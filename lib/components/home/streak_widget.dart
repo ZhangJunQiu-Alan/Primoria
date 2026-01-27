@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 连续天数火焰组件 - Brilliant 风格
+/// Streak flame widget - Brilliant style
 class StreakWidget extends StatelessWidget {
   final int streakCount;
   final bool showLabel;
@@ -28,7 +28,7 @@ class StreakWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 火焰图标
+          // Flame icon
           ShaderMask(
             shaderCallback: (Rect bounds) {
               return const LinearGradient(
@@ -44,7 +44,7 @@ class StreakWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.xs),
-          // 天数
+          // Day count
           Text(
             '$streakCount',
             style: AppTypography.title.copyWith(
@@ -56,7 +56,7 @@ class StreakWidget extends StatelessWidget {
           if (showLabel) ...[
             const SizedBox(width: AppSpacing.xs),
             Text(
-              '天',
+              'days',
               style: AppTypography.label.copyWith(
                 color: AppColors.streakFire,
               ),
@@ -68,7 +68,7 @@ class StreakWidget extends StatelessWidget {
   }
 }
 
-/// 大号连续天数显示 - 用于个人中心页
+/// Large streak display - used in profile page
 class StreakDisplayLarge extends StatelessWidget {
   final int streakCount;
   final int longestStreak;
@@ -89,7 +89,7 @@ class StreakDisplayLarge extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // 大火焰图标
+          // Large flame icon
           ShaderMask(
             shaderCallback: (Rect bounds) {
               return const LinearGradient(
@@ -106,7 +106,7 @@ class StreakDisplayLarge extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
 
-          // 当前连续天数
+          // Current streak count
           Text(
             '$streakCount',
             style: AppTypography.headline1.copyWith(
@@ -116,14 +116,14 @@ class StreakDisplayLarge extends StatelessWidget {
             ),
           ),
           Text(
-            '连续学习天数',
+            'Day Streak',
             style: AppTypography.body1.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
 
-          // 最长记录
+          // Longest streak
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.md,
@@ -134,7 +134,7 @@ class StreakDisplayLarge extends StatelessWidget {
               borderRadius: AppRadius.borderRadiusFull,
             ),
             child: Text(
-              '最长记录: $longestStreak 天',
+              'Best: $longestStreak days',
               style: AppTypography.label.copyWith(
                 color: Colors.white,
               ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'colors.dart';
 
-/// Primoria 应用字体规范
+/// Primoria app typography standards
 class AppTypography {
   AppTypography._();
 
-  // 标题样式
+  // Heading styles
   static const TextStyle headline1 = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class AppTypography {
     height: 1.4,
   );
 
-  // 正文样式
+  // Body styles
   static const TextStyle body1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
@@ -49,7 +49,7 @@ class AppTypography {
     height: 1.5,
   );
 
-  // 标签样式
+  // Label styles
   static const TextStyle label = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
@@ -64,7 +64,7 @@ class AppTypography {
     height: 1.4,
   );
 
-  // 按钮样式
+  // Button styles
   static const TextStyle button = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
@@ -79,7 +79,7 @@ class AppTypography {
     height: 1.2,
   );
 
-  // 数值显示样式
+  // Value display styles
   static const TextStyle valueDisplay = TextStyle(
     fontSize: 48,
     fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class AppTypography {
     height: 1.2,
   );
 
-  // 反馈弹窗样式
+  // Feedback dialog styles
   static const TextStyle feedbackTitle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,

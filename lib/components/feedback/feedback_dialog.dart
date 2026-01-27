@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/theme.dart';
 
-/// 反馈类型
+/// Feedback type
 enum FeedbackType { success, failure }
 
-/// 反馈弹窗组件
+/// Feedback dialog component
 class FeedbackDialog extends StatefulWidget {
   final FeedbackType type;
   final String title;
@@ -30,7 +30,7 @@ class FeedbackDialog extends StatefulWidget {
     this.showConfetti = true,
   });
 
-  /// 显示反馈弹窗
+  /// Show feedback dialog
   static Future<void> show(
     BuildContext context, {
     required FeedbackType type,
@@ -94,7 +94,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
   void initState() {
     super.initState();
 
-    // 图标动画
+    // Icon animation
     _iconController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -107,7 +107,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
       ),
     );
 
-    // 抖动动画（失败时使用）
+    // Shake animation (used on failure)
     _shakeController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -120,7 +120,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
       ),
     );
 
-    // 触发动画和触觉反馈
+    // Trigger animation and haptic feedback
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _iconController.forward();
       if (widget.type == FeedbackType.success) {
@@ -174,7 +174,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // 图标
+                // Icon
                 ScaleTransition(
                   scale: _iconScale,
                   child: Container(
@@ -193,7 +193,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
                 ),
                 AppSpacing.verticalGapLg,
 
-                // 标题
+                // Title
                 Text(
                   widget.title,
                   style: AppTypography.feedbackTitle,
@@ -201,14 +201,14 @@ class _FeedbackDialogState extends State<FeedbackDialog>
                 ),
                 AppSpacing.verticalGapMd,
 
-                // 消息
+                // Message
                 Text(
                   widget.message,
                   style: AppTypography.feedbackMessage,
                   textAlign: TextAlign.center,
                 ),
 
-                // 解释说明
+                // Explanation
                 if (widget.explanation != null) ...[
                   AppSpacing.verticalGapMd,
                   Container(
@@ -226,7 +226,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
                 ],
                 AppSpacing.verticalGapLg,
 
-                // 主按钮
+                // Primary button
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -242,7 +242,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
                   ),
                 ),
 
-                // 次按钮
+                // Secondary button
                 if (widget.secondaryButtonText != null) ...[
                   AppSpacing.verticalGapSm,
                   SizedBox(
@@ -269,20 +269,20 @@ class _FeedbackDialogState extends State<FeedbackDialog>
     );
   }
 
-  /// 抖动波形函数
+  /// Shake wave function
   double _shakeWave(double t) {
     return (1 - t) * (1 - t) * (2 * t - 1) * 8;
   }
 }
 
-/// 成功反馈的便捷方法
+/// Convenience methods for feedback
 extension FeedbackDialogExtension on BuildContext {
-  /// 显示成功反馈
+  /// Show success feedback
   Future<void> showSuccessFeedback({
-    String title = '太棒了！',
+    String title = 'Awesome!',
     required String message,
     String? explanation,
-    String buttonText = '继续',
+    String buttonText = 'Continue',
     required VoidCallback onContinue,
   }) {
     return FeedbackDialog.show(
@@ -296,12 +296,12 @@ extension FeedbackDialogExtension on BuildContext {
     );
   }
 
-  /// 显示失败反馈
+  /// Show failure feedback
   Future<void> showFailureFeedback({
-    String title = '再想想',
+    String title = 'Try Again',
     required String message,
     String? explanation,
-    String retryButtonText = '重试',
+    String retryButtonText = 'Retry',
     String? hintButtonText,
     required VoidCallback onRetry,
     VoidCallback? onHint,

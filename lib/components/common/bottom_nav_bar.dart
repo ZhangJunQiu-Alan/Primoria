@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 底部导航栏 - Brilliant 风格
+/// Bottom navigation bar - Brilliant style
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -37,28 +37,28 @@ class BottomNavBar extends StatelessWidget {
               _NavItem(
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home,
-                label: '首页',
+                label: 'Home',
                 isActive: currentIndex == 0,
                 onTap: () => onTap(0),
               ),
               _NavItem(
                 icon: Icons.search_outlined,
                 activeIcon: Icons.search,
-                label: '搜索',
+                label: 'Search',
                 isActive: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
                 icon: Icons.menu_book_outlined,
                 activeIcon: Icons.menu_book,
-                label: '课程',
+                label: 'Courses',
                 isActive: currentIndex == 2,
                 onTap: () => onTap(2),
               ),
               _NavItem(
                 icon: Icons.person_outline,
                 activeIcon: Icons.person,
-                label: '我的',
+                label: 'Profile',
                 isActive: currentIndex == 3,
                 onTap: () => onTap(3),
               ),

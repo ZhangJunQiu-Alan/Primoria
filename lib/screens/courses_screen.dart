@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import 'course_screen.dart';
 
-/// 课程列表页 - Brilliant 风格
+/// Courses list page - Brilliant style
 class CoursesScreen extends StatefulWidget {
   const CoursesScreen({super.key});
 
@@ -13,13 +13,13 @@ class CoursesScreen extends StatefulWidget {
 class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  final _tabs = ['全部', '进行中', '已完成', '收藏'];
+  final _tabs = ['All', 'In Progress', 'Completed', 'Favorites'];
 
   final _courses = [
     _CourseItem(
       id: '1',
-      title: '逻辑思维基础',
-      description: '培养逻辑推理能力，学会分析问题',
+      title: 'Logic Fundamentals',
+      description: 'Develop logical reasoning skills and learn to analyze problems',
       icon: Icons.psychology,
       gradient: AppColors.logicGradient,
       progress: 0.65,
@@ -30,8 +30,8 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
     ),
     _CourseItem(
       id: '2',
-      title: '数学思维',
-      description: '建立数学直觉，掌握数学思维方法',
+      title: 'Mathematical Thinking',
+      description: 'Build mathematical intuition and master mathematical thinking methods',
       icon: Icons.calculate,
       gradient: AppColors.mathGradient,
       progress: 0.25,
@@ -42,8 +42,8 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
     ),
     _CourseItem(
       id: '3',
-      title: '科学原理',
-      description: '探索自然规律，理解科学原理',
+      title: 'Scientific Principles',
+      description: 'Explore natural laws and understand scientific principles',
       icon: Icons.science,
       gradient: AppColors.scienceGradient,
       progress: 1.0,
@@ -54,8 +54,8 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
     ),
     _CourseItem(
       id: '4',
-      title: 'Python 编程',
-      description: '从零开始学习编程',
+      title: 'Python Programming',
+      description: 'Learn programming from scratch',
       icon: Icons.code,
       gradient: AppColors.csGradient,
       progress: 0.0,
@@ -66,8 +66,8 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
     ),
     _CourseItem(
       id: '5',
-      title: '统计学基础',
-      description: '数据分析必备技能',
+      title: 'Statistics Basics',
+      description: 'Essential data analysis skills',
       icon: Icons.analytics,
       gradient: AppColors.mathGradient,
       progress: 1.0,
@@ -92,13 +92,13 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
 
   List<_CourseItem> _getFilteredCourses(int tabIndex) {
     switch (tabIndex) {
-      case 1: // 进行中
+      case 1: // In Progress
         return _courses.where((c) => c.status == CourseStatus.inProgress).toList();
-      case 2: // 已完成
+      case 2: // Completed
         return _courses.where((c) => c.status == CourseStatus.completed).toList();
-      case 3: // 收藏
+      case 3: // Favorites
         return _courses.where((c) => c.isFavorite).toList();
-      default: // 全部
+      default: // All
         return _courses;
     }
   }
@@ -110,13 +110,13 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
       body: SafeArea(
         child: Column(
           children: [
-            // 顶部栏
+            // Top bar
             _buildHeader(),
 
-            // Tab 栏
+            // Tab bar
             _buildTabBar(),
 
-            // 课程列表
+            // Course list
             Expanded(
               child: TabBarView(
                 controller: _tabController,
@@ -137,7 +137,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
       child: Row(
         children: [
           Text(
-            '我的课程',
+            'My Courses',
             style: AppTypography.headline2,
           ),
           const Spacer(),
@@ -159,7 +159,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
-                  '${_courses.length} 门课程',
+                  '${_courses.length} courses',
                   style: AppTypography.label.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -211,7 +211,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              '暂无课程',
+              'No courses yet',
               style: AppTypography.body1.copyWith(
                 color: AppColors.textSecondary,
               ),
@@ -255,7 +255,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
         ),
         child: Column(
           children: [
-            // 课程头部
+            // Course header
             Container(
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
@@ -312,7 +312,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
               ),
             ),
 
-            // 课程进度
+            // Course progress
             Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
@@ -328,13 +328,13 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                         ),
                       ),
                       Text(
-                        '${course.completedLessons}/${course.totalLessons} 课时',
+                        '${course.completedLessons}/${course.totalLessons} lessons',
                         style: AppTypography.label,
                       ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  // 进度条
+                  // Progress bar
                   Container(
                     height: 6,
                     decoration: BoxDecoration(
@@ -353,7 +353,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  // 操作按钮
+                  // Action button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -376,10 +376,10 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                       ),
                       child: Text(
                         course.status == CourseStatus.completed
-                            ? '复习课程'
+                            ? 'Review Course'
                             : course.status == CourseStatus.inProgress
-                                ? '继续学习'
-                                : '开始学习',
+                                ? 'Continue Learning'
+                                : 'Start Learning',
                       ),
                     ),
                   ),
@@ -395,11 +395,11 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
   String _getStatusText(CourseStatus status) {
     switch (status) {
       case CourseStatus.notStarted:
-        return '未开始';
+        return 'Not Started';
       case CourseStatus.inProgress:
-        return '学习中';
+        return 'In Progress';
       case CourseStatus.completed:
-        return '已完成';
+        return 'Completed';
     }
   }
 

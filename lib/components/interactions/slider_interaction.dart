@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../../theme/theme.dart';
 import '../../models/unit_model.dart';
 
-/// 滑块互动组件
+/// Slider interaction component
 class InteractiveSlider extends StatefulWidget {
   final SliderConfig config;
   final String description;
@@ -60,7 +60,7 @@ class _InteractiveSliderState extends State<InteractiveSlider>
   }
 
   void _onChanged(double value) {
-    // 根据 step 进行吸附
+    // Snap to step
     final step = widget.config.step;
     final snappedValue = (value / step).round() * step;
 
@@ -93,7 +93,7 @@ class _InteractiveSliderState extends State<InteractiveSlider>
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // 题目描述
+        // Question description
         Padding(
           padding: AppSpacing.horizontalMd,
           child: Text(
@@ -104,7 +104,7 @@ class _InteractiveSliderState extends State<InteractiveSlider>
         ),
         AppSpacing.verticalGapLg,
 
-        // 当前值显示
+        // Current value display
         if (config.showValue) ...[
           AnimatedBuilder(
             animation: _scaleAnimation,
@@ -139,7 +139,7 @@ class _InteractiveSliderState extends State<InteractiveSlider>
           AppSpacing.verticalGapLg,
         ],
 
-        // 滑块
+        // Slider
         Padding(
           padding: AppSpacing.horizontalMd,
           child: Column(
@@ -170,7 +170,7 @@ class _InteractiveSliderState extends State<InteractiveSlider>
                 ),
               ),
 
-              // 最小/最大标签
+              // Min/max labels
               Padding(
                 padding: AppSpacing.horizontalSm,
                 child: Row(
@@ -191,10 +191,10 @@ class _InteractiveSliderState extends State<InteractiveSlider>
           ),
         ),
 
-        // 单位提示
+        // Unit hint
         AppSpacing.verticalGapMd,
         Text(
-          '单位: ${config.unit}',
+          'Unit: ${config.unit}',
           style: AppTypography.label.copyWith(color: AppColors.textDisabled),
         ),
       ],
@@ -202,7 +202,7 @@ class _InteractiveSliderState extends State<InteractiveSlider>
   }
 }
 
-/// 自定义滑块形状
+/// Custom thumb shape
 class _CustomThumbShape extends SliderComponentShape {
   final double thumbRadius;
   final double thumbElevation;
@@ -234,18 +234,18 @@ class _CustomThumbShape extends SliderComponentShape {
   }) {
     final canvas = context.canvas;
 
-    // 绘制阴影
+    // Draw shadow
     final shadowPath = Path()
       ..addOval(Rect.fromCircle(center: center, radius: thumbRadius));
     canvas.drawShadow(shadowPath, Colors.black, thumbElevation, true);
 
-    // 绘制白色边框
+    // Draw white border
     final borderPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
     canvas.drawCircle(center, thumbRadius, borderPaint);
 
-    // 绘制彩色内圆
+    // Draw colored inner circle
     final thumbPaint = Paint()
       ..color = sliderTheme.thumbColor ?? AppColors.sliderThumb
       ..style = PaintingStyle.fill;

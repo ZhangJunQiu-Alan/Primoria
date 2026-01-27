@@ -8,6 +8,6 @@ void main() {
     await tester.pumpWidget(const PrimoriaApp());
 
     // Verify that the app loads with the demo screen title
-    expect(find.text('调整水温'), findsOneWidget);
+    expect(find.text('Adjust Water Temperature'), findsOneWidget);
   });
 }

@@ -13,25 +13,25 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
-  # 数据持久化
+  # Data persistence
   shared_preferences: ^2.2.2
   sqflite: ^2.3.0
   path: ^1.8.3
 
-  # 状态管理
+  # State management
   provider: ^6.1.1
 
-  # 动画
+  # Animation
   lottie: ^3.1.0
   confetti: ^0.7.0
 
-  # 音效
+  # Audio
   audioplayers: ^6.0.0
 
-  # 本地通知
+  # Local notifications
   flutter_local_notifications: ^17.0.0
 
-  # 工具
+  # Utilities
   intl: ^0.19.0
   uuid: ^4.2.1
 

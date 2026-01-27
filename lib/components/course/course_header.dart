@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 课程头部组件
+/// Course header component
 class CourseHeader extends StatelessWidget {
   final String title;
   final String description;
@@ -34,7 +34,7 @@ class CourseHeader extends StatelessWidget {
         bottom: false,
         child: Column(
           children: [
-            // 顶部栏
+            // Top bar
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.sm,
@@ -57,12 +57,12 @@ class CourseHeader extends StatelessWidget {
               ),
             ),
 
-            // 课程信息
+            // Course info
             Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 children: [
-                  // 课程图标
+                  // Course icon
                   Container(
                     width: 80,
                     height: 80,
@@ -78,7 +78,7 @@ class CourseHeader extends StatelessWidget {
                   ),
                   AppSpacing.verticalGapMd,
 
-                  // 课程标题
+                  // Course title
                   Text(
                     title,
                     style: AppTypography.headline2.copyWith(
@@ -89,7 +89,7 @@ class CourseHeader extends StatelessWidget {
                   ),
                   AppSpacing.verticalGapSm,
 
-                  // 课程描述
+                  // Course description
                   Text(
                     description,
                     style: AppTypography.body1.copyWith(
@@ -101,13 +101,13 @@ class CourseHeader extends StatelessWidget {
                   ),
                   AppSpacing.verticalGapLg,
 
-                  // 进度信息
+                  // Progress info
                   _buildProgressInfo(),
                 ],
               ),
             ),
 
-            // 底部圆角遮罩
+            // Bottom rounded mask
             Container(
               height: 24,
               decoration: const BoxDecoration(
@@ -133,32 +133,32 @@ class CourseHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          // 完成章节
+          // Completed chapters
           _buildStat(
             '$completedChapters/$totalChapters',
-            '已完成章节',
+            'Chapters Done',
           ),
-          // 分隔线
+          // Divider
           Container(
             width: 1,
             height: 40,
             color: Colors.white.withValues(alpha: 0.3),
           ),
-          // 完成进度
+          // Completion progress
           _buildStat(
             '${(progress * 100).toInt()}%',
-            '完成进度',
+            'Progress',
           ),
-          // 分隔线
+          // Divider
           Container(
             width: 1,
             height: 40,
             color: Colors.white.withValues(alpha: 0.3),
           ),
-          // 预计时间
+          // Estimated time
           _buildStat(
             '${totalChapters * 15}',
-            '预计分钟',
+            'Est. Minutes',
           ),
         ],
       ),

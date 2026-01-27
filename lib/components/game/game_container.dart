@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 游戏容器状态
+/// Game container state
 enum GameContainerState {
   loading,
   ready,
@@ -12,7 +12,7 @@ enum GameContainerState {
   completed,
 }
 
-/// 通用游戏容器组件
+/// Generic game container component
 class GameContainer extends StatelessWidget {
   final String title;
   final int currentIndex;
@@ -46,7 +46,7 @@ class GameContainer extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Header 区域
+            // Header section
             _HeaderSection(
               title: title,
               currentIndex: currentIndex,
@@ -54,7 +54,7 @@ class GameContainer extends StatelessWidget {
               onExit: onExit,
             ),
 
-            // Content 区域
+            // Content section
             Expanded(
               child: _ContentSection(
                 state: state,
@@ -62,7 +62,7 @@ class GameContainer extends StatelessWidget {
               ),
             ),
 
-            // Footer 区域
+            // Footer section
             _FooterSection(
               onSubmit: onSubmit,
               onHint: onHint,
@@ -77,7 +77,7 @@ class GameContainer extends StatelessWidget {
   }
 }
 
-/// Header 区域
+/// Header section
 class _HeaderSection extends StatelessWidget {
   final String title;
   final int currentIndex;
@@ -106,10 +106,10 @@ class _HeaderSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // 顶部栏
+          // Top bar
           Row(
             children: [
-              // 退出按钮
+              // Exit button
               if (onExit != null)
                 IconButton(
                   onPressed: onExit,
@@ -125,7 +125,7 @@ class _HeaderSection extends StatelessWidget {
               else
                 const SizedBox(width: 40),
 
-              // 标题
+              // Title
               Expanded(
                 child: Text(
                   title,
@@ -136,7 +136,7 @@ class _HeaderSection extends StatelessWidget {
                 ),
               ),
 
-              // 进度文本
+              // Progress text
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm,
@@ -158,7 +158,7 @@ class _HeaderSection extends StatelessWidget {
           ),
           AppSpacing.verticalGapSm,
 
-          // 进度条
+          // Progress bar
           _ProgressBar(
             current: currentIndex,
             total: totalCount,
@@ -169,7 +169,7 @@ class _HeaderSection extends StatelessWidget {
   }
 }
 
-/// 进度条组件
+/// Progress bar component
 class _ProgressBar extends StatelessWidget {
   final int current;
   final int total;
@@ -203,7 +203,7 @@ class _ProgressBar extends StatelessWidget {
   }
 }
 
-/// Content 区域
+/// Content section
 class _ContentSection extends StatelessWidget {
   final GameContainerState state;
   final Widget content;
@@ -228,7 +228,7 @@ class _ContentSection extends StatelessWidget {
   }
 }
 
-/// Footer 区域
+/// Footer section
 class _FooterSection extends StatelessWidget {
   final VoidCallback onSubmit;
   final VoidCallback? onHint;
@@ -260,12 +260,12 @@ class _FooterSection extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // 提示按钮
+          // Hint button
           if (onHint != null) ...[
             OutlinedButton.icon(
               onPressed: onHint,
               icon: const Icon(Icons.lightbulb_outline, size: 20),
-              label: const Text('提示'),
+              label: const Text('Hint'),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.md,
@@ -276,7 +276,7 @@ class _FooterSection extends StatelessWidget {
             AppSpacing.horizontalGapMd,
           ],
 
-          // 提交按钮
+          // Submit button
           Expanded(
             child: ElevatedButton(
               onPressed: isSubmitEnabled && !isLoading ? onSubmit : null,
@@ -293,7 +293,7 @@ class _FooterSection extends StatelessWidget {
                         color: AppColors.textOnPrimary,
                       ),
                     )
-                  : Text(submitButtonText ?? '提交答案'),
+                  : Text(submitButtonText ?? 'Submit'),
             ),
           ),
         ],

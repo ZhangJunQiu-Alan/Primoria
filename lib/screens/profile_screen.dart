@@ -5,7 +5,7 @@ import '../components/home/streak_widget.dart';
 import '../providers/user_provider.dart';
 import '../providers/theme_provider.dart';
 
-/// 个人中心页 - Brilliant 风格
+/// Profile page - Brilliant style
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -19,13 +19,13 @@ class ProfileScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // 顶部栏
+              // Top bar
               _buildTopBar(context, isDark),
 
-              // 用户信息卡片
+              // User info card
               _buildUserCard(context, isDark),
 
-              // 连续学习天数
+              // Learning streak
               Consumer<UserProvider>(
                 builder: (context, userProvider, child) {
                   return Padding(
@@ -38,13 +38,13 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
 
-              // 学习统计
+              // Learning statistics
               _buildStatsSection(context, isDark),
 
-              // 成就徽章
+              // Achievement badges
               _buildAchievementsSection(context, isDark),
 
-              // 设置选项
+              // Settings options
               _buildSettingsSection(context, isDark),
 
               const SizedBox(height: AppSpacing.xxl),
@@ -61,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            '个人中心',
+            'Profile',
             style: AppTypography.headline2.copyWith(
               color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
             ),
@@ -93,7 +93,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // 头像
+              // Avatar
               Container(
                 width: 72,
                 height: 72,
@@ -118,13 +118,13 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.md),
 
-              // 用户信息
+              // User info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      isLoggedIn && user != null ? user.name : 'Primoria 学员',
+                      isLoggedIn && user != null ? user.name : 'Primoria Student',
                       style: AppTypography.headline3.copyWith(
                         color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
                       ),
@@ -132,8 +132,8 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xs),
                     Text(
                       isLoggedIn && user != null
-                          ? '加入于 ${user.joinedAt.year} 年 ${user.joinedAt.month} 月'
-                          : '游客模式',
+                          ? 'Joined ${user.joinedAt.month}/${user.joinedAt.year}'
+                          : 'Guest Mode',
                       style: AppTypography.body2.copyWith(
                         color: isDark ? AppColors.textSecondaryOnDark : AppColors.textSecondary,
                       ),
@@ -159,7 +159,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: AppSpacing.xs),
                             Text(
-                              'Pro 会员',
+                              'Pro Member',
                               style: AppTypography.label.copyWith(
                                 color: AppColors.accent,
                                 fontWeight: FontWeight.w600,
@@ -179,13 +179,13 @@ class ProfileScreen extends StatelessWidget {
                             vertical: AppSpacing.sm,
                           ),
                         ),
-                        child: const Text('登录/注册'),
+                        child: const Text('Login/Register'),
                       ),
                   ],
                 ),
               ),
 
-              // 编辑按钮
+              // Edit button
               if (isLoggedIn)
                 IconButton(
                   onPressed: () {},
@@ -208,7 +208,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '学习统计',
+                'Learning Statistics',
                 style: AppTypography.headline3.copyWith(
                   color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
                 ),
@@ -220,7 +220,7 @@ class ProfileScreen extends StatelessWidget {
                     child: _buildStatCard(
                       icon: Icons.school,
                       value: '${userProvider.completedCourses}',
-                      label: '完成课程',
+                      label: 'Courses Done',
                       color: AppColors.courseMath,
                       isDark: isDark,
                     ),
@@ -230,7 +230,7 @@ class ProfileScreen extends StatelessWidget {
                     child: _buildStatCard(
                       icon: Icons.timer,
                       value: userProvider.totalStudyTime,
-                      label: '学习时长',
+                      label: 'Study Time',
                       color: AppColors.courseScience,
                       isDark: isDark,
                     ),
@@ -244,7 +244,7 @@ class ProfileScreen extends StatelessWidget {
                     child: _buildStatCard(
                       icon: Icons.check_circle,
                       value: '${userProvider.completedQuestions}',
-                      label: '完成题目',
+                      label: 'Questions Done',
                       color: AppColors.courseCS,
                       isDark: isDark,
                     ),
@@ -254,7 +254,7 @@ class ProfileScreen extends StatelessWidget {
                     child: _buildStatCard(
                       icon: Icons.emoji_events,
                       value: '${userProvider.unlockedAchievements.length}',
-                      label: '获得徽章',
+                      label: 'Badges Earned',
                       color: AppColors.courseLogic,
                       isDark: isDark,
                     ),
@@ -319,12 +319,12 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildAchievementsSection(BuildContext context, bool isDark) {
     final achievements = [
-      _AchievementData('初学者', Icons.emoji_events, AppColors.accent, 'first_course'),
-      _AchievementData('连续7天', Icons.local_fire_department, AppColors.primary, 'streak_7'),
-      _AchievementData('连续30天', Icons.whatshot, AppColors.error, 'streak_30'),
-      _AchievementData('课程达人', Icons.school, AppColors.courseMath, 'courses_10'),
-      _AchievementData('百题王', Icons.check_circle, AppColors.courseCS, 'questions_100'),
-      _AchievementData('逻辑大师', Icons.psychology, AppColors.courseLogic, 'logic_master'),
+      _AchievementData('Beginner', Icons.emoji_events, AppColors.accent, 'first_course'),
+      _AchievementData('7-Day Streak', Icons.local_fire_department, AppColors.primary, 'streak_7'),
+      _AchievementData('30-Day Streak', Icons.whatshot, AppColors.error, 'streak_30'),
+      _AchievementData('Course Pro', Icons.school, AppColors.courseMath, 'courses_10'),
+      _AchievementData('100 Questions', Icons.check_circle, AppColors.courseCS, 'questions_100'),
+      _AchievementData('Logic Master', Icons.psychology, AppColors.courseLogic, 'logic_master'),
     ];
 
     return Consumer<UserProvider>(
@@ -338,7 +338,7 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '成就徽章',
+                    'Achievements',
                     style: AppTypography.headline3.copyWith(
                       color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
                     ),
@@ -346,7 +346,7 @@ class ProfileScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      '查看全部',
+                      'View All',
                       style: AppTypography.body2.copyWith(
                         color: AppColors.primary,
                       ),
@@ -433,7 +433,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '设置',
+                'Settings',
                 style: AppTypography.headline3.copyWith(
                   color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
                 ),
@@ -449,22 +449,22 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     _buildSettingItem(
                       icon: Icons.notifications_outlined,
-                      title: '通知设置',
+                      title: 'Notification Settings',
                       onTap: () {},
                       isDark: isDark,
                     ),
                     _buildDivider(isDark),
                     _buildSettingItem(
                       icon: Icons.language,
-                      title: '语言',
-                      trailing: '简体中文',
+                      title: 'Language',
+                      trailing: 'English',
                       onTap: () {},
                       isDark: isDark,
                     ),
                     _buildDivider(isDark),
                     _buildSettingItem(
                       icon: Icons.dark_mode_outlined,
-                      title: '深色模式',
+                      title: 'Dark Mode',
                       trailing: themeProvider.themeModeLabel,
                       onTap: () => _showThemePicker(context),
                       isDark: isDark,
@@ -472,14 +472,14 @@ class ProfileScreen extends StatelessWidget {
                     _buildDivider(isDark),
                     _buildSettingItem(
                       icon: Icons.help_outline,
-                      title: '帮助与反馈',
+                      title: 'Help & Feedback',
                       onTap: () {},
                       isDark: isDark,
                     ),
                     _buildDivider(isDark),
                     _buildSettingItem(
                       icon: Icons.info_outline,
-                      title: '关于',
+                      title: 'About',
                       onTap: () {},
                       isDark: isDark,
                     ),
@@ -487,7 +487,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              // 退出登录
+              // Logout
               if (userProvider.isLoggedIn)
                 SizedBox(
                   width: double.infinity,
@@ -496,7 +496,7 @@ class ProfileScreen extends StatelessWidget {
                       await userProvider.logout();
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('已退出登录')),
+                          const SnackBar(content: Text('Logged out successfully')),
                         );
                       }
                     },
@@ -505,7 +505,7 @@ class ProfileScreen extends StatelessWidget {
                       side: const BorderSide(color: AppColors.error),
                       padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                     ),
-                    child: const Text('退出登录'),
+                    child: const Text('Logout'),
                   ),
                 ),
             ],
@@ -527,13 +527,13 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const SizedBox(height: AppSpacing.md),
               Text(
-                '选择主题',
+                'Select Theme',
                 style: AppTypography.headline3,
               ),
               const SizedBox(height: AppSpacing.md),
               ListTile(
                 leading: const Icon(Icons.brightness_auto),
-                title: const Text('跟随系统'),
+                title: const Text('Follow System'),
                 trailing: themeProvider.themeMode == ThemeMode.system
                     ? const Icon(Icons.check, color: AppColors.primary)
                     : null,
@@ -544,7 +544,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.light_mode),
-                title: const Text('浅色模式'),
+                title: const Text('Light Mode'),
                 trailing: themeProvider.themeMode == ThemeMode.light
                     ? const Icon(Icons.check, color: AppColors.primary)
                     : null,
@@ -555,7 +555,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.dark_mode),
-                title: const Text('深色模式'),
+                title: const Text('Dark Mode'),
                 trailing: themeProvider.themeMode == ThemeMode.dark
                     ? const Icon(Icons.check, color: AppColors.primary)
                     : null,

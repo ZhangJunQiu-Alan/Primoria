@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import 'course_screen.dart';
 
-/// 搜索页 - Brilliant 风格
+/// Search page - Brilliant style
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -15,19 +15,19 @@ class _SearchScreenState extends State<SearchScreen> {
   String _searchQuery = '';
 
   final _categories = [
-    _CategoryData('数学', Icons.calculate, AppColors.courseMath, AppColors.mathGradient),
-    _CategoryData('科学', Icons.science, AppColors.courseScience, AppColors.scienceGradient),
-    _CategoryData('计算机', Icons.computer, AppColors.courseCS, AppColors.csGradient),
-    _CategoryData('逻辑', Icons.psychology, AppColors.courseLogic, AppColors.logicGradient),
-    _CategoryData('数据', Icons.bar_chart, AppColors.courseData, AppColors.mathGradient),
-    _CategoryData('工程', Icons.engineering, AppColors.primary, AppColors.primaryGradient),
+    _CategoryData('Math', Icons.calculate, AppColors.courseMath, AppColors.mathGradient),
+    _CategoryData('Science', Icons.science, AppColors.courseScience, AppColors.scienceGradient),
+    _CategoryData('Computer', Icons.computer, AppColors.courseCS, AppColors.csGradient),
+    _CategoryData('Logic', Icons.psychology, AppColors.courseLogic, AppColors.logicGradient),
+    _CategoryData('Data', Icons.bar_chart, AppColors.courseData, AppColors.mathGradient),
+    _CategoryData('Engineering', Icons.engineering, AppColors.primary, AppColors.primaryGradient),
   ];
 
   final _popularCourses = [
-    _CourseData('逻辑思维入门', '培养逻辑推理能力', Icons.psychology, AppColors.logicGradient, 4.9, 12500),
-    _CourseData('Python 编程', '从零开始学编程', Icons.code, AppColors.csGradient, 4.8, 23000),
-    _CourseData('统计学基础', '数据分析必备技能', Icons.analytics, AppColors.mathGradient, 4.7, 8900),
-    _CourseData('物理学原理', '探索自然规律', Icons.waves, AppColors.scienceGradient, 4.9, 15600),
+    _CourseData('Intro to Logic', 'Develop logical reasoning skills', Icons.psychology, AppColors.logicGradient, 4.9, 12500),
+    _CourseData('Python Programming', 'Learn programming from scratch', Icons.code, AppColors.csGradient, 4.8, 23000),
+    _CourseData('Statistics Basics', 'Essential data analysis skills', Icons.analytics, AppColors.mathGradient, 4.7, 8900),
+    _CourseData('Physics Principles', 'Explore natural laws', Icons.waves, AppColors.scienceGradient, 4.9, 15600),
   ];
 
   @override
@@ -44,10 +44,10 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 搜索栏
+            // Search bar
             _buildSearchBar(),
 
-            // 内容区域
+            // Content area
             Expanded(
               child: _searchQuery.isEmpty
                   ? _buildDiscoverContent()
@@ -66,7 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
         controller: _searchController,
         onChanged: (value) => setState(() => _searchQuery = value),
         decoration: InputDecoration(
-          hintText: '搜索课程、主题...',
+          hintText: 'Search courses, topics...',
           prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
           suffixIcon: _searchQuery.isNotEmpty
               ? IconButton(
@@ -101,11 +101,11 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 分类浏览
+          // Browse categories
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             child: Text(
-              '浏览分类',
+              'Browse Categories',
               style: AppTypography.headline3,
             ),
           ),
@@ -114,11 +114,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
           const SizedBox(height: AppSpacing.lg),
 
-          // 热门课程
+          // Popular courses
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             child: Text(
-              '热门课程',
+              'Popular Courses',
               style: AppTypography.headline3,
             ),
           ),
@@ -127,20 +127,20 @@ class _SearchScreenState extends State<SearchScreen> {
 
           const SizedBox(height: AppSpacing.lg),
 
-          // 最近搜索
+          // Recent searches
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '最近搜索',
+                  'Recent Searches',
                   style: AppTypography.headline3,
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    '清除',
+                    'Clear',
                     style: AppTypography.body2.copyWith(color: AppColors.primary),
                   ),
                 ),
@@ -177,7 +177,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildCategoryCard(_CategoryData category) {
     return GestureDetector(
       onTap: () {
-        // 跳转到分类页面
+        // Navigate to category page
       },
       child: Container(
         decoration: BoxDecoration(
@@ -246,7 +246,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         child: Row(
           children: [
-            // 课程图标
+            // Course icon
             Container(
               width: 56,
               height: 56,
@@ -262,7 +262,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const SizedBox(width: AppSpacing.md),
 
-            // 课程信息
+            // Course info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,7 +295,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       const SizedBox(width: AppSpacing.md),
                       Text(
-                        '${_formatNumber(course.students)} 学员',
+                        '${_formatNumber(course.students)} students',
                         style: AppTypography.label,
                       ),
                     ],
@@ -315,7 +315,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildRecentSearches() {
-    final recentSearches = ['逻辑思维', 'Python', '数学', '物理'];
+    final recentSearches = ['Logic', 'Python', 'Math', 'Physics'];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
@@ -361,7 +361,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchResults() {
-    // 过滤课程
+    // Filter courses
     final filteredCourses = _popularCourses
         .where((c) => c.title.toLowerCase().contains(_searchQuery.toLowerCase()))
         .toList();
@@ -378,7 +378,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              '未找到 "$_searchQuery" 相关课程',
+              'No courses found for "$_searchQuery"',
               style: AppTypography.body1.copyWith(
                 color: AppColors.textSecondary,
               ),
@@ -400,7 +400,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   String _formatNumber(int number) {
     if (number >= 10000) {
-      return '${(number / 10000).toStringAsFixed(1)}万';
+      return '${(number / 1000).toStringAsFixed(1)}k';
     } else if (number >= 1000) {
       return '${(number / 1000).toStringAsFixed(1)}k';
     }

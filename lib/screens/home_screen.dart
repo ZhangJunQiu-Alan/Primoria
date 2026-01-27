@@ -10,7 +10,7 @@ import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'lesson_screen.dart';
 
-/// 首页 - Brilliant 风格
+/// Home page - Brilliant style
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -75,12 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHomeContent() {
     return CustomScrollView(
       slivers: [
-        // 顶部应用栏
+        // Top app bar
         SliverToBoxAdapter(
           child: _buildAppBar(),
         ),
 
-        // 每日挑战卡片
+        // Daily challenge card
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(
                     builder: (context) => const LessonScreen(
                       lessonId: 'daily',
-                      lessonTitle: '每日挑战',
+                      lessonTitle: 'Daily Challenge',
                       gradient: AppColors.accentGradient,
                     ),
                   ),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // 继续学习标题
+        // Continue learning title
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -112,13 +112,13 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '继续学习',
+                  'Continue Learning',
                   style: AppTypography.headline3,
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    '查看全部',
+                    'View All',
                     style: AppTypography.body2.copyWith(
                       color: AppColors.primary,
                     ),
@@ -129,54 +129,54 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // 课程卡片列表
+        // Course card list
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               CourseCard(
-                title: '逻辑思维基础',
-                subtitle: '第 3 章 · 演绎推理',
+                title: 'Logic Fundamentals',
+                subtitle: 'Chapter 3 · Deductive Reasoning',
                 progress: 0.65,
                 gradient: AppColors.logicGradient,
                 icon: Icons.psychology,
                 onTap: () => _navigateToCourse(
                   context,
                   'logic',
-                  '逻辑思维基础',
-                  '培养逻辑推理能力，学会分析问题',
+                  'Logic Fundamentals',
+                  'Develop logical reasoning skills and learn to analyze problems',
                   AppColors.logicGradient,
                   Icons.psychology,
                 ),
               ),
               AppSpacing.verticalGapMd,
               CourseCard(
-                title: '数学思维',
-                subtitle: '第 1 章 · 数字感知',
+                title: 'Mathematical Thinking',
+                subtitle: 'Chapter 1 · Number Sense',
                 progress: 0.25,
                 gradient: AppColors.mathGradient,
                 icon: Icons.calculate,
                 onTap: () => _navigateToCourse(
                   context,
                   'math',
-                  '数学思维',
-                  '建立数学直觉，掌握数学思维方法',
+                  'Mathematical Thinking',
+                  'Build mathematical intuition and master mathematical thinking methods',
                   AppColors.mathGradient,
                   Icons.calculate,
                 ),
               ),
               AppSpacing.verticalGapMd,
               CourseCard(
-                title: '科学原理',
-                subtitle: '第 2 章 · 力与运动',
+                title: 'Scientific Principles',
+                subtitle: 'Chapter 2 · Force and Motion',
                 progress: 0.80,
                 gradient: AppColors.scienceGradient,
                 icon: Icons.science,
                 onTap: () => _navigateToCourse(
                   context,
                   'science',
-                  '科学原理',
-                  '探索自然规律，理解科学原理',
+                  'Scientific Principles',
+                  'Explore natural laws and understand scientific principles',
                   AppColors.scienceGradient,
                   Icons.science,
                 ),
@@ -186,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // 推荐课程标题
+        // Recommended courses title
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -194,13 +194,13 @@ class _HomeScreenState extends State<HomeScreen> {
               vertical: AppSpacing.sm,
             ),
             child: Text(
-              '为你推荐',
+              'Recommended for You',
               style: AppTypography.headline3,
             ),
           ),
         ),
 
-        // 推荐课程横向滚动
+        // Recommended courses horizontal scroll
         SliverToBoxAdapter(
           child: SizedBox(
             height: 180,
@@ -209,22 +209,22 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               children: [
                 _buildRecommendCard(
-                  '计算机科学',
-                  '算法入门',
+                  'Computer Science',
+                  'Intro to Algorithms',
                   AppColors.csGradient,
                   Icons.computer,
                 ),
                 AppSpacing.horizontalGapMd,
                 _buildRecommendCard(
-                  '数据分析',
-                  '统计学基础',
+                  'Data Analysis',
+                  'Statistics Basics',
                   AppColors.mathGradient,
                   Icons.bar_chart,
                 ),
                 AppSpacing.horizontalGapMd,
                 _buildRecommendCard(
-                  '物理学',
-                  '量子入门',
+                  'Physics',
+                  'Intro to Quantum',
                   AppColors.scienceGradient,
                   Icons.waves,
                 ),
@@ -234,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // 底部间距
+        // Bottom spacing
         const SliverToBoxAdapter(
           child: SizedBox(height: AppSpacing.xl),
         ),
@@ -277,10 +277,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const Spacer(),
-          // 连续天数
+          // Streak count
           const StreakWidget(streakCount: 7),
           const SizedBox(width: AppSpacing.md),
-          // 用户头像
+          // User avatar
           GestureDetector(
             onTap: () {},
             child: const CircleAvatar(

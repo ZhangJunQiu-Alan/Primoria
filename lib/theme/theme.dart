@@ -7,7 +7,7 @@ export 'colors.dart';
 export 'typography.dart';
 export 'spacing.dart';
 
-/// Primoria 应用主题
+/// Primoria app theme
 class AppTheme {
   AppTheme._();
 
@@ -18,7 +18,7 @@ class AppTheme {
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.background,
 
-      // 颜色方案
+      // Color scheme
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.success,
@@ -26,7 +26,7 @@ class AppTheme {
         error: AppColors.error,
       ),
 
-      // AppBar 主题
+      // AppBar theme
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surface,
         foregroundColor: AppColors.textPrimary,
@@ -35,7 +35,7 @@ class AppTheme {
         titleTextStyle: AppTypography.title,
       ),
 
-      // 按钮主题
+      // Button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -73,7 +73,7 @@ class AppTheme {
         ),
       ),
 
-      // 卡片主题
+      // Card theme
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 2,
@@ -83,7 +83,7 @@ class AppTheme {
         margin: EdgeInsets.zero,
       ),
 
-      // 输入框主题
+      // Input field theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceVariant,
@@ -110,7 +110,7 @@ class AppTheme {
         hintStyle: AppTypography.body1.copyWith(color: AppColors.textDisabled),
       ),
 
-      // 滑块主题
+      // Slider theme
       sliderTheme: SliderThemeData(
         activeTrackColor: AppColors.sliderActive,
         inactiveTrackColor: AppColors.sliderTrack,
@@ -124,7 +124,7 @@ class AppTheme {
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
       ),
 
-      // 对话框主题
+      // Dialog theme
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(
@@ -134,7 +134,7 @@ class AppTheme {
         contentTextStyle: AppTypography.body1,
       ),
 
-      // 进度指示器主题
+      // Progress indicator theme
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
         linearTrackColor: AppColors.border,
@@ -142,7 +142,7 @@ class AppTheme {
     );
   }
 
-  /// 深色主题
+  /// Dark theme
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
@@ -150,7 +150,7 @@ class AppTheme {
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.backgroundDark,
 
-      // 颜色方案
+      // Color scheme
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.success,
@@ -158,7 +158,7 @@ class AppTheme {
         error: AppColors.error,
       ),
 
-      // AppBar 主题
+      // AppBar theme
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.surfaceDark,
         foregroundColor: AppColors.textOnDark,
@@ -167,7 +167,7 @@ class AppTheme {
         titleTextStyle: AppTypography.title.copyWith(color: AppColors.textOnDark),
       ),
 
-      // 按钮主题
+      // Button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -205,7 +205,7 @@ class AppTheme {
         ),
       ),
 
-      // 卡片主题
+      // Card theme
       cardTheme: CardThemeData(
         color: AppColors.cardDark,
         elevation: 2,
@@ -215,7 +215,7 @@ class AppTheme {
         margin: EdgeInsets.zero,
       ),
 
-      // 输入框主题
+      // Input field theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.cardDark,
@@ -242,7 +242,7 @@ class AppTheme {
         hintStyle: AppTypography.body1.copyWith(color: AppColors.textSecondaryOnDark),
       ),
 
-      // 滑块主题
+      // Slider theme
       sliderTheme: SliderThemeData(
         activeTrackColor: AppColors.sliderActive,
         inactiveTrackColor: AppColors.borderDark,
@@ -256,7 +256,7 @@ class AppTheme {
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
       ),
 
-      // 对话框主题
+      // Dialog theme
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.cardDark,
         shape: RoundedRectangleBorder(
@@ -266,13 +266,13 @@ class AppTheme {
         contentTextStyle: AppTypography.body1.copyWith(color: AppColors.textOnDark),
       ),
 
-      // 进度指示器主题
+      // Progress indicator theme
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
         linearTrackColor: AppColors.borderDark,
       ),
 
-      // 文字主题
+      // Text theme
       textTheme: TextTheme(
         headlineLarge: AppTypography.headline1.copyWith(color: AppColors.textOnDark),
         headlineMedium: AppTypography.headline2.copyWith(color: AppColors.textOnDark),
@@ -283,12 +283,12 @@ class AppTheme {
         labelLarge: AppTypography.label.copyWith(color: AppColors.textSecondaryOnDark),
       ),
 
-      // 图标主题
+      // Icon theme
       iconTheme: const IconThemeData(
         color: AppColors.textOnDark,
       ),
 
-      // 分割线主题
+      // Divider theme
       dividerTheme: const DividerThemeData(
         color: AppColors.borderDark,
       ),

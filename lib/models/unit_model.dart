@@ -1,4 +1,4 @@
-/// 互动教学单元数据模型
+/// Interactive teaching unit data model
 class UnitModel {
   final String id;
   final String title;
@@ -57,7 +57,7 @@ class UnitModel {
   }
 }
 
-/// 单元类型枚举
+/// Unit type enumeration
 enum UnitType {
   slider('slider'),
   choice('choice'),
@@ -75,7 +75,7 @@ enum UnitType {
   }
 }
 
-/// UI 配置
+/// UI configuration
 class UiConfig {
   final SliderConfig? slider;
   final ChoiceConfig? choice;
@@ -122,7 +122,7 @@ class UiConfig {
   }
 }
 
-/// 滑块配置
+/// Slider configuration
 class SliderConfig {
   final double min;
   final double max;
@@ -181,7 +181,7 @@ class SliderConfig {
   }
 }
 
-/// 滑块标签
+/// Slider labels
 class SliderLabels {
   final String? minLabel;
   final String? maxLabel;
@@ -203,7 +203,7 @@ class SliderLabels {
   }
 }
 
-/// 选择题配置
+/// Choice question configuration
 class ChoiceConfig {
   final String layout;
   final bool allowMultiple;
@@ -242,7 +242,7 @@ class ChoiceConfig {
   }
 }
 
-/// 选择项
+/// Choice option
 class ChoiceOption {
   final String id;
   final String text;
@@ -275,7 +275,7 @@ class ChoiceOption {
   }
 }
 
-/// 输入框配置
+/// Input field configuration
 class InputConfig {
   final String inputType;
   final String placeholder;
@@ -316,7 +316,7 @@ class InputConfig {
   }
 }
 
-/// 排序配置
+/// Sorting configuration
 class SortingConfig {
   final String layout;
   final bool draggable;
@@ -347,7 +347,7 @@ class SortingConfig {
   }
 }
 
-/// 排序项
+/// Sorting item
 class SortingItem {
   final String id;
   final String text;
@@ -369,7 +369,7 @@ class SortingItem {
   }
 }
 
-/// 媒体配置
+/// Media configuration
 class MediaConfig {
   final String type;
   final String url;
@@ -398,7 +398,7 @@ class MediaConfig {
   }
 }
 
-/// 验证配置
+/// Validation configuration
 class Validation {
   final double? targetValue;
   final double? tolerance;
@@ -447,7 +447,7 @@ class Validation {
   }
 }
 
-/// 有效范围
+/// Valid range
 class ValidRange {
   final double min;
   final double max;
@@ -469,7 +469,7 @@ class ValidRange {
   }
 }
 
-/// 反馈配置
+/// Feedback configuration
 class Feedback {
   final String successMsg;
   final String? failMsg;
@@ -510,7 +510,7 @@ class Feedback {
   }
 }
 
-/// 元数据
+/// Metadata
 class Metadata {
   final String? createdAt;
   final String? updatedAt;

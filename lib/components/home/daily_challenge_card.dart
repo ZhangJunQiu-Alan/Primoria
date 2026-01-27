@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 每日挑战卡片 - Brilliant 风格
+/// Daily challenge card - Brilliant style
 class DailyChallengeCard extends StatelessWidget {
   final VoidCallback onTap;
   final bool isCompleted;
@@ -26,7 +26,7 @@ class DailyChallengeCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // 图标
+            // Icon
             Container(
               width: 56,
               height: 56,
@@ -42,13 +42,13 @@ class DailyChallengeCard extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.md),
 
-            // 文字内容
+            // Text content
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isCompleted ? '今日挑战已完成！' : '每日挑战',
+                    isCompleted ? 'Today\'s Challenge Complete!' : 'Daily Challenge',
                     style: AppTypography.title.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -57,8 +57,8 @@ class DailyChallengeCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.xs),
                   Text(
                     isCompleted
-                        ? '明天再来保持连续学习'
-                        : '完成今天的学习任务，保持连续天数',
+                        ? 'Come back tomorrow to keep your streak'
+                        : 'Complete today\'s learning task, keep your streak',
                     style: AppTypography.body2.copyWith(
                       color: Colors.white.withValues(alpha: 0.9),
                     ),
@@ -67,7 +67,7 @@ class DailyChallengeCard extends StatelessWidget {
               ),
             ),
 
-            // 箭头
+            // Arrow
             Container(
               width: 40,
               height: 40,

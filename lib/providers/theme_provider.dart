@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
 
-/// 主题状态管理
+/// Theme state management
 class ThemeProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
   StorageService? _storage;
@@ -61,11 +61,11 @@ class ThemeProvider extends ChangeNotifier {
   String get themeModeLabel {
     switch (_themeMode) {
       case ThemeMode.light:
-        return '浅色模式';
+        return 'Light Mode';
       case ThemeMode.dark:
-        return '深色模式';
+        return 'Dark Mode';
       default:
-        return '跟随系统';
+        return 'Follow System';
     }
   }
 }

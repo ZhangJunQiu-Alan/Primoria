@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 课程卡片组件 - Brilliant 风格
+/// Course card component - Brilliant style
 class CourseCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -33,7 +33,7 @@ class CourseCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // 课程图标
+            // Course icon
             Container(
               width: 56,
               height: 56,
@@ -49,7 +49,7 @@ class CourseCard extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.md),
 
-            // 课程信息
+            // Course info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,14 +69,14 @@ class CourseCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
 
-                  // 进度条
+                  // Progress bar
                   _buildProgressBar(),
                 ],
               ),
             ),
             const SizedBox(width: AppSpacing.md),
 
-            // 进度环
+            // Progress ring
             _buildProgressRing(),
           ],
         ),
@@ -111,7 +111,7 @@ class CourseCard extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // 背景圆环
+          // Background ring
           SizedBox(
             width: 48,
             height: 48,
@@ -122,7 +122,7 @@ class CourseCard extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation(AppColors.border),
             ),
           ),
-          // 进度圆环
+          // Progress circle
           SizedBox(
             width: 48,
             height: 48,
@@ -133,7 +133,7 @@ class CourseCard extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation(gradient.colors.first),
             ),
           ),
-          // 百分比文字
+          // Percentage text
           Text(
             '${(progress * 100).toInt()}%',
             style: AppTypography.label.copyWith(

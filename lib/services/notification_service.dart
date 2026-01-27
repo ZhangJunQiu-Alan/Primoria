@@ -1,7 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 
-/// 通知服务
+/// Notification service
 class NotificationService {
   static NotificationService? _instance;
   final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
@@ -44,11 +44,11 @@ class NotificationService {
   }
 
   void _onNotificationTap(NotificationResponse response) {
-    // 处理通知点击
+    // Handle notification tap
     debugPrint('Notification tapped: ${response.payload}');
   }
 
-  /// 请求通知权限
+  /// Request notification permission
   Future<bool> requestPermission() async {
     final android = _notifications.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
@@ -72,7 +72,7 @@ class NotificationService {
     return false;
   }
 
-  /// 显示即时通知
+  /// Show instant notification
   Future<void> showNotification({
     required int id,
     required String title,
@@ -82,7 +82,7 @@ class NotificationService {
     const androidDetails = AndroidNotificationDetails(
       'primoria_channel',
       'Primoria',
-      channelDescription: 'Primoria 学习提醒',
+      channelDescription: 'Primoria learning reminders',
       importance: Importance.high,
       priority: Priority.high,
       showWhen: true,
@@ -103,50 +103,50 @@ class NotificationService {
     await _notifications.show(id, title, body, details, payload: payload);
   }
 
-  /// 设置每日学习提醒
+  /// Schedule daily learning reminder
   Future<void> scheduleDailyReminder({
     required int hour,
     required int minute,
   }) async {
-    // 取消之前的提醒
+    // Cancel previous reminder
     await _notifications.cancel(1);
 
-    // 注意: 完整实现需要使用 flutter_local_notifications 的定时功能
-    // 这里提供简化版本
+    // Note: Full implementation requires flutter_local_notifications scheduling
+    // This is a simplified version
     debugPrint('Daily reminder scheduled for $hour:$minute');
   }
 
-  /// 取消所有通知
+  /// Cancel all notifications
   Future<void> cancelAll() async {
     await _notifications.cancelAll();
   }
 
-  /// 显示连续学习提醒
+  /// Show streak reminder
   Future<void> showStreakReminder(int currentStreak) async {
     await showNotification(
       id: 2,
-      title: '别忘了今天的学习！🔥',
-      body: '你已经连续学习 $currentStreak 天了，继续保持！',
+      title: 'Don\'t forget today\'s study!',
+      body: 'You\'ve been studying for $currentStreak days in a row. Keep it up!',
       payload: 'streak_reminder',
     );
   }
 
-  /// 显示成就解锁通知
+  /// Show achievement unlocked notification
   Future<void> showAchievementUnlocked(String achievementName) async {
     await showNotification(
       id: 3,
-      title: '成就解锁！🏆',
-      body: '恭喜你获得成就：$achievementName',
+      title: 'Achievement Unlocked!',
+      body: 'Congratulations! You earned: $achievementName',
       payload: 'achievement_unlocked',
     );
   }
 
-  /// 显示课程完成通知
+  /// Show course completed notification
   Future<void> showCourseCompleted(String courseName) async {
     await showNotification(
       id: 4,
-      title: '课程完成！🎉',
-      body: '太棒了！你已完成课程：$courseName',
+      title: 'Course Completed!',
+      body: 'Great job! You\'ve completed: $courseName',
       payload: 'course_completed',
     );
   }

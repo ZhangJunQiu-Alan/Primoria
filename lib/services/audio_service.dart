@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 
-/// 音效服务
+/// Audio service
 class AudioService {
   static AudioService? _instance;
   final AudioPlayer _player = AudioPlayer();
@@ -14,9 +14,9 @@ class AudioService {
     return _instance!;
   }
 
-  /// 初始化音效服务
+  /// Initialize audio service
   Future<void> initialize() async {
-    // 预加载音效文件（如果有的话）
+    // Preload audio files (if any)
     // await _player.setSource(AssetSource('sounds/correct.mp3'));
   }
 
@@ -26,43 +26,43 @@ class AudioService {
 
   bool get soundEnabled => _soundEnabled;
 
-  /// 播放正确答案音效
+  /// Play correct answer sound
   Future<void> playCorrect() async {
     if (!_soundEnabled) return;
     await HapticFeedback.mediumImpact();
-    // 使用系统音效或自定义音效
+    // Use system or custom sound
     // await _player.play(AssetSource('sounds/correct.mp3'));
   }
 
-  /// 播放错误答案音效
+  /// Play wrong answer sound
   Future<void> playWrong() async {
     if (!_soundEnabled) return;
     await HapticFeedback.heavyImpact();
     // await _player.play(AssetSource('sounds/wrong.mp3'));
   }
 
-  /// 播放按钮点击音效
+  /// Play button click sound
   Future<void> playClick() async {
     if (!_soundEnabled) return;
     await HapticFeedback.selectionClick();
     // await _player.play(AssetSource('sounds/click.mp3'));
   }
 
-  /// 播放完成音效
+  /// Play completion sound
   Future<void> playComplete() async {
     if (!_soundEnabled) return;
     await HapticFeedback.heavyImpact();
     // await _player.play(AssetSource('sounds/complete.mp3'));
   }
 
-  /// 播放升级/成就音效
+  /// Play achievement sound
   Future<void> playAchievement() async {
     if (!_soundEnabled) return;
     await HapticFeedback.heavyImpact();
     // await _player.play(AssetSource('sounds/achievement.mp3'));
   }
 
-  /// 播放连续天数音效
+  /// Play streak sound
   Future<void> playStreak() async {
     if (!_soundEnabled) return;
     await HapticFeedback.mediumImpact();

@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-/// 本地存储服务
+/// Local storage service
 class StorageService {
   static StorageService? _instance;
   static SharedPreferences? _prefs;
@@ -14,7 +14,7 @@ class StorageService {
     return _instance!;
   }
 
-  // 用户数据
+  // User data
   Future<void> saveUser(Map<String, dynamic> user) async {
     await _prefs?.setString('user', jsonEncode(user));
   }
@@ -31,7 +31,7 @@ class StorageService {
     await _prefs?.remove('user');
   }
 
-  // 连续学习天数
+  // Learning streak
   Future<void> saveStreak(int streak) async {
     await _prefs?.setInt('streak', streak);
     await _prefs?.setString('lastStudyDate', DateTime.now().toIso8601String());
@@ -45,7 +45,7 @@ class StorageService {
     return _prefs?.getString('lastStudyDate');
   }
 
-  // 最长连续天数
+  // Longest streak
   Future<void> saveLongestStreak(int streak) async {
     await _prefs?.setInt('longestStreak', streak);
   }
@@ -54,7 +54,7 @@ class StorageService {
     return _prefs?.getInt('longestStreak') ?? 0;
   }
 
-  // 课程进度
+  // Course progress
   Future<void> saveCourseProgress(String courseId, double progress) async {
     await _prefs?.setDouble('course_$courseId', progress);
   }
@@ -71,7 +71,7 @@ class StorageService {
     return _prefs?.getStringList('completed_$courseId') ?? [];
   }
 
-  // 成就
+  // Achievements
   Future<void> saveUnlockedAchievements(List<String> achievements) async {
     await _prefs?.setStringList('achievements', achievements);
   }
@@ -80,7 +80,7 @@ class StorageService {
     return _prefs?.getStringList('achievements') ?? [];
   }
 
-  // 学习统计
+  // Learning statistics
   Future<void> incrementCompletedCourses() async {
     final current = _prefs?.getInt('completedCourses') ?? 0;
     await _prefs?.setInt('completedCourses', current + 1);
@@ -108,7 +108,7 @@ class StorageService {
     return _prefs?.getInt('completedQuestions') ?? 0;
   }
 
-  // 主题设置
+  // Theme settings
   Future<void> saveThemeMode(String mode) async {
     await _prefs?.setString('themeMode', mode);
   }
@@ -117,7 +117,7 @@ class StorageService {
     return _prefs?.getString('themeMode') ?? 'system';
   }
 
-  // 音效设置
+  // Sound settings
   Future<void> saveSoundEnabled(bool enabled) async {
     await _prefs?.setBool('soundEnabled', enabled);
   }
@@ -126,7 +126,7 @@ class StorageService {
     return _prefs?.getBool('soundEnabled') ?? true;
   }
 
-  // 通知设置
+  // Notification settings
   Future<void> saveNotificationsEnabled(bool enabled) async {
     await _prefs?.setBool('notificationsEnabled', enabled);
   }
@@ -135,7 +135,7 @@ class StorageService {
     return _prefs?.getBool('notificationsEnabled') ?? true;
   }
 
-  // 收藏课程
+  // Favorite courses
   Future<void> saveFavoriteCourses(List<String> courseIds) async {
     await _prefs?.setStringList('favoriteCourses', courseIds);
   }
@@ -158,7 +158,7 @@ class StorageService {
     return getFavoriteCourses().contains(courseId);
   }
 
-  // 清除所有数据
+  // Clear all data
   Future<void> clearAll() async {
     await _prefs?.clear();
   }

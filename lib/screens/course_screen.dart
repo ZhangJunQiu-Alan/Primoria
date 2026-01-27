@@ -3,7 +3,7 @@ import '../theme/theme.dart';
 import '../components/course/chapter_node.dart';
 import '../components/course/course_header.dart';
 
-/// 课程详情页 - Brilliant 风格学习路径
+/// Course detail page - Brilliant style learning path
 class CourseScreen extends StatelessWidget {
   final String? courseId;
   final String? title;
@@ -20,49 +20,49 @@ class CourseScreen extends StatelessWidget {
     this.icon,
   });
 
-  // 获取默认值
+  // Get default values
   String get _courseId => courseId ?? 'default';
-  String get _title => title ?? '逻辑思维入门';
-  String get _description => description ?? '学习基础逻辑推理';
+  String get _title => title ?? 'Intro to Logic';
+  String get _description => description ?? 'Learn basic logical reasoning';
   LinearGradient get _gradient => gradient ?? AppColors.logicGradient;
   IconData get _icon => icon ?? Icons.psychology;
 
   @override
   Widget build(BuildContext context) {
-    // 示例章节数据
+    // Sample chapter data
     final chapters = [
       ChapterData(
         id: '1',
-        title: '基础概念',
-        subtitle: '5 个课时',
+        title: 'Basic Concepts',
+        subtitle: '5 lessons',
         progress: 1.0,
         status: ChapterStatus.completed,
       ),
       ChapterData(
         id: '2',
-        title: '核心原理',
-        subtitle: '8 个课时',
+        title: 'Core Principles',
+        subtitle: '8 lessons',
         progress: 0.75,
         status: ChapterStatus.inProgress,
       ),
       ChapterData(
         id: '3',
-        title: '进阶应用',
-        subtitle: '6 个课时',
+        title: 'Advanced Application',
+        subtitle: '6 lessons',
         progress: 0.0,
         status: ChapterStatus.locked,
       ),
       ChapterData(
         id: '4',
-        title: '实战练习',
-        subtitle: '10 个课时',
+        title: 'Practice Exercises',
+        subtitle: '10 lessons',
         progress: 0.0,
         status: ChapterStatus.locked,
       ),
       ChapterData(
         id: '5',
-        title: '综合测试',
-        subtitle: '期末考核',
+        title: 'Final Assessment',
+        subtitle: 'Final Exam',
         progress: 0.0,
         status: ChapterStatus.locked,
       ),
@@ -72,7 +72,7 @@ class CourseScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: CustomScrollView(
         slivers: [
-          // 课程头部
+          // Course header
           SliverToBoxAdapter(
             child: CourseHeader(
               title: _title,
@@ -85,18 +85,18 @@ class CourseScreen extends StatelessWidget {
             ),
           ),
 
-          // 学习路径标题
+          // Learning path title
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Text(
-                '学习路径',
+                'Learning Path',
                 style: AppTypography.headline3,
               ),
             ),
           ),
 
-          // 章节列表 - 学习路径
+          // Chapter list - learning path
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             sliver: SliverList(
@@ -112,7 +112,7 @@ class CourseScreen extends StatelessWidget {
                     gradient: _gradient,
                     onTap: () {
                       if (chapter.status != ChapterStatus.locked) {
-                        // 跳转到章节详情
+                        // Navigate to chapter detail
                         _showChapterDetail(context, chapter);
                       }
                     },
@@ -123,7 +123,7 @@ class CourseScreen extends StatelessWidget {
             ),
           ),
 
-          // 底部间距
+          // Bottom spacing
           const SliverToBoxAdapter(
             child: SizedBox(height: AppSpacing.xxl),
           ),
@@ -145,7 +145,7 @@ class CourseScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 拖动指示器
+            // Drag indicator
             Center(
               child: Container(
                 width: 40,
@@ -169,29 +169,29 @@ class CourseScreen extends StatelessWidget {
             ),
             AppSpacing.verticalGapLg,
 
-            // 课时列表
-            _buildLessonItem('课时 1: 概念介绍', true),
-            _buildLessonItem('课时 2: 基础练习', true),
-            _buildLessonItem('课时 3: 深入理解', chapter.progress > 0.5),
-            _buildLessonItem('课时 4: 综合应用', false),
-            _buildLessonItem('课时 5: 章节测验', false),
+            // Lesson list
+            _buildLessonItem('Lesson 1: Introduction', true),
+            _buildLessonItem('Lesson 2: Basic Practice', true),
+            _buildLessonItem('Lesson 3: Deep Understanding', chapter.progress > 0.5),
+            _buildLessonItem('Lesson 4: Comprehensive Application', false),
+            _buildLessonItem('Lesson 5: Chapter Quiz', false),
 
             AppSpacing.verticalGapLg,
 
-            // 继续学习按钮
+            // Continue learning button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  // 跳转到课时
+                  // Navigate to lesson
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _gradient.colors.first,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 ),
                 child: Text(
-                  chapter.status == ChapterStatus.completed ? '复习本章' : '继续学习',
+                  chapter.status == ChapterStatus.completed ? 'Review Chapter' : 'Continue Learning',
                 ),
               ),
             ),

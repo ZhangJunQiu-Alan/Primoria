@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// 章节状态
+/// Chapter status
 enum ChapterStatus {
-  locked,     // 锁定
-  available,  // 可用
-  inProgress, // 进行中
-  completed,  // 已完成
+  locked,     // locked
+  available,  // available
+  inProgress, // in progress
+  completed,  // completed
 }
 
-/// 章节数据
+/// Chapter data
 class ChapterData {
   final String id;
   final String title;
@@ -26,7 +26,7 @@ class ChapterData {
   });
 }
 
-/// 章节节点组件 - 学习路径中的单个节点
+/// Chapter node component - a single node in the learning path
 class ChapterNode extends StatelessWidget {
   final ChapterData chapter;
   final int index;
@@ -53,14 +53,14 @@ class ChapterNode extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 左侧 - 连接线和节点
+          // Left side - connection line and node
           SizedBox(
             width: 60,
             child: Column(
               children: [
-                // 进度环节点
+                // Progress ring node
                 _buildNode(isLocked, isCompleted, isInProgress),
-                // 连接线
+                // Connection line
                 if (!isLast)
                   Expanded(
                     child: Container(
@@ -77,7 +77,7 @@ class ChapterNode extends StatelessWidget {
             ),
           ),
 
-          // 右侧 - 章节卡片
+          // Right side - chapter card
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(
@@ -201,7 +201,7 @@ class ChapterNode extends StatelessWidget {
                             borderRadius: AppRadius.borderRadiusSm,
                           ),
                           child: Text(
-                            '已完成',
+                            'Completed',
                             style: AppTypography.labelSmall.copyWith(
                               color: AppColors.success,
                               fontWeight: FontWeight.w600,
@@ -221,7 +221,7 @@ class ChapterNode extends StatelessWidget {
                             borderRadius: AppRadius.borderRadiusSm,
                           ),
                           child: Text(
-                            '学习中',
+                            'In Progress',
                             style: AppTypography.labelSmall.copyWith(
                               color: gradient.colors.first,
                               fontWeight: FontWeight.w600,

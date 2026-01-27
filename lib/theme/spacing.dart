@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Primoria 应用间距规范
+/// Primoria app spacing standards
 class AppSpacing {
   AppSpacing._();
 
-  // 基础间距
+  // Base spacing
   static const double xs = 4.0;
   static const double sm = 8.0;
   static const double md = 16.0;
@@ -12,47 +12,47 @@ class AppSpacing {
   static const double xl = 32.0;
   static const double xxl = 48.0;
 
-  // 常用 EdgeInsets
+  // Common EdgeInsets
   static const EdgeInsets paddingXs = EdgeInsets.all(xs);
   static const EdgeInsets paddingSm = EdgeInsets.all(sm);
   static const EdgeInsets paddingMd = EdgeInsets.all(md);
   static const EdgeInsets paddingLg = EdgeInsets.all(lg);
   static const EdgeInsets paddingXl = EdgeInsets.all(xl);
 
-  // 水平间距
+  // Horizontal spacing
   static const EdgeInsets horizontalSm = EdgeInsets.symmetric(horizontal: sm);
   static const EdgeInsets horizontalMd = EdgeInsets.symmetric(horizontal: md);
   static const EdgeInsets horizontalLg = EdgeInsets.symmetric(horizontal: lg);
 
-  // 垂直间距
+  // Vertical spacing
   static const EdgeInsets verticalSm = EdgeInsets.symmetric(vertical: sm);
   static const EdgeInsets verticalMd = EdgeInsets.symmetric(vertical: md);
   static const EdgeInsets verticalLg = EdgeInsets.symmetric(vertical: lg);
 
-  // 页面边距
+  // Page margins
   static const EdgeInsets screenPadding = EdgeInsets.symmetric(
     horizontal: md,
     vertical: lg,
   );
 
-  // 卡片内边距
+  // Card padding
   static const EdgeInsets cardPadding = EdgeInsets.all(md);
 
-  // 间距 SizedBox
+  // Gap SizedBox
   static const SizedBox gapXs = SizedBox(height: xs, width: xs);
   static const SizedBox gapSm = SizedBox(height: sm, width: sm);
   static const SizedBox gapMd = SizedBox(height: md, width: md);
   static const SizedBox gapLg = SizedBox(height: lg, width: lg);
   static const SizedBox gapXl = SizedBox(height: xl, width: xl);
 
-  // 垂直间距
+  // Vertical gaps
   static const SizedBox verticalGapXs = SizedBox(height: xs);
   static const SizedBox verticalGapSm = SizedBox(height: sm);
   static const SizedBox verticalGapMd = SizedBox(height: md);
   static const SizedBox verticalGapLg = SizedBox(height: lg);
   static const SizedBox verticalGapXl = SizedBox(height: xl);
 
-  // 水平间距
+  // Horizontal gaps
   static const SizedBox horizontalGapXs = SizedBox(width: xs);
   static const SizedBox horizontalGapSm = SizedBox(width: sm);
   static const SizedBox horizontalGapMd = SizedBox(width: md);
@@ -60,7 +60,7 @@ class AppSpacing {
   static const SizedBox horizontalGapXl = SizedBox(width: xl);
 }
 
-/// 圆角规范
+/// Border radius standards
 class AppRadius {
   AppRadius._();
 
@@ -79,7 +79,7 @@ class AppRadius {
   static const BorderRadius borderRadiusFull = BorderRadius.all(Radius.circular(full));
 }
 
-/// 阴影规范
+/// Shadow standards
 class AppShadows {
   AppShadows._();
 

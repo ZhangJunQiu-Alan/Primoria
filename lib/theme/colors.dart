@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-/// Primoria 应用颜色系统 (Brilliant 风格)
+/// Primoria app color system (Brilliant style)
 class AppColors {
   AppColors._();
 
-  // 主题色 - Brilliant 风格橙黄色
+  // Primary color - Brilliant style orange-yellow
   static const Color primary = Color(0xFFFF6B00);
   static const Color primaryLight = Color(0xFFFF9500);
   static const Color primaryDark = Color(0xFFE55A00);
 
-  // 强调色
+  // Accent color
   static const Color accent = Color(0xFFFFB800);
   static const Color accentLight = Color(0xFFFFD54F);
 
-  // 功能色
+  // Functional colors
   static const Color success = Color(0xFF00C853);
   static const Color successLight = Color(0xFF69F0AE);
   static const Color successDark = Color(0xFF00A844);
@@ -26,25 +26,25 @@ class AppColors {
   static const Color errorLight = Color(0xFFFF8A80);
   static const Color errorDark = Color(0xFFD32F2F);
 
-  // 课程分类颜色
-  static const Color courseMath = Color(0xFF5C6BC0);      // 数学 - 靛蓝
-  static const Color courseScience = Color(0xFF26A69A);   // 科学 - 青色
-  static const Color courseCS = Color(0xFF7E57C2);        // 计算机 - 紫色
-  static const Color courseLogic = Color(0xFFEF5350);     // 逻辑 - 红色
-  static const Color courseData = Color(0xFF42A5F5);      // 数据 - 蓝色
+  // Course category colors
+  static const Color courseMath = Color(0xFF5C6BC0);      // Math - Indigo
+  static const Color courseScience = Color(0xFF26A69A);   // Science - Teal
+  static const Color courseCS = Color(0xFF7E57C2);        // Computer - Purple
+  static const Color courseLogic = Color(0xFFEF5350);     // Logic - Red
+  static const Color courseData = Color(0xFF42A5F5);      // Data - Blue
 
-  // 深色主题背景
+  // Dark theme background
   static const Color backgroundDark = Color(0xFF1A1A2E);
   static const Color surfaceDark = Color(0xFF16213E);
   static const Color cardDark = Color(0xFF1F2940);
 
-  // 浅色主题背景
+  // Light theme background
   static const Color background = Color(0xFFF8F9FA);
   static const Color surface = Color(0xFFFFFFFF);
   static const Color surfaceVariant = Color(0xFFF5F5F5);
   static const Color card = Color(0xFFFFFFFF);
 
-  // 文字颜色
+  // Text colors
   static const Color textPrimary = Color(0xFF1A1A2E);
   static const Color textSecondary = Color(0xFF6B7280);
   static const Color textDisabled = Color(0xFFBDBDBD);
@@ -52,21 +52,21 @@ class AppColors {
   static const Color textOnDark = Color(0xFFFFFFFF);
   static const Color textSecondaryOnDark = Color(0xFFB0B0B0);
 
-  // 边框颜色
+  // Border colors
   static const Color border = Color(0xFFE5E7EB);
   static const Color borderLight = Color(0xFFF3F4F6);
   static const Color borderDark = Color(0xFF374151);
 
-  // 滑块组件颜色
+  // Slider component colors
   static const Color sliderTrack = Color(0xFFE0E0E0);
   static const Color sliderActive = Color(0xFFFF6B00);
   static const Color sliderThumb = Color(0xFFFF6B00);
 
-  // 连续天数火焰颜色
+  // Streak fire colors
   static const Color streakFire = Color(0xFFFF6B00);
   static const Color streakFireGlow = Color(0xFFFFB800);
 
-  // 渐变色
+  // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primary, primaryLight],
     begin: Alignment.topLeft,
@@ -85,7 +85,7 @@ class AppColors {
     end: Alignment.bottomCenter,
   );
 
-  // 课程卡片渐变
+  // Course card gradients
   static const LinearGradient mathGradient = LinearGradient(
     colors: [Color(0xFF5C6BC0), Color(0xFF3F51B5)],
     begin: Alignment.topLeft,

@@ -8,7 +8,7 @@ import '../models/unit_model.dart';
 import '../providers/user_provider.dart';
 import '../services/audio_service.dart';
 
-/// 课时/互动学习页 - Brilliant 风格
+/// Lesson/Interactive learning page - Brilliant style
 class LessonScreen extends StatefulWidget {
   final String? lessonId;
   final String? lessonTitle;
@@ -32,33 +32,33 @@ class _LessonScreenState extends State<LessonScreen> {
   final _inputController = TextEditingController();
   List<String> _sortingOrder = [];
 
-  // 彩带控制器
+  // Confetti controller
   late ConfettiController _confettiController;
 
-  // 音效服务
+  // Audio service
   final _audioService = AudioService.getInstance();
 
-  // 开始时间（用于计算学习时长）
+  // Start time (for calculating study duration)
   final DateTime _startTime = DateTime.now();
 
-  // 获取默认渐变色
+  // Get default gradient
   LinearGradient get _gradient =>
       widget.gradient ?? AppColors.mathGradient;
 
-  // 获取标题
-  String get _title => widget.lessonTitle ?? '互动学习';
+  // Get title
+  String get _title => widget.lessonTitle ?? 'Interactive Learning';
 
-  // 示例题目数据
+  // Sample question data
   final _questions = [
     _QuestionData(
       type: QuestionType.info,
-      title: '欢迎来到本课时',
-      content: '在这个课时中，你将学习如何通过互动方式理解和掌握知识。\n\n准备好了吗？让我们开始吧！',
+      title: 'Welcome to This Lesson',
+      content: 'In this lesson, you will learn how to understand and master knowledge through interactive methods.\n\nAre you ready? Let\'s begin!',
     ),
     _QuestionData(
       type: QuestionType.slider,
-      title: '调整温度',
-      content: '请将水温调整到适合泡绿茶的温度',
+      title: 'Adjust Temperature',
+      content: 'Please adjust the water temperature to the ideal temperature for brewing green tea',
       sliderConfig: const SliderConfig(
         min: 0,
         max: 100,
@@ -69,45 +69,45 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
       targetValue: 85,
       tolerance: 5,
-      successMsg: '太棒了！85°C 左右是泡绿茶的最佳温度。',
-      failMsgHigh: '温度太高了，会破坏茶叶中的营养成分。',
-      failMsgLow: '温度太低了，无法充分释放茶叶的香味。',
+      successMsg: 'Great! Around 85°C is the ideal temperature for brewing green tea.',
+      failMsgHigh: 'The temperature is too high, it will damage the nutrients in the tea leaves.',
+      failMsgLow: 'The temperature is too low, it cannot fully release the aroma of the tea.',
     ),
     _QuestionData(
       type: QuestionType.choice,
-      title: '选择正确答案',
-      content: '下列哪个选项是正确的逻辑推理？',
+      title: 'Choose the Correct Answer',
+      content: 'Which of the following is a valid logical reasoning?',
       options: [
-        '如果下雨，地面会湿。地面湿了，所以下雨了。',
-        '如果下雨，地面会湿。下雨了，所以地面会湿。',
-        '如果地面湿了，就会下雨。地面湿了，所以下雨了。',
-        '如果不下雨，地面不会湿。地面不湿，所以没下雨。',
+        'If it rains, the ground gets wet. The ground is wet, so it rained.',
+        'If it rains, the ground gets wet. It rained, so the ground is wet.',
+        'If the ground is wet, it will rain. The ground is wet, so it rained.',
+        'If it doesn\'t rain, the ground won\'t be wet. The ground is not wet, so it didn\'t rain.',
       ],
       correctIndex: 1,
-      successMsg: '正确！这是一个有效的肯定前件推理。',
-      failMsg: '这个推理存在逻辑谬误，请再想想。',
+      successMsg: 'Correct! This is a valid modus ponens reasoning.',
+      failMsg: 'This reasoning contains a logical fallacy, please think again.',
     ),
     _QuestionData(
       type: QuestionType.sorting,
-      title: '排序题',
-      content: '请按照从小到大的顺序排列以下数字：',
+      title: 'Sorting Question',
+      content: 'Please arrange the following numbers in ascending order:',
       sortingItems: ['42', '15', '8', '23', '31'],
       correctOrder: ['8', '15', '23', '31', '42'],
-      successMsg: '排序正确！',
-      failMsg: '顺序不对，请再试试。',
+      successMsg: 'Sorting correct!',
+      failMsg: 'The order is incorrect, please try again.',
     ),
     _QuestionData(
       type: QuestionType.input,
-      title: '计算题',
-      content: '如果一个正方形的边长是 5，那么它的面积是多少？',
+      title: 'Calculation',
+      content: 'If a square has a side length of 5, what is its area?',
       correctAnswer: '25',
-      successMsg: '完全正确！正方形面积 = 边长 × 边长 = 5 × 5 = 25',
-      failMsg: '答案不对，记住正方形面积 = 边长 × 边长',
+      successMsg: 'Absolutely correct! Square area = side × side = 5 × 5 = 25',
+      failMsg: 'Incorrect answer, remember: square area = side × side',
     ),
     _QuestionData(
       type: QuestionType.info,
-      title: '恭喜完成！',
-      content: '你已经完成了本课时的学习。\n\n继续保持，每天学习一点点，你会越来越棒！',
+      title: 'Congratulations!',
+      content: 'You have completed this lesson.\n\nKeep going, learn a little every day, and you\'ll get better and better!',
       isLast: true,
     ),
   ];
@@ -117,7 +117,7 @@ class _LessonScreenState extends State<LessonScreen> {
     super.initState();
     _confettiController = ConfettiController(duration: const Duration(seconds: 3));
 
-    // 初始化排序题的顺序
+    // Initialize sorting question order
     final sortingQuestion = _questions.firstWhere(
       (q) => q.type == QuestionType.sorting,
       orElse: () => _questions.first,
@@ -174,7 +174,7 @@ class _LessonScreenState extends State<LessonScreen> {
     if (isCorrect) {
       await _audioService.playCorrect();
 
-      // 记录完成题目
+      // Record completed question
       if (mounted) {
         context.read<UserProvider>().completeQuestion();
       }
@@ -208,7 +208,7 @@ class _LessonScreenState extends State<LessonScreen> {
         _selectedOption = null;
         _inputController.clear();
 
-        // 重置排序题顺序
+        // Reset sorting question order
         final nextQuestion = _questions[_currentIndex];
         if (nextQuestion.type == QuestionType.sorting &&
             nextQuestion.sortingItems != null) {
@@ -216,17 +216,17 @@ class _LessonScreenState extends State<LessonScreen> {
         }
       });
     } else {
-      // 完成课时 - 播放彩带和完成音效
+      // Lesson complete - play confetti and completion sound
       _confettiController.play();
       await _audioService.playComplete();
 
-      // 记录学习时长
+      // Record study duration
       final studyMinutes = DateTime.now().difference(_startTime).inMinutes;
       if (mounted && studyMinutes > 0) {
         await context.read<UserProvider>().recordStudy(studyMinutes);
       }
 
-      // 延迟一下让用户看到彩带效果
+      // Delay to let user see confetti effect
       await Future.delayed(const Duration(milliseconds: 1500));
 
       if (mounted) {
@@ -247,13 +247,13 @@ class _LessonScreenState extends State<LessonScreen> {
           SafeArea(
             child: Column(
               children: [
-                // 顶部栏
+                // Top bar
                 _buildHeader(isDark),
 
-                // 进度条
+                // Progress bar
                 _buildProgressBar(),
 
-                // 内容区域
+                // Content area
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(AppSpacing.lg),
@@ -261,13 +261,13 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
                 ),
 
-                // 底部按钮
+                // Bottom buttons
                 _buildBottomBar(question, isDark),
               ],
             ),
           ),
 
-          // 彩带效果
+          // Confetti effect
           Align(
             alignment: Alignment.topCenter,
             child: ConfettiWidget(
@@ -365,7 +365,7 @@ class _LessonScreenState extends State<LessonScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 标题
+        // Title
         Text(
           question.title,
           style: AppTypography.headline2.copyWith(
@@ -374,7 +374,7 @@ class _LessonScreenState extends State<LessonScreen> {
         ),
         const SizedBox(height: AppSpacing.md),
 
-        // 内容/题目
+        // Content/question
         Text(
           question.content,
           style: AppTypography.body1.copyWith(
@@ -384,7 +384,7 @@ class _LessonScreenState extends State<LessonScreen> {
         ),
         const SizedBox(height: AppSpacing.xl),
 
-        // 互动组件
+        // Interactive widget
         _buildInteractionWidget(question, isDark),
       ],
     );
@@ -536,7 +536,7 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
           textAlign: TextAlign.center,
           decoration: InputDecoration(
-            hintText: '输入答案',
+            hintText: 'Enter answer',
             hintStyle: AppTypography.headline2.copyWith(
               color: isDark
                   ? AppColors.textSecondaryOnDark
@@ -617,8 +617,8 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
           child: Text(
             isInfoPage
-                ? (question.isLast ? '完成课时' : '继续')
-                : '提交答案',
+                ? (question.isLast ? 'Complete Lesson' : 'Continue')
+                : 'Submit Answer',
           ),
         ),
       ),
@@ -629,12 +629,12 @@ class _LessonScreenState extends State<LessonScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('确定退出？'),
-        content: const Text('退出后当前进度将不会保存。'),
+        title: const Text('Exit?'),
+        content: const Text('Your current progress will not be saved.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -642,7 +642,7 @@ class _LessonScreenState extends State<LessonScreen> {
               Navigator.pop(context);
             },
             child: Text(
-              '退出',
+              'Exit',
               style: TextStyle(color: AppColors.error),
             ),
           ),

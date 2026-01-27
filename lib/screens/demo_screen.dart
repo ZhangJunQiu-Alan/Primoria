@@ -5,7 +5,7 @@ import '../components/feedback/feedback_dialog.dart';
 import '../models/unit_model.dart';
 import '../theme/theme.dart';
 
-/// 演示页面 - 展示滑块交互组件
+/// Demo screen - showcasing slider interaction component
 class DemoScreen extends StatefulWidget {
   const DemoScreen({super.key});
 
@@ -18,7 +18,7 @@ class _DemoScreenState extends State<DemoScreen> {
   int _currentIndex = 1;
   final int _totalCount = 5;
 
-  // 示例数据
+  // Sample data
   final _sliderConfig = const SliderConfig(
     min: 0,
     max: 100,
@@ -27,8 +27,8 @@ class _DemoScreenState extends State<DemoScreen> {
     unit: '°C',
     showValue: true,
     labels: SliderLabels(
-      minLabel: '冰冷',
-      maxLabel: '沸腾',
+      minLabel: 'Ice Cold',
+      maxLabel: 'Boiling',
     ),
   );
 
@@ -44,19 +44,19 @@ class _DemoScreenState extends State<DemoScreen> {
 
     if (isCorrect) {
       context.showSuccessFeedback(
-        title: '太棒了！',
-        message: '85°C 左右是泡绿茶的最佳温度。',
-        explanation: '绿茶中含有丰富的茶多酚，过高的水温会破坏这些营养成分。',
+        title: 'Awesome!',
+        message: 'Around 85°C is the optimal temperature for brewing green tea.',
+        explanation: 'Green tea is rich in tea polyphenols, and water that is too hot will destroy these nutrients.',
         onContinue: _nextQuestion,
       );
     } else {
       final isTooHigh = _currentValue > _targetValue + _tolerance;
       context.showFailureFeedback(
-        title: '再想想',
+        title: 'Try Again',
         message: isTooHigh
-            ? '温度太高了，会破坏茶叶中的营养成分。'
-            : '温度太低了，无法充分释放茶叶的香味。',
-        hintButtonText: '查看提示',
+            ? 'The temperature is too high, it will destroy the nutrients in the tea.'
+            : 'The temperature is too low to fully release the tea\'s aroma.',
+        hintButtonText: 'View Hint',
         onRetry: () {},
         onHint: _showHint,
       );
@@ -70,7 +70,7 @@ class _DemoScreenState extends State<DemoScreen> {
         _currentValue = 50;
       });
     } else {
-      // 完成所有题目
+      // Completed all questions
       _showCompletionDialog();
     }
   }
@@ -79,12 +79,12 @@ class _DemoScreenState extends State<DemoScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('提示'),
-        content: const Text('绿茶适合用 80-90°C 的水冲泡。'),
+        title: const Text('Hint'),
+        content: const Text('Green tea is best brewed with water at 80-90°C.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('知道了'),
+            child: const Text('Got it'),
           ),
         ],
       ),
@@ -95,8 +95,8 @@ class _DemoScreenState extends State<DemoScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('恭喜完成！'),
-        content: const Text('你已完成所有题目。'),
+        title: const Text('Congratulations!'),
+        content: const Text('You have completed all questions.'),
         actions: [
           TextButton(
             onPressed: () {
@@ -106,7 +106,7 @@ class _DemoScreenState extends State<DemoScreen> {
                 _currentValue = 50;
               });
             },
-            child: const Text('重新开始'),
+            child: const Text('Start Over'),
           ),
         ],
       ),
@@ -117,20 +117,20 @@ class _DemoScreenState extends State<DemoScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('确定退出？'),
-        content: const Text('退出后当前进度将不会保存。'),
+        title: const Text('Confirm Exit?'),
+        content: const Text('Your current progress will not be saved after exiting.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // 退出逻辑
+              // Exit logic
             },
             child: Text(
-              '退出',
+              'Exit',
               style: TextStyle(color: AppColors.error),
             ),
           ),
@@ -142,7 +142,7 @@ class _DemoScreenState extends State<DemoScreen> {
   @override
   Widget build(BuildContext context) {
     return GameContainer(
-      title: '调整水温',
+      title: 'Adjust Water Temperature',
       currentIndex: _currentIndex,
       totalCount: _totalCount,
       onSubmit: _onSubmit,
@@ -151,7 +151,7 @@ class _DemoScreenState extends State<DemoScreen> {
       isSubmitEnabled: true,
       content: InteractiveSlider(
         config: _sliderConfig,
-        description: '请将水温调整到适合泡茶的温度（摄氏度）',
+        description: 'Please adjust the water temperature to a suitable level for brewing tea (Celsius)',
         onChanged: _onSliderChanged,
         initialValue: _currentValue,
       ),

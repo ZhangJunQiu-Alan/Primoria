@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../theme/theme.dart';
 import '../providers/user_provider.dart';
 
-/// 登录页面
+/// Login page
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (success && mounted) {
-      // 登录成功，导航到主页
+      // Login successful, navigate to home
       Navigator.of(context).pushReplacementNamed('/home');
     }
   }
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: AppSpacing.lg),
 
-              // 标题
+              // Title
               Center(
                 child: Text(
                   'Primoria',
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: AppSpacing.sm),
               Center(
                 child: Text(
-                  _isLogin ? '欢迎回来' : '创建账号',
+                  _isLogin ? 'Welcome back' : 'Create account',
                   style: AppTypography.body1.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -107,22 +107,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: AppSpacing.xxl),
 
-              // 表单
+              // Form
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    // 名字（仅注册）
+                    // Name (register only)
                     if (!_isLogin) ...[
                       TextFormField(
                         controller: _nameController,
                         decoration: const InputDecoration(
-                          labelText: '昵称',
+                          labelText: 'Nickname',
                           prefixIcon: Icon(Icons.person_outline),
                         ),
                         validator: (value) {
                           if (!_isLogin && (value == null || value.isEmpty)) {
-                            return '请输入昵称';
+                            return 'Please enter a nickname';
                           }
                           return null;
                         },
@@ -130,32 +130,32 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppSpacing.md),
                     ],
 
-                    // 邮箱
+                    // Email
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                        labelText: '邮箱',
+                        labelText: 'Email',
                         prefixIcon: Icon(Icons.email_outlined),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return '请输入邮箱';
+                          return 'Please enter an email';
                         }
                         if (!value.contains('@')) {
-                          return '请输入有效的邮箱地址';
+                          return 'Please enter a valid email address';
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: AppSpacing.md),
 
-                    // 密码
+                    // Password
                     TextFormField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
                       decoration: InputDecoration(
-                        labelText: '密码',
+                        labelText: 'Password',
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -170,17 +170,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return '请输入密码';
+                          return 'Please enter a password';
                         }
                         if (value.length < 6) {
-                          return '密码至少6位';
+                          return 'Password must be at least 6 characters';
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: AppSpacing.lg),
 
-                    // 登录/注册按钮
+                    // Login/Register button
                     Consumer<UserProvider>(
                       builder: (context, userProvider, child) {
                         return SizedBox(
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: Colors.white,
                                     ),
                                   )
-                                : Text(_isLogin ? '登录' : '注册'),
+                                : Text(_isLogin ? 'Login' : 'Register'),
                           ),
                         );
                       },
@@ -211,32 +211,32 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: AppSpacing.lg),
 
-              // 切换登录/注册
+              // Switch login/register
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    _isLogin ? '还没有账号？' : '已有账号？',
+                    _isLogin ? 'Don\'t have an account?' : 'Already have an account?',
                     style: AppTypography.body2,
                   ),
                   TextButton(
                     onPressed: () {
                       setState(() => _isLogin = !_isLogin);
                     },
-                    child: Text(_isLogin ? '立即注册' : '去登录'),
+                    child: Text(_isLogin ? 'Register now' : 'Login'),
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.xl),
 
-              // 分割线
+              // Divider
               Row(
                 children: [
                   const Expanded(child: Divider()),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                     child: Text(
-                      '或',
+                      'or',
                       style: AppTypography.body2,
                     ),
                   ),
@@ -245,12 +245,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: AppSpacing.lg),
 
-              // 游客登录
+              // Guest login
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () {
-                    // 跳过登录，直接进入
+                    // Skip login, enter directly
                     Navigator.of(context).pushReplacementNamed('/home');
                   },
                   style: OutlinedButton.styleFrom(
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       vertical: AppSpacing.md,
                     ),
                   ),
-                  child: const Text('跳过，稍后登录'),
+                  child: const Text('Skip, login later'),
                 ),
               ),
             ],

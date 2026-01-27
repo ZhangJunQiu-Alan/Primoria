@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
 import '../services/audio_service.dart';
 
-/// 用户数据模型
+/// User data model
 class UserData {
   final String id;
   final String name;
@@ -45,14 +45,14 @@ class UserData {
   }
 }
 
-/// 用户状态管理
+/// User state management
 class UserProvider extends ChangeNotifier {
   StorageService? _storage;
   UserData? _user;
   bool _isLoggedIn = false;
   bool _isLoading = false;
 
-  // 学习统计
+  // Learning statistics
   int _streak = 0;
   int _longestStreak = 0;
   int _completedCourses = 0;
@@ -112,7 +112,7 @@ class UserProvider extends ChangeNotifier {
       final diff = now.difference(last).inDays;
 
       if (diff > 1) {
-        // 连续学习中断
+        // Learning streak interrupted
         _streak = 0;
         await _storage?.saveStreak(0);
       }
@@ -120,15 +120,15 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 登录
+  /// Login
   Future<bool> login(String email, String password) async {
     _isLoading = true;
     notifyListeners();
 
-    // 模拟登录请求
+    // Simulate login request
     await Future.delayed(const Duration(seconds: 1));
 
-    // 模拟成功登录
+    // Simulate successful login
     _user = UserData(
       id: 'user_${DateTime.now().millisecondsSinceEpoch}',
       name: email.split('@').first,
@@ -145,12 +145,12 @@ class UserProvider extends ChangeNotifier {
     return true;
   }
 
-  /// 注册
+  /// Register
   Future<bool> register(String name, String email, String password) async {
     _isLoading = true;
     notifyListeners();
 
-    // 模拟注册请求
+    // Simulate registration request
     await Future.delayed(const Duration(seconds: 1));
 
     _user = UserData(
@@ -169,7 +169,7 @@ class UserProvider extends ChangeNotifier {
     return true;
   }
 
-  /// 登出
+  /// Logout
   Future<void> logout() async {
     await _storage?.clearUser();
     _user = null;
@@ -177,12 +177,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 记录学习
+  /// Record study
   Future<void> recordStudy(int minutes) async {
     await _storage?.addStudyTime(minutes);
     _totalStudyMinutes += minutes;
 
-    // 更新连续学习天数
+    // Update learning streak
     final lastStudyDate = _storage?.getLastStudyDate();
     final now = DateTime.now();
 
@@ -204,20 +204,20 @@ class UserProvider extends ChangeNotifier {
     await _storage?.saveStreak(_streak);
     await AudioService.getInstance().playStreak();
 
-    // 检查成就
+    // Check achievements
     await _checkAchievements();
 
     notifyListeners();
   }
 
-  /// 完成题目
+  /// Complete question
   Future<void> completeQuestion() async {
     await _storage?.incrementCompletedQuestions();
     _completedQuestions++;
     notifyListeners();
   }
 
-  /// 完成课程
+  /// Complete course
   Future<void> completeCourse(String courseId) async {
     await _storage?.incrementCompletedCourses();
     _completedCourses++;
@@ -225,11 +225,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 检查并解锁成就
+  /// Check and unlock achievements
   Future<void> _checkAchievements() async {
     final newAchievements = <String>[];
 
-    // 连续学习成就
+    // Streak achievements
     if (_streak >= 7 && !_unlockedAchievements.contains('streak_7')) {
       newAchievements.add('streak_7');
     }
@@ -237,7 +237,7 @@ class UserProvider extends ChangeNotifier {
       newAchievements.add('streak_30');
     }
 
-    // 完成课程成就
+    // Course completion achievements
     if (_completedCourses >= 1 && !_unlockedAchievements.contains('first_course')) {
       newAchievements.add('first_course');
     }
@@ -245,7 +245,7 @@ class UserProvider extends ChangeNotifier {
       newAchievements.add('courses_10');
     }
 
-    // 完成题目成就
+    // Question completion achievements
     if (_completedQuestions >= 100 && !_unlockedAchievements.contains('questions_100')) {
       newAchievements.add('questions_100');
     }
@@ -257,7 +257,7 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  /// 升级 Pro
+  /// Upgrade to Pro
   Future<void> upgradeToPro() async {
     if (_user != null) {
       _user = UserData(
