@@ -1,0 +1,321 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../theme/theme.dart';
+
+/// 反馈类型
+enum FeedbackType { success, failure }
+
+/// 反馈弹窗组件
+class FeedbackDialog extends StatefulWidget {
+  final FeedbackType type;
+  final String title;
+  final String message;
+  final String? explanation;
+  final String primaryButtonText;
+  final String? secondaryButtonText;
+  final VoidCallback onPrimaryTap;
+  final VoidCallback? onSecondaryTap;
+  final bool showConfetti;
+
+  const FeedbackDialog({
+    super.key,
+    required this.type,
+    required this.title,
+    required this.message,
+    this.explanation,
+    required this.primaryButtonText,
+    this.secondaryButtonText,
+    required this.onPrimaryTap,
+    this.onSecondaryTap,
+    this.showConfetti = true,
+  });
+
+  /// 显示反馈弹窗
+  static Future<void> show(
+    BuildContext context, {
+    required FeedbackType type,
+    required String title,
+    required String message,
+    String? explanation,
+    required String primaryButtonText,
+    String? secondaryButtonText,
+    required VoidCallback onPrimaryTap,
+    VoidCallback? onSecondaryTap,
+    bool showConfetti = true,
+  }) {
+    return showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black54,
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FeedbackDialog(
+          type: type,
+          title: title,
+          message: message,
+          explanation: explanation,
+          primaryButtonText: primaryButtonText,
+          secondaryButtonText: secondaryButtonText,
+          onPrimaryTap: onPrimaryTap,
+          onSecondaryTap: onSecondaryTap,
+          showConfetti: showConfetti,
+        );
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.3),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutBack,
+          )),
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  State<FeedbackDialog> createState() => _FeedbackDialogState();
+}
+
+class _FeedbackDialogState extends State<FeedbackDialog>
+    with TickerProviderStateMixin {
+  late AnimationController _iconController;
+  late AnimationController _shakeController;
+  late Animation<double> _iconScale;
+  late Animation<double> _shakeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 图标动画
+    _iconController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _iconScale = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _iconController,
+        curve: Curves.elasticOut,
+      ),
+    );
+
+    // 抖动动画（失败时使用）
+    _shakeController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _shakeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _shakeController,
+        curve: Curves.elasticOut,
+      ),
+    );
+
+    // 触发动画和触觉反馈
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _iconController.forward();
+      if (widget.type == FeedbackType.success) {
+        HapticFeedback.mediumImpact();
+      } else {
+        _shakeController.forward();
+        HapticFeedback.heavyImpact();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _iconController.dispose();
+    _shakeController.dispose();
+    super.dispose();
+  }
+
+  Color get _primaryColor => widget.type == FeedbackType.success
+      ? AppColors.success
+      : AppColors.warning;
+
+  IconData get _iconData =>
+      widget.type == FeedbackType.success ? Icons.check_circle : Icons.cancel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: AnimatedBuilder(
+        animation: _shakeAnimation,
+        builder: (context, child) {
+          final shakeOffset = widget.type == FeedbackType.failure
+              ? (1 - _shakeAnimation.value) * 10 * _shakeWave(_shakeAnimation.value)
+              : 0.0;
+
+          return Transform.translate(
+            offset: Offset(shakeOffset, 0),
+            child: child,
+          );
+        },
+        child: Container(
+          margin: AppSpacing.horizontalLg,
+          constraints: const BoxConstraints(maxWidth: 340),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: AppRadius.borderRadiusXl,
+            boxShadow: AppShadows.lg,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 图标
+                ScaleTransition(
+                  scale: _iconScale,
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: _primaryColor.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      _iconData,
+                      size: 48,
+                      color: _primaryColor,
+                    ),
+                  ),
+                ),
+                AppSpacing.verticalGapLg,
+
+                // 标题
+                Text(
+                  widget.title,
+                  style: AppTypography.feedbackTitle,
+                  textAlign: TextAlign.center,
+                ),
+                AppSpacing.verticalGapMd,
+
+                // 消息
+                Text(
+                  widget.message,
+                  style: AppTypography.feedbackMessage,
+                  textAlign: TextAlign.center,
+                ),
+
+                // 解释说明
+                if (widget.explanation != null) ...[
+                  AppSpacing.verticalGapMd,
+                  Container(
+                    padding: AppSpacing.paddingMd,
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceVariant,
+                      borderRadius: AppRadius.borderRadiusMd,
+                    ),
+                    child: Text(
+                      widget.explanation!,
+                      style: AppTypography.body2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+                AppSpacing.verticalGapLg,
+
+                // 主按钮
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      widget.onPrimaryTap();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                    ),
+                    child: Text(widget.primaryButtonText),
+                  ),
+                ),
+
+                // 次按钮
+                if (widget.secondaryButtonText != null) ...[
+                  AppSpacing.verticalGapSm,
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        widget.onSecondaryTap?.call();
+                      },
+                      child: Text(
+                        widget.secondaryButtonText!,
+                        style: AppTypography.button.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 抖动波形函数
+  double _shakeWave(double t) {
+    return (1 - t) * (1 - t) * (2 * t - 1) * 8;
+  }
+}
+
+/// 成功反馈的便捷方法
+extension FeedbackDialogExtension on BuildContext {
+  /// 显示成功反馈
+  Future<void> showSuccessFeedback({
+    String title = '太棒了！',
+    required String message,
+    String? explanation,
+    String buttonText = '继续',
+    required VoidCallback onContinue,
+  }) {
+    return FeedbackDialog.show(
+      this,
+      type: FeedbackType.success,
+      title: title,
+      message: message,
+      explanation: explanation,
+      primaryButtonText: buttonText,
+      onPrimaryTap: onContinue,
+    );
+  }
+
+  /// 显示失败反馈
+  Future<void> showFailureFeedback({
+    String title = '再想想',
+    required String message,
+    String? explanation,
+    String retryButtonText = '重试',
+    String? hintButtonText,
+    required VoidCallback onRetry,
+    VoidCallback? onHint,
+  }) {
+    return FeedbackDialog.show(
+      this,
+      type: FeedbackType.failure,
+      title: title,
+      message: message,
+      explanation: explanation,
+      primaryButtonText: retryButtonText,
+      secondaryButtonText: hintButtonText,
+      onPrimaryTap: onRetry,
+      onSecondaryTap: onHint,
+    );
+  }
+}

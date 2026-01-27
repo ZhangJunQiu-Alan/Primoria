@@ -1,0 +1,50 @@
+name: primoria
+description: "Primoria - Interactive Learning App"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # 数据持久化
+  shared_preferences: ^2.2.2
+  sqflite: ^2.3.0
+  path: ^1.8.3
+
+  # 状态管理
+  provider: ^6.1.1
+
+  # 动画
+  lottie: ^3.1.0
+  confetti: ^0.7.0
+
+  # 音效
+  audioplayers: ^6.0.0
+
+  # 本地通知
+  flutter_local_notifications: ^17.0.0
+
+  # 工具
+  intl: ^0.19.0
+  uuid: ^4.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/data/
+    - assets/sounds/
+    - assets/animations/
