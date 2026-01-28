@@ -3,7 +3,7 @@
 Primoria is a two-part Flutter system for building and consuming interactive STEM courses.
 
 - **Builder**: a Flutter Web authoring tool to compose courses via drag-and-drop blocks and export JSON.
-- **Viewer**: a Flutter learning app inspired by Brilliant.org to consume course content and run interactive lessons.
+- **Viewer**: a Flutter Web learning experience inspired by Brilliant.org to consume course content and run interactive lessons.
 
 This repository contains both apps plus the shared course schema and product docs.
 
@@ -20,9 +20,9 @@ This repository contains both apps plus the shared course schema and product doc
         v
 [Course Schema (Course/Page/Block)]
         |
-        |  load/preview in app
+        |  load/preview in Website
         v
-[Viewer (Flutter App)]
+[Viewer (Flutter Website)]
 ```
 
 ### Key Concepts
@@ -36,7 +36,7 @@ This repository contains both apps plus the shared course schema and product doc
 ```
 Primoria/
 ├── Builder/                     # Course authoring app (Flutter Web)
-├── Viewer/                      # Learning app (Flutter)
+├── Viewer/                      # Learning app (Flutter Web)
 ├── STEM-Course-Builder-PRD.md   # Product requirements doc
 ├── todolist.md                  # Builder task tracking & progress
 └── README.md                    # This file
@@ -69,7 +69,7 @@ Primoria/
 3. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/primoria.git
+   git clone https://github.com/ZhangJunQiu-Alan/primoria.git
    cd primoria
    ```
 
@@ -89,30 +89,10 @@ Primoria/
    cd Builder
    flutter run -d chrome
 
-   # Viewer (Flutter)
+   # Viewer (Flutter Web)
    cd ../Viewer
-   flutter run
+   flutter run -d chrome
    ```
-
-### Platform-Specific Setup
-
-#### iOS (macOS only)
-
-```bash
-cd Viewer/ios
-pod install
-cd ..
-flutter run -d ios
-```
-
-#### Android
-
-Ensure you have Android Studio installed with an Android emulator configured, or connect a physical device with USB debugging enabled.
-
-```bash
-cd Viewer
-flutter run -d android
-```
 
 ## Builder Overview
 
@@ -122,12 +102,12 @@ flutter pub get
 flutter run -d chrome
 ```
 
-### Viewer (Flutter)
+### Viewer (Flutter Web)
 
 ```bash
 cd Viewer
 flutter pub get
-flutter run
+flutter run -d chrome
 ```
 
 **Key features:**
