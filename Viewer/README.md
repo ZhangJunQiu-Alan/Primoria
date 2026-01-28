@@ -1,50 +1,15 @@
 # Primoria
 
-Primoria is a two-part Flutter system for building and consuming interactive STEM courses.
-
-- **Builder**: a Flutter Web authoring tool to compose courses via drag-and-drop blocks and export JSON.
-- **Viewer**: a Flutter learning app inspired by Brilliant.org to consume course content and run interactive lessons.
-
-This repository contains both apps plus the shared course schema and product docs.
+An interactive learning application inspired by [Brilliant.org](https://brilliant.org/), built with Flutter. Primoria provides an engaging way to learn through interactive lessons, daily challenges, and gamified progress tracking.
 
 ## Screenshots
 
 <!-- Add screenshots here -->
 
-## System Architecture
-
-```
-[Builder (Flutter Web)]
-        |
-        |  export Course JSON
-        v
-[Course Schema (Course/Page/Block)]
-        |
-        |  load/preview in app
-        v
-[Viewer (Flutter App)]
-```
-
-### Key Concepts
-- **Course Schema**: `Course → Pages → Blocks`, with metadata + settings. Defined in Builder models and exported as JSON.
-- **Blocks**: `text`, `image`, `code-block`, `code-playground`, `multiple-choice` (plus planned types).
-- **Flow**: Builder creates → validates → exports JSON → Viewer renders and previews.
-- **Storage**: Builder uses local persistence (SharedPreferences) and supports JSON export for sharing.
-
-## Repository Layout
-
-```
-Primoria/
-├── Builder/                     # Course authoring app (Flutter Web)
-├── Viewer/                      # Learning app (Flutter)
-├── STEM-Course-Builder-PRD.md   # Product requirements doc
-├── todolist.md                  # Builder task tracking & progress
-└── README.md                    # This file
-```
-
 ## Environment Setup
 
 ### Prerequisites
+
 - **Flutter SDK**: 3.35.0 or higher
 - **Dart SDK**: 3.9.0 or higher
 - **IDE**: VS Code with Flutter extension or Android Studio with Flutter plugin
@@ -76,22 +41,17 @@ Primoria/
 4. **Install Dependencies**
 
    ```bash
-   cd Builder
-   flutter pub get
-   cd ../Viewer
    flutter pub get
    ```
 
-5. **Run the Apps**
+5. **Run the App**
 
    ```bash
-   # Builder (Flutter Web)
-   cd Builder
-   flutter run -d chrome
-
-   # Viewer (Flutter)
-   cd ../Viewer
+   # For debug mode
    flutter run
+
+   # For release mode
+   flutter run --release
    ```
 
 ### Platform-Specific Setup
@@ -99,7 +59,7 @@ Primoria/
 #### iOS (macOS only)
 
 ```bash
-cd Viewer/ios
+cd ios
 pod install
 cd ..
 flutter run -d ios
@@ -110,65 +70,10 @@ flutter run -d ios
 Ensure you have Android Studio installed with an Android emulator configured, or connect a physical device with USB debugging enabled.
 
 ```bash
-cd Viewer
 flutter run -d android
 ```
 
-## Builder Overview
-
-```bash
-cd Builder
-flutter pub get
-flutter run -d chrome
-```
-
-### Viewer (Flutter)
-
-```bash
-cd Viewer
-flutter pub get
-flutter run
-```
-
-**Key features:**
-- Drag-and-drop blocks onto a canvas
-- Block selection + property editing
-- Multi-page course editing
-- JSON export (Course schema)
-- Code playground (stubbed execution)
-
-**Primary paths:**
-```
-Builder/lib/
-├── features/builder/            # Builder UI
-├── features/viewer/             # In-app preview
-├── models/                      # Course schema
-├── providers/                   # Riverpod state
-├── services/                    # Export/storage/utils
-└── widgets/                     # Panels, canvas, blocks
-```
-
-## Viewer Overview
-
-**Key features (current):**
-- Home, search, courses, lesson, profile screens
-- Interactive components (sliders, feedback, animations)
-- Local persistence and basic services
-
-**Primary paths:**
-```
-Viewer/lib/
-├── components/                  # UI components
-├── models/                      # Data models
-├── providers/                   # State management
-├── screens/                     # App screens
-├── services/                    # App services
-└── theme/                       # Design system
-```
-
 ## Project Structure
-
-### Viewer Structure
 
 ```
 lib/
@@ -187,7 +92,7 @@ lib/
 └── theme/                    # App theming (colors, typography, etc.)
 ```
 
-## Dependencies (Viewer)
+## Dependencies
 
 | Package | Version | Purpose |
 |---------|---------|---------|
@@ -201,7 +106,7 @@ lib/
 | intl | ^0.19.0 | Internationalization |
 | uuid | ^4.2.1 | UUID generation |
 
-## Completed Features (Viewer)
+## Completed Features
 
 ### UI/UX Design
 - [x] Brilliant-style design system
@@ -242,13 +147,7 @@ lib/
 
 ## Roadmap / TODO
 
-### Builder
-- [ ] Import workflow
-- [ ] Block reorder/insert refinement
-- [ ] More block types
-- [ ] Robust schema validation
-
-### Viewer
+### Backend Integration
 - [ ] RESTful API integration
 - [ ] User authentication with JWT
 - [ ] Cloud data synchronization
@@ -298,13 +197,13 @@ lib/
 
 ## Contributing
 
-Contributions are welcome. Open issues or submit PRs with clear descriptions.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-See `Viewer/LICENSE` for the current license file.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Design inspiration: Brilliant.org
-- Built with Flutter
+- Design inspired by [Brilliant.org](https://brilliant.org/)
+- Built with [Flutter](https://flutter.dev/)
