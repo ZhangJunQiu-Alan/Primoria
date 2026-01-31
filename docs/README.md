@@ -25,6 +25,12 @@ This repository contains both apps plus the shared course schema and product doc
 [Viewer (Flutter Website)]
 ```
 
+## Backend (Recommended)
+
+For accounts, cloud course saving/publishing, and search/recommendation with low ops, use **Supabase (Postgres)**.
+
+- See `docs/backend_supabase.md`
+
 ### Key Concepts
 - **Course Schema**: `Course → Pages → Blocks`, with metadata + settings. Defined in Builder models and exported as JSON.
 - **Blocks**: `text`, `image`, `code-block`, `code-playground`, `multiple-choice` (plus planned types).

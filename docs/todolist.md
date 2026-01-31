@@ -124,12 +124,12 @@
     - [x] 关键组件（按钮、面板、模块）使用 tokens 替代硬编码。
   - 验收：UI 颜色/间距来源统一且可集中调整。
 
-- [ ] 14. MVP 验收清单与内部测试
+- [x] 14. MVP 验收清单与内部测试
   - 背景：PRD Week 11-12 需要打磨与测试。
   - 技术任务：
-    - [ ] 编写“Builder MVP 手工测试清单”（拖拽、编辑、导出、导入、预览）。
-    - [ ] 补充关键 widget / model 测试（序列化、导入导出）。
-    - [ ] 性能与稳定性自检（大课程渲染、频繁拖拽）。
+    - [x] 编写"Builder MVP 手工测试清单"（拖拽、编辑、导出、导入、预览）。
+    - [x] 补充关键 widget / model 测试（序列化、导入导出）。
+    - [x] 性能与稳定性自检（大课程渲染、频繁拖拽）。
     - [x] 修复 `flutter test` 环境（`dart:html` 条件导入）。
     - [x] 新增 Builder smoke test 并通过。
   - 验收：清单全部通过并记录问题清单。
@@ -149,6 +149,66 @@
 
 # 当前待补/注意
 
-- [ ] 画布渲染尚未按 `position.order` 排序。
-- [ ] Code Playground 输入内容未写回 block content。
+- [x] 画布渲染尚未按 `position.order` 排序。
+- [x] Code Playground 输入内容未写回 block content。
 - [ ] Builder 端文本块未启用 Markdown 渲染（预览端已支持）。
+
+---
+
+# Phase 2 功能（2025-01-31 完成）
+
+- [x] 15. UI 国际化（英文化）
+  - [x] 所有界面文字改为英文（Preview, Import, Export, Save, Publish, Pages 等）。
+  - [x] 对话框文案英文化（Edit course title, Edit page title 等）。
+  - 验收：界面语言统一为英文。
+
+- [x] 16. 课程导入功能
+  - 技术任务：
+    - [x] 实现 `CourseImport` 服务（`course_import.dart`）。
+    - [x] 实现跨平台文件选择器（`file_picker.dart` + 条件导入）。
+    - [x] 支持 JSON 文件验证（必需字段检查）。
+    - [x] Builder 顶栏增加 Import 按钮。
+  - 验收：可从本地 JSON 文件导入课程并加载到编辑器。
+
+- [x] 17. AI 课程生成功能（Gemini API）
+  - 技术任务：
+    - [x] 实现 `AICourseGenerator` 服务（调用 Gemini API）。
+    - [x] 支持从 PDF 文件提取内容并生成课程 JSON。
+    - [x] 实现 `AIGenerateDialog` 对话框 UI。
+    - [x] Builder 顶栏增加 "AI Generate" 按钮。
+    - [x] 支持 API Key 配置。
+  - 验收：上传 PDF 后可自动生成课程结构。
+
+- [x] 18. Supabase 后端集成
+  - 技术任务：
+    - [x] 实现 `SupabaseService`（认证 + 课程存储 + 发布）。
+    - [x] 用户认证：邮箱注册/登录/登出/重置密码。
+    - [x] 云端保存：课程保存到 Supabase（courses + course_versions 表）。
+    - [x] 课程发布：publish_course RPC 调用。
+    - [x] 实现 `AuthDialog` 登录/注册对话框。
+    - [x] 实现 `ProfileDialog` 用户资料对话框。
+    - [x] Builder 顶栏增加 Save（云端）和 Publish 按钮。
+    - [x] 用户头像可点击登录/登出。
+  - 验收：用户可注册/登录，课程可保存到云端并发布。
+
+- [x] 19. 数据库设计与迁移
+  - 技术任务：
+    - [x] 设计 PostgreSQL 数据模型（profiles, courses, course_versions, user_course_progress, user_course_favorites）。
+    - [x] 实现 RLS 权限策略（作者可编辑，所有人可读 published）。
+    - [x] 实现全文搜索（tsvector + GIN 索引）。
+    - [x] 编写 SQL migration 文件（`supabase/migrations/`）。
+    - [x] 编写后端文档（`docs/backend_supabase.md`）。
+  - 验收：Supabase 数据库结构完整，支持课程 CRUD 和搜索。
+
+- [x] 20. 主题改进（STEM 科技感设计）
+  - 技术任务：
+    - [x] 更新 `design_tokens.dart`（新增 secondary 电子绿、accent 活力橙色系）。
+    - [x] 更新 `theme.dart`（STEM 科技感 + 明亮清新 + 现代感 + 教育友好）。
+    - [x] 完善 ColorScheme（primary/secondary/tertiary）。
+    - [x] 优化按钮、输入框、卡片等组件样式。
+  - 验收：UI 风格统一，符合 STEM 教育产品定位。
+
+- [x] 21. 响应式布局改进
+  - [x] AppBar leading 在窄屏时自动隐藏。
+  - [x] 按钮布局适配不同屏幕宽度。
+  - 验收：窄屏下界面仍可正常使用。

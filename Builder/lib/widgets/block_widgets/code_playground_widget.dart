@@ -58,7 +58,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
     setState(() {
       _isRunning = false;
       _hasRun = true;
-      _output = result.success ? result.output : (result.error ?? '运行错误');
+      _output = result.success ? result.output : (result.error ?? 'Run error');
     });
   }
 
@@ -145,7 +145,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                                     size: 14, color: Colors.white),
                               const SizedBox(width: 4),
                               Text(
-                                _isRunning ? '运行中...' : '运行',
+                                _isRunning ? 'Running...' : 'Run',
                                 style: const TextStyle(
                                   fontSize: AppFontSize.xs,
                                   color: Colors.white,
@@ -177,7 +177,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                     filled: true,
                     fillColor: AppColors.neutral800,
                     contentPadding: EdgeInsets.zero,
-                    hintText: '# 在此输入代码',
+                    hintText: '# Enter code here',
                     hintStyle: const TextStyle(
                       color: AppColors.neutral500,
                       fontFamily: 'monospace',
@@ -210,7 +210,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                         size: 14, color: AppColors.neutral500),
                     const SizedBox(width: AppSpacing.xs),
                     const Text(
-                      '输出',
+                      'Output',
                       style: TextStyle(
                         fontSize: AppFontSize.xs,
                         fontWeight: FontWeight.w500,
@@ -245,8 +245,8 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                             const SizedBox(width: 2),
                             Text(
                               _output == widget.content.expectedOutput
-                                  ? '正确'
-                                  : '再试试',
+                                  ? 'Correct'
+                                  : 'Try again',
                               style: const TextStyle(
                                 fontSize: AppFontSize.xs,
                                 color: Colors.white,
@@ -281,7 +281,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
               const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: Text(
-                  '提示: ${widget.content.hints.first}',
+                  'Hint: ${widget.content.hints.first}',
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
                     color: AppColors.neutral500,

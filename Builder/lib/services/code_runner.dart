@@ -28,7 +28,7 @@ class CodeRunner {
 
       return const CodeRunResult(
         success: true,
-        output: '(无输出)',
+        output: '(no output)',
       );
     }
 

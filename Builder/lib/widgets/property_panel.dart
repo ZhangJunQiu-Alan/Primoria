@@ -37,7 +37,7 @@ class PropertyPanel extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: const Text(
-            '属性',
+            'Properties',
             style: TextStyle(
               fontSize: AppFontSize.md,
               fontWeight: FontWeight.w600,
@@ -74,7 +74,7 @@ class PropertyPanel extends ConsumerWidget {
             ),
             SizedBox(height: AppSpacing.md),
             Text(
-              '点击画布中的模块\n查看和编辑属性',
+              'Click a block on the canvas\nto view and edit its properties',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: AppFontSize.sm,
@@ -118,7 +118,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
       children: [
         // 模块信息
         _PropertySection(
-          title: '模块信息',
+          title: 'Block',
           children: [
             Row(
               children: [
@@ -149,10 +149,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
 
         // 样式设置
         _PropertySection(
-          title: '样式设置',
+          title: 'Style',
           children: [
             _PropertyField(
-              label: '对齐',
+              label: 'Align',
               child: SegmentedButton<String>(
                 segments: const [
                   ButtonSegment(value: 'left', icon: Icon(Icons.format_align_left, size: 16)),
@@ -170,7 +170,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
             ),
             const SizedBox(height: AppSpacing.sm),
             _PropertyField(
-              label: '间距',
+              label: 'Spacing',
               child: DropdownButtonFormField<String>(
                 initialValue: widget.block.style.spacing,
                 decoration: const InputDecoration(
@@ -181,11 +181,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                   ),
                 ),
                 items: const [
-                  DropdownMenuItem(value: 'xs', child: Text('极小')),
-                  DropdownMenuItem(value: 'sm', child: Text('小')),
-                  DropdownMenuItem(value: 'md', child: Text('中')),
-                  DropdownMenuItem(value: 'lg', child: Text('大')),
-                  DropdownMenuItem(value: 'xl', child: Text('极大')),
+                  DropdownMenuItem(value: 'xs', child: Text('Extra small')),
+                  DropdownMenuItem(value: 'sm', child: Text('Small')),
+                  DropdownMenuItem(value: 'md', child: Text('Medium')),
+                  DropdownMenuItem(value: 'lg', child: Text('Large')),
+                  DropdownMenuItem(value: 'xl', child: Text('Extra large')),
                 ],
                 onChanged: (value) {
                   if (value != null) {
@@ -227,13 +227,13 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildTextEditor() {
     final content = widget.block.content as TextContent;
     return _PropertySection(
-      title: '文本内容',
+      title: 'Text',
       children: [
         TextFormField(
           initialValue: content.value,
           maxLines: 5,
           decoration: const InputDecoration(
-            hintText: '输入文本内容...',
+            hintText: 'Enter text...',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -250,12 +250,12 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildImageEditor() {
     final content = widget.block.content as ImageContent;
     return _PropertySection(
-      title: '图片设置',
+      title: 'Image',
       children: [
         TextFormField(
           initialValue: content.url,
           decoration: const InputDecoration(
-            labelText: '图片 URL',
+            labelText: 'Image URL',
             hintText: 'https://...',
             border: OutlineInputBorder(),
           ),
@@ -270,7 +270,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         TextFormField(
           initialValue: content.caption ?? '',
           decoration: const InputDecoration(
-            labelText: '图片说明',
+            labelText: 'Caption',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -287,12 +287,12 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildCodeBlockEditor() {
     final content = widget.block.content as CodeBlockContent;
     return _PropertySection(
-      title: '代码设置',
+      title: 'Code Block',
       children: [
         DropdownButtonFormField<String>(
           initialValue: content.language,
           decoration: const InputDecoration(
-            labelText: '语言',
+            labelText: 'Language',
             border: OutlineInputBorder(),
           ),
           items: const [
@@ -317,7 +317,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           maxLines: 8,
           style: const TextStyle(fontFamily: 'monospace', fontSize: AppFontSize.sm),
           decoration: const InputDecoration(
-            labelText: '代码',
+            labelText: 'Code',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -334,14 +334,14 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildCodePlaygroundEditor() {
     final content = widget.block.content as CodePlaygroundContent;
     return _PropertySection(
-      title: '代码运行设置',
+      title: 'Code Playground',
       children: [
         TextFormField(
           initialValue: content.initialCode,
           maxLines: 8,
           style: const TextStyle(fontFamily: 'monospace', fontSize: AppFontSize.sm),
           decoration: const InputDecoration(
-            labelText: '初始代码',
+            labelText: 'Starter code',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -361,7 +361,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         TextFormField(
           initialValue: content.expectedOutput ?? '',
           decoration: const InputDecoration(
-            labelText: '预期输出',
+            labelText: 'Expected output',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -384,12 +384,12 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildMultipleChoiceEditor() {
     final content = widget.block.content as MultipleChoiceContent;
     return _PropertySection(
-      title: '选择题设置',
+      title: 'Multiple Choice',
       children: [
         TextFormField(
           initialValue: content.question,
           decoration: const InputDecoration(
-            labelText: '问题',
+            labelText: 'Question',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -407,7 +407,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         ),
         const SizedBox(height: AppSpacing.md),
         const Text(
-          '选项（选中正确答案）',
+          'Options (select the correct answer)',
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -445,7 +445,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                   child: TextFormField(
                     initialValue: option.text,
                     decoration: InputDecoration(
-                      labelText: '选项 ${String.fromCharCode(65 + index)}',
+                      labelText: 'Option ${String.fromCharCode(65 + index)}',
                       isDense: true,
                     ),
                     onChanged: (value) {
@@ -472,7 +472,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         TextFormField(
           initialValue: content.explanation ?? '',
           decoration: const InputDecoration(
-            labelText: '答案解释',
+            labelText: 'Explanation',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {

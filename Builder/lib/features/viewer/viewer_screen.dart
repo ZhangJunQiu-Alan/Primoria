@@ -22,7 +22,7 @@ class ViewerScreen extends ConsumerWidget {
       length: pages.isEmpty ? 1 : pages.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(course.metadata.title.isEmpty ? '课程预览' : course.metadata.title),
+          title: Text(course.metadata.title.isEmpty ? 'Course Preview' : course.metadata.title),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => context.go('/builder'),
@@ -34,7 +34,7 @@ class ViewerScreen extends ConsumerWidget {
                   tabs: pages
                       .asMap()
                       .entries
-                      .map((entry) => Tab(text: '第 ${entry.key + 1} 页'))
+                      .map((entry) => Tab(text: 'Page ${entry.key + 1}'))
                       .toList(),
                 ),
         ),
@@ -59,7 +59,7 @@ class ViewerScreen extends ConsumerWidget {
           ),
           SizedBox(height: AppSpacing.lg),
           Text(
-            '课程预览',
+            'Course Preview',
             style: TextStyle(
               fontSize: AppFontSize.xxl,
               fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class ViewerScreen extends ConsumerWidget {
           ),
           SizedBox(height: AppSpacing.sm),
           Text(
-            '暂无课程内容，请先在 Builder 中创建',
+            'No course content yet. Create one in Builder first.',
             style: TextStyle(
               fontSize: AppFontSize.md,
               color: AppColors.neutral500,
@@ -94,7 +94,7 @@ class ViewerScreen extends ConsumerWidget {
         const SizedBox(height: AppSpacing.lg),
         if (page.blocks.isEmpty)
           const Text(
-            '该页面暂无内容',
+            'This page is empty.',
             style: TextStyle(
               fontSize: AppFontSize.sm,
               color: AppColors.neutral500,

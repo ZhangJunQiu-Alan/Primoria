@@ -77,7 +77,7 @@ class ApiService {
 
     return const ApiResponse(
       success: true,
-      message: '保存成功（模拟）',
+      message: 'Saved (mock)',
     );
   }
 
@@ -88,7 +88,7 @@ class ApiService {
 
     return const ApiResponse(
       success: false,
-      message: '功能即将推出',
+      message: 'Coming soon',
     );
   }
 }

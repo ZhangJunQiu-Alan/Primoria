@@ -2,13 +2,13 @@
 /// 对应 PRD 3.2 基础模块类型
 
 enum BlockType {
-  text('text', '文本', 'Aa'),
-  image('image', '图片', '🖼'),
-  codeBlock('code-block', '代码块', '</>'),
-  codePlayground('code-playground', '代码运行', '▶'),
-  multipleChoice('multiple-choice', '选择题', '✓'),
-  fillBlank('fill-blank', '填空题', '___'),
-  video('video', '视频', '🎬');
+  text('text', 'Text', 'Aa'),
+  image('image', 'Image', '🖼'),
+  codeBlock('code-block', 'Code Block', '</>'),
+  codePlayground('code-playground', 'Code Playground', '▶'),
+  multipleChoice('multiple-choice', 'Multiple Choice', '✓'),
+  fillBlank('fill-blank', 'Fill in the Blank', '___'),
+  video('video', 'Video', '🎬');
 
   final String value;
   final String label;

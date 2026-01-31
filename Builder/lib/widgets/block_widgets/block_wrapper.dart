@@ -10,6 +10,7 @@ class BlockWrapper extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final ValueChanged<Block>? onBlockUpdated;
 
   const BlockWrapper({
     super.key,
@@ -17,6 +18,7 @@ class BlockWrapper extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
     required this.onDelete,
+    this.onBlockUpdated,
   });
 
   @override
@@ -135,7 +137,20 @@ class BlockWrapper extends StatelessWidget {
         return _CodeBlockContent(content: block.content as CodeBlockContent);
       case BlockType.codePlayground:
         return CodePlaygroundWidget(
-            content: block.content as CodePlaygroundContent);
+          content: block.content as CodePlaygroundContent,
+          onCodeChanged: (newCode) {
+            if (onBlockUpdated != null) {
+              final updatedContent = CodePlaygroundContent(
+                language: (block.content as CodePlaygroundContent).language,
+                initialCode: newCode,
+                expectedOutput: (block.content as CodePlaygroundContent).expectedOutput,
+                hints: (block.content as CodePlaygroundContent).hints,
+                runnable: (block.content as CodePlaygroundContent).runnable,
+              );
+              onBlockUpdated!(block.copyWith(content: updatedContent));
+            }
+          },
+        );
       case BlockType.multipleChoice:
         return _MultipleChoiceContent(
             content: block.content as MultipleChoiceContent);
@@ -200,7 +215,7 @@ class _TextBlockContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      content.value.isEmpty ? '点击编辑文本...' : content.value,
+      content.value.isEmpty ? 'Click to edit text...' : content.value,
       textAlign: textAlign,
       style: TextStyle(
         fontSize: AppFontSize.md,
@@ -234,7 +249,7 @@ class _ImageBlockContent extends StatelessWidget {
               Icon(Icons.add_photo_alternate, size: 32, color: AppColors.neutral400),
               SizedBox(height: AppSpacing.xs),
               Text(
-                '点击添加图片',
+                'Click to add an image',
                 style: TextStyle(fontSize: AppFontSize.sm, color: AppColors.neutral400),
               ),
             ],
@@ -322,7 +337,7 @@ class _MultipleChoiceContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          content.question.isEmpty ? '在此输入问题' : content.question,
+          content.question.isEmpty ? 'Enter a question' : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
             fontWeight: FontWeight.w500,
@@ -384,7 +399,7 @@ class _FillBlankContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          content.question.isEmpty ? '在此输入填空题' : content.question,
+          content.question.isEmpty ? 'Enter a fill-in-the-blank question' : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
             color: content.question.isEmpty
@@ -403,7 +418,7 @@ class _FillBlankContent extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
           ),
           child: const Text(
-            '答案输入区',
+            'Answer input',
             style: TextStyle(
               fontSize: AppFontSize.sm,
               color: AppColors.neutral400,
@@ -437,7 +452,7 @@ class _VideoBlockContent extends StatelessWidget {
                 size: 48, color: AppColors.neutral400),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              content.url.isEmpty ? '点击添加视频' : content.title ?? '视频',
+              content.url.isEmpty ? 'Click to add a video' : content.title ?? 'Video',
               style: const TextStyle(
                 fontSize: AppFontSize.sm,
                 color: AppColors.neutral400,

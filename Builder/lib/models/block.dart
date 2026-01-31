@@ -356,32 +356,32 @@ class Block {
   }
 
   static BlockContent _getDefaultContent(BlockType type) {
-    switch (type) {
-      case BlockType.text:
-        return const TextContent(value: '在此输入文本内容...');
-      case BlockType.image:
-        return const ImageContent();
-      case BlockType.codeBlock:
-        return const CodeBlockContent(code: '# 在此输入代码');
-      case BlockType.codePlayground:
-        return const CodePlaygroundContent(
-          initialCode: '# 编写你的 Python 代码\nprint("Hello, World!")',
-        );
-      case BlockType.multipleChoice:
-        return MultipleChoiceContent(
-          question: '在此输入问题',
+      switch (type) {
+        case BlockType.text:
+        return const TextContent(value: 'Enter text here...');
+        case BlockType.image:
+          return const ImageContent();
+        case BlockType.codeBlock:
+        return const CodeBlockContent(code: '# Enter code here');
+        case BlockType.codePlayground:
+          return const CodePlaygroundContent(
+          initialCode: '# Write your Python code\nprint("Hello, World!")',
+          );
+        case BlockType.multipleChoice:
+          return MultipleChoiceContent(
+          question: 'Enter a question',
           options: [
-            const ChoiceOption(id: 'a', text: '选项 A'),
-            const ChoiceOption(id: 'b', text: '选项 B'),
-            const ChoiceOption(id: 'c', text: '选项 C'),
+            const ChoiceOption(id: 'a', text: 'Option A'),
+            const ChoiceOption(id: 'b', text: 'Option B'),
+            const ChoiceOption(id: 'c', text: 'Option C'),
           ],
           correctAnswer: 'a',
         );
-      case BlockType.fillBlank:
-        return const FillBlankContent(question: '在此输入填空题');
-      case BlockType.video:
-        return const VideoContent();
-    }
+        case BlockType.fillBlank:
+        return const FillBlankContent(question: 'Enter a fill-in-the-blank question');
+        case BlockType.video:
+          return const VideoContent();
+      }
   }
 
   factory Block.fromJson(Map<String, dynamic> json) {
