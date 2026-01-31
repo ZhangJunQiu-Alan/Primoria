@@ -52,9 +52,13 @@ class BuilderCanvas extends ConsumerWidget {
     List<Block> blocks,
     BuilderState builderState,
   ) {
+    // 按 position.order 排序
+    final sortedBlocks = List<Block>.from(blocks)
+      ..sort((a, b) => a.position.order.compareTo(b.position.order));
+
     return ReorderableListView.builder(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      itemCount: blocks.length,
+      itemCount: sortedBlocks.length,
       onReorder: (oldIndex, newIndex) {
         if (newIndex > oldIndex) newIndex--;
         ref.read(courseProvider.notifier).reorderBlocks(
@@ -65,7 +69,7 @@ class BuilderCanvas extends ConsumerWidget {
         ref.read(builderStateProvider.notifier).markAsUnsaved();
       },
       itemBuilder: (context, index) {
-        final block = blocks[index];
+        final block = sortedBlocks[index];
         final isSelected = builderState.selectedBlockId == block.id;
 
         return BlockWrapper(
@@ -81,6 +85,13 @@ class BuilderCanvas extends ConsumerWidget {
               block.id,
             );
             ref.read(builderStateProvider.notifier).clearSelection();
+            ref.read(builderStateProvider.notifier).markAsUnsaved();
+          },
+          onBlockUpdated: (updatedBlock) {
+            ref.read(courseProvider.notifier).updateBlock(
+              builderState.currentPageIndex,
+              updatedBlock,
+            );
             ref.read(builderStateProvider.notifier).markAsUnsaved();
           },
         );
@@ -107,7 +118,7 @@ class BuilderCanvas extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg),
           Text(
-            isDragOver ? '放开以添加模块' : '从左侧拖拽模块到这里',
+            isDragOver ? 'Drop to add block' : 'Drag blocks here from the left',
             style: TextStyle(
               fontSize: AppFontSize.md,
               fontWeight: FontWeight.w500,
@@ -116,7 +127,7 @@ class BuilderCanvas extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           const Text(
-            '开始构建你的交互式课程',
+            'Start building your interactive course',
             style: TextStyle(
               fontSize: AppFontSize.sm,
               color: AppColors.neutral400,

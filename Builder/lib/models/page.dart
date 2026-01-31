@@ -14,7 +14,7 @@ class CoursePage {
   });
 
   /// 创建默认空页面
-  factory CoursePage.create({String title = '新页面'}) {
+  factory CoursePage.create({String title = 'New Page'}) {
     return CoursePage(
       pageId: IdGenerator.pageId(),
       title: title,

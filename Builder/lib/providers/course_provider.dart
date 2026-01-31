@@ -56,7 +56,7 @@ class CourseNotifier extends StateNotifier<Course> {
 
   /// 添加新页面
   void addPage({String? title}) {
-    final pageTitle = title ?? '第 ${state.pages.length + 1} 页';
+    final pageTitle = title ?? 'Page ${state.pages.length + 1}';
     state = state.addPage(CoursePage.create(title: pageTitle));
   }
 
@@ -76,7 +76,7 @@ class CourseNotifier extends StateNotifier<Course> {
 
     // 创建副本，生成新 ID
     final duplicatedPage = CoursePage.create(
-      title: '${page.title} (副本)',
+      title: '${page.title} (Copy)',
     ).copyWith(
       blocks: page.blocks.map((block) => block.copyWith(
         id: IdGenerator.generate(),
@@ -104,7 +104,7 @@ class CourseNotifier extends StateNotifier<Course> {
   }
 
   /// 创建新课程
-  void createNewCourse({String title = '未命名课程'}) {
+  void createNewCourse({String title = 'Untitled Course'}) {
     state = Course.create(title: title);
   }
 }

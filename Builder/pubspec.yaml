@@ -21,6 +21,10 @@ dependencies:
   # 工具
   uuid: ^4.2.1
   shared_preferences: ^2.2.2
+  http: ^1.2.0
+
+  # Supabase
+  supabase_flutter: ^2.8.0
 
   # Markdown 渲染
   flutter_markdown: ^0.6.18

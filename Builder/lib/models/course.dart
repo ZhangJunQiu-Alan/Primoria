@@ -49,14 +49,14 @@ class CourseMetadata {
   });
 
   factory CourseMetadata.create({
-    String title = '未命名课程',
+    String title = 'Untitled Course',
     String description = '',
   }) {
     final now = DateTime.now();
     return CourseMetadata(
       title: title,
       description: description,
-      author: const CourseAuthor(userId: 'local', displayName: '本地用户'),
+      author: const CourseAuthor(userId: 'local', displayName: 'Local user'),
       tags: [],
       difficulty: 'beginner',
       estimatedMinutes: 0,
@@ -171,12 +171,12 @@ class Course {
   });
 
   /// 创建默认新课程
-  factory Course.create({String title = '未命名课程'}) {
+  factory Course.create({String title = 'Untitled Course'}) {
     return Course(
       courseId: IdGenerator.courseId(),
       metadata: CourseMetadata.create(title: title),
       settings: const CourseSettings(),
-      pages: [CoursePage.create(title: '第 1 页')],
+      pages: [CoursePage.create(title: 'Page 1')],
     );
   }
 

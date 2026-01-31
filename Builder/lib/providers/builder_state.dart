@@ -12,7 +12,7 @@ class BuilderState {
     this.currentPageIndex = 0,
     this.selectedBlockId,
     this.isPreviewMode = false,
-    this.courseTitle = '未命名课程',
+    this.courseTitle = 'Untitled Course',
     this.hasUnsavedChanges = false,
   });
 

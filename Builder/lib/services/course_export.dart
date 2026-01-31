@@ -19,19 +19,19 @@ class CourseExport {
 
     // 检查课程标题
     if (course.metadata.title.isEmpty) {
-      errors.add('课程标题不能为空');
+      errors.add('Course title cannot be empty');
     }
 
     // 检查页面
     if (course.pages.isEmpty) {
-      errors.add('课程至少需要一个页面');
+      errors.add('A course must have at least one page');
     }
 
     // 检查每个页面
     for (int i = 0; i < course.pages.length; i++) {
       final page = course.pages[i];
       if (page.title.isEmpty) {
-        errors.add('第 ${i + 1} 页标题不能为空');
+        errors.add('Page ${i + 1} title cannot be empty');
       }
     }
 

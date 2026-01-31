@@ -29,7 +29,7 @@ class ModulePanel extends StatelessWidget {
                       size: 24,
                     )
                   : const Text(
-                      '模块库',
+                      'Block Library',
                       style: TextStyle(
                         fontSize: AppFontSize.md,
                         fontWeight: FontWeight.w600,
