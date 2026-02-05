@@ -1,6 +1,7 @@
 /// Design Tokens - 统一的设计令牌定义
 /// 参考 PRD 5.3 Design Tokens 规范
 /// 基于 STEM 科技感 + 明亮清新 + 现代感 + 教育友好 设计风格
+library;
 
 import 'package:flutter/material.dart';
 

@@ -219,6 +219,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         return _buildCodePlaygroundEditor();
       case BlockType.multipleChoice:
         return _buildMultipleChoiceEditor();
+      case BlockType.matching:
+        return _buildMatchingEditor();
       default:
         return const SizedBox.shrink();
     }
@@ -483,6 +485,284 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                 correctAnswer: content.correctAnswer,
                 explanation: value.isEmpty ? null : value,
                 multiSelect: content.multiSelect,
+              ),
+            );
+            _updateBlock(updatedBlock);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMatchingEditor() {
+    final content = widget.block.content as MatchingContent;
+    return _PropertySection(
+      title: 'Matching',
+      children: [
+        // Question
+        TextFormField(
+          initialValue: content.question,
+          decoration: const InputDecoration(
+            labelText: 'Question',
+            border: OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            final updatedBlock = widget.block.copyWith(
+              content: content.copyWith(question: value),
+            );
+            _updateBlock(updatedBlock);
+          },
+        ),
+        const SizedBox(height: AppSpacing.md),
+
+        // Left Items
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Left Items',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral500,
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline, size: 20),
+              onPressed: () {
+                final newItem = MatchingItem(
+                  id: 'l${content.leftItems.length + 1}',
+                  text: 'Item ${content.leftItems.length + 1}',
+                );
+                final updatedBlock = widget.block.copyWith(
+                  content: content.copyWith(
+                    leftItems: [...content.leftItems, newItem],
+                  ),
+                );
+                _updateBlock(updatedBlock);
+              },
+              tooltip: 'Add left item',
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        ...content.leftItems.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    initialValue: item.text,
+                    decoration: InputDecoration(
+                      labelText: 'Left ${index + 1}',
+                      isDense: true,
+                    ),
+                    onChanged: (value) {
+                      final updatedItems = [...content.leftItems];
+                      updatedItems[index] = item.copyWith(text: value);
+                      final updatedBlock = widget.block.copyWith(
+                        content: content.copyWith(leftItems: updatedItems),
+                      );
+                      _updateBlock(updatedBlock);
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.remove_circle_outline, size: 20, color: AppColors.error),
+                  onPressed: content.leftItems.length > 1
+                      ? () {
+                          final updatedItems = [...content.leftItems];
+                          updatedItems.removeAt(index);
+                          // Remove related pairs
+                          final updatedPairs = content.correctPairs
+                              .where((p) => p.leftId != item.id)
+                              .toList();
+                          final updatedBlock = widget.block.copyWith(
+                            content: content.copyWith(
+                              leftItems: updatedItems,
+                              correctPairs: updatedPairs,
+                            ),
+                          );
+                          _updateBlock(updatedBlock);
+                        }
+                      : null,
+                ),
+              ],
+            ),
+          );
+        }),
+        const SizedBox(height: AppSpacing.md),
+
+        // Right Items
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Right Items',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral500,
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline, size: 20),
+              onPressed: () {
+                final newItem = MatchingItem(
+                  id: 'r${content.rightItems.length + 1}',
+                  text: 'Match ${content.rightItems.length + 1}',
+                );
+                final updatedBlock = widget.block.copyWith(
+                  content: content.copyWith(
+                    rightItems: [...content.rightItems, newItem],
+                  ),
+                );
+                _updateBlock(updatedBlock);
+              },
+              tooltip: 'Add right item',
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        ...content.rightItems.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    initialValue: item.text,
+                    decoration: InputDecoration(
+                      labelText: 'Right ${index + 1}',
+                      isDense: true,
+                    ),
+                    onChanged: (value) {
+                      final updatedItems = [...content.rightItems];
+                      updatedItems[index] = item.copyWith(text: value);
+                      final updatedBlock = widget.block.copyWith(
+                        content: content.copyWith(rightItems: updatedItems),
+                      );
+                      _updateBlock(updatedBlock);
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.remove_circle_outline, size: 20, color: AppColors.error),
+                  onPressed: content.rightItems.length > 1
+                      ? () {
+                          final updatedItems = [...content.rightItems];
+                          updatedItems.removeAt(index);
+                          // Remove related pairs
+                          final updatedPairs = content.correctPairs
+                              .where((p) => p.rightId != item.id)
+                              .toList();
+                          final updatedBlock = widget.block.copyWith(
+                            content: content.copyWith(
+                              rightItems: updatedItems,
+                              correctPairs: updatedPairs,
+                            ),
+                          );
+                          _updateBlock(updatedBlock);
+                        }
+                      : null,
+                ),
+              ],
+            ),
+          );
+        }),
+        const SizedBox(height: AppSpacing.md),
+
+        // Correct Pairs
+        const Text(
+          'Correct Pairs (tap to set)',
+          style: TextStyle(
+            fontSize: AppFontSize.xs,
+            fontWeight: FontWeight.w600,
+            color: AppColors.neutral500,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        ...content.leftItems.map((leftItem) {
+          final existingPair = content.correctPairs.firstWhere(
+            (p) => p.leftId == leftItem.id,
+            orElse: () => const MatchingPair(leftId: '', rightId: ''),
+          );
+          final selectedRightId = existingPair.leftId == leftItem.id ? existingPair.rightId : null;
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    leftItem.text,
+                    style: const TextStyle(fontSize: AppFontSize.sm),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const Icon(Icons.arrow_forward, size: 16, color: AppColors.neutral400),
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  flex: 3,
+                  child: DropdownButtonFormField<String>(
+                    initialValue: selectedRightId,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                        vertical: AppSpacing.xs,
+                      ),
+                    ),
+                    hint: const Text('Select match'),
+                    items: content.rightItems.map((rightItem) {
+                      return DropdownMenuItem(
+                        value: rightItem.id,
+                        child: Text(
+                          rightItem.text,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (rightId) {
+                      if (rightId != null) {
+                        // Remove existing pair for this left item
+                        final updatedPairs = content.correctPairs
+                            .where((p) => p.leftId != leftItem.id)
+                            .toList();
+                        // Add new pair
+                        updatedPairs.add(MatchingPair(leftId: leftItem.id, rightId: rightId));
+                        final updatedBlock = widget.block.copyWith(
+                          content: content.copyWith(correctPairs: updatedPairs),
+                        );
+                        _updateBlock(updatedBlock);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+        const SizedBox(height: AppSpacing.sm),
+
+        // Explanation
+        TextFormField(
+          initialValue: content.explanation ?? '',
+          decoration: const InputDecoration(
+            labelText: 'Explanation',
+            border: OutlineInputBorder(),
+          ),
+          maxLines: 2,
+          onChanged: (value) {
+            final updatedBlock = widget.block.copyWith(
+              content: content.copyWith(
+                explanation: value.isEmpty ? null : value,
               ),
             );
             _updateBlock(updatedBlock);

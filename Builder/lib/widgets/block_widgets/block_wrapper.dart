@@ -156,6 +156,8 @@ class BlockWrapper extends StatelessWidget {
             content: block.content as MultipleChoiceContent);
       case BlockType.fillBlank:
         return _FillBlankContent(content: block.content as FillBlankContent);
+      case BlockType.matching:
+        return _MatchingBlockContent(content: block.content as MatchingContent);
       case BlockType.video:
         return _VideoBlockContent(content: block.content as VideoContent);
     }
@@ -424,6 +426,137 @@ class _FillBlankContent extends StatelessWidget {
               color: AppColors.neutral400,
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 连线题内容
+class _MatchingBlockContent extends StatelessWidget {
+  final MatchingContent content;
+
+  const _MatchingBlockContent({required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          content.question.isEmpty ? 'Enter a matching question' : content.question,
+          style: TextStyle(
+            fontSize: AppFontSize.md,
+            fontWeight: FontWeight.w500,
+            color: content.question.isEmpty
+                ? AppColors.neutral400
+                : AppColors.neutral800,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Left items
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: content.leftItems.isEmpty
+                    ? [
+                        Container(
+                          padding: const EdgeInsets.all(AppSpacing.sm),
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral100,
+                            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                            border: Border.all(color: AppColors.neutral300),
+                          ),
+                          child: const Text(
+                            'No left items',
+                            style: TextStyle(
+                              fontSize: AppFontSize.sm,
+                              color: AppColors.neutral400,
+                            ),
+                          ),
+                        ),
+                      ]
+                    : content.leftItems
+                        .map(
+                          (item) => Padding(
+                            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                            child: Container(
+                              padding: const EdgeInsets.all(AppSpacing.sm),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                                border: Border.all(color: AppColors.neutral300),
+                              ),
+                              child: Text(
+                                item.text,
+                                style: const TextStyle(
+                                  fontSize: AppFontSize.sm,
+                                  color: AppColors.neutral700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            // Arrow indicator
+            const Padding(
+              padding: EdgeInsets.only(top: AppSpacing.sm),
+              child: Icon(Icons.compare_arrows, size: 20, color: AppColors.neutral400),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            // Right items
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: content.rightItems.isEmpty
+                    ? [
+                        Container(
+                          padding: const EdgeInsets.all(AppSpacing.sm),
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral100,
+                            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                            border: Border.all(color: AppColors.neutral300),
+                          ),
+                          child: const Text(
+                            'No right items',
+                            style: TextStyle(
+                              fontSize: AppFontSize.sm,
+                              color: AppColors.neutral400,
+                            ),
+                          ),
+                        ),
+                      ]
+                    : content.rightItems
+                        .map(
+                          (item) => Padding(
+                            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                            child: Container(
+                              padding: const EdgeInsets.all(AppSpacing.sm),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                                border: Border.all(color: AppColors.neutral300),
+                              ),
+                              child: Text(
+                                item.text,
+                                style: const TextStyle(
+                                  fontSize: AppFontSize.sm,
+                                  color: AppColors.neutral700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+              ),
+            ),
+          ],
         ),
       ],
     );
