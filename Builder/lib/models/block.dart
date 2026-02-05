@@ -78,6 +78,8 @@ abstract class BlockContent {
         return MultipleChoiceContent.fromJson(json);
       case BlockType.fillBlank:
         return FillBlankContent.fromJson(json);
+      case BlockType.matching:
+        return MatchingContent.fromJson(json);
       case BlockType.video:
         return VideoContent.fromJson(json);
     }
@@ -303,6 +305,117 @@ class FillBlankContent implements BlockContent {
   }
 }
 
+/// 连线题选项
+class MatchingItem {
+  final String id;
+  final String text;
+
+  const MatchingItem({
+    required this.id,
+    required this.text,
+  });
+
+  factory MatchingItem.fromJson(Map<String, dynamic> json) {
+    return MatchingItem(
+      id: json['id'] as String,
+      text: json['text'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {'id': id, 'text': text};
+
+  MatchingItem copyWith({String? id, String? text}) {
+    return MatchingItem(
+      id: id ?? this.id,
+      text: text ?? this.text,
+    );
+  }
+}
+
+/// 连线题配对关系
+class MatchingPair {
+  final String leftId;
+  final String rightId;
+
+  const MatchingPair({
+    required this.leftId,
+    required this.rightId,
+  });
+
+  factory MatchingPair.fromJson(Map<String, dynamic> json) {
+    return MatchingPair(
+      leftId: json['leftId'] as String,
+      rightId: json['rightId'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {'leftId': leftId, 'rightId': rightId};
+}
+
+/// 连线题内容
+class MatchingContent implements BlockContent {
+  final String question;
+  final List<MatchingItem> leftItems;
+  final List<MatchingItem> rightItems;
+  final List<MatchingPair> correctPairs;
+  final String? explanation;
+
+  const MatchingContent({
+    this.question = '',
+    this.leftItems = const [],
+    this.rightItems = const [],
+    this.correctPairs = const [],
+    this.explanation,
+  });
+
+  factory MatchingContent.fromJson(Map<String, dynamic> json) {
+    return MatchingContent(
+      question: json['question'] as String? ?? '',
+      leftItems: (json['leftItems'] as List<dynamic>?)
+              ?.map((e) => MatchingItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      rightItems: (json['rightItems'] as List<dynamic>?)
+              ?.map((e) => MatchingItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      correctPairs: (json['correctPairs'] as List<dynamic>?)
+              ?.map((e) => MatchingPair.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      explanation: json['explanation'] as String?,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{
+      'question': question,
+      'leftItems': leftItems.map((i) => i.toJson()).toList(),
+      'rightItems': rightItems.map((i) => i.toJson()).toList(),
+      'correctPairs': correctPairs.map((p) => p.toJson()).toList(),
+    };
+    if (explanation != null) map['explanation'] = explanation;
+    return map;
+  }
+
+  MatchingContent copyWith({
+    String? question,
+    List<MatchingItem>? leftItems,
+    List<MatchingItem>? rightItems,
+    List<MatchingPair>? correctPairs,
+    String? explanation,
+  }) {
+    return MatchingContent(
+      question: question ?? this.question,
+      leftItems: leftItems ?? this.leftItems,
+      rightItems: rightItems ?? this.rightItems,
+      correctPairs: correctPairs ?? this.correctPairs,
+      explanation: explanation ?? this.explanation,
+    );
+  }
+}
+
 /// 视频内容
 class VideoContent implements BlockContent {
   final String url;
@@ -379,6 +492,25 @@ class Block {
         );
         case BlockType.fillBlank:
         return const FillBlankContent(question: 'Enter a fill-in-the-blank question');
+        case BlockType.matching:
+          return MatchingContent(
+          question: 'Match the items on the left with those on the right',
+          leftItems: const [
+            MatchingItem(id: 'l1', text: 'Item 1'),
+            MatchingItem(id: 'l2', text: 'Item 2'),
+            MatchingItem(id: 'l3', text: 'Item 3'),
+          ],
+          rightItems: const [
+            MatchingItem(id: 'r1', text: 'Match A'),
+            MatchingItem(id: 'r2', text: 'Match B'),
+            MatchingItem(id: 'r3', text: 'Match C'),
+          ],
+          correctPairs: const [
+            MatchingPair(leftId: 'l1', rightId: 'r1'),
+            MatchingPair(leftId: 'l2', rightId: 'r2'),
+            MatchingPair(leftId: 'l3', rightId: 'r3'),
+          ],
+        );
         case BlockType.video:
           return const VideoContent();
       }

@@ -1,5 +1,6 @@
 /// Block 类型枚举
 /// 对应 PRD 3.2 基础模块类型
+library;
 
 enum BlockType {
   text('text', 'Text', 'Aa'),
@@ -8,6 +9,7 @@ enum BlockType {
   codePlayground('code-playground', 'Code Playground', '▶'),
   multipleChoice('multiple-choice', 'Multiple Choice', '✓'),
   fillBlank('fill-blank', 'Fill in the Blank', '___'),
+  matching('matching', 'Matching', '⟷'),
   video('video', 'Video', '🎬');
 
   final String value;

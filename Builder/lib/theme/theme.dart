@@ -1,6 +1,7 @@
 /// 应用主题配置
 /// 基于 Design Tokens 构建统一主题
 /// 符合 STEM 科技感 + 明亮清新 + 现代感 + 教育友好 设计风格
+library;
 
 import 'package:flutter/material.dart';
 import 'design_tokens.dart';
