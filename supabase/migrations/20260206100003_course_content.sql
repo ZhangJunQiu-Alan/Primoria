@@ -34,12 +34,23 @@ CREATE TABLE courses (
     created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     published_at      TIMESTAMPTZ,
-    search_tsv        TSVECTOR GENERATED ALWAYS AS (
-                          setweight(to_tsvector('simple', coalesce(title, '')), 'A') ||
-                          setweight(to_tsvector('simple', coalesce(description, '')), 'B') ||
-                          setweight(to_tsvector('simple', coalesce(array_to_string(tags, ' '), '')), 'C')
-                      ) STORED
+    search_tsv        TSVECTOR
 );
+
+-- 触发器函数：维护 courses.search_tsv
+CREATE OR REPLACE FUNCTION courses_search_tsv_trigger() RETURNS trigger AS $$
+BEGIN
+    NEW.search_tsv :=
+        setweight(to_tsvector('simple', coalesce(NEW.title, '')), 'A') ||
+        setweight(to_tsvector('simple', coalesce(NEW.description, '')), 'B') ||
+        setweight(to_tsvector('simple', coalesce(array_to_string(NEW.tags, ' '), '')), 'C');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_courses_search_tsv
+    BEFORE INSERT OR UPDATE ON courses
+    FOR EACH ROW EXECUTE FUNCTION courses_search_tsv_trigger();
 
 CREATE TRIGGER trg_courses_updated_at
     BEFORE UPDATE ON courses
