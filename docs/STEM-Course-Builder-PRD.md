@@ -45,8 +45,8 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                          后端服务                                │
 ├─────────────────┬─────────────────┬─────────────────────────────┤
-│   用户认证服务   │   课程存储服务   │      协作编辑服务            │
-│  (Auth Service) │ (Course Service)│  (Collaboration Service)    │
+│   用户认证服务   │   课程存储服务   │                  │
+│  (Auth Service) │ (Course Service)│     │
 └─────────────────┴─────────────────┴─────────────────────────────┘
           │                       │                     │
           ▼                       ▼                     ▼
@@ -64,9 +64,8 @@
 | **状态管理** | Riverpod / Bloc | Flutter 生态成熟方案 |
 | **动画引擎** | Flutter CustomPainter + AnimationController | 原生高性能 |
 | **拖拽系统** | flutter_draggable_gridview | 模块化拖拽 |
-| **后端框架** |  Node.js | 根据团队偏好 |
+| **后端框架** |  Node.js
 | **数据库** | PostgreSQL | 关系型，JSON 支持好 |
-| **实时协作** | WebSocket + CRDT (Yjs/Automerge) | 多人协作编辑 |
 | **对象存储** | S3 / OSS / MinIO | 媒体资源存储 |
 
 ---
@@ -581,26 +580,7 @@ GET    /api/v1/courses/{id}/versions      # 版本历史
 POST   /api/v1/courses/{id}/publish       # 发布课程
 GET    /api/v1/courses/{id}/export        # 导出 JSON
 
-# Collaboration Service
-WS     /api/v1/collaborate/{courseId}     # WebSocket 协作连接
-GET    /api/v1/courses/{id}/collaborators # 协作者列表
-POST   /api/v1/courses/{id}/collaborators # 邀请协作者
-```
-
-### 6.3 协作编辑实现
-
-```
-技术选型: CRDT (Conflict-free Replicated Data Type)
-推荐库: Yjs (可通过 wasm 在 Flutter 中使用) 或 Automerge
-
-工作流程:
-1. 用户 A 打开课程 → 建立 WebSocket 连接
-2. 用户 B 打开同一课程 → 建立连接，同步当前状态
-3. 用户 A 拖动模块 → 本地更新 + 发送操作到服务器
-4. 服务器广播操作 → 用户 B 接收并合并
-5. CRDT 自动处理冲突 → 最终一致性
-```
-
+```xiang
 ---
 
 ## 七、开发路线图
@@ -685,25 +665,15 @@ Week 9-12: 动画编辑器
 
 ---
 
-### Phase 3: 协作 & 开放
+### Phase 3: 开放
 
-**目标**: 支持多人协作，开放用户自定义能力
-
-```
-Month 1: 协作编辑
-├── WebSocket 实时通信
-├── CRDT 集成
-├── 协作者管理
-├── 编辑锁 / 冲突提示
-└── 操作历史 / 撤销
-
-Month 2: 用户自定义
+Month 1: 用户自定义
 ├── 自定义动画脚本
 ├── 组件模板系统
 ├── 用户组件市场（可选）
 └── 插件 API
 
-Month 3: 平台功能
+Month 2: 平台功能
 ├── 课程发布 / 审核流程
 ├── 课程发现 / 推荐
 ├── 学习进度追踪
@@ -722,7 +692,6 @@ Month 3: 平台功能
 | 拖拽实现 | 自研 + GestureDetector | 灵活度高 | flutter_draggable |
 | 状态管理 | Riverpod | 简洁、测试友好 | Bloc, GetX |
 | 代码编辑 | code_text_field | 轻量、可定制 | CodeMirror (WebView) |
-| 协作方案 | Yjs + WebSocket | CRDT 成熟、社区活跃 | Automerge, OT |
 | JSON 校验 | json_schema | 标准、跨平台 | 自定义校验 |
 
 ---
@@ -733,7 +702,6 @@ Month 3: 平台功能
 |------|------|----------|
 | Flutter Web 性能 | 复杂动画卡顿 | 使用 CanvasKit 渲染器，性能监控 |
 | 代码执行安全 | Python 代码可能有害 | 沙箱隔离，资源限制，代码审查 |
-| 协作冲突 | 数据不一致 | CRDT 保证最终一致性，定期同步 |
 | JSON Schema 演进 | 旧版本不兼容 | 版本号 + 迁移脚本 |
 | UGC 内容质量 | 低质量课程泛滥 | 审核机制，用户评分，推荐算法 |
 
@@ -750,10 +718,6 @@ Month 3: 平台功能
 - [Brilliant](https://brilliant.org/) - 交互体验对标
 - [Manim Community](https://www.manim.community/) - 数学动画参考
 - [Motion Canvas](https://motioncanvas.io/) - 编程式动画
-
-### 协作编辑
-- [Yjs 文档](https://docs.yjs.dev/)
-- [CRDT 原理](https://crdt.tech/)
 
 ### 类似产品
 - [Notion](https://notion.so) - 模块化编辑器参考
@@ -802,8 +766,3 @@ Month 3: 平台功能
 │  页面: [1] [2] [3] [+]                                                  │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
-
----
-
-*文档版本: 1.0.0*
-*最后更新: 2024-01*
