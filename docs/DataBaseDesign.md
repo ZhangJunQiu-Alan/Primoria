@@ -1,4 +1,4 @@
-# 数据库设计
+# 数据库设计 使用PostgreSQL
 系统原则:任何“用户行为导致的状态字段更新”，默认采用 5 分钟去抖；任何“审计/分析事件”，采用 append-only + 分区。
 last_active：去抖 5 分钟
 last_accessed：去抖 5 分钟
