@@ -1,173 +1,172 @@
-# Builder MVP 手工测试清单
+# Builder MVP Manual Test Checklist
 
-> 本清单用于 Builder MVP 功能验收，确保核心流程可用。
-
----
-
-## 1. 基础启动
-
-- [ ] `flutter run -d chrome` 正常启动
-- [ ] 进入 Builder 首页，三栏布局正常显示
-- [ ] 左侧模块面板显示所有模块类型
-- [ ] 中央画布显示空状态提示
-- [ ] 右侧属性面板显示"未选中模块"
+> This checklist is for validating Builder MVP functionality and ensuring the core flow works.
 
 ---
 
-## 2. 拖拽与模块实例化
+## 1. Basic Startup
 
-### 2.1 文本模块
-- [ ] 从左侧拖拽"文本"到画布
-- [ ] 画布生成文本模块实例
-- [ ] 模块显示默认文本内容
-
-### 2.2 图片模块
-- [ ] 从左侧拖拽"图片"到画布
-- [ ] 画布生成图片模块实例
-- [ ] 模块显示占位图标
-
-### 2.3 代码块模块
-- [ ] 从左侧拖拽"代码块"到画布
-- [ ] 画布生成代码块实例
-- [ ] 模块显示语言标签和默认代码
-
-### 2.4 代码运行模块
-- [ ] 从左侧拖拽"代码运行"到画布
-- [ ] 画布生成代码运行模块实例
-- [ ] 模块显示编辑器和运行按钮
-
-### 2.5 选择题模块
-- [ ] 从左侧拖拽"选择题"到画布
-- [ ] 画布生成选择题实例
-- [ ] 模块显示题干和选项
+- [ ] `flutter run -d chrome` starts successfully
+- [ ] Builder home page loads with the three-column layout
+- [ ] Left module panel shows all module types
+- [ ] Canvas shows the empty-state prompt
+- [ ] Right properties panel shows "No module selected"
 
 ---
 
-## 3. 选中与属性编辑
+## 2. Drag-and-Drop and Module Instantiation
 
-### 3.1 模块选中
-- [ ] 点击画布中的模块，出现选中高亮
-- [ ] 右侧属性面板显示该模块属性
-- [ ] 点击空白处或其他模块，取消/切换选中
+### 2.1 Text Module
+- [ ] Drag "Text" from the left panel to the canvas
+- [ ] Canvas creates a text module instance
+- [ ] Module shows default text content
 
-### 3.2 文本模块属性编辑
-- [ ] 选中文本模块
-- [ ] 在属性面板修改文本内容
-- [ ] 画布实时更新显示
-- [ ] 修改对齐方式，画布生效
-- [ ] 修改间距，画布生效
+### 2.2 Image Module
+- [ ] Drag "Image" from the left panel to the canvas
+- [ ] Canvas creates an image module instance
+- [ ] Module shows a placeholder icon
 
-### 3.3 图片模块属性编辑
-- [ ] 选中图片模块
-- [ ] 在属性面板输入图片 URL
-- [ ] 画布显示网络图片
+### 2.3 Code Block Module
+- [ ] Drag "Code Block" from the left panel to the canvas
+- [ ] Canvas creates a code block instance
+- [ ] Module shows the language label and default code
 
-### 3.4 代码运行模块属性编辑
-- [ ] 选中代码运行模块
-- [ ] 修改初始代码
-- [ ] 修改预期输出
-- [ ] 在画布中直接编辑代码，内容写回 block
+### 2.4 Code Playground Module
+- [ ] Drag "Code Playground" from the left panel to the canvas
+- [ ] Canvas creates a code playground module instance
+- [ ] Module shows the editor and Run button
 
----
-
-## 4. Code Playground 运行
-
-- [ ] 在代码运行模块输入 `print("Hello")`
-- [ ] 点击"运行"按钮
-- [ ] 输出区显示 `Hello`
-- [ ] 如设置预期输出，显示"正确"或"再试试"
+### 2.5 Multiple Choice Module
+- [ ] Drag "Multiple Choice" from the left panel to the canvas
+- [ ] Canvas creates a multiple choice instance
+- [ ] Module shows the question and options
 
 ---
 
-## 5. 模块排序与删除
+## 3. Selection and Property Editing
 
-### 5.1 排序
-- [ ] 拖拽模块手柄，调整顺序
-- [ ] 画布按新顺序渲染模块
+### 3.1 Module Selection
+- [ ] Click a module on the canvas, selection highlight appears
+- [ ] Right properties panel shows that module's properties
+- [ ] Click empty space or another module to deselect/switch
 
-### 5.2 删除
-- [ ] 点击模块头部的删除按钮
-- [ ] 模块从画布移除
-- [ ] 属性面板恢复"未选中模块"
+### 3.2 Text Module Properties
+- [ ] Select a text module
+- [ ] Edit text content in the properties panel
+- [ ] Canvas updates in real time
+- [ ] Change alignment, canvas reflects it
+- [ ] Change spacing, canvas reflects it
 
----
+### 3.3 Image Module Properties
+- [ ] Select an image module
+- [ ] Enter image URL in the properties panel
+- [ ] Canvas displays the network image
 
-## 6. 页面管理
-
-### 6.1 页面切换
-- [ ] 底部页面栏显示当前页面
-- [ ] 点击其他页面 tab，切换到对应页面
-- [ ] 画布显示对应页面的模块
-
-### 6.2 新增页面
-- [ ] 点击"+"按钮添加新页面
-- [ ] 页面栏新增 tab
-- [ ] 自动切换到新页面
-
-### 6.3 页面重命名
-- [ ] 双击页面 tab
-- [ ] 弹出重命名对话框
-- [ ] 修改后页面标题更新
-
-### 6.4 页面删除
-- [ ] 长按页面 tab
-- [ ] 选择"删除页面"
-- [ ] 确认后页面移除
+### 3.4 Code Playground Properties
+- [ ] Select a code playground module
+- [ ] Edit initial code
+- [ ] Edit expected output
+- [ ] Edit code directly in the canvas, content is written back to the block
 
 ---
 
-## 7. 课程信息
+## 4. Code Playground Run
 
-- [ ] 点击顶部课程名称
-- [ ] 弹出编辑对话框
-- [ ] 修改后标题更新
-- [ ] 未保存标记（黄点）出现
-
----
-
-## 8. JSON 导出
-
-- [ ] 点击顶部"导出"按钮
-- [ ] 验证导出前检查（标题、页面）
-- [ ] 下载 JSON 文件
-- [ ] JSON 文件格式正确，包含所有页面和模块
+- [ ] Enter `print("Hello")` in the code playground module
+- [ ] Click "Run"
+- [ ] Output area shows `Hello`
+- [ ] If expected output is set, show "Correct" or "Try again"
 
 ---
 
-## 9. 预览
+## 5. Module Ordering and Deletion
 
-- [ ] 点击顶部"预览"按钮
-- [ ] 跳转到 Viewer 页面
-- [ ] Viewer 显示当前课程内容
-- [ ] 点击返回，回到 Builder
+### 5.1 Ordering
+- [ ] Drag the module handle to reorder
+- [ ] Canvas renders modules in the new order
 
----
-
-## 10. 性能与稳定性
-
-### 10.1 大课程渲染
-- [ ] 创建 10+ 页面
-- [ ] 每页添加 5+ 模块
-- [ ] 页面切换流畅
-- [ ] 无明显卡顿
-
-### 10.2 频繁拖拽
-- [ ] 快速重复拖拽模块
-- [ ] 快速重复排序
-- [ ] 无报错或崩溃
+### 5.2 Deletion
+- [ ] Click the delete button in the module header
+- [ ] Module is removed from the canvas
+- [ ] Properties panel returns to "No module selected"
 
 ---
 
-## 测试结果记录
+## 6. Page Management
 
-| 日期 | 测试人 | 通过项 | 失败项 | 备注 |
+### 6.1 Page Switching
+- [ ] Bottom page bar shows the current page
+- [ ] Click another page tab to switch
+- [ ] Canvas shows that page's modules
+
+### 6.2 Add Page
+- [ ] Click the "+" button to add a new page
+- [ ] Page bar adds a new tab
+- [ ] Automatically switches to the new page
+
+### 6.3 Rename Page
+- [ ] Double-click a page tab
+- [ ] Rename dialog appears
+- [ ] After change, the page title updates
+
+### 6.4 Delete Page
+- [ ] Long-press a page tab
+- [ ] Select "Delete page"
+- [ ] Confirm to remove the page
+
+---
+
+## 7. Course Info
+
+- [ ] Click the course title at the top
+- [ ] Edit dialog appears
+- [ ] Title updates after changes
+- [ ] Unsaved indicator (yellow dot) appears
+
+---
+
+## 8. JSON Export
+
+- [ ] Click the top "Export" button
+- [ ] Validate pre-export checks (title, pages)
+- [ ] Download JSON file
+- [ ] JSON format is correct and includes all pages and modules
+
+---
+
+## 9. Preview
+
+- [ ] Click the top "Preview" button
+- [ ] Navigate to Viewer page
+- [ ] Viewer shows current course content
+- [ ] Click back to return to Builder
+
+---
+
+## 10. Performance and Stability
+
+### 10.1 Large Course Rendering
+- [ ] Create 10+ pages
+- [ ] Add 5+ modules per page
+- [ ] Page switching is smooth
+- [ ] No noticeable jank
+
+### 10.2 Frequent Dragging
+- [ ] Rapidly drag modules repeatedly
+- [ ] Rapidly reorder
+- [ ] No errors or crashes
+
+---
+
+## Test Results
+
+| Date | Tester | Passed | Failed | Notes |
 |------|--------|--------|--------|------|
 |      |        |        |        |      |
 
 ---
 
-## 已知问题
+## Known Issues
 
-1. Builder 端文本块未启用 Markdown 渲染（预览端已支持）
-2. 导入功能尚未实现
-
+1. Builder text blocks do not render Markdown (Viewer does)
+2. Import feature is not implemented yet

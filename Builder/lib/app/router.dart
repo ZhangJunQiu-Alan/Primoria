@@ -1,5 +1,5 @@
-/// 路由配置
-/// 定义 /builder 和 /viewer 路由入口
+/// Router configuration
+/// Define /builder and /viewer routes
 library;
 
 import 'package:go_router/go_router.dart';

@@ -3,7 +3,7 @@ import '../theme/design_tokens.dart';
 import '../models/block_type.dart';
 import '../services/block_registry.dart';
 
-/// 左侧模块面板 - 显示可拖拽的模块列表
+/// Left module panel - shows draggable module list
 class ModulePanel extends StatelessWidget {
   const ModulePanel({super.key});
 
@@ -18,7 +18,7 @@ class ModulePanel extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 面板标题 / Logo
+            // Panel title / logo
             Container(
               padding: EdgeInsets.all(isCompact ? AppSpacing.sm : AppSpacing.md),
               alignment: isCompact ? Alignment.center : Alignment.centerLeft,
@@ -38,7 +38,7 @@ class ModulePanel extends StatelessWidget {
                     ),
             ),
             const Divider(height: 1),
-            // 模块列表
+            // Module list
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.all(isCompact ? AppSpacing.xs : AppSpacing.sm),
@@ -62,7 +62,7 @@ class ModulePanel extends StatelessWidget {
   }
 }
 
-/// 单个模块项
+/// Single module item
 class _ModuleItem extends StatelessWidget {
   final IconData icon;
   final String label;

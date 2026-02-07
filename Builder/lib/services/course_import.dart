@@ -2,11 +2,11 @@ import 'dart:convert';
 import '../models/course.dart';
 import 'file_picker.dart';
 
-/// 课程导入服务
+/// Course import service
 class CourseImport {
   CourseImport._();
 
-  /// 从文件选择器导入 JSON
+  /// Import JSON from file picker
   static Future<ImportResult> importFromFile() async {
     final result = await pickJsonFile();
 
@@ -34,7 +34,7 @@ class CourseImport {
     }
   }
 
-  /// 从 JSON 字符串导入
+  /// Import from JSON string
   static ImportResult importFromString(String jsonString) {
     try {
       final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>;
@@ -53,14 +53,14 @@ class CourseImport {
     }
   }
 
-  /// 验证 JSON 结构
+  /// Validate JSON structure
   static ImportValidationResult validateJson(String jsonString) {
     final errors = <String>[];
 
     try {
       final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>;
 
-      // 检查必需字段
+      // Check required fields
       if (!jsonMap.containsKey('courseId')) {
         errors.add('Missing field: courseId');
       }
@@ -86,7 +86,7 @@ class CourseImport {
   }
 }
 
-/// 导入结果
+/// Import result
 class ImportResult {
   final bool success;
   final String message;
@@ -99,7 +99,7 @@ class ImportResult {
   });
 }
 
-/// 导入验证结果
+/// Import validation result
 class ImportValidationResult {
   final bool isValid;
   final List<String> errors;

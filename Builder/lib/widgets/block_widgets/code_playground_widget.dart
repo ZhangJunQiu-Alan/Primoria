@@ -3,7 +3,7 @@ import '../../theme/design_tokens.dart';
 import '../../models/block.dart';
 import '../../services/code_runner.dart';
 
-/// Code Playground 组件 - 可运行的代码编辑器
+/// Code Playground widget - runnable code editor
 class CodePlaygroundWidget extends StatefulWidget {
   final CodePlaygroundContent content;
   final ValueChanged<String>? onCodeChanged;
@@ -67,7 +67,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 代码编辑区
+        // Code editor area
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -77,7 +77,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 头部工具栏
+              // Header toolbar
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm,
@@ -110,7 +110,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                       ),
                     ),
                     const Spacer(),
-                    // 运行按钮
+                    // Run button
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -160,7 +160,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                   ],
                 ),
               ),
-              // 代码输入区
+              // Code input area
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.sm),
                 child: TextField(
@@ -190,7 +190,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
           ),
         ),
 
-        // 输出区
+        // Output area
         if (_hasRun) ...[
           const SizedBox(height: AppSpacing.sm),
           Container(
@@ -218,7 +218,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                       ),
                     ),
                     const Spacer(),
-                    // 检查输出是否匹配预期
+                    // Check if output matches expected
                     if (widget.content.expectedOutput != null)
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -271,7 +271,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
           ),
         ],
 
-        // 提示
+        // Hints
         if (widget.content.hints.isNotEmpty && !_hasRun) ...[
           const SizedBox(height: AppSpacing.sm),
           Row(

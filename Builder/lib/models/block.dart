@@ -1,7 +1,7 @@
 import 'block_type.dart';
 import '../services/id_generator.dart';
 
-/// Block 位置信息
+/// Block position info
 class BlockPosition {
   final int order;
 
@@ -18,7 +18,7 @@ class BlockPosition {
   }
 }
 
-/// Block 样式配置
+/// Block style configuration
 class BlockStyle {
   final String spacing;
   final String alignment;
@@ -60,7 +60,7 @@ class BlockStyle {
   }
 }
 
-/// Block 内容 - 基类
+/// Block content - base class
 abstract class BlockContent {
   Map<String, dynamic> toJson();
 
@@ -86,7 +86,7 @@ abstract class BlockContent {
   }
 }
 
-/// 文本模块内容
+/// Text block content
 class TextContent implements BlockContent {
   final String format; // 'markdown' | 'plain'
   final String value;
@@ -117,7 +117,7 @@ class TextContent implements BlockContent {
   }
 }
 
-/// 图片模块内容
+/// Image block content
 class ImageContent implements BlockContent {
   final String url;
   final String? alt;
@@ -146,7 +146,7 @@ class ImageContent implements BlockContent {
   }
 }
 
-/// 代码块内容
+/// Code block content
 class CodeBlockContent implements BlockContent {
   final String language;
   final String code;
@@ -170,7 +170,7 @@ class CodeBlockContent implements BlockContent {
       };
 }
 
-/// 代码运行模块内容
+/// Code playground content
 class CodePlaygroundContent implements BlockContent {
   final String language;
   final String initialCode;
@@ -212,7 +212,7 @@ class CodePlaygroundContent implements BlockContent {
   }
 }
 
-/// 选择题选项
+/// Multiple choice option
 class ChoiceOption {
   final String id;
   final String text;
@@ -232,7 +232,7 @@ class ChoiceOption {
   Map<String, dynamic> toJson() => {'id': id, 'text': text};
 }
 
-/// 选择题内容
+/// Multiple choice content
 class MultipleChoiceContent implements BlockContent {
   final String question;
   final List<ChoiceOption> options;
@@ -274,7 +274,7 @@ class MultipleChoiceContent implements BlockContent {
   }
 }
 
-/// 填空题内容
+/// Fill-in-the-blank content
 class FillBlankContent implements BlockContent {
   final String question;
   final String correctAnswer;
@@ -305,7 +305,7 @@ class FillBlankContent implements BlockContent {
   }
 }
 
-/// 连线题选项
+/// Matching question option
 class MatchingItem {
   final String id;
   final String text;
@@ -332,7 +332,7 @@ class MatchingItem {
   }
 }
 
-/// 连线题配对关系
+/// Matching question pair
 class MatchingPair {
   final String leftId;
   final String rightId;
@@ -352,7 +352,7 @@ class MatchingPair {
   Map<String, dynamic> toJson() => {'leftId': leftId, 'rightId': rightId};
 }
 
-/// 连线题内容
+/// Matching question content
 class MatchingContent implements BlockContent {
   final String question;
   final List<MatchingItem> leftItems;
@@ -416,7 +416,7 @@ class MatchingContent implements BlockContent {
   }
 }
 
-/// 视频内容
+/// Video content
 class VideoContent implements BlockContent {
   final String url;
   final String? title;
@@ -441,7 +441,7 @@ class VideoContent implements BlockContent {
   }
 }
 
-/// Block 模块 - 课程内容的基本单元
+/// Block model - basic unit of course content
 class Block {
   final String id;
   final BlockType type;
@@ -457,7 +457,7 @@ class Block {
     required this.content,
   });
 
-  /// 创建默认 Block
+  /// Create default block
   factory Block.create(BlockType type, {int order = 0}) {
     return Block(
       id: IdGenerator.blockId(),

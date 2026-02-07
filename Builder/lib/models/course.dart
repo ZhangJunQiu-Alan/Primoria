@@ -1,7 +1,7 @@
 import 'page.dart';
 import '../services/id_generator.dart';
 
-/// 课程作者信息
+/// Course author info
 class CourseAuthor {
   final String userId;
   final String displayName;
@@ -24,7 +24,7 @@ class CourseAuthor {
       };
 }
 
-/// 课程元数据
+/// Course metadata
 class CourseMetadata {
   final String title;
   final String description;
@@ -125,7 +125,7 @@ class CourseMetadata {
   }
 }
 
-/// 课程设置
+/// Course settings
 class CourseSettings {
   final String theme; // 'light' | 'dark'
   final String primaryColor;
@@ -152,7 +152,7 @@ class CourseSettings {
       };
 }
 
-/// 课程模型 - 对应 PRD 5.1 JSON Schema
+/// Course model - matches PRD 5.1 JSON schema
 class Course {
   static const String schemaVersion = '1.0.0';
   static const String schemaUrl =
@@ -170,7 +170,7 @@ class Course {
     required this.pages,
   });
 
-  /// 创建默认新课程
+  /// Create default new course
   factory Course.create({String title = 'Untitled Course'}) {
     return Course(
       courseId: IdGenerator.courseId(),
@@ -216,23 +216,23 @@ class Course {
     );
   }
 
-  /// 更新元数据（自动更新 updatedAt）
+  /// Update metadata (auto-update updatedAt)
   Course updateMetadata(CourseMetadata Function(CourseMetadata) update) {
     final updatedMeta = update(metadata).copyWith(updatedAt: DateTime.now());
     return copyWith(metadata: updatedMeta);
   }
 
-  /// 添加页面
+  /// Add page
   Course addPage(CoursePage page) {
     return copyWith(pages: [...pages, page]);
   }
 
-  /// 删除页面
+  /// Remove page
   Course removePage(String pageId) {
     return copyWith(pages: pages.where((p) => p.pageId != pageId).toList());
   }
 
-  /// 更新页面
+  /// Update page
   Course updatePage(CoursePage updatedPage) {
     final updatedPages = pages.map((p) {
       if (p.pageId == updatedPage.pageId) return updatedPage;
@@ -241,7 +241,7 @@ class Course {
     return copyWith(pages: updatedPages);
   }
 
-  /// 获取页面
+  /// Get page
   CoursePage? getPage(int index) {
     if (index < 0 || index >= pages.length) return null;
     return pages[index];

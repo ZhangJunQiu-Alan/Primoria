@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-/// 文件选择结果
+/// File pick result
 class FilePickResult {
   final bool success;
   final String message;
@@ -17,7 +17,7 @@ class FilePickResult {
   });
 }
 
-/// 非 Web 平台的文件选择（stub 实现）
+/// File picker for non-web platforms (stub)
 Future<FilePickResult> pickJsonFile() async {
   return const FilePickResult(
     success: false,

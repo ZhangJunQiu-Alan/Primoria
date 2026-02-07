@@ -8,16 +8,16 @@ import 'file_picker.dart' as fp;
 class AICourseGenerator {
   AICourseGenerator._();
 
-  // Gemini API 配置
+  // Gemini API configuration
   static const String _baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
   static String? _apiKey;
 
-  /// 设置 API Key
+  /// Set API key
   static void setApiKey(String key) {
     _apiKey = key;
   }
 
-  /// 获取当前 API Key
+  /// Get current API key
   static String? get apiKey => _apiKey;
 
   /// Prompt template
@@ -61,7 +61,7 @@ Rules:
 Generate the course based on the PDF:
 ''';
 
-  /// 从 PDF 文件生成课程
+  /// Generate course from PDF
   static Future<GenerationResult> generateFromPdf({
     required Uint8List pdfBytes,
     required String fileName,
@@ -75,10 +75,10 @@ Generate the course based on the PDF:
     }
 
     try {
-      // 1. 准备文件数据（直接使用 inline data，更可靠）
+      // 1. Prepare file data (use inline data for reliability)
       final base64Data = base64Encode(pdfBytes);
 
-      // 2. 调用 Gemini 生成课程
+      // 2. Call Gemini to generate the course
       final prompt = customPrompt ?? _courseGenerationPrompt;
       final jsonResult = await _generateContent(
         inlineData: base64Data,
@@ -93,7 +93,7 @@ Generate the course based on the PDF:
         );
       }
 
-      // 3. 解析 JSON 为 Course 对象
+      // 3. Parse JSON into Course object
       try {
         final jsonString = _extractJson(jsonResult.content!);
         final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>;
@@ -120,7 +120,7 @@ Generate the course based on the PDF:
     }
   }
 
-  /// 调用 Gemini 生成内容
+  /// Call Gemini to generate content
   static Future<_ContentResult> _generateContent({
     String? fileUri,
     String? inlineData,
@@ -130,7 +130,7 @@ Generate the course based on the PDF:
     try {
       final url = '$_baseUrl/models/gemini-2.0-flash:generateContent?key=$_apiKey';
 
-      // 构建请求体
+      // Build request body
       Map<String, dynamic> filePart;
       if (fileUri != null) {
         filePart = {
@@ -191,17 +191,17 @@ Generate the course based on the PDF:
     }
   }
 
-  /// 从响应中提取 JSON
+  /// Extract JSON from response
   static String _extractJson(String content) {
     var result = content.trim();
 
-    // 尝试提取 ```json ... ``` 代码块
+    // Try to extract ```json ... ``` code block
     final jsonBlockRegex = RegExp(r'```json\s*([\s\S]*?)\s*```');
     final match = jsonBlockRegex.firstMatch(result);
     if (match != null) {
       result = match.group(1)!.trim();
     } else {
-      // 尝试提取 ``` ... ``` 代码块
+      // Try to extract ``` ... ``` code block
       final codeBlockRegex = RegExp(r'```\s*([\s\S]*?)\s*```');
       final codeMatch = codeBlockRegex.firstMatch(result);
       if (codeMatch != null) {
@@ -209,28 +209,28 @@ Generate the course based on the PDF:
       }
     }
 
-    // 找到第一个 { 和最后一个 }
+    // Find the first { and last }
     final firstBrace = result.indexOf('{');
     final lastBrace = result.lastIndexOf('}');
     if (firstBrace != -1 && lastBrace != -1 && lastBrace > firstBrace) {
       result = result.substring(firstBrace, lastBrace + 1);
     }
 
-    // 清理可能的问题字符
+    // Clean up potential problematic characters
     result = result
         .replaceAll('\r\n', '\n')
         .replaceAll('\r', '\n')
-        .replaceAll('，', ',')  // 中文逗号
-        .replaceAll('：', ':')  // 中文冒号
-        .replaceAll('"', '"')  // 中文引号
-        .replaceAll('"', '"')  // 中文引号
-        .replaceAll(''', "'")  // 中文单引号
-        .replaceAll(''', "'"); // 中文单引号
+        .replaceAll('\uFF0C', ',')  // fullwidth comma
+        .replaceAll('\uFF1A', ':')  // fullwidth colon
+        .replaceAll('\u201C', '"')  // left double quote
+        .replaceAll('\u201D', '"')  // right double quote
+        .replaceAll('\u2018', "'")  // left single quote
+        .replaceAll('\u2019', "'"); // right single quote
 
     return result;
   }
 
-  /// 选择并读取 PDF 文件
+  /// Pick and read PDF file
   static Future<PdfPickResult> pickPdfFile() async {
     final result = await fp.pickPdfFile();
 
@@ -243,7 +243,7 @@ Generate the course based on the PDF:
   }
 }
 
-/// 生成结果
+/// Generation result
 class GenerationResult {
   final bool success;
   final String message;
@@ -258,7 +258,7 @@ class GenerationResult {
   });
 }
 
-/// PDF 选择结果
+/// PDF pick result
 class PdfPickResult {
   final bool success;
   final String message;
@@ -273,7 +273,7 @@ class PdfPickResult {
   });
 }
 
-/// 内容生成结果（内部使用）
+/// Content generation result (internal)
 class _ContentResult {
   final bool success;
   final String? content;

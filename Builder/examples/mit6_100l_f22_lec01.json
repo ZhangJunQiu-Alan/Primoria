@@ -3,13 +3,13 @@
   "schemaVersion": "1.0.0",
   "courseId": "mit-6-100l-f22-lec01",
   "metadata": {
-    "title": "MIT 6.100L（Fall 2022）Lecture 1：Welcome & Python Basics",
-    "description": "根据 6.100L Fall 2022 Lecture 1（Ana Bell）课件整理：什么是计算、算法、Python 对象与类型、表达式与运算、变量与赋值、执行顺序与重新绑定。",
+    "title": "MIT 6.100L (Fall 2022) Lecture 1: Welcome & Python Basics",
+    "description": "Based on 6.100L Fall 2022 Lecture 1 (Ana Bell) slides: what is computation, algorithms, Python objects and types, expressions and operations, variables and assignment, execution order and rebinding.",
     "author": {
       "userId": "mit-ocw",
-      "displayName": "Ana Bell（MIT 6.100L）"
+      "displayName": "Ana Bell (MIT 6.100L)"
     },
-    "tags": ["MIT", "6.100L", "Python", "Fall 2022", "Lecture 1", "计算与算法", "变量与类型"],
+    "tags": ["MIT", "6.100L", "Python", "Fall 2022", "Lecture 1", "Computation and Algorithms", "Variables and Types"],
     "difficulty": "beginner",
     "estimatedMinutes": 45,
     "createdAt": "2026-01-31T00:00:00.000Z",
@@ -33,7 +33,7 @@
           "style": { "spacing": "lg", "alignment": "center" },
           "content": {
             "format": "markdown",
-            "value": "# MIT 6.100L — Lecture 1\n\n> 课件来源：`6.100L/mit6_100l_f22_lec01.pdf`\n\n## Today\n\n- Course info\n- What is computation\n- Python basics\n- Mathematical operations\n- Python variables and types\n\n## Why come to class?\n\n- 你投入多少，就收获多少\n- 讲概念直觉 + 示例\n- 练习（practice, practice, practice）\n\n> 提示：课件里提到建议课前下载 slides 与代码文件，跟着一起跑例子、做 \"You try it\"。"
+            "value": "# MIT 6.100L — Lecture 1\n\n> Slides source: `6.100L/mit6_100l_f22_lec01.pdf`\n\n## Today\n\n- Course info\n- What is computation\n- Python basics\n- Mathematical operations\n- Python variables and types\n\n## Why come to class?\n\n- You get out what you put in\n- Conceptual intuition + examples\n- Practice (practice, practice, practice)\n\n> Tip: The slides suggest downloading the slides and code files before class, then running examples and doing the \"You try it\" exercises along the way."
           }
         },
         {
@@ -43,9 +43,9 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 点击运行，先确认你能看到输出\nprint(\"Welcome to 6.100L Lecture 1!\")",
+            "initialCode": "# Click Run to confirm you see output\nprint(\"Welcome to 6.100L Lecture 1!\")",
             "expectedOutput": "Welcome to 6.100L Lecture 1!",
-            "hints": ["先直接运行，不需要改代码"],
+            "hints": ["Run it directly, no changes needed"],
             "runnable": true
           }
         }
@@ -62,7 +62,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## 两种知识\n\n- Declarative knowledge：事实陈述（\"是什么\"）\n- Imperative knowledge：方法/步骤（\"怎么做\"）\n\n## 算法（Algorithm）\n\n课件给出的要点：\n\n1. 一系列简单步骤（sequence of simple steps）\n2. 有控制流程（flow of control）：决定何时执行下一步\n3. 终止（stops when done）\n\n可以把算法理解成「recipe」。\n\n## 计算机做什么？\n\n- 计算机是执行算法的机器\n- 现代计算机是 stored-program computer：指令存储在机器内部，用一组基本（primitive）指令运行\n- 计算机内部常见结构：memory / control unit / arithmetic logic unit（ALU）/ input / output\n\n## 语言（Language）的方面\n\n- Primitive constructs（最小构件）\n- Syntax（语法）：\"形式对不对\"\n- Static semantics：\"虽然形式对，但有没有意义\"\n- Semantics（语义）：\"到底表示什么\"\n\n常见出错：\n\n- Syntactic errors（语法错误）：常见且容易捕获\n- Semantic errors（语义/逻辑错误）：更隐蔽，需要测试与推理"
+            "value": "## Two kinds of knowledge\n\n- Declarative knowledge: statements of fact (\"what is\")\n- Imperative knowledge: methods/steps (\"how to\")\n\n## Algorithm\n\nKey points from the slides:\n\n1. A sequence of simple steps\n2. Flow of control: decide when to execute the next step\n3. Stops when done\n\nYou can think of an algorithm as a recipe.\n\n## What do computers do?\n\n- A computer is a machine that executes algorithms\n- A modern computer is a stored-program computer: instructions are stored inside the machine and run with a set of primitive operations\n- Typical internal structure: memory / control unit / arithmetic logic unit (ALU) / input / output\n\n## Aspects of language\n\n- Primitive constructs (smallest building blocks)\n- Syntax: \"is the form valid\"\n- Static semantics: \"the form is valid, but does it make sense\"\n- Semantics: \"what does it mean\"\n\nCommon errors:\n\n- Syntactic errors: common and easy to catch\n- Semantic errors: more subtle; require testing and reasoning"
           }
         },
         {
@@ -71,15 +71,15 @@
           "position": { "order": 1 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "下面哪一项更接近「语法（syntax）错误」的例子？",
+            "question": "Which of the following is closest to a syntax error?",
             "options": [
-              { "id": "a", "text": "写成 '\"hi\"5'（字符串后面直接跟数字）" },
-              { "id": "b", "text": "写成 '\"hi\"*5'（重复字符串）" },
-              { "id": "c", "text": "程序能运行，但计算结果不符合预期" },
-              { "id": "d", "text": "忘记更新某个变量，导致后续值过期" }
+              { "id": "a", "text": "Write '\"hi\"5' (a number immediately after a string)" },
+              { "id": "b", "text": "Write '\"hi\"*5' (repeat the string)" },
+              { "id": "c", "text": "The program runs but the result is wrong" },
+              { "id": "d", "text": "Forget to update a variable, leading to stale values" }
             ],
             "correctAnswer": "a",
-            "explanation": "语法错误是指代码形式本身不符合语言规则；逻辑/语义问题往往能运行但结果不对。",
+            "explanation": "Syntax errors mean the code form violates language rules; logic/semantic issues often run but produce wrong results.",
             "multiSelect": false
           }
         }
@@ -96,7 +96,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## Objects & Types\n\n- 程序操作数据对象（objects）\n- 每个对象都有类型（type），类型决定你能对它做什么\n\n### Scalar objects（不可再细分）\n\n- `int`：整数，如 `5`, `-100`\n- `float`：实数，如 `3.27`, `2.0`\n\n## Type conversions（casting）\n\n- `float(3)`：把 `int` 的 3 转成 `float` 的 3.0\n\n## Expressions（表达式）\n\n- 用对象 + 运算符组合成表达式，例如 `3+2`\n- Big idea：复杂表达式最终会被替换为一个值"
+            "value": "## Objects & Types\n\n- Programs manipulate objects (data)\n- Every object has a type, and the type determines what you can do with it\n\n### Scalar objects (not divisible)\n\n- `int`: integers like `5`, `-100`\n- `float`: real numbers like `3.27`, `2.0`\n\n## Type conversions (casting)\n\n- `float(3)`: convert integer 3 to float 3.0\n\n## Expressions\n\n- Combine objects and operators into expressions, e.g., `3+2`\n- Big idea: complex expressions ultimately evaluate to a single value"
           }
         },
         {
@@ -106,7 +106,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "code": "# REPL 里常见的写法（课件示例风格）\n# >>> 3+2\n# 5\n\n# 查看类型（在脚本里通常会用 print 包一层）\n# >>> type(1234)\n# <class 'int'>\n\n# 类型转换（casting）\n# >>> float(3)\n# 3.0\n\n# 表达式\n# >>> (13-4) / (12*12)\n# 0.0625"
+            "code": "# Common REPL style from the slides\n# >>> 3+2\n# 5\n\n# Check types (in scripts you usually wrap with print)\n# >>> type(1234)\n# <class 'int'>\n\n# Type conversion (casting)\n# >>> float(3)\n# 3.0\n\n# Expression\n# >>> (13-4) / (12*12)\n# 0.0625"
           }
         },
         {
@@ -115,15 +115,15 @@
           "position": { "order": 2 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "在 Python 中，表达式 float(3) 的结果是什么？",
+            "question": "In Python, what is the result of float(3)?",
             "options": [
-              { "id": "a", "text": "3（int）" },
-              { "id": "b", "text": "3.0（float）" },
-              { "id": "c", "text": "\"3\"（str）" },
-              { "id": "d", "text": "报错" }
+              { "id": "a", "text": "3 (int)" },
+              { "id": "b", "text": "3.0 (float)" },
+              { "id": "c", "text": "\"3\" (str)" },
+              { "id": "d", "text": "Error" }
             ],
             "correctAnswer": "b",
-            "explanation": "float(...) 会把数值转换为浮点数表示，因此 3 变为 3.0。",
+            "explanation": "float(...) converts the number to a floating-point representation, so 3 becomes 3.0.",
             "multiSelect": false
           }
         },
@@ -134,9 +134,9 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 练习：把 (13-4) / (12*12) 的计算结果输出。\n# 说明：当前 Builder 的运行器是占位实现，只能识别 print(\"...\") 这种字符串输出。\n# 所以这里先把正确答案作为字符串打印出来（后续接入真实 Python 执行后可改成直接计算）。\nprint(\"___\")",
+            "initialCode": "# Exercise: print the result of (13-4) / (12*12).\n# Note: the current Builder runner is a placeholder; it only recognizes print(\"...\") string output.\n# So for now, print the correct answer as a string (once a real Python runner is wired, you can compute directly).\nprint(\"___\")",
             "expectedOutput": "0.0625",
-            "hints": ["答案是 0.0625，把 ___ 替换为 0.0625（不需要引号外的空格）"],
+            "hints": ["The answer is 0.0625. Replace ___ with 0.0625 (no extra spaces)."],
             "runnable": true
           }
         }
@@ -153,7 +153,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## Variables（变量）\n\n课件强调：CS 里的变量更像“名字/标签”，它在某个时间点**绑定到一个值**。\n\n## Binding variables to values\n\n- `=` 在这里表示 assignment（赋值），不是数学上的“相等”或“求解”\n- 赋值的直觉步骤：\n  1. 先算右侧表达式得到一个值\n  2. 把这个值绑定到左侧名字\n\n示例：\n\n- `pi = 355/113`\n\n## 命名与可读性\n\n- 变量名尽量有意义，代码要能被「今天、明天、明年」的你/同事读懂\n- 经验法则：用字母、下划线，别以数字开头"
+            "value": "## Variables\n\nThe slides emphasize: in CS, a variable is more like a name/label that is **bound to a value** at a point in time.\n\n## Binding variables to values\n\n- `=` means assignment, not mathematical equality or solving\n- Assignment intuition:\n  1. Evaluate the right-hand expression to get a value\n  2. Bind that value to the name on the left\n\nExample:\n\n- `pi = 355/113`\n\n## Naming and readability\n\n- Use meaningful names; your code should be readable by you or teammates today, tomorrow, next year\n- Rule of thumb: use letters and underscores; do not start with a number"
           }
         },
         {
@@ -162,9 +162,9 @@
           "position": { "order": 1 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "在 Python 里，符号 ______ 通常表示「赋值」（assignment），不是数学等号。",
+            "question": "In Python, the symbol ______ usually means assignment, not mathematical equality.",
             "correctAnswer": "=",
-            "hint": "单个等号"
+            "hint": "Single equals sign"
           }
         },
         {
@@ -173,7 +173,7 @@
           "position": { "order": 2 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "下面哪些赋值语句在 Python 中是允许的？（单选）",
+            "question": "Which assignment statement is valid in Python? (single choice)",
             "options": [
               { "id": "a", "text": "x = 6" },
               { "id": "b", "text": "6 = x" },
@@ -181,7 +181,7 @@
               { "id": "d", "text": "x*y = 7" }
             ],
             "correctAnswer": "a",
-            "explanation": "左边必须是可赋值的变量名（或可解包结构），不能是字面量，也不能是表达式如 x*y。",
+            "explanation": "The left side must be an assignable name (or destructuring target). It cannot be a literal or an expression like x*y.",
             "multiSelect": false
           }
         },
@@ -192,7 +192,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "code": "# 课件里的「代码可读性」示例（更推荐拆成多行并命名）\n\n# 不推荐：一行塞满\n# a = 355/113 *(2.2**2)\n# c = 355/113 *(2.2*2)\n\n# 推荐：更清晰、更易改\npi = 355/113\nradius = 2.2\narea = pi*(radius**2)\ncircumference = pi*(radius*2)\n\nprint(area)\nprint(circumference)"
+            "code": "# Readability example from the slides (recommended: split and name)\n\n# Not recommended: cram into one line\n# a = 355/113 *(2.2**2)\n# c = 355/113 *(2.2*2)\n\n# Recommended: clearer and easier to modify\npi = 355/113\nradius = 2.2\narea = pi*(radius**2)\ncircumference = pi*(radius*2)\n\nprint(area)\nprint(circumference)"
           }
         },
         {
@@ -202,10 +202,9 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 练习：交换 x 和 y 的值（不要直接写死数字到目标变量）。\n# 说明：当前运行器只验证字符串输出，你可以先把最终答案作为字符串打印出来。\n# 目标输出：\"2 1\"\n\nx = 1\ny = 2\n\n# TODO: 在这里写交换逻辑\n\nprint(\"___\")",
+            "initialCode": "# Exercise: swap the values of x and y (do not hardcode numbers into the target variables).\n# Note: current runner only validates string output; you can print the final answer as a string.\n# Target output: \"2 1\"\n\nx = 1\ny = 2\n\n# TODO: write swap logic here\n\nprint(\"___\")",
             "expectedOutput": "2 1",
-            "hints": ["用一个临时变量 temp 保存中间值（temp = x; x = y; y = temp）"],
-            "runnable": true
+            "hints": ["Use a temporary variable temp (temp = x; x = y; y = temp)"]
           }
         }
       ]
@@ -221,7 +220,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## Big idea\n\n- 代码是一行一行按顺序执行的（lines are evaluated one after the other）\n- 变量可以被重新绑定（re-bind）：名字可以指向新值\n- 依赖旧值计算出的结果（例如 `feet`）不会自动更新，除非你再次计算/赋值\n\n课件中的思考题：\n\n```python\nmeters = 100\nfeet = 3.2808 * meters\nmeters = 200\n```\n\n问题：最后 `meters` 变了，但我们没有重新计算 `feet`，所以 `feet` 还是旧值。"
+            "value": "## Big idea\n\n- Code executes line by line in order (lines are evaluated one after the other)\n- Variables can be rebound: the name can point to a new value\n- Results computed from old values (e.g., `feet`) do not update automatically unless you recompute/reassign\n\nSlide thought exercise:\n\n```python\nmeters = 100\nfeet = 3.2808 * meters\nmeters = 200\n```\n\nQuestion: `meters` changes at the end, but we did not recompute `feet`, so `feet` remains the old value."
           }
         },
         {
@@ -230,15 +229,15 @@
           "position": { "order": 1 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "在下面代码执行完成后，feet 最可能是什么？\n\nmeters = 100\nfeet = 3.2808 * meters\nmeters = 200",
+            "question": "After this code runs, what is the most likely value of feet?\n\nmeters = 100\nfeet = 3.2808 * meters\nmeters = 200",
             "options": [
-              { "id": "a", "text": "656.16（自动跟着 meters 更新）" },
-              { "id": "b", "text": "328.08（保持第一次计算的结果）" },
-              { "id": "c", "text": "200（等于 meters）" },
-              { "id": "d", "text": "报错" }
+              { "id": "a", "text": "656.16 (auto-updated with meters)" },
+              { "id": "b", "text": "328.08 (keeps the first computed value)" },
+              { "id": "c", "text": "200 (same as meters)" },
+              { "id": "d", "text": "Error" }
             ],
             "correctAnswer": "b",
-            "explanation": "feet 的值在第二行被计算并绑定；第三行只改变 meters，不会触发 feet 自动重算。",
+            "explanation": "feet is computed and bound on line 2; line 3 only changes meters and does not recompute feet.",
             "multiSelect": false
           }
         },
@@ -249,14 +248,12 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 小练习：先把答案打印出来。\n# 目标输出：\"328.08\"\n# 说明：当前运行器只识别 print(\"...\")。\nprint(\"___\")",
+            "initialCode": "# Mini exercise: print the answer.\n# Target output: \"328.08\"\n# Note: current runner only recognizes print(\"...\").\nprint(\"___\")",
             "expectedOutput": "328.08",
-            "hints": ["feet = 3.2808 * 100 = 328.08；后续 meters 变为 200 不会自动更新 feet"],
-            "runnable": true
+            "hints": ["feet = 3.2808 * 100 = 328.08; later meters becomes 200 but feet does not update automatically"]
           }
         }
       ]
     }
   ]
 }
-

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '../models/block_type.dart';
 import '../models/block.dart';
 
-/// Block 注册表 - 管理模块类型元数据
+/// Block registry - manage module type metadata
 class BlockRegistry {
   BlockRegistry._();
 
-  /// 获取所有可用模块类型
+  /// Get all available module types
   static List<BlockTypeInfo> get allTypes => [
         BlockTypeInfo(
           type: BlockType.text,
@@ -66,7 +66,7 @@ class BlockRegistry {
         ),
       ];
 
-  /// 获取 MVP 优先模块（P0 + P1）
+  /// Get MVP priority modules (P0 + P1)
   static List<BlockTypeInfo> get mvpTypes => allTypes
       .where((t) =>
           t.type == BlockType.text ||
@@ -77,7 +77,7 @@ class BlockRegistry {
           t.type == BlockType.matching)
       .toList();
 
-  /// 根据类型获取信息
+  /// Get info by type
   static BlockTypeInfo? getInfo(BlockType type) {
     try {
       return allTypes.firstWhere((t) => t.type == type);
@@ -86,13 +86,13 @@ class BlockRegistry {
     }
   }
 
-  /// 创建指定类型的默认 Block
+  /// Create default block for a type
   static Block createBlock(BlockType type, {int order = 0}) {
     return Block.create(type, order: order);
   }
 }
 
-/// Block 类型信息
+/// Block type info
 class BlockTypeInfo {
   final BlockType type;
   final String name;

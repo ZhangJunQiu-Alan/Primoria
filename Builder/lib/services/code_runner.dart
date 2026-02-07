@@ -1,21 +1,21 @@
-/// 代码执行服务（占位实现）
-/// 后续接入真实的 Python 执行后端
+/// Code execution service (placeholder)
+/// Wire up a real Python execution backend later
 class CodeRunner {
   CodeRunner._();
   static final CodeRunner _instance = CodeRunner._();
   static CodeRunner get instance => _instance;
 
-  /// 运行代码（占位实现）
+  /// Run code (placeholder)
   Future<CodeRunResult> runCode(String code, {String language = 'python'}) async {
-    // 模拟执行延迟
+    // Simulate execution delay
     await Future.delayed(const Duration(milliseconds: 500));
 
-    // 简单模拟 print 输出
+    // Simple print output simulation
     final printPattern = RegExp(r'print\s*\(\s*["\x27](.+?)["\x27]\s*\)');
     final matches = printPattern.allMatches(code);
 
     if (matches.isEmpty) {
-      // 如果没有简单 print，尝试模拟 f-string
+      // If no simple print, try to simulate f-string
       final fStringPattern = RegExp(r'print\s*\(\s*f["\x27](.+?)["\x27]\s*\)');
       final fMatches = fStringPattern.allMatches(code);
       if (fMatches.isNotEmpty) {
@@ -40,7 +40,7 @@ class CodeRunner {
   }
 }
 
-/// 代码执行结果
+/// Code execution result
 class CodeRunResult {
   final bool success;
   final String output;

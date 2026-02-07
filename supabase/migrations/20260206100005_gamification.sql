@@ -1,8 +1,8 @@
 -- ============================================================
--- 4. 游戏化与成就 (Gamification)
+-- 4. Gamification
 -- ============================================================
 
--- -------------------- user_stats (用户统计 - 实时缓存) --------------------
+-- -------------------- user_stats (user stats - realtime cache) --------------------
 CREATE TABLE user_stats (
     user_id             UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
     total_xp            INTEGER NOT NULL DEFAULT 0,
@@ -25,7 +25,7 @@ CREATE POLICY "user_stats_insert_own"
 CREATE POLICY "user_stats_update_own"
     ON user_stats FOR UPDATE USING (auth.uid() = user_id);
 
--- -------------------- daily_activity_log (每日活跃日志 - GitHub 绿墙) --------------------
+-- -------------------- daily_activity_log (daily activity log - GitHub heatmap) --------------------
 CREATE TABLE daily_activity_log (
     user_id         UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     date            DATE NOT NULL,
@@ -48,7 +48,7 @@ CREATE POLICY "daily_activity_insert_own"
 CREATE POLICY "daily_activity_update_own"
     ON daily_activity_log FOR UPDATE USING (auth.uid() = user_id);
 
--- -------------------- achievements (成就定义) --------------------
+-- -------------------- achievements (achievement definitions) --------------------
 CREATE TABLE achievements (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     slug        TEXT NOT NULL UNIQUE,
@@ -64,7 +64,7 @@ ALTER TABLE achievements ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "achievements_select_public"
     ON achievements FOR SELECT USING (true);
 
--- -------------------- user_achievements (用户获得成就) --------------------
+-- -------------------- user_achievements (user earned achievements) --------------------
 CREATE TABLE user_achievements (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id         UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -84,7 +84,7 @@ CREATE POLICY "user_achievements_select_own"
 CREATE POLICY "user_achievements_insert_own"
     ON user_achievements FOR INSERT WITH CHECK (auth.uid() = user_id);
 
--- -------------------- xp_transactions (XP 流水 - 审计日志) --------------------
+-- -------------------- xp_transactions (XP ledger - audit log) --------------------
 CREATE TABLE xp_transactions (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id         UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,

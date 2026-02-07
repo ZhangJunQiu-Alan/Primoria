@@ -1,24 +1,24 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
 
-/// Supabase 服务 - 处理认证、课程存储、发布等
+/// Supabase service - handles auth, course storage, publishing, etc.
 class SupabaseService {
   SupabaseService._();
 
   static SupabaseClient get client => Supabase.instance.client;
 
-  /// 当前用户
+  /// Current user
   static User? get currentUser => client.auth.currentUser;
 
-  /// 是否已登录
+  /// Is logged in
   static bool get isLoggedIn => currentUser != null;
 
-  /// 监听认证状态变化
+  /// Auth state changes
   static Stream<AuthState> get authStateChanges => client.auth.onAuthStateChange;
 
-  // ==================== 认证 ====================
+  // ==================== Auth ====================
 
-  /// 邮箱注册
+  /// Sign up with email
   static Future<AuthResult> signUp({
     required String email,
     required String password,
@@ -43,7 +43,7 @@ class SupabaseService {
     }
   }
 
-  /// 邮箱登录
+  /// Sign in with email
   static Future<AuthResult> signIn({
     required String email,
     required String password,
@@ -66,12 +66,12 @@ class SupabaseService {
     }
   }
 
-  /// 登出
+  /// Sign out
   static Future<void> signOut() async {
     await client.auth.signOut();
   }
 
-  /// 重置密码（发送重置邮件）
+  /// Reset password (send reset email)
   static Future<AuthResult> resetPassword({required String email}) async {
     try {
       await client.auth.resetPasswordForEmail(email);
@@ -83,7 +83,7 @@ class SupabaseService {
     }
   }
 
-  /// Google 登录
+  /// Sign in with Google
   static Future<AuthResult> signInWithGoogle() async {
     try {
       await client.auth.signInWithOAuth(
@@ -98,7 +98,7 @@ class SupabaseService {
     }
   }
 
-  /// GitHub 登录
+  /// Sign in with GitHub
   static Future<AuthResult> signInWithGitHub() async {
     try {
       await client.auth.signInWithOAuth(
@@ -113,13 +113,13 @@ class SupabaseService {
     }
   }
 
-  /// 获取 OAuth 重定向 URL
+  /// Get OAuth redirect URL
   static String _getRedirectUrl() {
-    // 对于 Web，使用当前页面 URL
+    // For web, use current page URL
     return Uri.base.origin;
   }
 
-  /// 获取用户资料
+  /// Get user profile
   static Future<Map<String, dynamic>?> getProfile() async {
     if (currentUser == null) return null;
 
@@ -135,7 +135,7 @@ class SupabaseService {
     }
   }
 
-  /// 更新用户资料
+  /// Update user profile
   static Future<bool> updateProfile({
     String? displayName,
     String? avatarUrl,
@@ -153,16 +153,16 @@ class SupabaseService {
     }
   }
 
-  // ==================== 课程管理 ====================
+  // ==================== Course Management ====================
 
-  /// 保存课程（创建或更新）
+  /// Save course (create or update)
   static Future<CourseResult> saveCourse(Course course) async {
     if (currentUser == null) {
       return const CourseResult(success: false, message: 'Please sign in first');
     }
 
     try {
-      // 检查课程是否存在
+      // Check if course exists
       final existing = await client
           .from('courses')
           .select('id, owner_id')
@@ -172,7 +172,7 @@ class SupabaseService {
       String courseId;
 
       if (existing == null) {
-        // 创建新课程
+        // Create new course
         final insertResult = await client.from('courses').insert({
           'id': course.courseId,
           'owner_id': currentUser!.id,
@@ -186,7 +186,7 @@ class SupabaseService {
 
         courseId = insertResult['id'] as String;
       } else {
-        // 更新现有课程
+        // Update existing course
         if (existing['owner_id'] != currentUser!.id) {
           return const CourseResult(
             success: false,
@@ -205,7 +205,7 @@ class SupabaseService {
         courseId = course.courseId;
       }
 
-      // 获取最新版本号
+      // Get latest version
       final latestVersion = await client
           .from('course_versions')
           .select('version')
@@ -216,7 +216,7 @@ class SupabaseService {
 
       final newVersion = (latestVersion?['version'] as int? ?? 0) + 1;
 
-      // 创建新版本
+      // Create new version
       final versionResult = await client.from('course_versions').insert({
         'course_id': courseId,
         'version': newVersion,
@@ -224,7 +224,7 @@ class SupabaseService {
         'created_by': currentUser!.id,
       }).select('id').single();
 
-      // 更新课程的当前草稿版本
+      // Update current draft version
       await client.from('courses').update({
         'current_draft_version_id': versionResult['id'],
       }).eq('id', courseId);
@@ -240,7 +240,7 @@ class SupabaseService {
     }
   }
 
-  /// 发布课程
+  /// Publish course
   static Future<CourseResult> publishCourse(String courseId, String versionId) async {
     if (currentUser == null) {
       return const CourseResult(success: false, message: 'Please sign in first');
@@ -258,7 +258,7 @@ class SupabaseService {
     }
   }
 
-  /// 获取用户的课程列表
+  /// Get the user's course list
   static Future<List<Map<String, dynamic>>> getMyCourses() async {
     if (currentUser == null) return [];
 
@@ -275,10 +275,10 @@ class SupabaseService {
     }
   }
 
-  /// 获取课程详情（包括内容）
+  /// Get course details (including content)
   static Future<Course?> getCourseContent(String courseId, {String? versionId}) async {
     try {
-      // 如果没有指定版本，获取最新草稿或已发布版本
+      // If no version specified, get latest draft or published version
       String? targetVersionId = versionId;
 
       if (targetVersionId == null) {
@@ -288,7 +288,7 @@ class SupabaseService {
             .eq('id', courseId)
             .single();
 
-        // 如果是作者，优先获取草稿版本
+        // If the author, prefer draft version
         if (course['owner_id'] == currentUser?.id) {
           targetVersionId = course['current_draft_version_id'] as String?;
         }
@@ -312,7 +312,7 @@ class SupabaseService {
     }
   }
 
-  /// 搜索已发布的课程
+  /// Search published courses
   static Future<List<Map<String, dynamic>>> searchCourses({
     String? query,
     List<String>? tags,
@@ -335,7 +335,7 @@ class SupabaseService {
     }
   }
 
-  /// 获取推荐课程
+  /// Get recommended courses
   static Future<List<Map<String, dynamic>>> getRecommendedCourses({int limit = 20}) async {
     try {
       final response = await client.rpc('recommend_courses', params: {
@@ -348,7 +348,7 @@ class SupabaseService {
     }
   }
 
-  /// 删除课程
+  /// Delete course
   static Future<CourseResult> deleteCourse(String courseId) async {
     if (currentUser == null) {
       return const CourseResult(success: false, message: 'Please sign in first');
@@ -362,7 +362,7 @@ class SupabaseService {
     }
   }
 
-  // ==================== 辅助方法 ====================
+  // ==================== Helper methods ====================
 
   static String _translateAuthError(String message) {
     if (message.contains('Invalid login credentials')) {
@@ -384,7 +384,7 @@ class SupabaseService {
   }
 }
 
-/// 认证结果
+/// Auth result
 class AuthResult {
   final bool success;
   final String message;
@@ -392,7 +392,7 @@ class AuthResult {
   const AuthResult({required this.success, required this.message});
 }
 
-/// 课程操作结果
+/// Course operation result
 class CourseResult {
   final bool success;
   final String message;

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
-/// 文件选择结果
+/// File pick result
 class FilePickResult {
   final bool success;
   final String message;
@@ -20,7 +20,7 @@ class FilePickResult {
   });
 }
 
-/// 选择 JSON 文件
+/// Pick JSON file
 Future<FilePickResult> pickJsonFile() async {
   final completer = Completer<FilePickResult>();
 
@@ -65,7 +65,7 @@ Future<FilePickResult> pickJsonFile() async {
   return completer.future;
 }
 
-/// 选择 PDF 文件
+/// Pick PDF file
 Future<FilePickResult> pickPdfFile() async {
   final completer = Completer<FilePickResult>();
 

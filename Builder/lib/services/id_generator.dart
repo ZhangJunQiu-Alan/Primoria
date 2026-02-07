@@ -1,18 +1,18 @@
 import 'package:uuid/uuid.dart';
 
-/// ID 生成工具
+/// ID generator
 class IdGenerator {
   static const _uuid = Uuid();
 
-  /// 生成唯一 Block ID
+  /// Generate unique block ID
   static String blockId() => 'block-${_uuid.v4()}';
 
-  /// 生成唯一 Page ID
+  /// Generate unique page ID
   static String pageId() => 'page-${_uuid.v4()}';
 
-  /// 生成唯一 Course ID
+  /// Generate unique course ID
   static String courseId() => 'course-${_uuid.v4()}';
 
-  /// 生成通用唯一 ID
+  /// Generate generic unique ID
   static String generate() => _uuid.v4();
 }

@@ -1,13 +1,13 @@
 {
   "courseId": "python-beginner-101",
   "metadata": {
-    "title": "Python 编程入门",
-    "description": "适合零基础学习者的 Python 入门课程，包含交互式练习",
+    "title": "Python Programming for Beginners",
+    "description": "A beginner-friendly Python course with interactive exercises",
     "author": {
       "userId": "primoria-team",
-      "displayName": "Primoria 教学团队"
+      "displayName": "Primoria Teaching Team"
     },
-    "tags": ["Python", "编程", "入门", "交互式"],
+    "tags": ["Python", "Programming", "Beginner", "Interactive"],
     "difficulty": "beginner",
     "estimatedMinutes": 45,
     "createdAt": "2024-01-15T10:00:00.000Z",
@@ -22,7 +22,7 @@
   "pages": [
     {
       "pageId": "page-intro",
-      "title": "课程介绍",
+      "title": "Course Overview",
       "blocks": [
         {
           "type": "text",
@@ -31,7 +31,7 @@
           "style": { "spacing": "lg", "alignment": "center" },
           "content": {
             "format": "markdown",
-            "value": "# 欢迎学习 Python 编程！\n\nPython 是世界上最流行的编程语言之一，简单易学，功能强大。\n\n在这门课程中，你将学习：\n\n- 输出与 print() 函数\n- 变量与数据类型\n- 基础运算\n- 条件判断"
+            "value": "# Welcome to Python Programming!\n\nPython is one of the most popular programming languages in the world. It is easy to learn and powerful.\n\nIn this course, you will learn:\n\n- Output and the print() function\n- Variables and data types\n- Basic operations\n- Conditionals"
           }
         },
         {
@@ -42,7 +42,7 @@
           "content": {
             "url": "https://www.python.org/static/community_logos/python-logo-generic.svg",
             "alt": "Python Logo",
-            "caption": "Python 官方标志"
+            "caption": "Official Python logo"
           }
         }
       ]
@@ -58,7 +58,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## 你的第一个程序\n\n每个程序员学习新语言时，第一个程序都是输出 \"Hello, World!\"。\n\n在 Python 中，我们使用 `print()` 函数来输出内容。"
+            "value": "## Your first program\n\nWhen learning a new language, every programmer's first program prints \"Hello, World!\".\n\nIn Python, we use the `print()` function to output content."
           }
         },
         {
@@ -78,7 +78,7 @@
           "style": { "spacing": "sm", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "### 动手试试\n\n点击下方的「运行」按钮，看看会发生什么："
+            "value": "### Try it yourself\n\nClick the \"Run\" button below and see what happens:"
           }
         },
         {
@@ -88,9 +88,9 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 点击运行按钮，执行这段代码\nprint(\"Hello, World!\")",
+            "initialCode": "# Click Run to execute this code\nprint(\"Hello, World!\")",
             "expectedOutput": "Hello, World!",
-            "hints": ["直接点击运行按钮即可"],
+            "hints": ["Just click the Run button"],
             "runnable": true
           }
         },
@@ -100,15 +100,15 @@
           "position": { "order": 4 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "print() 函数的作用是什么？",
+            "question": "What does the print() function do?",
             "options": [
-              { "id": "a", "text": "将内容输出到屏幕" },
-              { "id": "b", "text": "读取用户输入" },
-              { "id": "c", "text": "定义一个变量" },
-              { "id": "d", "text": "进行数学计算" }
+              { "id": "a", "text": "Output content to the screen" },
+              { "id": "b", "text": "Read user input" },
+              { "id": "c", "text": "Define a variable" },
+              { "id": "d", "text": "Perform math" }
             ],
             "correctAnswer": "a",
-            "explanation": "print() 函数用于将括号内的内容输出到屏幕（控制台）。这是 Python 中最常用的函数之一。",
+            "explanation": "The print() function outputs the content inside the parentheses to the screen (console). It is one of the most commonly used functions in Python.",
             "multiSelect": false
           }
         }
@@ -116,7 +116,7 @@
     },
     {
       "pageId": "page-variables",
-      "title": "变量",
+      "title": "Variables",
       "blocks": [
         {
           "type": "text",
@@ -125,7 +125,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## 什么是变量？\n\n变量就像一个**盒子**，可以用来存储数据。\n\n你可以给这个盒子起一个名字，然后把数据放进去。"
+            "value": "## What is a variable?\n\nA variable is like a **box** that can store data.\n\nYou can give this box a name and put data inside it."
           }
         },
         {
@@ -135,7 +135,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "code": "# 创建变量\nname = \"小明\"    # 字符串类型\nage = 18        # 整数类型\nheight = 1.75   # 浮点数类型\n\n# 输出变量\nprint(name)\nprint(age)\nprint(height)"
+            "code": "# Create variables\nname = \"Alex\"    # string type\nage = 18         # integer type\nheight = 1.75    # float type\n\n# Print variables\nprint(name)\nprint(age)\nprint(height)"
           }
         },
         {
@@ -145,7 +145,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "### 变量命名规则\n\n1. 只能包含字母、数字和下划线 `_`\n2. 不能以数字开头\n3. 区分大小写（`name` 和 `Name` 是不同的变量）\n4. 不能使用 Python 关键字（如 `if`、`for`、`print` 等）"
+            "value": "### Variable naming rules\n\n1. Can contain letters, numbers, and underscore `_`\n2. Cannot start with a number\n3. Case-sensitive (`name` and `Name` are different)\n4. Cannot use Python keywords (e.g., `if`, `for`, `print`)"
           }
         },
         {
@@ -155,12 +155,12 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 练习：创建一个变量 x，值为 10，然后输出它\n# 在下面写你的代码：\n\n",
+            "initialCode": "# Exercise: create a variable x with value 10, then print it\n# Write your code below:\n\n",
             "expectedOutput": "10",
             "hints": [
-              "第一步：x = 10",
-              "第二步：print(x)",
-              "完整答案：\nx = 10\nprint(x)"
+              "Step 1: x = 10",
+              "Step 2: print(x)",
+              "Full answer:\nx = 10\nprint(x)"
             ],
             "runnable": true
           }
@@ -171,16 +171,16 @@
           "position": { "order": 4 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "在 Python 中，使用 ______ 符号给变量赋值",
+            "question": "In Python, use ______ to assign a value to a variable",
             "correctAnswer": "=",
-            "hint": "这是一个等号，不是双等号"
+            "hint": "This is a single equals sign, not double equals"
           }
         }
       ]
     },
     {
       "pageId": "page-calculation",
-      "title": "数学运算",
+      "title": "Math Operations",
       "blocks": [
         {
           "type": "text",
@@ -189,7 +189,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## Python 的数学运算\n\nPython 可以像计算器一样进行数学计算。"
+            "value": "## Math operations in Python\n\nPython can perform math calculations like a calculator."
           }
         },
         {
@@ -199,7 +199,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "code": "# 基础运算符\nprint(5 + 3)   # 加法：8\nprint(10 - 4)  # 减法：6\nprint(6 * 7)   # 乘法：42\nprint(20 / 4)  # 除法：5.0\nprint(17 // 5) # 整除：3\nprint(17 % 5)  # 取余：2\nprint(2 ** 3)  # 幂运算：8"
+            "code": "# Basic operators\nprint(5 + 3)   # addition: 8\nprint(10 - 4)  # subtraction: 6\nprint(6 * 7)   # multiplication: 42\nprint(20 / 4)  # division: 5.0\nprint(17 // 5) # floor division: 3\nprint(17 % 5)  # modulo: 2\nprint(2 ** 3)  # exponent: 8"
           }
         },
         {
@@ -209,10 +209,10 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 练习：计算 15 + 27 的结果并输出\n\n",
+            "initialCode": "# Exercise: calculate 15 + 27 and print the result\n\n",
             "expectedOutput": "42",
             "hints": [
-              "直接使用 print(15 + 27)"
+              "Just use print(15 + 27)"
             ],
             "runnable": true
           }
@@ -223,7 +223,7 @@
           "position": { "order": 3 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "在 Python 中，2 ** 4 的结果是什么？",
+            "question": "In Python, what is the result of 2 ** 4?",
             "options": [
               { "id": "a", "text": "8" },
               { "id": "b", "text": "16" },
@@ -231,7 +231,7 @@
               { "id": "d", "text": "24" }
             ],
             "correctAnswer": "b",
-            "explanation": "** 是幂运算符，2 ** 4 表示 2 的 4 次方，即 2 × 2 × 2 × 2 = 16",
+            "explanation": "** is the exponent operator. 2 ** 4 means 2 to the power of 4: 2 x 2 x 2 x 2 = 16.",
             "multiSelect": false
           }
         }
@@ -239,7 +239,7 @@
     },
     {
       "pageId": "page-summary",
-      "title": "课程总结",
+      "title": "Course Summary",
       "blocks": [
         {
           "type": "text",
@@ -248,7 +248,7 @@
           "style": { "spacing": "lg", "alignment": "center" },
           "content": {
             "format": "markdown",
-            "value": "# 恭喜你完成了第一课！\n\n## 你学到了：\n\n- 使用 `print()` 输出内容\n- 创建和使用变量\n- 进行基础数学运算\n\n## 下一步\n\n继续学习条件判断和循环，让你的程序更加智能！"
+            "value": "# Congratulations on finishing the first lesson!\n\n## You learned:\n\n- Use `print()` to output content\n- Create and use variables\n- Perform basic math operations\n\n## Next step\n\nContinue with conditionals and loops to make your programs smarter!"
           }
         },
         {
@@ -258,7 +258,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 最终挑战：\n# 1. 创建变量 a = 5\n# 2. 创建变量 b = 3  \n# 3. 计算 a + b 并输出结果\n\n",
+            "initialCode": "# Final challenge:\n# 1. Create variable a = 5\n# 2. Create variable b = 3\n# 3. Calculate a + b and print the result\n\n",
             "expectedOutput": "8",
             "hints": [
               "a = 5",

@@ -1,5 +1,5 @@
 name: builder
-description: "STEM Course Builder - UGC 课程创作平台"
+description: "STEM Course Builder - UGC course authoring platform"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -12,13 +12,13 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
-  # 状态管理
+  # State management
   flutter_riverpod: ^2.4.9
 
-  # 路由
+  # Routing
   go_router: ^14.0.0
 
-  # 工具
+  # Tools
   uuid: ^4.2.1
   shared_preferences: ^2.2.2
   http: ^1.2.0
@@ -26,10 +26,10 @@ dependencies:
   # Supabase
   supabase_flutter: ^2.8.0
 
-  # Markdown 渲染
+  # Markdown rendering
   flutter_markdown: ^0.6.18
 
-  # 代码高亮
+  # Code highlighting
   flutter_highlight: ^0.7.0
 
 dev_dependencies:

@@ -1,79 +1,79 @@
-# 课程 JSON 编写指南
+# Course JSON Authoring Guide
 
-本指南教你如何手动编写 JSON 文件来创建 Primoria 课程。
+This guide shows you how to manually write a JSON file to create a Primoria course.
 
 ---
 
-## 快速开始
+## Quick Start
 
-最简单的课程 JSON 只需要以下结构：
+The simplest course JSON only needs the following structure:
 
 ```json
 {
   "courseId": "my-first-course",
   "metadata": {
-    "title": "我的第一个课程"
+    "title": "My First Course"
   },
   "pages": [
     {
       "pageId": "page-1",
-      "title": "第一页",
+      "title": "First Page",
       "blocks": []
     }
   ]
 }
 ```
 
-保存为 `.json` 文件，在 Builder 中点击「导入」即可加载。
+Save it as a `.json` file, then click "Import" in Builder to load it.
 
 ---
 
-## 完整结构说明
+## Full Structure
 
-### 1. 顶层结构
+### 1. Top-Level Structure
 
 ```json
 {
-  "courseId": "唯一课程ID",
+  "courseId": "unique-course-id",
   "metadata": { ... },
   "settings": { ... },
   "pages": [ ... ]
 }
 ```
 
-| 字段 | 必填 | 说明 |
+| Field | Required | Description |
 |------|------|------|
-| `courseId` | 是 | 课程唯一标识，建议用英文和数字 |
-| `metadata` | 是 | 课程元信息 |
-| `settings` | 否 | 课程设置（主题、颜色等） |
-| `pages` | 是 | 页面数组，至少一页 |
+| `courseId` | Yes | Unique course identifier, recommended to use letters and numbers |
+| `metadata` | Yes | Course metadata |
+| `settings` | No | Course settings (theme, colors, etc.) |
+| `pages` | Yes | Page array, at least one page |
 
-### 2. metadata（元信息）
+### 2. metadata
 
 ```json
 "metadata": {
-  "title": "Python 入门",
-  "description": "从零开始学 Python",
+  "title": "Python Intro",
+  "description": "Learn Python from scratch",
   "author": {
     "userId": "teacher-001",
-    "displayName": "张老师"
+    "displayName": "Teacher Zhang"
   },
-  "tags": ["Python", "编程"],
+  "tags": ["Python", "Programming"],
   "difficulty": "beginner",
   "estimatedMinutes": 30
 }
 ```
 
-| 字段 | 必填 | 说明 |
+| Field | Required | Description |
 |------|------|------|
-| `title` | 是 | 课程标题 |
-| `description` | 否 | 课程简介 |
-| `author` | 否 | 作者信息 |
-| `tags` | 否 | 标签数组 |
-| `difficulty` | 否 | `beginner` / `intermediate` / `advanced` |
-| `estimatedMinutes` | 否 | 预计学习时间（分钟） |
+| `title` | Yes | Course title |
+| `description` | No | Course description |
+| `author` | No | Author info |
+| `tags` | No | Tag array |
+| `difficulty` | No | `beginner` / `intermediate` / `advanced` |
+| `estimatedMinutes` | No | Estimated study time (minutes) |
 
-### 3. settings（设置）
+### 3. settings
 
 ```json
 "settings": {
@@ -83,64 +83,64 @@
 }
 ```
 
-通常可省略，使用默认值即可。
+Usually optional; defaults are fine.
 
-### 4. pages（页面）
+### 4. pages
 
 ```json
 "pages": [
   {
     "pageId": "page-1",
-    "title": "第一章",
+    "title": "Chapter 1",
     "blocks": [ ... ]
   },
   {
     "pageId": "page-2",
-    "title": "第二章",
+    "title": "Chapter 2",
     "blocks": [ ... ]
   }
 ]
 ```
 
-| 字段 | 必填 | 说明 |
+| Field | Required | Description |
 |------|------|------|
-| `pageId` | 是 | 页面唯一ID |
-| `title` | 是 | 页面标题 |
-| `blocks` | 是 | 内容块数组 |
+| `pageId` | Yes | Unique page ID |
+| `title` | Yes | Page title |
+| `blocks` | Yes | Content block array |
 
 ---
 
-## Block（内容块）详解
+## Block Details
 
-每个 Block 的基本结构：
+Each Block has a basic structure like this:
 
 ```json
 {
-  "type": "block类型",
-  "id": "唯一ID",
+  "type": "blockType",
+  "id": "unique-id",
   "position": { "order": 0 },
   "style": { "spacing": "md", "alignment": "left" },
   "content": { ... }
 }
 ```
 
-### 通用字段
+### Common Fields
 
-| 字段 | 必填 | 说明 |
+| Field | Required | Description |
 |------|------|------|
-| `type` | 是 | Block 类型 |
-| `id` | 是 | 唯一标识 |
-| `position.order` | 否 | 排序顺序（从 0 开始） |
-| `style.spacing` | 否 | 间距：`sm` / `md` / `lg` |
-| `style.alignment` | 否 | 对齐：`left` / `center` / `right` |
+| `type` | Yes | Block type |
+| `id` | Yes | Unique identifier |
+| `position.order` | No | Sort order (starts at 0) |
+| `style.spacing` | No | Spacing: `sm` / `md` / `lg` |
+| `style.alignment` | No | Alignment: `left` / `center` / `right` |
 
 ---
 
-## Block 类型速查
+## Block Type Quick Reference
 
-### 1. text - 文本块
+### 1. text - Text Block
 
-用于显示文字说明，支持 Markdown 格式。
+Used for text explanations, supports Markdown.
 
 ```json
 {
@@ -150,28 +150,28 @@
   "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "format": "markdown",
-    "value": "# 标题\n\n这是一段文字。\n\n- 列表项 1\n- 列表项 2"
+    "value": "# Title\n\nThis is a paragraph.\n\n- List item 1\n- List item 2"
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 说明 |
+**content fields:**
+| Field | Description |
 |------|------|
-| `format` | `markdown` 或 `plain` |
-| `value` | 文本内容（支持换行符 `\n`） |
+| `format` | `markdown` or `plain` |
+| `value` | Text content (supports `\n` line breaks) |
 
-**Markdown 技巧：**
-- `# 标题` → 一级标题
-- `## 二级标题` → 二级标题
-- `**粗体**` → 粗体
-- `*斜体*` → 斜体
-- `` `代码` `` → 行内代码
-- `- 项目` → 无序列表
+**Markdown tips:**
+- `# Title` -> H1
+- `## Subtitle` -> H2
+- `**bold**` -> bold
+- `*italic*` -> italic
+- `` `code` `` -> inline code
+- `- item` -> unordered list
 
 ---
 
-### 2. image - 图片块
+### 2. image - Image Block
 
 ```json
 {
@@ -181,24 +181,24 @@
   "style": { "spacing": "md", "alignment": "center" },
   "content": {
     "url": "https://example.com/image.png",
-    "alt": "示意图",
-    "caption": "图 1：程序运行流程"
+    "alt": "Illustration",
+    "caption": "Figure 1: Program execution flow"
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
+**content fields:**
+| Field | Required | Description |
 |------|------|------|
-| `url` | 是 | 图片地址 |
-| `alt` | 否 | 替代文字（图片无法显示时） |
-| `caption` | 否 | 图片说明文字 |
+| `url` | Yes | Image URL |
+| `alt` | No | Alt text (when image cannot load) |
+| `caption` | No | Caption text |
 
 ---
 
-### 3. codeBlock - 代码展示块
+### 3. codeBlock - Code Display Block
 
-用于展示代码（只读，不可运行）。
+Used to display code (read-only, not runnable).
 
 ```json
 {
@@ -213,17 +213,17 @@
 }
 ```
 
-**content 字段：**
-| 字段 | 说明 |
+**content fields:**
+| Field | Description |
 |------|------|
-| `language` | 语言：`python` / `javascript` / `dart` / `java` 等 |
-| `code` | 代码内容（用 `\n` 换行） |
+| `language` | Language: `python` / `javascript` / `dart` / `java`, etc. |
+| `code` | Code content (use `\n` for line breaks) |
 
 ---
 
-### 4. codePlayground - 可运行代码块
+### 4. codePlayground - Runnable Code Block
 
-学生可以编辑并运行代码，检验输出是否正确。
+Students can edit and run code to verify output.
 
 ```json
 {
@@ -233,29 +233,29 @@
   "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "language": "python",
-    "initialCode": "# 请计算 1+1 并输出结果\nresult = ___\nprint(result)",
+    "initialCode": "# Calculate 1 + 1 and print the result\nresult = ___\nprint(result)",
     "expectedOutput": "2",
     "hints": [
-      "使用加法运算符 +",
-      "答案是 1 + 1"
+      "Use the + operator",
+      "The answer is 1 + 1"
     ],
     "runnable": true
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
+**content fields:**
+| Field | Required | Description |
 |------|------|------|
-| `language` | 是 | 编程语言 |
-| `initialCode` | 是 | 初始代码（学生看到的模板） |
-| `expectedOutput` | 否 | 预期输出（用于验证答案） |
-| `hints` | 否 | 提示数组（学生卡住时可查看） |
-| `runnable` | 否 | 是否可运行，默认 `true` |
+| `language` | Yes | Programming language |
+| `initialCode` | Yes | Starter code (template students see) |
+| `expectedOutput` | No | Expected output (used to validate answers) |
+| `hints` | No | Hint array (shown when students are stuck) |
+| `runnable` | No | Whether runnable, default `true` |
 
 ---
 
-### 5. multipleChoice - 选择题
+### 5. multipleChoice - Multiple Choice
 
 ```json
 {
@@ -264,7 +264,7 @@
   "position": { "order": 4 },
   "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "question": "Python 中哪个函数用于输出？",
+    "question": "Which function prints output in Python?",
     "options": [
       { "id": "a", "text": "print()" },
       { "id": "b", "text": "echo()" },
@@ -272,24 +272,24 @@
       { "id": "d", "text": "System.out.println()" }
     ],
     "correctAnswer": "a",
-    "explanation": "Python 使用 print() 函数输出内容到控制台。",
+    "explanation": "Python uses print() to output content to the console.",
     "multiSelect": false
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
+**content fields:**
+| Field | Required | Description |
 |------|------|------|
-| `question` | 是 | 题目 |
-| `options` | 是 | 选项数组，每项包含 `id` 和 `text` |
-| `correctAnswer` | 是 | 正确答案的 `id` |
-| `explanation` | 否 | 答案解释 |
-| `multiSelect` | 否 | 是否多选，默认 `false` |
+| `question` | Yes | Question |
+| `options` | Yes | Options array, each includes `id` and `text` |
+| `correctAnswer` | Yes | Correct option `id` |
+| `explanation` | No | Explanation |
+| `multiSelect` | No | Multi-select, default `false` |
 
 ---
 
-### 6. fillBlank - 填空题
+### 6. fillBlank - Fill in the Blank
 
 ```json
 {
@@ -298,23 +298,23 @@
   "position": { "order": 5 },
   "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "question": "Python 的创始人是 ______",
+    "question": "The creator of Python is ______",
     "correctAnswer": "Guido van Rossum",
-    "hint": "他是荷兰人，名字以 G 开头"
+    "hint": "He is Dutch and his name starts with G"
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
+**content fields:**
+| Field | Required | Description |
 |------|------|------|
-| `question` | 是 | 题目（用下划线表示空格） |
-| `correctAnswer` | 是 | 正确答案 |
-| `hint` | 否 | 提示 |
+| `question` | Yes | Prompt (use underscores for blanks) |
+| `correctAnswer` | Yes | Correct answer |
+| `hint` | No | Hint |
 
 ---
 
-### 7. video - 视频块
+### 7. video - Video Block
 
 ```json
 {
@@ -324,41 +324,41 @@
   "style": { "spacing": "md", "alignment": "center" },
   "content": {
     "url": "https://example.com/video.mp4",
-    "title": "Python 安装教程"
+    "title": "Python Installation Tutorial"
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
+**content fields:**
+| Field | Required | Description |
 |------|------|------|
-| `url` | 是 | 视频地址 |
-| `title` | 否 | 视频标题 |
+| `url` | Yes | Video URL |
+| `title` | No | Video title |
 
 ---
 
-## 完整示例
+## Complete Example
 
-以下是一个包含多种 Block 类型的完整课程示例：
+Below is a complete course example with multiple block types:
 
 ```json
 {
   "courseId": "python-101",
   "metadata": {
-    "title": "Python 编程入门",
-    "description": "适合零基础学习者的 Python 入门课程",
+    "title": "Intro to Python Programming",
+    "description": "A beginner-friendly Python course",
     "author": {
       "userId": "teacher-zhang",
-      "displayName": "张老师"
+      "displayName": "Teacher Zhang"
     },
-    "tags": ["Python", "编程", "入门"],
+    "tags": ["Python", "Programming", "Intro"],
     "difficulty": "beginner",
     "estimatedMinutes": 45
   },
   "pages": [
     {
       "pageId": "intro",
-      "title": "课程介绍",
+      "title": "Course Overview",
       "blocks": [
         {
           "type": "text",
@@ -367,7 +367,7 @@
           "style": { "spacing": "lg", "alignment": "center" },
           "content": {
             "format": "markdown",
-            "value": "# 欢迎学习 Python！\n\n在这门课程中，你将学习：\n\n- 基本语法\n- 变量和数据类型\n- 条件和循环\n- 函数定义"
+            "value": "# Welcome to Python!\n\nIn this course, you will learn:\n\n- Basic syntax\n- Variables and data types\n- Conditionals and loops\n- Function definitions"
           }
         }
       ]
@@ -383,7 +383,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## 你的第一个程序\n\n每个程序员的第一个程序都是输出 \"Hello, World!\"。"
+            "value": "## Your first program\n\nEvery programmer's first program prints \"Hello, World!\"."
           }
         },
         {
@@ -393,9 +393,9 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 运行这段代码，看看会输出什么\nprint(\"Hello, World!\")",
+            "initialCode": "# Run this code and see the output\nprint(\"Hello, World!\")",
             "expectedOutput": "Hello, World!",
-            "hints": ["点击运行按钮执行代码"],
+            "hints": ["Click the Run button to execute"],
             "runnable": true
           }
         },
@@ -405,22 +405,22 @@
           "position": { "order": 2 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "print() 函数的作用是什么？",
+            "question": "What does the print() function do?",
             "options": [
-              { "id": "a", "text": "输出内容到屏幕" },
-              { "id": "b", "text": "读取用户输入" },
-              { "id": "c", "text": "定义变量" },
-              { "id": "d", "text": "进行数学计算" }
+              { "id": "a", "text": "Print output to the screen" },
+              { "id": "b", "text": "Read user input" },
+              { "id": "c", "text": "Define variables" },
+              { "id": "d", "text": "Perform math" }
             ],
             "correctAnswer": "a",
-            "explanation": "print() 函数用于将括号内的内容输出到屏幕（控制台）。"
+            "explanation": "print() outputs the content inside the parentheses to the screen (console)."
           }
         }
       ]
     },
     {
       "pageId": "variables",
-      "title": "变量",
+      "title": "Variables",
       "blocks": [
         {
           "type": "text",
@@ -429,7 +429,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "format": "markdown",
-            "value": "## 什么是变量？\n\n变量就像一个**盒子**，可以存储数据。"
+            "value": "## What is a variable?\n\nA variable is like a **box** that can store data."
           }
         },
         {
@@ -439,7 +439,7 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "code": "name = \"小明\"\nage = 18\nprint(name)\nprint(age)"
+            "code": "name = \"Alex\"\nage = 18\nprint(name)\nprint(age)"
           }
         },
         {
@@ -449,12 +449,12 @@
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
             "language": "python",
-            "initialCode": "# 创建一个变量 x，值为 10\n# 然后输出 x\n\n",
+            "initialCode": "# Create a variable x with value 10\n# Then print x\n\n",
             "expectedOutput": "10",
             "hints": [
-              "使用 = 赋值",
+              "Use = for assignment",
               "x = 10",
-              "然后 print(x)"
+              "Then print(x)"
             ],
             "runnable": true
           }
@@ -465,9 +465,9 @@
           "position": { "order": 3 },
           "style": { "spacing": "md", "alignment": "left" },
           "content": {
-            "question": "在 Python 中，使用 ______ 符号给变量赋值",
+            "question": "In Python, use ______ to assign a value to a variable",
             "correctAnswer": "=",
-            "hint": "这是一个等号"
+            "hint": "It is the equals sign"
           }
         }
       ]
@@ -478,27 +478,27 @@
 
 ---
 
-## 常见问题
+## FAQ
 
-### Q: ID 可以重复吗？
-不可以。每个 `courseId`、`pageId`、Block `id` 都必须唯一。
+### Q: Can IDs be duplicated?
+No. Every `courseId`, `pageId`, and Block `id` must be unique.
 
-### Q: 如何换行？
-在 JSON 字符串中使用 `\n` 表示换行。
+### Q: How do I add line breaks?
+Use `\n` inside JSON strings.
 
-### Q: 支持中文吗？
-完全支持。确保文件保存为 UTF-8 编码。
+### Q: Does it support Chinese?
+Yes. Make sure the file is saved as UTF-8.
 
-### Q: 如何验证 JSON 格式？
-推荐使用 VS Code 编辑，会自动检查语法错误。也可以用在线工具如 [jsonlint.com](https://jsonlint.com)。
+### Q: How do I validate the JSON format?
+VS Code will check syntax automatically. You can also use online tools like [jsonlint.com](https://jsonlint.com).
 
 ---
 
-## 下一步
+## Next Steps
 
-1. 复制上面的示例，保存为 `my-course.json`
-2. 打开 Builder，点击「导入」
-3. 选择你的 JSON 文件
-4. 开始编辑和预览！
+1. Copy the example above and save as `my-course.json`
+2. Open Builder and click "Import"
+3. Select your JSON file
+4. Start editing and previewing
 
-有问题？查看 `examples/` 目录下的更多示例文件。
+Questions? Check more examples in the `examples/` directory.

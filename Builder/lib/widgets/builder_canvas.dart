@@ -6,7 +6,7 @@ import '../providers/builder_state.dart';
 import '../providers/course_provider.dart';
 import 'block_widgets/block_wrapper.dart';
 
-/// 中央画布区域 - 显示和编辑模块
+/// Center canvas area - display and edit blocks
 class BuilderCanvas extends ConsumerWidget {
   const BuilderCanvas({super.key});
 
@@ -52,7 +52,7 @@ class BuilderCanvas extends ConsumerWidget {
     List<Block> blocks,
     BuilderState builderState,
   ) {
-    // 按 position.order 排序
+    // Sort by position.order
     final sortedBlocks = List<Block>.from(blocks)
       ..sort((a, b) => a.position.order.compareTo(b.position.order));
 

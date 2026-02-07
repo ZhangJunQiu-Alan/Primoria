@@ -1,7 +1,7 @@
 import 'block.dart';
 import '../services/id_generator.dart';
 
-/// 课程页面模型
+/// Course page model
 class CoursePage {
   final String pageId;
   final String title;
@@ -13,7 +13,7 @@ class CoursePage {
     required this.blocks,
   });
 
-  /// 创建默认空页面
+  /// Create default empty page
   factory CoursePage.create({String title = 'New Page'}) {
     return CoursePage(
       pageId: IdGenerator.pageId(),
@@ -51,19 +51,19 @@ class CoursePage {
     );
   }
 
-  /// 添加 Block
+  /// Add block
   CoursePage addBlock(Block block) {
     final updatedBlocks = [...blocks, block];
     return copyWith(blocks: updatedBlocks);
   }
 
-  /// 删除 Block
+  /// Remove block
   CoursePage removeBlock(String blockId) {
     final updatedBlocks = blocks.where((b) => b.id != blockId).toList();
     return copyWith(blocks: updatedBlocks);
   }
 
-  /// 更新 Block
+  /// Update block
   CoursePage updateBlock(Block updatedBlock) {
     final updatedBlocks = blocks.map((b) {
       if (b.id == updatedBlock.id) return updatedBlock;
@@ -72,13 +72,13 @@ class CoursePage {
     return copyWith(blocks: updatedBlocks);
   }
 
-  /// 重排 Block 顺序
+  /// Reorder blocks
   CoursePage reorderBlocks(int oldIndex, int newIndex) {
     final updatedBlocks = [...blocks];
     final block = updatedBlocks.removeAt(oldIndex);
     updatedBlocks.insert(newIndex, block);
 
-    // 更新所有 block 的 order
+    // Update order for all blocks
     final reorderedBlocks = updatedBlocks.asMap().entries.map((entry) {
       return entry.value.copyWith(
         position: entry.value.position.copyWith(order: entry.key),

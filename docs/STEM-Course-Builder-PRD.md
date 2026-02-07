@@ -1,136 +1,137 @@
-# STEM Course Builder - 项目规划文档
+# STEM Course Builder - Product Planning Document
 
-> 模块化课程构建工具 | UGC 驱动的 STEM 学习平台
+> Modular course authoring tool | UGC-driven STEM learning platform
 
 ---
 
-## 一、项目概述
+## 1. Project Overview
 
-### 1.1 产品定位
-一个面向 STEM 教育的 **UGC 课程创作平台**，用户可通过拖拽模块快速构建交互式学习课程，对标 Brilliant 的交互体验。
+### 1.1 Product Positioning
+A **UGC course authoring platform** for STEM education. Users can build interactive learning courses by dragging modules, aiming for a Brilliant-level interactive experience.
 
-### 1.2 核心价值
-- **创作者**：零代码搭建专业级交互课程
-- **学习者**：获得 Brilliant 级别的交互学习体验
-- **平台**：UGC 模式快速扩充 STEM 学习资源
+### 1.2 Core Value
+- **Creators**: build professional interactive courses with zero code
+- **Learners**: get a Brilliant-level interactive learning experience
+- **Platform**: expand STEM content quickly with a UGC model
 
-### 1.3 上线策略
-| 阶段 | 内容领域 | 目标 |
+### 1.3 Launch Strategy
+| Phase | Content Area | Goal |
 |------|----------|------|
-| Phase 1 | Python 编程 | 验证产品 + 积累种子用户 |
-| Phase 2 | 数学 + 物理 | 扩展 STEM 核心学科 |
-| Phase 3 | 全 STEM | 开放更多学科领域 |
+| Phase 1 | Python programming | Validate the product + build a seed user base |
+| Phase 2 | Math + Physics | Expand core STEM subjects |
+| Phase 3 | All STEM | Open more subject areas |
 
 ---
 
-## 二、系统架构
+## 2. System Architecture
 
-### 2.1 整体架构
+### 2.1 Overall Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         前端 (Flutter Web)                       │
+│                      Frontend (Flutter Web)                     │
 ├─────────────────────┬───────────────────────┬───────────────────┤
-│   Course Builder    │     Course Viewer     │    User Portal    │
-│      (编辑器)        │       (渲染器)         │    (用户中心)      │
+│    Course Builder   │     Course Viewer     │    User Portal    │
+│       (Editor)      │      (Renderer)       │   (User Center)   │
 └─────────┬───────────┴───────────┬───────────┴─────────┬─────────┘
           │                       │                     │
           ▼                       ▼                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                        JSON Schema (数据层)                      │
-│              课程结构 / 模块定义 / 动画配置 / 用户数据             │
+│                    JSON Schema (Data Layer)                     │
+│        Course structure / module definitions / animation config │
+│                           / user data                           │
 └─────────────────────────────────────────────────────────────────┘
           │                       │                     │
           ▼                       ▼                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                          后端服务                                │
+│                        Backend Services                         │
 ├─────────────────┬─────────────────┬─────────────────────────────┤
-│   用户认证服务   │   课程存储服务   │                  │
-│  (Auth Service) │ (Course Service)│     │
+│  User Auth Svc   │  Course Storage │          Other Svc          │
+│ (Auth Service)   │ (Course Service)|            (TBD)            │
 └─────────────────┴─────────────────┴─────────────────────────────┘
           │                       │                     │
           ▼                       ▼                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                          基础设施                                │
+│                        Infrastructure                           │
 │         PostgreSQL / Redis / Object Storage / WebSocket         │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 2.2 技术选型
+### 2.2 Tech Stack
 
-| 层级 | 技术选择 | 理由 |
+| Layer | Choice | Rationale |
 |------|----------|------|
-| **前端框架** | Flutter Web | 统一 Builder/Viewer 渲染，团队有经验 |
-| **状态管理** | Riverpod / Bloc | Flutter 生态成熟方案 |
-| **动画引擎** | Flutter CustomPainter + AnimationController | 原生高性能 |
-| **拖拽系统** | flutter_draggable_gridview | 模块化拖拽 |
-| **后端框架** |  Node.js
-| **数据库** | PostgreSQL | 关系型，JSON 支持好 |
-| **对象存储** | S3 / OSS / MinIO | 媒体资源存储 |
+| **Frontend framework** | Flutter Web | Unified Builder/Viewer rendering, team experience |
+| **State management** | Riverpod / Bloc | Mature Flutter ecosystem options |
+| **Animation engine** | Flutter CustomPainter + AnimationController | Native high performance |
+| **Drag-and-drop** | flutter_draggable_gridview | Modular drag-and-drop |
+| **Backend framework** | Node.js | Fast iteration, large ecosystem |
+| **Database** | PostgreSQL | Relational, strong JSON support |
+| **Object storage** | S3 / OSS / MinIO | Media asset storage |
 
 ---
 
-## 三、Course Builder (编辑器)
+## 3. Course Builder (Editor)
 
-### 3.1 核心功能
+### 3.1 Core Features
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  Course Builder UI                                              │
 ├──────────────┬──────────────────────────────┬───────────────────┤
 │              │                              │                   │
-│   模块面板    │         画布区域              │     属性面板      │
-│              │                              │                   │
+│  Module Panel│         Canvas Area          │   Properties      │
+│              │                              │      Panel        │
 │  ┌────────┐  │   ┌──────────────────────┐   │  ┌─────────────┐  │
-│  │ 文本   │  │   │                      │   │  │ 模块属性    │  │
-│  ├────────┤  │   │   [拖拽放置的模块]     │   │  ├─────────────┤  │
-│  │ 图片   │  │   │                      │   │  │ 样式设置    │  │
-│  ├────────┤  │   │   [交互动画模块]       │   │  ├─────────────┤  │
-│  │ 代码块 │  │   │                      │   │  │ 动画参数    │  │
-│  ├────────┤  │   │   [选择题模块]        │   │  ├─────────────┤  │
-│  │ 动画   │  │   │                      │   │  │ 交互配置    │  │
+│  │ Text   │  │   │                      │   │  │ Module Props│  │
+│  ├────────┤  │   │   [Dropped Module]   │   │  ├─────────────┤  │
+│  │ Image  │  │   │                      │   │  │ Style        │  │
+│  ├────────┤  │   │   [Interactive Anim] │   │  ├─────────────┤  │
+│  │ Code   │  │   │                      │   │  │ Anim Params  │  │
+│  ├────────┤  │   │   [Quiz Module]      │   │  ├─────────────┤  │
+│  │ Anim   │  │   │                      │   │  │ Interaction  │  │
 │  ├────────┤  │   └──────────────────────┘   │  └─────────────┘  │
-│  │ 选择题 │  │                              │                   │
+│  │ Quiz   │  │                              │                   │
 │  ├────────┤  │                              │                   │
-│  │ 填空题 │  │                              │                   │
+│  │ Fill-in│  │                              │                   │
 │  ├────────┤  │                              │                   │
-│  │ 连线   │  │                              │                   │
+│  │ Connect│  │                              │                   │
 │  └────────┘  │                              │                   │
 │              │                              │                   │
 └──────────────┴──────────────────────────────┴───────────────────┘
-│  [预览]  [保存]  [导出 JSON]  [发布]                              │
+│  [Preview]  [Save]  [Export JSON]  [Publish]                    │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.2 模块类型定义
+### 3.2 Module Type Definitions
 
-#### 基础模块 (MVP)
+#### Basic Modules (MVP)
 
-| 模块类型 | 功能描述 | 优先级 |
+| Module Type | Description | Priority |
 |----------|----------|--------|
-| `text` | 富文本/Markdown | P0 |
-| `image` | 图片展示 | P0 |
-| `code-block` | 代码展示 + 语法高亮 | P0 (Python 课程必需) |
-| `code-playground` | 可运行的代码编辑器 | P0 (Python 课程核心) |
-| `multiple-choice` | 单选/多选题 | P0 |
-| `fill-blank` | 填空题 | P1 |
-| `video` | 视频嵌入 | P1 |
+| `text` | Rich text / Markdown | P0 |
+| `image` | Image display | P0 |
+| `code-block` | Code display + syntax highlighting | P0 (required for Python courses) |
+| `code-playground` | Runnable code editor | P0 (core for Python courses) |
+| `multiple-choice` | Single/multiple choice questions | P0 |
+| `fill-blank` | Fill-in-the-blank questions | P1 |
+| `video` | Video embed | P1 |
 
-#### 交互动画模块 (Phase 2)
+#### Interactive Animation Modules (Phase 2)
 
-| 模块类型 | 功能描述 | 示例 |
+| Module Type | Description | Example |
 |----------|----------|------|
-| `function-flow` | 函数方块连线 | Python 函数调用流程可视化 |
-| `data-structure` | 数据结构可视化 | 列表、字典、树的交互展示 |
-| `code-execution` | 代码执行动画 | 逐行执行 + 变量状态变化 |
-| `geometry` | 几何图形交互 | 可拖拽的点、线、面 |
-| `graph-plot` | 函数图像 | 可调参数的函数曲线 |
-| `custom-canvas` | 用户自定义画布 | 用户编程创建动画 |
+| `function-flow` | Function block connections | Visualize Python function calls |
+| `data-structure` | Data structure visualization | Interactive list/dict/tree views |
+| `code-execution` | Code execution animation | Line-by-line execution + variable states |
+| `geometry` | Geometry interactions | Draggable points, lines, planes |
+| `graph-plot` | Function plots | Curves with adjustable parameters |
+| `custom-canvas` | User-defined canvas | Users create animations via code |
 
-### 3.3 拖拽交互设计
+### 3.3 Drag-and-Drop Interaction Design
 
 ```dart
-// Flutter 拖拽实现示意
+// Flutter drag-and-drop sketch
 class BuilderCanvas extends StatefulWidget {
   @override
   _BuilderCanvasState createState() => _BuilderCanvasState();
@@ -172,37 +173,37 @@ class _BuilderCanvasState extends State<BuilderCanvas> {
 
 ---
 
-## 四、交互动画系统
+## 4. Interactive Animation System
 
-### 4.1 动画架构
+### 4.1 Animation Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                      Animation System                           │
+│                       Animation System                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
-│  │ 预设动画库   │    │ 参数化配置   │    │ 用户自定义脚本      │  │
-│  │ (Templates) │    │ (Params)    │    │ (Custom Script)    │  │
+│  │  Presets    │    │ Parameters  │    │ User Scripts        │  │
+│  │ (Templates) │    │ (Params)    │    │ (Custom Script)     │  │
 │  └──────┬──────┘    └──────┬──────┘    └──────────┬──────────┘  │
 │         │                  │                      │             │
 │         ▼                  ▼                      ▼             │
 │  ┌─────────────────────────────────────────────────────────────┐│
 │  │              Animation Renderer (CustomPainter)             ││
 │  │                                                             ││
-│  │  - 矢量绘制 (Path, Canvas API)                               ││
-│  │  - 手势处理 (GestureDetector)                                ││
-│  │  - 动画控制 (AnimationController, Tween)                     ││
-│  │  - 状态响应 (数据绑定)                                        ││
+│  │  - Vector drawing (Path, Canvas API)                        ││
+│  │  - Gesture handling (GestureDetector)                       ││
+│  │  - Animation control (AnimationController, Tween)           ││
+│  │  - State binding (data binding)                             ││
 │  └─────────────────────────────────────────────────────────────┘│
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 4.2 Flutter 动画实现
+### 4.2 Flutter Animation Implementation
 
 ```dart
-// 示例：可拖拽的函数方块连线动画
+// Example: draggable function block connection animation
 class FunctionFlowAnimation extends StatefulWidget {
   final FunctionFlowConfig config;
 
@@ -244,7 +245,7 @@ class _FunctionFlowAnimationState extends State<FunctionFlowAnimation>
   }
 
   void _handleTap(TapUpDetails details) {
-    // 检测点击的方块，创建连线
+    // Detect tapped block, create connection
     final tappedBlock = _findBlockAt(details.localPosition);
     if (tappedBlock != null) {
       _startConnection(tappedBlock);
@@ -252,14 +253,14 @@ class _FunctionFlowAnimationState extends State<FunctionFlowAnimation>
   }
 }
 
-// CustomPainter 绘制连线
+// CustomPainter draws connections
 class FunctionFlowPainter extends CustomPainter {
   final List<FunctionBlock> blocks;
   final List<Connection> connections;
 
   @override
   void paint(Canvas canvas, Size size) {
-    // 绘制连线（贝塞尔曲线）
+    // Draw connections (Bezier curves)
     for (final conn in connections) {
       final path = Path();
       path.moveTo(conn.start.dx, conn.start.dy);
@@ -271,7 +272,7 @@ class FunctionFlowPainter extends CustomPainter {
       canvas.drawPath(path, connectionPaint);
     }
 
-    // 绘制方块
+    // Draw blocks
     for (final block in blocks) {
       _drawRoundedBlock(canvas, block);
     }
@@ -283,17 +284,17 @@ class FunctionFlowPainter extends CustomPainter {
       Radius.circular(12),
     );
     canvas.drawRRect(rrect, blockPaint);
-    // 绘制文字...
+    // Draw text...
   }
 }
 ```
 
-### 4.3 用户自定义动画 (高级功能)
+### 4.3 User Custom Animations (Advanced)
 
-**策略：提供可视化脚本编辑器 + Dart 沙箱**
+**Strategy: provide a visual script editor + Dart sandbox**
 
 ```dart
-// 用户自定义动画的 JSON 描述
+// JSON description of a user custom animation
 {
   "type": "custom-animation",
   "id": "my-custom-viz",
@@ -310,8 +311,8 @@ class FunctionFlowPainter extends CustomPainter {
       {
         "id": "label1",
         "shape": "text",
-        "text": "拖动我",
-        "bindTo": "circle1"  // 跟随 circle1 移动
+        "text": "Drag me",
+        "bindTo": "circle1"  // follow circle1
       }
     ],
     "interactions": [
@@ -327,29 +328,29 @@ class FunctionFlowPainter extends CustomPainter {
         "trigger": "onDragEnd",
         "target": "circle1",
         "type": "spring",
-        "to": { "x": 150 }  // 弹回中心
+        "to": { "x": 150 }  // spring back to center
       }
     ]
   }
 }
 ```
 
-### 4.4 Python 课程专用动画组件
+### 4.4 Python Course-Specific Animation Components
 
-| 组件 | 功能 | 交互方式 |
+| Component | Function | Interaction |
 |------|------|----------|
-| `CodeExecutionViz` | 代码逐行执行可视化 | 播放/暂停/单步 |
-| `VariableInspector` | 变量状态实时展示 | 自动更新 |
-| `CallStackViz` | 函数调用栈可视化 | 展开/折叠 |
-| `DataStructureViz` | 列表/字典/集合可视化 | 点击查看详情 |
-| `FlowchartViz` | 流程图交互 | 高亮当前执行路径 |
-| `MemoryModelViz` | 内存模型可视化 | 引用关系连线 |
+| `CodeExecutionViz` | Line-by-line code execution visualization | Play/pause/step |
+| `VariableInspector` | Real-time variable state display | Auto update |
+| `CallStackViz` | Function call stack visualization | Expand/collapse |
+| `DataStructureViz` | List/dict/set visualization | Click to view details |
+| `FlowchartViz` | Flowchart interaction | Highlight current path |
+| `MemoryModelViz` | Memory model visualization | Reference line connections |
 
 ---
 
-## 五、JSON Schema 设计
+## 5. JSON Schema Design
 
-### 5.1 课程结构
+### 5.1 Course Structure
 
 ```json
 {
@@ -357,13 +358,13 @@ class FunctionFlowPainter extends CustomPainter {
   "schemaVersion": "1.0.0",
   "courseId": "python-basics-101",
   "metadata": {
-    "title": "Python 基础入门",
-    "description": "从零开始学习 Python 编程",
+    "title": "Python Basics",
+    "description": "Learn Python programming from scratch",
     "author": {
       "userId": "user-123",
-      "displayName": "张老师"
+      "displayName": "Teacher Zhang"
     },
-    "tags": ["python", "编程", "入门"],
+    "tags": ["python", "programming", "intro"],
     "difficulty": "beginner",
     "estimatedMinutes": 45,
     "createdAt": "2024-01-15T10:00:00Z",
@@ -378,16 +379,16 @@ class FunctionFlowPainter extends CustomPainter {
   "pages": [
     {
       "pageId": "page-1",
-      "title": "什么是变量？",
+      "title": "What is a variable?",
       "blocks": [
-        // ... 模块列表
+        // ... block list
       ]
     }
   ]
 }
 ```
 
-### 5.2 模块定义
+### 5.2 Module Definition
 
 ```json
 {
@@ -402,7 +403,7 @@ class FunctionFlowPainter extends CustomPainter {
       },
       "content": {
         "format": "markdown",
-        "value": "## 变量是什么？\n\n变量就像一个**盒子**，可以存储数据..."
+        "value": "## What is a variable?\n\nA variable is like a **box** that can store data..."
       }
     },
     {
@@ -416,7 +417,7 @@ class FunctionFlowPainter extends CustomPainter {
         "language": "python",
         "initialCode": "name = \"Alice\"\nprint(f\"Hello, {name}!\")",
         "expectedOutput": "Hello, Alice!",
-        "hints": ["试试改变 name 的值"],
+        "hints": ["Try changing the value of name"],
         "runnable": true
       }
     },
@@ -441,7 +442,7 @@ class FunctionFlowPainter extends CustomPainter {
       "id": "block-uuid-4",
       "position": { "order": 4 },
       "content": {
-        "question": "以下哪个是合法的 Python 变量名？",
+        "question": "Which of the following is a valid Python variable name?",
         "options": [
           { "id": "a", "text": "my_variable" },
           { "id": "b", "text": "2nd_variable" },
@@ -449,7 +450,7 @@ class FunctionFlowPainter extends CustomPainter {
           { "id": "d", "text": "class" }
         ],
         "correctAnswer": "a",
-        "explanation": "Python 变量名不能以数字开头，不能包含连字符，也不能使用保留字。",
+        "explanation": "Python variable names cannot start with a number, cannot contain hyphens, and cannot use reserved words.",
         "multiSelect": false
       }
     },
@@ -464,12 +465,12 @@ class FunctionFlowPainter extends CustomPainter {
             "type": "function",
             "label": "print()",
             "position": { "x": 100, "y": 100 },
-            "description": "输出内容到控制台"
+            "description": "Output content to the console"
           },
           {
             "id": "node-2",
             "type": "explanation",
-            "label": "print() 函数将括号内的内容显示在屏幕上",
+            "label": "The print() function displays the content inside the parentheses on the screen",
             "position": { "x": 350, "y": 100 }
           }
         ],
@@ -477,7 +478,7 @@ class FunctionFlowPainter extends CustomPainter {
           {
             "from": "node-1",
             "to": "node-2",
-            "label": "作用"
+            "label": "Purpose"
           }
         ],
         "userCanConnect": true,
@@ -488,7 +489,7 @@ class FunctionFlowPainter extends CustomPainter {
 }
 ```
 
-### 5.3 Design Tokens (样式统一)
+### 5.3 Design Tokens (Unified Styling)
 
 ```json
 {
@@ -535,9 +536,9 @@ class FunctionFlowPainter extends CustomPainter {
 
 ---
 
-## 六、后端服务设计
+## 6. Backend Service Design
 
-### 6.1 服务架构
+### 6.1 Service Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -549,19 +550,20 @@ class FunctionFlowPainter extends CustomPainter {
 ┌───────────────┐   ┌───────────────┐   ┌───────────────────────┐
 │  Auth Service │   │ Course Service│   │ Collaboration Service │
 ├───────────────┤   ├───────────────┤   ├───────────────────────┤
-│ - 用户注册/登录│   │ - 课程 CRUD   │   │ - 实时同步            │
-│ - OAuth 集成  │   │ - 版本管理    │   │ - 冲突解决            │
-│ - 权限管理    │   │ - 发布/审核   │   │ - 操作历史            │
+│ - User signup │   │ - Course CRUD │   │ - Realtime sync       │
+│ - Login       │   │ - Versioning  │   │ - Conflict resolution │
+│ - OAuth       │   │ - Publish/rev │   │ - Operation history   │
+│ - Permissions │   │              │   │                       │
 └───────┬───────┘   └───────┬───────┘   └───────────┬───────────┘
         │                   │                       │
         ▼                   ▼                       ▼
 ┌───────────────┐   ┌───────────────┐   ┌───────────────────────┐
 │   PostgreSQL  │   │ Object Storage│   │    Redis + WebSocket  │
-│  (用户数据)    │   │  (媒体资源)    │   │    (实时通信)         │
+│  (User Data)  │   │  (Media Assets)│  │    (Realtime Comms)   │
 └───────────────┘   └───────────────┘   └───────────────────────┘
 ```
 
-### 6.2 核心 API
+### 6.2 Core APIs
 
 ```yaml
 # Auth Service
@@ -571,198 +573,198 @@ POST   /api/v1/auth/oauth/{provider}
 GET    /api/v1/users/me
 
 # Course Service
-GET    /api/v1/courses                    # 课程列表
-POST   /api/v1/courses                    # 创建课程
-GET    /api/v1/courses/{id}               # 获取课程
-PUT    /api/v1/courses/{id}               # 更新课程
-DELETE /api/v1/courses/{id}               # 删除课程
-GET    /api/v1/courses/{id}/versions      # 版本历史
-POST   /api/v1/courses/{id}/publish       # 发布课程
-GET    /api/v1/courses/{id}/export        # 导出 JSON
+GET    /api/v1/courses                    # Course list
+POST   /api/v1/courses                    # Create course
+GET    /api/v1/courses/{id}               # Get course
+PUT    /api/v1/courses/{id}               # Update course
+DELETE /api/v1/courses/{id}               # Delete course
+GET    /api/v1/courses/{id}/versions      # Version history
+POST   /api/v1/courses/{id}/publish       # Publish course
+GET    /api/v1/courses/{id}/export        # Export JSON
+```
 
-```xiang
 ---
 
-## 七、开发路线图
+## 7. Development Roadmap
 
-### Phase 1: MVP (核心闭环)
+### Phase 1: MVP (Core Loop)
 
-**目标**: 验证产品概念，完成 Builder → JSON → Viewer 闭环
+**Goal**: validate the product concept and complete the Builder -> JSON -> Viewer loop
 
 ```
-Week 1-2: 项目初始化
-├── Flutter Web 项目搭建
-├── 状态管理架构 (Riverpod/Bloc)
-├── Design System 基础组件
-└── JSON Schema 定义
+Week 1-2: Project initialization
+├── Flutter Web setup
+├── State management architecture (Riverpod/Bloc)
+├── Design System base components
+└── JSON Schema definition
 
-Week 3-4: Builder 基础
-├── 画布区域实现
-├── 模块面板 (文本、图片、代码块)
-├── 拖拽放置功能
-├── 属性面板基础
-└── JSON 导出功能
+Week 3-4: Builder foundation
+├── Canvas area
+├── Module panel (text, image, code)
+├── Drag-and-drop placement
+├── Properties panel basics
+└── JSON export
 
-Week 5-6: 题目模块
-├── 选择题模块
-├── 填空题模块
-├── 答案校验逻辑
-└── Viewer 基础渲染
+Week 5-6: Question modules
+├── Multiple choice module
+├── Fill-in-the-blank module
+├── Answer validation logic
+└── Viewer basic rendering
 
 Week 7-8: Code Playground
-├── 代码编辑器集成 (code_text_field 或自研)
-├── Python 后端执行服务
-├── 运行结果展示
-└── 错误提示
+├── Code editor integration (code_text_field or custom)
+├── Python backend execution service
+├── Output display
+└── Error messages
 
-Week 9-10: 后端 MVP
-├── 用户认证服务
-├── 课程 CRUD API
-├── 云端存储集成
-└── 基础权限控制
+Week 9-10: Backend MVP
+├── User auth service
+├── Course CRUD API
+├── Cloud storage integration
+└── Basic access control
 
-Week 11-12: 打磨 & 测试
-├── 用户体验优化
-├── Bug 修复
-├── 性能优化
-└── 内部测试
+Week 11-12: Polish & testing
+├── UX improvements
+├── Bug fixes
+├── Performance optimization
+└── Internal testing
 ```
 
-**MVP 交付物**:
-- 可拖拽搭建的 Builder (5种基础模块)
-- Code Playground (Python 可运行)
-- JSON 导出/导入
-- Viewer 完整渲染
-- 用户账号系统
-- 云端保存
+**MVP deliverables**:
+- Drag-and-drop Builder (5 basic modules)
+- Code Playground (runnable Python)
+- JSON export/import
+- Full Viewer rendering
+- User account system
+- Cloud save
 
 ---
 
-### Phase 2: 交互动画
+### Phase 2: Interactive Animations
 
-**目标**: 实现 Brilliant 级别的交互动画体验
+**Goal**: deliver Brilliant-level interactive animation experience
 
 ```
-Week 1-4: 动画引擎
-├── CustomPainter 动画框架
-├── 手势交互系统
-├── 动画状态管理
-└── 预设动画组件库
+Week 1-4: Animation engine
+├── CustomPainter framework
+├── Gesture interaction system
+├── Animation state management
+└── Preset animation library
 
-Week 5-8: Python 专用组件
-├── 代码执行可视化
-├── 变量状态展示
-├── 数据结构可视化
-├── 函数调用流程图
-└── 函数方块连线组件
+Week 5-8: Python-specific components
+├── Code execution visualization
+├── Variable state display
+├── Data structure visualization
+├── Function call flowchart
+└── Function block connection component
 
-Week 9-12: 动画编辑器
-├── 动画参数配置面板
-├── 预览功能
-├── 动画模板库
-└── 简单脚本配置
-```
-
----
-
-### Phase 3: 开放
-
-Month 1: 用户自定义
-├── 自定义动画脚本
-├── 组件模板系统
-├── 用户组件市场（可选）
-└── 插件 API
-
-Month 2: 平台功能
-├── 课程发布 / 审核流程
-├── 课程发现 / 推荐
-├── 学习进度追踪
-├── 数据分析面板
-└── 创作者激励系统
+Week 9-12: Animation editor
+├── Animation parameter panel
+├── Preview
+├── Animation templates library
+└── Simple script configuration
 ```
 
 ---
 
-## 八、关键技术决策记录
+### Phase 3: Open Platform
 
-| 决策项 | 选择 | 理由 | 备选方案 |
+Month 1: User customization
+├── Custom animation scripts
+├── Component template system
+├── Component marketplace (optional)
+└── Plugin API
+
+Month 2: Platform features
+├── Course publish / review flow
+├── Course discovery / recommendation
+├── Learning progress tracking
+├── Analytics dashboard
+└── Creator incentive system
+```
+
+---
+
+## 8. Key Technical Decisions
+
+| Decision | Choice | Rationale | Alternatives |
 |--------|------|------|----------|
-| 前端框架 | Flutter Web | 统一渲染、团队经验、动画能力强 | React + Canvas |
-| 动画方案 | CustomPainter | 原生性能、完全控制 | Rive, Lottie |
-| 拖拽实现 | 自研 + GestureDetector | 灵活度高 | flutter_draggable |
-| 状态管理 | Riverpod | 简洁、测试友好 | Bloc, GetX |
-| 代码编辑 | code_text_field | 轻量、可定制 | CodeMirror (WebView) |
-| JSON 校验 | json_schema | 标准、跨平台 | 自定义校验 |
+| Frontend framework | Flutter Web | Unified rendering, team experience, strong animation | React + Canvas |
+| Animation approach | CustomPainter | Native performance, full control | Rive, Lottie |
+| Drag-and-drop | Custom + GestureDetector | Flexible | flutter_draggable |
+| State management | Riverpod | Simple, test-friendly | Bloc, GetX |
+| Code editor | code_text_field | Lightweight, customizable | CodeMirror (WebView) |
+| JSON validation | json_schema | Standard, cross-platform | Custom validation |
 
 ---
 
-## 九、风险与应对
+## 9. Risks and Mitigation
 
-| 风险 | 影响 | 应对策略 |
+| Risk | Impact | Mitigation |
 |------|------|----------|
-| Flutter Web 性能 | 复杂动画卡顿 | 使用 CanvasKit 渲染器，性能监控 |
-| 代码执行安全 | Python 代码可能有害 | 沙箱隔离，资源限制，代码审查 |
-| JSON Schema 演进 | 旧版本不兼容 | 版本号 + 迁移脚本 |
-| UGC 内容质量 | 低质量课程泛滥 | 审核机制，用户评分，推荐算法 |
+| Flutter Web performance | Complex animations lag | Use CanvasKit renderer, performance monitoring |
+| Code execution safety | Python code could be harmful | Sandbox isolation, resource limits, code review |
+| JSON Schema evolution | Old versions incompatible | Versioning + migration scripts |
+| UGC content quality | Low-quality courses flood | Review mechanism, user ratings, recommendation algorithm |
 
 ---
 
-## 十、参考资源
+## 10. References
 
-### Flutter 相关
-- [Flutter CustomPainter 文档](https://api.flutter.dev/flutter/rendering/CustomPainter-class.html)
-- [Flutter 动画指南](https://docs.flutter.dev/ui/animations)
-- [Riverpod 文档](https://riverpod.dev/)
+### Flutter
+- [Flutter CustomPainter Docs](https://api.flutter.dev/flutter/rendering/CustomPainter-class.html)
+- [Flutter Animation Guide](https://docs.flutter.dev/ui/animations)
+- [Riverpod Docs](https://riverpod.dev/)
 
-### 动画参考
-- [Brilliant](https://brilliant.org/) - 交互体验对标
-- [Manim Community](https://www.manim.community/) - 数学动画参考
-- [Motion Canvas](https://motioncanvas.io/) - 编程式动画
+### Animation References
+- [Brilliant](https://brilliant.org/) - interaction benchmark
+- [Manim Community](https://www.manim.community/) - math animation reference
+- [Motion Canvas](https://motioncanvas.io/) - programmable animation
 
-### 类似产品
-- [Notion](https://notion.so) - 模块化编辑器参考
-- [Articulate Rise](https://articulate.com/360/rise) - 课程构建器参考
-- [Observable](https://observablehq.com/) - 交互式文档
+### Similar Products
+- [Notion](https://notion.so) - modular editor reference
+- [Articulate Rise](https://articulate.com/360/rise) - course builder reference
+- [Observable](https://observablehq.com/) - interactive documents
 
 ---
 
-## 附录：设计稿参考
+## Appendix: Design Mock References
 
-### Builder 界面草图
+### Builder UI Sketch
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│  Logo    课程名称: Python 入门 ▼     [预览]  [保存]  [导出]  [发布]  👤  │
+│  Logo    Course Name: Python Intro ▼     [Preview] [Save] [Export] [Publish] │
 ├─────────┬───────────────────────────────────────────────────┬───────────┤
 │         │                                                   │           │
-│  模块库  │              第 1 页: 什么是变量                   │   属性    │
-│         │                                                   │           │
-│ ┌─────┐ │  ┌─────────────────────────────────────────────┐  │  当前选中  │
-│ │ Aa  │ │  │  ## 变量是什么？                             │  │  ────────  │
-│ │文本  │ │  │  变量就像一个盒子，可以存储数据...            │  │  类型:文本 │
+│  Module │              Page 1: What is a variable?          │  Props    │
+│  Library│                                                   │           │
+│ ┌─────┐ │  ┌─────────────────────────────────────────────┐  │  Selected │
+│ │ Aa  │ │  │  ## What is a variable?                     │  │  ──────── │
+│ │Text │ │  │  A variable is like a box that stores data...│  │  Type:Text│
 │ └─────┘ │  └─────────────────────────────────────────────┘  │           │
-│ ┌─────┐ │                                                   │  字号: 16 │
-│ │ 🖼 │ │  ┌─────────────────────────────────────────────┐  │  对齐: 左  │
-│ │图片  │ │  │  name = "Alice"                             │  │           │
-│ └─────┘ │  │  print(f"Hello, {name}!")                   │  │  间距: md │
-│ ┌─────┐ │  │                              [▶ 运行]       │  │           │
-│ │ </>│ │  └─────────────────────────────────────────────┘  │           │
-│ │代码  │ │                                                   │           │
+│ ┌─────┐ │                                                   │  Font: 16 │
+│ │ 🖼  │ │  ┌─────────────────────────────────────────────┐  │  Align: L │
+│ │Image│ │  │  name = "Alice"                              │  │           │
+│ └─────┘ │  │  print(f"Hello, {name}!")                   │  │  Spacing: md │
+│ ┌─────┐ │  │                              [▶ Run]        │  │           │
+│ │ </> │ │  └─────────────────────────────────────────────┘  │           │
+│ │Code │ │                                                   │           │
 │ └─────┘ │  ┌─────────────────────────────────────────────┐  │           │
-│ ┌─────┐ │  │  (?) 下列哪个是合法的变量名？                 │  │           │
-│ │ ✓  │ │  │                                             │  │           │
-│ │选择题│ │  │  ○ my_variable                              │  │           │
+│ ┌─────┐ │  │  (?) Which is a valid variable name?        │  │           │
+│ │ ✓   │ │  │                                             │  │           │
+│ │Quiz │ │  │  ○ my_variable                              │  │           │
 │ └─────┘ │  │  ○ 2nd_var                                  │  │           │
 │ ┌─────┐ │  │  ○ my-var                                   │  │           │
 │ │ ___ │ │  └─────────────────────────────────────────────┘  │           │
-│ │填空题│ │                                                   │           │
+│ │Fill │ │                                                   │           │
 │ └─────┘ │                                                   │           │
 │ ┌─────┐ │                                                   │           │
-│ │ ⚡ │ │                                                   │           │
-│ │动画  │ │                                                   │           │
+│ │ ⚡  │ │                                                   │           │
+│ │Anim │ │                                                   │           │
 │ └─────┘ │                                                   │           │
 │         │                                                   │           │
 ├─────────┴───────────────────────────────────────────────────┴───────────┤
-│  页面: [1] [2] [3] [+]                                                  │
+│  Pages: [1] [2] [3] [+]                                                │
 └─────────────────────────────────────────────────────────────────────────┘
 ```

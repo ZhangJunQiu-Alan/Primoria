@@ -1,8 +1,8 @@
 -- ============================================================
--- 1. 用户管理 (User Management)
+-- 1. User Management
 -- ============================================================
 
--- -------------------- profiles (用户档案) --------------------
+-- -------------------- profiles (user profiles) --------------------
 CREATE TABLE profiles (
     id          UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     username    TEXT UNIQUE CHECK (length(username) BETWEEN 3 AND 32),
@@ -30,7 +30,7 @@ CREATE POLICY "profiles_insert_own"
 CREATE POLICY "profiles_update_own"
     ON profiles FOR UPDATE USING (auth.uid() = id);
 
--- 注册时自动创建 profile
+-- Auto-create profile on sign-up
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -47,7 +47,7 @@ CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION handle_new_user();
 
--- -------------------- user_settings (用户设置) --------------------
+-- -------------------- user_settings (user settings) --------------------
 CREATE TABLE user_settings (
     user_id                     UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
     theme_mode                  theme_mode NOT NULL DEFAULT 'system',
