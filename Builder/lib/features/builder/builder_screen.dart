@@ -15,7 +15,7 @@ import '../../widgets/ai_generate_dialog.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
 
-/// Builder 主屏幕 - 课程编辑器
+/// Builder main screen - course editor
 class BuilderScreen extends ConsumerWidget {
   const BuilderScreen({super.key});
 
@@ -87,7 +87,7 @@ class BuilderScreen extends ConsumerWidget {
         ),
       ),
       actions: [
-        // AI 生成按钮
+        // AI generate button
         TextButton.icon(
           onPressed: () {
             _showAIGenerateDialog(context, ref);
@@ -100,7 +100,7 @@ class BuilderScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // 预览按钮
+        // Preview button
         TextButton.icon(
           onPressed: () {
             context.go('/viewer');
@@ -108,7 +108,7 @@ class BuilderScreen extends ConsumerWidget {
           icon: const Icon(Icons.play_arrow, size: 20),
           label: const Text('Preview'),
         ),
-        // 导入按钮
+        // Import button
         TextButton.icon(
           onPressed: () {
             _importCourse(context, ref);
@@ -116,7 +116,7 @@ class BuilderScreen extends ConsumerWidget {
           icon: const Icon(Icons.file_upload_outlined, size: 20),
           label: const Text('Import'),
         ),
-        // 导出按钮
+        // Export button
         TextButton.icon(
           onPressed: () {
             _exportCourse(context, ref);
@@ -124,7 +124,7 @@ class BuilderScreen extends ConsumerWidget {
           icon: const Icon(Icons.file_download_outlined, size: 20),
           label: const Text('Export'),
         ),
-        // 云端保存按钮
+        // Cloud save button
         TextButton.icon(
           onPressed: () {
             _saveToCloud(context, ref);
@@ -132,7 +132,7 @@ class BuilderScreen extends ConsumerWidget {
           icon: const Icon(Icons.cloud_upload_outlined, size: 20),
           label: const Text('Save'),
         ),
-        // 发布按钮
+        // Publish button
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           child: ElevatedButton(
@@ -142,7 +142,7 @@ class BuilderScreen extends ConsumerWidget {
             child: const Text('Publish'),
           ),
         ),
-        // 用户头像 - 点击登录/登出
+        // User avatar - sign in/out
         Padding(
           padding: const EdgeInsets.only(right: AppSpacing.md),
           child: _buildUserAvatar(context),
@@ -175,7 +175,7 @@ class BuilderScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
-          // 页面切换 tabs
+          // Page switch tabs
           ...List.generate(pages.length, (index) {
             final isSelected = index == state.currentPageIndex;
             final page = pages[index];
@@ -221,7 +221,7 @@ class BuilderScreen extends ConsumerWidget {
               ),
             );
           }),
-          // 添加页面按钮
+          // Add page button
           IconButton(
             onPressed: () {
               ref.read(courseProvider.notifier).addPage();
@@ -236,7 +236,7 @@ class BuilderScreen extends ConsumerWidget {
             ),
           ),
           const Spacer(),
-          // 缩放控制（可选）
+          // Zoom control (optional)
           Text(
             '100%',
             style: TextStyle(
@@ -381,7 +381,7 @@ class BuilderScreen extends ConsumerWidget {
               final currentIndex = ref.read(builderStateProvider).currentPageIndex;
               ref.read(courseProvider.notifier).removePage(pageIndex);
 
-              // 如果删除的是当前页面，调整索引
+              // If deleting the current page, adjust the index
               if (currentIndex >= pageIndex && currentIndex > 0) {
                 ref.read(builderStateProvider.notifier).setCurrentPage(currentIndex - 1);
               }
@@ -399,7 +399,7 @@ class BuilderScreen extends ConsumerWidget {
   void _exportCourse(BuildContext context, WidgetRef ref) {
     final course = ref.read(courseProvider);
 
-    // 验证课程
+    // Validate course
     final validation = CourseExport.validateForExport(course);
     if (!validation.isValid) {
       showDialog(
@@ -435,7 +435,7 @@ class BuilderScreen extends ConsumerWidget {
       return;
     }
 
-    // 执行导出
+    // Perform export
     try {
       CourseExport.downloadJson(course);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -455,7 +455,7 @@ class BuilderScreen extends ConsumerWidget {
   }
 
   void _showAIGenerateDialog(BuildContext context, WidgetRef ref) async {
-    // 检查是否有未保存的更改
+    // Check for unsaved changes
     final hasUnsaved = ref.read(builderStateProvider).hasUnsavedChanges;
 
     if (hasUnsaved) {
@@ -483,13 +483,13 @@ class BuilderScreen extends ConsumerWidget {
 
     if (!context.mounted) return;
 
-    // 显示 AI 生成对话框
+    // Show AI generation dialog
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => AIGenerateDialog(
         onCourseGenerated: (course) {
-          // 加载生成的课程
+          // Load generated course
           ref.read(courseProvider.notifier).loadCourse(course);
           ref.read(builderStateProvider.notifier).setCourseTitle(course.metadata.title);
           ref.read(builderStateProvider.notifier).setCurrentPage(0);
@@ -517,7 +517,7 @@ class BuilderScreen extends ConsumerWidget {
   }
 
   void _importCourse(BuildContext context, WidgetRef ref) async {
-    // 检查是否有未保存的更改
+    // Check for unsaved changes
     final hasUnsaved = ref.read(builderStateProvider).hasUnsavedChanges;
 
     if (hasUnsaved) {
@@ -543,13 +543,13 @@ class BuilderScreen extends ConsumerWidget {
       if (confirmed != true) return;
     }
 
-    // 执行导入
+    // Perform import
     final result = await CourseImport.importFromFile();
 
     if (!context.mounted) return;
 
     if (result.success && result.course != null) {
-      // 加载课程到状态
+      // Load course into state
       ref.read(courseProvider.notifier).loadCourse(result.course!);
       ref.read(builderStateProvider.notifier).setCourseTitle(result.course!.metadata.title);
       ref.read(builderStateProvider.notifier).setCurrentPage(0);
@@ -573,7 +573,7 @@ class BuilderScreen extends ConsumerWidget {
   }
 
   Widget _buildUserAvatar(BuildContext context) {
-    // 使用 StreamBuilder 监听认证状态变化
+    // Use StreamBuilder to listen for auth state changes
     return StreamBuilder(
       stream: SupabaseService.authStateChanges,
       builder: (context, snapshot) {
@@ -714,7 +714,7 @@ class BuilderScreen extends ConsumerWidget {
   }
 
   void _showMyCourses(BuildContext context) async {
-    // TODO: 显示我的课程列表对话框
+    // TODO: show my courses dialog
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('My courses is coming soon...')),
     );
@@ -726,7 +726,7 @@ class BuilderScreen extends ConsumerWidget {
         context: context,
         builder: (context) => AuthDialog(
           onSuccess: () {
-            // 登录成功后重新尝试保存
+            // After successful sign-in, retry saving
             _saveToCloud(context, ref);
           },
         ),
@@ -736,7 +736,7 @@ class BuilderScreen extends ConsumerWidget {
 
     final course = ref.read(courseProvider);
 
-    // 显示保存中提示
+    // Show saving indicator
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Row(
@@ -761,7 +761,7 @@ class BuilderScreen extends ConsumerWidget {
 
     if (!context.mounted) return;
 
-    // 清除之前的 SnackBar
+    // Clear previous SnackBar
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (result.success) {
@@ -801,7 +801,7 @@ class BuilderScreen extends ConsumerWidget {
       return;
     }
 
-    // 先保存
+    // Save first
     final course = ref.read(courseProvider);
     final saveResult = await SupabaseService.saveCourse(course);
 
@@ -817,7 +817,7 @@ class BuilderScreen extends ConsumerWidget {
       return;
     }
 
-    // 确认发布
+    // Confirm publish
     if (!context.mounted) return;
 
     final confirmed = await showDialog<bool>(
@@ -841,7 +841,7 @@ class BuilderScreen extends ConsumerWidget {
 
     if (confirmed != true) return;
 
-    // 执行发布
+    // Perform publish
     final publishResult = await SupabaseService.publishCourse(
       saveResult.courseId!,
       saveResult.versionId!,

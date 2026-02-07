@@ -4,7 +4,7 @@ import '../../models/models.dart';
 import '../../services/block_registry.dart';
 import 'code_playground_widget.dart';
 
-/// Block 包装器 - 处理选中、删除等通用功能
+/// Block wrapper - handles selection, delete, and other common behavior
 class BlockWrapper extends StatelessWidget {
   final Block block;
   final bool isSelected;
@@ -43,9 +43,9 @@ class BlockWrapper extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Block 头部（类型标签 + 操作按钮）
+              // Block header (type label + actions)
               _buildHeader(context, info),
-              // Block 内容
+              // Block content
               _buildContent(context),
             ],
           ),
@@ -84,14 +84,14 @@ class BlockWrapper extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          // 拖拽手柄
+          // Drag handle
           const Icon(
             Icons.drag_indicator,
             size: 16,
             color: AppColors.neutral400,
           ),
           const SizedBox(width: AppSpacing.xs),
-          // 删除按钮
+          // Delete button
           InkWell(
             onTap: onDelete,
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
@@ -204,7 +204,7 @@ class BlockWrapper extends StatelessWidget {
   }
 }
 
-/// 文本 Block 内容
+/// Text block content
 class _TextBlockContent extends StatelessWidget {
   final TextContent content;
   final TextAlign textAlign;
@@ -228,7 +228,7 @@ class _TextBlockContent extends StatelessWidget {
   }
 }
 
-/// 图片 Block 内容
+/// Image block content
 class _ImageBlockContent extends StatelessWidget {
   final ImageContent content;
 
@@ -273,7 +273,7 @@ class _ImageBlockContent extends StatelessWidget {
   }
 }
 
-/// 代码块内容
+/// Code block content
 class _CodeBlockContent extends StatelessWidget {
   final CodeBlockContent content;
 
@@ -327,7 +327,7 @@ class _CodeBlockContent extends StatelessWidget {
   }
 }
 
-/// 选择题内容
+/// Multiple choice content
 class _MultipleChoiceContent extends StatelessWidget {
   final MultipleChoiceContent content;
 
@@ -389,7 +389,7 @@ class _MultipleChoiceContent extends StatelessWidget {
   }
 }
 
-/// 填空题内容
+/// Fill-in-the-blank content
 class _FillBlankContent extends StatelessWidget {
   final FillBlankContent content;
 
@@ -432,7 +432,7 @@ class _FillBlankContent extends StatelessWidget {
   }
 }
 
-/// 连线题内容
+/// Matching question content
 class _MatchingBlockContent extends StatelessWidget {
   final MatchingContent content;
 
@@ -563,7 +563,7 @@ class _MatchingBlockContent extends StatelessWidget {
   }
 }
 
-/// 视频内容
+/// Video content
 class _VideoBlockContent extends StatelessWidget {
   final VideoContent content;
 

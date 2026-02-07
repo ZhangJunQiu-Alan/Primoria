@@ -1,8 +1,8 @@
 -- ============================================================
--- 7. RPC 业务函数
+-- 7. RPC business functions
 -- ============================================================
 
--- -------------------- 全文检索课程 --------------------
+-- -------------------- Full-text search courses --------------------
 CREATE OR REPLACE FUNCTION search_courses(
     p_query      TEXT    DEFAULT NULL,
     p_subject_id UUID    DEFAULT NULL,
@@ -30,21 +30,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- -------------------- 发布课程（聚合 content_blocks → lessons.content_json） --------------------
+-- -------------------- Publish course (aggregate content_blocks -> lessons.content_json) --------------------
 CREATE OR REPLACE FUNCTION publish_course(p_course_id UUID)
 RETURNS VOID AS $$
 DECLARE
     v_lesson RECORD;
     v_blocks JSONB;
 BEGIN
-    -- 权限检查
+    -- Permission check
     IF NOT EXISTS (
         SELECT 1 FROM courses WHERE id = p_course_id AND author_id = auth.uid()
     ) THEN
         RAISE EXCEPTION 'Permission denied';
     END IF;
 
-    -- 对该课程下每个 lesson 聚合 content_blocks 快照
+    -- Aggregate content_blocks snapshot for each lesson in the course
     FOR v_lesson IN
         SELECT l.id AS lesson_id
         FROM lessons l
@@ -72,7 +72,7 @@ BEGIN
         WHERE id = v_lesson.lesson_id;
     END LOOP;
 
-    -- 更新课程状态
+    -- Update course status
     UPDATE courses
     SET status       = 'published',
         published_at = NOW(),
@@ -81,7 +81,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- -------------------- 每日活跃 upsert（用于 GitHub 绿墙） --------------------
+-- -------------------- Daily activity upsert (for GitHub heatmap) --------------------
 CREATE OR REPLACE FUNCTION upsert_daily_activity(
     p_user_id UUID,
     p_xp      INTEGER DEFAULT 0,
@@ -98,7 +98,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- -------------------- 更新用户 Streak --------------------
+-- -------------------- Update user streak --------------------
 CREATE OR REPLACE FUNCTION update_user_streak(p_user_id UUID)
 RETURNS VOID AS $$
 DECLARE
@@ -109,7 +109,7 @@ BEGIN
     FROM user_stats WHERE user_id = p_user_id;
 
     IF v_last_date IS NULL THEN
-        -- 首次活跃，初始化
+        -- First activity, initialize
         INSERT INTO user_stats (user_id, current_streak, longest_streak, last_activity_date)
         VALUES (p_user_id, 1, 1, v_today)
         ON CONFLICT (user_id) DO UPDATE SET
@@ -117,17 +117,17 @@ BEGIN
             longest_streak     = GREATEST(user_stats.longest_streak, 1),
             last_activity_date = v_today;
     ELSIF v_last_date = v_today THEN
-        -- 今天已记录，跳过
+        -- Already recorded today, skip
         NULL;
     ELSIF v_last_date = v_today - 1 THEN
-        -- 连续打卡
+        -- Consecutive streak
         UPDATE user_stats SET
             current_streak     = current_streak + 1,
             longest_streak     = GREATEST(longest_streak, current_streak + 1),
             last_activity_date = v_today
         WHERE user_id = p_user_id;
     ELSE
-        -- Streak 断了，重置
+        -- Streak broken, reset
         UPDATE user_stats SET
             current_streak     = 1,
             last_activity_date = v_today

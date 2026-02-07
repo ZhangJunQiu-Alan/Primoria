@@ -1,8 +1,8 @@
 -- ============================================================
--- 5. 社交与互动 (Social)
+-- 5. Social
 -- ============================================================
 
--- -------------------- follows (关注关系) --------------------
+-- -------------------- follows (follow relationships) --------------------
 CREATE TABLE follows (
     follower_id     UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     following_id    UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -25,7 +25,7 @@ CREATE POLICY "follows_insert_own"
 CREATE POLICY "follows_delete_own"
     ON follows FOR DELETE USING (auth.uid() = follower_id);
 
--- -------------------- course_feedback (课程反馈) --------------------
+-- -------------------- course_feedback (course feedback) --------------------
 CREATE TABLE course_feedback (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,

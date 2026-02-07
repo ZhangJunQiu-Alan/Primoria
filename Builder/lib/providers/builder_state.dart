@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Builder 布局状态
+/// Builder layout state
 class BuilderState {
   final int currentPageIndex;
   final String? selectedBlockId;
@@ -35,7 +35,7 @@ class BuilderState {
   }
 }
 
-/// Builder 状态 Notifier
+/// Builder state notifier
 class BuilderStateNotifier extends StateNotifier<BuilderState> {
   BuilderStateNotifier() : super(const BuilderState());
 
@@ -68,7 +68,7 @@ class BuilderStateNotifier extends StateNotifier<BuilderState> {
   }
 }
 
-/// Builder 状态 Provider
+/// Builder state provider
 final builderStateProvider =
     StateNotifierProvider<BuilderStateNotifier, BuilderState>((ref) {
   return BuilderStateNotifier();

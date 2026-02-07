@@ -2,19 +2,19 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/course.dart';
 
-/// 本地存储服务
+/// Local storage service
 class StorageService {
   static const String _courseKey = 'current_course';
   static const String _autoSaveKey = 'auto_save_enabled';
 
   static SharedPreferences? _prefs;
 
-  /// 初始化
+  /// Initialize
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  /// 保存课程到本地
+  /// Save course locally
   static Future<bool> saveCourse(Course course) async {
     if (_prefs == null) await init();
 
@@ -26,7 +26,7 @@ class StorageService {
     }
   }
 
-  /// 从本地加载课程
+  /// Load course from local storage
   static Future<Course?> loadCourse() async {
     if (_prefs == null) await init();
 
@@ -41,38 +41,38 @@ class StorageService {
     }
   }
 
-  /// 检查是否有保存的课程
+  /// Check if there is a saved course
   static Future<bool> hasSavedCourse() async {
     if (_prefs == null) await init();
     return _prefs!.containsKey(_courseKey);
   }
 
-  /// 清除保存的课程
+  /// Clear saved course
   static Future<bool> clearCourse() async {
     if (_prefs == null) await init();
     return await _prefs!.remove(_courseKey);
   }
 
-  /// 设置自动保存
+  /// Set auto-save
   static Future<bool> setAutoSave(bool enabled) async {
     if (_prefs == null) await init();
     return await _prefs!.setBool(_autoSaveKey, enabled);
   }
 
-  /// 获取自动保存设置
+  /// Get auto-save setting
   static Future<bool> getAutoSave() async {
     if (_prefs == null) await init();
     return _prefs!.getBool(_autoSaveKey) ?? true;
   }
 }
 
-/// 远端 API 服务（占位实现）
+/// Remote API service (placeholder)
 class ApiService {
   static const String _baseUrl = 'https://api.primoria.com';
 
-  /// 保存课程到服务器（占位）
+  /// Save course to server (placeholder)
   static Future<ApiResponse> saveCourseToServer(Course course) async {
-    // TODO: 实现真实的 API 调用
+    // TODO: implement real API call
     await Future.delayed(const Duration(milliseconds: 500));
 
     return const ApiResponse(
@@ -81,9 +81,9 @@ class ApiService {
     );
   }
 
-  /// 从服务器加载课程（占位）
+  /// Load course from server (placeholder)
   static Future<ApiResponse<Course>> loadCourseFromServer(String courseId) async {
-    // TODO: 实现真实的 API 调用
+    // TODO: implement real API call
     await Future.delayed(const Duration(milliseconds: 500));
 
     return const ApiResponse(
@@ -93,7 +93,7 @@ class ApiService {
   }
 }
 
-/// API 响应
+/// API response
 class ApiResponse<T> {
   final bool success;
   final String message;

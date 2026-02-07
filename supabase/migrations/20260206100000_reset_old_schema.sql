@@ -1,5 +1,5 @@
 -- ============================================================
--- Reset: 删除旧的初始 schema，为新设计腾出空间
+-- Reset: drop old initial schema to make room for the new design
 -- ============================================================
 
 -- Drop old triggers

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/design_tokens.dart';
 
-/// Builder 三栏布局组件
+/// Builder three-column layout
 class BuilderLayout extends StatelessWidget {
   final Widget leftPanel;
   final Widget canvas;
@@ -28,7 +28,7 @@ class BuilderLayout extends StatelessWidget {
         final isCompact = availableWidth < (leftPanelWidth + minCanvasWidth + rightPanelWidth);
 
         if (isCompact) {
-          // 紧凑模式：折叠侧边栏
+          // Compact mode: collapse sidebars
           return _buildCompactLayout(context);
         }
 
@@ -40,7 +40,7 @@ class BuilderLayout extends StatelessWidget {
   Widget _buildFullLayout(BuildContext context) {
     return Row(
       children: [
-        // 左侧模块面板
+        // Left module panel
         Container(
           width: leftPanelWidth,
           decoration: BoxDecoration(
@@ -51,14 +51,14 @@ class BuilderLayout extends StatelessWidget {
           ),
           child: leftPanel,
         ),
-        // 中央画布
+        // Center canvas
         Expanded(
           child: Container(
             color: AppColors.background,
             child: canvas,
           ),
         ),
-        // 右侧属性面板
+        // Right properties panel
         Container(
           width: rightPanelWidth,
           decoration: BoxDecoration(
@@ -74,10 +74,10 @@ class BuilderLayout extends StatelessWidget {
   }
 
   Widget _buildCompactLayout(BuildContext context) {
-    // 紧凑模式下使用 Drawer 或 Tab 切换
+    // In compact mode, use Drawer or tabs
     return Row(
       children: [
-        // 折叠的左侧栏（只显示图标）
+        // Collapsed left panel (icons only)
         Container(
           width: 56,
           decoration: BoxDecoration(
@@ -88,7 +88,7 @@ class BuilderLayout extends StatelessWidget {
           ),
           child: leftPanel,
         ),
-        // 画布占据剩余空间
+        // Canvas takes remaining space
         Expanded(
           child: Container(
             color: AppColors.background,

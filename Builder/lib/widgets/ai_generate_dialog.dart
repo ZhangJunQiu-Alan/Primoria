@@ -3,7 +3,7 @@ import '../theme/design_tokens.dart';
 import '../services/ai_course_generator.dart';
 import '../models/course.dart';
 
-/// AI 课程生成对话框
+/// AI course generation dialog
 class AIGenerateDialog extends StatefulWidget {
   final Function(Course course) onCourseGenerated;
 
@@ -24,14 +24,14 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
   String? _statusMessage;
   double _progress = 0;
 
-  // PDF 数据
+  // PDF data
   dynamic _pdfBytes;
   String? _pdfFileName;
 
   @override
   void initState() {
     super.initState();
-    // 恢复已保存的 API Key
+    // Restore saved API key
     final savedKey = AICourseGenerator.apiKey;
     if (savedKey != null) {
       _apiKeyController.text = savedKey;
@@ -57,7 +57,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 标题栏
+            // Header
             Row(
               children: [
                 Container(
@@ -109,7 +109,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
             const Divider(),
             const SizedBox(height: AppSpacing.lg),
 
-            // API Key 输入
+            // API key input
             const Text(
               'Gemini API Key',
               style: TextStyle(
@@ -136,7 +136,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
 
             const SizedBox(height: AppSpacing.lg),
 
-            // PDF 上传区域
+            // PDF upload area
             const Text(
               'PDF',
               style: TextStyle(
@@ -203,7 +203,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
               ),
             ),
 
-            // 错误信息
+            // Error message
             if (_errorMessage != null) ...[
               const SizedBox(height: AppSpacing.md),
               Container(
@@ -232,7 +232,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
               ),
             ],
 
-            // 状态信息
+            // Status message
             if (_statusMessage != null && _isLoading) ...[
               const SizedBox(height: AppSpacing.md),
               Container(
@@ -282,7 +282,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
 
             const SizedBox(height: AppSpacing.lg),
 
-            // 操作按钮
+            // Action buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -357,7 +357,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
       _progress = 0.1;
     });
 
-    // 保存 API Key
+    // Save API key
     AICourseGenerator.setApiKey(_apiKeyController.text);
 
     setState(() {
@@ -365,7 +365,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
       _progress = 0.3;
     });
 
-    // 调用 AI 生成
+    // Call AI generation
     final result = await AICourseGenerator.generateFromPdf(
       pdfBytes: _pdfBytes,
       fileName: _pdfFileName!,
@@ -382,7 +382,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
         _statusMessage = 'Course generated!';
       });
 
-      // 延迟关闭，让用户看到成功状态
+      // Delay close so user can see success state
       await Future.delayed(const Duration(milliseconds: 500));
 
       if (mounted) {

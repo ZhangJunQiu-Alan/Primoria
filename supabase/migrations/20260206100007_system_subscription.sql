@@ -1,8 +1,8 @@
 -- ============================================================
--- 6. 系统与订阅 (System & Subscription)
+-- 6. System & Subscription
 -- ============================================================
 
--- -------------------- app_versions (版本控制) --------------------
+-- -------------------- app_versions (version control) --------------------
 CREATE TABLE app_versions (
     version         TEXT NOT NULL,
     platform        app_platform NOT NULL,
@@ -17,7 +17,7 @@ ALTER TABLE app_versions ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "app_versions_select_public"
     ON app_versions FOR SELECT USING (true);
 
--- -------------------- subscriptions (会员订阅) --------------------
+-- -------------------- subscriptions (subscriptions) --------------------
 CREATE TABLE subscriptions (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,

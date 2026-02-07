@@ -1,5 +1,5 @@
-/// Viewer 首页 - 课程渲染器入口
-/// 占位页面，用于预览构建的课程
+/// Viewer home - course renderer entry
+/// Placeholder page for previewing built courses
 library;
 
 import 'package:flutter/material.dart';
@@ -291,7 +291,7 @@ class _BlockPreview extends StatelessWidget {
   }
 }
 
-/// 连线题 Widget
+/// Matching question widget
 class _MatchingWidget extends StatefulWidget {
   final MatchingContent content;
 

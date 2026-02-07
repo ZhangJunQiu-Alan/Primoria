@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-使用 Gemini 重新设计 Builder 界面 - STEM 明亮风格
+Use Gemini to redesign the Builder UI - STEM bright style
 """
 
 import sys
@@ -9,15 +9,15 @@ from pathlib import Path
 try:
     import google.generativeai as genai
 except ImportError:
-    print("请先安装 google-generativeai:")
+    print("Please install google-generativeai first:")
     print("  pip install google-generativeai")
     sys.exit(1)
 
-# 从 gemini_helper.py 导入 API Key
+# Import API key from gemini_helper.py
 sys.path.insert(0, str(Path(__file__).parent))
 from gemini_helper import API_KEY
 
-# 需要分析的核心 UI 文件
+# Core UI files to analyze
 UI_FILES = [
     "../lib/theme/design_tokens.dart",
     "../lib/theme/theme.dart",
@@ -29,50 +29,50 @@ UI_FILES = [
 ]
 
 STEM_REDESIGN_PROMPT = """
-你是一个专业的 Flutter UI/UX 设计师。请为这个课程编辑器（Builder）重新设计界面，要求：
+You are a professional Flutter UI/UX designer. Please redesign the UI for this course editor (Builder). Requirements:
 
-## 设计风格要求
-1. **STEM 科技感**：
-   - 使用明亮的科技蓝、电子绿、活力橙作为主色调
-   - 添加细微的网格背景或电路板纹理
-   - 图标使用几何/科技风格
+## Style requirements
+1. **STEM tech feel**:
+   - Use bright tech blue, electric green, and vibrant orange as primary colors
+   - Add subtle grid background or circuit-board texture
+   - Use geometric/tech style icons
 
-2. **明亮清新**：
-   - 以白色和浅灰为基础背景
-   - 高对比度的色彩搭配
-   - 避免暗沉的颜色
+2. **Bright and fresh**:
+   - Use white and light gray as base backgrounds
+   - High-contrast color combinations
+   - Avoid dull/dark colors
 
-3. **现代感**：
-   - 更大的圆角（16px-24px）
-   - 柔和的阴影效果
-   - 微妙的渐变色
-   - 玻璃态效果（可选）
+3. **Modern**:
+   - Larger corner radius (16px-24px)
+   - Soft shadows
+   - Subtle gradients
+   - Glassmorphism effect (optional)
 
-4. **教育友好**：
-   - 清晰的视觉层级
-   - 足够的留白
-   - 易于阅读的字体大小
+4. **Education-friendly**:
+   - Clear visual hierarchy
+   - Ample whitespace
+   - Readable font sizes
 
-## 输出要求
-请输出完整的新代码文件：
+## Output requirements
+Output complete new code files:
 
-1. **design_tokens.dart** - 新的设计令牌（STEM 配色方案）
-2. **theme.dart** - 新的主题配置
+1. **design_tokens.dart** - new design tokens (STEM color palette)
+2. **theme.dart** - new theme configuration
 
-确保：
-- 保持与现有代码结构兼容
-- 所有颜色值使用具体的十六进制值
-- 添加必要的注释说明设计意图
+Ensure:
+- Keep compatibility with the existing code structure
+- All color values use explicit hex values
+- Add necessary comments to explain design intent
 
-## 现有代码
+## Existing code
 
-以下是当前的代码文件，请基于这些进行重新设计：
+Here are the current code files. Please redesign based on these:
 
 """
 
 
 def load_files():
-    """加载所有 UI 相关文件"""
+    """Load all UI related files."""
     base_path = Path(__file__).parent
     files_content = []
 
@@ -81,55 +81,55 @@ def load_files():
         if full_path.exists():
             content = full_path.read_text(encoding="utf-8")
             files_content.append(f"### {file_path}\n```dart\n{content}\n```\n")
-            print(f"✓ 已加载: {file_path}")
+            print(f"✓ Loaded: {file_path}")
         else:
-            print(f"✗ 文件不存在: {file_path}")
+            print(f"✗ File not found: {file_path}")
 
     return "\n".join(files_content)
 
 
 def main():
-    if API_KEY == "在这里填入你的API_KEY":
-        print("错误: 请先在 gemini_helper.py 中填入你的 Gemini API Key")
+    if API_KEY == "PUT_YOUR_API_KEY_HERE":
+        print("Error: Please set your Gemini API key in gemini_helper.py")
         sys.exit(1)
 
     print("=" * 50)
-    print("STEM 风格 UI 重设计工具")
+    print("STEM-style UI redesign tool")
     print("=" * 50)
     print()
 
-    # 加载文件
-    print("正在加载 UI 文件...")
+    # Load files
+    print("Loading UI files...")
     files_content = load_files()
     print()
 
-    # 构建完整 prompt
+    # Build full prompt
     full_prompt = STEM_REDESIGN_PROMPT + files_content
 
-    # 调用 Gemini
-    print("正在调用 Gemini API（这可能需要一些时间）...")
+    # Call Gemini
+    print("Calling Gemini API (this may take some time)...")
     genai.configure(api_key=API_KEY)
     model = genai.GenerativeModel("gemini-2.0-flash")
 
     response = model.generate_content(full_prompt)
     result = response.text
 
-    # 保存结果
+    # Save result
     output_file = Path(__file__).parent / "stem_redesign_output.md"
     output_file.write_text(result, encoding="utf-8")
 
     print()
     print("=" * 50)
-    print(f"✓ 设计方案已保存到: {output_file}")
+    print(f"✓ Design output saved to: {output_file}")
     print("=" * 50)
     print()
-    print("Gemini 输出预览:")
+    print("Gemini output preview:")
     print("-" * 50)
-    # 只显示前 2000 字符
+    # Only show first 2000 characters
     preview = result[:2000] + "..." if len(result) > 2000 else result
     print(preview)
     print()
-    print(f"完整输出请查看: {output_file}")
+    print(f"Full output is in: {output_file}")
 
 
 if __name__ == "__main__":

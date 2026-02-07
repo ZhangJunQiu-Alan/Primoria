@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/design_tokens.dart';
 import '../services/supabase_service.dart';
 
-/// 用户资料编辑对话框
+/// User profile edit dialog
 class ProfileDialog extends StatefulWidget {
   const ProfileDialog({super.key});
 
@@ -62,7 +62,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // 标题
+            // Title
             Row(
               children: [
                 Container(
@@ -117,7 +117,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                 ),
               )
             else ...[
-              // 头像
+              // Avatar
               Center(
                 child: Stack(
                   children: [
@@ -156,7 +156,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
 
               const SizedBox(height: AppSpacing.lg),
 
-              // 邮箱（只读）
+              // Email (read-only)
               TextFormField(
                 initialValue: _email,
                 enabled: false,
@@ -170,7 +170,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
 
               const SizedBox(height: AppSpacing.md),
 
-              // 显示名称
+              // Display name
               TextFormField(
                 controller: _nameController,
                 enabled: !_isSaving,
@@ -181,7 +181,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                 ),
               ),
 
-              // 错误信息
+              // Error message
               if (_errorMessage != null) ...[
                 const SizedBox(height: AppSpacing.md),
                 Container(
@@ -210,7 +210,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
 
               const SizedBox(height: AppSpacing.lg),
 
-              // 保存按钮
+              // Save button
               ElevatedButton(
                 onPressed: _isSaving ? null : _saveProfile,
                 child: _isSaving
@@ -227,7 +227,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
 
               const SizedBox(height: AppSpacing.md),
 
-              // 退出登录
+              // Sign out
               TextButton(
                 onPressed: _isSaving ? null : _logout,
                 style: TextButton.styleFrom(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/design_tokens.dart';
 import '../services/supabase_service.dart';
 
-/// 登录/注册对话框
+/// Sign in / sign up dialog
 class AuthDialog extends StatefulWidget {
   final VoidCallback? onSuccess;
 
@@ -74,34 +74,34 @@ class _AuthDialogState extends State<AuthDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 标题栏
+              // Header
               _buildHeader(),
 
               const SizedBox(height: AppSpacing.lg),
 
-              // 表单内容
+              // Form content
               _buildForm(),
 
-              // 消息区域
+              // Message area
               _buildMessages(),
 
               const SizedBox(height: AppSpacing.lg),
 
-              // 操作按钮
+              // Action buttons
               _buildActions(),
 
               const SizedBox(height: AppSpacing.md),
 
-              // 分隔线
+              // Divider
               if (_mode != AuthMode.forgotPassword) ...[
                 _buildDivider(),
                 const SizedBox(height: AppSpacing.md),
-                // 第三方登录
+                // Social sign-in
                 _buildSocialLogin(),
                 const SizedBox(height: AppSpacing.md),
               ],
 
-              // 切换模式
+              // Mode switch
               _buildModeSwitch(),
             ],
           ),
@@ -161,7 +161,7 @@ class _AuthDialogState extends State<AuthDialog> {
   Widget _buildForm() {
     return Column(
       children: [
-        // 注册时显示名称输入
+        // Show display name input on registration
         if (_mode == AuthMode.register) ...[
           TextFormField(
             controller: _nameController,
@@ -176,7 +176,7 @@ class _AuthDialogState extends State<AuthDialog> {
           const SizedBox(height: AppSpacing.md),
         ],
 
-        // 邮箱
+        // Email
         TextFormField(
           controller: _emailController,
           enabled: !_isLoading,
@@ -198,7 +198,7 @@ class _AuthDialogState extends State<AuthDialog> {
           },
         ),
 
-        // 密码（非忘记密码模式）
+        // Password (not in forgot password mode)
         if (_mode != AuthMode.forgotPassword) ...[
           const SizedBox(height: AppSpacing.md),
           TextFormField(
@@ -238,7 +238,7 @@ class _AuthDialogState extends State<AuthDialog> {
           ),
         ],
 
-        // 确认密码（注册模式）
+        // Confirm password (register mode)
         if (_mode == AuthMode.register) ...[
           const SizedBox(height: AppSpacing.md),
           TextFormField(
@@ -264,7 +264,7 @@ class _AuthDialogState extends State<AuthDialog> {
           ),
         ],
 
-        // 忘记密码链接（登录模式）
+        // Forgot password link (login mode)
         if (_mode == AuthMode.login) ...[
           const SizedBox(height: AppSpacing.sm),
           Align(
@@ -301,7 +301,7 @@ class _AuthDialogState extends State<AuthDialog> {
   Widget _buildMessages() {
     return Column(
       children: [
-        // 错误信息
+        // Error message
         if (_errorMessage != null) ...[
           const SizedBox(height: AppSpacing.md),
           Container(
@@ -329,7 +329,7 @@ class _AuthDialogState extends State<AuthDialog> {
           ),
         ],
 
-        // 成功信息
+        // Success message
         if (_successMessage != null) ...[
           const SizedBox(height: AppSpacing.md),
           Container(
@@ -414,7 +414,7 @@ class _AuthDialogState extends State<AuthDialog> {
   Widget _buildSocialLogin() {
     return Column(
       children: [
-        // Google 登录
+        // Google sign-in
         OutlinedButton.icon(
           onPressed: _isLoading ? null : _signInWithGoogle,
           icon: Image.network(
@@ -432,7 +432,7 @@ class _AuthDialogState extends State<AuthDialog> {
 
         const SizedBox(height: AppSpacing.sm),
 
-        // GitHub 登录
+        // GitHub sign-in
         OutlinedButton.icon(
           onPressed: _isLoading ? null : _signInWithGitHub,
           icon: const Icon(Icons.code, size: 20),

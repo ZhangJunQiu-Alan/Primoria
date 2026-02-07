@@ -18,6 +18,6 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('预览'), findsOneWidget);
+    expect(find.text('Preview'), findsOneWidget);
   });
 }

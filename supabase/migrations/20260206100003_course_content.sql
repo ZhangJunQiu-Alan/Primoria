@@ -1,8 +1,8 @@
 -- ============================================================
--- 2. 课程内容 (Course Content)
+-- 2. Course Content
 -- ============================================================
 
--- -------------------- subjects (学科/分类) --------------------
+-- -------------------- subjects (categories) --------------------
 CREATE TABLE subjects (
     id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name              TEXT NOT NULL UNIQUE,
@@ -17,7 +17,7 @@ ALTER TABLE subjects ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "subjects_select_public"
     ON subjects FOR SELECT USING (true);
 
--- -------------------- courses (课程) --------------------
+-- -------------------- courses --------------------
 CREATE TABLE courses (
     id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     author_id         UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -37,7 +37,7 @@ CREATE TABLE courses (
     search_tsv        TSVECTOR
 );
 
--- 触发器函数：维护 courses.search_tsv
+-- Trigger function: maintain courses.search_tsv
 CREATE OR REPLACE FUNCTION courses_search_tsv_trigger() RETURNS trigger AS $$
 BEGIN
     NEW.search_tsv :=
@@ -56,7 +56,7 @@ CREATE TRIGGER trg_courses_updated_at
     BEFORE UPDATE ON courses
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- 全文检索索引
+-- Full-text search indexes
 CREATE INDEX idx_courses_search_tsv ON courses USING GIN(search_tsv);
 CREATE INDEX idx_courses_author_id ON courses(author_id);
 CREATE INDEX idx_courses_subject_id ON courses(subject_id);
@@ -80,7 +80,7 @@ CREATE POLICY "courses_update_own"
 CREATE POLICY "courses_delete_own"
     ON courses FOR DELETE USING (auth.uid() = author_id);
 
--- -------------------- chapters (章节) --------------------
+-- -------------------- chapters --------------------
 CREATE TABLE chapters (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     course_id   UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
@@ -132,7 +132,7 @@ CREATE POLICY "chapters_delete_author"
         )
     );
 
--- -------------------- lessons (子课程) --------------------
+-- -------------------- lessons --------------------
 CREATE TABLE lessons (
     id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     chapter_id        UUID NOT NULL REFERENCES chapters(id) ON DELETE CASCADE,
@@ -197,7 +197,7 @@ CREATE POLICY "lessons_delete_author"
         )
     );
 
--- -------------------- content_blocks (内容块 - Source of Truth) --------------------
+-- -------------------- content_blocks (blocks - Source of Truth) --------------------
 CREATE TABLE content_blocks (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     lesson_id       UUID NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,

@@ -3,16 +3,16 @@ import '../models/models.dart';
 import '../services/block_registry.dart';
 import '../services/id_generator.dart';
 
-/// 课程状态 Notifier
+/// Course state notifier
 class CourseNotifier extends StateNotifier<Course> {
   CourseNotifier() : super(Course.create());
 
-  /// 获取当前页面
+  /// Get current page
   CoursePage? getCurrentPage(int pageIndex) {
     return state.getPage(pageIndex);
   }
 
-  /// 添加 Block 到指定页面
+  /// Add block to a page
   void addBlock(int pageIndex, BlockType type) {
     final page = state.getPage(pageIndex);
     if (page == null) return;
@@ -22,7 +22,7 @@ class CourseNotifier extends StateNotifier<Course> {
     state = state.updatePage(updatedPage);
   }
 
-  /// 删除 Block
+  /// Remove block
   void removeBlock(int pageIndex, String blockId) {
     final page = state.getPage(pageIndex);
     if (page == null) return;
@@ -31,7 +31,7 @@ class CourseNotifier extends StateNotifier<Course> {
     state = state.updatePage(updatedPage);
   }
 
-  /// 更新 Block
+  /// Update block
   void updateBlock(int pageIndex, Block updatedBlock) {
     final page = state.getPage(pageIndex);
     if (page == null) return;
@@ -40,7 +40,7 @@ class CourseNotifier extends StateNotifier<Course> {
     state = state.updatePage(updatedPage);
   }
 
-  /// 重排 Block 顺序
+  /// Reorder blocks
   void reorderBlocks(int pageIndex, int oldIndex, int newIndex) {
     final page = state.getPage(pageIndex);
     if (page == null) return;
@@ -49,32 +49,32 @@ class CourseNotifier extends StateNotifier<Course> {
     state = state.updatePage(updatedPage);
   }
 
-  /// 更新课程标题
+  /// Update course title
   void updateTitle(String title) {
     state = state.updateMetadata((meta) => meta.copyWith(title: title));
   }
 
-  /// 添加新页面
+  /// Add new page
   void addPage({String? title}) {
     final pageTitle = title ?? 'Page ${state.pages.length + 1}';
     state = state.addPage(CoursePage.create(title: pageTitle));
   }
 
-  /// 删除页面（通过索引）
+  /// Remove page (by index)
   void removePage(int pageIndex) {
-    if (state.pages.length <= 1) return; // 至少保留一页
+    if (state.pages.length <= 1) return; // Keep at least one page
     if (pageIndex < 0 || pageIndex >= state.pages.length) return;
 
     final pageId = state.pages[pageIndex].pageId;
     state = state.removePage(pageId);
   }
 
-  /// 复制页面
+  /// Duplicate page
   void duplicatePage(int pageIndex) {
     final page = state.getPage(pageIndex);
     if (page == null) return;
 
-    // 创建副本，生成新 ID
+    // Create a duplicate and generate new IDs
     final duplicatedPage = CoursePage.create(
       title: '${page.title} (Copy)',
     ).copyWith(
@@ -83,13 +83,13 @@ class CourseNotifier extends StateNotifier<Course> {
       )).toList(),
     );
 
-    // 插入到原页面之后
+    // Insert after the original page
     final pages = List<CoursePage>.from(state.pages);
     pages.insert(pageIndex + 1, duplicatedPage);
     state = state.copyWith(pages: pages);
   }
 
-  /// 更新页面标题
+  /// Update page title
   void updatePageTitle(int pageIndex, String title) {
     final page = state.getPage(pageIndex);
     if (page == null) return;
@@ -98,23 +98,23 @@ class CourseNotifier extends StateNotifier<Course> {
     state = state.updatePage(updatedPage);
   }
 
-  /// 加载课程
+  /// Load course
   void loadCourse(Course course) {
     state = course;
   }
 
-  /// 创建新课程
+  /// Create new course
   void createNewCourse({String title = 'Untitled Course'}) {
     state = Course.create(title: title);
   }
 }
 
-/// 课程 Provider
+/// Course provider
 final courseProvider = StateNotifierProvider<CourseNotifier, Course>((ref) {
   return CourseNotifier();
 });
 
-/// 当前页面 Blocks Provider
+/// Current page blocks provider
 final currentPageBlocksProvider = Provider.family<List<Block>, int>((ref, pageIndex) {
   final course = ref.watch(courseProvider);
   return course.getPage(pageIndex)?.blocks ?? [];

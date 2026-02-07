@@ -1,6 +1,6 @@
-/// 应用主题配置
-/// 基于 Design Tokens 构建统一主题
-/// 符合 STEM 科技感 + 明亮清新 + 现代感 + 教育友好 设计风格
+/// App theme configuration
+/// Build a unified theme based on Design Tokens
+/// Matches STEM tech feel + bright and fresh + modern + education-friendly style
 library;
 
 import 'package:flutter/material.dart';
@@ -9,29 +9,29 @@ import 'design_tokens.dart';
 class AppTheme {
   AppTheme._();
 
-  /// 亮色主题
+  /// Light theme
   static ThemeData get light => ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
 
-        // ColorScheme 配置
+        // ColorScheme configuration
         colorScheme: const ColorScheme.light(
-          primary: AppColors.primary500, // 科技蓝
+          primary: AppColors.primary500, // tech blue
           onPrimary: Colors.white,
-          secondary: AppColors.secondary500, // 电子绿
+          secondary: AppColors.secondary500, // electric green
           onSecondary: Colors.white,
-          tertiary: AppColors.accent500, // 活力橙
+          tertiary: AppColors.accent500, // vibrant orange
           onTertiary: Colors.white,
-          surface: AppColors.surface, // 白色
+          surface: AppColors.surface, // white
           onSurface: AppColors.neutral800,
           error: AppColors.error,
           onError: Colors.white,
         ),
 
-        // Scaffold 背景色
+        // Scaffold background
         scaffoldBackgroundColor: AppColors.background,
 
-        // AppBar 主题
+        // AppBar theme
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.surface,
           foregroundColor: AppColors.neutral800,
@@ -44,7 +44,7 @@ class AppTheme {
           ),
         ),
 
-        // Card 主题
+        // Card theme
         cardTheme: CardThemeData(
           color: AppColors.surface,
           elevation: 0,
@@ -55,7 +55,7 @@ class AppTheme {
           margin: EdgeInsets.zero,
         ),
 
-        // ElevatedButton 主题
+        // ElevatedButton theme
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary500,
@@ -76,7 +76,7 @@ class AppTheme {
           ),
         ),
 
-        // OutlinedButton 主题
+        // OutlinedButton theme
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.primary500,
@@ -96,7 +96,7 @@ class AppTheme {
           ),
         ),
 
-        // TextButton 主题
+        // TextButton theme
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             foregroundColor: AppColors.primary500,
@@ -107,7 +107,7 @@ class AppTheme {
           ),
         ),
 
-        // InputDecoration 主题
+        // InputDecoration theme
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: AppColors.neutral50,
@@ -149,7 +149,7 @@ class AppTheme {
           ),
         ),
 
-        // Divider 主题
+        // Divider theme
         dividerTheme: const DividerThemeData(
           color: AppColors.neutral200,
           thickness: 1,
@@ -235,29 +235,29 @@ class AppTheme {
         ),
       );
 
-  /// 暗色主题
+  /// Dark theme
   static ThemeData get dark => ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
 
-        // ColorScheme 配置
+        // ColorScheme configuration
         colorScheme: const ColorScheme.dark(
-          primary: AppColors.primary400, // 科技蓝
+          primary: AppColors.primary400, // tech blue
           onPrimary: Colors.white,
-          secondary: AppColors.secondary400, // 电子绿
+          secondary: AppColors.secondary400, // electric green
           onSecondary: Colors.white,
-          tertiary: AppColors.accent400, // 活力橙
+          tertiary: AppColors.accent400, // vibrant orange
           onTertiary: Colors.white,
-          surface: AppColors.surfaceDark, // 深色表面
+          surface: AppColors.surfaceDark, // dark surface
           onSurface: AppColors.neutral100,
           error: AppColors.error,
           onError: Colors.white,
         ),
 
-        // Scaffold 背景色
+        // Scaffold background
         scaffoldBackgroundColor: AppColors.backgroundDark,
 
-        // AppBar 主题
+        // AppBar theme
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.surfaceDark,
           foregroundColor: AppColors.neutral100,
@@ -270,7 +270,7 @@ class AppTheme {
           ),
         ),
 
-        // Card 主题
+        // Card theme
         cardTheme: CardThemeData(
           color: AppColors.surfaceDark,
           elevation: 0,
@@ -281,7 +281,7 @@ class AppTheme {
           margin: EdgeInsets.zero,
         ),
 
-        // ElevatedButton 主题
+        // ElevatedButton theme
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary500,
@@ -302,7 +302,7 @@ class AppTheme {
           ),
         ),
 
-        // OutlinedButton 主题
+        // OutlinedButton theme
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.primary400,
@@ -322,7 +322,7 @@ class AppTheme {
           ),
         ),
 
-        // TextButton 主题
+        // TextButton theme
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             foregroundColor: AppColors.primary400,
@@ -333,7 +333,7 @@ class AppTheme {
           ),
         ),
 
-        // InputDecoration 主题
+        // InputDecoration theme
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: AppColors.neutral800,
@@ -375,7 +375,7 @@ class AppTheme {
           ),
         ),
 
-        // Divider 主题
+        // Divider theme
         dividerTheme: const DividerThemeData(
           color: AppColors.neutral700,
           thickness: 1,

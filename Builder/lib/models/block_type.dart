@@ -1,5 +1,5 @@
-/// Block 类型枚举
-/// 对应 PRD 3.2 基础模块类型
+/// Block type enum
+/// Matches PRD 3.2 basic module types
 library;
 
 enum BlockType {
@@ -18,7 +18,7 @@ enum BlockType {
 
   const BlockType(this.value, this.label, this.icon);
 
-  /// 从 JSON 值解析
+  /// Parse from JSON value
   static BlockType fromValue(String value) {
     return BlockType.values.firstWhere(
       (type) => type.value == value,

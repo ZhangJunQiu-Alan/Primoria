@@ -1,24 +1,21 @@
- # ALL
-    1. [ ] 统一 UI 风格
-    2. [ ] 多语言支持
+# ALL
+1. [ ] Unify UI style
+2. [ ] Multilingual support
 
-
- # Builder
-    1. [ ] 端文本块启用 Markdown 渲染。
-    2. [ ] 修改课程Prompt,适配
-    3. [ ] 构建课程管理体系,子课程
-    4. [ ] 登录主页制作: 支持常见功能(个人 Profile,成就等)
-    5. [ ] 模块面板添加基本分类(物理,化学,生物,数学,编程,通用)
-    6. [ ] 添加更多题型
-    7. [ ] 添加多人协作功能
-
+# Builder
+1. [ ] Enable Markdown rendering for text blocks
+2. [ ] Update course prompt to match the new flow
+3. [ ] Build course management system with sub-courses
+4. [ ] Build home page: support common features (Profile, achievements, etc.)
+5. [ ] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general)
+6. [ ] Add more question types
+7. [ ] Add multi-user collaboration
 
 # Viewer
-    1. [ ] 学习主页制作: 支持常见功能(个人 Profile,成就等)
-    2. [ ] 引入交友功能
-    3. [ ] 完成课程后生成记录
-    4. [ ] lesson 中每完成一个 block 顶部栏显示目前进度,不写入数据库,仅完成整个 lesson后写入数据库
+1. [ ] Build learning home page: support common features (Profile, achievements, etc.)
+2. [ ] Introduce social/friend features
+3. [ ] Generate records after course completion
+4. [ ] In a lesson, show current progress in the top bar after each block; do not write to the DB until the entire lesson is completed
 
-
-# 数据库部分
-    1. [ ] 家长模式
+# Database
+1. [ ] Parent mode

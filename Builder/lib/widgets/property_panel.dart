@@ -6,7 +6,7 @@ import '../providers/course_provider.dart';
 import '../models/models.dart';
 import '../services/block_registry.dart';
 
-/// 右侧属性面板 - 显示选中模块的属性
+/// Right properties panel - shows properties of the selected module
 class PropertyPanel extends ConsumerWidget {
   const PropertyPanel({super.key});
 
@@ -16,7 +16,7 @@ class PropertyPanel extends ConsumerWidget {
     final course = ref.watch(courseProvider);
     final selectedBlockId = builderState.selectedBlockId;
 
-    // 查找选中的 block
+    // Find selected block
     Block? selectedBlock;
     if (selectedBlockId != null) {
       final page = course.getPage(builderState.currentPageIndex);
@@ -33,7 +33,7 @@ class PropertyPanel extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 面板标题
+        // Panel title
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: const Text(
@@ -46,7 +46,7 @@ class PropertyPanel extends ConsumerWidget {
           ),
         ),
         const Divider(height: 1),
-        // 属性内容
+        // Properties content
         Expanded(
           child: selectedBlock == null
               ? _buildEmptyState()
@@ -88,7 +88,7 @@ class PropertyPanel extends ConsumerWidget {
   }
 }
 
-/// Block 属性编辑器
+/// Block property editor
 class _BlockPropertyEditor extends ConsumerStatefulWidget {
   final Block block;
   final int pageIndex;
@@ -116,7 +116,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
-        // 模块信息
+        // Module info
         _PropertySection(
           title: 'Block',
           children: [
@@ -147,7 +147,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         ),
         const SizedBox(height: AppSpacing.lg),
 
-        // 样式设置
+        // Style settings
         _PropertySection(
           title: 'Style',
           children: [
@@ -201,7 +201,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         ),
         const SizedBox(height: AppSpacing.lg),
 
-        // 内容编辑（根据类型）
+        // Content editor (by type)
         _buildContentEditor(),
       ],
     );
@@ -773,7 +773,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   }
 }
 
-/// 属性分组
+/// Property section
 class _PropertySection extends StatelessWidget {
   final String title;
   final List<Widget> children;
@@ -803,7 +803,7 @@ class _PropertySection extends StatelessWidget {
   }
 }
 
-/// 单个属性字段
+/// Single property field
 class _PropertyField extends StatelessWidget {
   final String label;
   final Widget child;

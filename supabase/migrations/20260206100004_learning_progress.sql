@@ -1,8 +1,8 @@
 -- ============================================================
--- 3. 学习进度与追踪 (Learning & Progress)
+-- 3. Learning & Progress
 -- ============================================================
 
--- -------------------- enrollments (选课记录) --------------------
+-- -------------------- enrollments (course enrollments) --------------------
 CREATE TABLE enrollments (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id         UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -30,7 +30,7 @@ CREATE POLICY "enrollments_insert_own"
 CREATE POLICY "enrollments_update_own"
     ON enrollments FOR UPDATE USING (auth.uid() = user_id);
 
--- -------------------- lesson_completions (完课记录) --------------------
+-- -------------------- lesson_completions (lesson completion records) --------------------
 CREATE TABLE lesson_completions (
     id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id             UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -53,8 +53,8 @@ CREATE POLICY "lesson_completions_select_own"
 CREATE POLICY "lesson_completions_insert_own"
     ON lesson_completions FOR INSERT WITH CHECK (auth.uid() = user_id);
 
--- -------------------- block_interactions (交互详情) --------------------
--- append-only，按月可分区
+-- -------------------- block_interactions (interaction details) --------------------
+-- append-only, optionally partition by month
 CREATE TABLE block_interactions (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,

@@ -1,5 +1,5 @@
 -- ============================================================
--- 0. 公共枚举类型 & 通用函数
+-- 0. Common enum types & utility functions
 -- ============================================================
 
 -- Extensions
@@ -20,9 +20,9 @@ CREATE TYPE price_tier AS ENUM ('free', 'premium');
 CREATE TYPE app_platform AS ENUM ('ios', 'android', 'web');
 CREATE TYPE subscription_status AS ENUM ('active', 'canceled', 'expired');
 
--- -------------------- 通用 Trigger 函数 --------------------
+-- -------------------- Common trigger functions --------------------
 
--- 自动更新 updated_at
+-- Auto-update updated_at
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
