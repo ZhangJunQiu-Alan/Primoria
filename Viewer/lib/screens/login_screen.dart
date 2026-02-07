@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../theme/theme.dart';
 import '../providers/user_provider.dart';
 
-/// Login page
+/// Login page - Duolingo + Brilliant style
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -64,14 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: AppSpacing.xxl),
 
-              // Logo
+              // Logo - green gradient
               Center(
                 child: Container(
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
                     gradient: AppColors.primaryGradient,
-                    borderRadius: AppRadius.borderRadiusLg,
+                    borderRadius: AppRadius.borderRadiusXl,
                   ),
                   child: const Center(
                     child: Text(
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 48,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ),
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   'Primoria',
                   style: AppTypography.headline1.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
@@ -180,28 +180,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: AppSpacing.lg),
 
-                    // Login/Register button
+                    // Login/Register button - 3D green style
                     Consumer<UserProvider>(
                       builder: (context, userProvider, child) {
                         return SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton(
+                          child: _Duo3DLoginButton(
                             onPressed: userProvider.isLoading ? null : _submit,
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: AppSpacing.md,
-                              ),
-                            ),
-                            child: userProvider.isLoading
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : Text(_isLogin ? 'Login' : 'Register'),
+                            isLoading: userProvider.isLoading,
+                            label: _isLogin ? 'Login' : 'Register',
                           ),
                         );
                       },
@@ -263,6 +250,75 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Duolingo-style 3D login button
+class _Duo3DLoginButton extends StatefulWidget {
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final String label;
+
+  const _Duo3DLoginButton({
+    required this.onPressed,
+    required this.isLoading,
+    required this.label,
+  });
+
+  @override
+  State<_Duo3DLoginButton> createState() => _Duo3DLoginButtonState();
+}
+
+class _Duo3DLoginButtonState extends State<_Duo3DLoginButton> {
+  bool _isPressed = false;
+
+  bool get _isEnabled => widget.onPressed != null && !widget.isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: _isEnabled ? (_) => setState(() => _isPressed = true) : null,
+      onTapUp: _isEnabled
+          ? (_) {
+              setState(() => _isPressed = false);
+              widget.onPressed!();
+            }
+          : null,
+      onTapCancel: _isEnabled ? () => setState(() => _isPressed = false) : null,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+        margin: EdgeInsets.only(
+          top: _isPressed ? 4 : 0,
+          bottom: _isPressed ? 0 : 4,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: AppRadius.borderRadiusFull,
+          border: Border(
+            bottom: BorderSide(
+              color: _isPressed ? AppColors.primary : AppColors.buttonShadow,
+              width: _isPressed ? 0 : 4,
+            ),
+          ),
+        ),
+        child: Center(
+          child: widget.isLoading
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              : Text(
+                  widget.label,
+                  style: AppTypography.button,
+                ),
         ),
       ),
     );

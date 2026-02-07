@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// Daily challenge card - Brilliant style
+/// Daily challenge card - Duolingo + Brilliant style
 class DailyChallengeCard extends StatelessWidget {
   final VoidCallback onTap;
   final bool isCompleted;
@@ -19,9 +19,9 @@ class DailyChallengeCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          gradient: isCompleted ? null : AppColors.accentGradient,
+          gradient: isCompleted ? null : AppColors.primaryGradient,
           color: isCompleted ? AppColors.success : null,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           boxShadow: AppShadows.md,
         ),
         child: Row(
@@ -51,7 +51,7 @@ class DailyChallengeCard extends StatelessWidget {
                     isCompleted ? 'Today\'s Challenge Complete!' : 'Daily Challenge',
                     style: AppTypography.title.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
@@ -67,18 +67,18 @@ class DailyChallengeCard extends StatelessWidget {
               ),
             ),
 
-            // Arrow
+            // Arrow - green circle, more prominent
             Container(
-              width: 40,
-              height: 40,
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
+                color: Colors.white.withValues(alpha: 0.25),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.arrow_forward,
                 color: Colors.white,
-                size: 20,
+                size: 22,
               ),
             ),
           ],

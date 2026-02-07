@@ -1,48 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart';
 
-/// Primoria app typography standards
+/// Primoria app typography standards (Nunito rounded font)
 class AppTypography {
   AppTypography._();
 
+  static String? get _fontFamily => GoogleFonts.nunito().fontFamily;
+
   // Heading styles
-  static const TextStyle headline1 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
+  static TextStyle get headline1 => TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 34,
+    fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
     height: 1.2,
   );
 
-  static const TextStyle headline2 = TextStyle(
+  static TextStyle get headline2 => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 24,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     height: 1.3,
   );
 
-  static const TextStyle headline3 = TextStyle(
+  static TextStyle get headline3 => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 20,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
     height: 1.3,
   );
 
-  static const TextStyle title = TextStyle(
+  static TextStyle get title => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 18,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
     height: 1.4,
   );
 
   // Body styles
-  static const TextStyle body1 = TextStyle(
+  static TextStyle get body1 => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
     height: 1.5,
   );
 
-  static const TextStyle body2 = TextStyle(
+  static TextStyle get body2 => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: AppColors.textSecondary,
@@ -50,44 +59,50 @@ class AppTypography {
   );
 
   // Label styles
-  static const TextStyle label = TextStyle(
+  static TextStyle get label => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 12,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
     height: 1.4,
   );
 
-  static const TextStyle labelSmall = TextStyle(
+  static TextStyle get labelSmall => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 10,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
     height: 1.4,
   );
 
   // Button styles
-  static const TextStyle button = TextStyle(
+  static TextStyle get button => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textOnPrimary,
     height: 1.2,
   );
 
-  static const TextStyle buttonSmall = TextStyle(
+  static TextStyle get buttonSmall => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 14,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textOnPrimary,
     height: 1.2,
   );
 
   // Value display styles
-  static const TextStyle valueDisplay = TextStyle(
+  static TextStyle get valueDisplay => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 48,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w800,
     color: AppColors.primary,
     height: 1.1,
   );
 
-  static const TextStyle valueMedium = TextStyle(
+  static TextStyle get valueMedium => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 32,
     fontWeight: FontWeight.bold,
     color: AppColors.primary,
@@ -95,14 +110,16 @@ class AppTypography {
   );
 
   // Feedback dialog styles
-  static const TextStyle feedbackTitle = TextStyle(
+  static TextStyle get feedbackTitle => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 24,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
     height: 1.3,
   );
 
-  static const TextStyle feedbackMessage = TextStyle(
+  static TextStyle get feedbackMessage => TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: AppColors.textSecondary,

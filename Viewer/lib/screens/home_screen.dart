@@ -10,7 +10,7 @@ import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'lesson_screen.dart';
 
-/// Home page - Brilliant style
+/// Home page - Duolingo + Brilliant style
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context) => const LessonScreen(
                       lessonId: 'daily',
                       lessonTitle: 'Daily Challenge',
-                      gradient: AppColors.accentGradient,
+                      gradient: AppColors.primaryGradient,
                     ),
                   ),
                 );
@@ -121,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'View All',
                     style: AppTypography.body2.copyWith(
                       color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -250,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Row(
         children: [
-          // Logo
+          // Logo - green gradient
           Container(
             width: 40,
             height: 40,
@@ -264,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
@@ -273,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             'Primoria',
             style: AppTypography.headline3.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
             ),
           ),
           const Spacer(),
@@ -311,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
           gradient: gradient,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           boxShadow: AppShadows.md,
         ),
         child: Column(
