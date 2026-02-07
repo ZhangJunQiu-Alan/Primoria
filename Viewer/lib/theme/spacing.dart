@@ -60,15 +60,15 @@ class AppSpacing {
   static const SizedBox horizontalGapXl = SizedBox(width: xl);
 }
 
-/// Border radius standards
+/// Border radius standards (rounder for Duolingo feel)
 class AppRadius {
   AppRadius._();
 
-  static const double sm = 4.0;
-  static const double md = 8.0;
-  static const double lg = 12.0;
-  static const double xl = 16.0;
-  static const double xxl = 24.0;
+  static const double sm = 6.0;
+  static const double md = 12.0;
+  static const double lg = 16.0;
+  static const double xl = 20.0;
+  static const double xxl = 28.0;
   static const double full = 999.0;
 
   static const BorderRadius borderRadiusSm = BorderRadius.all(Radius.circular(sm));
@@ -85,24 +85,24 @@ class AppShadows {
 
   static const List<BoxShadow> sm = [
     BoxShadow(
-      color: Color(0x1A000000),
-      blurRadius: 4,
+      color: Color(0x14000000),
+      blurRadius: 6,
       offset: Offset(0, 2),
     ),
   ];
 
   static const List<BoxShadow> md = [
     BoxShadow(
-      color: Color(0x1A000000),
-      blurRadius: 8,
+      color: Color(0x14000000),
+      blurRadius: 10,
       offset: Offset(0, 4),
     ),
   ];
 
   static const List<BoxShadow> lg = [
     BoxShadow(
-      color: Color(0x1A000000),
-      blurRadius: 16,
+      color: Color(0x14000000),
+      blurRadius: 20,
       offset: Offset(0, 8),
     ),
   ];

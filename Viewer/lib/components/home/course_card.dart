@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// Course card component - Brilliant style
+/// Course card component - Duolingo + Brilliant style
 class CourseCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -28,11 +28,22 @@ class CourseCard extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           boxShadow: AppShadows.sm,
         ),
         child: Row(
           children: [
+            // Left accent stripe
+            Container(
+              width: 4,
+              height: 64,
+              decoration: BoxDecoration(
+                gradient: gradient,
+                borderRadius: AppRadius.borderRadiusFull,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.md),
+
             // Course icon
             Container(
               width: 56,
@@ -69,7 +80,7 @@ class CourseCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
 
-                  // Progress bar
+                  // Progress bar - thicker
                   _buildProgressBar(),
                 ],
               ),
@@ -86,7 +97,7 @@ class CourseCard extends StatelessWidget {
 
   Widget _buildProgressBar() {
     return Container(
-      height: 4,
+      height: 6,
       decoration: BoxDecoration(
         color: AppColors.border,
         borderRadius: AppRadius.borderRadiusFull,
@@ -96,7 +107,7 @@ class CourseCard extends StatelessWidget {
         widthFactor: progress,
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient,
+            color: AppColors.primary,
             borderRadius: AppRadius.borderRadiusFull,
           ),
         ),
@@ -122,7 +133,7 @@ class CourseCard extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation(AppColors.border),
             ),
           ),
-          // Progress circle
+          // Progress circle - green
           SizedBox(
             width: 48,
             height: 48,
@@ -130,14 +141,14 @@ class CourseCard extends StatelessWidget {
               value: progress,
               strokeWidth: 4,
               backgroundColor: Colors.transparent,
-              valueColor: AlwaysStoppedAnimation(gradient.colors.first),
+              valueColor: const AlwaysStoppedAnimation(AppColors.primary),
             ),
           ),
-          // Percentage text
+          // Percentage text - bolder
           Text(
             '${(progress * 100).toInt()}%',
             style: AppTypography.label.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
               color: AppColors.textPrimary,
             ),
           ),

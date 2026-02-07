@@ -62,17 +62,17 @@ class CourseHeader extends StatelessWidget {
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 children: [
-                  // Course icon
+                  // Course icon - larger container
                   Container(
-                    width: 80,
-                    height: 80,
+                    width: 88,
+                    height: 88,
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: AppRadius.borderRadiusLg,
+                      borderRadius: AppRadius.borderRadiusXl,
                     ),
                     child: Icon(
                       icon,
-                      size: 48,
+                      size: 52,
                       color: Colors.white,
                     ),
                   ),
@@ -83,7 +83,7 @@ class CourseHeader extends StatelessWidget {
                     title,
                     style: AppTypography.headline2.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w800,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -107,13 +107,13 @@ class CourseHeader extends StatelessWidget {
               ),
             ),
 
-            // Bottom rounded mask
+            // Bottom rounded mask - more pronounced curve
             Container(
-              height: 24,
+              height: 28,
               decoration: const BoxDecoration(
                 color: AppColors.background,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(AppRadius.xl),
+                  top: Radius.circular(AppRadius.xxl),
                 ),
               ),
             ),
@@ -128,7 +128,7 @@ class CourseHeader extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: AppRadius.borderRadiusLg,
+        borderRadius: AppRadius.borderRadiusXl,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -172,7 +172,7 @@ class CourseHeader extends StatelessWidget {
           value,
           style: AppTypography.headline3.copyWith(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w800,
           ),
         ),
         const SizedBox(height: AppSpacing.xs),

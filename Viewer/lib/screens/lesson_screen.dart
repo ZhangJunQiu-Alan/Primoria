@@ -8,7 +8,7 @@ import '../models/unit_model.dart';
 import '../providers/user_provider.dart';
 import '../services/audio_service.dart';
 
-/// Lesson/Interactive learning page - Brilliant style
+/// Lesson/Interactive learning page - Duolingo + Brilliant style
 class LessonScreen extends StatefulWidget {
   final String? lessonId;
   final String? lessonTitle;
@@ -40,10 +40,6 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // Start time (for calculating study duration)
   final DateTime _startTime = DateTime.now();
-
-  // Get default gradient
-  LinearGradient get _gradient =>
-      widget.gradient ?? AppColors.mathGradient;
 
   // Get title
   String get _title => widget.lessonTitle ?? 'Interactive Learning';
@@ -250,7 +246,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 // Top bar
                 _buildHeader(isDark),
 
-                // Progress bar
+                // Progress bar - thicker, green
                 _buildProgressBar(),
 
                 // Content area
@@ -267,7 +263,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
           ),
 
-          // Confetti effect
+          // Confetti effect - updated colors
           Align(
             alignment: Alignment.topCenter,
             child: ConfettiWidget(
@@ -276,7 +272,7 @@ class _LessonScreenState extends State<LessonScreen> {
               shouldLoop: false,
               colors: const [
                 AppColors.primary,
-                AppColors.success,
+                AppColors.primaryLight,
                 AppColors.accent,
                 AppColors.courseMath,
                 AppColors.courseCS,
@@ -321,14 +317,14 @@ class _LessonScreenState extends State<LessonScreen> {
               vertical: AppSpacing.xs,
             ),
             decoration: BoxDecoration(
-              color: _gradient.colors.first.withValues(alpha: 0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: AppRadius.borderRadiusFull,
             ),
             child: Text(
               '${_currentIndex + 1}/${_questions.length}',
               style: AppTypography.label.copyWith(
-                color: _gradient.colors.first,
-                fontWeight: FontWeight.w600,
+                color: AppColors.primary,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -342,7 +338,7 @@ class _LessonScreenState extends State<LessonScreen> {
     final progress = (_currentIndex + 1) / _questions.length;
 
     return Container(
-      height: 4,
+      height: 6,
       margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       decoration: BoxDecoration(
         color: AppColors.border,
@@ -353,7 +349,7 @@ class _LessonScreenState extends State<LessonScreen> {
         widthFactor: progress,
         child: Container(
           decoration: BoxDecoration(
-            gradient: _gradient,
+            gradient: AppColors.primaryGradient,
             borderRadius: AppRadius.borderRadiusFull,
           ),
         ),
@@ -415,14 +411,14 @@ class _LessonScreenState extends State<LessonScreen> {
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? _gradient.colors.first.withValues(alpha: 0.1)
+                        ? AppColors.primary.withValues(alpha: 0.08)
                         : isDark
                             ? AppColors.cardDark
                             : AppColors.surface,
-                    borderRadius: AppRadius.borderRadiusLg,
+                    borderRadius: AppRadius.borderRadiusXl,
                     border: Border.all(
                       color: isSelected
-                          ? _gradient.colors.first
+                          ? AppColors.primary
                           : isDark
                               ? AppColors.borderDark
                               : AppColors.border,
@@ -437,11 +433,11 @@ class _LessonScreenState extends State<LessonScreen> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: isSelected
-                              ? _gradient.colors.first
+                              ? AppColors.primary
                               : Colors.transparent,
                           border: Border.all(
                             color: isSelected
-                                ? _gradient.colors.first
+                                ? AppColors.primary
                                 : isDark
                                     ? AppColors.borderDark
                                     : AppColors.border,
@@ -498,7 +494,7 @@ class _LessonScreenState extends State<LessonScreen> {
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
                 color: isDark ? AppColors.cardDark : AppColors.surface,
-                borderRadius: AppRadius.borderRadiusMd,
+                borderRadius: AppRadius.borderRadiusLg,
                 border: Border.all(
                   color: isDark ? AppColors.borderDark : AppColors.border,
                 ),
@@ -545,15 +541,15 @@ class _LessonScreenState extends State<LessonScreen> {
             filled: true,
             fillColor: isDark ? AppColors.cardDark : AppColors.surface,
             border: OutlineInputBorder(
-              borderRadius: AppRadius.borderRadiusLg,
+              borderRadius: AppRadius.borderRadiusXl,
               borderSide: BorderSide(
                 color: isDark ? AppColors.borderDark : AppColors.border,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: AppRadius.borderRadiusLg,
-              borderSide: BorderSide(
-                color: _gradient.colors.first,
+              borderRadius: AppRadius.borderRadiusXl,
+              borderSide: const BorderSide(
+                color: AppColors.primary,
                 width: 2,
               ),
             ),
@@ -608,18 +604,11 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
       child: SizedBox(
         width: double.infinity,
-        child: ElevatedButton(
+        child: _Duo3DSubmitButton(
           onPressed: canSubmit ? (isInfoPage ? _nextQuestion : _checkAnswer) : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _gradient.colors.first,
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-            disabledBackgroundColor: isDark ? AppColors.borderDark : AppColors.border,
-          ),
-          child: Text(
-            isInfoPage
-                ? (question.isLast ? 'Complete Lesson' : 'Continue')
-                : 'Submit Answer',
-          ),
+          label: isInfoPage
+              ? (question.isLast ? 'Complete Lesson' : 'Continue')
+              : 'Submit Answer',
         ),
       ),
     );
@@ -647,6 +636,69 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Duolingo-style 3D submit button for lesson screen
+class _Duo3DSubmitButton extends StatefulWidget {
+  final VoidCallback? onPressed;
+  final String label;
+
+  const _Duo3DSubmitButton({
+    required this.onPressed,
+    required this.label,
+  });
+
+  @override
+  State<_Duo3DSubmitButton> createState() => _Duo3DSubmitButtonState();
+}
+
+class _Duo3DSubmitButtonState extends State<_Duo3DSubmitButton> {
+  bool _isPressed = false;
+
+  bool get _isEnabled => widget.onPressed != null;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _isEnabled ? AppColors.primary : AppColors.border;
+    final shadowColor = _isEnabled ? AppColors.buttonShadow : AppColors.border;
+
+    return GestureDetector(
+      onTapDown: _isEnabled ? (_) => setState(() => _isPressed = true) : null,
+      onTapUp: _isEnabled
+          ? (_) {
+              setState(() => _isPressed = false);
+              widget.onPressed!();
+            }
+          : null,
+      onTapCancel: _isEnabled ? () => setState(() => _isPressed = false) : null,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+        margin: EdgeInsets.only(
+          top: _isPressed ? 4 : 0,
+          bottom: _isPressed ? 0 : 4,
+        ),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: AppRadius.borderRadiusFull,
+          border: Border(
+            bottom: BorderSide(
+              color: _isPressed ? color : shadowColor,
+              width: _isPressed ? 0 : 4,
+            ),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            widget.label,
+            style: AppTypography.button.copyWith(
+              color: _isEnabled ? Colors.white : AppColors.textDisabled,
+            ),
+          ),
+        ),
       ),
     );
   }

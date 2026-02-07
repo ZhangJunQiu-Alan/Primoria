@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import 'course_screen.dart';
 
-/// Search page - Brilliant style
+/// Search page - Duolingo + Brilliant style
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search bar
+            // Search bar - pill shaped
             _buildSearchBar(),
 
             // Content area
@@ -80,15 +80,15 @@ class _SearchScreenState extends State<SearchScreen> {
           filled: true,
           fillColor: AppColors.surface,
           border: OutlineInputBorder(
-            borderRadius: AppRadius.borderRadiusLg,
+            borderRadius: AppRadius.borderRadiusFull,
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: AppRadius.borderRadiusLg,
+            borderRadius: AppRadius.borderRadiusFull,
             borderSide: const BorderSide(color: AppColors.border),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: AppRadius.borderRadiusLg,
+            borderRadius: AppRadius.borderRadiusFull,
             borderSide: const BorderSide(color: AppColors.primary, width: 2),
           ),
         ),
@@ -182,7 +182,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Container(
         decoration: BoxDecoration(
           gradient: category.gradient,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           boxShadow: AppShadows.sm,
         ),
         child: Column(
@@ -198,7 +198,7 @@ class _SearchScreenState extends State<SearchScreen> {
               category.name,
               style: AppTypography.label.copyWith(
                 color: Colors.white,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -241,7 +241,7 @@ class _SearchScreenState extends State<SearchScreen> {
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           boxShadow: AppShadows.sm,
         ),
         child: Row(
@@ -290,7 +290,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       Text(
                         '${course.rating}',
                         style: AppTypography.label.copyWith(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.md),
@@ -304,9 +304,9 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
 
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: AppColors.textSecondary,
+              color: AppColors.primary.withValues(alpha: 0.6),
             ),
           ],
         ),

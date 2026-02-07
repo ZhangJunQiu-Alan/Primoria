@@ -7,7 +7,7 @@ export 'colors.dart';
 export 'typography.dart';
 export 'spacing.dart';
 
-/// Primoria app theme
+/// Primoria app theme (Duolingo + Brilliant blend)
 class AppTheme {
   AppTheme._();
 
@@ -21,13 +21,13 @@ class AppTheme {
       // Color scheme
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
-        secondary: AppColors.success,
+        secondary: AppColors.accent,
         surface: AppColors.surface,
         error: AppColors.error,
       ),
 
       // AppBar theme
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.surface,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
@@ -35,19 +35,29 @@ class AppTheme {
         titleTextStyle: AppTypography.title,
       ),
 
-      // Button theme
+      // Button theme - Duolingo 3D raised style
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.textOnPrimary,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) return AppColors.border;
+            return AppColors.primary;
+          }),
+          foregroundColor: WidgetStateProperty.all(AppColors.textOnPrimary),
+          padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(
+              horizontal: 28,
+              vertical: 16,
+            ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadius.borderRadiusMd,
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: AppRadius.borderRadiusFull,
+            ),
           ),
-          textStyle: AppTypography.button,
+          textStyle: WidgetStateProperty.all(AppTypography.button),
+          elevation: WidgetStateProperty.all(0),
+          shadowColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(AppColors.primaryDark.withValues(alpha: 0.2)),
         ),
       ),
 
@@ -55,13 +65,13 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+            horizontal: 28,
+            vertical: 16,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: AppRadius.borderRadiusMd,
+            borderRadius: AppRadius.borderRadiusFull,
           ),
-          side: const BorderSide(color: AppColors.primary),
+          side: const BorderSide(color: AppColors.primary, width: 2),
           textStyle: AppTypography.button.copyWith(color: AppColors.primary),
         ),
       ),
@@ -73,34 +83,34 @@ class AppTheme {
         ),
       ),
 
-      // Card theme
+      // Card theme - rounder
       cardTheme: CardThemeData(
         color: AppColors.surface,
-        elevation: 2,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
         ),
         margin: EdgeInsets.zero,
       ),
 
-      // Input field theme
+      // Input field theme - rounder with green focus
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceVariant,
         border: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: const BorderSide(color: AppColors.error),
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -110,7 +120,7 @@ class AppTheme {
         hintStyle: AppTypography.body1.copyWith(color: AppColors.textDisabled),
       ),
 
-      // Slider theme
+      // Slider theme - green
       sliderTheme: SliderThemeData(
         activeTrackColor: AppColors.sliderActive,
         inactiveTrackColor: AppColors.sliderTrack,
@@ -124,17 +134,17 @@ class AppTheme {
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
       ),
 
-      // Dialog theme
+      // Dialog theme - rounder
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusXl,
+          borderRadius: AppRadius.borderRadiusXxl,
         ),
         titleTextStyle: AppTypography.headline3,
         contentTextStyle: AppTypography.body1,
       ),
 
-      // Progress indicator theme
+      // Progress indicator theme - green
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
         linearTrackColor: AppColors.border,
@@ -153,7 +163,7 @@ class AppTheme {
       // Color scheme
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
-        secondary: AppColors.success,
+        secondary: AppColors.accent,
         surface: AppColors.surfaceDark,
         error: AppColors.error,
       ),
@@ -167,19 +177,29 @@ class AppTheme {
         titleTextStyle: AppTypography.title.copyWith(color: AppColors.textOnDark),
       ),
 
-      // Button theme
+      // Button theme - Duolingo 3D raised style
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.textOnPrimary,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) return AppColors.borderDark;
+            return AppColors.primary;
+          }),
+          foregroundColor: WidgetStateProperty.all(AppColors.textOnPrimary),
+          padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(
+              horizontal: 28,
+              vertical: 16,
+            ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadius.borderRadiusMd,
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: AppRadius.borderRadiusFull,
+            ),
           ),
-          textStyle: AppTypography.button,
+          textStyle: WidgetStateProperty.all(AppTypography.button),
+          elevation: WidgetStateProperty.all(0),
+          shadowColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(AppColors.primaryDark.withValues(alpha: 0.2)),
         ),
       ),
 
@@ -187,13 +207,13 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+            horizontal: 28,
+            vertical: 16,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: AppRadius.borderRadiusMd,
+            borderRadius: AppRadius.borderRadiusFull,
           ),
-          side: const BorderSide(color: AppColors.primary),
+          side: const BorderSide(color: AppColors.primary, width: 2),
           textStyle: AppTypography.button.copyWith(color: AppColors.primary),
         ),
       ),
@@ -205,12 +225,12 @@ class AppTheme {
         ),
       ),
 
-      // Card theme
+      // Card theme - rounder
       cardTheme: CardThemeData(
         color: AppColors.cardDark,
-        elevation: 2,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
         ),
         margin: EdgeInsets.zero,
       ),
@@ -220,19 +240,19 @@ class AppTheme {
         filled: true,
         fillColor: AppColors.cardDark,
         border: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: const BorderSide(color: AppColors.borderDark),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: AppRadius.borderRadiusMd,
+          borderRadius: AppRadius.borderRadiusLg,
           borderSide: const BorderSide(color: AppColors.error),
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -260,7 +280,7 @@ class AppTheme {
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.cardDark,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusXl,
+          borderRadius: AppRadius.borderRadiusXxl,
         ),
         titleTextStyle: AppTypography.headline3.copyWith(color: AppColors.textOnDark),
         contentTextStyle: AppTypography.body1.copyWith(color: AppColors.textOnDark),

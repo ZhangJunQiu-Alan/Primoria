@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import 'course_screen.dart';
 
-/// Courses list page - Brilliant style
+/// Courses list page - Duolingo + Brilliant style
 class CoursesScreen extends StatefulWidget {
   const CoursesScreen({super.key});
 
@@ -162,7 +162,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                   '${_courses.length} courses',
                   style: AppTypography.label.copyWith(
                     color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -191,7 +191,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
         dividerColor: Colors.transparent,
         labelColor: AppColors.primary,
         unselectedLabelColor: AppColors.textSecondary,
-        labelStyle: AppTypography.label.copyWith(fontWeight: FontWeight.w600),
+        labelStyle: AppTypography.label.copyWith(fontWeight: FontWeight.w700),
         unselectedLabelStyle: AppTypography.label,
         tabs: _tabs.map((tab) => Tab(text: tab)).toList(),
       ),
@@ -250,7 +250,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           boxShadow: AppShadows.sm,
         ),
         child: Column(
@@ -260,8 +260,8 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
                 gradient: course.gradient,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(AppRadius.lg),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(AppRadius.xl),
                 ),
               ),
               child: Row(
@@ -324,7 +324,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                         _getStatusText(course.status),
                         style: AppTypography.label.copyWith(
                           color: _getStatusColor(course.status),
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       Text(
@@ -346,7 +346,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                       widthFactor: course.progress,
                       child: Container(
                         decoration: BoxDecoration(
-                          gradient: course.gradient,
+                          color: AppColors.primary,
                           borderRadius: AppRadius.borderRadiusFull,
                         ),
                       ),
@@ -371,9 +371,6 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                           ),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: course.gradient.colors.first,
-                      ),
                       child: Text(
                         course.status == CourseStatus.completed
                             ? 'Review Course'

@@ -166,7 +166,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
           constraints: const BoxConstraints(maxWidth: 340),
           decoration: BoxDecoration(
             color: AppColors.surface,
-            borderRadius: AppRadius.borderRadiusXl,
+            borderRadius: AppRadius.borderRadiusXxl,
             boxShadow: AppShadows.lg,
           ),
           child: Padding(
@@ -226,19 +226,19 @@ class _FeedbackDialogState extends State<FeedbackDialog>
                 ],
                 AppSpacing.verticalGapLg,
 
-                // Primary button
+                // Primary button - 3D green style
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: _Duo3DButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                       widget.onPrimaryTap();
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _primaryColor,
-                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                    color: _primaryColor,
+                    child: Text(
+                      widget.primaryButtonText,
+                      style: AppTypography.button,
                     ),
-                    child: Text(widget.primaryButtonText),
                   ),
                 ),
 
@@ -272,6 +272,62 @@ class _FeedbackDialogState extends State<FeedbackDialog>
   /// Shake wave function
   double _shakeWave(double t) {
     return (1 - t) * (1 - t) * (2 * t - 1) * 8;
+  }
+}
+
+/// Duolingo-style 3D raised button
+class _Duo3DButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final Color color;
+  final Widget child;
+
+  const _Duo3DButton({
+    required this.onPressed,
+    required this.color,
+    required this.child,
+  });
+
+  @override
+  State<_Duo3DButton> createState() => _Duo3DButtonState();
+}
+
+class _Duo3DButtonState extends State<_Duo3DButton> {
+  bool _isPressed = false;
+
+  Color get _shadowColor {
+    final hsl = HSLColor.fromColor(widget.color);
+    return hsl.withLightness((hsl.lightness - 0.15).clamp(0.0, 1.0)).toColor();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        widget.onPressed();
+      },
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+        margin: EdgeInsets.only(
+          top: _isPressed ? 4 : 0,
+          bottom: _isPressed ? 0 : 4,
+        ),
+        decoration: BoxDecoration(
+          color: widget.color,
+          borderRadius: AppRadius.borderRadiusFull,
+          border: Border(
+            bottom: BorderSide(
+              color: _isPressed ? widget.color : _shadowColor,
+              width: _isPressed ? 0 : 4,
+            ),
+          ),
+        ),
+        child: Center(child: widget.child),
+      ),
+    );
   }
 }
 

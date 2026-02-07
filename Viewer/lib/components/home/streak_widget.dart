@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// Streak flame widget - Brilliant style
+/// Streak flame widget - Duolingo style
 class StreakWidget extends StatelessWidget {
   final int streakCount;
   final bool showLabel;
@@ -18,8 +18,8 @@ class StreakWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: AppSpacing.sm + 2,
+        vertical: AppSpacing.xs + 1,
       ),
       decoration: BoxDecoration(
         color: AppColors.streakFire.withValues(alpha: 0.1),
@@ -28,7 +28,7 @@ class StreakWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Flame icon
+          // Flame icon with gold/orange gradient
           ShaderMask(
             shaderCallback: (Rect bounds) {
               return const LinearGradient(
@@ -49,7 +49,7 @@ class StreakWidget extends StatelessWidget {
             '$streakCount',
             style: AppTypography.title.copyWith(
               color: AppColors.streakFire,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
               fontSize: size * 0.45,
             ),
           ),
@@ -68,7 +68,7 @@ class StreakWidget extends StatelessWidget {
   }
 }
 
-/// Large streak display - used in profile page
+/// Large streak display - used in profile page (gold/orange gradient)
 class StreakDisplayLarge extends StatelessWidget {
   final int streakCount;
   final int longestStreak;
@@ -84,8 +84,8 @@ class StreakDisplayLarge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        gradient: AppColors.accentGradient,
-        borderRadius: AppRadius.borderRadiusLg,
+        gradient: AppColors.streakGradient,
+        borderRadius: AppRadius.borderRadiusXl,
       ),
       child: Column(
         children: [
@@ -112,7 +112,7 @@ class StreakDisplayLarge extends StatelessWidget {
             style: AppTypography.headline1.copyWith(
               color: Colors.white,
               fontSize: 48,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
             ),
           ),
           Text(

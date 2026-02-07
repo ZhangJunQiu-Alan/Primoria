@@ -5,7 +5,7 @@ import '../components/home/streak_widget.dart';
 import '../providers/user_provider.dart';
 import '../providers/theme_provider.dart';
 
-/// Profile page - Brilliant style
+/// Profile page - Duolingo + Brilliant style
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -88,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
             color: isDark ? AppColors.cardDark : AppColors.surface,
-            borderRadius: AppRadius.borderRadiusLg,
+            borderRadius: AppRadius.borderRadiusXl,
             boxShadow: isDark ? null : AppShadows.sm,
           ),
           child: Row(
@@ -97,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 width: 72,
                 height: 72,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: AppColors.primaryGradient,
                   shape: BoxShape.circle,
                 ),
@@ -111,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 32,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
@@ -162,7 +162,7 @@ class ProfileScreen extends StatelessWidget {
                               'Pro Member',
                               style: AppTypography.label.copyWith(
                                 color: AppColors.accent,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],
@@ -279,7 +279,7 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.surface,
-        borderRadius: AppRadius.borderRadiusLg,
+        borderRadius: AppRadius.borderRadiusXl,
         boxShadow: isDark ? null : AppShadows.sm,
       ),
       child: Column(
@@ -301,7 +301,7 @@ class ProfileScreen extends StatelessWidget {
           Text(
             value,
             style: AppTypography.headline2.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
               color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
             ),
           ),
@@ -320,7 +320,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildAchievementsSection(BuildContext context, bool isDark) {
     final achievements = [
       _AchievementData('Beginner', Icons.emoji_events, AppColors.accent, 'first_course'),
-      _AchievementData('7-Day Streak', Icons.local_fire_department, AppColors.primary, 'streak_7'),
+      _AchievementData('7-Day Streak', Icons.local_fire_department, AppColors.streakFire, 'streak_7'),
       _AchievementData('30-Day Streak', Icons.whatshot, AppColors.error, 'streak_30'),
       _AchievementData('Course Pro', Icons.school, AppColors.courseMath, 'courses_10'),
       _AchievementData('100 Questions', Icons.check_circle, AppColors.courseCS, 'questions_100'),
@@ -394,7 +394,7 @@ class ProfileScreen extends StatelessWidget {
                     : AppColors.surfaceVariant,
             shape: BoxShape.circle,
             border: isUnlocked
-                ? Border.all(color: achievement.color, width: 2)
+                ? Border.all(color: AppColors.primary, width: 2)
                 : null,
           ),
           child: Icon(
@@ -442,7 +442,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: isDark ? AppColors.cardDark : AppColors.surface,
-                  borderRadius: AppRadius.borderRadiusLg,
+                  borderRadius: AppRadius.borderRadiusXl,
                   boxShadow: isDark ? null : AppShadows.sm,
                 ),
                 child: Column(
@@ -487,7 +487,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              // Logout
+              // Logout - keep red
               if (userProvider.isLoggedIn)
                 SizedBox(
                   width: double.infinity,

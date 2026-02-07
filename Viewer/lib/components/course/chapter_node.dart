@@ -55,19 +55,19 @@ class ChapterNode extends StatelessWidget {
         children: [
           // Left side - connection line and node
           SizedBox(
-            width: 60,
+            width: 68,
             child: Column(
               children: [
-                // Progress ring node
+                // Progress ring node - bigger (52px)
                 _buildNode(isLocked, isCompleted, isInProgress),
-                // Connection line
+                // Connection line - thicker (4px)
                 if (!isLast)
                   Expanded(
                     child: Container(
-                      width: 3,
+                      width: 4,
                       decoration: BoxDecoration(
                         color: isCompleted
-                            ? gradient.colors.first
+                            ? AppColors.primary
                             : AppColors.border,
                         borderRadius: AppRadius.borderRadiusFull,
                       ),
@@ -95,22 +95,22 @@ class ChapterNode extends StatelessWidget {
     return GestureDetector(
       onTap: isLocked ? null : onTap,
       child: Container(
-        width: 48,
-        height: 48,
+        width: 52,
+        height: 52,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: isLocked
               ? AppColors.surfaceVariant
               : isCompleted
-                  ? gradient.colors.first
+                  ? AppColors.primary
                   : AppColors.surface,
           border: Border.all(
             color: isLocked
                 ? AppColors.border
                 : isInProgress
-                    ? gradient.colors.first
+                    ? AppColors.primary
                     : isCompleted
-                        ? gradient.colors.first
+                        ? AppColors.primary
                         : AppColors.border,
             width: isInProgress ? 3 : 2,
           ),
@@ -121,13 +121,13 @@ class ChapterNode extends StatelessWidget {
               ? const Icon(
                   Icons.check,
                   color: Colors.white,
-                  size: 24,
+                  size: 26,
                 )
               : isLocked
                   ? const Icon(
                       Icons.lock,
                       color: AppColors.textDisabled,
-                      size: 20,
+                      size: 22,
                     )
                   : isInProgress
                       ? _buildProgressIndicator()
@@ -144,8 +144,8 @@ class ChapterNode extends StatelessWidget {
 
   Widget _buildProgressIndicator() {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: 34,
+      height: 34,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -153,13 +153,13 @@ class ChapterNode extends StatelessWidget {
             value: chapter.progress,
             strokeWidth: 3,
             backgroundColor: AppColors.border,
-            valueColor: AlwaysStoppedAnimation(gradient.colors.first),
+            valueColor: const AlwaysStoppedAnimation(AppColors.primary),
           ),
           Text(
             '${(chapter.progress * 100).toInt()}',
             style: AppTypography.labelSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: gradient.colors.first,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primary,
             ),
           ),
         ],
@@ -176,9 +176,9 @@ class ChapterNode extends StatelessWidget {
           color: isLocked
               ? AppColors.surfaceVariant
               : AppColors.surface,
-          borderRadius: AppRadius.borderRadiusLg,
+          borderRadius: AppRadius.borderRadiusXl,
           border: isInProgress
-              ? Border.all(color: gradient.colors.first, width: 2)
+              ? Border.all(color: AppColors.primary, width: 2)
               : null,
           boxShadow: isLocked ? null : AppShadows.sm,
         ),
@@ -204,7 +204,7 @@ class ChapterNode extends StatelessWidget {
                             'Completed',
                             style: AppTypography.labelSmall.copyWith(
                               color: AppColors.success,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
@@ -217,14 +217,14 @@ class ChapterNode extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: gradient.colors.first.withValues(alpha: 0.1),
+                            color: AppColors.primary.withValues(alpha: 0.1),
                             borderRadius: AppRadius.borderRadiusSm,
                           ),
                           child: Text(
                             'In Progress',
                             style: AppTypography.labelSmall.copyWith(
-                              color: gradient.colors.first,
-                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
