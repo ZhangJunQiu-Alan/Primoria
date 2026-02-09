@@ -30,21 +30,31 @@ class BuilderScreen extends ConsumerWidget {
         canvas: BuilderCanvas(),
         rightPanel: PropertyPanel(),
       ),
-      bottomNavigationBar: _buildPageBar(context, ref, builderState),
     );
   }
 
   PreferredSizeWidget _buildAppBar(
       BuildContext context, WidgetRef ref, BuilderState state) {
     final isCompact = MediaQuery.of(context).size.width < 920;
+    final pillOutlinedStyle = OutlinedButton.styleFrom(
+      foregroundColor: AppColors.neutral700,
+      side: const BorderSide(color: AppColors.neutral300),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+    );
+
     return AppBar(
       automaticallyImplyLeading: false,
       leading: isCompact
           ? null
           : Padding(
               padding: const EdgeInsets.all(AppSpacing.sm),
-              child: Image.network(
-                'https://via.placeholder.com/32x32?text=P',
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 32,
+                height: 32,
                 errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.school,
                   color: AppColors.primary500,
@@ -66,7 +76,7 @@ class BuilderScreen extends ConsumerWidget {
                 state.courseTitle,
                 style: const TextStyle(
                   fontSize: AppFontSize.md,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(width: AppSpacing.xs),
@@ -88,165 +98,81 @@ class BuilderScreen extends ConsumerWidget {
       ),
       actions: [
         // AI generate button
-        TextButton.icon(
+        OutlinedButton.icon(
           onPressed: () {
             _showAIGenerateDialog(context, ref);
           },
-          icon: const Icon(Icons.auto_awesome, size: 20, color: AppColors.accent500),
-          label: const Text('AI Generate', style: TextStyle(color: AppColors.accent600)),
-          style: TextButton.styleFrom(
+          icon: const Icon(Icons.auto_awesome, size: 16),
+          label: const Text('AI'),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.accent600,
+            side: const BorderSide(color: AppColors.accent300),
             backgroundColor: AppColors.accent50,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
         // Preview button
-        TextButton.icon(
+        OutlinedButton(
           onPressed: () {
             context.go('/viewer');
           },
-          icon: const Icon(Icons.play_arrow, size: 20),
-          label: const Text('Preview'),
+          style: pillOutlinedStyle,
+          child: const Text('Preview'),
         ),
+        const SizedBox(width: AppSpacing.sm),
         // Import button
-        TextButton.icon(
+        OutlinedButton(
           onPressed: () {
             _importCourse(context, ref);
           },
-          icon: const Icon(Icons.file_upload_outlined, size: 20),
-          label: const Text('Import'),
+          style: pillOutlinedStyle,
+          child: const Text('Import'),
         ),
+        const SizedBox(width: AppSpacing.sm),
         // Export button
-        TextButton.icon(
+        OutlinedButton(
           onPressed: () {
             _exportCourse(context, ref);
           },
-          icon: const Icon(Icons.file_download_outlined, size: 20),
-          label: const Text('Export'),
+          style: pillOutlinedStyle,
+          child: const Text('Export'),
         ),
+        const SizedBox(width: AppSpacing.sm),
         // Cloud save button
-        TextButton.icon(
+        OutlinedButton(
           onPressed: () {
             _saveToCloud(context, ref);
           },
-          icon: const Icon(Icons.cloud_upload_outlined, size: 20),
-          label: const Text('Save'),
+          style: pillOutlinedStyle,
+          child: const Text('Save'),
         ),
+        const SizedBox(width: AppSpacing.sm),
         // Publish button
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: ElevatedButton(
-            onPressed: () {
-              _publishCourse(context, ref);
-            },
-            child: const Text('Publish'),
+        ElevatedButton(
+          onPressed: () {
+            _publishCourse(context, ref);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.secondary500,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
           ),
+          child: const Text('Publish'),
         ),
-        // User avatar - sign in/out
+        const SizedBox(width: AppSpacing.sm),
+        // Profile button
         Padding(
           padding: const EdgeInsets.only(right: AppSpacing.md),
           child: _buildUserAvatar(context),
         ),
       ],
-    );
-  }
-
-  Widget _buildPageBar(
-      BuildContext context, WidgetRef ref, BuilderState state) {
-    final course = ref.watch(courseProvider);
-    final pages = course.pages;
-
-    return Container(
-      height: 48,
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(
-          top: BorderSide(color: AppColors.neutral200),
-        ),
-      ),
-      child: Row(
-        children: [
-          const SizedBox(width: AppSpacing.md),
-          const Text(
-            'Pages:',
-            style: TextStyle(
-              fontSize: AppFontSize.sm,
-              color: AppColors.neutral500,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          // Page switch tabs
-          ...List.generate(pages.length, (index) {
-            final isSelected = index == state.currentPageIndex;
-            final page = pages[index];
-            return Padding(
-              padding: const EdgeInsets.only(right: AppSpacing.xs),
-              child: GestureDetector(
-                onDoubleTap: () => _editPageTitle(context, ref, index, page.title),
-                onLongPress: () => _showPageMenu(context, ref, index),
-                child: InkWell(
-                  onTap: () {
-                    ref.read(builderStateProvider.notifier).setCurrentPage(index);
-                  },
-                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.xs,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primary100
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.primary500
-                            : AppColors.neutral300,
-                      ),
-                    ),
-                    child: Text(
-                      '${index + 1}',
-                      style: TextStyle(
-                        fontSize: AppFontSize.sm,
-                        fontWeight:
-                            isSelected ? FontWeight.w600 : FontWeight.normal,
-                        color: isSelected
-                            ? AppColors.primary700
-                            : AppColors.neutral600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }),
-          // Add page button
-          IconButton(
-            onPressed: () {
-              ref.read(courseProvider.notifier).addPage();
-              final newIndex = ref.read(courseProvider).pages.length - 1;
-              ref.read(builderStateProvider.notifier).setCurrentPage(newIndex);
-              ref.read(builderStateProvider.notifier).markAsUnsaved();
-            },
-            icon: const Icon(Icons.add, size: 20),
-            tooltip: 'Add page',
-            style: IconButton.styleFrom(
-              foregroundColor: AppColors.neutral500,
-            ),
-          ),
-          const Spacer(),
-          // Zoom control (optional)
-          Text(
-            '100%',
-            style: TextStyle(
-              fontSize: AppFontSize.sm,
-              color: AppColors.neutral400,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.md),
-        ],
-      ),
     );
   }
 
@@ -280,116 +206,6 @@ class BuilderScreen extends ConsumerWidget {
               Navigator.pop(context);
             },
             child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _editPageTitle(BuildContext context, WidgetRef ref, int pageIndex, String currentTitle) {
-    final controller = TextEditingController(text: currentTitle);
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Edit page title'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Enter page title',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (controller.text.isNotEmpty) {
-                ref.read(courseProvider.notifier).updatePageTitle(pageIndex, controller.text);
-                ref.read(builderStateProvider.notifier).markAsUnsaved();
-              }
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showPageMenu(BuildContext context, WidgetRef ref, int pageIndex) {
-    final course = ref.read(courseProvider);
-    final page = course.pages[pageIndex];
-
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text('Rename'),
-              onTap: () {
-                Navigator.pop(context);
-                _editPageTitle(context, ref, pageIndex, page.title);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.content_copy),
-              title: const Text('Duplicate page'),
-              onTap: () {
-                ref.read(courseProvider.notifier).duplicatePage(pageIndex);
-                ref.read(builderStateProvider.notifier).markAsUnsaved();
-                Navigator.pop(context);
-              },
-            ),
-            if (course.pages.length > 1)
-              ListTile(
-                leading: const Icon(Icons.delete, color: AppColors.error),
-                title: const Text('Delete page', style: TextStyle(color: AppColors.error)),
-                onTap: () {
-                  Navigator.pop(context);
-                  _confirmDeletePage(context, ref, pageIndex);
-                },
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _confirmDeletePage(BuildContext context, WidgetRef ref, int pageIndex) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete page'),
-        content: const Text("Delete this page? This action can't be undone."),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.error,
-            ),
-            onPressed: () {
-              final currentIndex = ref.read(builderStateProvider).currentPageIndex;
-              ref.read(courseProvider.notifier).removePage(pageIndex);
-
-              // If deleting the current page, adjust the index
-              if (currentIndex >= pageIndex && currentIndex > 0) {
-                ref.read(builderStateProvider.notifier).setCurrentPage(currentIndex - 1);
-              }
-
-              ref.read(builderStateProvider.notifier).markAsUnsaved();
-              Navigator.pop(context);
-            },
-            child: const Text('Delete'),
           ),
         ],
       ),
@@ -585,13 +401,18 @@ class BuilderScreen extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
       ),
-      child: CircleAvatar(
-        radius: 16,
-        backgroundColor: isLoggedIn ? AppColors.secondary100 : AppColors.primary100,
-        child: Icon(
-          isLoggedIn ? Icons.person : Icons.person_outline,
-          size: 18,
-          color: isLoggedIn ? AppColors.secondary600 : AppColors.primary600,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+          border: Border.all(color: AppColors.neutral300),
+        ),
+        child: const Text(
+          'Profile',
+          style: TextStyle(
+            fontSize: AppFontSize.sm,
+            color: AppColors.neutral700,
+          ),
         ),
       ),
       itemBuilder: (context) {

@@ -38,64 +38,86 @@ class BuilderLayout extends StatelessWidget {
   }
 
   Widget _buildFullLayout(BuildContext context) {
-    return Row(
-      children: [
-        // Left module panel
-        Container(
-          width: leftPanelWidth,
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            border: Border(
-              right: BorderSide(color: AppColors.neutral200),
+    return Container(
+      color: AppColors.background,
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      child: Row(
+        children: [
+          // Left module panel
+          Container(
+            width: leftPanelWidth,
+            margin: const EdgeInsets.only(right: AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              boxShadow: AppShadows.sm,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: leftPanel,
+          ),
+          // Center canvas
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                boxShadow: AppShadows.sm,
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: canvas,
             ),
           ),
-          child: leftPanel,
-        ),
-        // Center canvas
-        Expanded(
-          child: Container(
-            color: AppColors.background,
-            child: canvas,
-          ),
-        ),
-        // Right properties panel
-        Container(
-          width: rightPanelWidth,
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            border: Border(
-              left: BorderSide(color: AppColors.neutral200),
+          // Right properties panel
+          Container(
+            width: rightPanelWidth,
+            margin: const EdgeInsets.only(left: AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              boxShadow: AppShadows.sm,
             ),
+            clipBehavior: Clip.antiAlias,
+            child: rightPanel,
           ),
-          child: rightPanel,
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildCompactLayout(BuildContext context) {
     // In compact mode, use Drawer or tabs
-    return Row(
-      children: [
-        // Collapsed left panel (icons only)
-        Container(
-          width: 56,
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            border: Border(
-              right: BorderSide(color: AppColors.neutral200),
+    return Container(
+      color: AppColors.background,
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      child: Row(
+        children: [
+          // Collapsed left panel (icons only)
+          Container(
+            width: 56,
+            margin: const EdgeInsets.only(right: AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              boxShadow: AppShadows.sm,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: leftPanel,
+          ),
+          // Canvas takes remaining space
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                boxShadow: AppShadows.sm,
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: canvas,
             ),
           ),
-          child: leftPanel,
-        ),
-        // Canvas takes remaining space
-        Expanded(
-          child: Container(
-            color: AppColors.background,
-            child: canvas,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

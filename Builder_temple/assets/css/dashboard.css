@@ -1,0 +1,149 @@
+.side-action {
+  align-self: flex-start;
+  margin-top: 6px;
+  margin-bottom: 18px;
+}
+
+.dashboard-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.dashboard-metrics > .card {
+  flex: 1 1 360px;
+  min-width: 300px;
+}
+
+.metric-card {
+  padding: 26px;
+}
+
+.metrics-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.metric {
+  padding: 20px 16px;
+  border-radius: 16px;
+  background: var(--surface-2);
+  border: 1px solid rgba(80, 110, 150, 0.18);
+  text-align: center;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.metric-label {
+  font-weight: 700;
+  color: var(--text);
+  text-transform: lowercase;
+}
+
+.metric strong {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.income-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 26px;
+}
+
+.income-label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.income-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.comments-card {
+  margin-top: 24px;
+  padding: 26px;
+}
+
+.comment-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.comment-card {
+  min-height: 140px;
+  border-radius: 16px;
+  border: 1px solid rgba(80, 110, 150, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+
+@media (max-width: 1100px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .comment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .metrics-grid,
+  .comment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Color accents without layout changes */
+.side-action {
+  background: linear-gradient(135deg, rgba(88, 204, 2, 0.18), rgba(77, 124, 255, 0.18));
+  border-color: rgba(77, 124, 255, 0.35);
+}
+
+.metric-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 246, 255, 0.9));
+  border-color: rgba(77, 124, 255, 0.2);
+}
+
+.income-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 232, 0.9));
+  border-color: rgba(255, 186, 73, 0.25);
+}
+
+.comments-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(235, 248, 240, 0.9));
+  border-color: rgba(88, 204, 2, 0.2);
+}
+
+.metric {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.comment-card {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+}

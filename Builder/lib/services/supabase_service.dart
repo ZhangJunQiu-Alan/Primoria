@@ -43,6 +43,25 @@ class SupabaseService {
     }
   }
 
+  /// Check if an email is registered
+  static Future<bool> isEmailRegistered(String email) async {
+    try {
+      // Attempt to send a password recovery to check existence.
+      // Supabase doesn't expose a direct "user exists" API for anon,
+      // so we query the profiles table if accessible, otherwise fall back.
+      final response = await client
+          .from('profiles')
+          .select('id')
+          .eq('email', email)
+          .maybeSingle();
+      return response != null;
+    } catch (_) {
+      // If profiles table doesn't have email or RLS blocks it,
+      // we can't pre-check — just let signIn handle errors.
+      return true; // assume exists, let sign-in decide
+    }
+  }
+
   /// Sign in with email
   static Future<AuthResult> signIn({
     required String email,
@@ -60,7 +79,11 @@ class SupabaseService {
         return const AuthResult(success: false, message: 'Sign in failed');
       }
     } on AuthException catch (e) {
-      return AuthResult(success: false, message: _translateAuthError(e.message));
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+        isUserNotFound: e.message.contains('Invalid login credentials'),
+      );
     } catch (e) {
       return AuthResult(success: false, message: 'Sign in failed: $e');
     }
@@ -388,8 +411,13 @@ class SupabaseService {
 class AuthResult {
   final bool success;
   final String message;
+  final bool isUserNotFound;
 
-  const AuthResult({required this.success, required this.message});
+  const AuthResult({
+    required this.success,
+    required this.message,
+    this.isUserNotFound = false,
+  });
 }
 
 /// Course operation result

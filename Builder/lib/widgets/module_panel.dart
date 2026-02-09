@@ -3,61 +3,245 @@ import '../theme/design_tokens.dart';
 import '../models/block_type.dart';
 import '../services/block_registry.dart';
 
-/// Left module panel - shows draggable module list
-class ModulePanel extends StatelessWidget {
+/// Block category definition
+class _BlockCategory {
+  final String name;
+  final List<BlockType> blockTypes;
+  final Color backgroundColor;
+
+  const _BlockCategory({
+    required this.name,
+    required this.blockTypes,
+    required this.backgroundColor,
+  });
+}
+
+/// Left module panel - shows draggable module list organized by category
+class ModulePanel extends StatefulWidget {
   const ModulePanel({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final modules = BlockRegistry.mvpTypes;
+  State<ModulePanel> createState() => _ModulePanelState();
+}
 
+class _ModulePanelState extends State<ModulePanel> {
+  String _searchQuery = '';
+  final Set<String> _expandedCategories = {'General', 'Physical', 'Chemical'};
+
+  static const List<_BlockCategory> _categories = [
+    _BlockCategory(
+      name: 'General',
+      blockTypes: [BlockType.text, BlockType.image],
+      backgroundColor: Color(0xFFE8EAF6), // indigo 50
+    ),
+    _BlockCategory(
+      name: 'Physical',
+      blockTypes: [BlockType.codeBlock, BlockType.codePlayground],
+      backgroundColor: Color(0xFFE3F2FD), // blue 50
+    ),
+    _BlockCategory(
+      name: 'Chemical',
+      blockTypes: [BlockType.multipleChoice, BlockType.matching],
+      backgroundColor: Color(0xFFE8F5E9), // green 50
+    ),
+  ];
+
+  List<BlockTypeInfo> _getBlocksForCategory(_BlockCategory category) {
+    final allMvp = BlockRegistry.mvpTypes;
+    return allMvp
+        .where((info) => category.blockTypes.contains(info.type))
+        .where((info) =>
+            _searchQuery.isEmpty ||
+            info.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
+  bool _categoryHasResults(_BlockCategory category) {
+    return _getBlocksForCategory(category).isNotEmpty;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isCompact = constraints.maxWidth < 120;
 
+        if (isCompact) {
+          return _buildCompactPanel();
+        }
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Panel title / logo
+            // Panel title
             Container(
-              padding: EdgeInsets.all(isCompact ? AppSpacing.sm : AppSpacing.md),
-              alignment: isCompact ? Alignment.center : Alignment.centerLeft,
-              child: isCompact
-                  ? const Icon(
-                      Icons.school,
-                      color: AppColors.primary500,
-                      size: 24,
-                    )
-                  : const Text(
-                      'Block Library',
-                      style: TextStyle(
-                        fontSize: AppFontSize.md,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral800,
-                      ),
-                    ),
+              padding: const EdgeInsets.all(AppSpacing.md),
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                'Block library',
+                style: TextStyle(
+                  fontSize: AppFontSize.md,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.neutral800,
+                ),
+              ),
             ),
-            const Divider(height: 1),
-            // Module list
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(isCompact ? AppSpacing.xs : AppSpacing.sm),
-                itemCount: modules.length,
-                itemBuilder: (context, index) {
-                  final info = modules[index];
-                  return _ModuleItem(
-                    icon: info.icon,
-                    label: info.name,
-                    description: info.description,
-                    type: info.type,
-                    compact: isCompact,
-                  );
+            // Search field
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
                 },
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  hintStyle: const TextStyle(
+                    fontSize: AppFontSize.sm,
+                    color: AppColors.neutral400,
+                  ),
+                  prefixIcon: const Icon(Icons.search, size: 18, color: AppColors.neutral400),
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: AppSpacing.sm,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                    borderSide: const BorderSide(color: AppColors.neutral200),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                    borderSide: const BorderSide(color: AppColors.neutral200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                    borderSide: const BorderSide(color: AppColors.primary500),
+                  ),
+                ),
+                style: const TextStyle(fontSize: AppFontSize.sm),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            // Category list
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                children: _categories
+                    .where((cat) => _searchQuery.isEmpty || _categoryHasResults(cat))
+                    .map((category) => _buildCategorySection(category))
+                    .toList(),
               ),
             ),
           ],
         );
       },
+    );
+  }
+
+  Widget _buildCompactPanel() {
+    final modules = BlockRegistry.mvpTypes;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(AppSpacing.sm),
+          alignment: Alignment.center,
+          child: const Icon(
+            Icons.school,
+            color: AppColors.primary500,
+            size: 24,
+          ),
+        ),
+        const Divider(height: 1),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(AppSpacing.xs),
+            itemCount: modules.length,
+            itemBuilder: (context, index) {
+              final info = modules[index];
+              return _ModuleItem(
+                icon: info.icon,
+                label: info.name,
+                description: info.description,
+                type: info.type,
+                compact: true,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCategorySection(_BlockCategory category) {
+    final blocks = _getBlocksForCategory(category);
+    final isExpanded = _expandedCategories.contains(category.name);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Column(
+        children: [
+          // Category header
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                if (isExpanded) {
+                  _expandedCategories.remove(category.name);
+                } else {
+                  _expandedCategories.add(category.name);
+                }
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
+              ),
+              decoration: BoxDecoration(
+                color: category.backgroundColor,
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      category.name,
+                      style: const TextStyle(
+                        fontSize: AppFontSize.sm,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral800,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    isExpanded ? Icons.expand_less : Icons.add,
+                    size: 18,
+                    color: AppColors.neutral600,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Expanded block items
+          if (isExpanded)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Column(
+                children: blocks
+                    .map((info) => _ModuleItem(
+                          icon: info.icon,
+                          label: info.name,
+                          description: info.description,
+                          type: info.type,
+                          compact: false,
+                        ))
+                    .toList(),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,59 @@
 # Changelog
 
+## [Unreleased] - 2026-02-09
+
+### Summary
+Major UI redesign of Builder, new Landing page and Dashboard, sign-in modal with Supabase auth integration, and project-level CLAUDE.md setup.
+
+### Added
+
+#### Landing Page (`features/landing/landing_screen.dart`)
+- New app entry point at `/` route — header with logo, hero section, feature cards, CTA band, animated blur blobs
+- "Apply Now" button (no navigation) and "Already Qualified" button (opens sign-in modal)
+- Sign-in modal (`_SignInModal`) matching `Design/signin_design.png`:
+  - Google / Apple / email+password sign-in options
+  - Expandable email+password form with validation
+  - Supabase backend integration — checks credentials, friendly error on unknown account ("We couldn't find an account with that email…")
+  - Navigates to `/dashboard` on successful login
+
+#### Dashboard (`features/dashboard/dashboard_screen.dart`)
+- New `/dashboard` route with sidebar navigation
+- Home Page tab: Course Data (blue gradient), Income overview (yellow gradient), Comments (green gradient)
+- Course Manage tab: course cards with lesson boxes, Edit/Delete actions, Profile/Sort/Create buttons
+- Responsive layout: sidebar collapses to drawer overlay on screens < 1024px
+- Based on `Builder_temple/dashboard.html` and `Builder_temple/course-manage.html` templates
+
+#### Project Configuration
+- Created `CLAUDE.md` at project root with build commands, architecture overview, and key patterns
+
+### Changed
+
+#### Builder UI Redesign
+- **`builder_layout.dart`** — Panels now render as rounded cards with `borderRadius`, `boxShadow`, margin, and `Clip.antiAlias`; background uses `AppColors.background`
+- **`builder_screen.dart`** — AppBar buttons restyled as pill-shaped `OutlinedButton`s; AI button with `Icons.auto_awesome` and accent orange; Publish as green filled pill; Profile as pill-outlined `PopupMenuButton`; replaced placeholder logo with `Image.asset('assets/images/logo.png')`
+- **`module_panel.dart`** — Converted to `StatefulWidget` with search `TextField` and 3 expandable category sections (General, Physical, Chemical) with colored backgrounds
+- **`builder_canvas.dart`** — Simplified empty state to centered "Drag Blocks Here" text
+- **`property_panel.dart`** — Empty state now shows metadata rows (Block, Type, Status, Last update) instead of icon+text
+- **`app/router.dart`** — Added `/dashboard` route; `initialLocation` set to `/`
+
+#### Auth Backend Integration
+- **`supabase_service.dart`** — Added `isEmailRegistered()` method; `signIn()` now flags `isUserNotFound` on invalid credentials; `AuthResult` gained `isUserNotFound` field
+
+### Removed
+- Removed `bottomNavigationBar` (pages bar) from Builder screen
+- Removed dead code: `_buildPageBar`, `_editPageTitle`, `_showPageMenu`, `_confirmDeletePage`
+
+### Assets
+- Copied `img/logo32.png` → `Builder/assets/images/logo.png`
+- Updated `pubspec.yaml` with `assets/images/` entry
+
+### Technical Notes
+- `flutter analyze`: 8 issues (all pre-existing — deprecated `withOpacity`, unused fields in storage_service/ai_generate_dialog)
+- `flutter build web`: passes successfully
+- UI localization switched from Chinese to English across all new screens
+
+---
+
 ## [Unreleased] - 2026-01-31
 
 ### Summary
