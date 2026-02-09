@@ -486,9 +486,6 @@ No. Every `courseId`, `pageId`, and Block `id` must be unique.
 ### Q: How do I add line breaks?
 Use `\n` inside JSON strings.
 
-### Q: Does it support Chinese?
-Yes. Make sure the file is saved as UTF-8.
-
 ### Q: How do I validate the JSON format?
 VS Code will check syntax automatically. You can also use online tools like [jsonlint.com](https://jsonlint.com).
 

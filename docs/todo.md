@@ -1,8 +1,10 @@
-# ALL
+# TODO
+
+## All
 1. [ ] Unify UI style
 2. [ ] Multilingual support
 
-# Builder
+## Builder
 1. [ ] Enable Markdown rendering for text blocks
 2. [ ] Update course prompt to match the new flow
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
@@ -13,15 +15,51 @@
 8. [x] Landing page with sign-in modal and Supabase auth integration (2026-02-09)
 9. [x] Builder UI redesign — rounded card panels, pill-shaped buttons, simplified empty states (2026-02-09)
 10. [ ] Create test users in Supabase for sign-in testing
-11. [ ] Wire up Dashboard to real Supabase course data (currently placeholder)
+11. [x] Wire up Dashboard to real Supabase course data (2026-02-10)
 12. [ ] Implement Google/GitHub OAuth redirect handling
+13. [ ] Import workflow refinement
+14. [ ] Block reorder/insert refinement
+15. [ ] More block types (animation, connect, etc.)
+16. [ ] Robust schema validation
 
-# Viewer
+## Viewer
 1. [ ] Build learning home page: support common features (Profile, achievements, etc.)
 2. [ ] Introduce social/friend features
 3. [ ] Generate records after course completion
 4. [ ] In a lesson, show current progress in the top bar after each block; do not write to the DB until the entire lesson is completed
+5. [ ] RESTful API integration
+6. [ ] User authentication with JWT
+7. [ ] Cloud data synchronization
+8. [ ] Real-time progress updates
+9. [ ] Offline mode with content caching
 
-# Database
+## Content & Curriculum
+1. [ ] Course content management system
+2. [ ] Multiple subject categories (Math, Science, Logic, etc.)
+3. [ ] Difficulty levels
+4. [ ] Prerequisites and learning paths
+
+## Gamification
+1. [ ] Achievement system with badges
+2. [ ] Leaderboards
+3. [ ] XP and leveling system
+4. [ ] Daily/weekly challenges
+5. [ ] Streak rewards
+
+## Social
+1. [ ] User profiles
+2. [ ] Friends and following
+3. [ ] Course discussions
+4. [ ] Share progress on social media
+
+## Database
 1. [ ] Parent mode
 2. [ ] Seed test user accounts
+
+## Quality
+1. [ ] Unit tests expansion
+2. [ ] Widget tests
+3. [ ] Integration tests
+4. [ ] Performance optimization
+5. [ ] Error tracking and reporting
+6. [ ] Accessibility improvements

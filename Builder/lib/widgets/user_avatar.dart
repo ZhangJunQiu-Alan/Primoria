@@ -31,7 +31,7 @@ class UserAvatar extends StatelessWidget {
             context,
             child: const Icon(
               Icons.person_outline,
-              color: Color(0xFF4D7CFF),
+              color: AppColors.neutral600,
               size: 20,
             ),
             onTap: () => _showAuthDialog(context),
@@ -124,12 +124,12 @@ class UserAvatar extends StatelessWidget {
 
     final avatarFrame = BoxDecoration(
       shape: BoxShape.circle,
-      border: Border.all(color: const Color(0xFF4D7CFF), width: 2),
+      border: Border.all(color: Colors.white.withValues(alpha: 0.95), width: 2),
       boxShadow: const [
         BoxShadow(
-          color: Color(0x334D7CFF),
-          blurRadius: 6,
-          offset: Offset(0, 2),
+          color: Color(0x22000000),
+          blurRadius: 8,
+          offset: Offset(0, 3),
         ),
       ],
     );
@@ -165,14 +165,14 @@ class UserAvatar extends StatelessWidget {
 
   Widget _initialsAvatarBody(String initials) {
     return Container(
-      color: const Color(0xFF4D7CFF),
+      color: Colors.white.withValues(alpha: 0.88),
       alignment: Alignment.center,
       child: Text(
         initials,
         style: TextStyle(
           fontSize: size * 0.38,
           fontWeight: FontWeight.w700,
-          color: Colors.white,
+          color: AppColors.neutral700,
         ),
       ),
     );
@@ -190,8 +190,18 @@ class UserAvatar extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: const Color(0xFFE8EDFB),
-          border: Border.all(color: const Color(0xFF4D7CFF), width: 2),
+          color: Colors.white.withValues(alpha: 0.82),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.95),
+            width: 2,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x22000000),
+              blurRadius: 8,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
         alignment: Alignment.center,
         child: child,
