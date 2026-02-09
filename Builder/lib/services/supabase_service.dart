@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
 
@@ -14,7 +16,8 @@ class SupabaseService {
   static bool get isLoggedIn => currentUser != null;
 
   /// Auth state changes
-  static Stream<AuthState> get authStateChanges => client.auth.onAuthStateChange;
+  static Stream<AuthState> get authStateChanges =>
+      client.auth.onAuthStateChange;
 
   // ==================== Auth ====================
 
@@ -37,7 +40,10 @@ class SupabaseService {
         return const AuthResult(success: false, message: 'Sign up failed');
       }
     } on AuthException catch (e) {
-      return AuthResult(success: false, message: _translateAuthError(e.message));
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+      );
     } catch (e) {
       return AuthResult(success: false, message: 'Sign up failed: $e');
     }
@@ -67,26 +73,39 @@ class SupabaseService {
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await client.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final response = await client.auth.signInWithPassword(
+          email: email,
+          password: password,
+        );
 
-      if (response.user != null) {
-        return AuthResult(success: true, message: 'Signed in');
-      } else {
-        return const AuthResult(success: false, message: 'Sign in failed');
+        if (response.user != null) {
+          return AuthResult(success: true, message: 'Signed in');
+        } else {
+          return const AuthResult(success: false, message: 'Sign in failed');
+        }
+      } on AuthException catch (e) {
+        if (_isRetryableAuthTimeout(e.message) && attempt == 0) {
+          await Future<void>.delayed(const Duration(milliseconds: 700));
+          continue;
+        }
+        return AuthResult(
+          success: false,
+          message: _translateAuthError(e.message),
+          isUserNotFound: e.message.contains('Invalid login credentials'),
+        );
+      } catch (e) {
+        final errorText = e.toString();
+        if (_isRetryableAuthTimeout(errorText) && attempt == 0) {
+          await Future<void>.delayed(const Duration(milliseconds: 700));
+          continue;
+        }
+        return AuthResult(success: false, message: 'Sign in failed: $e');
       }
-    } on AuthException catch (e) {
-      return AuthResult(
-        success: false,
-        message: _translateAuthError(e.message),
-        isUserNotFound: e.message.contains('Invalid login credentials'),
-      );
-    } catch (e) {
-      return AuthResult(success: false, message: 'Sign in failed: $e');
     }
+
+    return const AuthResult(success: false, message: 'Sign in failed');
   }
 
   /// Sign out
@@ -100,7 +119,10 @@ class SupabaseService {
       await client.auth.resetPasswordForEmail(email);
       return const AuthResult(success: true, message: 'Reset link sent');
     } on AuthException catch (e) {
-      return AuthResult(success: false, message: _translateAuthError(e.message));
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+      );
     } catch (e) {
       return AuthResult(success: false, message: 'Send failed: $e');
     }
@@ -115,7 +137,10 @@ class SupabaseService {
       );
       return const AuthResult(success: true, message: 'Redirecting...');
     } on AuthException catch (e) {
-      return AuthResult(success: false, message: _translateAuthError(e.message));
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+      );
     } catch (e) {
       return AuthResult(success: false, message: 'Sign in failed: $e');
     }
@@ -130,7 +155,10 @@ class SupabaseService {
       );
       return const AuthResult(success: true, message: 'Redirecting...');
     } on AuthException catch (e) {
-      return AuthResult(success: false, message: _translateAuthError(e.message));
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+      );
     } catch (e) {
       return AuthResult(success: false, message: 'Sign in failed: $e');
     }
@@ -166,10 +194,13 @@ class SupabaseService {
     if (currentUser == null) return false;
 
     try {
-      await client.from('profiles').update({
-        if (displayName != null) 'display_name': displayName,
-        if (avatarUrl != null) 'avatar_url': avatarUrl,
-      }).eq('id', currentUser!.id);
+      await client
+          .from('profiles')
+          .update({
+            if (displayName != null) 'display_name': displayName,
+            if (avatarUrl != null) 'avatar_url': avatarUrl,
+          })
+          .eq('id', currentUser!.id);
       return true;
     } catch (e) {
       return false;
@@ -181,7 +212,10 @@ class SupabaseService {
   /// Save course (create or update)
   static Future<CourseResult> saveCourse(Course course) async {
     if (currentUser == null) {
-      return const CourseResult(success: false, message: 'Please sign in first');
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
     }
 
     try {
@@ -196,16 +230,20 @@ class SupabaseService {
 
       if (existing == null) {
         // Create new course
-        final insertResult = await client.from('courses').insert({
-          'id': course.courseId,
-          'owner_id': currentUser!.id,
-          'title': course.metadata.title,
-          'description': course.metadata.description,
-          'tags': course.metadata.tags,
-          'difficulty': course.metadata.difficulty,
-          'estimated_minutes': course.metadata.estimatedMinutes,
-          'status': 'draft',
-        }).select('id').single();
+        final insertResult = await client
+            .from('courses')
+            .insert({
+              'id': course.courseId,
+              'owner_id': currentUser!.id,
+              'title': course.metadata.title,
+              'description': course.metadata.description,
+              'tags': course.metadata.tags,
+              'difficulty': course.metadata.difficulty,
+              'estimated_minutes': course.metadata.estimatedMinutes,
+              'status': 'draft',
+            })
+            .select('id')
+            .single();
 
         courseId = insertResult['id'] as String;
       } else {
@@ -217,13 +255,16 @@ class SupabaseService {
           );
         }
 
-        await client.from('courses').update({
-          'title': course.metadata.title,
-          'description': course.metadata.description,
-          'tags': course.metadata.tags,
-          'difficulty': course.metadata.difficulty,
-          'estimated_minutes': course.metadata.estimatedMinutes,
-        }).eq('id', course.courseId);
+        await client
+            .from('courses')
+            .update({
+              'title': course.metadata.title,
+              'description': course.metadata.description,
+              'tags': course.metadata.tags,
+              'difficulty': course.metadata.difficulty,
+              'estimated_minutes': course.metadata.estimatedMinutes,
+            })
+            .eq('id', course.courseId);
 
         courseId = course.courseId;
       }
@@ -240,17 +281,22 @@ class SupabaseService {
       final newVersion = (latestVersion?['version'] as int? ?? 0) + 1;
 
       // Create new version
-      final versionResult = await client.from('course_versions').insert({
-        'course_id': courseId,
-        'version': newVersion,
-        'content': course.toJson(),
-        'created_by': currentUser!.id,
-      }).select('id').single();
+      final versionResult = await client
+          .from('course_versions')
+          .insert({
+            'course_id': courseId,
+            'version': newVersion,
+            'content': course.toJson(),
+            'created_by': currentUser!.id,
+          })
+          .select('id')
+          .single();
 
       // Update current draft version
-      await client.from('courses').update({
-        'current_draft_version_id': versionResult['id'],
-      }).eq('id', courseId);
+      await client
+          .from('courses')
+          .update({'current_draft_version_id': versionResult['id']})
+          .eq('id', courseId);
 
       return CourseResult(
         success: true,
@@ -264,16 +310,22 @@ class SupabaseService {
   }
 
   /// Publish course
-  static Future<CourseResult> publishCourse(String courseId, String versionId) async {
+  static Future<CourseResult> publishCourse(
+    String courseId,
+    String versionId,
+  ) async {
     if (currentUser == null) {
-      return const CourseResult(success: false, message: 'Please sign in first');
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
     }
 
     try {
-      await client.rpc('publish_course', params: {
-        'p_course_id': courseId,
-        'p_version_id': versionId,
-      });
+      await client.rpc(
+        'publish_course',
+        params: {'p_course_id': courseId, 'p_version_id': versionId},
+      );
 
       return const CourseResult(success: true, message: 'Published');
     } catch (e) {
@@ -299,7 +351,10 @@ class SupabaseService {
   }
 
   /// Get course details (including content)
-  static Future<Course?> getCourseContent(String courseId, {String? versionId}) async {
+  static Future<Course?> getCourseContent(
+    String courseId, {
+    String? versionId,
+  }) async {
     try {
       // If no version specified, get latest draft or published version
       String? targetVersionId = versionId;
@@ -307,7 +362,9 @@ class SupabaseService {
       if (targetVersionId == null) {
         final course = await client
             .from('courses')
-            .select('current_draft_version_id, current_published_version_id, owner_id')
+            .select(
+              'current_draft_version_id, current_published_version_id, owner_id',
+            )
             .eq('id', courseId)
             .single();
 
@@ -344,13 +401,16 @@ class SupabaseService {
     int offset = 0,
   }) async {
     try {
-      final response = await client.rpc('search_courses', params: {
-        'p_query': query,
-        'p_tags': tags,
-        'p_difficulty': difficulty,
-        'p_limit': limit,
-        'p_offset': offset,
-      });
+      final response = await client.rpc(
+        'search_courses',
+        params: {
+          'p_query': query,
+          'p_tags': tags,
+          'p_difficulty': difficulty,
+          'p_limit': limit,
+          'p_offset': offset,
+        },
+      );
 
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
@@ -359,11 +419,14 @@ class SupabaseService {
   }
 
   /// Get recommended courses
-  static Future<List<Map<String, dynamic>>> getRecommendedCourses({int limit = 20}) async {
+  static Future<List<Map<String, dynamic>>> getRecommendedCourses({
+    int limit = 20,
+  }) async {
     try {
-      final response = await client.rpc('recommend_courses', params: {
-        'p_limit': limit,
-      });
+      final response = await client.rpc(
+        'recommend_courses',
+        params: {'p_limit': limit},
+      );
 
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
@@ -374,7 +437,10 @@ class SupabaseService {
   /// Delete course
   static Future<CourseResult> deleteCourse(String courseId) async {
     if (currentUser == null) {
-      return const CourseResult(success: false, message: 'Please sign in first');
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
     }
 
     try {
@@ -387,23 +453,51 @@ class SupabaseService {
 
   // ==================== Helper methods ====================
 
+  static bool _isRetryableAuthTimeout(String message) {
+    final raw = message.toLowerCase();
+    return raw.contains('request_timeout') ||
+        raw.contains('timed out') ||
+        raw.contains('context deadline exceeded');
+  }
+
   static String _translateAuthError(String message) {
-    if (message.contains('Invalid login credentials')) {
+    var normalized = message;
+    final trimmed = message.trim();
+
+    // Some auth failures come back as JSON payload string.
+    if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+      try {
+        final decoded = jsonDecode(trimmed);
+        if (decoded is Map<String, dynamic>) {
+          final code = decoded['code']?.toString() ?? '';
+          final details = decoded['message']?.toString() ?? '';
+          normalized = '$code $details'.trim();
+        }
+      } catch (_) {
+        normalized = message;
+      }
+    }
+
+    if (normalized.contains('Invalid login credentials')) {
       return 'Incorrect email or password';
     }
-    if (message.contains('Email not confirmed')) {
+    if (normalized.contains('Email not confirmed')) {
       return 'Please confirm your email first';
     }
-    if (message.contains('User already registered')) {
+    if (normalized.contains('User already registered')) {
       return 'Email is already registered';
     }
-    if (message.contains('Password should be at least')) {
+    if (normalized.contains('Password should be at least')) {
       return 'Password must be at least 6 characters';
     }
-    if (message.contains('Invalid email')) {
+    if (normalized.contains('Invalid email')) {
       return 'Invalid email format';
     }
-    return message;
+    if (_isRetryableAuthTimeout(normalized) ||
+        normalized.contains('Database error querying schema')) {
+      return 'Sign-in service is temporarily busy. Please retry in a few seconds.';
+    }
+    return normalized;
   }
 }
 

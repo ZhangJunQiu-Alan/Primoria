@@ -119,9 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       width: 260,
       decoration: const BoxDecoration(
         color: _C.surface,
-        border: Border(
-          right: BorderSide(color: Color(0x1A506E96)),
-        ),
+        border: Border(right: BorderSide(color: Color(0x1A506E96))),
       ),
       child: SafeArea(
         child: Padding(
@@ -185,8 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               _NavItem(
                 label: 'Fans Manage',
                 active: _currentTab == _NavTab.fansManage,
-                onTap: () =>
-                    setState(() => _currentTab = _NavTab.fansManage),
+                onTap: () => setState(() => _currentTab = _NavTab.fansManage),
               ),
             ],
           ),
@@ -208,11 +205,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _buildTopbar(context),
             const SizedBox(height: 24),
             // Page content
-            Expanded(
-              child: SingleChildScrollView(
-                child: _buildPageContent(),
-              ),
-            ),
+            Expanded(child: SingleChildScrollView(child: _buildPageContent())),
           ],
         ),
       ),
@@ -226,9 +219,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Default dashboard topbar — avatar at right
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        UserAvatar(onSignedIn: _loadCourses),
-      ],
+      children: [UserAvatar(size: 57, onSignedIn: _loadCourses)],
     );
   }
 
@@ -253,8 +244,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // No real comments data yet, keep current order
           break;
         default:
-          _courses.sort((a, b) => (b['updated_at'] as String? ?? '')
-              .compareTo(a['updated_at'] as String? ?? ''));
+          _courses.sort(
+            (a, b) => (b['updated_at'] as String? ?? '').compareTo(
+              a['updated_at'] as String? ?? '',
+            ),
+          );
       }
     });
   }
@@ -265,9 +259,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         // Avatar row
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            UserAvatar(onSignedIn: _loadCourses),
-          ],
+          children: [UserAvatar(size: 57, onSignedIn: _loadCourses)],
         ),
         const SizedBox(height: 16),
         // Sort + Create row
@@ -285,22 +277,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 borderRadius: BorderRadius.circular(14),
               ),
               itemBuilder: (_) => const [
-                PopupMenuItem(
-                  value: 'time',
-                  child: Text('Sort By time'),
-                ),
-                PopupMenuItem(
-                  value: 'student',
-                  child: Text('Sort By student'),
-                ),
+                PopupMenuItem(value: 'time', child: Text('Sort By time')),
+                PopupMenuItem(value: 'student', child: Text('Sort By student')),
                 PopupMenuItem(
                   value: 'comments',
                   child: Text('Sort By comments'),
                 ),
               ],
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(999),
                   border: Border.all(color: const Color(0x2E506E96)),
@@ -317,8 +305,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    const Icon(Icons.keyboard_arrow_down,
-                        size: 18, color: _C.muted),
+                    const Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 18,
+                      color: _C.muted,
+                    ),
                   ],
                 ),
               ),
@@ -350,32 +341,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
   //  Home Page content (dashboard)
   // ═══════════════════════════════════════════════
   Widget _buildHomePage() {
-    return LayoutBuilder(builder: (context, constraints) {
-      final wide = constraints.maxWidth > 700;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Metrics row: Course Data + Income overview
-          if (wide)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(flex: 3, child: _buildCourseDataCard(wide)),
-                const SizedBox(width: 22),
-                Expanded(flex: 2, child: _buildIncomeCard()),
-              ],
-            )
-          else ...[
-            _buildCourseDataCard(wide),
-            const SizedBox(height: 22),
-            _buildIncomeCard(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth > 700;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Metrics row: Course Data + Income overview
+            if (wide)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(flex: 3, child: _buildCourseDataCard(wide)),
+                  const SizedBox(width: 22),
+                  Expanded(flex: 2, child: _buildIncomeCard()),
+                ],
+              )
+            else ...[
+              _buildCourseDataCard(wide),
+              const SizedBox(height: 22),
+              _buildIncomeCard(),
+            ],
+            const SizedBox(height: 24),
+            // Comments
+            _buildCommentsCard(wide),
           ],
-          const SizedBox(height: 24),
-          // Comments
-          _buildCommentsCard(wide),
-        ],
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _buildCourseDataCard(bool wide) {
@@ -386,10 +379,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFAFFFFFF),
-            Color(0xE6F0F6FF),
-          ],
+          colors: [Color(0xFAFFFFFF), Color(0xE6F0F6FF)],
         ),
         border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
         boxShadow: const [
@@ -435,13 +425,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFAFFFFFF),
-            Color(0xE6FFF7E8),
-          ],
+          colors: [Color(0xFAFFFFFF), Color(0xE6FFF7E8)],
         ),
-        border: Border.all(
-            color: const Color(0x40FFBA49)),
+        border: Border.all(color: const Color(0x40FFBA49)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x261E2E50),
@@ -492,13 +478,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFAFFFFFF),
-            Color(0xE6EBF8F0),
-          ],
+          colors: [Color(0xFAFFFFFF), Color(0xE6EBF8F0)],
         ),
-        border:
-            Border.all(color: _C.primary.withValues(alpha: 0.2)),
+        border: Border.all(color: _C.primary.withValues(alpha: 0.2)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x261E2E50),
@@ -522,10 +504,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Wrap(
             spacing: 18,
             runSpacing: 18,
-            children: List.generate(
-              4,
-              (_) => const _CommentBlock(),
-            ),
+            children: List.generate(4, (_) => const _CommentBlock()),
           ),
         ],
       ),
@@ -605,8 +584,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 borderRadius: BorderRadius.circular(999),
               ),
             ),
-            child: const Text('Sign In',
-                style: TextStyle(fontWeight: FontWeight.w700)),
+            child: const Text(
+              'Sign In',
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
           ),
         ],
       ),
@@ -660,8 +641,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 borderRadius: BorderRadius.circular(999),
               ),
             ),
-            child: const Text('Create Course',
-                style: TextStyle(fontWeight: FontWeight.w700)),
+            child: const Text(
+              'Create Course',
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
           ),
         ],
       ),
@@ -732,66 +715,65 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Header: summary + actions ──
-          LayoutBuilder(builder: (context, constraints) {
-            final wide = constraints.maxWidth > 500;
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final wide = constraints.maxWidth > 500;
 
-            final summary = Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF1F2D3D),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                if (updatedAgo.isNotEmpty)
-                  Text(updatedAgo,
-                      style:
-                          const TextStyle(color: _C.muted, fontSize: 14)),
-                const SizedBox(height: 4),
-                Text(
-                  'Learned ${lessons.length} times',
-                  style: const TextStyle(color: _C.muted, fontSize: 14),
-                ),
-              ],
-            );
-
-            final actions = Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _GhostButton(
-                  label: 'Edit',
-                  onTap: () => context.go('/builder?courseId=$courseId'),
-                ),
-                const SizedBox(width: 16),
-                _GhostButton(
-                  label: 'Delete',
-                  onTap: () => _confirmDeleteCourse(courseId, title),
-                ),
-              ],
-            );
-
-            if (wide) {
-              return Row(
+              final summary = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: summary),
-                  actions,
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF1F2D3D),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  if (updatedAgo.isNotEmpty)
+                    Text(
+                      updatedAgo,
+                      style: const TextStyle(color: _C.muted, fontSize: 14),
+                    ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Learned ${lessons.length} times',
+                    style: const TextStyle(color: _C.muted, fontSize: 14),
+                  ),
                 ],
               );
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                summary,
-                const SizedBox(height: 16),
-                actions,
-              ],
-            );
-          }),
+
+              final actions = Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _GhostButton(
+                    label: 'Edit',
+                    onTap: () => context.go('/builder?courseId=$courseId'),
+                  ),
+                  const SizedBox(width: 16),
+                  _GhostButton(
+                    label: 'Delete',
+                    onTap: () => _confirmDeleteCourse(courseId, title),
+                  ),
+                ],
+              );
+
+              if (wide) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: summary),
+                    actions,
+                  ],
+                );
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [summary, const SizedBox(height: 16), actions],
+              );
+            },
+          ),
 
           const SizedBox(height: 24),
 
@@ -889,10 +871,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
       return;
     }
-    showDialog(
-      context: context,
-      builder: (ctx) => const ProfileDialog(),
-    );
+    showDialog(context: context, builder: (ctx) => const ProfileDialog());
   }
 }
 
@@ -920,7 +899,9 @@ class _NavItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: active ? _C.accent.withValues(alpha: 0.12) : Colors.transparent,
+          color: active
+              ? _C.accent.withValues(alpha: 0.12)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(14),
         ),
         child: Text(
@@ -957,9 +938,7 @@ class _SideAction extends StatelessWidget {
               _C.accent.withValues(alpha: 0.18),
             ],
           ),
-          border: Border.all(
-            color: _C.accent.withValues(alpha: 0.35),
-          ),
+          border: Border.all(color: _C.accent.withValues(alpha: 0.35)),
         ),
         child: Text(
           label,
@@ -989,9 +968,7 @@ class _GhostButton extends StatelessWidget {
         foregroundColor: _C.text,
         side: const BorderSide(color: Color(0x2E506E96)),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(999),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
         textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
       ),
       child: Text(label),
@@ -1076,11 +1053,7 @@ class _LessonBox extends StatelessWidget {
   final bool dashed;
   final VoidCallback? onTap;
 
-  const _LessonBox({
-    required this.label,
-    this.dashed = false,
-    this.onTap,
-  });
+  const _LessonBox({required this.label, this.dashed = false, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -1096,16 +1069,11 @@ class _LessonBox extends StatelessWidget {
               : const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    Color(0x1F4D7CFF),
-                    Color(0x1F58CC02),
-                  ],
+                  colors: [Color(0x1F4D7CFF), Color(0x1F58CC02)],
                 ),
           color: dashed ? const Color(0x99FFFFFF) : null,
           border: Border.all(
-            color: dashed
-                ? const Color(0x66506E96)
-                : const Color(0x4D506E96),
+            color: dashed ? const Color(0x66506E96) : const Color(0x4D506E96),
             width: dashed ? 2 : 1,
           ),
         ),

@@ -7,10 +7,6 @@ Primoria is a two-part Flutter system for building and consuming interactive STE
 
 This repository contains both apps plus the shared course schema and product docs.
 
-## Screenshots
-
-<!-- Add screenshots here -->
-
 ## System Architecture
 
 ```
@@ -25,17 +21,7 @@ This repository contains both apps plus the shared course schema and product doc
 [Viewer (Flutter Website)]
 ```
 
-## Backend (Recommended)
-
-For accounts, cloud course saving/publishing, and search/recommendation with low ops, use **Supabase (Postgres)**.
-
-- See `docs/backend_supabase.md`
-
-### Key Concepts
-- **Course Schema**: `Course → Pages → Blocks`, with metadata + settings. Defined in Builder models and exported as JSON.
-- **Blocks**: `text`, `image`, `code-block`, `code-playground`, `multiple-choice` (plus planned types).
-- **Flow**: Builder creates → validates → exports JSON → Viewer renders and previews.
-- **Storage**: Builder uses local persistence (SharedPreferences) and supports JSON export for sharing.
+Backend: **Supabase (Postgres)** — accounts, cloud course saving/publishing, search/recommendation.
 
 ## Repository Layout
 
@@ -61,64 +47,33 @@ Primoria/
 
 ### Installation
 
-1. **Install Flutter**
-
-   Follow the official Flutter installation guide for your operating system:
-   - [Windows](https://docs.flutter.dev/get-started/install/windows)
-   - [macOS](https://docs.flutter.dev/get-started/install/macos)
-   - [Linux](https://docs.flutter.dev/get-started/install/linux)
+1. **Install Flutter**: Follow the [official guide](https://docs.flutter.dev/get-started/install).
 
 2. **Verify Installation**
-
    ```bash
    flutter doctor
    ```
 
-   Ensure all checkmarks are green (or address any issues shown).
-
-3. **Clone the Repository**
-
+3. **Clone and Install Dependencies**
    ```bash
    git clone https://github.com/ZhangJunQiu-Alan/primoria.git
    cd primoria
+   cd Builder && flutter pub get
+   cd ../Viewer && flutter pub get
    ```
 
-4. **Install Dependencies**
-
-   ```bash
-   cd Builder
-   flutter pub get
-   cd ../Viewer
-   flutter pub get
-   ```
-
-5. **Run the Apps**
-
+4. **Run the Apps**
    ```bash
    # Builder (Flutter Web)
-   cd Builder
-   flutter run -d chrome
+   cd Builder && flutter run -d chrome
 
    # Viewer (Flutter Web)
-   cd ../Viewer
-   flutter run -d chrome
+   cd Viewer && flutter run -d chrome
    ```
 
 ## Builder Overview
 
-```bash
-cd Builder
-flutter pub get
-flutter run -d chrome
-```
-
-### Viewer (Flutter Web)
-
-```bash
-cd Viewer
-flutter pub get
-flutter run -d chrome
-```
+**Routes:** `/` (Landing) → `/dashboard` (Dashboard) → `/builder` (Editor) → `/viewer` (Preview)
 
 **Key features:**
 - Landing page with sign-in modal (Supabase auth: email/Google/GitHub)
@@ -128,9 +83,7 @@ flutter run -d chrome
 - JSON export/import and AI course generation (Gemini)
 - Code playground (stubbed execution)
 
-**Routes:** `/` (Landing) → `/dashboard` (Dashboard) → `/builder` (Editor) → `/viewer` (Preview)
-
-**Primary paths:**
+**Source layout:**
 ```
 Builder/lib/
 ├── app/                         # GoRouter navigation
@@ -146,151 +99,34 @@ Builder/lib/
 
 ## Viewer Overview
 
-**Key features (current):**
+**Key features:**
 - Home, search, courses, lesson, profile screens
 - Interactive components (sliders, feedback, animations)
 - Local persistence and basic services
+- Light and dark theme support
 
-**Primary paths:**
+**Source layout:**
 ```
 Viewer/lib/
 ├── components/                  # UI components
 ├── models/                      # Data models
-├── providers/                   # State management
+├── providers/                   # State management (Provider)
 ├── screens/                     # App screens
 ├── services/                    # App services
 └── theme/                       # Design system
 ```
 
-## Project Structure
+## Docs Index
 
-### Viewer Structure
-
-```
-lib/
-├── main.dart                 # App entry point
-├── components/               # Reusable UI components
-│   ├── common/              # Common widgets (bottom nav, etc.)
-│   ├── course/              # Course-related components
-│   ├── feedback/            # Feedback dialogs
-│   ├── game/                # Game container components
-│   ├── home/                # Home screen components
-│   └── interactions/        # Interactive elements (slider, etc.)
-├── models/                   # Data models
-├── providers/                # State management (Provider)
-├── screens/                  # App screens
-├── services/                 # Business logic services
-└── theme/                    # App theming (colors, typography, etc.)
-```
-
-## Dependencies (Viewer)
-
-| Package | Version | Purpose |
-|---------|---------|---------|
-| provider | ^6.1.1 | State management |
-| shared_preferences | ^2.2.2 | Local data persistence |
-| sqflite | ^2.3.0 | SQLite database |
-| lottie | ^3.1.0 | Lottie animations |
-| confetti | ^0.7.0 | Celebration effects |
-| audioplayers | ^6.0.0 | Sound effects |
-| flutter_local_notifications | ^17.0.0 | Local notifications |
-| intl | ^0.19.0 | Internationalization |
-| uuid | ^4.2.1 | UUID generation |
-
-## Completed Features (Viewer)
-
-### UI/UX Design
-- [x] Brilliant-style design system
-- [x] Light and dark theme support
-- [x] Custom color palette with gradients
-- [x] Consistent typography system
-- [x] Spacing and radius constants
-- [x] Shadow presets
-
-### Screens
-- [x] **Home Screen** - Daily challenge, continue learning, course recommendations
-- [x] **Search Screen** - Category browsing, course discovery, search functionality
-- [x] **Courses Screen** - Course list with filtering tabs (All, In Progress, Completed, Favorites)
-- [x] **Course Detail Screen** - Learning path visualization with chapter nodes
-- [x] **Lesson Screen** - Interactive lesson content with multiple question types
-- [x] **Profile Screen** - User stats, achievements, streak display, settings
-- [x] **Login Screen** - Email/password authentication with registration
-
-### Components
-- [x] Bottom navigation bar with animated active state
-- [x] Daily challenge card
-- [x] Streak widget (standard and large variants)
-- [x] Course cards with progress indicators
-- [x] Chapter nodes for learning path visualization
-- [x] Interactive slider component
-- [x] Feedback dialog with success/failure animations
-- [x] Game container for lesson interactions
-- [x] Course header with stats
-
-### Services
-- [x] **Storage Service** - Local data persistence with SharedPreferences
-- [x] **Audio Service** - Sound effects for interactions
-- [x] **Notification Service** - Daily reminder notifications
-
-### State Management
-- [x] **User Provider** - User authentication state, profile data, progress tracking
-- [x] **Theme Provider** - Theme mode management (light/dark/system)
-
-## Roadmap / TODO
-
-### Builder
-- [ ] Import workflow
-- [ ] Block reorder/insert refinement
-- [ ] More block types
-- [ ] Robust schema validation
-
-### Viewer
-- [ ] RESTful API integration
-- [ ] User authentication with JWT
-- [ ] Cloud data synchronization
-- [ ] Real-time progress updates
-
-### Content & Curriculum
-- [ ] Course content management system
-- [ ] Multiple subject categories (Math, Science, Logic, etc.)
-- [ ] Difficulty levels
-- [ ] Prerequisites and learning paths
-
-### Interactive Elements
-- [ ] Multiple choice questions
-- [ ] Drag and drop interactions
-- [ ] Drawing canvas
-- [ ] Code editor for programming courses
-- [ ] 3D visualizations
-
-### Gamification
-- [ ] Achievement system with badges
-- [ ] Leaderboards
-- [ ] XP and leveling system
-- [ ] Daily/weekly challenges
-- [ ] Streak rewards
-
-### Social Features
-- [ ] User profiles
-- [ ] Friends and following
-- [ ] Course discussions
-- [ ] Share progress on social media
-
-### Additional Features
-- [ ] Push notifications
-- [ ] Offline mode with content caching
-- [ ] Analytics and learning insights
-- [ ] Accessibility improvements
-- [ ] Multi-language support (i18n)
-- [ ] Onboarding tutorial
-- [ ] Subscription/payment integration
-
-### Performance & Quality
-- [ ] Unit tests
-- [ ] Widget tests
-- [ ] Integration tests
-- [ ] Performance optimization
-- [ ] Error tracking and reporting
+| File | Purpose |
+|------|---------|
+| `docs/prd.md` | Product Requirements Document |
+| `docs/database-schema.md` | PostgreSQL table design |
+| `docs/course-json-guide.md` | Course JSON authoring guide |
+| `docs/dashboard.md` | Dashboard architecture |
+| `docs/test-checklist.md` | MVP manual test checklist |
+| `docs/changelog.md` | Change log |
+| `docs/todo.md` | Task backlog |
 
 ## Contributing
 

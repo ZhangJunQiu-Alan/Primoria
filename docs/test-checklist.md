@@ -1,0 +1,92 @@
+# Builder MVP Manual Test Checklist
+
+## 1. Basic Startup
+
+- [ ] `flutter run -d chrome` starts successfully
+- [ ] Builder loads with three-column layout
+- [ ] Left panel shows all module types
+- [ ] Canvas shows empty-state prompt
+- [ ] Right panel shows "No module selected"
+
+## 2. Drag-and-Drop
+
+- [ ] Drag Text → canvas creates text instance
+- [ ] Drag Image → canvas creates image instance
+- [ ] Drag Code Block → canvas creates code block
+- [ ] Drag Code Playground → canvas creates playground with Run button
+- [ ] Drag Multiple Choice → canvas creates quiz with options
+
+## 3. Selection and Property Editing
+
+- [ ] Click module → selection highlight + right panel shows properties
+- [ ] Edit text content → canvas updates in real time
+- [ ] Enter image URL → canvas displays image
+- [ ] Edit code playground initial code / expected output
+
+## 4. Code Playground Run
+
+- [ ] Enter `print("Hello")` → Run → output shows `Hello`
+- [ ] With expected output set → shows "Correct" or "Try again"
+
+## 5. Module Ordering and Deletion
+
+- [ ] Drag handle to reorder → canvas updates order
+- [ ] Click delete → module removed, panel resets
+
+## 6. Course Info
+
+- [ ] Click course title → edit dialog → title updates
+- [ ] Unsaved indicator (yellow dot) appears after changes
+
+## 7. JSON Export
+
+- [ ] Export → validates title/pages → downloads JSON
+- [ ] JSON includes all pages and blocks
+
+## 8. Preview
+
+- [ ] Preview button → navigates to Viewer with current content
+
+## 9. Auth & Routing
+
+- [ ] `/dashboard` while logged out → redirects to `/`
+- [ ] `/builder` while logged out → redirects to `/`
+- [ ] Login on landing → auto-redirects to `/dashboard`
+- [ ] Sign out from avatar → redirects to `/`
+
+## 10. Dashboard — Home Page
+
+- [ ] Course Data, Income Overview, Comments cards visible
+- [ ] Cards render on both wide and narrow screens
+- [ ] Avatar circle in top-right corner
+
+## 11. Dashboard — Course Manage
+
+- [ ] Shows loading spinner → course list
+- [ ] Not logged in → sign-in prompt
+- [ ] No courses → empty state with Create Course button
+- [ ] Course cards: title, time ago, lesson boxes
+- [ ] Sort dropdown: 3 options (time/student/comments)
+- [ ] Edit → `/builder?courseId=<id>`
+- [ ] Delete → confirmation → deletes and refreshes
+- [ ] Add lesson → `/builder?courseId=<id>`
+- [ ] Create Course → `/builder`
+
+## 12. User Avatar
+
+- [ ] Visible on Dashboard and Builder (blue circle)
+- [ ] Logged in → popup menu (Profile/Dashboard/Sign out)
+- [ ] Logged out → opens sign-in dialog
+- [ ] OAuth users show profile photo
+
+## 13. Builder — Course Loading
+
+- [ ] `/builder` → blank new course
+- [ ] `/builder?courseId=<id>` → loads existing course
+
+## Known Issues
+
+1. Builder text blocks do not render Markdown (Viewer does)
+2. Sort by student/comments are placeholders
+3. Data Center / Fans Manage tabs are placeholders
+4. "Learned X times" shows lesson count, not learner count
