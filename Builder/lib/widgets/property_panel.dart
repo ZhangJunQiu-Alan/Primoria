@@ -61,29 +61,46 @@ class PropertyPanel extends ConsumerWidget {
   }
 
   Widget _buildEmptyState() {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.touch_app,
-              size: 48,
-              color: AppColors.neutral300,
-            ),
-            SizedBox(height: AppSpacing.md),
-            Text(
-              'Click a block on the canvas\nto view and edit its properties',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: AppFontSize.sm,
-                color: AppColors.neutral400,
-              ),
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildMetadataRow('Block', 'None selected'),
+          const SizedBox(height: AppSpacing.sm),
+          _buildMetadataRow('Type', '--'),
+          const SizedBox(height: AppSpacing.sm),
+          _buildMetadataRow('Status', '--'),
+          const SizedBox(height: AppSpacing.sm),
+          _buildMetadataRow('Last update', '--'),
+        ],
       ),
+    );
+  }
+
+  Widget _buildMetadataRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: AppFontSize.sm,
+            fontWeight: FontWeight.w500,
+            color: AppColors.neutral600,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: AppFontSize.sm,
+              color: AppColors.neutral400,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

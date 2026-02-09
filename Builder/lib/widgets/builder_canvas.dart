@@ -101,39 +101,12 @@ class BuilderCanvas extends ConsumerWidget {
 
   Widget _buildEmptyState(bool isDragOver) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            decoration: BoxDecoration(
-              color: isDragOver ? AppColors.primary50 : AppColors.neutral100,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              isDragOver ? Icons.add_circle : Icons.dashboard_customize,
-              size: 48,
-              color: isDragOver ? AppColors.primary500 : AppColors.neutral400,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Text(
-            isDragOver ? 'Drop to add block' : 'Drag blocks here from the left',
-            style: TextStyle(
-              fontSize: AppFontSize.md,
-              fontWeight: FontWeight.w500,
-              color: isDragOver ? AppColors.primary600 : AppColors.neutral500,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          const Text(
-            'Start building your interactive course',
-            style: TextStyle(
-              fontSize: AppFontSize.sm,
-              color: AppColors.neutral400,
-            ),
-          ),
-        ],
+      child: Text(
+        isDragOver ? 'Drop to add block' : 'Drag Blocks Here',
+        style: TextStyle(
+          fontSize: AppFontSize.md,
+          color: isDragOver ? AppColors.primary500 : AppColors.neutral400,
+        ),
       ),
     );
   }

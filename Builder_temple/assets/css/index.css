@@ -1,0 +1,130 @@
+.page-landing {
+  position: relative;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+  padding: 20px var(--gutter) 80px;
+}
+
+.hero h1 {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.hero .quote {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: rgba(77, 124, 255, 0.08);
+  border-left: 4px solid var(--accent);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-card {
+  position: relative;
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.85));
+  border: 1px solid rgba(80, 110, 150, 0.12);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: '';
+  position: absolute;
+  inset: -60% -10% auto auto;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 212, 59, 0.5), rgba(255, 212, 59, 0));
+  opacity: 0.8;
+}
+
+.hero-card h3 {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.hero-card .stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.stat-tile {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.stat-tile span {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.feature-row {
+  padding: 40px var(--gutter) 80px;
+}
+
+.feature-row .card {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cta-band {
+  margin: 0 var(--gutter) 80px;
+  padding: clamp(24px, 4vw, 40px);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, rgba(88, 204, 2, 0.18), rgba(77, 124, 255, 0.16));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-band h2 {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-card .stat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1500px) and (orientation: portrait) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}

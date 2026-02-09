@@ -1,0 +1,134 @@
+.page-auth {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-main {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+  padding: 20px var(--gutter) 80px;
+}
+
+.auth-copy h1 {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  margin-bottom: 12px;
+}
+
+.auth-copy p {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.auth-modal {
+  position: relative;
+  padding: 32px;
+  border-radius: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(80, 110, 150, 0.16);
+  box-shadow: 0 28px 60px rgba(10, 20, 40, 0.25);
+  display: grid;
+  gap: 16px;
+  text-align: center;
+  animation: float 10s ease-in-out infinite;
+}
+
+.auth-modal h2 {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 1.8rem;
+}
+
+.auth-modal .btn {
+  width: 100%;
+  box-shadow: none;
+}
+
+.auth-modal .btn-outline {
+  background: transparent;
+  border: 1px solid rgba(80, 110, 150, 0.2);
+}
+
+.auth-modal .btn-google {
+  background: #ffffff;
+  border: 1px solid rgba(80, 110, 150, 0.18);
+}
+
+.auth-modal .btn-apple {
+  background: #111827;
+  color: #ffffff;
+}
+
+.auth-modal .footnote {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.auth-orbit {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px dashed rgba(77, 124, 255, 0.2);
+  top: -40px;
+  right: -40px;
+  animation: pulse 6s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  .auth-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.auth-modal .badge {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin: 0 auto;
+}
+
+.auth-modal .badge.active {
+  opacity: 1;
+}
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 24, 38, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 50;
+  padding: 20px;
+}
+
+.auth-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.auth-modal {
+  width: min(420px, 90vw);
+}
+
+.auth-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  background: rgba(77, 124, 255, 0.12);
+  color: var(--accent);
+}
+
+body.modal-open {
+  overflow: hidden;
+}

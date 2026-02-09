@@ -43,9 +43,13 @@ For accounts, cloud course saving/publishing, and search/recommendation with low
 Primoria/
 ├── Builder/                     # Course authoring app (Flutter Web)
 ├── Viewer/                      # Learning app (Flutter Web)
-├── STEM-Course-Builder-PRD.md   # Product requirements doc
-├── todolist.md                  # Builder task tracking & progress
-└── README.md                    # This file
+├── supabase/                    # Supabase backend (migrations, config)
+├── docs/                        # Project documentation
+├── Design/                      # UI design mockups (PNG)
+├── Builder_temple/              # HTML templates/prototypes
+├── img/                         # Project images/assets
+├── CLAUDE.md                    # Claude Code project guidance
+└── .env.example                 # Environment variables template
 ```
 
 ## Environment Setup
@@ -117,20 +121,26 @@ flutter run -d chrome
 ```
 
 **Key features:**
-- Drag-and-drop blocks onto a canvas
+- Landing page with sign-in modal (Supabase auth: email/Google/GitHub)
+- Dashboard with course management, data overview, and income/comments cards
+- Drag-and-drop block editor with searchable categorized module panel
 - Block selection + property editing
-- Multi-page course editing
-- JSON export (Course schema)
+- JSON export/import and AI course generation (Gemini)
 - Code playground (stubbed execution)
+
+**Routes:** `/` (Landing) → `/dashboard` (Dashboard) → `/builder` (Editor) → `/viewer` (Preview)
 
 **Primary paths:**
 ```
 Builder/lib/
-├── features/builder/            # Builder UI
+├── app/                         # GoRouter navigation
+├── features/landing/            # Landing page + sign-in modal
+├── features/dashboard/          # Course management dashboard
+├── features/builder/            # Block editor UI
 ├── features/viewer/             # In-app preview
-├── models/                      # Course schema
-├── providers/                   # Riverpod state
-├── services/                    # Export/storage/utils
+├── models/                      # Course schema (Riverpod)
+├── providers/                   # State management
+├── services/                    # Supabase, AI, export/import
 └── widgets/                     # Panels, canvas, blocks
 ```
 
