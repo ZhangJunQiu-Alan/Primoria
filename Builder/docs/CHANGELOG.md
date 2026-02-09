@@ -1,5 +1,61 @@
 # Changelog
 
+## [Unreleased] - 2026-02-10
+
+### Summary
+Dashboard Course Manage implementation, auth-protected routing, shared UserAvatar component, and Builder courseId loading support.
+
+### Added
+
+#### Dashboard — Course Manage (`features/dashboard/dashboard_screen.dart`)
+- **Real Supabase data**: Course Manage tab now fetches user's courses via `getMyCourses()` with loading spinner, sign-in prompt (if not logged in), and empty state
+- **Sort dropdown**: `PopupMenuButton` with 3 options — Sort By time, Sort By student, Sort By comments
+- **Course cards**: Title, relative time ("Updated 2 days ago"), "Learned X times", status badge (Draft/Published)
+- **Edit button**: Navigates to `/builder?courseId=<id>` to load course in editor
+- **Delete button**: Confirmation dialog → Supabase `deleteCourse()` → refresh list
+- **Lesson boxes**: Async-loaded from course content (pages), displayed as "Lesson 1", "Lesson 2"… with gradient backgrounds
+- **Add lesson box**: Dashed border box → navigates to Builder with courseId
+- **Create Course button**: Top-right, navigates to `/builder`
+
+#### User Avatar (`widgets/user_avatar.dart`) — NEW FILE
+- Reusable circular avatar component used in both Dashboard and Builder
+- Listens to `authStateChanges` stream for real-time auth state updates
+- Logged in: Shows profile photo from OAuth `user_metadata` (`avatar_url` / `picture`) or initials fallback (white on blue circle)
+- Not logged in: Shows person icon on light blue circle; tap opens auth dialog
+- Popup menu: email display, Profile (edit dialog), Dashboard (go_router navigate), Sign out
+- Blue accent color scheme (#4D7CFF) for visibility on white backgrounds
+
+#### Auth-Protected Routing (`app/router.dart`)
+- `refreshListenable` tied to Supabase auth state stream
+- Redirect guard: `/dashboard` and `/builder` require login → redirect to `/`
+- Auto-redirect: logged-in users on `/` → `/dashboard`
+- `_GoRouterRefreshStream` helper class for GoRouter + Stream integration
+
+#### Builder Course Loading (`features/builder/builder_screen.dart`)
+- Changed from `ConsumerWidget` to `ConsumerStatefulWidget`
+- Accepts optional `courseId` query parameter
+- Auto-loads course content from Supabase when navigated with courseId (from Course Manage → Edit)
+- Route: `/builder?courseId=xxx`
+
+### Changed
+
+#### Dashboard Home Page — Layout Fix
+- Replaced `IntrinsicHeight` + `GridView.count` with `Row` + `Wrap` — fixes blank content area caused by GridView not reporting intrinsic height
+- `_MetricTile` (110×90) and `_CommentBlock` (160×100) now have explicit dimensions for Wrap layout
+
+#### Builder Screen
+- Removed 150+ lines of old `_buildUserAvatar`, `_showAuthDialog`, `_showProfileDialog`, `_logout`, `_showMyCourses` methods
+- Replaced with shared `UserAvatar` widget (36px)
+
+#### Dashboard Screen
+- Profile text button replaced with `UserAvatar` circle in both Home Page and Course Manage topbars
+
+### Technical Notes
+- `flutter analyze`: 8 issues (all pre-existing — deprecated `withOpacity`, unused fields)
+- No new warnings or errors introduced
+
+---
+
 ## [Unreleased] - 2026-02-09
 
 ### Summary

@@ -4,6 +4,7 @@ import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
+import '../../widgets/user_avatar.dart';
 
 // ─── Color tokens matching base.css variables ───
 class _C {
@@ -14,6 +15,7 @@ class _C {
   static const muted = Color(0xFF607086);
   static const primary = Color(0xFF58CC02);
   static const accent = Color(0xFF4D7CFF);
+  static const danger = Color(0xFFE53E3E);
 }
 
 /// Sidebar navigation items
@@ -30,6 +32,38 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   _NavTab _currentTab = _NavTab.homePage;
   bool _sidebarOpen = false;
+
+  // Course Manage state
+  List<Map<String, dynamic>> _courses = [];
+  bool _coursesLoading = false;
+  String _sortOrder = 'time'; // 'time', 'student', 'comments'
+
+  // Cache: courseId → list of page titles (lessons)
+  final Map<String, List<String>> _courseLessons = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCourses();
+  }
+
+  Future<void> _loadCourses() async {
+    if (!SupabaseService.isLoggedIn) return;
+    setState(() => _coursesLoading = true);
+    try {
+      final courses = await SupabaseService.getMyCourses();
+      if (mounted) {
+        setState(() {
+          _courses = courses;
+          _coursesLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _coursesLoading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +153,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(height: 18),
 
-              // "Build Course" button
+              // "Build Course" button → navigate to Builder
               _SideAction(
                 label: 'Build Course',
                 onTap: () => context.go('/builder'),
@@ -136,8 +170,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               _NavItem(
                 label: 'Course Manage',
                 active: _currentTab == _NavTab.courseManage,
-                onTap: () =>
-                    setState(() => _currentTab = _NavTab.courseManage),
+                onTap: () {
+                  setState(() => _currentTab = _NavTab.courseManage);
+                  _loadCourses();
+                },
               ),
               const SizedBox(height: 10),
               _NavItem(
@@ -187,24 +223,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (_currentTab == _NavTab.courseManage) {
       return _buildCourseManageTopbar(context);
     }
-    // Default dashboard topbar — Profile at right
+    // Default dashboard topbar — avatar at right
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        _GhostButton(label: 'Profile', onTap: () => _showProfile(context)),
+        UserAvatar(onSignedIn: _loadCourses),
       ],
     );
+  }
+
+  String get _sortLabel {
+    switch (_sortOrder) {
+      case 'student':
+        return 'Sort By student';
+      case 'comments':
+        return 'Sort By comments';
+      default:
+        return 'Sort By time';
+    }
+  }
+
+  void _applySortOrder() {
+    setState(() {
+      switch (_sortOrder) {
+        case 'student':
+          // No real student data yet, keep current order
+          break;
+        case 'comments':
+          // No real comments data yet, keep current order
+          break;
+        default:
+          _courses.sort((a, b) => (b['updated_at'] as String? ?? '')
+              .compareTo(a['updated_at'] as String? ?? ''));
+      }
+    });
   }
 
   Widget _buildCourseManageTopbar(BuildContext context) {
     return Column(
       children: [
-        // Profile row
+        // Avatar row
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            _GhostButton(
-                label: 'Profile', onTap: () => _showProfile(context)),
+            UserAvatar(onSignedIn: _loadCourses),
           ],
         ),
         const SizedBox(height: 16),
@@ -212,7 +274,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _GhostButton(label: 'Sort By time', onTap: () {}),
+            // Sort dropdown
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                _sortOrder = value;
+                _applySortOrder();
+              },
+              offset: const Offset(0, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              itemBuilder: (_) => const [
+                PopupMenuItem(
+                  value: 'time',
+                  child: Text('Sort By time'),
+                ),
+                PopupMenuItem(
+                  value: 'student',
+                  child: Text('Sort By student'),
+                ),
+                PopupMenuItem(
+                  value: 'comments',
+                  child: Text('Sort By comments'),
+                ),
+              ],
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(color: const Color(0x2E506E96)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      _sortLabel,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: _C.text,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    const Icon(Icons.keyboard_arrow_down,
+                        size: 18, color: _C.muted),
+                  ],
+                ),
+              ),
+            ),
             _GhostButton(
               label: 'Create Course',
               onTap: () => context.go('/builder'),
@@ -230,9 +340,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case _NavTab.courseManage:
         return _buildCourseManage();
       case _NavTab.dataCenter:
-        return _buildHomePage(); // same as home, anchored to data
+        return _buildHomePage();
       case _NavTab.fansManage:
-        return _buildHomePage(); // same as home, anchored to fans
+        return _buildHomePage();
     }
   }
 
@@ -240,40 +350,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
   //  Home Page content (dashboard)
   // ═══════════════════════════════════════════════
   Widget _buildHomePage() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Metrics row: Course Data + Income overview
-        LayoutBuilder(builder: (context, constraints) {
-          final wide = constraints.maxWidth > 700;
-          if (wide) {
-            return IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(flex: 3, child: _buildCourseDataCard()),
-                  const SizedBox(width: 22),
-                  Expanded(flex: 2, child: _buildIncomeCard()),
-                ],
-              ),
-            );
-          }
-          return Column(
-            children: [
-              _buildCourseDataCard(),
-              const SizedBox(height: 22),
-              _buildIncomeCard(),
-            ],
-          );
-        }),
-        const SizedBox(height: 24),
-        // Comments
-        _buildCommentsCard(),
-      ],
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      final wide = constraints.maxWidth > 700;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Metrics row: Course Data + Income overview
+          if (wide)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(flex: 3, child: _buildCourseDataCard(wide)),
+                const SizedBox(width: 22),
+                Expanded(flex: 2, child: _buildIncomeCard()),
+              ],
+            )
+          else ...[
+            _buildCourseDataCard(wide),
+            const SizedBox(height: 22),
+            _buildIncomeCard(),
+          ],
+          const SizedBox(height: 24),
+          // Comments
+          _buildCommentsCard(wide),
+        ],
+      );
+    });
   }
 
-  Widget _buildCourseDataCard() {
+  Widget _buildCourseDataCard(bool wide) {
     return Container(
       padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
@@ -282,8 +387,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFAFFFFFF), // rgba(255,255,255,0.98)
-            Color(0xE6F0F6FF), // rgba(240,246,255,0.9)
+            Color(0xFAFFFFFF),
+            Color(0xE6F0F6FF),
           ],
         ),
         border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
@@ -307,27 +412,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           const SizedBox(height: 18),
-          LayoutBuilder(builder: (context, constraints) {
-            final crossCount = constraints.maxWidth > 500
-                ? 4
-                : constraints.maxWidth > 300
-                    ? 2
-                    : 1;
-            return GridView.count(
-              crossAxisCount: crossCount,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 18,
-              crossAxisSpacing: 18,
-              childAspectRatio: 1.2,
-              children: const [
-                _MetricTile(label: 'fans:', value: 'number'),
-                _MetricTile(label: 'likes:', value: 'number'),
-                _MetricTile(label: 'share:', value: 'number'),
-                _MetricTile(label: 'fans:', value: 'number'),
-              ],
-            );
-          }),
+          Wrap(
+            spacing: 18,
+            runSpacing: 18,
+            children: const [
+              _MetricTile(label: 'fans:', value: 'number'),
+              _MetricTile(label: 'likes:', value: 'number'),
+              _MetricTile(label: 'share:', value: 'number'),
+              _MetricTile(label: 'fans:', value: 'number'),
+            ],
+          ),
         ],
       ),
     );
@@ -342,12 +436,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFAFFFFFF), // rgba(255,255,255,0.98)
-            Color(0xE6FFF7E8), // rgba(255,247,232,0.9)
+            Color(0xFAFFFFFF),
+            Color(0xE6FFF7E8),
           ],
         ),
         border: Border.all(
-            color: const Color(0x40FFBA49)), // rgba(255,186,73,0.25)
+            color: const Color(0x40FFBA49)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x261E2E50),
@@ -390,7 +484,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildCommentsCard() {
+  Widget _buildCommentsCard(bool wide) {
     return Container(
       padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
@@ -399,8 +493,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFAFFFFFF), // rgba(255,255,255,0.98)
-            Color(0xE6EBF8F0), // rgba(235,248,240,0.9)
+            Color(0xFAFFFFFF),
+            Color(0xE6EBF8F0),
           ],
         ),
         border:
@@ -425,25 +519,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           const SizedBox(height: 18),
-          LayoutBuilder(builder: (context, constraints) {
-            final crossCount = constraints.maxWidth > 800
-                ? 4
-                : constraints.maxWidth > 500
-                    ? 2
-                    : 1;
-            return GridView.count(
-              crossAxisCount: crossCount,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 18,
-              crossAxisSpacing: 18,
-              childAspectRatio: 1.4,
-              children: List.generate(
-                4,
-                (_) => const _CommentBlock(),
-              ),
-            );
-          }),
+          Wrap(
+            spacing: 18,
+            runSpacing: 18,
+            children: List.generate(
+              4,
+              (_) => const _CommentBlock(),
+            ),
+          ),
         ],
       ),
     );
@@ -453,15 +536,336 @@ class _DashboardScreenState extends State<DashboardScreen> {
   //  Course Manage content
   // ═══════════════════════════════════════════════
   Widget _buildCourseManage() {
-    return _CourseCard(
-      title: 'Python',
-      updatedAgo: 'Updated 2 days ago',
-      learnedTimes: 'Learned 45 times',
-      lessonCount: 1,
-      onEdit: () => context.go('/builder'),
-      onDelete: () {},
-      onAddLesson: () => context.go('/builder'),
+    if (!SupabaseService.isLoggedIn) {
+      return _buildSignInPrompt();
+    }
+
+    if (_coursesLoading) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(60),
+          child: CircularProgressIndicator(color: _C.accent),
+        ),
+      );
+    }
+
+    if (_courses.isEmpty) {
+      return _buildEmptyCourses();
+    }
+
+    return Column(
+      children: [
+        for (int i = 0; i < _courses.length; i++) ...[
+          if (i > 0) const SizedBox(height: 24),
+          _buildCourseCard(_courses[i]),
+        ],
+      ],
     );
+  }
+
+  Widget _buildSignInPrompt() {
+    return Container(
+      padding: const EdgeInsets.all(48),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(26),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFAFFFFFF), Color(0xE6EEF4FF)],
+        ),
+        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x261E2E50),
+            blurRadius: 40,
+            offset: Offset(0, 18),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          const Icon(Icons.lock_outline, size: 48, color: _C.muted),
+          const SizedBox(height: 16),
+          const Text(
+            'Sign in to manage your courses',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: _C.text,
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () => _showProfile(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _C.accent,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
+              ),
+            ),
+            child: const Text('Sign In',
+                style: TextStyle(fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyCourses() {
+    return Container(
+      padding: const EdgeInsets.all(48),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(26),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFAFFFFFF), Color(0xE6EEF4FF)],
+        ),
+        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x261E2E50),
+            blurRadius: 40,
+            offset: Offset(0, 18),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          const Icon(Icons.school_outlined, size: 48, color: _C.muted),
+          const SizedBox(height: 16),
+          const Text(
+            'No courses yet',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: _C.text,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Create your first course to get started',
+            style: TextStyle(fontSize: 14, color: _C.muted),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () => context.go('/builder'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _C.accent,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
+              ),
+            ),
+            child: const Text('Create Course',
+                style: TextStyle(fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Load lesson titles for a single course (async, cached)
+  Future<void> _loadCourseLessons(String courseId) async {
+    if (_courseLessons.containsKey(courseId)) return;
+    try {
+      final course = await SupabaseService.getCourseContent(courseId);
+      if (course != null && mounted) {
+        setState(() {
+          _courseLessons[courseId] = course.pages
+              .map((p) => p.title.isNotEmpty ? p.title : 'Untitled')
+              .toList();
+        });
+      }
+    } catch (_) {
+      // silently ignore — lessons just won't show
+    }
+  }
+
+  String _formatTimeAgo(String? updatedAt) {
+    if (updatedAt == null) return '';
+    try {
+      final dt = DateTime.parse(updatedAt);
+      final diff = DateTime.now().difference(dt);
+      if (diff.inDays > 0) {
+        return 'Updated ${diff.inDays} day${diff.inDays > 1 ? 's' : ''} ago';
+      } else if (diff.inHours > 0) {
+        return 'Updated ${diff.inHours} hour${diff.inHours > 1 ? 's' : ''} ago';
+      }
+      return 'Updated just now';
+    } catch (_) {
+      return 'Updated recently';
+    }
+  }
+
+  Widget _buildCourseCard(Map<String, dynamic> course) {
+    final courseId = course['id'] as String;
+    final title = course['title'] as String? ?? 'Untitled';
+    final updatedAgo = _formatTimeAgo(course['updated_at'] as String?);
+
+    // Trigger async lesson loading
+    _loadCourseLessons(courseId);
+    final lessons = _courseLessons[courseId] ?? [];
+
+    return Container(
+      padding: const EdgeInsets.all(28),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(26),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFAFFFFFF), Color(0xE6EEF4FF)],
+        ),
+        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x261E2E50),
+            blurRadius: 40,
+            offset: Offset(0, 18),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── Header: summary + actions ──
+          LayoutBuilder(builder: (context, constraints) {
+            final wide = constraints.maxWidth > 500;
+
+            final summary = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1F2D3D),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                if (updatedAgo.isNotEmpty)
+                  Text(updatedAgo,
+                      style:
+                          const TextStyle(color: _C.muted, fontSize: 14)),
+                const SizedBox(height: 4),
+                Text(
+                  'Learned ${lessons.length} times',
+                  style: const TextStyle(color: _C.muted, fontSize: 14),
+                ),
+              ],
+            );
+
+            final actions = Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _GhostButton(
+                  label: 'Edit',
+                  onTap: () => context.go('/builder?courseId=$courseId'),
+                ),
+                const SizedBox(width: 16),
+                _GhostButton(
+                  label: 'Delete',
+                  onTap: () => _confirmDeleteCourse(courseId, title),
+                ),
+              ],
+            );
+
+            if (wide) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: summary),
+                  actions,
+                ],
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                summary,
+                const SizedBox(height: 16),
+                actions,
+              ],
+            );
+          }),
+
+          const SizedBox(height: 24),
+
+          // ── Lesson boxes ──
+          Wrap(
+            spacing: 24,
+            runSpacing: 24,
+            children: [
+              // Existing lessons
+              for (int i = 0; i < lessons.length; i++)
+                _LessonBox(
+                  label: 'Lesson ${i + 1}',
+                  onTap: () => context.go('/builder?courseId=$courseId'),
+                ),
+              // "Add lesson" dashed box → opens builder
+              _LessonBox(
+                label: 'Add lesson',
+                dashed: true,
+                onTap: () => context.go('/builder?courseId=$courseId'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _confirmDeleteCourse(String courseId, String title) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Delete Course'),
+        content: Text(
+          'Are you sure you want to delete "$title"? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _C.danger,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      final result = await SupabaseService.deleteCourse(courseId);
+      if (mounted) {
+        if (result.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Course deleted'),
+              backgroundColor: AppColors.success,
+            ),
+          );
+          _loadCourses(); // refresh list
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(result.message),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      }
+    }
   }
 
   void _showProfile(BuildContext context) {
@@ -477,6 +881,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   backgroundColor: AppColors.success,
                 ),
               );
+              // Reload courses after sign in
+              _loadCourses();
             }
           },
         ),
@@ -603,6 +1009,8 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 110,
+      height: 90,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.85),
@@ -642,6 +1050,8 @@ class _CommentBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 160,
+      height: 100,
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(16),
@@ -656,125 +1066,6 @@ class _CommentBlock extends StatelessWidget {
           color: _C.muted,
         ),
       ),
-    );
-  }
-}
-
-/// Course card (course-manage page)
-class _CourseCard extends StatelessWidget {
-  final String title;
-  final String updatedAgo;
-  final String learnedTimes;
-  final int lessonCount;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
-  final VoidCallback onAddLesson;
-
-  const _CourseCard({
-    required this.title,
-    required this.updatedAgo,
-    required this.learnedTimes,
-    required this.lessonCount,
-    required this.onEdit,
-    required this.onDelete,
-    required this.onAddLesson,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 480),
-      padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFAFFFFFF),
-            Color(0xE6EEF4FF),
-          ],
-        ),
-        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header row
-          LayoutBuilder(builder: (context, constraints) {
-            final wide = constraints.maxWidth > 500;
-            if (wide) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildSummary()),
-                  _buildActions(),
-                ],
-              );
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSummary(),
-                const SizedBox(height: 16),
-                _buildActions(),
-              ],
-            );
-          }),
-          const SizedBox(height: 24),
-          // Lessons
-          Wrap(
-            spacing: 24,
-            runSpacing: 24,
-            children: [
-              ...List.generate(
-                lessonCount,
-                (i) => _LessonBox(label: 'Lesson ${i + 1}'),
-              ),
-              _LessonBox(label: 'Add lesson', dashed: true, onTap: onAddLesson),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSummary() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF1F2D3D),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Text(updatedAgo, style: const TextStyle(color: _C.muted, fontSize: 14)),
-        const SizedBox(height: 4),
-        Text(learnedTimes,
-            style: const TextStyle(color: _C.muted, fontSize: 14)),
-      ],
-    );
-  }
-
-  Widget _buildActions() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _GhostButton(label: 'Edit', onTap: onEdit),
-        const SizedBox(width: 16),
-        _GhostButton(label: 'Delete', onTap: onDelete),
-      ],
     );
   }
 }
@@ -806,15 +1097,15 @@ class _LessonBox extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0x1F4D7CFF), // rgba(77,124,255,0.12)
-                    Color(0x1F58CC02), // rgba(88,204,2,0.12)
+                    Color(0x1F4D7CFF),
+                    Color(0x1F58CC02),
                   ],
                 ),
           color: dashed ? const Color(0x99FFFFFF) : null,
           border: Border.all(
             color: dashed
-                ? const Color(0x66506E96) // rgba(80,110,150,0.4)
-                : const Color(0x4D506E96), // rgba(80,110,150,0.3)
+                ? const Color(0x66506E96)
+                : const Color(0x4D506E96),
             width: dashed ? 2 : 1,
           ),
         ),

@@ -13,14 +13,40 @@ import '../../widgets/property_panel.dart';
 import '../../widgets/builder_canvas.dart';
 import '../../widgets/ai_generate_dialog.dart';
 import '../../widgets/auth_dialog.dart';
-import '../../widgets/profile_dialog.dart';
+import '../../widgets/user_avatar.dart';
 
 /// Builder main screen - course editor
-class BuilderScreen extends ConsumerWidget {
-  const BuilderScreen({super.key});
+class BuilderScreen extends ConsumerStatefulWidget {
+  final String? courseId;
+
+  const BuilderScreen({super.key, this.courseId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BuilderScreen> createState() => _BuilderScreenState();
+}
+
+class _BuilderScreenState extends ConsumerState<BuilderScreen> {
+  bool _courseLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.courseId != null) {
+      _loadCourse();
+    }
+  }
+
+  Future<void> _loadCourse() async {
+    if (_courseLoaded) return;
+    _courseLoaded = true;
+    final course = await SupabaseService.getCourseContent(widget.courseId!);
+    if (course != null && mounted) {
+      ref.read(courseProvider.notifier).loadCourse(course);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final builderState = ref.watch(builderStateProvider);
 
     return Scaffold(
@@ -167,10 +193,10 @@ class BuilderScreen extends ConsumerWidget {
           child: const Text('Publish'),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // Profile button
-        Padding(
-          padding: const EdgeInsets.only(right: AppSpacing.md),
-          child: _buildUserAvatar(context),
+        // User avatar
+        const Padding(
+          padding: EdgeInsets.only(right: AppSpacing.md),
+          child: UserAvatar(size: 36),
         ),
       ],
     );
@@ -386,159 +412,6 @@ class BuilderScreen extends ConsumerWidget {
         ),
       );
     }
-  }
-
-  Widget _buildUserAvatar(BuildContext context) {
-    // Use StreamBuilder to listen for auth state changes
-    return StreamBuilder(
-      stream: SupabaseService.authStateChanges,
-      builder: (context, snapshot) {
-        final isLoggedIn = SupabaseService.isLoggedIn;
-        final user = SupabaseService.currentUser;
-
-        return PopupMenuButton<String>(
-      offset: const Offset(0, 40),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppBorderRadius.md),
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppBorderRadius.pill),
-          border: Border.all(color: AppColors.neutral300),
-        ),
-        child: const Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: AppFontSize.sm,
-            color: AppColors.neutral700,
-          ),
-        ),
-      ),
-      itemBuilder: (context) {
-        if (isLoggedIn) {
-          return [
-            PopupMenuItem(
-              enabled: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    user?.email ?? 'Signed in',
-                    style: const TextStyle(
-                      fontSize: AppFontSize.sm,
-                      color: AppColors.neutral600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const PopupMenuDivider(),
-            const PopupMenuItem(
-              value: 'profile',
-              child: Row(
-                children: [
-                  Icon(Icons.settings_outlined, size: 18),
-                  SizedBox(width: AppSpacing.sm),
-                  Text('Profile'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'my_courses',
-              child: Row(
-                children: [
-                  Icon(Icons.folder_outlined, size: 18),
-                  SizedBox(width: AppSpacing.sm),
-                  Text('My courses'),
-                ],
-              ),
-            ),
-            const PopupMenuDivider(),
-            const PopupMenuItem(
-              value: 'logout',
-              child: Row(
-                children: [
-                  Icon(Icons.logout, size: 18, color: AppColors.error),
-                  SizedBox(width: AppSpacing.sm),
-                  Text('Sign out', style: TextStyle(color: AppColors.error)),
-                ],
-              ),
-            ),
-          ];
-        } else {
-          return [
-            const PopupMenuItem(
-              value: 'login',
-              child: Row(
-                children: [
-                  Icon(Icons.login, size: 18),
-                  SizedBox(width: AppSpacing.sm),
-                  Text('Sign in / Sign up'),
-                ],
-              ),
-            ),
-          ];
-        }
-      },
-      onSelected: (value) {
-        switch (value) {
-          case 'login':
-            _showAuthDialog(context);
-            break;
-          case 'profile':
-            _showProfileDialog(context);
-            break;
-          case 'logout':
-            _logout(context);
-            break;
-          case 'my_courses':
-            _showMyCourses(context);
-            break;
-        }
-      },
-    );
-      },
-    );
-  }
-
-  void _showAuthDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AuthDialog(
-        onSuccess: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Signed in'),
-              backgroundColor: AppColors.success,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  void _showProfileDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const ProfileDialog(),
-    );
-  }
-
-  void _logout(BuildContext context) async {
-    await SupabaseService.signOut();
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Signed out')),
-      );
-    }
-  }
-
-  void _showMyCourses(BuildContext context) async {
-    // TODO: show my courses dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('My courses is coming soon...')),
-    );
   }
 
   void _saveToCloud(BuildContext context, WidgetRef ref) async {

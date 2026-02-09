@@ -166,7 +166,60 @@
 
 ---
 
+---
+
+## 11. Auth & Routing
+
+- [ ] Visiting `/dashboard` while logged out redirects to `/`
+- [ ] Visiting `/builder` while logged out redirects to `/`
+- [ ] Logging in on landing page auto-redirects to `/dashboard`
+- [ ] Logging out from avatar menu redirects to `/`
+
+---
+
+## 12. Dashboard — Home Page
+
+- [ ] Home Page tab shows Course Data, Income Overview, and Comments cards
+- [ ] Cards are visible (not blank) on both wide and narrow screens
+- [ ] Profile avatar circle appears in top-right corner
+
+---
+
+## 13. Dashboard — Course Manage
+
+- [ ] Switching to Course Manage tab shows loading spinner, then course list
+- [ ] If not logged in, shows "Sign in to manage your courses" prompt
+- [ ] If no courses, shows empty state with "Create Course" button
+- [ ] Course cards show title, "Updated X ago", lesson boxes
+- [ ] Sort dropdown opens with 3 options (time / student / comments)
+- [ ] "Edit" button navigates to `/builder?courseId=<id>`
+- [ ] "Delete" button shows confirmation dialog; confirming deletes and refreshes
+- [ ] "Add lesson" box navigates to `/builder?courseId=<id>`
+- [ ] "Create Course" button navigates to `/builder`
+
+---
+
+## 14. User Avatar
+
+- [ ] Avatar circle is visible on Dashboard (blue circle with initials or photo)
+- [ ] Avatar circle is visible on Builder AppBar
+- [ ] Clicking avatar when logged in shows popup menu (Profile / Dashboard / Sign out)
+- [ ] Clicking avatar when logged out opens sign-in dialog
+- [ ] OAuth users (Google/GitHub) show profile photo in avatar
+
+---
+
+## 15. Builder — Course Loading
+
+- [ ] Navigating to `/builder` opens a blank new course
+- [ ] Navigating to `/builder?courseId=<id>` loads existing course content
+- [ ] Course title and pages appear after loading
+
+---
+
 ## Known Issues
 
 1. Builder text blocks do not render Markdown (Viewer does)
-2. Import feature is not implemented yet
+2. Sort by student / comments are placeholders (no backend data)
+3. Data Center / Fans Manage tabs are placeholders
+4. "Learned X times" shows lesson count, not actual learner count
