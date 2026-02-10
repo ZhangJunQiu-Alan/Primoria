@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import '../services/supabase_service.dart';
+import '../features/auth/auth_callback_screen.dart';
 import '../features/landing/landing_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/builder/builder_screen.dart';
@@ -24,7 +25,12 @@ final appRouter = GoRouter(
     const protectedRoutes = {'/dashboard', '/builder'};
     final isProtected = protectedRoutes.contains(location);
 
+    // Don't redirect away from the callback screen — let it process first
+    if (location == '/auth/callback') return null;
+
     if (!loggedIn && isProtected) {
+      // Store the intended destination so OAuth callback can restore it
+      SupabaseService.pendingRedirect = state.uri.toString();
       return '/';
     }
 
@@ -52,6 +58,11 @@ final appRouter = GoRouter(
         final courseId = state.uri.queryParameters['courseId'];
         return BuilderScreen(courseId: courseId);
       },
+    ),
+    GoRoute(
+      path: '/auth/callback',
+      name: 'authCallback',
+      builder: (context, state) => const AuthCallbackScreen(),
     ),
     GoRoute(
       path: '/viewer',

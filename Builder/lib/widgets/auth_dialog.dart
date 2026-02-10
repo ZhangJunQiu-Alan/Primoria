@@ -207,7 +207,9 @@ class _AuthDialogState extends State<AuthDialog> {
             obscureText: _obscurePassword,
             decoration: InputDecoration(
               labelText: 'Password',
-              hintText: _mode == AuthMode.register ? 'At least 6 characters' : 'Enter your password',
+              hintText: _mode == AuthMode.register
+                  ? 'At least 6 characters'
+                  : 'Enter your password',
               prefixIcon: const Icon(Icons.lock_outline, size: 20),
               suffixIcon: IconButton(
                 icon: Icon(
@@ -313,7 +315,11 @@ class _AuthDialogState extends State<AuthDialog> {
             ),
             child: Row(
               children: [
-                const Icon(Icons.error_outline, size: 18, color: AppColors.error),
+                const Icon(
+                  Icons.error_outline,
+                  size: 18,
+                  color: AppColors.error,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
@@ -337,11 +343,17 @@ class _AuthDialogState extends State<AuthDialog> {
             decoration: BoxDecoration(
               color: AppColors.success.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-              border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
+              border: Border.all(
+                color: AppColors.success.withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [
-                const Icon(Icons.check_circle_outline, size: 18, color: AppColors.success),
+                const Icon(
+                  Icons.check_circle_outline,
+                  size: 18,
+                  color: AppColors.success,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
@@ -421,22 +433,10 @@ class _AuthDialogState extends State<AuthDialog> {
             'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
             width: 20,
             height: 20,
-            errorBuilder: (_, __, ___) => const Icon(Icons.g_mobiledata, size: 20),
+            errorBuilder: (_, __, ___) =>
+                const Icon(Icons.g_mobiledata, size: 20),
           ),
           label: const Text('Continue with Google'),
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-            foregroundColor: AppColors.neutral700,
-          ),
-        ),
-
-        const SizedBox(height: AppSpacing.sm),
-
-        // GitHub sign-in
-        OutlinedButton.icon(
-          onPressed: _isLoading ? null : _signInWithGitHub,
-          icon: const Icon(Icons.code, size: 20),
-          label: const Text('Continue with GitHub'),
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
             foregroundColor: AppColors.neutral700,
@@ -469,7 +469,9 @@ class _AuthDialogState extends State<AuthDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          _mode == AuthMode.login ? "Don't have an account?" : 'Already have an account?',
+          _mode == AuthMode.login
+              ? "Don't have an account?"
+              : 'Already have an account?',
           style: const TextStyle(
             fontSize: AppFontSize.sm,
             color: AppColors.neutral500,
@@ -600,36 +602,16 @@ class _AuthDialogState extends State<AuthDialog> {
   }
 
   Future<void> _signInWithGoogle() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    final result = await SupabaseService.signInWithGoogle();
-
-    if (!mounted) return;
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (result.success) {
-      Navigator.pop(context);
-      widget.onSuccess?.call();
-    } else {
-      setState(() {
-        _errorMessage = result.message;
-      });
-    }
+    await _handleSocialSignIn(SupabaseService.signInWithGoogle);
   }
 
-  Future<void> _signInWithGitHub() async {
+  Future<void> _handleSocialSignIn(Future<AuthResult> Function() action) async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
 
-    final result = await SupabaseService.signInWithGitHub();
+    final result = await action();
 
     if (!mounted) return;
 

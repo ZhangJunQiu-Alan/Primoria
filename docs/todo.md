@@ -14,13 +14,14 @@
 7. [ ] Add multi-user collaboration
 8. [x] Landing page with sign-in modal and Supabase auth integration (2026-02-09)
 9. [x] Builder UI redesign — rounded card panels, pill-shaped buttons, simplified empty states (2026-02-09)
-10. [ ] Create test users in Supabase for sign-in testing
+10. [x] Create test users in Supabase for sign-in testing
 11. [x] Wire up Dashboard to real Supabase course data (2026-02-10)
-12. [ ] Implement Google/GitHub OAuth redirect handling
+12. [ ] Use Google sign-in (OAuth callback handling and session recovery)
 13. [ ] Import workflow refinement
 14. [ ] Block reorder/insert refinement
 15. [ ] More block types (animation, connect, etc.)
 16. [ ] Robust schema validation
+17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 
 ## Viewer
 1. [ ] Build learning home page: support common features (Profile, achievements, etc.)

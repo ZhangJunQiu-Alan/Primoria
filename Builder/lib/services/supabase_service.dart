@@ -146,28 +146,19 @@ class SupabaseService {
     }
   }
 
-  /// Sign in with GitHub
-  static Future<AuthResult> signInWithGitHub() async {
-    try {
-      await client.auth.signInWithOAuth(
-        OAuthProvider.github,
-        redirectTo: _getRedirectUrl(),
-      );
-      return const AuthResult(success: true, message: 'Redirecting...');
-    } on AuthException catch (e) {
-      return AuthResult(
-        success: false,
-        message: _translateAuthError(e.message),
-      );
-    } catch (e) {
-      return AuthResult(success: false, message: 'Sign in failed: $e');
-    }
+  /// Pending redirect path to restore after OAuth callback
+  static String? pendingRedirect;
+
+  /// Returns and clears the pending redirect path.
+  static String? consumePendingRedirect() {
+    final path = pendingRedirect;
+    pendingRedirect = null;
+    return path;
   }
 
   /// Get OAuth redirect URL
   static String _getRedirectUrl() {
-    // For web, use current page URL
-    return Uri.base.origin;
+    return '${Uri.base.origin}/auth/callback';
   }
 
   /// Get user profile
@@ -470,7 +461,12 @@ class SupabaseService {
         final decoded = jsonDecode(trimmed);
         if (decoded is Map<String, dynamic>) {
           final code = decoded['code']?.toString() ?? '';
-          final details = decoded['message']?.toString() ?? '';
+          final details =
+              decoded['message']?.toString() ??
+              decoded['msg']?.toString() ??
+              decoded['error_description']?.toString() ??
+              decoded['error']?.toString() ??
+              '';
           normalized = '$code $details'.trim();
         }
       } catch (_) {
@@ -492,6 +488,13 @@ class SupabaseService {
     }
     if (normalized.contains('Invalid email')) {
       return 'Invalid email format';
+    }
+    if (normalized.contains('Unsupported provider') ||
+        normalized.contains('provider is not enabled')) {
+      return 'This login provider is not enabled in Supabase Auth.';
+    }
+    if (normalized.contains('redirect_to is not allowed')) {
+      return 'This callback URL is not allowed. Add it to Supabase redirect URLs.';
     }
     if (_isRetryableAuthTimeout(normalized) ||
         normalized.contains('Database error querying schema')) {
