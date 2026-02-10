@@ -51,18 +51,25 @@ class BlockRegistry {
           priority: 5,
         ),
         BlockTypeInfo(
+          type: BlockType.trueFalse,
+          name: 'True/False',
+          description: 'True or false question',
+          icon: Icons.toggle_on_outlined,
+          priority: 6,
+        ),
+        BlockTypeInfo(
           type: BlockType.matching,
           name: 'Matching',
           description: 'Match items between two columns',
           icon: Icons.compare_arrows,
-          priority: 6,
+          priority: 7,
         ),
         BlockTypeInfo(
           type: BlockType.video,
           name: 'Video',
           description: 'Embedded video',
           icon: Icons.videocam,
-          priority: 7,
+          priority: 8,
         ),
       ];
 
@@ -74,6 +81,7 @@ class BlockRegistry {
           t.type == BlockType.codeBlock ||
           t.type == BlockType.codePlayground ||
           t.type == BlockType.multipleChoice ||
+          t.type == BlockType.trueFalse ||
           t.type == BlockType.matching)
       .toList();
 

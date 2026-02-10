@@ -236,6 +236,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         return _buildCodePlaygroundEditor();
       case BlockType.multipleChoice:
         return _buildMultipleChoiceEditor();
+      case BlockType.trueFalse:
+        return _buildTrueFalseEditor();
       case BlockType.matching:
         return _buildMatchingEditor();
       default:
@@ -502,6 +504,67 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                 correctAnswer: content.correctAnswer,
                 explanation: value.isEmpty ? null : value,
                 multiSelect: content.multiSelect,
+              ),
+            );
+            _updateBlock(updatedBlock);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTrueFalseEditor() {
+    final content = widget.block.content as TrueFalseContent;
+    return _PropertySection(
+      title: 'True/False',
+      children: [
+        TextFormField(
+          initialValue: content.question,
+          decoration: const InputDecoration(
+            labelText: 'Question',
+            border: OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            final updatedBlock = widget.block.copyWith(
+              content: content.copyWith(question: value),
+            );
+            _updateBlock(updatedBlock);
+          },
+        ),
+        const SizedBox(height: AppSpacing.md),
+        const Text(
+          'Correct Answer',
+          style: TextStyle(
+            fontSize: AppFontSize.xs,
+            fontWeight: FontWeight.w600,
+            color: AppColors.neutral500,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        SegmentedButton<bool>(
+          segments: const [
+            ButtonSegment(value: true, label: Text('True')),
+            ButtonSegment(value: false, label: Text('False')),
+          ],
+          selected: {content.correctAnswer},
+          onSelectionChanged: (value) {
+            final updatedBlock = widget.block.copyWith(
+              content: content.copyWith(correctAnswer: value.first),
+            );
+            _updateBlock(updatedBlock);
+          },
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextFormField(
+          initialValue: content.explanation ?? '',
+          decoration: const InputDecoration(
+            labelText: 'Explanation',
+            border: OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            final updatedBlock = widget.block.copyWith(
+              content: content.copyWith(
+                explanation: value.isEmpty ? null : value,
               ),
             );
             _updateBlock(updatedBlock);

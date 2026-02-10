@@ -156,6 +156,8 @@ class BlockWrapper extends StatelessWidget {
             content: block.content as MultipleChoiceContent);
       case BlockType.fillBlank:
         return _FillBlankContent(content: block.content as FillBlankContent);
+      case BlockType.trueFalse:
+        return _TrueFalseBlockContent(content: block.content as TrueFalseContent);
       case BlockType.matching:
         return _MatchingBlockContent(content: block.content as MatchingContent);
       case BlockType.video:
@@ -559,6 +561,74 @@ class _MatchingBlockContent extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+/// True/False content
+class _TrueFalseBlockContent extends StatelessWidget {
+  final TrueFalseContent content;
+
+  const _TrueFalseBlockContent({required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          content.question.isEmpty ? 'Enter a true or false statement' : content.question,
+          style: TextStyle(
+            fontSize: AppFontSize.md,
+            fontWeight: FontWeight.w500,
+            color: content.question.isEmpty
+                ? AppColors.neutral400
+                : AppColors.neutral800,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          children: [
+            _buildAnswerChip('True', content.correctAnswer == true),
+            const SizedBox(width: AppSpacing.sm),
+            _buildAnswerChip('False', content.correctAnswer == false),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAnswerChip(String label, bool isCorrect) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        color: isCorrect ? AppColors.success.withValues(alpha: 0.1) : AppColors.neutral100,
+        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+        border: Border.all(
+          color: isCorrect ? AppColors.success : AppColors.neutral300,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isCorrect)
+            const Padding(
+              padding: EdgeInsets.only(right: AppSpacing.xs),
+              child: Icon(Icons.check, size: 16, color: AppColors.success),
+            ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: AppFontSize.sm,
+              fontWeight: isCorrect ? FontWeight.w600 : FontWeight.normal,
+              color: isCorrect ? AppColors.success : AppColors.neutral600,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
