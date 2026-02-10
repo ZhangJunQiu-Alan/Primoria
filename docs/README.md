@@ -76,7 +76,7 @@ Primoria/
 **Routes:** `/` (Landing) → `/dashboard` (Dashboard) → `/builder` (Editor) → `/viewer` (Preview)
 
 **Key features:**
-- Landing page with sign-in modal (Supabase auth: email/Google/GitHub)
+- Landing page with sign-in modal (Supabase auth: email/Google)
 - Dashboard with course management, data overview, and income/comments cards
 - Drag-and-drop block editor with searchable categorized module panel
 - Block selection + property editing

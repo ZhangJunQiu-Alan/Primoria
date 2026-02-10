@@ -1,16 +1,38 @@
-# builder
+# Builder
 
-A new Flutter project.
+Primoria Builder (Flutter Web) with OAuth login:
 
-## Getting Started
+- Native in Supabase: Google
 
-This project is a starting point for a Flutter application.
+## Local OAuth Setup
 
-A few resources to get you started if this is your first Flutter project:
+1. Copy `/Users/zhangjunqiu/Documents/Primoria/Builder/tools/oauth.env.example` to `/Users/zhangjunqiu/Documents/Primoria/.env` and fill:
+   - `SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID`
+   - `SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+   Current project values:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+   ```bash
+   SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID=420803065649-duifjpjhnkguuqg8h010ndguto1vnq58.apps.googleusercontent.com
+   SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET=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
+   ```
+
+2. Start Supabase local stack from repo root:
+
+```bash
+./supabase/run_with_env.sh start
+```
+
+3. Run Builder on fixed port `3000` (matches auth redirect allow-list):
+
+```bash
+cd Builder
+./tools/run_web_oauth.sh
+```
+
+The run script auto-loads `/Users/zhangjunqiu/Documents/Primoria/.env` when present.
+
+## Notes
+
+- Callback path is `/auth/callback`.
+- Supabase redirect allow-list is configured in `/Users/zhangjunqiu/Documents/Primoria/supabase/config.toml`.

@@ -80,16 +80,12 @@ class _LandingScreenState extends State<LandingScreen>
           Positioned(
             top: -120,
             left: -120,
-            child: _BlurBlob(
-              color: _C.accent.withValues(alpha: 0.22),
-            ),
+            child: _BlurBlob(color: _C.accent.withValues(alpha: 0.22)),
           ),
           Positioned(
             bottom: -120,
             right: -120,
-            child: _BlurBlob(
-              color: _C.primary.withValues(alpha: 0.28),
-            ),
+            child: _BlurBlob(color: _C.primary.withValues(alpha: 0.28)),
           ),
 
           // ── Scrollable content ──
@@ -155,269 +151,272 @@ class _LandingScreenState extends State<LandingScreen>
   //  Hero section – two-column on wide, stacked on narrow
   // ═══════════════════════════════════════════════════
   Widget _buildHero(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final wide = constraints.maxWidth > 900;
-      final gutter = _gutter(constraints.maxWidth);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth > 900;
+        final gutter = _gutter(constraints.maxWidth);
 
-      final leftColumn = Padding(
-        padding: EdgeInsets.only(left: gutter),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Tag
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: _C.primary.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: const Text(
-                'Learn by teaching',
-                style: TextStyle(
-                  color: Color(0xFF1D6B00),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+        final leftColumn = Padding(
+          padding: EdgeInsets.only(left: gutter),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Tag
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
                 ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Headline
-            Text(
-              'If you want to master\nsomething, teach it.',
-              style: TextStyle(
-                fontSize: wide ? 42 : 32,
-                fontWeight: FontWeight.w700,
-                height: 1.1,
-                color: _C.text,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Build courses, share insights, and turn curiosity into a daily habit. '
-              'Primoria blends Brilliant-style exploration with Duolingo-like momentum.',
-              style: TextStyle(fontSize: 16, color: _C.muted, height: 1.5),
-            ),
-            const SizedBox(height: 24),
-            // Quote card
-            Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: _C.accent.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(18),
-                border: Border(
-                  left: BorderSide(color: _C.accent, width: 4),
+                decoration: BoxDecoration(
+                  color: _C.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(999),
                 ),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '"If you want to master something, teach it."',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                      color: _C.text,
-                    ),
+                child: const Text(
+                  'Learn by teaching',
+                  style: TextStyle(
+                    color: Color(0xFF1D6B00),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Richard Feynman',
-                    style: TextStyle(fontSize: 13, color: _C.muted),
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Headline
+              Text(
+                'If you want to master\nsomething, teach it.',
+                style: TextStyle(
+                  fontSize: wide ? 42 : 32,
+                  fontWeight: FontWeight.w700,
+                  height: 1.1,
+                  color: _C.text,
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Build courses, share insights, and turn curiosity into a daily habit. '
+                'Primoria blends Brilliant-style exploration with Duolingo-like momentum.',
+                style: TextStyle(fontSize: 16, color: _C.muted, height: 1.5),
+              ),
+              const SizedBox(height: 24),
+              // Quote card
+              Container(
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: _C.accent.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border(left: BorderSide(color: _C.accent, width: 4)),
+                ),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '"If you want to master something, teach it."',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: _C.text,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Richard Feynman',
+                      style: TextStyle(fontSize: 13, color: _C.muted),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 28),
+              // Action buttons
+              Wrap(
+                spacing: 16,
+                runSpacing: 12,
+                children: [
+                  _PillButton(label: 'Apply Now', filled: true, onTap: () {}),
+                  _PillButton(
+                    label: 'Already Qualified',
+                    filled: false,
+                    onTap: () => _showSignInOverlay(context),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 28),
-            // Action buttons
-            Wrap(
-              spacing: 16,
-              runSpacing: 12,
-              children: [
-                _PillButton(
-                  label: 'Apply Now',
-                  filled: true,
-                  onTap: () {},
-                ),
-                _PillButton(
-                  label: 'Already Qualified',
-                  filled: false,
-                  onTap: () => _showSignInOverlay(context),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-
-      final rightColumn = Padding(
-        padding: EdgeInsets.only(right: gutter),
-        child: _HeroCard(),
-      );
-
-      if (wide) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 40),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(child: leftColumn),
-              const SizedBox(width: 40),
-              Expanded(child: rightColumn),
             ],
           ),
         );
-      }
 
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: gutter),
-        child: Column(
-          children: [
-            leftColumn,
-            const SizedBox(height: 32),
-            rightColumn,
-          ],
-        ),
-      );
-    });
+        final rightColumn = Padding(
+          padding: EdgeInsets.only(right: gutter),
+          child: _HeroCard(),
+        );
+
+        if (wide) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(child: leftColumn),
+                const SizedBox(width: 40),
+                Expanded(child: rightColumn),
+              ],
+            ),
+          );
+        }
+
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: gutter),
+          child: Column(
+            children: [leftColumn, const SizedBox(height: 32), rightColumn],
+          ),
+        );
+      },
+    );
   }
 
   // ═══════════════════════════════════════════════════
   //  Feature cards row
   // ═══════════════════════════════════════════════════
   Widget _buildFeatureRow() {
-    return LayoutBuilder(builder: (context, constraints) {
-      final gutter = _gutter(constraints.maxWidth);
-      final wide = constraints.maxWidth > 900;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final gutter = _gutter(constraints.maxWidth);
+        final wide = constraints.maxWidth > 900;
 
-      final cards = [
-        _FeatureCard(
-          badge: 'Guided',
-          title: 'Course builder that feels like play',
-          subtitle: 'Drag blocks, remix templates, and publish at any pace.',
-        ),
-        _FeatureCard(
-          badge: 'Social',
-          title: 'Community feedback loops',
-          subtitle: 'Turn comments into insights with smart highlights.',
-        ),
-        _FeatureCard(
-          badge: 'Momentum',
-          title: 'Daily quests and streaks',
-          subtitle: 'Stay consistent with bite-sized missions.',
-        ),
-      ];
+        final cards = [
+          _FeatureCard(
+            badge: 'Guided',
+            title: 'Course builder that feels like play',
+            subtitle: 'Drag blocks, remix templates, and publish at any pace.',
+          ),
+          _FeatureCard(
+            badge: 'Social',
+            title: 'Community feedback loops',
+            subtitle: 'Turn comments into insights with smart highlights.',
+          ),
+          _FeatureCard(
+            badge: 'Momentum',
+            title: 'Daily quests and streaks',
+            subtitle: 'Stay consistent with bite-sized missions.',
+          ),
+        ];
 
-      if (wide) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: gutter),
-          child: Row(
-            children: cards
-                .map((c) => Expanded(
+        if (wide) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: gutter),
+            child: Row(
+              children: cards
+                  .map(
+                    (c) => Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: c,
                       ),
-                    ))
+                    ),
+                  )
+                  .toList(),
+            ),
+          );
+        }
+
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: gutter),
+          child: Column(
+            children: cards
+                .map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: c,
+                  ),
+                )
                 .toList(),
           ),
         );
-      }
-
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: gutter),
-        child: Column(
-          children: cards
-              .map((c) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: c,
-                  ))
-              .toList(),
-        ),
-      );
-    });
+      },
+    );
   }
 
   // ═══════════════════════════════════════════════════
   //  CTA band
   // ═══════════════════════════════════════════════════
   Widget _buildCtaBand(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final gutter = _gutter(constraints.maxWidth);
-      final wide = constraints.maxWidth > 640;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final gutter = _gutter(constraints.maxWidth);
+        final wide = constraints.maxWidth > 640;
 
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: gutter),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(26),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                _C.primary.withValues(alpha: 0.18),
-                _C.accent.withValues(alpha: 0.16),
-              ],
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: gutter),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(26),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  _C.primary.withValues(alpha: 0.18),
+                  _C.accent.withValues(alpha: 0.16),
+                ],
+              ),
             ),
-          ),
-          child: wide
-              ? Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Ready to launch your next lesson?',
-                            style: TextStyle(
-                              fontSize: wide ? 28 : 22,
-                              fontWeight: FontWeight.w700,
-                              color: _C.text,
+            child: wide
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Ready to launch your next lesson?',
+                              style: TextStyle(
+                                fontSize: wide ? 28 : 22,
+                                fontWeight: FontWeight.w700,
+                                color: _C.text,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Bring your expertise and let Primoria handle the rest.',
-                            style: TextStyle(color: _C.muted, fontSize: 15),
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Bring your expertise and let Primoria handle the rest.',
+                              style: TextStyle(color: _C.muted, fontSize: 15),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 24),
-                    _PillButton(
-                      label: 'Start Creating',
-                      filled: true,
-                      onTap: () => context.go('/builder'),
-                    ),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Ready to launch your next lesson?',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: _C.text,
+                      const SizedBox(width: 24),
+                      _PillButton(
+                        label: 'Start Creating',
+                        filled: true,
+                        onTap: () => context.go('/builder'),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Bring your expertise and let Primoria handle the rest.',
-                      style: TextStyle(color: _C.muted, fontSize: 15),
-                    ),
-                    const SizedBox(height: 20),
-                    _PillButton(
-                      label: 'Start Creating',
-                      filled: true,
-                      onTap: () => context.go('/builder'),
-                    ),
-                  ],
-                ),
-        ),
-      );
-    });
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Ready to launch your next lesson?',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: _C.text,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Bring your expertise and let Primoria handle the rest.',
+                        style: TextStyle(color: _C.muted, fontSize: 15),
+                      ),
+                      const SizedBox(height: 20),
+                      _PillButton(
+                        label: 'Start Creating',
+                        filled: true,
+                        onTap: () => context.go('/builder'),
+                      ),
+                    ],
+                  ),
+          ),
+        );
+      },
+    );
   }
 
   double _gutter(double width) => (width * 0.03).clamp(16, 32);
@@ -461,10 +460,7 @@ class _BlurBlobState extends State<_BlurBlob>
       animation: _ctrl,
       builder: (context, child) {
         final dy = sin(_ctrl.value * 2 * pi) * 18;
-        return Transform.translate(
-          offset: Offset(0, dy),
-          child: child,
-        );
+        return Transform.translate(offset: Offset(0, dy), child: child);
       },
       child: Container(
         width: 380,
@@ -524,23 +520,25 @@ class _HeroCard extends StatelessWidget {
             style: TextStyle(fontSize: 14, color: _C.muted),
           ),
           const SizedBox(height: 20),
-          LayoutBuilder(builder: (context, constraints) {
-            final crossCount = constraints.maxWidth > 300 ? 2 : 1;
-            return GridView.count(
-              crossAxisCount: crossCount,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 14,
-              crossAxisSpacing: 14,
-              childAspectRatio: 2.2,
-              children: const [
-                _StatTile(value: '48 min', label: 'Avg build time'),
-                _StatTile(value: '92%', label: 'Learner completion'),
-                _StatTile(value: '132', label: 'New learners'),
-                _StatTile(value: '4x', label: 'Boosted income'),
-              ],
-            );
-          }),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final crossCount = constraints.maxWidth > 300 ? 2 : 1;
+              return GridView.count(
+                crossAxisCount: crossCount,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 14,
+                crossAxisSpacing: 14,
+                childAspectRatio: 2.2,
+                children: const [
+                  _StatTile(value: '48 min', label: 'Avg build time'),
+                  _StatTile(value: '92%', label: 'Learner completion'),
+                  _StatTile(value: '132', label: 'New learners'),
+                  _StatTile(value: '4x', label: 'Boosted income'),
+                ],
+              );
+            },
+          ),
         ],
       ),
     );
@@ -581,10 +579,7 @@ class _StatTile extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12, color: _C.muted),
-          ),
+          Text(label, style: const TextStyle(fontSize: 12, color: _C.muted)),
         ],
       ),
     );
@@ -698,9 +693,7 @@ class _PillButton extends StatelessWidget {
         foregroundColor: _C.text,
         side: BorderSide(color: const Color(0x2E506E96)),
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(999),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
         textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
       ),
       child: Text(label),
@@ -745,44 +738,30 @@ class _SignInModalState extends State<_SignInModal> {
   }
 
   Future<void> _signInWithGoogle() async {
-    setState(() {
-      _isLoading = true;
-      _statusMessage = null;
-    });
-    final result = await SupabaseService.signInWithGoogle();
-    if (!mounted) return;
-    setState(() => _isLoading = false);
-    if (result.success) {
-      Navigator.pop(context);
-      widget.onSuccess?.call();
-    } else if (result.isUserNotFound) {
-      _setStatus(
-        "We couldn't find an account linked to that Google profile. "
-        'Please apply for access first.',
-        error: true,
-      );
-    } else {
-      _setStatus(result.message, error: true);
-    }
+    await _handleOAuthSignIn(
+      action: SupabaseService.signInWithGoogle,
+      notFoundMessage:
+          "We couldn't find an account linked to that Google profile. "
+          'Please apply for access first.',
+    );
   }
 
-  Future<void> _signInWithGitHub() async {
+  Future<void> _handleOAuthSignIn({
+    required Future<AuthResult> Function() action,
+    required String notFoundMessage,
+  }) async {
     setState(() {
       _isLoading = true;
       _statusMessage = null;
     });
-    final result = await SupabaseService.signInWithGitHub();
+    final result = await action();
     if (!mounted) return;
     setState(() => _isLoading = false);
     if (result.success) {
       Navigator.pop(context);
       widget.onSuccess?.call();
     } else if (result.isUserNotFound) {
-      _setStatus(
-        "We couldn't find an account linked to that profile. "
-        'Please apply for access first.',
-        error: true,
-      );
+      _setStatus(notFoundMessage, error: true);
     } else {
       _setStatus(result.message, error: true);
     }
@@ -851,8 +830,10 @@ class _SignInModalState extends State<_SignInModal> {
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: _C.accent.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(999),
@@ -900,14 +881,6 @@ class _SignInModalState extends State<_SignInModal> {
               ),
               const SizedBox(height: 12),
 
-              // Apple
-              _ModalButton(
-                label: 'Continue with Apple',
-                onTap: _isLoading ? null : _signInWithGitHub, // GitHub as Apple placeholder
-                style: _ModalButtonStyle.dark,
-              ),
-              const SizedBox(height: 12),
-
               // Password toggle
               _ModalButton(
                 label: 'Sign in with password',
@@ -931,22 +904,25 @@ class _SignInModalState extends State<_SignInModal> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Email',
-                    prefixIcon:
-                        const Icon(Icons.email_outlined, size: 18, color: _C.muted),
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      size: 18,
+                      color: _C.muted,
+                    ),
                     filled: true,
                     fillColor: const Color(0xFFF9FBFF),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
-                      borderSide:
-                          const BorderSide(color: Color(0x1F506E96)),
+                      borderSide: const BorderSide(color: Color(0x1F506E96)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
-                      borderSide:
-                          const BorderSide(color: Color(0x1F506E96)),
+                      borderSide: const BorderSide(color: Color(0x1F506E96)),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                   ),
                   textInputAction: TextInputAction.next,
                 ),
@@ -957,8 +933,11 @@ class _SignInModalState extends State<_SignInModal> {
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     hintText: 'Password',
-                    prefixIcon:
-                        const Icon(Icons.lock_outline, size: 18, color: _C.muted),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      size: 18,
+                      color: _C.muted,
+                    ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword
@@ -967,23 +946,23 @@ class _SignInModalState extends State<_SignInModal> {
                         size: 18,
                         color: _C.muted,
                       ),
-                      onPressed: () => setState(
-                          () => _obscurePassword = !_obscurePassword),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                     ),
                     filled: true,
                     fillColor: const Color(0xFFF9FBFF),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
-                      borderSide:
-                          const BorderSide(color: Color(0x1F506E96)),
+                      borderSide: const BorderSide(color: Color(0x1F506E96)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
-                      borderSide:
-                          const BorderSide(color: Color(0x1F506E96)),
+                      borderSide: const BorderSide(color: Color(0x1F506E96)),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                   ),
                   textInputAction: TextInputAction.done,
                   onSubmitted: (_) => _signInWithPassword(),
@@ -1001,7 +980,9 @@ class _SignInModalState extends State<_SignInModal> {
                         borderRadius: BorderRadius.circular(999),
                       ),
                       textStyle: const TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 15),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
                     ),
                     child: _isLoading
                         ? const SizedBox(
@@ -1009,8 +990,7 @@ class _SignInModalState extends State<_SignInModal> {
                             height: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor:
-                                  AlwaysStoppedAnimation(Colors.white),
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
                             ),
                           )
                         : const Text('Sign in'),
@@ -1022,8 +1002,10 @@ class _SignInModalState extends State<_SignInModal> {
               if (_statusMessage != null) ...[
                 const SizedBox(height: 16),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: _C.accentYellow.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(999),
