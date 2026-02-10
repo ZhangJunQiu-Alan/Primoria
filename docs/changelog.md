@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased] - 2026-02-11
+
+### Summary
+New True/False block type for Builder.
+
+### Added
+- **True/False block type**: New `trueFalse` block across the full Builder stack — enum, model (`TrueFalseContent`), registry, property editor (SegmentedButton picker), preview widget (styled answer chips), module panel (Chemical category), and viewer screen support
+- JSON type value: `true-false`, content fields: `question`, `correctAnswer` (bool), `explanation` (optional)
+
+---
+
 ## [Unreleased] - 2026-02-10
 
 ### Summary
