@@ -314,7 +314,32 @@ Students can edit and run code to verify output.
 
 ---
 
-### 7. video - Video Block
+### 7. trueFalse - True/False Question
+
+```json
+{
+  "type": "true-false",
+  "id": "tf-001",
+  "position": { "order": 6 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "question": "Python is a compiled language.",
+    "correctAnswer": false,
+    "explanation": "Python is an interpreted language."
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `question` | Yes | A statement that is either true or false |
+| `correctAnswer` | Yes | `true` or `false` |
+| `explanation` | No | Explanation shown after answering |
+
+---
+
+### 8. video - Video Block
 
 ```json
 {

@@ -10,7 +10,7 @@
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
 4. [x] Build home page: support common features (Profile, achievements, etc.) — Dashboard Home Page with Course Data, Income, Comments (2026-02-09)
 5. [x] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general) — Module panel now has General/Physical/Chemical expandable categories with search (2026-02-09)
-6. [ ] Add more question types
+6. [~] Add more question types — True/False done (2026-02-11); remaining: animation, connect, etc.
 7. [ ] Add multi-user collaboration
 8. [x] Landing page with sign-in modal and Supabase auth integration (2026-02-09)
 9. [x] Builder UI redesign — rounded card panels, pill-shaped buttons, simplified empty states (2026-02-09)
@@ -19,7 +19,8 @@
 12. [ ] Use Google sign-in (OAuth callback handling and session recovery)
 13. [ ] Import workflow refinement
 14. [ ] Block reorder/insert refinement
-15. [ ] More block types (animation, connect, etc.)
+15. [~] More block types — True/False added (2026-02-11); remaining: animation, connect, etc.
+18. [ ] Builder Preview button: in-place preview overlay with mobile frame, interactive blocks, page navigation
 16. [ ] Robust schema validation
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 
