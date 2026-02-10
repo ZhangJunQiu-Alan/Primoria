@@ -231,6 +231,29 @@ class _BlockPreview extends StatelessWidget {
             color: AppColors.neutral700,
           ),
         );
+      case BlockType.trueFalse:
+        final content = block.content as TrueFalseContent;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              content.question,
+              style: const TextStyle(
+                fontSize: AppFontSize.md,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral800,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              children: [
+                Text('True', style: const TextStyle(fontSize: AppFontSize.sm, color: AppColors.neutral700)),
+                const SizedBox(width: AppSpacing.md),
+                Text('False', style: const TextStyle(fontSize: AppFontSize.sm, color: AppColors.neutral700)),
+              ],
+            ),
+          ],
+        );
       case BlockType.matching:
         final content = block.content as MatchingContent;
         return _MatchingWidget(content: content);

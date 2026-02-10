@@ -9,6 +9,7 @@ enum BlockType {
   codePlayground('code-playground', 'Code Playground', '▶'),
   multipleChoice('multiple-choice', 'Multiple Choice', '✓'),
   fillBlank('fill-blank', 'Fill in the Blank', '___'),
+  trueFalse('true-false', 'True/False', 'T/F'),
   matching('matching', 'Matching', '⟷'),
   video('video', 'Video', '🎬');
 

@@ -41,7 +41,7 @@ class _ModulePanelState extends State<ModulePanel> {
     ),
     _BlockCategory(
       name: 'Chemical',
-      blockTypes: [BlockType.multipleChoice, BlockType.matching],
+      blockTypes: [BlockType.multipleChoice, BlockType.trueFalse, BlockType.matching],
       backgroundColor: Color(0xFFE8F5E9), // green 50
     ),
   ];

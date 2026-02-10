@@ -78,6 +78,8 @@ abstract class BlockContent {
         return MultipleChoiceContent.fromJson(json);
       case BlockType.fillBlank:
         return FillBlankContent.fromJson(json);
+      case BlockType.trueFalse:
+        return TrueFalseContent.fromJson(json);
       case BlockType.matching:
         return MatchingContent.fromJson(json);
       case BlockType.video:
@@ -305,6 +307,49 @@ class FillBlankContent implements BlockContent {
   }
 }
 
+/// True/False content
+class TrueFalseContent implements BlockContent {
+  final String question;
+  final bool correctAnswer;
+  final String? explanation;
+
+  const TrueFalseContent({
+    this.question = '',
+    this.correctAnswer = true,
+    this.explanation,
+  });
+
+  factory TrueFalseContent.fromJson(Map<String, dynamic> json) {
+    return TrueFalseContent(
+      question: json['question'] as String? ?? '',
+      correctAnswer: json['correctAnswer'] as bool? ?? true,
+      explanation: json['explanation'] as String?,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{
+      'question': question,
+      'correctAnswer': correctAnswer,
+    };
+    if (explanation != null) map['explanation'] = explanation;
+    return map;
+  }
+
+  TrueFalseContent copyWith({
+    String? question,
+    bool? correctAnswer,
+    String? explanation,
+  }) {
+    return TrueFalseContent(
+      question: question ?? this.question,
+      correctAnswer: correctAnswer ?? this.correctAnswer,
+      explanation: explanation ?? this.explanation,
+    );
+  }
+}
+
 /// Matching question option
 class MatchingItem {
   final String id;
@@ -492,6 +537,8 @@ class Block {
         );
         case BlockType.fillBlank:
         return const FillBlankContent(question: 'Enter a fill-in-the-blank question');
+        case BlockType.trueFalse:
+        return const TrueFalseContent(question: 'Enter a true or false statement', correctAnswer: true);
         case BlockType.matching:
           return MatchingContent(
           question: 'Match the items on the left with those on the right',
