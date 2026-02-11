@@ -60,7 +60,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   PreferredSizeWidget _buildAppBar(
-      BuildContext context, WidgetRef ref, BuilderState state) {
+    BuildContext context,
+    WidgetRef ref,
+    BuilderState state,
+  ) {
     final isCompact = MediaQuery.of(context).size.width < 920;
     final pillOutlinedStyle = OutlinedButton.styleFrom(
       foregroundColor: AppColors.neutral700,
@@ -68,7 +71,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.pill),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
     );
 
     return AppBar(
@@ -81,10 +87,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 'assets/images/logo.png',
                 width: 32,
                 height: 32,
-                errorBuilder: (context, error, stackTrace) => const Icon(
-                  Icons.school,
-                  color: AppColors.primary500,
-                ),
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.school, color: AppColors.primary500),
               ),
             ),
       title: InkWell(
@@ -137,14 +141,22 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppBorderRadius.pill),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
         // Preview button
         OutlinedButton(
           onPressed: () {
-            context.go('/viewer');
+            final id = widget.courseId ?? '';
+            if (id.isNotEmpty) {
+              context.go('/viewer?courseId=$id');
+            } else {
+              context.go('/viewer');
+            }
           },
           style: pillOutlinedStyle,
           child: const Text('Preview'),
@@ -188,7 +200,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppBorderRadius.pill),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.sm,
+            ),
           ),
           child: const Text('Publish'),
         ),
@@ -202,7 +217,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     );
   }
 
-  void _editCourseTitle(BuildContext context, WidgetRef ref, String currentTitle) {
+  void _editCourseTitle(
+    BuildContext context,
+    WidgetRef ref,
+    String currentTitle,
+  ) {
     final controller = TextEditingController(text: currentTitle);
 
     showDialog(
@@ -212,9 +231,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Enter course title',
-          ),
+          decoration: const InputDecoration(hintText: 'Enter course title'),
         ),
         actions: [
           TextButton(
@@ -254,16 +271,18 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             children: [
               const Text('Please fix the following:'),
               const SizedBox(height: AppSpacing.sm),
-              ...validation.errors.map((e) => Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.error, size: 16, color: AppColors.error),
-                        const SizedBox(width: AppSpacing.xs),
-                        Expanded(child: Text(e)),
-                      ],
-                    ),
-                  )),
+              ...validation.errors.map(
+                (e) => Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error, size: 16, color: AppColors.error),
+                      const SizedBox(width: AppSpacing.xs),
+                      Expanded(child: Text(e)),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
           actions: [
@@ -306,7 +325,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         builder: (context) => AlertDialog(
           title: const Text('Confirm generation'),
           content: const Text(
-              'You have unsaved changes. The AI-generated course will replace the current content. Continue?'),
+            'You have unsaved changes. The AI-generated course will replace the current content. Continue?',
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
@@ -333,7 +353,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         onCourseGenerated: (course) {
           // Load generated course
           ref.read(courseProvider.notifier).loadCourse(course);
-          ref.read(builderStateProvider.notifier).setCourseTitle(course.metadata.title);
+          ref
+              .read(builderStateProvider.notifier)
+              .setCourseTitle(course.metadata.title);
           ref.read(builderStateProvider.notifier).setCurrentPage(0);
           ref.read(builderStateProvider.notifier).clearSelection();
           ref.read(builderStateProvider.notifier).markAsUnsaved();
@@ -345,7 +367,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                   const Icon(Icons.check_circle, color: Colors.white, size: 20),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
-                    child: Text('AI generated course: ${course.metadata.title}'),
+                    child: Text(
+                      'AI generated course: ${course.metadata.title}',
+                    ),
                   ),
                 ],
               ),
@@ -368,7 +392,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         builder: (context) => AlertDialog(
           title: const Text('Confirm import'),
           content: const Text(
-              'You have unsaved changes. Importing a new course will replace the current content. Continue?'),
+            'You have unsaved changes. Importing a new course will replace the current content. Continue?',
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
@@ -393,7 +418,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     if (result.success && result.course != null) {
       // Load course into state
       ref.read(courseProvider.notifier).loadCourse(result.course!);
-      ref.read(builderStateProvider.notifier).setCourseTitle(result.course!.metadata.title);
+      ref
+          .read(builderStateProvider.notifier)
+          .setCourseTitle(result.course!.metadata.title);
       ref.read(builderStateProvider.notifier).setCurrentPage(0);
       ref.read(builderStateProvider.notifier).clearSelection();
       ref.read(builderStateProvider.notifier).markAsSaved();
@@ -499,7 +526,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     final course = ref.read(courseProvider);
     final saveResult = await SupabaseService.saveCourse(course);
 
-    if (!saveResult.success || saveResult.courseId == null || saveResult.versionId == null) {
+    if (!saveResult.success ||
+        saveResult.courseId == null ||
+        saveResult.versionId == null) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -519,7 +548,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Publish course'),
         content: const Text(
-            'After publishing, everyone will be able to see this course. Publish now?'),
+          'After publishing, everyone will be able to see this course. Publish now?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),

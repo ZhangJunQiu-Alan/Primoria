@@ -24,11 +24,7 @@ class BlockStyle {
   final String alignment;
   final double? height;
 
-  const BlockStyle({
-    this.spacing = 'md',
-    this.alignment = 'left',
-    this.height,
-  });
+  const BlockStyle({this.spacing = 'md', this.alignment = 'left', this.height});
 
   factory BlockStyle.fromJson(Map<String, dynamic> json) {
     return BlockStyle(
@@ -39,19 +35,12 @@ class BlockStyle {
   }
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{
-      'spacing': spacing,
-      'alignment': alignment,
-    };
+    final map = <String, dynamic>{'spacing': spacing, 'alignment': alignment};
     if (height != null) map['height'] = height;
     return map;
   }
 
-  BlockStyle copyWith({
-    String? spacing,
-    String? alignment,
-    double? height,
-  }) {
+  BlockStyle copyWith({String? spacing, String? alignment, double? height}) {
     return BlockStyle(
       spacing: spacing ?? this.spacing,
       alignment: alignment ?? this.alignment,
@@ -93,10 +82,7 @@ class TextContent implements BlockContent {
   final String format; // 'markdown' | 'plain'
   final String value;
 
-  const TextContent({
-    this.format = 'markdown',
-    this.value = '',
-  });
+  const TextContent({this.format = 'markdown', this.value = ''});
 
   factory TextContent.fromJson(Map<String, dynamic> json) {
     return TextContent(
@@ -106,10 +92,7 @@ class TextContent implements BlockContent {
   }
 
   @override
-  Map<String, dynamic> toJson() => {
-        'format': format,
-        'value': value,
-      };
+  Map<String, dynamic> toJson() => {'format': format, 'value': value};
 
   TextContent copyWith({String? format, String? value}) {
     return TextContent(
@@ -125,11 +108,7 @@ class ImageContent implements BlockContent {
   final String? alt;
   final String? caption;
 
-  const ImageContent({
-    this.url = '',
-    this.alt,
-    this.caption,
-  });
+  const ImageContent({this.url = '', this.alt, this.caption});
 
   factory ImageContent.fromJson(Map<String, dynamic> json) {
     return ImageContent(
@@ -153,10 +132,7 @@ class CodeBlockContent implements BlockContent {
   final String language;
   final String code;
 
-  const CodeBlockContent({
-    this.language = 'python',
-    this.code = '',
-  });
+  const CodeBlockContent({this.language = 'python', this.code = ''});
 
   factory CodeBlockContent.fromJson(Map<String, dynamic> json) {
     return CodeBlockContent(
@@ -166,10 +142,7 @@ class CodeBlockContent implements BlockContent {
   }
 
   @override
-  Map<String, dynamic> toJson() => {
-        'language': language,
-        'code': code,
-      };
+  Map<String, dynamic> toJson() => {'language': language, 'code': code};
 }
 
 /// Code playground content
@@ -193,9 +166,8 @@ class CodePlaygroundContent implements BlockContent {
       language: json['language'] as String? ?? 'python',
       initialCode: json['initialCode'] as String? ?? '',
       expectedOutput: json['expectedOutput'] as String?,
-      hints: (json['hints'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
+      hints:
+          (json['hints'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           [],
       runnable: json['runnable'] as bool? ?? true,
     );
@@ -219,16 +191,10 @@ class ChoiceOption {
   final String id;
   final String text;
 
-  const ChoiceOption({
-    required this.id,
-    required this.text,
-  });
+  const ChoiceOption({required this.id, required this.text});
 
   factory ChoiceOption.fromJson(Map<String, dynamic> json) {
-    return ChoiceOption(
-      id: json['id'] as String,
-      text: json['text'] as String,
-    );
+    return ChoiceOption(id: json['id'] as String, text: json['text'] as String);
   }
 
   Map<String, dynamic> toJson() => {'id': id, 'text': text};
@@ -253,7 +219,8 @@ class MultipleChoiceContent implements BlockContent {
   factory MultipleChoiceContent.fromJson(Map<String, dynamic> json) {
     return MultipleChoiceContent(
       question: json['question'] as String? ?? '',
-      options: (json['options'] as List<dynamic>?)
+      options:
+          (json['options'] as List<dynamic>?)
               ?.map((e) => ChoiceOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
@@ -355,25 +322,16 @@ class MatchingItem {
   final String id;
   final String text;
 
-  const MatchingItem({
-    required this.id,
-    required this.text,
-  });
+  const MatchingItem({required this.id, required this.text});
 
   factory MatchingItem.fromJson(Map<String, dynamic> json) {
-    return MatchingItem(
-      id: json['id'] as String,
-      text: json['text'] as String,
-    );
+    return MatchingItem(id: json['id'] as String, text: json['text'] as String);
   }
 
   Map<String, dynamic> toJson() => {'id': id, 'text': text};
 
   MatchingItem copyWith({String? id, String? text}) {
-    return MatchingItem(
-      id: id ?? this.id,
-      text: text ?? this.text,
-    );
+    return MatchingItem(id: id ?? this.id, text: text ?? this.text);
   }
 }
 
@@ -382,10 +340,7 @@ class MatchingPair {
   final String leftId;
   final String rightId;
 
-  const MatchingPair({
-    required this.leftId,
-    required this.rightId,
-  });
+  const MatchingPair({required this.leftId, required this.rightId});
 
   factory MatchingPair.fromJson(Map<String, dynamic> json) {
     return MatchingPair(
@@ -416,15 +371,18 @@ class MatchingContent implements BlockContent {
   factory MatchingContent.fromJson(Map<String, dynamic> json) {
     return MatchingContent(
       question: json['question'] as String? ?? '',
-      leftItems: (json['leftItems'] as List<dynamic>?)
+      leftItems:
+          (json['leftItems'] as List<dynamic>?)
               ?.map((e) => MatchingItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      rightItems: (json['rightItems'] as List<dynamic>?)
+      rightItems:
+          (json['rightItems'] as List<dynamic>?)
               ?.map((e) => MatchingItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      correctPairs: (json['correctPairs'] as List<dynamic>?)
+      correctPairs:
+          (json['correctPairs'] as List<dynamic>?)
               ?.map((e) => MatchingPair.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
@@ -466,10 +424,7 @@ class VideoContent implements BlockContent {
   final String url;
   final String? title;
 
-  const VideoContent({
-    this.url = '',
-    this.title,
-  });
+  const VideoContent({this.url = '', this.title});
 
   factory VideoContent.fromJson(Map<String, dynamic> json) {
     return VideoContent(
@@ -493,6 +448,7 @@ class Block {
   final BlockPosition position;
   final BlockStyle style;
   final BlockContent content;
+  final String visibilityRule; // 'always' | 'afterPreviousCorrect'
 
   const Block({
     required this.id,
@@ -500,6 +456,7 @@ class Block {
     required this.position,
     required this.style,
     required this.content,
+    this.visibilityRule = 'always',
   });
 
   /// Create default block
@@ -514,19 +471,19 @@ class Block {
   }
 
   static BlockContent _getDefaultContent(BlockType type) {
-      switch (type) {
-        case BlockType.text:
+    switch (type) {
+      case BlockType.text:
         return const TextContent(value: 'Enter text here...');
-        case BlockType.image:
-          return const ImageContent();
-        case BlockType.codeBlock:
+      case BlockType.image:
+        return const ImageContent();
+      case BlockType.codeBlock:
         return const CodeBlockContent(code: '# Enter code here');
-        case BlockType.codePlayground:
-          return const CodePlaygroundContent(
+      case BlockType.codePlayground:
+        return const CodePlaygroundContent(
           initialCode: '# Write your Python code\nprint("Hello, World!")',
-          );
-        case BlockType.multipleChoice:
-          return MultipleChoiceContent(
+        );
+      case BlockType.multipleChoice:
+        return MultipleChoiceContent(
           question: 'Enter a question',
           options: [
             const ChoiceOption(id: 'a', text: 'Option A'),
@@ -535,12 +492,17 @@ class Block {
           ],
           correctAnswer: 'a',
         );
-        case BlockType.fillBlank:
-        return const FillBlankContent(question: 'Enter a fill-in-the-blank question');
-        case BlockType.trueFalse:
-        return const TrueFalseContent(question: 'Enter a true or false statement', correctAnswer: true);
-        case BlockType.matching:
-          return MatchingContent(
+      case BlockType.fillBlank:
+        return const FillBlankContent(
+          question: 'Enter a fill-in-the-blank question',
+        );
+      case BlockType.trueFalse:
+        return const TrueFalseContent(
+          question: 'Enter a true or false statement',
+          correctAnswer: true,
+        );
+      case BlockType.matching:
+        return MatchingContent(
           question: 'Match the items on the left with those on the right',
           leftItems: const [
             MatchingItem(id: 'l1', text: 'Item 1'),
@@ -558,9 +520,9 @@ class Block {
             MatchingPair(leftId: 'l3', rightId: 'r3'),
           ],
         );
-        case BlockType.video:
-          return const VideoContent();
-      }
+      case BlockType.video:
+        return const VideoContent();
+    }
   }
 
   factory Block.fromJson(Map<String, dynamic> json) {
@@ -569,20 +531,25 @@ class Block {
       id: json['id'] as String,
       type: type,
       position: BlockPosition.fromJson(
-          json['position'] as Map<String, dynamic>? ?? {}),
+        json['position'] as Map<String, dynamic>? ?? {},
+      ),
       style: BlockStyle.fromJson(json['style'] as Map<String, dynamic>? ?? {}),
-      content:
-          BlockContent.fromJson(type, json['content'] as Map<String, dynamic>),
+      content: BlockContent.fromJson(
+        type,
+        json['content'] as Map<String, dynamic>,
+      ),
+      visibilityRule: json['visibilityRule'] as String? ?? 'always',
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'type': type.value,
-        'id': id,
-        'position': position.toJson(),
-        'style': style.toJson(),
-        'content': content.toJson(),
-      };
+    'type': type.value,
+    'id': id,
+    'position': position.toJson(),
+    'style': style.toJson(),
+    'content': content.toJson(),
+    'visibilityRule': visibilityRule,
+  };
 
   Block copyWith({
     String? id,
@@ -590,6 +557,7 @@ class Block {
     BlockPosition? position,
     BlockStyle? style,
     BlockContent? content,
+    String? visibilityRule,
   }) {
     return Block(
       id: id ?? this.id,
@@ -597,6 +565,7 @@ class Block {
       position: position ?? this.position,
       style: style ?? this.style,
       content: content ?? this.content,
+      visibilityRule: visibilityRule ?? this.visibilityRule,
     );
   }
 }

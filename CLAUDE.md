@@ -1,6 +1,9 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+You are Claude Code, working in the root directory of the Primoria repository. Users will directly input tasks in the terminal (e.g., Fix / Implement / Refactor…).
+
+Your responsibility is to deliver workable, testable, and rollbackable changes without breaking existing architecture and data constraints.
 
 ## Project Overview
 
@@ -9,7 +12,15 @@ Primoria is a two-part Flutter system for interactive STEM courses:
 - **Viewer** (`Viewer/`) — Flutter multi-platform learning app (Brilliant.org-inspired, Provider state management)
 - **supabase/** — PostgreSQL backend (migrations, auth, course storage, gamification)
 
-The apps share a **Course JSON schema** (`Course → Pages → Blocks`) but are independent Flutter projects with separate dependencies and state management.
+关键文档（每次做任务先快速扫一遍相关部分再动手）：
+- docs/prd.md
+- docs/database-schema.md
+- docs/course-json-guide.md
+- docs/dashboard.md
+- docs/test-checklist.md
+- docs/changelog.md
+- docs/todo.md
+- README.md（仓库布局、启动方式）
 
 ## Common Commands
 
@@ -67,6 +78,25 @@ Courses use versioned content: `courses.current_draft_version_id` / `current_pub
 - Supabase credentials are hardcoded in `Builder/lib/main.dart` as compile-time constants (anon key only)
 - Builder tests are in `Builder/test/` — 26 model unit tests pass; `widget_test.dart` fails due to Supabase init requirement
 - Course JSON format is documented in `Builder/docs/course-json-guide.md`
+
+
+### 3.3 Quality gates（必须过）
+在提交最终结果前，至少完成：
+- `flutter format`（或 `dart format .`）
+- `flutter analyze`
+- `flutter test`
+
+## 6) Task Input Template (Optional but recommended)
+
+用户在终端输入任务时，推荐用以下格式（你要能识别并执行）：
+
+TASK: <一句话要做什么>
+CONTEXT: <涉及页面/模块/数据表>
+ACCEPTANCE: <验收标准>
+OUT_OF_SCOPE: <不做什么>
+NOTES: <任何硬约束/偏好>
+
+如果用户没写这些字段，你要自己从代码与 docs 推导，并把推导结果写进 plan/assumptions。
 
 ## Requirements
 

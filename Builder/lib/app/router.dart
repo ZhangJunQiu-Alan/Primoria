@@ -67,7 +67,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/viewer',
       name: 'viewer',
-      builder: (context, state) => const ViewerScreen(),
+      builder: (context, state) {
+        final courseId = state.uri.queryParameters['courseId'];
+        return ViewerScreen(courseId: courseId);
+      },
     ),
   ],
 );

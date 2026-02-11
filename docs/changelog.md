@@ -1,5 +1,29 @@
 # Changelog
 
+## [Unreleased] - 2026-02-12
+
+### Summary
+Phone-mockup Viewer with interactive question blocks, visibilityRule gating, course rename API, CLAUDE.md enhancements.
+
+### Added
+- **Phone-mockup Viewer**: ViewerScreen now renders course pages inside a 375×812 phone frame with status bar, home indicator, rounded corners, and shadow — replaces the flat TabBarView layout
+- **Interactive question blocks in Viewer**: MultipleChoice, FillBlank, TrueFalse, and Matching blocks are now fully interactive with answer selection, Check button, correct/incorrect feedback styling, and explanation reveal
+- **visibilityRule on Block model**: New `visibilityRule` field (`'always'` | `'afterPreviousCorrect'`) controls block visibility — gated blocks are hidden until the preceding question is answered correctly
+- **Gated badge in Builder**: Blocks with `visibilityRule: 'afterPreviousCorrect'` show an orange "Gated" lock badge in the block header
+- **Visibility property in PropertyPanel**: New dropdown in block properties to set visibilityRule (`Always visible` / `After previous correct`)
+- **`renameCourse()` API**: New `SupabaseService.renameCourse()` method for Dashboard Edit action — updates `courses.title` directly with ownership check
+- 6 new unit tests for visibilityRule (default, serialization, deserialization, missing-from-JSON fallback, copyWith, roundtrip)
+
+### Changed
+- **Viewer routing**: `/viewer` route now accepts `?courseId=<id>` query param; back button returns to `/builder?courseId=<id>` preserving context
+- **Builder Preview button**: Navigates to `/viewer?courseId=<id>` when courseId is available
+- **Dashboard lesson labels**: Show actual lesson title from DB instead of generic "Lesson N" when available
+- **`saveCourse` fix**: Removed duplicate `title` update from course metadata save (title is managed separately via `renameCourse`)
+- **Code formatting**: Applied `dart format` across all changed files (block.dart, builder_screen, viewer_screen, block_wrapper, property_panel, etc.)
+- **CLAUDE.md**: Added quality gates, task input template, key doc references
+
+---
+
 ## [Unreleased] - 2026-02-11
 
 ### Summary
