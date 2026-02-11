@@ -442,6 +442,105 @@ class SupabaseService {
     }
   }
 
+  // ==================== Dashboard Metrics ====================
+
+  /// Get dashboard metrics for the current user.
+  /// Returns { fans, likes, shares, income } with 0 defaults.
+  static Future<Map<String, int>> getDashboardMetrics() async {
+    if (currentUser == null) {
+      return {'fans': 0, 'likes': 0, 'shares': 0, 'income': 0};
+    }
+
+    int fans = 0;
+    int likes = 0;
+
+    // Fans = number of followers (follows where following_id = me)
+    try {
+      final result = await client
+          .from('follows')
+          .select()
+          .eq('following_id', currentUser!.id);
+      fans = (result as List).length;
+    } catch (_) {}
+
+    // Likes = total course_feedback on my courses
+    try {
+      final myCourseIds = await _getMyCourseIds();
+      if (myCourseIds.isNotEmpty) {
+        final result = await client
+            .from('course_feedback')
+            .select()
+            .inFilter('course_id', myCourseIds);
+        likes = (result as List).length;
+      }
+    } catch (_) {}
+
+    return {
+      'fans': fans,
+      'likes': likes,
+      'shares': 0, // No shares table yet
+      'income': 0, // No income table yet
+    };
+  }
+
+  /// Get recent comments on the current user's courses.
+  /// Returns list of { comment, rating, created_at, username, avatar_url }.
+  static Future<List<Map<String, dynamic>>> getRecentComments({
+    int limit = 4,
+  }) async {
+    if (currentUser == null) return [];
+
+    try {
+      final myCourseIds = await _getMyCourseIds();
+      if (myCourseIds.isEmpty) return [];
+
+      final result = await client
+          .from('course_feedback')
+          .select('id, comment, rating, created_at, user_id, course_id')
+          .inFilter('course_id', myCourseIds)
+          .order('created_at', ascending: false)
+          .limit(limit);
+
+      final comments = List<Map<String, dynamic>>.from(result);
+
+      // Enrich with profile info
+      for (final comment in comments) {
+        try {
+          final profile = await client
+              .from('profiles')
+              .select('username, avatar_url')
+              .eq('id', comment['user_id'] as String)
+              .maybeSingle();
+          comment['username'] = profile?['username'] ?? profile?['display_name'] ?? 'User';
+          comment['avatar_url'] = profile?['avatar_url'];
+        } catch (_) {
+          comment['username'] = 'User';
+          comment['avatar_url'] = null;
+        }
+      }
+
+      return comments;
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Helper: get current user's course IDs
+  static Future<List<String>> _getMyCourseIds() async {
+    if (currentUser == null) return [];
+    try {
+      final courses = await client
+          .from('courses')
+          .select('id')
+          .eq('owner_id', currentUser!.id);
+      return (courses as List)
+          .map((c) => c['id'].toString())
+          .toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
   // ==================== Helper methods ====================
 
   static bool _isRetryableAuthTimeout(String message) {

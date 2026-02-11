@@ -41,10 +41,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // Cache: courseId → list of page titles (lessons)
   final Map<String, List<String>> _courseLessons = {};
 
+  // Dashboard metrics state
+  Map<String, int> _metrics = {'fans': 0, 'likes': 0, 'shares': 0, 'income': 0};
+  List<Map<String, dynamic>> _comments = [];
+  bool _metricsLoading = false;
+
   @override
   void initState() {
     super.initState();
     _loadCourses();
+    _loadDashboardData();
   }
 
   Future<void> _loadCourses() async {
@@ -62,6 +68,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (mounted) {
         setState(() => _coursesLoading = false);
       }
+    }
+  }
+
+  Future<void> _loadDashboardData() async {
+    if (!SupabaseService.isLoggedIn) return;
+    setState(() => _metricsLoading = true);
+    try {
+      final results = await Future.wait([
+        SupabaseService.getDashboardMetrics(),
+        SupabaseService.getRecentComments(limit: 4),
+      ]);
+      if (mounted) {
+        setState(() {
+          _metrics = results[0] as Map<String, int>;
+          _comments = results[1] as List<Map<String, dynamic>>;
+          _metricsLoading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _metricsLoading = false);
     }
   }
 
@@ -219,7 +245,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Default dashboard topbar — avatar at right
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [UserAvatar(size: 57, onSignedIn: _loadCourses)],
+      children: [UserAvatar(size: 57, onSignedIn: () { _loadCourses(); _loadDashboardData(); })],
     );
   }
 
@@ -402,22 +428,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           const SizedBox(height: 18),
-          Wrap(
-            spacing: 18,
-            runSpacing: 18,
-            children: const [
-              _MetricTile(label: 'fans:', value: 'number'),
-              _MetricTile(label: 'likes:', value: 'number'),
-              _MetricTile(label: 'share:', value: 'number'),
-              _MetricTile(label: 'fans:', value: 'number'),
-            ],
-          ),
+          _metricsLoading
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: _C.accent),
+                    ),
+                  ),
+                )
+              : Wrap(
+                  spacing: 18,
+                  runSpacing: 18,
+                  children: [
+                    _MetricTile(label: 'fans:', value: '${_metrics['fans'] ?? 0}'),
+                    _MetricTile(label: 'likes:', value: '${_metrics['likes'] ?? 0}'),
+                    _MetricTile(label: 'shares:', value: '${_metrics['shares'] ?? 0}'),
+                  ],
+                ),
         ],
       ),
     );
   }
 
   Widget _buildIncomeCard() {
+    final income = _metrics['income'] ?? 0;
     return Container(
       padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
@@ -436,10 +473,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Income overview',
             style: TextStyle(
               fontSize: 20,
@@ -447,8 +484,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               color: _C.text,
             ),
           ),
-          SizedBox(height: 18),
-          Text(
+          const SizedBox(height: 18),
+          const Text(
             'Hold The money:',
             style: TextStyle(
               fontSize: 15,
@@ -456,15 +493,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
               color: _C.muted,
             ),
           ),
-          SizedBox(height: 8),
-          Text(
-            'number',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: _C.text,
-            ),
-          ),
+          const SizedBox(height: 8),
+          _metricsLoading
+              ? const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFFFBA49)),
+                )
+              : Text(
+                  '\$$income',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: _C.text,
+                  ),
+                ),
         ],
       ),
     );
@@ -492,22 +535,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Comments',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: _C.text,
-            ),
+          // Header with "more" link
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Comments',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: _C.text,
+                ),
+              ),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() => _currentTab = _NavTab.dataCenter);
+                  },
+                  child: const Text(
+                    'more',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: _C.accent,
+                      decoration: TextDecoration.underline,
+                      decorationColor: _C.accent,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 18),
-          Wrap(
-            spacing: 18,
-            runSpacing: 18,
-            children: List.generate(4, (_) => const _CommentBlock()),
-          ),
+          _metricsLoading
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: _C.primary),
+                    ),
+                  ),
+                )
+              : _buildCommentsList(),
         ],
       ),
+    );
+  }
+
+  Widget _buildCommentsList() {
+    if (_comments.isEmpty) {
+      // No comments: one dashed placeholder
+      return const _CommentPlaceholder();
+    }
+
+    // Show up to 4 comments
+    final displayComments = _comments.take(4).toList();
+    return Wrap(
+      spacing: 18,
+      runSpacing: 18,
+      children: displayComments.map((c) => _CommentBlock(comment: c)).toList(),
     );
   }
 
@@ -863,8 +952,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   backgroundColor: AppColors.success,
                 ),
               );
-              // Reload courses after sign in
+              // Reload data after sign in
               _loadCourses();
+              _loadDashboardData();
             }
           },
         ),
@@ -1020,28 +1110,124 @@ class _MetricTile extends StatelessWidget {
   }
 }
 
-/// Comment block placeholder
-class _CommentBlock extends StatelessWidget {
-  const _CommentBlock();
+/// Dashed placeholder when no comments exist
+class _CommentPlaceholder extends StatelessWidget {
+  const _CommentPlaceholder();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
+      width: double.infinity,
       height: 100,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0x33506E96)),
+        border: Border.all(
+          color: const Color(0x66506E96),
+          width: 2,
+          strokeAlign: BorderSide.strokeAlignInside,
+        ),
       ),
       alignment: Alignment.center,
       child: const Text(
-        'Comments Block',
+        'No comments yet',
         style: TextStyle(
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
           fontSize: 14,
           color: _C.muted,
         ),
+      ),
+    );
+  }
+}
+
+/// Comment block showing real feedback data
+class _CommentBlock extends StatelessWidget {
+  final Map<String, dynamic> comment;
+
+  const _CommentBlock({required this.comment});
+
+  @override
+  Widget build(BuildContext context) {
+    final username = comment['username'] as String? ?? 'User';
+    final text = comment['comment'] as String? ?? '';
+    final rating = comment['rating'] as int? ?? 0;
+    final createdAt = comment['created_at'] as String?;
+    final avatarUrl = comment['avatar_url'] as String?;
+
+    String timeAgo = '';
+    if (createdAt != null) {
+      try {
+        final dt = DateTime.parse(createdAt);
+        final diff = DateTime.now().difference(dt);
+        if (diff.inDays > 0) {
+          timeAgo = '${diff.inDays}d ago';
+        } else if (diff.inHours > 0) {
+          timeAgo = '${diff.inHours}h ago';
+        } else {
+          timeAgo = 'just now';
+        }
+      } catch (_) {}
+    }
+
+    return Container(
+      width: 260,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0x33506E96)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // User row
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 14,
+                backgroundColor: _C.accent.withValues(alpha: 0.15),
+                backgroundImage: avatarUrl != null ? NetworkImage(avatarUrl) : null,
+                child: avatarUrl == null
+                    ? Text(
+                        username.isNotEmpty ? username[0].toUpperCase() : '?',
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: _C.accent),
+                      )
+                    : null,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  username,
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: _C.text),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (timeAgo.isNotEmpty)
+                Text(
+                  timeAgo,
+                  style: const TextStyle(fontSize: 11, color: _C.muted),
+                ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          // Rating stars
+          Row(
+            children: List.generate(5, (i) => Icon(
+              i < rating ? Icons.star_rounded : Icons.star_outline_rounded,
+              size: 14,
+              color: i < rating ? const Color(0xFFFFBA49) : const Color(0xFFCCD3DD),
+            )),
+          ),
+          if (text.isNotEmpty) ...[
+            const SizedBox(height: 6),
+            Text(
+              text,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13, color: _C.muted),
+            ),
+          ],
+        ],
       ),
     );
   }
