@@ -38,16 +38,21 @@ The Dashboard (`/dashboard`) is the logged-in user's home — sidebar + tab-swit
 
 ```
 initState → _loadCourses() → getMyCourses() → _courses → rebuild
-Card render → _loadCourseLessons(id) → getCourseContent(id) → _courseLessons cache → rebuild
+Card render → _loadCourseLessons(id) → getCourseLessonTitles(id) → _courseLessons cache → rebuild
 ```
+
+`_loadCourseLessons` queries `chapters` → `lessons` tables directly (not `getCourseContent`), so courses with no saved content show 0 lessons.
 
 ## Navigation
 
 | Action | Destination |
 |--------|-------------|
-| Build Course / Create Course | `/builder` |
+| Build Course | `/builder` |
+| Create Course | Dialog → `createCourseRow()` → stays on Course Manage (refreshes list) |
 | Edit / Lesson box / Add lesson | `/builder?courseId=<id>` |
 | Delete | Confirmation → `deleteCourse()` → refresh |
+
+Builder title edits + Save update `courses.title` in DB. Returning to Dashboard reloads course data, keeping titles in sync.
 
 ## Auth Guard
 
@@ -55,7 +60,7 @@ Protected routes: `/dashboard`, `/builder` — redirect to `/` if not logged in.
 
 ## Known Limitations
 
-1. Lesson display depends on async `getCourseContent()` per card — can be slow with many courses
+1. Lesson display depends on async `getCourseLessonTitles()` per card — can be slow with many courses
 2. Sort by student/comments are placeholders
 3. Data Center / Fans Manage tabs are placeholders
 4. "Learned X times" shows lesson count, not actual learner count

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/design_tokens.dart';
-import '../../models/course.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
@@ -246,7 +245,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Default dashboard topbar — avatar at right
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [UserAvatar(size: 57, onSignedIn: () { _loadCourses(); _loadDashboardData(); })],
+      children: [
+        UserAvatar(
+          size: 57,
+          onSignedIn: () {
+            _loadCourses();
+            _loadDashboardData();
+          },
+        ),
+      ],
     );
   }
 
@@ -436,7 +443,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: SizedBox(
                       width: 24,
                       height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: _C.accent),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: _C.accent,
+                      ),
                     ),
                   ),
                 )
@@ -444,9 +454,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   spacing: 18,
                   runSpacing: 18,
                   children: [
-                    _MetricTile(label: 'fans:', value: '${_metrics['fans'] ?? 0}'),
-                    _MetricTile(label: 'likes:', value: '${_metrics['likes'] ?? 0}'),
-                    _MetricTile(label: 'shares:', value: '${_metrics['shares'] ?? 0}'),
+                    _MetricTile(
+                      label: 'fans:',
+                      value: '${_metrics['fans'] ?? 0}',
+                    ),
+                    _MetricTile(
+                      label: 'likes:',
+                      value: '${_metrics['likes'] ?? 0}',
+                    ),
+                    _MetricTile(
+                      label: 'shares:',
+                      value: '${_metrics['shares'] ?? 0}',
+                    ),
                   ],
                 ),
         ],
@@ -499,7 +518,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ? const SizedBox(
                   width: 24,
                   height: 24,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFFFBA49)),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Color(0xFFFFBA49),
+                  ),
                 )
               : Text(
                   '\$$income',
@@ -576,7 +598,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: SizedBox(
                       width: 24,
                       height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: _C.primary),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: _C.primary,
+                      ),
                     ),
                   ),
                 )
@@ -741,20 +766,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  /// Load lesson titles for a single course (async, cached)
+  /// Load lesson titles for a single course (async, cached).
+  /// Queries DB directly so courses with no saved content show 0 lessons.
   Future<void> _loadCourseLessons(String courseId) async {
     if (_courseLessons.containsKey(courseId)) return;
     try {
-      final course = await SupabaseService.getCourseContent(courseId);
-      if (course != null && mounted) {
-        setState(() {
-          _courseLessons[courseId] = course.pages
-              .map((p) => p.title.isNotEmpty ? p.title : 'Untitled')
-              .toList();
-        });
+      final titles = await SupabaseService.getCourseLessonTitles(courseId);
+      if (mounted) {
+        setState(() => _courseLessons[courseId] = titles);
       }
     } catch (_) {
-      // silently ignore — lessons just won't show
+      if (mounted) setState(() => _courseLessons[courseId] = []);
     }
   }
 
@@ -900,9 +922,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) {
-          final canCreate = nameController.text.trim().isNotEmpty && !isCreating;
+          final canCreate =
+              nameController.text.trim().isNotEmpty && !isCreating;
           return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
             title: const Text(
               'Create Course',
               style: TextStyle(fontWeight: FontWeight.w700, color: _C.text),
@@ -929,7 +954,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     }),
                     onSubmitted: canCreate
                         ? (_) async {
-                            await _createCourse(nameController.text.trim(), ctx, setDialogState, (e) => errorText = e, (v) => isCreating = v);
+                            await _createCourse(
+                              nameController.text.trim(),
+                              ctx,
+                              setDialogState,
+                              (e) => errorText = e,
+                              (v) => isCreating = v,
+                            );
                           }
                         : null,
                   ),
@@ -944,21 +975,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ElevatedButton(
                 onPressed: canCreate
                     ? () async {
-                        await _createCourse(nameController.text.trim(), ctx, setDialogState, (e) => errorText = e, (v) => isCreating = v);
+                        await _createCourse(
+                          nameController.text.trim(),
+                          ctx,
+                          setDialogState,
+                          (e) => errorText = e,
+                          (v) => isCreating = v,
+                        );
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _C.accent,
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                 ),
                 child: isCreating
                     ? const SizedBox(
-                        width: 18, height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
                       )
-                    : const Text('Create', style: TextStyle(fontWeight: FontWeight.w700)),
+                    : const Text(
+                        'Create',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
               ),
             ],
           );
@@ -968,7 +1017,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     if (courseId != null && mounted) {
       _loadCourses();
-      context.go('/builder?courseId=$courseId');
     }
   }
 
@@ -984,13 +1032,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       setError(null);
     });
 
-    final course = Course.create(title: name);
-    final result = await SupabaseService.saveCourse(course);
+    final result = await SupabaseService.createCourseRow(title: name);
 
     if (!ctx.mounted) return;
 
     if (result.success) {
-      Navigator.pop(ctx, course.courseId);
+      Navigator.pop(ctx, result.courseId);
     } else {
       setDialogState(() {
         setCreating(false);
@@ -1295,11 +1342,17 @@ class _CommentBlock extends StatelessWidget {
               CircleAvatar(
                 radius: 14,
                 backgroundColor: _C.accent.withValues(alpha: 0.15),
-                backgroundImage: avatarUrl != null ? NetworkImage(avatarUrl) : null,
+                backgroundImage: avatarUrl != null
+                    ? NetworkImage(avatarUrl)
+                    : null,
                 child: avatarUrl == null
                     ? Text(
                         username.isNotEmpty ? username[0].toUpperCase() : '?',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: _C.accent),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: _C.accent,
+                        ),
                       )
                     : null,
               ),
@@ -1307,7 +1360,11 @@ class _CommentBlock extends StatelessWidget {
               Expanded(
                 child: Text(
                   username,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: _C.text),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: _C.text,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -1321,11 +1378,16 @@ class _CommentBlock extends StatelessWidget {
           const SizedBox(height: 8),
           // Rating stars
           Row(
-            children: List.generate(5, (i) => Icon(
-              i < rating ? Icons.star_rounded : Icons.star_outline_rounded,
-              size: 14,
-              color: i < rating ? const Color(0xFFFFBA49) : const Color(0xFFCCD3DD),
-            )),
+            children: List.generate(
+              5,
+              (i) => Icon(
+                i < rating ? Icons.star_rounded : Icons.star_outline_rounded,
+                size: 14,
+                color: i < rating
+                    ? const Color(0xFFFFBA49)
+                    : const Color(0xFFCCD3DD),
+              ),
+            ),
           ),
           if (text.isNotEmpty) ...[
             const SizedBox(height: 6),
