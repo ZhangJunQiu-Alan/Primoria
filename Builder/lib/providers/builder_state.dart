@@ -26,8 +26,9 @@ class BuilderState {
   }) {
     return BuilderState(
       currentPageIndex: currentPageIndex ?? this.currentPageIndex,
-      selectedBlockId:
-          clearSelectedBlock ? null : (selectedBlockId ?? this.selectedBlockId),
+      selectedBlockId: clearSelectedBlock
+          ? null
+          : (selectedBlockId ?? this.selectedBlockId),
       isPreviewMode: isPreviewMode ?? this.isPreviewMode,
       courseTitle: courseTitle ?? this.courseTitle,
       hasUnsavedChanges: hasUnsavedChanges ?? this.hasUnsavedChanges,
@@ -59,6 +60,13 @@ class BuilderStateNotifier extends StateNotifier<BuilderState> {
     state = state.copyWith(courseTitle: title, hasUnsavedChanges: true);
   }
 
+  void syncCourseTitle(String title, {required bool hasUnsavedChanges}) {
+    state = state.copyWith(
+      courseTitle: title,
+      hasUnsavedChanges: hasUnsavedChanges,
+    );
+  }
+
   void markAsSaved() {
     state = state.copyWith(hasUnsavedChanges: false);
   }
@@ -71,5 +79,5 @@ class BuilderStateNotifier extends StateNotifier<BuilderState> {
 /// Builder state provider
 final builderStateProvider =
     StateNotifierProvider<BuilderStateNotifier, BuilderState>((ref) {
-  return BuilderStateNotifier();
-});
+      return BuilderStateNotifier();
+    });
