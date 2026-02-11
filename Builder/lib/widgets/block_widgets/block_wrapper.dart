@@ -250,11 +250,7 @@ class _TextBlockContent extends StatelessWidget {
             color: AppColors.neutral800,
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
           ),
-          codeblockTextStyle: const TextStyle(
-            fontSize: AppFontSize.sm,
-            fontFamily: 'monospace',
-            color: AppColors.neutral100,
-          ),
+          codeblockPadding: const EdgeInsets.all(AppSpacing.md),
           listBullet: const TextStyle(fontSize: AppFontSize.md, color: AppColors.neutral700),
           a: const TextStyle(color: AppColors.primary500, decoration: TextDecoration.underline),
         ),
