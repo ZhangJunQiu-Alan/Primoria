@@ -224,18 +224,39 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
     });
   }
 
-  /// Whether a block with `afterPreviousCorrect` should be visible.
-  bool _isBlockVisible(int index) {
-    final block = widget.page.blocks[index];
-    if (block.visibilityRule != 'afterPreviousCorrect') return true;
-    if (!_checked) return false;
+  /// Computes visibility sequentially so hidden gated blocks also gate
+  /// subsequent blocks until they are unlocked.
+  List<bool> _computeBlockVisibility(List<Block> blocks) {
+    final visibility = List<bool>.filled(blocks.length, true);
 
-    // Check if the immediately preceding block is correct.
-    if (index > 0) {
-      return _correctState[index - 1] == true;
+    for (int index = 0; index < blocks.length; index++) {
+      final previousVisible = index == 0 ? true : visibility[index - 1];
+      if (!previousVisible) {
+        visibility[index] = false;
+        continue;
+      }
+
+      final block = blocks[index];
+      if (block.visibilityRule != 'afterPreviousCorrect') {
+        visibility[index] = true;
+        continue;
+      }
+
+      if (!_checked) {
+        visibility[index] = false;
+        continue;
+      }
+
+      // Check if the immediately preceding block is correct.
+      if (index > 0) {
+        visibility[index] = _correctState[index - 1] == true;
+      } else {
+        // No previous block found → show by default.
+        visibility[index] = true;
+      }
     }
-    // No previous block found → show by default.
-    return true;
+
+    return visibility;
   }
 
   static bool _isQuestionType(BlockType type) {
@@ -248,6 +269,7 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
   @override
   Widget build(BuildContext context) {
     final blocks = widget.page.blocks;
+    final blockVisibility = _computeBlockVisibility(blocks);
 
     return Column(
       children: [
@@ -276,10 +298,10 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
                 ...blocks.asMap().entries.map((entry) {
                   final idx = entry.key;
                   final block = entry.value;
-                  final visible = _isBlockVisible(idx);
+                  final visible = blockVisibility[idx];
 
                   if (!visible) {
-                    return _LockedPlaceholder(key: ValueKey('locked_$idx'));
+                    return const SizedBox.shrink();
                   }
 
                   return AnimatedSwitcher(
@@ -330,40 +352,6 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
             ),
           ),
       ],
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Locked placeholder for hidden blocks
-// ---------------------------------------------------------------------------
-class _LockedPlaceholder extends StatelessWidget {
-  const _LockedPlaceholder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: AppSpacing.md),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.neutral100,
-        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-        border: Border.all(color: AppColors.neutral200),
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.lock_outline, size: 18, color: AppColors.neutral400),
-          SizedBox(width: AppSpacing.sm),
-          Text(
-            'Answer the previous question correctly to unlock',
-            style: TextStyle(
-              fontSize: AppFontSize.xs,
-              color: AppColors.neutral400,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

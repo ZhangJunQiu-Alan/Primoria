@@ -46,6 +46,10 @@
 ## 8. Preview
 
 - [ ] Preview button → navigates to Viewer with current content
+- [ ] Unsaved Builder edits survive Builder → Preview → Builder navigation for existing courses (`/builder?courseId=<id>`)
+- [ ] After successful cloud Save, reopening Builder does not restore stale draft content
+- [ ] For `visibilityRule: afterPreviousCorrect`, hidden blocks show true blank space (no lock placeholder) before unlock
+- [ ] For chained blocks, if a preceding gated block is hidden, subsequent blocks remain hidden until the gated block is unlocked
 
 ## 9. Auth & Routing
 

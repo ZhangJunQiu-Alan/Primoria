@@ -13,6 +13,9 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Visibility property in PropertyPanel**: New dropdown in block properties to set visibilityRule (`Always visible` / `After previous correct`)
 - **`renameCourse()` API**: New `SupabaseService.renameCourse()` method for Dashboard Edit action — updates `courses.title` directly with ownership check
 - 6 new unit tests for visibilityRule (default, serialization, deserialization, missing-from-JSON fallback, copyWith, roundtrip)
+- **Builder browser draft storage for unsaved edits**: Added per-course draft APIs in `StorageService` (`saveCourseDraft`, `loadCourseDraft`, `hasCourseDraft`, `clearCourseDraft`) to persist unsaved Builder content in browser storage
+- **Draft storage tests**: Added `test/storage_service_test.dart` for per-course draft save/load/isolation/clear behavior
+- **Viewer visibility tests**: Added `test/viewer_visibility_test.dart` for hidden-gated rendering and chained unlock behavior
 
 ### Changed
 - **Viewer routing**: `/viewer` route now accepts `?courseId=<id>` query param; back button returns to `/builder?courseId=<id>` preserving context
@@ -21,6 +24,9 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **`saveCourse` fix**: Removed duplicate `title` update from course metadata save (title is managed separately via `renameCourse`)
 - **Code formatting**: Applied `dart format` across all changed files (block.dart, builder_screen, viewer_screen, block_wrapper, property_panel, etc.)
 - **CLAUDE.md**: Added quality gates, task input template, key doc references
+- **Viewer `afterPreviousCorrect` rendering**: Hidden gated blocks now render as true blank (no lock placeholder), and visibility is evaluated sequentially so a hidden gated block also keeps all following blocks hidden until unlocked
+- **Builder course load flow**: Builder now restores local draft first (if present) before fetching cloud snapshot, and syncs title/unsaved status with restored content
+- **Preview navigation safety**: Clicking Preview now writes a local draft first; successful cloud Save clears the corresponding local draft
 
 ---
 

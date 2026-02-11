@@ -6,6 +6,7 @@ import '../../providers/builder_state.dart';
 import '../../providers/course_provider.dart';
 import '../../services/course_export.dart';
 import '../../services/course_import.dart';
+import '../../services/storage_service.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/builder_layout.dart';
 import '../../widgets/module_panel.dart';
@@ -27,6 +28,7 @@ class BuilderScreen extends ConsumerStatefulWidget {
 
 class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   bool _courseLoaded = false;
+  bool _draftAutoSaveEnabled = false;
 
   @override
   void initState() {
@@ -39,14 +41,60 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   Future<void> _loadCourse() async {
     if (_courseLoaded) return;
     _courseLoaded = true;
-    final course = await SupabaseService.getCourseContent(widget.courseId!);
-    if (course != null && mounted) {
-      ref.read(courseProvider.notifier).loadCourse(course);
+    final courseId = widget.courseId!;
+
+    // Restore browser draft first to prevent unsaved edits from being
+    // overwritten when navigating Builder -> Preview -> Builder.
+    final draft = await StorageService.loadCourseDraft(courseId);
+    if (!mounted) return;
+    if (draft != null) {
+      ref.read(courseProvider.notifier).loadCourse(draft);
+      ref
+          .read(builderStateProvider.notifier)
+          .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
+      _draftAutoSaveEnabled = true;
+      _showDraftRestoredHint();
+      return;
     }
+
+    final course = await SupabaseService.getCourseContent(courseId);
+    if (!mounted) return;
+    if (course != null) {
+      ref.read(courseProvider.notifier).loadCourse(course);
+      ref
+          .read(builderStateProvider.notifier)
+          .syncCourseTitle(course.metadata.title, hasUnsavedChanges: false);
+    }
+    _draftAutoSaveEnabled = true;
+  }
+
+  void _showDraftRestoredHint() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Recovered unsaved browser draft'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    });
+  }
+
+  Future<void> _saveBrowserDraft(WidgetRef ref) async {
+    final courseId = widget.courseId;
+    if (courseId == null || courseId.isEmpty) return;
+    await StorageService.saveCourseDraft(courseId, ref.read(courseProvider));
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(courseProvider, (previous, next) {
+      if (!_draftAutoSaveEnabled) return;
+      final courseId = widget.courseId;
+      if (courseId == null || courseId.isEmpty) return;
+      StorageService.saveCourseDraft(courseId, next);
+    });
+
     final builderState = ref.watch(builderStateProvider);
 
     return Scaffold(
@@ -150,7 +198,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         const SizedBox(width: AppSpacing.sm),
         // Preview button
         OutlinedButton(
-          onPressed: () {
+          onPressed: () async {
+            await _saveBrowserDraft(ref);
+            if (!context.mounted) return;
             final id = widget.courseId ?? '';
             if (id.isNotEmpty) {
               context.go('/viewer?courseId=$id');
@@ -487,6 +537,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
     if (result.success) {
       ref.read(builderStateProvider.notifier).markAsSaved();
+      final draftCourseId = widget.courseId;
+      if (draftCourseId != null && draftCourseId.isNotEmpty) {
+        await StorageService.clearCourseDraft(draftCourseId);
+        if (!context.mounted) return;
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(

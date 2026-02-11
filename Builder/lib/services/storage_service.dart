@@ -6,6 +6,7 @@ import '../models/course.dart';
 class StorageService {
   static const String _courseKey = 'current_course';
   static const String _autoSaveKey = 'auto_save_enabled';
+  static const String _courseDraftPrefix = 'course_draft_';
 
   static SharedPreferences? _prefs;
 
@@ -53,6 +54,53 @@ class StorageService {
     return await _prefs!.remove(_courseKey);
   }
 
+  static String _courseDraftKey(String courseId) {
+    return '$_courseDraftPrefix$courseId';
+  }
+
+  /// Save unsaved draft for a specific course into browser storage.
+  static Future<bool> saveCourseDraft(String courseId, Course course) async {
+    if (courseId.isEmpty) return false;
+    if (_prefs == null) await init();
+
+    try {
+      final jsonString = jsonEncode(course.toJson());
+      return await _prefs!.setString(_courseDraftKey(courseId), jsonString);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Load unsaved draft for a specific course.
+  static Future<Course?> loadCourseDraft(String courseId) async {
+    if (courseId.isEmpty) return null;
+    if (_prefs == null) await init();
+
+    try {
+      final jsonString = _prefs!.getString(_courseDraftKey(courseId));
+      if (jsonString == null) return null;
+
+      final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>;
+      return Course.fromJson(jsonMap);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Whether a specific course has an unsaved browser draft.
+  static Future<bool> hasCourseDraft(String courseId) async {
+    if (courseId.isEmpty) return false;
+    if (_prefs == null) await init();
+    return _prefs!.containsKey(_courseDraftKey(courseId));
+  }
+
+  /// Remove a specific course draft from browser storage.
+  static Future<bool> clearCourseDraft(String courseId) async {
+    if (courseId.isEmpty) return false;
+    if (_prefs == null) await init();
+    return await _prefs!.remove(_courseDraftKey(courseId));
+  }
+
   /// Set auto-save
   static Future<bool> setAutoSave(bool enabled) async {
     if (_prefs == null) await init();
@@ -75,21 +123,17 @@ class ApiService {
     // TODO: implement real API call
     await Future.delayed(const Duration(milliseconds: 500));
 
-    return const ApiResponse(
-      success: true,
-      message: 'Saved (mock)',
-    );
+    return const ApiResponse(success: true, message: 'Saved (mock)');
   }
 
   /// Load course from server (placeholder)
-  static Future<ApiResponse<Course>> loadCourseFromServer(String courseId) async {
+  static Future<ApiResponse<Course>> loadCourseFromServer(
+    String courseId,
+  ) async {
     // TODO: implement real API call
     await Future.delayed(const Duration(milliseconds: 500));
 
-    return const ApiResponse(
-      success: false,
-      message: 'Coming soon',
-    );
+    return const ApiResponse(success: false, message: 'Coming soon');
   }
 }
 
@@ -99,9 +143,5 @@ class ApiResponse<T> {
   final String message;
   final T? data;
 
-  const ApiResponse({
-    required this.success,
-    required this.message,
-    this.data,
-  });
+  const ApiResponse({required this.success, required this.message, this.data});
 }
