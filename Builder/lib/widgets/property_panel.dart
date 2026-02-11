@@ -250,12 +250,35 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     return _PropertySection(
       title: 'Text',
       children: [
+        _PropertyField(
+          label: 'Format',
+          child: SegmentedButton<String>(
+            segments: const [
+              ButtonSegment(value: 'markdown', label: Text('Markdown')),
+              ButtonSegment(value: 'plain', label: Text('Plain')),
+            ],
+            selected: {content.format},
+            onSelectionChanged: (value) {
+              final updatedBlock = widget.block.copyWith(
+                content: content.copyWith(format: value.first),
+              );
+              _updateBlock(updatedBlock);
+            },
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.value,
-          maxLines: 5,
-          decoration: const InputDecoration(
-            hintText: 'Enter text...',
-            border: OutlineInputBorder(),
+          maxLines: 8,
+          style: TextStyle(
+            fontFamily: content.format == 'markdown' ? 'monospace' : null,
+            fontSize: AppFontSize.sm,
+          ),
+          decoration: InputDecoration(
+            hintText: content.format == 'markdown'
+                ? '# Heading\n\n**Bold** and *italic*\n\n- List item'
+                : 'Enter text...',
+            border: const OutlineInputBorder(),
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(

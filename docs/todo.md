@@ -5,7 +5,7 @@
 2. [ ] Multilingual support
 
 ## Builder
-1. [ ] Enable Markdown rendering for text blocks
+1. [x] Enable Markdown rendering for text blocks — MarkdownBody in canvas, format toggle in property panel (2026-02-11)
 2. [ ] Update course prompt to match the new flow
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
 4. [x] Build home page: support common features (Profile, achievements, etc.) — Dashboard Home Page with Course Data, Income, Comments (2026-02-09)

@@ -52,6 +52,56 @@ void main() {
       expect(content.format, 'plain');
       expect(content.value, 'Test text');
     });
+
+    test('TextContent defaults to markdown format', () {
+      const content = TextContent(value: 'some text');
+      expect(content.format, 'markdown');
+    });
+
+    test('TextContent copyWith switches format', () {
+      const content = TextContent(format: 'plain', value: 'hello');
+      final switched = content.copyWith(format: 'markdown');
+
+      expect(switched.format, 'markdown');
+      expect(switched.value, 'hello');
+    });
+
+    test('TextContent roundtrip preserves format', () {
+      const content = TextContent(format: 'plain', value: 'plain text');
+      final json = content.toJson();
+      final restored = TextContent.fromJson(json);
+
+      expect(restored.format, 'plain');
+      expect(restored.value, 'plain text');
+    });
+
+    test('TextContent fromJson defaults format to markdown when missing', () {
+      final json = {'value': 'no format field'};
+      final content = TextContent.fromJson(json);
+
+      expect(content.format, 'markdown');
+      expect(content.value, 'no format field');
+    });
+
+    test('TextContent handles markdown syntax in value', () {
+      const mdValue = '# Heading\n\n**bold** and *italic*\n\n- item 1\n- item 2\n\n`code`';
+      const content = TextContent(format: 'markdown', value: mdValue);
+      final json = content.toJson();
+      final restored = TextContent.fromJson(json);
+
+      expect(restored.format, 'markdown');
+      expect(restored.value, mdValue);
+    });
+
+    test('TextContent handles malformed markdown without error', () {
+      const malformed = '# Unclosed **bold\n\n```\nno closing fence\n\n[broken link(';
+      const content = TextContent(format: 'markdown', value: malformed);
+      final json = content.toJson();
+      final restored = TextContent.fromJson(json);
+
+      expect(restored.value, malformed);
+      expect(restored.format, 'markdown');
+    });
   });
 
   group('CodePlaygroundContent', () {
