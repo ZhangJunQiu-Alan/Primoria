@@ -3,11 +3,14 @@
 ## [Unreleased] - 2026-02-11
 
 ### Summary
-New True/False block type for Builder.
+True/False block type and Markdown rendering for Builder text blocks.
 
 ### Added
 - **True/False block type**: New `trueFalse` block across the full Builder stack — enum, model (`TrueFalseContent`), registry, property editor (SegmentedButton picker), preview widget (styled answer chips), module panel (Chemical category), and viewer screen support
 - JSON type value: `true-false`, content fields: `question`, `correctAnswer` (bool), `explanation` (optional)
+- **Markdown rendering in Builder canvas**: Text blocks with `format: 'markdown'` now render via `MarkdownBody` with styled headings, bold/italic, lists, inline code, fenced code blocks, and links — matching Viewer output
+- **Format toggle in property panel**: Markdown/Plain segmented button lets authors switch text format; monospace font and markdown-hint placeholder in editor when markdown is selected
+- 6 new unit tests for TextContent format handling (defaults, copyWith, roundtrip, malformed markdown)
 
 ---
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../theme/design_tokens.dart';
 import '../../models/models.dart';
 import '../../services/block_registry.dart';
@@ -218,13 +219,54 @@ class _TextBlockContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (content.value.isEmpty) {
+      return Text(
+        'Click to edit text...',
+        textAlign: textAlign,
+        style: const TextStyle(
+          fontSize: AppFontSize.md,
+          color: AppColors.neutral400,
+          fontStyle: FontStyle.italic,
+        ),
+      );
+    }
+
+    if (content.format == 'markdown') {
+      return MarkdownBody(
+        data: content.value,
+        selectable: true,
+        styleSheet: MarkdownStyleSheet(
+          p: const TextStyle(fontSize: AppFontSize.md, color: AppColors.neutral700),
+          h1: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.neutral800),
+          h2: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.neutral800),
+          h3: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.neutral800),
+          code: TextStyle(
+            fontSize: AppFontSize.sm,
+            fontFamily: 'monospace',
+            backgroundColor: AppColors.neutral100,
+            color: AppColors.neutral700,
+          ),
+          codeblockDecoration: BoxDecoration(
+            color: AppColors.neutral800,
+            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+          ),
+          codeblockTextStyle: const TextStyle(
+            fontSize: AppFontSize.sm,
+            fontFamily: 'monospace',
+            color: AppColors.neutral100,
+          ),
+          listBullet: const TextStyle(fontSize: AppFontSize.md, color: AppColors.neutral700),
+          a: const TextStyle(color: AppColors.primary500, decoration: TextDecoration.underline),
+        ),
+      );
+    }
+
     return Text(
-      content.value.isEmpty ? 'Click to edit text...' : content.value,
+      content.value,
       textAlign: textAlign,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: AppFontSize.md,
-        color: content.value.isEmpty ? AppColors.neutral400 : AppColors.neutral700,
-        fontStyle: content.value.isEmpty ? FontStyle.italic : FontStyle.normal,
+        color: AppColors.neutral700,
       ),
     );
   }
