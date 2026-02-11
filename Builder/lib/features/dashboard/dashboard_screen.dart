@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/design_tokens.dart';
+import '../../models/course.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
@@ -342,7 +343,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             _GhostButton(
               label: 'Create Course',
-              onTap: () => context.go('/builder'),
+              onTap: _showCreateCourseDialog,
             ),
           ],
         ),
@@ -721,7 +722,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () => context.go('/builder'),
+            onPressed: _showCreateCourseDialog,
             style: ElevatedButton.styleFrom(
               backgroundColor: _C.accent,
               foregroundColor: Colors.white,
@@ -888,6 +889,114 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _showCreateCourseDialog() async {
+    final nameController = TextEditingController();
+    String? errorText;
+    bool isCreating = false;
+
+    final courseId = await showDialog<String>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final canCreate = nameController.text.trim().isNotEmpty && !isCreating;
+          return AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: const Text(
+              'Create Course',
+              style: TextStyle(fontWeight: FontWeight.w700, color: _C.text),
+            ),
+            content: SizedBox(
+              width: 360,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextField(
+                    controller: nameController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      labelText: 'Course Name',
+                      hintText: 'e.g. Intro to Python',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      errorText: errorText,
+                    ),
+                    onChanged: (_) => setDialogState(() {
+                      errorText = null;
+                    }),
+                    onSubmitted: canCreate
+                        ? (_) async {
+                            await _createCourse(nameController.text.trim(), ctx, setDialogState, (e) => errorText = e, (v) => isCreating = v);
+                          }
+                        : null,
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isCreating ? null : () => Navigator.pop(ctx),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: canCreate
+                    ? () async {
+                        await _createCourse(nameController.text.trim(), ctx, setDialogState, (e) => errorText = e, (v) => isCreating = v);
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _C.accent,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: isCreating
+                    ? const SizedBox(
+                        width: 18, height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                      )
+                    : const Text('Create', style: TextStyle(fontWeight: FontWeight.w700)),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    if (courseId != null && mounted) {
+      _loadCourses();
+      context.go('/builder?courseId=$courseId');
+    }
+  }
+
+  Future<void> _createCourse(
+    String name,
+    BuildContext ctx,
+    void Function(void Function()) setDialogState,
+    void Function(String?) setError,
+    void Function(bool) setCreating,
+  ) async {
+    setDialogState(() {
+      setCreating(true);
+      setError(null);
+    });
+
+    final course = Course.create(title: name);
+    final result = await SupabaseService.saveCourse(course);
+
+    if (!ctx.mounted) return;
+
+    if (result.success) {
+      Navigator.pop(ctx, course.courseId);
+    } else {
+      setDialogState(() {
+        setCreating(false);
+        setError(result.message);
+      });
+    }
   }
 
   Future<void> _confirmDeleteCourse(String courseId, String title) async {
