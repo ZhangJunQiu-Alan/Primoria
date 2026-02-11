@@ -6,6 +6,10 @@
 Phone-mockup Viewer with interactive question blocks, visibilityRule gating, course rename API, CLAUDE.md enhancements.
 
 ### Added
+- **Matching block UX improvements (Viewer)**: Color-coded pair chips with 8-accent palette, numbered circle badges on paired items, shuffled right column on init to prevent trivial positional matching, tap-to-unpair (tap an already-paired left or right item to clear the pair before submission), enhanced green/red feedback on both columns after submit
+- **Matching block pair numbers (Builder canvas)**: `_MatchingBlockContent` now shows circled pair numbers on left and right items so the author can see the correct mapping at a glance
+- **Matching export validation**: `_validateMatching()` in `CourseExport` checks ≥2 left items, ≥2 right items, non-empty question, no duplicate item IDs, valid pair references
+- 10 new unit tests: 6 for `MatchingContent` model (default values, fromJson, toJson roundtrip, copyWith, empty lists fallback, null explanation) + 4 for matching export validation (valid pass, empty question, <2 left items, invalid pair reference)
 - **Phone-mockup Viewer**: ViewerScreen now renders course pages inside a 375×812 phone frame with status bar, home indicator, rounded corners, and shadow — replaces the flat TabBarView layout
 - **Interactive question blocks in Viewer**: MultipleChoice, FillBlank, TrueFalse, and Matching blocks are now fully interactive with answer selection, Check button, correct/incorrect feedback styling, and explanation reveal
 - **visibilityRule on Block model**: New `visibilityRule` field (`'always'` | `'afterPreviousCorrect'`) controls block visibility — gated blocks are hidden until the preceding question is answered correctly
@@ -16,6 +20,10 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Builder browser draft storage for unsaved edits**: Added per-course draft APIs in `StorageService` (`saveCourseDraft`, `loadCourseDraft`, `hasCourseDraft`, `clearCourseDraft`) to persist unsaved Builder content in browser storage
 - **Draft storage tests**: Added `test/storage_service_test.dart` for per-course draft save/load/isolation/clear behavior
 - **Viewer visibility tests**: Added `test/viewer_visibility_test.dart` for hidden-gated rendering and chained unlock behavior
+- **Multi-select quiz authoring and validation**: MultipleChoice now supports `correctAnswers` list with single/multi authoring mode toggle and persisted multi-answer configuration
+- **Multi-select viewer tests**: Added `test/viewer_multi_select_test.dart` for unordered multi-answer validation in Preview
+- **Builder image local import**: Image block property panel now supports importing local image files (PNG/JPEG/GIF/WEBP) and storing as data URL for preview/edit persistence
+- **Builder block reorder affordances**: Added drag insertion indicator (`Drop here`) and larger dedicated drag handle hitbox in canvas list
 
 ### Changed
 - **Viewer routing**: `/viewer` route now accepts `?courseId=<id>` query param; back button returns to `/builder?courseId=<id>` preserving context
@@ -27,6 +35,10 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Viewer `afterPreviousCorrect` rendering**: Hidden gated blocks now render as true blank (no lock placeholder), and visibility is evaluated sequentially so a hidden gated block also keeps all following blocks hidden until unlocked
 - **Builder course load flow**: Builder now restores local draft first (if present) before fetching cloud snapshot, and syncs title/unsaved status with restored content
 - **Preview navigation safety**: Clicking Preview now writes a local draft first; successful cloud Save clears the corresponding local draft
+- **MultipleChoice answer checking**: Preview now validates multi-select answers as unordered sets (exact-match without order sensitivity)
+- **Course export validation**: Export now validates MultipleChoice configuration (non-empty question/options, unique option ids, valid answer ids, single-select exactly one answer)
+- **Image rendering compatibility**: Builder canvas and Viewer preview now render both network URLs and local data URLs for image blocks
+- **Builder long-list drag UX**: Added edge auto-scroll during reorder drag and precision insertion index tracking for dense/long block lists
 
 ---
 

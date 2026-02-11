@@ -31,3 +31,10 @@ Future<FilePickResult> pickPdfFile() async {
     message: 'File picker is only available on Web platform',
   );
 }
+
+Future<FilePickResult> pickImageFile() async {
+  return const FilePickResult(
+    success: false,
+    message: 'File picker is only available on Web platform',
+  );
+}

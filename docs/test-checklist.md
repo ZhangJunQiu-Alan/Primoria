@@ -21,6 +21,7 @@
 - [ ] Click module → selection highlight + right panel shows properties
 - [ ] Edit text content → canvas updates in real time
 - [ ] Enter image URL → canvas displays image
+- [ ] Import local image file in Image block → canvas displays imported image
 - [ ] Edit code playground initial code / expected output
 
 ## 4. Code Playground Run
@@ -31,6 +32,8 @@
 ## 5. Module Ordering and Deletion
 
 - [ ] Drag handle to reorder → canvas updates order
+- [ ] While dragging, insertion position is clearly shown with indicator line/placeholder
+- [ ] Dragging near top/bottom edges auto-scrolls long block lists
 - [ ] Click delete → module removed, panel resets
 
 ## 6. Course Info
@@ -50,6 +53,14 @@
 - [ ] After successful cloud Save, reopening Builder does not restore stale draft content
 - [ ] For `visibilityRule: afterPreviousCorrect`, hidden blocks show true blank space (no lock placeholder) before unlock
 - [ ] For chained blocks, if a preceding gated block is hidden, subsequent blocks remain hidden until the gated block is unlocked
+- [ ] Multiple Choice: can switch between Single Select and Multi Select in PropertyPanel
+- [ ] Multi Select question accepts multiple correct options and persists after refresh/export-import
+- [ ] Multi Select validation is order-independent (`A+C` equals `C+A`) and requires exact set match
+- [ ] Matching block: right column appears in shuffled order (not same as left)
+- [ ] Matching block: tapping left then right creates a color-coded pair with numbered badge
+- [ ] Matching block: tapping an already-paired item clears the pair (undo before submit)
+- [ ] Matching block: after Check, both columns show green/red borders and check/cross icons
+- [ ] Matching block in Builder canvas: left and right items show circled pair numbers
 
 ## 9. Auth & Routing
 

@@ -205,6 +205,7 @@ class MultipleChoiceContent implements BlockContent {
   final String question;
   final List<ChoiceOption> options;
   final String correctAnswer;
+  final List<String> correctAnswers;
   final String? explanation;
   final bool multiSelect;
 
@@ -212,11 +213,23 @@ class MultipleChoiceContent implements BlockContent {
     this.question = '',
     this.options = const [],
     this.correctAnswer = '',
+    this.correctAnswers = const [],
     this.explanation,
     this.multiSelect = false,
   });
 
   factory MultipleChoiceContent.fromJson(Map<String, dynamic> json) {
+    final parsedCorrectAnswers =
+        (json['correctAnswers'] as List<dynamic>?)
+            ?.whereType<String>()
+            .toList() ??
+        [];
+    final legacyCorrectAnswer = json['correctAnswer'] as String? ?? '';
+    final normalizedCorrectAnswers = _normalizeAnswerIds([
+      ...parsedCorrectAnswers,
+      legacyCorrectAnswer,
+    ]);
+
     return MultipleChoiceContent(
       question: json['question'] as String? ?? '',
       options:
@@ -224,22 +237,75 @@ class MultipleChoiceContent implements BlockContent {
               ?.map((e) => ChoiceOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      correctAnswer: json['correctAnswer'] as String? ?? '',
+      correctAnswer: normalizedCorrectAnswers.isNotEmpty
+          ? normalizedCorrectAnswers.first
+          : '',
+      correctAnswers: normalizedCorrectAnswers,
       explanation: json['explanation'] as String?,
       multiSelect: json['multiSelect'] as bool? ?? false,
     );
   }
 
+  /// Merged and deduplicated list of correct answer IDs.
+  List<String> get normalizedCorrectAnswers {
+    return _normalizeAnswerIds([...correctAnswers, correctAnswer]);
+  }
+
+  String get primaryCorrectAnswer {
+    final normalized = normalizedCorrectAnswers;
+    return normalized.isNotEmpty ? normalized.first : '';
+  }
+
   @override
   Map<String, dynamic> toJson() {
+    final normalized = normalizedCorrectAnswers;
     final map = <String, dynamic>{
       'question': question,
       'options': options.map((o) => o.toJson()).toList(),
-      'correctAnswer': correctAnswer,
+      // Keep legacy single-answer key for backward compatibility.
+      'correctAnswer': normalized.isNotEmpty ? normalized.first : '',
+      'correctAnswers': normalized,
       'multiSelect': multiSelect,
     };
     if (explanation != null) map['explanation'] = explanation;
     return map;
+  }
+
+  MultipleChoiceContent copyWith({
+    String? question,
+    List<ChoiceOption>? options,
+    String? correctAnswer,
+    List<String>? correctAnswers,
+    String? explanation,
+    bool clearExplanation = false,
+    bool? multiSelect,
+  }) {
+    final normalized = _normalizeAnswerIds([
+      ...(correctAnswers ?? this.correctAnswers),
+      correctAnswer ?? this.correctAnswer,
+    ]);
+
+    return MultipleChoiceContent(
+      question: question ?? this.question,
+      options: options ?? this.options,
+      correctAnswer: normalized.isNotEmpty ? normalized.first : '',
+      correctAnswers: normalized,
+      explanation: clearExplanation ? null : (explanation ?? this.explanation),
+      multiSelect: multiSelect ?? this.multiSelect,
+    );
+  }
+
+  static List<String> _normalizeAnswerIds(Iterable<String> rawIds) {
+    final seen = <String>{};
+    final result = <String>[];
+
+    for (final rawId in rawIds) {
+      final id = rawId.trim();
+      if (id.isEmpty || !seen.add(id)) continue;
+      result.add(id);
+    }
+
+    return result;
   }
 }
 
@@ -491,6 +557,7 @@ class Block {
             const ChoiceOption(id: 'c', text: 'Option C'),
           ],
           correctAnswer: 'a',
+          correctAnswers: ['a'],
         );
       case BlockType.fillBlank:
         return const FillBlankContent(
