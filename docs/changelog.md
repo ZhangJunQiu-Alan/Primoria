@@ -24,6 +24,8 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Multi-select viewer tests**: Added `test/viewer_multi_select_test.dart` for unordered multi-answer validation in Preview
 - **Builder image local import**: Image block property panel now supports importing local image files (PNG/JPEG/GIF/WEBP) and storing as data URL for preview/edit persistence
 - **Builder block reorder affordances**: Added drag insertion indicator (`Drop here`) and larger dedicated drag handle hitbox in canvas list
+- **Centralized course schema validator**: Added `course_schema_validator.dart` with reusable import/save/publish/export validation, warning vs blocking error severity, and JSON field-path findings
+- **Schema validation tests**: Added `test/course_schema_validator_test.dart` covering blocking errors, warning/error mode differences, import gate behavior, and export reuse
 
 ### Changed
 - **Viewer routing**: `/viewer` route now accepts `?courseId=<id>` query param; back button returns to `/builder?courseId=<id>` preserving context
@@ -39,6 +41,8 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Course export validation**: Export now validates MultipleChoice configuration (non-empty question/options, unique option ids, valid answer ids, single-select exactly one answer)
 - **Image rendering compatibility**: Builder canvas and Viewer preview now render both network URLs and local data URLs for image blocks
 - **Builder long-list drag UX**: Added edge auto-scroll during reorder drag and precision insertion index tracking for dense/long block lists
+- **Validation gates enforced at lifecycle points**: Import, cloud save, and publish now use the same schema validator; blocking errors prevent operation and show actionable path-based details in Builder dialogs
+- **Export validation reuse**: `CourseExport.validateForExport()` now delegates to the centralized schema validator instead of maintaining duplicated rule logic
 
 ---
 
