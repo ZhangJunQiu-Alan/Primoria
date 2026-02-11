@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
+import 'id_generator.dart';
 
 /// Supabase service - handles auth, course storage, publishing, etc.
 class SupabaseService {
@@ -210,36 +211,45 @@ class SupabaseService {
     }
 
     try {
-      // Check if course exists
-      final existing = await client
-          .from('courses')
-          .select('id, owner_id')
-          .eq('id', course.courseId)
-          .maybeSingle();
+      final inputCourseId = _isUuid(course.courseId) ? course.courseId : null;
+      final existing = inputCourseId == null
+          ? null
+          : await client
+                .from('courses')
+                .select('id, author_id')
+                .eq('id', inputCourseId)
+                .maybeSingle();
 
-      String courseId;
+      String persistedCourseId;
 
       if (existing == null) {
         // Create new course
         final insertResult = await client
             .from('courses')
             .insert({
-              'id': course.courseId,
-              'owner_id': currentUser!.id,
+              if (inputCourseId != null) 'id': inputCourseId,
+              'author_id': currentUser!.id,
               'title': course.metadata.title,
+              'slug': _buildCourseSlug(
+                course.metadata.title,
+                inputCourseId ?? IdGenerator.generate(),
+              ),
               'description': course.metadata.description,
               'tags': course.metadata.tags,
-              'difficulty': course.metadata.difficulty,
+              'difficulty_level': _normalizeDifficulty(
+                course.metadata.difficulty,
+              ),
               'estimated_minutes': course.metadata.estimatedMinutes,
               'status': 'draft',
             })
             .select('id')
             .single();
 
-        courseId = insertResult['id'] as String;
+        persistedCourseId = insertResult['id'] as String;
       } else {
         // Update existing course
-        if (existing['owner_id'] != currentUser!.id) {
+        final existingCourseId = existing['id'] as String;
+        if (existing['author_id'] != currentUser!.id) {
           return const CourseResult(
             success: false,
             message: 'You do not have permission to edit this course',
@@ -252,48 +262,24 @@ class SupabaseService {
               'title': course.metadata.title,
               'description': course.metadata.description,
               'tags': course.metadata.tags,
-              'difficulty': course.metadata.difficulty,
+              'difficulty_level': _normalizeDifficulty(
+                course.metadata.difficulty,
+              ),
               'estimated_minutes': course.metadata.estimatedMinutes,
             })
-            .eq('id', course.courseId);
+            .eq('id', existingCourseId);
 
-        courseId = course.courseId;
+        persistedCourseId = existingCourseId;
       }
 
-      // Get latest version
-      final latestVersion = await client
-          .from('course_versions')
-          .select('version')
-          .eq('course_id', courseId)
-          .order('version', ascending: false)
-          .limit(1)
-          .maybeSingle();
-
-      final newVersion = (latestVersion?['version'] as int? ?? 0) + 1;
-
-      // Create new version
-      final versionResult = await client
-          .from('course_versions')
-          .insert({
-            'course_id': courseId,
-            'version': newVersion,
-            'content': course.toJson(),
-            'created_by': currentUser!.id,
-          })
-          .select('id')
-          .single();
-
-      // Update current draft version
-      await client
-          .from('courses')
-          .update({'current_draft_version_id': versionResult['id']})
-          .eq('id', courseId);
+      await _saveCourseSnapshot(course.copyWith(courseId: persistedCourseId));
 
       return CourseResult(
         success: true,
-        message: 'Saved (version $newVersion)',
-        courseId: courseId,
-        versionId: versionResult['id'] as String,
+        message: 'Saved',
+        courseId: persistedCourseId,
+        // Keep backward compatibility with current publish flow.
+        versionId: persistedCourseId,
       );
     } catch (e) {
       return CourseResult(success: false, message: 'Save failed: $e');
@@ -313,10 +299,7 @@ class SupabaseService {
     }
 
     try {
-      await client.rpc(
-        'publish_course',
-        params: {'p_course_id': courseId, 'p_version_id': versionId},
-      );
+      await client.rpc('publish_course', params: {'p_course_id': courseId});
 
       return const CourseResult(success: true, message: 'Published');
     } catch (e) {
@@ -332,7 +315,7 @@ class SupabaseService {
       final response = await client
           .from('courses')
           .select()
-          .eq('owner_id', currentUser!.id)
+          .eq('author_id', currentUser!.id)
           .order('updated_at', ascending: false);
 
       return List<Map<String, dynamic>>.from(response);
@@ -347,37 +330,24 @@ class SupabaseService {
     String? versionId,
   }) async {
     try {
-      // If no version specified, get latest draft or published version
-      String? targetVersionId = versionId;
-
-      if (targetVersionId == null) {
-        final course = await client
-            .from('courses')
-            .select(
-              'current_draft_version_id, current_published_version_id, owner_id',
-            )
-            .eq('id', courseId)
-            .single();
-
-        // If the author, prefer draft version
-        if (course['owner_id'] == currentUser?.id) {
-          targetVersionId = course['current_draft_version_id'] as String?;
-        }
-        targetVersionId ??= course['current_published_version_id'] as String?;
+      final snapshot = await _loadCourseSnapshot(courseId);
+      if (snapshot != null && snapshot.containsKey('courseId')) {
+        final normalizedSnapshot = Map<String, dynamic>.from(snapshot)
+          ..['courseId'] = courseId;
+        return Course.fromJson(normalizedSnapshot);
       }
 
-      if (targetVersionId == null) {
-        return null;
-      }
+      // Fallback: at least open the builder with base metadata.
+      final courseRow = await client
+          .from('courses')
+          .select('id, title')
+          .eq('id', courseId)
+          .maybeSingle();
+      if (courseRow == null) return null;
 
-      final version = await client
-          .from('course_versions')
-          .select('content')
-          .eq('id', targetVersionId)
-          .single();
-
-      final content = version['content'] as Map<String, dynamic>;
-      return Course.fromJson(content);
+      return Course.create(
+        title: courseRow['title'] as String? ?? 'Untitled Course',
+      ).copyWith(courseId: courseId);
     } catch (e) {
       return null;
     }
@@ -421,6 +391,67 @@ class SupabaseService {
 
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
+      return [];
+    }
+  }
+
+  /// Create a course row only (no chapters, lessons, or snapshot).
+  /// Used by Dashboard's Create Course flow.
+  static Future<CourseResult> createCourseRow({required String title}) async {
+    if (currentUser == null) {
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
+    }
+
+    try {
+      final tempId = IdGenerator.generate();
+      final insertResult = await client
+          .from('courses')
+          .insert({
+            'author_id': currentUser!.id,
+            'title': title,
+            'slug': _buildCourseSlug(title, tempId),
+            'status': 'draft',
+          })
+          .select('id')
+          .single();
+
+      return CourseResult(
+        success: true,
+        message: 'Created',
+        courseId: insertResult['id'] as String,
+      );
+    } catch (e) {
+      return CourseResult(success: false, message: 'Create failed: $e');
+    }
+  }
+
+  /// Get lesson titles for a course by querying chapters → lessons directly.
+  /// Returns an empty list if the course has no saved content yet.
+  static Future<List<String>> getCourseLessonTitles(String courseId) async {
+    try {
+      final chapters = await client
+          .from('chapters')
+          .select('id')
+          .eq('course_id', courseId)
+          .order('sort_key', ascending: true);
+
+      if ((chapters as List).isEmpty) return [];
+
+      final chapterIds = chapters.map((c) => c['id'] as String).toList();
+
+      final lessons = await client
+          .from('lessons')
+          .select('title')
+          .inFilter('chapter_id', chapterIds)
+          .order('sort_key', ascending: true);
+
+      return (lessons as List)
+          .map((l) => (l['title'] as String?) ?? 'Untitled')
+          .toList();
+    } catch (_) {
       return [];
     }
   }
@@ -511,7 +542,8 @@ class SupabaseService {
               .select('username, avatar_url')
               .eq('id', comment['user_id'] as String)
               .maybeSingle();
-          comment['username'] = profile?['username'] ?? profile?['display_name'] ?? 'User';
+          comment['username'] =
+              profile?['username'] ?? profile?['display_name'] ?? 'User';
           comment['avatar_url'] = profile?['avatar_url'];
         } catch (_) {
           comment['username'] = 'User';
@@ -532,16 +564,122 @@ class SupabaseService {
       final courses = await client
           .from('courses')
           .select('id')
-          .eq('owner_id', currentUser!.id);
-      return (courses as List)
-          .map((c) => c['id'].toString())
-          .toList();
+          .eq('author_id', currentUser!.id);
+      return (courses as List).map((c) => c['id'].toString()).toList();
     } catch (_) {
       return [];
     }
   }
 
   // ==================== Helper methods ====================
+
+  static Future<void> _saveCourseSnapshot(Course course) async {
+    final chapter = await client
+        .from('chapters')
+        .select('id')
+        .eq('course_id', course.courseId)
+        .order('sort_key', ascending: true)
+        .limit(1)
+        .maybeSingle();
+
+    final chapterId =
+        chapter?['id'] as String? ??
+        (await client
+                .from('chapters')
+                .insert({
+                  'course_id': course.courseId,
+                  'title': 'Chapter 1',
+                  'sort_key': 1000,
+                  'is_locked': false,
+                })
+                .select('id')
+                .single())['id']
+            as String;
+
+    final lesson = await client
+        .from('lessons')
+        .select('id')
+        .eq('chapter_id', chapterId)
+        .order('sort_key', ascending: true)
+        .limit(1)
+        .maybeSingle();
+
+    final lessonPayload = {
+      'title': course.metadata.title.isEmpty
+          ? 'Untitled Lesson'
+          : course.metadata.title,
+      'content_json': course.toJson(),
+      'type': 'interactive',
+      'sort_key': 1000,
+    };
+
+    if (lesson == null) {
+      await client.from('lessons').insert({
+        'chapter_id': chapterId,
+        ...lessonPayload,
+      });
+      return;
+    }
+
+    await client
+        .from('lessons')
+        .update(lessonPayload)
+        .eq('id', lesson['id'] as String);
+  }
+
+  static Future<Map<String, dynamic>?> _loadCourseSnapshot(
+    String courseId,
+  ) async {
+    final chapter = await client
+        .from('chapters')
+        .select('id')
+        .eq('course_id', courseId)
+        .order('sort_key', ascending: true)
+        .limit(1)
+        .maybeSingle();
+
+    if (chapter == null) return null;
+
+    final lesson = await client
+        .from('lessons')
+        .select('content_json')
+        .eq('chapter_id', chapter['id'] as String)
+        .order('sort_key', ascending: true)
+        .limit(1)
+        .maybeSingle();
+
+    final content = lesson?['content_json'];
+    if (content is Map<String, dynamic>) return content;
+    if (content is Map) return Map<String, dynamic>.from(content);
+    return null;
+  }
+
+  static String _normalizeDifficulty(String? difficulty) {
+    switch (difficulty) {
+      case 'beginner':
+      case 'intermediate':
+      case 'advanced':
+        return difficulty!;
+      default:
+        return 'beginner';
+    }
+  }
+
+  static bool _isUuid(String value) {
+    return RegExp(
+      r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+    ).hasMatch(value);
+  }
+
+  static String _buildCourseSlug(String title, String courseId) {
+    final normalized = title.toLowerCase().trim().replaceAll(
+      RegExp(r'[^a-z0-9]+'),
+      '-',
+    );
+    final base = normalized.replaceAll(RegExp(r'^-+|-+$'), '');
+    final fallback = base.isEmpty ? 'course' : base;
+    return '$fallback-${courseId.split('-').first}';
+  }
 
   static bool _isRetryableAuthTimeout(String message) {
     final raw = message.toLowerCase();

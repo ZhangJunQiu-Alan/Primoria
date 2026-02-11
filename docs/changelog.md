@@ -3,7 +3,7 @@
 ## [Unreleased] - 2026-02-11
 
 ### Summary
-True/False block type, Markdown rendering, Dashboard backend wiring, and Create Course modal.
+True/False block type, Markdown rendering, Dashboard backend wiring, Create Course flow rework, and SupabaseService refactor.
 
 ### Added
 - **True/False block type**: New `trueFalse` block across the full Builder stack — enum, model (`TrueFalseContent`), registry, property editor (SegmentedButton picker), preview widget (styled answer chips), module panel (Chemical category), and viewer screen support. JSON type value: `true-false`, content fields: `question`, `correctAnswer` (bool), `explanation` (optional)
@@ -12,8 +12,13 @@ True/False block type, Markdown rendering, Dashboard backend wiring, and Create 
 - 6 new unit tests for TextContent format handling (defaults, copyWith, roundtrip, malformed markdown)
 - **Dashboard HomePage wired to backend**: Course Data metrics (fans, likes, shares) read from `follows` and `course_feedback` tables; Income Overview reads from DB with $0 fallback; duplicate fans tile removed
 - **Comments section**: Loads from `course_feedback` with profile enrichment; 0 comments → dashed placeholder, 1-4 → matching blocks, 5+ → capped at 4; "more" link navigates to Data Center
-- **New service methods**: `getDashboardMetrics()`, `getRecentComments()`, `_getMyCourseIds()` in SupabaseService
-- **Create Course modal**: Clicking "Create Course" in Dashboard opens a dialog with course name input; creates via `Course.create()` + `SupabaseService.saveCourse()`; disabled when empty; shows error on failure; on success refreshes list and navigates to Builder
+- **New service methods**: `getDashboardMetrics()`, `getRecentComments()`, `_getMyCourseIds()`, `createCourseRow()`, `getCourseLessonTitles()` in SupabaseService
+
+### Changed
+- **Create Course flow**: Creating a course from Dashboard no longer navigates to Builder; stays on Course Manage with refreshed list. Uses `createCourseRow()` (lightweight — only inserts course row, no chapters/lessons/snapshot). New courses show only "Add lesson" box; clicking it opens Builder
+- **Dashboard lesson loading**: `_loadCourseLessons()` now queries DB `chapters` → `lessons` tables directly via `getCourseLessonTitles()` instead of loading full course JSON through `getCourseContent()`. Courses with no saved content correctly show 0 lessons
+- **SupabaseService refactor**: Replaced `course_versions`-based storage with snapshot-based flow (`_saveCourseSnapshot` / `_loadCourseSnapshot` via `chapters` + `lessons.content_json`); `owner_id` → `author_id`; added `slug` generation; `difficulty` → `difficulty_level` with normalization; `courseId()` now generates pure UUID (removed `course-` prefix)
+- **Builder title sync**: Editing course title in Builder and saving updates `courses.title` in DB; returning to Dashboard reloads fresh data, keeping titles in sync
 
 ---
 
