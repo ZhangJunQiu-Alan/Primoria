@@ -30,10 +30,9 @@ Future<FilePickResult> pickJsonFile() async {
   input.onChange.listen((event) async {
     final files = input.files;
     if (files == null || files.isEmpty) {
-      completer.complete(const FilePickResult(
-        success: false,
-        message: 'No file selected',
-      ));
+      completer.complete(
+        const FilePickResult(success: false, message: 'No file selected'),
+      );
       return;
     }
 
@@ -42,19 +41,20 @@ Future<FilePickResult> pickJsonFile() async {
 
     reader.onLoadEnd.listen((event) {
       final content = reader.result as String;
-      completer.complete(FilePickResult(
-        success: true,
-        message: 'File loaded',
-        content: content,
-        fileName: file.name,
-      ));
+      completer.complete(
+        FilePickResult(
+          success: true,
+          message: 'File loaded',
+          content: content,
+          fileName: file.name,
+        ),
+      );
     });
 
     reader.onError.listen((event) {
-      completer.complete(const FilePickResult(
-        success: false,
-        message: 'Failed to read file',
-      ));
+      completer.complete(
+        const FilePickResult(success: false, message: 'Failed to read file'),
+      );
     });
 
     reader.readAsText(file);
@@ -69,16 +69,14 @@ Future<FilePickResult> pickJsonFile() async {
 Future<FilePickResult> pickPdfFile() async {
   final completer = Completer<FilePickResult>();
 
-  final input = html.FileUploadInputElement()
-    ..accept = '.pdf,application/pdf';
+  final input = html.FileUploadInputElement()..accept = '.pdf,application/pdf';
 
   input.onChange.listen((event) async {
     final files = input.files;
     if (files == null || files.isEmpty) {
-      completer.complete(const FilePickResult(
-        success: false,
-        message: 'No file selected',
-      ));
+      completer.complete(
+        const FilePickResult(success: false, message: 'No file selected'),
+      );
       return;
     }
 
@@ -87,22 +85,74 @@ Future<FilePickResult> pickPdfFile() async {
 
     reader.onLoadEnd.listen((event) {
       final bytes = reader.result as Uint8List;
-      completer.complete(FilePickResult(
-        success: true,
-        message: 'File loaded',
-        bytes: bytes,
-        fileName: file.name,
-      ));
+      completer.complete(
+        FilePickResult(
+          success: true,
+          message: 'File loaded',
+          bytes: bytes,
+          fileName: file.name,
+        ),
+      );
     });
 
     reader.onError.listen((event) {
-      completer.complete(const FilePickResult(
-        success: false,
-        message: 'Failed to read file',
-      ));
+      completer.complete(
+        const FilePickResult(success: false, message: 'Failed to read file'),
+      );
     });
 
     reader.readAsArrayBuffer(file);
+  });
+
+  input.click();
+
+  return completer.future;
+}
+
+/// Pick image file
+Future<FilePickResult> pickImageFile() async {
+  final completer = Completer<FilePickResult>();
+
+  final input = html.FileUploadInputElement()
+    ..accept = 'image/png,image/jpeg,image/gif,image/webp';
+
+  input.onChange.listen((event) async {
+    final files = input.files;
+    if (files == null || files.isEmpty) {
+      completer.complete(
+        const FilePickResult(success: false, message: 'No file selected'),
+      );
+      return;
+    }
+
+    final file = files.first;
+    final reader = html.FileReader();
+
+    reader.onLoadEnd.listen((event) {
+      final content = reader.result as String?;
+      if (content == null || content.isEmpty) {
+        completer.complete(
+          const FilePickResult(success: false, message: 'Failed to read image'),
+        );
+        return;
+      }
+      completer.complete(
+        FilePickResult(
+          success: true,
+          message: 'Image loaded',
+          content: content,
+          fileName: file.name,
+        ),
+      );
+    });
+
+    reader.onError.listen((event) {
+      completer.complete(
+        const FilePickResult(success: false, message: 'Failed to read image'),
+      );
+    });
+
+    reader.readAsDataUrl(file);
   });
 
   input.click();

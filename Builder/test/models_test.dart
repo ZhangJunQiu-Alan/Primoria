@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:builder/models/models.dart';
 import 'package:builder/services/id_generator.dart';
+import 'package:builder/services/course_export.dart';
 
 void main() {
   group('Block Model', () {
@@ -202,6 +203,7 @@ void main() {
           const ChoiceOption(id: 'c', text: '5'),
         ],
         correctAnswer: 'b',
+        correctAnswers: ['b'],
         explanation: 'Basic arithmetic',
         multiSelect: false,
       );
@@ -210,8 +212,46 @@ void main() {
       expect(json['question'], 'What is 2+2?');
       expect(json['options'].length, 3);
       expect(json['correctAnswer'], 'b');
+      expect(json['correctAnswers'], ['b']);
       expect(json['explanation'], 'Basic arithmetic');
     });
+
+    test('MultipleChoiceContent fromJson supports multi-answer list', () {
+      final json = {
+        'question': 'Select prime numbers',
+        'options': [
+          {'id': 'a', 'text': '2'},
+          {'id': 'b', 'text': '3'},
+          {'id': 'c', 'text': '4'},
+        ],
+        'correctAnswers': ['b', 'a'],
+        'multiSelect': true,
+      };
+
+      final content = MultipleChoiceContent.fromJson(json);
+      expect(content.multiSelect, isTrue);
+      expect(content.normalizedCorrectAnswers, ['b', 'a']);
+      expect(content.primaryCorrectAnswer, 'b');
+    });
+
+    test(
+      'MultipleChoiceContent fromJson falls back to legacy correctAnswer',
+      () {
+        final json = {
+          'question': 'Fallback',
+          'options': [
+            {'id': 'a', 'text': 'A'},
+            {'id': 'b', 'text': 'B'},
+          ],
+          'correctAnswer': 'a',
+          'multiSelect': false,
+        };
+
+        final content = MultipleChoiceContent.fromJson(json);
+        expect(content.normalizedCorrectAnswers, ['a']);
+        expect(content.primaryCorrectAnswer, 'a');
+      },
+    );
   });
 
   group('CoursePage Model', () {
@@ -375,6 +415,202 @@ void main() {
     test('BlockType labels', () {
       expect(BlockType.text.label, isNotEmpty);
       expect(BlockType.codePlayground.label, isNotEmpty);
+    });
+  });
+
+  group('MatchingContent', () {
+    test('default values', () {
+      const content = MatchingContent();
+      expect(content.question, '');
+      expect(content.leftItems, isEmpty);
+      expect(content.rightItems, isEmpty);
+      expect(content.correctPairs, isEmpty);
+      expect(content.explanation, isNull);
+    });
+
+    test('fromJson parses correctly', () {
+      final json = {
+        'question': 'Match capitals',
+        'leftItems': [
+          {'id': 'l1', 'text': 'France'},
+          {'id': 'l2', 'text': 'Germany'},
+        ],
+        'rightItems': [
+          {'id': 'r1', 'text': 'Paris'},
+          {'id': 'r2', 'text': 'Berlin'},
+        ],
+        'correctPairs': [
+          {'leftId': 'l1', 'rightId': 'r1'},
+          {'leftId': 'l2', 'rightId': 'r2'},
+        ],
+        'explanation': 'Geography basics',
+      };
+
+      final content = MatchingContent.fromJson(json);
+      expect(content.question, 'Match capitals');
+      expect(content.leftItems.length, 2);
+      expect(content.rightItems.length, 2);
+      expect(content.correctPairs.length, 2);
+      expect(content.correctPairs[0].leftId, 'l1');
+      expect(content.correctPairs[0].rightId, 'r1');
+      expect(content.explanation, 'Geography basics');
+    });
+
+    test('toJson roundtrip', () {
+      const content = MatchingContent(
+        question: 'Test Q',
+        leftItems: [
+          MatchingItem(id: 'a', text: 'A'),
+          MatchingItem(id: 'b', text: 'B'),
+        ],
+        rightItems: [
+          MatchingItem(id: 'x', text: 'X'),
+          MatchingItem(id: 'y', text: 'Y'),
+        ],
+        correctPairs: [
+          MatchingPair(leftId: 'a', rightId: 'x'),
+          MatchingPair(leftId: 'b', rightId: 'y'),
+        ],
+        explanation: 'Explanation',
+      );
+
+      final json = content.toJson();
+      final restored = MatchingContent.fromJson(json);
+
+      expect(restored.question, content.question);
+      expect(restored.leftItems.length, content.leftItems.length);
+      expect(restored.rightItems.length, content.rightItems.length);
+      expect(restored.correctPairs.length, content.correctPairs.length);
+      expect(restored.explanation, content.explanation);
+    });
+
+    test('copyWith updates fields', () {
+      const original = MatchingContent(
+        question: 'Original',
+        leftItems: [MatchingItem(id: 'l1', text: 'L1')],
+        rightItems: [MatchingItem(id: 'r1', text: 'R1')],
+        correctPairs: [MatchingPair(leftId: 'l1', rightId: 'r1')],
+      );
+
+      final updated = original.copyWith(question: 'Updated');
+      expect(updated.question, 'Updated');
+      expect(updated.leftItems.length, 1);
+      expect(updated.correctPairs.length, 1);
+    });
+
+    test('fromJson handles empty lists gracefully', () {
+      final json = {'question': 'Empty'};
+      final content = MatchingContent.fromJson(json);
+
+      expect(content.question, 'Empty');
+      expect(content.leftItems, isEmpty);
+      expect(content.rightItems, isEmpty);
+      expect(content.correctPairs, isEmpty);
+    });
+
+    test('fromJson handles null explanation', () {
+      final json = {
+        'question': 'Q',
+        'leftItems': <dynamic>[],
+        'rightItems': <dynamic>[],
+        'correctPairs': <dynamic>[],
+      };
+      final content = MatchingContent.fromJson(json);
+      expect(content.explanation, isNull);
+    });
+  });
+
+  group('Export validation — Matching', () {
+    Course buildCourseWithMatching(MatchingContent matchingContent) {
+      final block = Block(
+        id: 'b1',
+        type: BlockType.matching,
+        position: const BlockPosition(order: 0),
+        style: const BlockStyle(),
+        content: matchingContent,
+      );
+      final course = Course.create(title: 'Test Course');
+      final page = course.pages.first.copyWith(blocks: [block]);
+      return course.updatePage(page);
+    }
+
+    test('valid matching passes validation', () {
+      final course = buildCourseWithMatching(
+        const MatchingContent(
+          question: 'Match these',
+          leftItems: [
+            MatchingItem(id: 'l1', text: 'A'),
+            MatchingItem(id: 'l2', text: 'B'),
+          ],
+          rightItems: [
+            MatchingItem(id: 'r1', text: 'X'),
+            MatchingItem(id: 'r2', text: 'Y'),
+          ],
+          correctPairs: [
+            MatchingPair(leftId: 'l1', rightId: 'r1'),
+            MatchingPair(leftId: 'l2', rightId: 'r2'),
+          ],
+        ),
+      );
+      final result = CourseExport.validateForExport(course);
+      expect(result.isValid, isTrue);
+    });
+
+    test('empty question fails', () {
+      final course = buildCourseWithMatching(
+        const MatchingContent(
+          question: '',
+          leftItems: [
+            MatchingItem(id: 'l1', text: 'A'),
+            MatchingItem(id: 'l2', text: 'B'),
+          ],
+          rightItems: [
+            MatchingItem(id: 'r1', text: 'X'),
+            MatchingItem(id: 'r2', text: 'Y'),
+          ],
+          correctPairs: [],
+        ),
+      );
+      final result = CourseExport.validateForExport(course);
+      expect(result.errors, contains(contains('question cannot be empty')));
+    });
+
+    test('fewer than 2 left items fails', () {
+      final course = buildCourseWithMatching(
+        const MatchingContent(
+          question: 'Q',
+          leftItems: [MatchingItem(id: 'l1', text: 'A')],
+          rightItems: [
+            MatchingItem(id: 'r1', text: 'X'),
+            MatchingItem(id: 'r2', text: 'Y'),
+          ],
+          correctPairs: [],
+        ),
+      );
+      final result = CourseExport.validateForExport(course);
+      expect(result.errors, contains(contains('at least 2 left items')));
+    });
+
+    test('invalid pair reference fails', () {
+      final course = buildCourseWithMatching(
+        const MatchingContent(
+          question: 'Q',
+          leftItems: [
+            MatchingItem(id: 'l1', text: 'A'),
+            MatchingItem(id: 'l2', text: 'B'),
+          ],
+          rightItems: [
+            MatchingItem(id: 'r1', text: 'X'),
+            MatchingItem(id: 'r2', text: 'Y'),
+          ],
+          correctPairs: [
+            MatchingPair(leftId: 'l1', rightId: 'r1'),
+            MatchingPair(leftId: 'l999', rightId: 'r2'),
+          ],
+        ),
+      );
+      final result = CourseExport.validateForExport(course);
+      expect(result.errors, contains(contains('unknown left id')));
     });
   });
 }

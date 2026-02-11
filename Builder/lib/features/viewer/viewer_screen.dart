@@ -2,6 +2,8 @@
 /// Phone-mockup preview with interactive question blocks and visibilityRule support
 library;
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -418,7 +420,7 @@ class _InteractiveBlockPreview extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(content.url),
+            _buildImageWidget(content.url),
             if ((content.caption ?? '').isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
@@ -495,6 +497,42 @@ class _InteractiveBlockPreview extends StatelessWidget {
     }
   }
 
+  Widget _buildImageWidget(String source) {
+    if (source.startsWith('data:image/')) {
+      try {
+        final commaIndex = source.indexOf(',');
+        if (commaIndex <= 0) return _buildBrokenImage();
+        final bytes = base64Decode(source.substring(commaIndex + 1));
+        return Image.memory(
+          bytes,
+          errorBuilder: (context, error, stackTrace) => _buildBrokenImage(),
+        );
+      } catch (_) {
+        return _buildBrokenImage();
+      }
+    }
+
+    return Image.network(
+      source,
+      errorBuilder: (context, error, stackTrace) => _buildBrokenImage(),
+    );
+  }
+
+  Widget _buildBrokenImage() {
+    return Container(
+      height: 160,
+      width: 240,
+      decoration: BoxDecoration(
+        color: AppColors.neutral100,
+        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+        border: Border.all(color: AppColors.neutral200),
+      ),
+      child: const Center(
+        child: Icon(Icons.broken_image, color: AppColors.neutral400),
+      ),
+    );
+  }
+
   Alignment _alignmentToAlignment(String value) {
     switch (value) {
       case 'center':
@@ -557,7 +595,7 @@ class _InteractiveMultipleChoice extends StatefulWidget {
 
 class _InteractiveMultipleChoiceState
     extends State<_InteractiveMultipleChoice> {
-  String? _selectedId;
+  final Set<String> _selectedIds = <String>{};
   bool _submitted = false;
   bool _isCorrect = false;
 
@@ -574,7 +612,8 @@ class _InteractiveMultipleChoiceState
   }
 
   void _onCheck() {
-    if (_selectedId == null) {
+    final expectedAnswers = widget.content.normalizedCorrectAnswers.toSet();
+    if (_selectedIds.isEmpty || expectedAnswers.isEmpty) {
       // No selection — mark as incorrect.
       setState(() {
         _submitted = true;
@@ -583,7 +622,10 @@ class _InteractiveMultipleChoiceState
       widget.onAnswered(false);
       return;
     }
-    final correct = _selectedId == widget.content.correctAnswer;
+
+    final correct =
+        _selectedIds.length == expectedAnswers.length &&
+        _selectedIds.containsAll(expectedAnswers);
     setState(() {
       _submitted = true;
       _isCorrect = correct;
@@ -593,6 +635,7 @@ class _InteractiveMultipleChoiceState
 
   @override
   Widget build(BuildContext context) {
+    final correctAnswerIds = widget.content.normalizedCorrectAnswers.toSet();
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
@@ -611,10 +654,20 @@ class _InteractiveMultipleChoiceState
               color: AppColors.neutral800,
             ),
           ),
+          if (widget.content.multiSelect) ...[
+            const SizedBox(height: AppSpacing.xs),
+            const Text(
+              'Select all that apply',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                color: AppColors.neutral500,
+              ),
+            ),
+          ],
           const SizedBox(height: AppSpacing.sm),
           ...widget.content.options.map((option) {
-            final isSelected = _selectedId == option.id;
-            final isCorrectOption = option.id == widget.content.correctAnswer;
+            final isSelected = _selectedIds.contains(option.id);
+            final isCorrectOption = correctAnswerIds.contains(option.id);
 
             Color bgColor = Colors.white;
             Color borderColor = AppColors.neutral300;
@@ -636,7 +689,19 @@ class _InteractiveMultipleChoiceState
               child: GestureDetector(
                 onTap: _submitted
                     ? null
-                    : () => setState(() => _selectedId = option.id),
+                    : () => setState(() {
+                        if (widget.content.multiSelect) {
+                          if (isSelected) {
+                            _selectedIds.remove(option.id);
+                          } else {
+                            _selectedIds.add(option.id);
+                          }
+                        } else {
+                          _selectedIds
+                            ..clear()
+                            ..add(option.id);
+                        }
+                      }),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(AppSpacing.sm),
@@ -972,14 +1037,28 @@ class _MatchingWidget extends StatefulWidget {
 }
 
 class _MatchingWidgetState extends State<_MatchingWidget> {
+  static const _pairColors = <Color>[
+    Color(0xFF3B82F6), // blue
+    Color(0xFF8B5CF6), // purple
+    Color(0xFF14B8A6), // teal
+    Color(0xFFF97316), // orange
+    Color(0xFFEC4899), // pink
+    Color(0xFF10B981), // emerald
+    Color(0xFFF59E0B), // amber
+    Color(0xFF6366F1), // indigo
+  ];
+
   final Map<String, String> _userPairs = {};
   bool _submitted = false;
   String? _selectedLeftId;
+  late List<MatchingItem> _shuffledRightItems;
 
   @override
   void initState() {
     super.initState();
     widget.checkTrigger.addListener(_onCheck);
+    _shuffledRightItems = List<MatchingItem>.from(widget.content.rightItems)
+      ..shuffle();
   }
 
   @override
@@ -988,15 +1067,56 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
     super.dispose();
   }
 
+  /// Returns the pair index (0-based) for a left item, or -1 if unpaired.
+  int _pairIndexForLeft(String leftId) {
+    final keys = _userPairs.keys.toList();
+    return keys.indexOf(leftId);
+  }
+
+  /// Returns the pair index (0-based) for a right item, or -1 if unpaired.
+  int _pairIndexForRight(String rightId) {
+    final entry = _userPairs.entries
+        .toList()
+        .asMap()
+        .entries
+        .where((e) => e.value.value == rightId)
+        .firstOrNull;
+    if (entry == null) return -1;
+    return _userPairs.keys.toList().indexOf(entry.value.key);
+  }
+
+  Color _colorForPairIndex(int index) {
+    if (index < 0) return AppColors.neutral300;
+    return _pairColors[index % _pairColors.length];
+  }
+
   void _handleLeftItemTap(String leftId) {
     if (_submitted) return;
     setState(() {
-      _selectedLeftId = leftId;
+      if (_userPairs.containsKey(leftId)) {
+        // Tap-to-unpair: clear existing pairing
+        _userPairs.remove(leftId);
+        _selectedLeftId = null;
+      } else {
+        _selectedLeftId = leftId;
+      }
     });
   }
 
   void _handleRightItemTap(String rightId) {
-    if (_submitted || _selectedLeftId == null) return;
+    if (_submitted) return;
+    // If this right item is already claimed, clear that pair
+    final existingLeft = _userPairs.entries
+        .where((e) => e.value == rightId)
+        .map((e) => e.key)
+        .firstOrNull;
+    if (existingLeft != null) {
+      setState(() {
+        _userPairs.remove(existingLeft);
+      });
+      return;
+    }
+    if (_selectedLeftId == null) return;
     setState(() {
       _userPairs[_selectedLeftId!] = rightId;
       _selectedLeftId = null;
@@ -1028,6 +1148,25 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
     return count;
   }
 
+  Widget _buildPairBadge(int pairIndex) {
+    final color = _colorForPairIndex(pairIndex);
+    return Container(
+      width: 18,
+      height: 18,
+      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+      child: Center(
+        child: Text(
+          '${pairIndex + 1}',
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -1049,9 +1188,11 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          const Text(
-            'Tap items on the left, then tap matching items on the right',
-            style: TextStyle(
+          Text(
+            _submitted
+                ? 'Results shown below'
+                : 'Tap left then right to pair. Tap a paired item to undo.',
+            style: const TextStyle(
               fontSize: AppFontSize.xs,
               color: AppColors.neutral500,
             ),
@@ -1060,16 +1201,45 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Left column
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: widget.content.leftItems.map((item) {
                     final isSelected = _selectedLeftId == item.id;
                     final isPaired = _userPairs.containsKey(item.id);
+                    final pairIdx = _pairIndexForLeft(item.id);
+                    final pairColor = isPaired
+                        ? _colorForPairIndex(pairIdx)
+                        : null;
                     final isCorrect =
                         _submitted &&
                         _isPairCorrect(item.id, _userPairs[item.id]);
                     final isIncorrect = _submitted && isPaired && !isCorrect;
+
+                    Color bgColor;
+                    Color borderColor;
+                    if (_submitted) {
+                      if (isCorrect) {
+                        bgColor = AppColors.success.withValues(alpha: 0.1);
+                        borderColor = AppColors.success;
+                      } else if (isIncorrect) {
+                        bgColor = AppColors.error.withValues(alpha: 0.1);
+                        borderColor = AppColors.error;
+                      } else {
+                        bgColor = Colors.white;
+                        borderColor = AppColors.neutral300;
+                      }
+                    } else if (isSelected) {
+                      bgColor = AppColors.primary100;
+                      borderColor = AppColors.primary500;
+                    } else if (isPaired && pairColor != null) {
+                      bgColor = pairColor.withValues(alpha: 0.08);
+                      borderColor = pairColor;
+                    } else {
+                      bgColor = Colors.white;
+                      borderColor = AppColors.neutral300;
+                    }
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -1078,27 +1248,13 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                         child: Container(
                           padding: const EdgeInsets.all(AppSpacing.sm),
                           decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.primary100
-                                : (isCorrect
-                                      ? AppColors.success.withValues(alpha: 0.1)
-                                      : (isIncorrect
-                                            ? AppColors.error.withValues(
-                                                alpha: 0.1,
-                                              )
-                                            : Colors.white)),
+                            color: bgColor,
                             borderRadius: BorderRadius.circular(
                               AppBorderRadius.sm,
                             ),
                             border: Border.all(
-                              color: isSelected
-                                  ? AppColors.primary500
-                                  : (isCorrect
-                                        ? AppColors.success
-                                        : (isIncorrect
-                                              ? AppColors.error
-                                              : AppColors.neutral300)),
-                              width: isSelected ? 2 : 1,
+                              color: borderColor,
+                              width: isSelected || isPaired ? 2 : 1,
                             ),
                           ),
                           child: Row(
@@ -1112,21 +1268,18 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                                   ),
                                 ),
                               ),
-                              if (isPaired) ...[
+                              if (_submitted && isPaired) ...[
                                 const SizedBox(width: AppSpacing.xs),
                                 Icon(
-                                  _submitted
-                                      ? (isCorrect
-                                            ? Icons.check_circle
-                                            : Icons.cancel)
-                                      : Icons.link,
+                                  isCorrect ? Icons.check_circle : Icons.cancel,
                                   size: 16,
-                                  color: _submitted
-                                      ? (isCorrect
-                                            ? AppColors.success
-                                            : AppColors.error)
-                                      : AppColors.primary500,
+                                  color: isCorrect
+                                      ? AppColors.success
+                                      : AppColors.error,
                                 ),
+                              ] else if (isPaired && pairIdx >= 0) ...[
+                                const SizedBox(width: AppSpacing.xs),
+                                _buildPairBadge(pairIdx),
                               ],
                             ],
                           ),
@@ -1137,33 +1290,95 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                 ),
               ),
               const SizedBox(width: AppSpacing.md),
+              // Right column (shuffled)
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: widget.content.rightItems.map((item) {
+                  children: _shuffledRightItems.map((item) {
                     final isPaired = _userPairs.values.contains(item.id);
+                    final pairIdx = _pairIndexForRight(item.id);
+                    final pairColor = isPaired
+                        ? _colorForPairIndex(pairIdx)
+                        : null;
+
+                    // Find correctness for this right item after submit
+                    final pairedLeftId = _userPairs.entries
+                        .where((e) => e.value == item.id)
+                        .map((e) => e.key)
+                        .firstOrNull;
+                    final isCorrect =
+                        _submitted &&
+                        pairedLeftId != null &&
+                        _isPairCorrect(pairedLeftId, item.id);
+                    final isIncorrect =
+                        _submitted && pairedLeftId != null && !isCorrect;
+
+                    Color bgColor;
+                    Color borderColor;
+                    if (_submitted) {
+                      if (isCorrect) {
+                        bgColor = AppColors.success.withValues(alpha: 0.1);
+                        borderColor = AppColors.success;
+                      } else if (isIncorrect) {
+                        bgColor = AppColors.error.withValues(alpha: 0.1);
+                        borderColor = AppColors.error;
+                      } else {
+                        bgColor = Colors.white;
+                        borderColor = AppColors.neutral300;
+                      }
+                    } else if (isPaired && pairColor != null) {
+                      bgColor = pairColor.withValues(alpha: 0.08);
+                      borderColor = pairColor;
+                    } else {
+                      bgColor = Colors.white;
+                      borderColor = AppColors.neutral300;
+                    }
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                       child: GestureDetector(
                         onTap: () => _handleRightItemTap(item.id),
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.all(AppSpacing.sm),
                           decoration: BoxDecoration(
-                            color: isPaired
-                                ? AppColors.neutral100
-                                : Colors.white,
+                            color: bgColor,
                             borderRadius: BorderRadius.circular(
                               AppBorderRadius.sm,
                             ),
-                            border: Border.all(color: AppColors.neutral300),
-                          ),
-                          child: Text(
-                            item.text,
-                            style: const TextStyle(
-                              fontSize: AppFontSize.sm,
-                              color: AppColors.neutral700,
+                            border: Border.all(
+                              color: borderColor,
+                              width: isPaired ? 2 : 1,
                             ),
+                          ),
+                          child: Row(
+                            children: [
+                              if (!_submitted && isPaired && pairIdx >= 0) ...[
+                                _buildPairBadge(pairIdx),
+                                const SizedBox(width: AppSpacing.xs),
+                              ],
+                              if (_submitted && isPaired) ...[
+                                Icon(
+                                  isCorrect ? Icons.check_circle : Icons.cancel,
+                                  size: 16,
+                                  color: isCorrect
+                                      ? AppColors.success
+                                      : AppColors.error,
+                                ),
+                                const SizedBox(width: AppSpacing.xs),
+                              ],
+                              Expanded(
+                                child: Text(
+                                  item.text,
+                                  style: TextStyle(
+                                    fontSize: AppFontSize.sm,
+                                    color: isPaired && !_submitted
+                                        ? AppColors.neutral700
+                                        : AppColors.neutral700,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

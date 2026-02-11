@@ -5,6 +5,7 @@ import '../providers/builder_state.dart';
 import '../providers/course_provider.dart';
 import '../models/models.dart';
 import '../services/block_registry.dart';
+import '../services/file_picker.dart' as file_picker;
 
 /// Right properties panel - shows properties of the selected module
 class PropertyPanel extends ConsumerWidget {
@@ -127,6 +128,41 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         .read(courseProvider.notifier)
         .updateBlock(widget.pageIndex, updatedBlock);
     ref.read(builderStateProvider.notifier).markAsUnsaved();
+  }
+
+  Future<void> _pickLocalImage(ImageContent content) async {
+    final result = await file_picker.pickImageFile();
+    if (!mounted) return;
+
+    if (!result.success || (result.content ?? '').isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result.message),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    final updatedBlock = widget.block.copyWith(
+      content: ImageContent(
+        url: result.content!,
+        alt: content.alt,
+        caption: content.caption,
+      ),
+    );
+    _updateBlock(updatedBlock);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          result.fileName == null
+              ? 'Local image imported'
+              : 'Imported: ${result.fileName}',
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   @override
@@ -342,15 +378,27 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
 
   Widget _buildImageEditor() {
     final content = widget.block.content as ImageContent;
+    final isLocalImage = content.url.startsWith('data:image/');
     return _PropertySection(
       title: 'Image',
       children: [
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            onPressed: () => _pickLocalImage(content),
+            icon: const Icon(Icons.upload_file),
+            label: const Text('Import Local Image'),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.url,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             labelText: 'Image URL',
-            hintText: 'https://...',
-            border: OutlineInputBorder(),
+            hintText: isLocalImage
+                ? 'Local image is stored as data URL'
+                : 'https://...',
+            border: const OutlineInputBorder(),
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(
@@ -362,6 +410,14 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
             );
             _updateBlock(updatedBlock);
           },
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        const Text(
+          'Supports both local import and network URLs.',
+          style: TextStyle(
+            fontSize: AppFontSize.xs,
+            color: AppColors.neutral500,
+          ),
         ),
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
@@ -493,9 +549,36 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
 
   Widget _buildMultipleChoiceEditor() {
     final content = widget.block.content as MultipleChoiceContent;
+    final correctAnswerIds = content.normalizedCorrectAnswers.toSet();
     return _PropertySection(
       title: 'Multiple Choice',
       children: [
+        SegmentedButton<bool>(
+          segments: const [
+            ButtonSegment(value: false, label: Text('Single Select')),
+            ButtonSegment(value: true, label: Text('Multi Select')),
+          ],
+          selected: {content.multiSelect},
+          onSelectionChanged: (value) {
+            final isMultiSelect = value.first;
+            final nextAnswers = content.normalizedCorrectAnswers;
+            final constrainedAnswers = isMultiSelect
+                ? nextAnswers
+                : (nextAnswers.isEmpty ? <String>[] : [nextAnswers.first]);
+
+            final updatedBlock = widget.block.copyWith(
+              content: content.copyWith(
+                multiSelect: isMultiSelect,
+                correctAnswers: constrainedAnswers,
+                correctAnswer: constrainedAnswers.isEmpty
+                    ? ''
+                    : constrainedAnswers.first,
+              ),
+            );
+            _updateBlock(updatedBlock);
+          },
+        ),
+        const SizedBox(height: AppSpacing.md),
         TextFormField(
           initialValue: content.question,
           decoration: const InputDecoration(
@@ -504,20 +587,16 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(
-              content: MultipleChoiceContent(
-                question: value,
-                options: content.options,
-                correctAnswer: content.correctAnswer,
-                explanation: content.explanation,
-                multiSelect: content.multiSelect,
-              ),
+              content: content.copyWith(question: value),
             );
             _updateBlock(updatedBlock);
           },
         ),
         const SizedBox(height: AppSpacing.md),
-        const Text(
-          'Options (select the correct answer)',
+        Text(
+          content.multiSelect
+              ? 'Options (select all correct answers)'
+              : 'Options (select the correct answer)',
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -528,26 +607,43 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         ...content.options.asMap().entries.map((entry) {
           final index = entry.key;
           final option = entry.value;
-          final isCorrect = option.id == content.correctAnswer;
+          final isCorrect = correctAnswerIds.contains(option.id);
           return Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Row(
               children: [
                 IconButton(
                   icon: Icon(
-                    isCorrect
-                        ? Icons.check_circle
-                        : Icons.radio_button_unchecked,
+                    content.multiSelect
+                        ? (isCorrect
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank)
+                        : (isCorrect
+                              ? Icons.radio_button_checked
+                              : Icons.radio_button_unchecked),
                     color: isCorrect ? AppColors.success : AppColors.neutral400,
                   ),
                   onPressed: () {
+                    List<String> updatedCorrectAnswers;
+                    if (content.multiSelect) {
+                      updatedCorrectAnswers = [
+                        ...content.normalizedCorrectAnswers,
+                      ];
+                      if (isCorrect) {
+                        updatedCorrectAnswers.remove(option.id);
+                      } else {
+                        updatedCorrectAnswers.add(option.id);
+                      }
+                    } else {
+                      updatedCorrectAnswers = [option.id];
+                    }
+
                     final updatedBlock = widget.block.copyWith(
-                      content: MultipleChoiceContent(
-                        question: content.question,
-                        options: content.options,
-                        correctAnswer: option.id,
-                        explanation: content.explanation,
-                        multiSelect: content.multiSelect,
+                      content: content.copyWith(
+                        correctAnswers: updatedCorrectAnswers,
+                        correctAnswer: updatedCorrectAnswers.isEmpty
+                            ? ''
+                            : updatedCorrectAnswers.first,
                       ),
                     );
                     _updateBlock(updatedBlock);
@@ -567,13 +663,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                         text: value,
                       );
                       final updatedBlock = widget.block.copyWith(
-                        content: MultipleChoiceContent(
-                          question: content.question,
-                          options: updatedOptions,
-                          correctAnswer: content.correctAnswer,
-                          explanation: content.explanation,
-                          multiSelect: content.multiSelect,
-                        ),
+                        content: content.copyWith(options: updatedOptions),
                       );
                       _updateBlock(updatedBlock);
                     },
@@ -592,12 +682,9 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(
-              content: MultipleChoiceContent(
-                question: content.question,
-                options: content.options,
-                correctAnswer: content.correctAnswer,
+              content: content.copyWith(
                 explanation: value.isEmpty ? null : value,
-                multiSelect: content.multiSelect,
+                clearExplanation: value.isEmpty,
               ),
             );
             _updateBlock(updatedBlock);

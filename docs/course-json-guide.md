@@ -257,6 +257,8 @@ Students can edit and run code to verify output.
 
 ### 5. multipleChoice - Multiple Choice
 
+Single-select example:
+
 ```json
 {
   "type": "multipleChoice",
@@ -272,8 +274,33 @@ Students can edit and run code to verify output.
       { "id": "d", "text": "System.out.println()" }
     ],
     "correctAnswer": "a",
+    "correctAnswers": ["a"],
     "explanation": "Python uses print() to output content to the console.",
     "multiSelect": false
+  }
+}
+```
+
+Multi-select example:
+
+```json
+{
+  "type": "multipleChoice",
+  "id": "quiz-002",
+  "position": { "order": 5 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "question": "Which are Python data types?",
+    "options": [
+      { "id": "a", "text": "int" },
+      { "id": "b", "text": "float" },
+      { "id": "c", "text": "loop" },
+      { "id": "d", "text": "str" }
+    ],
+    "correctAnswers": ["a", "b", "d"],
+    "correctAnswer": "a",
+    "explanation": "int/float/str are data types; loop is a control-flow concept.",
+    "multiSelect": true
   }
 }
 ```
@@ -283,9 +310,12 @@ Students can edit and run code to verify output.
 |------|------|------|
 | `question` | Yes | Question |
 | `options` | Yes | Options array, each includes `id` and `text` |
-| `correctAnswer` | Yes | Correct option `id` |
+| `correctAnswer` | Yes* | Legacy single correct option `id` (kept for backward compatibility) |
+| `correctAnswers` | Recommended | Correct option id list; for multi-select, order does not matter |
 | `explanation` | No | Explanation |
 | `multiSelect` | No | Multi-select, default `false` |
+
+\* Use `correctAnswers` as the source of truth for new content. `correctAnswer` is still exported for compatibility.
 
 ---
 

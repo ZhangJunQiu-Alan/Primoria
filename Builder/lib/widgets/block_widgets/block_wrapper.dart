@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../theme/design_tokens.dart';
@@ -11,6 +13,7 @@ class BlockWrapper extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final Widget? dragHandle;
   final ValueChanged<Block>? onBlockUpdated;
 
   const BlockWrapper({
@@ -19,6 +22,7 @@ class BlockWrapper extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
     required this.onDelete,
+    this.dragHandle,
     this.onBlockUpdated,
   });
 
@@ -114,11 +118,12 @@ class BlockWrapper extends StatelessWidget {
           ],
           const Spacer(),
           // Drag handle
-          const Icon(
-            Icons.drag_indicator,
-            size: 16,
-            color: AppColors.neutral400,
-          ),
+          dragHandle ??
+              const Icon(
+                Icons.drag_indicator,
+                size: 16,
+                color: AppColors.neutral400,
+              ),
           const SizedBox(width: AppSpacing.xs),
           // Delete button
           InkWell(
@@ -352,15 +357,38 @@ class _ImageBlockContent extends StatelessWidget {
         ),
       );
     }
+    return _buildImageWidget(content.url);
+  }
+
+  Widget _buildImageWidget(String source) {
+    if (source.startsWith('data:image/')) {
+      try {
+        final commaIndex = source.indexOf(',');
+        if (commaIndex <= 0) return _buildBrokenImage();
+        final bytes = base64Decode(source.substring(commaIndex + 1));
+        return Image.memory(
+          bytes,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) => _buildBrokenImage(),
+        );
+      } catch (_) {
+        return _buildBrokenImage();
+      }
+    }
+
     return Image.network(
-      content.url,
+      source,
       fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) => Container(
-        height: 120,
-        color: AppColors.neutral100,
-        child: const Center(
-          child: Icon(Icons.broken_image, color: AppColors.neutral400),
-        ),
+      errorBuilder: (context, error, stackTrace) => _buildBrokenImage(),
+    );
+  }
+
+  Widget _buildBrokenImage() {
+    return Container(
+      height: 120,
+      color: AppColors.neutral100,
+      child: const Center(
+        child: Icon(Icons.broken_image, color: AppColors.neutral400),
       ),
     );
   }
@@ -428,6 +456,7 @@ class _MultipleChoiceContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final correctAnswerIds = content.normalizedCorrectAnswers.toSet();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -459,9 +488,11 @@ class _MultipleChoiceContent extends StatelessWidget {
                         ? BorderRadius.circular(4)
                         : null,
                   ),
-                  child: option.id == content.correctAnswer
+                  child: correctAnswerIds.contains(option.id)
                       ? Icon(
-                          content.multiSelect ? Icons.check : Icons.circle,
+                          content.multiSelect
+                              ? Icons.check
+                              : Icons.radio_button_checked,
                           size: 12,
                           color: AppColors.success,
                         )
@@ -535,6 +566,37 @@ class _MatchingBlockContent extends StatelessWidget {
 
   const _MatchingBlockContent({required this.content});
 
+  /// Returns the 1-based pair number for a given item id (left or right side).
+  int? _pairNumberFor(String itemId, {required bool isLeft}) {
+    for (int i = 0; i < content.correctPairs.length; i++) {
+      final pair = content.correctPairs[i];
+      if (isLeft && pair.leftId == itemId) return i + 1;
+      if (!isLeft && pair.rightId == itemId) return i + 1;
+    }
+    return null;
+  }
+
+  Widget _buildPairBadge(int number) {
+    return Container(
+      width: 18,
+      height: 18,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.primary500,
+      ),
+      child: Center(
+        child: Text(
+          '$number',
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -580,34 +642,39 @@ class _MatchingBlockContent extends StatelessWidget {
                           ),
                         ),
                       ]
-                    : content.leftItems
-                          .map(
-                            (item) => Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: AppSpacing.xs,
+                    : content.leftItems.map((item) {
+                        final pairNum = _pairNumberFor(item.id, isLeft: true);
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                          child: Container(
+                            padding: const EdgeInsets.all(AppSpacing.sm),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                AppBorderRadius.sm,
                               ),
-                              child: Container(
-                                padding: const EdgeInsets.all(AppSpacing.sm),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                    AppBorderRadius.sm,
-                                  ),
-                                  border: Border.all(
-                                    color: AppColors.neutral300,
-                                  ),
-                                ),
-                                child: Text(
-                                  item.text,
-                                  style: const TextStyle(
-                                    fontSize: AppFontSize.sm,
-                                    color: AppColors.neutral700,
-                                  ),
-                                ),
-                              ),
+                              border: Border.all(color: AppColors.neutral300),
                             ),
-                          )
-                          .toList(),
+                            child: Row(
+                              children: [
+                                if (pairNum != null) ...[
+                                  _buildPairBadge(pairNum),
+                                  const SizedBox(width: AppSpacing.xs),
+                                ],
+                                Expanded(
+                                  child: Text(
+                                    item.text,
+                                    style: const TextStyle(
+                                      fontSize: AppFontSize.sm,
+                                      color: AppColors.neutral700,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
               ),
             ),
             const SizedBox(width: AppSpacing.md),
@@ -645,34 +712,39 @@ class _MatchingBlockContent extends StatelessWidget {
                           ),
                         ),
                       ]
-                    : content.rightItems
-                          .map(
-                            (item) => Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: AppSpacing.xs,
+                    : content.rightItems.map((item) {
+                        final pairNum = _pairNumberFor(item.id, isLeft: false);
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                          child: Container(
+                            padding: const EdgeInsets.all(AppSpacing.sm),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                AppBorderRadius.sm,
                               ),
-                              child: Container(
-                                padding: const EdgeInsets.all(AppSpacing.sm),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                    AppBorderRadius.sm,
-                                  ),
-                                  border: Border.all(
-                                    color: AppColors.neutral300,
-                                  ),
-                                ),
-                                child: Text(
-                                  item.text,
-                                  style: const TextStyle(
-                                    fontSize: AppFontSize.sm,
-                                    color: AppColors.neutral700,
-                                  ),
-                                ),
-                              ),
+                              border: Border.all(color: AppColors.neutral300),
                             ),
-                          )
-                          .toList(),
+                            child: Row(
+                              children: [
+                                if (pairNum != null) ...[
+                                  _buildPairBadge(pairNum),
+                                  const SizedBox(width: AppSpacing.xs),
+                                ],
+                                Expanded(
+                                  child: Text(
+                                    item.text,
+                                    style: const TextStyle(
+                                      fontSize: AppFontSize.sm,
+                                      color: AppColors.neutral700,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
               ),
             ),
           ],

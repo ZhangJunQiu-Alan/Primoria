@@ -9,7 +9,8 @@ class AICourseGenerator {
   AICourseGenerator._();
 
   // Gemini API configuration
-  static const String _baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
+  static const String _baseUrl =
+      'https://generativelanguage.googleapis.com/v1beta';
   static String? _apiKey;
 
   /// Set API key
@@ -48,7 +49,7 @@ JSON schema:
 
 Block types:
 1. text: {"type":"text","id":"t1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"format":"markdown","value":"Text"}}
-2. multipleChoice: {"type":"multipleChoice","id":"q1","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"}],"correctAnswer":"a","explanation":"Explanation"}}
+2. multipleChoice: {"type":"multipleChoice","id":"q1","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation"}}
 3. codePlayground: {"type":"codePlayground","id":"c1","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","initialCode":"Code","expectedOutput":"Output","hints":["Hint"],"runnable":true}}
 
 Rules:
@@ -113,10 +114,7 @@ Generate the course based on the PDF:
         );
       }
     } catch (e) {
-      return GenerationResult(
-        success: false,
-        message: 'Generation error: $e',
-      );
+      return GenerationResult(success: false, message: 'Generation error: $e');
     }
   }
 
@@ -128,23 +126,18 @@ Generate the course based on the PDF:
     required String prompt,
   }) async {
     try {
-      final url = '$_baseUrl/models/gemini-2.0-flash:generateContent?key=$_apiKey';
+      final url =
+          '$_baseUrl/models/gemini-2.0-flash:generateContent?key=$_apiKey';
 
       // Build request body
       Map<String, dynamic> filePart;
       if (fileUri != null) {
         filePart = {
-          'fileData': {
-            'mimeType': mimeType,
-            'fileUri': fileUri,
-          }
+          'fileData': {'mimeType': mimeType, 'fileUri': fileUri},
         };
       } else if (inlineData != null) {
         filePart = {
-          'inlineData': {
-            'mimeType': mimeType,
-            'data': inlineData,
-          }
+          'inlineData': {'mimeType': mimeType, 'data': inlineData},
         };
       } else {
         return const _ContentResult(
@@ -159,14 +152,14 @@ Generate the course based on the PDF:
             'parts': [
               filePart,
               {'text': prompt},
-            ]
-          }
+            ],
+          },
         ],
         'generationConfig': {
           'temperature': 0.7,
           'maxOutputTokens': 65536,
           'responseMimeType': 'application/json',
-        }
+        },
       };
 
       final response = await http.post(
@@ -177,7 +170,8 @@ Generate the course based on the PDF:
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final content = data['candidates'][0]['content']['parts'][0]['text'] as String;
+        final content =
+            data['candidates'][0]['content']['parts'][0]['text'] as String;
         return _ContentResult(success: true, content: content);
       } else {
         final error = jsonDecode(response.body);
@@ -220,11 +214,11 @@ Generate the course based on the PDF:
     result = result
         .replaceAll('\r\n', '\n')
         .replaceAll('\r', '\n')
-        .replaceAll('\uFF0C', ',')  // fullwidth comma
-        .replaceAll('\uFF1A', ':')  // fullwidth colon
-        .replaceAll('\u201C', '"')  // left double quote
-        .replaceAll('\u201D', '"')  // right double quote
-        .replaceAll('\u2018', "'")  // left single quote
+        .replaceAll('\uFF0C', ',') // fullwidth comma
+        .replaceAll('\uFF1A', ':') // fullwidth colon
+        .replaceAll('\u201C', '"') // left double quote
+        .replaceAll('\u201D', '"') // right double quote
+        .replaceAll('\u2018', "'") // left single quote
         .replaceAll('\u2019', "'"); // right single quote
 
     return result;
@@ -279,9 +273,5 @@ class _ContentResult {
   final String? content;
   final String? message;
 
-  const _ContentResult({
-    required this.success,
-    this.content,
-    this.message,
-  });
+  const _ContentResult({required this.success, this.content, this.message});
 }
