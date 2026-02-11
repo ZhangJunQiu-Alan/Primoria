@@ -897,7 +897,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // Existing lessons
               for (int i = 0; i < lessons.length; i++)
                 _LessonBox(
-                  label: 'Lesson ${i + 1}',
+                  label: lessons[i].trim().isNotEmpty
+                      ? lessons[i]
+                      : 'Lecture ${i + 1}',
                   onTap: () => context.go('/builder?courseId=$courseId'),
                 ),
               // "Add lesson" dashed box → opens builder

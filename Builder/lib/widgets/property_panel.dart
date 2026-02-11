@@ -117,12 +117,15 @@ class _BlockPropertyEditor extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<_BlockPropertyEditor> createState() => _BlockPropertyEditorState();
+  ConsumerState<_BlockPropertyEditor> createState() =>
+      _BlockPropertyEditorState();
 }
 
 class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   void _updateBlock(Block updatedBlock) {
-    ref.read(courseProvider.notifier).updateBlock(widget.pageIndex, updatedBlock);
+    ref
+        .read(courseProvider.notifier)
+        .updateBlock(widget.pageIndex, updatedBlock);
     ref.read(builderStateProvider.notifier).markAsUnsaved();
   }
 
@@ -139,7 +142,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           children: [
             Row(
               children: [
-                Icon(info?.icon ?? Icons.widgets, size: 16, color: AppColors.primary500),
+                Icon(
+                  info?.icon ?? Icons.widgets,
+                  size: 16,
+                  color: AppColors.primary500,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   info?.name ?? widget.block.type.label,
@@ -172,9 +179,18 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
               label: 'Align',
               child: SegmentedButton<String>(
                 segments: const [
-                  ButtonSegment(value: 'left', icon: Icon(Icons.format_align_left, size: 16)),
-                  ButtonSegment(value: 'center', icon: Icon(Icons.format_align_center, size: 16)),
-                  ButtonSegment(value: 'right', icon: Icon(Icons.format_align_right, size: 16)),
+                  ButtonSegment(
+                    value: 'left',
+                    icon: Icon(Icons.format_align_left, size: 16),
+                  ),
+                  ButtonSegment(
+                    value: 'center',
+                    icon: Icon(Icons.format_align_center, size: 16),
+                  ),
+                  ButtonSegment(
+                    value: 'right',
+                    icon: Icon(Icons.format_align_right, size: 16),
+                  ),
                 ],
                 selected: {widget.block.style.alignment},
                 onSelectionChanged: (value) {
@@ -213,6 +229,39 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                   }
                 },
               ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.lg),
+
+        // Visibility rule
+        _PropertySection(
+          title: 'Visibility',
+          children: [
+            DropdownButtonFormField<String>(
+              initialValue: widget.block.visibilityRule,
+              decoration: const InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.sm,
+                  vertical: AppSpacing.xs,
+                ),
+              ),
+              items: const [
+                DropdownMenuItem(
+                  value: 'always',
+                  child: Text('Always visible'),
+                ),
+                DropdownMenuItem(
+                  value: 'afterPreviousCorrect',
+                  child: Text('After previous correct'),
+                ),
+              ],
+              onChanged: (value) {
+                if (value != null) {
+                  _updateBlock(widget.block.copyWith(visibilityRule: value));
+                }
+              },
             ),
           ],
         ),
@@ -305,7 +354,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(
-              content: ImageContent(url: value, alt: content.alt, caption: content.caption),
+              content: ImageContent(
+                url: value,
+                alt: content.alt,
+                caption: content.caption,
+              ),
             );
             _updateBlock(updatedBlock);
           },
@@ -319,7 +372,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(
-              content: ImageContent(url: content.url, alt: content.alt, caption: value),
+              content: ImageContent(
+                url: content.url,
+                alt: content.alt,
+                caption: value,
+              ),
             );
             _updateBlock(updatedBlock);
           },
@@ -359,14 +416,20 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         TextFormField(
           initialValue: content.code,
           maxLines: 8,
-          style: const TextStyle(fontFamily: 'monospace', fontSize: AppFontSize.sm),
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            fontSize: AppFontSize.sm,
+          ),
           decoration: const InputDecoration(
             labelText: 'Code',
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
             final updatedBlock = widget.block.copyWith(
-              content: CodeBlockContent(language: content.language, code: value),
+              content: CodeBlockContent(
+                language: content.language,
+                code: value,
+              ),
             );
             _updateBlock(updatedBlock);
           },
@@ -383,7 +446,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         TextFormField(
           initialValue: content.initialCode,
           maxLines: 8,
-          style: const TextStyle(fontFamily: 'monospace', fontSize: AppFontSize.sm),
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            fontSize: AppFontSize.sm,
+          ),
           decoration: const InputDecoration(
             labelText: 'Starter code',
             border: OutlineInputBorder(),
@@ -469,7 +535,9 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
               children: [
                 IconButton(
                   icon: Icon(
-                    isCorrect ? Icons.check_circle : Icons.radio_button_unchecked,
+                    isCorrect
+                        ? Icons.check_circle
+                        : Icons.radio_button_unchecked,
                     color: isCorrect ? AppColors.success : AppColors.neutral400,
                   ),
                   onPressed: () {
@@ -494,7 +562,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                     ),
                     onChanged: (value) {
                       final updatedOptions = [...content.options];
-                      updatedOptions[index] = ChoiceOption(id: option.id, text: value);
+                      updatedOptions[index] = ChoiceOption(
+                        id: option.id,
+                        text: value,
+                      );
                       final updatedBlock = widget.block.copyWith(
                         content: MultipleChoiceContent(
                           question: content.question,
@@ -674,7 +745,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.remove_circle_outline, size: 20, color: AppColors.error),
+                  icon: const Icon(
+                    Icons.remove_circle_outline,
+                    size: 20,
+                    color: AppColors.error,
+                  ),
                   onPressed: content.leftItems.length > 1
                       ? () {
                           final updatedItems = [...content.leftItems];
@@ -755,7 +830,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.remove_circle_outline, size: 20, color: AppColors.error),
+                  icon: const Icon(
+                    Icons.remove_circle_outline,
+                    size: 20,
+                    color: AppColors.error,
+                  ),
                   onPressed: content.rightItems.length > 1
                       ? () {
                           final updatedItems = [...content.rightItems];
@@ -795,7 +874,9 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
             (p) => p.leftId == leftItem.id,
             orElse: () => const MatchingPair(leftId: '', rightId: ''),
           );
-          final selectedRightId = existingPair.leftId == leftItem.id ? existingPair.rightId : null;
+          final selectedRightId = existingPair.leftId == leftItem.id
+              ? existingPair.rightId
+              : null;
 
           return Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -809,7 +890,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Icon(Icons.arrow_forward, size: 16, color: AppColors.neutral400),
+                const Icon(
+                  Icons.arrow_forward,
+                  size: 16,
+                  color: AppColors.neutral400,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   flex: 3,
@@ -839,7 +924,9 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                             .where((p) => p.leftId != leftItem.id)
                             .toList();
                         // Add new pair
-                        updatedPairs.add(MatchingPair(leftId: leftItem.id, rightId: rightId));
+                        updatedPairs.add(
+                          MatchingPair(leftId: leftItem.id, rightId: rightId),
+                        );
                         final updatedBlock = widget.block.copyWith(
                           content: content.copyWith(correctPairs: updatedPairs),
                         );
@@ -881,10 +968,7 @@ class _PropertySection extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
-  const _PropertySection({
-    required this.title,
-    required this.children,
-  });
+  const _PropertySection({required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -911,10 +995,7 @@ class _PropertyField extends StatelessWidget {
   final String label;
   final Widget child;
 
-  const _PropertyField({
-    required this.label,
-    required this.child,
-  });
+  const _PropertyField({required this.label, required this.child});
 
   @override
   Widget build(BuildContext context) {

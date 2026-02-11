@@ -259,7 +259,6 @@ class SupabaseService {
         await client
             .from('courses')
             .update({
-              'title': course.metadata.title,
               'description': course.metadata.description,
               'tags': course.metadata.tags,
               'difficulty_level': _normalizeDifficulty(
@@ -425,6 +424,49 @@ class SupabaseService {
       );
     } catch (e) {
       return CourseResult(success: false, message: 'Create failed: $e');
+    }
+  }
+
+  /// Rename an existing course row.
+  /// Used by Dashboard's Edit action to change course name explicitly.
+  static Future<CourseResult> renameCourse({
+    required String courseId,
+    required String title,
+  }) async {
+    if (currentUser == null) {
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
+    }
+
+    final nextTitle = title.trim();
+    if (nextTitle.isEmpty) {
+      return const CourseResult(
+        success: false,
+        message: 'Course name cannot be empty',
+      );
+    }
+
+    try {
+      final updated = await client
+          .from('courses')
+          .update({'title': nextTitle})
+          .eq('id', courseId)
+          .eq('author_id', currentUser!.id)
+          .select('id')
+          .maybeSingle();
+
+      if (updated == null) {
+        return const CourseResult(
+          success: false,
+          message: 'Course not found or no permission',
+        );
+      }
+
+      return const CourseResult(success: true, message: 'Course name updated');
+    } catch (e) {
+      return CourseResult(success: false, message: 'Update failed: $e');
     }
   }
 

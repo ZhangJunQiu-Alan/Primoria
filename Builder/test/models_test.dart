@@ -26,13 +26,64 @@ void main() {
 
     test('Block copyWith preserves values', () {
       final block = Block.create(BlockType.text, order: 0);
-      final copied = block.copyWith(
-        position: BlockPosition(order: 5),
-      );
+      final copied = block.copyWith(position: BlockPosition(order: 5));
 
       expect(copied.id, block.id);
       expect(copied.type, block.type);
       expect(copied.position.order, 5);
+    });
+
+    test('Block.create defaults visibilityRule to always', () {
+      final block = Block.create(BlockType.text, order: 0);
+      expect(block.visibilityRule, 'always');
+    });
+
+    test('Block visibilityRule serializes to JSON', () {
+      final block = Block.create(
+        BlockType.text,
+        order: 0,
+      ).copyWith(visibilityRule: 'afterPreviousCorrect');
+      final json = block.toJson();
+
+      expect(json['visibilityRule'], 'afterPreviousCorrect');
+    });
+
+    test('Block visibilityRule deserializes from JSON', () {
+      final block = Block.create(BlockType.text, order: 0);
+      final json = block.toJson();
+      json['visibilityRule'] = 'afterPreviousCorrect';
+      final restored = Block.fromJson(json);
+
+      expect(restored.visibilityRule, 'afterPreviousCorrect');
+    });
+
+    test('Block visibilityRule defaults to always when missing from JSON', () {
+      final block = Block.create(BlockType.text, order: 0);
+      final json = block.toJson();
+      json.remove('visibilityRule');
+      final restored = Block.fromJson(json);
+
+      expect(restored.visibilityRule, 'always');
+    });
+
+    test('Block copyWith updates visibilityRule', () {
+      final block = Block.create(BlockType.text, order: 0);
+      final updated = block.copyWith(visibilityRule: 'afterPreviousCorrect');
+
+      expect(updated.visibilityRule, 'afterPreviousCorrect');
+      expect(updated.id, block.id);
+    });
+
+    test('Block JSON roundtrip preserves visibilityRule', () {
+      final block = Block.create(
+        BlockType.multipleChoice,
+        order: 0,
+      ).copyWith(visibilityRule: 'afterPreviousCorrect');
+      final json = block.toJson();
+      final restored = Block.fromJson(json);
+
+      expect(restored.visibilityRule, 'afterPreviousCorrect');
+      expect(restored.type, BlockType.multipleChoice);
     });
   });
 
@@ -84,7 +135,8 @@ void main() {
     });
 
     test('TextContent handles markdown syntax in value', () {
-      const mdValue = '# Heading\n\n**bold** and *italic*\n\n- item 1\n- item 2\n\n`code`';
+      const mdValue =
+          '# Heading\n\n**bold** and *italic*\n\n- item 1\n- item 2\n\n`code`';
       const content = TextContent(format: 'markdown', value: mdValue);
       final json = content.toJson();
       final restored = TextContent.fromJson(json);
@@ -94,7 +146,8 @@ void main() {
     });
 
     test('TextContent handles malformed markdown without error', () {
-      const malformed = '# Unclosed **bold\n\n```\nno closing fence\n\n[broken link(';
+      const malformed =
+          '# Unclosed **bold\n\n```\nno closing fence\n\n[broken link(';
       const content = TextContent(format: 'markdown', value: malformed);
       final json = content.toJson();
       final restored = TextContent.fromJson(json);

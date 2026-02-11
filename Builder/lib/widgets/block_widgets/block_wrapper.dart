@@ -84,6 +84,34 @@ class BlockWrapper extends StatelessWidget {
               color: isSelected ? AppColors.primary600 : AppColors.neutral500,
             ),
           ),
+          if (block.visibilityRule == 'afterPreviousCorrect') ...[
+            const SizedBox(width: AppSpacing.xs),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.xs,
+                vertical: 1,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.lock, size: 10, color: AppColors.warning),
+                  SizedBox(width: 2),
+                  Text(
+                    'Gated',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.warning,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const Spacer(),
           // Drag handle
           const Icon(
@@ -98,11 +126,7 @@ class BlockWrapper extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
             child: const Padding(
               padding: EdgeInsets.all(2),
-              child: Icon(
-                Icons.close,
-                size: 14,
-                color: AppColors.neutral400,
-              ),
+              child: Icon(Icons.close, size: 14, color: AppColors.neutral400),
             ),
           ),
         ],
@@ -117,10 +141,7 @@ class BlockWrapper extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: spacing),
-        child: Align(
-          alignment: alignment,
-          child: _getBlockContentWidget(),
-        ),
+        child: Align(alignment: alignment, child: _getBlockContentWidget()),
       ),
     );
   }
@@ -144,7 +165,8 @@ class BlockWrapper extends StatelessWidget {
               final updatedContent = CodePlaygroundContent(
                 language: (block.content as CodePlaygroundContent).language,
                 initialCode: newCode,
-                expectedOutput: (block.content as CodePlaygroundContent).expectedOutput,
+                expectedOutput:
+                    (block.content as CodePlaygroundContent).expectedOutput,
                 hints: (block.content as CodePlaygroundContent).hints,
                 runnable: (block.content as CodePlaygroundContent).runnable,
               );
@@ -154,11 +176,14 @@ class BlockWrapper extends StatelessWidget {
         );
       case BlockType.multipleChoice:
         return _MultipleChoiceContent(
-            content: block.content as MultipleChoiceContent);
+          content: block.content as MultipleChoiceContent,
+        );
       case BlockType.fillBlank:
         return _FillBlankContent(content: block.content as FillBlankContent);
       case BlockType.trueFalse:
-        return _TrueFalseBlockContent(content: block.content as TrueFalseContent);
+        return _TrueFalseBlockContent(
+          content: block.content as TrueFalseContent,
+        );
       case BlockType.matching:
         return _MatchingBlockContent(content: block.content as MatchingContent);
       case BlockType.video:
@@ -212,10 +237,7 @@ class _TextBlockContent extends StatelessWidget {
   final TextContent content;
   final TextAlign textAlign;
 
-  const _TextBlockContent({
-    required this.content,
-    required this.textAlign,
-  });
+  const _TextBlockContent({required this.content, required this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -236,10 +258,25 @@ class _TextBlockContent extends StatelessWidget {
         data: content.value,
         selectable: true,
         styleSheet: MarkdownStyleSheet(
-          p: const TextStyle(fontSize: AppFontSize.md, color: AppColors.neutral700),
-          h1: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.neutral800),
-          h2: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.neutral800),
-          h3: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.neutral800),
+          p: const TextStyle(
+            fontSize: AppFontSize.md,
+            color: AppColors.neutral700,
+          ),
+          h1: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: AppColors.neutral800,
+          ),
+          h2: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.neutral800,
+          ),
+          h3: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.neutral800,
+          ),
           code: TextStyle(
             fontSize: AppFontSize.sm,
             fontFamily: 'monospace',
@@ -251,8 +288,14 @@ class _TextBlockContent extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
           ),
           codeblockPadding: const EdgeInsets.all(AppSpacing.md),
-          listBullet: const TextStyle(fontSize: AppFontSize.md, color: AppColors.neutral700),
-          a: const TextStyle(color: AppColors.primary500, decoration: TextDecoration.underline),
+          listBullet: const TextStyle(
+            fontSize: AppFontSize.md,
+            color: AppColors.neutral700,
+          ),
+          a: const TextStyle(
+            color: AppColors.primary500,
+            decoration: TextDecoration.underline,
+          ),
         ),
       );
     }
@@ -282,17 +325,27 @@ class _ImageBlockContent extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.neutral100,
           borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-          border: Border.all(color: AppColors.neutral200, style: BorderStyle.solid),
+          border: Border.all(
+            color: AppColors.neutral200,
+            style: BorderStyle.solid,
+          ),
         ),
         child: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.add_photo_alternate, size: 32, color: AppColors.neutral400),
+              Icon(
+                Icons.add_photo_alternate,
+                size: 32,
+                color: AppColors.neutral400,
+              ),
               SizedBox(height: AppSpacing.xs),
               Text(
                 'Click to add an image',
-                style: TextStyle(fontSize: AppFontSize.sm, color: AppColors.neutral400),
+                style: TextStyle(
+                  fontSize: AppFontSize.sm,
+                  color: AppColors.neutral400,
+                ),
               ),
             ],
           ),
@@ -389,41 +442,43 @@ class _MultipleChoiceContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        ...content.options.map((option) => Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: Row(
-                children: [
-                  Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      shape: content.multiSelect
-                          ? BoxShape.rectangle
-                          : BoxShape.circle,
-                      border: Border.all(color: AppColors.neutral300),
-                      borderRadius: content.multiSelect
-                          ? BorderRadius.circular(4)
-                          : null,
-                    ),
-                    child: option.id == content.correctAnswer
-                        ? Icon(
-                            content.multiSelect ? Icons.check : Icons.circle,
-                            size: 12,
-                            color: AppColors.success,
-                          )
+        ...content.options.map(
+          (option) => Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: Row(
+              children: [
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    shape: content.multiSelect
+                        ? BoxShape.rectangle
+                        : BoxShape.circle,
+                    border: Border.all(color: AppColors.neutral300),
+                    borderRadius: content.multiSelect
+                        ? BorderRadius.circular(4)
                         : null,
                   ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Text(
-                    option.text,
-                    style: const TextStyle(
-                      fontSize: AppFontSize.sm,
-                      color: AppColors.neutral700,
-                    ),
+                  child: option.id == content.correctAnswer
+                      ? Icon(
+                          content.multiSelect ? Icons.check : Icons.circle,
+                          size: 12,
+                          color: AppColors.success,
+                        )
+                      : null,
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Text(
+                  option.text,
+                  style: const TextStyle(
+                    fontSize: AppFontSize.sm,
+                    color: AppColors.neutral700,
                   ),
-                ],
-              ),
-            )),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -441,7 +496,9 @@ class _FillBlankContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          content.question.isEmpty ? 'Enter a fill-in-the-blank question' : content.question,
+          content.question.isEmpty
+              ? 'Enter a fill-in-the-blank question'
+              : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
             color: content.question.isEmpty
@@ -484,7 +541,9 @@ class _MatchingBlockContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          content.question.isEmpty ? 'Enter a matching question' : content.question,
+          content.question.isEmpty
+              ? 'Enter a matching question'
+              : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
             fontWeight: FontWeight.w500,
@@ -507,7 +566,9 @@ class _MatchingBlockContent extends StatelessWidget {
                           padding: const EdgeInsets.all(AppSpacing.sm),
                           decoration: BoxDecoration(
                             color: AppColors.neutral100,
-                            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                            borderRadius: BorderRadius.circular(
+                              AppBorderRadius.sm,
+                            ),
                             border: Border.all(color: AppColors.neutral300),
                           ),
                           child: const Text(
@@ -520,34 +581,44 @@ class _MatchingBlockContent extends StatelessWidget {
                         ),
                       ]
                     : content.leftItems
-                        .map(
-                          (item) => Padding(
-                            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                            child: Container(
-                              padding: const EdgeInsets.all(AppSpacing.sm),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                                border: Border.all(color: AppColors.neutral300),
+                          .map(
+                            (item) => Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: AppSpacing.xs,
                               ),
-                              child: Text(
-                                item.text,
-                                style: const TextStyle(
-                                  fontSize: AppFontSize.sm,
-                                  color: AppColors.neutral700,
+                              child: Container(
+                                padding: const EdgeInsets.all(AppSpacing.sm),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(
+                                    AppBorderRadius.sm,
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.neutral300,
+                                  ),
+                                ),
+                                child: Text(
+                                  item.text,
+                                  style: const TextStyle(
+                                    fontSize: AppFontSize.sm,
+                                    color: AppColors.neutral700,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
               ),
             ),
             const SizedBox(width: AppSpacing.md),
             // Arrow indicator
             const Padding(
               padding: EdgeInsets.only(top: AppSpacing.sm),
-              child: Icon(Icons.compare_arrows, size: 20, color: AppColors.neutral400),
+              child: Icon(
+                Icons.compare_arrows,
+                size: 20,
+                color: AppColors.neutral400,
+              ),
             ),
             const SizedBox(width: AppSpacing.md),
             // Right items
@@ -560,7 +631,9 @@ class _MatchingBlockContent extends StatelessWidget {
                           padding: const EdgeInsets.all(AppSpacing.sm),
                           decoration: BoxDecoration(
                             color: AppColors.neutral100,
-                            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                            borderRadius: BorderRadius.circular(
+                              AppBorderRadius.sm,
+                            ),
                             border: Border.all(color: AppColors.neutral300),
                           ),
                           child: const Text(
@@ -573,27 +646,33 @@ class _MatchingBlockContent extends StatelessWidget {
                         ),
                       ]
                     : content.rightItems
-                        .map(
-                          (item) => Padding(
-                            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                            child: Container(
-                              padding: const EdgeInsets.all(AppSpacing.sm),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                                border: Border.all(color: AppColors.neutral300),
+                          .map(
+                            (item) => Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: AppSpacing.xs,
                               ),
-                              child: Text(
-                                item.text,
-                                style: const TextStyle(
-                                  fontSize: AppFontSize.sm,
-                                  color: AppColors.neutral700,
+                              child: Container(
+                                padding: const EdgeInsets.all(AppSpacing.sm),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(
+                                    AppBorderRadius.sm,
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.neutral300,
+                                  ),
+                                ),
+                                child: Text(
+                                  item.text,
+                                  style: const TextStyle(
+                                    fontSize: AppFontSize.sm,
+                                    color: AppColors.neutral700,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
               ),
             ),
           ],
@@ -615,7 +694,9 @@ class _TrueFalseBlockContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          content.question.isEmpty ? 'Enter a true or false statement' : content.question,
+          content.question.isEmpty
+              ? 'Enter a true or false statement'
+              : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
             fontWeight: FontWeight.w500,
@@ -643,7 +724,9 @@ class _TrueFalseBlockContent extends StatelessWidget {
         vertical: AppSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: isCorrect ? AppColors.success.withValues(alpha: 0.1) : AppColors.neutral100,
+        color: isCorrect
+            ? AppColors.success.withValues(alpha: 0.1)
+            : AppColors.neutral100,
         borderRadius: BorderRadius.circular(AppBorderRadius.sm),
         border: Border.all(
           color: isCorrect ? AppColors.success : AppColors.neutral300,
@@ -689,11 +772,16 @@ class _VideoBlockContent extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.play_circle_outline,
-                size: 48, color: AppColors.neutral400),
+            const Icon(
+              Icons.play_circle_outline,
+              size: 48,
+              color: AppColors.neutral400,
+            ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              content.url.isEmpty ? 'Click to add a video' : content.title ?? 'Video',
+              content.url.isEmpty
+                  ? 'Click to add a video'
+                  : content.title ?? 'Video',
               style: const TextStyle(
                 fontSize: AppFontSize.sm,
                 color: AppColors.neutral400,
