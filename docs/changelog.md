@@ -11,6 +11,9 @@ True/False block type and Markdown rendering for Builder text blocks.
 - **Markdown rendering in Builder canvas**: Text blocks with `format: 'markdown'` now render via `MarkdownBody` with styled headings, bold/italic, lists, inline code, fenced code blocks, and links — matching Viewer output
 - **Format toggle in property panel**: Markdown/Plain segmented button lets authors switch text format; monospace font and markdown-hint placeholder in editor when markdown is selected
 - 6 new unit tests for TextContent format handling (defaults, copyWith, roundtrip, malformed markdown)
+- **Dashboard HomePage wired to backend**: Course Data metrics (fans, likes, shares) read from `follows` and `course_feedback` tables; Income Overview reads from DB with $0 fallback; duplicate fans tile removed
+- **Comments section**: Loads from `course_feedback` with profile enrichment; 0 comments → dashed placeholder, 1-4 → matching blocks, 5+ → capped at 4; "more" link navigates to Data Center
+- **New service methods**: `getDashboardMetrics()`, `getRecentComments()`, `_getMyCourseIds()` in SupabaseService
 
 ---
 
