@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
 import 'id_generator.dart';
+import 'course_schema_validator.dart';
 
 /// Supabase service - handles auth, course storage, publishing, etc.
 class SupabaseService {
@@ -210,6 +211,21 @@ class SupabaseService {
       );
     }
 
+    final validation = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.save,
+    );
+    if (validation.hasBlockingErrors) {
+      return CourseResult(
+        success: false,
+        message: _formatSchemaValidationMessage(
+          action: 'Save',
+          errors: validation.errorMessages,
+        ),
+        validation: validation,
+      );
+    }
+
     try {
       final inputCourseId = _isUuid(course.courseId) ? course.courseId : null;
       final existing = inputCourseId == null
@@ -275,10 +291,13 @@ class SupabaseService {
 
       return CourseResult(
         success: true,
-        message: 'Saved',
+        message: validation.warnings.isEmpty
+            ? 'Saved'
+            : 'Saved with ${validation.warnings.length} warning(s)',
         courseId: persistedCourseId,
         // Keep backward compatibility with current publish flow.
         versionId: persistedCourseId,
+        validation: validation,
       );
     } catch (e) {
       return CourseResult(success: false, message: 'Save failed: $e');
@@ -298,9 +317,40 @@ class SupabaseService {
     }
 
     try {
+      final snapshot = await _loadCourseSnapshot(courseId);
+      if (snapshot == null) {
+        return const CourseResult(
+          success: false,
+          message: 'Publish failed: no saved course snapshot found',
+        );
+      }
+
+      final normalized = Map<String, dynamic>.from(snapshot)
+        ..['courseId'] = courseId;
+      final validation = CourseSchemaValidator.validateJsonMap(
+        normalized,
+        mode: CourseSchemaValidationMode.publish,
+      );
+      if (validation.hasBlockingErrors) {
+        return CourseResult(
+          success: false,
+          message: _formatSchemaValidationMessage(
+            action: 'Publish',
+            errors: validation.errorMessages,
+          ),
+          validation: validation,
+        );
+      }
+
       await client.rpc('publish_course', params: {'p_course_id': courseId});
 
-      return const CourseResult(success: true, message: 'Published');
+      return CourseResult(
+        success: true,
+        message: validation.warnings.isEmpty
+            ? 'Published'
+            : 'Published with ${validation.warnings.length} warning(s)',
+        validation: validation,
+      );
     } catch (e) {
       return CourseResult(success: false, message: 'Publish failed: $e');
     }
@@ -723,6 +773,17 @@ class SupabaseService {
     return '$fallback-${courseId.split('-').first}';
   }
 
+  static String _formatSchemaValidationMessage({
+    required String action,
+    required List<String> errors,
+  }) {
+    if (errors.isEmpty) return '$action blocked by schema validation';
+    final shown = errors.take(8).toList();
+    final more = errors.length - shown.length;
+    final suffix = more > 0 ? '\n...and $more more issue(s)' : '';
+    return '$action blocked by schema validation:\n${shown.join('\n')}$suffix';
+  }
+
   static bool _isRetryableAuthTimeout(String message) {
     final raw = message.toLowerCase();
     return raw.contains('request_timeout') ||
@@ -802,11 +863,13 @@ class CourseResult {
   final String message;
   final String? courseId;
   final String? versionId;
+  final CourseSchemaValidationResult? validation;
 
   const CourseResult({
     required this.success,
     required this.message,
     this.courseId,
     this.versionId,
+    this.validation,
   });
 }

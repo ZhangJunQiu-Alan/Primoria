@@ -6,6 +6,7 @@ import '../../providers/builder_state.dart';
 import '../../providers/course_provider.dart';
 import '../../services/course_export.dart';
 import '../../services/course_import.dart';
+import '../../services/course_schema_validator.dart';
 import '../../services/storage_service.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/builder_layout.dart';
@@ -482,12 +483,21 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ),
       );
     } else if (result.message != 'Canceled') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Import failed: ${result.message}'),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      final validation = result.validation;
+      if (validation?.hasBlockingErrors ?? false) {
+        _showSchemaValidationDialog(
+          context,
+          title: 'Import blocked by schema validation',
+          validation: validation!,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Import failed: ${result.message}'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 
@@ -555,12 +565,21 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(result.message),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      final validation = result.validation;
+      if (validation?.hasBlockingErrors ?? false) {
+        _showSchemaValidationDialog(
+          context,
+          title: 'Save blocked by schema validation',
+          validation: validation!,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.message),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 
@@ -585,12 +604,21 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         saveResult.courseId == null ||
         saveResult.versionId == null) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Save failed: ${saveResult.message}'),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        final validation = saveResult.validation;
+        if (validation?.hasBlockingErrors ?? false) {
+          _showSchemaValidationDialog(
+            context,
+            title: 'Publish blocked (save validation failed)',
+            validation: validation!,
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Save failed: ${saveResult.message}'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
       }
       return;
     }
@@ -631,24 +659,108 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     if (publishResult.success) {
       ref.read(builderStateProvider.notifier).markAsSaved();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.white, size: 20),
-              SizedBox(width: AppSpacing.sm),
-              Text('Course published!'),
+              const Icon(Icons.check_circle, color: Colors.white, size: 20),
+              const SizedBox(width: AppSpacing.sm),
+              Text(publishResult.message),
             ],
           ),
           backgroundColor: AppColors.success,
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(publishResult.message),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      final validation = publishResult.validation;
+      if (validation?.hasBlockingErrors ?? false) {
+        _showSchemaValidationDialog(
+          context,
+          title: 'Publish blocked by schema validation',
+          validation: validation!,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(publishResult.message),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
+  }
+
+  void _showSchemaValidationDialog(
+    BuildContext context, {
+    required String title,
+    required CourseSchemaValidationResult validation,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: SizedBox(
+          width: 560,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 420),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (validation.errors.isNotEmpty) ...[
+                    Text(
+                      'Blocking errors (${validation.errors.length})',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.error,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    ...validation.errors.map(_buildValidationFindingRow),
+                  ],
+                  if (validation.warnings.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      'Warnings (${validation.warnings.length})',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.warning,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    ...validation.warnings.map(_buildValidationFindingRow),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildValidationFindingRow(CourseSchemaFinding finding) {
+    final isError = finding.severity == CourseSchemaFindingSeverity.error;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            isError ? Icons.error : Icons.warning_amber_rounded,
+            size: 16,
+            color: isError ? AppColors.error : AppColors.warning,
+          ),
+          const SizedBox(width: AppSpacing.xs),
+          Expanded(child: Text(finding.toDisplayMessage())),
+        ],
+      ),
+    );
   }
 }

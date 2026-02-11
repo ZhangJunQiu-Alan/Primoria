@@ -46,7 +46,14 @@
 - [ ] Export → validates title/pages → downloads JSON
 - [ ] JSON includes all pages and blocks
 
-## 8. Preview
+## 8. Schema Validation Gates
+
+- [ ] Import invalid course JSON (e.g. `correctAnswers` contains unknown option id) → import is blocked and dialog shows field path (like `$.pages[0].blocks[0].content.correctAnswers[0]`)
+- [ ] Save course with blocking schema errors → cloud save is blocked and dialog lists actionable field paths
+- [ ] Publish course with blocking schema errors (e.g. empty quiz question) → publish is blocked and dialog lists field paths
+- [ ] Save/import with warnings only (non-blocking) still succeeds and reports warning count
+
+## 9. Preview
 
 - [ ] Preview button → navigates to Viewer with current content
 - [ ] Unsaved Builder edits survive Builder → Preview → Builder navigation for existing courses (`/builder?courseId=<id>`)
@@ -62,20 +69,20 @@
 - [ ] Matching block: after Check, both columns show green/red borders and check/cross icons
 - [ ] Matching block in Builder canvas: left and right items show circled pair numbers
 
-## 9. Auth & Routing
+## 10. Auth & Routing
 
 - [ ] `/dashboard` while logged out → redirects to `/`
 - [ ] `/builder` while logged out → redirects to `/`
 - [ ] Login on landing → auto-redirects to `/dashboard`
 - [ ] Sign out from avatar → redirects to `/`
 
-## 10. Dashboard — Home Page
+## 11. Dashboard — Home Page
 
 - [ ] Course Data, Income Overview, Comments cards visible
 - [ ] Cards render on both wide and narrow screens
 - [ ] Avatar circle in top-right corner
 
-## 11. Dashboard — Course Manage
+## 12. Dashboard — Course Manage
 
 - [ ] Shows loading spinner → course list
 - [ ] Not logged in → sign-in prompt
@@ -87,14 +94,14 @@
 - [ ] Add lesson → `/builder?courseId=<id>`
 - [ ] Create Course → `/builder`
 
-## 12. User Avatar
+## 13. User Avatar
 
 - [ ] Visible on Dashboard and Builder (blue circle)
 - [ ] Logged in → popup menu (Profile/Dashboard/Sign out)
 - [ ] Logged out → opens sign-in dialog
 - [ ] OAuth users show profile photo
 
-## 13. Builder — Course Loading
+## 14. Builder — Course Loading
 
 - [ ] `/builder` → blank new course
 - [ ] `/builder?courseId=<id>` → loads existing course

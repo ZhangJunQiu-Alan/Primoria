@@ -542,7 +542,15 @@ No. Every `courseId`, `pageId`, and Block `id` must be unique.
 Use `\n` inside JSON strings.
 
 ### Q: How do I validate the JSON format?
-VS Code will check syntax automatically. You can also use online tools like [jsonlint.com](https://jsonlint.com).
+Builder now performs centralized schema validation at key lifecycle gates:
+
+- **Import**: blocking errors prevent import.
+- **Save**: blocking errors prevent cloud save.
+- **Publish**: strict blocking validation prevents invalid courses from being published.
+
+Validation messages include JSON field paths (for example: `$.pages[0].blocks[1].content.correctAnswers[0]`) so issues can be fixed quickly.
+
+Syntax-only tools (like [jsonlint.com](https://jsonlint.com)) can still help catch malformed JSON, but they do not enforce Primoria's course schema rules.
 
 ---
 

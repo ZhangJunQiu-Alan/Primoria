@@ -28,7 +28,7 @@
 23. [x] MultipleChoice multi-select authoring + unordered validation — add `correctAnswers`, single/multi mode toggle, and exact set matching in Preview (2026-02-12)
 24. [x] Block reorder/insert refinement — insertion indicator, edge auto-scroll, and larger drag handle hitbox in Builder canvas (2026-02-12)
 25. [x] Matching block UX improvements — color-coded pairs, numbered badges, shuffle, tap-to-unpair, export validation, unit tests (2026-02-12)
-16. [ ] Robust schema validation
+16. [x] Robust schema validation — centralized validator + import/save/publish enforcement with field-path error details and warning/error severity (2026-02-12)
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 
 ## Viewer
