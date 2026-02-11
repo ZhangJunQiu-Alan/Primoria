@@ -22,6 +22,7 @@
 15. [~] More block types — True/False added (2026-02-11); remaining: animation, connect, etc.
 18. [ ] Builder Preview button: in-place preview overlay with mobile frame, interactive blocks, page navigation
 19. [x] Dashboard HomePage wired to backend — fans/likes/shares from DB, comments with count rules, income with fallback (2026-02-11)
+20. [x] Create Course modal with DB persistence — name input, validation, error feedback, auto-refresh list (2026-02-11)
 16. [ ] Robust schema validation
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 
