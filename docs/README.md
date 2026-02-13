@@ -81,7 +81,7 @@ Primoria/
 - Drag-and-drop block editor with searchable categorized module panel
 - Block selection + property editing
 - JSON export/import and AI course generation (Gemini)
-- Code playground (stubbed execution)
+- Code playground (local Python-like simulator)
 
 **Source layout:**
 ```

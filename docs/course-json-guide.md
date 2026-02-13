@@ -10,6 +10,8 @@ The simplest course JSON only needs the following structure:
 
 ```json
 {
+  "$schema": "https://primoria.com/course-schema/v1.json",
+  "schemaVersion": "1.0.0",
   "courseId": "my-first-course",
   "metadata": {
     "title": "My First Course"
@@ -26,6 +28,25 @@ The simplest course JSON only needs the following structure:
 
 Save it as a `.json` file, then click "Import" in Builder to load it.
 
+### Schema Versioning & Migration Policy
+
+- Current schema version: `1.0.0`
+- Current schema URL: `https://primoria.com/course-schema/v1.json`
+- New exports always include both `$schema` and `schemaVersion`.
+- Import path supports automatic migration for:
+  - unversioned legacy JSON (`schemaVersion` missing)
+  - legacy `0.8.x` and `0.9.x` JSON
+  - compatible `1.x` JSON
+- Import rejects unsupported versions (for example `2.x`/`9.x`) with explicit migration errors.
+- Migration steps are logged by `CourseImport` for debugging.
+
+### AI Generation Output Contract
+
+- Builder AI generates course JSON into exactly one page.
+- Total generated blocks are capped at 20.
+- AI generation prefers course-appropriate block diversity (for example, programming courses include `code-block` + `code-playground`; conceptual courses prioritize text + quizzes).
+- AI output is normalized into canonical block types and validated before loading.
+
 ---
 
 ## Full Structure
@@ -34,6 +55,8 @@ Save it as a `.json` file, then click "Import" in Builder to load it.
 
 ```json
 {
+  "$schema": "https://primoria.com/course-schema/v1.json",
+  "schemaVersion": "1.0.0",
   "courseId": "unique-course-id",
   "metadata": { ... },
   "settings": { ... },
@@ -43,10 +66,21 @@ Save it as a `.json` file, then click "Import" in Builder to load it.
 
 | Field | Required | Description |
 |------|------|------|
+| `$schema` | Yes (new exports) | Schema URL |
+| `schemaVersion` | Yes (new exports) | Schema version, currently `1.0.0` |
 | `courseId` | Yes | Unique course identifier, recommended to use letters and numbers |
 | `metadata` | Yes | Course metadata |
 | `settings` | No | Course settings (theme, colors, etc.) |
 | `pages` | Yes | Page array, at least one page |
+
+Legacy compatibility note:
+- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `multipleChoice`, `fillBlank`, and `trueFalse`.
+- Import will migrate these aliases to canonical values:
+  - `code-block`
+  - `code-playground`
+  - `multiple-choice`
+  - `fill-blank`
+  - `true-false`
 
 ### 2. metadata
 
@@ -196,13 +230,13 @@ Used for text explanations, supports Markdown.
 
 ---
 
-### 3. codeBlock - Code Display Block
+### 3. code-block - Code Display Block
 
 Used to display code (read-only, not runnable).
 
 ```json
 {
-  "type": "codeBlock",
+  "type": "code-block",
   "id": "code-001",
   "position": { "order": 2 },
   "style": { "spacing": "md", "alignment": "left" },
@@ -221,13 +255,13 @@ Used to display code (read-only, not runnable).
 
 ---
 
-### 4. codePlayground - Runnable Code Block
+### 4. code-playground - Runnable Code Block
 
 Students can edit and run code to verify output.
 
 ```json
 {
-  "type": "codePlayground",
+  "type": "code-playground",
   "id": "playground-001",
   "position": { "order": 3 },
   "style": { "spacing": "md", "alignment": "left" },
@@ -253,15 +287,18 @@ Students can edit and run code to verify output.
 | `hints` | No | Hint array (shown when students are stuck) |
 | `runnable` | No | Whether runnable, default `true` |
 
+Execution note:
+- Builder runs a local Python-like simulator (not a full interpreter). It supports common cases such as `print(...)`, variable assignment, arithmetic, and `type`/`int`/`float`/`round`.
+
 ---
 
-### 5. multipleChoice - Multiple Choice
+### 5. multiple-choice - Multiple Choice
 
 Single-select example:
 
 ```json
 {
-  "type": "multipleChoice",
+  "type": "multiple-choice",
   "id": "quiz-001",
   "position": { "order": 4 },
   "style": { "spacing": "md", "alignment": "left" },
@@ -285,7 +322,7 @@ Multi-select example:
 
 ```json
 {
-  "type": "multipleChoice",
+  "type": "multiple-choice",
   "id": "quiz-002",
   "position": { "order": 5 },
   "style": { "spacing": "md", "alignment": "left" },
@@ -319,11 +356,11 @@ Multi-select example:
 
 ---
 
-### 6. fillBlank - Fill in the Blank
+### 6. fill-blank - Fill in the Blank
 
 ```json
 {
-  "type": "fillBlank",
+  "type": "fill-blank",
   "id": "fill-001",
   "position": { "order": 5 },
   "style": { "spacing": "md", "alignment": "left" },
@@ -344,7 +381,7 @@ Multi-select example:
 
 ---
 
-### 7. trueFalse - True/False Question
+### 7. true-false - True/False Question
 
 ```json
 {
@@ -398,6 +435,8 @@ Below is a complete course example with multiple block types:
 
 ```json
 {
+  "$schema": "https://primoria.com/course-schema/v1.json",
+  "schemaVersion": "1.0.0",
   "courseId": "python-101",
   "metadata": {
     "title": "Intro to Python Programming",
@@ -442,7 +481,7 @@ Below is a complete course example with multiple block types:
           }
         },
         {
-          "type": "codePlayground",
+          "type": "code-playground",
           "id": "hello-code",
           "position": { "order": 1 },
           "style": { "spacing": "md", "alignment": "left" },
@@ -455,7 +494,7 @@ Below is a complete course example with multiple block types:
           }
         },
         {
-          "type": "multipleChoice",
+          "type": "multiple-choice",
           "id": "quiz-print",
           "position": { "order": 2 },
           "style": { "spacing": "md", "alignment": "left" },
@@ -488,7 +527,7 @@ Below is a complete course example with multiple block types:
           }
         },
         {
-          "type": "codeBlock",
+          "type": "code-block",
           "id": "var-example",
           "position": { "order": 1 },
           "style": { "spacing": "md", "alignment": "left" },
@@ -498,7 +537,7 @@ Below is a complete course example with multiple block types:
           }
         },
         {
-          "type": "codePlayground",
+          "type": "code-playground",
           "id": "var-practice",
           "position": { "order": 2 },
           "style": { "spacing": "md", "alignment": "left" },
@@ -515,7 +554,7 @@ Below is a complete course example with multiple block types:
           }
         },
         {
-          "type": "fillBlank",
+          "type": "fill-blank",
           "id": "fill-var",
           "position": { "order": 3 },
           "style": { "spacing": "md", "alignment": "left" },

@@ -3,7 +3,7 @@
 ## [Unreleased] - 2026-02-12
 
 ### Summary
-Phone-mockup Viewer with interactive question blocks, visibilityRule gating, course rename API, CLAUDE.md enhancements.
+Phone-mockup Viewer with interactive question blocks, schema migration compatibility, AI one-page generation improvements, and Code Playground runtime fixes.
 
 ### Added
 - **Matching block UX improvements (Viewer)**: Color-coded pair chips with 8-accent palette, numbered circle badges on paired items, shuffled right column on init to prevent trivial positional matching, tap-to-unpair (tap an already-paired left or right item to clear the pair before submission), enhanced green/red feedback on both columns after submit
@@ -26,6 +26,13 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Builder block reorder affordances**: Added drag insertion indicator (`Drop here`) and larger dedicated drag handle hitbox in canvas list
 - **Centralized course schema validator**: Added `course_schema_validator.dart` with reusable import/save/publish/export validation, warning vs blocking error severity, and JSON field-path findings
 - **Schema validation tests**: Added `test/course_schema_validator_test.dart` covering blocking errors, warning/error mode differences, import gate behavior, and export reuse
+- **Schema migration pipeline for legacy JSON**: Added `course_schema_migrator.dart` and integrated it into `CourseImport` so unversioned / `0.8.x` / `0.9.x` legacy files are migrated to schema `1.0.0` before validation and parsing
+- **Migration diagnostics**: `ImportResult` now carries migration details and import logs include per-step migration output for debugging failed/partial compatibility cases
+- **Migration fixtures + tests**: Added `test/fixtures/legacy_unversioned_camelcase.json`, `test/fixtures/legacy_v0_9_modules_alias.json`, and `test/course_schema_migration_test.dart` for compatibility coverage and explicit unsupported-version failure behavior
+- **AI generation model fallback strategy**: `AICourseGenerator` now prefers higher-tier Gemini models first (Gemini 3 Pro candidates), then falls back through compatible models when a candidate is unavailable for the provided API key
+- **AI one-page generation contract**: Updated AI prompt + post-processing to keep output in exactly one page with up to 20 blocks and course-adaptive block type selection
+- **AI JSON repair + normalization**: Added parse-repair flow and structural normalization to improve resilience when the model returns malformed or legacy-shaped JSON
+- **Code playground regression tests**: Added `test/code_runner_test.dart` to cover expression output, assignment/arithmetic behavior, no-output behavior, and explicit runtime errors for unsupported functions
 
 ### Changed
 - **Viewer routing**: `/viewer` route now accepts `?courseId=<id>` query param; back button returns to `/builder?courseId=<id>` preserving context
@@ -43,6 +50,13 @@ Phone-mockup Viewer with interactive question blocks, visibilityRule gating, cou
 - **Builder long-list drag UX**: Added edge auto-scroll during reorder drag and precision insertion index tracking for dense/long block lists
 - **Validation gates enforced at lifecycle points**: Import, cloud save, and publish now use the same schema validator; blocking errors prevent operation and show actionable path-based details in Builder dialogs
 - **Export validation reuse**: `CourseExport.validateForExport()` now delegates to the centralized schema validator instead of maintaining duplicated rule logic
+- **AI generate dialog copy/status**: Dialog now communicates one-page/max-20 strategy and reports the chosen Gemini model in generation success status
+- **Schema constants source of truth**: `CourseSchemaValidator` now reads schema URL/version from `Course` model constants instead of duplicate literals
+
+### Fixed
+- **Code Playground `(no output)` false negatives**: Python-like runner now evaluates common expressions (`type`, `int`, `float`, `round`, assignments, arithmetic) instead of only matching `print("literal")`
+- **Expected output matching robustness**: Output comparison now ignores whitespace/newline formatting differences to reduce false "Try again" states
+- **Property panel block ID display crash**: Prevented substring range errors when block IDs are shorter than 20 characters
 
 ---
 

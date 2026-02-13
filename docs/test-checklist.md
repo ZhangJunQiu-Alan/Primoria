@@ -27,6 +27,7 @@
 ## 4. Code Playground Run
 
 - [ ] Enter `print("Hello")` → Run → output shows `Hello`
+- [ ] Enter `print(type(5))`, `print(type(3.0))`, `print(int(3.9))`, `print(round(3.9))` → Run → output shows `<class 'int'>`, `<class 'float'>`, `3`, `4` (line by line)
 - [ ] With expected output set → shows "Correct" or "Try again"
 
 ## 5. Module Ordering and Deletion
@@ -44,11 +45,14 @@
 ## 7. JSON Export
 
 - [ ] Export → validates title/pages → downloads JSON
+- [ ] Export includes `$schema` and `schemaVersion` metadata
 - [ ] JSON includes all pages and blocks
 
 ## 8. Schema Validation Gates
 
 - [ ] Import invalid course JSON (e.g. `correctAnswers` contains unknown option id) → import is blocked and dialog shows field path (like `$.pages[0].blocks[0].content.correctAnswers[0]`)
+- [ ] Import legacy unversioned / `0.9.x` JSON → migration runs before validation and import succeeds
+- [ ] Import unsupported `schemaVersion` (e.g. `9.0.0`) → import is blocked with explicit migration error
 - [ ] Save course with blocking schema errors → cloud save is blocked and dialog lists actionable field paths
 - [ ] Publish course with blocking schema errors (e.g. empty quiz question) → publish is blocked and dialog lists field paths
 - [ ] Save/import with warnings only (non-blocking) still succeeds and reports warning count

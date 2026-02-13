@@ -7,10 +7,7 @@ import '../models/course.dart';
 class AIGenerateDialog extends StatefulWidget {
   final Function(Course course) onCourseGenerated;
 
-  const AIGenerateDialog({
-    super.key,
-    required this.onCourseGenerated,
-  });
+  const AIGenerateDialog({super.key, required this.onCourseGenerated});
 
   @override
   State<AIGenerateDialog> createState() => _AIGenerateDialogState();
@@ -18,7 +15,6 @@ class AIGenerateDialog extends StatefulWidget {
 
 class _AIGenerateDialogState extends State<AIGenerateDialog> {
   final _apiKeyController = TextEditingController();
-  String? _fileName;
   bool _isLoading = false;
   String? _errorMessage;
   String? _statusMessage;
@@ -86,7 +82,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                         ),
                       ),
                       Text(
-                        'Upload a PDF and generate an interactive course',
+                        'Upload a PDF and generate a one-page course (max 20 blocks)',
                         style: TextStyle(
                           fontSize: AppFontSize.sm,
                           color: AppColors.neutral500,
@@ -202,6 +198,14 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                 ),
               ),
             ),
+            const SizedBox(height: AppSpacing.xs),
+            const Text(
+              'Output strategy: single page, up to 20 blocks, with course-appropriate block types.',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                color: AppColors.neutral500,
+              ),
+            ),
 
             // Error message
             if (_errorMessage != null) ...[
@@ -211,12 +215,17 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                 decoration: BoxDecoration(
                   color: AppColors.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                  border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                  border: Border.all(
+                    color: AppColors.error.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.error_outline,
-                        size: 20, color: AppColors.error),
+                    const Icon(
+                      Icons.error_outline,
+                      size: 20,
+                      color: AppColors.error,
+                    ),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Text(
@@ -251,7 +260,9 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                           height: 16,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation(AppColors.primary500),
+                            valueColor: AlwaysStoppedAnimation(
+                              AppColors.primary500,
+                            ),
                           ),
                         ),
                         const SizedBox(width: AppSpacing.sm),
@@ -271,8 +282,9 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                       LinearProgressIndicator(
                         value: _progress,
                         backgroundColor: AppColors.primary100,
-                        valueColor:
-                            const AlwaysStoppedAnimation(AppColors.primary500),
+                        valueColor: const AlwaysStoppedAnimation(
+                          AppColors.primary500,
+                        ),
                       ),
                     ],
                   ],
@@ -299,8 +311,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                           height: 16,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor:
-                                AlwaysStoppedAnimation(Colors.white),
+                            valueColor: AlwaysStoppedAnimation(Colors.white),
                           ),
                         )
                       : const Icon(Icons.auto_awesome, size: 18),
@@ -361,7 +372,8 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
     AICourseGenerator.setApiKey(_apiKeyController.text);
 
     setState(() {
-      _statusMessage = 'AI is analyzing the document...';
+      _statusMessage =
+          'AI is analyzing the document (Gemini 3 Pro preferred)...';
       _progress = 0.3;
     });
 
@@ -379,7 +391,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
     if (result.success && result.course != null) {
       setState(() {
         _progress = 1.0;
-        _statusMessage = 'Course generated!';
+        _statusMessage = result.message;
       });
 
       // Delay close so user can see success state

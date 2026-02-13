@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "0.9.0",
+  "id": "legacy-modules-course",
+  "title": "Legacy Modules Course",
+  "description": "Uses top-level modules + legacy block aliases",
+  "modules": [
+    {
+      "id": "module-1",
+      "name": "Legacy Module",
+      "items": [
+        {
+          "blockType": "codeBlock",
+          "blockId": "legacy-code",
+          "language": "python",
+          "code": "print(\"module legacy\")"
+        },
+        {
+          "blockType": "trueFalse",
+          "content": {
+            "question": "Python is interpreted.",
+            "correctAnswer": "true",
+            "explanation": "CPython executes bytecode with an interpreter."
+          }
+        },
+        {
+          "blockType": "text",
+          "content": "Legacy text block body without explicit content object"
+        }
+      ]
+    }
+  ]
+}
