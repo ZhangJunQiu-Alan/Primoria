@@ -24,6 +24,21 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
   bool _isRunning = false;
   bool _hasRun = false;
 
+  bool _matchesExpectedOutput() {
+    final expected = widget.content.expectedOutput;
+    if (expected == null) return false;
+    return _normalizeForComparison(_output) ==
+        _normalizeForComparison(expected);
+  }
+
+  String _normalizeForComparison(String value) {
+    return value
+        .replaceAll('\r\n', '\n')
+        .replaceAll('\r', '\n')
+        .replaceAll(RegExp(r'\s+'), '')
+        .trim();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -125,8 +140,9 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                             color: _isRunning
                                 ? AppColors.neutral600
                                 : AppColors.success,
-                            borderRadius:
-                                BorderRadius.circular(AppBorderRadius.sm),
+                            borderRadius: BorderRadius.circular(
+                              AppBorderRadius.sm,
+                            ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -141,8 +157,11 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                                   ),
                                 )
                               else
-                                const Icon(Icons.play_arrow,
-                                    size: 14, color: Colors.white),
+                                const Icon(
+                                  Icons.play_arrow,
+                                  size: 14,
+                                  color: Colors.white,
+                                ),
                               const SizedBox(width: 4),
                               Text(
                                 _isRunning ? 'Running...' : 'Run',
@@ -206,8 +225,11 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.terminal,
-                        size: 14, color: AppColors.neutral500),
+                    const Icon(
+                      Icons.terminal,
+                      size: 14,
+                      color: AppColors.neutral500,
+                    ),
                     const SizedBox(width: AppSpacing.xs),
                     const Text(
                       'Output',
@@ -220,40 +242,42 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                     const Spacer(),
                     // Check if output matches expected
                     if (widget.content.expectedOutput != null)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.xs,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _output == widget.content.expectedOutput
-                              ? AppColors.success
-                              : AppColors.warning,
-                          borderRadius:
-                              BorderRadius.circular(AppBorderRadius.sm),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              _output == widget.content.expectedOutput
-                                  ? Icons.check
-                                  : Icons.info_outline,
-                              size: 12,
-                              color: Colors.white,
+                      Builder(
+                        builder: (context) {
+                          final isCorrect = _matchesExpectedOutput();
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.xs,
+                              vertical: 2,
                             ),
-                            const SizedBox(width: 2),
-                            Text(
-                              _output == widget.content.expectedOutput
-                                  ? 'Correct'
-                                  : 'Try again',
-                              style: const TextStyle(
-                                fontSize: AppFontSize.xs,
-                                color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: isCorrect
+                                  ? AppColors.success
+                                  : AppColors.warning,
+                              borderRadius: BorderRadius.circular(
+                                AppBorderRadius.sm,
                               ),
                             ),
-                          ],
-                        ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  isCorrect ? Icons.check : Icons.info_outline,
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  isCorrect ? 'Correct' : 'Try again',
+                                  style: const TextStyle(
+                                    fontSize: AppFontSize.xs,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                   ],
                 ),
@@ -276,8 +300,11 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
           const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              const Icon(Icons.lightbulb_outline,
-                  size: 14, color: AppColors.warning),
+              const Icon(
+                Icons.lightbulb_outline,
+                size: 14,
+                color: AppColors.warning,
+              ),
               const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: Text(

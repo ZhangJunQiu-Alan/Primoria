@@ -195,13 +195,21 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
-            Text(
-              'ID: ${widget.block.id.substring(0, 20)}...',
-              style: const TextStyle(
-                fontSize: AppFontSize.xs,
-                color: AppColors.neutral400,
-                fontFamily: 'monospace',
-              ),
+            Builder(
+              builder: (context) {
+                final blockId = widget.block.id;
+                final displayId = blockId.length > 20
+                    ? '${blockId.substring(0, 20)}...'
+                    : blockId;
+                return Text(
+                  'ID: $displayId',
+                  style: const TextStyle(
+                    fontSize: AppFontSize.xs,
+                    color: AppColors.neutral400,
+                    fontFamily: 'monospace',
+                  ),
+                );
+              },
             ),
           ],
         ),

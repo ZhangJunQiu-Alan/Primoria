@@ -1,0 +1,42 @@
+{
+  "courseId": "legacy-camelcase-course",
+  "metadata": {
+    "title": "Legacy CamelCase Course",
+    "description": "Legacy block type values without schema metadata"
+  },
+  "pages": [
+    {
+      "pageId": "intro-page",
+      "title": "Intro",
+      "blocks": [
+        {
+          "type": "codePlayground",
+          "id": "playground-legacy",
+          "content": {
+            "language": "python",
+            "initialCode": "print(\"legacy\")",
+            "expectedOutput": "legacy",
+            "hints": ["Run the code"]
+          }
+        },
+        {
+          "type": "multipleChoice",
+          "id": "quiz-legacy",
+          "content": {
+            "question": "Which language is this course about?",
+            "options": ["Python", "Rust", "Go"],
+            "correctAnswer": "Python"
+          }
+        },
+        {
+          "type": "fillBlank",
+          "id": "fill-legacy",
+          "content": {
+            "question": "Python creator is ______.",
+            "correctAnswer": "Guido van Rossum"
+          }
+        }
+      ]
+    }
+  ]
+}

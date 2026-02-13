@@ -6,7 +6,7 @@
 
 ## Builder
 1. [x] Enable Markdown rendering for text blocks — MarkdownBody in canvas, format toggle in property panel (2026-02-11)
-2. [ ] Update course prompt to match the new flow
+2. [x] Update course prompt to match the new flow — Gemini one-page generation (max 20 blocks), adaptive block-type strategy, JSON normalization/repair (2026-02-13)
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
 4. [x] Build home page: support common features (Profile, achievements, etc.) — Dashboard Home Page with Course Data, Income, Comments (2026-02-09)
 5. [x] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general) — Module panel now has General/Physical/Chemical expandable categories with search (2026-02-09)
@@ -17,7 +17,7 @@
 10. [x] Create test users in Supabase for sign-in testing
 11. [x] Wire up Dashboard to real Supabase course data (2026-02-10)
 12. [ ] Use Google sign-in (OAuth callback handling and session recovery)
-13. [ ] Import workflow refinement
+13. [~] Import workflow refinement — schema version migration path + diagnostics done (2026-02-13); remaining: broader historical format coverage
 14. [ ] Block reorder/insert refinement
 15. [~] More block types — True/False added (2026-02-11); remaining: animation, connect, etc.
 18. [x] Builder Preview button: phone-mockup viewer with interactive question blocks, visibilityRule gating, page navigation (2026-02-12)
@@ -28,6 +28,7 @@
 23. [x] MultipleChoice multi-select authoring + unordered validation — add `correctAnswers`, single/multi mode toggle, and exact set matching in Preview (2026-02-12)
 24. [x] Block reorder/insert refinement — insertion indicator, edge auto-scroll, and larger drag handle hitbox in Builder canvas (2026-02-12)
 25. [x] Matching block UX improvements — color-coded pairs, numbered badges, shuffle, tap-to-unpair, export validation, unit tests (2026-02-12)
+26. [x] Code Playground output reliability — Python-like expression evaluation + expected-output whitespace-tolerant matching (2026-02-13)
 16. [x] Robust schema validation — centralized validator + import/save/publish enforcement with field-path error details and warning/error severity (2026-02-12)
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 

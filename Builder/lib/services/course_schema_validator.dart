@@ -47,8 +47,8 @@ class CourseSchemaValidator {
   CourseSchemaValidator._();
 
   static const String _rootPath = r'$';
-  static const String _schemaUrl = 'https://primoria.com/course-schema/v1.json';
-  static const String _schemaVersion = '1.0.0';
+  static const String _schemaUrl = Course.schemaUrl;
+  static const String _schemaVersion = Course.schemaVersion;
 
   static final Map<String, BlockType> _blockTypesByValue = {
     for (final type in BlockType.values) type.value: type,
