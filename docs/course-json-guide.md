@@ -74,13 +74,14 @@ Save it as a `.json` file, then click "Import" in Builder to load it.
 | `pages` | Yes | Page array, at least one page |
 
 Legacy compatibility note:
-- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `multipleChoice`, `fillBlank`, and `trueFalse`.
+- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `multipleChoice`, `fillBlank`, `trueFalse`, and `animationBlock`.
 - Import will migrate these aliases to canonical values:
   - `code-block`
   - `code-playground`
   - `multiple-choice`
   - `fill-blank`
   - `true-false`
+  - `animation`
 
 ### 2. metadata
 
@@ -406,7 +407,34 @@ Multi-select example:
 
 ---
 
-### 8. video - Video Block
+### 8. animation - Animation Block
+
+```json
+{
+  "type": "animation",
+  "id": "anim-001",
+  "position": { "order": 7 },
+  "style": { "spacing": "md", "alignment": "center" },
+  "content": {
+    "preset": "bouncing-dot",
+    "durationMs": 2000,
+    "loop": true,
+    "speed": 1.0
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `preset` | Yes | `bouncing-dot` or `pulse-bars` |
+| `durationMs` | No | Duration in milliseconds, recommended `300`-`10000` |
+| `loop` | No | Whether to loop animation, default `true` |
+| `speed` | No | Playback speed multiplier, recommended `0.25`-`3.0` |
+
+---
+
+### 9. video - Video Block
 
 ```json
 {

@@ -11,6 +11,7 @@ enum BlockType {
   fillBlank('fill-blank', 'Fill in the Blank', '___'),
   trueFalse('true-false', 'True/False', 'T/F'),
   matching('matching', 'Matching', '⟷'),
+  animation('animation', 'Animation', '◌'),
   video('video', 'Video', '🎬');
 
   final String value;

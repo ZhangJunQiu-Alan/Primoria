@@ -1,9 +1,9 @@
 # Changelog
 
-## [Unreleased] - 2026-02-12
+## [Unreleased] - 2026-02-14
 
 ### Summary
-Phone-mockup Viewer with interactive question blocks, schema migration compatibility, AI one-page generation improvements, and Code Playground runtime fixes.
+Phone-mockup Viewer/interactive blocks, schema migration + validation hardening, AI one-page generation diagnostics, Animation block MVP, and Code Playground runtime fixes.
 
 ### Added
 - **Matching block UX improvements (Viewer)**: Color-coded pair chips with 8-accent palette, numbered circle badges on paired items, shuffled right column on init to prevent trivial positional matching, tap-to-unpair (tap an already-paired left or right item to clear the pair before submission), enhanced green/red feedback on both columns after submit
@@ -32,7 +32,10 @@ Phone-mockup Viewer with interactive question blocks, schema migration compatibi
 - **AI generation model fallback strategy**: `AICourseGenerator` now prefers higher-tier Gemini models first (Gemini 3 Pro candidates), then falls back through compatible models when a candidate is unavailable for the provided API key
 - **AI one-page generation contract**: Updated AI prompt + post-processing to keep output in exactly one page with up to 20 blocks and course-adaptive block type selection
 - **AI JSON repair + normalization**: Added parse-repair flow and structural normalization to improve resilience when the model returns malformed or legacy-shaped JSON
+- **AI prompt versioning + diagnostics**: Added `promptVersion` metadata and per-request diagnostics (prompt fingerprint/source, model, stage, latencies, parse result, validation pass/fail) in generation results and developer logs
 - **Code playground regression tests**: Added `test/code_runner_test.dart` to cover expression output, assignment/arithmetic behavior, no-output behavior, and explicit runtime errors for unsupported functions
+- **AI diagnostics regression tests**: Added `test/ai_generation_diagnostics_test.dart` for prompt-version attribution and custom/default prompt source tracking
+- **Animation block MVP**: Added new `animation` block type with presets (`bouncing-dot`, `pulse-bars`) and basic parameters (`durationMs`, `loop`, `speed`) including Builder property editing + lightweight Builder/Viewer preview rendering
 
 ### Changed
 - **Viewer routing**: `/viewer` route now accepts `?courseId=<id>` query param; back button returns to `/builder?courseId=<id>` preserving context
@@ -52,6 +55,8 @@ Phone-mockup Viewer with interactive question blocks, schema migration compatibi
 - **Export validation reuse**: `CourseExport.validateForExport()` now delegates to the centralized schema validator instead of maintaining duplicated rule logic
 - **AI generate dialog copy/status**: Dialog now communicates one-page/max-20 strategy and reports the chosen Gemini model in generation success status
 - **Schema constants source of truth**: `CourseSchemaValidator` now reads schema URL/version from `Course` model constants instead of duplicate literals
+- **AI generation quality gate**: Generated courses now run through centralized schema validation after parsing/normalization; blocking errors fail at the validation stage with explicit diagnostics
+- **Schema + migration compatibility for animation**: Validator and legacy migrator now recognize/normalize `animation` content so import/export validation and compatibility flow remain consistent
 
 ### Fixed
 - **Code Playground `(no output)` false negatives**: Python-like runner now evaluates common expressions (`type`, `int`, `float`, `round`, assignments, arithmetic) instead of only matching `print("literal")`

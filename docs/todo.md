@@ -10,7 +10,7 @@
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
 4. [x] Build home page: support common features (Profile, achievements, etc.) — Dashboard Home Page with Course Data, Income, Comments (2026-02-09)
 5. [x] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general) — Module panel now has General/Physical/Chemical expandable categories with search (2026-02-09)
-6. [~] Add more question types — True/False done (2026-02-11), Matching UX enhanced (2026-02-12); remaining: animation, etc.
+6. [~] Add more question types — True/False done (2026-02-11), Matching UX enhanced (2026-02-12), Animation MVP done (2026-02-14); remaining: connect, etc.
 7. [ ] Add multi-user collaboration
 8. [x] Landing page with sign-in modal and Supabase auth integration (2026-02-09)
 9. [x] Builder UI redesign — rounded card panels, pill-shaped buttons, simplified empty states (2026-02-09)
@@ -19,7 +19,7 @@
 12. [ ] Use Google sign-in (OAuth callback handling and session recovery)
 13. [~] Import workflow refinement — schema version migration path + diagnostics done (2026-02-13); remaining: broader historical format coverage
 14. [ ] Block reorder/insert refinement
-15. [~] More block types — True/False added (2026-02-11); remaining: animation, connect, etc.
+15. [~] More block types — True/False added (2026-02-11), Animation MVP added (2026-02-14); remaining: connect, etc.
 18. [x] Builder Preview button: phone-mockup viewer with interactive question blocks, visibilityRule gating, page navigation (2026-02-12)
 19. [x] Dashboard HomePage wired to backend — fans/likes/shares from DB, comments with count rules, income with fallback (2026-02-11)
 20. [x] Create Course modal with DB persistence — name input, validation, error feedback, auto-refresh list (2026-02-11)
@@ -29,6 +29,7 @@
 24. [x] Block reorder/insert refinement — insertion indicator, edge auto-scroll, and larger drag handle hitbox in Builder canvas (2026-02-12)
 25. [x] Matching block UX improvements — color-coded pairs, numbered badges, shuffle, tap-to-unpair, export validation, unit tests (2026-02-12)
 26. [x] Code Playground output reliability — Python-like expression evaluation + expected-output whitespace-tolerant matching (2026-02-13)
+27. [x] AI generation diagnostics + validation gate — prompt versioning/fingerprint/source telemetry, parse/validation stage diagnostics, and blocking schema validation on AI output (2026-02-14)
 16. [x] Robust schema validation — centralized validator + import/save/publish enforcement with field-path error details and warning/error severity (2026-02-12)
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 

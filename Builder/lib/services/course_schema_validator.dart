@@ -415,6 +415,13 @@ class CourseSchemaValidator {
           findings,
           isStrict: isStrict,
         );
+      case BlockType.animation:
+        _validateAnimationContent(
+          content,
+          contentPath,
+          findings,
+          isStrict: isStrict,
+        );
       case BlockType.video:
         _validateVideoContent(
           content,
@@ -957,6 +964,67 @@ class CourseSchemaValidator {
     final title = content['title'];
     if (title != null && title is! String) {
       _addWarning(findings, '$contentPath.title', 'Expected string');
+    }
+  }
+
+  static void _validateAnimationContent(
+    Map<String, dynamic> content,
+    String contentPath,
+    List<CourseSchemaFinding> findings, {
+    required bool isStrict,
+  }) {
+    final preset = content['preset'];
+    if (preset is! String) {
+      _addError(findings, '$contentPath.preset', 'Missing or invalid string');
+    } else if (!AnimationContent.supportedPresets.contains(preset)) {
+      _addError(findings, '$contentPath.preset', 'Unknown preset "$preset"');
+    }
+
+    final durationMs = content['durationMs'];
+    if (durationMs != null && durationMs is! int) {
+      _addError(findings, '$contentPath.durationMs', 'Expected integer');
+    } else if (durationMs is int && durationMs <= 0) {
+      _addError(findings, '$contentPath.durationMs', 'Must be > 0');
+    } else if (durationMs is int && (durationMs < 300 || durationMs > 10000)) {
+      if (isStrict) {
+        _addError(
+          findings,
+          '$contentPath.durationMs',
+          'Must be between 300 and 10000',
+        );
+      } else {
+        _addWarning(
+          findings,
+          '$contentPath.durationMs',
+          'Recommended range is 300-10000',
+        );
+      }
+    }
+
+    final loop = content['loop'];
+    if (loop != null && loop is! bool) {
+      _addWarning(findings, '$contentPath.loop', 'Expected boolean');
+    }
+
+    final speed = content['speed'];
+    if (speed != null && speed is! num) {
+      _addError(findings, '$contentPath.speed', 'Expected number');
+    } else if (speed is num && speed <= 0) {
+      _addError(findings, '$contentPath.speed', 'Must be > 0');
+    } else if (speed is num && (speed < 0.25 || speed > 3.0)) {
+      if (isStrict) {
+        _addError(
+          findings,
+          '$contentPath.speed',
+          'Must be between 0.25 and 3.0',
+        );
+      } else {
+        _addWarning(
+          findings,
+          '$contentPath.speed',
+          'Recommended range is 0.25-3.0',
+        );
+      }
     }
   }
 

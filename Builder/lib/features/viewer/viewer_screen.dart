@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import '../../theme/design_tokens.dart';
 import '../../providers/course_provider.dart';
 import '../../models/models.dart';
+import '../../widgets/block_widgets/animation_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
 
 class ViewerScreen extends ConsumerWidget {
@@ -478,6 +479,8 @@ class _InteractiveBlockPreview extends StatelessWidget {
           checkTrigger: checkTrigger,
           onAnswered: onAnswered,
         );
+      case BlockType.animation:
+        return AnimationBlockWidget(content: block.content as AnimationContent);
       case BlockType.video:
         return Container(
           height: 180,

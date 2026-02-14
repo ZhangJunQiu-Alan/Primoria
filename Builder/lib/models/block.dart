@@ -71,6 +71,8 @@ abstract class BlockContent {
         return TrueFalseContent.fromJson(json);
       case BlockType.matching:
         return MatchingContent.fromJson(json);
+      case BlockType.animation:
+        return AnimationContent.fromJson(json);
       case BlockType.video:
         return VideoContent.fromJson(json);
     }
@@ -485,6 +487,82 @@ class MatchingContent implements BlockContent {
   }
 }
 
+/// Animation content
+class AnimationContent implements BlockContent {
+  static const String presetBouncingDot = 'bouncing-dot';
+  static const String presetPulseBars = 'pulse-bars';
+  static const Set<String> supportedPresets = {
+    presetBouncingDot,
+    presetPulseBars,
+  };
+
+  final String preset;
+  final int durationMs;
+  final bool loop;
+  final double speed;
+
+  const AnimationContent({
+    this.preset = presetBouncingDot,
+    this.durationMs = 2000,
+    this.loop = true,
+    this.speed = 1.0,
+  });
+
+  factory AnimationContent.fromJson(Map<String, dynamic> json) {
+    final rawPreset = json['preset'] as String? ?? presetBouncingDot;
+    final rawDuration = json['durationMs'] ?? json['duration'];
+    final rawSpeed = json['speed'];
+
+    return AnimationContent(
+      preset: supportedPresets.contains(rawPreset)
+          ? rawPreset
+          : presetBouncingDot,
+      durationMs: _normalizeDuration(rawDuration),
+      loop: json['loop'] as bool? ?? true,
+      speed: _normalizeSpeed(rawSpeed),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'preset': preset,
+    'durationMs': durationMs,
+    'loop': loop,
+    'speed': speed,
+  };
+
+  AnimationContent copyWith({
+    String? preset,
+    int? durationMs,
+    bool? loop,
+    double? speed,
+  }) {
+    final nextPreset = preset ?? this.preset;
+    return AnimationContent(
+      preset: supportedPresets.contains(nextPreset)
+          ? nextPreset
+          : presetBouncingDot,
+      durationMs: _normalizeDuration(durationMs ?? this.durationMs),
+      loop: loop ?? this.loop,
+      speed: _normalizeSpeed(speed ?? this.speed),
+    );
+  }
+
+  static int _normalizeDuration(dynamic raw) {
+    final value = raw is num ? raw.toInt() : 2000;
+    if (value < 300) return 300;
+    if (value > 10000) return 10000;
+    return value;
+  }
+
+  static double _normalizeSpeed(dynamic raw) {
+    final value = raw is num ? raw.toDouble() : 1.0;
+    if (value < 0.25) return 0.25;
+    if (value > 3.0) return 3.0;
+    return value;
+  }
+}
+
 /// Video content
 class VideoContent implements BlockContent {
   final String url;
@@ -587,6 +665,8 @@ class Block {
             MatchingPair(leftId: 'l3', rightId: 'r3'),
           ],
         );
+      case BlockType.animation:
+        return const AnimationContent();
       case BlockType.video:
         return const VideoContent();
     }

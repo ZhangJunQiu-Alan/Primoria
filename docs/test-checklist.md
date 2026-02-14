@@ -23,6 +23,7 @@
 - [ ] Enter image URL → canvas displays image
 - [ ] Import local image file in Image block → canvas displays imported image
 - [ ] Edit code playground initial code / expected output
+- [ ] Insert Animation block, switch preset (`Bouncing Dot`/`Pulse Bars`), and adjust `durationMs` / `loop` / `speed` in PropertyPanel
 
 ## 4. Code Playground Run
 
@@ -62,6 +63,7 @@
 - [ ] Preview button → navigates to Viewer with current content
 - [ ] Unsaved Builder edits survive Builder → Preview → Builder navigation for existing courses (`/builder?courseId=<id>`)
 - [ ] After successful cloud Save, reopening Builder does not restore stale draft content
+- [ ] Animation block preview in Viewer reflects selected preset and parameter changes (duration/loop/speed)
 - [ ] For `visibilityRule: afterPreviousCorrect`, hidden blocks show true blank space (no lock placeholder) before unlock
 - [ ] For chained blocks, if a preceding gated block is hidden, subsequent blocks remain hidden until the gated block is unlocked
 - [ ] Multiple Choice: can switch between Single Select and Multi Select in PropertyPanel
@@ -109,6 +111,10 @@
 
 - [ ] `/builder` → blank new course
 - [ ] `/builder?courseId=<id>` → loads existing course
+
+## 15. AI Diagnostics (Regression)
+
+- [ ] Trigger AI generation once and verify developer log includes one concise diagnostics line with `promptVersion`, selected `model`, latency fields (`total/generate/parse/validate`), `parseResult`, `validation.passed`, and final `stage`
 
 ## Known Issues
 
