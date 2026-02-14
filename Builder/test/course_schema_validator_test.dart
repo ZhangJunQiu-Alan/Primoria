@@ -123,6 +123,92 @@ void main() {
       isTrue,
     );
   });
+
+  test('animation block passes strict schema validation', () {
+    final block = Block.create(BlockType.animation, order: 0).copyWith(
+      content: const AnimationContent(
+        preset: AnimationContent.presetPulseBars,
+        durationMs: 1600,
+        loop: true,
+        speed: 1.25,
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final result = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isTrue);
+  });
+
+  test('animation block invalid config reports actionable paths', () {
+    final block = Block.create(
+      BlockType.animation,
+      order: 0,
+    ).copyWith(content: const AnimationContent());
+    final course = _buildCourseWithBlock(block);
+    final json = course.toJson();
+    final pages = json['pages'] as List<dynamic>;
+    final page = pages.first as Map<String, dynamic>;
+    final blocks = page['blocks'] as List<dynamic>;
+    final blockJson = blocks.first as Map<String, dynamic>;
+    final content = blockJson['content'] as Map<String, dynamic>;
+    content['preset'] = 'unknown';
+    content['durationMs'] = 'fast';
+    content['speed'] = -2;
+
+    final result = CourseSchemaValidator.validateJsonMap(
+      json,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isFalse);
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.preset'),
+      ),
+      isTrue,
+    );
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.durationMs'),
+      ),
+      isTrue,
+    );
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.speed'),
+      ),
+      isTrue,
+    );
+  });
+
+  test('animation configuration is preserved by export/import', () {
+    final block = Block.create(BlockType.animation, order: 0).copyWith(
+      content: const AnimationContent(
+        preset: AnimationContent.presetPulseBars,
+        durationMs: 2400,
+        loop: false,
+        speed: 1.75,
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final exported = CourseExport.exportToJson(course);
+    final imported = CourseImport.importFromString(exported);
+
+    expect(imported.success, isTrue);
+    final restored = imported.course!;
+    final restoredBlock = restored.pages.first.blocks.first;
+    expect(restoredBlock.type, BlockType.animation);
+    final content = restoredBlock.content as AnimationContent;
+    expect(content.preset, AnimationContent.presetPulseBars);
+    expect(content.durationMs, 2400);
+    expect(content.loop, isFalse);
+    expect(content.speed, 1.75);
+  });
 }
 
 Course _buildCourseWithMultipleChoice(MultipleChoiceContent content) {
@@ -130,6 +216,10 @@ Course _buildCourseWithMultipleChoice(MultipleChoiceContent content) {
     BlockType.multipleChoice,
     order: 0,
   ).copyWith(content: content);
+  return _buildCourseWithBlock(block);
+}
+
+Course _buildCourseWithBlock(Block block) {
   final page = CoursePage.create(title: 'Page 1').copyWith(blocks: [block]);
   return Course.create(title: 'Validation Test').copyWith(pages: [page]);
 }

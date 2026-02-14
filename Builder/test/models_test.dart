@@ -193,6 +193,49 @@ void main() {
     });
   });
 
+  group('AnimationContent', () {
+    test('AnimationContent serialization', () {
+      const content = AnimationContent(
+        preset: AnimationContent.presetPulseBars,
+        durationMs: 1800,
+        loop: false,
+        speed: 1.5,
+      );
+      final json = content.toJson();
+
+      expect(json['preset'], AnimationContent.presetPulseBars);
+      expect(json['durationMs'], 1800);
+      expect(json['loop'], false);
+      expect(json['speed'], 1.5);
+    });
+
+    test('AnimationContent deserialization with normalization', () {
+      final json = {
+        'preset': 'unknown-preset',
+        'durationMs': 120,
+        'loop': true,
+        'speed': 10,
+      };
+      final content = AnimationContent.fromJson(json);
+
+      expect(content.preset, AnimationContent.presetBouncingDot);
+      expect(content.durationMs, 300);
+      expect(content.loop, isTrue);
+      expect(content.speed, 3.0);
+    });
+
+    test('Block.create animation uses AnimationContent defaults', () {
+      final block = Block.create(BlockType.animation, order: 0);
+
+      expect(block.content, isA<AnimationContent>());
+      final content = block.content as AnimationContent;
+      expect(content.preset, AnimationContent.presetBouncingDot);
+      expect(content.durationMs, 2000);
+      expect(content.loop, isTrue);
+      expect(content.speed, 1.0);
+    });
+  });
+
   group('MultipleChoiceContent', () {
     test('MultipleChoiceContent serialization', () {
       final content = MultipleChoiceContent(

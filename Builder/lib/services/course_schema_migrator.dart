@@ -55,6 +55,10 @@ class CourseSchemaMigrator {
     'true-false': 'true-false',
     'true_false': 'true-false',
     'matching': 'matching',
+    'animation': 'animation',
+    'animationblock': 'animation',
+    'animation-block': 'animation',
+    'animation_block': 'animation',
     'video': 'video',
   };
 
@@ -596,6 +600,30 @@ class CourseSchemaMigrator {
       };
     }
 
+    if (type == 'animation') {
+      final rawDuration =
+          content['durationMs'] ??
+          content['duration'] ??
+          blockMap['durationMs'];
+      final durationMs = rawDuration is num ? rawDuration.toInt() : 2000;
+      final rawSpeed = content['speed'] ?? blockMap['speed'];
+      final speed = rawSpeed is num ? rawSpeed.toDouble() : 1.0;
+      final rawLoop = content['loop'] ?? blockMap['loop'];
+      final loop = rawLoop is bool ? rawLoop : true;
+      return {
+        'preset': _normalizeAnimationPreset(
+          _asString(content['preset']) ??
+              _asString(content['animationPreset']) ??
+              _asString(blockMap['preset']) ??
+              _asString(blockMap['animationPreset']) ??
+              'bouncing-dot',
+        ),
+        'durationMs': durationMs,
+        'loop': loop,
+        'speed': speed,
+      };
+    }
+
     if (type == 'video') {
       return {
         'url': _asString(content['url']) ?? _asString(content['src']) ?? '',
@@ -859,6 +887,23 @@ class CourseSchemaMigrator {
         .map((item) => item.trim())
         .where((item) => item.isNotEmpty)
         .toList();
+  }
+
+  static String _normalizeAnimationPreset(String rawPreset) {
+    final normalized = rawPreset.trim().toLowerCase();
+    switch (normalized) {
+      case 'pulse-bars':
+      case 'pulsebars':
+      case 'bars':
+      case 'wave-bars':
+        return 'pulse-bars';
+      case 'bouncing-dot':
+      case 'bouncingdot':
+      case 'bounce':
+      case 'dot':
+      default:
+        return 'bouncing-dot';
+    }
   }
 
   static String? _asString(dynamic value) => value is String ? value : null;

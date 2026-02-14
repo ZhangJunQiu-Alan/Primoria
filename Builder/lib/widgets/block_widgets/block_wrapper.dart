@@ -5,6 +5,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../theme/design_tokens.dart';
 import '../../models/models.dart';
 import '../../services/block_registry.dart';
+import 'animation_block_widget.dart';
 import 'code_playground_widget.dart';
 
 /// Block wrapper - handles selection, delete, and other common behavior
@@ -191,6 +192,8 @@ class BlockWrapper extends StatelessWidget {
         );
       case BlockType.matching:
         return _MatchingBlockContent(content: block.content as MatchingContent);
+      case BlockType.animation:
+        return AnimationBlockWidget(content: block.content as AnimationContent);
       case BlockType.video:
         return _VideoBlockContent(content: block.content as VideoContent);
     }

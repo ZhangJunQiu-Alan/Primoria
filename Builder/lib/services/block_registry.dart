@@ -8,81 +8,91 @@ class BlockRegistry {
 
   /// Get all available module types
   static List<BlockTypeInfo> get allTypes => [
-        BlockTypeInfo(
-          type: BlockType.text,
-          name: 'Text',
-          description: 'Rich text / Markdown',
-          icon: Icons.text_fields,
-          priority: 0,
-        ),
-        BlockTypeInfo(
-          type: BlockType.image,
-          name: 'Image',
-          description: 'Image block',
-          icon: Icons.image,
-          priority: 1,
-        ),
-        BlockTypeInfo(
-          type: BlockType.codeBlock,
-          name: 'Code Block',
-          description: 'Code snippet + syntax highlighting',
-          icon: Icons.code,
-          priority: 2,
-        ),
-        BlockTypeInfo(
-          type: BlockType.codePlayground,
-          name: 'Code Playground',
-          description: 'Runnable code editor',
-          icon: Icons.play_circle_outline,
-          priority: 3,
-        ),
-        BlockTypeInfo(
-          type: BlockType.multipleChoice,
-          name: 'Multiple Choice',
-          description: 'Single / multi-select question',
-          icon: Icons.check_circle_outline,
-          priority: 4,
-        ),
-        BlockTypeInfo(
-          type: BlockType.fillBlank,
-          name: 'Fill in the Blank',
-          description: 'Fill-in-the-blank exercise',
-          icon: Icons.edit_note,
-          priority: 5,
-        ),
-        BlockTypeInfo(
-          type: BlockType.trueFalse,
-          name: 'True/False',
-          description: 'True or false question',
-          icon: Icons.toggle_on_outlined,
-          priority: 6,
-        ),
-        BlockTypeInfo(
-          type: BlockType.matching,
-          name: 'Matching',
-          description: 'Match items between two columns',
-          icon: Icons.compare_arrows,
-          priority: 7,
-        ),
-        BlockTypeInfo(
-          type: BlockType.video,
-          name: 'Video',
-          description: 'Embedded video',
-          icon: Icons.videocam,
-          priority: 8,
-        ),
-      ];
+    BlockTypeInfo(
+      type: BlockType.text,
+      name: 'Text',
+      description: 'Rich text / Markdown',
+      icon: Icons.text_fields,
+      priority: 0,
+    ),
+    BlockTypeInfo(
+      type: BlockType.image,
+      name: 'Image',
+      description: 'Image block',
+      icon: Icons.image,
+      priority: 1,
+    ),
+    BlockTypeInfo(
+      type: BlockType.codeBlock,
+      name: 'Code Block',
+      description: 'Code snippet + syntax highlighting',
+      icon: Icons.code,
+      priority: 2,
+    ),
+    BlockTypeInfo(
+      type: BlockType.codePlayground,
+      name: 'Code Playground',
+      description: 'Runnable code editor',
+      icon: Icons.play_circle_outline,
+      priority: 3,
+    ),
+    BlockTypeInfo(
+      type: BlockType.multipleChoice,
+      name: 'Multiple Choice',
+      description: 'Single / multi-select question',
+      icon: Icons.check_circle_outline,
+      priority: 4,
+    ),
+    BlockTypeInfo(
+      type: BlockType.fillBlank,
+      name: 'Fill in the Blank',
+      description: 'Fill-in-the-blank exercise',
+      icon: Icons.edit_note,
+      priority: 5,
+    ),
+    BlockTypeInfo(
+      type: BlockType.trueFalse,
+      name: 'True/False',
+      description: 'True or false question',
+      icon: Icons.toggle_on_outlined,
+      priority: 6,
+    ),
+    BlockTypeInfo(
+      type: BlockType.matching,
+      name: 'Matching',
+      description: 'Match items between two columns',
+      icon: Icons.compare_arrows,
+      priority: 7,
+    ),
+    BlockTypeInfo(
+      type: BlockType.animation,
+      name: 'Animation',
+      description: 'Preset animation with basic controls',
+      icon: Icons.animation,
+      priority: 8,
+    ),
+    BlockTypeInfo(
+      type: BlockType.video,
+      name: 'Video',
+      description: 'Embedded video',
+      icon: Icons.videocam,
+      priority: 9,
+    ),
+  ];
 
   /// Get MVP priority modules (P0 + P1)
   static List<BlockTypeInfo> get mvpTypes => allTypes
-      .where((t) =>
-          t.type == BlockType.text ||
-          t.type == BlockType.image ||
-          t.type == BlockType.codeBlock ||
-          t.type == BlockType.codePlayground ||
-          t.type == BlockType.multipleChoice ||
-          t.type == BlockType.trueFalse ||
-          t.type == BlockType.matching)
+      .where(
+        (t) =>
+            t.type == BlockType.text ||
+            t.type == BlockType.image ||
+            t.type == BlockType.codeBlock ||
+            t.type == BlockType.codePlayground ||
+            t.type == BlockType.multipleChoice ||
+            t.type == BlockType.trueFalse ||
+            t.type == BlockType.matching ||
+            t.type == BlockType.animation,
+      )
       .toList();
 
   /// Get info by type

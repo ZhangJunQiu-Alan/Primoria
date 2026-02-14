@@ -333,6 +333,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         return _buildTrueFalseEditor();
       case BlockType.matching:
         return _buildMatchingEditor();
+      case BlockType.animation:
+        return _buildAnimationEditor();
       default:
         return const SizedBox.shrink();
     }
@@ -757,6 +759,129 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
               ),
             );
             _updateBlock(updatedBlock);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAnimationEditor() {
+    final content = widget.block.content as AnimationContent;
+
+    return _PropertySection(
+      title: 'Animation',
+      children: [
+        DropdownButtonFormField<String>(
+          initialValue: content.preset,
+          decoration: const InputDecoration(
+            labelText: 'Preset',
+            border: OutlineInputBorder(),
+          ),
+          items: const [
+            DropdownMenuItem(
+              value: AnimationContent.presetBouncingDot,
+              child: Text('Bouncing Dot'),
+            ),
+            DropdownMenuItem(
+              value: AnimationContent.presetPulseBars,
+              child: Text('Pulse Bars'),
+            ),
+          ],
+          onChanged: (value) {
+            if (value == null) return;
+            _updateBlock(
+              widget.block.copyWith(content: content.copyWith(preset: value)),
+            );
+          },
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          children: [
+            const Text(
+              'Duration',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral500,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              '${content.durationMs} ms',
+              style: const TextStyle(
+                fontSize: AppFontSize.xs,
+                color: AppColors.neutral600,
+              ),
+            ),
+          ],
+        ),
+        Slider(
+          value: content.durationMs.toDouble(),
+          min: 300,
+          max: 10000,
+          divisions: 97,
+          label: '${content.durationMs} ms',
+          onChanged: (value) {
+            _updateBlock(
+              widget.block.copyWith(
+                content: content.copyWith(durationMs: value.round()),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Row(
+          children: [
+            const Text(
+              'Loop',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral500,
+              ),
+            ),
+            const Spacer(),
+            Switch(
+              value: content.loop,
+              onChanged: (value) {
+                _updateBlock(
+                  widget.block.copyWith(content: content.copyWith(loop: value)),
+                );
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Row(
+          children: [
+            const Text(
+              'Speed',
+              style: TextStyle(
+                fontSize: AppFontSize.xs,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral500,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              '${content.speed.toStringAsFixed(2)}x',
+              style: const TextStyle(
+                fontSize: AppFontSize.xs,
+                color: AppColors.neutral600,
+              ),
+            ),
+          ],
+        ),
+        Slider(
+          value: content.speed,
+          min: 0.25,
+          max: 3.0,
+          divisions: 11,
+          label: '${content.speed.toStringAsFixed(2)}x',
+          onChanged: (value) {
+            _updateBlock(
+              widget.block.copyWith(content: content.copyWith(speed: value)),
+            );
           },
         ),
       ],

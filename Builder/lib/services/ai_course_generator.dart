@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/course.dart';
+import 'course_schema_validator.dart';
 import 'file_picker.dart' as fp;
 
 /// AI course generation service (Gemini API)
@@ -21,6 +22,7 @@ class AICourseGenerator {
     'gemini-2.0-flash',
   ];
   static const int _maxBlocksPerPage = 20;
+  static const String _promptVersion = '2026-02-13.ai-course-v1';
   static String? _apiKey;
 
   /// Set API key
@@ -30,6 +32,7 @@ class AICourseGenerator {
 
   /// Get current API key
   static String? get apiKey => _apiKey;
+  static String get promptVersion => _promptVersion;
 
   /// Prompt template
   static const String _courseGenerationPrompt = '''
@@ -95,9 +98,12 @@ Allowed block types and exact type values:
 9) video
 {"type":"video","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
 
+10) animation
+{"type":"animation","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
+
 Course-adaptive block strategy:
 - Programming / CS: include code-block + code-playground + conceptual quizzes (multiple-choice / fill-blank / matching / true-false).
-- Math / Physics / Engineering: prioritize worked explanations (text), formula understanding checks (fill-blank, true-false), and concept mapping (matching).
+- Math / Physics / Engineering: prioritize worked explanations (text), formula understanding checks (fill-blank, true-false), concept mapping (matching), and simple animation when it helps.
 - Language / History / Business / Humanities: prioritize text + multiple-choice + fill-blank + matching; add image/video only when it improves understanding.
 - Use at least 4 different block types when the source material supports it.
 - Keep an explain-practice rhythm: usually 1 assessment block after every 1-2 concept blocks.
@@ -112,8 +118,61 @@ Generate the course based on the PDF:
     required String fileName,
     String? customPrompt,
   }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+    final prompt = customPrompt ?? _courseGenerationPrompt;
+    final promptSource = customPrompt == null ? 'default' : 'custom';
+    final promptFingerprint = _fingerprintPrompt(prompt);
+
+    var stage = 'preflight';
+    var parseResult = AIGenerationParseResult.notAttempted;
+    bool? validationPassed;
+    var validationErrorCount = 0;
+    var validationWarningCount = 0;
+    var generationLatencyMs = 0;
+    var parseLatencyMs = 0;
+    var validationLatencyMs = 0;
+    var modelAttempts = 0;
+    String? selectedModel;
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+    }) {
+      totalTimer.stop();
+      final diagnostics = AIGenerationDiagnostics(
+        requestId: requestId,
+        promptVersion: _promptVersion,
+        promptSource: promptSource,
+        promptFingerprint: promptFingerprint,
+        model: selectedModel,
+        modelAttempts: modelAttempts,
+        totalLatencyMs: totalTimer.elapsedMilliseconds,
+        generationLatencyMs: generationLatencyMs,
+        parseLatencyMs: parseLatencyMs,
+        validationLatencyMs: validationLatencyMs,
+        parseResult: parseResult,
+        validationPassed: validationPassed,
+        validationErrorCount: validationErrorCount,
+        validationWarningCount: validationWarningCount,
+        stage: stage,
+        success: success,
+        message: message,
+      );
+      _logDiagnostics(diagnostics);
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: diagnostics,
+      );
+    }
+
     if (_apiKey == null || _apiKey!.isEmpty) {
-      return const GenerationResult(
+      return buildResult(
         success: false,
         message: 'Please set your Gemini API key first',
       );
@@ -124,57 +183,80 @@ Generate the course based on the PDF:
       final base64Data = base64Encode(pdfBytes);
 
       // 2. Call Gemini to generate the course
-      final prompt = customPrompt ?? _courseGenerationPrompt;
+      stage = 'generate';
       final jsonResult = await _generateContent(
         inlineData: base64Data,
         mimeType: 'application/pdf',
         prompt: prompt,
       );
+      generationLatencyMs = jsonResult.latencyMs ?? generationLatencyMs;
+      modelAttempts = jsonResult.attemptCount ?? modelAttempts;
+      selectedModel = jsonResult.model;
 
       if (!jsonResult.success) {
-        return GenerationResult(
+        return buildResult(
           success: false,
           message: 'Generation failed: ${jsonResult.message}',
         );
       }
 
       // 3. Parse JSON into Course object
-      try {
-        final decoded = await _parseJsonObjectWithRepair(
-          jsonResult.content!,
-          preferredModel: jsonResult.model,
-        );
-        if (decoded == null) {
-          return GenerationResult(
-            success: false,
-            message: 'Failed to parse course JSON: AI output is not valid JSON',
-            rawJson: _extractJson(jsonResult.content!),
-          );
-        }
+      stage = 'parse';
+      final parseTimer = Stopwatch()..start();
+      final parsedResult = await _parseJsonObjectWithRepair(
+        jsonResult.content!,
+        preferredModel: jsonResult.model,
+      );
+      parseTimer.stop();
+      parseLatencyMs = parseTimer.elapsedMilliseconds;
+      parseResult = parsedResult.result;
 
-        final normalizedJson = _normalizeGeneratedCourseJson(
-          decoded,
-          fileName: fileName,
-        );
-        final course = Course.fromJson(normalizedJson);
-
-        return GenerationResult(
-          success: true,
-          message: jsonResult.model != null
-              ? 'Course generated with ${jsonResult.model}'
-              : 'Course generated',
-          course: course,
-          rawJson: jsonEncode(normalizedJson),
-        );
-      } catch (e) {
-        return GenerationResult(
+      if (parsedResult.json == null) {
+        return buildResult(
           success: false,
-          message: 'Failed to parse course JSON: $e',
-          rawJson: jsonResult.content,
+          message: 'Failed to parse course JSON: AI output is not valid JSON',
+          rawJson: _extractJson(jsonResult.content!),
         );
       }
+
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        parsedResult.json!,
+        fileName: fileName,
+      );
+
+      final course = Course.fromJson(normalizedJson);
+
+      stage = 'validate';
+      final validationTimer = Stopwatch()..start();
+      final validation = CourseSchemaValidator.validateCourse(
+        course,
+        mode: CourseSchemaValidationMode.import,
+      );
+      validationTimer.stop();
+      validationLatencyMs = validationTimer.elapsedMilliseconds;
+      validationPassed = validation.isValid;
+      validationErrorCount = validation.errors.length;
+      validationWarningCount = validation.warnings.length;
+
+      if (!validation.isValid) {
+        return buildResult(
+          success: false,
+          message: _formatValidationFailureMessage(validation.errorMessages),
+          rawJson: jsonEncode(normalizedJson),
+        );
+      }
+
+      stage = 'complete';
+      return buildResult(
+        success: true,
+        message: jsonResult.model != null
+            ? 'Course generated with ${jsonResult.model}'
+            : 'Course generated',
+        course: course,
+        rawJson: jsonEncode(normalizedJson),
+      );
     } catch (e) {
-      return GenerationResult(success: false, message: 'Generation error: $e');
+      return buildResult(success: false, message: 'Generation error: $e');
     }
   }
 
@@ -191,8 +273,11 @@ Generate the course based on the PDF:
       );
     }
 
+    final timer = Stopwatch()..start();
     _ContentResult? lastFailure;
+    var attempts = 0;
     for (final model in _modelCandidates) {
+      attempts += 1;
       final result = await _generateContentWithModel(
         model: model,
         inlineData: inlineData,
@@ -200,16 +285,30 @@ Generate the course based on the PDF:
         prompt: prompt,
       );
 
-      if (result.success) return result;
+      if (result.success) {
+        timer.stop();
+        return result.copyWith(
+          attemptCount: attempts,
+          latencyMs: timer.elapsedMilliseconds,
+        );
+      }
       lastFailure = result;
-      if (!_shouldTryNextModel(result)) return result;
+      if (!_shouldTryNextModel(result)) {
+        timer.stop();
+        return result.copyWith(
+          attemptCount: attempts,
+          latencyMs: timer.elapsedMilliseconds,
+        );
+      }
     }
 
-    return lastFailure ??
-        const _ContentResult(
-          success: false,
-          message: 'No available Gemini model',
-        );
+    timer.stop();
+    return (lastFailure ??
+            const _ContentResult(
+              success: false,
+              message: 'No available Gemini model',
+            ))
+        .copyWith(attemptCount: attempts, latencyMs: timer.elapsedMilliseconds);
   }
 
   static Future<_ContentResult> _generateContentWithModel({
@@ -299,20 +398,36 @@ Generate the course based on the PDF:
     }
   }
 
-  static Future<Map<String, dynamic>?> _parseJsonObjectWithRepair(
+  static Future<_ParsedJsonResult> _parseJsonObjectWithRepair(
     String rawContent, {
     String? preferredModel,
   }) async {
     final parsed = _parseJsonObject(rawContent);
-    if (parsed != null) return parsed;
+    if (parsed != null) {
+      return _ParsedJsonResult(
+        json: parsed,
+        result: AIGenerationParseResult.direct,
+      );
+    }
 
     final repaired = await _repairJsonContent(
       rawContent,
       preferredModel: preferredModel,
     );
-    if (repaired == null) return null;
+    if (repaired == null) {
+      return const _ParsedJsonResult(
+        json: null,
+        result: AIGenerationParseResult.failed,
+      );
+    }
 
-    return _parseJsonObject(repaired);
+    final repairedJson = _parseJsonObject(repaired);
+    return _ParsedJsonResult(
+      json: repairedJson,
+      result: repairedJson == null
+          ? AIGenerationParseResult.failed
+          : AIGenerationParseResult.repaired,
+    );
   }
 
   static Map<String, dynamic>? _parseJsonObject(String content) {
@@ -582,6 +697,39 @@ $rawContent
     return body.isEmpty ? 'Unknown error' : body;
   }
 
+  static String _buildRequestId() {
+    final millis = DateTime.now().millisecondsSinceEpoch;
+    final suffix = (millis % 1000000).toString().padLeft(6, '0');
+    return 'gen-$suffix';
+  }
+
+  static String _fingerprintPrompt(String prompt) {
+    var hash = 2166136261;
+    for (final codeUnit in prompt.codeUnits) {
+      hash ^= codeUnit;
+      hash = (hash * 16777619) & 0x7fffffff;
+    }
+    return hash.toRadixString(16).padLeft(8, '0');
+  }
+
+  static String _formatValidationFailureMessage(List<String> errors) {
+    if (errors.isEmpty) {
+      return 'Generated course failed schema validation';
+    }
+    final shown = errors.take(3).toList();
+    final more = errors.length - shown.length;
+    final suffix = more > 0 ? '\n...and $more more issue(s)' : '';
+    return 'Generated course failed schema validation:\n'
+        '${shown.join('\n')}$suffix';
+  }
+
+  static void _logDiagnostics(AIGenerationDiagnostics diagnostics) {
+    debugPrint(
+      '[AICourseGenerator] request=${diagnostics.requestId} '
+      '${diagnostics.toSummaryLine()}',
+    );
+  }
+
   static Map<String, dynamic> _normalizeGeneratedCourseJson(
     Map<String, dynamic> rawJson, {
     required String fileName,
@@ -760,6 +908,10 @@ $rawContent
       'truefalse': 'true-false',
       'true_false': 'true-false',
       'matching': 'matching',
+      'animation': 'animation',
+      'animationblock': 'animation',
+      'animation-block': 'animation',
+      'animation_block': 'animation',
       'video': 'video',
     };
 
@@ -870,6 +1022,21 @@ $rawContent
         };
       case 'matching':
         return _normalizeMatchingContent(content);
+      case 'animation':
+        final preset = _asString(content['preset'])?.trim().toLowerCase();
+        final normalizedPreset = preset == 'pulse-bars'
+            ? 'pulse-bars'
+            : 'bouncing-dot';
+        final rawDuration = content['durationMs'];
+        final durationMs = rawDuration is num ? rawDuration.toInt() : 2000;
+        final rawSpeed = content['speed'];
+        final speed = rawSpeed is num ? rawSpeed.toDouble() : 1.0;
+        return {
+          'preset': normalizedPreset,
+          'durationMs': durationMs,
+          'loop': _asBool(content['loop']) ?? true,
+          'speed': speed,
+        };
       case 'video':
         final videoUrl = _asString(content['url'])?.trim() ?? '';
         final videoTitle = _asString(content['title'])?.trim();
@@ -1100,12 +1267,14 @@ class GenerationResult {
   final String message;
   final Course? course;
   final String? rawJson;
+  final AIGenerationDiagnostics? diagnostics;
 
   const GenerationResult({
     required this.success,
     required this.message,
     this.course,
     this.rawJson,
+    this.diagnostics,
   });
 }
 
@@ -1131,6 +1300,8 @@ class _ContentResult {
   final String? message;
   final int? statusCode;
   final String? model;
+  final int? attemptCount;
+  final int? latencyMs;
 
   const _ContentResult({
     required this.success,
@@ -1138,5 +1309,112 @@ class _ContentResult {
     this.message,
     this.statusCode,
     this.model,
+    this.attemptCount,
+    this.latencyMs,
   });
+
+  _ContentResult copyWith({
+    bool? success,
+    String? content,
+    String? message,
+    int? statusCode,
+    String? model,
+    int? attemptCount,
+    int? latencyMs,
+  }) {
+    return _ContentResult(
+      success: success ?? this.success,
+      content: content ?? this.content,
+      message: message ?? this.message,
+      statusCode: statusCode ?? this.statusCode,
+      model: model ?? this.model,
+      attemptCount: attemptCount ?? this.attemptCount,
+      latencyMs: latencyMs ?? this.latencyMs,
+    );
+  }
+}
+
+enum AIGenerationParseResult {
+  notAttempted('not_attempted'),
+  direct('direct'),
+  repaired('repaired'),
+  failed('failed');
+
+  final String value;
+  const AIGenerationParseResult(this.value);
+}
+
+class AIGenerationDiagnostics {
+  final String requestId;
+  final String promptVersion;
+  final String promptSource;
+  final String promptFingerprint;
+  final String? model;
+  final int modelAttempts;
+  final int totalLatencyMs;
+  final int generationLatencyMs;
+  final int parseLatencyMs;
+  final int validationLatencyMs;
+  final AIGenerationParseResult parseResult;
+  final bool? validationPassed;
+  final int validationErrorCount;
+  final int validationWarningCount;
+  final String stage;
+  final bool success;
+  final String message;
+
+  const AIGenerationDiagnostics({
+    required this.requestId,
+    required this.promptVersion,
+    required this.promptSource,
+    required this.promptFingerprint,
+    required this.model,
+    required this.modelAttempts,
+    required this.totalLatencyMs,
+    required this.generationLatencyMs,
+    required this.parseLatencyMs,
+    required this.validationLatencyMs,
+    required this.parseResult,
+    required this.validationPassed,
+    required this.validationErrorCount,
+    required this.validationWarningCount,
+    required this.stage,
+    required this.success,
+    required this.message,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'requestId': requestId,
+      'promptVersion': promptVersion,
+      'promptSource': promptSource,
+      'promptFingerprint': promptFingerprint,
+      'model': model,
+      'modelAttempts': modelAttempts,
+      'latencyMs': {
+        'total': totalLatencyMs,
+        'generate': generationLatencyMs,
+        'parse': parseLatencyMs,
+        'validate': validationLatencyMs,
+      },
+      'parseResult': parseResult.value,
+      'validation': {
+        'passed': validationPassed,
+        'errors': validationErrorCount,
+        'warnings': validationWarningCount,
+      },
+      'stage': stage,
+      'success': success,
+      'message': message,
+    };
+  }
+
+  String toSummaryLine() => jsonEncode(toJson());
+}
+
+class _ParsedJsonResult {
+  final Map<String, dynamic>? json;
+  final AIGenerationParseResult result;
+
+  const _ParsedJsonResult({required this.json, required this.result});
 }

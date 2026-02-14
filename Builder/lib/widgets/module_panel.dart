@@ -36,12 +36,20 @@ class _ModulePanelState extends State<ModulePanel> {
     ),
     _BlockCategory(
       name: 'Physical',
-      blockTypes: [BlockType.codeBlock, BlockType.codePlayground],
+      blockTypes: [
+        BlockType.codeBlock,
+        BlockType.codePlayground,
+        BlockType.animation,
+      ],
       backgroundColor: Color(0xFFE3F2FD), // blue 50
     ),
     _BlockCategory(
       name: 'Chemical',
-      blockTypes: [BlockType.multipleChoice, BlockType.trueFalse, BlockType.matching],
+      blockTypes: [
+        BlockType.multipleChoice,
+        BlockType.trueFalse,
+        BlockType.matching,
+      ],
       backgroundColor: Color(0xFFE8F5E9), // green 50
     ),
   ];
@@ -50,9 +58,11 @@ class _ModulePanelState extends State<ModulePanel> {
     final allMvp = BlockRegistry.mvpTypes;
     return allMvp
         .where((info) => category.blockTypes.contains(info.type))
-        .where((info) =>
-            _searchQuery.isEmpty ||
-            info.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .where(
+          (info) =>
+              _searchQuery.isEmpty ||
+              info.name.toLowerCase().contains(_searchQuery.toLowerCase()),
+        )
         .toList();
   }
 
@@ -101,7 +111,11 @@ class _ModulePanelState extends State<ModulePanel> {
                     fontSize: AppFontSize.sm,
                     color: AppColors.neutral400,
                   ),
-                  prefixIcon: const Icon(Icons.search, size: 18, color: AppColors.neutral400),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    size: 18,
+                    color: AppColors.neutral400,
+                  ),
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.sm,
@@ -129,7 +143,9 @@ class _ModulePanelState extends State<ModulePanel> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                 children: _categories
-                    .where((cat) => _searchQuery.isEmpty || _categoryHasResults(cat))
+                    .where(
+                      (cat) => _searchQuery.isEmpty || _categoryHasResults(cat),
+                    )
                     .map((category) => _buildCategorySection(category))
                     .toList(),
               ),
@@ -230,13 +246,15 @@ class _ModulePanelState extends State<ModulePanel> {
               padding: const EdgeInsets.only(top: AppSpacing.xs),
               child: Column(
                 children: blocks
-                    .map((info) => _ModuleItem(
-                          icon: info.icon,
-                          label: info.name,
-                          description: info.description,
-                          type: info.type,
-                          compact: false,
-                        ))
+                    .map(
+                      (info) => _ModuleItem(
+                        icon: info.icon,
+                        label: info.name,
+                        description: info.description,
+                        type: info.type,
+                        compact: false,
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -297,14 +315,8 @@ class _ModuleItem extends StatelessWidget {
             ),
           ),
         ),
-        childWhenDragging: Opacity(
-          opacity: 0.5,
-          child: _buildContent(),
-        ),
-        child: Tooltip(
-          message: description,
-          child: _buildContent(),
-        ),
+        childWhenDragging: Opacity(opacity: 0.5, child: _buildContent()),
+        child: Tooltip(message: description, child: _buildContent()),
       ),
     );
   }
