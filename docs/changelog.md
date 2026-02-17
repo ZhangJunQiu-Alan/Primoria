@@ -1,5 +1,29 @@
 # Changelog
 
+## [Unreleased] - 2026-02-18
+
+### Summary
+Viewer post-login home page redesign — ported 5 Figma screens (Home, Library, Community, Profile, LevelMap) from React/TSX templates (`temple/`) to Flutter, with 4-tab bottom navigation and web-responsive layout.
+
+### Added
+- **LevelMapScreen** (`Viewer/lib/screens/level_map_screen.dart`): New vertical level progression screen with completed nodes (green checkmark), current active node (glowing card with "Start Coding" button and tooltip), locked nodes (gray lock), and left-right staggered offset layout; push-navigated from Home
+- **Indigo color palette** (`Viewer/lib/theme/colors.dart`): `indigo` / `indigo50`–`indigo700`, `indigoGradient`, `profileBannerGradient` (indigo→purple→pink), `galaxyGradient` (dark slate→indigo space theme)
+- **React/TSX design templates** (`temple/`): Figma-exported prototype with 6 screen components (HomeScreen, LibraryScreen, FriendsScreen, ProfileScreen, LevelMapScreen, ContentScreen), BottomNav, and Shadcn UI library — serves as the single source of truth for Viewer visual design
+
+### Changed
+- **BottomNavBar** (`bottom_nav_bar.dart`): Tabs renamed from Home/Search/Courses/Profile → **Home/Library/Community/Profile** with updated icons (`local_library`, `people`) and indigo highlight color replacing green
+- **HomeScreen** (`home_screen.dart`): Complete rewrite — star counter header, centered "Data Structures" + "LEVEL 4" title, blue→indigo gradient logo block with Python-style geometric shapes, white bottom drawer panel with course list (completed/locked status dots) and indigo "Learning" button; tapping course area pushes to LevelMapScreen
+- **SearchScreen → Library** (`search_screen.dart`): Complete rewrite — search bar + 5 horizontal category tabs (CS/Math/Science/Business/Social) with icon+label, animated indigo selection, horizontal recommended course carousel (book-cover cards with star badge + lesson count), "Popular Now" list items with icon + progress bar; data switches per category
+- **CoursesScreen → Community** (`courses_screen.dart`): Complete rewrite — find/message dual-tab header with add-friend button, "find" view shows dark galaxy background with 27 floating animated planet nodes (color-coded by size, `AnimationController`-driven), "message" view shows search box + conversation list with avatar, name, last message, time, and unread red badge
+- **ProfileScreen** (`profile_screen.dart`): Complete rewrite — indigo→purple→pink gradient banner with settings button, rotated square avatar (3° `Transform.rotate`) with green online indicator, username + @handle + joined year, 2×2 stats card (Courses/Total Stars/Following/Fans with colored icon backgrounds), Daily Exclusive Badge (purple→pink gradient card with streak count from `UserProvider`), 4-column achievements grid (bolt/shield/star/trending icons), settings list with theme picker and logout; retains existing `UserProvider` and `ThemeProvider` data bindings
+- **Web responsive layout**: All 4 tab screens and LevelMapScreen wrapped in `Center > ConstrainedBox(maxWidth: 600)` for centered mobile-like presentation on wide browser windows
+- **Code formatting**: `dart format` applied across all Viewer lib files
+
+### Removed
+- **`viewer_temple/`**: Deleted legacy HTML/CSS/JS login/register templates and associated image assets (replaced by Flutter screens in previous release and React templates in `temple/`)
+
+---
+
 ## [Unreleased] - 2026-02-17
 
 ### Summary

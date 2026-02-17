@@ -3,10 +3,10 @@ import '../../theme/theme.dart';
 
 /// Chapter status
 enum ChapterStatus {
-  locked,     // locked
-  available,  // available
+  locked, // locked
+  available, // available
   inProgress, // in progress
-  completed,  // completed
+  completed, // completed
 }
 
 /// Chapter data
@@ -80,9 +80,7 @@ class ChapterNode extends StatelessWidget {
           // Right side - chapter card
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(
-                bottom: isLast ? 0 : AppSpacing.md,
-              ),
+              padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.md),
               child: _buildCard(isLocked, isCompleted, isInProgress),
             ),
           ),
@@ -102,41 +100,33 @@ class ChapterNode extends StatelessWidget {
           color: isLocked
               ? AppColors.surfaceVariant
               : isCompleted
-                  ? AppColors.primary
-                  : AppColors.surface,
+              ? AppColors.primary
+              : AppColors.surface,
           border: Border.all(
             color: isLocked
                 ? AppColors.border
                 : isInProgress
-                    ? AppColors.primary
-                    : isCompleted
-                        ? AppColors.primary
-                        : AppColors.border,
+                ? AppColors.primary
+                : isCompleted
+                ? AppColors.primary
+                : AppColors.border,
             width: isInProgress ? 3 : 2,
           ),
           boxShadow: isLocked ? null : AppShadows.sm,
         ),
         child: Center(
           child: isCompleted
-              ? const Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 26,
-                )
+              ? const Icon(Icons.check, color: Colors.white, size: 26)
               : isLocked
-                  ? const Icon(
-                      Icons.lock,
-                      color: AppColors.textDisabled,
-                      size: 22,
-                    )
-                  : isInProgress
-                      ? _buildProgressIndicator()
-                      : Text(
-                          '${index + 1}',
-                          style: AppTypography.title.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
+              ? const Icon(Icons.lock, color: AppColors.textDisabled, size: 22)
+              : isInProgress
+              ? _buildProgressIndicator()
+              : Text(
+                  '${index + 1}',
+                  style: AppTypography.title.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
         ),
       ),
     );
@@ -173,9 +163,7 @@ class ChapterNode extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: isLocked
-              ? AppColors.surfaceVariant
-              : AppColors.surface,
+          color: isLocked ? AppColors.surfaceVariant : AppColors.surface,
           borderRadius: AppRadius.borderRadiusXl,
           border: isInProgress
               ? Border.all(color: AppColors.primary, width: 2)

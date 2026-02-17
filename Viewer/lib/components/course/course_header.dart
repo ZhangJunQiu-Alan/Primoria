@@ -22,14 +22,13 @@ class CourseHeader extends StatelessWidget {
     required this.onBack,
   });
 
-  double get progress => totalChapters > 0 ? completedChapters / totalChapters : 0;
+  double get progress =>
+      totalChapters > 0 ? completedChapters / totalChapters : 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: gradient,
-      ),
+      decoration: BoxDecoration(gradient: gradient),
       child: SafeArea(
         bottom: false,
         child: Column(
@@ -70,11 +69,7 @@ class CourseHeader extends StatelessWidget {
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: AppRadius.borderRadiusXl,
                     ),
-                    child: Icon(
-                      icon,
-                      size: 52,
-                      color: Colors.white,
-                    ),
+                    child: Icon(icon, size: 52, color: Colors.white),
                   ),
                   AppSpacing.verticalGapMd,
 
@@ -134,10 +129,7 @@ class CourseHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           // Completed chapters
-          _buildStat(
-            '$completedChapters/$totalChapters',
-            'Chapters Done',
-          ),
+          _buildStat('$completedChapters/$totalChapters', 'Chapters Done'),
           // Divider
           Container(
             width: 1,
@@ -145,10 +137,7 @@ class CourseHeader extends StatelessWidget {
             color: Colors.white.withValues(alpha: 0.3),
           ),
           // Completion progress
-          _buildStat(
-            '${(progress * 100).toInt()}%',
-            'Progress',
-          ),
+          _buildStat('${(progress * 100).toInt()}%', 'Progress'),
           // Divider
           Container(
             width: 1,
@@ -156,10 +145,7 @@ class CourseHeader extends StatelessWidget {
             color: Colors.white.withValues(alpha: 0.3),
           ),
           // Estimated time
-          _buildStat(
-            '${totalChapters * 15}',
-            'Est. Minutes',
-          ),
+          _buildStat('${totalChapters * 15}', 'Est. Minutes'),
         ],
       ),
     );

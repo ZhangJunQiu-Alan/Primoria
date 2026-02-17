@@ -80,7 +80,9 @@ class CourseScreen extends StatelessWidget {
               gradient: _gradient,
               icon: _icon,
               totalChapters: chapters.length,
-              completedChapters: chapters.where((c) => c.status == ChapterStatus.completed).length,
+              completedChapters: chapters
+                  .where((c) => c.status == ChapterStatus.completed)
+                  .length,
               onBack: () => Navigator.pop(context),
             ),
           ),
@@ -89,10 +91,7 @@ class CourseScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text(
-                'Learning Path',
-                style: AppTypography.headline3,
-              ),
+              child: Text('Learning Path', style: AppTypography.headline3),
             ),
           ),
 
@@ -100,33 +99,28 @@ class CourseScreen extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final chapter = chapters[index];
-                  final isLast = index == chapters.length - 1;
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final chapter = chapters[index];
+                final isLast = index == chapters.length - 1;
 
-                  return ChapterNode(
-                    chapter: chapter,
-                    index: index,
-                    isLast: isLast,
-                    gradient: _gradient,
-                    onTap: () {
-                      if (chapter.status != ChapterStatus.locked) {
-                        // Navigate to chapter detail
-                        _showChapterDetail(context, chapter);
-                      }
-                    },
-                  );
-                },
-                childCount: chapters.length,
-              ),
+                return ChapterNode(
+                  chapter: chapter,
+                  index: index,
+                  isLast: isLast,
+                  gradient: _gradient,
+                  onTap: () {
+                    if (chapter.status != ChapterStatus.locked) {
+                      // Navigate to chapter detail
+                      _showChapterDetail(context, chapter);
+                    }
+                  },
+                );
+              }, childCount: chapters.length),
             ),
           ),
 
           // Bottom spacing
-          const SliverToBoxAdapter(
-            child: SizedBox(height: AppSpacing.xxl),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xxl)),
         ],
       ),
     );
@@ -158,21 +152,18 @@ class CourseScreen extends StatelessWidget {
             ),
             AppSpacing.verticalGapLg,
 
-            Text(
-              chapter.title,
-              style: AppTypography.headline2,
-            ),
+            Text(chapter.title, style: AppTypography.headline2),
             AppSpacing.verticalGapSm,
-            Text(
-              chapter.subtitle,
-              style: AppTypography.body2,
-            ),
+            Text(chapter.subtitle, style: AppTypography.body2),
             AppSpacing.verticalGapLg,
 
             // Lesson list
             _buildLessonItem('Lesson 1: Introduction', true),
             _buildLessonItem('Lesson 2: Basic Practice', true),
-            _buildLessonItem('Lesson 3: Deep Understanding', chapter.progress > 0.5),
+            _buildLessonItem(
+              'Lesson 3: Deep Understanding',
+              chapter.progress > 0.5,
+            ),
             _buildLessonItem('Lesson 4: Comprehensive Application', false),
             _buildLessonItem('Lesson 5: Chapter Quiz', false),
 
@@ -191,7 +182,9 @@ class CourseScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 ),
                 child: Text(
-                  chapter.status == ChapterStatus.completed ? 'Review Chapter' : 'Continue Learning',
+                  chapter.status == ChapterStatus.completed
+                      ? 'Review Chapter'
+                      : 'Continue Learning',
                 ),
               ),
             ),
@@ -224,7 +217,9 @@ class CourseScreen extends StatelessWidget {
           Text(
             title,
             style: AppTypography.body1.copyWith(
-              color: isCompleted ? AppColors.textPrimary : AppColors.textSecondary,
+              color: isCompleted
+                  ? AppColors.textPrimary
+                  : AppColors.textSecondary,
               decoration: isCompleted ? TextDecoration.lineThrough : null,
             ),
           ),

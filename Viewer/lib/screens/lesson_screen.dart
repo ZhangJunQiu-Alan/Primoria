@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'package:provider/provider.dart';
 import '../theme/theme.dart';
-import '../components/interactions/slider_interaction.dart' show InteractiveSlider;
+import '../components/interactions/slider_interaction.dart'
+    show InteractiveSlider;
 import '../components/feedback/feedback_dialog.dart';
 import '../models/unit_model.dart';
 import '../providers/user_provider.dart';
@@ -49,12 +50,14 @@ class _LessonScreenState extends State<LessonScreen> {
     _QuestionData(
       type: QuestionType.info,
       title: 'Welcome to This Lesson',
-      content: 'In this lesson, you will learn how to understand and master knowledge through interactive methods.\n\nAre you ready? Let\'s begin!',
+      content:
+          'In this lesson, you will learn how to understand and master knowledge through interactive methods.\n\nAre you ready? Let\'s begin!',
     ),
     _QuestionData(
       type: QuestionType.slider,
       title: 'Adjust Temperature',
-      content: 'Please adjust the water temperature to the ideal temperature for brewing green tea',
+      content:
+          'Please adjust the water temperature to the ideal temperature for brewing green tea',
       sliderConfig: const SliderConfig(
         min: 0,
         max: 100,
@@ -65,9 +68,12 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
       targetValue: 85,
       tolerance: 5,
-      successMsg: 'Great! Around 85°C is the ideal temperature for brewing green tea.',
-      failMsgHigh: 'The temperature is too high, it will damage the nutrients in the tea leaves.',
-      failMsgLow: 'The temperature is too low, it cannot fully release the aroma of the tea.',
+      successMsg:
+          'Great! Around 85°C is the ideal temperature for brewing green tea.',
+      failMsgHigh:
+          'The temperature is too high, it will damage the nutrients in the tea leaves.',
+      failMsgLow:
+          'The temperature is too low, it cannot fully release the aroma of the tea.',
     ),
     _QuestionData(
       type: QuestionType.choice,
@@ -103,7 +109,8 @@ class _LessonScreenState extends State<LessonScreen> {
     _QuestionData(
       type: QuestionType.info,
       title: 'Congratulations!',
-      content: 'You have completed this lesson.\n\nKeep going, learn a little every day, and you\'ll get better and better!',
+      content:
+          'You have completed this lesson.\n\nKeep going, learn a little every day, and you\'ll get better and better!',
       isLast: true,
     ),
   ];
@@ -111,7 +118,9 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   void initState() {
     super.initState();
-    _confettiController = ConfettiController(duration: const Duration(seconds: 3));
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 3),
+    );
 
     // Initialize sorting question order
     final sortingQuestion = _questions.firstWhere(
@@ -148,7 +157,8 @@ class _LessonScreenState extends State<LessonScreen> {
         break;
 
       case QuestionType.choice:
-        isCorrect = _selectedOption == question.options![question.correctIndex!];
+        isCorrect =
+            _selectedOption == question.options![question.correctIndex!];
         feedbackMsg = question.failMsg!;
         break;
 
@@ -181,10 +191,7 @@ class _LessonScreenState extends State<LessonScreen> {
       );
     } else {
       await _audioService.playWrong();
-      context.showFailureFeedback(
-        message: feedbackMsg,
-        onRetry: () {},
-      );
+      context.showFailureFeedback(message: feedbackMsg, onRetry: () {});
     }
   }
 
@@ -300,7 +307,9 @@ class _LessonScreenState extends State<LessonScreen> {
           IconButton(
             onPressed: () => _showExitDialog(),
             icon: const Icon(Icons.close),
-            color: isDark ? AppColors.textSecondaryOnDark : AppColors.textSecondary,
+            color: isDark
+                ? AppColors.textSecondaryOnDark
+                : AppColors.textSecondary,
           ),
           Expanded(
             child: Text(
@@ -413,15 +422,15 @@ class _LessonScreenState extends State<LessonScreen> {
                     color: isSelected
                         ? AppColors.primary.withValues(alpha: 0.08)
                         : isDark
-                            ? AppColors.cardDark
-                            : AppColors.surface,
+                        ? AppColors.cardDark
+                        : AppColors.surface,
                     borderRadius: AppRadius.borderRadiusXl,
                     border: Border.all(
                       color: isSelected
                           ? AppColors.primary
                           : isDark
-                              ? AppColors.borderDark
-                              : AppColors.border,
+                          ? AppColors.borderDark
+                          : AppColors.border,
                       width: isSelected ? 2 : 1,
                     ),
                   ),
@@ -439,8 +448,8 @@ class _LessonScreenState extends State<LessonScreen> {
                             color: isSelected
                                 ? AppColors.primary
                                 : isDark
-                                    ? AppColors.borderDark
-                                    : AppColors.border,
+                                ? AppColors.borderDark
+                                : AppColors.border,
                             width: 2,
                           ),
                         ),
@@ -548,10 +557,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: AppRadius.borderRadiusXl,
-              borderSide: const BorderSide(
-                color: AppColors.primary,
-                width: 2,
-              ),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
           ),
         );
@@ -584,9 +590,11 @@ class _LessonScreenState extends State<LessonScreen> {
 
   Widget _buildBottomBar(_QuestionData question, bool isDark) {
     final isInfoPage = question.type == QuestionType.info;
-    final canSubmit = isInfoPage ||
+    final canSubmit =
+        isInfoPage ||
         (question.type == QuestionType.choice && _selectedOption != null) ||
-        (question.type == QuestionType.input && _inputController.text.isNotEmpty) ||
+        (question.type == QuestionType.input &&
+            _inputController.text.isNotEmpty) ||
         question.type == QuestionType.slider ||
         question.type == QuestionType.sorting;
 
@@ -605,7 +613,9 @@ class _LessonScreenState extends State<LessonScreen> {
       child: SizedBox(
         width: double.infinity,
         child: _Duo3DSubmitButton(
-          onPressed: canSubmit ? (isInfoPage ? _nextQuestion : _checkAnswer) : null,
+          onPressed: canSubmit
+              ? (isInfoPage ? _nextQuestion : _checkAnswer)
+              : null,
           label: isInfoPage
               ? (question.isLast ? 'Complete Lesson' : 'Continue')
               : 'Submit Answer',
@@ -630,10 +640,7 @@ class _LessonScreenState extends State<LessonScreen> {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text(
-              'Exit',
-              style: TextStyle(color: AppColors.error),
-            ),
+            child: Text('Exit', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -646,10 +653,7 @@ class _Duo3DSubmitButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final String label;
 
-  const _Duo3DSubmitButton({
-    required this.onPressed,
-    required this.label,
-  });
+  const _Duo3DSubmitButton({required this.onPressed, required this.label});
 
   @override
   State<_Duo3DSubmitButton> createState() => _Duo3DSubmitButtonState();

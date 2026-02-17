@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 
-/// Bottom navigation bar - Duolingo + Brilliant style
+/// Bottom navigation bar — 4 tabs: Home / Library / Community / Profile
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -17,18 +17,19 @@ class BottomNavBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
+        border: const Border(top: BorderSide(color: AppColors.borderLight)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 20,
+            offset: const Offset(0, -4),
           ),
         ],
       ),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
+            horizontal: AppSpacing.sm,
             vertical: AppSpacing.sm + 2,
           ),
           child: Row(
@@ -42,16 +43,16 @@ class BottomNavBar extends StatelessWidget {
                 onTap: () => onTap(0),
               ),
               _NavItem(
-                icon: Icons.search_outlined,
-                activeIcon: Icons.search,
-                label: 'Search',
+                icon: Icons.local_library_outlined,
+                activeIcon: Icons.local_library,
+                label: 'Library',
                 isActive: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
-                icon: Icons.menu_book_outlined,
-                activeIcon: Icons.menu_book,
-                label: 'Courses',
+                icon: Icons.people_outline,
+                activeIcon: Icons.people,
+                label: 'Community',
                 isActive: currentIndex == 2,
                 onTap: () => onTap(2),
               ),
@@ -90,36 +91,25 @@ class _NavItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm + 2,
-        ),
-        decoration: BoxDecoration(
-          color: isActive
-              ? AppColors.primary.withValues(alpha: 0.12)
-              : Colors.transparent,
-          borderRadius: AppRadius.borderRadiusFull,
-        ),
-        child: Row(
+      child: SizedBox(
+        width: 64,
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               isActive ? activeIcon : icon,
-              color: isActive ? AppColors.primary : AppColors.textSecondary,
+              color: isActive ? AppColors.indigo : AppColors.textSecondary,
               size: 24,
             ),
-            if (isActive) ...[
-              const SizedBox(width: AppSpacing.xs + 2),
-              Text(
-                label,
-                style: AppTypography.label.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w700,
-                ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
+                color: isActive ? AppColors.indigo : AppColors.textSecondary,
               ),
-            ],
+            ),
           ],
         ),
       ),

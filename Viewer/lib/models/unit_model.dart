@@ -33,7 +33,9 @@ class UnitModel {
       difficulty: json['difficulty'] as String?,
       category: json['category'] as String?,
       uiConfig: UiConfig.fromJson(json['ui_config'] as Map<String, dynamic>),
-      validation: Validation.fromJson(json['validation'] as Map<String, dynamic>),
+      validation: Validation.fromJson(
+        json['validation'] as Map<String, dynamic>,
+      ),
       feedback: Feedback.fromJson(json['feedback'] as Map<String, dynamic>),
       metadata: json['metadata'] != null
           ? Metadata.fromJson(json['metadata'] as Map<String, dynamic>)
@@ -196,10 +198,7 @@ class SliderLabels {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'min_label': minLabel,
-      'max_label': maxLabel,
-    };
+    return {'min_label': minLabel, 'max_label': maxLabel};
   }
 }
 
@@ -266,12 +265,7 @@ class ChoiceOption {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'text': text,
-      'icon': icon,
-      'image_url': imageUrl,
-    };
+    return {'id': id, 'text': text, 'icon': icon, 'image_url': imageUrl};
   }
 }
 
@@ -355,17 +349,11 @@ class SortingItem {
   const SortingItem({required this.id, required this.text});
 
   factory SortingItem.fromJson(Map<String, dynamic> json) {
-    return SortingItem(
-      id: json['id'] as String,
-      text: json['text'] as String,
-    );
+    return SortingItem(id: json['id'] as String, text: json['text'] as String);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'text': text,
-    };
+    return {'id': id, 'text': text};
   }
 }
 
@@ -375,11 +363,7 @@ class MediaConfig {
   final String url;
   final String? altText;
 
-  const MediaConfig({
-    required this.type,
-    required this.url,
-    this.altText,
-  });
+  const MediaConfig({required this.type, required this.url, this.altText});
 
   factory MediaConfig.fromJson(Map<String, dynamic> json) {
     return MediaConfig(
@@ -390,11 +374,7 @@ class MediaConfig {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'url': url,
-      'alt_text': altText,
-    };
+    return {'type': type, 'url': url, 'alt_text': altText};
   }
 }
 
@@ -462,10 +442,7 @@ class ValidRange {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'min': min,
-      'max': max,
-    };
+    return {'min': min, 'max': max};
   }
 }
 
@@ -517,12 +494,7 @@ class Metadata {
   final String? author;
   final List<String>? tags;
 
-  const Metadata({
-    this.createdAt,
-    this.updatedAt,
-    this.author,
-    this.tags,
-  });
+  const Metadata({this.createdAt, this.updatedAt, this.author, this.tags});
 
   factory Metadata.fromJson(Map<String, dynamic> json) {
     return Metadata(

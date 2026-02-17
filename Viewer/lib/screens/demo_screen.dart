@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/game/game_container.dart';
-import '../components/interactions/slider_interaction.dart' show InteractiveSlider;
+import '../components/interactions/slider_interaction.dart'
+    show InteractiveSlider;
 import '../components/feedback/feedback_dialog.dart';
 import '../models/unit_model.dart';
 import '../theme/theme.dart';
@@ -26,10 +27,7 @@ class _DemoScreenState extends State<DemoScreen> {
     defaultValue: 50,
     unit: '°C',
     showValue: true,
-    labels: SliderLabels(
-      minLabel: 'Ice Cold',
-      maxLabel: 'Boiling',
-    ),
+    labels: SliderLabels(minLabel: 'Ice Cold', maxLabel: 'Boiling'),
   );
 
   final _targetValue = 85.0;
@@ -45,8 +43,10 @@ class _DemoScreenState extends State<DemoScreen> {
     if (isCorrect) {
       context.showSuccessFeedback(
         title: 'Awesome!',
-        message: 'Around 85°C is the optimal temperature for brewing green tea.',
-        explanation: 'Green tea is rich in tea polyphenols, and water that is too hot will destroy these nutrients.',
+        message:
+            'Around 85°C is the optimal temperature for brewing green tea.',
+        explanation:
+            'Green tea is rich in tea polyphenols, and water that is too hot will destroy these nutrients.',
         onContinue: _nextQuestion,
       );
     } else {
@@ -118,7 +118,9 @@ class _DemoScreenState extends State<DemoScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm Exit?'),
-        content: const Text('Your current progress will not be saved after exiting.'),
+        content: const Text(
+          'Your current progress will not be saved after exiting.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -129,10 +131,7 @@ class _DemoScreenState extends State<DemoScreen> {
               Navigator.pop(context);
               // Exit logic
             },
-            child: Text(
-              'Exit',
-              style: TextStyle(color: AppColors.error),
-            ),
+            child: Text('Exit', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -151,7 +150,8 @@ class _DemoScreenState extends State<DemoScreen> {
       isSubmitEnabled: true,
       content: InteractiveSlider(
         config: _sliderConfig,
-        description: 'Please adjust the water temperature to a suitable level for brewing tea (Celsius)',
+        description:
+            'Please adjust the water temperature to a suitable level for brewing tea (Celsius)',
         onChanged: _onSliderChanged,
         initialValue: _currentValue,
       ),

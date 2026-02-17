@@ -1,8 +1,9 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../theme/theme.dart';
-import 'course_screen.dart';
 
-/// Courses list page - Duolingo + Brilliant style
+/// Community screen — ported from Figma FriendsScreen template
+/// (file kept as courses_screen.dart for routing compatibility)
 class CoursesScreen extends StatefulWidget {
   const CoursesScreen({super.key});
 
@@ -10,120 +11,106 @@ class CoursesScreen extends StatefulWidget {
   State<CoursesScreen> createState() => _CoursesScreenState();
 }
 
-class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _CoursesScreenState extends State<CoursesScreen>
+    with TickerProviderStateMixin {
+  String _view = 'find'; // 'find' or 'message'
+  bool _showMenu = false;
 
-  final _tabs = ['All', 'In Progress', 'Completed', 'Favorites'];
-
-  final _courses = [
-    _CourseItem(
-      id: '1',
-      title: 'Logic Fundamentals',
-      description: 'Develop logical reasoning skills and learn to analyze problems',
-      icon: Icons.psychology,
-      gradient: AppColors.logicGradient,
-      progress: 0.65,
-      totalLessons: 20,
-      completedLessons: 13,
-      status: CourseStatus.inProgress,
-      isFavorite: true,
-    ),
-    _CourseItem(
-      id: '2',
-      title: 'Mathematical Thinking',
-      description: 'Build mathematical intuition and master mathematical thinking methods',
-      icon: Icons.calculate,
-      gradient: AppColors.mathGradient,
-      progress: 0.25,
-      totalLessons: 24,
-      completedLessons: 6,
-      status: CourseStatus.inProgress,
-      isFavorite: false,
-    ),
-    _CourseItem(
-      id: '3',
-      title: 'Scientific Principles',
-      description: 'Explore natural laws and understand scientific principles',
-      icon: Icons.science,
-      gradient: AppColors.scienceGradient,
-      progress: 1.0,
-      totalLessons: 18,
-      completedLessons: 18,
-      status: CourseStatus.completed,
-      isFavorite: true,
-    ),
-    _CourseItem(
-      id: '4',
-      title: 'Python Programming',
-      description: 'Learn programming from scratch',
-      icon: Icons.code,
-      gradient: AppColors.csGradient,
-      progress: 0.0,
-      totalLessons: 30,
-      completedLessons: 0,
-      status: CourseStatus.notStarted,
-      isFavorite: false,
-    ),
-    _CourseItem(
-      id: '5',
-      title: 'Statistics Basics',
-      description: 'Essential data analysis skills',
-      icon: Icons.analytics,
-      gradient: AppColors.mathGradient,
-      progress: 1.0,
-      totalLessons: 15,
-      completedLessons: 15,
-      status: CourseStatus.completed,
-      isFavorite: false,
-    ),
+  // Galaxy user data
+  static const _galaxyUsers = [
+    _GalaxyUser(1, '大清话', 50, 45, Color(0xFF22D3EE), 'large', 0),
+    _GalaxyUser(2, 'Mia小夏', 48, 50, Color(0xFFF472B6), 'large', 0.3),
+    _GalaxyUser(3, 'xX', 52, 48, Colors.white, 'medium', 0.6),
+    _GalaxyUser(4, '抹茶', 40, 45, Color(0xFF22D3EE), 'medium', 0.2),
+    _GalaxyUser(5, '沈术士', 45, 38, Color(0xFFF9A8D4), 'medium', 0.5),
+    _GalaxyUser(6, '无限星消风', 55, 38, Color(0xFF34D399), 'medium', 0.8),
+    _GalaxyUser(7, '一起吃冬瓜', 60, 45, Color(0xFFF9A8D4), 'medium', 1.1),
+    _GalaxyUser(8, '墓放独主', 55, 55, Color(0xFF22D3EE), 'medium', 1.4),
+    _GalaxyUser(9, '侣人', 45, 55, Color(0xFFF9A8D4), 'medium', 1.7),
+    _GalaxyUser(10, 'bsh', 40, 52, Color(0xFFF9A8D4), 'medium', 2.0),
+    _GalaxyUser(11, '爱吃香菜 🍀', 50, 58, Color(0xFFF9A8D4), 'medium', 2.3),
+    _GalaxyUser(12, '跨的透明人', 35, 30, Color(0xFFCBD5E1), 'small', 0.4),
+    _GalaxyUser(13, 'dragon', 42, 25, Color(0xFF94A3B8), 'small', 0.7),
+    _GalaxyUser(14, '野', 50, 23, Color(0xFFF9A8D4), 'small', 1.0),
+    _GalaxyUser(15, '&dnajaj', 58, 25, Color(0xFF94A3B8), 'small', 1.3),
+    _GalaxyUser(16, 'rainbow', 65, 30, Color(0xFF94A3B8), 'small', 1.6),
+    _GalaxyUser(17, '越自由', 70, 40, Color(0xFFF87171), 'small', 0.9),
+    _GalaxyUser(18, '城边配', 72, 48, Color(0xFF94A3B8), 'small', 1.2),
+    _GalaxyUser(19, '汉音夜飘', 70, 55, Color(0xFF94A3B8), 'small', 1.5),
+    _GalaxyUser(20, 'momo', 65, 62, Color(0xFFF9A8D4), 'small', 1.8),
+    _GalaxyUser(21, '小小', 58, 68, Color(0xFFF9A8D4), 'small', 2.1),
+    _GalaxyUser(22, '心碎小狗', 50, 70, Color(0xFF22D3EE), 'small', 2.4),
+    _GalaxyUser(23, '爱吃生蚝', 42, 68, Color(0xFF34D399), 'small', 2.7),
+    _GalaxyUser(24, 'DN', 35, 62, Color(0xFF22D3EE), 'small', 3.0),
+    _GalaxyUser(25, '电灯泡', 28, 48, Color(0xFFF9A8D4), 'small', 0.6),
+    _GalaxyUser(26, 'Souler', 30, 40, Color(0xFF34D399), 'small', 1.1),
+    _GalaxyUser(27, '喔过阴花', 32, 35, Color(0xFFF9A8D4), 'small', 1.9),
   ];
+
+  static const _conversations = [
+    _Conversation(
+      1,
+      'Sarah Connor',
+      'Python functions are so interesting!',
+      '10:30',
+      true,
+    ),
+    _Conversation(
+      2,
+      'Mike Chen',
+      'Want to practice coding together tomorrow?',
+      '09:15',
+      true,
+    ),
+    _Conversation(
+      3,
+      'Jessica Lee',
+      'Thank you for your help!',
+      'Yesterday',
+      false,
+    ),
+    _Conversation(
+      4,
+      'Python Study Group',
+      "Alex: Today's homework is too hard...",
+      'Yesterday',
+      false,
+    ),
+    _Conversation(5, 'David Park', 'See you this weekend!', 'Wed', false),
+  ];
+
+  late final List<AnimationController> _floatControllers;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    _floatControllers = List.generate(
+      _galaxyUsers.length,
+      (i) => AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 3000 + (i * 200 % 2000)),
+      )..repeat(reverse: true),
+    );
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  List<_CourseItem> _getFilteredCourses(int tabIndex) {
-    switch (tabIndex) {
-      case 1: // In Progress
-        return _courses.where((c) => c.status == CourseStatus.inProgress).toList();
-      case 2: // Completed
-        return _courses.where((c) => c.status == CourseStatus.completed).toList();
-      case 3: // Favorites
-        return _courses.where((c) => c.isFavorite).toList();
-      default: // All
-        return _courses;
+    for (final c in _floatControllers) {
+      c.dispose();
     }
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           children: [
-            // Top bar
             _buildHeader(),
-
-            // Tab bar
-            _buildTabBar(),
-
-            // Course list
             Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: List.generate(_tabs.length, (index) {
-                  return _buildCourseList(_getFilteredCourses(index));
-                }),
-              ),
+              child: _view == 'find' ? _buildFindView() : _buildMessageView(),
             ),
           ],
         ),
@@ -132,40 +119,81 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+      color: Colors.white,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'My Courses',
-            style: AppTypography.headline2,
-          ),
           const Spacer(),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: AppRadius.borderRadiusFull,
-            ),
-            child: Row(
+          // Find tab
+          GestureDetector(
+            onTap: () => setState(() => _view = 'find'),
+            child: Column(
               children: [
-                const Icon(
-                  Icons.school,
-                  size: 16,
-                  color: AppColors.primary,
-                ),
-                const SizedBox(width: AppSpacing.xs),
                 Text(
-                  '${_courses.length} courses',
-                  style: AppTypography.label.copyWith(
-                    color: AppColors.primary,
+                  'find',
+                  style: TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.w700,
+                    color: _view == 'find'
+                        ? const Color(0xFF0F172A)
+                        : const Color(0xFF94A3B8),
                   ),
                 ),
+                const SizedBox(height: 4),
+                Container(
+                  height: 2,
+                  width: 30,
+                  color: _view == 'find'
+                      ? const Color(0xFF0F172A)
+                      : Colors.transparent,
+                ),
               ],
+            ),
+          ),
+          const SizedBox(width: 32),
+          // Message tab
+          GestureDetector(
+            onTap: () => setState(() => _view = 'message'),
+            child: Column(
+              children: [
+                Text(
+                  'message',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: _view == 'message'
+                        ? const Color(0xFF0F172A)
+                        : const Color(0xFF94A3B8),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  height: 2,
+                  width: 50,
+                  color: _view == 'message'
+                      ? const Color(0xFF0F172A)
+                      : Colors.transparent,
+                ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          // Add friend button
+          GestureDetector(
+            onTap: () => setState(() => _showMenu = !_showMenu),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF8FAFC),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.person_add_outlined,
+                size: 20,
+                color: Color(0xFF334155),
+              ),
             ),
           ),
         ],
@@ -173,212 +201,252 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
     );
   }
 
-  Widget _buildTabBar() {
+  Widget _buildFindView() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: AppRadius.borderRadiusFull,
-      ),
-      child: TabBar(
-        controller: _tabController,
-        indicator: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadius.borderRadiusFull,
-          boxShadow: AppShadows.sm,
-        ),
-        indicatorSize: TabBarIndicatorSize.tab,
-        dividerColor: Colors.transparent,
-        labelColor: AppColors.primary,
-        unselectedLabelColor: AppColors.textSecondary,
-        labelStyle: AppTypography.label.copyWith(fontWeight: FontWeight.w700),
-        unselectedLabelStyle: AppTypography.label,
-        tabs: _tabs.map((tab) => Tab(text: tab)).toList(),
-      ),
-    );
-  }
-
-  Widget _buildCourseList(List<_CourseItem> courses) {
-    if (courses.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.folder_open,
-              size: 64,
-              color: AppColors.textDisabled,
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              'No courses yet',
-              style: AppTypography.body1.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return ListView.separated(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      itemCount: courses.length,
-      separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.md),
-      itemBuilder: (context, index) {
-        return _buildCourseCard(courses[index]);
-      },
-    );
-  }
-
-  Widget _buildCourseCard(_CourseItem course) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CourseScreen(
-              courseId: course.id,
-              title: course.title,
-              description: course.description,
-              gradient: course.gradient,
-              icon: course.icon,
+      decoration: const BoxDecoration(gradient: AppColors.galaxyGradient),
+      child: Column(
+        children: [
+          // Galaxy area
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  children: [
+                    for (int i = 0; i < _galaxyUsers.length; i++)
+                      _buildPlanet(_galaxyUsers[i], i, constraints),
+                  ],
+                );
+              },
             ),
           ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadius.borderRadiusXl,
-          boxShadow: AppShadows.sm,
-        ),
-        child: Column(
-          children: [
-            // Course header
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: BoxDecoration(
-                gradient: course.gradient,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(AppRadius.xl),
+          // Find button
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: const BoxDecoration(
+              gradient: AppColors.galaxyGradient,
+              border: Border(top: BorderSide(color: Color(0xFF1E293B))),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {},
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFFCBD5E1),
+                  side: const BorderSide(color: Color(0xFFCBD5E1), width: 2),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: const Text(
+                  'Find',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: AppRadius.borderRadiusMd,
-                    ),
-                    child: Icon(
-                      course.icon,
-                      color: Colors.white,
-                      size: 24,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlanet(_GalaxyUser user, int index, BoxConstraints constraints) {
+    final controller = _floatControllers[index];
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        final yOffset = math.sin(controller.value * math.pi) * 8;
+        final xOffset = math.cos(controller.value * math.pi * 0.7) * 4;
+        return Positioned(
+          left: constraints.maxWidth * user.x / 100 - 20 + xOffset,
+          top: constraints.maxHeight * user.y / 100 - 20 + yOffset,
+          child: child!,
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Planet dot
+          Container(
+            width: _planetSize(user.size),
+            height: _planetSize(user.size),
+            decoration: BoxDecoration(
+              color: user.color,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: user.color.withValues(alpha: 0.6),
+                  blurRadius: 12,
+                  spreadRadius: 4,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 6),
+          // Name label
+          Text(
+            user.name,
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFFCBD5E1),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  double _planetSize(String size) {
+    switch (size) {
+      case 'large':
+        return 20;
+      case 'medium':
+        return 16;
+      default:
+        return 12;
+    }
+  }
+
+  Widget _buildMessageView() {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          // Search box
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'search box',
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF94A3B8),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Color(0xFF94A3B8),
+                    size: 20,
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+              ),
+            ),
+          ),
+          // Conversation list
+          Expanded(
+            child: ListView.builder(
+              itemCount: _conversations.length,
+              itemBuilder: (context, index) {
+                return _buildConversationItem(_conversations[index]);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConversationItem(_Conversation conv) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9))),
+        ),
+        child: Row(
+          children: [
+            // Avatar
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: const Color(0xFFE2E8F0),
+                  child: Text(
+                    conv.name[0],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF64748B),
+                      fontSize: 18,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          course.title,
-                          style: AppTypography.title.copyWith(
+                ),
+                if (conv.unread)
+                  Positioned(
+                    top: -2,
+                    right: -2,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEF4444),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          '1',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.xs),
-                        Text(
-                          course.description,
-                          style: AppTypography.body2.copyWith(
-                            color: Colors.white.withValues(alpha: 0.9),
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                  if (course.isFavorite)
-                    const Icon(
-                      Icons.favorite,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                ],
-              ),
+              ],
             ),
-
-            // Course progress
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
+            const SizedBox(width: 16),
+            // Content
+            Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        _getStatusText(course.status),
-                        style: AppTypography.label.copyWith(
-                          color: _getStatusColor(course.status),
+                        conv.name,
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
+                          color: Color(0xFF0F172A),
+                          fontSize: 15,
                         ),
                       ),
                       Text(
-                        '${course.completedLessons}/${course.totalLessons} lessons',
-                        style: AppTypography.label,
+                        conv.time,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF94A3B8),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.sm),
-                  // Progress bar
-                  Container(
-                    height: 6,
-                    decoration: BoxDecoration(
-                      color: AppColors.border,
-                      borderRadius: AppRadius.borderRadiusFull,
+                  const SizedBox(height: 4),
+                  Text(
+                    conv.message,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: conv.unread
+                          ? const Color(0xFF0F172A)
+                          : const Color(0xFF64748B),
+                      fontWeight: conv.unread
+                          ? FontWeight.w500
+                          : FontWeight.w400,
                     ),
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: course.progress,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: AppRadius.borderRadiusFull,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  // Action button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CourseScreen(
-                              courseId: course.id,
-                              title: course.title,
-                              description: course.description,
-                              gradient: course.gradient,
-                              icon: course.icon,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        course.status == CourseStatus.completed
-                            ? 'Review Course'
-                            : course.status == CourseStatus.inProgress
-                                ? 'Continue Learning'
-                                : 'Start Learning',
-                      ),
-                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -388,54 +456,32 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
       ),
     );
   }
-
-  String _getStatusText(CourseStatus status) {
-    switch (status) {
-      case CourseStatus.notStarted:
-        return 'Not Started';
-      case CourseStatus.inProgress:
-        return 'In Progress';
-      case CourseStatus.completed:
-        return 'Completed';
-    }
-  }
-
-  Color _getStatusColor(CourseStatus status) {
-    switch (status) {
-      case CourseStatus.notStarted:
-        return AppColors.textSecondary;
-      case CourseStatus.inProgress:
-        return AppColors.primary;
-      case CourseStatus.completed:
-        return AppColors.success;
-    }
-  }
 }
 
-enum CourseStatus { notStarted, inProgress, completed }
+class _GalaxyUser {
+  final int id;
+  final String name;
+  final double x;
+  final double y;
+  final Color color;
+  final String size;
+  final double floatDelay;
+  const _GalaxyUser(
+    this.id,
+    this.name,
+    this.x,
+    this.y,
+    this.color,
+    this.size,
+    this.floatDelay,
+  );
+}
 
-class _CourseItem {
-  final String id;
-  final String title;
-  final String description;
-  final IconData icon;
-  final LinearGradient gradient;
-  final double progress;
-  final int totalLessons;
-  final int completedLessons;
-  final CourseStatus status;
-  final bool isFavorite;
-
-  _CourseItem({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.gradient,
-    required this.progress,
-    required this.totalLessons,
-    required this.completedLessons,
-    required this.status,
-    required this.isFavorite,
-  });
+class _Conversation {
+  final int id;
+  final String name;
+  final String message;
+  final String time;
+  final bool unread;
+  const _Conversation(this.id, this.name, this.message, this.time, this.unread);
 }

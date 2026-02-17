@@ -48,7 +48,9 @@ class DailyChallengeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isCompleted ? 'Today\'s Challenge Complete!' : 'Daily Challenge',
+                    isCompleted
+                        ? 'Today\'s Challenge Complete!'
+                        : 'Daily Challenge',
                     style: AppTypography.title.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
