@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
 import '../services/audio_service.dart';
+import '../services/supabase_service.dart';
 
 /// User data model
 class UserData {
@@ -51,6 +52,7 @@ class UserProvider extends ChangeNotifier {
   UserData? _user;
   bool _isLoggedIn = false;
   bool _isLoading = false;
+  String _errorMessage = '';
 
   // Learning statistics
   int _streak = 0;
@@ -64,6 +66,7 @@ class UserProvider extends ChangeNotifier {
   UserData? get user => _user;
   bool get isLoggedIn => _isLoggedIn;
   bool get isLoading => _isLoading;
+  String get errorMessage => _errorMessage;
   int get streak => _streak;
   int get longestStreak => _longestStreak;
   int get completedCourses => _completedCourses;
@@ -75,23 +78,48 @@ class UserProvider extends ChangeNotifier {
     }
     return '${_totalStudyMinutes}m';
   }
+
   int get completedQuestions => _completedQuestions;
   List<String> get unlockedAchievements => _unlockedAchievements;
 
   Future<void> initialize() async {
     _storage = await StorageService.getInstance();
-    await _loadUserData();
+    await _restoreSession();
     await _loadStats();
     await _checkAndUpdateStreak();
   }
 
-  Future<void> _loadUserData() async {
-    final userData = _storage?.getUser();
-    if (userData != null) {
-      _user = UserData.fromJson(userData);
+  Future<void> _restoreSession() async {
+    final supabaseUser = SupabaseService.currentUser;
+    if (supabaseUser != null) {
+      _user = _userDataFromSupabase(supabaseUser);
+      await _storage?.saveUser(_user!.toJson());
       _isLoggedIn = true;
+    } else {
+      final userData = _storage?.getUser();
+      if (userData != null) {
+        // Stale local cache but no Supabase session — clear it
+        await _storage?.clearUser();
+      }
+      _isLoggedIn = false;
     }
     notifyListeners();
+  }
+
+  UserData _userDataFromSupabase(dynamic supabaseUser) {
+    final meta = supabaseUser.userMetadata as Map<String, dynamic>? ?? {};
+    return UserData(
+      id: supabaseUser.id,
+      name:
+          (meta['name'] as String?) ??
+          (meta['full_name'] as String?) ??
+          (supabaseUser.email?.split('@').first ?? ''),
+      email: supabaseUser.email ?? '',
+      avatarUrl: meta['avatar_url'] as String?,
+      isPro: false,
+      joinedAt:
+          DateTime.tryParse(supabaseUser.createdAt ?? '') ?? DateTime.now(),
+    );
   }
 
   Future<void> _loadStats() async {
@@ -123,58 +151,67 @@ class UserProvider extends ChangeNotifier {
   /// Login
   Future<bool> login(String email, String password) async {
     _isLoading = true;
+    _errorMessage = '';
     notifyListeners();
 
-    // Simulate login request
-    await Future.delayed(const Duration(seconds: 1));
-
-    // Simulate successful login
-    _user = UserData(
-      id: 'user_${DateTime.now().millisecondsSinceEpoch}',
-      name: email.split('@').first,
+    final result = await SupabaseService.signIn(
       email: email,
-      isPro: false,
-      joinedAt: DateTime.now(),
+      password: password,
     );
 
-    await _storage?.saveUser(_user!.toJson());
-    _isLoggedIn = true;
+    if (result.success && SupabaseService.currentUser != null) {
+      _user = _userDataFromSupabase(SupabaseService.currentUser!);
+      await _storage?.saveUser(_user!.toJson());
+      _isLoggedIn = true;
+    } else {
+      _errorMessage = result.message;
+    }
+
     _isLoading = false;
     notifyListeners();
-
-    return true;
+    return result.success;
   }
 
   /// Register
   Future<bool> register(String name, String email, String password) async {
     _isLoading = true;
+    _errorMessage = '';
     notifyListeners();
 
-    // Simulate registration request
-    await Future.delayed(const Duration(seconds: 1));
-
-    _user = UserData(
-      id: 'user_${DateTime.now().millisecondsSinceEpoch}',
-      name: name,
+    final result = await SupabaseService.signUp(
       email: email,
-      isPro: false,
-      joinedAt: DateTime.now(),
+      password: password,
+      displayName: name,
     );
 
-    await _storage?.saveUser(_user!.toJson());
-    _isLoggedIn = true;
+    if (result.success && SupabaseService.currentUser != null) {
+      _user = _userDataFromSupabase(SupabaseService.currentUser!);
+      await _storage?.saveUser(_user!.toJson());
+      _isLoggedIn = true;
+    } else if (result.success) {
+      // Sign-up succeeded but no session yet (email confirmation required)
+      _errorMessage = 'Please check your email to confirm your account.';
+    } else {
+      _errorMessage = result.message;
+    }
+
     _isLoading = false;
     notifyListeners();
-
-    return true;
+    return result.success;
   }
 
   /// Logout
   Future<void> logout() async {
+    await SupabaseService.signOut();
     await _storage?.clearUser();
     _user = null;
     _isLoggedIn = false;
     notifyListeners();
+  }
+
+  /// Reset password
+  Future<AuthResult> resetPassword(String email) async {
+    return SupabaseService.resetPassword(email: email);
   }
 
   /// Record study
@@ -238,15 +275,18 @@ class UserProvider extends ChangeNotifier {
     }
 
     // Course completion achievements
-    if (_completedCourses >= 1 && !_unlockedAchievements.contains('first_course')) {
+    if (_completedCourses >= 1 &&
+        !_unlockedAchievements.contains('first_course')) {
       newAchievements.add('first_course');
     }
-    if (_completedCourses >= 10 && !_unlockedAchievements.contains('courses_10')) {
+    if (_completedCourses >= 10 &&
+        !_unlockedAchievements.contains('courses_10')) {
       newAchievements.add('courses_10');
     }
 
     // Question completion achievements
-    if (_completedQuestions >= 100 && !_unlockedAchievements.contains('questions_100')) {
+    if (_completedQuestions >= 100 &&
+        !_unlockedAchievements.contains('questions_100')) {
       newAchievements.add('questions_100');
     }
 

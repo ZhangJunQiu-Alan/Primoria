@@ -1,5 +1,29 @@
 # Changelog
 
+## [Unreleased] - 2026-02-17
+
+### Summary
+Viewer Supabase auth integration, landing/login/register screen redesign, and social login support.
+
+### Added
+- **Viewer Supabase auth**: New `supabase_flutter` dependency and `SupabaseService` (auth-only, ported from Builder) with `signIn`, `signUp`, `signOut`, `resetPassword`, `signInWithGoogle`, `getProfile`, `updateProfile`, and `_translateAuthError`
+- **Viewer `main.dart` Supabase init**: `Supabase.initialize()` with `String.fromEnvironment` for URL/anonKey (same pattern as Builder)
+- **Viewer landing screen**: New `LandingScreen` as initial route with "Get Start" entry point
+- **Viewer register screen**: New `RegisterScreen` with email/password registration, confirm password, terms checkbox, social login grid, and Supabase backend wiring
+- **Viewer login screen redesign**: Full visual overhaul with split-panel layout (image + form), CSS-matched color constants, Google OAuth button, "Forgot password?" dialog that sends reset email via Supabase
+- **Viewer visual assets**: `login.jpg`, `register.jpg`, `logo_with_bg.png`, `google.png`, `wechat.png`, `ins.png`, `whatsapp.png`
+
+### Changed
+- **`UserProvider.login()`**: Replaced `Future.delayed` mock with `SupabaseService.signIn()`, constructs `UserData` from Supabase user metadata
+- **`UserProvider.register()`**: Replaced mock with `SupabaseService.signUp()`, handles email confirmation required case
+- **`UserProvider.logout()`**: Now calls `SupabaseService.signOut()` before clearing local storage
+- **`UserProvider.initialize()`**: Restores session from `SupabaseService.currentUser` instead of only reading local cache; clears stale local data when no Supabase session exists
+- **`UserProvider` new APIs**: Added `errorMessage` getter and `resetPassword()` method
+- **Login/Register error display**: Error messages now come from Supabase `AuthResult.message` (translated) instead of generic "Unable to login"
+- **Viewer routing**: Initial route changed from `AppEntryPoint` (auto-HomeScreen) to `LandingScreen`; added `/register` route
+
+---
+
 ## [Unreleased] - 2026-02-14
 
 ### Summary

@@ -7,7 +7,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const PrimoriaApp());
 
-    // Verify that the app loads with the demo screen title
-    expect(find.text('Adjust Water Temperature'), findsOneWidget);
+    // Verify that the app loads with the landing screen
+    expect(find.text('Learn by thinking, not just watching'), findsOneWidget);
   });
 }
