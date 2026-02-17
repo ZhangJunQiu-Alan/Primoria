@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'theme/theme.dart';
+import 'screens/landing_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/register_screen.dart';
 import 'screens/course_screen.dart';
 import 'screens/lesson_screen.dart';
 import 'providers/theme_provider.dart';
@@ -11,6 +14,16 @@ import 'providers/user_provider.dart';
 import 'services/storage_service.dart';
 import 'services/audio_service.dart';
 import 'services/notification_service.dart';
+
+const supabaseUrl = String.fromEnvironment(
+  'SUPABASE_URL',
+  defaultValue: 'http://127.0.0.1:54321',
+);
+const supabaseAnonKey = String.fromEnvironment(
+  'SUPABASE_ANON_KEY',
+  defaultValue:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +35,13 @@ void main() async {
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.light,
     ),
+  );
+
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
+    authOptions: const FlutterAuthClientOptions(autoRefreshToken: true),
   );
 
   // Initialize services
@@ -52,8 +72,9 @@ class PrimoriaApp extends StatelessWidget {
             themeMode: themeProvider.themeMode,
             initialRoute: '/',
             routes: {
-              '/': (context) => const AppEntryPoint(),
+              '/': (context) => const LandingScreen(),
               '/login': (context) => const LoginScreen(),
+              '/register': (context) => const RegisterScreen(),
               '/home': (context) => const HomeScreen(),
               '/course': (context) => const CourseScreen(),
               '/lesson': (context) => const LessonScreen(),
@@ -61,23 +82,6 @@ class PrimoriaApp extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-/// App entry point - decides which page to show based on login status
-class AppEntryPoint extends StatelessWidget {
-  const AppEntryPoint({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-      builder: (context, userProvider, child) {
-        // If user is logged in, show home page
-        // If user is not logged in, show login page
-        // Guest mode is allowed, so show home page by default
-        return const HomeScreen();
-      },
     );
   }
 }

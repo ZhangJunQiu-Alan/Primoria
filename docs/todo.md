@@ -39,10 +39,11 @@
 3. [ ] Generate records after course completion
 4. [ ] In a lesson, show current progress in the top bar after each block; do not write to the DB until the entire lesson is completed
 5. [ ] RESTful API integration
-6. [ ] User authentication with JWT
+6. [x] User authentication with Supabase — email/password sign-in/sign-up, Google OAuth, password reset, session restore, error translation (2026-02-17)
 7. [ ] Cloud data synchronization
 8. [ ] Real-time progress updates
 9. [ ] Offline mode with content caching
+10. [x] Landing screen + login/register screen redesign — split-panel layout, CSS-matched design tokens, social login grid (2026-02-17)
 
 ## Content & Curriculum
 1. [ ] Course content management system

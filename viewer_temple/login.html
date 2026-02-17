@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="login-page">
+        <section class="login-shell" aria-label="Primoria login panel">
+            <div class="visual-panel">
+                <img class="visual-image" src="./asset/login.jpg" alt="太空主题插画">
+            </div>
+
+            <section class="form-panel">
+                <img class="form-logo" src="./asset/logo_with bg.png" alt="Primoria logo">
+                <h1>Welcome! This is Primoria</h1>
+                <p class="form-subtitle">Sign in to continue to your workspace.</p>
+
+                <form id="login-form" class="login-form" novalidate>
+                    <div class="field-group">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="text" autocomplete="username" placeholder="you@example.com or phone" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="password">Password</label>
+                        <div class="password-input-wrap">
+                            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 6 characters" required>
+                            <button id="password-toggle" class="password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-meta">
+                        <label class="remember-me" for="remember-me">
+                            <input id="remember-me" type="checkbox" name="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a class="forgot-link" href="#">Forgot password?</a>
+                    </div>
+
+                    <button id="login-btn" class="login-btn" type="submit">Login</button>
+                    <p id="form-status" class="form-status" aria-live="polite"></p>
+                </form>
+
+                <div class="divider" aria-hidden="true">
+                    <span class="line"></span>
+                    <span class="divider-text">Other Login Way</span>
+                    <span class="line"></span>
+                </div>
+
+                <div class="social-grid">
+                    <a id="social-google" class="social-btn" href="#" aria-label="使用 Google 登录">
+                        <img src="./asset/Google.png" alt="Google 图标">
+                    </a>
+                    <a id="social-wechat" class="social-btn" href="#" aria-label="使用微信登录">
+                        <img src="./asset/WeChat.png" alt="微信图标">
+                    </a>
+                    <a id="social-instagram" class="social-btn" href="#" aria-label="使用 Instagram 登录">
+                        <img src="./asset/ins.png" alt="Instagram 图标">
+                    </a>
+                    <a id="social-whatsapp" class="social-btn" href="#" aria-label="使用 WhatsApp 登录">
+                        <img src="./asset/whatspp.png" alt="WhatsApp 图标">
+                    </a>
+                </div>
+
+                <p class="signup-text">
+                    Don't have an account? <a id="signup-link" href="#">Sign-up</a>
+                </p>
+            </section>
+        </section>
+    </main>
+    <script src="./login.js"></script>
+</body>
+</html>

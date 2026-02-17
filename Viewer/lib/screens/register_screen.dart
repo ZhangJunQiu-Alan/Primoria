@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/supabase_service.dart';
 
-/// Login page color constants (matching CSS template)
+/// Register page color constants (matching CSS template)
 class _C {
   static const Color pageBg = Color(0xFF174A6B);
   static const Color cardBg = Color(0xFFF3F4F6);
@@ -26,27 +26,29 @@ class _C {
   static const Color visualBg = Color(0xFF102B45);
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
-  bool _rememberMe = false;
+  bool _obscureConfirmPassword = true;
+  bool _acceptedTerms = false;
   String _statusMessage = '';
-  String _statusState = ''; // '', 'error', 'success', 'info'
+  String _statusState = '';
   bool _isSubmitting = false;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -62,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _validate() {
     final account = _emailController.text.trim();
     final password = _passwordController.text;
+    final confirm = _confirmPasswordController.text;
     final emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
     final phoneRegex = RegExp(r'^\+?\d{7,15}$');
 
@@ -71,6 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     if (password.isEmpty) return 'Please enter your password.';
     if (password.length < 6) return 'Password must be at least 6 characters.';
+    if (confirm.isEmpty) return 'Please confirm your password.';
+    if (password != confirm) return 'Passwords do not match.';
+    if (!_acceptedTerms) return 'Please accept the Terms & Privacy Policy.';
     return null;
   }
 
@@ -82,19 +88,24 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     setState(() => _isSubmitting = true);
-    _setStatus('Logging in...', 'info');
+    _setStatus('Creating your account...', 'info');
 
     final userProvider = context.read<UserProvider>();
-    final success = await userProvider.login(
+    final name = _emailController.text.trim().split('@').first;
+    final success = await userProvider.register(
+      name,
       _emailController.text.trim(),
       _passwordController.text,
     );
 
     if (!mounted) return;
 
-    if (success) {
-      _setStatus('Login successful.', 'success');
+    if (success && userProvider.isLoggedIn) {
+      _setStatus('Registration successful.', 'success');
       Navigator.of(context).pushReplacementNamed('/home');
+    } else if (success) {
+      // Signed up but email confirmation required
+      _setStatus(userProvider.errorMessage, 'info');
     } else {
       _setStatus(userProvider.errorMessage, 'error');
     }
@@ -137,25 +148,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildDesktopLayout() {
+    // Mirrored: form left (48%), image right (52%)
     return Row(
       children: [
-        // Visual panel (left 52%)
-        Expanded(flex: 52, child: _buildVisualPanel()),
-        // Form panel (right 48%)
         Expanded(flex: 48, child: _buildFormPanel()),
+        Expanded(flex: 52, child: _buildVisualPanel()),
       ],
     );
   }
 
   Widget _buildMobileLayout() {
+    // Mobile: form first, image second
     return SingleChildScrollView(
       child: Column(
         children: [
+          _buildFormPanel(),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.38,
             child: _buildVisualPanel(),
           ),
-          _buildFormPanel(),
         ],
       ),
     );
@@ -165,11 +176,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       color: _C.visualBg,
       child: Image.asset(
-        'assets/images/login.jpg',
+        'assets/images/register.jpg',
         fit: BoxFit.cover,
         width: double.infinity,
         height: double.infinity,
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
         errorBuilder: (_, __, ___) =>
             const SizedBox.expand(child: ColoredBox(color: _C.visualBg)),
       ),
@@ -223,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // Title
           Text(
-            'Welcome! This is Primoria',
+            'Create Your Account',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: _fontFamily,
@@ -236,7 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // Subtitle
           Text(
-            'Sign in to continue to your workspace.',
+            'Register now and start building with Primoria.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: _fontFamily,
@@ -247,103 +258,119 @@ class _LoginScreenState extends State<LoginScreen> {
           if (isMobile) const SizedBox(height: 10),
 
           // Form
-          Form(
-            key: _formKey,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 500),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Email
-                  _buildLabel('Email'),
-                  const SizedBox(height: 8),
-                  _buildInput(
-                    controller: _emailController,
-                    placeholder: 'you@example.com or phone',
-                    keyboardType: TextInputType.emailAddress,
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Email
+                _buildLabel('Email'),
+                const SizedBox(height: 8),
+                _buildInput(
+                  controller: _emailController,
+                  placeholder: 'you@example.com or phone',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 14),
+
+                // Password
+                _buildLabel('Password'),
+                const SizedBox(height: 8),
+                _buildPasswordInput(
+                  controller: _passwordController,
+                  obscure: _obscurePassword,
+                  onToggle: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                  placeholder: 'At least 6 characters',
+                ),
+                const SizedBox(height: 14),
+
+                // Confirm Password
+                _buildLabel('Confirm Password'),
+                const SizedBox(height: 8),
+                _buildPasswordInput(
+                  controller: _confirmPasswordController,
+                  obscure: _obscureConfirmPassword,
+                  onToggle: () => setState(
+                    () => _obscureConfirmPassword = !_obscureConfirmPassword,
                   ),
-                  const SizedBox(height: 14),
+                  placeholder: 'Repeat your password',
+                ),
+                const SizedBox(height: 8),
 
-                  // Password
-                  _buildLabel('Password'),
-                  const SizedBox(height: 8),
-                  _buildPasswordInput(),
-                  const SizedBox(height: 8),
-
-                  // Remember me + Forgot password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: Checkbox(
-                              value: _rememberMe,
-                              onChanged: (v) =>
-                                  setState(() => _rememberMe = v ?? false),
-                              activeColor: _C.buttonBg,
-                            ),
+                // Terms + Need help
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: Checkbox(
+                            value: _acceptedTerms,
+                            onChanged: (v) =>
+                                setState(() => _acceptedTerms = v ?? false),
+                            activeColor: _C.buttonBg,
                           ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Remember me',
-                            style: TextStyle(
-                              fontFamily: _fontFamily,
-                              fontSize: 12.6,
-                              color: _C.metaColor,
-                            ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'I agree to the Terms & Privacy Policy',
+                          style: TextStyle(
+                            fontFamily: _fontFamily,
+                            fontSize: 12.6,
+                            color: _C.metaColor,
                           ),
-                        ],
-                      ),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: _showForgotPasswordDialog,
-                          child: Text(
-                            'Forgot password?',
-                            style: TextStyle(
-                              fontFamily: _fontFamily,
-                              fontSize: 12.6,
-                              color: _C.metaColor,
-                            ),
+                        ),
+                      ],
+                    ),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          'Need help?',
+                          style: TextStyle(
+                            fontFamily: _fontFamily,
+                            fontSize: 12.6,
+                            color: _C.metaColor,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
 
-                  // Login button
-                  Center(
-                    child: SizedBox(
-                      width: isMobile ? double.infinity : 220,
-                      height: 48,
-                      child: _buildLoginButton(),
+                // Register button
+                Center(
+                  child: SizedBox(
+                    width: isMobile ? double.infinity : 220,
+                    height: 48,
+                    child: _buildRegisterButton(),
+                  ),
+                ),
+                const SizedBox(height: 4),
+
+                // Status message
+                SizedBox(
+                  height: 18,
+                  child: Text(
+                    _statusMessage,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: _fontFamily,
+                      fontSize: 12.6,
+                      color: _statusState == 'error'
+                          ? _C.errorColor
+                          : _statusState == 'success'
+                          ? _C.successColor
+                          : _C.statusInfo,
                     ),
                   ),
-                  const SizedBox(height: 4),
-
-                  // Status message
-                  SizedBox(
-                    height: 18,
-                    child: Text(
-                      _statusMessage,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: _fontFamily,
-                        fontSize: 12.6,
-                        color: _statusState == 'error'
-                            ? _C.errorColor
-                            : _statusState == 'success'
-                            ? _C.successColor
-                            : _C.statusInfo,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
@@ -356,7 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
-                    'Other Login Way',
+                    'Other Register Way',
                     style: TextStyle(
                       fontFamily: _fontFamily,
                       fontSize: 14.2,
@@ -377,10 +404,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const SizedBox(height: 4),
 
-          // Sign up text
+          // Sign in text
           Text.rich(
             TextSpan(
-              text: "Don't have an account? ",
+              text: 'Already have an account? ',
               style: TextStyle(
                 fontFamily: _fontFamily,
                 fontSize: 14.4,
@@ -393,11 +420,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
-                      onTap: () => Navigator.of(
-                        context,
-                      ).pushReplacementNamed('/register'),
+                      onTap: () =>
+                          Navigator.of(context).pushReplacementNamed('/login'),
                       child: Text(
-                        'Sign-up',
+                        'Sign-in',
                         style: TextStyle(
                           fontFamily: _fontFamily,
                           fontSize: 14.4,
@@ -466,10 +492,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildPasswordInput() {
+  Widget _buildPasswordInput({
+    required TextEditingController controller,
+    required bool obscure,
+    required VoidCallback onToggle,
+    required String placeholder,
+  }) {
     return TextField(
-      controller: _passwordController,
-      obscureText: _obscurePassword,
+      controller: controller,
+      obscureText: obscure,
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },
@@ -479,7 +510,7 @@ class _LoginScreenState extends State<LoginScreen> {
         color: _C.inputText,
       ),
       decoration: InputDecoration(
-        hintText: 'At least 6 characters',
+        hintText: placeholder,
         hintStyle: TextStyle(
           fontFamily: _fontFamily,
           fontSize: 14.7,
@@ -499,11 +530,11 @@ class _LoginScreenState extends State<LoginScreen> {
         suffixIcon: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: () => setState(() => _obscurePassword = !_obscurePassword),
+            onTap: onToggle,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Text(
-                _obscurePassword ? 'Show' : 'Hide',
+                obscure ? 'Show' : 'Hide',
                 style: TextStyle(
                   fontFamily: _fontFamily,
                   fontSize: 12.9,
@@ -519,7 +550,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildRegisterButton() {
     return MouseRegion(
       cursor: _isSubmitting
           ? SystemMouseCursors.wait
@@ -543,7 +574,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   )
                 : Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
                       fontFamily: _fontFamily,
                       fontSize: 18,
@@ -613,76 +644,5 @@ class _LoginScreenState extends State<LoginScreen> {
         _setStatus(result.message, 'error');
       }
     }
-    // Other providers are placeholders — no action
-  }
-
-  void _showForgotPasswordDialog() {
-    final resetEmailController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          title: Text(
-            'Reset Password',
-            style: TextStyle(fontFamily: _fontFamily),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Enter your email and we will send you a password reset link.',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontSize: 13.5,
-                  color: _C.subtitleColor,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: resetEmailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'you@example.com',
-                  hintStyle: TextStyle(
-                    fontFamily: _fontFamily,
-                    color: _C.mutedColor,
-                  ),
-                  border: const UnderlineInputBorder(),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: Text('Cancel', style: TextStyle(fontFamily: _fontFamily)),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = resetEmailController.text.trim();
-                if (email.isEmpty) return;
-                Navigator.of(ctx).pop();
-                final userProvider = context.read<UserProvider>();
-                final result = await userProvider.resetPassword(email);
-                if (!mounted) return;
-                if (result.success) {
-                  _setStatus('Reset link sent! Check your email.', 'success');
-                } else {
-                  _setStatus(result.message, 'error');
-                }
-              },
-              child: Text(
-                'Send',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
   }
 }
