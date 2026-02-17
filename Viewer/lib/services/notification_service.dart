@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 /// Notification service
 class NotificationService {
   static NotificationService? _instance;
-  final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _notifications =
+      FlutterLocalNotificationsPlugin();
   bool _initialized = false;
 
   NotificationService._();
@@ -17,7 +18,9 @@ class NotificationService {
   Future<void> initialize() async {
     if (_initialized) return;
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -50,10 +53,14 @@ class NotificationService {
 
   /// Request notification permission
   Future<bool> requestPermission() async {
-    final android = _notifications.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
-    final iOS = _notifications.resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>();
+    final android = _notifications
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    final iOS = _notifications
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
 
     if (android != null) {
       final granted = await android.requestNotificationsPermission();
@@ -126,7 +133,8 @@ class NotificationService {
     await showNotification(
       id: 2,
       title: 'Don\'t forget today\'s study!',
-      body: 'You\'ve been studying for $currentStreak days in a row. Keep it up!',
+      body:
+          'You\'ve been studying for $currentStreak days in a row. Keep it up!',
       payload: 'streak_reminder',
     );
   }

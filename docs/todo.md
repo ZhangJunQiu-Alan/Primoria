@@ -34,8 +34,8 @@
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 
 ## Viewer
-1. [ ] Build learning home page: support common features (Profile, achievements, etc.)
-2. [ ] Introduce social/friend features
+1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
+2. [x] Introduce social/friend features — Community tab with galaxy "find" visualization + message conversation list (2026-02-18)
 3. [ ] Generate records after course completion
 4. [ ] In a lesson, show current progress in the top bar after each block; do not write to the DB until the entire lesson is completed
 5. [ ] RESTful API integration

@@ -30,11 +30,11 @@ class AppColors {
   static const Color errorDark = Color(0xFFD32F2F);
 
   // Course category colors (slightly brightened)
-  static const Color courseMath = Color(0xFF6C7BD8);      // Math - Indigo
-  static const Color courseScience = Color(0xFF2EC4B6);   // Science - Teal
-  static const Color courseCS = Color(0xFF8E67D4);        // Computer - Purple
-  static const Color courseLogic = Color(0xFFFF5A5F);     // Logic - Red
-  static const Color courseData = Color(0xFF4DB8FF);      // Data - Blue
+  static const Color courseMath = Color(0xFF6C7BD8); // Math - Indigo
+  static const Color courseScience = Color(0xFF2EC4B6); // Science - Teal
+  static const Color courseCS = Color(0xFF8E67D4); // Computer - Purple
+  static const Color courseLogic = Color(0xFFFF5A5F); // Logic - Red
+  static const Color courseData = Color(0xFF4DB8FF); // Data - Blue
 
   // Dark theme background
   static const Color backgroundDark = Color(0xFF1A1A2E);
@@ -115,6 +115,36 @@ class AppColors {
 
   static const LinearGradient logicGradient = LinearGradient(
     colors: [Color(0xFFFF5A5F), Color(0xFFE5484D)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Indigo palette (from Figma template)
+  static const Color indigo = Color(0xFF4F46E5);
+  static const Color indigo50 = Color(0xFFEEF2FF);
+  static const Color indigo100 = Color(0xFFE0E7FF);
+  static const Color indigo200 = Color(0xFFC7D2FE);
+  static const Color indigo500 = Color(0xFF6366F1);
+  static const Color indigo600 = Color(0xFF4F46E5);
+  static const Color indigo700 = Color(0xFF4338CA);
+
+  // Indigo gradient (course logo)
+  static const LinearGradient indigoGradient = LinearGradient(
+    colors: [Color(0xFF2563EB), Color(0xFF4F46E5)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Profile banner gradient
+  static const LinearGradient profileBannerGradient = LinearGradient(
+    colors: [Color(0xFF6366F1), Color(0xFFA855F7), Color(0xFFEC4899)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
+  // Galaxy background gradient
+  static const LinearGradient galaxyGradient = LinearGradient(
+    colors: [Color(0xFF020617), Color(0xFF1E1B4B), Color(0xFF020617)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

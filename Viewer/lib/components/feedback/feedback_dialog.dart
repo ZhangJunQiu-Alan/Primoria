@@ -63,17 +63,11 @@ class FeedbackDialog extends StatefulWidget {
       },
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 0.3),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOutBack,
-          )),
-          child: FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
+          position: Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero)
+              .animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+              ),
+          child: FadeTransition(opacity: animation, child: child),
         );
       },
     );
@@ -101,10 +95,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
     );
 
     _iconScale = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _iconController,
-        curve: Curves.elasticOut,
-      ),
+      CurvedAnimation(parent: _iconController, curve: Curves.elasticOut),
     );
 
     // Shake animation (used on failure)
@@ -114,10 +105,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
     );
 
     _shakeAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _shakeController,
-        curve: Curves.elasticOut,
-      ),
+      CurvedAnimation(parent: _shakeController, curve: Curves.elasticOut),
     );
 
     // Trigger animation and haptic feedback
@@ -153,7 +141,9 @@ class _FeedbackDialogState extends State<FeedbackDialog>
         animation: _shakeAnimation,
         builder: (context, child) {
           final shakeOffset = widget.type == FeedbackType.failure
-              ? (1 - _shakeAnimation.value) * 10 * _shakeWave(_shakeAnimation.value)
+              ? (1 - _shakeAnimation.value) *
+                    10 *
+                    _shakeWave(_shakeAnimation.value)
               : 0.0;
 
           return Transform.translate(
@@ -184,11 +174,7 @@ class _FeedbackDialogState extends State<FeedbackDialog>
                       color: _primaryColor.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      _iconData,
-                      size: 48,
-                      color: _primaryColor,
-                    ),
+                    child: Icon(_iconData, size: 48, color: _primaryColor),
                   ),
                 ),
                 AppSpacing.verticalGapLg,

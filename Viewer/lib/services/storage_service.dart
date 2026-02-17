@@ -63,7 +63,10 @@ class StorageService {
     return _prefs?.getDouble('course_$courseId') ?? 0.0;
   }
 
-  Future<void> saveCompletedLessons(String courseId, List<String> lessonIds) async {
+  Future<void> saveCompletedLessons(
+    String courseId,
+    List<String> lessonIds,
+  ) async {
     await _prefs?.setStringList('completed_$courseId', lessonIds);
   }
 

@@ -52,11 +52,7 @@ class CourseCard extends StatelessWidget {
                 gradient: gradient,
                 borderRadius: AppRadius.borderRadiusMd,
               ),
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 28,
-              ),
+              child: Icon(icon, color: Colors.white, size: 28),
             ),
             const SizedBox(width: AppSpacing.md),
 

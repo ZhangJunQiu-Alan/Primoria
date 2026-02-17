@@ -56,10 +56,7 @@ class GameContainer extends StatelessWidget {
 
             // Content section
             Expanded(
-              child: _ContentSection(
-                state: state,
-                content: content,
-              ),
+              child: _ContentSection(state: state, content: content),
             ),
 
             // Footer section
@@ -100,9 +97,7 @@ class _HeaderSection extends StatelessWidget {
       ),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        border: Border(
-          bottom: BorderSide(color: AppColors.border, width: 1),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.border, width: 1)),
       ),
       child: Column(
         children: [
@@ -159,10 +154,7 @@ class _HeaderSection extends StatelessWidget {
           AppSpacing.verticalGapSm,
 
           // Progress bar
-          _ProgressBar(
-            current: currentIndex,
-            total: totalCount,
-          ),
+          _ProgressBar(current: currentIndex, total: totalCount),
         ],
       ),
     );
@@ -174,10 +166,7 @@ class _ProgressBar extends StatelessWidget {
   final int current;
   final int total;
 
-  const _ProgressBar({
-    required this.current,
-    required this.total,
-  });
+  const _ProgressBar({required this.current, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -208,17 +197,12 @@ class _ContentSection extends StatelessWidget {
   final GameContainerState state;
   final Widget content;
 
-  const _ContentSection({
-    required this.state,
-    required this.content,
-  });
+  const _ContentSection({required this.state, required this.content});
 
   @override
   Widget build(BuildContext context) {
     if (state == GameContainerState.loading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     return SingleChildScrollView(

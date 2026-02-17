@@ -44,30 +44,24 @@ class AppTheme {
           }),
           foregroundColor: WidgetStateProperty.all(AppColors.textOnPrimary),
           padding: WidgetStateProperty.all(
-            const EdgeInsets.symmetric(
-              horizontal: 28,
-              vertical: 16,
-            ),
+            const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: AppRadius.borderRadiusFull,
-            ),
+            RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusFull),
           ),
           textStyle: WidgetStateProperty.all(AppTypography.button),
           elevation: WidgetStateProperty.all(0),
           shadowColor: WidgetStateProperty.all(Colors.transparent),
-          overlayColor: WidgetStateProperty.all(AppColors.primaryDark.withValues(alpha: 0.2)),
+          overlayColor: WidgetStateProperty.all(
+            AppColors.primaryDark.withValues(alpha: 0.2),
+          ),
         ),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 28,
-            vertical: 16,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: AppRadius.borderRadiusFull,
           ),
@@ -87,9 +81,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusXl,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusXl),
         margin: EdgeInsets.zero,
       ),
 
@@ -137,9 +129,7 @@ class AppTheme {
       // Dialog theme - rounder
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusXxl,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusXxl),
         titleTextStyle: AppTypography.headline3,
         contentTextStyle: AppTypography.body1,
       ),
@@ -174,42 +164,39 @@ class AppTheme {
         foregroundColor: AppColors.textOnDark,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: AppTypography.title.copyWith(color: AppColors.textOnDark),
+        titleTextStyle: AppTypography.title.copyWith(
+          color: AppColors.textOnDark,
+        ),
       ),
 
       // Button theme - Duolingo 3D raised style
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.disabled)) return AppColors.borderDark;
+            if (states.contains(WidgetState.disabled))
+              return AppColors.borderDark;
             return AppColors.primary;
           }),
           foregroundColor: WidgetStateProperty.all(AppColors.textOnPrimary),
           padding: WidgetStateProperty.all(
-            const EdgeInsets.symmetric(
-              horizontal: 28,
-              vertical: 16,
-            ),
+            const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: AppRadius.borderRadiusFull,
-            ),
+            RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusFull),
           ),
           textStyle: WidgetStateProperty.all(AppTypography.button),
           elevation: WidgetStateProperty.all(0),
           shadowColor: WidgetStateProperty.all(Colors.transparent),
-          overlayColor: WidgetStateProperty.all(AppColors.primaryDark.withValues(alpha: 0.2)),
+          overlayColor: WidgetStateProperty.all(
+            AppColors.primaryDark.withValues(alpha: 0.2),
+          ),
         ),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 28,
-            vertical: 16,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: AppRadius.borderRadiusFull,
           ),
@@ -229,9 +216,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.cardDark,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusXl,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusXl),
         margin: EdgeInsets.zero,
       ),
 
@@ -259,7 +244,9 @@ class AppTheme {
           horizontal: AppSpacing.md,
           vertical: AppSpacing.md,
         ),
-        hintStyle: AppTypography.body1.copyWith(color: AppColors.textSecondaryOnDark),
+        hintStyle: AppTypography.body1.copyWith(
+          color: AppColors.textSecondaryOnDark,
+        ),
       ),
 
       // Slider theme
@@ -279,11 +266,13 @@ class AppTheme {
       // Dialog theme
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.cardDark,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderRadiusXxl,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusXxl),
+        titleTextStyle: AppTypography.headline3.copyWith(
+          color: AppColors.textOnDark,
         ),
-        titleTextStyle: AppTypography.headline3.copyWith(color: AppColors.textOnDark),
-        contentTextStyle: AppTypography.body1.copyWith(color: AppColors.textOnDark),
+        contentTextStyle: AppTypography.body1.copyWith(
+          color: AppColors.textOnDark,
+        ),
       ),
 
       // Progress indicator theme
@@ -294,24 +283,30 @@ class AppTheme {
 
       // Text theme
       textTheme: TextTheme(
-        headlineLarge: AppTypography.headline1.copyWith(color: AppColors.textOnDark),
-        headlineMedium: AppTypography.headline2.copyWith(color: AppColors.textOnDark),
-        headlineSmall: AppTypography.headline3.copyWith(color: AppColors.textOnDark),
+        headlineLarge: AppTypography.headline1.copyWith(
+          color: AppColors.textOnDark,
+        ),
+        headlineMedium: AppTypography.headline2.copyWith(
+          color: AppColors.textOnDark,
+        ),
+        headlineSmall: AppTypography.headline3.copyWith(
+          color: AppColors.textOnDark,
+        ),
         titleLarge: AppTypography.title.copyWith(color: AppColors.textOnDark),
         bodyLarge: AppTypography.body1.copyWith(color: AppColors.textOnDark),
-        bodyMedium: AppTypography.body2.copyWith(color: AppColors.textSecondaryOnDark),
-        labelLarge: AppTypography.label.copyWith(color: AppColors.textSecondaryOnDark),
+        bodyMedium: AppTypography.body2.copyWith(
+          color: AppColors.textSecondaryOnDark,
+        ),
+        labelLarge: AppTypography.label.copyWith(
+          color: AppColors.textSecondaryOnDark,
+        ),
       ),
 
       // Icon theme
-      iconTheme: const IconThemeData(
-        color: AppColors.textOnDark,
-      ),
+      iconTheme: const IconThemeData(color: AppColors.textOnDark),
 
       // Divider theme
-      dividerTheme: const DividerThemeData(
-        color: AppColors.borderDark,
-      ),
+      dividerTheme: const DividerThemeData(color: AppColors.borderDark),
     );
   }
 }

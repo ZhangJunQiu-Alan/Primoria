@@ -116,6 +116,22 @@
 
 - [ ] Trigger AI generation once and verify developer log includes one concise diagnostics line with `promptVersion`, selected `model`, latency fields (`total/generate/parse/validate`), `parseResult`, `validation.passed`, and final `stage`
 
+## 16. Viewer — Post-Login Home (4 Tabs)
+
+- [ ] `flutter run -d chrome` → login → lands on Home tab
+- [ ] Bottom nav shows 4 tabs: Home / Library / Community / Profile with indigo highlight
+- [ ] **Home tab**: Star counter (top-right), "Data Structures" + "LEVEL 4" title, blue-indigo logo block, white drawer with course list + "Learning" button
+- [ ] **Home → LevelMap**: Tap course area → pushes LevelMapScreen with back button, "Module 1" header, completed/current/locked nodes
+- [ ] **LevelMap → Lesson**: Tap "Start Coding" on current node → pushes LessonScreen
+- [ ] **Library tab**: Search bar, 5 category tabs (CS/Math/Science/Business/Social), recommended carousel, popular list; switching category updates both sections
+- [ ] **Community tab — Find**: Dark galaxy background with floating planet dots and "Find" button
+- [ ] **Community tab — Message**: Search box + conversation list with unread badges
+- [ ] **Community tab switching**: Tap "find" / "message" header toggles views
+- [ ] **Profile tab**: Gradient banner (indigo→purple→pink), rotated avatar, user name + handle, 2×2 stats grid, Daily Badge card, 4-column achievements, settings list
+- [ ] **Profile — Settings**: Theme picker works (Follow System / Light / Dark)
+- [ ] **Profile — Logout**: Logout button visible when logged in, shows snackbar on success
+- [ ] **Wide browser**: All tab content stays centered, max-width 600px on wide screens
+
 ## Known Issues
 
 1. Builder text blocks do not render Markdown (Viewer does)

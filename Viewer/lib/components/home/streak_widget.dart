@@ -57,9 +57,7 @@ class StreakWidget extends StatelessWidget {
             const SizedBox(width: AppSpacing.xs),
             Text(
               'days',
-              style: AppTypography.label.copyWith(
-                color: AppColors.streakFire,
-              ),
+              style: AppTypography.label.copyWith(color: AppColors.streakFire),
             ),
           ],
         ],
@@ -135,9 +133,7 @@ class StreakDisplayLarge extends StatelessWidget {
             ),
             child: Text(
               'Best: $longestStreak days',
-              style: AppTypography.label.copyWith(
-                color: Colors.white,
-              ),
+              style: AppTypography.label.copyWith(color: Colors.white),
             ),
           ),
         ],
