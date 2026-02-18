@@ -161,6 +161,19 @@ class StorageService {
     return getFavoriteCourses().contains(courseId);
   }
 
+  // Remember me (login form)
+  Future<void> saveRememberMe(bool remember, String email) async {
+    await _prefs?.setBool('rememberMe', remember);
+    if (remember) {
+      await _prefs?.setString('rememberedEmail', email);
+    } else {
+      await _prefs?.remove('rememberedEmail');
+    }
+  }
+
+  bool getRememberMe() => _prefs?.getBool('rememberMe') ?? false;
+  String getRememberedEmail() => _prefs?.getString('rememberedEmail') ?? '';
+
   // Clear all data
   Future<void> clearAll() async {
     await _prefs?.clear();

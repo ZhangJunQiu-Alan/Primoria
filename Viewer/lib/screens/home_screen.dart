@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/theme.dart';
 import '../components/common/bottom_nav_bar.dart';
+import '../providers/user_provider.dart';
+import '../services/supabase_service.dart';
 import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'profile_screen.dart';
-import 'level_map_screen.dart';
 import 'lesson_screen.dart';
+import 'course_screen.dart';
 
 /// Home page — ported from Figma HomeScreen template
 class HomeScreen extends StatefulWidget {
@@ -17,6 +20,68 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentNavIndex = 0;
+
+  // Active enrolled course data loaded from backend
+  Map<String, dynamic>? _course; // row from courses table (nested in enrollment)
+  List<Map<String, dynamic>> _chapters = [];
+  Set<String> _completedLessonIds = {};
+  bool _loadingHome = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHomeData();
+  }
+
+  Future<void> _loadHomeData() async {
+    final enrollments = await SupabaseService.getEnrollments();
+    if (!mounted) return;
+
+    if (enrollments.isNotEmpty) {
+      final enrollment = enrollments.first;
+      final courseMap = enrollment['courses'] as Map<String, dynamic>?;
+      final courseId = (courseMap?['id'] ?? enrollment['course_id']) as String?;
+      if (courseId != null) {
+        final detail = await SupabaseService.getCourseDetail(courseId);
+        if (detail != null && mounted) {
+          setState(() {
+            _course = courseMap;
+            _chapters = List<Map<String, dynamic>>.from(detail['chapters'] ?? []);
+            _completedLessonIds = Set<String>.from(
+              (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
+            );
+          });
+        }
+      }
+    }
+
+    if (mounted) setState(() => _loadingHome = false);
+  }
+
+  /// Returns the first incomplete lesson ID from chapters, or null.
+  String? get _nextLessonId {
+    for (final ch in _chapters) {
+      final lessons = (ch['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+      for (final lesson in lessons) {
+        final id = lesson['id'] as String;
+        if (!_completedLessonIds.contains(id)) return id;
+      }
+    }
+    return null;
+  }
+
+  String? get _nextLessonTitle {
+    for (final ch in _chapters) {
+      final lessons = (ch['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+      for (final lesson in lessons) {
+        final id = lesson['id'] as String;
+        if (!_completedLessonIds.contains(id)) {
+          return lesson['title'] as String?;
+        }
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,23 +116,19 @@ class _HomeScreenState extends State<HomeScreen> {
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           children: [
-            // Header with star counter
             _buildHeader(),
-
-            // Main content area
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 8),
-                    // Clickable area → LevelMap
-                    _buildCourseHero(),
-
-                    // Bottom drawer panel
-                    _buildDrawerPanel(),
-                  ],
-                ),
-              ),
+              child: _loadingHome
+                  ? const Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 8),
+                          _buildCourseHero(),
+                          _buildDrawerPanel(),
+                        ],
+                      ),
+                    ),
             ),
           ],
         ),
@@ -81,39 +142,41 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         children: [
           const Spacer(),
-          // Star counter
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: const Color(0xFFF1F5F9)),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x08000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 1),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.star_rounded,
-                  color: Color(0xFFFBBF24),
-                  size: 20,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  '5',
-                  style: AppTypography.label.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF334155),
-                    fontSize: 14,
+          // XP counter from backend
+          Consumer<UserProvider>(
+            builder: (context, up, _) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: const Color(0xFFF1F5F9)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x08000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 1),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.star_rounded,
+                    color: Color(0xFFFBBF24),
+                    size: 20,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${up.totalXp}',
+                    style: AppTypography.label.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF334155),
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -122,19 +185,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCourseHero() {
+    final courseTitle = _course?['title'] as String? ?? 'Start Learning';
+    final subjectColor = _subjectColor(_course);
+    final completedCount = _completedLessonIds.length;
+    final totalLessons = _chapters
+        .expand((ch) => (ch['lessons'] as List? ?? []))
+        .length;
+    final levelLabel = totalLessons == 0
+        ? 'EXPLORE COURSES'
+        : 'LESSON $completedCount / $totalLessons';
+
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const LevelMapScreen()),
-        );
-      },
+      onTap: _course == null
+          ? null
+          : () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CourseScreen(
+                    courseId: _course!['id'] as String?,
+                    title: courseTitle,
+                    description: _course!['description'] as String?,
+                  ),
+                ),
+              ),
       child: Column(
         children: [
           const SizedBox(height: 8),
-          // Course title
           Text(
-            'Data Structures',
+            courseTitle,
             style: AppTypography.headline1.copyWith(
               fontSize: 30,
               fontWeight: FontWeight.w800,
@@ -143,29 +221,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          // Level badge
           Text(
-            'LEVEL 4',
+            levelLabel,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
               color: AppColors.indigo500,
-              letterSpacing: 3.0,
+              letterSpacing: 2.0,
             ),
           ),
           const SizedBox(height: 32),
-          // Course logo — blue→indigo gradient block with Python shapes
           Transform.rotate(
-            angle: 0.1, // ~6 degrees
+            angle: 0.1,
             child: Container(
               width: 240,
               height: 240,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [
-                    Color(0xFF2563EB),
-                    Color(0xFF3B82F6),
-                    Color(0xFF4F46E5),
+                    subjectColor,
+                    subjectColor.withValues(alpha: 0.7),
+                    AppColors.indigo,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -173,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(48),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF4F46E5).withValues(alpha: 0.3),
+                    color: subjectColor.withValues(alpha: 0.3),
                     blurRadius: 40,
                     offset: const Offset(0, 20),
                   ),
@@ -183,110 +259,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
                 ),
               ),
-              child: Stack(
-                children: [
-                  // Internal glow
-                  Positioned.fill(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(48),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.white.withValues(alpha: 0.2),
-                            Colors.transparent,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                    ),
+              child: Center(
+                child: Text(
+                  _courseInitials(courseTitle),
+                  style: TextStyle(
+                    fontSize: 64,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white.withValues(alpha: 0.4),
+                    letterSpacing: -4,
                   ),
-                  // Python-style geometric shapes
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 64,
-                              height: 64,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFBBF24),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  topRight: Radius.circular(16),
-                                  bottomLeft: Radius.circular(16),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              width: 64,
-                              height: 64,
-                              decoration: BoxDecoration(
-                                color: const Color(
-                                  0xFFFBBF24,
-                                ).withValues(alpha: 0.8),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  topRight: Radius.circular(16),
-                                  bottomRight: Radius.circular(16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 64,
-                              height: 64,
-                              decoration: BoxDecoration(
-                                color: const Color(
-                                  0xFF93C5FD,
-                                ).withValues(alpha: 0.8),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  bottomLeft: Radius.circular(16),
-                                  bottomRight: Radius.circular(16),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              width: 64,
-                              height: 64,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF93C5FD),
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(16),
-                                  bottomLeft: Radius.circular(16),
-                                  bottomRight: Radius.circular(16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  // "Py" overlay text
-                  Center(
-                    child: Text(
-                      'Py',
-                      style: TextStyle(
-                        fontSize: 72,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white.withValues(alpha: 0.4),
-                        letterSpacing: -4,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -296,6 +278,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildDrawerPanel() {
+    final chaptersToShow = _chapters.take(2).toList();
+    final hasCourse = _course != null;
+
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 48),
@@ -313,35 +298,45 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
-          // Course list items
-          _buildCourseListItem(
-            title: 'The Dot Product',
-            subtitle: '3 Lessons',
-            isCompleted: true,
-          ),
+          if (!hasCourse)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: Text(
+                'Enroll in a course to start learning!',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: const Color(0xFF94A3B8),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            )
+          else
+            for (int i = 0; i < chaptersToShow.length; i++) ...[
+              _buildChapterItem(chaptersToShow[i]),
+              if (i < chaptersToShow.length - 1) const SizedBox(height: 24),
+            ],
           const SizedBox(height: 24),
-          _buildCourseListItem(
-            title: 'Cross Product',
-            subtitle: 'Locked',
-            isCompleted: false,
-          ),
-          const SizedBox(height: 24),
-          // Learning button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const LessonScreen(
-                      lessonId: 'daily',
-                      lessonTitle: 'The Dot Product',
-                      gradient: AppColors.indigoGradient,
-                    ),
-                  ),
-                );
-              },
+              onPressed: hasCourse
+                  ? () {
+                      final lessonId = _nextLessonId;
+                      final lessonTitle = _nextLessonTitle;
+                      if (lessonId != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => LessonScreen(
+                              lessonId: lessonId,
+                              lessonTitle: lessonTitle ?? 'Lesson',
+                              gradient: AppColors.indigoGradient,
+                            ),
+                          ),
+                        ).then((_) => _loadHomeData());
+                      }
+                    }
+                  : () => setState(() => _currentNavIndex = 1),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.indigo600,
                 foregroundColor: Colors.white,
@@ -352,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 0,
               ),
               child: Text(
-                'Learning',
+                hasCourse ? 'Continue Learning' : 'Browse Courses',
                 style: AppTypography.button.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 18,
@@ -367,13 +362,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCourseListItem({
-    required String title,
-    required String subtitle,
-    required bool isCompleted,
-  }) {
+  Widget _buildChapterItem(Map<String, dynamic> chapter) {
+    final title = chapter['title'] as String? ?? 'Chapter';
+    final lessons = (chapter['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+    final lessonCount = lessons.length;
+    final completedCount = lessons
+        .where((l) => _completedLessonIds.contains(l['id'] as String))
+        .length;
+    final isCompleted = lessonCount > 0 && completedCount == lessonCount;
+    final subtitle = isCompleted
+        ? 'Completed'
+        : lessonCount == 0
+            ? 'No lessons'
+            : '$lessonCount lessons';
+
     return Opacity(
-      opacity: isCompleted ? 1.0 : 0.6,
+      opacity: isCompleted ? 1.0 : 0.7,
       child: Row(
         children: [
           Expanded(
@@ -390,17 +394,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: const Color(0xFF94A3B8),
+                    color: Color(0xFF94A3B8),
                     letterSpacing: 1.0,
                   ),
                 ),
               ],
             ),
           ),
-          // Status dot
           Container(
             width: 24,
             height: 24,
@@ -429,5 +432,26 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────
+
+  Color _subjectColor(Map<String, dynamic>? course) {
+    final subject = course?['subjects'] as Map<String, dynamic>?;
+    final hex = subject?['color_hex'] as String?;
+    if (hex == null) return const Color(0xFF3B82F6);
+    try {
+      return Color(int.parse('FF${hex.replaceFirst('#', '')}', radix: 16));
+    } catch (_) {
+      return const Color(0xFF3B82F6);
+    }
+  }
+
+  String _courseInitials(String title) {
+    final words = title.trim().split(RegExp(r'\s+'));
+    if (words.length >= 2) {
+      return '${words[0][0]}${words[1][0]}'.toUpperCase();
+    }
+    return title.substring(0, title.length.clamp(0, 2)).toUpperCase();
   }
 }

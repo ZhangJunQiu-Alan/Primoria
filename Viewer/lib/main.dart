@@ -75,13 +75,43 @@ class PrimoriaApp extends StatelessWidget {
               '/': (context) => const LandingScreen(),
               '/login': (context) => const LoginScreen(),
               '/register': (context) => const RegisterScreen(),
-              '/home': (context) => const HomeScreen(),
-              '/course': (context) => const CourseScreen(),
-              '/lesson': (context) => const LessonScreen(),
+              '/home': (context) => const _AuthGuard(child: HomeScreen()),
+              '/course': (context) => const _AuthGuard(child: CourseScreen()),
+              '/lesson': (context) => const _AuthGuard(child: LessonScreen()),
             },
           );
         },
       ),
+    );
+  }
+}
+
+/// Route guard: redirects unauthenticated users to /login.
+/// Shows a loading indicator while [UserProvider] is still initializing
+/// (e.g., restoring a Supabase session on cold start).
+class _AuthGuard extends StatelessWidget {
+  final Widget child;
+  const _AuthGuard({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<UserProvider>(
+      builder: (context, up, _) {
+        // Still restoring session — show a blank loading screen
+        if (!up.isInitialized) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        // No active session — redirect to login
+        if (!up.isLoggedIn) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed('/login');
+          });
+          return const Scaffold(body: SizedBox.shrink());
+        }
+        return child;
+      },
     );
   }
 }

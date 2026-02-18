@@ -144,6 +144,8 @@ class ProfileScreen extends StatelessWidget {
             ? 'Joined ${user.joinedAt.year}'
             : 'Joined 2023';
 
+        final bio = user?.bio;
+
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
@@ -166,6 +168,19 @@ class ProfileScreen extends StatelessWidget {
                   color: Color(0xFF64748B),
                 ),
               ),
+              if (bio != null && bio.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(
+                  bio,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    height: 1.45,
+                    color: Color(0xFF94A3B8),
+                  ),
+                ),
+              ],
             ],
           ),
         );
@@ -210,8 +225,8 @@ class ProfileScreen extends StatelessWidget {
                       icon: Icons.star_rounded,
                       iconBg: AppColors.indigo50,
                       iconColor: AppColors.indigo500,
-                      value: '3,450',
-                      label: 'TOTAL STARS',
+                      value: _formatStat(userProvider.totalXp),
+                      label: 'TOTAL XP',
                     ),
                   ),
                 ],
@@ -228,7 +243,7 @@ class ProfileScreen extends StatelessWidget {
                       icon: Icons.how_to_reg,
                       iconBg: const Color(0xFFDBEAFE),
                       iconColor: const Color(0xFF3B82F6),
-                      value: '145',
+                      value: _formatStat(userProvider.followingCount),
                       label: 'FOLLOWING',
                     ),
                   ),
@@ -237,7 +252,7 @@ class ProfileScreen extends StatelessWidget {
                       icon: Icons.people,
                       iconBg: const Color(0xFFFCE7F3),
                       iconColor: const Color(0xFFEC4899),
-                      value: '892',
+                      value: _formatStat(userProvider.followersCount),
                       label: 'FANS',
                     ),
                   ),
@@ -563,16 +578,7 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
-                    onPressed: () async {
-                      await userProvider.logout();
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Logged out successfully'),
-                          ),
-                        );
-                      }
-                    },
+                    onPressed: () => _showLogoutDialog(context, userProvider),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.error,
                       side: const BorderSide(color: AppColors.error),
@@ -620,6 +626,17 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Format a stat number: 1200 → "1.2K", 1000000 → "1M", etc.
+  static String _formatStat(int n) {
+    if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
+    if (n >= 10000) return '${(n / 1000).round()}K';
+    if (n >= 1000) {
+      final s = n.toString();
+      return '${s.substring(0, s.length - 3)},${s.substring(s.length - 3)}';
+    }
+    return '$n';
   }
 
   void _showThemePicker(BuildContext context) {
@@ -677,6 +694,142 @@ class ProfileScreen extends StatelessWidget {
 
   void _showSettingsSheet(BuildContext context) {
     _showThemePicker(context);
+  }
+
+  void _showLogoutDialog(BuildContext context, UserProvider userProvider) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (ctx) {
+        bool isLoggingOut = false;
+
+        return StatefulBuilder(
+          builder: (ctx, setDialogState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(28, 32, 28, 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Warning icon
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: AppColors.error.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.logout_rounded,
+                        size: 32,
+                        color: AppColors.error,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Title
+                    const Text(
+                      'Log Out',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF1E293B),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Body
+                    const Text(
+                      "Are you sure you want to log out?\nYou'll need to sign in again to access your account.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        height: 1.5,
+                        color: Color(0xFF64748B),
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+
+                    // Buttons
+                    Row(
+                      children: [
+                        // Cancel
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: isLoggingOut
+                                ? null
+                                : () => Navigator.of(ctx).pop(),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 13),
+                              side: const BorderSide(
+                                color: Color(0xFFE2E8F0),
+                              ),
+                              foregroundColor: const Color(0xFF64748B),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+
+                        // Confirm logout
+                        Expanded(
+                          child: FilledButton(
+                            onPressed: isLoggingOut
+                                ? null
+                                : () async {
+                                    setDialogState(() => isLoggingOut = true);
+                                    await userProvider.logout();
+                                    if (context.mounted) {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/login');
+                                    }
+                                  },
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.error,
+                              disabledBackgroundColor: AppColors.error
+                                  .withValues(alpha: 0.5),
+                              padding: const EdgeInsets.symmetric(vertical: 13),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: isLoggingOut
+                                ? const SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Log Out',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
 

@@ -1,5 +1,29 @@
 # Changelog
 
+## [Unreleased] - 2026-02-18 (Viewer DB Integration)
+
+### Summary
+Full Viewer ↔ Supabase database integration: all four main screens (Home, Search, Course, Lesson) now load and write live data. Added auth guard for protected routes, Remember Me on login, logout confirmation dialog, Profile stat sync, two new migrations (lesson completion RPC + seed data), and eight new `SupabaseService` course/gamification methods.
+
+### Added
+- **`complete_lesson_and_award_xp` RPC** (`supabase/migrations/20260218000001_complete_lesson_rpc.sql`): Atomic PostgreSQL function — upserts `lesson_completions`, awards XP only on first completion via `xp_transactions` idempotency check, increments `user_stats`, updates daily activity log and streak. `SECURITY DEFINER`, uses `auth.uid()`
+- **Seed data migration** (`supabase/migrations/20260218000002_seed_data.sql`): Idempotent (`ON CONFLICT DO NOTHING`) seed for local dev — 5 subjects (CS/Math/Science/Business/Social), 8 published courses with fixed UUIDs, 10 chapters, 19 lessons with full `content_json` arrays (info_card, multiple_choice, slider blocks), and 9 achievement definitions
+- **`SupabaseService` course methods**: `getSubjects()`, `getCourses({subjectId, searchQuery})` (with `search_courses` RPC fallback), `getEnrollments()`, `getCourseDetail(courseId)` (course + sorted chapters + lessons + completions + enrollment row), `getLessonContent(lessonId)`, `enrollInCourse(courseId)`, `updateEnrollmentProgress({courseId, progressBp})`, `completeLessonAndAwardXp({lessonId, score, timeSpentSeconds})`
+- **Auth guard** (`Viewer/lib/main.dart`): `_AuthGuard` widget wraps `/home`, `/course`, `/lesson` routes — shows spinner while `UserProvider` initialises, redirects to `/login` via `addPostFrameCallback` when unauthenticated
+- **Remember Me** (`Viewer/lib/screens/login_screen.dart`, `storage_service.dart`): `StorageService.saveRememberMe()` / `getRememberMe()` / `getRememberedEmail()` persist the checkbox state and email to SharedPreferences; `initState` pre-fills the email field and checkbox on next launch
+- **Logout confirmation dialog** (`Viewer/lib/screens/profile_screen.dart`): `_showLogoutDialog()` shows a custom `Dialog` with `StatefulBuilder` loading state, warning icon, cancel + red "Log Out" buttons; on confirm calls `userProvider.logout()` then `pushReplacementNamed('/login')`
+- **`UserProvider.refreshStats()`**: Public wrapper for `_loadStatsFromBackend()` so screens can trigger an XP/stats refresh after lesson completion without accessing the private method
+
+### Changed
+- **HomeScreen** (`home_screen.dart`): Full rewrite as `StatefulWidget` — `_loadHomeData()` fetches active enrollment + `getCourseDetail()`, renders real course title, LESSON X/N counter, chapter completion dots, "Continue Learning" → first incomplete lesson, "Browse Courses" when no enrollment; XP counter reads `userProvider.totalXp`
+- **SearchScreen** (`search_screen.dart`): Full rewrite — subjects loaded from DB for animated tab bar, courses loaded per subject or via search query, course cards tap to `CourseScreen` with real `courseId`
+- **CourseScreen** (`course_screen.dart`): Converted from `StatelessWidget` to `StatefulWidget`; `_loadCourseData()` fetches chapters/lessons/completions from `getCourseDetail()`; chapter nodes show live completed/inProgress/available status; chapter bottom sheet lists real lessons with play/check icon, tapping any lesson navigates to `LessonScreen`; "Enroll in Course" button appears when user is not yet enrolled
+- **LessonScreen** (`lesson_screen.dart`): `_initLesson()` fetches `content_json` from `getLessonContent()` and parses blocks (`info_card` → `QuestionType.info`, `multiple_choice` → `QuestionType.choice`, `slider` → `QuestionType.slider`); falls back to demo questions when `lessonId` is null/`'daily'` or fetch fails; on final slide: calls `completeLessonAndAwardXp` RPC, then `userProvider.refreshStats()` to sync XP counter; slider `defaultValue` is initialised per question on navigation
+- **ProfileScreen** (`profile_screen.dart`): Stats row now reads `userProvider.totalXp` / `followingCount` / `followersCount` from backend-synced values; `bio` displayed when non-empty; logout button replaced with `_showLogoutDialog` call; `_formatStat()` helper formats numbers as 1,234 / 12K / 1.5M
+- **UserProvider** (`user_provider.dart`): Added `_isInitialized` flag (set after full `initialize()` completes) and `isInitialized` getter for the auth guard; added `bio` field to `UserData`; `initialize()` triggers non-blocking `_loadStatsFromBackend()` + `_loadProfileFromBackend()` after local session restore; `login()` triggers the same background syncs; added `_followingCount` / `_followersCount` state and getters
+
+---
+
 ## [Unreleased] - 2026-02-18
 
 ### Summary
