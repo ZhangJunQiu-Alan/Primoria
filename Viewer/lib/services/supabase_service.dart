@@ -147,6 +147,233 @@ class SupabaseService {
     }
   }
 
+  // ==================== Course service ====================
+
+  /// Fetch all subjects ordered by name.
+  static Future<List<Map<String, dynamic>>> getSubjects() async {
+    try {
+      final res = await client.from('subjects').select().order('name');
+      return (res as List).cast<Map<String, dynamic>>();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Fetch published courses. Optionally filter by [subjectId] or full-text [searchQuery].
+  static Future<List<Map<String, dynamic>>> getCourses({
+    String? subjectId,
+    String? searchQuery,
+  }) async {
+    try {
+      if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+        final res = await client.rpc('search_courses', params: {
+          'p_query': searchQuery.trim(),
+          if (subjectId != null) 'p_subject_id': subjectId,
+        });
+        return (res as List).cast<Map<String, dynamic>>();
+      }
+
+      var q = client
+          .from('courses')
+          .select('id, title, slug, description, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex)')
+          .eq('status', 'published');
+
+      if (subjectId != null) {
+        q = q.eq('subject_id', subjectId);
+      }
+
+      final res = await q.order('published_at', ascending: false).limit(30);
+      return (res as List).cast<Map<String, dynamic>>();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Fetch current user's enrollments with nested course data.
+  static Future<List<Map<String, dynamic>>> getEnrollments() async {
+    if (currentUser == null) return [];
+    try {
+      final res = await client
+          .from('enrollments')
+          .select(
+            '*, courses(id, title, slug, description, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex))',
+          )
+          .eq('user_id', currentUser!.id)
+          .order('last_accessed_at', ascending: false);
+      return (res as List).cast<Map<String, dynamic>>();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Fetch course detail: course + chapters + lessons + completion status for current user.
+  static Future<Map<String, dynamic>?> getCourseDetail(String courseId) async {
+    try {
+      final course = await client
+          .from('courses')
+          .select('*, subjects(id, name, color_hex)')
+          .eq('id', courseId)
+          .single();
+
+      final chapters = await client
+          .from('chapters')
+          .select('*, lessons(id, title, type, sort_key, xp_reward, duration_seconds)')
+          .eq('course_id', courseId)
+          .order('sort_key');
+      final chapList = (chapters as List).cast<Map<String, dynamic>>();
+
+      // Sort lessons within each chapter
+      for (final ch in chapList) {
+        final lessons = ch['lessons'] as List? ?? [];
+        lessons.sort((a, b) =>
+            ((a as Map)['sort_key'] as int? ?? 0)
+                .compareTo((b as Map)['sort_key'] as int? ?? 0));
+        ch['lessons'] = lessons;
+      }
+
+      // Fetch completed lesson IDs for current user
+      final completedIds = <String>{};
+      if (currentUser != null) {
+        final allLessonIds = chapList
+            .expand((ch) => (ch['lessons'] as List? ?? []))
+            .map((l) => (l as Map<String, dynamic>)['id'] as String)
+            .toList();
+
+        if (allLessonIds.isNotEmpty) {
+          final completions = await client
+              .from('lesson_completions')
+              .select('lesson_id')
+              .eq('user_id', currentUser!.id)
+              .inFilter('lesson_id', allLessonIds);
+          for (final c in (completions as List)) {
+            completedIds.add((c as Map<String, dynamic>)['lesson_id'] as String);
+          }
+        }
+      }
+
+      Map<String, dynamic>? enrollment;
+      if (currentUser != null) {
+        enrollment = await client
+            .from('enrollments')
+            .select()
+            .eq('user_id', currentUser!.id)
+            .eq('course_id', courseId)
+            .maybeSingle();
+      }
+
+      return {
+        'course': course as Map<String, dynamic>,
+        'chapters': chapList,
+        'completed_lesson_ids': completedIds.toList(),
+        'enrollment': enrollment,
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Fetch a single lesson's content_json and metadata.
+  static Future<Map<String, dynamic>?> getLessonContent(String lessonId) async {
+    try {
+      return await client
+          .from('lessons')
+          .select('id, title, content_json, xp_reward, duration_seconds')
+          .eq('id', lessonId)
+          .single() as Map<String, dynamic>;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Enroll current user in a course (idempotent).
+  static Future<bool> enrollInCourse(String courseId) async {
+    if (currentUser == null) return false;
+    try {
+      await client.from('enrollments').upsert(
+        {'user_id': currentUser!.id, 'course_id': courseId, 'status': 'in_progress'},
+        onConflict: 'user_id,course_id',
+      );
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Update enrollment progress (progress_bp: 0–10000).
+  static Future<void> updateEnrollmentProgress({
+    required String courseId,
+    required int progressBp,
+  }) async {
+    if (currentUser == null) return;
+    try {
+      await client
+          .from('enrollments')
+          .update({
+            'progress_bp': progressBp,
+            'last_accessed_at': DateTime.now().toIso8601String(),
+          })
+          .eq('user_id', currentUser!.id)
+          .eq('course_id', courseId);
+    } catch (_) {}
+  }
+
+  /// Complete a lesson and award XP via the atomic RPC.
+  static Future<bool> completeLessonAndAwardXp({
+    required String lessonId,
+    int score = 0,
+    int timeSpentSeconds = 0,
+  }) async {
+    if (currentUser == null) return false;
+    try {
+      await client.rpc('complete_lesson_and_award_xp', params: {
+        'p_lesson_id': lessonId,
+        'p_score': score,
+        'p_seconds': timeSpentSeconds,
+      });
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // ==================== Gamification ====================
+
+  /// Get user stats from user_stats table
+  static Future<Map<String, dynamic>?> getUserStats() async {
+    if (currentUser == null) return null;
+    try {
+      final response = await client
+          .from('user_stats')
+          .select()
+          .eq('user_id', currentUser!.id)
+          .maybeSingle();
+      return response;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Get follow counts for current user (following + followers)
+  static Future<Map<String, int>> getFollowCounts() async {
+    if (currentUser == null) return {'following': 0, 'followers': 0};
+    try {
+      final following = await client
+          .from('follows')
+          .select()
+          .eq('follower_id', currentUser!.id);
+      final followers = await client
+          .from('follows')
+          .select()
+          .eq('following_id', currentUser!.id);
+      return {
+        'following': (following as List).length,
+        'followers': (followers as List).length,
+      };
+    } catch (_) {
+      return {'following': 0, 'followers': 0};
+    }
+  }
+
   /// Update user profile
   static Future<bool> updateProfile({
     String? displayName,

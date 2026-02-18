@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
+import '../services/storage_service.dart';
 import '../services/supabase_service.dart';
 
 /// Login page color constants (matching CSS template)
@@ -42,6 +43,24 @@ class _LoginScreenState extends State<LoginScreen> {
   String _statusMessage = '';
   String _statusState = ''; // '', 'error', 'success', 'info'
   bool _isSubmitting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRemembered();
+  }
+
+  Future<void> _loadRemembered() async {
+    final storage = await StorageService.getInstance();
+    final remember = storage.getRememberMe();
+    final email = storage.getRememberedEmail();
+    if (remember && email.isNotEmpty) {
+      setState(() {
+        _rememberMe = true;
+        _emailController.text = email;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -93,6 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
 
     if (success) {
+      final storage = await StorageService.getInstance();
+      await storage.saveRememberMe(_rememberMe, _emailController.text.trim());
+      if (!mounted) return;
       _setStatus('Login successful.', 'success');
       Navigator.of(context).pushReplacementNamed('/home');
     } else {

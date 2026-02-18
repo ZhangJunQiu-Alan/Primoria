@@ -36,14 +36,19 @@
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
 2. [x] Introduce social/friend features — Community tab with galaxy "find" visualization + message conversation list (2026-02-18)
-3. [ ] Generate records after course completion
+3. [x] Generate records after course completion — `complete_lesson_and_award_xp` RPC (atomic XP award + streak update), called from LessonScreen on final slide (2026-02-18)
 4. [ ] In a lesson, show current progress in the top bar after each block; do not write to the DB until the entire lesson is completed
-5. [ ] RESTful API integration
+5. [x] Connect all Viewer screens to Supabase DB — HomeScreen, SearchScreen, CourseScreen, LessonScreen all load/write live data; seed migration for local dev (2026-02-18)
 6. [x] User authentication with Supabase — email/password sign-in/sign-up, Google OAuth, password reset, session restore, error translation (2026-02-17)
-7. [ ] Cloud data synchronization
-8. [ ] Real-time progress updates
-9. [ ] Offline mode with content caching
-10. [x] Landing screen + login/register screen redesign — split-panel layout, CSS-matched design tokens, social login grid (2026-02-17)
+7. [x] Auth guard for protected routes — unauthenticated users redirected to /login from Home/Course/Lesson (2026-02-18)
+8. [x] Remember Me on login — email + checkbox persisted in SharedPreferences, pre-filled on next launch (2026-02-18)
+9. [x] Logout confirmation dialog — custom dialog with loading state, navigates to /login on confirm (2026-02-18)
+10. [x] Profile stats from backend — XP, following count, followers count, bio synced from user_stats + follows + profiles tables (2026-02-18)
+11. [x] Enrollment flow in CourseScreen — "Enroll in Course" button when not enrolled, calls enrollInCourse upsert (2026-02-18)
+12. [ ] Cloud data synchronization (real-time / offline)
+13. [ ] Real-time progress updates
+14. [ ] Offline mode with content caching
+15. [x] Landing screen + login/register screen redesign — split-panel layout, CSS-matched design tokens, social login grid (2026-02-17)
 
 ## Content & Curriculum
 1. [ ] Course content management system
@@ -66,7 +71,7 @@
 
 ## Database
 1. [ ] Parent mode
-2. [ ] Seed test user accounts
+2. [x] Seed test user accounts — `20260218000002_seed_data.sql` with 5 subjects, 8 courses, 10 chapters, 19 lessons (2026-02-18)
 
 ## Quality
 1. [ ] Unit tests expansion

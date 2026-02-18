@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
 import '../services/audio_service.dart';
@@ -9,6 +11,7 @@ class UserData {
   final String name;
   final String email;
   final String? avatarUrl;
+  final String? bio;
   final bool isPro;
   final DateTime joinedAt;
 
@@ -17,6 +20,7 @@ class UserData {
     required this.name,
     required this.email,
     this.avatarUrl,
+    this.bio,
     this.isPro = false,
     required this.joinedAt,
   });
@@ -27,6 +31,7 @@ class UserData {
       name: json['name'] ?? '',
       email: json['email'] ?? '',
       avatarUrl: json['avatarUrl'],
+      bio: json['bio'],
       isPro: json['isPro'] ?? false,
       joinedAt: json['joinedAt'] != null
           ? DateTime.parse(json['joinedAt'])
@@ -40,6 +45,7 @@ class UserData {
       'name': name,
       'email': email,
       'avatarUrl': avatarUrl,
+      'bio': bio,
       'isPro': isPro,
       'joinedAt': joinedAt.toIso8601String(),
     };
@@ -50,26 +56,38 @@ class UserData {
 class UserProvider extends ChangeNotifier {
   StorageService? _storage;
   UserData? _user;
+  bool _isInitialized = false;
   bool _isLoggedIn = false;
   bool _isLoading = false;
   String _errorMessage = '';
 
-  // Learning statistics
+  // Learning statistics (local cache, overridden by backend on sync)
   int _streak = 0;
   int _longestStreak = 0;
   int _completedCourses = 0;
+  int _lessonsCompleted = 0;
   int _totalStudyMinutes = 0;
   int _completedQuestions = 0;
+  int _totalXp = 0;
   List<String> _unlockedAchievements = [];
+
+  // Social counts (from backend)
+  int _followingCount = 0;
+  int _followersCount = 0;
 
   // Getters
   UserData? get user => _user;
+  bool get isInitialized => _isInitialized;
   bool get isLoggedIn => _isLoggedIn;
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   int get streak => _streak;
   int get longestStreak => _longestStreak;
   int get completedCourses => _completedCourses;
+  int get lessonsCompleted => _lessonsCompleted;
+  int get totalXp => _totalXp;
+  int get followingCount => _followingCount;
+  int get followersCount => _followersCount;
   int get totalStudyMinutes => _totalStudyMinutes;
   String get totalStudyTime {
     final hours = _totalStudyMinutes ~/ 60;
@@ -87,6 +105,13 @@ class UserProvider extends ChangeNotifier {
     await _restoreSession();
     await _loadStats();
     await _checkAndUpdateStreak();
+    _isInitialized = true;
+    notifyListeners();
+    // Non-blocking: refresh from backend after local init completes
+    if (_isLoggedIn) {
+      unawaited(_loadStatsFromBackend());
+      unawaited(_loadProfileFromBackend());
+    }
   }
 
   Future<void> _restoreSession() async {
@@ -116,10 +141,57 @@ class UserProvider extends ChangeNotifier {
           (supabaseUser.email?.split('@').first ?? ''),
       email: supabaseUser.email ?? '',
       avatarUrl: meta['avatar_url'] as String?,
+      bio: null, // populated by _loadProfileFromBackend
       isPro: false,
       joinedAt:
           DateTime.tryParse(supabaseUser.createdAt ?? '') ?? DateTime.now(),
     );
+  }
+
+  /// Sync profile (username, avatar, bio) from Supabase profiles table.
+  Future<void> _loadProfileFromBackend() async {
+    if (!_isLoggedIn || _user == null) return;
+    try {
+      final profile = await SupabaseService.getProfile();
+      if (profile != null && _user != null) {
+        final username = profile['username'] as String?;
+        _user = UserData(
+          id: _user!.id,
+          email: _user!.email,
+          name: (username != null && username.isNotEmpty) ? username : _user!.name,
+          avatarUrl: (profile['avatar_url'] as String?) ?? _user!.avatarUrl,
+          bio: profile['bio'] as String?,
+          isPro: _user!.isPro,
+          joinedAt: _user!.joinedAt,
+        );
+        await _storage?.saveUser(_user!.toJson());
+        notifyListeners();
+      }
+    } catch (_) {}
+  }
+
+  /// Public wrapper — call after completing a lesson to refresh XP / stats.
+  Future<void> refreshStats() => _loadStatsFromBackend();
+
+  /// Sync stats and social counts from Supabase backend.
+  Future<void> _loadStatsFromBackend() async {
+    if (!_isLoggedIn) return;
+    try {
+      final stats = await SupabaseService.getUserStats();
+      if (stats != null) {
+        _streak = (stats['current_streak'] as int?) ?? _streak;
+        _longestStreak = (stats['longest_streak'] as int?) ?? _longestStreak;
+        _completedCourses = (stats['courses_completed'] as int?) ?? _completedCourses;
+        _lessonsCompleted = (stats['lessons_completed'] as int?) ?? _lessonsCompleted;
+        _totalXp = (stats['total_xp'] as int?) ?? _totalXp;
+        await _storage?.saveStreak(_streak);
+        await _storage?.saveLongestStreak(_longestStreak);
+      }
+      final counts = await SupabaseService.getFollowCounts();
+      _followingCount = counts['following'] ?? 0;
+      _followersCount = counts['followers'] ?? 0;
+      notifyListeners();
+    } catch (_) {}
   }
 
   Future<void> _loadStats() async {
@@ -163,6 +235,9 @@ class UserProvider extends ChangeNotifier {
       _user = _userDataFromSupabase(SupabaseService.currentUser!);
       await _storage?.saveUser(_user!.toJson());
       _isLoggedIn = true;
+      // Non-blocking backend sync
+      unawaited(_loadStatsFromBackend());
+      unawaited(_loadProfileFromBackend());
     } else {
       _errorMessage = result.message;
     }
@@ -305,6 +380,7 @@ class UserProvider extends ChangeNotifier {
         name: _user!.name,
         email: _user!.email,
         avatarUrl: _user!.avatarUrl,
+        bio: _user!.bio,
         isPro: true,
         joinedAt: _user!.joinedAt,
       );
