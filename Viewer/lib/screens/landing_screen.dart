@@ -695,7 +695,7 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
                 ),
                 child: ClipOval(
                   child: Image.asset(
-                    'assets/images/logo_with_bg.png',
+                    'assets/imgs/logo_with_bg.png',
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Center(
                       child: Text(

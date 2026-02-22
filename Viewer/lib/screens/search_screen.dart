@@ -13,7 +13,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   String? _selectedSubjectId;
-  String _selectedSubjectName = '';
+  String _selectedSubjectName = 'All Courses';
   final _searchController = TextEditingController();
 
   List<Map<String, dynamic>> _subjects = [];
@@ -39,14 +39,10 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _subjects = subjects;
       _loadingSubjects = false;
-      if (subjects.isNotEmpty) {
-        _selectedSubjectId = subjects.first['id'] as String;
-        _selectedSubjectName = subjects.first['name'] as String? ?? '';
-      }
+      _selectedSubjectId = null;
+      _selectedSubjectName = 'All Courses';
     });
-    if (subjects.isNotEmpty) {
-      _loadCourses();
-    }
+    _loadCourses();
   }
 
   Future<void> _loadCourses({String? query}) async {
@@ -66,6 +62,15 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _selectedSubjectId = subject['id'] as String;
       _selectedSubjectName = subject['name'] as String? ?? '';
+      _searchController.clear();
+    });
+    _loadCourses();
+  }
+
+  void _selectAllSubjects() {
+    setState(() {
+      _selectedSubjectId = null;
+      _selectedSubjectName = 'All Courses';
       _searchController.clear();
     });
     _loadCourses();
@@ -101,8 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            const BorderRadius.vertical(bottom: Radius.circular(32)),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -144,79 +148,98 @@ class _SearchScreenState extends State<SearchScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: _subjects.map((subject) {
-                final isSelected =
-                    _selectedSubjectId == (subject['id'] as String);
-                final color = _parseColor(subject['color_hex'] as String?);
-                return Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: GestureDetector(
+              children: [
+                _buildSubjectTab(
+                  label: 'All',
+                  icon: Icons.apps_rounded,
+                  color: AppColors.indigo,
+                  isSelected: _selectedSubjectId == null,
+                  onTap: _selectAllSubjects,
+                ),
+                ..._subjects.map((subject) {
+                  final isSelected =
+                      _selectedSubjectId == (subject['id'] as String);
+                  final color = _parseColor(subject['color_hex'] as String?);
+                  return _buildSubjectTab(
+                    label: _shortName(subject['name'] as String? ?? ''),
+                    icon: _subjectIcon(subject['name'] as String? ?? ''),
+                    color: color,
+                    isSelected: isSelected,
                     onTap: () => _selectSubject(subject),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      constraints: const BoxConstraints(minWidth: 80),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.indigo600
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: AppColors.indigo
-                                      .withValues(alpha: 0.3),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ]
-                            : null,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 56,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? Colors.white.withValues(alpha: 0.2)
-                                  : color.withValues(alpha: 0.12),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: isSelected
-                                    ? Colors.white.withValues(alpha: 0.2)
-                                    : color.withValues(alpha: 0.3),
-                                width: 2,
-                              ),
-                            ),
-                            child: Icon(
-                              _subjectIcon(subject['name'] as String? ?? ''),
-                              size: 24,
-                              color: isSelected ? Colors.white : color,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _shortName(subject['name'] as String? ?? ''),
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: isSelected
-                                  ? Colors.white
-                                  : const Color(0xFF475569),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+                  );
+                }),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSubjectTab({
+    required String label,
+    required IconData icon,
+    required Color color,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 12),
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          constraints: const BoxConstraints(minWidth: 80),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.indigo600 : Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: AppColors.indigo.withValues(alpha: 0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 56,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Colors.white.withValues(alpha: 0.2)
+                      : color.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isSelected
+                        ? Colors.white.withValues(alpha: 0.2)
+                        : color.withValues(alpha: 0.3),
+                    width: 2,
+                  ),
+                ),
+                child: Icon(
+                  icon,
+                  size: 24,
+                  color: isSelected ? Colors.white : color,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: isSelected ? Colors.white : const Color(0xFF475569),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -253,10 +276,12 @@ class _SearchScreenState extends State<SearchScreen> {
           style: AppTypography.title.copyWith(color: const Color(0xFF1E293B)),
         ),
         const SizedBox(height: 16),
-        ..._courses.map((course) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _buildCourseCard(course),
-            )),
+        ..._courses.map(
+          (course) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _buildCourseCard(course),
+          ),
+        ),
       ],
     );
   }
@@ -306,11 +331,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: color.withValues(alpha: 0.2)),
               ),
-              child: Icon(
-                Icons.menu_book_rounded,
-                size: 32,
-                color: color,
-              ),
+              child: Icon(Icons.menu_book_rounded, size: 32, color: color),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -342,7 +363,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: tags.take(3).map((tag) {
                         return Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: color.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(6),

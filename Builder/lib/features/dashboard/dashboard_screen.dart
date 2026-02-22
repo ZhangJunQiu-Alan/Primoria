@@ -157,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Row(
                 children: [
                   Image.asset(
-                    'assets/images/logo.png',
+                    'assets/imgs/logo32.png',
                     width: 32,
                     height: 32,
                     errorBuilder: (_, __, ___) =>
