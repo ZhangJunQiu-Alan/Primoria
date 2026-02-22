@@ -126,7 +126,7 @@ class _LandingScreenState extends State<LandingScreen>
       child: Row(
         children: [
           Image.asset(
-            'assets/images/logo.png',
+            'assets/imgs/logo32.png',
             width: 32,
             height: 32,
             errorBuilder: (_, __, ___) =>
@@ -853,7 +853,7 @@ class _SignInModalState extends State<_SignInModal> {
 
               // Logo
               Image.asset(
-                'assets/images/logo.png',
+                'assets/imgs/logo32.png',
                 width: 40,
                 height: 40,
                 errorBuilder: (_, __, ___) =>

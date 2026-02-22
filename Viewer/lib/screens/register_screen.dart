@@ -176,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Container(
       color: _C.visualBg,
       child: Image.asset(
-        'assets/images/register.jpg',
+        'assets/imgs/register.jpg',
         fit: BoxFit.cover,
         width: double.infinity,
         height: double.infinity,
@@ -205,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(999),
             child: Image.asset(
-              'assets/images/logo_with_bg.png',
+              'assets/imgs/logo_with_bg.png',
               width: 80,
               height: 80,
               fit: BoxFit.contain,
@@ -590,10 +590,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildSocialGrid(bool isMobile) {
     final icons = [
-      {'asset': 'assets/images/google.png', 'size': 38.0, 'key': 'google'},
-      {'asset': 'assets/images/wechat.png', 'size': 44.0, 'key': 'wechat'},
-      {'asset': 'assets/images/ins.png', 'size': 44.0, 'key': 'ins'},
-      {'asset': 'assets/images/whatsapp.png', 'size': 44.0, 'key': 'whatsapp'},
+      {'asset': 'assets/imgs/google.png', 'size': 38.0, 'key': 'google'},
+      {'asset': 'assets/imgs/wechat.png', 'size': 44.0, 'key': 'wechat'},
+      {'asset': 'assets/imgs/ins.png', 'size': 44.0, 'key': 'ins'},
+      {'asset': 'assets/imgs/whatsapp.png', 'size': 44.0, 'key': 'whatsapp'},
     ];
 
     return GridView.builder(

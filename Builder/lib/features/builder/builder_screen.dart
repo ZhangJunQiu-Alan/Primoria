@@ -133,7 +133,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           : Padding(
               padding: const EdgeInsets.all(AppSpacing.sm),
               child: Image.asset(
-                'assets/images/logo.png',
+                'assets/imgs/logo32.png',
                 width: 32,
                 height: 32,
                 errorBuilder: (context, error, stackTrace) =>
