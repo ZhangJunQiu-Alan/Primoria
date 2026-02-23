@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
+import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
 import '../../widgets/user_avatar.dart';
@@ -862,7 +865,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 children: [
                   _GhostButton(
                     label: t.courseEdit,
-                    onTap: () => _showRenameCourseDialog(courseId, title, t),
+                    onTap: () => _showEditCourseDialog(course, t),
                   ),
                   const SizedBox(width: 16),
                   _GhostButton(
@@ -917,15 +920,31 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   Future<void> _showCreateCourseDialog(BuilderLocalizations t) async {
     final nameController = TextEditingController();
-    String? errorText;
+    final descController = TextEditingController();
+    final thumbnailController = TextEditingController();
+    final hoursController = TextEditingController();
+    final priceController = TextEditingController();
+    String? titleError;
+    String? hoursError;
+    String? priceError;
+    String difficulty = 'beginner';
+    String priceTier = 'free';
     bool isCreating = false;
+    // Thumbnail upload state
+    String thumbnailMode = 'url'; // 'url' | 'upload'
+    Uint8List? pickedImageBytes;
+    bool isUploadingImage = false;
+    String? imageUploadError;
 
     final courseId = await showDialog<String>(
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) {
           final canCreate =
-              nameController.text.trim().isNotEmpty && !isCreating;
+              nameController.text.trim().isNotEmpty &&
+              !isCreating &&
+              !isUploadingImage;
+
           return AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
@@ -934,42 +953,247 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               t.createCourseDialogTitle,
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
+                fontSize: 18,
                 color: _C.text,
               ),
             ),
             content: SizedBox(
-              width: 360,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    controller: nameController,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: t.courseName,
-                      hintText: t.courseNameHint,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+              width: 480,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ── Title ──────────────────────────────────
+                    TextField(
+                      controller: nameController,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: '${t.courseName} *',
+                        hintText: t.courseNameHint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorText: titleError,
                       ),
-                      errorText: errorText,
+                      onChanged: (_) => setDialogState(() => titleError = null),
                     ),
-                    onChanged: (_) => setDialogState(() {
-                      errorText = null;
-                    }),
-                    onSubmitted: canCreate
-                        ? (_) async {
-                            await _createCourse(
-                              nameController.text.trim(),
-                              ctx,
-                              setDialogState,
-                              (e) => errorText = e,
-                              (v) => isCreating = v,
-                            );
-                          }
-                        : null,
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    // ── Description ────────────────────────────
+                    TextField(
+                      controller: descController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: t.courseDescription,
+                        hintText: t.courseDescriptionHint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignLabelWithHint: true,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Cover Image ────────────────────────────
+                    Row(
+                      children: [
+                        _ThumbnailModeChip(
+                          label: t.uploadImage,
+                          icon: Icons.upload_rounded,
+                          active: thumbnailMode == 'upload',
+                          onTap: () =>
+                              setDialogState(() => thumbnailMode = 'upload'),
+                        ),
+                        const SizedBox(width: 8),
+                        _ThumbnailModeChip(
+                          label: t.imageUrl,
+                          icon: Icons.link_rounded,
+                          active: thumbnailMode == 'url',
+                          onTap: () =>
+                              setDialogState(() => thumbnailMode = 'url'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    if (thumbnailMode == 'upload') ...[
+                      GestureDetector(
+                        onTap: isUploadingImage
+                            ? null
+                            : () async {
+                                // Read image bytes from browser file picker
+                                final result = await pickImageFileBytes();
+                                if (!result.success || result.bytes == null) {
+                                  setDialogState(
+                                    () => imageUploadError = result.message,
+                                  );
+                                  return;
+                                }
+                                setDialogState(() {
+                                  isUploadingImage = true;
+                                  imageUploadError = null;
+                                });
+                                final (
+                                  url,
+                                  uploadErr,
+                                ) = await SupabaseService.uploadCourseThumbnail(
+                                  bytes: result.bytes!,
+                                  fileName: result.fileName ?? 'thumbnail.jpg',
+                                );
+                                setDialogState(() {
+                                  isUploadingImage = false;
+                                  if (url != null) {
+                                    pickedImageBytes = result.bytes;
+                                    thumbnailController.text = url;
+                                  } else {
+                                    imageUploadError =
+                                        uploadErr ?? t.imageUploadFailed;
+                                  }
+                                });
+                              },
+                        child: _UploadPreviewBox(
+                          bytes: pickedImageBytes,
+                          isUploading: isUploadingImage,
+                          uploadLabel: t.clickToUpload,
+                          uploadingLabel: t.uploadingImage,
+                          changeLabel: t.changeImage,
+                        ),
+                      ),
+                      if (imageUploadError != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          imageUploadError!,
+                          style: const TextStyle(
+                            color: _C.danger,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ] else ...[
+                      TextField(
+                        controller: thumbnailController,
+                        decoration: InputDecoration(
+                          labelText: t.courseThumbnailUrl,
+                          hintText: t.courseThumbnailUrlHint,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.image_outlined,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    // ── Difficulty ─────────────────────────────
+                    DropdownButtonFormField<String>(
+                      value: difficulty,
+                      decoration: InputDecoration(
+                        labelText: '${t.courseDifficulty} *',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'beginner',
+                          child: Text(t.difficultyBeginner),
+                        ),
+                        DropdownMenuItem(
+                          value: 'intermediate',
+                          child: Text(t.difficultyIntermediate),
+                        ),
+                        DropdownMenuItem(
+                          value: 'advanced',
+                          child: Text(t.difficultyAdvanced),
+                        ),
+                      ],
+                      onChanged: (v) =>
+                          setDialogState(() => difficulty = v ?? 'beginner'),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Estimated Hours ────────────────────────
+                    TextField(
+                      controller: hoursController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: t.courseEstimatedHours,
+                        hintText: t.courseEstimatedHoursHint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorText: hoursError,
+                      ),
+                      onChanged: (_) => setDialogState(() => hoursError = null),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Price Tier ─────────────────────────────
+                    DropdownButtonFormField<String>(
+                      value: priceTier,
+                      decoration: InputDecoration(
+                        labelText: '${t.coursePriceTier} *',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'free',
+                          child: Text(t.priceFree),
+                        ),
+                        DropdownMenuItem(
+                          value: 'premium',
+                          child: Text(t.pricePremium),
+                        ),
+                      ],
+                      onChanged: (v) => setDialogState(() {
+                        priceTier = v ?? 'free';
+                        if (priceTier == 'free') priceError = null;
+                      }),
+                    ),
+                    // ── Price (visible only when premium) ──────
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 220),
+                      curve: Curves.easeInOut,
+                      alignment: Alignment.topCenter,
+                      child: priceTier == 'premium'
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: TextField(
+                                controller: priceController,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                decoration: InputDecoration(
+                                  labelText: '${t.coursePrice} *',
+                                  hintText: t.coursePriceHint,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    Icons.attach_money,
+                                    size: 20,
+                                  ),
+                                  errorText: priceError,
+                                ),
+                                onChanged: (_) =>
+                                    setDialogState(() => priceError = null),
+                              ),
+                            )
+                          : const SizedBox(width: double.infinity),
+                    ),
+                  ],
+                ),
               ),
             ),
             actions: [
@@ -980,12 +1204,48 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ElevatedButton(
                 onPressed: canCreate
                     ? () async {
+                        // Validate hours
+                        final hoursText = hoursController.text.trim();
+                        int? minutes;
+                        if (hoursText.isNotEmpty) {
+                          final hours = double.tryParse(hoursText);
+                          if (hours == null || hours < 0) {
+                            setDialogState(
+                              () => hoursError = t.isZh
+                                  ? '请输入有效数字'
+                                  : 'Enter a valid number',
+                            );
+                            return;
+                          }
+                          minutes = (hours * 60).round();
+                        }
+                        // Validate price
+                        double parsedPrice = 0;
+                        if (priceTier == 'premium') {
+                          final priceText = priceController.text.trim();
+                          final p = double.tryParse(priceText);
+                          if (p == null || p <= 0) {
+                            setDialogState(
+                              () => priceError = t.isZh
+                                  ? '请输入有效价格'
+                                  : 'Enter a valid price',
+                            );
+                            return;
+                          }
+                          parsedPrice = p;
+                        }
                         await _createCourse(
-                          nameController.text.trim(),
-                          ctx,
-                          setDialogState,
-                          (e) => errorText = e,
-                          (v) => isCreating = v,
+                          title: nameController.text.trim(),
+                          description: descController.text.trim(),
+                          thumbnailUrl: thumbnailController.text.trim(),
+                          difficultyLevel: difficulty,
+                          estimatedMinutes: minutes,
+                          priceTier: priceTier,
+                          price: parsedPrice,
+                          ctx: ctx,
+                          setDialogState: setDialogState,
+                          setTitleError: (e) => titleError = e,
+                          setCreating: (v) => isCreating = v,
                         );
                       }
                     : null,
@@ -1025,19 +1285,33 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     }
   }
 
-  Future<void> _createCourse(
-    String name,
-    BuildContext ctx,
-    void Function(void Function()) setDialogState,
-    void Function(String?) setError,
-    void Function(bool) setCreating,
-  ) async {
+  Future<void> _createCourse({
+    required String title,
+    required String description,
+    required String thumbnailUrl,
+    required String difficultyLevel,
+    required int? estimatedMinutes,
+    required String priceTier,
+    required double price,
+    required BuildContext ctx,
+    required void Function(void Function()) setDialogState,
+    required void Function(String?) setTitleError,
+    required void Function(bool) setCreating,
+  }) async {
     setDialogState(() {
       setCreating(true);
-      setError(null);
+      setTitleError(null);
     });
 
-    final result = await SupabaseService.createCourseRow(title: name);
+    final result = await SupabaseService.createCourseRow(
+      title: title,
+      description: description.isNotEmpty ? description : null,
+      thumbnailUrl: thumbnailUrl.isNotEmpty ? thumbnailUrl : null,
+      difficultyLevel: difficultyLevel,
+      estimatedMinutes: estimatedMinutes,
+      priceTier: priceTier,
+      price: price,
+    );
 
     if (!ctx.mounted) return;
 
@@ -1046,7 +1320,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     } else {
       setDialogState(() {
         setCreating(false);
-        setError(result.message);
+        setTitleError(result.message);
       });
     }
   }
@@ -1126,58 +1400,301 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return suffix.isNotEmpty ? suffix : cleaned;
   }
 
-  Future<void> _showRenameCourseDialog(
-    String courseId,
-    String currentTitle,
+  Future<void> _showEditCourseDialog(
+    Map<String, dynamic> course,
     BuilderLocalizations t,
   ) async {
-    final titleController = TextEditingController(text: currentTitle);
-    String? errorText;
+    final courseId = course['id'] as String;
+    final titleController = TextEditingController(
+      text: course['title'] as String? ?? '',
+    );
+    final descController = TextEditingController(
+      text: course['description'] as String? ?? '',
+    );
+    final thumbnailController = TextEditingController(
+      text: course['thumbnail_url'] as String? ?? '',
+    );
+    final existingMinutes = course['estimated_minutes'] as int? ?? 0;
+    final hoursController = TextEditingController(
+      text: existingMinutes > 0
+          ? (existingMinutes / 60.0).toStringAsFixed(
+              existingMinutes % 60 == 0 ? 0 : 1,
+            )
+          : '',
+    );
+    final existingPrice = (course['price'] as num?)?.toDouble() ?? 0.0;
+    final priceController = TextEditingController(
+      text: existingPrice > 0 ? existingPrice.toStringAsFixed(2) : '',
+    );
+    String difficulty = (course['difficulty_level'] as String?) ?? 'beginner';
+    String priceTier = (course['price_tier'] as String?) ?? 'free';
+    String? titleError;
+    String? hoursError;
+    String? priceError;
     bool isSaving = false;
+    // Thumbnail upload state
+    String thumbnailMode = 'url';
+    Uint8List? pickedImageBytes;
+    bool isUploadingImage = false;
+    String? imageUploadError;
 
-    final renamed = await showDialog<bool>(
+    final updated = await showDialog<bool>(
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) {
-          final canSave = titleController.text.trim().isNotEmpty && !isSaving;
+          final canSave =
+              titleController.text.trim().isNotEmpty &&
+              !isSaving &&
+              !isUploadingImage;
+
           return AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             title: Text(
-              t.editCourseNameTitle,
+              t.editCourseDialogTitle,
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
+                fontSize: 18,
                 color: _C.text,
               ),
             ),
             content: SizedBox(
-              width: 360,
-              child: TextField(
-                controller: titleController,
-                autofocus: true,
-                decoration: InputDecoration(
-                  labelText: t.courseName,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  errorText: errorText,
+              width: 480,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ── Title ──────────────────────────────────
+                    TextField(
+                      controller: titleController,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: '${t.courseName} *',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorText: titleError,
+                      ),
+                      onChanged: (_) => setDialogState(() => titleError = null),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Description ────────────────────────────
+                    TextField(
+                      controller: descController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: t.courseDescription,
+                        hintText: t.courseDescriptionHint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignLabelWithHint: true,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Cover Image ────────────────────────────
+                    Row(
+                      children: [
+                        _ThumbnailModeChip(
+                          label: t.uploadImage,
+                          icon: Icons.upload_rounded,
+                          active: thumbnailMode == 'upload',
+                          onTap: () =>
+                              setDialogState(() => thumbnailMode = 'upload'),
+                        ),
+                        const SizedBox(width: 8),
+                        _ThumbnailModeChip(
+                          label: t.imageUrl,
+                          icon: Icons.link_rounded,
+                          active: thumbnailMode == 'url',
+                          onTap: () =>
+                              setDialogState(() => thumbnailMode = 'url'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    if (thumbnailMode == 'upload') ...[
+                      GestureDetector(
+                        onTap: isUploadingImage
+                            ? null
+                            : () async {
+                                // Read image bytes from browser file picker
+                                final result = await pickImageFileBytes();
+                                if (!result.success || result.bytes == null) {
+                                  setDialogState(
+                                    () => imageUploadError = result.message,
+                                  );
+                                  return;
+                                }
+                                setDialogState(() {
+                                  isUploadingImage = true;
+                                  imageUploadError = null;
+                                });
+                                final (
+                                  url,
+                                  uploadErr,
+                                ) = await SupabaseService.uploadCourseThumbnail(
+                                  bytes: result.bytes!,
+                                  fileName: result.fileName ?? 'thumbnail.jpg',
+                                );
+                                setDialogState(() {
+                                  isUploadingImage = false;
+                                  if (url != null) {
+                                    pickedImageBytes = result.bytes;
+                                    thumbnailController.text = url;
+                                  } else {
+                                    imageUploadError =
+                                        uploadErr ?? t.imageUploadFailed;
+                                  }
+                                });
+                              },
+                        child: _UploadPreviewBox(
+                          bytes: pickedImageBytes,
+                          isUploading: isUploadingImage,
+                          uploadLabel: t.clickToUpload,
+                          uploadingLabel: t.uploadingImage,
+                          changeLabel: t.changeImage,
+                        ),
+                      ),
+                      if (imageUploadError != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          imageUploadError!,
+                          style: const TextStyle(
+                            color: _C.danger,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ] else ...[
+                      TextField(
+                        controller: thumbnailController,
+                        decoration: InputDecoration(
+                          labelText: t.courseThumbnailUrl,
+                          hintText: t.courseThumbnailUrlHint,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.image_outlined,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    // ── Difficulty ─────────────────────────────
+                    DropdownButtonFormField<String>(
+                      value: difficulty,
+                      decoration: InputDecoration(
+                        labelText: '${t.courseDifficulty} *',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'beginner',
+                          child: Text(t.difficultyBeginner),
+                        ),
+                        DropdownMenuItem(
+                          value: 'intermediate',
+                          child: Text(t.difficultyIntermediate),
+                        ),
+                        DropdownMenuItem(
+                          value: 'advanced',
+                          child: Text(t.difficultyAdvanced),
+                        ),
+                      ],
+                      onChanged: (v) =>
+                          setDialogState(() => difficulty = v ?? 'beginner'),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Estimated Hours ────────────────────────
+                    TextField(
+                      controller: hoursController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: t.courseEstimatedHours,
+                        hintText: t.courseEstimatedHoursHint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorText: hoursError,
+                      ),
+                      onChanged: (_) => setDialogState(() => hoursError = null),
+                    ),
+                    const SizedBox(height: 16),
+                    // ── Price Tier ─────────────────────────────
+                    DropdownButtonFormField<String>(
+                      value: priceTier,
+                      decoration: InputDecoration(
+                        labelText: '${t.coursePriceTier} *',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'free',
+                          child: Text(t.priceFree),
+                        ),
+                        DropdownMenuItem(
+                          value: 'premium',
+                          child: Text(t.pricePremium),
+                        ),
+                      ],
+                      onChanged: (v) => setDialogState(() {
+                        priceTier = v ?? 'free';
+                        if (priceTier == 'free') priceError = null;
+                      }),
+                    ),
+                    // ── Price (visible only when premium) ──────
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 220),
+                      curve: Curves.easeInOut,
+                      alignment: Alignment.topCenter,
+                      child: priceTier == 'premium'
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: TextField(
+                                controller: priceController,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                decoration: InputDecoration(
+                                  labelText: '${t.coursePrice} *',
+                                  hintText: t.coursePriceHint,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    Icons.attach_money,
+                                    size: 20,
+                                  ),
+                                  errorText: priceError,
+                                ),
+                                onChanged: (_) =>
+                                    setDialogState(() => priceError = null),
+                              ),
+                            )
+                          : const SizedBox(width: double.infinity),
+                    ),
+                  ],
                 ),
-                onChanged: (_) => setDialogState(() => errorText = null),
-                onSubmitted: canSave
-                    ? (_) async {
-                        final result = await SupabaseService.renameCourse(
-                          courseId: courseId,
-                          title: titleController.text,
-                        );
-                        if (!ctx.mounted) return;
-                        if (result.success) {
-                          Navigator.pop(ctx, true);
-                          return;
-                        }
-                        setDialogState(() => errorText = result.message);
-                      }
-                    : null,
               ),
             ),
             actions: [
@@ -1188,13 +1705,49 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ElevatedButton(
                 onPressed: canSave
                     ? () async {
+                        // Validate hours
+                        final hoursText = hoursController.text.trim();
+                        int? minutes;
+                        if (hoursText.isNotEmpty) {
+                          final hours = double.tryParse(hoursText);
+                          if (hours == null || hours < 0) {
+                            setDialogState(
+                              () => hoursError = t.isZh
+                                  ? '请输入有效数字'
+                                  : 'Enter a valid number',
+                            );
+                            return;
+                          }
+                          minutes = (hours * 60).round();
+                        }
+                        // Validate price
+                        double parsedPrice = 0;
+                        if (priceTier == 'premium') {
+                          final priceText = priceController.text.trim();
+                          final p = double.tryParse(priceText);
+                          if (p == null || p <= 0) {
+                            setDialogState(
+                              () => priceError = t.isZh
+                                  ? '请输入有效价格'
+                                  : 'Enter a valid price',
+                            );
+                            return;
+                          }
+                          parsedPrice = p;
+                        }
                         setDialogState(() {
                           isSaving = true;
-                          errorText = null;
+                          titleError = null;
                         });
-                        final result = await SupabaseService.renameCourse(
+                        final result = await SupabaseService.updateCourseInfo(
                           courseId: courseId,
-                          title: titleController.text,
+                          title: titleController.text.trim(),
+                          description: descController.text.trim(),
+                          thumbnailUrl: thumbnailController.text.trim(),
+                          difficultyLevel: difficulty,
+                          estimatedMinutes: minutes,
+                          priceTier: priceTier,
+                          price: parsedPrice,
                         );
                         if (!ctx.mounted) return;
                         if (result.success) {
@@ -1203,7 +1756,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         }
                         setDialogState(() {
                           isSaving = false;
-                          errorText = result.message;
+                          titleError = result.message;
                         });
                       }
                     : null,
@@ -1212,6 +1765,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(999),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
                   ),
                 ),
                 child: isSaving
@@ -1234,11 +1791,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ),
     );
 
-    if (renamed == true && mounted) {
+    if (updated == true && mounted) {
       final t2 = BuilderLocalizations(ref.read(languageProvider));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(t2.courseNameUpdated),
+          content: Text(t2.courseInfoUpdated),
           backgroundColor: AppColors.success,
         ),
       );
@@ -1639,6 +2196,158 @@ class _LessonBox extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+// ─── Thumbnail mode toggle chip ────────────────────────────────────────────
+class _ThumbnailModeChip extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final bool active;
+  final VoidCallback onTap;
+
+  const _ThumbnailModeChip({
+    required this.label,
+    required this.icon,
+    required this.active,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: active ? _C.accent : Colors.transparent,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(
+            color: active ? _C.accent : _C.muted.withValues(alpha: 0.35),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 15, color: active ? Colors.white : _C.muted),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: TextStyle(
+                color: active ? Colors.white : _C.muted,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Upload preview box ────────────────────────────────────────────────────
+class _UploadPreviewBox extends StatelessWidget {
+  final Uint8List? bytes;
+  final bool isUploading;
+  final String uploadLabel;
+  final String uploadingLabel;
+  final String changeLabel;
+
+  const _UploadPreviewBox({
+    required this.bytes,
+    required this.isUploading,
+    required this.uploadLabel,
+    required this.uploadingLabel,
+    required this.changeLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 160,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF6F8FA),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: _C.accent.withValues(alpha: 0.25),
+          width: 1.5,
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: isUploading
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(
+                  color: _C.accent,
+                  strokeWidth: 2.5,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  uploadingLabel,
+                  style: const TextStyle(color: _C.muted, fontSize: 13),
+                ),
+              ],
+            )
+          : bytes != null
+          ? Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.memory(bytes!, fit: BoxFit.cover),
+                Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.swap_horiz_rounded,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          changeLabel,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add_photo_alternate_outlined,
+                  size: 36,
+                  color: _C.muted.withValues(alpha: 0.7),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  uploadLabel,
+                  style: const TextStyle(color: _C.muted, fontSize: 13),
+                ),
+              ],
+            ),
     );
   }
 }

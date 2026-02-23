@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
@@ -106,6 +107,71 @@ Future<FilePickResult> pickPdfFile() async {
 
   input.click();
 
+  return completer.future;
+}
+
+/// Pick image file as raw bytes (for Supabase Storage upload).
+///
+/// Uses readAsDataUrl + base64 decode because readAsArrayBuffer returns a
+/// JS ArrayBuffer / Dart ByteBuffer that cannot be cast to Uint8List directly.
+Future<FilePickResult> pickImageFileBytes() async {
+  final completer = Completer<FilePickResult>();
+
+  final input = html.FileUploadInputElement()
+    ..accept = 'image/png,image/jpeg,image/gif,image/webp';
+
+  input.onChange.listen((event) async {
+    final files = input.files;
+    if (files == null || files.isEmpty) {
+      completer.complete(
+        const FilePickResult(success: false, message: 'No file selected'),
+      );
+      return;
+    }
+
+    final file = files.first;
+    final reader = html.FileReader();
+
+    reader.onLoadEnd.listen((event) {
+      try {
+        // readAsDataUrl returns "data:<mime>;base64,<data>"
+        final dataUrl = reader.result as String;
+        final comma = dataUrl.indexOf(',');
+        if (comma < 0) {
+          completer.complete(
+            const FilePickResult(
+              success: false,
+              message: 'Invalid data URL from FileReader',
+            ),
+          );
+          return;
+        }
+        final bytes = base64.decode(dataUrl.substring(comma + 1));
+        completer.complete(
+          FilePickResult(
+            success: true,
+            message: 'Image loaded',
+            bytes: bytes,
+            fileName: file.name,
+          ),
+        );
+      } catch (e) {
+        completer.complete(
+          FilePickResult(success: false, message: 'Failed to decode image: $e'),
+        );
+      }
+    });
+
+    reader.onError.listen((event) {
+      completer.complete(
+        const FilePickResult(success: false, message: 'Failed to read image'),
+      );
+    });
+
+    reader.readAsDataUrl(file); // returns a String — reliable cross-browser
+  });
+
+  input.click();
   return completer.future;
 }
 

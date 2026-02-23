@@ -98,7 +98,38 @@
 - [ ] Edit → `/builder?courseId=<id>`
 - [ ] Delete → confirmation → deletes and refreshes
 - [ ] Add lesson → `/builder?courseId=<id>`
-- [ ] Create Course → `/builder`
+- [ ] Create Course → opens full form dialog (not `/builder` directly)
+
+### 12a. Create Course Form
+- [ ] Create button opens 480 px scrollable dialog with: Name, Description, Thumbnail, Difficulty, Estimated Hours, Price Tier fields
+- [ ] Name is required — Create button disabled when blank
+- [ ] Description is optional — saving with empty description works
+- [ ] Thumbnail: "Upload Image" chip and "Enter URL" chip toggle between upload UI and text field
+- [ ] Upload chip → click placeholder → file picker opens → image preview shown
+- [ ] Upload fails (network error) → error message shown below preview box (not silent hang)
+- [ ] Uploading state → spinner shown, Create button disabled until upload completes
+- [ ] Enter URL chip → text field accepts image URL; switching back to Upload clears the URL field
+- [ ] Difficulty dropdown: Beginner / Intermediate / Advanced options, required (no blank selection)
+- [ ] Estimated Hours accepts decimal input (e.g. "2.5"); stored as minutes in DB
+- [ ] Price Tier: Free / Premium toggle
+- [ ] Selecting "Free" hides price field (AnimatedSize collapses smoothly)
+- [ ] Selecting "Premium" reveals price input field
+- [ ] Creating Premium course with empty price → validation error shown; Create button stays disabled
+- [ ] Price field accepts decimals (e.g. "9.99")
+- [ ] Cancel closes dialog without creating
+- [ ] Create with all valid fields → dialog closes, course list refreshes, snackbar shown
+- [ ] New course appears in list with correct title, thumbnail, and metadata
+
+### 12b. Edit Course Form
+- [ ] Edit button on course card opens full edit dialog (same layout as Create)
+- [ ] All fields pre-populated from existing course data
+- [ ] Thumbnail pre-populated: if URL exists, URL field shows it; upload area shows preview if previously uploaded
+- [ ] Changing difficulty → Save → reloading confirms DB updated
+- [ ] Switching from Premium to Free → price field hides, price saved as 0
+- [ ] Switching from Free to Premium → price field appears; must fill price before Save
+- [ ] Upload new image in Edit dialog → replaces previous thumbnail URL
+- [ ] Save → dialog closes, course card reflects updated info, snackbar "Course info updated"
+- [ ] Cancel → no changes committed
 
 ## 13. User Avatar
 

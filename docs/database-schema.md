@@ -58,6 +58,7 @@ interactions: insert-only, partition by month
 | estimated_minutes | Integer | Default: 0, estimated duration, used to display "about 2 hours" |
 | tags | Array<Text> | Default: {} PostgreSQL array type. Used for search optimization, e.g., ['recursion','algorithms','Python'] |
 | price_tier | Enum ('free', 'premium') | Default: free. Distinguish free vs paid. Frontend uses this to show a "lock" icon |
+| price | NUMERIC(10,2) | Default: 0, CHECK (price >= 0). Actual price in USD (or local currency). Ignored when price_tier = 'free'. Added 2026-02-24 |
 | created_at | Timestamp | Default: now() creation time |
 | updated_at | timestamptz | Default: now() trigger |
 | published_at | timestamptz | Set only when published |
@@ -246,7 +247,24 @@ CHECK (follower_id <> following_id) + PK(follower_id, following_id) to prevent s
 | comment | Text | Text review. Displayed on course intro page to help other users decide |
 | created_at | Timestamp | Creation time |
 
-### 6. System & Subscription
+### 6. Storage Buckets
+
+#### course-thumbnails (Supabase Storage)
+| Property | Value |
+| --- | --- |
+| Bucket ID | `course-thumbnails` |
+| Public | Yes (public read, no auth required) |
+| Max file size | 5 MB |
+| Allowed MIME types | `image/jpeg`, `image/png`, `image/webp`, `image/gif` |
+| Insert | Authenticated users only |
+| Update / Delete | Owner only (`storage.objects.owner = auth.uid()`) |
+| Path convention | `<author_uuid>/<generated_uuid>.<ext>` |
+
+Added by migration `20260224000002_course_thumbnails_storage.sql`. Public URLs returned by `SupabaseService.uploadCourseThumbnail()` are stored in `courses.thumbnail_url`.
+
+---
+
+### 7. System & Subscription
 
 #### app_versions (version control)
 | Column | Type | Notes |
