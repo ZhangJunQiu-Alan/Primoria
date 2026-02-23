@@ -70,6 +70,72 @@ class AppLocalizations {
 
   // ── Profile Screen ──────────────────────────────────────────
   String profileJoined(int year) => isZh ? '加入于 $year' : 'Joined $year';
+  String profileMonthYear(DateTime date) {
+    if (isZh) return '${date.year}年${date.month}月';
+    const months = <String>[
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    final monthIndex = (date.month >= 1 && date.month <= 12)
+        ? date.month - 1
+        : 0;
+    final month = months[monthIndex];
+    return '$month ${date.year}';
+  }
+
+  String profileJoinedAtMonthYear(DateTime date) {
+    final formatted = profileMonthYear(date);
+    return isZh ? '加入于 $formatted' : 'Joined at $formatted';
+  }
+
+  String get profilePersonalInfo => isZh ? '个人信息' : 'Personal Info';
+  String get profileUsername => isZh ? '用户名' : 'Username';
+  String get profileBio => isZh ? '个人简介' : 'Bio';
+  String get profileRole => isZh ? '角色' : 'Role';
+  String get profileJoinedAt => isZh ? '加入时间' : 'Joined at';
+  String get profileUploadAvatar => isZh ? '上传头像' : 'Upload Avatar';
+  String get profileSaving => isZh ? '保存中…' : 'Saving…';
+  String get profileSave => isZh ? '保存' : 'Save';
+  String get profileSaveSuccess => isZh ? '个人信息已更新' : 'Profile updated';
+  String get profileSaveFailed =>
+      isZh ? '更新失败，请重试' : 'Failed to update profile';
+  String get profileAvatarUploadFailed =>
+      isZh ? '头像上传失败，请重试' : 'Avatar upload failed. Please retry.';
+  String get profileFieldRequired =>
+      isZh ? '此字段不能为空' : 'This field is required';
+  String get profileUsernameLengthHint =>
+      isZh ? '用户名需为 3-32 个字符' : 'Username must be 3-32 characters';
+  String get profileHelp => isZh ? '帮助' : 'Help';
+  String get profileHelpBody => isZh
+      ? '如需帮助，请通过产品内反馈联系我们。'
+      : 'Need help? Contact us via in-app feedback.';
+  String get profileAboutBody => isZh
+      ? 'Primoria 是一个交互式学习平台，帮助你高效掌握知识。'
+      : 'Primoria is an interactive learning platform designed for effective learning.';
+  String profileRoleLabel(String role) {
+    switch (role.trim().toLowerCase()) {
+      case 'subscriber':
+        return isZh ? '订阅用户' : 'Subscriber';
+      case 'author':
+        return isZh ? '创作者' : 'Author';
+      case 'admin':
+        return isZh ? '管理员' : 'Admin';
+      case 'user':
+      default:
+        return isZh ? '普通用户' : 'User';
+    }
+  }
+
   String get profileCourses => isZh ? '课程' : 'COURSES';
   String get profileTotalXp => isZh ? '总经验值' : 'TOTAL XP';
   String get profileFollowing => isZh ? '关注' : 'FOLLOWING';

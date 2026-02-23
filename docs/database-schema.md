@@ -249,6 +249,21 @@ CHECK (follower_id <> following_id) + PK(follower_id, following_id) to prevent s
 
 ### 6. Storage Buckets
 
+#### avatars (Supabase Storage)
+| Property | Value |
+| --- | --- |
+| Bucket ID | `avatars` |
+| Public | Yes (public read, no auth required) |
+| Max file size | 5 MB |
+| Allowed MIME types | `image/jpeg`, `image/png`, `image/webp`, `image/gif` |
+| Insert | Authenticated users only |
+| Update / Delete | Owner only (`storage.objects.owner = auth.uid()`) |
+| Path convention | `public/<user_uuid>/avatar_<timestamp>.<ext>` |
+
+Added by migration `20260223000004_profile_avatar_storage.sql`. Public URLs returned by `SupabaseService.uploadAvatar()` are stored in `profiles.avatar_url`.
+
+---
+
 #### course-thumbnails (Supabase Storage)
 | Property | Value |
 | --- | --- |

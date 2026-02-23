@@ -254,7 +254,24 @@ CHECK (follower_id <> following_id) + PK(follower_id, following_id) 可防止自
 | comment | Text | 文本评价。展示在课程详情页，帮助其他用户做决策 |
 | created_at | Timestamp | 创建时间 |
 
-### 6. 系统与订阅
+### 6. 存储桶（Storage Buckets）
+
+#### avatars（Supabase Storage）
+| 属性 | 值 |
+| --- | --- |
+| Bucket ID | `avatars` |
+| Public | 是（公开读，无需鉴权） |
+| 最大文件大小 | 5 MB |
+| 允许 MIME 类型 | `image/jpeg`, `image/png`, `image/webp`, `image/gif` |
+| Insert | 仅认证用户 |
+| Update / Delete | 仅对象 owner（`storage.objects.owner = auth.uid()`） |
+| 路径规范 | `public/<user_uuid>/avatar_<timestamp>.<ext>` |
+
+由迁移 `20260223000004_profile_avatar_storage.sql` 创建。`SupabaseService.uploadAvatar()` 返回的公开 URL 存储在 `profiles.avatar_url`。
+
+---
+
+### 7. 系统与订阅
 
 #### app_versions（版本控制）
 | 字段 | 类型 | 说明 |
