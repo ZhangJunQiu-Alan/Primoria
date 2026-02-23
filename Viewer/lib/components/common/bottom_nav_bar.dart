@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../theme/theme.dart';
+import '../../providers/language_provider.dart';
 
 /// Bottom navigation bar — 4 tabs: Home / Library / Community / Profile
 class BottomNavBar extends StatelessWidget {
@@ -14,6 +16,7 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
@@ -38,28 +41,28 @@ class BottomNavBar extends StatelessWidget {
               _NavItem(
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home,
-                label: 'Home',
+                label: t.navHome,
                 isActive: currentIndex == 0,
                 onTap: () => onTap(0),
               ),
               _NavItem(
                 icon: Icons.local_library_outlined,
                 activeIcon: Icons.local_library,
-                label: 'Library',
+                label: t.navLibrary,
                 isActive: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
                 icon: Icons.people_outline,
                 activeIcon: Icons.people,
-                label: 'Community',
+                label: t.navCommunity,
                 isActive: currentIndex == 2,
                 onTap: () => onTap(2),
               ),
               _NavItem(
                 icon: Icons.person_outline,
                 activeIcon: Icons.person,
-                label: 'Profile',
+                label: t.navProfile,
                 isActive: currentIndex == 3,
                 onTap: () => onTap(3),
               ),

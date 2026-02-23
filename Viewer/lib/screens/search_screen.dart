@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/theme.dart';
+import '../providers/language_provider.dart';
+import '../l10n/app_localizations.dart';
 import '../services/supabase_service.dart';
 import 'course_screen.dart';
 
 /// Library / Search screen — loads subjects and courses from Supabase.
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final VoidCallback? onEnrolled;
+
+  const SearchScreen({super.key, this.onEnrolled});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -13,7 +18,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   String? _selectedSubjectId;
-  String _selectedSubjectName = 'All Courses';
+  String _selectedSubjectName = '';
   final _searchController = TextEditingController();
 
   List<Map<String, dynamic>> _subjects = [];
@@ -40,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
       _subjects = subjects;
       _loadingSubjects = false;
       _selectedSubjectId = null;
-      _selectedSubjectName = 'All Courses';
+      _selectedSubjectName = '';
     });
     _loadCourses();
   }
@@ -70,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void _selectAllSubjects() {
     setState(() {
       _selectedSubjectId = null;
-      _selectedSubjectName = 'All Courses';
+      _selectedSubjectName = '';
       _searchController.clear();
     });
     _loadCourses();
@@ -78,19 +83,20 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           children: [
-            _buildHeader(),
+            _buildHeader(t),
             Expanded(
               child: _loadingSubjects
                   ? const Center(child: CircularProgressIndicator())
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: [
-                        _buildCoursesSection(),
+                        _buildCoursesSection(t),
                         const SizedBox(height: 80),
                       ],
                     ),
@@ -101,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations t) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
       decoration: BoxDecoration(
@@ -126,8 +132,8 @@ class _SearchScreenState extends State<SearchScreen> {
             child: TextField(
               controller: _searchController,
               onSubmitted: (v) => _loadCourses(query: v.trim()),
-              decoration: const InputDecoration(
-                hintText: 'Search courses...',
+              decoration: InputDecoration(
+                hintText: t.searchPlaceholder,
                 hintStyle: TextStyle(
                   color: Color(0xFF94A3B8),
                   fontSize: 14,
@@ -150,7 +156,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Row(
               children: [
                 _buildSubjectTab(
-                  label: 'All',
+                  label: t.searchAllTab,
                   icon: Icons.apps_rounded,
                   color: AppColors.indigo,
                   isSelected: _selectedSubjectId == null,
@@ -244,7 +250,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildCoursesSection() {
+  Widget _buildCoursesSection(AppLocalizations t) {
     if (_loadingCourses) {
       return const Center(
         child: Padding(
@@ -259,20 +265,24 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Padding(
           padding: const EdgeInsets.all(40),
           child: Text(
-            'No courses found.',
-            style: TextStyle(color: const Color(0xFF94A3B8), fontSize: 14),
+            t.searchNoResults,
+            style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
           ),
         ),
       );
     }
 
+    final sectionTitle = _searchController.text.isNotEmpty
+        ? t.searchResults
+        : (_selectedSubjectId == null
+              ? t.searchAllCourses
+              : _selectedSubjectName);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _searchController.text.isNotEmpty
-              ? 'Search Results'
-              : _selectedSubjectName,
+          sectionTitle,
           style: AppTypography.title.copyWith(color: const Color(0xFF1E293B)),
         ),
         const SizedBox(height: 16),
@@ -304,6 +314,7 @@ class _SearchScreenState extends State<SearchScreen> {
             courseId: course['id'] as String?,
             title: title,
             description: course['description'] as String?,
+            onEnrolled: widget.onEnrolled,
           ),
         ),
       ),

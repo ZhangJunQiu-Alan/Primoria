@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../theme/theme.dart';
 import '../providers/user_provider.dart';
 import '../providers/theme_provider.dart';
+import '../providers/language_provider.dart';
+import '../l10n/app_localizations.dart';
 
 /// Profile screen — ported from Figma ProfileScreen template
 class ProfileScreen extends StatelessWidget {
@@ -10,22 +12,23 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _buildBannerAndAvatar(context),
-              _buildUserInfo(context),
+              _buildBannerAndAvatar(context, t),
+              _buildUserInfo(context, t),
               const SizedBox(height: 24),
-              _buildStatsCard(context),
+              _buildStatsCard(context, t),
               const SizedBox(height: 24),
-              _buildDailyBadge(context),
+              _buildDailyBadge(context, t),
               const SizedBox(height: 24),
-              _buildAchievements(context),
+              _buildAchievements(context, t),
               const SizedBox(height: 24),
-              _buildSettingsSection(context),
+              _buildSettingsSection(context, t),
               const SizedBox(height: 40),
             ],
           ),
@@ -34,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBannerAndAvatar(BuildContext context) {
+  Widget _buildBannerAndAvatar(BuildContext context, AppLocalizations t) {
     return SizedBox(
       height: 220,
       child: Stack(
@@ -130,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfo(BuildContext context) {
+  Widget _buildUserInfo(BuildContext context, AppLocalizations t) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
         final user = userProvider.user;
@@ -141,8 +144,8 @@ class ProfileScreen extends StatelessWidget {
             ? '@${user.name.toLowerCase().replaceAll(' ', '_')}'
             : '@alex_j';
         final joined = user != null
-            ? 'Joined ${user.joinedAt.year}'
-            : 'Joined 2023';
+            ? t.profileJoined(user.joinedAt.year)
+            : t.profileJoined(2023);
 
         final bio = user?.bio;
 
@@ -188,7 +191,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsCard(BuildContext context) {
+  Widget _buildStatsCard(BuildContext context, AppLocalizations t) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
         return Container(
@@ -208,7 +211,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Row 1: Courses + Total Stars
+              // Row 1: Courses + Total XP
               Row(
                 children: [
                   Expanded(
@@ -217,7 +220,7 @@ class ProfileScreen extends StatelessWidget {
                       iconBg: const Color(0xFFD1FAE5),
                       iconColor: const Color(0xFF10B981),
                       value: '${userProvider.completedCourses}',
-                      label: 'COURSES',
+                      label: t.profileCourses,
                     ),
                   ),
                   Expanded(
@@ -226,7 +229,7 @@ class ProfileScreen extends StatelessWidget {
                       iconBg: AppColors.indigo50,
                       iconColor: AppColors.indigo500,
                       value: _formatStat(userProvider.totalXp),
-                      label: 'TOTAL XP',
+                      label: t.profileTotalXp,
                     ),
                   ),
                 ],
@@ -244,7 +247,7 @@ class ProfileScreen extends StatelessWidget {
                       iconBg: const Color(0xFFDBEAFE),
                       iconColor: const Color(0xFF3B82F6),
                       value: _formatStat(userProvider.followingCount),
-                      label: 'FOLLOWING',
+                      label: t.profileFollowing,
                     ),
                   ),
                   Expanded(
@@ -253,7 +256,7 @@ class ProfileScreen extends StatelessWidget {
                       iconBg: const Color(0xFFFCE7F3),
                       iconColor: const Color(0xFFEC4899),
                       value: _formatStat(userProvider.followersCount),
-                      label: 'FANS',
+                      label: t.profileFans,
                     ),
                   ),
                 ],
@@ -309,7 +312,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDailyBadge(BuildContext context) {
+  Widget _buildDailyBadge(BuildContext context, AppLocalizations t) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
         return Container(
@@ -336,9 +339,9 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Daily Exclusive Badge',
-                    style: TextStyle(
+                  Text(
+                    t.profileDailyBadge,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF1E293B),
                       fontSize: 16,
@@ -383,7 +386,7 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${userProvider.streak}-Day Streak',
+                        t.profileStreakDays(userProvider.streak),
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF1E293B),
@@ -391,9 +394,9 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
-                        'Keep learning to maintain your badge!',
-                        style: TextStyle(
+                      Text(
+                        t.profileBadgeSubtitle,
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xFF64748B),
                         ),
@@ -409,7 +412,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAchievements(BuildContext context) {
+  Widget _buildAchievements(BuildContext context, AppLocalizations t) {
     final badges = [
       _Badge(Icons.bolt, const Color(0xFFEAB308), const Color(0xFFFEF9C3)),
       _Badge(Icons.shield, const Color(0xFF10B981), const Color(0xFFD1FAE5)),
@@ -445,9 +448,9 @@ class ProfileScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Achievements',
-                style: TextStyle(
+              Text(
+                t.profileAchievements,
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF1E293B),
                   fontSize: 16,
@@ -460,7 +463,7 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  'View All',
+                  t.profileViewAll,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -502,17 +505,23 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsSection(BuildContext context) {
+  Widget _buildSettingsSection(BuildContext context, AppLocalizations t) {
     return Consumer2<ThemeProvider, UserProvider>(
       builder: (context, themeProvider, userProvider, _) {
+        // Derive theme mode label using translations
+        final themeModeLabel = switch (themeProvider.themeMode) {
+          ThemeMode.light => t.themeLightMode,
+          ThemeMode.dark => t.themeDarkMode,
+          _ => t.themeFollowSystem,
+        };
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Settings',
-                style: TextStyle(
+              Text(
+                t.profileSettings,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF1E293B),
@@ -529,7 +538,7 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     _settingItem(
                       Icons.notifications_outlined,
-                      'Notifications',
+                      t.profileNotifications,
                       onTap: () {},
                     ),
                     const Divider(
@@ -539,9 +548,9 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     _settingItem(
                       Icons.language,
-                      'Language',
-                      trailing: 'English',
-                      onTap: () {},
+                      t.profileLanguage,
+                      trailing: t.langDisplayName,
+                      onTap: () => _showLanguagePicker(context, t),
                     ),
                     const Divider(
                       height: 1,
@@ -550,9 +559,9 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     _settingItem(
                       Icons.dark_mode_outlined,
-                      'Dark Mode',
-                      trailing: themeProvider.themeModeLabel,
-                      onTap: () => _showThemePicker(context),
+                      t.profileDarkMode,
+                      trailing: themeModeLabel,
+                      onTap: () => _showThemePicker(context, t),
                     ),
                     const Divider(
                       height: 1,
@@ -561,7 +570,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     _settingItem(
                       Icons.help_outline,
-                      'Help & Feedback',
+                      t.profileHelpFeedback,
                       onTap: () {},
                     ),
                     const Divider(
@@ -569,7 +578,11 @@ class ProfileScreen extends StatelessWidget {
                       indent: 56,
                       color: Color(0xFFF1F5F9),
                     ),
-                    _settingItem(Icons.info_outline, 'About', onTap: () {}),
+                    _settingItem(
+                      Icons.info_outline,
+                      t.profileAbout,
+                      onTap: () {},
+                    ),
                   ],
                 ),
               ),
@@ -578,13 +591,14 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
-                    onPressed: () => _showLogoutDialog(context, userProvider),
+                    onPressed: () =>
+                        _showLogoutDialog(context, userProvider, t),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.error,
                       side: const BorderSide(color: AppColors.error),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    child: const Text('Logout'),
+                    child: Text(t.profileLogout),
                   ),
                 ),
               ],
@@ -639,7 +653,7 @@ class ProfileScreen extends StatelessWidget {
     return '$n';
   }
 
-  void _showThemePicker(BuildContext context) {
+  void _showThemePicker(BuildContext context, AppLocalizations t) {
     final themeProvider = context.read<ThemeProvider>();
     showModalBottomSheet(
       context: context,
@@ -649,11 +663,11 @@ class ProfileScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: AppSpacing.md),
-              Text('Select Theme', style: AppTypography.headline3),
+              Text(t.themeSelectTitle, style: AppTypography.headline3),
               const SizedBox(height: AppSpacing.md),
               ListTile(
                 leading: const Icon(Icons.brightness_auto),
-                title: const Text('Follow System'),
+                title: Text(t.themeFollowSystem),
                 trailing: themeProvider.themeMode == ThemeMode.system
                     ? Icon(Icons.check, color: AppColors.indigo)
                     : null,
@@ -664,7 +678,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.light_mode),
-                title: const Text('Light Mode'),
+                title: Text(t.themeLightMode),
                 trailing: themeProvider.themeMode == ThemeMode.light
                     ? Icon(Icons.check, color: AppColors.indigo)
                     : null,
@@ -675,7 +689,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.dark_mode),
-                title: const Text('Dark Mode'),
+                title: Text(t.themeDarkMode),
                 trailing: themeProvider.themeMode == ThemeMode.dark
                     ? Icon(Icons.check, color: AppColors.indigo)
                     : null,
@@ -692,11 +706,58 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void _showSettingsSheet(BuildContext context) {
-    _showThemePicker(context);
+  void _showLanguagePicker(BuildContext context, AppLocalizations t) {
+    final langProvider = context.read<LanguageProvider>();
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: AppSpacing.md),
+              Text(t.langSelectTitle, style: AppTypography.headline3),
+              const SizedBox(height: AppSpacing.md),
+              ListTile(
+                leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
+                title: const Text(AppLocalizations.langEnglish),
+                trailing: langProvider.languageCode == 'en'
+                    ? Icon(Icons.check, color: AppColors.indigo)
+                    : null,
+                onTap: () {
+                  langProvider.setLanguage('en');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Text('🇨🇳', style: TextStyle(fontSize: 24)),
+                title: const Text(AppLocalizations.langChinese),
+                trailing: langProvider.languageCode == 'zh'
+                    ? Icon(Icons.check, color: AppColors.indigo)
+                    : null,
+                onTap: () {
+                  langProvider.setLanguage('zh');
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(height: AppSpacing.lg),
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  void _showLogoutDialog(BuildContext context, UserProvider userProvider) {
+  void _showSettingsSheet(BuildContext context) {
+    final t = context.read<LanguageProvider>().t;
+    _showThemePicker(context, t);
+  }
+
+  void _showLogoutDialog(
+    BuildContext context,
+    UserProvider userProvider,
+    AppLocalizations t,
+  ) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -732,9 +793,9 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     // Title
-                    const Text(
-                      'Log Out',
-                      style: TextStyle(
+                    Text(
+                      t.profileLogoutTitle,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
                         color: Color(0xFF1E293B),
@@ -743,10 +804,10 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     // Body
-                    const Text(
-                      "Are you sure you want to log out?\nYou'll need to sign in again to access your account.",
+                    Text(
+                      t.profileLogoutBody,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         height: 1.5,
                         color: Color(0xFF64748B),
@@ -765,17 +826,17 @@ class ProfileScreen extends StatelessWidget {
                                 : () => Navigator.of(ctx).pop(),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 13),
-                              side: const BorderSide(
-                                color: Color(0xFFE2E8F0),
-                              ),
+                              side: const BorderSide(color: Color(0xFFE2E8F0)),
                               foregroundColor: const Color(0xFF64748B),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text(
-                              'Cancel',
-                              style: TextStyle(fontWeight: FontWeight.w600),
+                            child: Text(
+                              t.cancel,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
@@ -790,8 +851,9 @@ class ProfileScreen extends StatelessWidget {
                                     setDialogState(() => isLoggingOut = true);
                                     await userProvider.logout();
                                     if (context.mounted) {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed('/login');
+                                      Navigator.of(
+                                        context,
+                                      ).pushReplacementNamed('/login');
                                     }
                                   },
                             style: FilledButton.styleFrom(
@@ -812,9 +874,9 @@ class ProfileScreen extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                   )
-                                : const Text(
-                                    'Log Out',
-                                    style: TextStyle(
+                                : Text(
+                                    t.profileLogoutConfirm,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),

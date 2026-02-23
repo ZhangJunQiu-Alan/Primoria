@@ -120,6 +120,15 @@ class StorageService {
     return _prefs?.getString('themeMode') ?? 'system';
   }
 
+  // Language settings
+  Future<void> saveLanguage(String code) async {
+    await _prefs?.setString('language', code);
+  }
+
+  String? getLanguage() {
+    return _prefs?.getString('language');
+  }
+
   // Sound settings
   Future<void> saveSoundEnabled(bool enabled) async {
     await _prefs?.setBool('soundEnabled', enabled);

@@ -166,16 +166,21 @@ class SupabaseService {
   }) async {
     try {
       if (searchQuery != null && searchQuery.trim().isNotEmpty) {
-        final res = await client.rpc('search_courses', params: {
-          'p_query': searchQuery.trim(),
-          if (subjectId != null) 'p_subject_id': subjectId,
-        });
+        final res = await client.rpc(
+          'search_courses',
+          params: {
+            'p_query': searchQuery.trim(),
+            if (subjectId != null) 'p_subject_id': subjectId,
+          },
+        );
         return (res as List).cast<Map<String, dynamic>>();
       }
 
       var q = client
           .from('courses')
-          .select('id, title, slug, description, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex)')
+          .select(
+            'id, title, slug, description, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex)',
+          )
           .eq('status', 'published');
 
       if (subjectId != null) {
@@ -217,7 +222,9 @@ class SupabaseService {
 
       final chapters = await client
           .from('chapters')
-          .select('*, lessons(id, title, type, sort_key, xp_reward, duration_seconds)')
+          .select(
+            '*, lessons(id, title, type, sort_key, xp_reward, duration_seconds)',
+          )
           .eq('course_id', courseId)
           .order('sort_key');
       final chapList = (chapters as List).cast<Map<String, dynamic>>();
@@ -225,9 +232,11 @@ class SupabaseService {
       // Sort lessons within each chapter
       for (final ch in chapList) {
         final lessons = ch['lessons'] as List? ?? [];
-        lessons.sort((a, b) =>
-            ((a as Map)['sort_key'] as int? ?? 0)
-                .compareTo((b as Map)['sort_key'] as int? ?? 0));
+        lessons.sort(
+          (a, b) => ((a as Map)['sort_key'] as int? ?? 0).compareTo(
+            (b as Map)['sort_key'] as int? ?? 0,
+          ),
+        );
         ch['lessons'] = lessons;
       }
 
@@ -246,7 +255,9 @@ class SupabaseService {
               .eq('user_id', currentUser!.id)
               .inFilter('lesson_id', allLessonIds);
           for (final c in (completions as List)) {
-            completedIds.add((c as Map<String, dynamic>)['lesson_id'] as String);
+            completedIds.add(
+              (c as Map<String, dynamic>)['lesson_id'] as String,
+            );
           }
         }
       }
@@ -262,7 +273,7 @@ class SupabaseService {
       }
 
       return {
-        'course': course as Map<String, dynamic>,
+        'course': course,
         'chapters': chapList,
         'completed_lesson_ids': completedIds.toList(),
         'enrollment': enrollment,
@@ -275,24 +286,72 @@ class SupabaseService {
   /// Fetch a single lesson's content_json and metadata.
   static Future<Map<String, dynamic>?> getLessonContent(String lessonId) async {
     try {
-      return await client
+      final lesson = await client
           .from('lessons')
           .select('id, title, content_json, xp_reward, duration_seconds')
           .eq('id', lessonId)
-          .single() as Map<String, dynamic>;
+          .single();
+
+      final map = (lesson as Map).cast<String, dynamic>();
+
+      if (_isLessonContentEmpty(map['content_json'])) {
+        final blocks = await client
+            .from('content_blocks')
+            .select('id, type, content, config, is_interactive, sort_key')
+            .eq('lesson_id', lessonId)
+            .order('sort_key', ascending: true);
+
+        if (blocks.isNotEmpty) {
+          map['content_json'] = blocks
+              .whereType<Map>()
+              .map(
+                (b) => <String, dynamic>{
+                  'block_id': b['id'],
+                  'type': b['type'],
+                  'content': b['content'],
+                  'config': b['config'],
+                  'is_interactive': b['is_interactive'],
+                  'sort_key': b['sort_key'],
+                },
+              )
+              .toList();
+        }
+      }
+
+      return map;
     } catch (_) {
       return null;
     }
+  }
+
+  static bool _isLessonContentEmpty(dynamic raw) {
+    if (raw == null) return true;
+    if (raw is String) {
+      final t = raw.trim();
+      return t.isEmpty || t == '{}' || t == '[]';
+    }
+    if (raw is List) return raw.isEmpty;
+    if (raw is Map) {
+      final map = Map<String, dynamic>.from(raw);
+      if (map.isEmpty) return true;
+      final pages = map['pages'];
+      if (pages is List) return pages.isEmpty;
+      final blocks = map['blocks'];
+      if (blocks is List) return blocks.isEmpty;
+      return false;
+    }
+    return false;
   }
 
   /// Enroll current user in a course (idempotent).
   static Future<bool> enrollInCourse(String courseId) async {
     if (currentUser == null) return false;
     try {
-      await client.from('enrollments').upsert(
-        {'user_id': currentUser!.id, 'course_id': courseId, 'status': 'in_progress'},
-        onConflict: 'user_id,course_id',
-      );
+      await client.from('enrollments').upsert({
+        'user_id': currentUser!.id,
+        'course_id': courseId,
+        'status': 'in_progress',
+      }, onConflict: 'user_id,course_id');
       return true;
     } catch (_) {
       return false;
@@ -325,11 +384,14 @@ class SupabaseService {
   }) async {
     if (currentUser == null) return false;
     try {
-      await client.rpc('complete_lesson_and_award_xp', params: {
-        'p_lesson_id': lessonId,
-        'p_score': score,
-        'p_seconds': timeSpentSeconds,
-      });
+      await client.rpc(
+        'complete_lesson_and_award_xp',
+        params: {
+          'p_lesson_id': lessonId,
+          'p_score': score,
+          'p_seconds': timeSpentSeconds,
+        },
+      );
       return true;
     } catch (_) {
       return false;

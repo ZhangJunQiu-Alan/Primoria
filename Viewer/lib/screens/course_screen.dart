@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/theme.dart';
-import '../components/course/chapter_node.dart';
 import '../components/course/course_header.dart';
+import '../providers/language_provider.dart';
+import '../l10n/app_localizations.dart';
 import '../services/supabase_service.dart';
 import 'lesson_screen.dart';
 
@@ -13,6 +15,10 @@ class CourseScreen extends StatefulWidget {
   final LinearGradient? gradient;
   final IconData? icon;
 
+  /// Called after a successful enrollment so the caller (HomeScreen) can
+  /// switch to the Home tab and reload enrolled-course data.
+  final VoidCallback? onEnrolled;
+
   const CourseScreen({
     super.key,
     this.courseId,
@@ -20,6 +26,7 @@ class CourseScreen extends StatefulWidget {
     this.description,
     this.gradient,
     this.icon,
+    this.onEnrolled,
   });
 
   @override
@@ -74,8 +81,9 @@ class _CourseScreenState extends State<CourseScreen> {
       _loading = false;
       if (detail != null) {
         _courseData = detail['course'] as Map<String, dynamic>?;
-        _chapters =
-            List<Map<String, dynamic>>.from(detail['chapters'] as List? ?? []);
+        _chapters = List<Map<String, dynamic>>.from(
+          detail['chapters'] as List? ?? [],
+        );
         _completedLessonIds = Set<String>.from(
           (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
         );
@@ -95,33 +103,6 @@ class _CourseScreenState extends State<CourseScreen> {
     }
   }
 
-  ChapterData _toChapterData(Map<String, dynamic> chapter, int index) {
-    final lessons =
-        (chapter['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
-    final total = lessons.length;
-    final completed = lessons
-        .where((l) => _completedLessonIds.contains(l['id'] as String))
-        .length;
-    final progress = total == 0 ? 0.0 : completed / total;
-
-    final ChapterStatus status;
-    if (total == 0 || completed == 0) {
-      status = ChapterStatus.available;
-    } else if (completed == total) {
-      status = ChapterStatus.completed;
-    } else {
-      status = ChapterStatus.inProgress;
-    }
-
-    return ChapterData(
-      id: chapter['id'] as String? ?? '$index',
-      title: chapter['title'] as String? ?? 'Chapter ${index + 1}',
-      subtitle: total == 0 ? 'No lessons' : '$total lesson${total == 1 ? '' : 's'}',
-      progress: progress,
-      status: status,
-    );
-  }
-
   // ── Actions ───────────────────────────────────────────────────
 
   Future<void> _enroll() async {
@@ -129,158 +110,303 @@ class _CourseScreenState extends State<CourseScreen> {
     setState(() => _enrolling = true);
     final ok = await SupabaseService.enrollInCourse(widget.courseId!);
     if (!mounted) return;
-    if (ok) await _loadCourseData();
-    if (mounted) setState(() => _enrolling = false);
+    setState(() => _enrolling = false);
+    if (ok) {
+      // Pop back to home screen, then notify HomeScreen to switch to home tab.
+      Navigator.pop(context);
+      widget.onEnrolled?.call();
+    }
   }
 
-  void _showChapterDetail(
-      BuildContext context, Map<String, dynamic> rawChapter, ChapterData chapter) {
-    final lessons =
-        (rawChapter['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+  // ── Lesson path ───────────────────────────────────────────────
 
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.surface,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
-      ),
-      builder: (ctx) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.55,
-        maxChildSize: 0.85,
-        minChildSize: 0.35,
-        builder: (_, scrollCtrl) => ListView(
-          controller: scrollCtrl,
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          children: [
-            // Drag handle
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppColors.border,
-                  borderRadius: AppRadius.borderRadiusFull,
+  /// Build a flat list of widgets representing all lessons across chapters.
+  List<Widget> _buildLessonPathWidgets(AppLocalizations t) {
+    // Flatten chapters → lesson entries
+    final entries =
+        <
+          ({
+            String id,
+            String title,
+            String chapterTitle,
+            bool isFirstInChapter,
+          })
+        >[];
+
+    for (final chapter in _chapters) {
+      final chapterTitle = chapter['title'] as String? ?? 'Chapter';
+      final lessons = (chapter['lessons'] as List? ?? [])
+          .cast<Map<String, dynamic>>();
+      for (int i = 0; i < lessons.length; i++) {
+        final l = lessons[i];
+        entries.add((
+          id: l['id'] as String,
+          title: l['title'] as String? ?? 'Lesson',
+          chapterTitle: chapterTitle,
+          isFirstInChapter: i == 0,
+        ));
+      }
+    }
+
+    if (entries.isEmpty) {
+      return [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: Text(
+            t.courseNoLessons,
+            style: AppTypography.body2.copyWith(color: AppColors.textSecondary),
+          ),
+        ),
+      ];
+    }
+
+    // Find the first incomplete lesson (shown as "Up Next")
+    String? nextLessonId;
+    for (final e in entries) {
+      if (!_completedLessonIds.contains(e.id)) {
+        nextLessonId = e.id;
+        break;
+      }
+    }
+
+    final widgets = <Widget>[];
+    for (int i = 0; i < entries.length; i++) {
+      final e = entries[i];
+      final isDone = _completedLessonIds.contains(e.id);
+      final isNext = e.id == nextLessonId;
+      final isLast = i == entries.length - 1;
+
+      // Chapter section header at start of each chapter
+      if (e.isFirstInChapter) {
+        widgets.add(
+          Padding(
+            padding: EdgeInsets.only(top: i == 0 ? 0 : 20, bottom: 8),
+            child: Row(
+              children: [
+                Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    e.chapterTitle,
+                    style: AppTypography.label.copyWith(
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+              ],
             ),
-            AppSpacing.verticalGapLg,
-            Text(chapter.title, style: AppTypography.headline2),
-            AppSpacing.verticalGapSm,
-            Text(chapter.subtitle, style: AppTypography.body2),
-            AppSpacing.verticalGapLg,
+          ),
+        );
+      }
 
-            // Lesson list
-            if (lessons.isEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Text(
-                  'No lessons in this chapter yet.',
-                  style: AppTypography.body2
-                      .copyWith(color: AppColors.textSecondary),
-                ),
-              )
-            else
-              ...lessons.map((lesson) {
-                final lessonId = lesson['id'] as String? ?? '';
-                final lessonTitle = lesson['title'] as String? ?? 'Lesson';
-                final isDone = _completedLessonIds.contains(lessonId);
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Container(
-                    width: 32,
-                    height: 32,
+      widgets.add(
+        _buildLessonNode(
+          lessonId: e.id,
+          lessonTitle: e.title,
+          isDone: isDone,
+          isNext: isNext,
+          isLast: isLast,
+          t: t,
+        ),
+      );
+    }
+
+    return widgets;
+  }
+
+  Widget _buildLessonNode({
+    required String lessonId,
+    required String lessonTitle,
+    required bool isDone,
+    required bool isNext,
+    required bool isLast,
+    required AppLocalizations t,
+  }) {
+    final nodeColor = isDone
+        ? AppColors.success
+        : isNext
+        ? AppColors.primary
+        : AppColors.surface;
+    final nodeBorderColor = isDone
+        ? AppColors.success
+        : isNext
+        ? AppColors.primary
+        : AppColors.border;
+
+    void onTap() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => LessonScreen(
+            lessonId: lessonId,
+            lessonTitle: lessonTitle,
+            gradient: _gradient,
+          ),
+        ),
+      ).then((_) => _loadCourseData());
+    }
+
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Left: circle node + vertical connector
+          SizedBox(
+            width: 56,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
-                      color: isDone ? AppColors.success : AppColors.border,
                       shape: BoxShape.circle,
+                      color: nodeColor,
+                      border: Border.all(
+                        color: nodeBorderColor,
+                        width: isNext ? 3 : 2,
+                      ),
+                      boxShadow: (isDone || isNext)
+                          ? [
+                              BoxShadow(
+                                color: nodeBorderColor.withValues(alpha: 0.25),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ]
+                          : null,
                     ),
-                    child: Icon(
-                      isDone ? Icons.check : Icons.play_arrow_rounded,
-                      color: isDone ? Colors.white : AppColors.textSecondary,
-                      size: 18,
+                    child: Center(
+                      child: Icon(
+                        isDone
+                            ? Icons.check_rounded
+                            : isNext
+                            ? Icons.play_arrow_rounded
+                            : Icons.radio_button_unchecked,
+                        color: (isDone || isNext)
+                            ? Colors.white
+                            : AppColors.textDisabled,
+                        size: 22,
+                      ),
                     ),
                   ),
-                  title: Text(
-                    lessonTitle,
-                    style: AppTypography.body1.copyWith(
-                      color: isDone
-                          ? AppColors.textSecondary
-                          : AppColors.textPrimary,
-                      decoration:
-                          isDone ? TextDecoration.lineThrough : null,
+                ),
+                if (!isLast)
+                  Expanded(
+                    child: Container(
+                      width: 3,
+                      margin: const EdgeInsets.symmetric(vertical: 2),
+                      decoration: BoxDecoration(
+                        color: isDone
+                            ? AppColors.success.withValues(alpha: 0.35)
+                            : AppColors.border,
+                        borderRadius: AppRadius.borderRadiusFull,
+                      ),
                     ),
                   ),
-                  trailing: const Icon(Icons.chevron_right,
-                      color: AppColors.textSecondary),
-                  onTap: () {
-                    Navigator.pop(ctx);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => LessonScreen(
-                          lessonId: lessonId,
-                          lessonTitle: lessonTitle,
-                          gradient: _gradient,
+              ],
+            ),
+          ),
+
+          const SizedBox(width: 8),
+
+          // Right: lesson card
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.md),
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  decoration: BoxDecoration(
+                    color: isNext
+                        ? AppColors.primary.withValues(alpha: 0.04)
+                        : AppColors.surface,
+                    borderRadius: AppRadius.borderRadiusXl,
+                    border: isNext
+                        ? Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.35),
+                            width: 1.5,
+                          )
+                        : Border.all(color: AppColors.border),
+                    boxShadow: (isDone || isNext) ? AppShadows.sm : null,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (isDone) ...[
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.success.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  borderRadius: AppRadius.borderRadiusSm,
+                                ),
+                                child: Text(
+                                  t.completed,
+                                  style: AppTypography.labelSmall.copyWith(
+                                    color: AppColors.success,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ] else if (isNext) ...[
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  borderRadius: AppRadius.borderRadiusSm,
+                                ),
+                                child: Text(
+                                  t.courseUpNext,
+                                  style: AppTypography.labelSmall.copyWith(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                            Text(
+                              lessonTitle,
+                              style: AppTypography.title.copyWith(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ).then((_) => _loadCourseData());
-                  },
-                );
-              }),
-
-            AppSpacing.verticalGapLg,
-
-            // Continue / Review button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: lessons.isEmpty
-                    ? null
-                    : () {
-                        Navigator.pop(ctx);
-                        // First incomplete lesson in this chapter
-                        Map<String, dynamic>? next;
-                        for (final l in lessons) {
-                          if (!_completedLessonIds
-                              .contains(l['id'] as String)) {
-                            next = l;
-                            break;
-                          }
-                        }
-                        // Fall back to first lesson if all complete (review)
-                        final target = next ?? lessons.first;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => LessonScreen(
-                              lessonId: target['id'] as String?,
-                              lessonTitle: target['title'] as String?,
-                              gradient: _gradient,
-                            ),
-                          ),
-                        ).then((_) => _loadCourseData());
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _gradient.colors.first,
-                  foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                      Icon(
+                        Icons.chevron_right,
+                        color: AppColors.textSecondary,
+                        size: 20,
+                      ),
+                    ],
                   ),
-                ),
-                child: Text(
-                  chapter.status == ChapterStatus.completed
-                      ? 'Review Chapter'
-                      : 'Continue Learning',
-                  style: AppTypography.button,
                 ),
               ),
             ),
-            AppSpacing.verticalGapMd,
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -289,19 +415,18 @@ class _CourseScreenState extends State<CourseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
+
     if (_loading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    final chapters = _chapters
-        .asMap()
-        .entries
-        .map((e) => _toChapterData(e.value, e.key))
-        .toList();
-    final completedChapters =
-        chapters.where((c) => c.status == ChapterStatus.completed).length;
+    final completedChapters = _chapters.where((ch) {
+      final lessons = (ch['lessons'] as List? ?? [])
+          .cast<Map<String, dynamic>>();
+      return lessons.isNotEmpty &&
+          lessons.every((l) => _completedLessonIds.contains(l['id'] as String));
+    }).length;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -314,7 +439,7 @@ class _CourseScreenState extends State<CourseScreen> {
               description: _description,
               gradient: _gradient,
               icon: _icon,
-              totalChapters: chapters.length,
+              totalChapters: _chapters.length,
               completedChapters: completedChapters,
               onBack: () => Navigator.pop(context),
             ),
@@ -334,16 +459,21 @@ class _CourseScreenState extends State<CourseScreen> {
                             width: 18,
                             height: 18,
                             child: CircularProgressIndicator(
-                                strokeWidth: 2, color: Colors.white),
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
                           )
                         : const Icon(Icons.add_circle_outline),
-                    label: Text(_enrolling ? 'Enrolling…' : 'Enroll in Course'),
+                    label: Text(
+                      _enrolling ? t.courseEnrolling : t.courseEnroll,
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.indigo600,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
                       elevation: 0,
                     ),
                   ),
@@ -355,19 +485,23 @@ class _CourseScreenState extends State<CourseScreen> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text('Learning Path', style: AppTypography.headline3),
+              child: Text(t.courseLearningPath, style: AppTypography.headline3),
             ),
           ),
 
-          // Chapter nodes
-          if (chapters.isEmpty)
+          // Lesson path nodes
+          if (_chapters.isEmpty)
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 32,
+                ),
                 child: Text(
-                  'No chapters available yet.',
-                  style: AppTypography.body2
-                      .copyWith(color: AppColors.textSecondary),
+                  t.courseNoChapters,
+                  style: AppTypography.body2.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ),
             )
@@ -375,20 +509,7 @@ class _CourseScreenState extends State<CourseScreen> {
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final chapter = chapters[index];
-                    return ChapterNode(
-                      chapter: chapter,
-                      index: index,
-                      isLast: index == chapters.length - 1,
-                      gradient: _gradient,
-                      onTap: () => _showChapterDetail(
-                          context, _chapters[index], chapter),
-                    );
-                  },
-                  childCount: chapters.length,
-                ),
+                delegate: SliverChildListDelegate(_buildLessonPathWidgets(t)),
               ),
             ),
 
