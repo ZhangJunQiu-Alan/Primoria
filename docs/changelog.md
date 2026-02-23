@@ -1,5 +1,32 @@
 # Changelog
 
+## [Unreleased] - 2026-02-24 (Rich Create/Edit Course Form + Image Upload)
+
+### Summary
+Expanded Create Course and Edit Course dialogs in the Builder Dashboard with full metadata fields (description, difficulty, estimated hours, price tier, conditional price input). Added support for uploading a local image or entering a URL as course cover; images are stored in Supabase Storage (`course-thumbnails` bucket). Fixed a critical web file-reading bug where `readAsArrayBuffer` produced an unusable `ByteBuffer` (not `Uint8List`) in Dart/Web, causing silent hangs.
+
+### Added
+- **Migration: `20260224000001_add_price_to_courses.sql`**: Adds `price NUMERIC(10,2) NOT NULL DEFAULT 0` with a non-negative CHECK constraint to the `courses` table
+- **Migration: `20260224000002_course_thumbnails_storage.sql`**: Creates `course-thumbnails` Supabase Storage bucket (public, 5 MB limit, JPEG/PNG/WebP/GIF); RLS policies: public read, authenticated insert, owner update+delete
+- **`SupabaseService.updateCourseInfo()`**: New method updating all editable course fields (title, description, thumbnailUrl, difficultyLevel, estimatedMinutes, priceTier, price) with ownership check
+- **`SupabaseService.uploadCourseThumbnail()`**: New method uploading image bytes to `course-thumbnails` bucket, returning `(String? url, String? error)` tuple; uses per-user subfolder + generated UUID filename
+- **`pickImageFileBytes()` in `file_picker_web.dart`**: New file-picker variant using `readAsDataUrl` + `base64.decode()` to reliably read image bytes in Dart Web (avoids `ByteBuffer` cast issue)
+- **21 new i18n strings** in `BuilderLocalizations`: form labels (description, thumbnail, difficulty, estimated hours, price tier, price), upload states (uploading, change, failed), and difficulty/price options (beginner/intermediate/advanced, free/premium)
+- **`_ThumbnailModeChip`**: New animated toggle chip widget for "Upload Image" / "Enter URL" tab switching (150 ms transition)
+- **`_UploadPreviewBox`**: New widget showing upload placeholder / spinner / image preview with "Change" overlay
+
+### Changed
+- **`_showCreateCourseDialog`** (`dashboard_screen.dart`): Expanded from single-field (title only) to full 480 px scrollable form — name (required), description, thumbnail (upload ↔ URL toggle), difficulty dropdown, estimated hours, price tier dropdown, and `AnimatedSize`-gated price input shown only when "Premium" is selected
+- **`_showEditCourseDialog`** (replaces `_showRenameCourseDialog`): Same full form pre-populated from the existing course map; calls `updateCourseInfo()` on save
+- **`_buildCourseCard` Edit button**: Now passes the full course map to `_showEditCourseDialog` instead of just the title
+- **`SupabaseService.createCourseRow()`**: Extended to accept and write `description`, `thumbnailUrl`, `difficultyLevel`, `estimatedMinutes`, `priceTier`, `price`
+
+### Fixed
+- **`pickImageFileBytes` silent hang**: `readAsArrayBuffer` returns a JS `ArrayBuffer` / Dart `ByteBuffer`, not a `Uint8List`. The cast threw `TypeError` inside a stream listener, so the `Completer` never resolved and `await` hung indefinitely with no UI feedback. Fixed by switching to `readAsDataUrl` + `base64.decode()`
+- **Silent upload failure**: `uploadCourseThumbnail` previously used `catch (_) { return null; }`, swallowing the actual Supabase error string. Now returns `(null, error.toString())` so the dialog can display an actionable message
+
+---
+
 ## [Unreleased] - 2026-02-23 (Lesson Locks + Chapter Removal + Viewer Tab Stability)
 
 ### Summary

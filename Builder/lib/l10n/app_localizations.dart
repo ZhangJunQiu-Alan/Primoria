@@ -70,9 +70,37 @@ class BuilderLocalizations {
   String get cancel => isZh ? '取消' : 'Cancel';
   String get create => isZh ? '创建' : 'Create';
 
-  // Dialogs — Edit Course Name
+  // Dialogs — Edit Course (all fields)
+  String get editCourseDialogTitle => isZh ? '编辑课程信息' : 'Edit Course Info';
   String get editCourseNameTitle => isZh ? '编辑课程名称' : 'Edit Course Name';
   String get save => isZh ? '保存' : 'Save';
+
+  // Course form fields
+  String get courseDescription => isZh ? '课程简介' : 'Course Description';
+  String get courseDescriptionHint =>
+      isZh ? '简短介绍课程内容（选填）' : 'Brief intro to the course (optional)';
+  String get courseThumbnailUrl => isZh ? '封面图 URL' : 'Cover Image URL';
+  String get courseThumbnailUrlHint =>
+      isZh ? 'https://... (选填)' : 'https://... (optional)';
+  String get uploadImage => isZh ? '上传图片' : 'Upload Image';
+  String get imageUrl => isZh ? '输入 URL' : 'Enter URL';
+  String get clickToUpload => isZh ? '点击上传图片' : 'Click to upload image';
+  String get uploadingImage => isZh ? '正在上传...' : 'Uploading...';
+  String get changeImage => isZh ? '更换图片' : 'Change';
+  String get imageUploadFailed =>
+      isZh ? '上传失败，请重试' : 'Upload failed, please retry';
+  String get courseDifficulty => isZh ? '难度' : 'Difficulty';
+  String get difficultyBeginner => isZh ? '入门' : 'Beginner';
+  String get difficultyIntermediate => isZh ? '进阶' : 'Intermediate';
+  String get difficultyAdvanced => isZh ? '高级' : 'Advanced';
+  String get courseEstimatedHours => isZh ? '预计时长（小时）' : 'Estimated Hours';
+  String get courseEstimatedHoursHint =>
+      isZh ? '例如: 2.5（选填）' : 'e.g. 2.5 (optional)';
+  String get coursePriceTier => isZh ? '定价' : 'Price Tier';
+  String get priceFree => isZh ? '免费' : 'Free';
+  String get pricePremium => isZh ? '付费' : 'Premium';
+  String get coursePrice => isZh ? '价格' : 'Price';
+  String get coursePriceHint => isZh ? '例如: 9.99' : 'e.g. 9.99';
 
   // Dialogs — Delete Course
   String get deleteCourseTitle => isZh ? '删除课程' : 'Delete Course';
@@ -84,6 +112,7 @@ class BuilderLocalizations {
   // ── Snackbars ─────────────────────────────────────────────────
   String get courseDeleted => isZh ? '课程已删除' : 'Course deleted';
   String get courseNameUpdated => isZh ? '课程名称已更新' : 'Course name updated';
+  String get courseInfoUpdated => isZh ? '课程信息已更新' : 'Course info updated';
   String get signedIn => isZh ? '已登录' : 'Signed in';
   String get profileUpdated => isZh ? '个人资料已更新' : 'Profile updated';
 

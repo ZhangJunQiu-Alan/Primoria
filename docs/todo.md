@@ -33,6 +33,9 @@
 16. [x] Robust schema validation — centralized validator + import/save/publish enforcement with field-path error details and warning/error severity (2026-02-12)
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
 28. [x] Full EN/ZH multilingual support — BuilderLocalizations class, Riverpod languageProvider (StateNotifier), language tile in Profile Dialog, browser locale auto-detect, translated Landing/Dashboard/Builder/Profile screens (2026-02-23)
+29. [x] Rich Create/Edit Course form — all metadata fields (description, difficulty, estimated hours, price tier, conditional price), `updateCourseInfo()` API, snackbar feedback (2026-02-24)
+30. [x] Course thumbnail image upload — local file pick + Supabase Storage bucket (`course-thumbnails`), upload/URL toggle UI with preview, `uploadCourseThumbnail()` returning (url, error) tuple (2026-02-24)
+31. [x] Fix `pickImageFileBytes` silent hang — switched from `readAsArrayBuffer` (returns unusable `ByteBuffer` in Dart Web) to `readAsDataUrl` + `base64.decode()`; also fixed `uploadCourseThumbnail` swallowing Supabase errors (2026-02-24)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

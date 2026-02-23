@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
@@ -456,9 +457,65 @@ class SupabaseService {
     }
   }
 
+  /// Upload a course thumbnail image to Supabase Storage.
+  /// Returns (publicUrl, null) on success, (null, errorMessage) on failure.
+  static Future<(String?, String?)> uploadCourseThumbnail({
+    required Uint8List bytes,
+    required String fileName,
+  }) async {
+    if (currentUser == null) {
+      return (null, 'Please sign in first');
+    }
+
+    try {
+      final ext = fileName.contains('.')
+          ? fileName.split('.').last.toLowerCase()
+          : 'jpg';
+      final path = '${currentUser!.id}/${IdGenerator.generate()}.$ext';
+      final mime = _imageExtToMime(ext);
+
+      await client.storage
+          .from('course-thumbnails')
+          .uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(contentType: mime, upsert: true),
+          );
+
+      final url = client.storage.from('course-thumbnails').getPublicUrl(path);
+      return (url, null);
+    } catch (e) {
+      return (null, e.toString());
+    }
+  }
+
+  static String _imageExtToMime(String ext) {
+    switch (ext) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      default:
+        return 'image/jpeg';
+    }
+  }
+
   /// Create a course row only (no chapters, lessons, or snapshot).
   /// Used by Dashboard's Create Course flow.
-  static Future<CourseResult> createCourseRow({required String title}) async {
+  static Future<CourseResult> createCourseRow({
+    required String title,
+    String? description,
+    String? thumbnailUrl,
+    String difficultyLevel = 'beginner',
+    int? estimatedMinutes,
+    String priceTier = 'free',
+    double price = 0,
+  }) async {
     if (currentUser == null) {
       return const CourseResult(
         success: false,
@@ -468,6 +525,7 @@ class SupabaseService {
 
     try {
       final tempId = IdGenerator.generate();
+      final isPremium = priceTier == 'premium';
       final insertResult = await client
           .from('courses')
           .insert({
@@ -475,6 +533,14 @@ class SupabaseService {
             'title': title,
             'slug': _buildCourseSlug(title, tempId),
             'status': 'draft',
+            if (description != null && description.isNotEmpty)
+              'description': description,
+            if (thumbnailUrl != null && thumbnailUrl.isNotEmpty)
+              'thumbnail_url': thumbnailUrl,
+            'difficulty_level': _normalizeDifficulty(difficultyLevel),
+            if (estimatedMinutes != null) 'estimated_minutes': estimatedMinutes,
+            'price_tier': isPremium ? 'premium' : 'free',
+            'price': isPremium ? price : 0,
           })
           .select('id')
           .single();
@@ -486,6 +552,66 @@ class SupabaseService {
       );
     } catch (e) {
       return CourseResult(success: false, message: 'Create failed: $e');
+    }
+  }
+
+  /// Update course metadata fields.
+  /// Used by Dashboard's Edit Course flow.
+  static Future<CourseResult> updateCourseInfo({
+    required String courseId,
+    required String title,
+    String? description,
+    String? thumbnailUrl,
+    String difficultyLevel = 'beginner',
+    int? estimatedMinutes,
+    String priceTier = 'free',
+    double price = 0,
+  }) async {
+    if (currentUser == null) {
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
+    }
+
+    final nextTitle = title.trim();
+    if (nextTitle.isEmpty) {
+      return const CourseResult(
+        success: false,
+        message: 'Course name cannot be empty',
+      );
+    }
+
+    try {
+      final isPremium = priceTier == 'premium';
+      final updated = await client
+          .from('courses')
+          .update({
+            'title': nextTitle,
+            'description': (description ?? '').isNotEmpty ? description : null,
+            'thumbnail_url': (thumbnailUrl ?? '').isNotEmpty
+                ? thumbnailUrl
+                : null,
+            'difficulty_level': _normalizeDifficulty(difficultyLevel),
+            'estimated_minutes': estimatedMinutes ?? 0,
+            'price_tier': isPremium ? 'premium' : 'free',
+            'price': isPremium ? price : 0,
+          })
+          .eq('id', courseId)
+          .eq('author_id', currentUser!.id)
+          .select('id')
+          .maybeSingle();
+
+      if (updated == null) {
+        return const CourseResult(
+          success: false,
+          message: 'Course not found or no permission',
+        );
+      }
+
+      return const CourseResult(success: true, message: 'Course info updated');
+    } catch (e) {
+      return CourseResult(success: false, message: 'Update failed: $e');
     }
   }
 
