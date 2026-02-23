@@ -15,6 +15,8 @@ class _CoursesScreenState extends State<CoursesScreen>
     with TickerProviderStateMixin {
   String _view = 'find'; // 'find' or 'message'
   bool _showMenu = false;
+  final TextEditingController _findSearchController = TextEditingController();
+  String _findQuery = '';
 
   // Galaxy user data
   static const _galaxyUsers = [
@@ -95,6 +97,7 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   @override
   void dispose() {
+    _findSearchController.dispose();
     for (final c in _floatControllers) {
       c.dispose();
     }
@@ -202,18 +205,79 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildFindView() {
+    final visibleUserIndexes = _visibleGalaxyUserIndexes;
     return Container(
       decoration: const BoxDecoration(gradient: AppColors.galaxyGradient),
       child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF0F172A).withValues(alpha: 0.45),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFF334155)),
+              ),
+              child: TextField(
+                controller: _findSearchController,
+                textInputAction: TextInputAction.search,
+                onChanged: (value) => setState(() => _findQuery = value),
+                style: const TextStyle(
+                  color: Color(0xFFE2E8F0),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Search user',
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF94A3B8),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Color(0xFF94A3B8),
+                    size: 20,
+                  ),
+                  suffixIcon: _findQuery.isEmpty
+                      ? null
+                      : IconButton(
+                          onPressed: () {
+                            _findSearchController.clear();
+                            setState(() => _findQuery = '');
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Color(0xFF94A3B8),
+                            size: 18,
+                          ),
+                        ),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+              ),
+            ),
+          ),
           // Galaxy area
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return Stack(
                   children: [
-                    for (int i = 0; i < _galaxyUsers.length; i++)
-                      _buildPlanet(_galaxyUsers[i], i, constraints),
+                    if (visibleUserIndexes.isEmpty)
+                      const Center(
+                        child: Text(
+                          'No user found',
+                          style: TextStyle(
+                            color: Color(0xFFCBD5E1),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )
+                    else
+                      for (final i in visibleUserIndexes)
+                        _buildPlanet(_galaxyUsers[i], i, constraints),
                   ],
                 );
               },
@@ -295,6 +359,21 @@ class _CoursesScreenState extends State<CoursesScreen>
         ],
       ),
     );
+  }
+
+  List<int> get _visibleGalaxyUserIndexes {
+    final normalizedQuery = _findQuery.trim().toLowerCase();
+    if (normalizedQuery.isEmpty) {
+      return List<int>.generate(_galaxyUsers.length, (index) => index);
+    }
+
+    final matchingIndexes = <int>[];
+    for (var i = 0; i < _galaxyUsers.length; i++) {
+      if (_galaxyUsers[i].name.toLowerCase().contains(normalizedQuery)) {
+        matchingIndexes.add(i);
+      }
+    }
+    return matchingIndexes;
   }
 
   double _planetSize(String size) {
