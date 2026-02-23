@@ -47,81 +47,106 @@ class _HomeScreenState extends State<HomeScreen> {
     final enrollments = await SupabaseService.getEnrollments();
     if (!mounted) return;
 
+    Map<String, dynamic>? resolvedCourse;
+    var resolvedChapters = <Map<String, dynamic>>[];
+    var resolvedCompletedLessonIds = <String>{};
+
     if (enrollments.isNotEmpty) {
       final enrollment = enrollments.first;
       final courseMap = enrollment['courses'] as Map<String, dynamic>?;
       final courseId = (courseMap?['id'] ?? enrollment['course_id']) as String?;
       if (courseId != null) {
         final detail = await SupabaseService.getCourseDetail(courseId);
-        if (detail != null && mounted) {
-          setState(() {
-            _course = courseMap;
-            _chapters = List<Map<String, dynamic>>.from(
-              detail['chapters'] ?? [],
-            );
-            _completedLessonIds = Set<String>.from(
-              (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
-            );
-          });
+        if (!mounted) return;
+        if (detail != null) {
+          resolvedCourse =
+              detail['course'] as Map<String, dynamic>? ?? courseMap;
+          resolvedChapters = List<Map<String, dynamic>>.from(
+            detail['chapters'] ?? [],
+          );
+          resolvedCompletedLessonIds = Set<String>.from(
+            (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
+          );
+        } else {
+          resolvedCourse = courseMap;
         }
       }
     }
 
-    if (mounted) setState(() => _loadingHome = false);
+    if (!mounted) return;
+    setState(() {
+      _course = resolvedCourse;
+      _chapters = resolvedChapters;
+      _completedLessonIds = resolvedCompletedLessonIds;
+      _loadingHome = false;
+    });
+  }
+
+  bool _isLessonLocked(Map<String, dynamic> lesson) {
+    final locked = lesson['is_locked'] == true;
+    if (!locked) return false;
+
+    final unlockType = (lesson['unlock_type'] as String? ?? 'none')
+        .trim()
+        .toLowerCase();
+    final prerequisiteId = lesson['prerequisite_lesson_id'] as String?;
+    final prerequisiteDone =
+        prerequisiteId != null && _completedLessonIds.contains(prerequisiteId);
+
+    switch (unlockType) {
+      case 'prerequisite':
+        return !prerequisiteDone;
+      case 'paid':
+        return true;
+      case 'prerequisite_or_paid':
+        return !prerequisiteDone;
+      case 'prerequisite_and_paid':
+        return true;
+      case 'none':
+      default:
+        return true;
+    }
+  }
+
+  Map<String, dynamic>? get _nextAvailableLesson {
+    for (final ch in _chapters) {
+      final lessons = (ch['lessons'] as List? ?? [])
+          .cast<Map<String, dynamic>>();
+      for (final lesson in lessons) {
+        final id = lesson['id'] as String;
+        if (_completedLessonIds.contains(id)) continue;
+        if (_isLessonLocked(lesson)) continue;
+        return lesson;
+      }
+    }
+    return null;
   }
 
   /// Returns the first incomplete lesson ID from chapters, or null.
-  String? get _nextLessonId {
-    for (final ch in _chapters) {
-      final lessons = (ch['lessons'] as List? ?? [])
-          .cast<Map<String, dynamic>>();
-      for (final lesson in lessons) {
-        final id = lesson['id'] as String;
-        if (!_completedLessonIds.contains(id)) return id;
-      }
-    }
-    return null;
-  }
+  String? get _nextLessonId => _nextAvailableLesson?['id'] as String?;
 
-  String? get _nextLessonTitle {
-    for (final ch in _chapters) {
-      final lessons = (ch['lessons'] as List? ?? [])
-          .cast<Map<String, dynamic>>();
-      for (final lesson in lessons) {
-        final id = lesson['id'] as String;
-        if (!_completedLessonIds.contains(id)) {
-          return lesson['title'] as String?;
-        }
-      }
-    }
-    return null;
-  }
+  String? get _nextLessonTitle => _nextAvailableLesson?['title'] as String?;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FC),
-      body: SafeArea(child: _buildContent()),
+      body: SafeArea(
+        child: IndexedStack(
+          index: _currentNavIndex,
+          children: [
+            _buildHomeContent(),
+            SearchScreen(onEnrolled: _onEnrolled),
+            const CoursesScreen(),
+            const ProfileScreen(),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentNavIndex,
         onTap: (index) => setState(() => _currentNavIndex = index),
       ),
     );
-  }
-
-  Widget _buildContent() {
-    switch (_currentNavIndex) {
-      case 0:
-        return _buildHomeContent();
-      case 1:
-        return SearchScreen(onEnrolled: _onEnrolled);
-      case 2:
-        return const CoursesScreen();
-      case 3:
-        return const ProfileScreen();
-      default:
-        return _buildHomeContent();
-    }
   }
 
   Widget _buildHomeContent() {
@@ -302,6 +327,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildDrawerPanel(AppLocalizations t) {
     final chaptersToShow = _chapters.take(2).toList();
     final hasCourse = _course != null;
+    final nextLessonId = _nextLessonId;
+    final nextLessonTitle = _nextLessonTitle;
+    final canContinue = hasCourse && nextLessonId != null;
 
     return Container(
       width: double.infinity,
@@ -339,26 +367,28 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: hasCourse
-                  ? () {
-                      final lessonId = _nextLessonId;
-                      final lessonTitle = _nextLessonTitle;
-                      if (lessonId != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => LessonScreen(
-                              lessonId: lessonId,
-                              lessonTitle: lessonTitle ?? 'Lesson',
-                              gradient: AppColors.indigoGradient,
-                            ),
+              onPressed: !hasCourse
+                  ? () => setState(() => _currentNavIndex = 1)
+                  : !canContinue
+                  ? null
+                  : () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => LessonScreen(
+                            lessonId: nextLessonId,
+                            lessonTitle: nextLessonTitle ?? 'Lesson',
+                            gradient: AppColors.indigoGradient,
                           ),
-                        ).then((_) => _loadHomeData());
-                      }
-                    }
-                  : () => setState(() => _currentNavIndex = 1),
+                        ),
+                      ).then((_) => _loadHomeData());
+                    },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.indigo600,
+                backgroundColor: hasCourse
+                    ? (canContinue
+                          ? AppColors.indigo600
+                          : AppColors.textDisabled)
+                    : AppColors.indigo600,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
@@ -367,7 +397,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 0,
               ),
               child: Text(
-                hasCourse ? t.homeContinueLearning : t.homeBrowseCourses,
+                hasCourse
+                    ? (canContinue ? t.homeContinueLearning : t.courseLocked)
+                    : t.homeBrowseCourses,
                 style: AppTypography.button.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 18,

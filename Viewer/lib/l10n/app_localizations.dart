@@ -45,6 +45,14 @@ class AppLocalizations {
   String get courseNoChapters => isZh ? '暂无章节。' : 'No chapters available yet.';
   String get courseNoLessons => isZh ? '暂无课程内容。' : 'No lessons available yet.';
   String get courseUpNext => isZh ? '接下来' : 'Up Next';
+  String get courseLocked => isZh ? '已锁定' : 'Locked';
+  String get courseLockedPrerequisite =>
+      isZh ? '完成前置课后解锁' : 'Complete the prerequisite lesson to unlock.';
+  String get courseLockedPaid => isZh ? '需要付费解锁' : 'Paid unlock required.';
+  String get courseLockedPrerequisiteOrPaid =>
+      isZh ? '完成前置课或付费后解锁' : 'Complete prerequisite or pay to unlock.';
+  String get courseLockedPrerequisiteAndPaid =>
+      isZh ? '完成前置课并付费后解锁' : 'Complete prerequisite and pay to unlock.';
 
   // ── Lesson Screen ───────────────────────────────────────────
   String get lessonDefaultTitle => isZh ? '互动学习' : 'Interactive Learning';

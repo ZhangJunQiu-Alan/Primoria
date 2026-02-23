@@ -16,7 +16,8 @@ class SearchScreen extends StatefulWidget {
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen>
+    with AutomaticKeepAliveClientMixin<SearchScreen> {
   String? _selectedSubjectId;
   String _selectedSubjectName = '';
   final _searchController = TextEditingController();
@@ -83,6 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final t = context.watch<LanguageProvider>().t;
     return Center(
       child: ConstrainedBox(
@@ -106,6 +108,9 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   Widget _buildHeader(AppLocalizations t) {
     return Container(

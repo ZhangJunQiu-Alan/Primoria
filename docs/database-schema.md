@@ -63,27 +63,22 @@ interactions: insert-only, partition by month
 | published_at | timestamptz | Set only when published |
 | search_tsv | tsvector | Generated column (title/description/tags) for full-text search |
 
-#### chapters (chapters/modules)
-| Column | Type | Notes |
-| --- | --- | --- |
-| id | UUID (PK) | Default: gen_random_uuid() primary key |
-| course_id | UUID (FK) | FK -> courses.id, course ID |
-| title | Text | Chapter title |
-| description | Text | Chapter description |
-| sort_key | bigint | Default: 1000, leave gaps for insert/drag (e.g., 1000,2000,3000) to determine order (Chapter 1, Chapter 2). Builder updates this field on save |
-| is_locked | Boolean | Default: True. Gamification design. The first lesson is false. If true, the previous chapter must be completed to unlock (or payment required) |
-UNIQUE(course_id, sort_key) prevents order conflicts
-
 #### lessons (sub-lessons) includes snapshot data for fast Viewer rendering
 | Column | Type | Notes |
 | --- | --- | --- |
 | id | UUID (PK) | Primary key |
-| chapter_id | UUID (FK) | FK -> chapters.id, chapter ID |
+| course_id | UUID (FK) | FK -> courses.id, course ID (lessons are now direct course children) |
+| group_title | Text | Default: `Chapter 1`. Display-only grouping label in Viewer/Builder (no separate chapter table) |
+| group_sort_key | bigint | Default: 1000. Controls group ordering with spacing for drag/insert |
 | title | Text | Lesson title |
 | type | Enum ('interactive', 'quiz', 'video', 'article') | Default: interactive, lesson type |
-| sort_key | bigint | Default: 1000, constraint: UNIQUE(chapter_id, sort_key) lesson order; Builder updates on save |
+| sort_key | bigint | Default: 1000. Controls lesson order within a group; Builder updates on save |
 | xp_reward | Integer | Default: 0 CHECK (xp_reward >= 0) XP reward for completing the lesson |
 | duration_seconds | Integer | Default: 0, estimated duration (seconds) |
+| is_locked | Boolean | Default: true. Lesson lock switch |
+| unlock_type | Enum ('none','prerequisite','paid','prerequisite_or_paid','prerequisite_and_paid') | Default: `none`. Unlock strategy |
+| prerequisite_lesson_id | UUID (FK -> lessons.id) | Optional prerequisite lesson |
+| paywall_product_id | Text | Optional product id for paid unlock |
 | content_json | JSONB | Default: '{}'. Aggregated snapshot of all content_blocks under this lesson, including the sorted page structure |
 | content_hash | text | Hash of course content for change detection and cache validation |
 | created_at | timestamptz | now() creation time |
@@ -109,7 +104,7 @@ The core logic is to separate the concerns of "editing" and "reading":
 
 1. **Write flow (Builder & Authoring)**:
 * After the author edits a course in Builder and clicks Save or Publish, the system performs atomic operations on the `content_blocks` table (Insert/Update/Delete). This enables fine-grained content search at the database level (e.g., "find all blocks that contain Python 2 code").
-* **Sync mechanism (Snapshot)**: When the author runs Save or Publish, the backend triggers aggregation: query all Blocks under the Lesson, sort by `sequence_order`, package into a full JSON object, and update the `content_json` field in the `lessons` table.
+* **Sync mechanism (Snapshot)**: When the author runs Save or Publish, the backend triggers aggregation: query all Blocks under the Lesson, sort by `sort_key`, package into a full JSON object, and update the `content_json` field in the `lessons` table.
 
 2. **Read flow (Viewer & Rendering)**:
 * The Viewer only needs to request the `lessons` table. By reading `content_json`, the client can get all data for rendering in a single network request (1 RTT), avoiding complex joins and greatly improving first paint and UX.
@@ -118,14 +113,14 @@ The core logic is to separate the concerns of "editing" and "reading":
 * Even though the Viewer renders JSON, each component still retains the original `block_id`.
 * When a user interacts (e.g., submit code, drag a slider), the report includes `block_id`. This lets us trace back to `content_blocks` and precisely analyze pass rates and interaction details for each knowledge point, enabling fine-grained teaching quality optimization.
 
-The `sort_key` fields in the three tables are only updated on Save or Publish to avoid frequent DB writes.
+Lesson/group ordering fields (`group_sort_key`, `sort_key`) are only updated on Save or Publish to avoid frequent DB writes.
 **Downsides of `sort_key`** and **corresponding solutions**
 ### 1. Gap exhaustion (theoretical)
 **Problem**
 * Multiple inserts within the same range shrink key gaps
 **Solution**
 * Use `BIGINT`
-* When adjacent diff <= 2, re-rank the chapter/lesson
+* When adjacent diff <= 2, re-rank the lesson group / lesson
 * Re-ranking only occurs on "Save / Publish"
 > Very low probability, acceptable
 ---
@@ -141,9 +136,9 @@ The `sort_key` fields in the three tables are only updated on Save or Publish to
 * `order by sort_key` without an index is slow
 **Solution**
 * Create composite indexes:
-  * `(course_id, sort_key)`
-  * `(chapter_id, sort_key)`
-  * `(lesson_id, sequence_order)`
+  * `(course_id, group_sort_key, sort_key, id)`
+  * `(course_id, sort_key, id)`
+  * `(lesson_id, sort_key)`
 
 ### 3. Learning & Progress
 

@@ -532,24 +532,15 @@ class SupabaseService {
     }
   }
 
-  /// Get lesson titles for a course by querying chapters → lessons directly.
+  /// Get lesson titles for a course by querying lessons directly.
   /// Returns an empty list if the course has no saved content yet.
   static Future<List<String>> getCourseLessonTitles(String courseId) async {
     try {
-      final chapters = await client
-          .from('chapters')
-          .select('id')
-          .eq('course_id', courseId)
-          .order('sort_key', ascending: true);
-
-      if ((chapters as List).isEmpty) return [];
-
-      final chapterIds = chapters.map((c) => c['id'] as String).toList();
-
       final lessons = await client
           .from('lessons')
           .select('title')
-          .inFilter('chapter_id', chapterIds)
+          .eq('course_id', courseId)
+          .order('group_sort_key', ascending: true)
           .order('sort_key', ascending: true);
 
       return (lessons as List)
@@ -678,32 +669,11 @@ class SupabaseService {
   // ==================== Helper methods ====================
 
   static Future<void> _saveCourseSnapshot(Course course) async {
-    final chapter = await client
-        .from('chapters')
-        .select('id')
-        .eq('course_id', course.courseId)
-        .order('sort_key', ascending: true)
-        .limit(1)
-        .maybeSingle();
-
-    final chapterId =
-        chapter?['id'] as String? ??
-        (await client
-                .from('chapters')
-                .insert({
-                  'course_id': course.courseId,
-                  'title': 'Chapter 1',
-                  'sort_key': 1000,
-                  'is_locked': false,
-                })
-                .select('id')
-                .single())['id']
-            as String;
-
     final lesson = await client
         .from('lessons')
         .select('id')
-        .eq('chapter_id', chapterId)
+        .eq('course_id', course.courseId)
+        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
@@ -719,8 +689,14 @@ class SupabaseService {
 
     if (lesson == null) {
       await client.from('lessons').insert({
-        'chapter_id': chapterId,
+        'course_id': course.courseId,
+        'group_title': 'Chapter 1',
+        'group_sort_key': 1000,
         ...lessonPayload,
+        'is_locked': false,
+        'unlock_type': 'none',
+        'prerequisite_lesson_id': null,
+        'paywall_product_id': null,
       });
       return;
     }
@@ -735,21 +711,11 @@ class SupabaseService {
     required String courseId,
     required Map<String, dynamic> snapshot,
   }) async {
-    final chapter = await client
-        .from('chapters')
-        .select('id')
-        .eq('course_id', courseId)
-        .order('sort_key', ascending: true)
-        .limit(1)
-        .maybeSingle();
-
-    if (chapter == null) return;
-
-    final chapterId = chapter['id'] as String;
     final lesson = await client
         .from('lessons')
         .select('id')
-        .eq('chapter_id', chapterId)
+        .eq('course_id', courseId)
+        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
@@ -771,20 +737,11 @@ class SupabaseService {
   static Future<Map<String, dynamic>?> _loadCourseSnapshot(
     String courseId,
   ) async {
-    final chapter = await client
-        .from('chapters')
-        .select('id')
-        .eq('course_id', courseId)
-        .order('sort_key', ascending: true)
-        .limit(1)
-        .maybeSingle();
-
-    if (chapter == null) return null;
-
     final lesson = await client
         .from('lessons')
         .select('content_json')
-        .eq('chapter_id', chapter['id'] as String)
+        .eq('course_id', courseId)
+        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
