@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -474,7 +475,8 @@ class SupabaseService {
 
   /// Update user profile
   static Future<bool> updateProfile({
-    String? displayName,
+    String? username,
+    String? bio,
     String? avatarUrl,
   }) async {
     if (currentUser == null) return false;
@@ -483,13 +485,57 @@ class SupabaseService {
       await client
           .from('profiles')
           .update({
-            if (displayName != null) 'display_name': displayName,
+            if (username != null) 'username': username,
+            if (bio != null) 'bio': bio,
             if (avatarUrl != null) 'avatar_url': avatarUrl,
           })
           .eq('id', currentUser!.id);
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  /// Upload avatar bytes to Supabase Storage and return a public URL.
+  static Future<String?> uploadAvatar(
+    Uint8List bytes, {
+    String fileExt = 'jpg',
+  }) async {
+    if (currentUser == null) return null;
+    try {
+      final ext = fileExt.replaceAll('.', '').trim().toLowerCase();
+      final normalizedExt = ext.isEmpty ? 'jpg' : ext;
+      final path =
+          'public/${currentUser!.id}/avatar_${DateTime.now().millisecondsSinceEpoch}.$normalizedExt';
+
+      await client.storage
+          .from('avatars')
+          .uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(
+              upsert: true,
+              contentType: _avatarContentTypeForExt(normalizedExt),
+            ),
+          );
+      return client.storage.from('avatars').getPublicUrl(path);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static String _avatarContentTypeForExt(String ext) {
+    switch (ext.toLowerCase()) {
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'jpeg':
+      case 'jpg':
+      default:
+        return 'image/jpeg';
     }
   }
 

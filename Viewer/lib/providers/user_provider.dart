@@ -12,6 +12,7 @@ class UserData {
   final String email;
   final String? avatarUrl;
   final String? bio;
+  final String role;
   final bool isPro;
   final DateTime joinedAt;
 
@@ -21,6 +22,7 @@ class UserData {
     required this.email,
     this.avatarUrl,
     this.bio,
+    this.role = 'user',
     this.isPro = false,
     required this.joinedAt,
   });
@@ -32,6 +34,7 @@ class UserData {
       email: json['email'] ?? '',
       avatarUrl: json['avatarUrl'],
       bio: json['bio'],
+      role: (json['role'] as String?) ?? 'user',
       isPro: json['isPro'] ?? false,
       joinedAt: json['joinedAt'] != null
           ? DateTime.parse(json['joinedAt'])
@@ -46,6 +49,7 @@ class UserData {
       'email': email,
       'avatarUrl': avatarUrl,
       'bio': bio,
+      'role': role,
       'isPro': isPro,
       'joinedAt': joinedAt.toIso8601String(),
     };
@@ -142,6 +146,7 @@ class UserProvider extends ChangeNotifier {
       email: supabaseUser.email ?? '',
       avatarUrl: meta['avatar_url'] as String?,
       bio: null, // populated by _loadProfileFromBackend
+      role: 'user', // populated by _loadProfileFromBackend
       isPro: false,
       joinedAt:
           DateTime.tryParse(supabaseUser.createdAt ?? '') ?? DateTime.now(),
@@ -155,19 +160,46 @@ class UserProvider extends ChangeNotifier {
       final profile = await SupabaseService.getProfile();
       if (profile != null && _user != null) {
         final username = profile['username'] as String?;
+        final role = profile['role'] as String?;
+        final createdAt = DateTime.tryParse(
+          (profile['created_at'] as String?) ?? '',
+        );
         _user = UserData(
           id: _user!.id,
           email: _user!.email,
-          name: (username != null && username.isNotEmpty) ? username : _user!.name,
+          name: (username != null && username.isNotEmpty)
+              ? username
+              : _user!.name,
           avatarUrl: (profile['avatar_url'] as String?) ?? _user!.avatarUrl,
           bio: profile['bio'] as String?,
+          role: (role != null && role.isNotEmpty) ? role : _user!.role,
           isPro: _user!.isPro,
-          joinedAt: _user!.joinedAt,
+          joinedAt: createdAt ?? _user!.joinedAt,
         );
         await _storage?.saveUser(_user!.toJson());
         notifyListeners();
       }
     } catch (_) {}
+  }
+
+  Future<void> refreshProfile() => _loadProfileFromBackend();
+
+  /// Update current user's profile in DB and refresh local cache.
+  Future<bool> updateProfile({
+    required String username,
+    String? bio,
+    String? avatarUrl,
+  }) async {
+    if (!_isLoggedIn || _user == null) return false;
+    final ok = await SupabaseService.updateProfile(
+      username: username,
+      bio: bio,
+      avatarUrl: avatarUrl,
+    );
+    if (ok) {
+      await _loadProfileFromBackend();
+    }
+    return ok;
   }
 
   /// Public wrapper — call after completing a lesson to refresh XP / stats.
@@ -181,8 +213,10 @@ class UserProvider extends ChangeNotifier {
       if (stats != null) {
         _streak = (stats['current_streak'] as int?) ?? _streak;
         _longestStreak = (stats['longest_streak'] as int?) ?? _longestStreak;
-        _completedCourses = (stats['courses_completed'] as int?) ?? _completedCourses;
-        _lessonsCompleted = (stats['lessons_completed'] as int?) ?? _lessonsCompleted;
+        _completedCourses =
+            (stats['courses_completed'] as int?) ?? _completedCourses;
+        _lessonsCompleted =
+            (stats['lessons_completed'] as int?) ?? _lessonsCompleted;
         _totalXp = (stats['total_xp'] as int?) ?? _totalXp;
         await _storage?.saveStreak(_streak);
         await _storage?.saveLongestStreak(_longestStreak);
@@ -381,6 +415,7 @@ class UserProvider extends ChangeNotifier {
         email: _user!.email,
         avatarUrl: _user!.avatarUrl,
         bio: _user!.bio,
+        role: _user!.role,
         isPro: true,
         joinedAt: _user!.joinedAt,
       );

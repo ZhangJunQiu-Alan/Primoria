@@ -1,5 +1,29 @@
 # Changelog
 
+## [Unreleased] - 2026-02-23 (Viewer Profile Settings + Avatar Upload + Menu Cleanup)
+
+### Summary
+Completed Viewer Profile menu and settings flow. The top-right menu now provides Settings/About/Help/Log out. Added a dedicated Personal Info settings page connected to Supabase (`profiles`) for editing username/bio/avatar, displaying role, and showing joined date as month+year. Added avatar storage bucket/policies migration and fixed date-format locale crash in web settings. Removed the redundant settings panel at the bottom of the Profile page.
+
+### Added
+- **Viewer Settings screen** (`Viewer/lib/screens/profile_settings_screen.dart`): Personal Info section with editable `username`, editable `bio`, avatar upload, read-only `role`, read-only joined date (`Month yyyy` / `yyyy年M月`)
+- **Cross-platform image picker adapter** (`Viewer/lib/services/image_picker_service.dart` + `image_picker_service_stub.dart` + `image_picker_service_web.dart`): web-native file input path and non-web `image_picker` path
+- **Migration: `20260223000004_profile_avatar_storage.sql`**: Creates/updates public `avatars` storage bucket and adds `storage.objects` policies (public select, authenticated insert, owner update/delete)
+- **Viewer profile i18n copy** (`Viewer/lib/l10n/app_localizations.dart`): strings for Settings/About/Help/Personal Info/Role/Joined at/upload/save feedback
+
+### Changed
+- **Profile top-right action** (`Viewer/lib/screens/profile_screen.dart`): replaced direct settings icon action with popup menu (`Settings`, `About`, `Help`, `Log out`)
+- **Profile data sync model** (`Viewer/lib/providers/user_provider.dart`): `UserData` extended with `role`; profile refresh now reads `username`, `bio`, `avatar_url`, `role`, `created_at` from Supabase `profiles`
+- **Profile update API** (`Viewer/lib/services/supabase_service.dart`): `updateProfile` now updates `profiles.username`, `profiles.bio`, `profiles.avatar_url`; added `uploadAvatar(Uint8List)` helper
+- **Avatar upload behavior** (`Viewer/lib/screens/profile_settings_screen.dart`): upload success now persists avatar to DB immediately and refreshes profile cache
+
+### Fixed
+- **LocaleDataException on Settings page**: removed `DateFormat(locale)` dependency from profile month-year formatting to avoid missing locale init in Flutter web
+- **Avatar upload “no response” behavior in Settings**: improved picker/upload failure paths with explicit error handling and snackbars
+- **Profile UI redundancy**: removed bottom settings section from Profile tab; settings entry now only through top-right menu
+
+---
+
 ## [Unreleased] - 2026-02-24 (Rich Create/Edit Course Form + Image Upload)
 
 ### Summary

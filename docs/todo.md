@@ -54,6 +54,10 @@
 14. [ ] Offline mode with content caching
 15. [x] Landing screen + login/register screen redesign — split-panel layout, CSS-matched design tokens, social login grid (2026-02-17)
 16. [x] Full EN/ZH multilingual support — AppLocalizations class, LanguageProvider (ChangeNotifier), language picker in Profile tab, browser locale auto-detect, translated Home/Search/Course/Lesson/Profile screens (2026-02-23)
+17. [x] Profile top-right menu + dedicated settings flow — `Settings/About/Help/Log out`; Settings opens Personal Info page (2026-02-23)
+18. [x] Profile Personal Info data bound to DB — edit `username`/`bio`, show `role`, show joined month-year from `profiles.created_at` (2026-02-23)
+19. [x] Avatar upload end-to-end in Settings — web/native picker + Supabase Storage (`avatars`) + immediate DB persistence and profile refresh (2026-02-23)
+20. [x] Remove redundant bottom settings block from Profile tab; keep settings entry only in top-right menu (2026-02-23)
 
 ## Content & Curriculum
 1. [ ] Course content management system

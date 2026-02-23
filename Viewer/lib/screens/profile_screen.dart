@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../theme/theme.dart';
-import '../providers/user_provider.dart';
-import '../providers/theme_provider.dart';
-import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../providers/language_provider.dart';
+import '../providers/user_provider.dart';
+import '../theme/theme.dart';
+import 'profile_settings_screen.dart';
+
+enum _ProfileMenuAction { settings, about, help, logout }
 
 /// Profile screen — ported from Figma ProfileScreen template
 class ProfileScreen extends StatelessWidget {
@@ -27,8 +31,6 @@ class ProfileScreen extends StatelessWidget {
               _buildDailyBadge(context, t),
               const SizedBox(height: 24),
               _buildAchievements(context, t),
-              const SizedBox(height: 24),
-              _buildSettingsSection(context, t),
               const SizedBox(height: 40),
             ],
           ),
@@ -54,18 +56,39 @@ class ProfileScreen extends StatelessWidget {
               alignment: Alignment.topRight,
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: GestureDetector(
-                  onTap: () => _showSettingsSheet(context),
+                child: PopupMenuButton<_ProfileMenuAction>(
+                  tooltip: '',
+                  onSelected: (action) =>
+                      _onProfileMenuSelected(context, action),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: _ProfileMenuAction.settings,
+                      child: Text(t.profileSettings),
+                    ),
+                    PopupMenuItem(
+                      value: _ProfileMenuAction.about,
+                      child: Text(t.profileAbout),
+                    ),
+                    PopupMenuItem(
+                      value: _ProfileMenuAction.help,
+                      child: Text(t.profileHelp),
+                    ),
+                    const PopupMenuDivider(),
+                    PopupMenuItem(
+                      value: _ProfileMenuAction.logout,
+                      child: Text(t.profileLogoutTitle),
+                    ),
+                  ],
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
-                      shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(14),
                     ),
                     child: const Icon(
-                      Icons.settings,
+                      Icons.menu_rounded,
                       color: Colors.white,
-                      size: 20,
+                      size: 22,
                     ),
                   ),
                 ),
@@ -90,6 +113,9 @@ class ProfileScreen extends StatelessWidget {
                 child: Consumer<UserProvider>(
                   builder: (context, userProvider, _) {
                     final user = userProvider.user;
+                    final avatarProvider = _avatarImageProvider(
+                      user?.avatarUrl,
+                    );
                     final initial = (user != null && user.name.isNotEmpty)
                         ? user.name[0].toUpperCase()
                         : 'A';
@@ -98,16 +124,24 @@ class ProfileScreen extends StatelessWidget {
                         color: AppColors.indigo100,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Center(
-                        child: Text(
-                          initial,
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.indigo,
-                          ),
-                        ),
-                      ),
+                      child: avatarProvider != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image(
+                                image: avatarProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                initial,
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.indigo,
+                                ),
+                              ),
+                            ),
                     );
                   },
                 ),
@@ -133,6 +167,22 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  ImageProvider<Object>? _avatarImageProvider(String? avatarUrl) {
+    final raw = avatarUrl?.trim() ?? '';
+    if (raw.isEmpty) return null;
+    if (raw.startsWith('data:image')) {
+      final comma = raw.indexOf(',');
+      if (comma <= 0 || comma >= raw.length - 1) return null;
+      try {
+        final bytes = base64Decode(raw.substring(comma + 1));
+        return MemoryImage(bytes);
+      } catch (_) {
+        return null;
+      }
+    }
+    return NetworkImage(raw);
+  }
+
   Widget _buildUserInfo(BuildContext context, AppLocalizations t) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
@@ -140,12 +190,11 @@ class ProfileScreen extends StatelessWidget {
         final name = (user != null && user.name.isNotEmpty)
             ? user.name
             : 'Alex Johnson';
-        final handle = user != null
-            ? '@${user.name.toLowerCase().replaceAll(' ', '_')}'
-            : '@alex_j';
+        final handleName = name.toLowerCase().replaceAll(' ', '_');
+        final handle = '@$handleName';
         final joined = user != null
-            ? t.profileJoined(user.joinedAt.year)
-            : t.profileJoined(2023);
+            ? t.profileJoinedAtMonthYear(user.joinedAt)
+            : t.profileJoinedAtMonthYear(DateTime(2023, 1, 1));
 
         final bio = user?.bio;
 
@@ -505,143 +554,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsSection(BuildContext context, AppLocalizations t) {
-    return Consumer2<ThemeProvider, UserProvider>(
-      builder: (context, themeProvider, userProvider, _) {
-        // Derive theme mode label using translations
-        final themeModeLabel = switch (themeProvider.themeMode) {
-          ThemeMode.light => t.themeLightMode,
-          ThemeMode.dark => t.themeDarkMode,
-          _ => t.themeFollowSystem,
-        };
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                t.profileSettings,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF1E293B),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFF1F5F9)),
-                ),
-                child: Column(
-                  children: [
-                    _settingItem(
-                      Icons.notifications_outlined,
-                      t.profileNotifications,
-                      onTap: () {},
-                    ),
-                    const Divider(
-                      height: 1,
-                      indent: 56,
-                      color: Color(0xFFF1F5F9),
-                    ),
-                    _settingItem(
-                      Icons.language,
-                      t.profileLanguage,
-                      trailing: t.langDisplayName,
-                      onTap: () => _showLanguagePicker(context, t),
-                    ),
-                    const Divider(
-                      height: 1,
-                      indent: 56,
-                      color: Color(0xFFF1F5F9),
-                    ),
-                    _settingItem(
-                      Icons.dark_mode_outlined,
-                      t.profileDarkMode,
-                      trailing: themeModeLabel,
-                      onTap: () => _showThemePicker(context, t),
-                    ),
-                    const Divider(
-                      height: 1,
-                      indent: 56,
-                      color: Color(0xFFF1F5F9),
-                    ),
-                    _settingItem(
-                      Icons.help_outline,
-                      t.profileHelpFeedback,
-                      onTap: () {},
-                    ),
-                    const Divider(
-                      height: 1,
-                      indent: 56,
-                      color: Color(0xFFF1F5F9),
-                    ),
-                    _settingItem(
-                      Icons.info_outline,
-                      t.profileAbout,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-              if (userProvider.isLoggedIn) ...[
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () =>
-                        _showLogoutDialog(context, userProvider, t),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.error,
-                      side: const BorderSide(color: AppColors.error),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: Text(t.profileLogout),
-                  ),
-                ),
-              ],
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _settingItem(
-    IconData icon,
-    String title, {
-    String? trailing,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Icon(icon, color: const Color(0xFF94A3B8), size: 24),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(fontSize: 15, color: Color(0xFF334155)),
-              ),
-            ),
-            if (trailing != null)
-              Text(
-                trailing,
-                style: const TextStyle(fontSize: 14, color: Color(0xFF94A3B8)),
-              ),
-            const SizedBox(width: 8),
-            const Icon(Icons.chevron_right, color: Color(0xFFCBD5E1)),
-          ],
-        ),
-      ),
-    );
-  }
-
   /// Format a stat number: 1200 → "1.2K", 1000000 → "1M", etc.
   static String _formatStat(int n) {
     if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
@@ -653,104 +565,54 @@ class ProfileScreen extends StatelessWidget {
     return '$n';
   }
 
-  void _showThemePicker(BuildContext context, AppLocalizations t) {
-    final themeProvider = context.read<ThemeProvider>();
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: AppSpacing.md),
-              Text(t.themeSelectTitle, style: AppTypography.headline3),
-              const SizedBox(height: AppSpacing.md),
-              ListTile(
-                leading: const Icon(Icons.brightness_auto),
-                title: Text(t.themeFollowSystem),
-                trailing: themeProvider.themeMode == ThemeMode.system
-                    ? Icon(Icons.check, color: AppColors.indigo)
-                    : null,
-                onTap: () {
-                  themeProvider.setThemeMode(ThemeMode.system);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.light_mode),
-                title: Text(t.themeLightMode),
-                trailing: themeProvider.themeMode == ThemeMode.light
-                    ? Icon(Icons.check, color: AppColors.indigo)
-                    : null,
-                onTap: () {
-                  themeProvider.setThemeMode(ThemeMode.light);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.dark_mode),
-                title: Text(t.themeDarkMode),
-                trailing: themeProvider.themeMode == ThemeMode.dark
-                    ? Icon(Icons.check, color: AppColors.indigo)
-                    : null,
-                onTap: () {
-                  themeProvider.setThemeMode(ThemeMode.dark);
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: AppSpacing.lg),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _showLanguagePicker(BuildContext context, AppLocalizations t) {
-    final langProvider = context.read<LanguageProvider>();
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: AppSpacing.md),
-              Text(t.langSelectTitle, style: AppTypography.headline3),
-              const SizedBox(height: AppSpacing.md),
-              ListTile(
-                leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
-                title: const Text(AppLocalizations.langEnglish),
-                trailing: langProvider.languageCode == 'en'
-                    ? Icon(Icons.check, color: AppColors.indigo)
-                    : null,
-                onTap: () {
-                  langProvider.setLanguage('en');
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Text('🇨🇳', style: TextStyle(fontSize: 24)),
-                title: const Text(AppLocalizations.langChinese),
-                trailing: langProvider.languageCode == 'zh'
-                    ? Icon(Icons.check, color: AppColors.indigo)
-                    : null,
-                onTap: () {
-                  langProvider.setLanguage('zh');
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: AppSpacing.lg),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _showSettingsSheet(BuildContext context) {
+  Future<void> _onProfileMenuSelected(
+    BuildContext context,
+    _ProfileMenuAction action,
+  ) async {
     final t = context.read<LanguageProvider>().t;
-    _showThemePicker(context, t);
+    switch (action) {
+      case _ProfileMenuAction.settings:
+        final updated = await Navigator.of(context).push<bool>(
+          MaterialPageRoute(builder: (_) => const ProfileSettingsScreen()),
+        );
+        if (updated == true && context.mounted) {
+          await context.read<UserProvider>().refreshProfile();
+        }
+        break;
+      case _ProfileMenuAction.about:
+        _showInfoDialog(
+          context,
+          title: t.profileAbout,
+          body: t.profileAboutBody,
+        );
+        break;
+      case _ProfileMenuAction.help:
+        _showInfoDialog(context, title: t.profileHelp, body: t.profileHelpBody);
+        break;
+      case _ProfileMenuAction.logout:
+        _showLogoutDialog(context, context.read<UserProvider>(), t);
+        break;
+    }
+  }
+
+  void _showInfoDialog(
+    BuildContext context, {
+    required String title,
+    required String body,
+  }) {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(context.read<LanguageProvider>().t.cancel),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showLogoutDialog(
