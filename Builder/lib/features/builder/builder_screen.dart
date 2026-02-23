@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../l10n/app_localizations.dart';
+import '../../models/course.dart';
 import '../../theme/design_tokens.dart';
 import '../../providers/builder_state.dart';
 import '../../providers/course_provider.dart';
+import '../../providers/language_provider.dart';
 import '../../services/course_export.dart';
 import '../../services/course_import.dart';
 import '../../services/course_schema_validator.dart';
@@ -30,11 +33,13 @@ class BuilderScreen extends ConsumerStatefulWidget {
 class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   bool _courseLoaded = false;
   bool _draftAutoSaveEnabled = false;
+  String? _courseId;
 
   @override
   void initState() {
     super.initState();
-    if (widget.courseId != null) {
+    _courseId = widget.courseId;
+    if (_courseId != null) {
       _loadCourse();
     }
   }
@@ -42,14 +47,16 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   Future<void> _loadCourse() async {
     if (_courseLoaded) return;
     _courseLoaded = true;
-    final courseId = widget.courseId!;
+    final courseId = _courseId!;
 
     // Restore browser draft first to prevent unsaved edits from being
     // overwritten when navigating Builder -> Preview -> Builder.
     final draft = await StorageService.loadCourseDraft(courseId);
     if (!mounted) return;
     if (draft != null) {
-      ref.read(courseProvider.notifier).loadCourse(draft);
+      ref
+          .read(courseProvider.notifier)
+          .loadCourse(draft.copyWith(courseId: courseId));
       ref
           .read(builderStateProvider.notifier)
           .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
@@ -72,17 +79,18 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   void _showDraftRestoredHint() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      final t = BuilderLocalizations(ref.read(languageProvider));
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Recovered unsaved browser draft'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(t.draftRestored),
+          duration: const Duration(seconds: 2),
         ),
       );
     });
   }
 
   Future<void> _saveBrowserDraft(WidgetRef ref) async {
-    final courseId = widget.courseId;
+    final courseId = _courseId;
     if (courseId == null || courseId.isEmpty) return;
     await StorageService.saveCourseDraft(courseId, ref.read(courseProvider));
   }
@@ -91,15 +99,16 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   Widget build(BuildContext context) {
     ref.listen(courseProvider, (previous, next) {
       if (!_draftAutoSaveEnabled) return;
-      final courseId = widget.courseId;
+      final courseId = _courseId;
       if (courseId == null || courseId.isEmpty) return;
       StorageService.saveCourseDraft(courseId, next);
     });
 
     final builderState = ref.watch(builderStateProvider);
+    final t = BuilderLocalizations(ref.watch(languageProvider));
 
     return Scaffold(
-      appBar: _buildAppBar(context, ref, builderState),
+      appBar: _buildAppBar(context, ref, builderState, t),
       body: const BuilderLayout(
         leftPanel: ModulePanel(),
         canvas: BuilderCanvas(),
@@ -112,6 +121,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     BuildContext context,
     WidgetRef ref,
     BuilderState state,
+    BuilderLocalizations t,
   ) {
     final isCompact = MediaQuery.of(context).size.width < 920;
     final pillOutlinedStyle = OutlinedButton.styleFrom(
@@ -202,7 +212,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           onPressed: () async {
             await _saveBrowserDraft(ref);
             if (!context.mounted) return;
-            final id = widget.courseId ?? '';
+            final id = _courseId ?? '';
             if (id.isNotEmpty) {
               context.go('/viewer?courseId=$id');
             } else {
@@ -210,40 +220,40 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             }
           },
           style: pillOutlinedStyle,
-          child: const Text('Preview'),
+          child: Text(t.builderPreview),
         ),
         const SizedBox(width: AppSpacing.sm),
         // Import button
         OutlinedButton(
           onPressed: () {
-            _importCourse(context, ref);
+            _importCourse(context, ref, t);
           },
           style: pillOutlinedStyle,
-          child: const Text('Import'),
+          child: Text(t.builderImport),
         ),
         const SizedBox(width: AppSpacing.sm),
         // Export button
         OutlinedButton(
           onPressed: () {
-            _exportCourse(context, ref);
+            _exportCourse(context, ref, t);
           },
           style: pillOutlinedStyle,
-          child: const Text('Export'),
+          child: Text(t.builderExport),
         ),
         const SizedBox(width: AppSpacing.sm),
         // Cloud save button
         OutlinedButton(
           onPressed: () {
-            _saveToCloud(context, ref);
+            _saveToCloud(context, ref, t);
           },
           style: pillOutlinedStyle,
-          child: const Text('Save'),
+          child: Text(t.builderSave),
         ),
         const SizedBox(width: AppSpacing.sm),
         // Publish button
         ElevatedButton(
           onPressed: () {
-            _publishCourse(context, ref);
+            _publishCourse(context, ref, t);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary500,
@@ -256,7 +266,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
               vertical: AppSpacing.sm,
             ),
           ),
-          child: const Text('Publish'),
+          child: Text(t.builderPublish),
         ),
         const SizedBox(width: AppSpacing.sm),
         // User avatar
@@ -273,21 +283,22 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     WidgetRef ref,
     String currentTitle,
   ) {
+    final t = BuilderLocalizations(ref.read(languageProvider));
     final controller = TextEditingController(text: currentTitle);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit course title'),
+        title: Text(t.editCourseTitleLabel),
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: const InputDecoration(hintText: 'Enter course title'),
+          decoration: InputDecoration(hintText: t.enterCourseTitle),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(t.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -299,14 +310,18 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
               }
               Navigator.pop(context);
             },
-            child: const Text('OK'),
+            child: Text(t.ok),
           ),
         ],
       ),
     );
   }
 
-  void _exportCourse(BuildContext context, WidgetRef ref) {
+  void _exportCourse(
+    BuildContext context,
+    WidgetRef ref,
+    BuilderLocalizations t,
+  ) {
     final course = ref.read(courseProvider);
 
     // Validate course
@@ -315,12 +330,12 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Export failed'),
+          title: Text(t.exportFailed),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Please fix the following:'),
+              Text(t.exportPleasefix),
               const SizedBox(height: AppSpacing.sm),
               ...validation.errors.map(
                 (e) => Padding(
@@ -339,7 +354,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           actions: [
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
+              child: Text(t.ok),
             ),
           ],
         ),
@@ -351,15 +366,15 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     try {
       CourseExport.downloadJson(course);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Course JSON exported'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(t.exportSuccess),
+          duration: const Duration(seconds: 2),
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Export failed: $e'),
+          content: Text(t.exportError('$e')),
           backgroundColor: AppColors.error,
         ),
       );
@@ -367,6 +382,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   void _showAIGenerateDialog(BuildContext context, WidgetRef ref) async {
+    final t = BuilderLocalizations(ref.read(languageProvider));
     // Check for unsaved changes
     final hasUnsaved = ref.read(builderStateProvider).hasUnsavedChanges;
 
@@ -374,18 +390,16 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Confirm generation'),
-          content: const Text(
-            'You have unsaved changes. The AI-generated course will replace the current content. Continue?',
-          ),
+          title: Text(t.confirmGeneration),
+          content: Text(t.aiUnsavedWarning),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child: Text(t.cancel),
             ),
             ElevatedButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Continue'),
+              child: Text(t.continueButton),
             ),
           ],
         ),
@@ -411,6 +425,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           ref.read(builderStateProvider.notifier).clearSelection();
           ref.read(builderStateProvider.notifier).markAsUnsaved();
 
+          final t2 = BuilderLocalizations(ref.read(languageProvider));
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Row(
@@ -418,9 +433,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                   const Icon(Icons.check_circle, color: Colors.white, size: 20),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
-                    child: Text(
-                      'AI generated course: ${course.metadata.title}',
-                    ),
+                    child: Text(t2.aiGeneratedCourse(course.metadata.title)),
                   ),
                 ],
               ),
@@ -433,7 +446,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     );
   }
 
-  void _importCourse(BuildContext context, WidgetRef ref) async {
+  void _importCourse(
+    BuildContext context,
+    WidgetRef ref,
+    BuilderLocalizations t,
+  ) async {
     // Check for unsaved changes
     final hasUnsaved = ref.read(builderStateProvider).hasUnsavedChanges;
 
@@ -441,18 +458,16 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Confirm import'),
-          content: const Text(
-            'You have unsaved changes. Importing a new course will replace the current content. Continue?',
-          ),
+          title: Text(t.confirmImport),
+          content: Text(t.importUnsavedWarning),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child: Text(t.cancel),
             ),
             ElevatedButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Import'),
+              child: Text(t.importButton),
             ),
           ],
         ),
@@ -478,7 +493,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Imported course: ${result.course!.metadata.title}'),
+          content: Text(t.importedCourse(result.course!.metadata.title)),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -493,7 +508,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Import failed: ${result.message}'),
+            content: Text(t.importFailed(result.message)),
             backgroundColor: AppColors.error,
           ),
         );
@@ -501,28 +516,33 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     }
   }
 
-  void _saveToCloud(BuildContext context, WidgetRef ref) async {
+  void _saveToCloud(
+    BuildContext context,
+    WidgetRef ref,
+    BuilderLocalizations t,
+  ) async {
     if (!SupabaseService.isLoggedIn) {
       showDialog(
         context: context,
         builder: (context) => AuthDialog(
           onSuccess: () {
             // After successful sign-in, retry saving
-            _saveToCloud(context, ref);
+            final t2 = BuilderLocalizations(ref.read(languageProvider));
+            _saveToCloud(context, ref, t2);
           },
         ),
       );
       return;
     }
 
-    final course = ref.read(courseProvider);
+    final course = _courseForPersist(ref.read(courseProvider));
 
     // Show saving indicator
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 16,
               height: 16,
               child: CircularProgressIndicator(
@@ -530,11 +550,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 valueColor: AlwaysStoppedAnimation(Colors.white),
               ),
             ),
-            SizedBox(width: AppSpacing.sm),
-            Text('Saving to cloud...'),
+            const SizedBox(width: AppSpacing.sm),
+            Text(t.savingToCloud),
           ],
         ),
-        duration: Duration(seconds: 30),
+        duration: const Duration(seconds: 30),
       ),
     );
 
@@ -546,8 +566,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (result.success) {
+      await _adoptPersistedCourseId(result.courseId, ref);
+      if (!context.mounted) return;
       ref.read(builderStateProvider.notifier).markAsSaved();
-      final draftCourseId = widget.courseId;
+      final draftCourseId = _courseId;
       if (draftCourseId != null && draftCourseId.isNotEmpty) {
         await StorageService.clearCourseDraft(draftCourseId);
         if (!context.mounted) return;
@@ -583,13 +605,18 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     }
   }
 
-  void _publishCourse(BuildContext context, WidgetRef ref) async {
+  void _publishCourse(
+    BuildContext context,
+    WidgetRef ref,
+    BuilderLocalizations t,
+  ) async {
     if (!SupabaseService.isLoggedIn) {
       showDialog(
         context: context,
         builder: (context) => AuthDialog(
           onSuccess: () {
-            _publishCourse(context, ref);
+            final t2 = BuilderLocalizations(ref.read(languageProvider));
+            _publishCourse(context, ref, t2);
           },
         ),
       );
@@ -597,7 +624,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     }
 
     // Save first
-    final course = ref.read(courseProvider);
+    final course = _courseForPersist(ref.read(courseProvider));
     final saveResult = await SupabaseService.saveCourse(course);
 
     if (!saveResult.success ||
@@ -614,7 +641,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Save failed: ${saveResult.message}'),
+              content: Text(t.saveFailed(saveResult.message)),
               backgroundColor: AppColors.error,
             ),
           );
@@ -623,24 +650,25 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       return;
     }
 
+    await _adoptPersistedCourseId(saveResult.courseId, ref);
+    if (!context.mounted) return;
+
     // Confirm publish
     if (!context.mounted) return;
 
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Publish course'),
-        content: const Text(
-          'After publishing, everyone will be able to see this course. Publish now?',
-        ),
+        title: Text(t.publishCourseTitle),
+        content: Text(t.publishConfirmMsg),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(t.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Publish'),
+            child: Text(t.builderPublish),
           ),
         ],
       ),
@@ -689,6 +717,41 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     }
   }
 
+  Course _courseForPersist(Course course) {
+    final id = _courseId;
+    if (id == null || id.isEmpty || id == course.courseId) return course;
+    return course.copyWith(courseId: id);
+  }
+
+  Future<void> _adoptPersistedCourseId(
+    String? persistedId,
+    WidgetRef ref,
+  ) async {
+    if (persistedId == null || persistedId.isEmpty) return;
+    final previousId = _courseId;
+    if (previousId == persistedId) return;
+
+    final current = ref.read(courseProvider);
+    if (current.courseId != persistedId) {
+      ref
+          .read(courseProvider.notifier)
+          .loadCourse(current.copyWith(courseId: persistedId));
+    }
+
+    _draftAutoSaveEnabled = true;
+
+    if (!mounted) {
+      _courseId = persistedId;
+      return;
+    }
+
+    setState(() => _courseId = persistedId);
+
+    if (previousId != null && previousId.isNotEmpty) {
+      await StorageService.clearCourseDraft(previousId);
+    }
+  }
+
   void _showSchemaValidationDialog(
     BuildContext context, {
     required String title,
@@ -708,24 +771,38 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (validation.errors.isNotEmpty) ...[
-                    Text(
-                      'Blocking errors (${validation.errors.length})',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.error,
-                      ),
+                    Builder(
+                      builder: (ctx) {
+                        final t = BuilderLocalizations(
+                          ProviderScope.containerOf(ctx).read(languageProvider),
+                        );
+                        return Text(
+                          t.blockingErrors(validation.errors.length),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.error,
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     ...validation.errors.map(_buildValidationFindingRow),
                   ],
                   if (validation.warnings.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.md),
-                    Text(
-                      'Warnings (${validation.warnings.length})',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.warning,
-                      ),
+                    Builder(
+                      builder: (ctx) {
+                        final t = BuilderLocalizations(
+                          ProviderScope.containerOf(ctx).read(languageProvider),
+                        );
+                        return Text(
+                          t.warnings(validation.warnings.length),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.warning,
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     ...validation.warnings.map(_buildValidationFindingRow),
@@ -738,7 +815,14 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Builder(
+              builder: (ctx) {
+                final t = BuilderLocalizations(
+                  ProviderScope.containerOf(ctx).read(languageProvider),
+                );
+                return Text(t.ok);
+              },
+            ),
           ),
         ],
       ),

@@ -1,5 +1,30 @@
 # Changelog
 
+## [Unreleased] - 2026-02-23 (Multilingual Support: EN / ZH)
+
+### Summary
+Full English / Chinese language switching for both Builder and Viewer apps. Language defaults to the browser locale and is persisted in SharedPreferences. Viewer uses a custom `LanguageProvider` (Provider pattern); Builder uses a Riverpod `StateNotifierProvider`. The switch is accessible from the Profile section in both apps.
+
+### Added
+- **`Viewer/lib/l10n/app_localizations.dart`**: `AppLocalizations` class — complete EN/ZH string table for all Viewer screens (Home, Library, Community, Course, Lesson, Profile, bottom nav)
+- **`Viewer/lib/providers/language_provider.dart`**: `LanguageProvider` (`ChangeNotifier`) — auto-detects browser locale (`platformDispatcher.locale`), falls back to English; persisted via `StorageService`
+- **`Builder/lib/l10n/app_localizations.dart`**: `BuilderLocalizations` class — complete EN/ZH string table for Landing, Dashboard, Builder editor, and Profile Dialog
+- **`Builder/lib/providers/language_provider.dart`**: Riverpod `StateNotifierProvider<LanguageNotifier, String>` + convenience `tProvider`; same browser-locale auto-detection logic
+
+### Changed
+- **`Viewer/lib/services/storage_service.dart`**: Added `saveLanguage(String)` / `getLanguage()` instance methods (key: `'language'`)
+- **`Builder/lib/services/storage_service.dart`**: Added `saveLanguage(String)` / `getLanguage()` static methods (key: `'language'`)
+- **`Viewer/lib/main.dart`**: Injected `LanguageProvider` into `MultiProvider`; `initialize()` called eagerly so browser locale is read before first frame
+- **`Viewer/lib/screens/profile_screen.dart`**: Language tile in settings list → bottom-sheet picker with 🇺🇸 English / 🇨🇳 中文 options; all screen strings replaced with `t.xxx`
+- **`Viewer/lib/components/common/bottom_nav_bar.dart`**: Nav labels (Home / Library / Community / Profile) now sourced from `AppLocalizations`
+- **`Viewer/lib/screens/home_screen.dart`**, **`search_screen.dart`**, **`course_screen.dart`**, **`lesson_screen.dart`**, **`courses_screen.dart`**: All hardcoded UI strings replaced with `AppLocalizations` — uses pattern `final t = context.watch<LanguageProvider>().t;` in `build()`, threaded as parameter to sub-methods
+- **`Builder/lib/widgets/profile_dialog.dart`**: Converted `StatefulWidget` → `ConsumerStatefulWidget`; Language row added (icon + current language label + chevron); picker bottom sheet with 🇺🇸/🇨🇳 options; all dialog strings translated
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**: Converted to `ConsumerStatefulWidget`; sidebar nav labels, Course Data / Income / Comments card titles, sort dropdown items, Course Manage dialogs (Create, Edit, Delete), snackbar messages, and time-ago formatting all translated
+- **`Builder/lib/features/landing/landing_screen.dart`**: Converted to `ConsumerStatefulWidget`; hero headline/subtitle/quote, feature cards, CTA band, sign-in modal (title, buttons, error messages) all translated; `_HeroCard` and `_SignInModal` parameterised with `BuilderLocalizations`
+- **`Builder/lib/features/builder/builder_screen.dart`**: `t` passed through `_buildAppBar`; AppBar button labels (Preview / Import / Export / Save / Publish) translated; all action dialogs and snackbar messages (Export, Import, AI Generate, Save to Cloud, Publish, Draft Restored) translated
+
+---
+
 ## [Unreleased] - 2026-02-18 (Viewer DB Integration)
 
 ### Summary

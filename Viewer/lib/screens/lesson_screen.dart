@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +9,8 @@ import '../components/interactions/slider_interaction.dart'
 import '../components/feedback/feedback_dialog.dart';
 import '../models/unit_model.dart';
 import '../providers/user_provider.dart';
+import '../providers/language_provider.dart';
+import '../l10n/app_localizations.dart';
 import '../services/audio_service.dart';
 import '../services/supabase_service.dart';
 
@@ -30,6 +34,7 @@ class LessonScreen extends StatefulWidget {
 class _LessonScreenState extends State<LessonScreen> {
   // ── Loading state ─────────────────────────────────────────────
   bool _loadingLesson = true;
+  bool _contentUnavailable = false;
 
   // ── Question state ────────────────────────────────────────────
   List<_QuestionData> _questions = [];
@@ -44,15 +49,17 @@ class _LessonScreenState extends State<LessonScreen> {
   final _audioService = AudioService.getInstance();
   final DateTime _startTime = DateTime.now();
 
-  String get _title => widget.lessonTitle ?? 'Interactive Learning';
+  String _title(AppLocalizations t) =>
+      widget.lessonTitle ?? t.lessonDefaultTitle;
 
   // ── Lifecycle ─────────────────────────────────────────────────
 
   @override
   void initState() {
     super.initState();
-    _confettiController =
-        ConfettiController(duration: const Duration(seconds: 3));
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 3),
+    );
     _initLesson();
   }
 
@@ -65,17 +72,28 @@ class _LessonScreenState extends State<LessonScreen> {
 
   Future<void> _initLesson() async {
     final lessonId = widget.lessonId;
-    List<_QuestionData> questions;
+    List<_QuestionData> questions = [];
 
-    if (lessonId != null && lessonId != 'daily') {
-      final content = await SupabaseService.getLessonContent(lessonId);
-      if (content != null && mounted) {
-        questions = _parseContentJson(content);
+    try {
+      if (lessonId != null && lessonId != 'daily') {
+        final content = await SupabaseService.getLessonContent(lessonId);
+        if (content != null) {
+          questions = _parseContentJson(content);
+        }
+        if (questions.isEmpty) {
+          _contentUnavailable = true;
+          questions = _contentUnavailableQuestions();
+        }
       } else {
         questions = _demoQuestions();
       }
-    } else {
-      questions = _demoQuestions();
+    } catch (_) {
+      if (lessonId != null && lessonId != 'daily') {
+        _contentUnavailable = true;
+        questions = _contentUnavailableQuestions();
+      } else {
+        questions = _demoQuestions();
+      }
     }
 
     if (!mounted) return;
@@ -100,98 +118,540 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // ── Content JSON parser ───────────────────────────────────────
 
-  /// Map DB content_json array → list of _QuestionData.
+  /// Detects content_json format and delegates to the appropriate parser.
+  /// Handles two formats:
+  ///   1. DB list format: [{block_id, type, content, config, sort_key}]
+  ///   2. Builder JSON map format: {pages: [{title, blocks: [{type, content}]}]}
   List<_QuestionData> _parseContentJson(Map<String, dynamic> lesson) {
-    final raw = lesson['content_json'];
-    if (raw == null) return _demoQuestions();
+    dynamic raw = lesson['content_json'];
+    if (raw == null) return [];
 
-    final blocks = (raw as List).cast<Map<String, dynamic>>();
-    blocks.sort((a, b) =>
-        ((a['sort_key'] as int?) ?? 0)
-            .compareTo((b['sort_key'] as int?) ?? 0));
+    List<_QuestionData> questions;
+    try {
+      if (raw is String && raw.trim().isNotEmpty) {
+        raw = jsonDecode(raw);
+      }
+
+      if (raw is List) {
+        questions = _parseDbBlocks(
+          raw.whereType<Map>().cast<Map<String, dynamic>>().toList(),
+        );
+      } else if (raw is Map) {
+        final map = Map<String, dynamic>.from(raw);
+        final pages = map['pages'];
+        if (pages is List && pages.isNotEmpty) {
+          questions = _parseBuilderPages(
+            pages.whereType<Map>().cast<Map<String, dynamic>>().toList(),
+          );
+        } else if (map['blocks'] is List) {
+          questions = _parseBuilderPages([
+            {'title': lesson['title'] ?? 'Lesson', 'blocks': map['blocks']},
+          ]);
+        } else {
+          questions = [];
+        }
+      } else {
+        questions = [];
+      }
+    } catch (_) {
+      questions = [];
+    }
+
+    if (questions.isEmpty) return [];
+
+    // Always append a completion card
+    questions.add(
+      _QuestionData(
+        type: QuestionType.info,
+        title: 'Lesson Complete!',
+        content:
+            'Great job! You\'ve finished this lesson.\n\nKeep learning every day!',
+        isLast: true,
+      ),
+    );
+
+    return questions;
+  }
+
+  /// Parse DB list format: [{block_id, type, content, config, sort_key}]
+  List<_QuestionData> _parseDbBlocks(List<Map<String, dynamic>> blocks) {
+    blocks.sort(
+      (a, b) => ((a['sort_key'] as int?) ?? 0).compareTo(
+        (b['sort_key'] as int?) ?? 0,
+      ),
+    );
 
     final questions = <_QuestionData>[];
-
     for (final block in blocks) {
       final type = block['type'] as String? ?? '';
-      final content =
-          (block['content'] as Map<String, dynamic>?) ?? {};
-      final config =
-          (block['config'] as Map<String, dynamic>?) ?? {};
-      final title = content['title'] as String? ?? '';
-      final body = content['body'] as String? ?? '';
+      final content = _toMap(block['content']);
+      final config = _toMap(block['config']);
+      final parsed = _parseBlock(
+        type: type,
+        content: content,
+        config: config,
+        pageTitle: '',
+      );
+      if (parsed != null) questions.add(parsed);
+    }
+    return questions;
+  }
 
-      switch (type) {
-        case 'info_card':
-          questions.add(_QuestionData(
-            type: QuestionType.info,
-            title: title,
-            content: body,
-          ));
+  /// Parse Builder JSON map format: {pages: [{title, blocks: [{type, content}]}]}
+  List<_QuestionData> _parseBuilderPages(List<Map<String, dynamic>> pages) {
+    final questions = <_QuestionData>[];
 
-        case 'multiple_choice':
-          final options =
-              (config['options'] as List? ?? []).cast<String>();
-          final correctIdx = config['correct_index'] as int? ?? 0;
-          if (options.isNotEmpty) {
-            questions.add(_QuestionData(
-              type: QuestionType.choice,
-              title: title,
-              content: body,
-              options: options,
-              correctIndex: correctIdx,
-              successMsg:
-                  config['success_msg'] as String? ?? 'Correct!',
-              failMsg: config['fail_msg'] as String? ?? 'Try again.',
-            ));
-          }
+    for (final page in pages) {
+      final pageTitle = page['title'] as String? ?? '';
+      final blocks = (page['blocks'] as List? ?? [])
+          .whereType<Map>()
+          .map((b) => Map<String, dynamic>.from(b))
+          .toList();
 
-        case 'slider':
-          final min = (config['min'] as num? ?? 0).toDouble();
-          final max = (config['max'] as num? ?? 100).toDouble();
-          final step = (config['step'] as num? ?? 1).toDouble();
-          final defaultVal =
-              (config['default'] as num? ?? 50).toDouble();
-          final unit = config['unit'] as String? ?? '';
-          final target = (config['target'] as num? ?? 50).toDouble();
-          final tolerance =
-              (config['tolerance'] as num? ?? 5).toDouble();
-          questions.add(_QuestionData(
-            type: QuestionType.slider,
-            title: title,
-            content: body,
-            sliderConfig: SliderConfig(
-              min: min,
-              max: max,
-              step: step,
-              defaultValue: defaultVal,
-              unit: unit,
-              showValue: true,
-            ),
-            targetValue: target,
-            tolerance: tolerance,
-            successMsg:
-                config['success_msg'] as String? ?? 'Great!',
-            failMsgHigh:
-                config['fail_msg_high'] as String? ?? 'Too high!',
-            failMsgLow:
-                config['fail_msg_low'] as String? ?? 'Too low!',
-          ));
+      for (final block in blocks) {
+        final type = block['type'] as String? ?? '';
+        final content = _toMap(block['content']);
+        final parsed = _parseBlock(
+          type: type,
+          content: content,
+          config: const {},
+          pageTitle: pageTitle,
+        );
+        if (parsed != null) questions.add(parsed);
       }
     }
 
-    if (questions.isEmpty) return _demoQuestions();
-
-    // Always append a completion card
-    questions.add(_QuestionData(
-      type: QuestionType.info,
-      title: 'Lesson Complete!',
-      content:
-          'Great job! You\'ve finished this lesson.\n\nKeep learning every day!',
-      isLast: true,
-    ));
-
     return questions;
+  }
+
+  _QuestionData? _parseBlock({
+    required String type,
+    required Map<String, dynamic> content,
+    required Map<String, dynamic> config,
+    required String pageTitle,
+  }) {
+    final normalizedType = type.trim().toLowerCase().replaceAll('_', '-');
+
+    switch (normalizedType) {
+      case 'info-card':
+      case 'text':
+        final body = _firstNonEmptyString([
+          content['value'],
+          content['text'],
+          content['body'],
+          content['description'],
+          config['text'],
+          config['body'],
+        ]);
+        final title = _firstNonEmptyString([
+          content['title'],
+          pageTitle,
+          'Reading',
+        ]);
+        if (body.isEmpty) return null;
+        return _QuestionData(
+          type: QuestionType.info,
+          title: title,
+          content: body,
+        );
+
+      case 'multiple-choice':
+        final promptTitle = _firstNonEmptyString([
+          content['question'],
+          content['title'],
+          pageTitle,
+          'Question',
+        ]);
+        final promptBody = _firstNonEmptyString([
+          content['body'],
+          content['description'],
+          config['body'],
+        ]);
+
+        final rawOptions = content['options'] ?? config['options'];
+        final options = <String>[];
+        final optionIds = <String?>[];
+        int? inferredCorrectIndex;
+
+        if (rawOptions is List) {
+          for (final option in rawOptions) {
+            if (option is String && option.trim().isNotEmpty) {
+              options.add(option.trim());
+              optionIds.add(null);
+              continue;
+            }
+            if (option is Map) {
+              final map = Map<String, dynamic>.from(option);
+              final text = _firstNonEmptyString([
+                map['text'],
+                map['label'],
+                map['value'],
+              ]);
+              if (text.isEmpty) continue;
+              options.add(text);
+              optionIds.add((map['id'] as String?)?.trim());
+              if (map['isCorrect'] == true && inferredCorrectIndex == null) {
+                inferredCorrectIndex = options.length - 1;
+              }
+            }
+          }
+        }
+
+        if (options.isEmpty) return null;
+
+        final correctIndexRaw =
+            config['correct_index'] ??
+            config['correctIndex'] ??
+            content['correct_index'] ??
+            content['correctIndex'];
+        int? correctIndex = _toInt(correctIndexRaw);
+
+        if (correctIndex == null ||
+            correctIndex < 0 ||
+            correctIndex >= options.length) {
+          correctIndex = inferredCorrectIndex;
+        }
+
+        if (correctIndex == null) {
+          final candidateAnswers = <String>[
+            _firstNonEmptyString([
+              content['correctAnswer'],
+              content['correct_answer'],
+              config['correctAnswer'],
+              config['correct_answer'],
+            ]),
+            ..._toStringList(content['correctAnswers']),
+            ..._toStringList(config['correctAnswers']),
+          ].where((e) => e.isNotEmpty).toList();
+
+          for (final candidate in candidateAnswers) {
+            final lower = candidate.toLowerCase();
+            final byId = optionIds.indexWhere(
+              (id) => id != null && id.toLowerCase() == lower,
+            );
+            if (byId >= 0) {
+              correctIndex = byId;
+              break;
+            }
+            final byText = options.indexWhere(
+              (text) => text.toLowerCase() == lower,
+            );
+            if (byText >= 0) {
+              correctIndex = byText;
+              break;
+            }
+          }
+        }
+        correctIndex ??= 0;
+
+        return _QuestionData(
+          type: QuestionType.choice,
+          title: promptTitle,
+          content: promptBody,
+          options: options,
+          correctIndex: correctIndex,
+          successMsg: _firstNonEmptyString([
+            config['success_msg'],
+            config['successMsg'],
+            content['success_msg'],
+            content['explanation'],
+            'Correct!',
+          ]),
+          failMsg: _firstNonEmptyString([
+            config['fail_msg'],
+            config['failMsg'],
+            content['fail_msg'],
+            "That's not right. Try again!",
+          ]),
+        );
+
+      case 'slider':
+        final min = _toDouble(config['min'] ?? content['min'], 0);
+        final max = _toDouble(config['max'] ?? content['max'], 100);
+        final step = _toDouble(config['step'] ?? content['step'], 1);
+        final defaultValue = _toDouble(
+          config['default'] ??
+              config['defaultValue'] ??
+              config['default_value'] ??
+              content['default'] ??
+              content['defaultValue'] ??
+              content['default_value'],
+          50,
+        );
+        final targetValue = _toDouble(
+          config['target'] ??
+              config['targetValue'] ??
+              content['target'] ??
+              content['targetValue'],
+          defaultValue,
+        );
+        final tolerance = _toDouble(
+          config['tolerance'] ?? content['tolerance'],
+          5,
+        );
+        final unit = _firstNonEmptyString([config['unit'], content['unit']]);
+
+        return _QuestionData(
+          type: QuestionType.slider,
+          title: _firstNonEmptyString([
+            content['title'],
+            content['question'],
+            pageTitle,
+            'Adjust Value',
+          ]),
+          content: _firstNonEmptyString([
+            content['body'],
+            content['description'],
+            config['description'],
+          ]),
+          sliderConfig: SliderConfig(
+            min: min,
+            max: max,
+            step: step,
+            defaultValue: defaultValue,
+            unit: unit,
+            showValue: true,
+          ),
+          targetValue: targetValue,
+          tolerance: tolerance,
+          successMsg: _firstNonEmptyString([
+            config['success_msg'],
+            config['successMsg'],
+            content['success_msg'],
+            'Great!',
+          ]),
+          failMsgHigh: _firstNonEmptyString([
+            config['fail_msg_high'],
+            content['fail_msg_high'],
+            'Too high!',
+          ]),
+          failMsgLow: _firstNonEmptyString([
+            config['fail_msg_low'],
+            content['fail_msg_low'],
+            'Too low!',
+          ]),
+        );
+
+      case 'fill-blank':
+        final question = _firstNonEmptyString([
+          content['question'],
+          '${_firstNonEmptyString([content['before']])} ____ ${_firstNonEmptyString([content['after']])}'
+              .trim(),
+        ]);
+        final answer = _firstNonEmptyString([
+          content['correctAnswer'],
+          content['answer'],
+          config['correctAnswer'],
+          config['answer'],
+        ]);
+        if (question.isEmpty || answer.isEmpty) return null;
+        final hint = _firstNonEmptyString([content['hint'], config['hint']]);
+        return _QuestionData(
+          type: QuestionType.input,
+          title: _firstNonEmptyString([pageTitle, 'Fill in the Blank']),
+          content: hint.isNotEmpty ? '$question\n\nHint: $hint' : question,
+          correctAnswer: answer,
+          successMsg: _firstNonEmptyString([
+            content['success_msg'],
+            config['success_msg'],
+            'Correct!',
+          ]),
+          failMsg: _firstNonEmptyString([
+            content['fail_msg'],
+            config['fail_msg'],
+            'Not quite. Try again!',
+          ]),
+        );
+
+      case 'true-false':
+        final statement = _firstNonEmptyString([
+          content['question'],
+          content['statement'],
+        ]);
+        if (statement.isEmpty) return null;
+        final isTrue = _toBool(
+          content['correctAnswer'] ?? content['isTrue'],
+          true,
+        );
+        final explanation = _firstNonEmptyString([
+          content['explanation'],
+          config['explanation'],
+        ]);
+        return _QuestionData(
+          type: QuestionType.choice,
+          title: 'True or False?',
+          content: statement,
+          options: const ['True', 'False'],
+          correctIndex: isTrue ? 0 : 1,
+          successMsg: explanation.isNotEmpty ? explanation : 'Correct!',
+          failMsg: explanation.isNotEmpty
+              ? explanation
+              : "That's not right. Try again!",
+        );
+
+      case 'code-block':
+        final code = _firstNonEmptyString([content['code']]);
+        if (code.isEmpty) return null;
+        final language = _firstNonEmptyString([content['language']]);
+        return _QuestionData(
+          type: QuestionType.info,
+          title: pageTitle.isNotEmpty
+              ? pageTitle
+              : (language.isNotEmpty
+                    ? '${language.toUpperCase()} Code'
+                    : 'Code'),
+          content: code,
+        );
+
+      case 'code-playground':
+        final expectedOutput = _firstNonEmptyString([
+          content['expectedOutput'],
+          content['expected_output'],
+        ]);
+        final starterCode = _firstNonEmptyString([
+          content['initialCode'],
+          content['starterCode'],
+        ]);
+        if (expectedOutput.isNotEmpty) {
+          return _QuestionData(
+            type: QuestionType.input,
+            title: _firstNonEmptyString([pageTitle, 'Code Challenge']),
+            content: starterCode.isNotEmpty
+                ? 'Starting code:\n$starterCode\n\nExpected output: $expectedOutput'
+                : 'Expected output: $expectedOutput',
+            correctAnswer: expectedOutput,
+            successMsg: 'Correct output!',
+            failMsg: "Output doesn't match. Try again!",
+          );
+        }
+        if (starterCode.isNotEmpty) {
+          return _QuestionData(
+            type: QuestionType.info,
+            title: _firstNonEmptyString([pageTitle, 'Code Example']),
+            content: starterCode,
+          );
+        }
+        return null;
+
+      case 'image':
+        final caption = _firstNonEmptyString([content['caption']]);
+        final alt = _firstNonEmptyString([content['alt']]);
+        final url = _firstNonEmptyString([content['url']]);
+        final desc = _firstNonEmptyString([caption, alt, url]);
+        if (desc.isEmpty) return null;
+        return _QuestionData(
+          type: QuestionType.info,
+          title: _firstNonEmptyString([pageTitle, 'Visual']),
+          content: desc,
+        );
+
+      case 'matching':
+        final question = _firstNonEmptyString([
+          content['question'],
+          pageTitle,
+          'Matching',
+        ]);
+        final leftItems = _extractItemTexts(content['leftItems']);
+        final rightItems = _extractItemTexts(content['rightItems']);
+        final body = [
+          if (leftItems.isNotEmpty) 'Left: ${leftItems.join(', ')}',
+          if (rightItems.isNotEmpty) 'Right: ${rightItems.join(', ')}',
+        ].join('\n');
+        return _QuestionData(
+          type: QuestionType.info,
+          title: question,
+          content: body.isNotEmpty ? body : 'Matching activity',
+        );
+
+      case 'animation':
+      case 'video':
+        return _QuestionData(
+          type: QuestionType.info,
+          title: _firstNonEmptyString([pageTitle, 'Interactive Content']),
+          content: 'This block type is not interactive in Viewer yet.',
+        );
+    }
+    return null;
+  }
+
+  Map<String, dynamic> _toMap(dynamic value) {
+    if (value is Map<String, dynamic>) return value;
+    if (value is Map) return Map<String, dynamic>.from(value);
+    return <String, dynamic>{};
+  }
+
+  String _firstNonEmptyString(List<dynamic> values) {
+    for (final value in values) {
+      if (value is String) {
+        final trimmed = value.trim();
+        if (trimmed.isNotEmpty) return trimmed;
+      }
+    }
+    return '';
+  }
+
+  List<String> _toStringList(dynamic value) {
+    if (value is! List) return const [];
+    return value
+        .whereType<String>()
+        .map((v) => v.trim())
+        .where((v) => v.isNotEmpty)
+        .toList();
+  }
+
+  int? _toInt(dynamic value) {
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+
+  double _toDouble(dynamic value, double fallback) {
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? fallback;
+    return fallback;
+  }
+
+  bool _toBool(dynamic value, bool fallback) {
+    if (value is bool) return value;
+    if (value is String) {
+      final lowered = value.toLowerCase();
+      if (lowered == 'true') return true;
+      if (lowered == 'false') return false;
+    }
+    return fallback;
+  }
+
+  List<String> _extractItemTexts(dynamic value) {
+    if (value is! List) return const [];
+    final out = <String>[];
+    for (final item in value) {
+      if (item is String && item.trim().isNotEmpty) {
+        out.add(item.trim());
+        continue;
+      }
+      if (item is Map) {
+        final text = _firstNonEmptyString([
+          item['text'],
+          item['label'],
+          item['value'],
+        ]);
+        if (text.isNotEmpty) out.add(text);
+      }
+    }
+    return out;
+  }
+
+  List<_QuestionData> _contentUnavailableQuestions() {
+    return [
+      _QuestionData(
+        type: QuestionType.info,
+        title: 'Content unavailable',
+        content:
+            'This lesson has no readable content in database yet.\n\nPlease open Builder and republish this course, then try again.',
+        isLast: true,
+      ),
+    ];
   }
 
   // ── Demo questions (fallback) ─────────────────────────────────
@@ -257,8 +717,7 @@ class _LessonScreenState extends State<LessonScreen> {
         correctAnswer: '25',
         successMsg:
             'Absolutely correct! Square area = side × side = 5 × 5 = 25',
-        failMsg:
-            'Incorrect answer, remember: square area = side × side',
+        failMsg: 'Incorrect answer, remember: square area = side × side',
       ),
       _QuestionData(
         type: QuestionType.info,
@@ -294,8 +753,7 @@ class _LessonScreenState extends State<LessonScreen> {
         feedbackMsg = question.failMsg!;
 
       case QuestionType.input:
-        isCorrect =
-            _inputController.text.trim() == question.correctAnswer;
+        isCorrect = _inputController.text.trim() == question.correctAnswer;
         feedbackMsg = question.failMsg!;
 
       case QuestionType.sorting:
@@ -338,8 +796,7 @@ class _LessonScreenState extends State<LessonScreen> {
         _sliderValue = nextQ.sliderConfig?.defaultValue ?? 50;
         _selectedOption = null;
         _inputController.clear();
-        if (nextQ.type == QuestionType.sorting &&
-            nextQ.sortingItems != null) {
+        if (nextQ.type == QuestionType.sorting && nextQ.sortingItems != null) {
           _sortingOrder = List.from(nextQ.sortingItems!);
         }
       });
@@ -379,10 +836,10 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
+
     if (_loadingLesson) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     final question = _questions[_currentIndex];
@@ -395,15 +852,15 @@ class _LessonScreenState extends State<LessonScreen> {
           SafeArea(
             child: Column(
               children: [
-                _buildHeader(isDark),
+                _buildHeader(isDark, t),
                 _buildProgressBar(),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(AppSpacing.lg),
-                    child: _buildQuestionContent(question, isDark),
+                    child: _buildQuestionContent(question, isDark, t),
                   ),
                 ),
-                _buildBottomBar(question, isDark),
+                _buildBottomBar(question, isDark, t),
               ],
             ),
           ),
@@ -432,7 +889,7 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  Widget _buildHeader(bool isDark) {
+  Widget _buildHeader(bool isDark, AppLocalizations t) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.sm,
@@ -441,7 +898,7 @@ class _LessonScreenState extends State<LessonScreen> {
       child: Row(
         children: [
           IconButton(
-            onPressed: _showExitDialog,
+            onPressed: () => _showExitDialog(t),
             icon: const Icon(Icons.close),
             color: isDark
                 ? AppColors.textSecondaryOnDark
@@ -449,7 +906,7 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
           Expanded(
             child: Text(
-              _title,
+              _title(t),
               style: AppTypography.title.copyWith(
                 color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
               ),
@@ -501,7 +958,11 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  Widget _buildQuestionContent(_QuestionData question, bool isDark) {
+  Widget _buildQuestionContent(
+    _QuestionData question,
+    bool isDark,
+    AppLocalizations t,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -520,12 +981,16 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
-        _buildInteractionWidget(question, isDark),
+        _buildInteractionWidget(question, isDark, t),
       ],
     );
   }
 
-  Widget _buildInteractionWidget(_QuestionData question, bool isDark) {
+  Widget _buildInteractionWidget(
+    _QuestionData question,
+    bool isDark,
+    AppLocalizations t,
+  ) {
     switch (question.type) {
       case QuestionType.slider:
         return InteractiveSlider(
@@ -552,15 +1017,15 @@ class _LessonScreenState extends State<LessonScreen> {
                     color: isSelected
                         ? AppColors.primary.withValues(alpha: 0.08)
                         : isDark
-                            ? AppColors.cardDark
-                            : AppColors.surface,
+                        ? AppColors.cardDark
+                        : AppColors.surface,
                     borderRadius: AppRadius.borderRadiusXl,
                     border: Border.all(
                       color: isSelected
                           ? AppColors.primary
                           : isDark
-                              ? AppColors.borderDark
-                              : AppColors.border,
+                          ? AppColors.borderDark
+                          : AppColors.border,
                       width: isSelected ? 2 : 1,
                     ),
                   ),
@@ -578,14 +1043,17 @@ class _LessonScreenState extends State<LessonScreen> {
                             color: isSelected
                                 ? AppColors.primary
                                 : isDark
-                                    ? AppColors.borderDark
-                                    : AppColors.border,
+                                ? AppColors.borderDark
+                                : AppColors.border,
                             width: 2,
                           ),
                         ),
                         child: isSelected
-                            ? const Icon(Icons.check,
-                                size: 16, color: Colors.white)
+                            ? const Icon(
+                                Icons.check,
+                                size: 16,
+                                color: Colors.white,
+                              )
                             : null,
                       ),
                       const SizedBox(width: AppSpacing.md),
@@ -636,10 +1104,12 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.drag_handle,
-                      color: isDark
-                          ? AppColors.textSecondaryOnDark
-                          : AppColors.textSecondary),
+                  Icon(
+                    Icons.drag_handle,
+                    color: isDark
+                        ? AppColors.textSecondaryOnDark
+                        : AppColors.textSecondary,
+                  ),
                   const SizedBox(width: AppSpacing.md),
                   Text(
                     item,
@@ -664,7 +1134,7 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
           textAlign: TextAlign.center,
           decoration: InputDecoration(
-            hintText: 'Enter answer',
+            hintText: t.lessonEnterAnswer,
             hintStyle: AppTypography.headline2.copyWith(
               color: isDark
                   ? AppColors.textSecondaryOnDark
@@ -680,8 +1150,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: AppRadius.borderRadiusXl,
-              borderSide:
-                  const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
           ),
         );
@@ -696,8 +1165,11 @@ class _LessonScreenState extends State<LessonScreen> {
                 color: AppColors.success.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.celebration,
-                  size: 48, color: AppColors.success),
+              child: const Icon(
+                Icons.celebration,
+                size: 48,
+                color: AppColors.success,
+              ),
             ),
           );
         }
@@ -705,14 +1177,25 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
-  Widget _buildBottomBar(_QuestionData question, bool isDark) {
+  Widget _buildBottomBar(
+    _QuestionData question,
+    bool isDark,
+    AppLocalizations t,
+  ) {
     final isInfoPage = question.type == QuestionType.info;
-    final canSubmit = isInfoPage ||
+    final canSubmit =
+        isInfoPage ||
         (question.type == QuestionType.choice && _selectedOption != null) ||
         (question.type == QuestionType.input &&
             _inputController.text.isNotEmpty) ||
         question.type == QuestionType.slider ||
         question.type == QuestionType.sorting;
+
+    final label = _contentUnavailable
+        ? t.lessonBack
+        : isInfoPage
+        ? (question.isLast ? t.lessonComplete : t.lessonContinue)
+        : t.lessonSubmit;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -730,34 +1213,33 @@ class _LessonScreenState extends State<LessonScreen> {
         width: double.infinity,
         child: _Duo3DSubmitButton(
           onPressed: canSubmit
-              ? (isInfoPage ? _nextQuestion : _checkAnswer)
+              ? (_contentUnavailable
+                    ? () => Navigator.pop(context)
+                    : (isInfoPage ? _nextQuestion : _checkAnswer))
               : null,
-          label: isInfoPage
-              ? (question.isLast ? 'Complete Lesson' : 'Continue')
-              : 'Submit Answer',
+          label: label,
         ),
       ),
     );
   }
 
-  void _showExitDialog() {
+  void _showExitDialog(AppLocalizations t) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Exit?'),
-        content: const Text('Your current progress will not be saved.'),
+        title: Text(t.lessonExitTitle),
+        content: Text(t.lessonExitBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(t.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text('Exit',
-                style: TextStyle(color: AppColors.error)),
+            child: Text(t.lessonExit, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -795,8 +1277,7 @@ class _Duo3DSubmitButtonState extends State<_Duo3DSubmitButton> {
               widget.onPressed!();
             }
           : null,
-      onTapCancel:
-          _isEnabled ? () => setState(() => _isPressed = false) : null,
+      onTapCancel: _isEnabled ? () => setState(() => _isPressed = false) : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 80),
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),

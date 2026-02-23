@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../l10n/app_localizations.dart';
+import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
 
@@ -16,14 +19,14 @@ class _C {
 }
 
 /// Landing / index page – mirrors Builder_temple/index.html
-class LandingScreen extends StatefulWidget {
+class LandingScreen extends ConsumerStatefulWidget {
   const LandingScreen({super.key});
 
   @override
-  State<LandingScreen> createState() => _LandingScreenState();
+  ConsumerState<LandingScreen> createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen>
+class _LandingScreenState extends ConsumerState<LandingScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _fadeCtrl;
   late Animation<double> _fadeAnim;
@@ -50,16 +53,17 @@ class _LandingScreenState extends State<LandingScreen>
     super.dispose();
   }
 
-  void _showSignInOverlay(BuildContext context) {
+  void _showSignInOverlay(BuildContext context, BuilderLocalizations t) {
     showDialog(
       context: context,
-      barrierColor: const Color(0xB80F1826), // rgba(15,24,38,0.72)
+      barrierColor: const Color(0xB80F1826),
       builder: (ctx) => _SignInModal(
+        t: t,
         onSuccess: () {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Signed in'),
+              SnackBar(
+                content: Text(t.signedIn),
                 backgroundColor: AppColors.success,
               ),
             );
@@ -72,6 +76,8 @@ class _LandingScreenState extends State<LandingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final t = BuilderLocalizations(ref.watch(languageProvider));
+
     return Scaffold(
       backgroundColor: _C.bg,
       body: Stack(
@@ -100,11 +106,11 @@ class _LandingScreenState extends State<LandingScreen>
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildHeader(),
-                      _buildHero(context),
+                      _buildHero(context, t),
                       const SizedBox(height: 40),
-                      _buildFeatureRow(),
+                      _buildFeatureRow(t),
                       const SizedBox(height: 40),
-                      _buildCtaBand(context),
+                      _buildCtaBand(context, t),
                       const SizedBox(height: 80),
                     ],
                   ),
@@ -148,9 +154,9 @@ class _LandingScreenState extends State<LandingScreen>
   }
 
   // ═══════════════════════════════════════════════════
-  //  Hero section – two-column on wide, stacked on narrow
+  //  Hero section
   // ═══════════════════════════════════════════════════
-  Widget _buildHero(BuildContext context) {
+  Widget _buildHero(BuildContext context, BuilderLocalizations t) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final wide = constraints.maxWidth > 900;
@@ -171,9 +177,9 @@ class _LandingScreenState extends State<LandingScreen>
                   color: _C.primary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(999),
                 ),
-                child: const Text(
-                  'Learn by teaching',
-                  style: TextStyle(
+                child: Text(
+                  t.landingTagline,
+                  style: const TextStyle(
                     color: Color(0xFF1D6B00),
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -183,7 +189,7 @@ class _LandingScreenState extends State<LandingScreen>
               const SizedBox(height: 20),
               // Headline
               Text(
-                'If you want to master\nsomething, teach it.',
+                t.landingHeadline,
                 style: TextStyle(
                   fontSize: wide ? 42 : 32,
                   fontWeight: FontWeight.w700,
@@ -192,10 +198,13 @@ class _LandingScreenState extends State<LandingScreen>
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Build courses, share insights, and turn curiosity into a daily habit. '
-                'Primoria blends Brilliant-style exploration with Duolingo-like momentum.',
-                style: TextStyle(fontSize: 16, color: _C.muted, height: 1.5),
+              Text(
+                t.landingSubtitle,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: _C.muted,
+                  height: 1.5,
+                ),
               ),
               const SizedBox(height: 24),
               // Quote card
@@ -206,19 +215,19 @@ class _LandingScreenState extends State<LandingScreen>
                   borderRadius: BorderRadius.circular(18),
                   border: Border(left: BorderSide(color: _C.accent, width: 4)),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '"If you want to master something, teach it."',
-                      style: TextStyle(
+                      t.landingQuote,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
                         color: _C.text,
                       ),
                     ),
-                    SizedBox(height: 4),
-                    Text(
+                    const SizedBox(height: 4),
+                    const Text(
                       'Richard Feynman',
                       style: TextStyle(fontSize: 13, color: _C.muted),
                     ),
@@ -231,11 +240,15 @@ class _LandingScreenState extends State<LandingScreen>
                 spacing: 16,
                 runSpacing: 12,
                 children: [
-                  _PillButton(label: 'Apply Now', filled: true, onTap: () {}),
                   _PillButton(
-                    label: 'Already Qualified',
+                    label: t.landingApplyNow,
+                    filled: true,
+                    onTap: () {},
+                  ),
+                  _PillButton(
+                    label: t.landingAlreadyQualified,
                     filled: false,
-                    onTap: () => _showSignInOverlay(context),
+                    onTap: () => _showSignInOverlay(context, t),
                   ),
                 ],
               ),
@@ -245,7 +258,7 @@ class _LandingScreenState extends State<LandingScreen>
 
         final rightColumn = Padding(
           padding: EdgeInsets.only(right: gutter),
-          child: _HeroCard(),
+          child: _HeroCard(t: t),
         );
 
         if (wide) {
@@ -275,7 +288,7 @@ class _LandingScreenState extends State<LandingScreen>
   // ═══════════════════════════════════════════════════
   //  Feature cards row
   // ═══════════════════════════════════════════════════
-  Widget _buildFeatureRow() {
+  Widget _buildFeatureRow(BuilderLocalizations t) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final gutter = _gutter(constraints.maxWidth);
@@ -283,19 +296,19 @@ class _LandingScreenState extends State<LandingScreen>
 
         final cards = [
           _FeatureCard(
-            badge: 'Guided',
-            title: 'Course builder that feels like play',
-            subtitle: 'Drag blocks, remix templates, and publish at any pace.',
+            badge: t.featureBadge1,
+            title: t.featureTitle1,
+            subtitle: t.featureSubtitle1,
           ),
           _FeatureCard(
-            badge: 'Social',
-            title: 'Community feedback loops',
-            subtitle: 'Turn comments into insights with smart highlights.',
+            badge: t.featureBadge2,
+            title: t.featureTitle2,
+            subtitle: t.featureSubtitle2,
           ),
           _FeatureCard(
-            badge: 'Momentum',
-            title: 'Daily quests and streaks',
-            subtitle: 'Stay consistent with bite-sized missions.',
+            badge: t.featureBadge3,
+            title: t.featureTitle3,
+            subtitle: t.featureSubtitle3,
           ),
         ];
 
@@ -337,7 +350,7 @@ class _LandingScreenState extends State<LandingScreen>
   // ═══════════════════════════════════════════════════
   //  CTA band
   // ═══════════════════════════════════════════════════
-  Widget _buildCtaBand(BuildContext context) {
+  Widget _buildCtaBand(BuildContext context, BuilderLocalizations t) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final gutter = _gutter(constraints.maxWidth);
@@ -366,7 +379,7 @@ class _LandingScreenState extends State<LandingScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Ready to launch your next lesson?',
+                              t.landingReadyTitle,
                               style: TextStyle(
                                 fontSize: wide ? 28 : 22,
                                 fontWeight: FontWeight.w700,
@@ -374,16 +387,19 @@ class _LandingScreenState extends State<LandingScreen>
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Bring your expertise and let Primoria handle the rest.',
-                              style: TextStyle(color: _C.muted, fontSize: 15),
+                            Text(
+                              t.landingReadySubtitle,
+                              style: const TextStyle(
+                                color: _C.muted,
+                                fontSize: 15,
+                              ),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(width: 24),
                       _PillButton(
-                        label: 'Start Creating',
+                        label: t.landingStartCreating,
                         filled: true,
                         onTap: () => context.go('/builder'),
                       ),
@@ -392,22 +408,22 @@ class _LandingScreenState extends State<LandingScreen>
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Ready to launch your next lesson?',
-                        style: TextStyle(
+                      Text(
+                        t.landingReadyTitle,
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                           color: _C.text,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Bring your expertise and let Primoria handle the rest.',
-                        style: TextStyle(color: _C.muted, fontSize: 15),
+                      Text(
+                        t.landingReadySubtitle,
+                        style: const TextStyle(color: _C.muted, fontSize: 15),
                       ),
                       const SizedBox(height: 20),
                       _PillButton(
-                        label: 'Start Creating',
+                        label: t.landingStartCreating,
                         filled: true,
                         onTap: () => context.go('/builder'),
                       ),
@@ -478,6 +494,9 @@ class _BlurBlobState extends State<_BlurBlob>
 
 /// Hero stats card
 class _HeroCard extends StatelessWidget {
+  final BuilderLocalizations t;
+  const _HeroCard({required this.t});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -487,14 +506,9 @@ class _HeroCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xE6FFFFFF), // rgba(255,255,255,0.9)
-            Color(0xD9F0F8FF), // rgba(240,248,255,0.85)
-          ],
+          colors: [Color(0xE6FFFFFF), Color(0xD9F0F8FF)],
         ),
-        border: Border.all(
-          color: const Color(0x1F506E96), // rgba(80,110,150,0.12)
-        ),
+        border: Border.all(color: const Color(0x1F506E96)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x261E2E50),
@@ -506,18 +520,18 @@ class _HeroCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Today's Teaching Sprint",
-            style: TextStyle(
+          Text(
+            t.landingTodaysSprint,
+            style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w700,
               color: _C.text,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Create a bite-sized lesson and publish in minutes.',
-            style: TextStyle(fontSize: 14, color: _C.muted),
+          Text(
+            t.landingSprintSubtitle,
+            style: const TextStyle(fontSize: 14, color: _C.muted),
           ),
           const SizedBox(height: 20),
           LayoutBuilder(
@@ -530,11 +544,11 @@ class _HeroCard extends StatelessWidget {
                 mainAxisSpacing: 14,
                 crossAxisSpacing: 14,
                 childAspectRatio: 2.2,
-                children: const [
-                  _StatTile(value: '48 min', label: 'Avg build time'),
-                  _StatTile(value: '92%', label: 'Learner completion'),
-                  _StatTile(value: '132', label: 'New learners'),
-                  _StatTile(value: '4x', label: 'Boosted income'),
+                children: [
+                  _StatTile(value: '48 min', label: t.statAvgBuild),
+                  _StatTile(value: '92%', label: t.statLearnerCompletion),
+                  _StatTile(value: '132', label: t.statNewLearners),
+                  _StatTile(value: '4x', label: t.statBoostedIncome),
                 ],
               );
             },
@@ -606,9 +620,7 @@ class _FeatureCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: const Color(0x14506E96), // rgba(80,110,150,0.08)
-        ),
+        border: Border.all(color: const Color(0x14506E96)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x261E2E50),
@@ -655,7 +667,7 @@ class _FeatureCard extends StatelessWidget {
   }
 }
 
-/// Pill-shaped button matching .btn / .btn-primary / .btn-secondary
+/// Pill-shaped button
 class _PillButton extends StatelessWidget {
   final String label;
   final bool filled;
@@ -691,7 +703,7 @@ class _PillButton extends StatelessWidget {
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
         foregroundColor: _C.text,
-        side: BorderSide(color: const Color(0x2E506E96)),
+        side: const BorderSide(color: Color(0x2E506E96)),
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
         textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
@@ -702,12 +714,13 @@ class _PillButton extends StatelessWidget {
 }
 
 // ═══════════════════════════════════════════════════════
-//  Sign-in modal overlay – matches Design/signin_design.png
+//  Sign-in modal overlay
 // ═══════════════════════════════════════════════════════
 
 class _SignInModal extends StatefulWidget {
+  final BuilderLocalizations t;
   final VoidCallback? onSuccess;
-  const _SignInModal({this.onSuccess});
+  const _SignInModal({required this.t, this.onSuccess});
 
   @override
   State<_SignInModal> createState() => _SignInModalState();
@@ -740,9 +753,7 @@ class _SignInModalState extends State<_SignInModal> {
   Future<void> _signInWithGoogle() async {
     await _handleOAuthSignIn(
       action: SupabaseService.signInWithGoogle,
-      notFoundMessage:
-          "We couldn't find an account linked to that Google profile. "
-          'Please apply for access first.',
+      notFoundMessage: widget.t.signInNotFoundMsg,
     );
   }
 
@@ -768,10 +779,11 @@ class _SignInModalState extends State<_SignInModal> {
   }
 
   Future<void> _signInWithPassword() async {
+    final t = widget.t;
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     if (email.isEmpty || password.isEmpty) {
-      _setStatus('Please enter your email and password.', error: true);
+      _setStatus(t.signInEmptyFields, error: true);
       return;
     }
     setState(() {
@@ -788,11 +800,7 @@ class _SignInModalState extends State<_SignInModal> {
       Navigator.pop(context);
       widget.onSuccess?.call();
     } else if (result.isUserNotFound) {
-      _setStatus(
-        "We couldn't find an account with that email. "
-        'Please check your spelling or apply for access.',
-        error: true,
-      );
+      _setStatus(t.signInEmailNotFound, error: true);
     } else {
       _setStatus(result.message, error: true);
     }
@@ -800,6 +808,8 @@ class _SignInModalState extends State<_SignInModal> {
 
   @override
   Widget build(BuildContext context) {
+    final t = widget.t;
+
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -810,12 +820,10 @@ class _SignInModalState extends State<_SignInModal> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(28),
-            border: Border.all(
-              color: const Color(0x29506E96), // rgba(80,110,150,0.16)
-            ),
+            border: Border.all(color: const Color(0x29506E96)),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x400A1428), // rgba(10,20,40,0.25)
+                color: Color(0x400A1428),
                 blurRadius: 60,
                 offset: Offset(0, 28),
               ),
@@ -824,7 +832,7 @@ class _SignInModalState extends State<_SignInModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Close button – top right
+              // Close button
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
@@ -838,9 +846,9 @@ class _SignInModalState extends State<_SignInModal> {
                       color: _C.accent.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(999),
                     ),
-                    child: const Text(
-                      'Close',
-                      style: TextStyle(
+                    child: Text(
+                      t.signInClose,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
                         color: _C.accent,
@@ -862,9 +870,9 @@ class _SignInModalState extends State<_SignInModal> {
               const SizedBox(height: 16),
 
               // Title
-              const Text(
-                'Sign in',
-                style: TextStyle(
+              Text(
+                t.signInTitle,
+                style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
                   color: _C.text,
@@ -872,10 +880,9 @@ class _SignInModalState extends State<_SignInModal> {
               ),
               const SizedBox(height: 24),
 
-              // ── Social buttons ──
               // Google
               _ModalButton(
-                label: 'Sign in with Google',
+                label: t.signInWithGoogle,
                 onTap: _isLoading ? null : _signInWithGoogle,
                 style: _ModalButtonStyle.outlined,
               ),
@@ -883,7 +890,7 @@ class _SignInModalState extends State<_SignInModal> {
 
               // Password toggle
               _ModalButton(
-                label: 'Sign in with password',
+                label: t.signInWithPassword,
                 onTap: _isLoading
                     ? null
                     : () {
@@ -895,7 +902,7 @@ class _SignInModalState extends State<_SignInModal> {
                 style: _ModalButtonStyle.outlined,
               ),
 
-              // ── Password form (expandable) ──
+              // Password form
               if (_showPasswordForm) ...[
                 const SizedBox(height: 20),
                 TextField(
@@ -903,7 +910,7 @@ class _SignInModalState extends State<_SignInModal> {
                   enabled: !_isLoading,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Email',
+                    hintText: t.signInEmailHint,
                     prefixIcon: const Icon(
                       Icons.email_outlined,
                       size: 18,
@@ -932,7 +939,7 @@ class _SignInModalState extends State<_SignInModal> {
                   enabled: !_isLoading,
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: t.signInPasswordHint,
                     prefixIcon: const Icon(
                       Icons.lock_outline,
                       size: 18,
@@ -993,12 +1000,12 @@ class _SignInModalState extends State<_SignInModal> {
                               valueColor: AlwaysStoppedAnimation(Colors.white),
                             ),
                           )
-                        : const Text('Sign in'),
+                        : Text(t.signInButton),
                   ),
                 ),
               ],
 
-              // ── Status badge ──
+              // Status badge
               if (_statusMessage != null) ...[
                 const SizedBox(height: 16),
                 Container(
@@ -1028,18 +1035,17 @@ class _SignInModalState extends State<_SignInModal> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'New user? ',
-                    style: TextStyle(fontSize: 14, color: _C.muted),
+                  Text(
+                    t.signInNewUser,
+                    style: const TextStyle(fontSize: 14, color: _C.muted),
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
-                      // Scroll to CTA or do nothing
                     },
-                    child: const Text(
-                      'Apply for access',
-                      style: TextStyle(
+                    child: Text(
+                      t.signInApplyAccess,
+                      style: const TextStyle(
                         fontSize: 14,
                         color: _C.muted,
                         decoration: TextDecoration.underline,

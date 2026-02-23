@@ -1,6 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/theme.dart';
+import '../providers/language_provider.dart';
+import '../l10n/app_localizations.dart';
 
 /// Community screen — ported from Figma FriendsScreen template
 /// (file kept as courses_screen.dart for routing compatibility)
@@ -103,14 +106,15 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           children: [
-            _buildHeader(),
+            _buildHeader(t),
             Expanded(
-              child: _view == 'find' ? _buildFindView() : _buildMessageView(),
+              child: _view == 'find' ? _buildFindView(t) : _buildMessageView(t),
             ),
           ],
         ),
@@ -118,7 +122,7 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations t) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       color: Colors.white,
@@ -132,7 +136,7 @@ class _CoursesScreenState extends State<CoursesScreen>
             child: Column(
               children: [
                 Text(
-                  'find',
+                  t.communityFind,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -159,7 +163,7 @@ class _CoursesScreenState extends State<CoursesScreen>
             child: Column(
               children: [
                 Text(
-                  'message',
+                  t.communityMessage,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -201,7 +205,7 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildFindView() {
+  Widget _buildFindView(AppLocalizations t) {
     return Container(
       decoration: const BoxDecoration(gradient: AppColors.galaxyGradient),
       child: Column(
@@ -238,9 +242,12 @@ class _CoursesScreenState extends State<CoursesScreen>
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
-                  'Find',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                child: Text(
+                  t.communityFindButton,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),
@@ -308,7 +315,7 @@ class _CoursesScreenState extends State<CoursesScreen>
     }
   }
 
-  Widget _buildMessageView() {
+  Widget _buildMessageView(AppLocalizations t) {
     return Container(
       color: Colors.white,
       child: Column(
@@ -324,7 +331,7 @@ class _CoursesScreenState extends State<CoursesScreen>
               ),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'search box',
+                  hintText: t.communitySearch,
                   hintStyle: const TextStyle(
                     color: Color(0xFF94A3B8),
                     fontSize: 14,

@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../theme/theme.dart';
 import '../components/common/bottom_nav_bar.dart';
 import '../providers/user_provider.dart';
+import '../providers/language_provider.dart';
+import '../l10n/app_localizations.dart';
 import '../services/supabase_service.dart';
 import 'search_screen.dart';
 import 'courses_screen.dart';
@@ -22,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentNavIndex = 0;
 
   // Active enrolled course data loaded from backend
-  Map<String, dynamic>? _course; // row from courses table (nested in enrollment)
+  Map<String, dynamic>?
+  _course; // row from courses table (nested in enrollment)
   List<Map<String, dynamic>> _chapters = [];
   Set<String> _completedLessonIds = {};
   bool _loadingHome = true;
@@ -30,6 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _loadHomeData();
+  }
+
+  /// Called after the user enrolls in a course from the Library tab.
+  /// Switches to the Home tab and refreshes enrolled-course data.
+  void _onEnrolled() {
+    setState(() => _currentNavIndex = 0);
     _loadHomeData();
   }
 
@@ -46,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
         if (detail != null && mounted) {
           setState(() {
             _course = courseMap;
-            _chapters = List<Map<String, dynamic>>.from(detail['chapters'] ?? []);
+            _chapters = List<Map<String, dynamic>>.from(
+              detail['chapters'] ?? [],
+            );
             _completedLessonIds = Set<String>.from(
               (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
             );
@@ -61,7 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Returns the first incomplete lesson ID from chapters, or null.
   String? get _nextLessonId {
     for (final ch in _chapters) {
-      final lessons = (ch['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+      final lessons = (ch['lessons'] as List? ?? [])
+          .cast<Map<String, dynamic>>();
       for (final lesson in lessons) {
         final id = lesson['id'] as String;
         if (!_completedLessonIds.contains(id)) return id;
@@ -72,7 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String? get _nextLessonTitle {
     for (final ch in _chapters) {
-      final lessons = (ch['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+      final lessons = (ch['lessons'] as List? ?? [])
+          .cast<Map<String, dynamic>>();
       for (final lesson in lessons) {
         final id = lesson['id'] as String;
         if (!_completedLessonIds.contains(id)) {
@@ -100,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return _buildHomeContent();
       case 1:
-        return const SearchScreen();
+        return SearchScreen(onEnrolled: _onEnrolled);
       case 2:
         return const CoursesScreen();
       case 3:
@@ -111,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHomeContent() {
+    final t = context.watch<LanguageProvider>().t;
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
@@ -120,14 +135,21 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: _loadingHome
                   ? const Center(child: CircularProgressIndicator())
-                  : SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 8),
-                          _buildCourseHero(),
-                          _buildDrawerPanel(),
-                        ],
-                      ),
+                  : CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 8),
+                              _buildCourseHero(t),
+                            ],
+                          ),
+                        ),
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: _buildDrawerPanel(t),
+                        ),
+                      ],
                     ),
             ),
           ],
@@ -184,30 +206,30 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCourseHero() {
-    final courseTitle = _course?['title'] as String? ?? 'Start Learning';
+  Widget _buildCourseHero(AppLocalizations t) {
+    final courseTitle = _course?['title'] as String? ?? t.homeStartLearning;
     final subjectColor = _subjectColor(_course);
     final completedCount = _completedLessonIds.length;
     final totalLessons = _chapters
         .expand((ch) => (ch['lessons'] as List? ?? []))
         .length;
     final levelLabel = totalLessons == 0
-        ? 'EXPLORE COURSES'
-        : 'LESSON $completedCount / $totalLessons';
+        ? t.homeExploreCourses
+        : t.homeLessonProgress(completedCount, totalLessons);
 
     return GestureDetector(
       onTap: _course == null
           ? null
           : () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CourseScreen(
-                    courseId: _course!['id'] as String?,
-                    title: courseTitle,
-                    description: _course!['description'] as String?,
-                  ),
+              context,
+              MaterialPageRoute(
+                builder: (_) => CourseScreen(
+                  courseId: _course!['id'] as String?,
+                  title: courseTitle,
+                  description: _course!['description'] as String?,
                 ),
               ),
+            ),
       child: Column(
         children: [
           const SizedBox(height: 8),
@@ -277,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDrawerPanel() {
+  Widget _buildDrawerPanel(AppLocalizations t) {
     final chaptersToShow = _chapters.take(2).toList();
     final hasCourse = _course != null;
 
@@ -302,19 +324,17 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: Text(
-                'Enroll in a course to start learning!',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: const Color(0xFF94A3B8),
-                ),
+                t.homeEnrollPrompt,
+                style: const TextStyle(fontSize: 14, color: Color(0xFF94A3B8)),
                 textAlign: TextAlign.center,
               ),
             )
           else
             for (int i = 0; i < chaptersToShow.length; i++) ...[
-              _buildChapterItem(chaptersToShow[i]),
+              _buildChapterItem(chaptersToShow[i], t),
               if (i < chaptersToShow.length - 1) const SizedBox(height: 24),
             ],
+          const Spacer(),
           const SizedBox(height: 24),
           SizedBox(
             width: double.infinity,
@@ -347,7 +367,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 0,
               ),
               child: Text(
-                hasCourse ? 'Continue Learning' : 'Browse Courses',
+                hasCourse ? t.homeContinueLearning : t.homeBrowseCourses,
                 style: AppTypography.button.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 18,
@@ -362,19 +382,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildChapterItem(Map<String, dynamic> chapter) {
+  Widget _buildChapterItem(Map<String, dynamic> chapter, AppLocalizations t) {
     final title = chapter['title'] as String? ?? 'Chapter';
-    final lessons = (chapter['lessons'] as List? ?? []).cast<Map<String, dynamic>>();
+    final lessons = (chapter['lessons'] as List? ?? [])
+        .cast<Map<String, dynamic>>();
     final lessonCount = lessons.length;
     final completedCount = lessons
         .where((l) => _completedLessonIds.contains(l['id'] as String))
         .length;
     final isCompleted = lessonCount > 0 && completedCount == lessonCount;
     final subtitle = isCompleted
-        ? 'Completed'
+        ? t.completed
         : lessonCount == 0
-            ? 'No lessons'
-            : '$lessonCount lessons';
+        ? t.homeNoLessons
+        : t.homeLessonCount(lessonCount);
 
     return Opacity(
       opacity: isCompleted ? 1.0 : 0.7,

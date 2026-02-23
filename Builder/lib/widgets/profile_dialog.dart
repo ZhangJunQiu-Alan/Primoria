@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/app_localizations.dart';
+import '../providers/language_provider.dart';
 import '../theme/design_tokens.dart';
 import '../services/supabase_service.dart';
 
 /// User profile edit dialog
-class ProfileDialog extends StatefulWidget {
+class ProfileDialog extends ConsumerStatefulWidget {
   const ProfileDialog({super.key});
 
   @override
-  State<ProfileDialog> createState() => _ProfileDialogState();
+  ConsumerState<ProfileDialog> createState() => _ProfileDialogState();
 }
 
-class _ProfileDialogState extends State<ProfileDialog> {
+class _ProfileDialogState extends ConsumerState<ProfileDialog> {
   final _nameController = TextEditingController();
   bool _isLoading = true;
   bool _isSaving = false;
@@ -51,6 +54,8 @@ class _ProfileDialogState extends State<ProfileDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final t = BuilderLocalizations(ref.watch(languageProvider));
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.lg),
@@ -78,21 +83,21 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.md),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Profile',
-                        style: TextStyle(
+                        t.profileTitle,
+                        style: const TextStyle(
                           fontSize: AppFontSize.xl,
                           fontWeight: FontWeight.w600,
                           color: AppColors.neutral800,
                         ),
                       ),
                       Text(
-                        'Edit your public info',
-                        style: TextStyle(
+                        t.profileSubtitle,
+                        style: const TextStyle(
                           fontSize: AppFontSize.sm,
                           color: AppColors.neutral500,
                         ),
@@ -160,9 +165,9 @@ class _ProfileDialogState extends State<ProfileDialog> {
               TextFormField(
                 initialValue: _email,
                 enabled: false,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email_outlined, size: 20),
+                decoration: InputDecoration(
+                  labelText: t.profileEmail,
+                  prefixIcon: const Icon(Icons.email_outlined, size: 20),
                   filled: true,
                   fillColor: AppColors.neutral100,
                 ),
@@ -174,10 +179,60 @@ class _ProfileDialogState extends State<ProfileDialog> {
               TextFormField(
                 controller: _nameController,
                 enabled: !_isSaving,
-                decoration: const InputDecoration(
-                  labelText: 'Display name',
-                  hintText: 'How should we call you?',
-                  prefixIcon: Icon(Icons.person_outline, size: 20),
+                decoration: InputDecoration(
+                  labelText: t.profileDisplayName,
+                  hintText: t.profileDisplayNameHint,
+                  prefixIcon: const Icon(Icons.person_outline, size: 20),
+                ),
+              ),
+
+              const SizedBox(height: AppSpacing.md),
+
+              // Language tile
+              InkWell(
+                onTap: () => _showLanguagePicker(context, t),
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.neutral300),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.language,
+                        size: 20,
+                        color: AppColors.neutral500,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          t.profileLanguage,
+                          style: const TextStyle(
+                            fontSize: AppFontSize.md,
+                            color: AppColors.neutral700,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        t.langDisplayName,
+                        style: const TextStyle(
+                          fontSize: AppFontSize.sm,
+                          color: AppColors.neutral500,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Icon(
+                        Icons.chevron_right,
+                        size: 18,
+                        color: AppColors.neutral400,
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -192,7 +247,11 @@ class _ProfileDialogState extends State<ProfileDialog> {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.error_outline, size: 18, color: AppColors.error),
+                      const Icon(
+                        Icons.error_outline,
+                        size: 18,
+                        color: AppColors.error,
+                      ),
                       const SizedBox(width: AppSpacing.sm),
                       Expanded(
                         child: Text(
@@ -212,7 +271,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
 
               // Save button
               ElevatedButton(
-                onPressed: _isSaving ? null : _saveProfile,
+                onPressed: _isSaving ? null : () => _saveProfile(t),
                 child: _isSaving
                     ? const SizedBox(
                         width: 20,
@@ -222,7 +281,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
                           valueColor: AlwaysStoppedAnimation(Colors.white),
                         ),
                       )
-                    : const Text('Save'),
+                    : Text(t.profileSave),
               ),
 
               const SizedBox(height: AppSpacing.md),
@@ -230,15 +289,62 @@ class _ProfileDialogState extends State<ProfileDialog> {
               // Sign out
               TextButton(
                 onPressed: _isSaving ? null : _logout,
-                style: TextButton.styleFrom(
-                  foregroundColor: AppColors.error,
-                ),
-                child: const Text('Sign out'),
+                style: TextButton.styleFrom(foregroundColor: AppColors.error),
+                child: Text(t.profileSignOut),
               ),
             ],
           ],
         ),
       ),
+    );
+  }
+
+  void _showLanguagePicker(BuildContext context, BuilderLocalizations t) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        final currentCode = ref.read(languageProvider);
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                t.profileLanguageTitle,
+                style: const TextStyle(
+                  fontSize: AppFontSize.lg,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.neutral800,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _LanguageOption(
+                flag: '🇺🇸',
+                label: BuilderLocalizations.langEnglish,
+                selected: currentCode == 'en',
+                onTap: () {
+                  ref.read(languageProvider.notifier).setLanguage('en');
+                  Navigator.pop(ctx);
+                },
+              ),
+              const SizedBox(height: 12),
+              _LanguageOption(
+                flag: '🇨🇳',
+                label: BuilderLocalizations.langChinese,
+                selected: currentCode == 'zh',
+                onTap: () {
+                  ref.read(languageProvider.notifier).setLanguage('zh');
+                  Navigator.pop(ctx);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -254,7 +360,7 @@ class _ProfileDialogState extends State<ProfileDialog> {
     return name.substring(0, 1).toUpperCase();
   }
 
-  Future<void> _saveProfile() async {
+  Future<void> _saveProfile(BuilderLocalizations t) async {
     setState(() {
       _isSaving = true;
       _errorMessage = null;
@@ -273,14 +379,14 @@ class _ProfileDialogState extends State<ProfileDialog> {
     if (success) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile updated'),
+        SnackBar(
+          content: Text(t.profileUpdated),
           backgroundColor: AppColors.success,
         ),
       );
     } else {
       setState(() {
-        _errorMessage = 'Save failed. Please try again.';
+        _errorMessage = t.profileSaveFailed;
       });
     }
   }
@@ -290,5 +396,61 @@ class _ProfileDialogState extends State<ProfileDialog> {
     if (mounted) {
       Navigator.pop(context);
     }
+  }
+}
+
+/// Single language option row inside the picker sheet
+class _LanguageOption extends StatelessWidget {
+  final String flag;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _LanguageOption({
+    required this.flag,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary100 : AppColors.neutral100,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: selected ? AppColors.primary500 : AppColors.neutral200,
+            width: selected ? 2 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Text(flag, style: const TextStyle(fontSize: 22)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: AppFontSize.md,
+                  fontWeight: FontWeight.w600,
+                  color: selected ? AppColors.primary600 : AppColors.neutral700,
+                ),
+              ),
+            ),
+            if (selected)
+              const Icon(
+                Icons.check_circle,
+                color: AppColors.primary500,
+                size: 20,
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

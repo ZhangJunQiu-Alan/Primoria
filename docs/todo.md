@@ -2,7 +2,7 @@
 
 ## All
 1. [ ] Unify UI style
-2. [ ] Multilingual support
+2. [x] Multilingual support — full EN/ZH switching for Builder and Viewer, browser locale default, SharedPreferences persistence (2026-02-23)
 
 ## Builder
 1. [x] Enable Markdown rendering for text blocks — MarkdownBody in canvas, format toggle in property panel (2026-02-11)
@@ -32,6 +32,7 @@
 27. [x] AI generation diagnostics + validation gate — prompt versioning/fingerprint/source telemetry, parse/validation stage diagnostics, and blocking schema validation on AI output (2026-02-14)
 16. [x] Robust schema validation — centralized validator + import/save/publish enforcement with field-path error details and warning/error severity (2026-02-12)
 17. [ ] Provide region-specific sign-in methods (Lowest priority; Apple Developer Program membership required)
+28. [x] Full EN/ZH multilingual support — BuilderLocalizations class, Riverpod languageProvider (StateNotifier), language tile in Profile Dialog, browser locale auto-detect, translated Landing/Dashboard/Builder/Profile screens (2026-02-23)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
@@ -49,6 +50,7 @@
 13. [ ] Real-time progress updates
 14. [ ] Offline mode with content caching
 15. [x] Landing screen + login/register screen redesign — split-panel layout, CSS-matched design tokens, social login grid (2026-02-17)
+16. [x] Full EN/ZH multilingual support — AppLocalizations class, LanguageProvider (ChangeNotifier), language picker in Profile tab, browser locale auto-detect, translated Home/Search/Course/Lesson/Profile screens (2026-02-23)
 
 ## Content & Curriculum
 1. [ ] Course content management system

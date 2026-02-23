@@ -275,12 +275,16 @@ class SupabaseService {
         await client
             .from('courses')
             .update({
+              'title': course.metadata.title,
               'description': course.metadata.description,
               'tags': course.metadata.tags,
               'difficulty_level': _normalizeDifficulty(
                 course.metadata.difficulty,
               ),
               'estimated_minutes': course.metadata.estimatedMinutes,
+              // Save means draft snapshot in cloud.
+              'status': 'draft',
+              'published_at': null,
             })
             .eq('id', existingCourseId);
 
@@ -343,6 +347,14 @@ class SupabaseService {
       }
 
       await client.rpc('publish_course', params: {'p_course_id': courseId});
+
+      // Defensive write-back:
+      // In environments with old publish_course RPC, lesson content_json may
+      // be overwritten to [] when content_blocks are empty. Restore snapshot.
+      await _writeSnapshotToFirstLesson(
+        courseId: courseId,
+        snapshot: normalized,
+      );
 
       return CourseResult(
         success: true,
@@ -716,6 +728,43 @@ class SupabaseService {
     await client
         .from('lessons')
         .update(lessonPayload)
+        .eq('id', lesson['id'] as String);
+  }
+
+  static Future<void> _writeSnapshotToFirstLesson({
+    required String courseId,
+    required Map<String, dynamic> snapshot,
+  }) async {
+    final chapter = await client
+        .from('chapters')
+        .select('id')
+        .eq('course_id', courseId)
+        .order('sort_key', ascending: true)
+        .limit(1)
+        .maybeSingle();
+
+    if (chapter == null) return;
+
+    final chapterId = chapter['id'] as String;
+    final lesson = await client
+        .from('lessons')
+        .select('id')
+        .eq('chapter_id', chapterId)
+        .order('sort_key', ascending: true)
+        .limit(1)
+        .maybeSingle();
+
+    if (lesson == null) return;
+
+    final metadata = snapshot['metadata'] as Map<String, dynamic>?;
+    final title = (metadata?['title'] as String?)?.trim();
+
+    await client
+        .from('lessons')
+        .update({
+          if (title != null && title.isNotEmpty) 'title': title,
+          'content_json': snapshot,
+        })
         .eq('id', lesson['id'] as String);
   }
 

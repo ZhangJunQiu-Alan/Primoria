@@ -7,6 +7,7 @@ class StorageService {
   static const String _courseKey = 'current_course';
   static const String _autoSaveKey = 'auto_save_enabled';
   static const String _courseDraftPrefix = 'course_draft_';
+  static const String _languageKey = 'language';
 
   static SharedPreferences? _prefs;
 
@@ -111,6 +112,18 @@ class StorageService {
   static Future<bool> getAutoSave() async {
     if (_prefs == null) await init();
     return _prefs!.getBool(_autoSaveKey) ?? true;
+  }
+
+  /// Persist selected language code ('en' | 'zh').
+  static Future<bool> saveLanguage(String code) async {
+    if (_prefs == null) await init();
+    return await _prefs!.setString(_languageKey, code);
+  }
+
+  /// Return the previously saved language code, or null if not set.
+  /// Callers must ensure [init] has been awaited first.
+  static String? getLanguage() {
+    return _prefs?.getString(_languageKey);
   }
 }
 

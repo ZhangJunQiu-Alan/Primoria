@@ -11,6 +11,7 @@ import 'screens/course_screen.dart';
 import 'screens/lesson_screen.dart';
 import 'providers/theme_provider.dart';
 import 'providers/user_provider.dart';
+import 'providers/language_provider.dart';
 import 'services/storage_service.dart';
 import 'services/audio_service.dart';
 import 'services/notification_service.dart';
@@ -61,6 +62,7 @@ class PrimoriaApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()..initialize()),
         ChangeNotifierProvider(create: (_) => UserProvider()..initialize()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()..initialize()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../l10n/app_localizations.dart';
+import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/auth_dialog.dart';
@@ -22,14 +25,14 @@ class _C {
 enum _NavTab { homePage, courseManage, dataCenter, fansManage }
 
 /// Dashboard screen — sidebar + content area
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   _NavTab _currentTab = _NavTab.homePage;
   bool _sidebarOpen = false;
 
@@ -93,6 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = BuilderLocalizations(ref.watch(languageProvider));
     final screenWidth = MediaQuery.of(context).size.width;
     final isCompact = screenWidth < 1024;
 
@@ -103,9 +107,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             children: [
               // Sidebar — fixed on wide, hidden on compact
-              if (!isCompact) _buildSidebar(context),
+              if (!isCompact) _buildSidebar(context, t),
               // Main content
-              Expanded(child: _buildMain(context)),
+              Expanded(child: _buildMain(context, t)),
             ],
           ),
 
@@ -120,7 +124,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               top: 0,
               bottom: 0,
               width: 280,
-              child: _buildSidebar(context),
+              child: _buildSidebar(context, t),
             ),
           ],
         ],
@@ -140,7 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // ═══════════════════════════════════════════════
   //  Sidebar
   // ═══════════════════════════════════════════════
-  Widget _buildSidebar(BuildContext context) {
+  Widget _buildSidebar(BuildContext context, BuilderLocalizations t) {
     return Container(
       width: 260,
       decoration: const BoxDecoration(
@@ -179,20 +183,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // "Build Course" button → navigate to Builder
               _SideAction(
-                label: 'Build Course',
+                label: t.sidebarBuildCourse,
                 onTap: () => context.go('/builder'),
               ),
               const SizedBox(height: 18),
 
               // Nav items
               _NavItem(
-                label: 'Home Page',
+                label: t.navHomePage,
                 active: _currentTab == _NavTab.homePage,
                 onTap: () => setState(() => _currentTab = _NavTab.homePage),
               ),
               const SizedBox(height: 10),
               _NavItem(
-                label: 'Course Manage',
+                label: t.navCourseManage,
                 active: _currentTab == _NavTab.courseManage,
                 onTap: () {
                   setState(() => _currentTab = _NavTab.courseManage);
@@ -201,13 +205,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(height: 10),
               _NavItem(
-                label: 'Data Center',
+                label: t.navDataCenter,
                 active: _currentTab == _NavTab.dataCenter,
                 onTap: () => setState(() => _currentTab = _NavTab.dataCenter),
               ),
               const SizedBox(height: 10),
               _NavItem(
-                label: 'Fans Manage',
+                label: t.navFansManage,
                 active: _currentTab == _NavTab.fansManage,
                 onTap: () => setState(() => _currentTab = _NavTab.fansManage),
               ),
@@ -221,26 +225,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // ═══════════════════════════════════════════════
   //  Main content area
   // ═══════════════════════════════════════════════
-  Widget _buildMain(BuildContext context) {
+  Widget _buildMain(BuildContext context, BuilderLocalizations t) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 28),
         child: Column(
           children: [
             // Topbar
-            _buildTopbar(context),
+            _buildTopbar(context, t),
             const SizedBox(height: 24),
             // Page content
-            Expanded(child: SingleChildScrollView(child: _buildPageContent())),
+            Expanded(child: SingleChildScrollView(child: _buildPageContent(t))),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTopbar(BuildContext context) {
+  Widget _buildTopbar(BuildContext context, BuilderLocalizations t) {
     if (_currentTab == _NavTab.courseManage) {
-      return _buildCourseManageTopbar(context);
+      return _buildCourseManageTopbar(context, t);
     }
     // Default dashboard topbar — avatar at right
     return Row(
@@ -257,14 +261,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  String get _sortLabel {
+  String _sortLabel(BuilderLocalizations t) {
     switch (_sortOrder) {
       case 'student':
-        return 'Sort By student';
+        return t.sortByStudent;
       case 'comments':
-        return 'Sort By comments';
+        return t.sortByComments;
       default:
-        return 'Sort By time';
+        return t.sortByTime;
     }
   }
 
@@ -287,7 +291,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
-  Widget _buildCourseManageTopbar(BuildContext context) {
+  Widget _buildCourseManageTopbar(
+    BuildContext context,
+    BuilderLocalizations t,
+  ) {
     return Column(
       children: [
         // Avatar row
@@ -310,13 +317,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
-              itemBuilder: (_) => const [
-                PopupMenuItem(value: 'time', child: Text('Sort By time')),
-                PopupMenuItem(value: 'student', child: Text('Sort By student')),
-                PopupMenuItem(
-                  value: 'comments',
-                  child: Text('Sort By comments'),
-                ),
+              itemBuilder: (_) => [
+                PopupMenuItem(value: 'time', child: Text(t.sortByTime)),
+                PopupMenuItem(value: 'student', child: Text(t.sortByStudent)),
+                PopupMenuItem(value: 'comments', child: Text(t.sortByComments)),
               ],
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -331,7 +335,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      _sortLabel,
+                      _sortLabel(t),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
@@ -349,8 +353,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             _GhostButton(
-              label: 'Create Course',
-              onTap: _showCreateCourseDialog,
+              label: t.createCourse,
+              onTap: () => _showCreateCourseDialog(t),
             ),
           ],
         ),
@@ -358,23 +362,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildPageContent() {
+  Widget _buildPageContent(BuilderLocalizations t) {
     switch (_currentTab) {
       case _NavTab.homePage:
-        return _buildHomePage();
+        return _buildHomePage(t);
       case _NavTab.courseManage:
-        return _buildCourseManage();
+        return _buildCourseManage(t);
       case _NavTab.dataCenter:
-        return _buildHomePage();
+        return _buildHomePage(t);
       case _NavTab.fansManage:
-        return _buildHomePage();
+        return _buildHomePage(t);
     }
   }
 
   // ═══════════════════════════════════════════════
   //  Home Page content (dashboard)
   // ═══════════════════════════════════════════════
-  Widget _buildHomePage() {
+  Widget _buildHomePage(BuilderLocalizations t) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final wide = constraints.maxWidth > 700;
@@ -386,26 +390,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(flex: 3, child: _buildCourseDataCard(wide)),
+                  Expanded(flex: 3, child: _buildCourseDataCard(wide, t)),
                   const SizedBox(width: 22),
-                  Expanded(flex: 2, child: _buildIncomeCard()),
+                  Expanded(flex: 2, child: _buildIncomeCard(t)),
                 ],
               )
             else ...[
-              _buildCourseDataCard(wide),
+              _buildCourseDataCard(wide, t),
               const SizedBox(height: 22),
-              _buildIncomeCard(),
+              _buildIncomeCard(t),
             ],
             const SizedBox(height: 24),
             // Comments
-            _buildCommentsCard(wide),
+            _buildCommentsCard(wide, t),
           ],
         );
       },
     );
   }
 
-  Widget _buildCourseDataCard(bool wide) {
+  Widget _buildCourseDataCard(bool wide, BuilderLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
@@ -427,9 +431,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Course Data',
-            style: TextStyle(
+          Text(
+            t.dashCourseData,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: _C.text,
@@ -455,15 +459,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   runSpacing: 18,
                   children: [
                     _MetricTile(
-                      label: 'fans:',
+                      label: t.dashFans,
                       value: '${_metrics['fans'] ?? 0}',
                     ),
                     _MetricTile(
-                      label: 'likes:',
+                      label: t.dashLikes,
                       value: '${_metrics['likes'] ?? 0}',
                     ),
                     _MetricTile(
-                      label: 'shares:',
+                      label: t.dashShares,
                       value: '${_metrics['shares'] ?? 0}',
                     ),
                   ],
@@ -473,7 +477,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildIncomeCard() {
+  Widget _buildIncomeCard(BuilderLocalizations t) {
     final income = _metrics['income'] ?? 0;
     return Container(
       padding: const EdgeInsets.all(26),
@@ -496,18 +500,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Income overview',
-            style: TextStyle(
+          Text(
+            t.dashIncomeOverview,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: _C.text,
             ),
           ),
           const SizedBox(height: 18),
-          const Text(
-            'Hold The money:',
-            style: TextStyle(
+          Text(
+            t.dashHoldMoney,
+            style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
               color: _C.muted,
@@ -536,7 +540,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildCommentsCard(bool wide) {
+  Widget _buildCommentsCard(bool wide, BuilderLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
@@ -562,9 +566,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Comments',
-                style: TextStyle(
+              Text(
+                t.dashComments,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: _C.text,
@@ -576,9 +580,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   onTap: () {
                     setState(() => _currentTab = _NavTab.dataCenter);
                   },
-                  child: const Text(
-                    'more',
-                    style: TextStyle(
+                  child: Text(
+                    t.dashMore,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: _C.accent,
@@ -605,19 +609,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                 )
-              : _buildCommentsList(),
+              : _buildCommentsList(t),
         ],
       ),
     );
   }
 
-  Widget _buildCommentsList() {
+  Widget _buildCommentsList(BuilderLocalizations t) {
     if (_comments.isEmpty) {
-      // No comments: one dashed placeholder
-      return const _CommentPlaceholder();
+      return _CommentPlaceholder(label: t.dashNoComments);
     }
 
-    // Show up to 4 comments
     final displayComments = _comments.take(4).toList();
     return Wrap(
       spacing: 18,
@@ -629,9 +631,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // ═══════════════════════════════════════════════
   //  Course Manage content
   // ═══════════════════════════════════════════════
-  Widget _buildCourseManage() {
+  Widget _buildCourseManage(BuilderLocalizations t) {
     if (!SupabaseService.isLoggedIn) {
-      return _buildSignInPrompt();
+      return _buildSignInPrompt(t);
     }
 
     if (_coursesLoading) {
@@ -644,20 +646,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     if (_courses.isEmpty) {
-      return _buildEmptyCourses();
+      return _buildEmptyCourses(t);
     }
 
     return Column(
       children: [
         for (int i = 0; i < _courses.length; i++) ...[
           if (i > 0) const SizedBox(height: 24),
-          _buildCourseCard(_courses[i]),
+          _buildCourseCard(_courses[i], t),
         ],
       ],
     );
   }
 
-  Widget _buildSignInPrompt() {
+  Widget _buildSignInPrompt(BuilderLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(48),
       decoration: BoxDecoration(
@@ -680,9 +682,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           const Icon(Icons.lock_outline, size: 48, color: _C.muted),
           const SizedBox(height: 16),
-          const Text(
-            'Sign in to manage your courses',
-            style: TextStyle(
+          Text(
+            t.signInToManage,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: _C.text,
@@ -699,9 +701,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 borderRadius: BorderRadius.circular(999),
               ),
             ),
-            child: const Text(
-              'Sign In',
-              style: TextStyle(fontWeight: FontWeight.w700),
+            child: Text(
+              t.signIn,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -709,7 +711,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildEmptyCourses() {
+  Widget _buildEmptyCourses(BuilderLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(48),
       decoration: BoxDecoration(
@@ -732,22 +734,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           const Icon(Icons.school_outlined, size: 48, color: _C.muted),
           const SizedBox(height: 16),
-          const Text(
-            'No courses yet',
-            style: TextStyle(
+          Text(
+            t.noCoursesYet,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: _C.text,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Create your first course to get started',
-            style: TextStyle(fontSize: 14, color: _C.muted),
+          Text(
+            t.createFirstCourse,
+            style: const TextStyle(fontSize: 14, color: _C.muted),
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: _showCreateCourseDialog,
+            onPressed: () => _showCreateCourseDialog(t),
             style: ElevatedButton.styleFrom(
               backgroundColor: _C.accent,
               foregroundColor: Colors.white,
@@ -756,9 +758,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 borderRadius: BorderRadius.circular(999),
               ),
             ),
-            child: const Text(
-              'Create Course',
-              style: TextStyle(fontWeight: FontWeight.w700),
+            child: Text(
+              t.createCourse,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -767,7 +769,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   /// Load lesson titles for a single course (async, cached).
-  /// Queries DB directly so courses with no saved content show 0 lessons.
   Future<void> _loadCourseLessons(String courseId) async {
     if (_courseLessons.containsKey(courseId)) return;
     try {
@@ -780,26 +781,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  String _formatTimeAgo(String? updatedAt) {
+  String _formatTimeAgo(String? updatedAt, BuilderLocalizations t) {
     if (updatedAt == null) return '';
     try {
       final dt = DateTime.parse(updatedAt);
       final diff = DateTime.now().difference(dt);
       if (diff.inDays > 0) {
-        return 'Updated ${diff.inDays} day${diff.inDays > 1 ? 's' : ''} ago';
+        return t.updatedDaysAgo(diff.inDays);
       } else if (diff.inHours > 0) {
-        return 'Updated ${diff.inHours} hour${diff.inHours > 1 ? 's' : ''} ago';
+        return t.updatedHoursAgo(diff.inHours);
       }
-      return 'Updated just now';
+      return t.updatedJustNow;
     } catch (_) {
-      return 'Updated recently';
+      return t.updatedRecently;
     }
   }
 
-  Widget _buildCourseCard(Map<String, dynamic> course) {
+  Widget _buildCourseCard(Map<String, dynamic> course, BuilderLocalizations t) {
     final courseId = course['id'] as String;
     final title = course['title'] as String? ?? 'Untitled';
-    final updatedAgo = _formatTimeAgo(course['updated_at'] as String?);
+    final updatedAgo = _formatTimeAgo(course['updated_at'] as String?, t);
 
     // Trigger async lesson loading
     _loadCourseLessons(courseId);
@@ -850,7 +851,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   const SizedBox(height: 4),
                   Text(
-                    'Learned ${lessons.length} times',
+                    t.learnedTimes(lessons.length),
                     style: const TextStyle(color: _C.muted, fontSize: 14),
                   ),
                 ],
@@ -860,13 +861,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _GhostButton(
-                    label: 'Edit',
-                    onTap: () => context.go('/builder?courseId=$courseId'),
+                    label: t.courseEdit,
+                    onTap: () => _showRenameCourseDialog(courseId, title, t),
                   ),
                   const SizedBox(width: 16),
                   _GhostButton(
-                    label: 'Delete',
-                    onTap: () => _confirmDeleteCourse(courseId, title),
+                    label: t.courseDelete,
+                    onTap: () => _confirmDeleteCourse(courseId, title, t),
                   ),
                 ],
               );
@@ -897,14 +898,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // Existing lessons
               for (int i = 0; i < lessons.length; i++)
                 _LessonBox(
-                  label: lessons[i].trim().isNotEmpty
-                      ? lessons[i]
-                      : 'Lecture ${i + 1}',
+                  lessonLabel: t.lessonN(i + 1),
+                  title: _formatLessonCardTitle(lessons[i], courseTitle: title),
                   onTap: () => context.go('/builder?courseId=$courseId'),
                 ),
               // "Add lesson" dashed box → opens builder
               _LessonBox(
-                label: 'Add lesson',
+                title: t.addLesson,
                 dashed: true,
                 onTap: () => context.go('/builder?courseId=$courseId'),
               ),
@@ -915,7 +915,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Future<void> _showCreateCourseDialog() async {
+  Future<void> _showCreateCourseDialog(BuilderLocalizations t) async {
     final nameController = TextEditingController();
     String? errorText;
     bool isCreating = false;
@@ -930,9 +930,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            title: const Text(
-              'Create Course',
-              style: TextStyle(fontWeight: FontWeight.w700, color: _C.text),
+            title: Text(
+              t.createCourseDialogTitle,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                color: _C.text,
+              ),
             ),
             content: SizedBox(
               width: 360,
@@ -944,8 +947,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     controller: nameController,
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: 'Course Name',
-                      hintText: 'e.g. Intro to Python',
+                      labelText: t.courseName,
+                      hintText: t.courseNameHint,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -972,7 +975,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             actions: [
               TextButton(
                 onPressed: isCreating ? null : () => Navigator.pop(ctx),
-                child: const Text('Cancel'),
+                child: Text(t.cancel),
               ),
               ElevatedButton(
                 onPressed: canCreate
@@ -1006,9 +1009,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
-                        'Create',
-                        style: TextStyle(fontWeight: FontWeight.w700),
+                    : Text(
+                        t.create,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
                       ),
               ),
             ],
@@ -1048,19 +1051,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  Future<void> _confirmDeleteCourse(String courseId, String title) async {
+  Future<void> _confirmDeleteCourse(
+    String courseId,
+    String title,
+    BuilderLocalizations t,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Delete Course'),
-        content: Text(
-          'Are you sure you want to delete "$title"? This action cannot be undone.',
-        ),
+        title: Text(t.deleteCourseTitle),
+        content: Text(t.deleteConfirm(title)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(t.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
@@ -1068,7 +1073,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               backgroundColor: _C.danger,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Delete'),
+            child: Text(t.delete),
           ),
         ],
       ),
@@ -1079,8 +1084,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (mounted) {
         if (result.success) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Course deleted'),
+            SnackBar(
+              content: Text(t.courseDeleted),
               backgroundColor: AppColors.success,
             ),
           );
@@ -1097,6 +1102,150 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
+  String _formatLessonCardTitle(
+    String rawTitle, {
+    required String courseTitle,
+  }) {
+    final cleaned = rawTitle.trim();
+    if (cleaned.isEmpty) return 'Untitled lesson';
+
+    final base = courseTitle.trim();
+    if (base.isEmpty) return cleaned;
+
+    final cleanedLower = cleaned.toLowerCase();
+    final baseLower = base.toLowerCase();
+    if (!cleanedLower.startsWith(baseLower)) return cleaned;
+
+    var suffix = cleaned.substring(base.length).trimLeft();
+    if (suffix.startsWith(':') ||
+        suffix.startsWith('-') ||
+        suffix.startsWith('—')) {
+      suffix = suffix.substring(1).trimLeft();
+    }
+
+    return suffix.isNotEmpty ? suffix : cleaned;
+  }
+
+  Future<void> _showRenameCourseDialog(
+    String courseId,
+    String currentTitle,
+    BuilderLocalizations t,
+  ) async {
+    final titleController = TextEditingController(text: currentTitle);
+    String? errorText;
+    bool isSaving = false;
+
+    final renamed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final canSave = titleController.text.trim().isNotEmpty && !isSaving;
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              t.editCourseNameTitle,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                color: _C.text,
+              ),
+            ),
+            content: SizedBox(
+              width: 360,
+              child: TextField(
+                controller: titleController,
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: t.courseName,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  errorText: errorText,
+                ),
+                onChanged: (_) => setDialogState(() => errorText = null),
+                onSubmitted: canSave
+                    ? (_) async {
+                        final result = await SupabaseService.renameCourse(
+                          courseId: courseId,
+                          title: titleController.text,
+                        );
+                        if (!ctx.mounted) return;
+                        if (result.success) {
+                          Navigator.pop(ctx, true);
+                          return;
+                        }
+                        setDialogState(() => errorText = result.message);
+                      }
+                    : null,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isSaving ? null : () => Navigator.pop(ctx, false),
+                child: Text(t.cancel),
+              ),
+              ElevatedButton(
+                onPressed: canSave
+                    ? () async {
+                        setDialogState(() {
+                          isSaving = true;
+                          errorText = null;
+                        });
+                        final result = await SupabaseService.renameCourse(
+                          courseId: courseId,
+                          title: titleController.text,
+                        );
+                        if (!ctx.mounted) return;
+                        if (result.success) {
+                          Navigator.pop(ctx, true);
+                          return;
+                        }
+                        setDialogState(() {
+                          isSaving = false;
+                          errorText = result.message;
+                        });
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _C.accent,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                ),
+                child: isSaving
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        t.save,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    if (renamed == true && mounted) {
+      final t2 = BuilderLocalizations(ref.read(languageProvider));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(t2.courseNameUpdated),
+          backgroundColor: AppColors.success,
+        ),
+      );
+      _loadCourses();
+    }
+  }
+
   void _showProfile(BuildContext context) {
     if (!SupabaseService.isLoggedIn) {
       showDialog(
@@ -1104,9 +1253,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         builder: (ctx) => AuthDialog(
           onSuccess: () {
             if (mounted) {
+              final t = BuilderLocalizations(ref.read(languageProvider));
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Signed in'),
+                SnackBar(
+                  content: Text(t.signedIn),
                   backgroundColor: AppColors.success,
                 ),
               );
@@ -1270,7 +1420,8 @@ class _MetricTile extends StatelessWidget {
 
 /// Dashed placeholder when no comments exist
 class _CommentPlaceholder extends StatelessWidget {
-  const _CommentPlaceholder();
+  final String label;
+  const _CommentPlaceholder({required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -1286,9 +1437,9 @@ class _CommentPlaceholder extends StatelessWidget {
         ),
       ),
       alignment: Alignment.center,
-      child: const Text(
-        'No comments yet',
-        style: TextStyle(
+      child: Text(
+        label,
+        style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 14,
           color: _C.muted,
@@ -1408,11 +1559,17 @@ class _CommentBlock extends StatelessWidget {
 
 /// Lesson box (200x200)
 class _LessonBox extends StatelessWidget {
-  final String label;
+  final String title;
+  final String? lessonLabel;
   final bool dashed;
   final VoidCallback? onTap;
 
-  const _LessonBox({required this.label, this.dashed = false, this.onTap});
+  const _LessonBox({
+    required this.title,
+    this.lessonLabel,
+    this.dashed = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1436,13 +1593,49 @@ class _LessonBox extends StatelessWidget {
             width: dashed ? 2 : 1,
           ),
         ),
-        alignment: Alignment.center,
-        child: Text(
-          label,
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 15,
-            color: dashed ? _C.muted : _C.text,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+          child: Center(
+            child: dashed
+                ? Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                      color: _C.muted,
+                    ),
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (lessonLabel != null) ...[
+                        Text(
+                          lessonLabel!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: _C.muted,
+                            letterSpacing: 0.6,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                      Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          height: 1.35,
+                          color: _C.text,
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),
