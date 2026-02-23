@@ -103,6 +103,54 @@ class _CourseScreenState extends State<CourseScreen> {
     }
   }
 
+  bool _isLessonLocked(Map<String, dynamic> lesson) {
+    final locked = lesson['is_locked'] == true;
+    if (!locked) return false;
+
+    final unlockType = (lesson['unlock_type'] as String? ?? 'none')
+        .trim()
+        .toLowerCase();
+    final prerequisiteId = lesson['prerequisite_lesson_id'] as String?;
+    final prerequisiteDone =
+        prerequisiteId != null && _completedLessonIds.contains(prerequisiteId);
+
+    switch (unlockType) {
+      case 'prerequisite':
+        return !prerequisiteDone;
+      case 'paid':
+        // Entitlement check will be integrated later.
+        return true;
+      case 'prerequisite_or_paid':
+        // Paid unlock not integrated yet; prerequisite path remains valid.
+        return !prerequisiteDone;
+      case 'prerequisite_and_paid':
+        // Paid unlock not integrated yet.
+        return true;
+      case 'none':
+      default:
+        return true;
+    }
+  }
+
+  String? _lockHintForLesson(Map<String, dynamic> lesson, AppLocalizations t) {
+    final unlockType = (lesson['unlock_type'] as String? ?? 'none')
+        .trim()
+        .toLowerCase();
+
+    switch (unlockType) {
+      case 'prerequisite':
+        return t.courseLockedPrerequisite;
+      case 'paid':
+        return t.courseLockedPaid;
+      case 'prerequisite_or_paid':
+        return t.courseLockedPrerequisiteOrPaid;
+      case 'prerequisite_and_paid':
+        return t.courseLockedPrerequisiteAndPaid;
+      default:
+        return t.courseLocked;
+    }
+  }
+
   // ── Actions ───────────────────────────────────────────────────
 
   Future<void> _enroll() async {
@@ -130,6 +178,8 @@ class _CourseScreenState extends State<CourseScreen> {
             String title,
             String chapterTitle,
             bool isFirstInChapter,
+            bool isLocked,
+            String lockHint,
           })
         >[];
 
@@ -139,11 +189,14 @@ class _CourseScreenState extends State<CourseScreen> {
           .cast<Map<String, dynamic>>();
       for (int i = 0; i < lessons.length; i++) {
         final l = lessons[i];
+        final isLocked = _isLessonLocked(l);
         entries.add((
           id: l['id'] as String,
           title: l['title'] as String? ?? 'Lesson',
           chapterTitle: chapterTitle,
           isFirstInChapter: i == 0,
+          isLocked: isLocked,
+          lockHint: _lockHintForLesson(l, t) ?? t.courseLocked,
         ));
       }
     }
@@ -163,7 +216,7 @@ class _CourseScreenState extends State<CourseScreen> {
     // Find the first incomplete lesson (shown as "Up Next")
     String? nextLessonId;
     for (final e in entries) {
-      if (!_completedLessonIds.contains(e.id)) {
+      if (!_completedLessonIds.contains(e.id) && !e.isLocked) {
         nextLessonId = e.id;
         break;
       }
@@ -209,6 +262,8 @@ class _CourseScreenState extends State<CourseScreen> {
           lessonTitle: e.title,
           isDone: isDone,
           isNext: isNext,
+          isLocked: e.isLocked,
+          lockHint: e.lockHint,
           isLast: isLast,
           t: t,
         ),
@@ -223,21 +278,33 @@ class _CourseScreenState extends State<CourseScreen> {
     required String lessonTitle,
     required bool isDone,
     required bool isNext,
+    required bool isLocked,
+    required String lockHint,
     required bool isLast,
     required AppLocalizations t,
   }) {
     final nodeColor = isDone
         ? AppColors.success
+        : isLocked
+        ? AppColors.surfaceVariant
         : isNext
         ? AppColors.primary
         : AppColors.surface;
     final nodeBorderColor = isDone
         ? AppColors.success
+        : isLocked
+        ? AppColors.border
         : isNext
         ? AppColors.primary
         : AppColors.border;
 
     void onTap() {
+      if (isLocked) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(lockHint)));
+        return;
+      }
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -285,11 +352,15 @@ class _CourseScreenState extends State<CourseScreen> {
                       child: Icon(
                         isDone
                             ? Icons.check_rounded
+                            : isLocked
+                            ? Icons.lock_outline_rounded
                             : isNext
                             ? Icons.play_arrow_rounded
                             : Icons.radio_button_unchecked,
                         color: (isDone || isNext)
                             ? Colors.white
+                            : isLocked
+                            ? AppColors.textDisabled
                             : AppColors.textDisabled,
                         size: 22,
                       ),
@@ -324,17 +395,23 @@ class _CourseScreenState extends State<CourseScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
-                    color: isNext
+                    color: isLocked
+                        ? AppColors.surfaceVariant
+                        : isNext
                         ? AppColors.primary.withValues(alpha: 0.04)
                         : AppColors.surface,
                     borderRadius: AppRadius.borderRadiusXl,
-                    border: isNext
+                    border: isLocked
+                        ? Border.all(color: AppColors.border)
+                        : isNext
                         ? Border.all(
                             color: AppColors.primary.withValues(alpha: 0.35),
                             width: 1.5,
                           )
                         : Border.all(color: AppColors.border),
-                    boxShadow: (isDone || isNext) ? AppShadows.sm : null,
+                    boxShadow: (isDone || isNext) && !isLocked
+                        ? AppShadows.sm
+                        : null,
                   ),
                   child: Row(
                     children: [
@@ -342,7 +419,28 @@ class _CourseScreenState extends State<CourseScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (isDone) ...[
+                            if (isLocked) ...[
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.textDisabled.withValues(
+                                    alpha: 0.12,
+                                  ),
+                                  borderRadius: AppRadius.borderRadiusSm,
+                                ),
+                                child: Text(
+                                  t.courseLocked,
+                                  style: AppTypography.labelSmall.copyWith(
+                                    color: AppColors.textSecondary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ] else if (isDone) ...[
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 6,
@@ -388,16 +486,29 @@ class _CourseScreenState extends State<CourseScreen> {
                             Text(
                               lessonTitle,
                               style: AppTypography.title.copyWith(
-                                color: AppColors.textPrimary,
+                                color: isLocked
+                                    ? AppColors.textDisabled
+                                    : AppColors.textPrimary,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                            if (isLocked) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                lockHint,
+                                style: AppTypography.body2.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
                       Icon(
-                        Icons.chevron_right,
-                        color: AppColors.textSecondary,
+                        isLocked ? Icons.lock_outline : Icons.chevron_right,
+                        color: isLocked
+                            ? AppColors.textDisabled
+                            : AppColors.textSecondary,
                         size: 20,
                       ),
                     ],

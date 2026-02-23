@@ -63,27 +63,22 @@ interactions：仅插入，按月分区
 | published_at | timestamptz | 发布时写入 |
 | search_tsv | tsvector | 生成列（title/description/tags）用于全文检索 |
 
-#### chapters（章节/模块）
-| 字段 | 类型 | 说明 |
-| --- | --- | --- |
-| id | UUID (PK) | 默认：gen_random_uuid() 主键 |
-| course_id | UUID (FK) | 外键 -> courses.id，课程 ID |
-| title | Text | 章节标题 |
-| description | Text | 章节描述 |
-| sort_key | bigint | 默认 1000，预留间隔支持插入/拖拽（1000, 2000, 3000）用于排序。Builder 在保存时更新 |
-| is_locked | Boolean | 默认 True。游戏化设计：第一章可设 false；若 true 需完成前置章节或完成付费解锁 |
-UNIQUE(course_id, sort_key) 防止排序冲突
-
 #### lessons（课时）包含用于 Viewer 快速渲染的快照数据
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | id | UUID (PK) | 主键 |
-| chapter_id | UUID (FK) | 外键 -> chapters.id，章节 ID |
+| course_id | UUID (FK) | 外键 -> courses.id，课程 ID（课时直接隶属课程） |
+| group_title | Text | 默认 `Chapter 1`。用于 Viewer/Builder 的分组展示文案（不再有独立 chapters 表） |
+| group_sort_key | bigint | 默认 1000。分组排序键，支持插入与拖拽重排 |
 | title | Text | 课时标题 |
 | type | Enum ('interactive', 'quiz', 'video', 'article') | 默认 interactive，课时类型 |
-| sort_key | bigint | 默认 1000，约束：UNIQUE(chapter_id, sort_key)；Builder 保存时更新排序 |
+| sort_key | bigint | 默认 1000。组内课时排序键；Builder 保存时更新 |
 | xp_reward | Integer | 默认 0，CHECK (xp_reward >= 0)，完成课时的 XP 奖励 |
 | duration_seconds | Integer | 默认 0，预计时长（秒） |
+| is_locked | Boolean | 默认 true，课时锁状态 |
+| unlock_type | Enum ('none','prerequisite','paid','prerequisite_or_paid','prerequisite_and_paid') | 默认 `none`，解锁策略 |
+| prerequisite_lesson_id | UUID (FK -> lessons.id) | 可空，前置课时 ID |
+| paywall_product_id | Text | 可空，付费商品 ID |
 | content_json | JSONB | 默认 `{}`，该课时下全部 `content_blocks` 的聚合快照，含排序后的页面结构 |
 | content_hash | text | 内容哈希，用于变更检测与缓存校验 |
 | created_at | timestamptz | now() 创建时间 |
@@ -118,7 +113,7 @@ UNIQUE(course_id, sort_key) 防止排序冲突
 * 虽然 Viewer 读的是 JSON 快照，但每个组件仍保留原始 `block_id`。
 * 用户交互（如代码提交、滑块拖动）上报包含 `block_id`，可反查 `content_blocks` 进行知识点粒度的通过率与交互分析，支撑教学质量优化。
 
-三个表里的 `sort_key` 仅在 Save/Publish 时更新，避免频繁写库。
+排序相关字段（`group_sort_key`、`sort_key`）仅在 Save/Publish 时更新，避免频繁写库。
 **`sort_key` 的潜在问题**与**对应方案**：
 
 ### 1. 间隔耗尽（理论问题）
@@ -127,7 +122,7 @@ UNIQUE(course_id, sort_key) 防止排序冲突
 
 **方案**
 * 使用 `BIGINT`
-* 当相邻差值 <= 2 时，对该章节/课时重排
+* 当相邻差值 <= 2 时，对课时分组/课时做重排
 * 重排只在 Save/Publish 触发
 > 概率极低，可接受
 
@@ -149,8 +144,8 @@ UNIQUE(course_id, sort_key) 防止排序冲突
 
 **方案**
 * 建立复合索引：
-  * `(course_id, sort_key)`
-  * `(chapter_id, sort_key)`
+  * `(course_id, group_sort_key, sort_key, id)`
+  * `(course_id, sort_key, id)`
   * `(lesson_id, sort_key)`
 
 ### 3. 学习与进度

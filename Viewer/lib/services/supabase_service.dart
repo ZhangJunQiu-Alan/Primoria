@@ -211,7 +211,8 @@ class SupabaseService {
     }
   }
 
-  /// Fetch course detail: course + chapters + lessons + completion status for current user.
+  /// Fetch course detail: course + grouped lessons + completion status.
+  /// Grouping is derived from lessons.group_* fields.
   static Future<Map<String, dynamic>?> getCourseDetail(String courseId) async {
     try {
       final course = await client
@@ -220,14 +221,49 @@ class SupabaseService {
           .eq('id', courseId)
           .single();
 
-      final chapters = await client
-          .from('chapters')
+      final lessonsRes = await client
+          .from('lessons')
           .select(
-            '*, lessons(id, title, type, sort_key, xp_reward, duration_seconds)',
+            'id, title, type, sort_key, xp_reward, duration_seconds, is_locked, unlock_type, prerequisite_lesson_id, paywall_product_id, group_title, group_sort_key',
           )
           .eq('course_id', courseId)
+          .order('group_sort_key')
           .order('sort_key');
-      final chapList = (chapters as List).cast<Map<String, dynamic>>();
+      final lessonList = (lessonsRes as List).cast<Map<String, dynamic>>();
+
+      final grouped = <String, Map<String, dynamic>>{};
+      for (final row in lessonList) {
+        final rawTitle = (row['group_title'] as String?)?.trim();
+        final chapterTitle = (rawTitle == null || rawTitle.isEmpty)
+            ? 'Chapter 1'
+            : rawTitle;
+        final chapterSort = (row['group_sort_key'] as num?)?.toInt() ?? 1000;
+        final chapterKey = '$chapterSort::$chapterTitle';
+
+        final chapter = grouped.putIfAbsent(chapterKey, () {
+          return {
+            'id': chapterKey,
+            'title': chapterTitle,
+            'sort_key': chapterSort,
+            'lessons': <Map<String, dynamic>>[],
+          };
+        });
+
+        final lesson = Map<String, dynamic>.from(row)
+          ..remove('group_title')
+          ..remove('group_sort_key');
+        (chapter['lessons'] as List<Map<String, dynamic>>).add(lesson);
+      }
+
+      final chapList = grouped.values.toList()
+        ..sort((a, b) {
+          final sa = (a['sort_key'] as num?)?.toInt() ?? 0;
+          final sb = (b['sort_key'] as num?)?.toInt() ?? 0;
+          if (sa != sb) return sa.compareTo(sb);
+          final ta = (a['title'] as String? ?? '').toLowerCase();
+          final tb = (b['title'] as String? ?? '').toLowerCase();
+          return ta.compareTo(tb);
+        });
 
       // Sort lessons within each chapter
       for (final ch in chapList) {

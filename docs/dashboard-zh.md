@@ -41,7 +41,7 @@ initState → _loadCourses() → getMyCourses() → _courses → rebuild
 卡片渲染 → _loadCourseLessons(id) → getCourseLessonTitles(id) → _courseLessons cache → rebuild
 ```
 
-`_loadCourseLessons` 直接查询 `chapters` → `lessons`，不走 `getCourseContent`，因此未保存课程内容时能正确显示 0 节课。
+`_loadCourseLessons` 现已按 `course_id` 直接查询 `lessons`，不走 `getCourseContent`，因此未保存课程内容时能正确显示 0 节课。
 
 ## 导航行为
 

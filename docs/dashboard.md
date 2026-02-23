@@ -41,7 +41,7 @@ initState → _loadCourses() → getMyCourses() → _courses → rebuild
 Card render → _loadCourseLessons(id) → getCourseLessonTitles(id) → _courseLessons cache → rebuild
 ```
 
-`_loadCourseLessons` queries `chapters` → `lessons` tables directly (not `getCourseContent`), so courses with no saved content show 0 lessons.
+`_loadCourseLessons` now queries `lessons` directly by `course_id` (not `getCourseContent`), so courses with no saved content show 0 lessons.
 
 ## Navigation
 

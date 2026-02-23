@@ -1,5 +1,32 @@
 # Changelog
 
+## [Unreleased] - 2026-02-23 (Lesson Locks + Chapter Removal + Viewer Tab Stability)
+
+### Summary
+Refactored course structure to remove the `chapters` table and make `lessons` direct children of `courses` with lightweight group metadata. Added lesson-level lock fields and lock-aware Viewer flows, then fixed Library tab first-frame flicker by keeping tab pages alive instead of recreating them on each switch.
+
+### Added
+- **Migration: `20260223000002_lesson_unlock_fields.sql`**: Adds lesson-level lock model (`is_locked`, `unlock_type`, `prerequisite_lesson_id`, `paywall_product_id`) with consistency constraints and backfill from legacy chapter lock semantics
+- **Migration: `20260223000003_remove_chapters_table.sql`**: Adds `lessons.course_id`, `group_title`, `group_sort_key`; backfills from `chapters`; rebuilds lesson/content_blocks RLS policies; updates `publish_course` to use `lessons.course_id`; drops `lessons.chapter_id` and `chapters` table
+- **Viewer lock copy** (`Viewer/lib/l10n/app_localizations.dart`): Added localized lock labels/hints for prerequisite / paid unlock states
+
+### Changed
+- **Builder data access** (`Builder/lib/services/supabase_service.dart`):
+  - `getCourseLessonTitles()` now queries `lessons` directly by `course_id`
+  - Snapshot save/load/write now locate first lesson via `course_id + group_sort_key + sort_key` (no chapter lookup)
+  - Initial lesson insert sets lock defaults (`is_locked=false`, `unlock_type='none'`)
+- **Viewer course detail data source** (`Viewer/lib/services/supabase_service.dart`):
+  - `getCourseDetail()` now fetches from `lessons` directly and derives UI grouping from `group_title/group_sort_key`
+  - Returned shape remains chapter-like (`chapters: [...]`) for UI compatibility, but grouping is now virtual
+- **Viewer lesson lock behavior**:
+  - Home and Course screens now use lesson-level lock fields to decide available lessons and lock hints (`home_screen.dart`, `course_screen.dart`)
+  - "Continue Learning" chooses the first incomplete and unlocked lesson
+
+### Fixed
+- **Viewer tab flicker on Library/Community/Profile navigation**:
+  - `HomeScreen` switched from `switch`-based page recreation to `IndexedStack` to preserve tab states
+  - `SearchScreen` now uses `AutomaticKeepAliveClientMixin` to avoid one-frame loading flash and state reset on tab switch
+
 ## [Unreleased] - 2026-02-23 (Multilingual Support: EN / ZH)
 
 ### Summary
