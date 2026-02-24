@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Flutter Web
         working-directory: hackathon
-        run: flutter build web --base-href "/Primoria/"
+        run: flutter build web --base-href "/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
