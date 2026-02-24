@@ -80,7 +80,7 @@ CREATE POLICY "Users can delete their own courses"
 
 -- ==================== Course Versions Table ====================
 CREATE TABLE course_versions (
-    id TEXT PRIMARY KEY DEFAULT uuid_generate_v4()::TEXT,
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
     course_id TEXT REFERENCES courses(id) ON DELETE CASCADE NOT NULL,
     version INTEGER NOT NULL,
     content JSONB NOT NULL,
