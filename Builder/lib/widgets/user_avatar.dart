@@ -108,7 +108,16 @@ class UserAvatar extends StatelessWidget {
               case 'dashboard':
                 context.go('/dashboard');
               case 'logout':
-                _logout(context);
+                // Delay sign-out until the popup dismiss animation fully
+                // completes (~200 ms). addPostFrameCallback only skips one
+                // frame (~16 ms), which is not enough: the popup's LayoutBuilder
+                // keeps firing during the close animation and calls
+                // PopupMenuTheme.of() on an already-deactivated context →
+                // red-screen crash.
+                Future.delayed(
+                  const Duration(milliseconds: 300),
+                  SupabaseService.signOut,
+                );
             }
           },
         );
@@ -241,12 +250,4 @@ class UserAvatar extends StatelessWidget {
     );
   }
 
-  Future<void> _logout(BuildContext context) async {
-    await SupabaseService.signOut();
-    if (context.mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Signed out')));
-    }
-  }
 }

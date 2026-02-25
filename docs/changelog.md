@@ -1,5 +1,35 @@
 # Changelog
 
+## [Unreleased] - 2026-02-25 (Cloud Supabase + Builder RBAC + Sign-out Crash Fixes)
+
+### Summary
+Migrated both Builder and Viewer from localhost Supabase to the cloud project (`rygafvlzzkvqhhenajzi`). Pushed all 18 local migrations. Added role-based access control (RBAC) to the Builder — only `author` / `admin` roles can enter; `user`-role accounts are blocked on cold start and on session restore. Fixed multiple causes of the "Looking up a deactivated widget's ancestor is unsafe" red-screen crash that appeared on sign-out.
+
+### Added
+- **`Builder/lib/providers/builder_access_provider.dart`** — `BuilderAccessNotifier` singleton (`ChangeNotifier`): checks Supabase role immediately on cold-start session restore and re-checks on every auth event; exposes `AccessState { checking, allowed, denied }` and `deniedMessage` for UI; uses `_isCheckingAccess` flag to distinguish role-check-triggered sign-outs from explicit user sign-outs
+- **`supabase/migrations/20260225000001_restore_public_api_grants.sql`** — Restores `USAGE` on public schema and default privileges after the schema drop-and-recreate that was needed during cloud migration
+
+### Changed
+- **`Builder/lib/main.dart`** + **`Viewer/lib/main.dart`**: `defaultValue` for `SUPABASE_URL` and `SUPABASE_ANON_KEY` changed from `http://127.0.0.1:54321` / demo key to cloud URL / cloud anon key — both apps now talk to `rygafvlzzkvqhhenajzi.supabase.co` by default
+- **`supabase/migrations/20260206025935_initial_schema.sql`**: Replaced `uuid_generate_v4()` with `gen_random_uuid()` — cloud Postgres puts `uuid-ossp` in the `extensions` schema, making `uuid_generate_v4()` unavailable in search path
+- **`Builder/lib/app/router.dart`**: Merged `builderAccessNotifier` into `refreshListenable` via `Listenable.merge`; added `AccessState` checks in `redirect`: hold on `/` while `checking`, bounce `denied` from protected routes, auto-advance `allowed` from `/` to `/dashboard`
+- **`Builder/lib/features/landing/landing_screen.dart`**: Wrapped `build()` in `ListenableBuilder` on `builderAccessNotifier`; added `_buildCheckingScreen()` (spinner) for session-restore in-progress state; added `_buildAccessDeniedBanner()` for access-denied banner (shown to `user`-role accounts); changed `AuthDialog.onSuccess` to `null` — GoRouter handles the `/dashboard` redirect
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**:
+  - `_bootstrapProtectedScreen()` simplified — removed redundant `ensureBuilderAccess` call (now handled by `BuilderAccessNotifier`); directly calls `_loadCourses()` + `_loadDashboardData()`
+  - `_confirmDeleteCourse()`: captures `ScaffoldMessenger.of(context)` **before** `await showDialog` and `await deleteCourse`; uses `messenger.mounted` instead of `mounted` after the async gap
+  - `_showEditCourseDialog()`: captures messenger before `showDialog`; post-dialog snackbar uses `messenger.mounted` / `messenger.showSnackBar`
+  - `_showProfile()._onSuccess`: captures messenger before `showDialog`; success callback uses `messenger.mounted` / `messenger.showSnackBar`
+- **`Builder/lib/widgets/user_avatar.dart`**: Sign-out in popup menu now deferred via `Future.delayed(Duration(milliseconds: 300))` instead of `addPostFrameCallback` — gives the popup dismiss animation (~200 ms) time to fully complete before GoRouter navigates, preventing `PopupMenuTheme.of(context)` being called on a deactivated context in the popup's `_positionBuilder` LayoutBuilder
+- **`Builder/lib/widgets/profile_dialog.dart`**: `_logout()` now pops the dialog **before** calling `signOut()` — prevents GoRouter's subsequent navigation from finding a deactivated dialog context on the stack
+
+### Fixed
+- **`user`-role bypass on session restore**: GoRouter redirect only checked `isLoggedIn`, missing the role check on cold start. `BuilderAccessNotifier` now performs the role check immediately on construction when a session is already present, blocking `user`-role accounts correctly
+- **Red-screen crash on sign-out (popup menu)**: `PopupMenuTheme.of(context)` called inside the popup's `_positionBuilder` LayoutBuilder during the dismiss animation → deactivated context crash. Fixed by delaying sign-out 300 ms until the animation fully completes
+- **Red-screen crash on sign-out (dashboard async handlers)**: `ScaffoldMessenger.of(context)` called after `await` with only `if (mounted)` guard — `mounted` returns `true` even during the deactivated phase. Fixed by capturing the messenger before any async gap and checking `messenger.mounted` afterward
+- **Red-screen crash on sign-out (landing screen)**: `AuthDialog.onSuccess` callback called `ScaffoldMessenger.of(context)` on the already-navigated-away landing screen context. Fixed by setting `onSuccess: null`
+
+---
+
 ## [Unreleased] - 2026-02-23 (Viewer Profile Settings + Avatar Upload + Menu Cleanup)
 
 ### Summary

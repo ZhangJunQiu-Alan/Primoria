@@ -248,6 +248,9 @@ class BuilderLocalizations {
   String get signInEmailNotFound => isZh
       ? '未找到该邮箱对应的账号。请检查拼写或申请访问权限。'
       : "We couldn't find an account with that email. Please check your spelling or apply for access.";
+  String get signInInvalidCredentials => isZh
+      ? '邮箱或密码错误。若你使用 Google 注册，请改用 Google 登录。'
+      : 'Incorrect email or password. If you signed up with Google, use Google sign-in.';
 
   // Schema validation dialog
   String blockingErrors(int n) => isZh ? '阻断错误 ($n)' : 'Blocking errors ($n)';
