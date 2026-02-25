@@ -89,8 +89,16 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
     });
   }
 
-  void _onSuccess() {
+  Future<void> _onSuccess() async {
     if (!mounted) return;
+    final hasAccess = await SupabaseService.ensureBuilderAccess(
+      signOutIfDenied: true,
+    );
+    if (!mounted) return;
+    if (!hasAccess) {
+      setState(() => _error = SupabaseService.builderAccessDeniedMessage);
+      return;
+    }
     final destination =
         SupabaseService.consumePendingRedirect() ?? '/dashboard';
     context.go(destination);
