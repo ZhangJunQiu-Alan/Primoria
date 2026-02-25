@@ -39,6 +39,18 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   void initState() {
     super.initState();
     _courseId = widget.courseId;
+    _bootstrapProtectedScreen();
+  }
+
+  Future<void> _bootstrapProtectedScreen() async {
+    final hasAccess = await SupabaseService.ensureBuilderAccess(
+      signOutIfDenied: true,
+    );
+    if (!mounted) return;
+    if (!hasAccess) {
+      context.go('/');
+      return;
+    }
     if (_courseId != null) {
       _loadCourse();
     }

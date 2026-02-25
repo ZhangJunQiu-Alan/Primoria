@@ -7,13 +7,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import '../services/supabase_service.dart';
+import '../providers/builder_access_provider.dart';
 import '../features/auth/auth_callback_screen.dart';
 import '../features/landing/landing_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/builder/builder_screen.dart';
 import '../features/viewer/viewer_screen.dart';
 
-final _routerRefresh = _GoRouterRefreshStream(SupabaseService.authStateChanges);
+final _routerRefresh = Listenable.merge([
+  _GoRouterRefreshStream(SupabaseService.authStateChanges),
+  builderAccessNotifier,
+]);
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -21,6 +25,7 @@ final appRouter = GoRouter(
   redirect: (context, state) {
     final loggedIn = SupabaseService.isLoggedIn;
     final location = state.matchedLocation;
+    final access = builderAccessNotifier.state;
 
     const protectedRoutes = {'/dashboard', '/builder'};
     final isProtected = protectedRoutes.contains(location);
@@ -28,13 +33,26 @@ final appRouter = GoRouter(
     // Don't redirect away from the callback screen — let it process first
     if (location == '/auth/callback') return null;
 
+    // Not logged in → bounce from protected routes
     if (!loggedIn && isProtected) {
-      // Store the intended destination so OAuth callback can restore it
       SupabaseService.pendingRedirect = state.uri.toString();
       return '/';
     }
 
-    if (loggedIn && location == '/') {
+    // Session restored but role check still in progress →
+    // hold the user on landing (which shows a loading screen) instead of
+    // letting them through to a protected route.
+    if (loggedIn && access == AccessState.checking) {
+      return isProtected ? '/' : null;
+    }
+
+    // Role check failed → stay on landing; the notifier already signed them out
+    if (access == AccessState.denied && isProtected) {
+      return '/';
+    }
+
+    // Logged in + role verified → advance from landing to dashboard
+    if (loggedIn && access == AccessState.allowed && location == '/') {
       return '/dashboard';
     }
 

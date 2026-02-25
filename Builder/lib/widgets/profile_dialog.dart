@@ -361,6 +361,9 @@ class _ProfileDialogState extends ConsumerState<ProfileDialog> {
   }
 
   Future<void> _saveProfile(BuilderLocalizations t) async {
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.maybeOf(context);
+
     setState(() {
       _isSaving = true;
       _errorMessage = null;
@@ -377,13 +380,17 @@ class _ProfileDialogState extends ConsumerState<ProfileDialog> {
     });
 
     if (success) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(t.profileUpdated),
-          backgroundColor: AppColors.success,
-        ),
-      );
+      if (navigator.mounted && navigator.canPop()) {
+        navigator.pop();
+      }
+      if (messenger != null && messenger.mounted) {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(t.profileUpdated),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      }
     } else {
       setState(() {
         _errorMessage = t.profileSaveFailed;
@@ -392,10 +399,11 @@ class _ProfileDialogState extends ConsumerState<ProfileDialog> {
   }
 
   Future<void> _logout() async {
+    // Dismiss the dialog BEFORE signing out so that GoRouter's subsequent
+    // navigation to '/' (triggered by the signedOut event) doesn't find a
+    // deactivated dialog context still on the stack.
+    if (mounted) Navigator.of(context).pop();
     await SupabaseService.signOut();
-    if (mounted) {
-      Navigator.pop(context);
-    }
   }
 }
 

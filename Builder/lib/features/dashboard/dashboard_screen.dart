@@ -55,6 +55,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    _bootstrapProtectedScreen();
+  }
+
+  void _bootstrapProtectedScreen() {
+    // Access is already guarded by BuilderAccessNotifier + GoRouter redirect.
+    // Just kick off data loading.
     _loadCourses();
     _loadDashboardData();
   }
@@ -1330,6 +1336,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     String title,
     BuilderLocalizations t,
   ) async {
+    // Capture messenger before any async gap so it remains safe to use
+    // even if this widget is deactivated while the dialog / network call runs.
+    final messenger = ScaffoldMessenger.of(context);
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -1355,23 +1365,22 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
     if (confirmed == true) {
       final result = await SupabaseService.deleteCourse(courseId);
-      if (mounted) {
-        if (result.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(t.courseDeleted),
-              backgroundColor: AppColors.success,
-            ),
-          );
-          _loadCourses(); // refresh list
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(result.message),
-              backgroundColor: AppColors.error,
-            ),
-          );
-        }
+      if (!messenger.mounted) return;
+      if (result.success) {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(t.courseDeleted),
+            backgroundColor: AppColors.success,
+          ),
+        );
+        if (mounted) _loadCourses(); // refresh list
+      } else {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(result.message),
+            backgroundColor: AppColors.error,
+          ),
+        );
       }
     }
   }
@@ -1405,6 +1414,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     BuilderLocalizations t,
   ) async {
     final courseId = course['id'] as String;
+    // Capture before async gap (showDialog completes asynchronously).
+    final messenger = ScaffoldMessenger.of(context);
     final titleController = TextEditingController(
       text: course['title'] as String? ?? '',
     );
@@ -1791,35 +1802,38 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ),
     );
 
-    if (updated == true && mounted) {
+    if (updated == true && messenger.mounted) {
       final t2 = BuilderLocalizations(ref.read(languageProvider));
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         SnackBar(
           content: Text(t2.courseInfoUpdated),
           backgroundColor: AppColors.success,
         ),
       );
-      _loadCourses();
+      if (mounted) _loadCourses();
     }
   }
 
   void _showProfile(BuildContext context) {
     if (!SupabaseService.isLoggedIn) {
+      // Capture messenger before the dialog opens (async boundary).
+      final messenger = ScaffoldMessenger.of(context);
       showDialog(
         context: context,
         builder: (ctx) => AuthDialog(
           onSuccess: () {
-            if (mounted) {
+            if (messenger.mounted) {
               final t = BuilderLocalizations(ref.read(languageProvider));
-              ScaffoldMessenger.of(context).showSnackBar(
+              messenger.showSnackBar(
                 SnackBar(
                   content: Text(t.signedIn),
                   backgroundColor: AppColors.success,
                 ),
               );
-              // Reload data after sign in
-              _loadCourses();
-              _loadDashboardData();
+              if (mounted) {
+                _loadCourses();
+                _loadDashboardData();
+              }
             }
           },
         ),
