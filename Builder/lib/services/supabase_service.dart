@@ -11,6 +11,10 @@ class SupabaseService {
   SupabaseService._();
 
   static SupabaseClient get client => Supabase.instance.client;
+  static const Set<String> _builderRoles = {'author', 'admin'};
+  static const String _builderAccessDeniedMessage =
+      'This account does not have Builder access. '
+      'Please use an author/admin account.';
 
   /// Current user
   static User? get currentUser => client.auth.currentUser;
@@ -21,6 +25,8 @@ class SupabaseService {
   /// Auth state changes
   static Stream<AuthState> get authStateChanges =>
       client.auth.onAuthStateChange;
+
+  static String get builderAccessDeniedMessage => _builderAccessDeniedMessage;
 
   // ==================== Auth ====================
 
@@ -84,6 +90,13 @@ class SupabaseService {
         );
 
         if (response.user != null) {
+          final hasAccess = await ensureBuilderAccess(signOutIfDenied: true);
+          if (!hasAccess) {
+            return const AuthResult(
+              success: false,
+              message: _builderAccessDeniedMessage,
+            );
+          }
           return AuthResult(success: true, message: 'Signed in');
         } else {
           return const AuthResult(success: false, message: 'Sign in failed');
@@ -178,6 +191,38 @@ class SupabaseService {
     } catch (e) {
       return null;
     }
+  }
+
+  static bool isBuilderRole(String? role) {
+    if (role == null) return false;
+    return _builderRoles.contains(role);
+  }
+
+  static Future<String?> getCurrentUserRole() async {
+    if (currentUser == null) return null;
+    try {
+      final profile = await client
+          .from('profiles')
+          .select('role')
+          .eq('id', currentUser!.id)
+          .maybeSingle();
+      return profile?['role']?.toString();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Checks whether current account can access Builder pages/features.
+  static Future<bool> ensureBuilderAccess({
+    bool signOutIfDenied = false,
+  }) async {
+    if (currentUser == null) return false;
+    final role = await getCurrentUserRole();
+    final allowed = isBuilderRole(role);
+    if (!allowed && signOutIfDenied) {
+      await signOut();
+    }
+    return allowed;
   }
 
   /// Update user profile
