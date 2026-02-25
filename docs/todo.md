@@ -36,6 +36,9 @@
 29. [x] Rich Create/Edit Course form — all metadata fields (description, difficulty, estimated hours, price tier, conditional price), `updateCourseInfo()` API, snackbar feedback (2026-02-24)
 30. [x] Course thumbnail image upload — local file pick + Supabase Storage bucket (`course-thumbnails`), upload/URL toggle UI with preview, `uploadCourseThumbnail()` returning (url, error) tuple (2026-02-24)
 31. [x] Fix `pickImageFileBytes` silent hang — switched from `readAsArrayBuffer` (returns unusable `ByteBuffer` in Dart Web) to `readAsDataUrl` + `base64.decode()`; also fixed `uploadCourseThumbnail` swallowing Supabase errors (2026-02-24)
+32. [x] Migrate Builder + Viewer to cloud Supabase — both apps now default to `rygafvlzzkvqhhenajzi.supabase.co`; all 18 migrations pushed; `uuid_generate_v4()` → `gen_random_uuid()` for cloud compatibility (2026-02-25)
+33. [x] Role-based access control for Builder — `BuilderAccessNotifier` singleton checks role on cold-start and auth events; `user`-role accounts blocked; router guards updated; landing screen shows checking spinner + access-denied banner (2026-02-25)
+34. [x] Fix sign-out red-screen crash — (a) popup menu: delay signOut 300 ms for dismiss animation; (b) dashboard async handlers: capture `ScaffoldMessenger` before `await`, check `messenger.mounted`; (c) profile dialog: pop before signOut; (d) landing `onSuccess`: set to null (2026-02-25)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
+import '../../providers/builder_access_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
 
@@ -59,17 +60,11 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
       barrierColor: const Color(0xB80F1826),
       builder: (ctx) => _SignInModal(
         t: t,
-        onSuccess: () {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(t.signedIn),
-                backgroundColor: AppColors.success,
-              ),
-            );
-            context.go('/dashboard');
-          }
-        },
+        // Navigation is driven entirely by builderAccessNotifier + GoRouter.
+        // Calling ScaffoldMessenger / context.go here is unsafe: by the time
+        // onSuccess fires, the router may have already navigated away and
+        // deactivated this context.
+        onSuccess: null,
       ),
     );
   }
@@ -78,47 +73,162 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
   Widget build(BuildContext context) {
     final t = BuilderLocalizations(ref.watch(languageProvider));
 
-    return Scaffold(
-      backgroundColor: _C.bg,
-      body: Stack(
-        children: [
-          // ── Decorative blur blobs ──
-          Positioned(
-            top: -120,
-            left: -120,
-            child: _BlurBlob(color: _C.accent.withValues(alpha: 0.22)),
-          ),
-          Positioned(
-            bottom: -120,
-            right: -120,
-            child: _BlurBlob(color: _C.primary.withValues(alpha: 0.28)),
-          ),
+    return ListenableBuilder(
+      listenable: builderAccessNotifier,
+      builder: (context, _) {
+        final access = builderAccessNotifier.state;
+        final deniedMessage = builderAccessNotifier.deniedMessage;
 
-          // ── Scrollable content ──
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
-              child: FadeTransition(
-                opacity: _fadeAnim,
-                child: SlideTransition(
-                  position: _slideAnim,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildHeader(),
-                      _buildHero(context, t),
-                      const SizedBox(height: 40),
-                      _buildFeatureRow(t),
-                      const SizedBox(height: 40),
-                      _buildCtaBand(context, t),
-                      const SizedBox(height: 80),
-                    ],
+        // ── Checking: session restored but role not yet verified ──
+        if (SupabaseService.isLoggedIn && access == AccessState.checking) {
+          return _buildCheckingScreen();
+        }
+
+        // ── Normal landing page (with optional access-denied banner) ──
+        return Scaffold(
+          backgroundColor: _C.bg,
+          body: Stack(
+            children: [
+              // Decorative blur blobs
+              Positioned(
+                top: -120,
+                left: -120,
+                child: _BlurBlob(color: _C.accent.withValues(alpha: 0.22)),
+              ),
+              Positioned(
+                bottom: -120,
+                right: -120,
+                child: _BlurBlob(color: _C.primary.withValues(alpha: 0.28)),
+              ),
+
+              // Scrollable content
+              SafeArea(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.zero,
+                  child: FadeTransition(
+                    opacity: _fadeAnim,
+                    child: SlideTransition(
+                      position: _slideAnim,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Push content down when the denied banner is shown
+                          if (deniedMessage != null)
+                            const SizedBox(height: 56),
+                          _buildHeader(),
+                          _buildHero(context, t),
+                          const SizedBox(height: 40),
+                          _buildFeatureRow(t),
+                          const SizedBox(height: 40),
+                          _buildCtaBand(context, t),
+                          const SizedBox(height: 80),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+
+              // Access-denied banner — floats above content
+              if (deniedMessage != null)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: _buildAccessDeniedBanner(deniedMessage),
+                ),
+            ],
           ),
-        ],
+        );
+      },
+    );
+  }
+
+  // ─── Verifying session screen ────────────────────────────────────────────
+  Widget _buildCheckingScreen() {
+    return Scaffold(
+      backgroundColor: _C.bg,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/imgs/logo32.png',
+              width: 52,
+              height: 52,
+              errorBuilder: (_, __, ___) =>
+                  const Icon(Icons.school, size: 52, color: _C.accent),
+            ),
+            const SizedBox(height: 28),
+            const SizedBox(
+              width: 26,
+              height: 26,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: _C.accent,
+              ),
+            ),
+            const SizedBox(height: 18),
+            const Text(
+              'Verifying access…',
+              style: TextStyle(fontSize: 15, color: _C.muted),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─── Access-denied banner ────────────────────────────────────────────────
+  Widget _buildAccessDeniedBanner(String message) {
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 11),
+        decoration: const BoxDecoration(
+          color: Color(0xFFFFF3CD),
+          border: Border(
+            bottom: BorderSide(color: Color(0x55D4A017)),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x18000000),
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              size: 20,
+              color: Color(0xFF996600),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF664D00),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: builderAccessNotifier.clearDeniedMessage,
+              child: const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Icon(
+                  Icons.close_rounded,
+                  size: 18,
+                  color: Color(0xFF996600),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -800,7 +910,7 @@ class _SignInModalState extends State<_SignInModal> {
       Navigator.pop(context);
       widget.onSuccess?.call();
     } else if (result.isUserNotFound) {
-      _setStatus(t.signInEmailNotFound, error: true);
+      _setStatus(t.signInInvalidCredentials, error: true);
     } else {
       _setStatus(result.message, error: true);
     }
