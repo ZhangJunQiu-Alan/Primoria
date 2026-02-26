@@ -115,7 +115,6 @@ A **UGC course authoring platform** for STEM education. Users can build interact
 | `code-playground` | Runnable code editor | P0 (core for Python courses) |
 | `multiple-choice` | Single/multiple choice questions | P0 |
 | `fill-blank` | Fill-in-the-blank questions | P1 |
-| `video` | Video embed | P1 |
 
 #### Interactive Animation Modules (Phase 2)
 
@@ -352,7 +351,7 @@ class FunctionFlowPainter extends CustomPainter {
 
 See **`course-json-guide.md`** for the full Course JSON authoring guide with examples.
 
-Summary: `Course → Pages → Blocks`. Block types: text, image, codeBlock, codePlayground, multipleChoice, fillBlank, video (MVP); function-flow, data-structure, code-execution, geometry, graph-plot, custom-canvas (Phase 2).
+Summary: `Course → Pages → Blocks`. MVP block types in current Builder UI: text, image, codeBlock, codePlayground, multipleChoice, fillBlank. Phase 2 types: function-flow, data-structure, code-execution, geometry, graph-plot, custom-canvas.
 
 ---
 
