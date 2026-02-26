@@ -276,20 +276,27 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Email
-                  _buildLabel('Email'),
-                  const SizedBox(height: 8),
-                  _buildInput(
-                    controller: _emailController,
-                    placeholder: 'you@example.com or phone',
-                    keyboardType: TextInputType.emailAddress,
+                  // Email + Password wrapped in AutofillGroup so the
+                  // browser/password-manager can offer to save & autofill.
+                  AutofillGroup(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildLabel('Email'),
+                        const SizedBox(height: 8),
+                        _buildInput(
+                          controller: _emailController,
+                          placeholder: 'you@example.com or phone',
+                          keyboardType: TextInputType.emailAddress,
+                          autofillHints: const [AutofillHints.email],
+                        ),
+                        const SizedBox(height: 14),
+                        _buildLabel('Password'),
+                        const SizedBox(height: 8),
+                        _buildPasswordInput(),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 14),
-
-                  // Password
-                  _buildLabel('Password'),
-                  const SizedBox(height: 8),
-                  _buildPasswordInput(),
                   const SizedBox(height: 8),
 
                   // Remember me + Forgot password
@@ -454,10 +461,12 @@ class _LoginScreenState extends State<LoginScreen> {
     required TextEditingController controller,
     required String placeholder,
     TextInputType? keyboardType,
+    List<String>? autofillHints,
   }) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
+      autofillHints: autofillHints,
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },
@@ -492,6 +501,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextField(
       controller: _passwordController,
       obscureText: _obscurePassword,
+      autofillHints: const [AutofillHints.password],
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },

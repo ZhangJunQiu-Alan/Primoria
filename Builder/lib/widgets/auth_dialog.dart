@@ -159,101 +159,108 @@ class _AuthDialogState extends State<AuthDialog> {
   }
 
   Widget _buildForm() {
-    return Column(
-      children: [
-        // Show display name input on registration
-        if (_mode == AuthMode.register) ...[
+    return AutofillGroup(
+      child: Column(
+        children: [
+          // Show display name input on registration
+          if (_mode == AuthMode.register) ...[
+            TextFormField(
+              controller: _nameController,
+              enabled: !_isLoading,
+              autofillHints: const [AutofillHints.name],
+              decoration: const InputDecoration(
+                labelText: 'Display name',
+                hintText: 'How should we call you?',
+                prefixIcon: Icon(Icons.person_outline, size: 20),
+              ),
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
+
+          // Email
           TextFormField(
-            controller: _nameController,
+            controller: _emailController,
             enabled: !_isLoading,
+            keyboardType: TextInputType.emailAddress,
+            autofillHints: const [AutofillHints.email],
             decoration: const InputDecoration(
-              labelText: 'Display name',
-              hintText: 'How should we call you?',
-              prefixIcon: Icon(Icons.person_outline, size: 20),
+              labelText: 'Email',
+              hintText: 'example@email.com',
+              prefixIcon: Icon(Icons.email_outlined, size: 20),
             ),
             textInputAction: TextInputAction.next,
-          ),
-          const SizedBox(height: AppSpacing.md),
-        ],
-
-        // Email
-        TextFormField(
-          controller: _emailController,
-          enabled: !_isLoading,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-            labelText: 'Email',
-            hintText: 'example@email.com',
-            prefixIcon: Icon(Icons.email_outlined, size: 20),
-          ),
-          textInputAction: TextInputAction.next,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter your email';
-            }
-            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-              return 'Please enter a valid email address';
-            }
-            return null;
-          },
-        ),
-
-        // Password (not in forgot password mode)
-        if (_mode != AuthMode.forgotPassword) ...[
-          const SizedBox(height: AppSpacing.md),
-          TextFormField(
-            controller: _passwordController,
-            enabled: !_isLoading,
-            obscureText: _obscurePassword,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              hintText: _mode == AuthMode.register
-                  ? 'At least 6 characters'
-                  : 'Enter your password',
-              prefixIcon: const Icon(Icons.lock_outline, size: 20),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                  size: 20,
-                  color: AppColors.neutral400,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _obscurePassword = !_obscurePassword;
-                  });
-                },
-              ),
-            ),
-            textInputAction: _mode == AuthMode.register
-                ? TextInputAction.next
-                : TextInputAction.done,
-            onFieldSubmitted: _mode == AuthMode.login ? (_) => _submit() : null,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter a password';
+                return 'Please enter your email';
               }
-              if (_mode == AuthMode.register && value.length < 6) {
-                return 'Password must be at least 6 characters';
+              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                return 'Please enter a valid email address';
               }
               return null;
             },
           ),
-        ],
 
-        // Confirm password (register mode)
-        if (_mode == AuthMode.register) ...[
-          const SizedBox(height: AppSpacing.md),
-          TextFormField(
-            controller: _confirmPasswordController,
-            enabled: !_isLoading,
-            obscureText: _obscurePassword,
-            decoration: const InputDecoration(
-              labelText: 'Confirm password',
-              hintText: 'Enter password again',
-              prefixIcon: Icon(Icons.lock_outline, size: 20),
+          // Password (not in forgot password mode)
+          if (_mode != AuthMode.forgotPassword) ...[
+            const SizedBox(height: AppSpacing.md),
+            TextFormField(
+              controller: _passwordController,
+              enabled: !_isLoading,
+              obscureText: _obscurePassword,
+              autofillHints: _mode == AuthMode.register
+                  ? const [AutofillHints.newPassword]
+                  : const [AutofillHints.password],
+              decoration: InputDecoration(
+                labelText: 'Password',
+                hintText: _mode == AuthMode.register
+                    ? 'At least 6 characters'
+                    : 'Enter your password',
+                prefixIcon: const Icon(Icons.lock_outline, size: 20),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    size: 20,
+                    color: AppColors.neutral400,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                ),
+              ),
+              textInputAction: _mode == AuthMode.register
+                  ? TextInputAction.next
+                  : TextInputAction.done,
+              onFieldSubmitted: _mode == AuthMode.login ? (_) => _submit() : null,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a password';
+                }
+                if (_mode == AuthMode.register && value.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
             ),
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => _submit(),
+          ],
+
+          // Confirm password (register mode)
+          if (_mode == AuthMode.register) ...[
+            const SizedBox(height: AppSpacing.md),
+            TextFormField(
+              controller: _confirmPasswordController,
+              enabled: !_isLoading,
+              obscureText: _obscurePassword,
+              autofillHints: const [AutofillHints.newPassword],
+              decoration: const InputDecoration(
+                labelText: 'Confirm password',
+                hintText: 'Enter password again',
+                prefixIcon: Icon(Icons.lock_outline, size: 20),
+              ),
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) => _submit(),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please confirm your password';
@@ -297,6 +304,7 @@ class _AuthDialogState extends State<AuthDialog> {
           ),
         ],
       ],
+      ),
     );
   }
 
