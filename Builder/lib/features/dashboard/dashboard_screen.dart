@@ -7,6 +7,8 @@ import '../../l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
+import '../../services/storage_service.dart';
+import '../../services/ai_course_generator.dart';
 import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
@@ -361,9 +363,20 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
               ),
             ),
-            _GhostButton(
-              label: t.createCourse,
-              onTap: () => _showCreateCourseDialog(t),
+            // Right-side actions: AI Generate (Beta) + Create Course
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _AiBetaButton(
+                  label: t.aiGenerateBeta,
+                  onTap: () => _showOneSentenceGenerateDialog(t),
+                ),
+                const SizedBox(width: 10),
+                _GhostButton(
+                  label: t.createCourse,
+                  onTap: () => _showCreateCourseDialog(t),
+                ),
+              ],
             ),
           ],
         ),
@@ -920,6 +933,438 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  // ─────────────────────────────────────────────────────
+  //  AI one-sentence generate dialog (Beta)
+  // ─────────────────────────────────────────────────────
+
+  Future<void> _showOneSentenceGenerateDialog(BuilderLocalizations t) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final descController = TextEditingController();
+    String difficulty = 'beginner';
+    String animationStyle = 'minimal';
+    String audience = 'beginners';
+    bool isGenerating = false;
+    String? errorMessage;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: !isGenerating,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final hasText = descController.text.trim().isNotEmpty;
+
+          // ── helpers ──
+          Widget _sectionLabel(String text) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: _C.muted,
+              ),
+            ),
+          );
+
+          Widget _dropdown<T>({
+            required T value,
+            required List<DropdownMenuItem<T>> items,
+            required ValueChanged<T?> onChanged,
+          }) => DropdownButtonFormField<T>(
+            value: value,
+            items: items,
+            onChanged: isGenerating ? null : onChanged,
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          );
+
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            titlePadding: const EdgeInsets.fromLTRB(24, 20, 16, 0),
+            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+            actionsPadding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            t.aiGenerateDialogTitle,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: _C.text,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          // Orange "Beta" badge
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 7,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFF8C00).withValues(
+                                alpha: 0.12,
+                              ),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(
+                                color: const Color(0xFFFF8C00).withValues(
+                                  alpha: 0.5,
+                                ),
+                              ),
+                            ),
+                            child: const Text(
+                              'Beta',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFCC6600),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        t.aiGenerateDialogSubtitle,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: _C.muted,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: isGenerating ? null : () => Navigator.pop(ctx),
+                  icon: const Icon(Icons.close, color: _C.muted, size: 20),
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: 480,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // ── Description textarea ──────────────────────────
+                    TextField(
+                      controller: descController,
+                      enabled: !isGenerating,
+                      autofocus: true,
+                      minLines: 3,
+                      maxLines: 6,
+                      decoration: InputDecoration(
+                        hintText: t.aiGeneratePlaceholder,
+                        hintStyle: const TextStyle(
+                          fontSize: 13,
+                          color: _C.muted,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: _C.accent,
+                            width: 1.5,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(14),
+                      ),
+                      onChanged: (_) => setDialogState(() {}),
+                    ),
+
+                    // ── Options (animate in when text is present) ─────
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOut,
+                      child: hasText
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const SizedBox(height: 20),
+                                // Options header
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.tune_rounded,
+                                      size: 15,
+                                      color: _C.muted,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      t.aiGenerateOptionsLabel,
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: _C.muted,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                // Difficulty
+                                _sectionLabel(t.aiGenerateDifficulty),
+                                _dropdown<String>(
+                                  value: difficulty,
+                                  onChanged: (v) =>
+                                      setDialogState(() => difficulty = v!),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'beginner',
+                                      child: Text(t.aiGenerateDiffBeginner),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'intermediate',
+                                      child: Text(
+                                        t.aiGenerateDiffIntermediate,
+                                      ),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'advanced',
+                                      child: Text(t.aiGenerateDiffAdvanced),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                // Animation style
+                                _sectionLabel(t.aiGenerateStyle),
+                                _dropdown<String>(
+                                  value: animationStyle,
+                                  onChanged: (v) =>
+                                      setDialogState(
+                                        () => animationStyle = v!,
+                                      ),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'minimal',
+                                      child: Text(t.aiGenerateStyleMinimal),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'cartoon',
+                                      child: Text(t.aiGenerateStyleCartoon),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'realistic',
+                                      child: Text(t.aiGenerateStyleRealistic),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                // Target audience
+                                _sectionLabel(t.aiGenerateAudience),
+                                _dropdown<String>(
+                                  value: audience,
+                                  onChanged: (v) =>
+                                      setDialogState(() => audience = v!),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'beginners',
+                                      child: Text(
+                                        t.aiGenerateAudienceBeginner,
+                                      ),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'intermediate',
+                                      child: Text(
+                                        t.aiGenerateAudienceIntermediate,
+                                      ),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'advanced',
+                                      child: Text(
+                                        t.aiGenerateAudienceAdvanced,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+
+                    // ── Error message ─────────────────────────────────
+                    if (errorMessage != null) ...[
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.error.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppColors.error.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.error_outline,
+                              size: 16,
+                              color: AppColors.error,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                errorMessage!,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.error,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 4),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isGenerating ? null : () => Navigator.pop(ctx),
+                child: Text(
+                  t.cancel,
+                  style: const TextStyle(color: _C.muted),
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: isGenerating
+                    ? null
+                    : () async {
+                        final desc = descController.text.trim();
+                        if (desc.isEmpty) {
+                          setDialogState(
+                            () => errorMessage = t.aiGenerateEmptyHint,
+                          );
+                          return;
+                        }
+                        setDialogState(() {
+                          isGenerating = true;
+                          errorMessage = null;
+                        });
+
+                        final result =
+                            await AICourseGenerator.generateFromDescription(
+                          description: desc,
+                          difficulty: difficulty,
+                          animationStyle: animationStyle,
+                          audience: audience,
+                        );
+
+                        if (!ctx.mounted) return;
+
+                        if (!result.success || result.course == null) {
+                          setDialogState(() {
+                            isGenerating = false;
+                            errorMessage =
+                                result.message.isNotEmpty
+                                    ? result.message
+                                    : t.aiGenerateFailed;
+                          });
+                          return;
+                        }
+
+                        // Save to Supabase and open in Builder
+                        final course = result.course!;
+                        final createResult =
+                            await SupabaseService.createCourseRow(
+                          title: course.metadata.title,
+                          description: course.metadata.description,
+                          difficultyLevel: course.metadata.difficulty,
+                          estimatedMinutes: course.metadata.estimatedMinutes,
+                          priceTier: 'free',
+                          price: 0,
+                        );
+
+                        if (!ctx.mounted) return;
+
+                        if (!createResult.success ||
+                            createResult.courseId == null) {
+                          setDialogState(() {
+                            isGenerating = false;
+                            errorMessage = createResult.message;
+                          });
+                          return;
+                        }
+
+                        // Dismiss dialog then navigate
+                        if (ctx.mounted) Navigator.pop(ctx);
+                        if (messenger.mounted) {
+                          messenger.showSnackBar(
+                            SnackBar(
+                              content: Text(t.aiGenerateSuccess),
+                              backgroundColor: AppColors.success,
+                            ),
+                          );
+                        }
+
+                        if (mounted) {
+                          // Store the AI-generated content as a local draft so
+                          // the Builder can restore it immediately on load.
+                          await StorageService.saveCourseDraft(
+                            createResult.courseId!,
+                            course,
+                          );
+                          context.go(
+                            '/builder?courseId=${createResult.courseId}',
+                          );
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF8C00),
+                  foregroundColor: Colors.white,
+                  disabledBackgroundColor: const Color(0xFFFF8C00).withValues(
+                    alpha: 0.5,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                ),
+                icon: isGenerating
+                    ? const SizedBox(
+                        width: 14,
+                        height: 14,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                        ),
+                      )
+                    : const Icon(Icons.auto_awesome, size: 16),
+                label: Text(
+                  isGenerating ? t.aiGenerating : t.aiGenerateBtn,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -2362,6 +2807,52 @@ class _UploadPreviewBox extends StatelessWidget {
                 ),
               ],
             ),
+    );
+  }
+}
+
+/// Orange pill button with a β badge — entry point for AI one-sentence generation.
+class _AiBetaButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+
+  const _AiBetaButton({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(999),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFF8C00), Color(0xFFFFAA33)],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF8C00).withValues(alpha: 0.28),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.auto_awesome, size: 14, color: Colors.white),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
