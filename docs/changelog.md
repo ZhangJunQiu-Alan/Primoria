@@ -1,5 +1,25 @@
 # Changelog
 
+## [Unreleased] - 2026-02-26 (GitHub Pages Domain Restore + Browser Autofill)
+
+### Summary
+Restored the custom domain `primoria.dpdns.org` for the hackathon landing page after the repo was temporarily set to private (which disables GitHub Pages). Added browser password autofill / save-password support to the Builder auth dialog and both Viewer login and register screens.
+
+### Added
+- **`hackathon/web/CNAME`**: Contains `primoria.dpdns.org`; Flutter build copies it to the Pages artifact, so the custom domain is permanently bound and survives re-deploys
+
+### Changed
+- **GitHub Pages custom domain**: Re-bound to `primoria.dpdns.org` via GitHub API (`PUT /repos/.../pages`); verified `http://primoria.dpdns.org` → 301 → `https://primoria.dpdns.org` → 200 OK
+- **`Builder/lib/widgets/auth_dialog.dart`**: Wrapped `_buildForm()` in `AutofillGroup`; added `autofillHints` to all fields — email → `AutofillHints.email`, password → `AutofillHints.password` (login) / `AutofillHints.newPassword` (register), name → `AutofillHints.name`
+- **`Viewer/lib/screens/login_screen.dart`**: Wrapped email+password fields in `AutofillGroup`; added optional `autofillHints` param to `_buildInput`; password field uses `AutofillHints.password`
+- **`Viewer/lib/screens/register_screen.dart`**: Wrapped all three fields (email, password, confirm) in `AutofillGroup`; added optional `autofillHints` param to `_buildInput` and `_buildPasswordInput` (default `AutofillHints.newPassword`)
+
+### Fixed
+- **Browser password autofill not triggering**: Flutter `TextField` does not emit HTML `autocomplete` attributes by default, so password managers and browsers could not recognize login/register fields. Fixed by adding `AutofillGroup` + `autofillHints` — browsers now show "Save password?" on successful login and auto-fill credentials on return visits
+- **GitHub Pages disabled after repo set to private**: GitHub disables Pages for private repos on the free plan. Repo is now public; CNAME file ensures the custom domain is always included in the deployed artifact
+
+---
+
 ## [Unreleased] - 2026-02-25 (Cloud Supabase + Builder RBAC + Sign-out Crash Fixes)
 
 ### Summary

@@ -57,6 +57,8 @@
 32. [x] Builder + Viewer 迁移至云端 Supabase — 两端默认连接 `rygafvlzzkvqhhenajzi.supabase.co`；18 条迁移全部推送；`uuid_generate_v4()` → `gen_random_uuid()` 适配云端（2026-02-25）
 33. [x] Builder 角色鉴权（RBAC）— `BuilderAccessNotifier` 单例在冷启动和认证事件时即时检查角色；`user` 角色被拦截；路由守卫已更新；落地页展示检查中 spinner + 访问拒绝横幅（2026-02-25）
 34. [x] 修复退出红屏崩溃 — (a) 弹出菜单：延迟 300 ms 等关闭动画完成再 signOut；(b) Dashboard 异步回调：在 await 前捕获 ScaffoldMessenger，用 messenger.mounted 替代 mounted；(c) Profile 弹窗：先 pop 再 signOut；(d) 落地页 onSuccess 改为 null（2026-02-25）
+35. [x] 恢复 hackathon 网页自定义域名 — 新增 `hackathon/web/CNAME` 写入 `primoria.dpdns.org`；通过 GitHub API 重新绑定；网站已正常访问 https://primoria.dpdns.org（2026-02-26）
+36. [x] 登录/注册表单支持浏览器自动填充密码 — Builder 登录弹窗及 Viewer 登录/注册页均加入 `AutofillGroup` + `autofillHints`；浏览器现在会弹出"保存密码"提示，下次访问自动填充（2026-02-26）
 
 ## 内容与课程体系
 1. [ ] 课程内容管理系统
