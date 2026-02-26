@@ -260,6 +260,186 @@ Generate the course based on the PDF:
     }
   }
 
+  /// Generate course from a plain-text description (one-sentence / Beta flow).
+  ///
+  /// Unlike [generateFromPdf], this method sends a text-only prompt to Gemini
+  /// (no file upload), so it works without any file picker.
+  static Future<GenerationResult> generateFromDescription({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String audience = 'beginners',
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+    const promptSource = 'description';
+    const promptVersion = _promptVersion;
+
+    var stage = 'preflight';
+    var parseResult = AIGenerationParseResult.notAttempted;
+    bool? validationPassed;
+    var validationErrorCount = 0;
+    var validationWarningCount = 0;
+    var generationLatencyMs = 0;
+    var parseLatencyMs = 0;
+    var validationLatencyMs = 0;
+    var modelAttempts = 0;
+    String? selectedModel;
+
+    final promptFingerprint = _fingerprintPrompt(description);
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+    }) {
+      totalTimer.stop();
+      final diagnostics = AIGenerationDiagnostics(
+        requestId: requestId,
+        promptVersion: promptVersion,
+        promptSource: promptSource,
+        promptFingerprint: promptFingerprint,
+        model: selectedModel,
+        modelAttempts: modelAttempts,
+        totalLatencyMs: totalTimer.elapsedMilliseconds,
+        generationLatencyMs: generationLatencyMs,
+        parseLatencyMs: parseLatencyMs,
+        validationLatencyMs: validationLatencyMs,
+        parseResult: parseResult,
+        validationPassed: validationPassed,
+        validationErrorCount: validationErrorCount,
+        validationWarningCount: validationWarningCount,
+        stage: stage,
+        success: success,
+        message: message,
+      );
+      _logDiagnostics(diagnostics);
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: diagnostics,
+      );
+    }
+
+    if (_apiKey == null || _apiKey!.isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Please set your Gemini API key first',
+      );
+    }
+
+    if (description.trim().isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Course description must not be empty',
+      );
+    }
+
+    // Build a text-only prompt embedding all user options
+    final prompt = '''
+$_courseGenerationPrompt
+
+User course request:
+"${description.trim()}"
+
+Additional requirements:
+- Difficulty level: $difficulty
+- Animation style preference: $animationStyle
+- Target audience: $audience
+- Generate content entirely from the description above (no PDF provided).
+- Follow all hard constraints and block type rules above.
+''';
+
+    try {
+      // 1. Call Gemini with text-only prompt (no file upload needed)
+      stage = 'generate';
+      final models = _modelCandidates;
+      final genTimer = Stopwatch()..start();
+      _ContentResult? lastFailure;
+
+      for (final model in models) {
+        modelAttempts += 1;
+        final result = await _generateTextWithModel(
+          model: model,
+          prompt: prompt,
+        );
+        if (result.success) {
+          genTimer.stop();
+          generationLatencyMs = genTimer.elapsedMilliseconds;
+          selectedModel = result.model;
+          lastFailure = null;
+
+          // 2. Parse
+          stage = 'parse';
+          final parseTimer = Stopwatch()..start();
+          final parsedResult = await _parseJsonObjectWithRepair(
+            result.content!,
+            preferredModel: model,
+          );
+          parseTimer.stop();
+          parseLatencyMs = parseTimer.elapsedMilliseconds;
+          parseResult = parsedResult.result;
+
+          if (parsedResult.json == null) {
+            return buildResult(
+              success: false,
+              message: 'Failed to parse course JSON from AI output',
+              rawJson: _extractJson(result.content!),
+            );
+          }
+
+          final normalizedJson = _normalizeGeneratedCourseJson(
+            parsedResult.json!,
+            fileName: description.trim(),
+          );
+          final course = Course.fromJson(normalizedJson);
+
+          // 3. Validate
+          stage = 'validate';
+          final valTimer = Stopwatch()..start();
+          final validation = CourseSchemaValidator.validateCourse(
+            course,
+            mode: CourseSchemaValidationMode.import,
+          );
+          valTimer.stop();
+          validationLatencyMs = valTimer.elapsedMilliseconds;
+          validationPassed = validation.isValid;
+          validationErrorCount = validation.errors.length;
+          validationWarningCount = validation.warnings.length;
+
+          if (!validation.isValid) {
+            return buildResult(
+              success: false,
+              message: _formatValidationFailureMessage(validation.errorMessages),
+              rawJson: jsonEncode(normalizedJson),
+            );
+          }
+
+          stage = 'complete';
+          return buildResult(
+            success: true,
+            message: 'Course generated with $model',
+            course: course,
+            rawJson: jsonEncode(normalizedJson),
+          );
+        }
+        lastFailure = result;
+        if (!_shouldTryNextModel(result)) break;
+      }
+
+      genTimer.stop();
+      return buildResult(
+        success: false,
+        message: 'Generation failed: ${lastFailure?.message ?? 'No available model'}',
+      );
+    } catch (e) {
+      return buildResult(success: false, message: 'Generation error: $e');
+    }
+  }
+
   /// Call Gemini to generate content
   static Future<_ContentResult> _generateContent({
     String? inlineData,
