@@ -115,7 +115,6 @@
 | `code-playground` | 可运行代码编辑器 | P0（Python 课程核心） |
 | `multiple-choice` | 单选/多选题 | P0 |
 | `fill-blank` | 填空题 | P1 |
-| `video` | 视频嵌入 | P1 |
 
 #### 交互动效模块（Phase 2）
 
@@ -352,7 +351,7 @@ class FunctionFlowPainter extends CustomPainter {
 
 完整 Course JSON 编写规范见 **`course-json-guide.md`**。
 
-摘要：数据结构是 `Course → Pages → Blocks`。MVP block 类型包括 `text`、`image`、`codeBlock`、`codePlayground`、`multipleChoice`、`fillBlank`、`video`；Phase 2 增加 `function-flow`、`data-structure`、`code-execution`、`geometry`、`graph-plot`、`custom-canvas`。
+摘要：数据结构是 `Course → Pages → Blocks`。当前 Builder UI 的 MVP block 类型包括 `text`、`image`、`codeBlock`、`codePlayground`、`multipleChoice`、`fillBlank`。Phase 2 增加 `function-flow`、`data-structure`、`code-execution`、`geometry`、`graph-plot`、`custom-canvas`。
 
 ---
 

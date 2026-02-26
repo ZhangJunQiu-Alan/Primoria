@@ -434,29 +434,6 @@
 
 ---
 
-### 9. video - 视频块
-
-```json
-{
-  "type": "video",
-  "id": "video-001",
-  "position": { "order": 6 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "url": "https://example.com/video.mp4",
-    "title": "Python Installation Tutorial"
-  }
-}
-```
-
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `url` | 是 | 视频 URL |
-| `title` | 否 | 视频标题 |
-
----
-
 ## 完整示例
 
 下面是一个包含多种 block 类型的完整课程示例：
