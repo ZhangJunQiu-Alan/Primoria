@@ -434,29 +434,6 @@ Multi-select example:
 
 ---
 
-### 9. video - Video Block
-
-```json
-{
-  "type": "video",
-  "id": "video-001",
-  "position": { "order": 6 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "url": "https://example.com/video.mp4",
-    "title": "Python Installation Tutorial"
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `url` | Yes | Video URL |
-| `title` | No | Video title |
-
----
-
 ## Complete Example
 
 Below is a complete course example with multiple block types:
