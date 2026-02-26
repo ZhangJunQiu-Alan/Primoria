@@ -263,38 +263,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Email
-                _buildLabel('Email'),
-                const SizedBox(height: 8),
-                _buildInput(
-                  controller: _emailController,
-                  placeholder: 'you@example.com or phone',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 14),
+                AutofillGroup(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Email
+                      _buildLabel('Email'),
+                      const SizedBox(height: 8),
+                      _buildInput(
+                        controller: _emailController,
+                        placeholder: 'you@example.com or phone',
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                      ),
+                      const SizedBox(height: 14),
 
-                // Password
-                _buildLabel('Password'),
-                const SizedBox(height: 8),
-                _buildPasswordInput(
-                  controller: _passwordController,
-                  obscure: _obscurePassword,
-                  onToggle: () =>
-                      setState(() => _obscurePassword = !_obscurePassword),
-                  placeholder: 'At least 6 characters',
-                ),
-                const SizedBox(height: 14),
+                      // Password
+                      _buildLabel('Password'),
+                      const SizedBox(height: 8),
+                      _buildPasswordInput(
+                        controller: _passwordController,
+                        obscure: _obscurePassword,
+                        onToggle: () =>
+                            setState(() => _obscurePassword = !_obscurePassword),
+                        placeholder: 'At least 6 characters',
+                      ),
+                      const SizedBox(height: 14),
 
-                // Confirm Password
-                _buildLabel('Confirm Password'),
-                const SizedBox(height: 8),
-                _buildPasswordInput(
-                  controller: _confirmPasswordController,
-                  obscure: _obscureConfirmPassword,
-                  onToggle: () => setState(
-                    () => _obscureConfirmPassword = !_obscureConfirmPassword,
+                      // Confirm Password
+                      _buildLabel('Confirm Password'),
+                      const SizedBox(height: 8),
+                      _buildPasswordInput(
+                        controller: _confirmPasswordController,
+                        obscure: _obscureConfirmPassword,
+                        onToggle: () => setState(
+                          () =>
+                              _obscureConfirmPassword = !_obscureConfirmPassword,
+                        ),
+                        placeholder: 'Repeat your password',
+                      ),
+                    ],
                   ),
-                  placeholder: 'Repeat your password',
                 ),
                 const SizedBox(height: 8),
 
@@ -458,10 +467,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     required TextEditingController controller,
     required String placeholder,
     TextInputType? keyboardType,
+    List<String>? autofillHints,
   }) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
+      autofillHints: autofillHints,
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },
@@ -497,10 +508,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     required bool obscure,
     required VoidCallback onToggle,
     required String placeholder,
+    List<String> autofillHints = const [AutofillHints.newPassword],
   }) {
     return TextField(
       controller: controller,
       obscureText: obscure,
+      autofillHints: autofillHints,
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },
