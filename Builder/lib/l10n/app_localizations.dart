@@ -38,6 +38,41 @@ class BuilderLocalizations {
   String get sortByComments => isZh ? '按评论排序' : 'Sort By comments';
   String get createCourse => isZh ? '创建课程' : 'Create Course';
 
+  // Course Manage — AI one-sentence generation (Beta)
+  String get aiGenerateBeta => isZh ? 'AI 生成 (Beta)' : 'AI Generate (Beta)';
+  String get aiGenerateDialogTitle =>
+      isZh ? '一句话生成课程' : 'Generate Course with AI';
+  String get aiGenerateDialogSubtitle =>
+      isZh
+          ? '用一句话描述课程，AI 自动生成结构化内容'
+          : 'Describe your course in one sentence — AI builds the rest';
+  String get aiGeneratePlaceholder =>
+      isZh
+          ? "用一句话描述你想要的课程，例如'教 Python 基础编程，适合初学者，带互动练习'"
+          : "e.g. 'Teach Python basics for beginners with interactive exercises'";
+  String get aiGenerateOptionsLabel => isZh ? '高级选项' : 'Options';
+  String get aiGenerateDifficulty => isZh ? '难度' : 'Difficulty';
+  String get aiGenerateDiffBeginner => isZh ? '入门' : 'Beginner';
+  String get aiGenerateDiffIntermediate => isZh ? '进阶' : 'Intermediate';
+  String get aiGenerateDiffAdvanced => isZh ? '高级' : 'Advanced';
+  String get aiGenerateStyle => isZh ? '动画风格' : 'Animation Style';
+  String get aiGenerateStyleCartoon => isZh ? '卡通' : 'Cartoon';
+  String get aiGenerateStyleMinimal => isZh ? '简约' : 'Minimal';
+  String get aiGenerateStyleRealistic => isZh ? '写实' : 'Realistic';
+  String get aiGenerateAudience => isZh ? '目标受众' : 'Target Audience';
+  String get aiGenerateAudienceBeginner => isZh ? '初学者' : 'Beginners';
+  String get aiGenerateAudienceIntermediate =>
+      isZh ? '中级用户' : 'Intermediate';
+  String get aiGenerateAudienceAdvanced => isZh ? '高级用户' : 'Advanced';
+  String get aiGenerateBtn => isZh ? '生成课程' : 'Generate Course';
+  String get aiGenerating => isZh ? '正在生成...' : 'Generating...';
+  String get aiGenerateSuccess =>
+      isZh ? '课程已生成，正在跳转…' : 'Course generated! Opening builder…';
+  String get aiGenerateFailed =>
+      isZh ? '生成失败，请重试' : 'Generation failed, please try again';
+  String get aiGenerateEmptyHint =>
+      isZh ? '请先输入课程描述' : 'Please describe your course first';
+
   // Course Manage — sign-in prompt
   String get signInToManage =>
       isZh ? '登录以管理您的课程' : 'Sign in to manage your courses';
