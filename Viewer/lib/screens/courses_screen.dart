@@ -26,6 +26,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   final List<AnimationController> _floatControllers = [];
   final List<_Conversation> _conversations = [];
   final Map<int, String> _userCategoryById = <int, String>{};
+  final Map<int, bool> _userOnlineById = <int, bool>{};
   int _nextUserId = 1;
 
   // Galaxy user data
@@ -119,6 +120,9 @@ class _CoursesScreenState extends State<CoursesScreen>
       _floatControllers.add(_createFloatController(i));
       _userCategoryById[_galaxyUsers[i].id] =
           _communityCategories[i % _communityCategories.length];
+      _userOnlineById[_galaxyUsers[i].id] = _defaultOnlineForUserId(
+        _galaxyUsers[i].id,
+      );
     }
     for (final seed in _seedConversations) {
       _conversations.add(
@@ -196,6 +200,22 @@ class _CoursesScreenState extends State<CoursesScreen>
   String _headlineForUser(_GalaxyUser user) {
     final category = _categoryForUser(user);
     return '$category enthusiast looking to collaborate with the community.';
+  }
+
+  bool _defaultOnlineForUserId(int id) {
+    // Deterministic pseudo-presence while local-only.
+    return id % 3 == 0 || id % 5 == 0;
+  }
+
+  bool _isUserOnline(_GalaxyUser user) {
+    return _userOnlineById[user.id] ?? false;
+  }
+
+  int get _connectedUsersCount => _galaxyUsers.length;
+
+  int get _onlineUsersCountIncludingSelf {
+    final onlineOthers = _galaxyUsers.where(_isUserOnline).length;
+    return onlineOthers + 1; // include current user
   }
 
   Future<void> _startChatWithUser(_GalaxyUser user) async {
@@ -312,6 +332,10 @@ class _CoursesScreenState extends State<CoursesScreen>
                 ),
                 const SizedBox(height: 12),
                 _buildProfileField('Category', category),
+                _buildProfileField(
+                  'Status',
+                  _isUserOnline(user) ? 'Online now' : 'Offline',
+                ),
                 _buildProfileField('Email', email),
                 _buildProfileField('Username', '@$username'),
               ],
@@ -514,6 +538,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       _view = 'find';
       _galaxyUsers.add(newUser);
       _userCategoryById[newUser.id] = category;
+      _userOnlineById[newUser.id] = true;
       _floatControllers.add(_createFloatController(_floatControllers.length));
       _findQuery = input;
       _findSearchController.text = input;
@@ -532,6 +557,7 @@ class _CoursesScreenState extends State<CoursesScreen>
         _hoveredUserId = null;
       }
       _userCategoryById.remove(removedUser.id);
+      _userOnlineById.remove(removedUser.id);
       _galaxyUsers.removeAt(index);
       _floatControllers.removeAt(index);
     });
@@ -797,6 +823,68 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
+  Widget _buildConnectionStats() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.people_alt_outlined,
+                  size: 13,
+                  color: Color(0xFF64748B),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Connected $_connectedUsersCount',
+                  style: const TextStyle(
+                    fontSize: 11.5,
+                    color: Color(0xFF64748B),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 2),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF22C55E),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Online $_onlineUsersCountIncludingSelf',
+                  style: const TextStyle(
+                    fontSize: 11.5,
+                    color: Color(0xFF16A34A),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildHeader() {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
@@ -804,7 +892,8 @@ class _CoursesScreenState extends State<CoursesScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Expanded(child: SizedBox()),
+          _buildConnectionStats(),
+          const SizedBox(width: 16),
           // Find tab
           GestureDetector(
             onTap: () => setState(() => _view = 'find'),
@@ -858,49 +947,41 @@ class _CoursesScreenState extends State<CoursesScreen>
               ],
             ),
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: _view == 'find'
-                  ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: _showRemoveUserDialog,
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF8FAFC),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Icon(
-                              Icons.person_remove_outlined,
-                              size: 20,
-                              color: Color(0xFF334155),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: _showAddUserDialog,
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF8FAFC),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Icon(
-                              Icons.person_add_outlined,
-                              size: 20,
-                              color: Color(0xFF334155),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : const SizedBox.shrink(),
+          const Spacer(),
+          if (_view == 'find') ...[
+            GestureDetector(
+              onTap: _showRemoveUserDialog,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.person_remove_outlined,
+                  size: 20,
+                  color: Color(0xFF334155),
+                ),
+              ),
             ),
-          ),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: _showAddUserDialog,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.person_add_outlined,
+                  size: 20,
+                  color: Color(0xFF334155),
+                ),
+              ),
+            ),
+          ] else
+            const SizedBox(width: 76),
         ],
       ),
     );

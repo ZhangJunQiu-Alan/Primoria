@@ -4,26 +4,30 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/supabase_service.dart';
 
-/// Register page color constants (matching CSS template)
 class _C {
-  static const Color pageBg = Color(0xFF174A6B);
-  static const Color cardBg = Color(0xFFF3F4F6);
-  static const Color titleColor = Color(0xFF5A6678);
-  static const Color mutedColor = Color(0xFFA2ACB8);
-  static const Color lineColor = Color(0xFFDCE3EB);
-  static const Color buttonBg = Color(0xFF42516A);
-  static const Color errorColor = Color(0xFFD9534F);
-  static const Color successColor = Color(0xFF2F8D59);
-  static const Color inputText = Color(0xFF455366);
-  static const Color inputFocusBorder = Color(0xFF99B3CE);
-  static const Color subtitleColor = Color(0xFF8593A5);
-  static const Color metaColor = Color(0xFF778599);
-  static const Color toggleColor = Color(0xFF5F7088);
-  static const Color socialBorder = Color(0xFFD8DFE8);
-  static const Color signupLink = Color(0xFF74849A);
-  static const Color dividerText = Color(0xFF7B8796);
-  static const Color statusInfo = Color(0xFF8692A0);
-  static const Color visualBg = Color(0xFF102B45);
+  const _C._();
+
+  static const pageBg = Color(0xFF133151);
+  static const shell = Color(0xFF102A46);
+
+  static const formTop = Color(0xFF202C4C);
+  static const formBottom = Color(0xFFC65957);
+
+  static const heading = Color(0xFFF4F0F0);
+  static const label = Color(0xFFECE8E9);
+  static const input = Color(0xFF111217);
+  static const hint = Color(0xFF7A7D86);
+  static const line = Color(0x66FFFFFF);
+  static const meta = Color(0xC9F0ECED);
+  static const toggle = Color(0xFF32343A);
+
+  static const button = Color(0xFF2E3138);
+  static const buttonText = Color(0xFFFDFDFE);
+  static const socialBg = Color(0xFFF4F5F7);
+
+  static const error = Color(0xFFFFC0B8);
+  static const success = Color(0xFFCCF4CF);
+  static const info = Color(0xFFF3DFDF);
 }
 
 class RegisterScreen extends StatefulWidget {
@@ -40,9 +44,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _acceptedTerms = false;
+  bool _isSubmitting = false;
   String _statusMessage = '';
   String _statusState = '';
-  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -52,13 +56,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  String? get _fontFamily => GoogleFonts.notoSansSc().fontFamily;
-
   void _setStatus(String message, String state) {
     setState(() {
       _statusMessage = message;
       _statusState = state;
     });
+  }
+
+  Color _statusColor() {
+    switch (_statusState) {
+      case 'error':
+        return _C.error;
+      case 'success':
+        return _C.success;
+      default:
+        return _C.info;
+    }
   }
 
   String? _validate() {
@@ -104,43 +117,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _setStatus('Registration successful.', 'success');
       Navigator.of(context).pushReplacementNamed('/home');
     } else if (success) {
-      // Signed up but email confirmation required
       _setStatus(userProvider.errorMessage, 'info');
     } else {
       _setStatus(userProvider.errorMessage, 'error');
     }
 
-    setState(() => _isSubmitting = false);
+    if (mounted) setState(() => _isSubmitting = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth <= 900;
+    final size = MediaQuery.of(context).size;
+    final isMobile = size.width < 980;
+    final desktopHeight = (size.height - 24).clamp(700.0, 920.0).toDouble();
 
     return Scaffold(
       backgroundColor: _C.pageBg,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: 1360,
-              maxHeight: isMobile ? double.infinity : 820,
-            ),
-            decoration: BoxDecoration(
-              color: _C.cardBg,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x2E000000),
-                  blurRadius: 30,
-                  offset: Offset(0, 14),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(isMobile ? 0 : 12),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1420),
+              child: Container(
+                height: isMobile ? null : desktopHeight,
+                decoration: BoxDecoration(
+                  color: _C.shell,
+                  borderRadius: BorderRadius.circular(isMobile ? 0 : 8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x2A000000),
+                      blurRadius: 24,
+                      offset: Offset(0, 10),
+                    ),
+                  ],
                 ),
-              ],
+                clipBehavior: Clip.antiAlias,
+                child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+              ),
             ),
-            clipBehavior: Clip.antiAlias,
-            child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
           ),
         ),
       ),
@@ -148,296 +163,299 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildDesktopLayout() {
-    // Mirrored: form left (48%), image right (52%)
     return Row(
       children: [
-        Expanded(flex: 48, child: _buildFormPanel()),
-        Expanded(flex: 52, child: _buildVisualPanel()),
+        Expanded(flex: 48, child: _buildFormPanel(isMobile: false)),
+        Expanded(
+          flex: 52,
+          child: _buildVisualPanel('assets/imgs/register.jpg'),
+        ),
       ],
     );
   }
 
   Widget _buildMobileLayout() {
-    // Mobile: form first, image second
     return SingleChildScrollView(
       child: Column(
         children: [
-          _buildFormPanel(),
+          _buildFormPanel(isMobile: true),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.38,
-            child: _buildVisualPanel(),
+            height: 280,
+            width: double.infinity,
+            child: _buildVisualPanel('assets/imgs/register.jpg'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildVisualPanel() {
-    return Container(
-      color: _C.visualBg,
-      child: Image.asset(
-        'assets/imgs/register.jpg',
-        fit: BoxFit.cover,
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.center,
-        errorBuilder: (_, __, ___) =>
-            const SizedBox.expand(child: ColoredBox(color: _C.visualBg)),
-      ),
+  Widget _buildVisualPanel(String asset) {
+    return Image.asset(
+      asset,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+      alignment: Alignment.center,
+      errorBuilder: (_, __, ___) =>
+          const SizedBox.expand(child: ColoredBox(color: _C.shell)),
     );
   }
 
-  Widget _buildFormPanel() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth <= 900;
+  Widget _buildFormPanel({required bool isMobile}) {
+    final titleSize = isMobile ? 40.0 : 52.0;
+    final horizontalPad = isMobile ? 24.0 : 38.0;
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 18 : 42,
-        vertical: isMobile ? 18 : 16,
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [_C.formTop, _C.formBottom],
+        ),
       ),
-      child: Column(
-        mainAxisAlignment: isMobile
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.spaceEvenly,
-        children: [
-          // Logo
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: Image.asset(
-              'assets/imgs/logo_with_bg.png',
-              width: 80,
-              height: 80,
-              fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) => Container(
-                width: 80,
-                height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _C.pageBg,
-                ),
-                child: Center(
-                  child: Text(
-                    'P',
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 42,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final content = Padding(
+            padding: EdgeInsets.fromLTRB(
+              horizontalPad,
+              isMobile ? 22 : 30,
+              horizontalPad,
+              isMobile ? 24 : 20,
             ),
-          ),
-          const SizedBox(height: 2),
-
-          // Title
-          Text(
-            'Create Your Account',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: _fontFamily,
-              fontSize: isMobile ? 22 : 28,
-              fontWeight: FontWeight.w700,
-              color: _C.titleColor,
-              height: 1.16,
-            ),
-          ),
-
-          // Subtitle
-          Text(
-            'Register now and start building with Primoria.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: _fontFamily,
-              fontSize: 13.5,
-              color: _C.subtitleColor,
-            ),
-          ),
-          if (isMobile) const SizedBox(height: 10),
-
-          // Form
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Email
-                _buildLabel('Email'),
-                const SizedBox(height: 8),
-                _buildInput(
-                  controller: _emailController,
-                  placeholder: 'you@example.com or phone',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 14),
-
-                // Password
-                _buildLabel('Password'),
-                const SizedBox(height: 8),
-                _buildPasswordInput(
-                  controller: _passwordController,
-                  obscure: _obscurePassword,
-                  onToggle: () =>
-                      setState(() => _obscurePassword = !_obscurePassword),
-                  placeholder: 'At least 6 characters',
-                ),
-                const SizedBox(height: 14),
-
-                // Confirm Password
-                _buildLabel('Confirm Password'),
-                const SizedBox(height: 8),
-                _buildPasswordInput(
-                  controller: _confirmPasswordController,
-                  obscure: _obscureConfirmPassword,
-                  onToggle: () => setState(
-                    () => _obscureConfirmPassword = !_obscureConfirmPassword,
-                  ),
-                  placeholder: 'Repeat your password',
-                ),
-                const SizedBox(height: 8),
-
-                // Terms + Need help
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: Checkbox(
-                            value: _acceptedTerms,
-                            onChanged: (v) =>
-                                setState(() => _acceptedTerms = v ?? false),
-                            activeColor: _C.buttonBg,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'I agree to the Terms & Privacy Policy',
-                          style: TextStyle(
-                            fontFamily: _fontFamily,
-                            fontSize: 12.6,
-                            color: _C.metaColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'Need help?',
-                          style: TextStyle(
-                            fontFamily: _fontFamily,
-                            fontSize: 12.6,
-                            color: _C.metaColor,
-                          ),
+                    _buildBrandTile(isMobile ? 82 : 104),
+                    SizedBox(width: isMobile ? 16 : 20),
+                    Expanded(
+                      child: Text(
+                        'Create Your\nAccount',
+                        style: GoogleFonts.sora(
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.w700,
+                          height: 0.98,
+                          color: _C.heading,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-
-                // Register button
+                const SizedBox(height: 20),
+                _buildLabel('Email'),
+                _buildInput(
+                  controller: _emailController,
+                  hint: 'you@example.com or phone',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16),
+                _buildLabel('Password'),
+                _buildInput(
+                  controller: _passwordController,
+                  hint: 'At least 6 characters',
+                  obscure: _obscurePassword,
+                  suffixText: _obscurePassword ? 'Show' : 'Hide',
+                  onSuffixTap: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                ),
+                const SizedBox(height: 16),
+                _buildLabel('Confirm Password'),
+                _buildInput(
+                  controller: _confirmPasswordController,
+                  hint: 'Repeat your password',
+                  obscure: _obscureConfirmPassword,
+                  suffixText: _obscureConfirmPassword ? 'Show' : 'Hide',
+                  onSuffixTap: () => setState(
+                    () => _obscureConfirmPassword = !_obscureConfirmPassword,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: Checkbox(
+                              value: _acceptedTerms,
+                              side: const BorderSide(
+                                color: _C.meta,
+                                width: 1.2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              activeColor: Colors.white,
+                              checkColor: _C.formTop,
+                              onChanged: (value) => setState(
+                                () => _acceptedTerms = value ?? false,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              'I Agree to the Terms & Privacy Policy',
+                              style: GoogleFonts.manrope(
+                                fontSize: 13.5,
+                                color: _C.meta,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        'Need Help?',
+                        style: GoogleFonts.manrope(
+                          fontSize: 13.5,
+                          color: _C.meta,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 22),
                 Center(
                   child: SizedBox(
-                    width: isMobile ? double.infinity : 220,
-                    height: 48,
+                    width: isMobile ? double.infinity : 250,
+                    height: 56,
                     child: _buildRegisterButton(),
                   ),
                 ),
-                const SizedBox(height: 4),
-
-                // Status message
+                const SizedBox(height: 12),
                 SizedBox(
-                  height: 18,
-                  child: Text(
-                    _statusMessage,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 12.6,
-                      color: _statusState == 'error'
-                          ? _C.errorColor
-                          : _statusState == 'success'
-                          ? _C.successColor
-                          : _C.statusInfo,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Divider
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: Row(
-              children: [
-                Expanded(child: Container(height: 1, color: _C.lineColor)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    'Other Register Way',
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 14.2,
-                      color: _C.dividerText,
-                    ),
-                  ),
-                ),
-                Expanded(child: Container(height: 1, color: _C.lineColor)),
-              ],
-            ),
-          ),
-          const SizedBox(height: 6),
-
-          // Social buttons
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: _buildSocialGrid(isMobile),
-          ),
-          const SizedBox(height: 4),
-
-          // Sign in text
-          Text.rich(
-            TextSpan(
-              text: 'Already have an account? ',
-              style: TextStyle(
-                fontFamily: _fontFamily,
-                fontSize: 14.4,
-                color: _C.signupLink,
-              ),
-              children: [
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.baseline,
-                  baseline: TextBaseline.alphabetic,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushReplacementNamed('/login'),
-                      child: Text(
-                        'Sign-in',
-                        style: TextStyle(
-                          fontFamily: _fontFamily,
-                          fontSize: 14.4,
-                          fontWeight: FontWeight.w700,
-                          color: _C.buttonBg,
-                        ),
+                  height: 20,
+                  child: Center(
+                    child: Text(
+                      _statusMessage,
+                      style: GoogleFonts.manrope(
+                        fontSize: 12,
+                        color: _statusColor(),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Expanded(
+                      child: Divider(color: _C.line, thickness: 1),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Text(
+                        'Login Via',
+                        style: GoogleFonts.manrope(
+                          color: _C.meta,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Divider(color: _C.line, thickness: 1),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildSocialButton('assets/imgs/google.png', 34, 'google'),
+                    const SizedBox(width: 16),
+                    _buildSocialButton('assets/imgs/wechat.png', 38, 'wechat'),
+                    const SizedBox(width: 16),
+                    _buildSocialButton('assets/imgs/ins.png', 38, 'ins'),
+                    const SizedBox(width: 16),
+                    _buildSocialButton(
+                      'assets/imgs/whatsapp.png',
+                      38,
+                      'whatsapp',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Center(
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Already Have an account? ',
+                      style: GoogleFonts.manrope(
+                        fontSize: 14.5,
+                        color: _C.meta,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      children: [
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.baseline,
+                          baseline: TextBaseline.alphabetic,
+                          child: GestureDetector(
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushReplacementNamed('/login'),
+                            child: Text(
+                              'Sign In',
+                              style: GoogleFonts.manrope(
+                                fontSize: 14.5,
+                                color: _C.heading,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             ),
+          );
+
+          if (isMobile) return content;
+
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: content,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildBrandTile(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFE66558), Color(0xFF8E42F5)],
+        ),
+      ),
+      child: Center(
+        child: Text(
+          'V',
+          style: GoogleFonts.sora(
+            fontSize: size * 0.55,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            height: 1,
           ),
-        ],
+        ),
       ),
     );
   }
@@ -445,193 +463,124 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildLabel(String text) {
     return Text(
       text,
-      style: TextStyle(
-        fontFamily: _fontFamily,
+      style: GoogleFonts.sora(
+        color: _C.label,
         fontSize: 18,
-        fontWeight: FontWeight.w600,
-        color: _C.mutedColor,
+        fontWeight: FontWeight.w700,
       ),
     );
   }
 
   Widget _buildInput({
     required TextEditingController controller,
-    required String placeholder,
+    required String hint,
     TextInputType? keyboardType,
+    bool obscure = false,
+    String? suffixText,
+    VoidCallback? onSuffixTap,
   }) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
-      onChanged: (_) {
-        if (_statusState == 'error') _setStatus('', '');
-      },
-      style: TextStyle(
-        fontFamily: _fontFamily,
-        fontSize: 14.7,
-        color: _C.inputText,
-      ),
-      decoration: InputDecoration(
-        hintText: placeholder,
-        hintStyle: TextStyle(
-          fontFamily: _fontFamily,
-          fontSize: 14.7,
-          color: _C.mutedColor.withValues(alpha: 0.6),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.only(bottom: 10),
-        border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
-        ),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.inputFocusBorder),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPasswordInput({
-    required TextEditingController controller,
-    required bool obscure,
-    required VoidCallback onToggle,
-    required String placeholder,
-  }) {
-    return TextField(
-      controller: controller,
       obscureText: obscure,
+      textInputAction: TextInputAction.next,
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },
-      style: TextStyle(
-        fontFamily: _fontFamily,
-        fontSize: 14.7,
-        color: _C.inputText,
+      style: GoogleFonts.manrope(
+        color: _C.input,
+        fontSize: 15.5,
+        fontWeight: FontWeight.w600,
       ),
       decoration: InputDecoration(
-        hintText: placeholder,
-        hintStyle: TextStyle(
-          fontFamily: _fontFamily,
-          fontSize: 14.7,
-          color: _C.mutedColor.withValues(alpha: 0.6),
+        hintText: hint,
+        hintStyle: GoogleFonts.manrope(
+          color: _C.hint,
+          fontSize: 15.5,
+          fontWeight: FontWeight.w700,
         ),
-        filled: false,
-        contentPadding: const EdgeInsets.only(bottom: 10, right: 62),
-        border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
-        ),
+        contentPadding: const EdgeInsets.only(bottom: 10),
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
+          borderSide: BorderSide(color: _C.line),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.inputFocusBorder),
+          borderSide: BorderSide(color: Colors.white),
         ),
-        suffixIcon: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: onToggle,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                obscure ? 'Show' : 'Hide',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontSize: 12.9,
-                  fontWeight: FontWeight.w600,
-                  color: _C.toggleColor,
+        suffixIcon: suffixText == null
+            ? null
+            : GestureDetector(
+                onTap: onSuffixTap,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    suffixText,
+                    style: GoogleFonts.manrope(
+                      color: _C.toggle,
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+        suffixIconConstraints: const BoxConstraints(minHeight: 0, minWidth: 0),
       ),
     );
   }
 
   Widget _buildRegisterButton() {
-    return MouseRegion(
-      cursor: _isSubmitting
-          ? SystemMouseCursors.wait
-          : SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: _isSubmitting ? null : _submit,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          decoration: BoxDecoration(
-            color: _C.buttonBg,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: _C.button,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: TextButton(
+        onPressed: _isSubmitting ? null : _submit,
+        style: TextButton.styleFrom(
+          foregroundColor: _C.buttonText,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          child: Center(
-            child: _isSubmitting
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    'Register',
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFFF8FBFF),
-                    ),
-                  ),
+          textStyle: GoogleFonts.sora(
+            fontSize: 15.5,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.8,
           ),
         ),
+        child: _isSubmitting
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : const Text('REGISTER'),
       ),
     );
   }
 
-  Widget _buildSocialGrid(bool isMobile) {
-    final icons = [
-      {'asset': 'assets/imgs/google.png', 'size': 38.0, 'key': 'google'},
-      {'asset': 'assets/imgs/wechat.png', 'size': 44.0, 'key': 'wechat'},
-      {'asset': 'assets/imgs/ins.png', 'size': 44.0, 'key': 'ins'},
-      {'asset': 'assets/imgs/whatsapp.png', 'size': 44.0, 'key': 'whatsapp'},
-    ];
-
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: isMobile ? 2 : 4,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: isMobile ? 2.5 : 1.6,
-      ),
-      itemCount: icons.length,
-      itemBuilder: (context, index) {
-        final icon = icons[index];
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => _onSocialTap(icon['key'] as String),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: _C.socialBorder),
-              ),
-              child: Center(
-                child: Image.asset(
-                  icon['asset'] as String,
-                  width: icon['size'] as double,
-                  height: icon['size'] as double,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.link, color: _C.titleColor),
-                ),
-              ),
-            ),
+  Widget _buildSocialButton(String asset, double iconSize, String key) {
+    return GestureDetector(
+      onTap: () => _onSocialTap(key),
+      child: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: _C.socialBg,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Image.asset(
+            asset,
+            width: iconSize,
+            height: iconSize,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) =>
+                const Icon(Icons.link, color: Colors.black54),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
