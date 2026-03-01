@@ -804,7 +804,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(),
+          const Expanded(child: SizedBox()),
           // Find tab
           GestureDetector(
             onTap: () => setState(() => _view = 'find'),
@@ -858,43 +858,48 @@ class _CoursesScreenState extends State<CoursesScreen>
               ],
             ),
           ),
-          const Spacer(),
-          // Add/remove user buttons
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GestureDetector(
-                onTap: _showRemoveUserDialog,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.person_remove_outlined,
-                    size: 20,
-                    color: Color(0xFF334155),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: _showAddUserDialog,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.person_add_outlined,
-                    size: 20,
-                    color: Color(0xFF334155),
-                  ),
-                ),
-              ),
-            ],
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: _view == 'find'
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: _showRemoveUserDialog,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF8FAFC),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(
+                              Icons.person_remove_outlined,
+                              size: 20,
+                              color: Color(0xFF334155),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: _showAddUserDialog,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF8FAFC),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(
+                              Icons.person_add_outlined,
+                              size: 20,
+                              color: Color(0xFF334155),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+            ),
           ),
         ],
       ),
@@ -1508,6 +1513,15 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
+  void _deleteConversation(_Conversation conv) {
+    setState(() {
+      _conversations.removeWhere((item) => item.id == conv.id);
+    });
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Deleted chat with ${conv.name}')));
+  }
+
   Widget _buildConversationItem(_Conversation conv) {
     return InkWell(
       onTap: () => _openConversationChat(conv),
@@ -1566,25 +1580,13 @@ class _CoursesScreenState extends State<CoursesScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        conv.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        conv.time,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF94A3B8),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    conv.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF0F172A),
+                      fontSize: 15,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -1603,6 +1605,29 @@ class _CoursesScreenState extends State<CoursesScreen>
                   ),
                 ],
               ),
+            ),
+            const SizedBox(width: 8),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  conv.time,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF94A3B8),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                IconButton(
+                  tooltip: 'Delete chat',
+                  onPressed: () => _deleteConversation(conv),
+                  icon: const Icon(
+                    Icons.delete_outline_rounded,
+                    size: 20,
+                    color: Color(0xFFDC2626),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
