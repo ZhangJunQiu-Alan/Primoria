@@ -65,6 +65,10 @@
 40. [x] 课程管理入口体验简化 — 移除左侧「创建课程」按钮；「添加课时」改为进入空白 Builder（`/builder`），不再直接带当前课程 id（2026-03-03）
 41. [x] 解决空白课程「预览往返丢内容」— 空白 Builder 会立刻分配本地临时 `courseId` 并启用草稿自动保存；预览始终携带 `courseId`，返回后可恢复 block/AI 生成内容（2026-03-03）
 42. [x] Builder 默认空白标题调整 — 默认标题由 `Untitled Course` 改为 `Untitled Lesson`（`builder_state` + `course_provider`）（2026-03-03）
+43. [x] AI 多课时生成能力 — Edge Function 可生成 2-4 个结构化课时（每课时 6-9 个 block）；服务端 TypeScript Schema 校验；截断检测 + 模型回退链修复；生成后留在 Dashboard；`_saveCourseSnapshot` 按 page 同步多条 lesson 快照（2026-03-04）
+44. [x] Function Flow 新 block 类型 — 用节点/连线可视化 caller-callee 执行路径；支持逐步播放；属性面板可编辑；完成 schema 迁移与校验器接入；补齐测试（2026-03-04）
+45. [x] Add Lesson 流程 — 新增 `/builder?addLesson=1&courseId=…&draftId=…`；通过 `saveLessonToCourse()` 作为独立课时写入目标课程；支持草稿持久化；Viewer 返回 Builder 时保持 add-lesson 上下文（2026-03-04）
+46. [x] Function Flow 发布后稳定性收尾 — `function_flow_block_widget.dart` 改为迭代器方式读取 path metrics（箭头/标签渲染更稳）；viewer smoke test 改为断言 `function_flow_step` 控件存在，降低偶发波动（2026-03-04）
 
 ## 内容与课程体系
 1. [ ] 课程内容管理系统

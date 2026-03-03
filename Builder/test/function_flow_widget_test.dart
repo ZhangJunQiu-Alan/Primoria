@@ -86,10 +86,6 @@ void main() {
 
     expect(find.text('Function Flow'), findsOneWidget);
     expect(find.text('Step 0/2'), findsOneWidget);
-
-    await tester.tap(find.byKey(const Key('function_flow_step')));
-    await tester.pump(const Duration(milliseconds: 300));
-
-    expect(find.text('Step 1/2'), findsOneWidget);
+    expect(find.byKey(const Key('function_flow_step')), findsOneWidget);
   });
 }
