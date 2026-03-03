@@ -9,7 +9,7 @@
 2. [x] 课程 Prompt 适配新流程：Gemini 单页生成（最多 20 blocks）、按课程类型自适应模块、JSON 归一化/修复（2026-02-13）
 3. [x] 课程管理系统与子课程流程：Dashboard 增加 Course Manage（2026-02-09）
 4. [x] 首页常见能力（Profile、成就等）：Dashboard 首页含课程数据、收入、评论（2026-02-09）
-5. [x] 模块面板基础分类（物理/化学/生物/数学/编程/通用）：现为 General/Physical/Chemical 可展开分类 + 搜索（2026-02-09）
+5. [x] 模块面板基础分类（物理/化学/生物/数学/编程/通用）：现已调整为 General + Programming 分类 + 搜索；General 包含 Text/Image/Animation/Multiple Choice/True-False/Matching，Programming 包含 Code Block/Code Playground（2026-03-03）
 6. [~] 增加更多题型：True/False 已完成（2026-02-11），Matching 体验增强（2026-02-12），Animation MVP 已完成（2026-02-14）；剩余 connect 等
 7. [ ] 多人协作
 8. [x] 落地页 + 登录弹窗 + Supabase 认证集成（2026-02-09）
@@ -59,6 +59,12 @@
 34. [x] 修复退出红屏崩溃 — (a) 弹出菜单：延迟 300 ms 等关闭动画完成再 signOut；(b) Dashboard 异步回调：在 await 前捕获 ScaffoldMessenger，用 messenger.mounted 替代 mounted；(c) Profile 弹窗：先 pop 再 signOut；(d) 落地页 onSuccess 改为 null（2026-02-25）
 35. [x] 恢复 hackathon 网页自定义域名 — 新增 `hackathon/web/CNAME` 写入 `primoria.dpdns.org`；通过 GitHub API 重新绑定；网站已正常访问 https://primoria.dpdns.org（2026-02-26）
 36. [x] 登录/注册表单支持浏览器自动填充密码 — Builder 登录弹窗及 Viewer 登录/注册页均加入 `AutofillGroup` + `autofillHints`；浏览器现在会弹出"保存密码"提示，下次访问自动填充（2026-02-26）
+37. [x] AI 后端 Edge Function 接入 — Gemini 调用与 Prompt 迁移到 `supabase/functions/ai-generate-course-json`；新增 `generateViaApi()`；Dashboard 一句话生成改走服务端；PDF 生成弹窗移除 API Key 输入（2026-03-03）
+38. [x] 修复拖拽 Block 红屏崩溃 — `ReorderableListView` 拖拽项进入 Overlay 后，`localToGlobal(ancestor: viewportBox)` 可能抛出空值异常；已在 `builder_canvas.dart` 增加保护（2026-03-03）
+39. [x] 修复无 courseId 进入 Builder 初始化问题 — `initState` 归一化空 courseId，`/builder` 显式执行空白课程初始化（2026-03-03）
+40. [x] 课程管理入口体验简化 — 移除左侧「创建课程」按钮；「添加课时」改为进入空白 Builder（`/builder`），不再直接带当前课程 id（2026-03-03）
+41. [x] 解决空白课程「预览往返丢内容」— 空白 Builder 会立刻分配本地临时 `courseId` 并启用草稿自动保存；预览始终携带 `courseId`，返回后可恢复 block/AI 生成内容（2026-03-03）
+42. [x] Builder 默认空白标题调整 — 默认标题由 `Untitled Course` 改为 `Untitled Lesson`（`builder_state` + `course_provider`）（2026-03-03）
 
 ## 内容与课程体系
 1. [ ] 课程内容管理系统
