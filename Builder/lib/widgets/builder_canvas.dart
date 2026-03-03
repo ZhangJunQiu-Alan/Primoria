@@ -338,7 +338,17 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
       final box = key?.currentContext?.findRenderObject() as RenderBox?;
       if (box == null || !box.attached) continue;
 
-      final top = box.localToGlobal(Offset.zero, ancestor: viewportBox).dy;
+      // During a drag, ReorderableListView moves the dragged item's GlobalKey
+      // element into an Overlay widget, so `box` is no longer a descendant of
+      // `viewportBox`. Calling localToGlobal(ancestor: viewportBox) in that
+      // case walks up the render tree past the root and throws
+      // "Unexpected null value." — skip any box not under the viewport.
+      final double top;
+      try {
+        top = box.localToGlobal(Offset.zero, ancestor: viewportBox).dy;
+      } catch (_) {
+        continue;
+      }
       final mid = top + (box.size.height / 2);
       if (localPointer.dy < mid) {
         targetIndex = i;
