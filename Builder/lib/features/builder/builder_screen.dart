@@ -38,7 +38,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   @override
   void initState() {
     super.initState();
-    _courseId = widget.courseId;
+    final routeCourseId = widget.courseId?.trim();
+    _courseId = (routeCourseId == null || routeCourseId.isEmpty)
+        ? null
+        : routeCourseId;
     _bootstrapProtectedScreen();
   }
 
@@ -51,9 +54,24 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       context.go('/');
       return;
     }
-    if (_courseId != null) {
+    if (_courseId != null && _courseId!.isNotEmpty) {
       _loadCourse();
+      return;
     }
+    _initializeBlankCourse();
+  }
+
+  void _initializeBlankCourse() {
+    ref.read(courseProvider.notifier).createNewCourse();
+    final created = ref.read(courseProvider);
+    _courseId = created.courseId;
+    _draftAutoSaveEnabled = true;
+    ref
+        .read(builderStateProvider.notifier)
+        .syncCourseTitle(created.metadata.title, hasUnsavedChanges: false);
+    ref.read(builderStateProvider.notifier).setCurrentPage(0);
+    ref.read(builderStateProvider.notifier).clearSelection();
+    ref.read(builderStateProvider.notifier).markAsSaved();
   }
 
   Future<void> _loadCourse() async {
@@ -222,11 +240,14 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         // Preview button
         OutlinedButton(
           onPressed: () async {
+            final previewCourseId = (_courseId ?? '').isNotEmpty
+                ? _courseId!
+                : ref.read(courseProvider).courseId;
+            _courseId = previewCourseId;
             await _saveBrowserDraft(ref);
             if (!context.mounted) return;
-            final id = _courseId ?? '';
-            if (id.isNotEmpty) {
-              context.go('/viewer?courseId=$id');
+            if (previewCourseId.isNotEmpty) {
+              context.go('/viewer?courseId=$previewCourseId');
             } else {
               context.go('/viewer');
             }
