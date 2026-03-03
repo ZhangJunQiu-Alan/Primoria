@@ -50,6 +50,7 @@
 43. [x] AI multi-lesson generation — Edge Function produces 2-4 structured lessons (6-9 blocks each); server-side TypeScript schema validator; truncation detection + model fallback chain fix; stay on Dashboard after generation; `_saveCourseSnapshot` syncs one lesson row per page (2026-03-04)
 44. [x] Function Flow block type — node-edge diagram for visualising caller-callee execution paths; step-through playback widget; property-panel editor; schema migration + validator; tests (2026-03-04)
 45. [x] Add Lesson flow — `/builder?addLesson=1&courseId=…&draftId=…`; `saveLessonToCourse()` for independent lesson creation; draft persistence; Viewer back-navigation preserves add-lesson context (2026-03-04)
+46. [x] Function Flow post-release stabilization — hardened path-metric rendering in `function_flow_block_widget.dart` (iterator-based metric read) and adjusted viewer smoke test to assert control availability (`function_flow_step`) for lower flake rate (2026-03-04)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

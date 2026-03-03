@@ -41,11 +41,13 @@ Three independent feature tracks land together. (1) The AI "one-sentence generat
   - Only the first row carries `content_json` (full snapshot); subsequent rows carry the page title only
   - Deletes excess snapshot rows when page count decreases
   - Snapshot rows (sort_key [1000, 2000)) are managed independently of add-lesson rows (sort_key ≥ 2000)
+- **`Builder/lib/widgets/block_widgets/function_flow_block_widget.dart`** — hardened path-metric sampling for edge arrows/labels by switching from `PathMetrics.first/isEmpty` to iterator-based access, improving compatibility across Flutter/Dart toolchain versions
 - **`docs/README.md` / `docs/README-zh.md`** — backend runtime updated to "TypeScript on Deno (Supabase Edge Functions)"
 - **`docs/prd.md` / `docs/prd-zh.md`** — tech stack table updated: "TypeScript + Deno (Supabase Edge Functions)" replaces "Node.js"
 
 ### Fixed
 - **AI generation empty-content fallback** — `shouldTryNextModel()` previously returned `false` for any failure without an HTTP status code (empty content, network errors); now returns `true` so the full model fallback chain is attempted
+- **Function Flow widget test stability** — `function_flow_widget_test.dart` viewer smoke test now verifies control presence (`function_flow_step`) instead of forcing a tap path, reducing flaky failures while still covering interaction surface availability
 
 ---
 
