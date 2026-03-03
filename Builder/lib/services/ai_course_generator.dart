@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
+import 'course_import.dart';
 import 'course_schema_validator.dart';
 import 'file_picker.dart' as fp;
 
@@ -13,14 +15,15 @@ class AICourseGenerator {
   static const String _baseUrl =
       'https://generativelanguage.googleapis.com/v1beta';
   static const List<String> _modelCandidates = [
-    'gemini-3-pro-preview',
-    'gemini-3-flash-preview',
-    'gemini-2.5-pro',
-    'gemini-2.5-pro-latest',
-    'gemini-2.5-flash',
     'gemini-2.5-flash-latest',
+    'gemini-2.5-flash',
+    'gemini-3-flash-preview',
     'gemini-2.0-flash',
+    'gemini-2.5-pro-latest',
+    'gemini-2.5-pro',
+    'gemini-3-pro-preview',
   ];
+  static const int _maxOutputTokens = 16384;
   static const int _maxBlocksPerPage = 20;
   static const String _promptVersion = '2026-02-13.ai-course-v1';
   static String? _apiKey;
@@ -339,7 +342,8 @@ Generate the course based on the PDF:
     }
 
     // Build a text-only prompt embedding all user options
-    final prompt = '''
+    final prompt =
+        '''
 $_courseGenerationPrompt
 
 User course request:
@@ -413,7 +417,9 @@ Additional requirements:
           if (!validation.isValid) {
             return buildResult(
               success: false,
-              message: _formatValidationFailureMessage(validation.errorMessages),
+              message: _formatValidationFailureMessage(
+                validation.errorMessages,
+              ),
               rawJson: jsonEncode(normalizedJson),
             );
           }
@@ -433,10 +439,286 @@ Additional requirements:
       genTimer.stop();
       return buildResult(
         success: false,
-        message: 'Generation failed: ${lastFailure?.message ?? 'No available model'}',
+        message:
+            'Generation failed: ${lastFailure?.message ?? 'No available model'}',
       );
     } catch (e) {
       return buildResult(success: false, message: 'Generation error: $e');
+    }
+  }
+
+  /// Generate course via the backend Supabase Edge Function.
+  ///
+  /// Unlike [generateFromDescription], this method does not require a
+  /// client-side Gemini API key — the key and prompt live server-side in
+  /// the `ai-generate-course-json` Edge Function.
+  ///
+  /// The returned JSON is normalised and validated through the existing
+  /// [CourseImport] pipeline (schema migration + schema validation).
+  static Future<GenerationResult> generateViaApi({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String audience = 'beginners',
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+    }) {
+      totalTimer.stop();
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: AIGenerationDiagnostics(
+          requestId: requestId,
+          promptVersion: _promptVersion,
+          promptSource: 'api',
+          promptFingerprint: _fingerprintPrompt(description),
+          model: null,
+          modelAttempts: 1,
+          totalLatencyMs: totalTimer.elapsedMilliseconds,
+          generationLatencyMs: 0,
+          parseLatencyMs: 0,
+          validationLatencyMs: 0,
+          parseResult: success
+              ? AIGenerationParseResult.direct
+              : AIGenerationParseResult.failed,
+          validationPassed: success ? true : false,
+          validationErrorCount: 0,
+          validationWarningCount: 0,
+          stage: success ? 'complete' : 'generate',
+          success: success,
+          message: message,
+        ),
+      );
+    }
+
+    if (description.trim().isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Course description must not be empty',
+      );
+    }
+
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-generate-course-json',
+        body: {
+          'description': description.trim(),
+          'difficulty': difficulty,
+          'animationStyle': animationStyle,
+          'audience': audience,
+        },
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return buildResult(success: false, message: 'No response from server');
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        return buildResult(success: false, message: error);
+      }
+
+      final rawCourseJson = dataMap['courseJson'];
+      if (rawCourseJson == null) {
+        return buildResult(
+          success: false,
+          message: 'Server returned no course JSON',
+        );
+      }
+
+      final courseJsonMap = rawCourseJson is Map<String, dynamic>
+          ? rawCourseJson
+          : Map<String, dynamic>.from(rawCourseJson as Map);
+
+      // Normalise (type aliases, unique IDs, defaults) then encode as string
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        courseJsonMap,
+        fileName: description.trim(),
+      );
+      final rawJsonStr = jsonEncode(normalizedJson);
+
+      // Validate through the existing CourseImport pipeline
+      // (schema migration + schema validation)
+      final importResult = CourseImport.importFromString(rawJsonStr);
+      if (!importResult.success || importResult.course == null) {
+        return buildResult(
+          success: false,
+          message: importResult.message,
+          rawJson: rawJsonStr,
+        );
+      }
+
+      return buildResult(
+        success: true,
+        message: 'Course generated via API',
+        course: importResult.course,
+        rawJson: rawJsonStr,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return buildResult(success: false, message: 'Server error: $detail');
+    } on http.ClientException catch (e) {
+      // "Failed to fetch" in Flutter Web = CORS blocked or function not deployed.
+      // The most common cause: the Edge Function has never been deployed to Supabase.
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy ai-generate-course-json\n'
+                '并设置：supabase secrets set GEMINI_API_KEY=<your_key>'
+          : 'Network error: ${e.message}';
+      return buildResult(success: false, message: msg);
+    } catch (e) {
+      return buildResult(success: false, message: 'Error: $e');
+    }
+  }
+
+  /// Generate course from PDF via backend Supabase Edge Function.
+  ///
+  /// This method does not require a client-side Gemini API key.
+  /// The PDF is sent as base64 to `ai-generate-course-json`.
+  static Future<GenerationResult> generateFromPdfViaApi({
+    required Uint8List pdfBytes,
+    required String fileName,
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+      String? model,
+    }) {
+      totalTimer.stop();
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: AIGenerationDiagnostics(
+          requestId: requestId,
+          promptVersion: _promptVersion,
+          promptSource: 'api_pdf',
+          promptFingerprint: _fingerprintPrompt(
+            'pdf:$fileName:${pdfBytes.length}',
+          ),
+          model: model,
+          modelAttempts: 1,
+          totalLatencyMs: totalTimer.elapsedMilliseconds,
+          generationLatencyMs: 0,
+          parseLatencyMs: 0,
+          validationLatencyMs: 0,
+          parseResult: success
+              ? AIGenerationParseResult.direct
+              : AIGenerationParseResult.failed,
+          validationPassed: success ? true : false,
+          validationErrorCount: 0,
+          validationWarningCount: 0,
+          stage: success ? 'complete' : 'generate',
+          success: success,
+          message: message,
+        ),
+      );
+    }
+
+    if (pdfBytes.isEmpty) {
+      return buildResult(success: false, message: 'PDF file must not be empty');
+    }
+
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-generate-course-json',
+        body: {'pdfBase64': base64Encode(pdfBytes), 'fileName': fileName},
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return buildResult(success: false, message: 'No response from server');
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      final model = dataMap['model']?.toString();
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        return buildResult(success: false, message: error, model: model);
+      }
+
+      final rawCourseJson = dataMap['courseJson'];
+      if (rawCourseJson == null) {
+        return buildResult(
+          success: false,
+          message: 'Server returned no course JSON',
+          model: model,
+        );
+      }
+
+      final courseJsonMap = rawCourseJson is Map<String, dynamic>
+          ? rawCourseJson
+          : Map<String, dynamic>.from(rawCourseJson as Map);
+
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        courseJsonMap,
+        fileName: fileName.trim().isEmpty ? 'Uploaded PDF' : fileName,
+      );
+      final rawJsonStr = jsonEncode(normalizedJson);
+
+      final importResult = CourseImport.importFromString(rawJsonStr);
+      if (!importResult.success || importResult.course == null) {
+        return buildResult(
+          success: false,
+          message: importResult.message,
+          rawJson: rawJsonStr,
+          model: model,
+        );
+      }
+
+      return buildResult(
+        success: true,
+        message: model != null && model.isNotEmpty
+            ? 'Course generated via API ($model)'
+            : 'Course generated via API',
+        course: importResult.course,
+        rawJson: rawJsonStr,
+        model: model,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return buildResult(success: false, message: 'Server error: $detail');
+    } on http.ClientException catch (e) {
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy ai-generate-course-json\n'
+                '并设置：supabase secrets set GEMINI_API_KEY=<your_key>'
+          : 'Network error: ${e.message}';
+      return buildResult(success: false, message: msg);
+    } catch (e) {
+      return buildResult(success: false, message: 'Error: $e');
     }
   }
 
@@ -513,7 +795,7 @@ Additional requirements:
         ],
         'generationConfig': {
           'temperature': 0.6,
-          'maxOutputTokens': 65536,
+          'maxOutputTokens': _maxOutputTokens,
           'responseMimeType': 'application/json',
         },
       };
@@ -782,7 +1064,7 @@ $rawContent
         ],
         'generationConfig': {
           'temperature': 0.0,
-          'maxOutputTokens': 65536,
+          'maxOutputTokens': _maxOutputTokens,
           'responseMimeType': 'application/json',
         },
       };
@@ -850,9 +1132,23 @@ $rawContent
     final statusCode = result.statusCode;
     if (statusCode == 404) return true;
     if (statusCode == 429) return true;
-    if (statusCode != 400 && statusCode != 403) return false;
+    if (statusCode == 500 ||
+        statusCode == 502 ||
+        statusCode == 503 ||
+        statusCode == 504) {
+      return true;
+    }
 
     final message = (result.message ?? '').toLowerCase();
+    if (message.contains('high demand') ||
+        message.contains('resource_exhausted') ||
+        message.contains('resource exhausted') ||
+        message.contains('unavailable')) {
+      return true;
+    }
+
+    if (statusCode != 400 && statusCode != 403) return false;
+
     return message.contains('model') &&
             (message.contains('not found') ||
                 message.contains('unsupported') ||

@@ -192,13 +192,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
               const SizedBox(height: 18),
 
-              // "Build Course" button → navigate to Builder
-              _SideAction(
-                label: t.sidebarBuildCourse,
-                onTap: () => context.go('/builder'),
-              ),
-              const SizedBox(height: 18),
-
               // Nav items
               _NavItem(
                 label: t.navHomePage,
@@ -924,11 +917,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   title: _formatLessonCardTitle(lessons[i], courseTitle: title),
                   onTap: () => context.go('/builder?courseId=$courseId'),
                 ),
-              // "Add lesson" dashed box → opens builder
+              // "Add lesson" dashed box → opens blank builder
               _LessonBox(
                 title: t.addLesson,
                 dashed: true,
-                onTap: () => context.go('/builder?courseId=$courseId'),
+                onTap: () => context.go('/builder'),
               ),
             ],
           ),
@@ -1021,14 +1014,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFF8C00).withValues(
-                                alpha: 0.12,
-                              ),
+                              color: const Color(
+                                0xFFFF8C00,
+                              ).withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(999),
                               border: Border.all(
-                                color: const Color(0xFFFF8C00).withValues(
-                                  alpha: 0.5,
-                                ),
+                                color: const Color(
+                                  0xFFFF8C00,
+                                ).withValues(alpha: 0.5),
                               ),
                             ),
                             child: const Text(
@@ -1137,9 +1130,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                     ),
                                     DropdownMenuItem(
                                       value: 'intermediate',
-                                      child: Text(
-                                        t.aiGenerateDiffIntermediate,
-                                      ),
+                                      child: Text(t.aiGenerateDiffIntermediate),
                                     ),
                                     DropdownMenuItem(
                                       value: 'advanced',
@@ -1153,9 +1144,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                 _dropdown<String>(
                                   value: animationStyle,
                                   onChanged: (v) =>
-                                      setDialogState(
-                                        () => animationStyle = v!,
-                                      ),
+                                      setDialogState(() => animationStyle = v!),
                                   items: [
                                     DropdownMenuItem(
                                       value: 'minimal',
@@ -1181,9 +1170,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                   items: [
                                     DropdownMenuItem(
                                       value: 'beginners',
-                                      child: Text(
-                                        t.aiGenerateAudienceBeginner,
-                                      ),
+                                      child: Text(t.aiGenerateAudienceBeginner),
                                     ),
                                     DropdownMenuItem(
                                       value: 'intermediate',
@@ -1193,9 +1180,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                     ),
                                     DropdownMenuItem(
                                       value: 'advanced',
-                                      child: Text(
-                                        t.aiGenerateAudienceAdvanced,
-                                      ),
+                                      child: Text(t.aiGenerateAudienceAdvanced),
                                     ),
                                   ],
                                 ),
@@ -1245,10 +1230,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             actions: [
               TextButton(
                 onPressed: isGenerating ? null : () => Navigator.pop(ctx),
-                child: Text(
-                  t.cancel,
-                  style: const TextStyle(color: _C.muted),
-                ),
+                child: Text(t.cancel, style: const TextStyle(color: _C.muted)),
               ),
               ElevatedButton.icon(
                 onPressed: isGenerating
@@ -1266,8 +1248,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           errorMessage = null;
                         });
 
-                        final result =
-                            await AICourseGenerator.generateFromDescription(
+                        final result = await AICourseGenerator.generateViaApi(
                           description: desc,
                           difficulty: difficulty,
                           animationStyle: animationStyle,
@@ -1279,10 +1260,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         if (!result.success || result.course == null) {
                           setDialogState(() {
                             isGenerating = false;
-                            errorMessage =
-                                result.message.isNotEmpty
-                                    ? result.message
-                                    : t.aiGenerateFailed;
+                            errorMessage = result.message.isNotEmpty
+                                ? result.message
+                                : t.aiGenerateFailed;
                           });
                           return;
                         }
@@ -1291,13 +1271,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         final course = result.course!;
                         final createResult =
                             await SupabaseService.createCourseRow(
-                          title: course.metadata.title,
-                          description: course.metadata.description,
-                          difficultyLevel: course.metadata.difficulty,
-                          estimatedMinutes: course.metadata.estimatedMinutes,
-                          priceTier: 'free',
-                          price: 0,
-                        );
+                              title: course.metadata.title,
+                              description: course.metadata.description,
+                              difficultyLevel: course.metadata.difficulty,
+                              estimatedMinutes:
+                                  course.metadata.estimatedMinutes,
+                              priceTier: 'free',
+                              price: 0,
+                            );
 
                         if (!ctx.mounted) return;
 
@@ -1336,9 +1317,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFF8C00),
                   foregroundColor: Colors.white,
-                  disabledBackgroundColor: const Color(0xFFFF8C00).withValues(
-                    alpha: 0.5,
-                  ),
+                  disabledBackgroundColor: const Color(
+                    0xFFFF8C00,
+                  ).withValues(alpha: 0.5),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(999),
                   ),
@@ -2324,42 +2305,6 @@ class _NavItem extends StatelessWidget {
             fontSize: 15,
             fontWeight: FontWeight.w700,
             color: active ? _C.accent : _C.muted,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// "Build Course" side action button
-class _SideAction extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const _SideAction({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(999),
-          gradient: LinearGradient(
-            colors: [
-              _C.primary.withValues(alpha: 0.18),
-              _C.accent.withValues(alpha: 0.18),
-            ],
-          ),
-          border: Border.all(color: _C.accent.withValues(alpha: 0.35)),
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: _C.text,
           ),
         ),
       ),

@@ -26,30 +26,24 @@ class ModulePanel extends StatefulWidget {
 
 class _ModulePanelState extends State<ModulePanel> {
   String _searchQuery = '';
-  final Set<String> _expandedCategories = {'General', 'Physical', 'Chemical'};
+  final Set<String> _expandedCategories = {'General', 'Programming'};
 
   static const List<_BlockCategory> _categories = [
     _BlockCategory(
       name: 'General',
-      blockTypes: [BlockType.text, BlockType.image],
-      backgroundColor: Color(0xFFE8EAF6), // indigo 50
-    ),
-    _BlockCategory(
-      name: 'Physical',
       blockTypes: [
-        BlockType.codeBlock,
-        BlockType.codePlayground,
+        BlockType.text,
+        BlockType.image,
         BlockType.animation,
-      ],
-      backgroundColor: Color(0xFFE3F2FD), // blue 50
-    ),
-    _BlockCategory(
-      name: 'Chemical',
-      blockTypes: [
         BlockType.multipleChoice,
         BlockType.trueFalse,
         BlockType.matching,
       ],
+      backgroundColor: Color(0xFFE8EAF6), // indigo 50
+    ),
+    _BlockCategory(
+      name: 'Programming',
+      blockTypes: [BlockType.codeBlock, BlockType.codePlayground],
       backgroundColor: Color(0xFFE8F5E9), // green 50
     ),
   ];

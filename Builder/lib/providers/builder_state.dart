@@ -12,7 +12,7 @@ class BuilderState {
     this.currentPageIndex = 0,
     this.selectedBlockId,
     this.isPreviewMode = false,
-    this.courseTitle = 'Untitled Course',
+    this.courseTitle = 'Untitled Lesson',
     this.hasUnsavedChanges = false,
   });
 

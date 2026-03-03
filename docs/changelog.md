@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased] - 2026-03-03 (AI Backend Edge Function + Drag-and-Drop Crash Fix)
+
+### Summary
+Moved Gemini AI course generation from the Flutter client to a Supabase Edge Function (`ai-generate-course-json`). The API key and prompt now live server-side — no client-side key required. Removed the API key input from the AI Generate dialog (PDF mode). Fixed a red-screen crash that occurred when dragging blocks in the Builder canvas (`Unexpected null value`). Fixed the Builder screen failing to initialise a blank course when navigated to without a `courseId`.
+
+### Added
+- **`supabase/functions/ai-generate-course-json/index.ts`** — Deno Edge Function: accepts `{description, difficulty, animationStyle, audience}` (text mode) or `{pdfBase64, storageUrl, fileName}` (PDF mode); tries Gemini models in fallback order (`gemini-2.5-flash-latest → 2.5-flash → 2.0-flash → 2.5-pro-latest → 2.5-pro`); returns `{success, courseJson, model}` or `{success: false, error}`. The full course-generation prompt (with all 10 block-type schemas) now lives here, so prompt changes only require a function redeploy — not a Flutter build
+- **`AICourseGenerator.generateViaApi()`** — new static method in `ai_course_generator.dart`: calls the Edge Function via `Supabase.instance.client.functions.invoke`, normalises the returned JSON, and validates it through the existing `CourseImport.importFromString()` pipeline (schema migration + schema validation). Handles `FunctionException` and network-level `ClientException` separately
+
+### Changed
+- **`supabase/config.toml`**: Added `[functions.ai-generate-course-json] verify_jwt = false` — the function calls only the Gemini API and does not touch Supabase user data, so JWT auth is not needed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**: `_showOneSentenceGenerateDialog` now calls `AICourseGenerator.generateViaApi()` instead of `generateFromDescription()` — generation no longer requires a client-side API key
+- **`Builder/lib/widgets/ai_generate_dialog.dart`**: Removed the Gemini API key text field and its controller/initState/dispose. `_canGenerate()` no longer checks for a non-empty key. PDF generation now routes through `generateViaApi()` (server-side key)
+- **`Builder/lib/services/ai_course_generator.dart`**: Updated `_modelCandidates` list order (flash-first); added `_maxOutputTokens = 16384` constant; expanded `_shouldTryNextModel` to include 5xx server errors and rate-limit messages
+
+### Fixed
+- **Red-screen crash on block drag (`Unexpected null value`)**: During a `ReorderableListView` drag, Flutter moves the dragged item's `GlobalKey` element into an `Overlay`, making it no longer a descendant of the list viewport. Calling `box.localToGlobal(Offset.zero, ancestor: viewportBox)` then walks up the render tree past the root and hits a null parent → crash. Fixed in `builder_canvas.dart` by wrapping `localToGlobal` in a try-catch and skipping boxes that are not under the viewport
+- **Builder screen blank-canvas init**: When navigating to `/builder` without a `courseId` query param, `_initializeBlankCourse()` was not being called (only `_loadCourse()` was guarded). Fixed by normalising empty/whitespace courseId to `null` in `initState` and explicitly calling `_initializeBlankCourse()` when no courseId is present
+
+---
+
 ## [Unreleased] - 2026-02-26 (GitHub Pages Domain Restore + Browser Autofill)
 
 ### Summary

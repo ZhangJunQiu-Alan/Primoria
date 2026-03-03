@@ -41,6 +41,9 @@
 34. [x] Fix sign-out red-screen crash — (a) popup menu: delay signOut 300 ms for dismiss animation; (b) dashboard async handlers: capture `ScaffoldMessenger` before `await`, check `messenger.mounted`; (c) profile dialog: pop before signOut; (d) landing `onSuccess`: set to null (2026-02-25)
 35. [x] Restore hackathon GitHub Pages custom domain — added `hackathon/web/CNAME` with `primoria.dpdns.org`; re-bound via GitHub API; site live at https://primoria.dpdns.org (2026-02-26)
 36. [x] Browser password autofill on login/register — added `AutofillGroup` + `autofillHints` to Builder auth dialog and Viewer login/register screens; browsers now show save-password prompt and auto-fill on return (2026-02-26)
+37. [x] AI backend Edge Function — moved Gemini call + prompt to `supabase/functions/ai-generate-course-json`; `generateViaApi()` in `ai_course_generator.dart` calls it; dashboard one-sentence dialog uses it; API key input removed from AI Generate dialog; `verify_jwt = false` in `config.toml` (2026-03-03)
+38. [x] Fix drag-and-drop red-screen crash — `ReorderableListView` moves dragged item's `GlobalKey` into an Overlay, so `localToGlobal(ancestor: viewportBox)` throws "Unexpected null value"; fixed with try-catch in `builder_canvas.dart` (2026-03-03)
+39. [x] Fix Builder blank-canvas init — normalise empty courseId to null in `initState`; call `_initializeBlankCourse()` when no courseId is provided so `/builder` without params works correctly (2026-03-03)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
