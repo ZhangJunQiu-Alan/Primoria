@@ -7,7 +7,6 @@ import '../../l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
-import '../../services/storage_service.dart';
 import '../../services/ai_course_generator.dart';
 import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
@@ -921,7 +920,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               _LessonBox(
                 title: t.addLesson,
                 dashed: true,
-                onTap: () => context.go('/builder'),
+                onTap: () =>
+                    context.go('/builder?courseId=$courseId&addLesson=1'),
               ),
             ],
           ),
@@ -1267,31 +1267,24 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           return;
                         }
 
-                        // Save to Supabase and open in Builder
+                        // Save full course to Supabase (course row + lesson
+                        // snapshot rows), then stay on dashboard.
                         final course = result.course!;
-                        final createResult =
-                            await SupabaseService.createCourseRow(
-                              title: course.metadata.title,
-                              description: course.metadata.description,
-                              difficultyLevel: course.metadata.difficulty,
-                              estimatedMinutes:
-                                  course.metadata.estimatedMinutes,
-                              priceTier: 'free',
-                              price: 0,
-                            );
+                        final saveResult =
+                            await SupabaseService.saveCourse(course);
 
                         if (!ctx.mounted) return;
 
-                        if (!createResult.success ||
-                            createResult.courseId == null) {
+                        if (!saveResult.success ||
+                            saveResult.courseId == null) {
                           setDialogState(() {
                             isGenerating = false;
-                            errorMessage = createResult.message;
+                            errorMessage = saveResult.message;
                           });
                           return;
                         }
 
-                        // Dismiss dialog then navigate
+                        // Dismiss dialog and refresh the course list in place.
                         if (ctx.mounted) Navigator.pop(ctx);
                         if (messenger.mounted) {
                           messenger.showSnackBar(
@@ -1303,15 +1296,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         }
 
                         if (mounted) {
-                          // Store the AI-generated content as a local draft so
-                          // the Builder can restore it immediately on load.
-                          await StorageService.saveCourseDraft(
-                            createResult.courseId!,
-                            course,
+                          // Clear any stale lesson-title cache for this course,
+                          // then reload the course list so the new card appears.
+                          setState(
+                            () => _courseLessons.remove(saveResult.courseId),
                           );
-                          context.go(
-                            '/builder?courseId=${createResult.courseId}',
-                          );
+                          await _loadCourses();
                         }
                       },
                 style: ElevatedButton.styleFrom(

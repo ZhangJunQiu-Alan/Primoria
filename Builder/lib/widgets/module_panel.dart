@@ -43,7 +43,11 @@ class _ModulePanelState extends State<ModulePanel> {
     ),
     _BlockCategory(
       name: 'Programming',
-      blockTypes: [BlockType.codeBlock, BlockType.codePlayground],
+      blockTypes: [
+        BlockType.codeBlock,
+        BlockType.codePlayground,
+        BlockType.functionFlow,
+      ],
       backgroundColor: Color(0xFFE8F5E9), // green 50
     ),
   ];

@@ -65,7 +65,7 @@
 | **状态管理** | Riverpod / Bloc | Flutter 生态成熟，便于扩展 |
 | **动画引擎** | Flutter CustomPainter + AnimationController | 原生性能高、可控性强 |
 | **拖拽实现** | flutter_draggable_gridview | 模块化拖拽落地快 |
-| **后端框架** | Node.js | 迭代快，生态丰富 |
+| **后端语言/运行时** | TypeScript + Deno（Supabase Edge Functions） | 与前端统一 TypeScript 生态，便于 Serverless 和边缘部署 |
 | **数据库** | PostgreSQL | 关系能力强，JSON 支持好 |
 | **对象存储** | S3 / OSS / MinIO | 媒体资源存储 |
 
@@ -433,7 +433,7 @@ Week 5-6: Question modules
 
 Week 7-8: Code Playground
 ├── Code editor integration (code_text_field or custom)
-├── Python backend execution service
+├── TypeScript（Deno）执行服务
 ├── Output display
 └── Error messages
 

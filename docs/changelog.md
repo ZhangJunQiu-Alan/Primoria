@@ -1,5 +1,54 @@
 # Changelog
 
+## [Unreleased] - 2026-03-04 (AI Multi-Lesson Generation + Function Flow Block + Add-Lesson Flow)
+
+### Summary
+Three independent feature tracks land together. (1) The AI "one-sentence generate" feature now produces structured multi-lesson courses (2-4 lessons, 6-9 blocks each) entirely server-side, with TypeScript schema validation in the Edge Function, truncation detection, and model fallback — generation result stays on the Dashboard instead of jumping to the Builder. (2) A new **Function Flow** block type visualises caller-callee execution paths as an interactive node-edge diagram, complete with step-through animation, a property-panel editor, schema migration, and validator coverage. (3) The Builder gains a dedicated **Add Lesson** flow (`/builder?addLesson=1&courseId=…`) that creates an independent lesson under an existing course via `saveLessonToCourse()`, with draft persistence and round-trip Viewer support.
+
+### Added
+- **`supabase/functions/ai-generate-course-json/index.ts`** — major update:
+  - Multi-lesson prompt: 2-4 lessons, 6-9 blocks/lesson, ≤ 30 total; each lesson covers one coherent sub-topic
+  - `validateCourseSchema()` TypeScript validator (mirrors Dart `CourseSchemaValidator`): checks courseId, metadata, pages, block IDs/types, per-type content fields, duplicate IDs; errors block, warnings pass through
+  - `buildValidationSummary()` returns concise human-readable summaries with up to 3 error details
+  - `finishReason` check: `MAX_TOKENS` → truncation error → retry next model; non-STOP reasons with no text → retry
+  - Trailing `}` guard: detects mid-JSON truncation even when `finishReason` is incorrectly reported as `STOP`
+  - Content snippet (first 200 chars) included in parse-failure error for diagnostics
+  - `MAX_OUTPUT_TOKENS` raised from 16 384 → 32 768
+  - `shouldTryNextModel`: fixed — `statusCode === undefined` (non-HTTP failure) now always retries next model
+  - Success response includes optional `warnings` array; failure response includes optional `validationErrors` array
+- **`Builder/lib/models/block.dart`** — `FunctionFlowNode`, `FunctionFlowEdge`, `FunctionFlowStep`, `FunctionFlowContent` model classes with full JSON serialization / deserialization and `copyWith`
+- **`Builder/lib/models/block_type.dart`** — `functionFlow` enum value (`'function-flow'`, symbol `ƒ→`)
+- **`Builder/lib/services/block_registry.dart`** — `FunctionFlow` registered with priority 4
+- **`Builder/lib/widgets/block_widgets/function_flow_block_widget.dart`** — read-only canvas widget with step-through playback
+- **`Builder/lib/widgets/function_flow_content_editor.dart`** — property-panel editor (add/remove/edit nodes and edges, entryNodeId picker)
+- **`Builder/lib/widgets/module_panel.dart`** — `FunctionFlow` added to **Programming** category
+- **`Builder/lib/widgets/property_panel.dart`** — `_buildFunctionFlowEditor()` delegating to `FunctionFlowContentEditor`
+- **`Builder/lib/services/course_schema_migrator.dart`** — `function-flow` content normalization: node/edge/step normalizers, style normalizer, alias map entries (`functionflow`, `function_flow`)
+- **`Builder/lib/services/course_schema_validator.dart`** — `_validateFunctionFlowContent()`: node structure, edge referential integrity, steps count, entryNodeId presence
+- **`Builder/lib/app/router.dart`** — `/builder` and `/viewer` routes now accept `addLesson` (bool) and `draftId` query params
+- **`Builder/lib/features/builder/builder_screen.dart`** — `addLesson` / `draftId` params; `_isAddLessonFlow` getter; `_loadOrInitAddLessonCourse()` (loads draft if present, else blank); saves via `saveLessonToCourse()`
+- **`Builder/lib/features/viewer/viewer_screen.dart`** — accepts `addLesson` / `draftId`; back-button routes back to `/builder?courseId=…&addLesson=1&draftId=…` when in add-lesson context; renders `FunctionFlowBlockWidget`
+- **Tests**: `models_test.dart` (FunctionFlowContent roundtrip, edge validation), `course_schema_migration_test.dart` (functionFlow alias migration), `course_schema_validator_test.dart` (invalid edge path error), `function_flow_widget_test.dart` (widget smoke test)
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**:
+  - After AI generation: stay on Dashboard (no longer auto-navigates to `/builder`)
+  - Replaced `createCourseRow()` + `StorageService.saveCourseDraft()` with a single `SupabaseService.saveCourse()` call
+  - Refreshes course list in-place after generation via `_loadCourses()`
+  - Removed unused `storage_service.dart` import
+- **`Builder/lib/services/supabase_service.dart`** — `_saveCourseSnapshot()` rewritten:
+  - Creates one `lessons` row per course page (sort_keys 1000, 1010, 1020, …)
+  - Only the first row carries `content_json` (full snapshot); subsequent rows carry the page title only
+  - Deletes excess snapshot rows when page count decreases
+  - Snapshot rows (sort_key [1000, 2000)) are managed independently of add-lesson rows (sort_key ≥ 2000)
+- **`docs/README.md` / `docs/README-zh.md`** — backend runtime updated to "TypeScript on Deno (Supabase Edge Functions)"
+- **`docs/prd.md` / `docs/prd-zh.md`** — tech stack table updated: "TypeScript + Deno (Supabase Edge Functions)" replaces "Node.js"
+
+### Fixed
+- **AI generation empty-content fallback** — `shouldTryNextModel()` previously returned `false` for any failure without an HTTP status code (empty content, network errors); now returns `true` so the full model fallback chain is attempted
+
+---
+
 ## [Unreleased] - 2026-03-03 (Builder UX Continuity + Module Taxonomy Refresh)
 
 ### Summary

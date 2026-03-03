@@ -13,11 +13,19 @@ import '../../providers/course_provider.dart';
 import '../../models/models.dart';
 import '../../widgets/block_widgets/animation_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
+import '../../widgets/block_widgets/function_flow_block_widget.dart';
 
 class ViewerScreen extends ConsumerWidget {
   final String? courseId;
+  final bool addLesson;
+  final String? draftId;
 
-  const ViewerScreen({super.key, this.courseId});
+  const ViewerScreen({
+    super.key,
+    this.courseId,
+    this.addLesson = false,
+    this.draftId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +47,14 @@ class ViewerScreen extends ConsumerWidget {
             onPressed: () {
               final id = courseId ?? '';
               if (id.isNotEmpty) {
-                context.go('/builder?courseId=$id');
+                if (addLesson) {
+                  final draftPart = (draftId != null && draftId!.isNotEmpty)
+                      ? '&draftId=${Uri.encodeQueryComponent(draftId!)}'
+                      : '';
+                  context.go('/builder?courseId=$id&addLesson=1$draftPart');
+                } else {
+                  context.go('/builder?courseId=$id');
+                }
               } else {
                 context.go('/builder');
               }
@@ -455,6 +470,10 @@ class _InteractiveBlockPreview extends StatelessWidget {
       case BlockType.codePlayground:
         final content = block.content as CodePlaygroundContent;
         return CodePlaygroundWidget(content: content);
+      case BlockType.functionFlow:
+        return FunctionFlowBlockWidget(
+          content: block.content as FunctionFlowContent,
+        );
       case BlockType.multipleChoice:
         return _InteractiveMultipleChoice(
           content: block.content as MultipleChoiceContent,

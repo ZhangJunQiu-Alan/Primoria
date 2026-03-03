@@ -457,6 +457,65 @@ Multi-select example:
 
 ---
 
+### 10. function-flow - Function Flow Block
+
+Visualises caller-callee execution paths as an interactive node-edge diagram with optional step-through playback.
+
+```json
+{
+  "type": "function-flow",
+  "id": "ff-001",
+  "position": { "order": 7 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "title": "How solve() calls helper()",
+    "nodes": [
+      { "id": "start",  "label": "Start",    "x": 10, "y": 50, "kind": "start" },
+      { "id": "solve",  "label": "solve()",  "x": 40, "y": 50, "kind": "function", "description": "Entry point" },
+      { "id": "helper", "label": "helper()", "x": 70, "y": 50, "kind": "function" },
+      { "id": "end",    "label": "End",      "x": 90, "y": 50, "kind": "end" }
+    ],
+    "edges": [
+      { "from": "start",  "to": "solve",  "label": "" },
+      { "from": "solve",  "to": "helper", "label": "calls" },
+      { "from": "helper", "to": "end",    "label": "" }
+    ],
+    "entryNodeId": "start",
+    "steps": [
+      { "activeNodeId": "start",  "edgeIndex": 0, "description": "Program begins" },
+      { "activeNodeId": "solve",  "edgeIndex": 1, "description": "solve() runs, calls helper()" },
+      { "activeNodeId": "helper", "edgeIndex": 2, "description": "helper() executes" },
+      { "activeNodeId": "end",    "edgeIndex": -1, "description": "Execution complete" }
+    ],
+    "style": { "nodeColor": "#4A90E2", "edgeColor": "#999999", "activeColor": "#FF8C00" }
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `title` | No | Diagram heading shown above the canvas |
+| `nodes` | Yes | Array of node objects |
+| `nodes[].id` | Yes | Unique node identifier |
+| `nodes[].label` | Yes | Display label |
+| `nodes[].x` / `nodes[].y` | Yes | Position (0–100 percentage units) |
+| `nodes[].kind` | No | `start` / `function` / `end`; defaults to `function` |
+| `nodes[].description` | No | Tooltip / annotation text |
+| `edges` | Yes | Array of directed edges |
+| `edges[].from` / `edges[].to` | Yes | Node IDs; must exist in `nodes` |
+| `edges[].label` | No | Edge annotation |
+| `entryNodeId` | No | ID of the first node to highlight on load |
+| `steps` | No | Ordered step list for playback mode |
+| `steps[].activeNodeId` | Yes (per step) | Node to highlight at this step |
+| `steps[].edgeIndex` | No | Index into `edges` to highlight (`-1` = none) |
+| `steps[].description` | No | Narration text for this step |
+| `style` | No | Visual overrides: `nodeColor`, `edgeColor`, `activeColor` |
+
+**Legacy aliases accepted by the schema migrator:** `functionflow`, `function_flow`
+
+---
+
 ## Complete Example
 
 Below is a complete course example with multiple block types:

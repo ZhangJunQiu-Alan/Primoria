@@ -236,6 +236,74 @@ void main() {
     });
   });
 
+  group('FunctionFlowContent', () {
+    test('FunctionFlowContent serialization roundtrip', () {
+      final content = FunctionFlowContent(
+        title: 'Call graph',
+        nodes: const [
+          FunctionFlowNode(
+            id: 'start',
+            label: 'Start',
+            x: 10,
+            y: 50,
+            kind: FunctionFlowNode.kindStart,
+          ),
+          FunctionFlowNode(
+            id: 'solve',
+            label: 'solve()',
+            x: 50,
+            y: 50,
+            description: 'Core function',
+          ),
+          FunctionFlowNode(
+            id: 'end',
+            label: 'End',
+            x: 90,
+            y: 50,
+            kind: FunctionFlowNode.kindEnd,
+          ),
+        ],
+        edges: const [
+          FunctionFlowEdge(from: 'start', to: 'solve', label: 'call'),
+          FunctionFlowEdge(from: 'solve', to: 'end', label: 'return'),
+        ],
+        entryNodeId: 'start',
+        steps: const [
+          FunctionFlowStep(edgeIndex: 0, note: 'call solve'),
+          FunctionFlowStep(edgeIndex: 1, note: 'return'),
+        ],
+        style: const FunctionFlowStyle(
+          theme: 'emerald',
+          showArrows: true,
+          stepDurationMs: 1400,
+          lineWidth: 2.5,
+        ),
+      );
+
+      final json = content.toJson();
+      final restored = FunctionFlowContent.fromJson(json);
+
+      expect(restored.title, 'Call graph');
+      expect(restored.nodes.length, 3);
+      expect(restored.edges.length, 2);
+      expect(restored.steps.length, 2);
+      expect(restored.entryNodeId, 'start');
+      expect(restored.style.theme, 'emerald');
+      expect(restored.style.stepDurationMs, 1400);
+    });
+
+    test('Block.create function-flow uses defaults', () {
+      final block = Block.create(BlockType.functionFlow, order: 0);
+      expect(block.type, BlockType.functionFlow);
+      expect(block.content, isA<FunctionFlowContent>());
+
+      final content = block.content as FunctionFlowContent;
+      expect(content.nodes.length, greaterThanOrEqualTo(2));
+      expect(content.edges.length, greaterThanOrEqualTo(1));
+      expect(content.style.stepDurationMs, 1200);
+    });
+  });
+
   group('MultipleChoiceContent', () {
     test('MultipleChoiceContent serialization', () {
       final content = MultipleChoiceContent(

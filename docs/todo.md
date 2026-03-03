@@ -47,6 +47,9 @@
 40. [x] Course Manage entry UX simplification — removed left sidebar "Build Course" button; "Add Lesson" now opens blank Builder (`/builder`) instead of opening the existing course (`/builder?courseId=<id>`) (2026-03-03)
 41. [x] Preserve unsaved content across Preview round-trip on blank sessions — blank Builder now gets local temp `courseId`, draft autosave is enabled immediately, and Preview always routes with `courseId` so blocks/AI-generated content are restored when returning (2026-03-03)
 42. [x] Builder default blank title rename — default new title switched from `Untitled Course` to `Untitled Lesson` in `builder_state` + `course_provider` (2026-03-03)
+43. [x] AI multi-lesson generation — Edge Function produces 2-4 structured lessons (6-9 blocks each); server-side TypeScript schema validator; truncation detection + model fallback chain fix; stay on Dashboard after generation; `_saveCourseSnapshot` syncs one lesson row per page (2026-03-04)
+44. [x] Function Flow block type — node-edge diagram for visualising caller-callee execution paths; step-through playback widget; property-panel editor; schema migration + validator; tests (2026-03-04)
+45. [x] Add Lesson flow — `/builder?addLesson=1&courseId=…&draftId=…`; `saveLessonToCourse()` for independent lesson creation; draft persistence; Viewer back-navigation preserves add-lesson context (2026-03-04)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

@@ -21,7 +21,8 @@ Primoria 是一个由两部分组成的 Flutter 系统，用于创建和学习�
 [Viewer (Flutter Website)]
 ```
 
-后端：**Supabase（Postgres）**，用于账号、课程云端保存/发布、搜索/推荐等能力。
+后端：**Supabase（Postgres + Edge Functions）**，用于账号、课程云端保存/发布、搜索/推荐等能力。
+后端语言/运行时基线：**TypeScript + Deno**（Supabase Edge Functions）。
 
 ## 仓库结构
 
