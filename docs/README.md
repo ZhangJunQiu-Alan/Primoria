@@ -21,7 +21,8 @@ This repository contains both apps plus the shared course schema and product doc
 [Viewer (Flutter Website)]
 ```
 
-Backend: **Supabase (Postgres)** — accounts, cloud course saving/publishing, search/recommendation.
+Backend: **Supabase (Postgres + Edge Functions)** — accounts, cloud course saving/publishing, search/recommendation.
+Backend language/runtime baseline: **TypeScript on Deno** (Supabase Edge Functions).
 
 ## Repository Layout
 

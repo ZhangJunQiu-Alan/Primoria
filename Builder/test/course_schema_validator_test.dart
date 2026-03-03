@@ -209,6 +209,45 @@ void main() {
     expect(content.loop, isFalse);
     expect(content.speed, 1.75);
   });
+
+  test('function-flow invalid edge reports actionable path', () {
+    final block = Block.create(BlockType.functionFlow, order: 0).copyWith(
+      content: const FunctionFlowContent(
+        title: 'Flow',
+        nodes: [
+          FunctionFlowNode(
+            id: 'start',
+            label: 'Start',
+            x: 10,
+            y: 50,
+            kind: FunctionFlowNode.kindStart,
+          ),
+          FunctionFlowNode(
+            id: 'end',
+            label: 'End',
+            x: 90,
+            y: 50,
+            kind: FunctionFlowNode.kindEnd,
+          ),
+        ],
+        edges: [FunctionFlowEdge(from: 'start', to: 'missing-node')],
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final result = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isFalse);
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.edges[0].to'),
+      ),
+      isTrue,
+    );
+  });
 }
 
 Course _buildCourseWithMultipleChoice(MultipleChoiceContent content) {

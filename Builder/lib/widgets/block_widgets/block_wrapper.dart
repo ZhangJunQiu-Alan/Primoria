@@ -7,6 +7,7 @@ import '../../models/models.dart';
 import '../../services/block_registry.dart';
 import 'animation_block_widget.dart';
 import 'code_playground_widget.dart';
+import 'function_flow_block_widget.dart';
 
 /// Block wrapper - handles selection, delete, and other common behavior
 class BlockWrapper extends StatelessWidget {
@@ -179,6 +180,10 @@ class BlockWrapper extends StatelessWidget {
               onBlockUpdated!(block.copyWith(content: updatedContent));
             }
           },
+        );
+      case BlockType.functionFlow:
+        return FunctionFlowBlockWidget(
+          content: block.content as FunctionFlowContent,
         );
       case BlockType.multipleChoice:
         return _MultipleChoiceContent(
