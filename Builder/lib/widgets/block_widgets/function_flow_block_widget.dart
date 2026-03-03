@@ -648,9 +648,9 @@ class _FunctionFlowPainter extends CustomPainter {
   }
 
   void _drawArrow(Canvas canvas, Path path, Color color) {
-    final metrics = path.computeMetrics();
-    if (metrics.isEmpty) return;
-    final metric = metrics.first;
+    final metricsIterator = path.computeMetrics().iterator;
+    if (!metricsIterator.moveNext()) return;
+    final metric = metricsIterator.current;
     if (!metric.length.isFinite || metric.length <= 2) return;
     final tangent = metric.getTangentForOffset(metric.length - 2);
     if (tangent == null) return;
@@ -679,9 +679,9 @@ class _FunctionFlowPainter extends CustomPainter {
   }
 
   void _drawEdgeLabel(Canvas canvas, Path path, String label, bool isActive) {
-    final metrics = path.computeMetrics();
-    if (metrics.isEmpty) return;
-    final metric = metrics.first;
+    final metricsIterator = path.computeMetrics().iterator;
+    if (!metricsIterator.moveNext()) return;
+    final metric = metricsIterator.current;
     final tangent = metric.getTangentForOffset(metric.length * 0.5);
     if (tangent == null) return;
 
