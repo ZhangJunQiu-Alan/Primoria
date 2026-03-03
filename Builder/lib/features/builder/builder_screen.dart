@@ -23,8 +23,15 @@ import '../../widgets/user_avatar.dart';
 /// Builder main screen - course editor
 class BuilderScreen extends ConsumerStatefulWidget {
   final String? courseId;
+  final bool addLesson;
+  final String? draftId;
 
-  const BuilderScreen({super.key, this.courseId});
+  const BuilderScreen({
+    super.key,
+    this.courseId,
+    this.addLesson = false,
+    this.draftId,
+  });
 
   @override
   ConsumerState<BuilderScreen> createState() => _BuilderScreenState();
@@ -34,6 +41,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   bool _courseLoaded = false;
   bool _draftAutoSaveEnabled = false;
   String? _courseId;
+  String? _draftId;
+  String? _addFlowLessonId;
 
   @override
   void initState() {
@@ -42,6 +51,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     _courseId = (routeCourseId == null || routeCourseId.isEmpty)
         ? null
         : routeCourseId;
+    final routeDraftId = widget.draftId?.trim();
+    _draftId = (routeDraftId == null || routeDraftId.isEmpty)
+        ? null
+        : routeDraftId;
     _bootstrapProtectedScreen();
   }
 
@@ -54,6 +67,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       context.go('/');
       return;
     }
+    if (_isAddLessonFlow) {
+      await _loadOrInitAddLessonCourse();
+      return;
+    }
+
     if (_courseId != null && _courseId!.isNotEmpty) {
       _loadCourse();
       return;
@@ -61,10 +79,49 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     _initializeBlankCourse();
   }
 
-  void _initializeBlankCourse() {
+  bool get _isAddLessonFlow =>
+      widget.addLesson && _courseId != null && _courseId!.isNotEmpty;
+
+  String? get _activeDraftStorageId {
+    if (_isAddLessonFlow) {
+      final id = _draftId;
+      if (id != null && id.isNotEmpty) return id;
+    }
+    final id = _courseId;
+    if (id != null && id.isNotEmpty) return id;
+    return null;
+  }
+
+  Future<void> _loadOrInitAddLessonCourse() async {
+    if (_draftId != null && _draftId!.isNotEmpty) {
+      final draft = await StorageService.loadCourseDraft(_draftId!);
+      if (!mounted) return;
+      if (draft != null) {
+        ref.read(courseProvider.notifier).loadCourse(draft);
+        ref
+            .read(builderStateProvider.notifier)
+            .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
+        ref.read(builderStateProvider.notifier).setCurrentPage(0);
+        ref.read(builderStateProvider.notifier).clearSelection();
+        _draftAutoSaveEnabled = true;
+        return;
+      }
+    }
+
+    _initializeBlankCourse(preserveCourseId: true);
+  }
+
+  void _initializeBlankCourse({bool preserveCourseId = false}) {
     ref.read(courseProvider.notifier).createNewCourse();
     final created = ref.read(courseProvider);
-    _courseId = created.courseId;
+
+    if (!preserveCourseId) {
+      _courseId = created.courseId;
+      _draftId = null;
+    } else {
+      _draftId = created.courseId;
+    }
+
     _draftAutoSaveEnabled = true;
     ref
         .read(builderStateProvider.notifier)
@@ -81,7 +138,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
     // Restore browser draft first to prevent unsaved edits from being
     // overwritten when navigating Builder -> Preview -> Builder.
-    final draft = await StorageService.loadCourseDraft(courseId);
+    final draftKey = _activeDraftStorageId ?? courseId;
+    final draft = await StorageService.loadCourseDraft(draftKey);
     if (!mounted) return;
     if (draft != null) {
       ref
@@ -120,18 +178,21 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   Future<void> _saveBrowserDraft(WidgetRef ref) async {
-    final courseId = _courseId;
-    if (courseId == null || courseId.isEmpty) return;
-    await StorageService.saveCourseDraft(courseId, ref.read(courseProvider));
+    final draftStorageId = _activeDraftStorageId;
+    if (draftStorageId == null || draftStorageId.isEmpty) return;
+    await StorageService.saveCourseDraft(
+      draftStorageId,
+      ref.read(courseProvider),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen(courseProvider, (previous, next) {
       if (!_draftAutoSaveEnabled) return;
-      final courseId = _courseId;
-      if (courseId == null || courseId.isEmpty) return;
-      StorageService.saveCourseDraft(courseId, next);
+      final draftStorageId = _activeDraftStorageId;
+      if (draftStorageId == null || draftStorageId.isEmpty) return;
+      StorageService.saveCourseDraft(draftStorageId, next);
     });
 
     final builderState = ref.watch(builderStateProvider);
@@ -244,10 +305,22 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 ? _courseId!
                 : ref.read(courseProvider).courseId;
             _courseId = previewCourseId;
+            if (_isAddLessonFlow && (_draftId == null || _draftId!.isEmpty)) {
+              _draftId = ref.read(courseProvider).courseId;
+            }
             await _saveBrowserDraft(ref);
             if (!context.mounted) return;
             if (previewCourseId.isNotEmpty) {
-              context.go('/viewer?courseId=$previewCourseId');
+              if (_isAddLessonFlow) {
+                final draftPart = (_draftId != null && _draftId!.isNotEmpty)
+                    ? '&draftId=${Uri.encodeQueryComponent(_draftId!)}'
+                    : '';
+                context.go(
+                  '/viewer?courseId=$previewCourseId&addLesson=1$draftPart',
+                );
+              } else {
+                context.go('/viewer?courseId=$previewCourseId');
+              }
             } else {
               context.go('/viewer');
             }
@@ -568,7 +641,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       return;
     }
 
-    final course = _courseForPersist(ref.read(courseProvider));
+    final sourceCourse = ref.read(courseProvider);
+    final course = _courseForPersist(sourceCourse);
 
     // Show saving indicator
     ScaffoldMessenger.of(context).showSnackBar(
@@ -591,7 +665,13 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       ),
     );
 
-    final result = await SupabaseService.saveCourse(course);
+    final result = _isAddLessonFlow
+        ? await SupabaseService.saveLessonToCourse(
+            courseId: _courseId!,
+            lessonCourse: sourceCourse,
+            lessonId: _addFlowLessonId,
+          )
+        : await SupabaseService.saveCourse(course);
 
     if (!context.mounted) return;
 
@@ -599,12 +679,15 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (result.success) {
+      if (_isAddLessonFlow) {
+        _addFlowLessonId = result.lessonId ?? _addFlowLessonId;
+      }
       await _adoptPersistedCourseId(result.courseId, ref);
       if (!context.mounted) return;
       ref.read(builderStateProvider.notifier).markAsSaved();
-      final draftCourseId = _courseId;
-      if (draftCourseId != null && draftCourseId.isNotEmpty) {
-        await StorageService.clearCourseDraft(draftCourseId);
+      final draftStorageId = _activeDraftStorageId;
+      if (draftStorageId != null && draftStorageId.isNotEmpty) {
+        await StorageService.clearCourseDraft(draftStorageId);
         if (!context.mounted) return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
@@ -761,6 +844,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     WidgetRef ref,
   ) async {
     if (persistedId == null || persistedId.isEmpty) return;
+    if (_isAddLessonFlow) return;
+
     final previousId = _courseId;
     if (previousId == persistedId) return;
 

@@ -105,6 +105,54 @@ void main() {
       expect(exportedJson[r'$schema'], Course.schemaUrl);
       expect(exportedJson['schemaVersion'], Course.schemaVersion);
     });
+
+    test('migrates functionFlow alias to function-flow', () {
+      final legacy = {
+        'courseId': 'course-legacy-flow',
+        'metadata': {'title': 'Legacy Flow'},
+        'pages': [
+          {
+            'pageId': 'p1',
+            'title': 'Page 1',
+            'blocks': [
+              {
+                'id': 'b1',
+                'type': 'functionFlow',
+                'position': {'order': 0},
+                'style': {'alignment': 'left', 'spacing': 'md'},
+                'content': {
+                  'title': 'Legacy Function Flow',
+                  'nodes': [
+                    {
+                      'id': 'n1',
+                      'label': 'Start',
+                      'x': 10,
+                      'y': 50,
+                      'kind': 'start',
+                    },
+                    {
+                      'id': 'n2',
+                      'label': 'run()',
+                      'x': 60,
+                      'y': 50,
+                      'kind': 'function',
+                    },
+                  ],
+                  'edges': [
+                    {'from': 'n1', 'to': 'n2', 'label': 'call'},
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      final result = CourseImport.importFromString(jsonEncode(legacy));
+      expect(result.success, isTrue);
+      final block = result.course!.pages.first.blocks.first;
+      expect(block.type, BlockType.functionFlow);
+    });
   });
 }
 

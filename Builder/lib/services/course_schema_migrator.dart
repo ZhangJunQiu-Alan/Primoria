@@ -45,6 +45,9 @@ class CourseSchemaMigrator {
     'codeplayground': 'code-playground',
     'code-playground': 'code-playground',
     'code_playground': 'code-playground',
+    'functionflow': 'function-flow',
+    'function-flow': 'function-flow',
+    'function_flow': 'function-flow',
     'multiplechoice': 'multiple-choice',
     'multiple-choice': 'multiple-choice',
     'multiple_choice': 'multiple-choice',
@@ -514,6 +517,32 @@ class CourseSchemaMigrator {
       };
     }
 
+    if (type == 'function-flow') {
+      final nodes = _normalizeFunctionFlowNodes(content['nodes']);
+      final nodeIds = nodes.map((node) => node['id'] as String).toSet();
+      final edges = _normalizeFunctionFlowEdges(content['edges'], nodeIds);
+      final steps = _normalizeFunctionFlowSteps(content['steps'], edges.length);
+      final entryNodeId = _asString(content['entryNodeId'])?.trim();
+      final normalizedEntryNodeId =
+          entryNodeId != null &&
+              entryNodeId.isNotEmpty &&
+              nodeIds.contains(entryNodeId)
+          ? entryNodeId
+          : (nodes.isNotEmpty ? nodes.first['id'] as String : null);
+
+      return {
+        'title':
+            _asString(content['title']) ??
+            _asString(blockMap['title']) ??
+            'Function Flow',
+        'nodes': nodes,
+        'edges': edges,
+        if (normalizedEntryNodeId != null) 'entryNodeId': normalizedEntryNodeId,
+        'steps': steps,
+        'style': _normalizeFunctionFlowStyle(content['style']),
+      };
+    }
+
     if (type == 'multiple-choice') {
       final question =
           _asString(content['question']) ??
@@ -797,6 +826,210 @@ class CourseSchemaMigrator {
       normalized.add({'leftId': left, 'rightId': right});
     }
     return normalized;
+  }
+
+  static List<Map<String, dynamic>> _normalizeFunctionFlowNodes(
+    dynamic rawNodes,
+  ) {
+    if (rawNodes is! List) {
+      return const [
+        {
+          'id': 'start',
+          'label': 'Start',
+          'x': 15.0,
+          'y': 50.0,
+          'kind': 'start',
+        },
+        {
+          'id': 'process',
+          'label': 'processInput()',
+          'x': 50.0,
+          'y': 50.0,
+          'kind': 'function',
+        },
+        {'id': 'end', 'label': 'End', 'x': 85.0, 'y': 50.0, 'kind': 'end'},
+      ];
+    }
+
+    final normalized = <Map<String, dynamic>>[];
+    final usedIds = <String>{};
+    for (int i = 0; i < rawNodes.length; i++) {
+      final raw = rawNodes[i];
+      if (raw is! Map) continue;
+      final map = Map<String, dynamic>.from(raw);
+
+      final fallbackId = 'n${i + 1}';
+      var id = (_asString(map['id']) ?? fallbackId).trim();
+      if (id.isEmpty) id = fallbackId;
+      if (!usedIds.add(id)) {
+        id = '$id-${usedIds.length + 1}';
+        usedIds.add(id);
+      }
+
+      final label = (_asString(map['label']) ?? _asString(map['name']) ?? id)
+          .trim();
+      final kind = _normalizeFunctionFlowNodeKind(
+        _asString(map['kind']) ?? _asString(map['type']) ?? 'function',
+      );
+      final x = _normalizeCoordinate(map['x'], fallback: 20.0 + i * 20);
+      final y = _normalizeCoordinate(map['y'], fallback: 50.0);
+
+      normalized.add({
+        'id': id,
+        'label': label.isEmpty ? id : label,
+        'x': x,
+        'y': y,
+        'kind': kind,
+        if (_asString(map['description']) != null)
+          'description': _asString(map['description']),
+      });
+    }
+
+    if (normalized.isEmpty) {
+      return const [
+        {
+          'id': 'start',
+          'label': 'Start',
+          'x': 15.0,
+          'y': 50.0,
+          'kind': 'start',
+        },
+        {
+          'id': 'process',
+          'label': 'processInput()',
+          'x': 50.0,
+          'y': 50.0,
+          'kind': 'function',
+        },
+        {'id': 'end', 'label': 'End', 'x': 85.0, 'y': 50.0, 'kind': 'end'},
+      ];
+    }
+
+    return normalized;
+  }
+
+  static List<Map<String, dynamic>> _normalizeFunctionFlowEdges(
+    dynamic rawEdges,
+    Set<String> nodeIds,
+  ) {
+    if (rawEdges is! List) {
+      return nodeIds.length >= 2
+          ? [
+              {
+                'from': nodeIds.elementAt(0),
+                'to': nodeIds.elementAt(1),
+                'label': 'call',
+              },
+            ]
+          : const [];
+    }
+
+    final normalized = <Map<String, dynamic>>[];
+    for (int i = 0; i < rawEdges.length; i++) {
+      final raw = rawEdges[i];
+      if (raw is! Map) continue;
+      final map = Map<String, dynamic>.from(raw);
+      final from = (_asString(map['from']) ?? _asString(map['source']) ?? '')
+          .trim();
+      final to = (_asString(map['to']) ?? _asString(map['target']) ?? '')
+          .trim();
+      if (from.isEmpty || to.isEmpty) continue;
+      if (!nodeIds.contains(from) || !nodeIds.contains(to)) continue;
+
+      normalized.add({
+        'from': from,
+        'to': to,
+        if (_asString(map['label']) != null) 'label': _asString(map['label']),
+      });
+    }
+
+    return normalized;
+  }
+
+  static List<Map<String, dynamic>> _normalizeFunctionFlowSteps(
+    dynamic rawSteps,
+    int edgeCount,
+  ) {
+    if (rawSteps is! List) return const [];
+
+    final normalized = <Map<String, dynamic>>[];
+    for (final raw in rawSteps) {
+      if (raw is! Map) continue;
+      final map = Map<String, dynamic>.from(raw);
+      final edgeIndexRaw = map['edgeIndex'];
+      if (edgeIndexRaw is! num) continue;
+      final edgeIndex = edgeIndexRaw.toInt();
+      if (edgeIndex < 0 || edgeIndex >= edgeCount) continue;
+      final durationMs = map['durationMs'];
+      normalized.add({
+        'edgeIndex': edgeIndex,
+        if (durationMs is num && durationMs > 0)
+          'durationMs': durationMs.toInt(),
+        if (_asString(map['note']) != null) 'note': _asString(map['note']),
+      });
+    }
+    return normalized;
+  }
+
+  static Map<String, dynamic> _normalizeFunctionFlowStyle(dynamic rawStyle) {
+    final style = rawStyle is Map
+        ? Map<String, dynamic>.from(rawStyle)
+        : <String, dynamic>{};
+    return {
+      'theme': _normalizeFunctionFlowTheme(
+        _asString(style['theme']) ?? 'indigo',
+      ),
+      'showArrows': style['showArrows'] is bool ? style['showArrows'] : true,
+      'stepDurationMs': _normalizeStepDuration(style['stepDurationMs']),
+      'lineWidth': _normalizeLineWidth(style['lineWidth']),
+    };
+  }
+
+  static String _normalizeFunctionFlowNodeKind(String rawKind) {
+    final normalized = rawKind.trim().toLowerCase();
+    switch (normalized) {
+      case 'start':
+        return 'start';
+      case 'end':
+        return 'end';
+      case 'function':
+      default:
+        return 'function';
+    }
+  }
+
+  static String _normalizeFunctionFlowTheme(String rawTheme) {
+    final normalized = rawTheme.trim().toLowerCase();
+    switch (normalized) {
+      case 'emerald':
+        return 'emerald';
+      case 'amber':
+        return 'amber';
+      case 'indigo':
+      default:
+        return 'indigo';
+    }
+  }
+
+  static double _normalizeCoordinate(dynamic raw, {required double fallback}) {
+    final value = raw is num ? raw.toDouble() : fallback;
+    if (value < 0) return 0;
+    if (value > 100) return 100;
+    return value;
+  }
+
+  static int _normalizeStepDuration(dynamic raw) {
+    final value = raw is num ? raw.toInt() : 1200;
+    if (value < 200) return 200;
+    if (value > 8000) return 8000;
+    return value;
+  }
+
+  static double _normalizeLineWidth(dynamic raw) {
+    final value = raw is num ? raw.toDouble() : 2.0;
+    if (value < 1.0) return 1.0;
+    if (value > 6.0) return 6.0;
+    return value;
   }
 
   static bool _ensureSchemaMetadata(

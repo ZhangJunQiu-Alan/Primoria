@@ -22,7 +22,7 @@ const CORS_HEADERS = {
 };
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
-const MAX_OUTPUT_TOKENS = 16384;
+const MAX_OUTPUT_TOKENS = 32768;
 const PDF_MIME_TYPE = 'application/pdf';
 
 // Try models from fastest/cheapest to most capable
@@ -44,7 +44,7 @@ const COURSE_GENERATION_PROMPT = `You are an expert instructional designer. Crea
 Return JSON only. Do not output markdown/code fences/explanations.
 All strings must use double quotes.
 
-JSON schema:
+JSON schema (example with 2 lessons — your output must follow this structure):
 {
   "courseId": "course-xxx",
   "metadata": {
@@ -58,20 +58,27 @@ JSON schema:
   "pages": [
     {
       "pageId": "p1",
-      "title": "Page title",
-      "blocks": [...]
+      "title": "Introduction to Variables",
+      "blocks": [/* 6-9 blocks */]
+    },
+    {
+      "pageId": "p2",
+      "title": "Working with Data Types",
+      "blocks": [/* 6-9 blocks */]
     }
   ]
 }
 
 Hard constraints:
-- Put all generated blocks into exactly ONE page.
-- Total block count must be <= 20.
-- Prefer 10-20 blocks when content is sufficient; for short topics 6-12 is acceptable.
-- Every id must be unique.
-- position.order must be continuous from 0.
-- Use \\n for newlines in text.
+- Generate 2-4 lessons (pages). Use 2 for short/focused topics, 3-4 for rich or broad ones.
+- Every lesson covers one coherent learning objective or sub-topic.
+- Each lesson must have 6-9 blocks. Do NOT exceed 9 blocks per lesson.
+- Total blocks across all lessons must not exceed 30.
+- position.order is 0-based and continuous within each lesson independently.
+- Every id (pageId, block id, option id) must be globally unique across the whole course.
+- Use \\n for newlines in text. Keep text blocks concise (≤ 3 sentences each).
 - Keep metadata concise and useful.
+- Keep an explain-practice rhythm inside each lesson: 1 assessment block after every 1-2 concept blocks.
 
 Allowed block types and exact type values:
 
@@ -110,7 +117,6 @@ Course-adaptive block strategy:
 - Math / Physics / Engineering: prioritize worked explanations (text), formula understanding checks (fill-blank, true-false), concept mapping (matching), and simple animation when it helps.
 - Language / History / Business / Humanities: prioritize text + multiple-choice + fill-blank + matching; add image/video only when it improves understanding.
 - Use at least 4 different block types when the source material supports it.
-- Keep an explain-practice rhythm: usually 1 assessment block after every 1-2 concept blocks.
 - If real image/video URLs are unavailable, use text or quiz blocks instead of fake URLs.`;
 
 function buildPrompt(
@@ -221,13 +227,41 @@ async function callGeminiModelWithParts(
 
   const candidates = (data?.candidates as unknown[]) ?? [];
   const firstCandidate = candidates[0] as Record<string, unknown> | undefined;
+  const finishReason = firstCandidate?.finishReason as string | undefined;
   const content = firstCandidate?.content as Record<string, unknown> | undefined;
   const parts = (content?.parts as unknown[]) ?? [];
   const firstPart = parts[0] as Record<string, unknown> | undefined;
   const text = firstPart?.text as string | undefined;
 
+  // MAX_TOKENS → output was cut off mid-JSON; try next model (higher token limit)
+  if (finishReason === 'MAX_TOKENS') {
+    return {
+      success: false,
+      error: `Model ${model} output truncated (MAX_TOKENS) — try a model with larger output limit`,
+    };
+  }
+
+  // SAFETY / RECITATION / etc. → model refused; try next model
+  if (finishReason && finishReason !== 'STOP' && !text?.trim()) {
+    return {
+      success: false,
+      error: `Model ${model} did not complete (finishReason=${finishReason})`,
+    };
+  }
+
   if (!text?.trim()) {
     return { success: false, error: `Model ${model} returned empty content` };
+  }
+
+  // Truncation guard: valid JSON must end with '}'.
+  // If MAX_TOKENS wasn't flagged but the text is cut off, catch it here.
+  const trimmed = text.trimEnd();
+  if (!trimmed.endsWith('}')) {
+    const tail = trimmed.slice(-60).replace(/\n/g, ' ');
+    return {
+      success: false,
+      error: `Model ${model} output truncated mid-JSON (last 60 chars: "...${tail}")`,
+    };
   }
 
   return { success: true, content: text };
@@ -285,6 +319,10 @@ function shouldTryNextModel(result: GeminiResult): boolean {
     return true;
   }
 
+  // No HTTP status code = content-level failure (empty response, network error)
+  // Always try next model — another model may succeed.
+  if (code === undefined) return true;
+
   if (code !== 400 && code !== 403) return false;
   return (
     (msg.includes('model') &&
@@ -340,6 +378,289 @@ function parseJsonObject(text: string): Record<string, unknown> | null {
   }
 
   return null;
+}
+
+// ────────────────────────────────────────────────────────────────────
+// Schema validation (server-side mirror of Flutter CourseSchemaValidator)
+// ────────────────────────────────────────────────────────────────────
+
+interface SchemaError {
+  path: string;
+  code: string;
+  message: string;
+}
+
+interface SchemaWarning {
+  path: string;
+  message: string;
+}
+
+interface SchemaValidationResult {
+  valid: boolean;
+  errors: SchemaError[];
+  warnings: SchemaWarning[];
+  summary: string;
+}
+
+const VALID_BLOCK_TYPES = new Set([
+  'text', 'image', 'code-block', 'code-playground',
+  'multiple-choice', 'fill-blank', 'true-false', 'matching', 'video', 'animation',
+]);
+
+const VALID_DIFFICULTIES = new Set(['beginner', 'intermediate', 'advanced']);
+const VALID_ANIMATION_PRESETS = new Set(['bouncing-dot', 'pulse-bars']);
+
+function isNonEmptyString(v: unknown): v is string {
+  return typeof v === 'string' && v.trim().length > 0;
+}
+
+function isNonNegativeInt(v: unknown): boolean {
+  return typeof v === 'number' && Number.isInteger(v) && v >= 0;
+}
+
+function validateBlockContent(
+  block: Record<string, unknown>,
+  blockPath: string,
+  errors: SchemaError[],
+  warnings: SchemaWarning[],
+): void {
+  const content = block.content as Record<string, unknown> | undefined;
+  const type = block.type as string;
+  const cp = `${blockPath}.content`;
+
+  switch (type) {
+    case 'text':
+      if (!isNonEmptyString(content?.value)) {
+        errors.push({ path: `${cp}.value`, code: 'REQUIRED', message: 'text block content.value is required' });
+      }
+      break;
+
+    case 'image':
+      if (!isNonEmptyString(content?.url)) {
+        errors.push({ path: `${cp}.url`, code: 'REQUIRED', message: 'image block content.url is required and must be non-empty' });
+      }
+      break;
+
+    case 'code-block':
+      if (content?.code === undefined || content?.code === null) {
+        errors.push({ path: `${cp}.code`, code: 'REQUIRED', message: 'code-block content.code is required' });
+      }
+      break;
+
+    case 'code-playground':
+      if (content?.initialCode === undefined || content?.initialCode === null) {
+        errors.push({ path: `${cp}.initialCode`, code: 'REQUIRED', message: 'code-playground content.initialCode is required' });
+      }
+      break;
+
+    case 'multiple-choice': {
+      if (!isNonEmptyString(content?.question)) {
+        errors.push({ path: `${cp}.question`, code: 'REQUIRED', message: 'multiple-choice content.question is required' });
+      }
+      const options = content?.options;
+      if (!Array.isArray(options) || options.length < 2) {
+        errors.push({ path: `${cp}.options`, code: 'INVALID_VALUE', message: 'multiple-choice content.options must have at least 2 items' });
+      } else {
+        (options as unknown[]).forEach((opt, k) => {
+          const o = opt as Record<string, unknown>;
+          if (!isNonEmptyString(o?.id) || !isNonEmptyString(o?.text)) {
+            errors.push({ path: `${cp}.options[${k}]`, code: 'REQUIRED', message: `option at index ${k} must have non-empty id and text` });
+          }
+        });
+      }
+      if (content?.correctAnswer === undefined && content?.correctAnswers === undefined) {
+        errors.push({ path: `${cp}.correctAnswer`, code: 'REQUIRED', message: 'multiple-choice must have correctAnswer or correctAnswers' });
+      }
+      break;
+    }
+
+    case 'fill-blank':
+      if (!isNonEmptyString(content?.question)) {
+        errors.push({ path: `${cp}.question`, code: 'REQUIRED', message: 'fill-blank content.question is required' });
+      }
+      if (!isNonEmptyString(content?.correctAnswer)) {
+        errors.push({ path: `${cp}.correctAnswer`, code: 'REQUIRED', message: 'fill-blank content.correctAnswer is required' });
+      }
+      break;
+
+    case 'true-false':
+      if (typeof content?.correctAnswer !== 'boolean') {
+        errors.push({
+          path: `${cp}.correctAnswer`,
+          code: 'INVALID_TYPE',
+          message: `correctAnswer must be boolean for true-false blocks, got ${typeof content?.correctAnswer}`,
+        });
+      }
+      break;
+
+    case 'matching': {
+      const left = content?.leftItems;
+      const right = content?.rightItems;
+      if (!Array.isArray(left) || left.length < 2) {
+        errors.push({ path: `${cp}.leftItems`, code: 'INVALID_VALUE', message: 'matching leftItems must have at least 2 items' });
+      }
+      if (!Array.isArray(right) || right.length < 2) {
+        errors.push({ path: `${cp}.rightItems`, code: 'INVALID_VALUE', message: 'matching rightItems must have at least 2 items' });
+      }
+      const pairs = content?.correctPairs;
+      if (!Array.isArray(pairs) || pairs.length === 0) {
+        errors.push({ path: `${cp}.correctPairs`, code: 'REQUIRED', message: 'matching correctPairs must be a non-empty array' });
+      } else if (Array.isArray(left) && Array.isArray(right)) {
+        const leftIds = new Set((left as Record<string, unknown>[]).map((x) => x.id));
+        const rightIds = new Set((right as Record<string, unknown>[]).map((x) => x.id));
+        for (const pair of pairs as Record<string, unknown>[]) {
+          if (!leftIds.has(pair.leftId) || !rightIds.has(pair.rightId)) {
+            errors.push({ path: `${cp}.correctPairs`, code: 'INVALID_PAIRS', message: 'correctPairs reference IDs not present in leftItems/rightItems' });
+            break;
+          }
+        }
+      }
+      break;
+    }
+
+    case 'animation': {
+      const preset = content?.preset;
+      if (!VALID_ANIMATION_PRESETS.has(preset as string)) {
+        warnings.push({ path: `${cp}.preset`, message: `animation preset "${preset}" is not a known value (expected bouncing-dot or pulse-bars)` });
+      }
+      const durationMs = content?.durationMs;
+      if (typeof durationMs === 'number' && (durationMs < 300 || durationMs > 10000)) {
+        warnings.push({ path: `${cp}.durationMs`, message: `animation durationMs ${durationMs} is outside recommended range 300-10000` });
+      }
+      const speed = content?.speed;
+      if (typeof speed === 'number' && (speed < 0.25 || speed > 3.0)) {
+        warnings.push({ path: `${cp}.speed`, message: `animation speed ${speed} is outside recommended range 0.25-3.0` });
+      }
+      break;
+    }
+
+    case 'video':
+      if (!isNonEmptyString(content?.url)) {
+        errors.push({ path: `${cp}.url`, code: 'REQUIRED', message: 'video block content.url is required and must be non-empty' });
+      }
+      break;
+  }
+}
+
+function validateCourseSchema(json: unknown): SchemaValidationResult {
+  const errors: SchemaError[] = [];
+  const warnings: SchemaWarning[] = [];
+
+  if (typeof json !== 'object' || json === null || Array.isArray(json)) {
+    errors.push({ path: '$', code: 'INVALID_TYPE', message: 'Course JSON must be an object' });
+    return { valid: false, errors, warnings, summary: buildValidationSummary(errors, warnings) };
+  }
+
+  const course = json as Record<string, unknown>;
+
+  // courseId
+  if (!isNonEmptyString(course.courseId)) {
+    errors.push({ path: '$.courseId', code: 'REQUIRED', message: 'courseId is required and must be a non-empty string' });
+  }
+
+  // metadata
+  const meta = course.metadata as Record<string, unknown> | undefined;
+  if (!meta || typeof meta !== 'object') {
+    errors.push({ path: '$.metadata', code: 'REQUIRED', message: 'metadata object is required' });
+  } else {
+    if (!isNonEmptyString(meta.title)) {
+      errors.push({ path: '$.metadata.title', code: 'REQUIRED', message: 'metadata.title is required and must be a non-empty string' });
+    }
+    if (meta.difficulty !== undefined && !VALID_DIFFICULTIES.has(meta.difficulty as string)) {
+      warnings.push({ path: '$.metadata.difficulty', message: `metadata.difficulty "${meta.difficulty}" should be beginner, intermediate, or advanced` });
+    }
+    if (meta.estimatedMinutes !== undefined && !isNonNegativeInt(meta.estimatedMinutes)) {
+      warnings.push({ path: '$.metadata.estimatedMinutes', message: 'metadata.estimatedMinutes should be a non-negative integer' });
+    }
+  }
+
+  // pages
+  const pages = course.pages;
+  if (!Array.isArray(pages) || pages.length === 0) {
+    errors.push({ path: '$.pages', code: 'REQUIRED', message: 'pages must be a non-empty array' });
+    return { valid: errors.length === 0, errors, warnings, summary: buildValidationSummary(errors, warnings) };
+  }
+
+  const seenPageIds = new Set<string>();
+  const seenBlockIds = new Set<string>();
+
+  (pages as unknown[]).forEach((page, i) => {
+    const p = page as Record<string, unknown>;
+    const pagePath = `$.pages[${i}]`;
+
+    // pageId
+    const pageId = p.pageId as string | undefined;
+    if (!isNonEmptyString(pageId)) {
+      errors.push({ path: `${pagePath}.pageId`, code: 'REQUIRED', message: 'pageId is required and must be non-empty' });
+    } else if (seenPageIds.has(pageId)) {
+      errors.push({ path: `${pagePath}.pageId`, code: 'DUPLICATE_ID', message: `duplicate pageId "${pageId}"` });
+    } else {
+      seenPageIds.add(pageId);
+    }
+
+    // blocks
+    const blocks = p.blocks;
+    if (!Array.isArray(blocks)) {
+      errors.push({ path: `${pagePath}.blocks`, code: 'INVALID_TYPE', message: 'page.blocks must be an array' });
+      return;
+    }
+
+    (blocks as unknown[]).forEach((block, j) => {
+      const b = block as Record<string, unknown>;
+      const blockPath = `${pagePath}.blocks[${j}]`;
+
+      // block.id
+      const blockId = b.id as string | undefined;
+      if (!isNonEmptyString(blockId)) {
+        errors.push({ path: `${blockPath}.id`, code: 'REQUIRED', message: 'block.id is required and must be non-empty' });
+      } else if (seenBlockIds.has(blockId)) {
+        errors.push({ path: `${blockPath}.id`, code: 'DUPLICATE_ID', message: `duplicate block id "${blockId}"` });
+      } else {
+        seenBlockIds.add(blockId);
+      }
+
+      // block.type
+      const blockType = b.type as string | undefined;
+      if (!isNonEmptyString(blockType) || !VALID_BLOCK_TYPES.has(blockType)) {
+        errors.push({
+          path: `${blockPath}.type`,
+          code: 'INVALID_VALUE',
+          message: `block.type "${blockType}" is not one of the 10 valid types`,
+        });
+        return; // can't validate content without knowing type
+      }
+
+      // block.content
+      if (!b.content || typeof b.content !== 'object' || Array.isArray(b.content)) {
+        errors.push({ path: `${blockPath}.content`, code: 'INVALID_TYPE', message: 'block.content must be an object' });
+        return;
+      }
+
+      validateBlockContent(b, blockPath, errors, warnings);
+    });
+  });
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings,
+    summary: buildValidationSummary(errors, warnings),
+  };
+}
+
+function buildValidationSummary(errors: SchemaError[], warnings: SchemaWarning[]): string {
+  if (errors.length === 0 && warnings.length === 0) return 'Schema valid.';
+  const parts: string[] = [];
+  if (errors.length > 0) {
+    const errorDetails = errors.slice(0, 3).map((e) => `[${e.path}] ${e.message}`).join('; ');
+    const more = errors.length > 3 ? ` (+${errors.length - 3} more)` : '';
+    parts.push(`${errors.length} error${errors.length > 1 ? 's' : ''}: ${errorDetails}${more}`);
+  }
+  if (warnings.length > 0) {
+    parts.push(`${warnings.length} warning${warnings.length > 1 ? 's' : ''}`);
+  }
+  const prefix = errors.length > 0 ? 'Schema validation failed: ' : 'Schema valid with warnings: ';
+  return prefix + parts.join('; ');
 }
 
 // ────────────────────────────────────────────────────────────────────
@@ -427,6 +748,7 @@ Deno.serve(async (req: Request) => {
 
     const prompt = buildPdfPrompt(fileName);
     let lastError = 'No model succeeded';
+    let lastValidationErrors: SchemaError[] | undefined;
     for (const model of MODEL_CANDIDATES) {
       const result = await callGeminiModelWithParts(
         model,
@@ -451,20 +773,33 @@ Deno.serve(async (req: Request) => {
 
       const courseJson = parseJsonObject(result.content);
       if (!courseJson) {
-        lastError = `Could not parse JSON from model ${model} output`;
+        const snippet = result.content.slice(0, 200).replace(/\n/g, ' ');
+        lastError = `Could not parse JSON from model ${model} (first 200 chars: "${snippet}")`;
         continue;
       }
 
-      return jsonResponse({ success: true, courseJson, model, source: 'pdf' });
+      const validation = validateCourseSchema(courseJson);
+      if (!validation.valid) {
+        lastError = validation.summary;
+        lastValidationErrors = validation.errors;
+        continue; // try next model — another model may produce valid output
+      }
+
+      const response: Record<string, unknown> = { success: true, courseJson, model, source: 'pdf' };
+      if (validation.warnings.length > 0) response.warnings = validation.warnings;
+      return jsonResponse(response);
     }
 
-    return jsonResponse({ success: false, error: lastError }, 500);
+    const failBody: Record<string, unknown> = { success: false, error: lastError };
+    if (lastValidationErrors) failBody.validationErrors = lastValidationErrors;
+    return jsonResponse(failBody, 500);
   }
 
   const prompt = buildPrompt(description, difficulty, animationStyle, audience);
 
   // Try models in order
   let lastError = 'No model succeeded';
+  let lastValidationErrors: SchemaError[] | undefined;
   for (const model of MODEL_CANDIDATES) {
     const result = await callGeminiModel(model, prompt, apiKey);
 
@@ -476,12 +811,24 @@ Deno.serve(async (req: Request) => {
 
     const courseJson = parseJsonObject(result.content);
     if (!courseJson) {
-      lastError = `Could not parse JSON from model ${model} output`;
+      const snippet = result.content.slice(0, 200).replace(/\n/g, ' ');
+      lastError = `Could not parse JSON from model ${model} (first 200 chars: "${snippet}")`;
       continue;
     }
 
-    return jsonResponse({ success: true, courseJson, model });
+    const validation = validateCourseSchema(courseJson);
+    if (!validation.valid) {
+      lastError = validation.summary;
+      lastValidationErrors = validation.errors;
+      continue; // try next model — another model may produce valid output
+    }
+
+    const response: Record<string, unknown> = { success: true, courseJson, model };
+    if (validation.warnings.length > 0) response.warnings = validation.warnings;
+    return jsonResponse(response);
   }
 
-  return jsonResponse({ success: false, error: lastError }, 500);
+  const failBody: Record<string, unknown> = { success: false, error: lastError };
+  if (lastValidationErrors) failBody.validationErrors = lastValidationErrors;
+  return jsonResponse(failBody, 500);
 });

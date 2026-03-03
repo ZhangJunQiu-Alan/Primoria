@@ -63,6 +63,8 @@ abstract class BlockContent {
         return CodeBlockContent.fromJson(json);
       case BlockType.codePlayground:
         return CodePlaygroundContent.fromJson(json);
+      case BlockType.functionFlow:
+        return FunctionFlowContent.fromJson(json);
       case BlockType.multipleChoice:
         return MultipleChoiceContent.fromJson(json);
       case BlockType.fillBlank:
@@ -185,6 +187,331 @@ class CodePlaygroundContent implements BlockContent {
     if (expectedOutput != null) map['expectedOutput'] = expectedOutput;
     if (hints.isNotEmpty) map['hints'] = hints;
     return map;
+  }
+}
+
+/// Function flow node
+class FunctionFlowNode {
+  static const String kindStart = 'start';
+  static const String kindFunction = 'function';
+  static const String kindEnd = 'end';
+  static const Set<String> supportedKinds = {kindStart, kindFunction, kindEnd};
+
+  final String id;
+  final String label;
+  final double x;
+  final double y;
+  final String kind;
+  final String? description;
+
+  const FunctionFlowNode({
+    required this.id,
+    required this.label,
+    required this.x,
+    required this.y,
+    this.kind = kindFunction,
+    this.description,
+  });
+
+  factory FunctionFlowNode.fromJson(Map<String, dynamic> json) {
+    final rawKind = (json['kind'] as String? ?? kindFunction).trim();
+    final normalizedKind = supportedKinds.contains(rawKind)
+        ? rawKind
+        : kindFunction;
+    return FunctionFlowNode(
+      id: (json['id'] as String? ?? '').trim(),
+      label: (json['label'] as String? ?? '').trim(),
+      x: _normalizeCoordinate(json['x']),
+      y: _normalizeCoordinate(json['y']),
+      kind: normalizedKind,
+      description: json['description'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{
+      'id': id,
+      'label': label,
+      'x': x,
+      'y': y,
+      'kind': kind,
+    };
+    if (description != null) map['description'] = description;
+    return map;
+  }
+
+  FunctionFlowNode copyWith({
+    String? id,
+    String? label,
+    double? x,
+    double? y,
+    String? kind,
+    String? description,
+    bool clearDescription = false,
+  }) {
+    final nextKind = kind ?? this.kind;
+    return FunctionFlowNode(
+      id: id ?? this.id,
+      label: label ?? this.label,
+      x: _normalizeCoordinate(x ?? this.x),
+      y: _normalizeCoordinate(y ?? this.y),
+      kind: supportedKinds.contains(nextKind) ? nextKind : kindFunction,
+      description: clearDescription ? null : (description ?? this.description),
+    );
+  }
+
+  static double _normalizeCoordinate(dynamic raw) {
+    final value = raw is num ? raw.toDouble() : 0.0;
+    if (value < 0) return 0;
+    if (value > 100) return 100;
+    return value;
+  }
+}
+
+/// Function flow edge
+class FunctionFlowEdge {
+  final String from;
+  final String to;
+  final String? label;
+
+  const FunctionFlowEdge({required this.from, required this.to, this.label});
+
+  factory FunctionFlowEdge.fromJson(Map<String, dynamic> json) {
+    return FunctionFlowEdge(
+      from: (json['from'] as String? ?? '').trim(),
+      to: (json['to'] as String? ?? '').trim(),
+      label: json['label'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{'from': from, 'to': to};
+    if (label != null) map['label'] = label;
+    return map;
+  }
+
+  FunctionFlowEdge copyWith({
+    String? from,
+    String? to,
+    String? label,
+    bool clearLabel = false,
+  }) {
+    return FunctionFlowEdge(
+      from: from ?? this.from,
+      to: to ?? this.to,
+      label: clearLabel ? null : (label ?? this.label),
+    );
+  }
+}
+
+/// Function flow step
+class FunctionFlowStep {
+  final int edgeIndex;
+  final int? durationMs;
+  final String? note;
+
+  const FunctionFlowStep({required this.edgeIndex, this.durationMs, this.note});
+
+  factory FunctionFlowStep.fromJson(Map<String, dynamic> json) {
+    final rawIndex = json['edgeIndex'];
+    final rawDuration = json['durationMs'];
+    return FunctionFlowStep(
+      edgeIndex: rawIndex is num ? rawIndex.toInt() : -1,
+      durationMs: rawDuration is num ? rawDuration.toInt() : null,
+      note: json['note'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{'edgeIndex': edgeIndex};
+    if (durationMs != null) map['durationMs'] = durationMs;
+    if (note != null) map['note'] = note;
+    return map;
+  }
+
+  FunctionFlowStep copyWith({
+    int? edgeIndex,
+    int? durationMs,
+    String? note,
+    bool clearDuration = false,
+    bool clearNote = false,
+  }) {
+    return FunctionFlowStep(
+      edgeIndex: edgeIndex ?? this.edgeIndex,
+      durationMs: clearDuration ? null : (durationMs ?? this.durationMs),
+      note: clearNote ? null : (note ?? this.note),
+    );
+  }
+}
+
+/// Function flow style
+class FunctionFlowStyle {
+  static const Set<String> supportedThemes = {'indigo', 'emerald', 'amber'};
+
+  final String theme;
+  final bool showArrows;
+  final int stepDurationMs;
+  final double lineWidth;
+
+  const FunctionFlowStyle({
+    this.theme = 'indigo',
+    this.showArrows = true,
+    this.stepDurationMs = 1200,
+    this.lineWidth = 2.0,
+  });
+
+  factory FunctionFlowStyle.fromJson(Map<String, dynamic> json) {
+    final rawTheme = (json['theme'] as String? ?? 'indigo').trim();
+    final rawDuration = json['stepDurationMs'];
+    final rawLineWidth = json['lineWidth'];
+    return FunctionFlowStyle(
+      theme: supportedThemes.contains(rawTheme) ? rawTheme : 'indigo',
+      showArrows: json['showArrows'] as bool? ?? true,
+      stepDurationMs: _normalizeStepDuration(rawDuration),
+      lineWidth: _normalizeLineWidth(rawLineWidth),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'theme': theme,
+    'showArrows': showArrows,
+    'stepDurationMs': stepDurationMs,
+    'lineWidth': lineWidth,
+  };
+
+  FunctionFlowStyle copyWith({
+    String? theme,
+    bool? showArrows,
+    int? stepDurationMs,
+    double? lineWidth,
+  }) {
+    final nextTheme = theme ?? this.theme;
+    return FunctionFlowStyle(
+      theme: supportedThemes.contains(nextTheme) ? nextTheme : 'indigo',
+      showArrows: showArrows ?? this.showArrows,
+      stepDurationMs: _normalizeStepDuration(
+        stepDurationMs ?? this.stepDurationMs,
+      ),
+      lineWidth: _normalizeLineWidth(lineWidth ?? this.lineWidth),
+    );
+  }
+
+  static int _normalizeStepDuration(dynamic raw) {
+    final value = raw is num ? raw.toInt() : 1200;
+    if (value < 200) return 200;
+    if (value > 8000) return 8000;
+    return value;
+  }
+
+  static double _normalizeLineWidth(dynamic raw) {
+    final value = raw is num ? raw.toDouble() : 2.0;
+    if (value < 1.0) return 1.0;
+    if (value > 6.0) return 6.0;
+    return value;
+  }
+}
+
+/// Function flow content
+class FunctionFlowContent implements BlockContent {
+  final String title;
+  final List<FunctionFlowNode> nodes;
+  final List<FunctionFlowEdge> edges;
+  final String? entryNodeId;
+  final List<FunctionFlowStep> steps;
+  final FunctionFlowStyle style;
+
+  const FunctionFlowContent({
+    this.title = 'Function Flow',
+    this.nodes = const [],
+    this.edges = const [],
+    this.entryNodeId,
+    this.steps = const [],
+    this.style = const FunctionFlowStyle(),
+  });
+
+  factory FunctionFlowContent.fromJson(Map<String, dynamic> json) {
+    final parsedNodes =
+        (json['nodes'] as List<dynamic>?)
+            ?.whereType<Map>()
+            .map(
+              (item) =>
+                  FunctionFlowNode.fromJson(Map<String, dynamic>.from(item)),
+            )
+            .where((node) => node.id.isNotEmpty)
+            .toList() ??
+        const <FunctionFlowNode>[];
+    final parsedEdges =
+        (json['edges'] as List<dynamic>?)
+            ?.whereType<Map>()
+            .map(
+              (item) =>
+                  FunctionFlowEdge.fromJson(Map<String, dynamic>.from(item)),
+            )
+            .toList() ??
+        const <FunctionFlowEdge>[];
+    final parsedSteps =
+        (json['steps'] as List<dynamic>?)
+            ?.whereType<Map>()
+            .map(
+              (item) =>
+                  FunctionFlowStep.fromJson(Map<String, dynamic>.from(item)),
+            )
+            .where((step) => step.edgeIndex >= 0)
+            .toList() ??
+        const <FunctionFlowStep>[];
+    final rawEntryNodeId = (json['entryNodeId'] as String?)?.trim();
+    final availableNodeIds = parsedNodes.map((node) => node.id).toSet();
+    final normalizedEntry =
+        rawEntryNodeId != null &&
+            rawEntryNodeId.isNotEmpty &&
+            availableNodeIds.contains(rawEntryNodeId)
+        ? rawEntryNodeId
+        : null;
+
+    return FunctionFlowContent(
+      title: (json['title'] as String? ?? 'Function Flow').trim(),
+      nodes: parsedNodes,
+      edges: parsedEdges,
+      entryNodeId: normalizedEntry,
+      steps: parsedSteps,
+      style: json['style'] is Map
+          ? FunctionFlowStyle.fromJson(
+              Map<String, dynamic>.from(json['style'] as Map),
+            )
+          : const FunctionFlowStyle(),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{
+      'title': title,
+      'nodes': nodes.map((node) => node.toJson()).toList(),
+      'edges': edges.map((edge) => edge.toJson()).toList(),
+      'steps': steps.map((step) => step.toJson()).toList(),
+      'style': style.toJson(),
+    };
+    if (entryNodeId != null) map['entryNodeId'] = entryNodeId;
+    return map;
+  }
+
+  FunctionFlowContent copyWith({
+    String? title,
+    List<FunctionFlowNode>? nodes,
+    List<FunctionFlowEdge>? edges,
+    String? entryNodeId,
+    List<FunctionFlowStep>? steps,
+    FunctionFlowStyle? style,
+    bool clearEntryNodeId = false,
+  }) {
+    return FunctionFlowContent(
+      title: title ?? this.title,
+      nodes: nodes ?? this.nodes,
+      edges: edges ?? this.edges,
+      entryNodeId: clearEntryNodeId ? null : (entryNodeId ?? this.entryNodeId),
+      steps: steps ?? this.steps,
+      style: style ?? this.style,
+    );
   }
 }
 
@@ -625,6 +952,43 @@ class Block {
       case BlockType.codePlayground:
         return const CodePlaygroundContent(
           initialCode: '# Write your Python code\nprint("Hello, World!")',
+        );
+      case BlockType.functionFlow:
+        return const FunctionFlowContent(
+          title: 'Function Call Flow',
+          nodes: [
+            FunctionFlowNode(
+              id: 'start',
+              label: 'Start',
+              x: 15,
+              y: 50,
+              kind: FunctionFlowNode.kindStart,
+            ),
+            FunctionFlowNode(
+              id: 'process',
+              label: 'processInput()',
+              x: 50,
+              y: 50,
+              kind: FunctionFlowNode.kindFunction,
+              description: 'Parse input and prepare normalized data.',
+            ),
+            FunctionFlowNode(
+              id: 'result',
+              label: 'return result',
+              x: 85,
+              y: 50,
+              kind: FunctionFlowNode.kindEnd,
+            ),
+          ],
+          edges: [
+            FunctionFlowEdge(from: 'start', to: 'process', label: 'call'),
+            FunctionFlowEdge(from: 'process', to: 'result', label: 'return'),
+          ],
+          entryNodeId: 'start',
+          steps: [
+            FunctionFlowStep(edgeIndex: 0, note: 'Start calls processInput'),
+            FunctionFlowStep(edgeIndex: 1, note: 'processInput returns result'),
+          ],
         );
       case BlockType.multipleChoice:
         return MultipleChoiceContent(

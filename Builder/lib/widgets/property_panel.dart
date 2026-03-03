@@ -6,6 +6,7 @@ import '../providers/course_provider.dart';
 import '../models/models.dart';
 import '../services/block_registry.dart';
 import '../services/file_picker.dart' as file_picker;
+import 'function_flow_content_editor.dart';
 
 /// Right properties panel - shows properties of the selected module
 class PropertyPanel extends ConsumerWidget {
@@ -327,6 +328,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         return _buildCodeBlockEditor();
       case BlockType.codePlayground:
         return _buildCodePlaygroundEditor();
+      case BlockType.functionFlow:
+        return _buildFunctionFlowEditor();
       case BlockType.multipleChoice:
         return _buildMultipleChoiceEditor();
       case BlockType.trueFalse:
@@ -554,6 +557,16 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildFunctionFlowEditor() {
+    final content = widget.block.content as FunctionFlowContent;
+    return FunctionFlowContentEditor(
+      content: content,
+      onChanged: (updatedContent) {
+        _updateBlock(widget.block.copyWith(content: updatedContent));
+      },
     );
   }
 
