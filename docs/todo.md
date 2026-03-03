@@ -9,7 +9,7 @@
 2. [x] Update course prompt to match the new flow — Gemini one-page generation (max 20 blocks), adaptive block-type strategy, JSON normalization/repair (2026-02-13)
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
 4. [x] Build home page: support common features (Profile, achievements, etc.) — Dashboard Home Page with Course Data, Income, Comments (2026-02-09)
-5. [x] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general) — Module panel now has General/Physical/Chemical expandable categories with search (2026-02-09)
+5. [x] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general) — updated taxonomy: General + Programming groups with search; General now includes Text/Image/Animation/Multiple Choice/True-False/Matching, Programming includes Code Block/Code Playground (2026-03-03)
 6. [~] Add more question types — True/False done (2026-02-11), Matching UX enhanced (2026-02-12), Animation MVP done (2026-02-14); remaining: connect, etc.
 7. [ ] Add multi-user collaboration
 8. [x] Landing page with sign-in modal and Supabase auth integration (2026-02-09)
@@ -44,6 +44,9 @@
 37. [x] AI backend Edge Function — moved Gemini call + prompt to `supabase/functions/ai-generate-course-json`; `generateViaApi()` in `ai_course_generator.dart` calls it; dashboard one-sentence dialog uses it; API key input removed from AI Generate dialog; `verify_jwt = false` in `config.toml` (2026-03-03)
 38. [x] Fix drag-and-drop red-screen crash — `ReorderableListView` moves dragged item's `GlobalKey` into an Overlay, so `localToGlobal(ancestor: viewportBox)` throws "Unexpected null value"; fixed with try-catch in `builder_canvas.dart` (2026-03-03)
 39. [x] Fix Builder blank-canvas init — normalise empty courseId to null in `initState`; call `_initializeBlankCourse()` when no courseId is provided so `/builder` without params works correctly (2026-03-03)
+40. [x] Course Manage entry UX simplification — removed left sidebar "Build Course" button; "Add Lesson" now opens blank Builder (`/builder`) instead of opening the existing course (`/builder?courseId=<id>`) (2026-03-03)
+41. [x] Preserve unsaved content across Preview round-trip on blank sessions — blank Builder now gets local temp `courseId`, draft autosave is enabled immediately, and Preview always routes with `courseId` so blocks/AI-generated content are restored when returning (2026-03-03)
+42. [x] Builder default blank title rename — default new title switched from `Untitled Course` to `Untitled Lesson` in `builder_state` + `course_provider` (2026-03-03)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

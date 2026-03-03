@@ -1,5 +1,31 @@
 # Changelog
 
+## [Unreleased] - 2026-03-03 (Builder UX Continuity + Module Taxonomy Refresh)
+
+### Summary
+Improved Builder authoring continuity for unsaved courses and simplified Dashboard entry flows. New blank Builder sessions now use a local temporary course id, so Preview round-trips no longer drop unsaved blocks or AI-generated content. Updated the default blank title from `Untitled Course` to `Untitled Lesson`. Simplified module taxonomy from `General/Physical/Chemical` to `General/Programming`.
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**:
+  - Removed the left sidebar "Build Course" quick action button
+  - Changed Course Manage "Add Lesson" tile navigation from `/builder?courseId=<id>` to `/builder` (open blank Builder)
+- **`Builder/lib/providers/builder_state.dart`** + **`Builder/lib/providers/course_provider.dart`**:
+  - Default blank course title changed to `Untitled Lesson`
+  - `CourseNotifier` initial state and `createNewCourse()` defaults now align to `Untitled Lesson`
+- **`Builder/lib/widgets/module_panel.dart`**:
+  - Category layout changed to:
+    - `General`: Text, Image, Animation, Multiple Choice, True/False, Matching
+    - `Programming`: Code Block, Code Playground
+  - Removed empty `Physical` / `Chemical` groups
+
+### Fixed
+- **Preview round-trip data loss on unsaved blank courses**:
+  - In `Builder/lib/features/builder/builder_screen.dart`, `_initializeBlankCourse()` now immediately assigns `_courseId = created.courseId` and enables draft auto-save for new unsaved sessions
+  - Preview navigation now always carries a stable id (`/viewer?courseId=<local-id>`) and saves the browser draft under that id before routing
+  - Returning from Viewer to Builder restores the same in-memory/draft-backed course instead of re-initializing a fresh blank course
+
+---
+
 ## [Unreleased] - 2026-03-03 (AI Backend Edge Function + Drag-and-Drop Crash Fix)
 
 ### Summary
