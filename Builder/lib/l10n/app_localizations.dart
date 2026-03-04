@@ -73,6 +73,35 @@ class BuilderLocalizations {
   String get aiGenerateEmptyHint =>
       isZh ? '请先输入课程描述' : 'Please describe your course first';
 
+  // Course Manage — AI Agentic generation progress stages
+  String get aiAgentStagePlan =>
+      isZh ? '正在规划课程结构...' : 'Planning course structure...';
+  String get aiAgentStageGenerate =>
+      isZh ? '正在生成课程内容...' : 'Generating lesson content...';
+  String get aiAgentStageValidate =>
+      isZh ? '正在校验课程结构...' : 'Validating course structure...';
+  String aiAgentSuccessN(int n) =>
+      isZh ? '课程已生成，共 $n 课' : 'Course generated with $n lessons';
+
+  // Quality report dialog
+  String get qualityDialogTitle =>
+      isZh ? 'AI 质量反馈' : 'AI Quality Report';
+  String qualityDialogBody(int score) => isZh
+      ? '课程质量评分：$score / 100。AI 检测到一些可以改进的地方。'
+      : 'Quality score: $score / 100. AI found areas to improve.';
+  String get qualityActionAddInteractive =>
+      isZh ? '自动补充互动练习' : 'Add Interactive Exercises';
+  String get qualityActionAddQuiz =>
+      isZh ? '添加期末测验页' : 'Add Final Quiz';
+  String get qualityActionIgnore =>
+      isZh ? '忽略，查看课程' : 'Skip & View Course';
+  String get qualityEnhancing =>
+      isZh ? '正在优化课程...' : 'Enhancing course...';
+  String get qualityEnhanceDone =>
+      isZh ? '课程已优化' : 'Course enhanced';
+  String get qualityEnhanceFailed =>
+      isZh ? '优化失败，请稍后重试' : 'Enhancement failed, please try again';
+
   // Course Manage — sign-in prompt
   String get signInToManage =>
       isZh ? '登录以管理您的课程' : 'Sign in to manage your courses';

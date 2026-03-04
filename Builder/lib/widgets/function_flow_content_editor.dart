@@ -122,16 +122,34 @@ class FunctionFlowContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         DropdownButtonFormField<String?>(
           initialValue: content.entryNodeId,
+          isExpanded: true,
           decoration: const InputDecoration(
             labelText: 'Entry Node',
             border: OutlineInputBorder(),
           ),
           items: [
-            const DropdownMenuItem<String?>(value: null, child: Text('None')),
+            const DropdownMenuItem<String?>(
+              value: null,
+              child: Text('None', overflow: TextOverflow.ellipsis, maxLines: 1),
+            ),
             ...content.nodes.map(
               (node) => DropdownMenuItem<String?>(
                 value: node.id,
-                child: Text('${node.label} (${node.id})'),
+                child: Text(
+                  '${node.label} (${node.id})',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            ),
+          ],
+          selectedItemBuilder: (context) => [
+            const Text('None', overflow: TextOverflow.ellipsis, maxLines: 1),
+            ...content.nodes.map(
+              (node) => Text(
+                '${node.label} (${node.id})',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
           ],
@@ -675,13 +693,30 @@ class _EdgeEditorCard extends StatelessWidget {
                     initialValue: nodeIds.contains(edge.from)
                         ? edge.from
                         : null,
+                    isExpanded: true,
                     decoration: const InputDecoration(
                       labelText: 'From',
                       isDense: true,
                     ),
                     items: nodeIds
                         .map(
-                          (id) => DropdownMenuItem(value: id, child: Text(id)),
+                          (id) => DropdownMenuItem(
+                            value: id,
+                            child: Text(
+                              id,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    selectedItemBuilder: (context) => nodeIds
+                        .map(
+                          (id) => Text(
+                            id,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         )
                         .toList(),
                     onChanged: (value) {
@@ -694,13 +729,30 @@ class _EdgeEditorCard extends StatelessWidget {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     initialValue: nodeIds.contains(edge.to) ? edge.to : null,
+                    isExpanded: true,
                     decoration: const InputDecoration(
                       labelText: 'To',
                       isDense: true,
                     ),
                     items: nodeIds
                         .map(
-                          (id) => DropdownMenuItem(value: id, child: Text(id)),
+                          (id) => DropdownMenuItem(
+                            value: id,
+                            child: Text(
+                              id,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    selectedItemBuilder: (context) => nodeIds
+                        .map(
+                          (id) => Text(
+                            id,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         )
                         .toList(),
                     onChanged: (value) {
@@ -709,11 +761,18 @@ class _EdgeEditorCard extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(width: AppSpacing.xs),
                 IconButton(
                   icon: const Icon(
                     Icons.remove_circle_outline,
                     color: AppColors.error,
                     size: 20,
+                  ),
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints.tightFor(
+                    width: 28,
+                    height: 28,
                   ),
                   onPressed: onRemove,
                 ),

@@ -95,7 +95,7 @@ A **UGC course authoring platform** for STEM education. Users can build interact
 │  ├────────┤  │                              │                   │
 │  │ Fill-in│  │                              │                   │
 │  ├────────┤  │                              │                   │
-│  │ Connect│  │                              │                   │
+│  │        │  │                              │                   │
 │  └────────┘  │                              │                   │
 │              │                              │                   │
 └──────────────┴──────────────────────────────┴───────────────────┘

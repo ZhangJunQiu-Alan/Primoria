@@ -267,61 +267,67 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
                   borderRadius: BorderRadius.circular(AppBorderRadius.sm),
                   border: Border.all(color: AppColors.neutral200),
                 ),
-                child: AnimatedBuilder(
-                  animation: _pulseController,
-                  builder: (context, _) {
-                    final pulse = _pulseController.value;
-                    return Stack(
-                      children: [
-                        Positioned.fill(
-                          child: CustomPaint(
-                            painter: _FunctionFlowPainter(
-                              content: widget.content,
-                              activeEdgeIndex: activeEdgeIndex,
-                              activeNodeId: activeStep?.edge.to,
-                              themeColor: _themePrimaryColor(),
-                              pulse: pulse,
-                            ),
-                          ),
-                        ),
-                        ...widget.content.nodes.map((node) {
-                          final center = _nodeCenter(node, constraints.biggest);
-                          final isActive = activeStep?.edge.to == node.id;
-                          final isSelected = _selectedNodeId == node.id;
-                          final isHovered = _hoveredNodeId == node.id;
-
-                          return Positioned(
-                            left: center.dx - _nodeSize / 2,
-                            top: center.dy - _nodeSize / 2,
-                            child: MouseRegion(
-                              onEnter: (_) =>
-                                  setState(() => _hoveredNodeId = node.id),
-                              onExit: (_) =>
-                                  setState(() => _hoveredNodeId = null),
-                              child: Tooltip(
-                                message:
-                                    node.description?.trim().isNotEmpty == true
-                                    ? '${node.label}\n${node.description}'
-                                    : node.label,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _selectedNodeId = node.id;
-                                    });
-                                  },
-                                  child: _buildNodeChip(
-                                    node: node,
-                                    isActive: isActive,
-                                    isSelected: isSelected,
-                                    isHovered: isHovered,
-                                    pulse: pulse,
-                                  ),
+                child: LayoutBuilder(
+                  builder: (context, canvasConstraints) {
+                    final canvasSize = canvasConstraints.biggest;
+                    return AnimatedBuilder(
+                      animation: _pulseController,
+                      builder: (context, _) {
+                        final pulse = _pulseController.value;
+                        return Stack(
+                          children: [
+                            Positioned.fill(
+                              child: CustomPaint(
+                                painter: _FunctionFlowPainter(
+                                  content: widget.content,
+                                  activeEdgeIndex: activeEdgeIndex,
+                                  activeNodeId: activeStep?.edge.to,
+                                  themeColor: _themePrimaryColor(),
+                                  pulse: pulse,
                                 ),
                               ),
                             ),
-                          );
-                        }),
-                      ],
+                            ...widget.content.nodes.map((node) {
+                              final center = _nodeCenter(node, canvasSize);
+                              final isActive = activeStep?.edge.to == node.id;
+                              final isSelected = _selectedNodeId == node.id;
+                              final isHovered = _hoveredNodeId == node.id;
+
+                              return Positioned(
+                                left: center.dx - _nodeSize / 2,
+                                top: center.dy - _nodeSize / 2,
+                                child: MouseRegion(
+                                  onEnter: (_) =>
+                                      setState(() => _hoveredNodeId = node.id),
+                                  onExit: (_) =>
+                                      setState(() => _hoveredNodeId = null),
+                                  child: Tooltip(
+                                    message:
+                                        node.description?.trim().isNotEmpty ==
+                                            true
+                                        ? '${node.label}\n${node.description}'
+                                        : node.label,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _selectedNodeId = node.id;
+                                        });
+                                      },
+                                      child: _buildNodeChip(
+                                        node: node,
+                                        isActive: isActive,
+                                        isSelected: isSelected,
+                                        isHovered: isHovered,
+                                        pulse: pulse,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ],
+                        );
+                      },
                     );
                   },
                 ),
