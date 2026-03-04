@@ -17,25 +17,45 @@ import '../../widgets/block_widgets/code_execution_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
 import '../../widgets/block_widgets/function_flow_block_widget.dart';
 
-class ViewerScreen extends ConsumerWidget {
+class ViewerScreen extends ConsumerStatefulWidget {
   final String? courseId;
   final bool addLesson;
   final String? draftId;
+  final int? pageIndex;
+  final bool singlePage;
 
   const ViewerScreen({
     super.key,
     this.courseId,
     this.addLesson = false,
     this.draftId,
+    this.pageIndex,
+    this.singlePage = false,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ViewerScreen> createState() => _ViewerScreenState();
+}
+
+class _ViewerScreenState extends ConsumerState<ViewerScreen> {
+  String _viewMode = 'desktop';
+
+  @override
+  Widget build(BuildContext context) {
     final course = ref.watch(courseProvider);
     final pages = course.pages;
+    final resolvedPageIndex =
+        (widget.pageIndex != null &&
+                widget.pageIndex! >= 0 &&
+                widget.pageIndex! < pages.length)
+            ? widget.pageIndex!
+            : 0;
+    final previewPages = (widget.singlePage && pages.isNotEmpty)
+        ? <CoursePage>[pages[resolvedPageIndex]]
+        : pages;
 
     return DefaultTabController(
-      length: pages.isEmpty ? 1 : pages.length,
+      length: previewPages.isEmpty ? 1 : previewPages.length,
       child: Scaffold(
         backgroundColor: AppColors.neutral100,
         appBar: AppBar(
@@ -47,28 +67,48 @@ class ViewerScreen extends ConsumerWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              final id = courseId ?? '';
-              if (id.isNotEmpty) {
-                if (addLesson) {
-                  final draftPart = (draftId != null && draftId!.isNotEmpty)
-                      ? '&draftId=${Uri.encodeQueryComponent(draftId!)}'
+              final id = widget.courseId ?? '';
+              final pagePart =
+                  (widget.pageIndex != null && widget.pageIndex! >= 0)
+                      ? '&lessonIndex=${widget.pageIndex}'
                       : '';
-                  context.go('/builder?courseId=$id&addLesson=1$draftPart');
+              if (id.isNotEmpty) {
+                if (widget.addLesson) {
+                  final draftPart =
+                      (widget.draftId != null && widget.draftId!.isNotEmpty)
+                          ? '&draftId=${Uri.encodeQueryComponent(widget.draftId!)}'
+                          : '';
+                  context.go(
+                    '/builder?courseId=$id&addLesson=1$pagePart$draftPart',
+                  );
                 } else {
-                  context.go('/builder?courseId=$id');
+                  context.go('/builder?courseId=$id$pagePart');
                 }
               } else {
                 context.go('/builder');
               }
             },
           ),
+          actions: [
+            _ViewportButton(
+              icon: Icons.laptop_mac,
+              active: _viewMode == 'desktop',
+              onTap: () => setState(() => _viewMode = 'desktop'),
+            ),
+            _ViewportButton(
+              icon: Icons.smartphone,
+              active: _viewMode == 'mobile',
+              onTap: () => setState(() => _viewMode = 'mobile'),
+            ),
+            const SizedBox(width: 8),
+          ],
         ),
-        body: pages.isEmpty
+        body: previewPages.isEmpty
             ? _buildEmptyState()
             : Column(
                 children: [
-                  // Page tabs outside the phone frame
-                  if (pages.length > 1)
+                  // Page tabs
+                  if (!widget.singlePage && previewPages.length > 1)
                     Material(
                       color: Colors.white,
                       child: TabBar(
@@ -76,88 +116,131 @@ class ViewerScreen extends ConsumerWidget {
                         labelColor: AppColors.primary500,
                         unselectedLabelColor: AppColors.neutral500,
                         indicatorColor: AppColors.primary500,
-                        tabs: pages
+                        tabs: previewPages
                             .asMap()
                             .entries
                             .map((entry) => Tab(text: 'Page ${entry.key + 1}'))
                             .toList(),
                       ),
                     ),
-                  // Phone mockup
                   Expanded(
-                    child: Center(
-                      child: Container(
-                        width: 375,
-                        height: 812,
-                        margin: const EdgeInsets.all(AppSpacing.lg),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          border: Border.all(
-                            color: AppColors.neutral300,
-                            width: 4,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
-                              blurRadius: 30,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(36),
-                          child: Column(
-                            children: [
-                              // Phone status bar
-                              Container(
-                                height: 44,
-                                color: AppColors.primary500,
-                                child: const Center(
-                                  child: Text(
-                                    'Primoria Preview',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: AppFontSize.xs,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Course content
-                              Expanded(
-                                child: TabBarView(
-                                  children: pages
-                                      .map(
-                                        (page) =>
-                                            _InteractivePageView(page: page),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                              // Phone home indicator
-                              Container(
-                                height: 34,
-                                color: Colors.white,
-                                child: Center(
-                                  child: Container(
-                                    width: 134,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.neutral300,
-                                      borderRadius: BorderRadius.circular(2.5),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: _viewMode == 'desktop'
+                        ? _buildDesktopLayout(previewPages)
+                        : _buildMobileLayout(previewPages),
                   ),
                 ],
               ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopLayout(List<CoursePage> previewPages) {
+    return Container(
+      color: const Color.fromRGBO(245, 246, 248, 1),
+      child: TabBarView(
+        children: previewPages
+            .map(
+              (page) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 24,
+                  horizontal: 32,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.06),
+                              blurRadius: 16,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: _InteractivePageView(page: page),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+
+  Widget _buildMobileLayout(List<CoursePage> previewPages) {
+    return Center(
+      child: Container(
+        width: 375,
+        height: 812,
+        margin: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(
+            color: AppColors.neutral300,
+            width: 4,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              blurRadius: 30,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(36),
+          child: Column(
+            children: [
+              // Phone status bar
+              Container(
+                height: 44,
+                color: AppColors.primary500,
+                child: const Center(
+                  child: Text(
+                    'Primoria Preview',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: AppFontSize.xs,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              // Course content
+              Expanded(
+                child: TabBarView(
+                  children: previewPages
+                      .map((page) => _InteractivePageView(page: page))
+                      .toList(),
+                ),
+              ),
+              // Phone home indicator
+              Container(
+                height: 34,
+                color: Colors.white,
+                child: Center(
+                  child: Container(
+                    width: 134,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: AppColors.neutral300,
+                      borderRadius: BorderRadius.circular(2.5),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -186,6 +269,43 @@ class ViewerScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Viewport toggle button
+// ---------------------------------------------------------------------------
+class _ViewportButton extends StatelessWidget {
+  final IconData icon;
+  final bool active;
+  final VoidCallback onTap;
+
+  const _ViewportButton({
+    required this.icon,
+    required this.active,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: active
+              ? AppColors.primary500.withValues(alpha: 0.12)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          icon,
+          size: 20,
+          color: active ? AppColors.primary500 : AppColors.neutral400,
+        ),
       ),
     );
   }
