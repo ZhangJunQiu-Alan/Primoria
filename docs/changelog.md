@@ -1,5 +1,34 @@
 # Changelog
 
+## [Unreleased] - 2026-03-04 (AI Agentic – Milestones 2 & 3 + Fixes)
+
+### Summary
+Completed the full AI Agentic Course Builder pipeline (Milestones 2 & 3): plan → per-lesson generation → schema validation → quality evaluation → autonomous quality improvement pass → human-in-the-loop enhancement dialog. Also removed the legacy `group_sort_key`/`group_title` chapter-grouping columns from lessons, extracted the matching content editor, and stabilised Function Flow dropdown overflow.
+
+### Added
+- **`supabase/functions/ai-plan-course/index.ts`** (2B) — generates a `CoursePlanJson` (schema_version "plan-1.0") with structured lesson outlines
+- **`supabase/functions/ai-generate-lesson-blocks/index.ts`** (2C) — generates blocks for a single lesson from `CoursePlanLesson`; block-ID prefix `l{order}-`; per-model correction-prompt retry loop (`MAX_RETRIES_PER_MODEL = 2`); optional `qualityHints[]` injection
+- **`supabase/functions/agentic-generate-course/index.ts`** (2D + 3C) — orchestrator: plan → parallel lesson generation → assembly → schema validation → Stage 3.5 quality improvement pass → DB write; returns `qualityReport` in response
+- **`supabase/functions/_shared/quality.ts`** (3C) — shared quality evaluation logic (`evaluateCourseQuality`); 4 rules: `MISSING_INTERACTIVE`, `LOW_QUESTION_COUNT`, `TEXT_TOO_LONG`, `BEGINNER_KEYWORD`; score 0–100, passed ≥ 80
+- **`supabase/functions/utils-validate-course-json/index.ts`** (3A) — standalone Course JSON schema validator; returns `passed`, `errors`, `warnings`, `summary`; added `function-flow` content validation case (nodes must be a non-empty array)
+- **`supabase/functions/utils-evaluate-course-quality/index.ts`** (3C) — HTTP wrapper around the shared quality evaluator
+- **`supabase/functions/ai-enhance-course/index.ts`** (3D) — course enhancement endpoint; `add-interactive` re-generates lessons missing interactive blocks (null-safe); `add-final-quiz` appends a synthetic quiz lesson
+- **`supabase/migrations/20260304000004_drop_lesson_group_columns.sql`** — drops `group_sort_key` and `group_title` columns from `lessons`; removes associated indexes
+- **`supabase/migrations/20260304000005_add_ai_agentic_columns_to_courses.sql`** — adds `animation_style`, `content_language`, `planning_json` columns to `courses`
+- **`Builder/lib/widgets/matching_content_editor.dart`** — extracted `MatchingContentEditor` widget into its own file; full property-panel UX for pairs, mode toggle, shuffle, and graph preview
+- **`Builder/test/matching_graph_widget_test.dart`** — smoke tests for matching content editor
+- **`docs/ai-agentic-course-builder.md`** — full Milestone 1/2/3 roadmap doc with all items checked
+
+### Changed
+- **`Builder/lib/services/ai_course_generator.dart`** — `AgentCourseResult` gains `qualityScore`, `qualityPassed`, `qualityIssues`; new `enhanceCourseViaApi()` static method; new `EnhanceCourseResult` class
+- **`Builder/lib/l10n/app_localizations.dart`** — added quality dialog i18n strings (EN + ZH)
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`** — post-generation quality dialog (`_showQualityDialog`): shows score, issues list, "Add Interactive" / "Add Final Quiz" buttons with async enhance flow
+- **`Builder/lib/services/supabase_service.dart`** — removed `group_sort_key`/`group_title` from all lesson queries and inserts; code-style cleanup
+- **`Viewer/lib/services/supabase_service.dart`** — removed chapter-grouping logic; flattened to single "Chapter 1" wrapper ordered by `sort_key`
+- **`Builder/lib/widgets/function_flow_content_editor.dart`** — added `isExpanded: true` and `TextOverflow.ellipsis` to Entry Node and edge From/To dropdowns; added `selectedItemBuilder` to fix selected-item overflow
+- **`Builder/lib/services/id_generator.dart`** — `courseId()` now returns `'course-<uuid>'` prefix for clarity
+- **`docs/database-schema.md`** — documented new `animation_style`, `content_language`, `planning_json` columns in courses table
+
 ## [Unreleased] - 2026-03-04 (Code Execution Block)
 
 ### Summary

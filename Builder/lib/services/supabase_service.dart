@@ -436,27 +436,19 @@ class SupabaseService {
       } else {
         final lastLesson = await client
             .from('lessons')
-            .select('sort_key, group_sort_key, group_title')
+            .select('sort_key')
             .eq('course_id', courseId)
-            .order('group_sort_key', ascending: false)
             .order('sort_key', ascending: false)
             .limit(1)
             .maybeSingle();
 
         final lastSortKey = (lastLesson?['sort_key'] as num?)?.toInt() ?? 0;
         final nextSortKey = lastSortKey + 1000;
-        final groupSortKey =
-            (lastLesson?['group_sort_key'] as num?)?.toInt() ?? 1000;
-        final groupTitle = (lastLesson?['group_title'] as String?)?.trim();
 
         final inserted = await client
             .from('lessons')
             .insert({
               'course_id': courseId,
-              'group_title': (groupTitle == null || groupTitle.isEmpty)
-                  ? 'Chapter 1'
-                  : groupTitle,
-              'group_sort_key': groupSortKey,
               'sort_key': nextSortKey,
               ...lessonPayload,
               'is_locked': false,
@@ -848,7 +840,6 @@ class SupabaseService {
           .from('lessons')
           .select('title')
           .eq('course_id', courseId)
-          .order('group_sort_key', ascending: true)
           .order('sort_key', ascending: true);
 
       return (lessons as List)
@@ -990,8 +981,9 @@ class SupabaseService {
         .gte('sort_key', 1000)
         .lt('sort_key', 2000)
         .order('sort_key', ascending: true);
-    final existingIds =
-        (existingRaw as List).map((l) => l['id'] as String).toList();
+    final existingIds = (existingRaw as List)
+        .map((l) => l['id'] as String)
+        .toList();
 
     if (pages.isEmpty) {
       // Fallback: single row with course title (shouldn't normally occur)
@@ -1006,8 +998,6 @@ class SupabaseService {
       if (existingIds.isEmpty) {
         await client.from('lessons').insert({
           'course_id': course.courseId,
-          'group_title': 'Chapter 1',
-          'group_sort_key': 1000,
           'is_locked': false,
           'unlock_type': 'none',
           'prerequisite_lesson_id': null,
@@ -1015,10 +1005,7 @@ class SupabaseService {
           ...payload,
         });
       } else {
-        await client
-            .from('lessons')
-            .update(payload)
-            .eq('id', existingIds[0]);
+        await client.from('lessons').update(payload).eq('id', existingIds[0]);
         if (existingIds.length > 1) {
           await client
               .from('lessons')
@@ -1035,10 +1022,10 @@ class SupabaseService {
       final pageTitle = pages[i].title.trim().isNotEmpty
           ? pages[i].title.trim()
           : (i == 0
-              ? (course.metadata.title.isEmpty
-                  ? 'Untitled'
-                  : course.metadata.title)
-              : 'Lesson ${i + 1}');
+                ? (course.metadata.title.isEmpty
+                      ? 'Untitled'
+                      : course.metadata.title)
+                : 'Lesson ${i + 1}');
       final payload = <String, dynamic>{
         'title': pageTitle,
         'type': 'interactive',
@@ -1047,15 +1034,10 @@ class SupabaseService {
       };
 
       if (i < existingIds.length) {
-        await client
-            .from('lessons')
-            .update(payload)
-            .eq('id', existingIds[i]);
+        await client.from('lessons').update(payload).eq('id', existingIds[i]);
       } else {
         await client.from('lessons').insert({
           'course_id': course.courseId,
-          'group_title': 'Chapter 1',
-          'group_sort_key': 1000,
           'is_locked': false,
           'unlock_type': 'none',
           'prerequisite_lesson_id': null,
@@ -1082,7 +1064,6 @@ class SupabaseService {
         .from('lessons')
         .select('id')
         .eq('course_id', courseId)
-        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
@@ -1108,7 +1089,6 @@ class SupabaseService {
         .from('lessons')
         .select('content_json')
         .eq('course_id', courseId)
-        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
