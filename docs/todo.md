@@ -56,6 +56,7 @@
 49. [x] Drop lesson group columns — removed `group_sort_key`/`group_title` from DB (migration 20260304000004); updated Builder and Viewer supabase_service.dart to use flat sort_key ordering (2026-03-04)
 50. [x] Matching content editor extraction — `MatchingContentEditor` moved to dedicated file with smoke tests (2026-03-04)
 51. [x] Function Flow dropdown overflow fix — `isExpanded`, `TextOverflow.ellipsis`, and `selectedItemBuilder` added to Entry Node and edge From/To dropdowns (2026-03-04)
+52. [x] Delete lesson from Dashboard — hover-reveal ✕ button on each lesson card; `AlertDialog` confirmation; last-lesson guard; `getCourseContent` → `removePage` → `saveCourse` flow with cache invalidation (2026-03-04)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
