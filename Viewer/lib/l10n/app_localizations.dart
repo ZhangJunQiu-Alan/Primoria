@@ -176,4 +176,71 @@ class AppLocalizations {
   String get communityMessage => isZh ? '消息' : 'message';
   String get communitySearch => isZh ? '搜索' : 'search';
   String get communityFindButton => isZh ? '寻找' : 'Find';
+
+  // ── Lesson Result Screen ─────────────────────────────────────
+  String get resultTitle => isZh ? '课程完成！' : 'Lesson Complete!';
+  String get resultAccuracy => isZh ? '正确率' : 'Accuracy';
+  String get resultTimeSpent => isZh ? '用时' : 'Time';
+  String get resultStreakLabel => isZh ? '天连击' : 'Day Streak';
+  String get resultTodayStar => isZh ? '今日星星' : "Today's Star";
+  String get resultStarLit => isZh ? '刚刚点亮！' : 'Just lit!';
+  String get resultTaskProgress => isZh ? '任务进度更新' : 'Task Progress';
+  String get resultContinue => isZh ? '继续学习' : 'Continue Learning';
+  String get resultGoHome => isZh ? '返回主页' : 'Back to Home';
+  String get resultAchievementHint =>
+      isZh ? '🏆 有新成就解锁！点击继续查看' : '🏆 New achievement! Tap continue to view';
+  String get resultCompleted => isZh ? '已完成' : 'Completed';
+  String get resultInProgress => isZh ? '进行中' : 'In Progress';
+  String resultXpEarned(int xp) => '+$xp XP';
+
+  // ── Star Chain ───────────────────────────────────────────────
+  String get starChainTitle => isZh ? '今日星星' : "Today's Star";
+  String get starChainComplete => isZh ? '本周全勤！' : 'Perfect Week!';
+  List<String> get weekDayLabels =>
+      isZh ? ['一', '二', '三', '四', '五', '六', '日'] : ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+  // ── Daily Tasks ──────────────────────────────────────────────
+  String get dailyTaskTitle => isZh ? '每日任务' : 'Daily Quests';
+  String get dailyTaskAllDone => isZh ? '今日圆满 🎉' : 'All Done! 🎉';
+  String dailyTaskRewardHint(int xp) =>
+      isZh ? '完成全部解锁 +${xp}XP' : 'Complete all to unlock +${xp}XP';
+  String dailyTaskProgress(int current, int total) => '$current/$total';
+  String get dailyTaskLoading => isZh ? '加载任务中…' : 'Loading quests…';
+
+  // ── Achievement Popup ────────────────────────────────────────
+  String get achievementUnlocked => isZh ? '成就解锁！' : 'Achievement Unlocked!';
+  String get achievementPin => isZh ? '置顶此成就' : 'Pin Achievement';
+  String get achievementPinned => isZh ? '已置顶 ✓' : 'Pinned ✓';
+  String get achievementPinReplace => isZh ? '替换置顶成就' : 'Replace Pinned';
+  String get achievementContinue => isZh ? '继续' : 'Continue';
+
+  // ── Achievement Rarity ───────────────────────────────────────
+  String get rarityCommon => isZh ? '普通' : 'Common';
+  String get rarityRare => isZh ? '稀有' : 'Rare';
+  String get rarityEpic => isZh ? '史诗' : 'Epic';
+  String get rarityLegendary => isZh ? '传说' : 'Legendary';
+
+  // ── Achievement Wall ─────────────────────────────────────────
+  String get achievementWallTitle => isZh ? '我的成就' : 'My Achievements';
+  String achievementWallCount(int n, int total) =>
+      isZh ? '已解锁 $n/$total' : 'Unlocked $n/$total';
+  String get achievementManage => isZh ? '管理' : 'Manage';
+  String get achievementManageTitle => isZh ? '管理置顶成就' : 'Manage Pinned';
+  String get achievementManageHint =>
+      isZh ? '最多选择3个显示在个人资料页' : 'Select up to 3 to show on profile';
+  String get achievementCategoryAll => isZh ? '全部' : 'All';
+  String get achievementCategoryStreak => isZh ? '坚持' : 'Streak';
+  String get achievementCategoryLearning => isZh ? '学习' : 'Learning';
+  String get achievementCategoryChallenge => isZh ? '挑战' : 'Challenge';
+  String get achievementCategorySocial => isZh ? '社交' : 'Social';
+
+  // ── Profile gamification ─────────────────────────────────────
+  String get profileMyAchievements => isZh ? '我的成就' : 'My Achievements';
+  String get profileViewAllAchievements =>
+      isZh ? '查看全部成就 →' : 'View All Achievements →';
+  String get profileStarThisWeek => isZh ? '本周星星' : 'This Week';
+  String get profileStarLastWeek => isZh ? '上周' : 'Last Week';
+  String get profileWeekPerfect => isZh ? '🌈 全勤' : '🌈 Perfect';
+  String get profileNoPinnedAchievements =>
+      isZh ? '暂无置顶成就' : 'No pinned achievements yet';
 }

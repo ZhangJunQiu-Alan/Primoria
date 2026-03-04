@@ -3,16 +3,63 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
+import '../models/achievement_model.dart';
 import '../providers/language_provider.dart';
 import '../providers/user_provider.dart';
+import '../services/achievement_service.dart';
+import '../services/supabase_service.dart';
 import '../theme/theme.dart';
+import '../widgets/star_chain_widget.dart';
+import 'achievement_wall_screen.dart';
 import 'profile_settings_screen.dart';
 
 enum _ProfileMenuAction { settings, about, help, logout }
 
-/// Profile screen — ported from Figma ProfileScreen template
-class ProfileScreen extends StatelessWidget {
+/// Profile screen with gamification: pinned achievements, XP, star chain.
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  List<AchievementModel> _pinnedAchievements = [];
+  Set<String> _activeDates = {};
+  bool _loadingGamification = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGamification();
+  }
+
+  Future<void> _loadGamification() async {
+    final results = await Future.wait([
+      SupabaseService.getPinnedAchievementIds(),
+      SupabaseService.getActiveDates(),
+    ]);
+    final pinnedIds = results[0] as List<String>;
+    final activeDates = results[1] as Set<String>;
+
+    List<AchievementModel> pinned = [];
+    if (pinnedIds.isNotEmpty) {
+      final all = await SupabaseService.getAchievementsWithStatus();
+      final allModels = all.map(AchievementModel.fromMap).toList();
+      // Preserve pinned order
+      for (final id in pinnedIds) {
+        final match = allModels.where((a) => a.id == id).toList();
+        if (match.isNotEmpty) pinned.add(match.first);
+      }
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _pinnedAchievements = pinned;
+      _activeDates = activeDates;
+      _loadingGamification = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +75,9 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 24),
               _buildStatsCard(context, t),
               const SizedBox(height: 24),
-              _buildDailyBadge(context, t),
+              _buildStarChainCard(context, t),
               const SizedBox(height: 24),
-              _buildAchievements(context, t),
+              _buildPinnedAchievements(context, t),
               const SizedBox(height: 40),
             ],
           ),
@@ -100,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
             bottom: 0,
             left: 24,
             child: Transform.rotate(
-              angle: 0.05, // ~3 degrees
+              angle: 0.05,
               child: Container(
                 width: 96,
                 height: 96,
@@ -195,7 +242,6 @@ class ProfileScreen extends StatelessWidget {
         final joined = user != null
             ? t.profileJoinedAtMonthYear(user.joinedAt)
             : t.profileJoinedAtMonthYear(DateTime(2023, 1, 1));
-
         final bio = user?.bio;
 
         return Padding(
@@ -260,7 +306,6 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Row 1: Courses + Total XP
               Row(
                 children: [
                   Expanded(
@@ -287,16 +332,15 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Divider(height: 1, color: Color(0xFFF1F5F9)),
               ),
-              // Row 2: Following + Fans
               Row(
                 children: [
                   Expanded(
                     child: _statItem(
-                      icon: Icons.how_to_reg,
-                      iconBg: const Color(0xFFDBEAFE),
-                      iconColor: const Color(0xFF3B82F6),
-                      value: _formatStat(userProvider.followingCount),
-                      label: t.profileFollowing,
+                      icon: Icons.local_fire_department_rounded,
+                      iconBg: const Color(0xFFFEF3C7),
+                      iconColor: const Color(0xFFF59E0B),
+                      value: '${userProvider.streak}',
+                      label: t.resultStreakLabel,
                     ),
                   ),
                   Expanded(
@@ -361,128 +405,13 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDailyBadge(BuildContext context, AppLocalizations t) {
-    return Consumer<UserProvider>(
-      builder: (context, userProvider, _) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFFFAF5FF), Color(0xFFFDF2F8)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: const Color(0xFFF3E8FF)),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x08000000),
-                blurRadius: 4,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    t.profileDailyBadge,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1E293B),
-                      fontSize: 16,
-                    ),
-                  ),
-                  Icon(
-                    Icons.auto_awesome,
-                    size: 20,
-                    color: const Color(0xFFA855F7),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFA855F7), Color(0xFFEC4899)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFA855F7).withValues(alpha: 0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.emoji_events,
-                      size: 32,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        t.profileStreakDays(userProvider.streak),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF1E293B),
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        t.profileBadgeSubtitle,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF64748B),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildAchievements(BuildContext context, AppLocalizations t) {
-    final badges = [
-      _Badge(Icons.bolt, const Color(0xFFEAB308), const Color(0xFFFEF9C3)),
-      _Badge(Icons.shield, const Color(0xFF10B981), const Color(0xFFD1FAE5)),
-      _Badge(
-        Icons.star_rounded,
-        const Color(0xFFA855F7),
-        const Color(0xFFF3E8FF),
-      ),
-      _Badge(
-        Icons.trending_up,
-        const Color(0xFF3B82F6),
-        const Color(0xFFDBEAFE),
-      ),
-    ];
-
+  Widget _buildStarChainCard(BuildContext context, AppLocalizations t) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFF1F5F9)),
         boxShadow: const [
           BoxShadow(
@@ -493,24 +422,63 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            t.profileStarThisWeek,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF1E293B),
+            ),
+          ),
+          const SizedBox(height: 14),
+          StarChainWidget(activeDates: _activeDates),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPinnedAchievements(BuildContext context, AppLocalizations t) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFF1F5F9)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                t.profileAchievements,
+                t.profileMyAchievements,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF1E293B),
                   fontSize: 16,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.indigo50,
-                  borderRadius: BorderRadius.circular(6),
-                ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () async {
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const AchievementWallScreen(),
+                    ),
+                  );
+                  // Refresh in case pins changed
+                  _loadGamification();
+                },
                 child: Text(
                   t.profileViewAll,
                   style: TextStyle(
@@ -523,38 +491,99 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Row(
-            children: badges.map((badge) {
-              return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: badge.bg,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x08000000),
-                            blurRadius: 2,
-                            offset: Offset(0, 1),
+          if (_loadingGamification)
+            const Center(
+              child: SizedBox(
+                height: 40,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            )
+          else if (_pinnedAchievements.isEmpty)
+            Center(
+              child: Text(
+                t.profileNoPinnedAchievements,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Color(0xFFCBD5E1),
+                ),
+              ),
+            )
+          else
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: _pinnedAchievements.map((achievement) {
+                final style = AchievementService.rarityStyle(
+                  achievement.rarity,
+                  t.isZh,
+                );
+                final color = Color(style.color);
+                return Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: color.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: color.withValues(alpha: 0.3),
                           ),
-                        ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            AchievementService.categoryIcon(
+                              achievement.category,
+                            ),
+                            style: const TextStyle(fontSize: 28),
+                          ),
+                        ),
                       ),
-                      child: Icon(badge.icon, size: 32, color: badge.color),
-                    ),
+                      const SizedBox(height: 6),
+                      SizedBox(
+                        width: 64,
+                        child: Text(
+                          achievement.name,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF64748B),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                );
+              }).toList(),
+            ),
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const AchievementWallScreen(),
                 ),
               );
-            }).toList(),
+              _loadGamification();
+            },
+            child: Text(
+              t.profileViewAllAchievements,
+              style: TextStyle(
+                fontSize: 13,
+                color: AppColors.indigo500,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  /// Format a stat number: 1200 → "1.2K", 1000000 → "1M", etc.
   static String _formatStat(int n) {
     if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
     if (n >= 10000) return '${(n / 1000).round()}K';
@@ -638,7 +667,6 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Warning icon
                     Container(
                       width: 64,
                       height: 64,
@@ -653,8 +681,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-
-                    // Title
                     Text(
                       t.profileLogoutTitle,
                       style: const TextStyle(
@@ -664,8 +690,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-
-                    // Body
                     Text(
                       t.profileLogoutBody,
                       textAlign: TextAlign.center,
@@ -676,11 +700,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 28),
-
-                    // Buttons
                     Row(
                       children: [
-                        // Cancel
                         Expanded(
                           child: OutlinedButton(
                             onPressed: isLoggingOut
@@ -688,7 +709,9 @@ class ProfileScreen extends StatelessWidget {
                                 : () => Navigator.of(ctx).pop(),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 13),
-                              side: const BorderSide(color: Color(0xFFE2E8F0)),
+                              side: const BorderSide(
+                                color: Color(0xFFE2E8F0),
+                              ),
                               foregroundColor: const Color(0xFF64748B),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -703,14 +726,14 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-
-                        // Confirm logout
                         Expanded(
                           child: FilledButton(
                             onPressed: isLoggingOut
                                 ? null
                                 : () async {
-                                    setDialogState(() => isLoggingOut = true);
+                                    setDialogState(
+                                      () => isLoggingOut = true,
+                                    );
                                     await userProvider.logout();
                                     if (context.mounted) {
                                       Navigator.of(
@@ -755,11 +778,4 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
-}
-
-class _Badge {
-  final IconData icon;
-  final Color color;
-  final Color bg;
-  const _Badge(this.icon, this.color, this.bg);
 }
