@@ -67,13 +67,41 @@ interactions: insert-only, partition by month
 | published_at | timestamptz | Set only when published |
 | search_tsv | tsvector | Generated column (title/description/tags) for full-text search |
 
+#### AI Agentic — CoursePlanJson → DB field mapping
+
+When `agentic-generate-course` writes a generated course it maps `CoursePlanJson` as follows:
+
+| CoursePlanJson field | DB table.column | Notes |
+|---|---|---|
+| `course.title` | `courses.title` | direct write |
+| `course.description` | `courses.description` | direct write |
+| `course.subject` | `courses.subject_id` | `SELECT id FROM subjects WHERE name = $subject` |
+| `course.difficulty` | `courses.difficulty_level` | values match exactly |
+| `course.estimated_total_minutes` | `courses.estimated_minutes` | direct write |
+| `course.tags` | `courses.tags` | direct write |
+| `course.animation_style` | `courses.animation_style` | `'cartoon'｜'minimal'｜'realistic'` |
+| `course.language` | `courses.content_language` | `'zh'｜'en'` |
+| entire CoursePlanJson | `courses.planning_json` | per-lesson `objective` + `key_points` consumed by block generator |
+| — | `courses.status` | fixed `'draft'` |
+| — | `courses.author_id` | authenticated user UUID |
+| `lesson.title` | `lessons.title` | direct write |
+| `lesson.type` | `lessons.type` | direct write |
+| `lesson.order × 1000` | `lessons.sort_key` | gap convention for later inserts |
+| `lesson.estimated_minutes × 60` | `lessons.duration_seconds` | unit conversion |
+| `lesson.xp_reward` | `lessons.xp_reward` | direct write |
+| — | `lessons.course_id` | UUID from the preceding courses insert |
+| — | `lessons.content_json` | `{ blocks: [...] }` filled by ai-generate-lesson-blocks |
+| — | `lessons.is_locked` | lesson 1 → `false`, rest → `true` |
+
+Type definition lives in `supabase/functions/_shared/types/course_plan.ts`.
+
+---
+
 #### lessons (sub-lessons) includes snapshot data for fast Viewer rendering
 | Column | Type | Notes |
 | --- | --- | --- |
 | id | UUID (PK) | Primary key |
 | course_id | UUID (FK) | FK -> courses.id, course ID (lessons are now direct course children) |
-| group_title | Text | Default: `Chapter 1`. Display-only grouping label in Viewer/Builder (no separate chapter table) |
-| group_sort_key | bigint | Default: 1000. Controls group ordering with spacing for drag/insert |
 | title | Text | Lesson title |
 | type | Enum ('interactive', 'quiz', 'video', 'article') | Default: interactive, lesson type |
 | sort_key | bigint | Default: 1000. Controls lesson order within a group; Builder updates on save |
