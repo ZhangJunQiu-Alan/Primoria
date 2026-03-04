@@ -18,17 +18,17 @@
  *   }
  *
  * Response (success):
- *   { success: true, page: LessonPageJson, model: string }
- *   where LessonPageJson = { pageTitle: string, blocks: LessonBlock[] }
+ *   { success: true, page: LessonJson, model: string }
+ *   where LessonJson = { lessonTitle: string, blocks: LessonBlock[] }
  *
  * Response (error):
  *   { success: false, error: string, validationErrors?: BlockValidationError[] }
  *
  * Block IDs are prefixed with "l{order}-" (e.g. "l1-b0") to guarantee
- * global uniqueness when Phase 2D merges pages from multiple calls.
+ * global uniqueness when Phase 2D merges lessons from multiple calls.
  */
 
-import type { CoursePlanLesson, LessonPageJson } from '../_shared/types/course_plan.ts';
+import type { CoursePlanLesson, LessonJson } from '../_shared/types/course_plan.ts';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -111,7 +111,7 @@ Generate content blocks for ONE lesson. Return JSON only — no markdown, no cod
 
 Output structure (exact — do NOT add or remove top-level keys):
 {
-  "pageTitle": "<lesson title>",
+  "lessonTitle": "<lesson title>",
   "blocks": [ /* array of block objects */ ]
 }
 
@@ -130,7 +130,7 @@ Key concepts to cover:
 ${keyPointsList}
 
 ═══ HARD CONSTRAINTS ═══
-- Generate exactly 4-8 blocks. Do NOT exceed 8.
+- Generate 4-15 blocks. Do NOT exceed 15.
 - Must include at least 2 interactive blocks (code-playground, multiple-choice, fill-blank, true-false, or matching).
 - Rhythm: introduce concept → show example → practice (at least one interactive block after every 1-2 concept blocks).
 - All block IDs must be unique (use simple names like b0, b1, b2 … — they will be prefixed automatically).
@@ -405,8 +405,8 @@ function validateLessonPage(json: unknown): BlockValidationResult {
 
   const page = json as Record<string, unknown>;
 
-  if (!isStr(page.pageTitle)) {
-    err('$.pageTitle', 'pageTitle is required and must be a non-empty string');
+  if (!isStr(page.lessonTitle)) {
+    err('$.lessonTitle', 'lessonTitle is required and must be a non-empty string');
   }
 
   const blocks = page.blocks;
@@ -415,8 +415,8 @@ function validateLessonPage(json: unknown): BlockValidationResult {
     return { valid: false, errors, summary: buildSummary(errors) };
   }
 
-  if (blocks.length < 4 || blocks.length > 8) {
-    err('$.blocks', `blocks count must be 4-8, got ${blocks.length}`);
+  if (blocks.length < 4 || blocks.length > 15) {
+    err('$.blocks', `blocks count must be 4-15, got ${blocks.length}`);
   }
 
   const seenIds = new Set<string>();
@@ -585,7 +585,7 @@ Deno.serve(async (req: Request) => {
         ),
       };
 
-      return jsonResponse({ success: true, page: prefixed as unknown as LessonPageJson, model });
+      return jsonResponse({ success: true, page: prefixed as unknown as LessonJson, model });
     }
   }
 

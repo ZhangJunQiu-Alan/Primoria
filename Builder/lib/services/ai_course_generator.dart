@@ -17,18 +17,17 @@ class AICourseGenerator {
   static const List<String> _modelCandidates = [
     'gemini-2.5-flash-latest',
     'gemini-2.5-flash',
-    'gemini-3-flash-preview',
     'gemini-2.0-flash',
     'gemini-2.5-pro-latest',
     'gemini-2.5-pro',
-    'gemini-3-pro-preview',
   ];
   static const int _maxOutputTokens = 16384;
-  static const int _maxBlocksPerPage = 20;
+  static const int _maxBlocksPerLesson = 20;
   static const String _promptVersion = '2026-02-13.ai-course-v1';
   static String? _apiKey;
 
-  /// Set API key
+  /// Set API key manually (optional — [generateCourseAgentLocally] will
+  /// auto-fetch from the server if the key has not been set yet).
   static void setApiKey(String key) {
     _apiKey = key;
   }
@@ -36,6 +35,37 @@ class AICourseGenerator {
   /// Get current API key
   static String? get apiKey => _apiKey;
   static String get promptVersion => _promptVersion;
+
+  /// Fetch the Gemini API key from the `get-gemini-key` Edge Function and
+  /// cache it in [_apiKey].  Requires an active Supabase session.
+  /// Returns null on success, or an error message string on failure.
+  static Future<String?> fetchAndCacheApiKey() async {
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'get-gemini-key',
+      );
+      final data = response.data;
+      debugPrint('[AICourseGenerator] get-gemini-key response: $data');
+      if (data is Map && data['success'] == true) {
+        final key = data['key']?.toString();
+        if (key != null && key.isNotEmpty) {
+          _apiKey = key;
+          return null; // success
+        }
+        return 'Server returned empty key';
+      }
+      final serverError = (data is Map ? data['error']?.toString() : null)
+          ?? 'Unexpected response: $data';
+      return serverError;
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      debugPrint('[AICourseGenerator] get-gemini-key FunctionException: $detail');
+      return 'get-gemini-key error: $detail';
+    } catch (e) {
+      debugPrint('[AICourseGenerator] get-gemini-key exception: $e');
+      return 'get-gemini-key exception: $e';
+    }
+  }
 
   /// Prompt template
   static const String _courseGenerationPrompt = '''
@@ -55,17 +85,17 @@ JSON schema:
     "difficulty": "beginner",
     "estimatedMinutes": 30
   },
-  "pages": [
+  "lessons": [
     {
-      "pageId": "p1",
-      "title": "Page title",
+      "lessonId": "p1",
+      "title": "Lesson title",
       "blocks": [...]
     }
   ]
 }
 
 Hard constraints:
-- Put all generated blocks into exactly ONE page.
+- Put all generated blocks into exactly ONE lesson.
 - Total block count must be <= 20.
 - Prefer 10-20 blocks when content is sufficient; for short PDFs 6-12 is acceptable.
 - Every id must be unique.
@@ -1188,6 +1218,8 @@ $rawContent
   static Future<_ContentResult> _generateTextWithModel({
     required String model,
     required String prompt,
+    double temperature = 0.0,
+    int? maxOutputTokens,
   }) async {
     try {
       final url = '$_baseUrl/models/$model:generateContent?key=$_apiKey';
@@ -1200,8 +1232,8 @@ $rawContent
           },
         ],
         'generationConfig': {
-          'temperature': 0.0,
-          'maxOutputTokens': _maxOutputTokens,
+          'temperature': temperature,
+          'maxOutputTokens': maxOutputTokens ?? _maxOutputTokens,
           'responseMimeType': 'application/json',
         },
       };
@@ -1233,6 +1265,7 @@ $rawContent
       }
 
       final candidate = _mapFromDynamic(candidates.first);
+      final finishReason = _asString(candidate['finishReason']);
       final contentMap = _mapFromDynamic(candidate['content']);
       final parts = contentMap['parts'];
       if (parts is! List || parts.isEmpty) {
@@ -1255,6 +1288,17 @@ $rawContent
         );
       }
 
+      if (finishReason == 'MAX_TOKENS') {
+        return _ContentResult(
+          success: false,
+          message: 'MAX_TOKENS: output truncated by $model — try a model with larger context',
+          statusCode: response.statusCode,
+          model: model,
+          truncated: true,
+          partialContent: content,
+        );
+      }
+
       return _ContentResult(success: true, content: content, model: model);
     } catch (e) {
       return _ContentResult(
@@ -1263,6 +1307,15 @@ $rawContent
         model: model,
       );
     }
+  }
+
+  static bool _isHighDemandError(String? message) {
+    final msg = (message ?? '').toLowerCase();
+    return msg.contains('high demand') ||
+        msg.contains('resource_exhausted') ||
+        msg.contains('resource exhausted') ||
+        msg.contains('overloaded') ||
+        msg.contains('503');
   }
 
   static bool _shouldTryNextModel(_ContentResult result) {
@@ -1349,11 +1402,13 @@ $rawContent
   }) {
     final normalized = Map<String, dynamic>.from(rawJson);
     final metadata = _normalizeMetadata(normalized['metadata'], fileName);
-    final pages = _normalizePages(normalized['pages']);
+    // Accept both 'lessons' (new) and 'pages' (legacy) key from AI output
+    final lessons = _normalizeLessons(normalized['lessons'] ?? normalized['pages']);
 
     normalized['courseId'] = _normalizeCourseId(normalized['courseId']);
     normalized['metadata'] = metadata;
-    normalized['pages'] = pages;
+    normalized['lessons'] = lessons;
+    normalized.remove('pages');
     normalized['settings'] = _normalizeSettings(normalized['settings']);
 
     return normalized;
@@ -1420,19 +1475,19 @@ $rawContent
     };
   }
 
-  static List<Map<String, dynamic>> _normalizePages(dynamic rawPages) {
-    final rawPageList = rawPages is List ? rawPages : const [];
+  static List<Map<String, dynamic>> _normalizeLessons(dynamic rawLessons) {
+    final rawLessonList = rawLessons is List ? rawLessons : const [];
     final allRawBlocks = <Map<String, dynamic>>[];
-    String? firstPageTitle;
+    String? firstLessonTitle;
 
-    for (final rawPage in rawPageList) {
-      final page = _mapFromDynamic(rawPage);
-      final title = _asString(page['title'])?.trim();
-      if (firstPageTitle == null && title != null && title.isNotEmpty) {
-        firstPageTitle = title;
+    for (final rawLesson in rawLessonList) {
+      final lesson = _mapFromDynamic(rawLesson);
+      final title = _asString(lesson['title'])?.trim();
+      if (firstLessonTitle == null && title != null && title.isNotEmpty) {
+        firstLessonTitle = title;
       }
 
-      final blocks = page['blocks'];
+      final blocks = lesson['blocks'];
       if (blocks is! List) continue;
 
       for (final rawBlock in blocks) {
@@ -1445,8 +1500,8 @@ $rawContent
     final normalizedBlocks = _normalizeBlocks(allRawBlocks);
     return [
       {
-        'pageId': 'p1',
-        'title': firstPageTitle ?? 'Generated Content',
+        'lessonId': 'p1',
+        'title': firstLessonTitle ?? 'Generated Content',
         'blocks': normalizedBlocks,
       },
     ];
@@ -1459,7 +1514,7 @@ $rawContent
     final usedIds = <String>{};
 
     for (final rawBlock in rawBlocks) {
-      if (normalized.length >= _maxBlocksPerPage) break;
+      if (normalized.length >= _maxBlocksPerLesson) break;
 
       final type = _normalizeBlockType(_asString(rawBlock['type']));
       final originalContent = _mapFromDynamic(rawBlock['content']);
@@ -1958,6 +2013,694 @@ $rawContent
     return _sanitizeJsonText(content);
   }
 
+  // ── Local agentic generation (no Edge Function) ──────────────────────────
+
+  static const String _planSystemPrompt =
+      'You are an expert instructional designer for Primoria, an interactive STEM learning platform.\n'
+      'Given a course description, produce a structured course plan JSON.\n\n'
+      'Return JSON only. Do not output markdown, code fences, or explanations.\n'
+      'All strings must use double quotes.\n\n'
+      'Required JSON structure (exact schema — do NOT add or remove fields):\n'
+      '{\n'
+      '  "schema_version": "plan-1.0",\n'
+      '  "course": {\n'
+      '    "title": "Course title",\n'
+      '    "description": "2-3 sentence description of what students will learn",\n'
+      '    "subject": "<exactly one of the 8 allowed subjects>",\n'
+      '    "difficulty": "beginner",\n'
+      '    "target_audience": "Who this course is designed for",\n'
+      '    "estimated_total_minutes": 90,\n'
+      '    "tags": ["tag1", "tag2", "tag3"],\n'
+      '    "animation_style": "minimal",\n'
+      '    "language": "zh"\n'
+      '  },\n'
+      '  "lessons": [\n'
+      '    {\n'
+      '      "order": 1,\n'
+      '      "title": "Lesson title",\n'
+      '      "objective": "By the end of this lesson, students will be able to...",\n'
+      '      "key_points": ["concept1", "concept2", "concept3"],\n'
+      '      "type": "interactive",\n'
+      '      "estimated_minutes": 15,\n'
+      '      "xp_reward": 50\n'
+      '    }\n'
+      '  ]\n'
+      '}\n\n'
+      'Hard constraints:\n'
+      '- subject must be exactly one of: "Mathematics", "Physics", "Chemistry", "Biology", "Computer Science", "Engineering", "Data Science & AI", "Earth & Space Science"\n'
+      '- difficulty must be exactly one of: beginner, intermediate, advanced\n'
+      '- animation_style must be exactly one of: cartoon, minimal, realistic\n'
+      '- language must be exactly one of: zh, en\n'
+      '- lesson.type must be exactly one of: interactive, quiz, video, article; most lessons should be "interactive"\n'
+      '- Generate 3-8 lessons. Use 3-4 for short/focused topics, 5-8 for rich/broad topics.\n'
+      '- Each lesson must have exactly 3-6 key_points (strings).\n'
+      '- lesson.order starts at 1 and must be consecutive (1, 2, 3 …).\n'
+      '- lesson.estimated_minutes must be between 10 and 30.\n'
+      '- lesson.xp_reward must be between 30 and 100; longer or harder lessons earn more.\n'
+      '- estimated_total_minutes must equal the sum of all lesson estimated_minutes.\n'
+      '- Lessons must be in a logical learning sequence: fundamentals first, advanced concepts last.';
+
+  static const String _blockTypeReference =
+      'Allowed block types and exact JSON format:\n\n'
+      '1) text\n'
+      '{"type":"text","id":"b0","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"format":"markdown","value":"## Heading\\n\\nParagraph text."}}\n\n'
+      '2) image\n'
+      '{"type":"image","id":"b1","position":{"order":1},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/img.png","alt":"Alt text","caption":"Caption"}}\n\n'
+      '3) code-block  (read-only display)\n'
+      '{"type":"code-block","id":"b2","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","code":"x = 1\\nprint(x)"}}\n\n'
+      '4) code-playground  (editable + runnable)\n'
+      '{"type":"code-playground","id":"b3","position":{"order":3},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","initialCode":"# fill in the blank\\nresult = ___\\nprint(result)","expectedOutput":"2","hints":["Use the + operator"],"runnable":true}}\n\n'
+      '5) multiple-choice\n'
+      '{"type":"multiple-choice","id":"b4","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Question text?","options":[{"id":"a","text":"Option A"},{"id":"b","text":"Option B"},{"id":"c","text":"Option C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation."}}\n\n'
+      '6) fill-blank\n'
+      '{"type":"fill-blank","id":"b5","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python uses ___ to print output.","correctAnswer":"print","hint":"It is a built-in function"}}\n\n'
+      '7) true-false\n'
+      '{"type":"true-false","id":"b6","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted."}}\n\n'
+      '8) matching\n'
+      '{"type":"matching","id":"b7","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Match each term to its meaning.","leftItems":[{"id":"l1","text":"variable"},{"id":"l2","text":"function"}],"rightItems":[{"id":"r1","text":"stores a value"},{"id":"r2","text":"reusable block of code"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Explanation."}}\n\n'
+      '9) video\n'
+      '{"type":"video","id":"b8","position":{"order":8},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}';
+
+  static String _buildPlanPrompt(
+    String description,
+    String difficulty,
+    String animationStyle,
+    String language,
+  ) {
+    return '$_planSystemPrompt\n\n'
+        'User course request:\n'
+        '"${description.trim()}"\n\n'
+        'Honour these user preferences:\n'
+        '- Difficulty level: $difficulty\n'
+        '- Animation style: $animationStyle\n'
+        '- Content language: $language (write all titles, descriptions, objectives, and key_points in this language)';
+  }
+
+  static String _buildLessonBlocksPrompt(
+    Map<String, dynamic> lessonPlan,
+    Map<String, dynamic> courseContext,
+  ) {
+    final keyPoints = lessonPlan['key_points'] as List? ?? [];
+    final keyPointsList = keyPoints
+        .asMap()
+        .entries
+        .map((e) => '  ${e.key + 1}. ${e.value}')
+        .join('\n');
+
+    final animStyle =
+        courseContext['animation_style'] as String? ?? 'minimal';
+    final String animationHint;
+    if (animStyle == 'cartoon') {
+      animationHint =
+          'Prefer visual, animated, and playful examples. Use animation blocks where they help.';
+    } else if (animStyle == 'realistic') {
+      animationHint =
+          'Use realistic, professional examples. Include video or image blocks when they add clarity.';
+    } else {
+      animationHint =
+          'Keep content clean and minimal. Prefer text, code, and quiz blocks over decorative elements.';
+    }
+
+    final subject = courseContext['subject'] as String? ?? '';
+    final lessonType = lessonPlan['type'] as String? ?? 'interactive';
+    final String subjectHint;
+    if (lessonType == 'quiz') {
+      subjectHint =
+          '- This is a quiz lesson: use mostly multiple-choice, fill-blank, true-false, and matching blocks. Minimal or no text blocks.';
+    } else if (subject == 'Computer Science' ||
+        subject == 'Engineering' ||
+        subject == 'Data Science & AI') {
+      subjectHint =
+          '- Include at least 1 code-block (display) and 1 code-playground (practice) if the key concepts involve code.';
+    } else if (subject == 'Mathematics' || subject == 'Physics') {
+      subjectHint =
+          '- Use text for worked examples, fill-blank for formula checks, and true-false for conceptual verification.';
+    } else {
+      subjectHint =
+          '- Prefer text + multiple-choice + fill-blank. Add matching for terminology lessons.';
+    }
+
+    return 'You are an expert instructional designer for Primoria, an interactive STEM learning platform.\n'
+        'Generate content blocks for ONE lesson. Return JSON only — no markdown, no code fences, no explanations.\n\n'
+        'Output structure (exact — do NOT add or remove top-level keys):\n'
+        '{\n'
+        '  "lessonTitle": "<lesson title>",\n'
+        '  "blocks": [ /* array of block objects */ ]\n'
+        '}\n\n'
+        '═══ COURSE CONTEXT ═══\n'
+        'Course title:    ${courseContext['title']}\n'
+        'Subject:         ${courseContext['subject']}\n'
+        'Difficulty:      ${courseContext['difficulty']}\n'
+        'Target audience: ${courseContext['target_audience']}\n'
+        'Animation style: $animStyle — $animationHint\n'
+        'Language:        ${courseContext['language']} ← write ALL content (titles, text, questions, hints, explanations) in this language\n\n'
+        '═══ THIS LESSON ═══\n'
+        'Title:     ${lessonPlan['title']}\n'
+        'Objective: ${lessonPlan['objective']}\n'
+        'Key concepts to cover:\n'
+        '$keyPointsList\n\n'
+        '═══ HARD CONSTRAINTS ═══\n'
+        '- Generate 4-8 blocks. Do NOT exceed 8.\n'
+        '- Must include at least 2 interactive blocks (code-playground, multiple-choice, fill-blank, true-false, or matching).\n'
+        '- Rhythm: introduce concept → show example → practice (at least one interactive block after every 1-2 concept blocks).\n'
+        '- All block IDs must be unique (use simple names like b0, b1, b2 … — they will be prefixed automatically).\n'
+        '- position.order is 0-based and continuous within this lesson.\n'
+        '- Write ALL text, question, answer, hint, and explanation content in the specified language.\n'
+        '- Keep text blocks very concise: ≤ 2 sentences each. Prioritise quality over quantity.\n'
+        '- If no real image/video URL is available, use text or quiz blocks instead of fake URLs.\n'
+        '$subjectHint\n\n'
+        '$_blockTypeReference';
+  }
+
+  static String? _validatePlanJsonLocal(Map<String, dynamic> plan) {
+    const validSubjects = {
+      'Mathematics',
+      'Physics',
+      'Chemistry',
+      'Biology',
+      'Computer Science',
+      'Engineering',
+      'Data Science & AI',
+      'Earth & Space Science',
+    };
+    const validDifficulties = {'beginner', 'intermediate', 'advanced'};
+    const validAnimStyles = {'cartoon', 'minimal', 'realistic'};
+    const validLanguages = {'zh', 'en'};
+
+    if (plan['schema_version'] != 'plan-1.0') {
+      return 'schema_version must be "plan-1.0"';
+    }
+    final course = plan['course'];
+    if (course is! Map) return 'course object is required';
+    final c = _mapFromDynamic(course);
+    if ((c['title'] as String? ?? '').trim().isEmpty) {
+      return 'course.title is required';
+    }
+    if (!validSubjects.contains(c['subject'])) {
+      return 'invalid course.subject: ${c['subject']}';
+    }
+    if (!validDifficulties.contains(c['difficulty'])) {
+      return 'invalid course.difficulty: ${c['difficulty']}';
+    }
+    if (!validAnimStyles.contains(c['animation_style'])) {
+      return 'invalid course.animation_style: ${c['animation_style']}';
+    }
+    if (!validLanguages.contains(c['language'])) {
+      return 'invalid course.language: ${c['language']}';
+    }
+    final lessons = plan['lessons'];
+    if (lessons is! List || lessons.isEmpty) return 'lessons array is empty';
+    if (lessons.length < 2 || lessons.length > 8) {
+      return 'lessons count must be 2-8, got ${lessons.length}';
+    }
+    for (int i = 0; i < lessons.length; i++) {
+      final l = _mapFromDynamic(lessons[i]);
+      if ((l['title'] as String? ?? '').trim().isEmpty) {
+        return 'lessons[$i].title is required';
+      }
+      if ((l['objective'] as String? ?? '').trim().isEmpty) {
+        return 'lessons[$i].objective is required';
+      }
+      final kp = l['key_points'];
+      if (kp is! List || kp.length < 2) {
+        return 'lessons[$i].key_points must have ≥ 2 items';
+      }
+    }
+    return null;
+  }
+
+  static String? _validateLessonBlocksLocal(Map<String, dynamic> lesson) {
+    if ((lesson['lessonTitle'] as String? ?? '').trim().isEmpty) {
+      return 'lessonTitle is required';
+    }
+    final blocks = lesson['blocks'];
+    if (blocks is! List || blocks.isEmpty) return 'blocks array is empty';
+    if (blocks.length < 2 || blocks.length > 15) {
+      return 'blocks count must be 2-15, got ${blocks.length}';
+    }
+    const interactiveTypes = {
+      'code-playground',
+      'multiple-choice',
+      'fill-blank',
+      'true-false',
+      'matching',
+    };
+    var interactiveCount = 0;
+    for (final b in blocks) {
+      if (b is! Map) return 'each block must be an object';
+      final block = _mapFromDynamic(b);
+      if ((block['id'] as String? ?? '').trim().isEmpty) {
+        return 'block.id is required';
+      }
+      if ((block['type'] as String? ?? '').trim().isEmpty) {
+        return 'block.type is required';
+      }
+      if (interactiveTypes.contains(block['type'])) interactiveCount++;
+    }
+    if (interactiveCount < 1) {
+      return 'lesson needs at least 1 interactive block';
+    }
+    return null;
+  }
+
+  static List<Map<String, dynamic>> _prefixBlockIdsLocal(
+    List<dynamic> blocks,
+    int lessonOrder,
+  ) {
+    final prefix = 'l$lessonOrder-';
+    return blocks.map((b) {
+      final block = Map<String, dynamic>.from(_mapFromDynamic(b));
+      block['id'] = '$prefix${block['id'] ?? 'b'}';
+
+      if (block['type'] == 'matching') {
+        final content =
+            Map<String, dynamic>.from(_mapFromDynamic(block['content']));
+        if (content['leftItems'] is List) {
+          content['leftItems'] = (content['leftItems'] as List).map((item) {
+            final m = Map<String, dynamic>.from(_mapFromDynamic(item));
+            m['id'] = '$prefix${m['id']}';
+            return m;
+          }).toList();
+        }
+        if (content['rightItems'] is List) {
+          content['rightItems'] = (content['rightItems'] as List).map((item) {
+            final m = Map<String, dynamic>.from(_mapFromDynamic(item));
+            m['id'] = '$prefix${m['id']}';
+            return m;
+          }).toList();
+        }
+        if (content['correctPairs'] is List) {
+          content['correctPairs'] =
+              (content['correctPairs'] as List).map((pair) {
+            final m = Map<String, dynamic>.from(_mapFromDynamic(pair));
+            m['leftId'] = '$prefix${m['leftId']}';
+            m['rightId'] = '$prefix${m['rightId']}';
+            return m;
+          }).toList();
+        }
+        block['content'] = content;
+      }
+
+      if (block['type'] == 'multiple-choice') {
+        final content =
+            Map<String, dynamic>.from(_mapFromDynamic(block['content']));
+        if (content['options'] is List) {
+          content['options'] = (content['options'] as List).map((opt) {
+            final m = Map<String, dynamic>.from(_mapFromDynamic(opt));
+            m['id'] = '$prefix${m['id']}';
+            return m;
+          }).toList();
+        }
+        if (content['correctAnswer'] is String) {
+          content['correctAnswer'] = '$prefix${content['correctAnswer']}';
+        }
+        if (content['correctAnswers'] is List) {
+          content['correctAnswers'] =
+              (content['correctAnswers'] as List).map((id) => '$prefix$id').toList();
+        }
+        block['content'] = content;
+      }
+
+      return block;
+    }).toList();
+  }
+
+  static String _agenticToSlug(String title) {
+    final ascii = title.replaceAll(RegExp(r'[^\x00-\x7F]'), '').trim();
+    final base = ascii.isNotEmpty
+        ? ascii
+              .toLowerCase()
+              .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
+              .replaceAll(RegExp(r'^-|-$'), '')
+        : 'course';
+    return '${base.isEmpty ? 'course' : base}-${DateTime.now().millisecondsSinceEpoch.toRadixString(36)}';
+  }
+
+  static Future<String> _writeAgenticCourseToDb({
+    required Map<String, dynamic> planJson,
+    required List<Map<String, dynamic>> lessonJsons,
+    required String userId,
+  }) async {
+    final client = Supabase.instance.client;
+    final course = _mapFromDynamic(planJson['course']);
+
+    String? subjectId;
+    try {
+      final subjectData = await client
+          .from('subjects')
+          .select('id')
+          .eq('name', course['subject'] as String)
+          .maybeSingle();
+      subjectId = (subjectData)?['id']?.toString();
+    } catch (_) {}
+
+    final courseRow = await client
+        .from('courses')
+        .insert({
+          'author_id': userId,
+          if (subjectId != null) 'subject_id': subjectId,
+          'title': course['title'],
+          'slug': _agenticToSlug(course['title'].toString()),
+          'description': course['description'] ?? '',
+          'difficulty_level': course['difficulty'] ?? 'beginner',
+          'estimated_minutes': course['estimated_total_minutes'] ?? 30,
+          'tags': course['tags'] ?? [],
+          'animation_style': course['animation_style'] ?? 'minimal',
+          'content_language': course['language'] ?? 'zh',
+          'planning_json': planJson,
+          'status': 'draft',
+        })
+        .select('id')
+        .single();
+
+    final courseId = courseRow['id'] as String;
+
+    final lessons = planJson['lessons'] as List? ?? [];
+    const validTypes = {'interactive', 'quiz', 'video', 'article'};
+    final lessonRows = List.generate(lessons.length, (i) {
+      final l = _mapFromDynamic(lessons[i]);
+      final lessonType = l['type'] as String? ?? 'interactive';
+      final blocks =
+          i < lessonJsons.length
+              ? (lessonJsons[i]['blocks'] as List? ?? [])
+              : [];
+      return {
+        'course_id': courseId,
+        'title': l['title'] ?? 'Untitled',
+        'type': validTypes.contains(lessonType) ? lessonType : 'interactive',
+        'sort_key': ((l['order'] as num?)?.toInt() ?? (i + 1)) * 1000,
+        'xp_reward': (l['xp_reward'] as num?)?.toInt() ?? 50,
+        'duration_seconds':
+            ((l['estimated_minutes'] as num?)?.toInt() ?? 15) * 60,
+        'is_locked': ((l['order'] as num?)?.toInt() ?? (i + 1)) > 1,
+        'content_json': {'blocks': blocks},
+      };
+    });
+
+    await client.from('lessons').insert(lessonRows);
+    return courseId;
+  }
+
+  /// Compact variant of [_buildLessonBlocksPrompt] used in retry rounds to
+  /// reduce output size and avoid MAX_TOKENS truncation.
+  static String _buildLessonBlocksPromptCompact(
+    Map<String, dynamic> lessonPlan,
+    Map<String, dynamic> courseContext,
+  ) {
+    final keyPoints = lessonPlan['key_points'] as List? ?? [];
+    final keyPointsList = keyPoints
+        .asMap()
+        .entries
+        .map((e) => '  ${e.key + 1}. ${e.value}')
+        .join('\n');
+    return 'You are an expert instructional designer. Generate content blocks '
+        'for ONE lesson as compact JSON.\n\n'
+        'Output structure:\n'
+        '{"lessonTitle":"<title>","blocks":[...]}\n\n'
+        'Lesson: ${lessonPlan['title']}\n'
+        'Key concepts:\n$keyPointsList\n'
+        'Language: ${courseContext['language']}\n\n'
+        'STRICT RULES:\n'
+        '- Exactly 4-6 blocks. No more.\n'
+        '- Include at least 1 interactive block (multiple-choice, fill-blank, or true-false).\n'
+        '- Use ONLY text and multiple-choice blocks if unsure (simplest schema).\n'
+        '- All block IDs unique (b0, b1, …).\n'
+        '- Write all content in the specified language.\n\n'
+        'Allowed block types (minimal reference):\n'
+        '{"type":"text","id":"b0","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"format":"markdown","value":"content"}}\n'
+        '{"type":"multiple-choice","id":"b1","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Q?","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Why."}}\n'
+        '{"type":"fill-blank","id":"b2","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Sentence with ___.","correctAnswer":"answer","hint":"hint"}}\n'
+        '{"type":"true-false","id":"b3","position":{"order":3},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Statement.","correctAnswer":true,"explanation":"Why."}}';
+  }
+
+  /// Builds a minimal placeholder lesson for when all AI models fail.
+  /// This ensures the course can still be saved and opened in the Builder.
+  static Map<String, dynamic> _buildFallbackLesson(
+    String title,
+    int lessonOrder,
+  ) {
+    final prefix = 'l$lessonOrder-';
+    return {
+      'lessonTitle': title,
+      'blocks': [
+        {
+          'type': 'text',
+          'id': '${prefix}b0',
+          'position': {'order': 0},
+          'style': {'spacing': 'md', 'alignment': 'left'},
+          'content': {
+            'format': 'markdown',
+            'value': '## $title\n\n*Content for this lesson could not be '
+                'generated automatically. Please edit this lesson in the '
+                'Builder to add your content.*',
+          },
+        },
+        {
+          'type': 'multiple-choice',
+          'id': '${prefix}b1',
+          'position': {'order': 1},
+          'style': {'spacing': 'md', 'alignment': 'left'},
+          'content': {
+            'question': 'What did you learn in this lesson?',
+            'options': [
+              {'id': '${prefix}a', 'text': 'Option A'},
+              {'id': '${prefix}b', 'text': 'Option B'},
+              {'id': '${prefix}c', 'text': 'Option C'},
+            ],
+            'correctAnswer': '${prefix}a',
+            'correctAnswers': ['${prefix}a'],
+            'multiSelect': false,
+            'explanation': 'Please update this question with real content.',
+          },
+        },
+      ],
+    };
+  }
+
+  /// Agentic course generation — runs entirely on the client via direct
+  /// Gemini API calls. No Supabase Edge Function, no server-side timeout.
+  ///
+  /// Stages:
+  ///   1. Plan course    — one Gemini call, produces lesson outline
+  ///   2. Generate blocks — one Gemini call per lesson
+  ///   3. DB write       — inserts courses + lessons rows directly
+  ///
+  /// [onProgress] receives (stageLabel, 0.0–1.0) after each sub-step.
+  static Future<AgentCourseResult> generateCourseAgentLocally({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String language = 'zh',
+    void Function(String stage, double progress)? onProgress,
+  }) async {
+    if (description.trim().isEmpty) {
+      return const AgentCourseResult(
+        success: false,
+        message: 'Course description must not be empty',
+      );
+    }
+
+    try {
+      // ── Auto-fetch API key if not already cached ──────────────────
+      if (_apiKey == null || _apiKey!.isEmpty) {
+        onProgress?.call('init', 0.02);
+        final fetchError = await fetchAndCacheApiKey();
+        if (fetchError != null) {
+          return AgentCourseResult(
+            success: false,
+            message: '获取 AI 服务配置失败：$fetchError',
+          );
+        }
+      }
+
+      // ── Stage 1: Plan course ──────────────────────────────────────
+      onProgress?.call('plan', 0.05);
+      final planPrompt =
+          _buildPlanPrompt(description, difficulty, animationStyle, language);
+
+      Map<String, dynamic>? planJson;
+      String? planError;
+      for (final model in _modelCandidates) {
+        final result = await _generateTextWithModel(
+          model: model,
+          prompt: planPrompt,
+          temperature: 0.4,
+          maxOutputTokens: 8192,
+        );
+        if (!result.success) {
+          planError = result.message;
+          if (!_shouldTryNextModel(result)) break;
+          if (_isHighDemandError(result.message)) {
+            await Future.delayed(const Duration(seconds: 2));
+          }
+          continue;
+        }
+        final parsed = _parseJsonObject(result.content!);
+        if (parsed == null) {
+          planError = 'Could not parse plan JSON from $model';
+          continue;
+        }
+        final validErr = _validatePlanJsonLocal(parsed);
+        if (validErr != null) {
+          planError = 'Plan validation ($model): $validErr';
+          continue;
+        }
+        planJson = parsed;
+        break;
+      }
+
+      if (planJson == null) {
+        return AgentCourseResult(
+          success: false,
+          message:
+              'Course planning failed: ${planError ?? "No model succeeded"}',
+        );
+      }
+      onProgress?.call('plan', 0.15);
+
+      // ── Stage 2: Generate blocks per lesson ───────────────────────
+      final lessons = planJson['lessons'] as List? ?? [];
+      final planCourse = _mapFromDynamic(planJson['course']);
+      final courseCtx = <String, dynamic>{
+        'title': planCourse['title'] ?? '',
+        'subject': planCourse['subject'] ?? '',
+        'difficulty': planCourse['difficulty'] ?? difficulty,
+        'target_audience': planCourse['target_audience'] ?? '',
+        'animation_style': planCourse['animation_style'] ?? animationStyle,
+        'language': planCourse['language'] ?? language,
+      };
+
+      final lessonJsons = <Map<String, dynamic>>[];
+      for (int i = 0; i < lessons.length; i++) {
+        final lesson = _mapFromDynamic(lessons[i]);
+        final lessonOrder = (lesson['order'] as num?)?.toInt() ?? (i + 1);
+        final progress = 0.15 + (i / lessons.length) * 0.70;
+        onProgress?.call('blocks', progress);
+
+        final lessonPrompt = _buildLessonBlocksPrompt(lesson, courseCtx);
+        Map<String, dynamic>? lessonJson;
+        String? lessonError;
+
+        // Up to 3 full rounds through the model list (with backoff between rounds)
+        const maxRounds = 3;
+        for (int round = 0; round < maxRounds && lessonJson == null; round++) {
+          if (round > 0) {
+            // Exponential backoff between full rounds: 5s, 10s
+            await Future.delayed(Duration(seconds: 5 * round));
+          }
+          // Round 2+: use a more compact prompt (fewer blocks) to avoid truncation
+          final roundPrompt = round > 0
+              ? _buildLessonBlocksPromptCompact(lesson, courseCtx)
+              : lessonPrompt;
+          final roundTokens = round > 0 ? 8192 : 12288;
+          for (final model in _modelCandidates) {
+            final result = await _generateTextWithModel(
+              model: model,
+              prompt: roundPrompt,
+              temperature: 0.3,
+              maxOutputTokens: roundTokens,
+            );
+            if (!result.success) {
+              lessonError = result.message;
+              // On truncation: try repair on partial content before moving on
+              if (result.truncated && result.partialContent != null) {
+                final repaired = await _repairJsonContent(
+                  result.partialContent!,
+                  preferredModel: model,
+                );
+                if (repaired != null) {
+                  final parsed = _parseJsonObject(repaired);
+                  if (parsed != null) {
+                    final validErr = _validateLessonBlocksLocal(parsed);
+                    if (validErr == null) {
+                      final prefixed = Map<String, dynamic>.from(parsed);
+                      prefixed['blocks'] = _prefixBlockIdsLocal(
+                        parsed['blocks'] as List? ?? [],
+                        lessonOrder,
+                      );
+                      lessonJson = prefixed;
+                      break;
+                    }
+                  }
+                }
+              }
+              if (!_shouldTryNextModel(result)) break;
+              if (_isHighDemandError(result.message)) {
+                await Future.delayed(const Duration(seconds: 2));
+              }
+              continue;
+            }
+            // Try to parse; if that fails, attempt AI-assisted repair once
+            Map<String, dynamic>? parsed = _parseJsonObject(result.content!);
+            if (parsed == null) {
+              final repaired = await _repairJsonContent(
+                result.content!,
+                preferredModel: model,
+              );
+              if (repaired != null) parsed = _parseJsonObject(repaired);
+            }
+            if (parsed == null) {
+              lessonError = 'Could not parse lesson JSON from $model';
+              continue;
+            }
+            final validErr = _validateLessonBlocksLocal(parsed);
+            if (validErr != null) {
+              lessonError = 'Lesson ${i + 1} validation ($model): $validErr';
+              continue;
+            }
+            final prefixed = Map<String, dynamic>.from(parsed);
+            prefixed['blocks'] = _prefixBlockIdsLocal(
+              parsed['blocks'] as List? ?? [],
+              lessonOrder,
+            );
+            lessonJson = prefixed;
+            break;
+          }
+        }
+
+        // Graceful fallback: if all models failed, create a minimal placeholder
+        // lesson so the rest of the course can still be saved.
+        if (lessonJson == null) {
+          debugPrint(
+            '[AICourseGenerator] Lesson ${i + 1} failed after all retries '
+            '(${lessonError ?? "unknown error"}). Using placeholder.',
+          );
+          final lessonTitle =
+              (lesson['title'] as String? ?? 'Lesson ${i + 1}').trim();
+          lessonJson = _buildFallbackLesson(lessonTitle, lessonOrder);
+        }
+        lessonJsons.add(lessonJson);
+      }
+
+      onProgress?.call('db', 0.88);
+
+      // ── Stage 3: Write to DB ──────────────────────────────────────
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        return const AgentCourseResult(
+          success: false,
+          message: 'Not authenticated — please sign in',
+        );
+      }
+
+      final courseId = await _writeAgenticCourseToDb(
+        planJson: planJson,
+        lessonJsons: lessonJsons,
+        userId: userId,
+      );
+
+      onProgress?.call('done', 1.0);
+      return AgentCourseResult(
+        success: true,
+        message: 'Course generated successfully',
+        courseId: courseId,
+        lessonCount: lessonJsons.length,
+      );
+    } catch (e) {
+      return AgentCourseResult(success: false, message: 'Error: $e');
+    }
+  }
+
   /// Pick and read PDF file
   static Future<PdfPickResult> pickPdfFile() async {
     final result = await fp.pickPdfFile();
@@ -2012,6 +2755,10 @@ class _ContentResult {
   final String? model;
   final int? attemptCount;
   final int? latencyMs;
+  /// True when the model hit MAX_TOKENS and output was cut mid-JSON.
+  final bool truncated;
+  /// The partial (unparseable) content from a truncated response.
+  final String? partialContent;
 
   const _ContentResult({
     required this.success,
@@ -2021,6 +2768,8 @@ class _ContentResult {
     this.model,
     this.attemptCount,
     this.latencyMs,
+    this.truncated = false,
+    this.partialContent,
   });
 
   _ContentResult copyWith({

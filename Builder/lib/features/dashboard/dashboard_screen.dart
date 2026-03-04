@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -970,7 +969,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     String? errorMessage;
     String progressStage = '';
     double progressValue = 0.0;
-    Timer? progressTimer;
 
     await showDialog<void>(
       context: context,
@@ -1302,38 +1300,27 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           progressStage = t.aiAgentStagePlan;
                         });
 
-                        // Simulate progress through 3 stages while the
-                        // server orchestrates plan → blocks → DB write.
-                        progressTimer = Timer.periodic(
-                          const Duration(milliseconds: 450),
-                          (timer) {
-                            setDialogState(() {
-                              if (progressValue < 0.15) {
-                                progressValue += 0.025; // ~3 s to reach 15 %
-                                progressStage = t.aiAgentStagePlan;
-                              } else if (progressValue < 0.82) {
-                                progressValue += 0.010; // ~30 s to reach 82 %
-                                progressStage = t.aiAgentStageGenerate;
-                              } else if (progressValue < 0.92) {
-                                progressValue += 0.008;
-                                progressStage = t.aiAgentStageValidate;
-                              }
-                              // Pause at 92 % — wait for actual response.
-                            });
-                          },
-                        );
-
                         final language = t.isZh ? 'zh' : 'en';
                         final result =
-                            await AICourseGenerator.generateCourseAgentViaApi(
+                            await AICourseGenerator.generateCourseAgentLocally(
                           description: desc,
                           difficulty: difficulty,
                           animationStyle: animationStyle,
                           language: language,
+                          onProgress: (stage, progress) {
+                            if (!ctx.mounted) return;
+                            setDialogState(() {
+                              progressValue = progress;
+                              if (stage == 'plan') {
+                                progressStage = t.aiAgentStagePlan;
+                              } else if (stage == 'blocks') {
+                                progressStage = t.aiAgentStageGenerate;
+                              } else {
+                                progressStage = t.aiAgentStageValidate;
+                              }
+                            });
+                          },
                         );
-
-                        progressTimer?.cancel();
-                        progressTimer = null;
 
                         if (!ctx.mounted) return;
 
@@ -2056,15 +2043,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     // Load full course, remove the page, save back
     final course = await SupabaseService.getCourseContent(courseId);
     if (!mounted) return;
-    if (course == null || lessonIndex >= course.pages.length) {
+    if (course == null || lessonIndex >= course.lessons.length) {
       messenger.showSnackBar(
         SnackBar(content: Text(t.errorLoading)),
       );
       return;
     }
 
-    final pageId = course.pages[lessonIndex].pageId;
-    final updated = course.removePage(pageId);
+    final lessonId = course.lessons[lessonIndex].lessonId;
+    final updated = course.removeLesson(lessonId);
     final result = await SupabaseService.saveCourse(updated);
     if (!mounted) return;
 
