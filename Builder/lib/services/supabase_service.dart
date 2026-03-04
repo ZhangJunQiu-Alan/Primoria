@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
-import '../models/page.dart';
+import '../models/lesson.dart';
 import 'id_generator.dart';
 import 'course_schema_validator.dart';
 
@@ -619,16 +619,16 @@ class SupabaseService {
     final agenticLessons = lessonList.where((l) {
       final cj = l['content_json'];
       if (cj is! Map) return false;
-      return (cj as Map).containsKey('blocks');
+      return cj.containsKey('blocks');
     }).toList();
 
     if (agenticLessons.isEmpty) return null;
 
-    final pages = agenticLessons.map((l) {
+    final courseLessons = agenticLessons.map((l) {
       final cj = Map<String, dynamic>.from(l['content_json'] as Map);
       final rawBlocks = cj['blocks'] as List<dynamic>? ?? [];
-      return CoursePage.fromJson({
-        'pageId': l['id'] as String,
+      return CourseLesson.fromJson({
+        'lessonId': l['id'] as String,
         'title': l['title'] as String? ?? 'Untitled',
         'blocks': rawBlocks,
       });
@@ -654,7 +654,7 @@ class SupabaseService {
         version: '1.0.0',
       ),
       settings: const CourseSettings(),
-      pages: pages,
+      lessons: courseLessons,
     );
   }
 
@@ -1037,24 +1037,24 @@ class SupabaseService {
   // ==================== Helper methods ====================
 
   static Future<void> _saveCourseSnapshot(Course course) async {
-    final pages = course.pages;
+    final lessons = course.lessons;
     final fullJson = course.toJson();
 
-    // Fetch existing snapshot rows (sort_key in [1000, 2000)).
-    // saveLessonToCourse uses lastSortKey+1000, so add-lesson rows land at ≥2000
-    // and are never touched here.
+    // Fetch ALL existing lesson rows for this course.
+    // Agentic-generated courses store lessons at sort_key = order×1000
+    // (1000, 2000, 3000 …), so the old [1000, 2000) upper-bound filter would
+    // miss rows 2-N and cause duplicates on save.
     final existingRaw = await client
         .from('lessons')
         .select('id')
         .eq('course_id', course.courseId)
         .gte('sort_key', 1000)
-        .lt('sort_key', 2000)
         .order('sort_key', ascending: true);
     final existingIds = (existingRaw as List)
         .map((l) => l['id'] as String)
         .toList();
 
-    if (pages.isEmpty) {
+    if (lessons.isEmpty) {
       // Fallback: single row with course title (shouldn't normally occur)
       final payload = {
         'title': course.metadata.title.isEmpty
@@ -1085,18 +1085,18 @@ class SupabaseService {
       return;
     }
 
-    // One lesson row per page.  Only the first row carries content_json
-    // (the full course snapshot); remaining rows carry just the page title.
-    for (int i = 0; i < pages.length; i++) {
-      final pageTitle = pages[i].title.trim().isNotEmpty
-          ? pages[i].title.trim()
+    // One lesson row per lesson.  Only the first row carries content_json
+    // (the full course snapshot); remaining rows carry just the lesson title.
+    for (int i = 0; i < lessons.length; i++) {
+      final lessonTitle = lessons[i].title.trim().isNotEmpty
+          ? lessons[i].title.trim()
           : (i == 0
                 ? (course.metadata.title.isEmpty
                       ? 'Untitled'
                       : course.metadata.title)
                 : 'Lesson ${i + 1}');
       final payload = <String, dynamic>{
-        'title': pageTitle,
+        'title': lessonTitle,
         'type': 'interactive',
         'sort_key': 1000 + i * 10,
         if (i == 0) 'content_json': fullJson,
@@ -1116,12 +1116,12 @@ class SupabaseService {
       }
     }
 
-    // Delete any extra snapshot rows if page count decreased.
-    if (existingIds.length > pages.length) {
+    // Delete any extra snapshot rows if lesson count decreased.
+    if (existingIds.length > lessons.length) {
       await client
           .from('lessons')
           .delete()
-          .inFilter('id', existingIds.sublist(pages.length));
+          .inFilter('id', existingIds.sublist(lessons.length));
     }
   }
 

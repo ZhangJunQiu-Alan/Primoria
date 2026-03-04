@@ -1,5 +1,35 @@
 # Changelog
 
+## [Unreleased] - 2026-03-05 (AI Agentic Local Execution + Reliability)
+
+### Summary
+Moved the entire AI agentic course generation pipeline from Supabase Edge Functions to client-side Flutter (direct Gemini API calls), eliminating the 60-second Edge Function timeout. Added a secure `get-gemini-key` Edge Function to vend the API key without exposing it client-side. Fixed a dashboard duplicate-lesson bug and significantly hardened lesson block generation reliability through reduced output size, compact retry prompts, MAX_TOKENS repair, and graceful fallback lessons.
+
+### Added
+- **`supabase/functions/get-gemini-key/index.ts`** — new Edge Function (deployed `--no-verify-jwt`); verifies Supabase session internally via `getUser()`, then returns `GEMINI_API_KEY` to the caller; keyed by server-side secret only
+- **`AICourseGenerator.fetchAndCacheApiKey()`** — calls `get-gemini-key`, caches key in `_apiKey`; auto-invoked by `generateCourseAgentLocally()` on first call
+- **`AICourseGenerator.generateCourseAgentLocally()`** — full local pipeline: API-key fetch → plan → per-lesson block generation → DB write; real `onProgress(stage, 0–1)` callbacks; no Edge Function, no server timeout
+- **`AICourseGenerator._buildLessonBlocksPromptCompact()`** — stripped-down prompt for retry rounds; requests only 4-6 blocks with the 3 simplest block types; used with `maxOutputTokens: 8192`
+- **`AICourseGenerator._buildFallbackLesson()`** — generates a minimal placeholder lesson (1 text + 1 multiple-choice block) when all AI models fail; prevents the whole course from being aborted
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`** — switched agentic generation call from `generateCourseAgentViaApi()` to `generateCourseAgentLocally()`; removed fake `Timer.periodic` progress simulation; wired real `onProgress` callback mapping stage strings to i18n labels
+- **`Builder/lib/services/ai_course_generator.dart`**
+  - Lesson blocks prompt: reduced max blocks **15 → 8**; text blocks now `≤ 2 sentences` for smaller output
+  - Lesson generation loop: round 2+ uses compact prompt + `maxOutputTokens: 8192`; truncated (`MAX_TOKENS`) responses now attempt `_repairJsonContent` on partial content before abandoning that model; after 3 full rounds, falls back to placeholder instead of hard-failing
+  - Model candidates: removed 1.5-series, `gemini-2.0-flash-lite`, and preview models; final list: `gemini-2.5-flash-latest`, `gemini-2.5-flash`, `gemini-2.0-flash`, `gemini-2.5-pro-latest`, `gemini-2.5-pro`
+  - Added `_isHighDemandError()` helper; high-demand errors now trigger 2-second delay between model attempts
+  - `_ContentResult` gains `truncated` and `partialContent` fields; `_generateTextWithModel` detects `finishReason == MAX_TOKENS` and populates them
+- **`Builder/lib/services/supabase_service.dart`** — `_saveCourseSnapshot`: removed `.lt('sort_key', 2000)` upper-bound filter; now fetches all lesson rows (`sort_key ≥ 1000`) so agentic-created rows at 2000, 3000 … are not missed, fixing the duplicate-lesson-on-save bug
+
+### Fixed
+- Duplicate lessons appearing in Dashboard after saving a course that contained agentic-generated lessons (sort_key ≥ 2000)
+- "Connection reset" / timeout on lesson 3+ caused by Supabase Edge Function 60 s limit
+- "Could not parse lesson JSON from gemini-2.5-pro" on lesson 5+ caused by large output and/or MAX_TOKENS truncation
+- 401 `InvalidJWT` on `get-gemini-key` — deployed with `--no-verify-jwt`; auth is handled internally
+
+---
+
 ## [Unreleased] - 2026-03-04 (Delete Lesson from Dashboard)
 
 ### Summary

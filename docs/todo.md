@@ -57,6 +57,9 @@
 50. [x] Matching content editor extraction — `MatchingContentEditor` moved to dedicated file with smoke tests (2026-03-04)
 51. [x] Function Flow dropdown overflow fix — `isExpanded`, `TextOverflow.ellipsis`, and `selectedItemBuilder` added to Entry Node and edge From/To dropdowns (2026-03-04)
 52. [x] Delete lesson from Dashboard — hover-reveal ✕ button on each lesson card; `AlertDialog` confirmation; last-lesson guard; `getCourseContent` → `removePage` → `saveCourse` flow with cache invalidation (2026-03-04)
+53. [x] AI Agentic local execution — moved entire generation pipeline from Supabase Edge Functions to client-side Flutter (direct Gemini API calls); eliminates 60 s Edge Function timeout; `generateCourseAgentLocally()` with real progress callbacks; `get-gemini-key` Edge Function vends API key securely (2026-03-05)
+54. [x] Fix duplicate lessons on save — `_saveCourseSnapshot` upper-bound sort_key filter `< 2000` was missing agentic-created rows (sort_key = 2000, 3000…); removed upper bound so all existing lesson rows are fetched before upsert (2026-03-05)
+55. [x] AI lesson generation reliability — reduced max blocks per lesson 15 → 8; compact fallback prompt (4-6 blocks) for retry rounds; MAX_TOKENS partial-content repair; graceful placeholder lesson when all models fail so entire course is never abandoned (2026-03-05)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
