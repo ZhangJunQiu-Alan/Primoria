@@ -1,4 +1,4 @@
-import 'page.dart';
+import 'lesson.dart';
 import '../services/id_generator.dart';
 
 /// Course author info
@@ -161,13 +161,13 @@ class Course {
   final String courseId;
   final CourseMetadata metadata;
   final CourseSettings settings;
-  final List<CoursePage> pages;
+  final List<CourseLesson> lessons;
 
   const Course({
     required this.courseId,
     required this.metadata,
     required this.settings,
-    required this.pages,
+    required this.lessons,
   });
 
   /// Create default new course
@@ -176,19 +176,22 @@ class Course {
       courseId: IdGenerator.courseId(),
       metadata: CourseMetadata.create(title: title),
       settings: const CourseSettings(),
-      pages: [CoursePage.create(title: 'Page 1')],
+      lessons: [CourseLesson.create(title: 'Lesson 1')],
     );
   }
 
   factory Course.fromJson(Map<String, dynamic> json) {
+    // backward compat: accept legacy 'pages' key
+    final lessonsRaw =
+        (json['lessons'] ?? json['pages']) as List<dynamic>;
     return Course(
       courseId: json['courseId'] as String,
       metadata:
           CourseMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
       settings:
           CourseSettings.fromJson(json['settings'] as Map<String, dynamic>? ?? {}),
-      pages: (json['pages'] as List<dynamic>)
-          .map((e) => CoursePage.fromJson(e as Map<String, dynamic>))
+      lessons: lessonsRaw
+          .map((e) => CourseLesson.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -199,20 +202,20 @@ class Course {
         'courseId': courseId,
         'metadata': metadata.toJson(),
         'settings': settings.toJson(),
-        'pages': pages.map((p) => p.toJson()).toList(),
+        'lessons': lessons.map((l) => l.toJson()).toList(),
       };
 
   Course copyWith({
     String? courseId,
     CourseMetadata? metadata,
     CourseSettings? settings,
-    List<CoursePage>? pages,
+    List<CourseLesson>? lessons,
   }) {
     return Course(
       courseId: courseId ?? this.courseId,
       metadata: metadata ?? this.metadata,
       settings: settings ?? this.settings,
-      pages: pages ?? this.pages,
+      lessons: lessons ?? this.lessons,
     );
   }
 
@@ -222,28 +225,29 @@ class Course {
     return copyWith(metadata: updatedMeta);
   }
 
-  /// Add page
-  Course addPage(CoursePage page) {
-    return copyWith(pages: [...pages, page]);
+  /// Add lesson
+  Course addLesson(CourseLesson lesson) {
+    return copyWith(lessons: [...lessons, lesson]);
   }
 
-  /// Remove page
-  Course removePage(String pageId) {
-    return copyWith(pages: pages.where((p) => p.pageId != pageId).toList());
+  /// Remove lesson
+  Course removeLesson(String lessonId) {
+    return copyWith(
+        lessons: lessons.where((l) => l.lessonId != lessonId).toList());
   }
 
-  /// Update page
-  Course updatePage(CoursePage updatedPage) {
-    final updatedPages = pages.map((p) {
-      if (p.pageId == updatedPage.pageId) return updatedPage;
-      return p;
+  /// Update lesson
+  Course updateLesson(CourseLesson updatedLesson) {
+    final updatedLessons = lessons.map((l) {
+      if (l.lessonId == updatedLesson.lessonId) return updatedLesson;
+      return l;
     }).toList();
-    return copyWith(pages: updatedPages);
+    return copyWith(lessons: updatedLessons);
   }
 
-  /// Get page
-  CoursePage? getPage(int index) {
-    if (index < 0 || index >= pages.length) return null;
-    return pages[index];
+  /// Get lesson
+  CourseLesson? getLesson(int index) {
+    if (index < 0 || index >= lessons.length) return null;
+    return lessons[index];
   }
 }

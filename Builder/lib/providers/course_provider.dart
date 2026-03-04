@@ -7,46 +7,47 @@ import '../services/id_generator.dart';
 class CourseNotifier extends StateNotifier<Course> {
   CourseNotifier() : super(Course.create(title: 'Untitled Lesson'));
 
-  /// Get current page
-  CoursePage? getCurrentPage(int pageIndex) {
-    return state.getPage(pageIndex);
+  /// Get current lesson
+  CourseLesson? getCurrentLesson(int lessonIndex) {
+    return state.getLesson(lessonIndex);
   }
 
-  /// Add block to a page
-  void addBlock(int pageIndex, BlockType type) {
-    final page = state.getPage(pageIndex);
-    if (page == null) return;
+  /// Add block to a lesson
+  void addBlock(int lessonIndex, BlockType type) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
 
-    final newBlock = BlockRegistry.createBlock(type, order: page.blocks.length);
-    final updatedPage = page.addBlock(newBlock);
-    state = state.updatePage(updatedPage);
+    final newBlock =
+        BlockRegistry.createBlock(type, order: lesson.blocks.length);
+    final updatedLesson = lesson.addBlock(newBlock);
+    state = state.updateLesson(updatedLesson);
   }
 
   /// Remove block
-  void removeBlock(int pageIndex, String blockId) {
-    final page = state.getPage(pageIndex);
-    if (page == null) return;
+  void removeBlock(int lessonIndex, String blockId) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
 
-    final updatedPage = page.removeBlock(blockId);
-    state = state.updatePage(updatedPage);
+    final updatedLesson = lesson.removeBlock(blockId);
+    state = state.updateLesson(updatedLesson);
   }
 
   /// Update block
-  void updateBlock(int pageIndex, Block updatedBlock) {
-    final page = state.getPage(pageIndex);
-    if (page == null) return;
+  void updateBlock(int lessonIndex, Block updatedBlock) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
 
-    final updatedPage = page.updateBlock(updatedBlock);
-    state = state.updatePage(updatedPage);
+    final updatedLesson = lesson.updateBlock(updatedBlock);
+    state = state.updateLesson(updatedLesson);
   }
 
   /// Reorder blocks
-  void reorderBlocks(int pageIndex, int oldIndex, int newIndex) {
-    final page = state.getPage(pageIndex);
-    if (page == null) return;
+  void reorderBlocks(int lessonIndex, int oldIndex, int newIndex) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
 
-    final updatedPage = page.reorderBlocks(oldIndex, newIndex);
-    state = state.updatePage(updatedPage);
+    final updatedLesson = lesson.reorderBlocks(oldIndex, newIndex);
+    state = state.updateLesson(updatedLesson);
   }
 
   /// Update course title
@@ -54,47 +55,47 @@ class CourseNotifier extends StateNotifier<Course> {
     state = state.updateMetadata((meta) => meta.copyWith(title: title));
   }
 
-  /// Add new page
-  void addPage({String? title}) {
-    final pageTitle = title ?? 'Page ${state.pages.length + 1}';
-    state = state.addPage(CoursePage.create(title: pageTitle));
+  /// Add new lesson
+  void addLesson({String? title}) {
+    final lessonTitle = title ?? 'Lesson ${state.lessons.length + 1}';
+    state = state.addLesson(CourseLesson.create(title: lessonTitle));
   }
 
-  /// Remove page (by index)
-  void removePage(int pageIndex) {
-    if (state.pages.length <= 1) return; // Keep at least one page
-    if (pageIndex < 0 || pageIndex >= state.pages.length) return;
+  /// Remove lesson (by index)
+  void removeLesson(int lessonIndex) {
+    if (state.lessons.length <= 1) return; // Keep at least one lesson
+    if (lessonIndex < 0 || lessonIndex >= state.lessons.length) return;
 
-    final pageId = state.pages[pageIndex].pageId;
-    state = state.removePage(pageId);
+    final lessonId = state.lessons[lessonIndex].lessonId;
+    state = state.removeLesson(lessonId);
   }
 
-  /// Duplicate page
-  void duplicatePage(int pageIndex) {
-    final page = state.getPage(pageIndex);
-    if (page == null) return;
+  /// Duplicate lesson
+  void duplicateLesson(int lessonIndex) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
 
     // Create a duplicate and generate new IDs
-    final duplicatedPage = CoursePage.create(title: '${page.title} (Copy)')
-        .copyWith(
-          blocks: page.blocks
-              .map((block) => block.copyWith(id: IdGenerator.generate()))
-              .toList(),
-        );
+    final duplicatedLesson =
+        CourseLesson.create(title: '${lesson.title} (Copy)').copyWith(
+      blocks: lesson.blocks
+          .map((block) => block.copyWith(id: IdGenerator.generate()))
+          .toList(),
+    );
 
-    // Insert after the original page
-    final pages = List<CoursePage>.from(state.pages);
-    pages.insert(pageIndex + 1, duplicatedPage);
-    state = state.copyWith(pages: pages);
+    // Insert after the original lesson
+    final lessons = List<CourseLesson>.from(state.lessons);
+    lessons.insert(lessonIndex + 1, duplicatedLesson);
+    state = state.copyWith(lessons: lessons);
   }
 
-  /// Update page title
-  void updatePageTitle(int pageIndex, String title) {
-    final page = state.getPage(pageIndex);
-    if (page == null) return;
+  /// Update lesson title
+  void updateLessonTitle(int lessonIndex, String title) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
 
-    final updatedPage = page.copyWith(title: title);
-    state = state.updatePage(updatedPage);
+    final updatedLesson = lesson.copyWith(title: title);
+    state = state.updateLesson(updatedLesson);
   }
 
   /// Load course
@@ -113,11 +114,11 @@ final courseProvider = StateNotifierProvider<CourseNotifier, Course>((ref) {
   return CourseNotifier();
 });
 
-/// Current page blocks provider
-final currentPageBlocksProvider = Provider.family<List<Block>, int>((
+/// Current lesson blocks provider
+final currentLessonBlocksProvider = Provider.family<List<Block>, int>((
   ref,
-  pageIndex,
+  lessonIndex,
 ) {
   final course = ref.watch(courseProvider);
-  return course.getPage(pageIndex)?.blocks ?? [];
+  return course.getLesson(lessonIndex)?.blocks ?? [];
 });

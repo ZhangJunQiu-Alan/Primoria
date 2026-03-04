@@ -114,11 +114,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     return null;
   }
 
-  int _resolveEntryPageIndex(Course course) {
+  int _resolveEntryLessonIndex(Course course) {
     final target = _entryLessonIndex;
     if (target == null || target < 0) return 0;
-    if (course.pages.isEmpty) return 0;
-    if (target >= course.pages.length) return course.pages.length - 1;
+    if (course.lessons.isEmpty) return 0;
+    if (target >= course.lessons.length) return course.lessons.length - 1;
     return target;
   }
 
@@ -154,7 +154,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ref
             .read(builderStateProvider.notifier)
             .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
-        ref.read(builderStateProvider.notifier).setCurrentPage(0);
+        ref.read(builderStateProvider.notifier).setCurrentLesson(0);
         ref.read(builderStateProvider.notifier).clearSelection();
         _draftAutoSaveEnabled = true;
         return;
@@ -179,7 +179,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     ref
         .read(builderStateProvider.notifier)
         .syncCourseTitle(created.metadata.title, hasUnsavedChanges: false);
-    ref.read(builderStateProvider.notifier).setCurrentPage(0);
+    ref.read(builderStateProvider.notifier).setCurrentLesson(0);
     ref.read(builderStateProvider.notifier).clearSelection();
     ref.read(builderStateProvider.notifier).markAsSaved();
   }
@@ -198,16 +198,16 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     // stale artefact from a previously failed DB load and should be discarded
     // so the fresh DB content (e.g. agentic-generated lessons) can be shown.
     final draftHasContent =
-        draft != null && draft.pages.any((p) => p.blocks.isNotEmpty);
+        draft != null && draft.lessons.any((l) => l.blocks.isNotEmpty);
     if (draftHasContent) {
       final hydratedDraft = draft.copyWith(courseId: courseId);
       ref.read(courseProvider.notifier).loadCourse(hydratedDraft);
       ref
           .read(builderStateProvider.notifier)
           .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
-      final entryPageIndex = _resolveEntryPageIndex(hydratedDraft);
-      _entryLessonIndex = entryPageIndex;
-      ref.read(builderStateProvider.notifier).setCurrentPage(entryPageIndex);
+      final entryLessonIndex = _resolveEntryLessonIndex(hydratedDraft);
+      _entryLessonIndex = entryLessonIndex;
+      ref.read(builderStateProvider.notifier).setCurrentLesson(entryLessonIndex);
       _draftAutoSaveEnabled = true;
       _showDraftRestoredHint();
       return;
@@ -220,9 +220,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       ref
           .read(builderStateProvider.notifier)
           .syncCourseTitle(course.metadata.title, hasUnsavedChanges: false);
-      final entryPageIndex = _resolveEntryPageIndex(course);
-      _entryLessonIndex = entryPageIndex;
-      ref.read(builderStateProvider.notifier).setCurrentPage(entryPageIndex);
+      final entryLessonIndex = _resolveEntryLessonIndex(course);
+      _entryLessonIndex = entryLessonIndex;
+      ref.read(builderStateProvider.notifier).setCurrentLesson(entryLessonIndex);
     }
     _draftAutoSaveEnabled = true;
   }
@@ -282,7 +282,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     final isCompact = MediaQuery.of(context).size.width < 920;
     final currentLessonTitle = _resolveCurrentLessonTitle(
       course,
-      state.currentPageIndex,
+      state.currentLessonIndex,
       t,
     );
     final displayCourseTitle = _resolveDisplayCourseTitle(state.courseTitle);
@@ -377,7 +377,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             final previewCourseId = (_courseId ?? '').isNotEmpty
                 ? _courseId!
                 : ref.read(courseProvider).courseId;
-            final previewPageIndex = state.currentPageIndex;
+            final previewLessonIndex = state.currentLessonIndex;
             _courseId = previewCourseId;
             if (_isAddLessonFlow && (_draftId == null || _draftId!.isEmpty)) {
               _draftId = ref.read(courseProvider).courseId;
@@ -390,15 +390,15 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                     ? '&draftId=${Uri.encodeQueryComponent(_draftId!)}'
                     : '';
                 context.go(
-                  '/viewer?courseId=$previewCourseId&singlePage=1&pageIndex=$previewPageIndex&addLesson=1$draftPart',
+                  '/viewer?courseId=$previewCourseId&singlePage=1&lessonIndex=$previewLessonIndex&addLesson=1$draftPart',
                 );
               } else {
                 context.go(
-                  '/viewer?courseId=$previewCourseId&singlePage=1&pageIndex=$previewPageIndex',
+                  '/viewer?courseId=$previewCourseId&singlePage=1&lessonIndex=$previewLessonIndex',
                 );
               }
             } else {
-              context.go('/viewer?singlePage=1&pageIndex=$previewPageIndex');
+              context.go('/viewer?singlePage=1&lessonIndex=$previewLessonIndex');
             }
           },
           style: pillOutlinedStyle,
@@ -462,15 +462,15 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
   String _resolveCurrentLessonTitle(
     Course course,
-    int pageIndex,
+    int lessonIndex,
     BuilderLocalizations t,
   ) {
-    final page = course.getPage(pageIndex);
-    final title = page?.title.trim() ?? '';
+    final lesson = course.getLesson(lessonIndex);
+    final title = lesson?.title.trim() ?? '';
     final entryIndex = _entryLessonIndex;
     final entryTitle = _entryLessonTitle;
 
-    if (entryIndex != null && entryTitle != null && pageIndex == entryIndex) {
+    if (entryIndex != null && entryTitle != null && lessonIndex == entryIndex) {
       return entryTitle;
     }
 
@@ -487,10 +487,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     }
 
     if (title.isNotEmpty) return title;
-    if (entryIndex != null && entryTitle != null && pageIndex == entryIndex) {
+    if (entryIndex != null && entryTitle != null && lessonIndex == entryIndex) {
       return entryTitle;
     }
-    final displayIndex = pageIndex >= 0 ? pageIndex + 1 : 1;
+    final displayIndex = lessonIndex >= 0 ? lessonIndex + 1 : 1;
     return t.lessonN(displayIndex);
   }
 
@@ -511,7 +511,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     if (normalized == 'untitled lesson' || normalized == 'untitled course') {
       return true;
     }
-    return RegExp(r'^page\s*\d+$').hasMatch(normalized);
+    return RegExp(r'^(page|lesson)\s*\d+$').hasMatch(normalized);
   }
 
   void _editCourseTitle(
@@ -657,7 +657,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           ref
               .read(builderStateProvider.notifier)
               .setCourseTitle(course.metadata.title);
-          ref.read(builderStateProvider.notifier).setCurrentPage(0);
+          ref.read(builderStateProvider.notifier).setCurrentLesson(0);
           ref.read(builderStateProvider.notifier).clearSelection();
           ref.read(builderStateProvider.notifier).markAsUnsaved();
 
@@ -723,7 +723,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       ref
           .read(builderStateProvider.notifier)
           .setCourseTitle(result.course!.metadata.title);
-      ref.read(builderStateProvider.notifier).setCurrentPage(0);
+      ref.read(builderStateProvider.notifier).setCurrentLesson(0);
       ref.read(builderStateProvider.notifier).clearSelection();
       ref.read(builderStateProvider.notifier).markAsSaved();
 

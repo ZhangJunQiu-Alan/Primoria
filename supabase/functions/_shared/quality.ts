@@ -71,20 +71,21 @@ export function evaluateCourseQuality(courseJson: unknown): QualityReport {
   const difficulty       = meta?.difficulty as string | undefined;
   const isBeginnerCourse = difficulty === 'beginner';
 
-  const pages = course.pages;
-  if (!Array.isArray(pages) || pages.length === 0) {
+  // Accept both 'lessons' (new) and legacy 'pages' key
+  const lessons = (course as Record<string, unknown>).lessons ?? (course as Record<string, unknown>).pages;
+  if (!Array.isArray(lessons) || lessons.length === 0) {
     return {
       score: 0, passed: false, issues: [],
-      summary: 'No pages found in course JSON.',
+      summary: 'No lessons found in course JSON.',
     };
   }
 
   let totalQuestions = 0;
 
-  (pages as unknown[]).forEach((page, i) => {
-    const p        = page as Record<string, unknown>;
-    const pageLoc  = `pages[${i}]`;
-    const blocks   = p.blocks;
+  (lessons as unknown[]).forEach((lesson, i) => {
+    const p           = lesson as Record<string, unknown>;
+    const lessonLoc   = `lessons[${i}]`;
+    const blocks      = p.blocks;
     if (!Array.isArray(blocks)) return;
 
     let lessonInteractive = 0;
@@ -103,8 +104,8 @@ export function evaluateCourseQuality(courseJson: unknown): QualityReport {
         if (typeof value === 'string' && value.length > TEXT_MAX_CHARS) {
           issues.push({
             type:        'TEXT_TOO_LONG',
-            message:     `Text block at ${pageLoc}.blocks[${j}] is ${value.length} chars (limit ${TEXT_MAX_CHARS})`,
-            location:    `${pageLoc}.blocks[${j}]`,
+            message:     `Text block at ${lessonLoc}.blocks[${j}] is ${value.length} chars (limit ${TEXT_MAX_CHARS})`,
+            location:    `${lessonLoc}.blocks[${j}]`,
             lessonIndex: i,
             qualityHint: `Keep each text block concise (≤${TEXT_MAX_CHARS} characters). Split long explanations into shorter paragraphs or add more interactive blocks to break up the reading.`,
           });
@@ -119,8 +120,8 @@ export function evaluateCourseQuality(courseJson: unknown): QualityReport {
           if (blockText.includes(kw)) {
             issues.push({
               type:        'BEGINNER_KEYWORD',
-              message:     `Advanced concept "${kw}" found in a beginner lesson (${pageLoc}.blocks[${j}])`,
-              location:    `${pageLoc}.blocks[${j}]`,
+              message:     `Advanced concept "${kw}" found in a beginner lesson (${lessonLoc}.blocks[${j}])`,
+              location:    `${lessonLoc}.blocks[${j}]`,
               lessonIndex: i,
               qualityHint: `This is a beginner course. Avoid advanced concepts like "${kw}". Use simpler explanations and foundational examples only.`,
             });
@@ -133,11 +134,11 @@ export function evaluateCourseQuality(courseJson: unknown): QualityReport {
 
     // ── Rule: each lesson must have ≥1 interactive block ────────────
     if (lessonInteractive === 0) {
-      const lessonTitle = typeof p.title === 'string' ? p.title : String(p.pageId ?? `lesson ${i + 1}`);
+      const lessonTitle = typeof p.title === 'string' ? p.title : String((p.lessonId ?? p.pageId) ?? `lesson ${i + 1}`);
       issues.push({
         type:        'MISSING_INTERACTIVE',
         message:     `Lesson ${i + 1} ("${lessonTitle}") has no interactive blocks`,
-        location:    pageLoc,
+        location:    lessonLoc,
         lessonIndex: i,
         qualityHint: 'Add at least 1 interactive block (multiple-choice, fill-blank, true-false, matching, or code-playground) to reinforce active learning in this lesson.',
       });
@@ -146,11 +147,11 @@ export function evaluateCourseQuality(courseJson: unknown): QualityReport {
   });
 
   // ── Rule: total question count ≥ lesson count ────────────────────
-  if (totalQuestions < pages.length) {
+  if (totalQuestions < lessons.length) {
     issues.push({
       type:        'LOW_QUESTION_COUNT',
-      message:     `Course has ${totalQuestions} question block${totalQuestions !== 1 ? 's' : ''} across ${pages.length} lessons (target ≥${pages.length})`,
-      location:    '$.pages',
+      message:     `Course has ${totalQuestions} question block${totalQuestions !== 1 ? 's' : ''} across ${lessons.length} lessons (target ≥${lessons.length})`,
+      location:    '$.lessons',
       lessonIndex: -1,
       qualityHint: 'Add at least 1 question block per lesson (multiple-choice, fill-blank, true-false, or matching) to check comprehension.',
     });

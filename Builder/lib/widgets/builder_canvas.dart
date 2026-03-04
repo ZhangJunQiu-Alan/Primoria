@@ -37,7 +37,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   Widget build(BuildContext context) {
     final builderState = ref.watch(builderStateProvider);
     final blocks = ref.watch(
-      currentPageBlocksProvider(builderState.currentPageIndex),
+      currentLessonBlocksProvider(builderState.currentLessonIndex),
     );
 
     return DragTarget<BlockType>(
@@ -45,7 +45,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
         final blockType = details.data;
         ref
             .read(courseProvider.notifier)
-            .addBlock(builderState.currentPageIndex, blockType);
+            .addBlock(builderState.currentLessonIndex, blockType);
         ref.read(builderStateProvider.notifier).markAsUnsaved();
       },
       builder: (context, candidateData, rejectedData) {
@@ -91,7 +91,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
           if (newIndex > oldIndex) newIndex--;
           ref
               .read(courseProvider.notifier)
-              .reorderBlocks(builderState.currentPageIndex, oldIndex, newIndex);
+              .reorderBlocks(builderState.currentLessonIndex, oldIndex, newIndex);
           ref.read(builderStateProvider.notifier).markAsUnsaved();
         },
         footer: _draggingIndex != null && _insertionIndex == sortedBlocks.length
@@ -143,7 +143,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                         ref
                             .read(courseProvider.notifier)
                             .removeBlock(
-                              builderState.currentPageIndex,
+                              builderState.currentLessonIndex,
                               block.id,
                             );
                         ref
@@ -155,7 +155,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                         ref
                             .read(courseProvider.notifier)
                             .updateBlock(
-                              builderState.currentPageIndex,
+                              builderState.currentLessonIndex,
                               updatedBlock,
                             );
                         ref.read(builderStateProvider.notifier).markAsUnsaved();
@@ -365,7 +365,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
 
   List<Block> _readSortedBlocks() {
     final state = ref.read(builderStateProvider);
-    final blocks = ref.read(currentPageBlocksProvider(state.currentPageIndex));
+    final blocks = ref.read(currentLessonBlocksProvider(state.currentLessonIndex));
     final sorted = List<Block>.from(blocks)
       ..sort((a, b) => a.position.order.compareTo(b.position.order));
     return sorted;

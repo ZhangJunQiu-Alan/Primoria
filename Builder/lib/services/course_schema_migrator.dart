@@ -102,7 +102,7 @@ class CourseSchemaMigrator {
           sourceVersion: sourceVersion,
           targetVersion: Course.schemaVersion,
           steps: steps,
-          message: 'Cannot migrate: expected top-level "pages" list',
+          message: 'Cannot migrate: expected top-level "pages" or "lessons" list',
           didModify: changed,
         );
       }
@@ -116,6 +116,9 @@ class CourseSchemaMigrator {
           _ensureSchemaMetadata(working, steps, normalizeVersion: false) ||
           changed;
     }
+
+    // Rename legacy 'pages'/'pageId' keys to 'lessons'/'lessonId'
+    changed = _renamePagesToLessons(working, steps) || changed;
 
     if (!changed) {
       steps.add('No migration changes were required.');
@@ -1398,6 +1401,59 @@ class CourseSchemaMigrator {
     if (value < 1.0) return 1.0;
     if (value > 6.0) return 6.0;
     return value;
+  }
+
+  /// Renames 'pages' → 'lessons' and 'pageId' → 'lessonId' inside each lesson.
+  /// Handles both legacy-migrated JSON (has 'pages' key) and partially migrated
+  /// JSON that already has 'lessons' but old 'pageId' keys.
+  static bool _renamePagesToLessons(
+    Map<String, dynamic> json,
+    List<String> steps,
+  ) {
+    var changed = false;
+
+    // Case 1: 'pages' key present → rename to 'lessons' and fix inner keys
+    if (json.containsKey('pages') && json['pages'] is List) {
+      final pagesRaw = json['pages'] as List<dynamic>;
+      final lessonsNormalized = pagesRaw.map((rawLesson) {
+        final lessonMap = rawLesson is Map
+            ? Map<String, dynamic>.from(rawLesson)
+            : <String, dynamic>{};
+        if (lessonMap.containsKey('pageId') &&
+            !lessonMap.containsKey('lessonId')) {
+          lessonMap['lessonId'] = lessonMap.remove('pageId');
+        }
+        return lessonMap;
+      }).toList();
+      json['lessons'] = lessonsNormalized;
+      json.remove('pages');
+      changed = true;
+      steps.add(
+          'Renamed top-level "pages" -> "lessons" and "pageId" -> "lessonId".');
+    }
+    // Case 2: 'lessons' key present but items still use 'pageId'
+    else if (json.containsKey('lessons') && json['lessons'] is List) {
+      final lessonsRaw = json['lessons'] as List<dynamic>;
+      var anyFixed = false;
+      final lessonsNormalized = lessonsRaw.map((rawLesson) {
+        final lessonMap = rawLesson is Map
+            ? Map<String, dynamic>.from(rawLesson)
+            : <String, dynamic>{};
+        if (lessonMap.containsKey('pageId') &&
+            !lessonMap.containsKey('lessonId')) {
+          lessonMap['lessonId'] = lessonMap.remove('pageId');
+          anyFixed = true;
+        }
+        return lessonMap;
+      }).toList();
+      if (anyFixed) {
+        json['lessons'] = lessonsNormalized;
+        changed = true;
+        steps.add('Renamed "pageId" -> "lessonId" inside lessons.');
+      }
+    }
+
+    return changed;
   }
 
   static bool _ensureSchemaMetadata(
