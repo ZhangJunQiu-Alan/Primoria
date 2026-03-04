@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
+import '../models/page.dart';
 import 'id_generator.dart';
 import 'course_schema_validator.dart';
 
@@ -573,7 +574,12 @@ class SupabaseService {
         return Course.fromJson(normalizedSnapshot);
       }
 
-      // Fallback: at least open the builder with base metadata.
+      // Fallback: reconstruct from individual lesson rows (agentic-generated
+      // courses store {blocks:[...]} per lesson, not a full course snapshot).
+      final reconstructed = await _reconstructCourseFromLessons(courseId);
+      if (reconstructed != null) return reconstructed;
+
+      // Last resort: open builder with title only (no content).
       final courseRow = await client
           .from('courses')
           .select('id, title')
@@ -587,6 +593,69 @@ class SupabaseService {
     } catch (e) {
       return null;
     }
+  }
+
+  /// Reconstruct a Course from individual lesson rows written by the agentic
+  /// generator. Each lesson row has content_json = {blocks: [...]}.
+  static Future<Course?> _reconstructCourseFromLessons(
+    String courseId,
+  ) async {
+    final courseRow = await client
+        .from('courses')
+        .select(
+            'id, title, description, difficulty_level, estimated_minutes, tags')
+        .eq('id', courseId)
+        .maybeSingle();
+    if (courseRow == null) return null;
+
+    final lessons = await client
+        .from('lessons')
+        .select('id, title, content_json, sort_key')
+        .eq('course_id', courseId)
+        .order('sort_key', ascending: true);
+
+    final lessonList = List<Map<String, dynamic>>.from(lessons as List);
+    // Only use lessons that carry the agentic {blocks:[...]} format.
+    final agenticLessons = lessonList.where((l) {
+      final cj = l['content_json'];
+      if (cj is! Map) return false;
+      return (cj as Map).containsKey('blocks');
+    }).toList();
+
+    if (agenticLessons.isEmpty) return null;
+
+    final pages = agenticLessons.map((l) {
+      final cj = Map<String, dynamic>.from(l['content_json'] as Map);
+      final rawBlocks = cj['blocks'] as List<dynamic>? ?? [];
+      return CoursePage.fromJson({
+        'pageId': l['id'] as String,
+        'title': l['title'] as String? ?? 'Untitled',
+        'blocks': rawBlocks,
+      });
+    }).toList();
+
+    final rawTags = courseRow['tags'];
+    final tags = rawTags is List
+        ? rawTags.map((e) => e.toString()).toList()
+        : <String>[];
+
+    return Course(
+      courseId: courseId,
+      metadata: CourseMetadata(
+        title: courseRow['title'] as String? ?? 'Untitled Course',
+        description: courseRow['description'] as String? ?? '',
+        author: const CourseAuthor(userId: 'ai', displayName: 'AI'),
+        tags: tags,
+        difficulty:
+            _normalizeDifficulty(courseRow['difficulty_level'] as String?),
+        estimatedMinutes: courseRow['estimated_minutes'] as int? ?? 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        version: '1.0.0',
+      ),
+      settings: const CourseSettings(),
+      pages: pages,
+    );
   }
 
   /// Search published courses
