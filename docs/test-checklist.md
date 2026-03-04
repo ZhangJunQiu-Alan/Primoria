@@ -98,6 +98,12 @@
 - [ ] Edit → `/builder?courseId=<id>`
 - [ ] Delete → confirmation → deletes and refreshes
 - [ ] Add lesson → `/builder?courseId=<id>`
+- [ ] Delete lesson: hover lesson card → ✕ fades in at top-right; hover away → fades out
+- [ ] Delete lesson: click ✕ → `AlertDialog` shows correct lesson number and title
+- [ ] Delete lesson: Cancel → no change
+- [ ] Delete lesson: Confirm → lesson removed from grid, success snackbar shown
+- [ ] Delete lesson: only 1 lesson in course → error snackbar shown, no dialog
+- [ ] "Add lesson" dashed card never shows ✕
 - [ ] Create Course → opens full form dialog (not `/builder` directly)
 
 ### 12a. Create Course Form

@@ -173,6 +173,17 @@ class BuilderLocalizations {
       : 'Are you sure you want to delete "$title"? This action cannot be undone.';
   String get delete => isZh ? '删除' : 'Delete';
 
+  // Dialogs — Delete Lesson
+  String get deleteLessonTitle => isZh ? '删除课时' : 'Delete Lesson';
+  String deleteLessonConfirm(int n, String title) => isZh
+      ? '确定删除第 $n 课「$title」吗？此操作不可撤销。'
+      : 'Delete Lesson $n "$title"? This cannot be undone.';
+  String get lessonDeleted => isZh ? '课时已删除' : 'Lesson deleted';
+  String get cannotDeleteLastLesson => isZh
+      ? '课程至少需要保留一个课时'
+      : 'A course must have at least one lesson';
+  String get errorLoading => isZh ? '加载失败，请重试' : 'Failed to load, please retry';
+
   // ── Snackbars ─────────────────────────────────────────────────
   String get courseDeleted => isZh ? '课程已删除' : 'Course deleted';
   String get courseNameUpdated => isZh ? '课程名称已更新' : 'Course name updated';

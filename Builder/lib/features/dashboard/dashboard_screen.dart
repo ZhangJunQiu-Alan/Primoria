@@ -915,14 +915,39 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 _LessonBox(
                   lessonLabel: t.lessonN(i + 1),
                   title: _formatLessonCardTitle(lessons[i], courseTitle: title),
-                  onTap: () => context.go('/builder?courseId=$courseId'),
+                  onDelete: () => _confirmDeleteLesson(
+                    courseId: courseId,
+                    lessonIndex: i,
+                    lessonTitle: _formatLessonCardTitle(
+                      lessons[i],
+                      courseTitle: title,
+                    ),
+                    t: t,
+                  ),
+                  onTap: () {
+                    final lessonTitle = _formatLessonCardTitle(
+                      lessons[i],
+                      courseTitle: title,
+                    );
+                    final encodedLessonTitle = Uri.encodeQueryComponent(
+                      lessonTitle,
+                    );
+                    final encodedCourseTitle = Uri.encodeQueryComponent(title);
+                    context.go(
+                      '/builder?courseId=$courseId&lessonIndex=$i&lessonTitle=$encodedLessonTitle&courseTitle=$encodedCourseTitle',
+                    );
+                  },
                 ),
               // "Add lesson" dashed box → opens blank builder
               _LessonBox(
                 title: t.addLesson,
                 dashed: true,
-                onTap: () =>
-                    context.go('/builder?courseId=$courseId&addLesson=1'),
+                onTap: () {
+                  final encodedCourseTitle = Uri.encodeQueryComponent(title);
+                  context.go(
+                    '/builder?courseId=$courseId&addLesson=1&courseTitle=$encodedCourseTitle',
+                  );
+                },
               ),
             ],
           ),
@@ -1988,6 +2013,80 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     }
   }
 
+  Future<void> _confirmDeleteLesson({
+    required String courseId,
+    required int lessonIndex,
+    required String lessonTitle,
+    required BuilderLocalizations t,
+  }) async {
+    // Guard: prevent deleting last lesson
+    final currentLessons = _courseLessons[courseId] ?? [];
+    if (currentLessons.length <= 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.cannotDeleteLastLesson)),
+      );
+      return;
+    }
+
+    final messenger = ScaffoldMessenger.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(t.deleteLessonTitle),
+        content: Text(t.deleteLessonConfirm(lessonIndex + 1, lessonTitle)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(t.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _C.danger,
+              foregroundColor: Colors.white,
+            ),
+            child: Text(t.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    // Load full course, remove the page, save back
+    final course = await SupabaseService.getCourseContent(courseId);
+    if (!mounted) return;
+    if (course == null || lessonIndex >= course.pages.length) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(t.errorLoading)),
+      );
+      return;
+    }
+
+    final pageId = course.pages[lessonIndex].pageId;
+    final updated = course.removePage(pageId);
+    final result = await SupabaseService.saveCourse(updated);
+    if (!mounted) return;
+
+    if (result.success) {
+      _courseLessons.remove(courseId); // invalidate cache
+      await _loadCourseLessons(courseId); // reload titles
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(t.lessonDeleted),
+          backgroundColor: AppColors.success,
+        ),
+      );
+    } else {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(result.message),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
+  }
+
   String _formatLessonCardTitle(
     String rawTitle, {
     required String courseTitle,
@@ -2696,86 +2795,134 @@ class _CommentBlock extends StatelessWidget {
 }
 
 /// Lesson box (200x200)
-class _LessonBox extends StatelessWidget {
+class _LessonBox extends StatefulWidget {
   final String title;
   final String? lessonLabel;
   final bool dashed;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
 
   const _LessonBox({
     required this.title,
     this.lessonLabel,
     this.dashed = false,
     this.onTap,
+    this.onDelete,
   });
 
   @override
+  State<_LessonBox> createState() => _LessonBoxState();
+}
+
+class _LessonBoxState extends State<_LessonBox> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 200,
-        height: 200,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          gradient: dashed
-              ? null
-              : const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0x1F4D7CFF), Color(0x1F58CC02)],
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: widget.onTap,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: widget.dashed
+                    ? null
+                    : const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0x1F4D7CFF), Color(0x1F58CC02)],
+                      ),
+                color: widget.dashed ? const Color(0x99FFFFFF) : null,
+                border: Border.all(
+                  color: widget.dashed
+                      ? const Color(0x66506E96)
+                      : const Color(0x4D506E96),
+                  width: widget.dashed ? 2 : 1,
                 ),
-          color: dashed ? const Color(0x99FFFFFF) : null,
-          border: Border.all(
-            color: dashed ? const Color(0x66506E96) : const Color(0x4D506E96),
-            width: dashed ? 2 : 1,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-          child: Center(
-            child: dashed
-                ? Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                      color: _C.muted,
-                    ),
-                  )
-                : Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (lessonLabel != null) ...[
-                        Text(
-                          lessonLabel!,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                child: Center(
+                  child: widget.dashed
+                      ? Text(
+                          widget.title,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 12,
+                            fontSize: 15,
                             color: _C.muted,
-                            letterSpacing: 0.6,
                           ),
+                        )
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (widget.lessonLabel != null) ...[
+                              Text(
+                                widget.lessonLabel!,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                  color: _C.muted,
+                                  letterSpacing: 0.6,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                            Text(
+                              widget.title,
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15,
+                                height: 1.35,
+                                color: _C.text,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                      ],
-                      Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                          height: 1.35,
-                          color: _C.text,
-                        ),
-                      ),
-                    ],
-                  ),
+                ),
+              ),
+            ),
           ),
-        ),
+          // Delete button — fades in on hover for non-dashed cards
+          if (widget.onDelete != null)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: AnimatedOpacity(
+                opacity: _isHovered ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 150),
+                child: GestureDetector(
+                  onTap: widget.onDelete,
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(color: Colors.black26, blurRadius: 4),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      size: 14,
+                      color: Color(0xFFE53E3E),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

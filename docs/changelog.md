@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased] - 2026-03-04 (Delete Lesson from Dashboard)
+
+### Summary
+Added per-lesson delete capability directly from the Dashboard course card. Hovering a lesson box reveals a ✕ button (animated fade-in); clicking it confirms via dialog, then removes the page from the course and refreshes the lesson list. A guard prevents deleting the last lesson in a course.
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`** — `_LessonBox` converted from `StatelessWidget` to `StatefulWidget`; `MouseRegion` + `Stack` overlay with `AnimatedOpacity` ✕ button; `onDelete` callback parameter; `_confirmDeleteLesson()` method with last-lesson guard, `AlertDialog` confirmation, `getCourseContent` → `removePage` → `saveCourse` flow, cache invalidation and reload
+- **`Builder/lib/l10n/app_localizations.dart`** — added `deleteLessonTitle`, `deleteLessonConfirm(n, title)`, `lessonDeleted`, `cannotDeleteLastLesson`, `errorLoading` (EN + ZH)
+
+---
+
 ## [Unreleased] - 2026-03-04 (AI Agentic – Milestones 2 & 3 + Fixes)
 
 ### Summary
