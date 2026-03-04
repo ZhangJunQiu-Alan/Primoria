@@ -387,6 +387,20 @@ class CourseSchemaValidator {
         _validateCodeBlockContent(content, contentPath, findings);
       case BlockType.codePlayground:
         _validateCodePlaygroundContent(content, contentPath, findings);
+      case BlockType.codeExecution:
+        _validateCodeExecutionContent(
+          content,
+          contentPath,
+          findings,
+          isStrict: isStrict,
+        );
+      case BlockType.functionFlow:
+        _validateFunctionFlowContent(
+          content,
+          contentPath,
+          findings,
+          isStrict: isStrict,
+        );
       case BlockType.multipleChoice:
         _validateMultipleChoiceContent(
           content,
@@ -547,6 +561,562 @@ class CourseSchemaValidator {
     final runnable = content['runnable'];
     if (runnable != null && runnable is! bool) {
       _addWarning(findings, '$contentPath.runnable', 'Expected boolean');
+    }
+  }
+
+  static void _validateCodeExecutionContent(
+    Map<String, dynamic> content,
+    String contentPath,
+    List<CourseSchemaFinding> findings, {
+    required bool isStrict,
+  }) {
+    final title = content['title'];
+    if (title != null && title is! String) {
+      _addError(findings, '$contentPath.title', 'Expected string');
+    } else if (title is String && title.trim().isEmpty) {
+      if (isStrict) {
+        _addError(findings, '$contentPath.title', 'Title cannot be empty');
+      } else {
+        _addWarning(findings, '$contentPath.title', 'Empty title');
+      }
+    }
+
+    final language = content['language'];
+    if (language != null && language is! String) {
+      _addError(findings, '$contentPath.language', 'Expected string');
+    }
+
+    final sourceCode = content['sourceCode'];
+    if (sourceCode is! String) {
+      _addError(
+        findings,
+        '$contentPath.sourceCode',
+        'Missing or invalid string',
+      );
+    }
+    final sourceLineCount = sourceCode is String && sourceCode.isNotEmpty
+        ? sourceCode.split('\n').length
+        : 0;
+
+    final traceSteps = content['traceSteps'];
+    if (traceSteps is! List) {
+      _addError(findings, '$contentPath.traceSteps', 'Missing or invalid list');
+      return;
+    }
+    if (traceSteps.isEmpty) {
+      _addError(
+        findings,
+        '$contentPath.traceSteps',
+        'Must contain at least one execution step',
+      );
+    }
+
+    for (int stepIndex = 0; stepIndex < traceSteps.length; stepIndex++) {
+      final stepPath = '$contentPath.traceSteps[$stepIndex]';
+      final stepValue = traceSteps[stepIndex];
+      if (stepValue is! Map) {
+        _addError(findings, stepPath, 'Expected object');
+        continue;
+      }
+
+      final step = Map<String, dynamic>.from(stepValue);
+      final linePath = '$stepPath.line';
+      final lineValue = step['line'];
+      if (lineValue is! int) {
+        _addError(findings, linePath, 'Missing or invalid integer');
+      } else if (lineValue <= 0) {
+        _addError(findings, linePath, 'Must be >= 1');
+      } else if (sourceLineCount > 0 && lineValue > sourceLineCount) {
+        _addError(
+          findings,
+          linePath,
+          'Out of range: source code has $sourceLineCount line(s)',
+        );
+      } else if (sourceLineCount == 0) {
+        _addError(
+          findings,
+          linePath,
+          'Cannot map line number because sourceCode is empty',
+        );
+      }
+
+      final stdoutDelta = step['stdoutDelta'];
+      if (stdoutDelta != null && stdoutDelta is! String) {
+        _addError(findings, '$stepPath.stdoutDelta', 'Expected string');
+      }
+
+      final variables = step['variables'];
+      if (variables is! Map) {
+        _addError(
+          findings,
+          '$stepPath.variables',
+          'Missing or invalid object snapshot',
+        );
+      }
+
+      final callStack = step['callStack'];
+      if (callStack != null && callStack is! List) {
+        _addError(findings, '$stepPath.callStack', 'Expected list of strings');
+      } else if (callStack is List) {
+        for (int i = 0; i < callStack.length; i++) {
+          if (callStack[i] is! String) {
+            _addError(
+              findings,
+              '$stepPath.callStack[$i]',
+              'Expected string frame',
+            );
+          }
+        }
+      }
+
+      final note = step['note'];
+      if (note != null && note is! String) {
+        _addWarning(findings, '$stepPath.note', 'Expected string');
+      }
+    }
+
+    final initialVariables = content['initialVariables'];
+    if (initialVariables != null && initialVariables is! Map) {
+      _addError(findings, '$contentPath.initialVariables', 'Expected object');
+    }
+
+    final checkpoints = content['checkpoints'];
+    if (checkpoints != null && checkpoints is! List) {
+      _addError(findings, '$contentPath.checkpoints', 'Expected list');
+    } else if (checkpoints is List) {
+      for (
+        int checkpointIndex = 0;
+        checkpointIndex < checkpoints.length;
+        checkpointIndex++
+      ) {
+        final checkpointPath = '$contentPath.checkpoints[$checkpointIndex]';
+        final checkpointValue = checkpoints[checkpointIndex];
+        if (checkpointValue is! Map) {
+          _addError(findings, checkpointPath, 'Expected object');
+          continue;
+        }
+
+        final checkpoint = Map<String, dynamic>.from(checkpointValue);
+        final stepIndexValue = checkpoint['stepIndex'];
+        if (stepIndexValue is! int) {
+          _addError(
+            findings,
+            '$checkpointPath.stepIndex',
+            'Missing or invalid integer',
+          );
+        } else if (stepIndexValue < 0 || stepIndexValue >= traceSteps.length) {
+          _addError(
+            findings,
+            '$checkpointPath.stepIndex',
+            'Out of range for traceSteps',
+          );
+        }
+
+        final question = checkpoint['question'];
+        if (question is! String) {
+          _addError(
+            findings,
+            '$checkpointPath.question',
+            'Missing or invalid string',
+          );
+        } else if (question.trim().isEmpty) {
+          _addWarning(findings, '$checkpointPath.question', 'Empty question');
+        }
+
+        final options = checkpoint['options'];
+        if (options is! List) {
+          _addError(
+            findings,
+            '$checkpointPath.options',
+            'Missing or invalid list',
+          );
+          continue;
+        }
+        if (options.isEmpty) {
+          _addError(
+            findings,
+            '$checkpointPath.options',
+            'Must contain at least one option',
+          );
+        }
+
+        for (int optionIndex = 0; optionIndex < options.length; optionIndex++) {
+          if (options[optionIndex] is! String) {
+            _addError(
+              findings,
+              '$checkpointPath.options[$optionIndex]',
+              'Expected string',
+            );
+          }
+        }
+
+        final correctIndex = checkpoint['correctIndex'];
+        if (correctIndex is! int) {
+          _addError(
+            findings,
+            '$checkpointPath.correctIndex',
+            'Missing or invalid integer',
+          );
+        } else if (correctIndex < 0 || correctIndex >= options.length) {
+          _addError(
+            findings,
+            '$checkpointPath.correctIndex',
+            'Out of range for checkpoint options',
+          );
+        }
+
+        final explanation = checkpoint['explanation'];
+        if (explanation != null && explanation is! String) {
+          _addWarning(
+            findings,
+            '$checkpointPath.explanation',
+            'Expected string',
+          );
+        }
+      }
+    }
+
+    final controls = content['controls'];
+    if (controls != null && controls is! Map) {
+      _addError(findings, '$contentPath.controls', 'Expected object');
+    } else if (controls is Map) {
+      final controlsMap = Map<String, dynamic>.from(controls);
+      final autoplay = controlsMap['autoplay'];
+      if (autoplay != null && autoplay is! bool) {
+        _addError(
+          findings,
+          '$contentPath.controls.autoplay',
+          'Expected boolean',
+        );
+      }
+
+      final stepDurationMs = controlsMap['stepDurationMs'];
+      if (stepDurationMs != null && stepDurationMs is! int) {
+        _addError(
+          findings,
+          '$contentPath.controls.stepDurationMs',
+          'Expected integer',
+        );
+      } else if (stepDurationMs is int &&
+          (stepDurationMs < 200 || stepDurationMs > 10000)) {
+        if (isStrict) {
+          _addError(
+            findings,
+            '$contentPath.controls.stepDurationMs',
+            'Must be between 200 and 10000',
+          );
+        } else {
+          _addWarning(
+            findings,
+            '$contentPath.controls.stepDurationMs',
+            'Recommended range is 200-10000',
+          );
+        }
+      }
+
+      final allowScrub = controlsMap['allowScrub'];
+      if (allowScrub != null && allowScrub is! bool) {
+        _addError(
+          findings,
+          '$contentPath.controls.allowScrub',
+          'Expected boolean',
+        );
+      }
+    }
+
+    final style = content['style'];
+    if (style != null && style is! Map) {
+      _addError(findings, '$contentPath.style', 'Expected object');
+    } else if (style is Map) {
+      final styleMap = Map<String, dynamic>.from(style);
+
+      final theme = styleMap['theme'];
+      if (theme != null && theme is! String) {
+        _addError(findings, '$contentPath.style.theme', 'Expected string');
+      } else if (theme is String &&
+          !CodeExecutionStyle.supportedThemes.contains(theme)) {
+        _addWarning(
+          findings,
+          '$contentPath.style.theme',
+          'Unknown theme "$theme"',
+        );
+      }
+
+      final showLineNumbers = styleMap['showLineNumbers'];
+      if (showLineNumbers != null && showLineNumbers is! bool) {
+        _addError(
+          findings,
+          '$contentPath.style.showLineNumbers',
+          'Expected boolean',
+        );
+      }
+
+      final showVariablesPanel = styleMap['showVariablesPanel'];
+      if (showVariablesPanel != null && showVariablesPanel is! bool) {
+        _addError(
+          findings,
+          '$contentPath.style.showVariablesPanel',
+          'Expected boolean',
+        );
+      }
+
+      final showStdoutPanel = styleMap['showStdoutPanel'];
+      if (showStdoutPanel != null && showStdoutPanel is! bool) {
+        _addError(
+          findings,
+          '$contentPath.style.showStdoutPanel',
+          'Expected boolean',
+        );
+      }
+    }
+  }
+
+  static void _validateFunctionFlowContent(
+    Map<String, dynamic> content,
+    String contentPath,
+    List<CourseSchemaFinding> findings, {
+    required bool isStrict,
+  }) {
+    final title = content['title'];
+    if (title != null && title is! String) {
+      _addError(findings, '$contentPath.title', 'Expected string');
+    } else if (title is String && title.trim().isEmpty) {
+      if (isStrict) {
+        _addError(findings, '$contentPath.title', 'Title cannot be empty');
+      } else {
+        _addWarning(findings, '$contentPath.title', 'Empty title');
+      }
+    }
+
+    final nodes = content['nodes'];
+    if (nodes is! List) {
+      _addError(findings, '$contentPath.nodes', 'Missing or invalid list');
+      return;
+    }
+    if (nodes.isEmpty) {
+      if (isStrict) {
+        _addError(
+          findings,
+          '$contentPath.nodes',
+          'Must contain at least one node',
+        );
+      } else {
+        _addWarning(findings, '$contentPath.nodes', 'No nodes configured');
+      }
+    }
+
+    final nodeIds = <String>{};
+    for (int i = 0; i < nodes.length; i++) {
+      final nodePath = '$contentPath.nodes[$i]';
+      final nodeValue = nodes[i];
+      if (nodeValue is! Map) {
+        _addError(findings, nodePath, 'Expected object');
+        continue;
+      }
+
+      final node = Map<String, dynamic>.from(nodeValue);
+      final id = node['id'];
+      if (id is! String || id.trim().isEmpty) {
+        _addError(findings, '$nodePath.id', 'Missing or empty string');
+      } else if (!nodeIds.add(id.trim())) {
+        _addError(findings, '$nodePath.id', 'Duplicate node id "$id"');
+      }
+
+      final label = node['label'];
+      if (label is! String) {
+        _addError(findings, '$nodePath.label', 'Missing or invalid string');
+      } else if (label.trim().isEmpty) {
+        if (isStrict) {
+          _addError(findings, '$nodePath.label', 'Node label cannot be empty');
+        } else {
+          _addWarning(findings, '$nodePath.label', 'Empty node label');
+        }
+      }
+
+      final x = node['x'];
+      if (x is! num) {
+        _addError(findings, '$nodePath.x', 'Missing or invalid number');
+      } else if (x < 0 || x > 100) {
+        _addError(findings, '$nodePath.x', 'Must be between 0 and 100');
+      }
+
+      final y = node['y'];
+      if (y is! num) {
+        _addError(findings, '$nodePath.y', 'Missing or invalid number');
+      } else if (y < 0 || y > 100) {
+        _addError(findings, '$nodePath.y', 'Must be between 0 and 100');
+      }
+
+      final kind = node['kind'];
+      if (kind is! String) {
+        _addError(findings, '$nodePath.kind', 'Missing or invalid string');
+      } else if (!FunctionFlowNode.supportedKinds.contains(kind)) {
+        _addError(findings, '$nodePath.kind', 'Unknown kind "$kind"');
+      }
+
+      final description = node['description'];
+      if (description != null && description is! String) {
+        _addWarning(findings, '$nodePath.description', 'Expected string');
+      }
+    }
+
+    final edges = content['edges'];
+    if (edges is! List) {
+      _addError(findings, '$contentPath.edges', 'Missing or invalid list');
+      return;
+    }
+    if (edges.isEmpty) {
+      _addWarning(findings, '$contentPath.edges', 'No edges configured');
+    }
+
+    for (int i = 0; i < edges.length; i++) {
+      final edgePath = '$contentPath.edges[$i]';
+      final edgeValue = edges[i];
+      if (edgeValue is! Map) {
+        _addError(findings, edgePath, 'Expected object');
+        continue;
+      }
+
+      final edge = Map<String, dynamic>.from(edgeValue);
+      final from = edge['from'];
+      if (from is! String || from.trim().isEmpty) {
+        _addError(findings, '$edgePath.from', 'Missing or empty string');
+      } else if (!nodeIds.contains(from)) {
+        _addError(findings, '$edgePath.from', 'Unknown source node "$from"');
+      }
+
+      final to = edge['to'];
+      if (to is! String || to.trim().isEmpty) {
+        _addError(findings, '$edgePath.to', 'Missing or empty string');
+      } else if (!nodeIds.contains(to)) {
+        _addError(findings, '$edgePath.to', 'Unknown target node "$to"');
+      }
+
+      final label = edge['label'];
+      if (label != null && label is! String) {
+        _addWarning(findings, '$edgePath.label', 'Expected string');
+      }
+    }
+
+    final entryNodeId = content['entryNodeId'];
+    if (entryNodeId != null && entryNodeId is! String) {
+      _addError(findings, '$contentPath.entryNodeId', 'Expected string');
+    } else if (entryNodeId is String &&
+        entryNodeId.trim().isNotEmpty &&
+        !nodeIds.contains(entryNodeId)) {
+      _addError(
+        findings,
+        '$contentPath.entryNodeId',
+        'Unknown entry node "$entryNodeId"',
+      );
+    }
+
+    final steps = content['steps'];
+    if (steps != null && steps is! List) {
+      _addError(findings, '$contentPath.steps', 'Expected list');
+    } else if (steps is List) {
+      for (int i = 0; i < steps.length; i++) {
+        final stepPath = '$contentPath.steps[$i]';
+        final stepValue = steps[i];
+        if (stepValue is! Map) {
+          _addError(findings, stepPath, 'Expected object');
+          continue;
+        }
+
+        final step = Map<String, dynamic>.from(stepValue);
+        final edgeIndex = step['edgeIndex'];
+        if (edgeIndex is! int) {
+          _addError(
+            findings,
+            '$stepPath.edgeIndex',
+            'Missing or invalid integer',
+          );
+        } else if (edgeIndex < 0 || edgeIndex >= edges.length) {
+          _addError(
+            findings,
+            '$stepPath.edgeIndex',
+            'Out of range for edges list',
+          );
+        }
+
+        final durationMs = step['durationMs'];
+        if (durationMs != null && durationMs is! int) {
+          _addError(findings, '$stepPath.durationMs', 'Expected integer');
+        } else if (durationMs is int && durationMs <= 0) {
+          _addError(findings, '$stepPath.durationMs', 'Must be > 0');
+        }
+
+        final note = step['note'];
+        if (note != null && note is! String) {
+          _addWarning(findings, '$stepPath.note', 'Expected string');
+        }
+      }
+    }
+
+    final style = content['style'];
+    if (style != null && style is! Map) {
+      _addError(findings, '$contentPath.style', 'Expected object');
+    } else if (style is Map) {
+      final styleMap = Map<String, dynamic>.from(style);
+      final showArrows = styleMap['showArrows'];
+      if (showArrows != null && showArrows is! bool) {
+        _addWarning(
+          findings,
+          '$contentPath.style.showArrows',
+          'Expected boolean',
+        );
+      }
+
+      final stepDurationMs = styleMap['stepDurationMs'];
+      if (stepDurationMs != null && stepDurationMs is! int) {
+        _addError(
+          findings,
+          '$contentPath.style.stepDurationMs',
+          'Expected integer',
+        );
+      } else if (stepDurationMs is int &&
+          (stepDurationMs < 200 || stepDurationMs > 8000)) {
+        if (isStrict) {
+          _addError(
+            findings,
+            '$contentPath.style.stepDurationMs',
+            'Must be between 200 and 8000',
+          );
+        } else {
+          _addWarning(
+            findings,
+            '$contentPath.style.stepDurationMs',
+            'Recommended range is 200-8000',
+          );
+        }
+      }
+
+      final lineWidth = styleMap['lineWidth'];
+      if (lineWidth != null && lineWidth is! num) {
+        _addWarning(
+          findings,
+          '$contentPath.style.lineWidth',
+          'Expected number',
+        );
+      } else if (lineWidth is num && (lineWidth <= 0 || lineWidth > 6)) {
+        _addWarning(
+          findings,
+          '$contentPath.style.lineWidth',
+          'Recommended range is 1.0-6.0',
+        );
+      }
+
+      final theme = styleMap['theme'];
+      if (theme != null && theme is! String) {
+        _addWarning(findings, '$contentPath.style.theme', 'Expected string');
+      } else if (theme is String &&
+          !FunctionFlowStyle.supportedThemes.contains(theme)) {
+        _addWarning(
+          findings,
+          '$contentPath.style.theme',
+          'Unknown theme "$theme"',
+        );
+      }
     }
   }
 
@@ -813,25 +1383,58 @@ class CourseSchemaValidator {
       }
     }
 
-    final leftItems = content['leftItems'];
-    final rightItems = content['rightItems'];
-    if (leftItems is! List) {
-      _addError(findings, '$contentPath.leftItems', 'Missing or invalid list');
-      return;
+    final modeValue = content['mode'];
+    var mode = MatchingContent.modeList;
+    if (modeValue != null && modeValue is! String) {
+      _addError(findings, '$contentPath.mode', 'Expected string');
+    } else if (modeValue is String) {
+      if (!MatchingContent.supportedModes.contains(modeValue)) {
+        _addWarning(findings, '$contentPath.mode', 'Unknown mode "$modeValue"');
+      } else {
+        mode = modeValue;
+      }
     }
-    if (rightItems is! List) {
-      _addError(findings, '$contentPath.rightItems', 'Missing or invalid list');
-      return;
+
+    final isGraphMode = mode == MatchingContent.modeGraph;
+
+    final leftItemsRaw = content['leftItems'];
+    final rightItemsRaw = content['rightItems'];
+    if (leftItemsRaw != null && leftItemsRaw is! List) {
+      _addError(findings, '$contentPath.leftItems', 'Expected list');
+    }
+    if (rightItemsRaw != null && rightItemsRaw is! List) {
+      _addError(findings, '$contentPath.rightItems', 'Expected list');
+    }
+    final leftItems = leftItemsRaw is List ? leftItemsRaw : const <dynamic>[];
+    final rightItems = rightItemsRaw is List
+        ? rightItemsRaw
+        : const <dynamic>[];
+
+    if (!isGraphMode) {
+      if (leftItemsRaw is! List) {
+        _addError(
+          findings,
+          '$contentPath.leftItems',
+          'Missing or invalid list',
+        );
+      }
+      if (rightItemsRaw is! List) {
+        _addError(
+          findings,
+          '$contentPath.rightItems',
+          'Missing or invalid list',
+        );
+      }
     }
 
     if (leftItems.length < 2) {
-      if (isStrict) {
+      if (isStrict && !isGraphMode) {
         _addError(
           findings,
           '$contentPath.leftItems',
           'must contain at least 2 left items',
         );
-      } else {
+      } else if (!isGraphMode) {
         _addWarning(
           findings,
           '$contentPath.leftItems',
@@ -841,13 +1444,13 @@ class CourseSchemaValidator {
     }
 
     if (rightItems.length < 2) {
-      if (isStrict) {
+      if (isStrict && !isGraphMode) {
         _addError(
           findings,
           '$contentPath.rightItems',
           'must contain at least 2 right items',
         );
-      } else {
+      } else if (!isGraphMode) {
         _addWarning(
           findings,
           '$contentPath.rightItems',
@@ -856,50 +1459,257 @@ class CourseSchemaValidator {
       }
     }
 
-    final leftIds = _validateMatchingItems(
-      leftItems,
-      '$contentPath.leftItems',
-      findings,
-      isStrict: isStrict,
-    );
-    final rightIds = _validateMatchingItems(
-      rightItems,
-      '$contentPath.rightItems',
-      findings,
-      isStrict: isStrict,
-    );
+    final leftIds = leftItemsRaw is List
+        ? _validateMatchingItems(
+            leftItems,
+            '$contentPath.leftItems',
+            findings,
+            isStrict: isStrict,
+          )
+        : <String>{};
+    final rightIds = rightItemsRaw is List
+        ? _validateMatchingItems(
+            rightItems,
+            '$contentPath.rightItems',
+            findings,
+            isStrict: isStrict,
+          )
+        : <String>{};
 
     final pairs = content['correctPairs'];
     if (pairs != null && pairs is! List) {
       _addError(findings, '$contentPath.correctPairs', 'Expected list');
-      return;
     }
 
-    if (pairs is! List) return;
+    final normalizedPairs = <_MatchingRuleEdgeRef>[];
+    if (pairs is List) {
+      for (int i = 0; i < pairs.length; i++) {
+        final pairPath = '$contentPath.correctPairs[$i]';
+        final pairValue = pairs[i];
+        if (pairValue is! Map) {
+          _addError(findings, pairPath, 'Expected object');
+          continue;
+        }
 
-    for (int i = 0; i < pairs.length; i++) {
-      final pairPath = '$contentPath.correctPairs[$i]';
-      final pairValue = pairs[i];
-      if (pairValue is! Map) {
-        _addError(findings, pairPath, 'Expected object');
-        continue;
+        final pair = Map<String, dynamic>.from(pairValue);
+        final leftId = pair['leftId'];
+        final rightId = pair['rightId'];
+
+        if (leftId is! String || leftId.trim().isEmpty) {
+          _addError(findings, '$pairPath.leftId', 'Missing or empty string');
+        } else if (leftIds.isNotEmpty && !leftIds.contains(leftId)) {
+          _addError(findings, '$pairPath.leftId', 'unknown left id "$leftId"');
+        }
+
+        if (rightId is! String || rightId.trim().isEmpty) {
+          _addError(findings, '$pairPath.rightId', 'Missing or empty string');
+        } else if (rightIds.isNotEmpty && !rightIds.contains(rightId)) {
+          _addError(
+            findings,
+            '$pairPath.rightId',
+            'unknown right id "$rightId"',
+          );
+        }
+
+        if (leftId is String &&
+            leftId.trim().isNotEmpty &&
+            rightId is String &&
+            rightId.trim().isNotEmpty) {
+          normalizedPairs.add(
+            _MatchingRuleEdgeRef(from: leftId, to: rightId, path: pairPath),
+          );
+        }
       }
+    }
 
-      final pair = Map<String, dynamic>.from(pairValue);
-      final leftId = pair['leftId'];
-      final rightId = pair['rightId'];
-
-      if (leftId is! String || leftId.trim().isEmpty) {
-        _addError(findings, '$pairPath.leftId', 'Missing or empty string');
-      } else if (!leftIds.contains(leftId)) {
-        _addError(findings, '$pairPath.leftId', 'unknown left id "$leftId"');
+    final rulesRaw = content['rules'];
+    var allowOneToMany = false;
+    var allowManyToMany = false;
+    var directed = true;
+    if (rulesRaw != null && rulesRaw is! Map) {
+      _addError(findings, '$contentPath.rules', 'Expected object');
+    } else if (rulesRaw is Map) {
+      final rules = Map<String, dynamic>.from(rulesRaw);
+      final allowOneToManyRaw = rules['allowOneToMany'];
+      final allowManyToManyRaw = rules['allowManyToMany'];
+      final directedRaw = rules['directed'];
+      if (allowOneToManyRaw != null && allowOneToManyRaw is! bool) {
+        _addError(
+          findings,
+          '$contentPath.rules.allowOneToMany',
+          'Expected boolean',
+        );
+      } else if (allowOneToManyRaw is bool) {
+        allowOneToMany = allowOneToManyRaw;
       }
-
-      if (rightId is! String || rightId.trim().isEmpty) {
-        _addError(findings, '$pairPath.rightId', 'Missing or empty string');
-      } else if (!rightIds.contains(rightId)) {
-        _addError(findings, '$pairPath.rightId', 'unknown right id "$rightId"');
+      if (allowManyToManyRaw != null && allowManyToManyRaw is! bool) {
+        _addError(
+          findings,
+          '$contentPath.rules.allowManyToMany',
+          'Expected boolean',
+        );
+      } else if (allowManyToManyRaw is bool) {
+        allowManyToMany = allowManyToManyRaw;
       }
+      if (directedRaw != null && directedRaw is! bool) {
+        _addError(findings, '$contentPath.rules.directed', 'Expected boolean');
+      } else if (directedRaw is bool) {
+        directed = directedRaw;
+      }
+    }
+    if (allowManyToMany) allowOneToMany = true;
+
+    final nodesRaw = content['nodes'];
+    final nodeIds = <String>{};
+    if (nodesRaw != null && nodesRaw is! List) {
+      _addError(findings, '$contentPath.nodes', 'Expected list');
+    } else if (nodesRaw is List) {
+      for (int i = 0; i < nodesRaw.length; i++) {
+        final nodePath = '$contentPath.nodes[$i]';
+        final nodeValue = nodesRaw[i];
+        if (nodeValue is! Map) {
+          _addError(findings, nodePath, 'Expected object');
+          continue;
+        }
+
+        final node = Map<String, dynamic>.from(nodeValue);
+        final id = node['id'];
+        if (id is! String || id.trim().isEmpty) {
+          _addError(findings, '$nodePath.id', 'Missing or empty string');
+        } else if (!nodeIds.add(id.trim())) {
+          _addError(findings, '$nodePath.id', 'Duplicate node id "$id"');
+        }
+
+        final label = node['label'];
+        if (label is! String) {
+          _addError(findings, '$nodePath.label', 'Missing or invalid string');
+        } else if (label.trim().isEmpty) {
+          if (isStrict) {
+            _addError(
+              findings,
+              '$nodePath.label',
+              'Node label cannot be empty',
+            );
+          } else {
+            _addWarning(findings, '$nodePath.label', 'Empty node label');
+          }
+        }
+
+        final x = node['x'];
+        if (x is! num) {
+          _addError(findings, '$nodePath.x', 'Missing or invalid number');
+        } else if (x < 0 || x > 100) {
+          _addError(findings, '$nodePath.x', 'Must be between 0 and 100');
+        }
+
+        final y = node['y'];
+        if (y is! num) {
+          _addError(findings, '$nodePath.y', 'Missing or invalid number');
+        } else if (y < 0 || y > 100) {
+          _addError(findings, '$nodePath.y', 'Must be between 0 and 100');
+        }
+
+        final group = node['group'];
+        if (group != null && group is! String) {
+          _addWarning(findings, '$nodePath.group', 'Expected string');
+        } else if (group is String &&
+            !MatchingNode.supportedGroups.contains(group)) {
+          _addWarning(findings, '$nodePath.group', 'Unknown group "$group"');
+        }
+      }
+    }
+
+    if (isGraphMode && nodeIds.isEmpty) {
+      if (isStrict) {
+        _addError(findings, '$contentPath.nodes', 'Graph mode requires nodes');
+      } else {
+        _addWarning(
+          findings,
+          '$contentPath.nodes',
+          'No graph nodes configured',
+        );
+      }
+    }
+
+    final availableNodeIds = nodeIds.isNotEmpty
+        ? nodeIds
+        : {...leftIds, ...rightIds};
+    final edgesRaw = content['edges'];
+    final graphEdges = <_MatchingRuleEdgeRef>[];
+    if (edgesRaw != null && edgesRaw is! List) {
+      _addError(findings, '$contentPath.edges', 'Expected list');
+    } else if (edgesRaw is List) {
+      for (int i = 0; i < edgesRaw.length; i++) {
+        final edgePath = '$contentPath.edges[$i]';
+        final edgeValue = edgesRaw[i];
+        if (edgeValue is! Map) {
+          _addError(findings, edgePath, 'Expected object');
+          continue;
+        }
+        final edge = Map<String, dynamic>.from(edgeValue);
+        final from = edge['from'];
+        final to = edge['to'];
+
+        if (from is! String || from.trim().isEmpty) {
+          _addError(findings, '$edgePath.from', 'Missing or empty string');
+        } else if (availableNodeIds.isNotEmpty &&
+            !availableNodeIds.contains(from)) {
+          _addError(findings, '$edgePath.from', 'Unknown source node "$from"');
+        }
+
+        if (to is! String || to.trim().isEmpty) {
+          _addError(findings, '$edgePath.to', 'Missing or empty string');
+        } else if (availableNodeIds.isNotEmpty &&
+            !availableNodeIds.contains(to)) {
+          _addError(findings, '$edgePath.to', 'Unknown target node "$to"');
+        }
+
+        final label = edge['label'];
+        if (label != null && label is! String) {
+          _addWarning(findings, '$edgePath.label', 'Expected string');
+        }
+        final edgeDirected = edge['directed'];
+        if (edgeDirected != null && edgeDirected is! bool) {
+          _addWarning(findings, '$edgePath.directed', 'Expected boolean');
+        }
+
+        if (from is String &&
+            from.trim().isNotEmpty &&
+            to is String &&
+            to.trim().isNotEmpty) {
+          graphEdges.add(
+            _MatchingRuleEdgeRef(from: from, to: to, path: edgePath),
+          );
+        }
+      }
+    }
+
+    if (isGraphMode && graphEdges.isEmpty && normalizedPairs.isEmpty) {
+      if (isStrict) {
+        _addError(findings, '$contentPath.edges', 'Graph mode requires edges');
+      } else {
+        _addWarning(
+          findings,
+          '$contentPath.edges',
+          'No graph edges configured',
+        );
+      }
+    }
+
+    final ruleEdges = isGraphMode
+        ? (graphEdges.isNotEmpty ? graphEdges : normalizedPairs)
+        : normalizedPairs;
+    _validateMatchingRuleConstraints(
+      ruleEdges,
+      findings: findings,
+      allowOneToMany: allowOneToMany,
+      allowManyToMany: allowManyToMany,
+      directed: directed,
+    );
+
+    final explanation = content['explanation'];
+    if (explanation != null && explanation is! String) {
+      _addWarning(findings, '$contentPath.explanation', 'Expected string');
     }
   }
 
@@ -940,6 +1750,60 @@ class CourseSchemaValidator {
     }
 
     return ids;
+  }
+
+  static void _validateMatchingRuleConstraints(
+    List<_MatchingRuleEdgeRef> edges, {
+    required List<CourseSchemaFinding> findings,
+    required bool allowOneToMany,
+    required bool allowManyToMany,
+    required bool directed,
+  }) {
+    if (edges.isEmpty) return;
+
+    final seen = <String>{};
+    for (final edge in edges) {
+      final key = directed
+          ? '${edge.from}->${edge.to}'
+          : (edge.from.compareTo(edge.to) <= 0
+                ? '${edge.from}<->${edge.to}'
+                : '${edge.to}<->${edge.from}');
+      if (!seen.add(key)) {
+        _addError(
+          findings,
+          edge.path,
+          'Duplicate connection "${edge.from}" -> "${edge.to}"',
+        );
+      }
+    }
+
+    if (allowManyToMany) return;
+
+    final outgoingCount = <String, int>{};
+    final incomingCount = <String, int>{};
+    for (final edge in edges) {
+      final outCount = (outgoingCount[edge.from] ?? 0) + 1;
+      outgoingCount[edge.from] = outCount;
+
+      final inCount = (incomingCount[edge.to] ?? 0) + 1;
+      incomingCount[edge.to] = inCount;
+
+      if (!allowOneToMany && outCount > 1) {
+        _addError(
+          findings,
+          edge.path,
+          'Rule conflict: "${edge.from}" has multiple outgoing edges but one-to-one mode is enabled',
+        );
+      }
+
+      if (inCount > 1) {
+        _addError(
+          findings,
+          edge.path,
+          'Rule conflict: "${edge.to}" has multiple incoming edges but many-to-one is disabled',
+        );
+      }
+    }
   }
 
   static void _validateVideoContent(
@@ -1061,4 +1925,16 @@ class CourseSchemaValidator {
       ),
     );
   }
+}
+
+class _MatchingRuleEdgeRef {
+  final String from;
+  final String to;
+  final String path;
+
+  const _MatchingRuleEdgeRef({
+    required this.from,
+    required this.to,
+    required this.path,
+  });
 }

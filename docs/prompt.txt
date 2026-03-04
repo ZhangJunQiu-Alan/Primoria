@@ -1,0 +1,5 @@
+你把规划中的 block 类型 列出一个来 搭配详细的解释 作用 目的
+
+将目前做完的工作分别记录在 docs文件夹中合适的 files 中, 帮我 Commit 一下,提供合适的 Summary还有 Description,然后 push
+
+阅读 docs文件夹里的所有文件,然后等待我的要求

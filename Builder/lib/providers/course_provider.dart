@@ -5,7 +5,7 @@ import '../services/id_generator.dart';
 
 /// Course state notifier
 class CourseNotifier extends StateNotifier<Course> {
-  CourseNotifier() : super(Course.create());
+  CourseNotifier() : super(Course.create(title: 'Untitled Lesson'));
 
   /// Get current page
   CoursePage? getCurrentPage(int pageIndex) {
@@ -75,13 +75,12 @@ class CourseNotifier extends StateNotifier<Course> {
     if (page == null) return;
 
     // Create a duplicate and generate new IDs
-    final duplicatedPage = CoursePage.create(
-      title: '${page.title} (Copy)',
-    ).copyWith(
-      blocks: page.blocks.map((block) => block.copyWith(
-        id: IdGenerator.generate(),
-      )).toList(),
-    );
+    final duplicatedPage = CoursePage.create(title: '${page.title} (Copy)')
+        .copyWith(
+          blocks: page.blocks
+              .map((block) => block.copyWith(id: IdGenerator.generate()))
+              .toList(),
+        );
 
     // Insert after the original page
     final pages = List<CoursePage>.from(state.pages);
@@ -104,7 +103,7 @@ class CourseNotifier extends StateNotifier<Course> {
   }
 
   /// Create new course
-  void createNewCourse({String title = 'Untitled Course'}) {
+  void createNewCourse({String title = 'Untitled Lesson'}) {
     state = Course.create(title: title);
   }
 }
@@ -115,7 +114,10 @@ final courseProvider = StateNotifierProvider<CourseNotifier, Course>((ref) {
 });
 
 /// Current page blocks provider
-final currentPageBlocksProvider = Provider.family<List<Block>, int>((ref, pageIndex) {
+final currentPageBlocksProvider = Provider.family<List<Block>, int>((
+  ref,
+  pageIndex,
+) {
   final course = ref.watch(courseProvider);
   return course.getPage(pageIndex)?.blocks ?? [];
 });
