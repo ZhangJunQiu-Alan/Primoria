@@ -7,8 +7,8 @@ class IdGenerator {
   /// Generate unique block ID
   static String blockId() => 'block-${_uuid.v4()}';
 
-  /// Generate unique page ID
-  static String pageId() => 'page-${_uuid.v4()}';
+  /// Generate unique lesson ID
+  static String lessonId() => 'lesson-${_uuid.v4()}';
 
   /// Generate unique course ID
   static String courseId() => 'course-${_uuid.v4()}';

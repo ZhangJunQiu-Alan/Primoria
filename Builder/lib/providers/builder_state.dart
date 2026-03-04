@@ -2,14 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Builder layout state
 class BuilderState {
-  final int currentPageIndex;
+  final int currentLessonIndex;
   final String? selectedBlockId;
   final bool isPreviewMode;
   final String courseTitle;
   final bool hasUnsavedChanges;
 
   const BuilderState({
-    this.currentPageIndex = 0,
+    this.currentLessonIndex = 0,
     this.selectedBlockId,
     this.isPreviewMode = false,
     this.courseTitle = 'Untitled Lesson',
@@ -17,7 +17,7 @@ class BuilderState {
   });
 
   BuilderState copyWith({
-    int? currentPageIndex,
+    int? currentLessonIndex,
     String? selectedBlockId,
     bool? isPreviewMode,
     String? courseTitle,
@@ -25,7 +25,7 @@ class BuilderState {
     bool clearSelectedBlock = false,
   }) {
     return BuilderState(
-      currentPageIndex: currentPageIndex ?? this.currentPageIndex,
+      currentLessonIndex: currentLessonIndex ?? this.currentLessonIndex,
       selectedBlockId: clearSelectedBlock
           ? null
           : (selectedBlockId ?? this.selectedBlockId),
@@ -48,8 +48,9 @@ class BuilderStateNotifier extends StateNotifier<BuilderState> {
     state = state.copyWith(clearSelectedBlock: true);
   }
 
-  void setCurrentPage(int index) {
-    state = state.copyWith(currentPageIndex: index, clearSelectedBlock: true);
+  void setCurrentLesson(int index) {
+    state =
+        state.copyWith(currentLessonIndex: index, clearSelectedBlock: true);
   }
 
   void togglePreviewMode() {

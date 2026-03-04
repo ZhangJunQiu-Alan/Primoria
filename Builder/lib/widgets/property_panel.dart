@@ -23,9 +23,9 @@ class PropertyPanel extends ConsumerWidget {
     // Find selected block
     Block? selectedBlock;
     if (selectedBlockId != null) {
-      final page = course.getPage(builderState.currentPageIndex);
-      if (page != null) {
-        for (final block in page.blocks) {
+      final lesson = course.getLesson(builderState.currentLessonIndex);
+      if (lesson != null) {
+        for (final block in lesson.blocks) {
           if (block.id == selectedBlockId) {
             selectedBlock = block;
             break;
@@ -57,7 +57,7 @@ class PropertyPanel extends ConsumerWidget {
               : _BlockPropertyEditor(
                   key: ValueKey(selectedBlock.id),
                   block: selectedBlock,
-                  pageIndex: builderState.currentPageIndex,
+                  lessonIndex: builderState.currentLessonIndex,
                 ),
         ),
       ],
@@ -112,12 +112,12 @@ class PropertyPanel extends ConsumerWidget {
 /// Block property editor
 class _BlockPropertyEditor extends ConsumerStatefulWidget {
   final Block block;
-  final int pageIndex;
+  final int lessonIndex;
 
   const _BlockPropertyEditor({
     super.key,
     required this.block,
-    required this.pageIndex,
+    required this.lessonIndex,
   });
 
   @override
@@ -129,7 +129,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   void _updateBlock(Block updatedBlock) {
     ref
         .read(courseProvider.notifier)
-        .updateBlock(widget.pageIndex, updatedBlock);
+        .updateBlock(widget.lessonIndex, updatedBlock);
     ref.read(builderStateProvider.notifier).markAsUnsaved();
   }
 

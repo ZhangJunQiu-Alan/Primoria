@@ -20,15 +20,15 @@ void main() {
       expect(result.migration!.targetVersion, Course.schemaVersion);
 
       final course = result.course!;
-      expect(course.pages.length, 1);
+      expect(course.lessons.length, 1);
       expect(
-        course.pages.first.blocks.any(
+        course.lessons.first.blocks.any(
           (b) => b.type == BlockType.codePlayground,
         ),
         isTrue,
       );
       expect(
-        course.pages.first.blocks.any(
+        course.lessons.first.blocks.any(
           (b) => b.type == BlockType.multipleChoice,
         ),
         isTrue,
@@ -46,18 +46,18 @@ void main() {
       expect(result.migration!.sourceVersion, '0.9.0');
 
       final course = result.course!;
-      expect(course.pages.length, 1);
-      expect(course.pages.first.title, 'Legacy Module');
+      expect(course.lessons.length, 1);
+      expect(course.lessons.first.title, 'Legacy Module');
       expect(
-        course.pages.first.blocks.any((b) => b.type == BlockType.codeBlock),
+        course.lessons.first.blocks.any((b) => b.type == BlockType.codeBlock),
         isTrue,
       );
       expect(
-        course.pages.first.blocks.any((b) => b.type == BlockType.trueFalse),
+        course.lessons.first.blocks.any((b) => b.type == BlockType.trueFalse),
         isTrue,
       );
       expect(
-        course.pages.first.blocks.any((b) => b.type == BlockType.text),
+        course.lessons.first.blocks.any((b) => b.type == BlockType.text),
         isTrue,
       );
     });
@@ -150,7 +150,7 @@ void main() {
 
       final result = CourseImport.importFromString(jsonEncode(legacy));
       expect(result.success, isTrue);
-      final block = result.course!.pages.first.blocks.first;
+      final block = result.course!.lessons.first.blocks.first;
       expect(block.type, BlockType.functionFlow);
     });
 
@@ -192,7 +192,7 @@ void main() {
 
       final result = CourseImport.importFromString(jsonEncode(legacy));
       expect(result.success, isTrue);
-      final block = result.course!.pages.first.blocks.first;
+      final block = result.course!.lessons.first.blocks.first;
       expect(block.type, BlockType.codeExecution);
       final content = block.content as CodeExecutionContent;
       expect(content.sourceCode, contains('print(x)'));
@@ -236,7 +236,7 @@ void main() {
 
       final result = CourseImport.importFromString(jsonEncode(legacy));
       expect(result.success, isTrue);
-      final block = result.course!.pages.first.blocks.first;
+      final block = result.course!.lessons.first.blocks.first;
       final content = block.content as MatchingContent;
       expect(block.type, BlockType.matching);
       expect(content.mode, MatchingContent.modeList);

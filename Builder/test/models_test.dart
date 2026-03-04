@@ -445,38 +445,38 @@ void main() {
     );
   });
 
-  group('CoursePage Model', () {
-    test('CoursePage.create generates valid page', () {
-      final page = CoursePage.create(title: 'Test Page');
+  group('CourseLesson Model', () {
+    test('CourseLesson.create generates valid lesson', () {
+      final lesson = CourseLesson.create(title: 'Test Lesson');
 
-      expect(page.pageId, isNotEmpty);
-      expect(page.title, 'Test Page');
-      expect(page.blocks, isEmpty);
+      expect(lesson.lessonId, isNotEmpty);
+      expect(lesson.title, 'Test Lesson');
+      expect(lesson.blocks, isEmpty);
     });
 
-    test('CoursePage addBlock', () {
-      final page = CoursePage.create(title: 'Test');
+    test('CourseLesson addBlock', () {
+      final lesson = CourseLesson.create(title: 'Test');
       final block = Block.create(BlockType.text, order: 0);
-      final updated = page.addBlock(block);
+      final updated = lesson.addBlock(block);
 
       expect(updated.blocks.length, 1);
       expect(updated.blocks.first.id, block.id);
     });
 
-    test('CoursePage removeBlock', () {
-      final page = CoursePage.create(title: 'Test');
+    test('CourseLesson removeBlock', () {
+      final lesson = CourseLesson.create(title: 'Test');
       final block = Block.create(BlockType.text, order: 0);
-      final withBlock = page.addBlock(block);
+      final withBlock = lesson.addBlock(block);
       final removed = withBlock.removeBlock(block.id);
 
       expect(removed.blocks.length, 0);
     });
 
-    test('CoursePage reorderBlocks', () {
-      final page = CoursePage.create(title: 'Test');
+    test('CourseLesson reorderBlocks', () {
+      final lesson = CourseLesson.create(title: 'Test');
       final block1 = Block.create(BlockType.text, order: 0);
       final block2 = Block.create(BlockType.image, order: 1);
-      final withBlocks = page.addBlock(block1).addBlock(block2);
+      final withBlocks = lesson.addBlock(block1).addBlock(block2);
       final reordered = withBlocks.reorderBlocks(0, 1);
 
       expect(reordered.blocks[0].id, block2.id);
@@ -485,17 +485,29 @@ void main() {
       expect(reordered.blocks[1].position.order, 1);
     });
 
-    test('CoursePage JSON roundtrip', () {
-      final page = CoursePage.create(title: 'Test Page');
+    test('CourseLesson JSON roundtrip', () {
+      final lesson = CourseLesson.create(title: 'Test Lesson');
       final block = Block.create(BlockType.text, order: 0);
-      final withBlock = page.addBlock(block);
+      final withBlock = lesson.addBlock(block);
 
       final json = withBlock.toJson();
-      final restored = CoursePage.fromJson(json);
+      final restored = CourseLesson.fromJson(json);
 
-      expect(restored.pageId, withBlock.pageId);
+      expect(restored.lessonId, withBlock.lessonId);
       expect(restored.title, withBlock.title);
       expect(restored.blocks.length, 1);
+    });
+
+    test('CourseLesson fromJson accepts legacy pageId key', () {
+      final json = {
+        'pageId': 'legacy-page-id',
+        'title': 'Legacy Lesson',
+        'blocks': <dynamic>[],
+      };
+      final lesson = CourseLesson.fromJson(json);
+
+      expect(lesson.lessonId, 'legacy-page-id');
+      expect(lesson.title, 'Legacy Lesson');
     });
   });
 
@@ -505,40 +517,40 @@ void main() {
 
       expect(course.courseId, isNotEmpty);
       expect(course.metadata.title, 'My Course');
-      expect(course.pages.length, 1);
+      expect(course.lessons.length, 1);
     });
 
-    test('Course addPage', () {
+    test('Course addLesson', () {
       final course = Course.create(title: 'Test');
-      final newPage = CoursePage.create(title: 'Page 2');
-      final updated = course.addPage(newPage);
+      final newLesson = CourseLesson.create(title: 'Lesson 2');
+      final updated = course.addLesson(newLesson);
 
-      expect(updated.pages.length, 2);
+      expect(updated.lessons.length, 2);
     });
 
-    test('Course removePage', () {
+    test('Course removeLesson', () {
       final course = Course.create(title: 'Test');
-      final newPage = CoursePage.create(title: 'Page 2');
-      final withPage = course.addPage(newPage);
-      final removed = withPage.removePage(newPage.pageId);
+      final newLesson = CourseLesson.create(title: 'Lesson 2');
+      final withLesson = course.addLesson(newLesson);
+      final removed = withLesson.removeLesson(newLesson.lessonId);
 
-      expect(removed.pages.length, 1);
+      expect(removed.lessons.length, 1);
     });
 
-    test('Course getPage', () {
+    test('Course getLesson', () {
       final course = Course.create(title: 'Test');
 
-      expect(course.getPage(0), isNotNull);
-      expect(course.getPage(1), isNull);
-      expect(course.getPage(-1), isNull);
+      expect(course.getLesson(0), isNotNull);
+      expect(course.getLesson(1), isNull);
+      expect(course.getLesson(-1), isNull);
     });
 
     test('Course JSON roundtrip', () {
       final course = Course.create(title: 'Full Course');
-      final page = course.pages.first;
+      final lesson = course.lessons.first;
       final block = Block.create(BlockType.codePlayground, order: 0);
-      final updatedPage = page.addBlock(block);
-      final updatedCourse = course.updatePage(updatedPage);
+      final updatedLesson = lesson.addBlock(block);
+      final updatedCourse = course.updateLesson(updatedLesson);
 
       final json = updatedCourse.toJson();
       final jsonString = jsonEncode(json);
@@ -547,9 +559,9 @@ void main() {
 
       expect(restored.courseId, updatedCourse.courseId);
       expect(restored.metadata.title, 'Full Course');
-      expect(restored.pages.length, 1);
-      expect(restored.pages.first.blocks.length, 1);
-      expect(restored.pages.first.blocks.first.type, BlockType.codePlayground);
+      expect(restored.lessons.length, 1);
+      expect(restored.lessons.first.blocks.length, 1);
+      expect(restored.lessons.first.blocks.first.type, BlockType.codePlayground);
     });
 
     test('Course JSON schema fields', () {
@@ -561,7 +573,37 @@ void main() {
       expect(json['courseId'], isNotEmpty);
       expect(json['metadata'], isNotNull);
       expect(json['settings'], isNotNull);
-      expect(json['pages'], isA<List>());
+      expect(json['lessons'], isA<List>());
+    });
+
+    test('Course fromJson accepts legacy pages key', () {
+      final json = {
+        'courseId': 'test-course',
+        'metadata': {
+          'title': 'Legacy Course',
+          'description': '',
+          'author': {'userId': 'u1', 'displayName': 'Test'},
+          'tags': <String>[],
+          'difficulty': 'beginner',
+          'estimatedMinutes': 0,
+          'createdAt': DateTime.now().toIso8601String(),
+          'updatedAt': DateTime.now().toIso8601String(),
+          'version': '1.0.0',
+        },
+        'settings': <String, dynamic>{},
+        'pages': [
+          {
+            'pageId': 'page-1',
+            'title': 'Old Page',
+            'blocks': <dynamic>[],
+          },
+        ],
+      };
+      final course = Course.fromJson(json);
+
+      expect(course.lessons.length, 1);
+      expect(course.lessons.first.title, 'Old Page');
+      expect(course.lessons.first.lessonId, 'page-1');
     });
   });
 
@@ -578,9 +620,9 @@ void main() {
       expect(id.startsWith('course-'), true);
     });
 
-    test('pageId has correct prefix', () {
-      final id = IdGenerator.pageId();
-      expect(id.startsWith('page-'), true);
+    test('lessonId has correct prefix', () {
+      final id = IdGenerator.lessonId();
+      expect(id.startsWith('lesson-'), true);
     });
 
     test('blockId has correct prefix', () {
@@ -794,8 +836,8 @@ void main() {
         content: matchingContent,
       );
       final course = Course.create(title: 'Test Course');
-      final page = course.pages.first.copyWith(blocks: [block]);
-      return course.updatePage(page);
+      final lesson = course.lessons.first.copyWith(blocks: [block]);
+      return course.updateLesson(lesson);
     }
 
     test('valid matching passes validation', () {

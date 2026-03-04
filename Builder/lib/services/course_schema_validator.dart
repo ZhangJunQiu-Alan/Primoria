@@ -71,7 +71,7 @@ class CourseSchemaValidator {
     _validateSchemaMetadata(json, findings);
     _validateCourseId(json, findings);
     _validateMetadata(json, findings, isStrict: isStrict);
-    _validatePages(json, findings, isStrict: isStrict);
+    _validateLessons(json, findings, isStrict: isStrict);
 
     return CourseSchemaValidationResult(findings: findings);
   }
@@ -216,57 +216,59 @@ class CourseSchemaValidator {
     }
   }
 
-  static void _validatePages(
+  static void _validateLessons(
     Map<String, dynamic> json,
     List<CourseSchemaFinding> findings, {
     required bool isStrict,
   }) {
-    final pagesPath = '$_rootPath.pages';
-    final pages = json['pages'];
-    if (pages is! List) {
-      _addError(findings, pagesPath, 'Missing or invalid list');
+    // Accept both 'lessons' (new) and 'pages' (legacy) key
+    final lessonsPath = '$_rootPath.lessons';
+    final lessons = json['lessons'] ?? json['pages'];
+    if (lessons is! List) {
+      _addError(findings, lessonsPath, 'Missing or invalid list');
       return;
     }
-    if (pages.isEmpty) {
-      _addError(findings, pagesPath, 'Must contain at least one page');
+    if (lessons.isEmpty) {
+      _addError(findings, lessonsPath, 'Must contain at least one lesson');
       return;
     }
 
-    final pageIds = <String>{};
+    final lessonIds = <String>{};
     final blockIds = <String>{};
 
-    for (int pageIndex = 0; pageIndex < pages.length; pageIndex++) {
-      final pagePath = '$pagesPath[$pageIndex]';
-      final pageValue = pages[pageIndex];
-      if (pageValue is! Map) {
-        _addError(findings, pagePath, 'Expected object');
+    for (int lessonIndex = 0; lessonIndex < lessons.length; lessonIndex++) {
+      final lessonPath = '$lessonsPath[$lessonIndex]';
+      final lessonValue = lessons[lessonIndex];
+      if (lessonValue is! Map) {
+        _addError(findings, lessonPath, 'Expected object');
         continue;
       }
 
-      final page = Map<String, dynamic>.from(pageValue);
+      final lesson = Map<String, dynamic>.from(lessonValue);
 
-      final pageIdPath = '$pagePath.pageId';
-      final pageId = page['pageId'];
-      if (pageId is! String || pageId.trim().isEmpty) {
-        _addError(findings, pageIdPath, 'Missing or empty string');
-      } else if (!pageIds.add(pageId)) {
-        _addError(findings, pageIdPath, 'Duplicate pageId "$pageId"');
+      final lessonIdPath = '$lessonPath.lessonId';
+      // Accept both 'lessonId' (new) and 'pageId' (legacy)
+      final lessonId = lesson['lessonId'] ?? lesson['pageId'];
+      if (lessonId is! String || lessonId.trim().isEmpty) {
+        _addError(findings, lessonIdPath, 'Missing or empty string');
+      } else if (!lessonIds.add(lessonId)) {
+        _addError(findings, lessonIdPath, 'Duplicate lessonId "$lessonId"');
       }
 
-      final pageTitlePath = '$pagePath.title';
-      final pageTitle = page['title'];
-      if (pageTitle is! String) {
-        _addError(findings, pageTitlePath, 'Missing or invalid string');
-      } else if (pageTitle.trim().isEmpty) {
+      final lessonTitlePath = '$lessonPath.title';
+      final lessonTitle = lesson['title'];
+      if (lessonTitle is! String) {
+        _addError(findings, lessonTitlePath, 'Missing or invalid string');
+      } else if (lessonTitle.trim().isEmpty) {
         if (isStrict) {
-          _addError(findings, pageTitlePath, 'Cannot be empty');
+          _addError(findings, lessonTitlePath, 'Cannot be empty');
         } else {
-          _addWarning(findings, pageTitlePath, 'Empty page title');
+          _addWarning(findings, lessonTitlePath, 'Empty lesson title');
         }
       }
 
-      final blocksPath = '$pagePath.blocks';
-      final blocks = page['blocks'];
+      final blocksPath = '$lessonPath.blocks';
+      final blocks = lesson['blocks'];
       if (blocks == null) {
         _addWarning(findings, blocksPath, 'Missing list; defaulting to empty');
         continue;

@@ -55,14 +55,14 @@ JSON schema (example with 2 lessons — your output must follow this structure):
     "difficulty": "beginner",
     "estimatedMinutes": 30
   },
-  "pages": [
+  "lessons": [
     {
-      "pageId": "p1",
+      "lessonId": "p1",
       "title": "Introduction to Variables",
       "blocks": [/* 6-9 blocks */]
     },
     {
-      "pageId": "p2",
+      "lessonId": "p2",
       "title": "Working with Data Types",
       "blocks": [/* 6-9 blocks */]
     }
@@ -70,12 +70,12 @@ JSON schema (example with 2 lessons — your output must follow this structure):
 }
 
 Hard constraints:
-- Generate 2-4 lessons (pages). Use 2 for short/focused topics, 3-4 for rich or broad ones.
+- Generate 2-4 lessons. Use 2 for short/focused topics, 3-4 for rich or broad ones.
 - Every lesson covers one coherent learning objective or sub-topic.
 - Each lesson must have 6-9 blocks. Do NOT exceed 9 blocks per lesson.
 - Total blocks across all lessons must not exceed 30.
 - position.order is 0-based and continuous within each lesson independently.
-- Every id (pageId, block id, option id) must be globally unique across the whole course.
+- Every id (lessonId, block id, option id) must be globally unique across the whole course.
 - Use \\n for newlines in text. Keep text blocks concise (≤ 3 sentences each).
 - Keep metadata concise and useful.
 - Keep an explain-practice rhythm inside each lesson: 1 assessment block after every 1-2 concept blocks.
@@ -574,40 +574,40 @@ function validateCourseSchema(json: unknown): SchemaValidationResult {
     }
   }
 
-  // pages
-  const pages = course.pages;
-  if (!Array.isArray(pages) || pages.length === 0) {
-    errors.push({ path: '$.pages', code: 'REQUIRED', message: 'pages must be a non-empty array' });
+  // lessons (accept both 'lessons' and legacy 'pages' key)
+  const lessons = (course as Record<string, unknown>).lessons ?? (course as Record<string, unknown>).pages;
+  if (!Array.isArray(lessons) || lessons.length === 0) {
+    errors.push({ path: '$.lessons', code: 'REQUIRED', message: 'lessons must be a non-empty array' });
     return { valid: errors.length === 0, errors, warnings, summary: buildValidationSummary(errors, warnings) };
   }
 
-  const seenPageIds = new Set<string>();
+  const seenLessonIds = new Set<string>();
   const seenBlockIds = new Set<string>();
 
-  (pages as unknown[]).forEach((page, i) => {
-    const p = page as Record<string, unknown>;
-    const pagePath = `$.pages[${i}]`;
+  (lessons as unknown[]).forEach((lesson, i) => {
+    const p = lesson as Record<string, unknown>;
+    const lessonPath = `$.lessons[${i}]`;
 
-    // pageId
-    const pageId = p.pageId as string | undefined;
-    if (!isNonEmptyString(pageId)) {
-      errors.push({ path: `${pagePath}.pageId`, code: 'REQUIRED', message: 'pageId is required and must be non-empty' });
-    } else if (seenPageIds.has(pageId)) {
-      errors.push({ path: `${pagePath}.pageId`, code: 'DUPLICATE_ID', message: `duplicate pageId "${pageId}"` });
+    // lessonId (accept legacy 'pageId')
+    const lessonId = (p.lessonId ?? p.pageId) as string | undefined;
+    if (!isNonEmptyString(lessonId)) {
+      errors.push({ path: `${lessonPath}.lessonId`, code: 'REQUIRED', message: 'lessonId is required and must be non-empty' });
+    } else if (seenLessonIds.has(lessonId)) {
+      errors.push({ path: `${lessonPath}.lessonId`, code: 'DUPLICATE_ID', message: `duplicate lessonId "${lessonId}"` });
     } else {
-      seenPageIds.add(pageId);
+      seenLessonIds.add(lessonId);
     }
 
     // blocks
     const blocks = p.blocks;
     if (!Array.isArray(blocks)) {
-      errors.push({ path: `${pagePath}.blocks`, code: 'INVALID_TYPE', message: 'page.blocks must be an array' });
+      errors.push({ path: `${lessonPath}.blocks`, code: 'INVALID_TYPE', message: 'lesson.blocks must be an array' });
       return;
     }
 
     (blocks as unknown[]).forEach((block, j) => {
       const b = block as Record<string, unknown>;
-      const blockPath = `${pagePath}.blocks[${j}]`;
+      const blockPath = `${lessonPath}.blocks[${j}]`;
 
       // block.id
       const blockId = b.id as string | undefined;

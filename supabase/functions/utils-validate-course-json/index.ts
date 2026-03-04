@@ -158,37 +158,39 @@ export function validateCourseSchema(json: unknown): SchemaValidationResult {
       warnings.push({ path: '$.metadata.estimatedMinutes', message: 'estimatedMinutes should be a non-negative integer' });
   }
 
-  const pages = course.pages;
-  if (!Array.isArray(pages) || pages.length === 0) {
-    errors.push({ path: '$.pages', code: 'REQUIRED', message: 'pages must be a non-empty array' });
+  // Accept both 'lessons' (new) and legacy 'pages' key
+  const lessons = (course as Record<string, unknown>).lessons ?? (course as Record<string, unknown>).pages;
+  if (!Array.isArray(lessons) || lessons.length === 0) {
+    errors.push({ path: '$.lessons', code: 'REQUIRED', message: 'lessons must be a non-empty array' });
     return { passed: errors.length === 0, errors, warnings, summary: buildSummary(errors, warnings) };
   }
 
-  const seenPageIds  = new Set<string>();
-  const seenBlockIds = new Set<string>();
+  const seenLessonIds = new Set<string>();
+  const seenBlockIds  = new Set<string>();
 
-  (pages as unknown[]).forEach((page, i) => {
-    const p        = page as Record<string, unknown>;
-    const pagePath = `$.pages[${i}]`;
-    const pageId   = p.pageId as string | undefined;
+  (lessons as unknown[]).forEach((lesson, i) => {
+    const p          = lesson as Record<string, unknown>;
+    const lessonPath = `$.lessons[${i}]`;
+    // Accept both 'lessonId' (new) and legacy 'pageId'
+    const lessonId   = (p.lessonId ?? p.pageId) as string | undefined;
 
-    if (!isStr(pageId)) {
-      errors.push({ path: `${pagePath}.pageId`, code: 'REQUIRED', message: 'pageId is required' });
-    } else if (seenPageIds.has(pageId)) {
-      errors.push({ path: `${pagePath}.pageId`, code: 'DUPLICATE_ID', message: `duplicate pageId "${pageId}"` });
+    if (!isStr(lessonId)) {
+      errors.push({ path: `${lessonPath}.lessonId`, code: 'REQUIRED', message: 'lessonId is required' });
+    } else if (seenLessonIds.has(lessonId)) {
+      errors.push({ path: `${lessonPath}.lessonId`, code: 'DUPLICATE_ID', message: `duplicate lessonId "${lessonId}"` });
     } else {
-      seenPageIds.add(pageId);
+      seenLessonIds.add(lessonId);
     }
 
     const blocks = p.blocks;
     if (!Array.isArray(blocks)) {
-      errors.push({ path: `${pagePath}.blocks`, code: 'INVALID_TYPE', message: 'page.blocks must be an array' });
+      errors.push({ path: `${lessonPath}.blocks`, code: 'INVALID_TYPE', message: 'lesson.blocks must be an array' });
       return;
     }
 
     (blocks as unknown[]).forEach((block, j) => {
       const b         = block as Record<string, unknown>;
-      const blockPath = `${pagePath}.blocks[${j}]`;
+      const blockPath = `${lessonPath}.blocks[${j}]`;
       const blockId   = b.id as string | undefined;
 
       if (!isStr(blockId)) {

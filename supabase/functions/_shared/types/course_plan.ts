@@ -59,7 +59,7 @@ export interface CoursePlanJson {
 
 // ── Phase 2C output ──────────────────────────────────────────────────
 // Returned by POST /ai/generate-lesson-blocks (one per lesson).
-// Phase 2D (buildCourseJson) assembles these into the final Course JSON pages[].
+// Phase 2D (buildCourseJson) assembles these into the final Course JSON lessons[].
 
 export interface LessonBlock {
   type:      string;
@@ -70,8 +70,8 @@ export interface LessonBlock {
   [key: string]: unknown;
 }
 
-export interface LessonPageJson {
-  /** Maps to pages[].title in the final Course JSON. */
-  pageTitle: string;
-  blocks:    LessonBlock[];
+export interface LessonJson {
+  /** Maps to lessons[].title in the final Course JSON. */
+  lessonTitle: string;
+  blocks:      LessonBlock[];
 }

@@ -111,10 +111,10 @@ void main() {
       BlockType.codeExecution,
       order: 0,
     ).copyWith(content: buildContent());
-    final page = CoursePage.create(title: 'Page 1').copyWith(blocks: [block]);
+    final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
     final course = Course.create(
       title: 'Execution Course',
-    ).copyWith(pages: [page]);
+    ).copyWith(lessons: [lesson]);
 
     await tester.pumpWidget(
       ProviderScope(

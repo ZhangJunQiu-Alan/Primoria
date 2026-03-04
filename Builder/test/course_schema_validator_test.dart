@@ -28,7 +28,7 @@ void main() {
     expect(result.hasBlockingErrors, isTrue);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.correctAnswers[0]'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.correctAnswers[0]'),
       ),
       isTrue,
     );
@@ -56,7 +56,7 @@ void main() {
       expect(saveResult.hasBlockingErrors, isFalse);
       expect(
         saveResult.warningMessages.any(
-          (w) => w.contains(r'$.pages[0].blocks[0].content.question'),
+          (w) => w.contains(r'$.lessons[0].blocks[0].content.question'),
         ),
         isTrue,
       );
@@ -68,7 +68,7 @@ void main() {
       expect(publishResult.hasBlockingErrors, isTrue);
       expect(
         publishResult.errorMessages.any(
-          (e) => e.contains(r'$.pages[0].blocks[0].content.question'),
+          (e) => e.contains(r'$.lessons[0].blocks[0].content.question'),
         ),
         isTrue,
       );
@@ -95,7 +95,7 @@ void main() {
     expect(result.message, contains('Schema validation failed'));
     expect(
       result.validation!.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.correctAnswers[0]'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.correctAnswers[0]'),
       ),
       isTrue,
     );
@@ -118,7 +118,7 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errors.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.question'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.question'),
       ),
       isTrue,
     );
@@ -150,7 +150,7 @@ void main() {
     ).copyWith(content: const AnimationContent());
     final course = _buildCourseWithBlock(block);
     final json = course.toJson();
-    final pages = json['pages'] as List<dynamic>;
+    final pages = json['lessons'] as List<dynamic>;
     final page = pages.first as Map<String, dynamic>;
     final blocks = page['blocks'] as List<dynamic>;
     final blockJson = blocks.first as Map<String, dynamic>;
@@ -167,19 +167,19 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.preset'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.preset'),
       ),
       isTrue,
     );
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.durationMs'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.durationMs'),
       ),
       isTrue,
     );
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.speed'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.speed'),
       ),
       isTrue,
     );
@@ -201,7 +201,7 @@ void main() {
 
     expect(imported.success, isTrue);
     final restored = imported.course!;
-    final restoredBlock = restored.pages.first.blocks.first;
+    final restoredBlock = restored.lessons.first.blocks.first;
     expect(restoredBlock.type, BlockType.animation);
     final content = restoredBlock.content as AnimationContent;
     expect(content.preset, AnimationContent.presetPulseBars);
@@ -243,7 +243,7 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.edges[0].to'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.edges[0].to'),
       ),
       isTrue,
     );
@@ -271,7 +271,7 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.traceSteps[1].line'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.traceSteps[1].line'),
       ),
       isTrue,
     );
@@ -312,7 +312,7 @@ void main() {
     expect(
       result.errorMessages.any(
         (e) => e.contains(
-          r'$.pages[0].blocks[0].content.checkpoints[0].stepIndex',
+          r'$.lessons[0].blocks[0].content.checkpoints[0].stepIndex',
         ),
       ),
       isTrue,
@@ -320,7 +320,7 @@ void main() {
     expect(
       result.errorMessages.any(
         (e) => e.contains(
-          r'$.pages[0].blocks[0].content.checkpoints[0].correctIndex',
+          r'$.lessons[0].blocks[0].content.checkpoints[0].correctIndex',
         ),
       ),
       isTrue,
@@ -350,7 +350,7 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.edges[0].to'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.edges[0].to'),
       ),
       isTrue,
     );
@@ -387,7 +387,7 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.pages[0].blocks[0].content.edges[1]'),
+        (e) => e.contains(r'$.lessons[0].blocks[0].content.edges[1]'),
       ),
       isTrue,
     );
@@ -403,6 +403,6 @@ Course _buildCourseWithMultipleChoice(MultipleChoiceContent content) {
 }
 
 Course _buildCourseWithBlock(Block block) {
-  final page = CoursePage.create(title: 'Page 1').copyWith(blocks: [block]);
-  return Course.create(title: 'Validation Test').copyWith(pages: [page]);
+  final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
+  return Course.create(title: 'Validation Test').copyWith(lessons: [lesson]);
 }

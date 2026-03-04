@@ -67,8 +67,8 @@ void main() {
       BlockType.functionFlow,
       order: 0,
     ).copyWith(content: buildContent());
-    final page = CoursePage.create(title: 'Page 1').copyWith(blocks: [block]);
-    final course = Course.create(title: 'Flow course').copyWith(pages: [page]);
+    final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
+    final course = Course.create(title: 'Flow course').copyWith(lessons: [lesson]);
 
     await tester.pumpWidget(
       ProviderScope(

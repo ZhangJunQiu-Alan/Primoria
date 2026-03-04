@@ -72,11 +72,11 @@ Course _buildMultiSelectCourse() {
         ),
       );
 
-  final page = CoursePage.create(
-    title: 'Page 1',
+  final lesson = CourseLesson.create(
+    title: 'Lesson 1',
   ).copyWith(blocks: [questionBlock]);
 
   return Course.create(
     title: 'Multi Select Validation',
-  ).copyWith(pages: [page]);
+  ).copyWith(lessons: [lesson]);
 }
