@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -6,7 +7,9 @@ import '../../theme/design_tokens.dart';
 import '../../models/models.dart';
 import '../../services/block_registry.dart';
 import 'animation_block_widget.dart';
+import 'code_execution_block_widget.dart';
 import 'code_playground_widget.dart';
+import 'function_flow_block_widget.dart';
 
 /// Block wrapper - handles selection, delete, and other common behavior
 class BlockWrapper extends StatelessWidget {
@@ -179,6 +182,14 @@ class BlockWrapper extends StatelessWidget {
               onBlockUpdated!(block.copyWith(content: updatedContent));
             }
           },
+        );
+      case BlockType.codeExecution:
+        return CodeExecutionBlockWidget(
+          content: block.content as CodeExecutionContent,
+        );
+      case BlockType.functionFlow:
+        return FunctionFlowBlockWidget(
+          content: block.content as FunctionFlowContent,
         );
       case BlockType.multipleChoice:
         return _MultipleChoiceContent(
@@ -579,6 +590,55 @@ class _MatchingBlockContent extends StatelessWidget {
     return null;
   }
 
+  List<MatchingNode> _effectiveNodes() {
+    if (content.nodes.isNotEmpty) return content.nodes;
+    final nodes = <MatchingNode>[];
+    final leftStep = content.leftItems.isEmpty
+        ? 50.0
+        : 80.0 / (content.leftItems.length + 1);
+    for (int i = 0; i < content.leftItems.length; i++) {
+      final item = content.leftItems[i];
+      nodes.add(
+        MatchingNode(
+          id: item.id,
+          label: item.text,
+          x: 18,
+          y: 10 + leftStep * (i + 1),
+          group: MatchingNode.groupLeft,
+        ),
+      );
+    }
+    final rightStep = content.rightItems.isEmpty
+        ? 50.0
+        : 80.0 / (content.rightItems.length + 1);
+    for (int i = 0; i < content.rightItems.length; i++) {
+      final item = content.rightItems[i];
+      nodes.add(
+        MatchingNode(
+          id: item.id,
+          label: item.text,
+          x: 82,
+          y: 10 + rightStep * (i + 1),
+          group: MatchingNode.groupRight,
+        ),
+      );
+    }
+    return nodes;
+  }
+
+  List<MatchingEdge> _effectiveEdges() {
+    if (content.edges.isNotEmpty) return content.edges;
+    return content.correctPairs
+        .map(
+          (pair) => MatchingEdge(
+            from: pair.leftId,
+            to: pair.rightId,
+            directed: content.rules.directed,
+          ),
+        )
+        .toList();
+  }
+
   Widget _buildPairBadge(int number) {
     return Container(
       width: 18,
@@ -602,6 +662,142 @@ class _MatchingBlockContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (content.mode == MatchingContent.modeGraph) {
+      return _buildGraphMode();
+    }
+    return _buildListMode();
+  }
+
+  Widget _buildGraphMode() {
+    final nodes = _effectiveNodes();
+    final edges = _effectiveEdges();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          content.question.isEmpty
+              ? 'Enter a graph matching question'
+              : content.question,
+          style: TextStyle(
+            fontSize: AppFontSize.md,
+            fontWeight: FontWeight.w500,
+            color: content.question.isEmpty
+                ? AppColors.neutral400
+                : AppColors.neutral800,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          content.rules.directed
+              ? 'Directed graph mode (A -> B)'
+              : 'Undirected graph mode',
+          style: const TextStyle(
+            fontSize: AppFontSize.xs,
+            color: AppColors.neutral500,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Container(
+          height: 220,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            border: Border.all(color: AppColors.neutral200),
+          ),
+          child: nodes.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No graph nodes configured',
+                    style: TextStyle(
+                      fontSize: AppFontSize.sm,
+                      color: AppColors.neutral500,
+                    ),
+                  ),
+                )
+              : LayoutBuilder(
+                  builder: (context, constraints) {
+                    final size = constraints.biggest;
+                    return Stack(
+                      children: [
+                        Positioned.fill(
+                          child: CustomPaint(
+                            painter: _MatchingGraphPreviewPainter(
+                              nodes: nodes,
+                              edges: edges,
+                              rules: content.rules,
+                            ),
+                          ),
+                        ),
+                        ...nodes.map((node) {
+                          final center = _matchingNodeCenter(node, size);
+                          return Positioned(
+                            left:
+                                center.dx -
+                                _MatchingGraphPreviewPainter.nodeSize / 2,
+                            top:
+                                center.dy -
+                                _MatchingGraphPreviewPainter.nodeSize / 2,
+                            child: _buildGraphNodeChip(node),
+                          );
+                        }),
+                      ],
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGraphNodeChip(MatchingNode node) {
+    Color bgColor;
+    switch (node.group) {
+      case MatchingNode.groupLeft:
+        bgColor = AppColors.primary500;
+        break;
+      case MatchingNode.groupRight:
+        bgColor = AppColors.success;
+        break;
+      case MatchingNode.groupNeutral:
+      default:
+        bgColor = AppColors.neutral700;
+        break;
+    }
+    return Container(
+      width: _MatchingGraphPreviewPainter.nodeSize,
+      height: _MatchingGraphPreviewPainter.nodeSize,
+      decoration: BoxDecoration(
+        color: bgColor,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 1.5),
+      ),
+      child: Center(
+        child: Text(
+          _shortNodeLabel(node.label),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _shortNodeLabel(String label) {
+    final trimmed = label.trim();
+    if (trimmed.isEmpty) return '?';
+    final words = trimmed.split(RegExp(r'\\s+'));
+    if (words.length == 1) {
+      return words.first.length <= 4
+          ? words.first
+          : words.first.substring(0, 4);
+    }
+    return words.take(2).map((w) => w[0]).join().toUpperCase();
+  }
+
+  Widget _buildListMode() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -754,6 +950,114 @@ class _MatchingBlockContent extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+Offset _matchingNodeCenter(MatchingNode node, Size size) {
+  final safeWidth = math.max(
+    0.0,
+    size.width - _MatchingGraphPreviewPainter.nodeSize,
+  );
+  final safeHeight = math.max(
+    0.0,
+    size.height - _MatchingGraphPreviewPainter.nodeSize,
+  );
+  final x =
+      _MatchingGraphPreviewPainter.nodeSize / 2 + safeWidth * (node.x / 100);
+  final y =
+      _MatchingGraphPreviewPainter.nodeSize / 2 + safeHeight * (node.y / 100);
+  return Offset(x, y);
+}
+
+class _MatchingGraphPreviewPainter extends CustomPainter {
+  static const double nodeSize = 36;
+
+  final List<MatchingNode> nodes;
+  final List<MatchingEdge> edges;
+  final MatchingRules rules;
+
+  const _MatchingGraphPreviewPainter({
+    required this.nodes,
+    required this.edges,
+    required this.rules,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final nodeMap = <String, MatchingNode>{for (final n in nodes) n.id: n};
+    final linePaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = AppColors.neutral400;
+
+    for (final edge in edges) {
+      final fromNode = nodeMap[edge.from];
+      final toNode = nodeMap[edge.to];
+      if (fromNode == null || toNode == null) continue;
+
+      final start = _matchingNodeCenter(fromNode, size);
+      final end = _matchingNodeCenter(toNode, size);
+      canvas.drawLine(start, end, linePaint);
+
+      final directed = edge.directed ?? rules.directed;
+      if (directed) {
+        _drawArrow(canvas, start, end);
+      }
+
+      final label = edge.label?.trim();
+      if (label != null && label.isNotEmpty) {
+        _drawLabel(canvas, label, start, end);
+      }
+    }
+  }
+
+  void _drawArrow(Canvas canvas, Offset start, Offset end) {
+    final angle = math.atan2(end.dy - start.dy, end.dx - start.dx);
+    const arrowLength = 10.0;
+    const spread = 0.45;
+    final p1 = Offset(
+      end.dx - arrowLength * math.cos(angle - spread),
+      end.dy - arrowLength * math.sin(angle - spread),
+    );
+    final p2 = Offset(
+      end.dx - arrowLength * math.cos(angle + spread),
+      end.dy - arrowLength * math.sin(angle + spread),
+    );
+    final arrowPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = AppColors.neutral500;
+    canvas.drawLine(end, p1, arrowPaint);
+    canvas.drawLine(end, p2, arrowPaint);
+  }
+
+  void _drawLabel(Canvas canvas, String label, Offset start, Offset end) {
+    final midpoint = Offset((start.dx + end.dx) / 2, (start.dy + end.dy) / 2);
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: const TextStyle(
+          fontSize: AppFontSize.xs,
+          color: AppColors.neutral600,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    textPainter.paint(
+      canvas,
+      Offset(
+        midpoint.dx - textPainter.width / 2,
+        midpoint.dy - textPainter.height - 4,
+      ),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _MatchingGraphPreviewPainter oldDelegate) {
+    return oldDelegate.nodes != nodes ||
+        oldDelegate.edges != edges ||
+        oldDelegate.rules != rules;
   }
 }
 

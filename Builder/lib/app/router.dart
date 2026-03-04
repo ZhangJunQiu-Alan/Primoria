@@ -74,7 +74,21 @@ final appRouter = GoRouter(
       name: 'builder',
       builder: (context, state) {
         final courseId = state.uri.queryParameters['courseId'];
-        return BuilderScreen(courseId: courseId);
+        final addLesson = state.uri.queryParameters['addLesson'] == '1';
+        final draftId = state.uri.queryParameters['draftId'];
+        final lessonIndex = int.tryParse(
+          state.uri.queryParameters['lessonIndex'] ?? '',
+        );
+        final lessonTitle = state.uri.queryParameters['lessonTitle'];
+        final courseTitle = state.uri.queryParameters['courseTitle'];
+        return BuilderScreen(
+          courseId: courseId,
+          addLesson: addLesson,
+          draftId: draftId,
+          lessonIndex: lessonIndex,
+          lessonTitle: lessonTitle,
+          parentCourseTitle: courseTitle,
+        );
       },
     ),
     GoRoute(
@@ -87,7 +101,19 @@ final appRouter = GoRouter(
       name: 'viewer',
       builder: (context, state) {
         final courseId = state.uri.queryParameters['courseId'];
-        return ViewerScreen(courseId: courseId);
+        final addLesson = state.uri.queryParameters['addLesson'] == '1';
+        final draftId = state.uri.queryParameters['draftId'];
+        final pageIndex = int.tryParse(
+          state.uri.queryParameters['pageIndex'] ?? '',
+        );
+        final singlePage = state.uri.queryParameters['singlePage'] == '1';
+        return ViewerScreen(
+          courseId: courseId,
+          addLesson: addLesson,
+          draftId: draftId,
+          pageIndex: pageIndex,
+          singlePage: singlePage,
+        );
       },
     ),
   ],

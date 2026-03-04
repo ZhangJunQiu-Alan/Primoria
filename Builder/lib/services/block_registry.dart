@@ -37,46 +37,60 @@ class BlockRegistry {
       priority: 3,
     ),
     BlockTypeInfo(
+      type: BlockType.codeExecution,
+      name: 'Code Execution',
+      description: 'Step-by-step code execution visualizer',
+      icon: Icons.play_arrow_outlined,
+      priority: 4,
+    ),
+    BlockTypeInfo(
+      type: BlockType.functionFlow,
+      name: 'Function Flow',
+      description: 'Visualize caller-callee execution paths',
+      icon: Icons.hub,
+      priority: 5,
+    ),
+    BlockTypeInfo(
       type: BlockType.multipleChoice,
       name: 'Multiple Choice',
       description: 'Single / multi-select question',
       icon: Icons.check_circle_outline,
-      priority: 4,
+      priority: 6,
     ),
     BlockTypeInfo(
       type: BlockType.fillBlank,
       name: 'Fill in the Blank',
       description: 'Fill-in-the-blank exercise',
       icon: Icons.edit_note,
-      priority: 5,
+      priority: 7,
     ),
     BlockTypeInfo(
       type: BlockType.trueFalse,
       name: 'True/False',
       description: 'True or false question',
       icon: Icons.toggle_on_outlined,
-      priority: 6,
+      priority: 8,
     ),
     BlockTypeInfo(
       type: BlockType.matching,
       name: 'Matching',
       description: 'Match items between two columns',
       icon: Icons.compare_arrows,
-      priority: 7,
+      priority: 9,
     ),
     BlockTypeInfo(
       type: BlockType.animation,
       name: 'Animation',
       description: 'Preset animation with basic controls',
       icon: Icons.animation,
-      priority: 8,
+      priority: 10,
     ),
     BlockTypeInfo(
       type: BlockType.video,
       name: 'Video',
       description: 'Embedded video',
       icon: Icons.videocam,
-      priority: 9,
+      priority: 11,
     ),
   ];
 
@@ -88,6 +102,8 @@ class BlockRegistry {
             t.type == BlockType.image ||
             t.type == BlockType.codeBlock ||
             t.type == BlockType.codePlayground ||
+            t.type == BlockType.codeExecution ||
+            t.type == BlockType.functionFlow ||
             t.type == BlockType.multipleChoice ||
             t.type == BlockType.trueFalse ||
             t.type == BlockType.matching ||
