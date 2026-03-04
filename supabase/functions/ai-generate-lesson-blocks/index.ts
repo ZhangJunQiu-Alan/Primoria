@@ -50,7 +50,7 @@ const MODEL_CANDIDATES = [
 
 const VALID_BLOCK_TYPES = new Set([
   'text', 'image', 'code-block', 'code-playground',
-  'multiple-choice', 'fill-blank', 'true-false', 'matching', 'video', 'animation',
+  'multiple-choice', 'fill-blank', 'true-false', 'matching', 'video',
 ]);
 
 const INTERACTIVE_BLOCK_TYPES = new Set([
@@ -88,10 +88,7 @@ const BLOCK_TYPE_REFERENCE = `Allowed block types and exact JSON format:
 {"type":"matching","id":"b7","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Match each term to its meaning.","leftItems":[{"id":"l1","text":"variable"},{"id":"l2","text":"function"}],"rightItems":[{"id":"r1","text":"stores a value"},{"id":"r2","text":"reusable block of code"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Explanation."}}
 
 9) video
-{"type":"video","id":"b8","position":{"order":8},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}
-
-10) animation
-{"type":"animation","id":"b9","position":{"order":9},"style":{"spacing":"md","alignment":"center"},"content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}`;
+{"type":"video","id":"b8","position":{"order":8},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}`;
 
 function buildLessonPrompt(
   lesson: CoursePlanLesson,
@@ -256,16 +253,16 @@ function shouldTryNextModel(result: GeminiResult): boolean {
 }
 
 function parseJsonObject(text: string): Record<string, unknown> | null {
-  const s = text.trim()
-    .replace(/\uFF0C/g, ',').replace(/\uFF1A/g, ':')
-    .replace(/\u201C|\u201D/g, '"').replace(/\u2018|\u2019/g, "'");
+  const raw = text.trim();
 
+  // 1. Try raw parse first — preserves all Unicode characters inside strings
   try {
-    const p = JSON.parse(s);
+    const p = JSON.parse(raw);
     if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
   } catch (_) {}
 
-  const block = s.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  // 2. Try markdown code-block extraction on raw text
+  const block = raw.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
   if (block) {
     try {
       const p = JSON.parse(block[1].trim());
@@ -273,10 +270,40 @@ function parseJsonObject(text: string): Record<string, unknown> | null {
     } catch (_) {}
   }
 
-  const first = s.indexOf('{'), last = s.lastIndexOf('}');
+  // 3. Extract {…} boundaries from raw text
+  const first = raw.indexOf('{'), last = raw.lastIndexOf('}');
   if (first !== -1 && last > first) {
     try {
-      const p = JSON.parse(s.slice(first, last + 1));
+      const p = JSON.parse(raw.slice(first, last + 1));
+      if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+    } catch (_) {}
+  }
+
+  // 4. Fallback: apply Unicode normalisation (for models that use fullwidth
+  //    punctuation as JSON separators) then retry all three strategies.
+  //    Note: \u201C/\u201D replacement is intentionally omitted here because
+  //    Chinese curly-quotes inside string values would corrupt valid JSON.
+  const s = raw
+    .replace(/\uFF0C/g, ',')
+    .replace(/\uFF1A/g, ':');
+
+  try {
+    const p = JSON.parse(s);
+    if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+  } catch (_) {}
+
+  const block2 = s.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  if (block2) {
+    try {
+      const p = JSON.parse(block2[1].trim());
+      if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+    } catch (_) {}
+  }
+
+  const first2 = s.indexOf('{'), last2 = s.lastIndexOf('}');
+  if (first2 !== -1 && last2 > first2) {
+    try {
+      const p = JSON.parse(s.slice(first2, last2 + 1));
       if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
     } catch (_) {}
   }

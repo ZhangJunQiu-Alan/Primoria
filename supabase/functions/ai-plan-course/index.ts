@@ -218,16 +218,16 @@ function shouldTryNextModel(result: GeminiResult): boolean {
 }
 
 function parseJsonObject(text: string): Record<string, unknown> | null {
-  const s = text.trim()
-    .replace(/\uFF0C/g, ',').replace(/\uFF1A/g, ':')
-    .replace(/\u201C|\u201D/g, '"').replace(/\u2018|\u2019/g, "'");
+  const raw = text.trim();
 
+  // 1. Try raw parse first — preserves all Unicode characters inside strings
   try {
-    const p = JSON.parse(s);
+    const p = JSON.parse(raw);
     if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
   } catch (_) {}
 
-  const block = s.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  // 2. Try markdown code-block extraction on raw text
+  const block = raw.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
   if (block) {
     try {
       const p = JSON.parse(block[1].trim());
@@ -235,10 +235,40 @@ function parseJsonObject(text: string): Record<string, unknown> | null {
     } catch (_) {}
   }
 
-  const first = s.indexOf('{'), last = s.lastIndexOf('}');
+  // 3. Extract {…} boundaries from raw text
+  const first = raw.indexOf('{'), last = raw.lastIndexOf('}');
   if (first !== -1 && last > first) {
     try {
-      const p = JSON.parse(s.slice(first, last + 1));
+      const p = JSON.parse(raw.slice(first, last + 1));
+      if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+    } catch (_) {}
+  }
+
+  // 4. Fallback: apply Unicode normalisation (for models that use fullwidth
+  //    punctuation as JSON separators) then retry all three strategies.
+  //    Note: \u201C/\u201D replacement is intentionally omitted here because
+  //    Chinese curly-quotes inside string values would corrupt valid JSON.
+  const s = raw
+    .replace(/\uFF0C/g, ',')
+    .replace(/\uFF1A/g, ':');
+
+  try {
+    const p = JSON.parse(s);
+    if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+  } catch (_) {}
+
+  const block2 = s.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  if (block2) {
+    try {
+      const p = JSON.parse(block2[1].trim());
+      if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+    } catch (_) {}
+  }
+
+  const first2 = s.indexOf('{'), last2 = s.lastIndexOf('}');
+  if (first2 !== -1 && last2 > first2) {
+    try {
+      const p = JSON.parse(s.slice(first2, last2 + 1));
       if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
     } catch (_) {}
   }
