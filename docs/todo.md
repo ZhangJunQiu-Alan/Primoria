@@ -52,6 +52,10 @@
 45. [x] Add Lesson flow — `/builder?addLesson=1&courseId=…&draftId=…`; `saveLessonToCourse()` for independent lesson creation; draft persistence; Viewer back-navigation preserves add-lesson context (2026-03-04)
 46. [x] Function Flow post-release stabilization — hardened path-metric rendering in `function_flow_block_widget.dart` (iterator-based metric read) and adjusted viewer smoke test to assert control availability (`function_flow_step`) for lower flake rate (2026-03-04)
 47. [x] Code Execution block type — added `code-execution` end-to-end: model/registry/module panel, property editor, Builder + Viewer interactive renderer (play/pause/step/back/reset, line highlight, variables/stdout, checkpoint Q&A), schema migrator aliases (`codeExecution`/`code_execution`), validator path-level checks, and smoke/model/migration/validator tests (2026-03-04)
+48. [x] AI Agentic Course Builder (Milestones 1–3) — full pipeline: one-sentence → CoursePlanJson → per-lesson block generation (retry + quality hints) → schema validation tool → quality evaluation (4 rules, score 0–100) → autonomous quality improvement pass → human-in-the-loop enhancement dialog (add-interactive / add-final-quiz); deployed 5 Edge Functions + 2 DB migrations (2026-03-04)
+49. [x] Drop lesson group columns — removed `group_sort_key`/`group_title` from DB (migration 20260304000004); updated Builder and Viewer supabase_service.dart to use flat sort_key ordering (2026-03-04)
+50. [x] Matching content editor extraction — `MatchingContentEditor` moved to dedicated file with smoke tests (2026-03-04)
+51. [x] Function Flow dropdown overflow fix — `isExpanded`, `TextOverflow.ellipsis`, and `selectedItemBuilder` added to Entry Node and edge From/To dropdowns (2026-03-04)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

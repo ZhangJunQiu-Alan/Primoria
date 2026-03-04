@@ -640,11 +640,24 @@ Additional requirements:
         );
       }
 
+      final qr = dataMap['qualityReport'] as Map<String, dynamic>?;
+      final qualityScore  = (qr?['score'] as num?)?.toInt() ?? 100;
+      final qualityPassed = qr?['passed'] as bool? ?? true;
+      final rawIssues     = qr?['issues'] as List<dynamic>? ?? [];
+      final qualityIssues = rawIssues
+          .whereType<Map<String, dynamic>>()
+          .map((i) => i['message']?.toString() ?? '')
+          .where((s) => s.isNotEmpty)
+          .toList();
+
       return AgentCourseResult(
-        success: true,
-        message: 'Course generated successfully',
-        courseId: dataMap['courseId']?.toString(),
-        lessonCount: (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
+        success:       true,
+        message:       'Course generated successfully',
+        courseId:      dataMap['courseId']?.toString(),
+        lessonCount:   (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
+        qualityScore:  qualityScore,
+        qualityPassed: qualityPassed,
+        qualityIssues: qualityIssues,
       );
     } on FunctionException catch (e) {
       final detail = e.details?.toString() ?? e.toString();
@@ -663,6 +676,53 @@ Additional requirements:
       return AgentCourseResult(success: false, message: msg);
     } catch (e) {
       return AgentCourseResult(success: false, message: 'Error: $e');
+    }
+  }
+
+  /// Enhance an existing AI-generated course in the database.
+  ///
+  /// [type] is either `'add-interactive'` (re-generate lessons that have no
+  /// interactive blocks) or `'add-final-quiz'` (append a new quiz lesson).
+  static Future<EnhanceCourseResult> enhanceCourseViaApi({
+    required String courseId,
+    required String type,
+  }) async {
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-enhance-course',
+        body: {'courseId': courseId, 'type': type},
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return const EnhanceCourseResult(
+          success: false,
+          message: 'No response from server',
+        );
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      if (dataMap['success'] != true) {
+        return EnhanceCourseResult(
+          success: false,
+          message: dataMap['error']?.toString() ?? 'Enhancement failed',
+        );
+      }
+
+      return EnhanceCourseResult(
+        success: true,
+        message: dataMap['message']?.toString() ?? 'Done',
+      );
+    } on FunctionException catch (e) {
+      return EnhanceCourseResult(
+        success: false,
+        message: 'Server error: ${e.details ?? e}',
+      );
+    } catch (e) {
+      return EnhanceCourseResult(success: false, message: 'Error: $e');
     }
   }
 
@@ -2079,6 +2139,9 @@ class AgentCourseResult {
     required this.message,
     this.courseId,
     this.lessonCount = 0,
+    this.qualityScore = 100,
+    this.qualityPassed = true,
+    this.qualityIssues = const [],
   });
 
   final bool success;
@@ -2089,4 +2152,24 @@ class AgentCourseResult {
 
   /// Number of lessons generated and saved to the database.
   final int lessonCount;
+
+  /// Quality score from the server-side quality check (0–100).
+  final int qualityScore;
+
+  /// Whether the quality check passed (score ≥ 80).
+  final bool qualityPassed;
+
+  /// Human-readable descriptions of quality issues (empty if none).
+  final List<String> qualityIssues;
+}
+
+/// Result returned by [AICourseGenerator.enhanceCourseViaApi].
+class EnhanceCourseResult {
+  const EnhanceCourseResult({
+    required this.success,
+    required this.message,
+  });
+
+  final bool success;
+  final String message;
 }

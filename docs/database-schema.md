@@ -59,6 +59,9 @@ interactions: insert-only, partition by month
 | tags | Array<Text> | Default: {} PostgreSQL array type. Used for search optimization, e.g., ['recursion','algorithms','Python'] |
 | price_tier | Enum ('free', 'premium') | Default: free. Distinguish free vs paid. Frontend uses this to show a "lock" icon |
 | price | NUMERIC(10,2) | Default: 0, CHECK (price >= 0). Actual price in USD (or local currency). Ignored when price_tier = 'free'. Added 2026-02-24 |
+| animation_style | text | CHECK ('cartoon','minimal','realistic'). Visual style hint used by AI block generation. Added for Milestone 2 AI Agentic. |
+| content_language | text | CHECK ('zh','en'). Language of the course content, used for Viewer filtering. Added for Milestone 2 AI Agentic. |
+| planning_json | jsonb | Stores the raw CoursePlanJson returned by /ai/plan-course. Contains per-lesson objective and key_points consumed by Phase 2C block generation. Added for Milestone 2 AI Agentic. |
 | created_at | Timestamp | Default: now() creation time |
 | updated_at | timestamptz | Default: now() trigger |
 | published_at | timestamptz | Set only when published |

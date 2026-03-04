@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -942,6 +943,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     String audience = 'beginners';
     bool isGenerating = false;
     String? errorMessage;
+    String progressStage = '';
+    double progressValue = 0.0;
+    Timer? progressTimer;
 
     await showDialog<void>(
       context: context,
@@ -1222,6 +1226,29 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         ),
                       ),
                     ],
+                    // ── Progress stages (shown while generating) ──────
+                    if (isGenerating) ...[
+                      const SizedBox(height: 14),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: progressValue,
+                          minHeight: 4,
+                          backgroundColor:
+                              const Color(0xFFFF8C00).withValues(alpha: 0.12),
+                          color: const Color(0xFFFF8C00),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        progressStage,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: _C.muted,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                     const SizedBox(height: 4),
                   ],
                 ),
@@ -1246,20 +1273,50 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         setDialogState(() {
                           isGenerating = true;
                           errorMessage = null;
+                          progressValue = 0.0;
+                          progressStage = t.aiAgentStagePlan;
                         });
 
-                        final result = await AICourseGenerator.generateViaApi(
+                        // Simulate progress through 3 stages while the
+                        // server orchestrates plan → blocks → DB write.
+                        progressTimer = Timer.periodic(
+                          const Duration(milliseconds: 450),
+                          (timer) {
+                            setDialogState(() {
+                              if (progressValue < 0.15) {
+                                progressValue += 0.025; // ~3 s to reach 15 %
+                                progressStage = t.aiAgentStagePlan;
+                              } else if (progressValue < 0.82) {
+                                progressValue += 0.010; // ~30 s to reach 82 %
+                                progressStage = t.aiAgentStageGenerate;
+                              } else if (progressValue < 0.92) {
+                                progressValue += 0.008;
+                                progressStage = t.aiAgentStageValidate;
+                              }
+                              // Pause at 92 % — wait for actual response.
+                            });
+                          },
+                        );
+
+                        final language = t.isZh ? 'zh' : 'en';
+                        final result =
+                            await AICourseGenerator.generateCourseAgentViaApi(
                           description: desc,
                           difficulty: difficulty,
                           animationStyle: animationStyle,
-                          audience: audience,
+                          language: language,
                         );
+
+                        progressTimer?.cancel();
+                        progressTimer = null;
 
                         if (!ctx.mounted) return;
 
-                        if (!result.success || result.course == null) {
+                        if (!result.success) {
                           setDialogState(() {
                             isGenerating = false;
+                            progressValue = 0.0;
+                            progressStage = '';
                             errorMessage = result.message.isNotEmpty
                                 ? result.message
                                 : t.aiGenerateFailed;
@@ -1267,41 +1324,33 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           return;
                         }
 
-                        // Save full course to Supabase (course row + lesson
-                        // snapshot rows), then stay on dashboard.
-                        final course = result.course!;
-                        final saveResult =
-                            await SupabaseService.saveCourse(course);
-
-                        if (!ctx.mounted) return;
-
-                        if (!saveResult.success ||
-                            saveResult.courseId == null) {
-                          setDialogState(() {
-                            isGenerating = false;
-                            errorMessage = saveResult.message;
-                          });
-                          return;
-                        }
-
-                        // Dismiss dialog and refresh the course list in place.
+                        // Course is already in the database — just refresh.
                         if (ctx.mounted) Navigator.pop(ctx);
                         if (messenger.mounted) {
                           messenger.showSnackBar(
                             SnackBar(
-                              content: Text(t.aiGenerateSuccess),
+                              content: Text(
+                                t.aiAgentSuccessN(result.lessonCount),
+                              ),
                               backgroundColor: AppColors.success,
                             ),
                           );
                         }
 
                         if (mounted) {
-                          // Clear any stale lesson-title cache for this course,
-                          // then reload the course list so the new card appears.
-                          setState(
-                            () => _courseLessons.remove(saveResult.courseId),
-                          );
                           await _loadCourses();
+                        }
+
+                        // Show quality improvement dialog if score < 80
+                        if (mounted &&
+                            !result.qualityPassed &&
+                            result.courseId != null) {
+                          await _showQualityDialog(
+                            t: t,
+                            courseId: result.courseId!,
+                            qualityScore: result.qualityScore,
+                            qualityIssues: result.qualityIssues,
+                          );
                         }
                       },
                 style: ElevatedButton.styleFrom(
@@ -1337,6 +1386,144 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           );
         },
       ),
+    );
+  }
+
+  /// Show the post-generation quality report dialog and let the user choose
+  /// to enhance the course or skip.
+  Future<void> _showQualityDialog({
+    required BuilderLocalizations t,
+    required String courseId,
+    required int qualityScore,
+    required List<String> qualityIssues,
+  }) async {
+    final hasMissingInteractive = qualityIssues.any(
+      (s) => s.toLowerCase().contains('interactive'),
+    );
+
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) {
+        bool isEnhancing = false;
+        String statusMessage = '';
+
+        return StatefulBuilder(
+          builder: (ctx2, setS) => AlertDialog(
+            title: Text(
+              t.qualityDialogTitle,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+            ),
+            content: SizedBox(
+              width: 380,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    t.qualityDialogBody(qualityScore),
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  if (qualityIssues.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    ...qualityIssues.take(3).map(
+                      (issue) => Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('• ',
+                                style: TextStyle(
+                                    color: Color(0xFFFF8C00), fontSize: 13)),
+                            Expanded(
+                              child: Text(issue,
+                                  style: const TextStyle(fontSize: 13)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                  if (isEnhancing) ...[
+                    const SizedBox(height: 16),
+                    const LinearProgressIndicator(),
+                    const SizedBox(height: 6),
+                    Text(t.qualityEnhancing,
+                        style: const TextStyle(fontSize: 12)),
+                  ],
+                  if (statusMessage.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text(statusMessage,
+                        style: const TextStyle(fontSize: 13)),
+                  ],
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isEnhancing ? null : () => Navigator.pop(ctx2),
+                child: Text(t.qualityActionIgnore),
+              ),
+              if (hasMissingInteractive)
+                TextButton(
+                  onPressed: isEnhancing
+                      ? null
+                      : () async {
+                          setS(() => isEnhancing = true);
+                          final r = await AICourseGenerator.enhanceCourseViaApi(
+                            courseId: courseId,
+                            type: 'add-interactive',
+                          );
+                          if (!ctx2.mounted) return;
+                          if (r.success) {
+                            setS(() {
+                              isEnhancing = false;
+                              statusMessage =
+                                  '${t.qualityEnhanceDone}: ${r.message}';
+                            });
+                            if (mounted) await _loadCourses();
+                          } else {
+                            setS(() {
+                              isEnhancing = false;
+                              statusMessage = t.qualityEnhanceFailed;
+                            });
+                          }
+                        },
+                  child: Text(t.qualityActionAddInteractive),
+                ),
+              ElevatedButton(
+                onPressed: isEnhancing
+                    ? null
+                    : () async {
+                        setS(() => isEnhancing = true);
+                        final r = await AICourseGenerator.enhanceCourseViaApi(
+                          courseId: courseId,
+                          type: 'add-final-quiz',
+                        );
+                        if (!ctx2.mounted) return;
+                        if (r.success) {
+                          setS(() {
+                            isEnhancing = false;
+                            statusMessage =
+                                '${t.qualityEnhanceDone}: ${r.message}';
+                          });
+                          if (mounted) await _loadCourses();
+                        } else {
+                          setS(() {
+                            isEnhancing = false;
+                            statusMessage = t.qualityEnhanceFailed;
+                          });
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF8C00),
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(t.qualityActionAddQuiz),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
