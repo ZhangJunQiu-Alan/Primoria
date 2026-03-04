@@ -7,6 +7,7 @@ enum BlockType {
   image('image', 'Image', '🖼'),
   codeBlock('code-block', 'Code Block', '</>'),
   codePlayground('code-playground', 'Code Playground', '▶'),
+  codeExecution('code-execution', 'Code Execution', '▶▷'),
   functionFlow('function-flow', 'Function Flow', 'ƒ→'),
   multipleChoice('multiple-choice', 'Multiple Choice', '✓'),
   fillBlank('fill-blank', 'Fill in the Blank', '___'),
