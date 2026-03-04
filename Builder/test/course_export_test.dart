@@ -73,7 +73,7 @@ Course _buildCourseWithMultipleChoice(MultipleChoiceContent multipleChoice) {
     BlockType.multipleChoice,
     order: 0,
   ).copyWith(content: multipleChoice);
-  final page = CoursePage.create(title: 'Page 1').copyWith(blocks: [block]);
+  final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
 
-  return Course.create(title: 'Export Validation').copyWith(pages: [page]);
+  return Course.create(title: 'Export Validation').copyWith(lessons: [lesson]);
 }

@@ -24,7 +24,7 @@
  * Required env vars: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
  */
 
-import type { CoursePlanJson, CoursePlanLesson, LessonPageJson } from '../_shared/types/course_plan.ts';
+import type { CoursePlanJson, CoursePlanLesson, LessonJson } from '../_shared/types/course_plan.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const CORS_HEADERS = {
@@ -71,7 +71,7 @@ async function callGenerateLessonBlocks(
   qualityHints: string[],
   supabaseUrl: string,
   serviceKey: string,
-): Promise<LessonPageJson | null> {
+): Promise<LessonJson | null> {
   let response: Response;
   try {
     response = await fetch(`${supabaseUrl}/functions/v1/ai-generate-lesson-blocks`, {
@@ -92,7 +92,7 @@ async function callGenerateLessonBlocks(
   catch (_) { return null; }
 
   if (!response.ok || !body.success) return null;
-  return body.page as LessonPageJson;
+  return body.page as LessonJson;
 }
 
 // ────────────────────────────────────────────────────────────────────

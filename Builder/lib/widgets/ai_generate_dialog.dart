@@ -65,7 +65,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                         ),
                       ),
                       Text(
-                        'Upload a PDF and generate a one-page course (max 20 blocks)',
+                        'Upload a PDF and generate a one-lesson course (max 20 blocks)',
                         style: TextStyle(
                           fontSize: AppFontSize.sm,
                           color: AppColors.neutral500,

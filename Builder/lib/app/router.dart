@@ -103,15 +103,16 @@ final appRouter = GoRouter(
         final courseId = state.uri.queryParameters['courseId'];
         final addLesson = state.uri.queryParameters['addLesson'] == '1';
         final draftId = state.uri.queryParameters['draftId'];
-        final pageIndex = int.tryParse(
-          state.uri.queryParameters['pageIndex'] ?? '',
+        final lessonIndex = int.tryParse(
+          state.uri.queryParameters['lessonIndex'] ??
+              state.uri.queryParameters['pageIndex'] ?? '',
         );
         final singlePage = state.uri.queryParameters['singlePage'] == '1';
         return ViewerScreen(
           courseId: courseId,
           addLesson: addLesson,
           draftId: draftId,
-          pageIndex: pageIndex,
+          lessonIndex: lessonIndex,
           singlePage: singlePage,
         );
       },

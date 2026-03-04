@@ -21,7 +21,7 @@ class ViewerScreen extends ConsumerStatefulWidget {
   final String? courseId;
   final bool addLesson;
   final String? draftId;
-  final int? pageIndex;
+  final int? lessonIndex;
   final bool singlePage;
 
   const ViewerScreen({
@@ -29,7 +29,7 @@ class ViewerScreen extends ConsumerStatefulWidget {
     this.courseId,
     this.addLesson = false,
     this.draftId,
-    this.pageIndex,
+    this.lessonIndex,
     this.singlePage = false,
   });
 
@@ -43,19 +43,19 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
   @override
   Widget build(BuildContext context) {
     final course = ref.watch(courseProvider);
-    final pages = course.pages;
-    final resolvedPageIndex =
-        (widget.pageIndex != null &&
-                widget.pageIndex! >= 0 &&
-                widget.pageIndex! < pages.length)
-            ? widget.pageIndex!
+    final lessons = course.lessons;
+    final resolvedLessonIndex =
+        (widget.lessonIndex != null &&
+                widget.lessonIndex! >= 0 &&
+                widget.lessonIndex! < lessons.length)
+            ? widget.lessonIndex!
             : 0;
-    final previewPages = (widget.singlePage && pages.isNotEmpty)
-        ? <CoursePage>[pages[resolvedPageIndex]]
-        : pages;
+    final previewLessons = (widget.singlePage && lessons.isNotEmpty)
+        ? <CourseLesson>[lessons[resolvedLessonIndex]]
+        : lessons;
 
     return DefaultTabController(
-      length: previewPages.isEmpty ? 1 : previewPages.length,
+      length: previewLessons.isEmpty ? 1 : previewLessons.length,
       child: Scaffold(
         backgroundColor: AppColors.neutral100,
         appBar: AppBar(
@@ -69,8 +69,8 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
             onPressed: () {
               final id = widget.courseId ?? '';
               final pagePart =
-                  (widget.pageIndex != null && widget.pageIndex! >= 0)
-                      ? '&lessonIndex=${widget.pageIndex}'
+                  (widget.lessonIndex != null && widget.lessonIndex! >= 0)
+                      ? '&lessonIndex=${widget.lessonIndex}'
                       : '';
               if (id.isNotEmpty) {
                 if (widget.addLesson) {
@@ -103,12 +103,12 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
             const SizedBox(width: 8),
           ],
         ),
-        body: previewPages.isEmpty
+        body: previewLessons.isEmpty
             ? _buildEmptyState()
             : Column(
                 children: [
-                  // Page tabs
-                  if (!widget.singlePage && previewPages.length > 1)
+                  // Lesson tabs
+                  if (!widget.singlePage && previewLessons.length > 1)
                     Material(
                       color: Colors.white,
                       child: TabBar(
@@ -116,17 +116,20 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
                         labelColor: AppColors.primary500,
                         unselectedLabelColor: AppColors.neutral500,
                         indicatorColor: AppColors.primary500,
-                        tabs: previewPages
+                        tabs: previewLessons
                             .asMap()
                             .entries
-                            .map((entry) => Tab(text: 'Page ${entry.key + 1}'))
+                            .map(
+                              (entry) =>
+                                  Tab(text: 'Lesson ${entry.key + 1}'),
+                            )
                             .toList(),
                       ),
                     ),
                   Expanded(
                     child: _viewMode == 'desktop'
-                        ? _buildDesktopLayout(previewPages)
-                        : _buildMobileLayout(previewPages),
+                        ? _buildDesktopLayout(previewLessons)
+                        : _buildMobileLayout(previewLessons),
                   ),
                 ],
               ),
@@ -134,13 +137,13 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     );
   }
 
-  Widget _buildDesktopLayout(List<CoursePage> previewPages) {
+  Widget _buildDesktopLayout(List<CourseLesson> previewLessons) {
     return Container(
       color: const Color.fromRGBO(245, 246, 248, 1),
       child: TabBarView(
-        children: previewPages
+        children: previewLessons
             .map(
-              (page) => Padding(
+              (lesson) => Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 24,
                   horizontal: 32,
@@ -149,21 +152,23 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 760),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.06),
-                              blurRadius: 16,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
+                    Flexible(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 760),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.06),
+                                blurRadius: 16,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: _InteractiveLessonView(lesson: lesson),
                         ),
-                        child: _InteractivePageView(page: page),
                       ),
                     ),
                   ],
@@ -175,7 +180,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     );
   }
 
-  Widget _buildMobileLayout(List<CoursePage> previewPages) {
+  Widget _buildMobileLayout(List<CourseLesson> previewLessons) {
     return Center(
       child: Container(
         width: 375,
@@ -218,8 +223,8 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
               // Course content
               Expanded(
                 child: TabBarView(
-                  children: previewPages
-                      .map((page) => _InteractivePageView(page: page))
+                  children: previewLessons
+                      .map((lesson) => _InteractiveLessonView(lesson: lesson))
                       .toList(),
                 ),
               ),
@@ -312,18 +317,18 @@ class _ViewportButton extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Interactive page view — manages per-block answer state & visibilityRule
+// Interactive lesson view — manages per-block answer state & visibilityRule
 // ---------------------------------------------------------------------------
-class _InteractivePageView extends StatefulWidget {
-  final CoursePage page;
+class _InteractiveLessonView extends StatefulWidget {
+  final CourseLesson lesson;
 
-  const _InteractivePageView({required this.page});
+  const _InteractiveLessonView({required this.lesson});
 
   @override
-  State<_InteractivePageView> createState() => _InteractivePageViewState();
+  State<_InteractiveLessonView> createState() => _InteractiveLessonViewState();
 }
 
-class _InteractivePageViewState extends State<_InteractivePageView> {
+class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
   /// Tracks which block indices have been answered correctly.
   final Map<int, bool> _correctState = {};
 
@@ -337,7 +342,7 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
   void initState() {
     super.initState();
     // Auto-mark non-interactive blocks as correct.
-    final blocks = widget.page.blocks;
+    final blocks = widget.lesson.blocks;
     for (int i = 0; i < blocks.length; i++) {
       if (!_isQuestionType(blocks[i].type)) {
         _correctState[i] = true;
@@ -408,7 +413,7 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
 
   @override
   Widget build(BuildContext context) {
-    final blocks = widget.page.blocks;
+    final blocks = widget.lesson.blocks;
     final blockVisibility = _computeBlockVisibility(blocks);
 
     return Column(
@@ -418,7 +423,7 @@ class _InteractivePageViewState extends State<_InteractivePageView> {
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [
               Text(
-                widget.page.title,
+                widget.lesson.title,
                 style: const TextStyle(
                   fontSize: AppFontSize.lg,
                   fontWeight: FontWeight.w600,

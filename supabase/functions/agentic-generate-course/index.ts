@@ -3,7 +3,7 @@
  *
  * Milestone 2 orchestrator. Calls sub-functions sequentially:
  *   1. ai-plan-course       → CoursePlanJson
- *   2. ai-generate-lesson-blocks × N  → LessonPageJson[]
+ *   2. ai-generate-lesson-blocks × N  → LessonJson[]
  *   3. Assemble + validate CourseJson
  *   4. Write courses + lessons to database
  *
@@ -28,7 +28,7 @@
  * Keep lesson count ≤ 6 for comfortable headroom within the 60-s default limit.
  */
 
-import type { CoursePlanJson, LessonPageJson } from '../_shared/types/course_plan.ts';
+import type { CoursePlanJson, LessonJson } from '../_shared/types/course_plan.ts';
 import { evaluateCourseQuality } from '../_shared/quality.ts';
 import type { QualityReport } from '../_shared/quality.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -110,14 +110,14 @@ interface CourseJson {
     difficulty:       string;
     estimatedMinutes: number;
   };
-  pages: Array<{
-    pageId:  string;
-    title:   string;
-    blocks:  unknown[];
+  lessons: Array<{
+    lessonId: string;
+    title:    string;
+    blocks:   unknown[];
   }>;
 }
 
-function buildCourseJson(plan: CoursePlanJson, lessonPages: LessonPageJson[]): CourseJson {
+function buildCourseJson(plan: CoursePlanJson, lessonJsons: LessonJson[]): CourseJson {
   return {
     $schema:       'https://primoria.com/course-schema/v1.json',
     schemaVersion: '1.0.0',
@@ -129,26 +129,26 @@ function buildCourseJson(plan: CoursePlanJson, lessonPages: LessonPageJson[]): C
       difficulty:       plan.course.difficulty,
       estimatedMinutes: plan.course.estimated_total_minutes,
     },
-    pages: lessonPages.map((page, i) => ({
-      pageId: `l${i + 1}`,
-      title:  page.pageTitle,
-      blocks: page.blocks,
+    lessons: lessonJsons.map((lesson, i) => ({
+      lessonId: `l${i + 1}`,
+      title:    lesson.lessonTitle,
+      blocks:   lesson.blocks,
     })),
   };
 }
 
 // ────────────────────────────────────────────────────────────────────
 // Minimal CourseJson validation (full block-level validation already
-// happened inside ai-generate-lesson-blocks for each page)
+// happened inside ai-generate-lesson-blocks for each lesson)
 // ────────────────────────────────────────────────────────────────────
 
 function validateAssembledCourse(course: CourseJson): string | null {
   if (!course.metadata?.title?.trim()) return 'metadata.title is empty';
-  if (!Array.isArray(course.pages) || course.pages.length === 0) return 'pages array is empty';
-  for (let i = 0; i < course.pages.length; i++) {
-    const page = course.pages[i];
-    if (!Array.isArray(page.blocks) || page.blocks.length === 0) {
-      return `pages[${i}] has no blocks`;
+  if (!Array.isArray(course.lessons) || course.lessons.length === 0) return 'lessons array is empty';
+  for (let i = 0; i < course.lessons.length; i++) {
+    const lesson = course.lessons[i];
+    if (!Array.isArray(lesson.blocks) || lesson.blocks.length === 0) {
+      return `lessons[${i}] has no blocks`;
     }
   }
   return null; // valid
@@ -184,7 +184,7 @@ async function lookupSubjectId(
 
 async function writeToDb(
   plan: CoursePlanJson,
-  lessonPages: LessonPageJson[],
+  lessonJsons: LessonJson[],
   userId: string,
   supabase: SupabaseClient,
 ): Promise<string> {
@@ -226,7 +226,7 @@ async function writeToDb(
     xp_reward:        lesson.xp_reward,
     duration_seconds: lesson.estimated_minutes * 60,
     is_locked:        lesson.order > 1,      // first lesson unlocked by default
-    content_json:     { blocks: lessonPages[i].blocks },
+    content_json:     { blocks: lessonJsons[i].blocks },
   }));
 
   const { error: lessonsErr } = await supabase.from('lessons').insert(lessonRows);
@@ -328,10 +328,10 @@ Deno.serve(async (req: Request) => {
     language:        planJson.course.language,
   };
 
-  const lessonPages: LessonPageJson[] = [];
+  const lessonJsons: LessonJson[] = [];
 
   for (const lesson of planJson.lessons) {
-    const lessonResult = await callSubFunction<{ page: LessonPageJson }>(
+    const lessonResult = await callSubFunction<{ page: LessonJson }>(
       'ai-generate-lesson-blocks',
       { lessonPlan: lesson, courseContext },
       supabaseUrl,
@@ -343,11 +343,11 @@ Deno.serve(async (req: Request) => {
         `lesson-${lesson.order}`,
       );
     }
-    lessonPages.push(lessonResult.data.page);
+    lessonJsons.push(lessonResult.data.page);
   }
 
   // ── Stage 3: assemble + validate CourseJson ───────────────────────
-  let courseJson = buildCourseJson(planJson, lessonPages);
+  let courseJson = buildCourseJson(planJson, lessonJsons);
   const validationError = validateAssembledCourse(courseJson);
   if (validationError) {
     return errorResponse(`Course assembly validation failed: ${validationError}`, 'validate');
@@ -384,7 +384,7 @@ Deno.serve(async (req: Request) => {
         const lesson = planJson.lessons[lessonIdx];
         if (!lesson) continue;
 
-        const regenResult = await callSubFunction<{ page: LessonPageJson }>(
+        const regenResult = await callSubFunction<{ page: LessonJson }>(
           'ai-generate-lesson-blocks',
           { lessonPlan: lesson, courseContext, qualityHints },
           supabaseUrl,
@@ -392,13 +392,13 @@ Deno.serve(async (req: Request) => {
         );
 
         if (regenResult.success) {
-          lessonPages[lessonIdx] = regenResult.data.page;
+          lessonJsons[lessonIdx] = regenResult.data.page;
         }
         // On failure: keep original page — do not abort the whole generation
       }
 
       // Rebuild and re-validate after improvements
-      courseJson = buildCourseJson(planJson, lessonPages);
+      courseJson = buildCourseJson(planJson, lessonJsons);
       const revalidErr = validateAssembledCourse(courseJson);
       if (revalidErr) {
         return errorResponse(`Course re-assembly after quality improvement failed: ${revalidErr}`, 'quality-improve');
@@ -413,7 +413,7 @@ Deno.serve(async (req: Request) => {
   const adminClient = createClient(supabaseUrl, serviceKey);
   let courseId: string;
   try {
-    courseId = await writeToDb(planJson, lessonPages, userId, adminClient);
+    courseId = await writeToDb(planJson, lessonJsons, userId, adminClient);
   } catch (e) {
     return errorResponse(`Database write failed: ${e}`, 'db');
   }
@@ -422,7 +422,7 @@ Deno.serve(async (req: Request) => {
   return jsonResponse({
     success:       true,
     courseId,
-    lessonCount:   lessonPages.length,
+    lessonCount:   lessonJsons.length,
     planJson,
     qualityReport: {
       score:   qualityReport.score,

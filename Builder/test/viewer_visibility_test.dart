@@ -73,9 +73,9 @@ Course _buildCourse() {
     order: 2,
   ).copyWith(content: const TextContent(value: 'Trailing block'));
 
-  final page = CoursePage.create(
-    title: 'Page 1',
+  final lesson = CourseLesson.create(
+    title: 'Lesson 1',
   ).copyWith(blocks: [questionBlock, gatedBlock, trailingBlock]);
 
-  return Course.create(title: 'Viewer Visibility Test').copyWith(pages: [page]);
+  return Course.create(title: 'Viewer Visibility Test').copyWith(lessons: [lesson]);
 }

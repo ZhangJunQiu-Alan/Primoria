@@ -1,30 +1,31 @@
 import 'block.dart';
 import '../services/id_generator.dart';
 
-/// Course page model
-class CoursePage {
-  final String pageId;
+/// Course lesson model
+class CourseLesson {
+  final String lessonId;
   final String title;
   final List<Block> blocks;
 
-  const CoursePage({
-    required this.pageId,
+  const CourseLesson({
+    required this.lessonId,
     required this.title,
     required this.blocks,
   });
 
-  /// Create default empty page
-  factory CoursePage.create({String title = 'New Page'}) {
-    return CoursePage(
-      pageId: IdGenerator.pageId(),
+  /// Create default empty lesson
+  factory CourseLesson.create({String title = 'New Lesson'}) {
+    return CourseLesson(
+      lessonId: IdGenerator.lessonId(),
       title: title,
       blocks: [],
     );
   }
 
-  factory CoursePage.fromJson(Map<String, dynamic> json) {
-    return CoursePage(
-      pageId: json['pageId'] as String,
+  factory CourseLesson.fromJson(Map<String, dynamic> json) {
+    return CourseLesson(
+      // backward compat: accept legacy 'pageId' key
+      lessonId: (json['lessonId'] ?? json['pageId']) as String,
       title: json['title'] as String? ?? '',
       blocks: (json['blocks'] as List<dynamic>?)
               ?.map((e) => Block.fromJson(e as Map<String, dynamic>))
@@ -34,37 +35,37 @@ class CoursePage {
   }
 
   Map<String, dynamic> toJson() => {
-        'pageId': pageId,
+        'lessonId': lessonId,
         'title': title,
         'blocks': blocks.map((b) => b.toJson()).toList(),
       };
 
-  CoursePage copyWith({
-    String? pageId,
+  CourseLesson copyWith({
+    String? lessonId,
     String? title,
     List<Block>? blocks,
   }) {
-    return CoursePage(
-      pageId: pageId ?? this.pageId,
+    return CourseLesson(
+      lessonId: lessonId ?? this.lessonId,
       title: title ?? this.title,
       blocks: blocks ?? this.blocks,
     );
   }
 
   /// Add block
-  CoursePage addBlock(Block block) {
+  CourseLesson addBlock(Block block) {
     final updatedBlocks = [...blocks, block];
     return copyWith(blocks: updatedBlocks);
   }
 
   /// Remove block
-  CoursePage removeBlock(String blockId) {
+  CourseLesson removeBlock(String blockId) {
     final updatedBlocks = blocks.where((b) => b.id != blockId).toList();
     return copyWith(blocks: updatedBlocks);
   }
 
   /// Update block
-  CoursePage updateBlock(Block updatedBlock) {
+  CourseLesson updateBlock(Block updatedBlock) {
     final updatedBlocks = blocks.map((b) {
       if (b.id == updatedBlock.id) return updatedBlock;
       return b;
@@ -73,7 +74,7 @@ class CoursePage {
   }
 
   /// Reorder blocks
-  CoursePage reorderBlocks(int oldIndex, int newIndex) {
+  CourseLesson reorderBlocks(int oldIndex, int newIndex) {
     final updatedBlocks = [...blocks];
     final block = updatedBlocks.removeAt(oldIndex);
     updatedBlocks.insert(newIndex, block);
