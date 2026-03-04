@@ -13,6 +13,7 @@ import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/audio_service.dart';
 import '../services/supabase_service.dart';
+import 'lesson_result_screen.dart';
 
 /// Lesson/Interactive learning page - Duolingo + Brilliant style
 class LessonScreen extends StatefulWidget {
@@ -43,6 +44,10 @@ class _LessonScreenState extends State<LessonScreen> {
   String? _selectedOption;
   final _inputController = TextEditingController();
   List<String> _sortingOrder = [];
+
+  // ── Answer tracking ───────────────────────────────────────────
+  int _correctCount = 0;
+  int _totalCount = 0;
 
   // ── Supporting services ───────────────────────────────────────
   late ConfettiController _confettiController;
@@ -765,6 +770,12 @@ class _LessonScreenState extends State<LessonScreen> {
         return;
     }
 
+    // Track answer stats (skip info blocks)
+    if (question.type != QuestionType.info) {
+      _totalCount++;
+      if (isCorrect) _correctCount++;
+    }
+
     if (isCorrect) {
       await _audioService.playCorrect();
       if (!mounted) return;
@@ -805,30 +816,48 @@ class _LessonScreenState extends State<LessonScreen> {
       _confettiController.play();
       await _audioService.playComplete();
 
-      // Capture provider reference before async gaps
       final userProvider = mounted ? context.read<UserProvider>() : null;
-
-      // Persist completion to DB and award XP
       final lessonId = widget.lessonId;
+      final elapsed = DateTime.now().difference(_startTime).inSeconds;
+      final studyMinutes = DateTime.now().difference(_startTime).inMinutes;
+
+      Map<String, dynamic> rpcResult = {};
       if (lessonId != null && lessonId != 'daily') {
-        final elapsed = DateTime.now().difference(_startTime).inSeconds;
-        await SupabaseService.completeLessonAndAwardXp(
+        final result = await SupabaseService.completeLessonAndAwardXp(
           lessonId: lessonId,
-          score: 100,
+          score: _totalCount > 0
+              ? ((_correctCount / _totalCount) * 100).round()
+              : 100,
           timeSpentSeconds: elapsed,
+          correctCount: _correctCount,
+          totalCount: _totalCount,
         );
+        rpcResult = result ?? {};
         await userProvider?.refreshStats();
       }
 
-      // Record study duration locally
-      final studyMinutes = DateTime.now().difference(_startTime).inMinutes;
       if (studyMinutes > 0) {
         await userProvider?.recordStudy(studyMinutes);
       }
 
-      // Let confetti play briefly, then pop
-      await Future.delayed(const Duration(milliseconds: 1500));
-      if (mounted) Navigator.pop(context);
+      // Short confetti burst then go to result screen
+      await Future.delayed(const Duration(milliseconds: 800));
+      if (!mounted) return;
+
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => LessonResultScreen(
+            lessonId: lessonId ?? '',
+            lessonTitle: widget.lessonTitle ?? '',
+            rpcResult: rpcResult,
+            correctCount: _correctCount,
+            totalCount: _totalCount,
+            timeSpentSeconds: elapsed,
+            currentStreak: userProvider?.streak ?? 0,
+          ),
+        ),
+      );
     }
   }
 

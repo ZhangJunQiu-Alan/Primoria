@@ -5,7 +5,11 @@ import '../components/common/bottom_nav_bar.dart';
 import '../providers/user_provider.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../models/daily_task_model.dart';
 import '../services/supabase_service.dart';
+import '../services/daily_task_service.dart';
+import '../widgets/star_chain_widget.dart';
+import '../widgets/daily_task_card.dart';
 import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'profile_screen.dart';
@@ -30,6 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Set<String> _completedLessonIds = {};
   bool _loadingHome = true;
 
+  // Gamification data
+  Set<String> _activeDates = {};
+  List<DailyTask> _dailyTasks = [];
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadHomeData() async {
-    final enrollments = await SupabaseService.getEnrollments();
+    final results = await Future.wait([
+      SupabaseService.getEnrollments(),
+      SupabaseService.getActiveDates(),
+      DailyTaskService.loadOrCreateTodayTasks(),
+    ]);
+
     if (!mounted) return;
+
+    final enrollments = results[0] as List<Map<String, dynamic>>;
+    final activeDates = results[1] as Set<String>;
+    final tasks = results[2] as List<DailyTask>;
 
     Map<String, dynamic>? resolvedCourse;
     var resolvedChapters = <Map<String, dynamic>>[];
@@ -78,6 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _course = resolvedCourse;
       _chapters = resolvedChapters;
       _completedLessonIds = resolvedCompletedLessonIds;
+      _activeDates = activeDates;
+      _dailyTasks = tasks;
       _loadingHome = false;
     });
   }
@@ -348,6 +367,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
+          // ── Gamification section ──────────────────────────────
+          _buildStarChainSection(t),
+          const SizedBox(height: 16),
+          DailyTaskCard(tasks: _dailyTasks, t: t),
+          const SizedBox(height: 24),
+          // ── Course section ────────────────────────────────────
           if (!hasCourse)
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
@@ -411,6 +436,24 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 8),
         ],
       ),
+    );
+  }
+
+  Widget _buildStarChainSection(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.starChainTitle,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1E293B),
+          ),
+        ),
+        const SizedBox(height: 12),
+        StarChainWidget(activeDates: _activeDates),
+      ],
     );
   }
 

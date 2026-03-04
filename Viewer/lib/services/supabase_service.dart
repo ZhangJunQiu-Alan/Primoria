@@ -385,24 +385,213 @@ class SupabaseService {
   }
 
   /// Complete a lesson and award XP via the atomic RPC.
-  static Future<bool> completeLessonAndAwardXp({
+  /// Returns the XP breakdown map from the server, or null on error.
+  static Future<Map<String, dynamic>?> completeLessonAndAwardXp({
     required String lessonId,
     int score = 0,
     int timeSpentSeconds = 0,
+    int correctCount = 0,
+    int totalCount = 0,
   }) async {
-    if (currentUser == null) return false;
+    if (currentUser == null) return null;
     try {
-      await client.rpc(
+      final result = await client.rpc(
         'complete_lesson_and_award_xp',
         params: {
           'p_lesson_id': lessonId,
           'p_score': score,
           'p_seconds': timeSpentSeconds,
+          'p_correct_count': correctCount,
+          'p_total_count': totalCount,
         },
       );
-      return true;
+      if (result is Map) {
+        return Map<String, dynamic>.from(result);
+      }
+      return {};
     } catch (_) {
-      return false;
+      return null;
+    }
+  }
+
+  // ==================== Gamification — Achievements ====================
+
+  /// Fetch all achievements with the current user's earned state.
+  static Future<List<Map<String, dynamic>>> getAchievementsWithStatus() async {
+    try {
+      // All achievement definitions
+      final all = await client
+          .from('achievements')
+          .select('id, slug, name, description, category, rarity')
+          .order('rarity', ascending: true);
+
+      if (currentUser == null) return List<Map<String, dynamic>>.from(all);
+
+      // User's earned achievements
+      final earned = await client
+          .from('user_achievements')
+          .select('achievement_id, earned_at')
+          .eq('user_id', currentUser!.id);
+
+      final earnedMap = <String, String>{};
+      for (final row in earned as List) {
+        earnedMap[row['achievement_id'].toString()] =
+            row['earned_at'].toString();
+      }
+
+      return (all as List).map<Map<String, dynamic>>((a) {
+        final m = Map<String, dynamic>.from(a);
+        m['earned_at'] = earnedMap[m['id']?.toString()];
+        return m;
+      }).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Record a newly unlocked achievement for the current user.
+  static Future<void> unlockAchievement(String achievementId) async {
+    if (currentUser == null) return;
+    try {
+      await client.from('user_achievements').upsert({
+        'user_id': currentUser!.id,
+        'achievement_id': achievementId,
+      });
+    } catch (_) {}
+  }
+
+  /// Get IDs of achievements already earned by the current user.
+  static Future<Set<String>> getEarnedAchievementIds() async {
+    if (currentUser == null) return {};
+    try {
+      final rows = await client
+          .from('user_achievements')
+          .select('achievement_id')
+          .eq('user_id', currentUser!.id);
+      return {for (final r in rows as List) r['achievement_id'].toString()};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  /// Fetch the user's pinned achievement IDs from their profile.
+  static Future<List<String>> getPinnedAchievementIds() async {
+    if (currentUser == null) return [];
+    try {
+      final row = await client
+          .from('profiles')
+          .select('pinned_achievement_ids')
+          .eq('id', currentUser!.id)
+          .maybeSingle();
+      final raw = row?['pinned_achievement_ids'];
+      if (raw is List) return raw.map((e) => e.toString()).toList();
+      return [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Save pinned achievement IDs to the user's profile (max 3).
+  static Future<void> savePinnedAchievementIds(List<String> ids) async {
+    if (currentUser == null) return;
+    try {
+      await client
+          .from('profiles')
+          .update({'pinned_achievement_ids': ids.take(3).toList()})
+          .eq('id', currentUser!.id);
+    } catch (_) {}
+  }
+
+  // ==================== Gamification — Daily Tasks ====================
+
+  /// Fetch today's daily tasks for the current user.
+  static Future<List<Map<String, dynamic>>> getTodayTasks() async {
+    if (currentUser == null) return [];
+    try {
+      final today = DateTime.now().toLocal();
+      final dateStr =
+          '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+      final rows = await client
+          .from('daily_tasks')
+          .select()
+          .eq('user_id', currentUser!.id)
+          .eq('task_date', dateStr)
+          .order('created_at');
+      return List<Map<String, dynamic>>.from(rows);
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Insert a batch of new daily tasks for today.
+  static Future<void> insertTodayTasks(
+    List<Map<String, dynamic>> tasks,
+  ) async {
+    if (currentUser == null) return;
+    try {
+      await client.from('daily_tasks').upsert(tasks);
+    } catch (_) {}
+  }
+
+  /// Increment a task's current_value. Marks complete if target reached.
+  static Future<Map<String, dynamic>?> incrementTaskProgress({
+    required String taskId,
+    required int increment,
+    required int targetValue,
+  }) async {
+    if (currentUser == null) return null;
+    try {
+      // Fetch current value first
+      final row = await client
+          .from('daily_tasks')
+          .select('current_value, is_completed')
+          .eq('id', taskId)
+          .eq('user_id', currentUser!.id)
+          .maybeSingle();
+      if (row == null) return null;
+      if (row['is_completed'] == true) return row;
+
+      final newValue =
+          ((row['current_value'] as num?)?.toInt() ?? 0) + increment;
+      final clamped = newValue.clamp(0, targetValue);
+      final completed = clamped >= targetValue;
+
+      final updated = await client
+          .from('daily_tasks')
+          .update({
+            'current_value': clamped,
+            'is_completed': completed,
+            if (completed)
+              'completed_at': DateTime.now().toUtc().toIso8601String(),
+          })
+          .eq('id', taskId)
+          .eq('user_id', currentUser!.id)
+          .select()
+          .maybeSingle();
+      return updated;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // ==================== Gamification — Star Chain ====================
+
+  /// Fetch daily_activity_log for the past 14 days (current + last week).
+  static Future<Set<String>> getActiveDates({int days = 14}) async {
+    if (currentUser == null) return {};
+    try {
+      final since = DateTime.now().subtract(Duration(days: days));
+      final sinceStr =
+          '${since.year}-${since.month.toString().padLeft(2, '0')}-${since.day.toString().padLeft(2, '0')}';
+      final rows = await client
+          .from('daily_activity_log')
+          .select('date')
+          .eq('user_id', currentUser!.id)
+          .gte('date', sinceStr)
+          .gt('lessons_count', 0);
+      return {for (final r in rows as List) r['date'].toString()};
+    } catch (_) {
+      return {};
     }
   }
 
