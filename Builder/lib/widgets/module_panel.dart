@@ -46,6 +46,7 @@ class _ModulePanelState extends State<ModulePanel> {
       blockTypes: [
         BlockType.codeBlock,
         BlockType.codePlayground,
+        BlockType.codeExecution,
         BlockType.functionFlow,
       ],
       backgroundColor: Color(0xFFE8F5E9), // green 50

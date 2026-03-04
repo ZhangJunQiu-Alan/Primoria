@@ -86,23 +86,26 @@ Allowed block types and exact type values:
 4) code-playground
 {"type":"code-playground","id":"b4","position":{"order":3},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"language":"python","initialCode":"print(1)","expectedOutput":"1","hints":["hint"],"runnable":true}}
 
-5) multiple-choice
-{"type":"multiple-choice","id":"b5","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation"}}
+5) code-execution
+{"type":"code-execution","id":"b5","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"title":"Trace demo","language":"python","sourceCode":"a = 1\\nb = a + 2\\nprint(b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":3}},{"line":3,"stdoutDelta":"3","variables":{"a":1,"b":3}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}
 
-6) fill-blank
-{"type":"fill-blank","id":"b6","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand CPU"}}
+6) multiple-choice
+{"type":"multiple-choice","id":"b6","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation"}}
 
-7) true-false
-{"type":"true-false","id":"b7","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Statement","correctAnswer":true,"explanation":"Why"}}
+7) fill-blank
+{"type":"fill-blank","id":"b7","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand CPU"}}
 
-8) matching
-{"type":"matching","id":"b8","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Why"}}
+8) true-false
+{"type":"true-false","id":"b8","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Statement","correctAnswer":true,"explanation":"Why"}}
 
-9) video
-{"type":"video","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+9) matching
+{"type":"matching","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Why"}}
 
-10) animation
-{"type":"animation","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
+10) video
+{"type":"video","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+
+11) animation
+{"type":"animation","id":"b11","position":{"order":10},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
 
 Course-adaptive block strategy:
 - Programming / CS: include code-block + code-playground + conceptual quizzes (multiple-choice / fill-blank / matching / true-false).
@@ -586,6 +589,80 @@ Additional requirements:
       return buildResult(success: false, message: msg);
     } catch (e) {
       return buildResult(success: false, message: 'Error: $e');
+    }
+  }
+
+  /// Agentic course generation via the `agentic-generate-course` Edge Function.
+  ///
+  /// Internally the function runs three stages:
+  ///   1. ai-plan-course      → decides N lessons and their key_points
+  ///   2. ai-generate-lesson-blocks × N → content blocks per lesson
+  ///   3. DB write            → inserts courses + lessons rows
+  ///
+  /// The course is written to the database before this method returns.
+  /// [AgentCourseResult.courseId] identifies the new row.
+  static Future<AgentCourseResult> generateCourseAgentViaApi({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String language = 'zh',
+  }) async {
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'agentic-generate-course',
+        body: {
+          'description': description.trim(),
+          'difficulty': difficulty,
+          'animationStyle': animationStyle,
+          'language': language,
+        },
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return const AgentCourseResult(
+          success: false,
+          message: 'No response from server',
+        );
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        final stage = dataMap['stage']?.toString();
+        return AgentCourseResult(
+          success: false,
+          message: stage != null ? '[$stage] $error' : error,
+        );
+      }
+
+      return AgentCourseResult(
+        success: true,
+        message: 'Course generated successfully',
+        courseId: dataMap['courseId']?.toString(),
+        lessonCount: (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return AgentCourseResult(
+        success: false,
+        message: 'Server error: $detail',
+      );
+    } on http.ClientException catch (e) {
+      final isFailedToFetch =
+          e.message.toLowerCase().contains('failed to fetch');
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy agentic-generate-course\n'
+                '并设置：supabase secrets set GEMINI_API_KEY=<your_key>'
+          : 'Network error: ${e.message}';
+      return AgentCourseResult(success: false, message: msg);
+    } catch (e) {
+      return AgentCourseResult(success: false, message: 'Error: $e');
     }
   }
 
@@ -1374,6 +1451,9 @@ $rawContent
       'code-playground': 'code-playground',
       'codeplayground': 'code-playground',
       'code_playground': 'code-playground',
+      'code-execution': 'code-execution',
+      'codeexecution': 'code-execution',
+      'code_execution': 'code-execution',
       'multiple-choice': 'multiple-choice',
       'multiplechoice': 'multiple-choice',
       'multiple_choice': 'multiple-choice',
@@ -1479,6 +1559,8 @@ $rawContent
           'hints': _stringListFromDynamic(content['hints']),
           'runnable': _asBool(content['runnable']) ?? true,
         };
+      case 'code-execution':
+        return _normalizeCodeExecutionContent(content);
       case 'multiple-choice':
         return _normalizeMultipleChoiceContent(content);
       case 'fill-blank':
@@ -1678,6 +1760,98 @@ $rawContent
       'correctPairs': pairs,
       if (explanation != null && explanation.isNotEmpty)
         'explanation': explanation,
+    };
+  }
+
+  static Map<String, dynamic> _normalizeCodeExecutionContent(
+    Map<String, dynamic> content,
+  ) {
+    final sourceCode =
+        _asString(content['sourceCode']) ?? _asString(content['code']) ?? '';
+
+    final rawTraceSteps = content['traceSteps'];
+    final traceSteps = <Map<String, dynamic>>[];
+    if (rawTraceSteps is List) {
+      for (final rawStep in rawTraceSteps) {
+        if (rawStep is! Map) continue;
+        final map = _mapFromDynamic(rawStep);
+        final lineRaw = map['line'] ?? map['lineNumber'];
+        final line = lineRaw is num ? lineRaw.toInt() : 1;
+        final variables = map['variables'] is Map
+            ? Map<String, dynamic>.from(map['variables'] as Map)
+            : <String, dynamic>{};
+        final stdoutDelta = _asString(map['stdoutDelta'])?.trim();
+        final note = _asString(map['note'])?.trim();
+        final callStack = _stringListFromDynamic(map['callStack']);
+        traceSteps.add({
+          'line': line <= 0 ? 1 : line,
+          'variables': variables,
+          if (stdoutDelta != null && stdoutDelta.isNotEmpty)
+            'stdoutDelta': stdoutDelta,
+          if (callStack.isNotEmpty) 'callStack': callStack,
+          if (note != null && note.isNotEmpty) 'note': note,
+        });
+      }
+    }
+    if (traceSteps.isEmpty) {
+      traceSteps.add(const {'line': 1, 'variables': <String, dynamic>{}});
+    }
+
+    final checkpoints = <Map<String, dynamic>>[];
+    final rawCheckpoints = content['checkpoints'];
+    if (rawCheckpoints is List) {
+      for (final rawCheckpoint in rawCheckpoints) {
+        if (rawCheckpoint is! Map) continue;
+        final map = _mapFromDynamic(rawCheckpoint);
+        final options = _stringListFromDynamic(map['options']);
+        if (options.isEmpty) continue;
+        final stepIndexRaw = map['stepIndex'];
+        final correctIndexRaw = map['correctIndex'];
+        final stepIndex = stepIndexRaw is num ? stepIndexRaw.toInt() : 0;
+        final correctIndex = correctIndexRaw is num
+            ? correctIndexRaw.toInt()
+            : 0;
+        checkpoints.add({
+          'stepIndex': stepIndex < 0 ? 0 : stepIndex,
+          'question': _asString(map['question'])?.trim().isNotEmpty == true
+              ? _asString(map['question'])!.trim()
+              : 'What happens next?',
+          'options': options,
+          'correctIndex': correctIndex < 0 ? 0 : correctIndex,
+          if (_asString(map['explanation'])?.trim().isNotEmpty == true)
+            'explanation': _asString(map['explanation'])!.trim(),
+        });
+      }
+    }
+
+    final controls = _mapFromDynamic(content['controls']);
+    final style = _mapFromDynamic(content['style']);
+    final initialVariables = content['initialVariables'] is Map
+        ? Map<String, dynamic>.from(content['initialVariables'] as Map)
+        : <String, dynamic>{};
+
+    return {
+      'title': _asString(content['title'])?.trim().isNotEmpty == true
+          ? _asString(content['title'])!.trim()
+          : 'Code Execution',
+      'language': _asString(content['language'])?.trim().isNotEmpty == true
+          ? _asString(content['language'])!.trim()
+          : 'python',
+      'sourceCode': sourceCode,
+      'traceSteps': traceSteps,
+      if (initialVariables.isNotEmpty) 'initialVariables': initialVariables,
+      if (checkpoints.isNotEmpty) 'checkpoints': checkpoints,
+      'controls': {
+        'autoplay': _asBool(controls['autoplay']) ?? false,
+        'stepDurationMs': _asInt(controls['stepDurationMs']) ?? 1200,
+        'allowScrub': _asBool(controls['allowScrub']) ?? true,
+      },
+      'style': {
+        'theme': _asString(style['theme']) ?? 'indigo',
+        'showLineNumbers': _asBool(style['showLineNumbers']) ?? true,
+        'showVariablesPanel': _asBool(style['showVariablesPanel']) ?? true,
+        'showStdoutPanel': _asBool(style['showStdoutPanel']) ?? true,
+      },
     };
   }
 
@@ -1893,4 +2067,26 @@ class _ParsedJsonResult {
   final AIGenerationParseResult result;
 
   const _ParsedJsonResult({required this.json, required this.result});
+}
+
+/// Result returned by [AICourseGenerator.generateCourseAgentViaApi].
+///
+/// Unlike [GenerationResult], the course is already persisted to the database
+/// by the time this is returned — only [courseId] is provided, not a Course object.
+class AgentCourseResult {
+  const AgentCourseResult({
+    required this.success,
+    required this.message,
+    this.courseId,
+    this.lessonCount = 0,
+  });
+
+  final bool success;
+  final String message;
+
+  /// Supabase UUID of the newly-created course row (null on failure).
+  final String? courseId;
+
+  /// Number of lessons generated and saved to the database.
+  final int lessonCount;
 }

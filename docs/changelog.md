@@ -1,5 +1,53 @@
 # Changelog
 
+## [Unreleased] - 2026-03-04 (Code Execution Block)
+
+### Summary
+Added a new interactive programming block type, **`code-execution`**, for line-by-line execution teaching. The feature is integrated end-to-end across Builder authoring, Viewer playback, JSON import/export normalization, schema migration/validation, and tests.
+
+### Added
+- **`Builder/lib/widgets/block_widgets/code_execution_block_widget.dart`** — visual + interactive execution renderer:
+  - current-line highlight with hover/selected/active states
+  - variables panel diff highlighting
+  - stdout accumulation panel
+  - playback controls (`Play / Pause / Step / Back / Reset`) + timeline scrub support
+  - checkpoint Q&A interaction (submit, correctness feedback, explanation, continue)
+  - responsive layout and scroll fallback to avoid overflow in constrained viewports
+- **`Builder/test/code_execution_widget_test.dart`** — widget smoke coverage for:
+  - stepping and reset behavior
+  - checkpoint trigger/answer feedback
+  - Viewer rendering + controls interaction
+
+### Changed
+- **`Builder/lib/models/block_type.dart`** — added `codeExecution` enum entry (`'code-execution'`)
+- **`Builder/lib/models/block.dart`** — added `CodeExecutionContent` model family:
+  - `CodeExecutionTraceStep`
+  - `CodeExecutionCheckpoint`
+  - `CodeExecutionControls`
+  - `CodeExecutionStyle`
+  - JSON serialization/deserialization + defaults + `copyWith`
+- **`Builder/lib/services/block_registry.dart`** — registered `Code Execution` metadata
+- **`Builder/lib/widgets/module_panel.dart`** — added `Code Execution` under `Programming`
+- **`Builder/lib/widgets/property_panel.dart`** — wired `CodeExecutionContentEditor`
+- **`Builder/lib/widgets/block_widgets/block_wrapper.dart`** — Builder canvas now renders `CodeExecutionBlockWidget`
+- **`Builder/lib/features/viewer/viewer_screen.dart`** — Viewer dispatcher now renders `CodeExecutionBlockWidget`
+- **`Builder/lib/services/course_schema_migrator.dart`**:
+  - block-type aliases added: `codeExecution`, `code_execution` → `code-execution`
+  - content normalization added for source code / trace steps / checkpoints / controls / style
+- **`Builder/lib/services/course_schema_validator.dart`** — added path-level validation for `code-execution`:
+  - `traceSteps` required and each `line` must be within source-code range
+  - `checkpoints[].stepIndex` range checks
+  - `checkpoints[].correctIndex` range checks against `options`
+  - object/field type checks for variables, controls, and style
+- **`Builder/lib/services/ai_course_generator.dart`**:
+  - added type alias normalization for `code-execution`
+  - added content normalization for AI-generated `code-execution` blocks
+  - prompt allow-list updated to include `code-execution` canonical schema example
+- **Tests**:
+  - `Builder/test/models_test.dart`: code-execution model roundtrip/default tests
+  - `Builder/test/course_schema_migration_test.dart`: `codeExecution` alias migration test
+  - `Builder/test/course_schema_validator_test.dart`: invalid line/checkpoint path-level error tests
+
 ## [Unreleased] - 2026-03-04 (AI Multi-Lesson Generation + Function Flow Block + Add-Lesson Flow)
 
 ### Summary
