@@ -10,7 +10,7 @@
 3. [x] Build course management system with sub-courses — Dashboard with Course Manage tab (2026-02-09)
 4. [x] Build home page: support common features (Profile, achievements, etc.) — Dashboard Home Page with Course Data, Income, Comments (2026-02-09)
 5. [x] Add basic categories to the module panel (physics, chemistry, biology, math, programming, general) — updated taxonomy: General + Programming groups with search; General now includes Text/Image/Animation/Multiple Choice/True-False/Matching, Programming includes Code Block/Code Playground (2026-03-03)
-6. [~] Add more question types — True/False done (2026-02-11), Matching UX enhanced (2026-02-12), Animation MVP done (2026-02-14); remaining: connect, etc.
+6. [~] Add more question types — True/False done (2026-02-11), Matching UX enhanced (2026-02-12), Animation MVP done (2026-02-14); remaining: advanced matching modes, etc.
 7. [ ] Add multi-user collaboration
 8. [x] Landing page with sign-in modal and Supabase auth integration (2026-02-09)
 9. [x] Builder UI redesign — rounded card panels, pill-shaped buttons, simplified empty states (2026-02-09)
@@ -19,7 +19,7 @@
 12. [ ] Use Google sign-in (OAuth callback handling and session recovery)
 13. [~] Import workflow refinement — schema version migration path + diagnostics done (2026-02-13); remaining: broader historical format coverage
 14. [ ] Block reorder/insert refinement
-15. [~] More block types — True/False added (2026-02-11), Animation MVP added (2026-02-14); remaining: connect, etc.
+15. [~] More block types — True/False added (2026-02-11), Animation MVP added (2026-02-14); remaining: advanced matching modes, etc.
 18. [x] Builder Preview button: phone-mockup viewer with interactive question blocks, visibilityRule gating, page navigation (2026-02-12)
 19. [x] Dashboard HomePage wired to backend — fans/likes/shares from DB, comments with count rules, income with fallback (2026-02-11)
 20. [x] Create Course modal with DB persistence — name input, validation, error feedback, auto-refresh list (2026-02-11)
@@ -51,6 +51,7 @@
 44. [x] Function Flow block type — node-edge diagram for visualising caller-callee execution paths; step-through playback widget; property-panel editor; schema migration + validator; tests (2026-03-04)
 45. [x] Add Lesson flow — `/builder?addLesson=1&courseId=…&draftId=…`; `saveLessonToCourse()` for independent lesson creation; draft persistence; Viewer back-navigation preserves add-lesson context (2026-03-04)
 46. [x] Function Flow post-release stabilization — hardened path-metric rendering in `function_flow_block_widget.dart` (iterator-based metric read) and adjusted viewer smoke test to assert control availability (`function_flow_step`) for lower flake rate (2026-03-04)
+47. [x] Code Execution block type — added `code-execution` end-to-end: model/registry/module panel, property editor, Builder + Viewer interactive renderer (play/pause/step/back/reset, line highlight, variables/stdout, checkpoint Q&A), schema migrator aliases (`codeExecution`/`code_execution`), validator path-level checks, and smoke/model/migration/validator tests (2026-03-04)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)

@@ -45,6 +45,9 @@ class CourseSchemaMigrator {
     'codeplayground': 'code-playground',
     'code-playground': 'code-playground',
     'code_playground': 'code-playground',
+    'codeexecution': 'code-execution',
+    'code-execution': 'code-execution',
+    'code_execution': 'code-execution',
     'functionflow': 'function-flow',
     'function-flow': 'function-flow',
     'function_flow': 'function-flow',
@@ -517,6 +520,10 @@ class CourseSchemaMigrator {
       };
     }
 
+    if (type == 'code-execution') {
+      return _normalizeCodeExecutionContent(content, blockMap);
+    }
+
     if (type == 'function-flow') {
       final nodes = _normalizeFunctionFlowNodes(content['nodes']);
       final nodeIds = nodes.map((node) => node['id'] as String).toSet();
@@ -607,14 +614,40 @@ class CourseSchemaMigrator {
     }
 
     if (type == 'matching') {
+      final leftItems = _normalizeMatchingItems(content['leftItems'], 'l');
+      final rightItems = _normalizeMatchingItems(content['rightItems'], 'r');
+      final correctPairs = _normalizeMatchingPairs(content['correctPairs']);
+      final rules = _normalizeMatchingRules(content['rules']);
+      final nodes = _normalizeMatchingNodes(
+        content['nodes'],
+        leftItems: leftItems,
+        rightItems: rightItems,
+      );
+      final nodeIds = nodes.map((node) => node['id'] as String).toSet();
+      final edges = _normalizeMatchingEdges(
+        content['edges'],
+        nodeIds: nodeIds,
+        fallbackPairs: correctPairs,
+        defaultDirected: rules['directed'] as bool,
+      );
       return {
         'question':
             _asString(content['question']) ??
             _asString(blockMap['question']) ??
             '',
-        'leftItems': _normalizeMatchingItems(content['leftItems'], 'l'),
-        'rightItems': _normalizeMatchingItems(content['rightItems'], 'r'),
-        'correctPairs': _normalizeMatchingPairs(content['correctPairs']),
+        'leftItems': leftItems,
+        'rightItems': rightItems,
+        'correctPairs': correctPairs,
+        'mode': _normalizeMatchingMode(
+          _asString(content['mode']),
+          hasExplicitGraphFields:
+              content.containsKey('nodes') ||
+              content.containsKey('edges') ||
+              content.containsKey('rules'),
+        ),
+        'nodes': nodes,
+        'edges': edges,
+        'rules': rules,
         if (_asString(content['explanation']) != null)
           'explanation': _asString(content['explanation']),
       };
@@ -826,6 +859,341 @@ class CourseSchemaMigrator {
       normalized.add({'leftId': left, 'rightId': right});
     }
     return normalized;
+  }
+
+  static List<Map<String, dynamic>> _normalizeMatchingNodes(
+    dynamic rawNodes, {
+    required List<Map<String, dynamic>> leftItems,
+    required List<Map<String, dynamic>> rightItems,
+  }) {
+    final normalized = <Map<String, dynamic>>[];
+    final seenIds = <String>{};
+    if (rawNodes is List) {
+      for (int i = 0; i < rawNodes.length; i++) {
+        final raw = rawNodes[i];
+        if (raw is! Map) continue;
+        final map = Map<String, dynamic>.from(raw);
+        final id = (_asString(map['id']) ?? 'n${i + 1}').trim();
+        final label = (_asString(map['label']) ?? _asString(map['text']) ?? '')
+            .trim();
+        if (id.isEmpty || label.isEmpty || !seenIds.add(id)) continue;
+        normalized.add({
+          'id': id,
+          'label': label,
+          'x': _normalizeCoordinate(map['x'], fallback: 50.0),
+          'y': _normalizeCoordinate(map['y'], fallback: 50.0),
+          'group': _normalizeMatchingNodeGroup(_asString(map['group'])),
+        });
+      }
+    }
+    if (normalized.isNotEmpty) return normalized;
+
+    final derived = <Map<String, dynamic>>[];
+    final leftStep = leftItems.isEmpty ? 50.0 : 80.0 / (leftItems.length + 1);
+    for (int i = 0; i < leftItems.length; i++) {
+      final item = leftItems[i];
+      derived.add({
+        'id': item['id'],
+        'label': item['text'],
+        'x': 18.0,
+        'y': 10.0 + leftStep * (i + 1),
+        'group': 'left',
+      });
+    }
+
+    final rightStep = rightItems.isEmpty
+        ? 50.0
+        : 80.0 / (rightItems.length + 1);
+    for (int i = 0; i < rightItems.length; i++) {
+      final item = rightItems[i];
+      derived.add({
+        'id': item['id'],
+        'label': item['text'],
+        'x': 82.0,
+        'y': 10.0 + rightStep * (i + 1),
+        'group': 'right',
+      });
+    }
+    return derived;
+  }
+
+  static Map<String, dynamic> _normalizeCodeExecutionContent(
+    Map<String, dynamic> content,
+    Map<String, dynamic> blockMap,
+  ) {
+    final sourceCode =
+        _asString(content['sourceCode']) ??
+        _asString(content['code']) ??
+        _asString(blockMap['code']) ??
+        '';
+    final sourceLineCount = sourceCode.isEmpty
+        ? 0
+        : sourceCode.split('\n').length;
+
+    final traceSteps = _normalizeCodeExecutionTraceSteps(
+      content['traceSteps'],
+      sourceLineCount: sourceLineCount,
+    );
+    final checkpoints = _normalizeCodeExecutionCheckpoints(
+      content['checkpoints'],
+      stepCount: traceSteps.length,
+    );
+    final initialVariables = _normalizeStringKeyMap(
+      content['initialVariables'],
+    );
+
+    return {
+      'title':
+          _asString(content['title']) ??
+          _asString(blockMap['title']) ??
+          'Code Execution',
+      'language':
+          _asString(content['language']) ??
+          _asString(blockMap['language']) ??
+          'python',
+      'sourceCode': sourceCode,
+      'traceSteps': traceSteps.isNotEmpty
+          ? traceSteps
+          : const [
+              {'line': 1, 'variables': <String, dynamic>{}},
+            ],
+      if (initialVariables.isNotEmpty) 'initialVariables': initialVariables,
+      if (checkpoints.isNotEmpty) 'checkpoints': checkpoints,
+      'controls': _normalizeCodeExecutionControls(content['controls']),
+      'style': _normalizeCodeExecutionStyle(content['style']),
+    };
+  }
+
+  static List<Map<String, dynamic>> _normalizeCodeExecutionTraceSteps(
+    dynamic rawSteps, {
+    required int sourceLineCount,
+  }) {
+    if (rawSteps is! List) return const [];
+
+    final normalized = <Map<String, dynamic>>[];
+    for (final raw in rawSteps) {
+      if (raw is! Map) continue;
+      final map = Map<String, dynamic>.from(raw);
+
+      final lineRaw = map['line'] ?? map['lineNumber'];
+      final parsedLine = lineRaw is num ? lineRaw.toInt() : 1;
+      final positiveLine = parsedLine <= 0 ? 1 : parsedLine;
+      final line = sourceLineCount <= 0
+          ? positiveLine
+          : positiveLine.clamp(1, sourceLineCount);
+
+      final variables = _normalizeStringKeyMap(map['variables']);
+      final callStack = _normalizeStringList(map['callStack']);
+      final stdoutDelta = _asString(map['stdoutDelta'])?.trim();
+      final note = _asString(map['note'])?.trim();
+
+      normalized.add({
+        'line': line,
+        'variables': variables,
+        if (stdoutDelta != null && stdoutDelta.isNotEmpty)
+          'stdoutDelta': stdoutDelta,
+        if (callStack.isNotEmpty) 'callStack': callStack,
+        if (note != null && note.isNotEmpty) 'note': note,
+      });
+    }
+    return normalized;
+  }
+
+  static List<Map<String, dynamic>> _normalizeCodeExecutionCheckpoints(
+    dynamic rawCheckpoints, {
+    required int stepCount,
+  }) {
+    if (stepCount <= 0 || rawCheckpoints is! List) return const [];
+
+    final normalized = <Map<String, dynamic>>[];
+    for (final raw in rawCheckpoints) {
+      if (raw is! Map) continue;
+      final map = Map<String, dynamic>.from(raw);
+
+      final rawStepIndex = map['stepIndex'];
+      final parsedStepIndex = rawStepIndex is num ? rawStepIndex.toInt() : 0;
+      final stepIndex = parsedStepIndex.clamp(0, stepCount - 1);
+
+      final options = _normalizeStringList(map['options']);
+      final safeOptions = options.isEmpty
+          ? const ['Option A', 'Option B']
+          : options;
+
+      final rawCorrectIndex = map['correctIndex'];
+      final parsedCorrectIndex = rawCorrectIndex is num
+          ? rawCorrectIndex.toInt()
+          : 0;
+      final correctIndex = parsedCorrectIndex.clamp(0, safeOptions.length - 1);
+
+      final question =
+          _asString(map['question'])?.trim() ?? 'What happens next?';
+      final explanation = _asString(map['explanation'])?.trim();
+
+      normalized.add({
+        'stepIndex': stepIndex,
+        'question': question.isEmpty ? 'What happens next?' : question,
+        'options': safeOptions,
+        'correctIndex': correctIndex,
+        if (explanation != null && explanation.isNotEmpty)
+          'explanation': explanation,
+      });
+    }
+    return normalized;
+  }
+
+  static Map<String, dynamic> _normalizeCodeExecutionControls(
+    dynamic rawControls,
+  ) {
+    final controls = rawControls is Map
+        ? Map<String, dynamic>.from(rawControls)
+        : <String, dynamic>{};
+    return {
+      'autoplay': controls['autoplay'] is bool ? controls['autoplay'] : false,
+      'stepDurationMs': _normalizeCodeExecutionStepDuration(
+        controls['stepDurationMs'],
+      ),
+      'allowScrub': controls['allowScrub'] is bool
+          ? controls['allowScrub']
+          : true,
+    };
+  }
+
+  static Map<String, dynamic> _normalizeCodeExecutionStyle(dynamic rawStyle) {
+    final style = rawStyle is Map
+        ? Map<String, dynamic>.from(rawStyle)
+        : <String, dynamic>{};
+    return {
+      'theme': _normalizeCodeExecutionTheme(
+        _asString(style['theme']) ?? 'indigo',
+      ),
+      'showLineNumbers': style['showLineNumbers'] is bool
+          ? style['showLineNumbers']
+          : true,
+      'showVariablesPanel': style['showVariablesPanel'] is bool
+          ? style['showVariablesPanel']
+          : true,
+      'showStdoutPanel': style['showStdoutPanel'] is bool
+          ? style['showStdoutPanel']
+          : true,
+    };
+  }
+
+  static String _normalizeCodeExecutionTheme(String rawTheme) {
+    final normalized = rawTheme.trim().toLowerCase();
+    switch (normalized) {
+      case 'emerald':
+        return 'emerald';
+      case 'amber':
+        return 'amber';
+      case 'slate':
+        return 'slate';
+      case 'indigo':
+      default:
+        return 'indigo';
+    }
+  }
+
+  static int _normalizeCodeExecutionStepDuration(dynamic rawDurationMs) {
+    final value = rawDurationMs is num ? rawDurationMs.toInt() : 1200;
+    if (value < 200) return 200;
+    if (value > 10000) return 10000;
+    return value;
+  }
+
+  static Map<String, dynamic> _normalizeStringKeyMap(dynamic rawMap) {
+    if (rawMap is! Map) return const <String, dynamic>{};
+    final normalized = <String, dynamic>{};
+    rawMap.forEach((key, value) {
+      final keyString = key.toString().trim();
+      if (keyString.isEmpty) return;
+      normalized[keyString] = value;
+    });
+    return normalized;
+  }
+
+  static List<Map<String, dynamic>> _normalizeMatchingEdges(
+    dynamic rawEdges, {
+    required Set<String> nodeIds,
+    required List<Map<String, dynamic>> fallbackPairs,
+    required bool defaultDirected,
+  }) {
+    final normalized = <Map<String, dynamic>>[];
+    if (rawEdges is List) {
+      for (final raw in rawEdges) {
+        if (raw is! Map) continue;
+        final map = Map<String, dynamic>.from(raw);
+        final from = _asString(map['from'])?.trim();
+        final to = _asString(map['to'])?.trim();
+        if (from == null || from.isEmpty || to == null || to.isEmpty) continue;
+        if (nodeIds.isNotEmpty &&
+            (!nodeIds.contains(from) || !nodeIds.contains(to))) {
+          continue;
+        }
+        normalized.add({
+          'from': from,
+          'to': to,
+          if (_asString(map['label']) != null) 'label': _asString(map['label']),
+          'directed': map['directed'] is bool
+              ? map['directed'] as bool
+              : defaultDirected,
+        });
+      }
+    }
+    if (normalized.isNotEmpty) return normalized;
+
+    return fallbackPairs
+        .map(
+          (pair) => {
+            'from': pair['leftId'] as String,
+            'to': pair['rightId'] as String,
+            'directed': true,
+          },
+        )
+        .toList();
+  }
+
+  static Map<String, dynamic> _normalizeMatchingRules(dynamic rawRules) {
+    if (rawRules is! Map) {
+      return const {
+        'allowOneToMany': false,
+        'allowManyToMany': false,
+        'directed': true,
+      };
+    }
+    final map = Map<String, dynamic>.from(rawRules);
+    final allowManyToMany = map['allowManyToMany'] as bool? ?? false;
+    final allowOneToMany = allowManyToMany
+        ? true
+        : (map['allowOneToMany'] as bool? ?? false);
+    return {
+      'allowOneToMany': allowOneToMany,
+      'allowManyToMany': allowManyToMany,
+      'directed': map['directed'] as bool? ?? true,
+    };
+  }
+
+  static String _normalizeMatchingMode(
+    String? rawMode, {
+    required bool hasExplicitGraphFields,
+  }) {
+    final normalized = rawMode?.trim().toLowerCase();
+    if (normalized == 'list') return 'list';
+    if (normalized == 'graph') return 'graph';
+    if (hasExplicitGraphFields) return 'graph';
+    return 'list';
+  }
+
+  static String _normalizeMatchingNodeGroup(String? rawGroup) {
+    final normalized = rawGroup?.trim().toLowerCase();
+    switch (normalized) {
+      case 'left':
+        return 'left';
+      case 'right':
+        return 'right';
+      case 'neutral':
+      default:
+        return 'neutral';
+    }
   }
 
   static List<Map<String, dynamic>> _normalizeFunctionFlowNodes(

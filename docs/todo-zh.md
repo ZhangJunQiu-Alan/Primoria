@@ -10,7 +10,7 @@
 3. [x] 课程管理系统与子课程流程：Dashboard 增加 Course Manage（2026-02-09）
 4. [x] 首页常见能力（Profile、成就等）：Dashboard 首页含课程数据、收入、评论（2026-02-09）
 5. [x] 模块面板基础分类（物理/化学/生物/数学/编程/通用）：现已调整为 General + Programming 分类 + 搜索；General 包含 Text/Image/Animation/Multiple Choice/True-False/Matching，Programming 包含 Code Block/Code Playground（2026-03-03）
-6. [~] 增加更多题型：True/False 已完成（2026-02-11），Matching 体验增强（2026-02-12），Animation MVP 已完成（2026-02-14）；剩余 connect 等
+6. [~] 增加更多题型：True/False 已完成（2026-02-11），Matching 体验增强（2026-02-12），Animation MVP 已完成（2026-02-14）；剩余高级 Matching 模式等
 7. [ ] 多人协作
 8. [x] 落地页 + 登录弹窗 + Supabase 认证集成（2026-02-09）
 9. [x] Builder UI 重构：圆角卡片、胶囊按钮、简化空状态（2026-02-09）
@@ -18,7 +18,7 @@
 11. [x] Dashboard 接入真实 Supabase 课程数据（2026-02-10）
 12. [ ] Google 登录（OAuth 回调处理与会话恢复）
 13. [ ] Block 重排/插入体验继续优化
-14. [~] 更多 Block 类型：True/False（2026-02-11）与 Animation MVP（2026-02-14）已完成；剩余 connect 等
+14. [~] 更多 Block 类型：True/False（2026-02-11）与 Animation MVP（2026-02-14）已完成；剩余高级 Matching 模式等
 15. [x] Builder 预览按钮：手机壳 Viewer + 交互题型 + visibilityRule 门控 + 页面导航（2026-02-12）
 16. [x] Dashboard 首页后端接线：fans/likes/shares 来自 DB，评论带数量规则，收入支持兜底（2026-02-11）
 17. [x] Create Course 弹窗持久化到 DB：名称输入、校验、错误反馈、自动刷新列表（2026-02-11）
@@ -69,6 +69,7 @@
 44. [x] Function Flow 新 block 类型 — 用节点/连线可视化 caller-callee 执行路径；支持逐步播放；属性面板可编辑；完成 schema 迁移与校验器接入；补齐测试（2026-03-04）
 45. [x] Add Lesson 流程 — 新增 `/builder?addLesson=1&courseId=…&draftId=…`；通过 `saveLessonToCourse()` 作为独立课时写入目标课程；支持草稿持久化；Viewer 返回 Builder 时保持 add-lesson 上下文（2026-03-04）
 46. [x] Function Flow 发布后稳定性收尾 — `function_flow_block_widget.dart` 改为迭代器方式读取 path metrics（箭头/标签渲染更稳）；viewer smoke test 改为断言 `function_flow_step` 控件存在，降低偶发波动（2026-03-04）
+47. [x] Code Execution 新 block 类型 — 完成 `code-execution` 全链路接入：model/registry/模块面板、属性编辑器、Builder+Viewer 交互渲染（播放/暂停/步进/回退/重置、当前行高亮、变量/输出面板、checkpoint 作答）、schema 迁移别名（`codeExecution`/`code_execution`）、路径级校验，以及 smoke/model/migration/validator 测试（2026-03-04）
 
 ## 内容与课程体系
 1. [ ] 课程内容管理系统

@@ -248,6 +248,150 @@ void main() {
       isTrue,
     );
   });
+
+  test('code-execution invalid line reports actionable path', () {
+    final block = Block.create(BlockType.codeExecution, order: 0).copyWith(
+      content: const CodeExecutionContent(
+        title: 'Execution',
+        language: 'python',
+        sourceCode: 'x = 1\\nprint(x)',
+        traceSteps: [
+          CodeExecutionTraceStep(line: 1, variables: {'x': 1}),
+          CodeExecutionTraceStep(line: 5, variables: {'x': 1}),
+        ],
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final result = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isFalse);
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.traceSteps[1].line'),
+      ),
+      isTrue,
+    );
+  });
+
+  test('code-execution invalid checkpoint indexes report actionable path', () {
+    final block = Block.create(BlockType.codeExecution, order: 0).copyWith(
+      content: const CodeExecutionContent(
+        title: 'Execution',
+        language: 'python',
+        sourceCode: 'x = 1\\nprint(x)',
+        traceSteps: [
+          CodeExecutionTraceStep(line: 1, variables: {'x': 1}),
+          CodeExecutionTraceStep(
+            line: 2,
+            stdoutDelta: '1',
+            variables: {'x': 1},
+          ),
+        ],
+        checkpoints: [
+          CodeExecutionCheckpoint(
+            stepIndex: 5,
+            question: 'What prints?',
+            options: ['0', '1'],
+            correctIndex: 4,
+          ),
+        ],
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final result = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isFalse);
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(
+          r'$.pages[0].blocks[0].content.checkpoints[0].stepIndex',
+        ),
+      ),
+      isTrue,
+    );
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(
+          r'$.pages[0].blocks[0].content.checkpoints[0].correctIndex',
+        ),
+      ),
+      isTrue,
+    );
+  });
+
+  test('matching graph invalid edge reports actionable path', () {
+    final block = Block.create(BlockType.matching, order: 0).copyWith(
+      content: const MatchingContent(
+        question: 'Graph match',
+        mode: MatchingContent.modeGraph,
+        nodes: [
+          MatchingNode(id: 'a', label: 'A', x: 20, y: 50),
+          MatchingNode(id: 'b', label: 'B', x: 80, y: 50),
+        ],
+        edges: [MatchingEdge(from: 'a', to: 'missing', directed: true)],
+        rules: MatchingRules(directed: true),
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final result = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isFalse);
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.edges[0].to'),
+      ),
+      isTrue,
+    );
+  });
+
+  test('matching graph one-to-one conflict reports edge path', () {
+    final block = Block.create(BlockType.matching, order: 0).copyWith(
+      content: const MatchingContent(
+        question: 'Graph match',
+        mode: MatchingContent.modeGraph,
+        nodes: [
+          MatchingNode(id: 'a', label: 'A', x: 20, y: 50),
+          MatchingNode(id: 'b', label: 'B', x: 60, y: 30),
+          MatchingNode(id: 'c', label: 'C', x: 60, y: 70),
+        ],
+        edges: [
+          MatchingEdge(from: 'a', to: 'b', directed: true),
+          MatchingEdge(from: 'a', to: 'c', directed: true),
+        ],
+        rules: MatchingRules(
+          allowOneToMany: false,
+          allowManyToMany: false,
+          directed: true,
+        ),
+      ),
+    );
+    final course = _buildCourseWithBlock(block);
+
+    final result = CourseSchemaValidator.validateCourse(
+      course,
+      mode: CourseSchemaValidationMode.export,
+    );
+
+    expect(result.isValid, isFalse);
+    expect(
+      result.errorMessages.any(
+        (e) => e.contains(r'$.pages[0].blocks[0].content.edges[1]'),
+      ),
+      isTrue,
+    );
+  });
 }
 
 Course _buildCourseWithMultipleChoice(MultipleChoiceContent content) {

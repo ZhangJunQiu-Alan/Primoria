@@ -304,6 +304,86 @@ void main() {
     });
   });
 
+  group('CodeExecutionContent', () {
+    test('serialization roundtrip preserves execution fields', () {
+      const content = CodeExecutionContent(
+        title: 'Trace Loop',
+        language: 'python',
+        sourceCode: 'x = 1\\ny = x + 2\\nprint(y)',
+        traceSteps: [
+          CodeExecutionTraceStep(line: 1, variables: {'x': 1}),
+          CodeExecutionTraceStep(
+            line: 2,
+            variables: {'x': 1, 'y': 3},
+            note: 'y computed',
+          ),
+          CodeExecutionTraceStep(
+            line: 3,
+            variables: {'x': 1, 'y': 3},
+            stdoutDelta: '3',
+          ),
+        ],
+        initialVariables: {'seed': 0},
+        checkpoints: [
+          CodeExecutionCheckpoint(
+            stepIndex: 1,
+            question: 'What is y?',
+            options: ['2', '3'],
+            correctIndex: 1,
+            explanation: 'x + 2',
+          ),
+        ],
+        controls: CodeExecutionControls(
+          autoplay: false,
+          stepDurationMs: 900,
+          allowScrub: true,
+        ),
+        style: CodeExecutionStyle(
+          theme: 'emerald',
+          showLineNumbers: true,
+          showVariablesPanel: true,
+          showStdoutPanel: true,
+        ),
+      );
+
+      final restored = CodeExecutionContent.fromJson(content.toJson());
+      expect(restored.title, 'Trace Loop');
+      expect(restored.language, 'python');
+      expect(restored.sourceCode, contains('print(y)'));
+      expect(restored.traceSteps.length, 3);
+      expect(restored.traceSteps[1].line, 2);
+      expect(restored.traceSteps[2].stdoutDelta, '3');
+      expect(restored.initialVariables['seed'], 0);
+      expect(restored.checkpoints.length, 1);
+      expect(restored.checkpoints.first.correctIndex, 1);
+      expect(restored.controls.stepDurationMs, 900);
+      expect(restored.style.theme, 'emerald');
+    });
+
+    test('fromJson supports legacy code field fallback', () {
+      final content = CodeExecutionContent.fromJson({
+        'title': 'Legacy',
+        'language': 'python',
+        'code': 'print(\"legacy\")',
+        'traceSteps': [
+          {'line': 1, 'variables': {}},
+        ],
+      });
+
+      expect(content.sourceCode, 'print(\"legacy\")');
+      expect(content.traceSteps.length, 1);
+    });
+
+    test('Block.create code-execution has default trace', () {
+      final block = Block.create(BlockType.codeExecution, order: 0);
+      expect(block.type, BlockType.codeExecution);
+      final content = block.content as CodeExecutionContent;
+      expect(content.traceSteps.isNotEmpty, isTrue);
+      expect(content.controls.stepDurationMs, 1200);
+      expect(content.style.showLineNumbers, isTrue);
+    });
+  });
+
   group('MultipleChoiceContent', () {
     test('MultipleChoiceContent serialization', () {
       final content = MultipleChoiceContent(
@@ -515,6 +595,7 @@ void main() {
       expect(BlockType.image.value, 'image');
       expect(BlockType.codeBlock.value, 'code-block');
       expect(BlockType.codePlayground.value, 'code-playground');
+      expect(BlockType.codeExecution.value, 'code-execution');
       expect(BlockType.multipleChoice.value, 'multiple-choice');
     });
 
@@ -628,6 +709,78 @@ void main() {
       };
       final content = MatchingContent.fromJson(json);
       expect(content.explanation, isNull);
+    });
+
+    test('legacy matching infers graph fields while keeping list mode', () {
+      final json = {
+        'question': 'Match terms',
+        'leftItems': [
+          {'id': 'l1', 'text': 'CPU'},
+          {'id': 'l2', 'text': 'RAM'},
+        ],
+        'rightItems': [
+          {'id': 'r1', 'text': 'Processor'},
+          {'id': 'r2', 'text': 'Memory'},
+        ],
+        'correctPairs': [
+          {'leftId': 'l1', 'rightId': 'r1'},
+          {'leftId': 'l2', 'rightId': 'r2'},
+        ],
+      };
+
+      final content = MatchingContent.fromJson(json);
+      expect(content.mode, MatchingContent.modeList);
+      expect(content.nodes.length, 4);
+      expect(content.edges.length, 2);
+      expect(content.rules.directed, isTrue);
+    });
+
+    test('graph mode serializes nodes, edges, and rules', () {
+      const content = MatchingContent(
+        question: 'Connect system flow',
+        mode: MatchingContent.modeGraph,
+        nodes: [
+          MatchingNode(
+            id: 'n1',
+            label: 'Input',
+            x: 15,
+            y: 40,
+            group: MatchingNode.groupLeft,
+          ),
+          MatchingNode(
+            id: 'n2',
+            label: 'Parser',
+            x: 55,
+            y: 40,
+            group: MatchingNode.groupNeutral,
+          ),
+          MatchingNode(
+            id: 'n3',
+            label: 'Output',
+            x: 85,
+            y: 40,
+            group: MatchingNode.groupRight,
+          ),
+        ],
+        edges: [
+          MatchingEdge(from: 'n1', to: 'n2', label: 'feed', directed: true),
+          MatchingEdge(from: 'n2', to: 'n3', directed: true),
+        ],
+        rules: MatchingRules(
+          allowOneToMany: true,
+          allowManyToMany: false,
+          directed: true,
+        ),
+      );
+
+      final restored = MatchingContent.fromJson(content.toJson());
+      expect(restored.mode, MatchingContent.modeGraph);
+      expect(restored.nodes.length, 3);
+      expect(restored.edges.length, 2);
+      expect(restored.edges.first.from, 'n1');
+      expect(restored.rules.allowOneToMany, isTrue);
+      expect(restored.rules.allowManyToMany, isFalse);
+      expect(restored.rules.directed, isTrue);
     });
   });
 

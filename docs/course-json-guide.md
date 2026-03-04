@@ -74,10 +74,12 @@ Save it as a `.json` file, then click "Import" in Builder to load it.
 | `pages` | Yes | Page array, at least one page |
 
 Legacy compatibility note:
-- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `multipleChoice`, `fillBlank`, `trueFalse`, and `animationBlock`.
+- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `codeExecution`, `functionFlow`, `multipleChoice`, `fillBlank`, `trueFalse`, and `animationBlock`.
 - Import will migrate these aliases to canonical values:
   - `code-block`
   - `code-playground`
+  - `code-execution`
+  - `function-flow`
   - `multiple-choice`
   - `fill-blank`
   - `true-false`
@@ -513,6 +515,74 @@ Visualises caller-callee execution paths as an interactive node-edge diagram wit
 | `style` | No | Visual overrides: `nodeColor`, `edgeColor`, `activeColor` |
 
 **Legacy aliases accepted by the schema migrator:** `functionflow`, `function_flow`
+
+---
+
+### 11. code-execution - Code Execution Block
+
+Interactive line-by-line execution playback for teaching runtime flow, variable changes, and output accumulation.
+
+```json
+{
+  "type": "code-execution",
+  "id": "ce-001",
+  "position": { "order": 8 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "title": "Trace Variable Updates",
+    "language": "python",
+    "sourceCode": "a = 1\nb = a + 2\nprint(b)",
+    "traceSteps": [
+      { "line": 1, "variables": { "a": 1 } },
+      { "line": 2, "variables": { "a": 1, "b": 3 }, "note": "b is computed" },
+      { "line": 3, "variables": { "a": 1, "b": 3 }, "stdoutDelta": "3" }
+    ],
+    "initialVariables": { "seed": 0 },
+    "checkpoints": [
+      {
+        "stepIndex": 1,
+        "question": "What is b now?",
+        "options": ["2", "3"],
+        "correctIndex": 1,
+        "explanation": "b = a + 2 = 3"
+      }
+    ],
+    "controls": {
+      "autoplay": false,
+      "stepDurationMs": 1200,
+      "allowScrub": true
+    },
+    "style": {
+      "theme": "indigo",
+      "showLineNumbers": true,
+      "showVariablesPanel": true,
+      "showStdoutPanel": true
+    }
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `title` | No | Block title shown in Builder/Viewer |
+| `language` | No | Language label, default `python` |
+| `sourceCode` | Yes | Full source code string (line breaks supported) |
+| `traceSteps` | Yes | Ordered execution steps |
+| `traceSteps[].line` | Yes | 1-based active line number; must be within source range |
+| `traceSteps[].stdoutDelta` | No | Output appended at this step |
+| `traceSteps[].variables` | Yes | Variable snapshot object at this step |
+| `traceSteps[].callStack` | No | Call stack frames |
+| `traceSteps[].note` | No | Teaching note for this step |
+| `initialVariables` | No | Initial variable snapshot before step 1 |
+| `checkpoints` | No | Quiz prompts triggered by step index |
+| `checkpoints[].stepIndex` | Yes (if checkpoint exists) | Trigger step index (0-based, must be in range) |
+| `checkpoints[].options` | Yes (if checkpoint exists) | Option list |
+| `checkpoints[].correctIndex` | Yes (if checkpoint exists) | Correct option index in `options` |
+| `controls` | No | Playback settings (`autoplay`, `stepDurationMs`, `allowScrub`) |
+| `style` | No | Visual settings (`theme`, line numbers, variables/stdout panels) |
+
+**Legacy aliases accepted by the schema migrator:** `codeExecution`, `code_execution`
 
 ---
 
