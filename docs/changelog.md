@@ -1,5 +1,191 @@
 # Changelog
 
+## [Unreleased] - 2026-03-04 (Delete Lesson from Dashboard)
+
+### Summary
+Added per-lesson delete capability directly from the Dashboard course card. Hovering a lesson box reveals a ✕ button (animated fade-in); clicking it confirms via dialog, then removes the page from the course and refreshes the lesson list. A guard prevents deleting the last lesson in a course.
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`** — `_LessonBox` converted from `StatelessWidget` to `StatefulWidget`; `MouseRegion` + `Stack` overlay with `AnimatedOpacity` ✕ button; `onDelete` callback parameter; `_confirmDeleteLesson()` method with last-lesson guard, `AlertDialog` confirmation, `getCourseContent` → `removePage` → `saveCourse` flow, cache invalidation and reload
+- **`Builder/lib/l10n/app_localizations.dart`** — added `deleteLessonTitle`, `deleteLessonConfirm(n, title)`, `lessonDeleted`, `cannotDeleteLastLesson`, `errorLoading` (EN + ZH)
+
+---
+
+## [Unreleased] - 2026-03-04 (AI Agentic – Milestones 2 & 3 + Fixes)
+
+### Summary
+Completed the full AI Agentic Course Builder pipeline (Milestones 2 & 3): plan → per-lesson generation → schema validation → quality evaluation → autonomous quality improvement pass → human-in-the-loop enhancement dialog. Also removed the legacy `group_sort_key`/`group_title` chapter-grouping columns from lessons, extracted the matching content editor, and stabilised Function Flow dropdown overflow.
+
+### Added
+- **`supabase/functions/ai-plan-course/index.ts`** (2B) — generates a `CoursePlanJson` (schema_version "plan-1.0") with structured lesson outlines
+- **`supabase/functions/ai-generate-lesson-blocks/index.ts`** (2C) — generates blocks for a single lesson from `CoursePlanLesson`; block-ID prefix `l{order}-`; per-model correction-prompt retry loop (`MAX_RETRIES_PER_MODEL = 2`); optional `qualityHints[]` injection
+- **`supabase/functions/agentic-generate-course/index.ts`** (2D + 3C) — orchestrator: plan → parallel lesson generation → assembly → schema validation → Stage 3.5 quality improvement pass → DB write; returns `qualityReport` in response
+- **`supabase/functions/_shared/quality.ts`** (3C) — shared quality evaluation logic (`evaluateCourseQuality`); 4 rules: `MISSING_INTERACTIVE`, `LOW_QUESTION_COUNT`, `TEXT_TOO_LONG`, `BEGINNER_KEYWORD`; score 0–100, passed ≥ 80
+- **`supabase/functions/utils-validate-course-json/index.ts`** (3A) — standalone Course JSON schema validator; returns `passed`, `errors`, `warnings`, `summary`; added `function-flow` content validation case (nodes must be a non-empty array)
+- **`supabase/functions/utils-evaluate-course-quality/index.ts`** (3C) — HTTP wrapper around the shared quality evaluator
+- **`supabase/functions/ai-enhance-course/index.ts`** (3D) — course enhancement endpoint; `add-interactive` re-generates lessons missing interactive blocks (null-safe); `add-final-quiz` appends a synthetic quiz lesson
+- **`supabase/migrations/20260304000004_drop_lesson_group_columns.sql`** — drops `group_sort_key` and `group_title` columns from `lessons`; removes associated indexes
+- **`supabase/migrations/20260304000005_add_ai_agentic_columns_to_courses.sql`** — adds `animation_style`, `content_language`, `planning_json` columns to `courses`
+- **`Builder/lib/widgets/matching_content_editor.dart`** — extracted `MatchingContentEditor` widget into its own file; full property-panel UX for pairs, mode toggle, shuffle, and graph preview
+- **`Builder/test/matching_graph_widget_test.dart`** — smoke tests for matching content editor
+- **`docs/ai-agentic-course-builder.md`** — full Milestone 1/2/3 roadmap doc with all items checked
+
+### Changed
+- **`Builder/lib/services/ai_course_generator.dart`** — `AgentCourseResult` gains `qualityScore`, `qualityPassed`, `qualityIssues`; new `enhanceCourseViaApi()` static method; new `EnhanceCourseResult` class
+- **`Builder/lib/l10n/app_localizations.dart`** — added quality dialog i18n strings (EN + ZH)
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`** — post-generation quality dialog (`_showQualityDialog`): shows score, issues list, "Add Interactive" / "Add Final Quiz" buttons with async enhance flow
+- **`Builder/lib/services/supabase_service.dart`** — removed `group_sort_key`/`group_title` from all lesson queries and inserts; code-style cleanup
+- **`Viewer/lib/services/supabase_service.dart`** — removed chapter-grouping logic; flattened to single "Chapter 1" wrapper ordered by `sort_key`
+- **`Builder/lib/widgets/function_flow_content_editor.dart`** — added `isExpanded: true` and `TextOverflow.ellipsis` to Entry Node and edge From/To dropdowns; added `selectedItemBuilder` to fix selected-item overflow
+- **`Builder/lib/services/id_generator.dart`** — `courseId()` now returns `'course-<uuid>'` prefix for clarity
+- **`docs/database-schema.md`** — documented new `animation_style`, `content_language`, `planning_json` columns in courses table
+
+## [Unreleased] - 2026-03-04 (Code Execution Block)
+
+### Summary
+Added a new interactive programming block type, **`code-execution`**, for line-by-line execution teaching. The feature is integrated end-to-end across Builder authoring, Viewer playback, JSON import/export normalization, schema migration/validation, and tests.
+
+### Added
+- **`Builder/lib/widgets/block_widgets/code_execution_block_widget.dart`** — visual + interactive execution renderer:
+  - current-line highlight with hover/selected/active states
+  - variables panel diff highlighting
+  - stdout accumulation panel
+  - playback controls (`Play / Pause / Step / Back / Reset`) + timeline scrub support
+  - checkpoint Q&A interaction (submit, correctness feedback, explanation, continue)
+  - responsive layout and scroll fallback to avoid overflow in constrained viewports
+- **`Builder/test/code_execution_widget_test.dart`** — widget smoke coverage for:
+  - stepping and reset behavior
+  - checkpoint trigger/answer feedback
+  - Viewer rendering + controls interaction
+
+### Changed
+- **`Builder/lib/models/block_type.dart`** — added `codeExecution` enum entry (`'code-execution'`)
+- **`Builder/lib/models/block.dart`** — added `CodeExecutionContent` model family:
+  - `CodeExecutionTraceStep`
+  - `CodeExecutionCheckpoint`
+  - `CodeExecutionControls`
+  - `CodeExecutionStyle`
+  - JSON serialization/deserialization + defaults + `copyWith`
+- **`Builder/lib/services/block_registry.dart`** — registered `Code Execution` metadata
+- **`Builder/lib/widgets/module_panel.dart`** — added `Code Execution` under `Programming`
+- **`Builder/lib/widgets/property_panel.dart`** — wired `CodeExecutionContentEditor`
+- **`Builder/lib/widgets/block_widgets/block_wrapper.dart`** — Builder canvas now renders `CodeExecutionBlockWidget`
+- **`Builder/lib/features/viewer/viewer_screen.dart`** — Viewer dispatcher now renders `CodeExecutionBlockWidget`
+- **`Builder/lib/services/course_schema_migrator.dart`**:
+  - block-type aliases added: `codeExecution`, `code_execution` → `code-execution`
+  - content normalization added for source code / trace steps / checkpoints / controls / style
+- **`Builder/lib/services/course_schema_validator.dart`** — added path-level validation for `code-execution`:
+  - `traceSteps` required and each `line` must be within source-code range
+  - `checkpoints[].stepIndex` range checks
+  - `checkpoints[].correctIndex` range checks against `options`
+  - object/field type checks for variables, controls, and style
+- **`Builder/lib/services/ai_course_generator.dart`**:
+  - added type alias normalization for `code-execution`
+  - added content normalization for AI-generated `code-execution` blocks
+  - prompt allow-list updated to include `code-execution` canonical schema example
+- **Tests**:
+  - `Builder/test/models_test.dart`: code-execution model roundtrip/default tests
+  - `Builder/test/course_schema_migration_test.dart`: `codeExecution` alias migration test
+  - `Builder/test/course_schema_validator_test.dart`: invalid line/checkpoint path-level error tests
+
+## [Unreleased] - 2026-03-04 (AI Multi-Lesson Generation + Function Flow Block + Add-Lesson Flow)
+
+### Summary
+Three independent feature tracks land together. (1) The AI "one-sentence generate" feature now produces structured multi-lesson courses (2-4 lessons, 6-9 blocks each) entirely server-side, with TypeScript schema validation in the Edge Function, truncation detection, and model fallback — generation result stays on the Dashboard instead of jumping to the Builder. (2) A new **Function Flow** block type visualises caller-callee execution paths as an interactive node-edge diagram, complete with step-through animation, a property-panel editor, schema migration, and validator coverage. (3) The Builder gains a dedicated **Add Lesson** flow (`/builder?addLesson=1&courseId=…`) that creates an independent lesson under an existing course via `saveLessonToCourse()`, with draft persistence and round-trip Viewer support.
+
+### Added
+- **`supabase/functions/ai-generate-course-json/index.ts`** — major update:
+  - Multi-lesson prompt: 2-4 lessons, 6-9 blocks/lesson, ≤ 30 total; each lesson covers one coherent sub-topic
+  - `validateCourseSchema()` TypeScript validator (mirrors Dart `CourseSchemaValidator`): checks courseId, metadata, pages, block IDs/types, per-type content fields, duplicate IDs; errors block, warnings pass through
+  - `buildValidationSummary()` returns concise human-readable summaries with up to 3 error details
+  - `finishReason` check: `MAX_TOKENS` → truncation error → retry next model; non-STOP reasons with no text → retry
+  - Trailing `}` guard: detects mid-JSON truncation even when `finishReason` is incorrectly reported as `STOP`
+  - Content snippet (first 200 chars) included in parse-failure error for diagnostics
+  - `MAX_OUTPUT_TOKENS` raised from 16 384 → 32 768
+  - `shouldTryNextModel`: fixed — `statusCode === undefined` (non-HTTP failure) now always retries next model
+  - Success response includes optional `warnings` array; failure response includes optional `validationErrors` array
+- **`Builder/lib/models/block.dart`** — `FunctionFlowNode`, `FunctionFlowEdge`, `FunctionFlowStep`, `FunctionFlowContent` model classes with full JSON serialization / deserialization and `copyWith`
+- **`Builder/lib/models/block_type.dart`** — `functionFlow` enum value (`'function-flow'`, symbol `ƒ→`)
+- **`Builder/lib/services/block_registry.dart`** — `FunctionFlow` registered with priority 4
+- **`Builder/lib/widgets/block_widgets/function_flow_block_widget.dart`** — read-only canvas widget with step-through playback
+- **`Builder/lib/widgets/function_flow_content_editor.dart`** — property-panel editor (add/remove/edit nodes and edges, entryNodeId picker)
+- **`Builder/lib/widgets/module_panel.dart`** — `FunctionFlow` added to **Programming** category
+- **`Builder/lib/widgets/property_panel.dart`** — `_buildFunctionFlowEditor()` delegating to `FunctionFlowContentEditor`
+- **`Builder/lib/services/course_schema_migrator.dart`** — `function-flow` content normalization: node/edge/step normalizers, style normalizer, alias map entries (`functionflow`, `function_flow`)
+- **`Builder/lib/services/course_schema_validator.dart`** — `_validateFunctionFlowContent()`: node structure, edge referential integrity, steps count, entryNodeId presence
+- **`Builder/lib/app/router.dart`** — `/builder` and `/viewer` routes now accept `addLesson` (bool) and `draftId` query params
+- **`Builder/lib/features/builder/builder_screen.dart`** — `addLesson` / `draftId` params; `_isAddLessonFlow` getter; `_loadOrInitAddLessonCourse()` (loads draft if present, else blank); saves via `saveLessonToCourse()`
+- **`Builder/lib/features/viewer/viewer_screen.dart`** — accepts `addLesson` / `draftId`; back-button routes back to `/builder?courseId=…&addLesson=1&draftId=…` when in add-lesson context; renders `FunctionFlowBlockWidget`
+- **Tests**: `models_test.dart` (FunctionFlowContent roundtrip, edge validation), `course_schema_migration_test.dart` (functionFlow alias migration), `course_schema_validator_test.dart` (invalid edge path error), `function_flow_widget_test.dart` (widget smoke test)
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**:
+  - After AI generation: stay on Dashboard (no longer auto-navigates to `/builder`)
+  - Replaced `createCourseRow()` + `StorageService.saveCourseDraft()` with a single `SupabaseService.saveCourse()` call
+  - Refreshes course list in-place after generation via `_loadCourses()`
+  - Removed unused `storage_service.dart` import
+- **`Builder/lib/services/supabase_service.dart`** — `_saveCourseSnapshot()` rewritten:
+  - Creates one `lessons` row per course page (sort_keys 1000, 1010, 1020, …)
+  - Only the first row carries `content_json` (full snapshot); subsequent rows carry the page title only
+  - Deletes excess snapshot rows when page count decreases
+  - Snapshot rows (sort_key [1000, 2000)) are managed independently of add-lesson rows (sort_key ≥ 2000)
+- **`Builder/lib/widgets/block_widgets/function_flow_block_widget.dart`** — hardened path-metric sampling for edge arrows/labels by switching from `PathMetrics.first/isEmpty` to iterator-based access, improving compatibility across Flutter/Dart toolchain versions
+- **`docs/README.md` / `docs/README-zh.md`** — backend runtime updated to "TypeScript on Deno (Supabase Edge Functions)"
+- **`docs/prd.md` / `docs/prd-zh.md`** — tech stack table updated: "TypeScript + Deno (Supabase Edge Functions)" replaces "Node.js"
+
+### Fixed
+- **AI generation empty-content fallback** — `shouldTryNextModel()` previously returned `false` for any failure without an HTTP status code (empty content, network errors); now returns `true` so the full model fallback chain is attempted
+- **Function Flow widget test stability** — `function_flow_widget_test.dart` viewer smoke test now verifies control presence (`function_flow_step`) instead of forcing a tap path, reducing flaky failures while still covering interaction surface availability
+
+---
+
+## [Unreleased] - 2026-03-03 (Builder UX Continuity + Module Taxonomy Refresh)
+
+### Summary
+Improved Builder authoring continuity for unsaved courses and simplified Dashboard entry flows. New blank Builder sessions now use a local temporary course id, so Preview round-trips no longer drop unsaved blocks or AI-generated content. Updated the default blank title from `Untitled Course` to `Untitled Lesson`. Simplified module taxonomy from `General/Physical/Chemical` to `General/Programming`.
+
+### Changed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**:
+  - Removed the left sidebar "Build Course" quick action button
+  - Changed Course Manage "Add Lesson" tile navigation from `/builder?courseId=<id>` to `/builder` (open blank Builder)
+- **`Builder/lib/providers/builder_state.dart`** + **`Builder/lib/providers/course_provider.dart`**:
+  - Default blank course title changed to `Untitled Lesson`
+  - `CourseNotifier` initial state and `createNewCourse()` defaults now align to `Untitled Lesson`
+- **`Builder/lib/widgets/module_panel.dart`**:
+  - Category layout changed to:
+    - `General`: Text, Image, Animation, Multiple Choice, True/False, Matching
+    - `Programming`: Code Block, Code Playground
+  - Removed empty `Physical` / `Chemical` groups
+
+### Fixed
+- **Preview round-trip data loss on unsaved blank courses**:
+  - In `Builder/lib/features/builder/builder_screen.dart`, `_initializeBlankCourse()` now immediately assigns `_courseId = created.courseId` and enables draft auto-save for new unsaved sessions
+  - Preview navigation now always carries a stable id (`/viewer?courseId=<local-id>`) and saves the browser draft under that id before routing
+  - Returning from Viewer to Builder restores the same in-memory/draft-backed course instead of re-initializing a fresh blank course
+
+---
+
+## [Unreleased] - 2026-03-03 (AI Backend Edge Function + Drag-and-Drop Crash Fix)
+
+### Summary
+Moved Gemini AI course generation from the Flutter client to a Supabase Edge Function (`ai-generate-course-json`). The API key and prompt now live server-side — no client-side key required. Removed the API key input from the AI Generate dialog (PDF mode). Fixed a red-screen crash that occurred when dragging blocks in the Builder canvas (`Unexpected null value`). Fixed the Builder screen failing to initialise a blank course when navigated to without a `courseId`.
+
+### Added
+- **`supabase/functions/ai-generate-course-json/index.ts`** — Deno Edge Function: accepts `{description, difficulty, animationStyle, audience}` (text mode) or `{pdfBase64, storageUrl, fileName}` (PDF mode); tries Gemini models in fallback order (`gemini-2.5-flash-latest → 2.5-flash → 2.0-flash → 2.5-pro-latest → 2.5-pro`); returns `{success, courseJson, model}` or `{success: false, error}`. The full course-generation prompt (with all 10 block-type schemas) now lives here, so prompt changes only require a function redeploy — not a Flutter build
+- **`AICourseGenerator.generateViaApi()`** — new static method in `ai_course_generator.dart`: calls the Edge Function via `Supabase.instance.client.functions.invoke`, normalises the returned JSON, and validates it through the existing `CourseImport.importFromString()` pipeline (schema migration + schema validation). Handles `FunctionException` and network-level `ClientException` separately
+
+### Changed
+- **`supabase/config.toml`**: Added `[functions.ai-generate-course-json] verify_jwt = false` — the function calls only the Gemini API and does not touch Supabase user data, so JWT auth is not needed
+- **`Builder/lib/features/dashboard/dashboard_screen.dart`**: `_showOneSentenceGenerateDialog` now calls `AICourseGenerator.generateViaApi()` instead of `generateFromDescription()` — generation no longer requires a client-side API key
+- **`Builder/lib/widgets/ai_generate_dialog.dart`**: Removed the Gemini API key text field and its controller/initState/dispose. `_canGenerate()` no longer checks for a non-empty key. PDF generation now routes through `generateViaApi()` (server-side key)
+- **`Builder/lib/services/ai_course_generator.dart`**: Updated `_modelCandidates` list order (flash-first); added `_maxOutputTokens = 16384` constant; expanded `_shouldTryNextModel` to include 5xx server errors and rate-limit messages
+
+### Fixed
+- **Red-screen crash on block drag (`Unexpected null value`)**: During a `ReorderableListView` drag, Flutter moves the dragged item's `GlobalKey` element into an `Overlay`, making it no longer a descendant of the list viewport. Calling `box.localToGlobal(Offset.zero, ancestor: viewportBox)` then walks up the render tree past the root and hits a null parent → crash. Fixed in `builder_canvas.dart` by wrapping `localToGlobal` in a try-catch and skipping boxes that are not under the viewport
+- **Builder screen blank-canvas init**: When navigating to `/builder` without a `courseId` query param, `_initializeBlankCourse()` was not being called (only `_loadCourse()` was guarded). Fixed by normalising empty/whitespace courseId to `null` in `initState` and explicitly calling `_initializeBlankCourse()` when no courseId is present
+
+---
+
 ## [Unreleased] - 2026-02-26 (GitHub Pages Domain Restore + Browser Autofill)
 
 ### Summary

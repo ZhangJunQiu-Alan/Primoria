@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
+import 'course_import.dart';
 import 'course_schema_validator.dart';
 import 'file_picker.dart' as fp;
 
@@ -13,14 +15,15 @@ class AICourseGenerator {
   static const String _baseUrl =
       'https://generativelanguage.googleapis.com/v1beta';
   static const List<String> _modelCandidates = [
-    'gemini-3-pro-preview',
-    'gemini-3-flash-preview',
-    'gemini-2.5-pro',
-    'gemini-2.5-pro-latest',
-    'gemini-2.5-flash',
     'gemini-2.5-flash-latest',
+    'gemini-2.5-flash',
+    'gemini-3-flash-preview',
     'gemini-2.0-flash',
+    'gemini-2.5-pro-latest',
+    'gemini-2.5-pro',
+    'gemini-3-pro-preview',
   ];
+  static const int _maxOutputTokens = 16384;
   static const int _maxBlocksPerPage = 20;
   static const String _promptVersion = '2026-02-13.ai-course-v1';
   static String? _apiKey;
@@ -83,23 +86,26 @@ Allowed block types and exact type values:
 4) code-playground
 {"type":"code-playground","id":"b4","position":{"order":3},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"language":"python","initialCode":"print(1)","expectedOutput":"1","hints":["hint"],"runnable":true}}
 
-5) multiple-choice
-{"type":"multiple-choice","id":"b5","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation"}}
+5) code-execution
+{"type":"code-execution","id":"b5","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"title":"Trace demo","language":"python","sourceCode":"a = 1\\nb = a + 2\\nprint(b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":3}},{"line":3,"stdoutDelta":"3","variables":{"a":1,"b":3}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}
 
-6) fill-blank
-{"type":"fill-blank","id":"b6","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand CPU"}}
+6) multiple-choice
+{"type":"multiple-choice","id":"b6","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation"}}
 
-7) true-false
-{"type":"true-false","id":"b7","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Statement","correctAnswer":true,"explanation":"Why"}}
+7) fill-blank
+{"type":"fill-blank","id":"b7","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand CPU"}}
 
-8) matching
-{"type":"matching","id":"b8","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Why"}}
+8) true-false
+{"type":"true-false","id":"b8","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Statement","correctAnswer":true,"explanation":"Why"}}
 
-9) video
-{"type":"video","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+9) matching
+{"type":"matching","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Why"}}
 
-10) animation
-{"type":"animation","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
+10) video
+{"type":"video","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+
+11) animation
+{"type":"animation","id":"b11","position":{"order":10},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
 
 Course-adaptive block strategy:
 - Programming / CS: include code-block + code-playground + conceptual quizzes (multiple-choice / fill-blank / matching / true-false).
@@ -260,6 +266,599 @@ Generate the course based on the PDF:
     }
   }
 
+  /// Generate course from a plain-text description (one-sentence / Beta flow).
+  ///
+  /// Unlike [generateFromPdf], this method sends a text-only prompt to Gemini
+  /// (no file upload), so it works without any file picker.
+  static Future<GenerationResult> generateFromDescription({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String audience = 'beginners',
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+    const promptSource = 'description';
+    const promptVersion = _promptVersion;
+
+    var stage = 'preflight';
+    var parseResult = AIGenerationParseResult.notAttempted;
+    bool? validationPassed;
+    var validationErrorCount = 0;
+    var validationWarningCount = 0;
+    var generationLatencyMs = 0;
+    var parseLatencyMs = 0;
+    var validationLatencyMs = 0;
+    var modelAttempts = 0;
+    String? selectedModel;
+
+    final promptFingerprint = _fingerprintPrompt(description);
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+    }) {
+      totalTimer.stop();
+      final diagnostics = AIGenerationDiagnostics(
+        requestId: requestId,
+        promptVersion: promptVersion,
+        promptSource: promptSource,
+        promptFingerprint: promptFingerprint,
+        model: selectedModel,
+        modelAttempts: modelAttempts,
+        totalLatencyMs: totalTimer.elapsedMilliseconds,
+        generationLatencyMs: generationLatencyMs,
+        parseLatencyMs: parseLatencyMs,
+        validationLatencyMs: validationLatencyMs,
+        parseResult: parseResult,
+        validationPassed: validationPassed,
+        validationErrorCount: validationErrorCount,
+        validationWarningCount: validationWarningCount,
+        stage: stage,
+        success: success,
+        message: message,
+      );
+      _logDiagnostics(diagnostics);
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: diagnostics,
+      );
+    }
+
+    if (_apiKey == null || _apiKey!.isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Please set your Gemini API key first',
+      );
+    }
+
+    if (description.trim().isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Course description must not be empty',
+      );
+    }
+
+    // Build a text-only prompt embedding all user options
+    final prompt =
+        '''
+$_courseGenerationPrompt
+
+User course request:
+"${description.trim()}"
+
+Additional requirements:
+- Difficulty level: $difficulty
+- Animation style preference: $animationStyle
+- Target audience: $audience
+- Generate content entirely from the description above (no PDF provided).
+- Follow all hard constraints and block type rules above.
+''';
+
+    try {
+      // 1. Call Gemini with text-only prompt (no file upload needed)
+      stage = 'generate';
+      final models = _modelCandidates;
+      final genTimer = Stopwatch()..start();
+      _ContentResult? lastFailure;
+
+      for (final model in models) {
+        modelAttempts += 1;
+        final result = await _generateTextWithModel(
+          model: model,
+          prompt: prompt,
+        );
+        if (result.success) {
+          genTimer.stop();
+          generationLatencyMs = genTimer.elapsedMilliseconds;
+          selectedModel = result.model;
+          lastFailure = null;
+
+          // 2. Parse
+          stage = 'parse';
+          final parseTimer = Stopwatch()..start();
+          final parsedResult = await _parseJsonObjectWithRepair(
+            result.content!,
+            preferredModel: model,
+          );
+          parseTimer.stop();
+          parseLatencyMs = parseTimer.elapsedMilliseconds;
+          parseResult = parsedResult.result;
+
+          if (parsedResult.json == null) {
+            return buildResult(
+              success: false,
+              message: 'Failed to parse course JSON from AI output',
+              rawJson: _extractJson(result.content!),
+            );
+          }
+
+          final normalizedJson = _normalizeGeneratedCourseJson(
+            parsedResult.json!,
+            fileName: description.trim(),
+          );
+          final course = Course.fromJson(normalizedJson);
+
+          // 3. Validate
+          stage = 'validate';
+          final valTimer = Stopwatch()..start();
+          final validation = CourseSchemaValidator.validateCourse(
+            course,
+            mode: CourseSchemaValidationMode.import,
+          );
+          valTimer.stop();
+          validationLatencyMs = valTimer.elapsedMilliseconds;
+          validationPassed = validation.isValid;
+          validationErrorCount = validation.errors.length;
+          validationWarningCount = validation.warnings.length;
+
+          if (!validation.isValid) {
+            return buildResult(
+              success: false,
+              message: _formatValidationFailureMessage(
+                validation.errorMessages,
+              ),
+              rawJson: jsonEncode(normalizedJson),
+            );
+          }
+
+          stage = 'complete';
+          return buildResult(
+            success: true,
+            message: 'Course generated with $model',
+            course: course,
+            rawJson: jsonEncode(normalizedJson),
+          );
+        }
+        lastFailure = result;
+        if (!_shouldTryNextModel(result)) break;
+      }
+
+      genTimer.stop();
+      return buildResult(
+        success: false,
+        message:
+            'Generation failed: ${lastFailure?.message ?? 'No available model'}',
+      );
+    } catch (e) {
+      return buildResult(success: false, message: 'Generation error: $e');
+    }
+  }
+
+  /// Generate course via the backend Supabase Edge Function.
+  ///
+  /// Unlike [generateFromDescription], this method does not require a
+  /// client-side Gemini API key — the key and prompt live server-side in
+  /// the `ai-generate-course-json` Edge Function.
+  ///
+  /// The returned JSON is normalised and validated through the existing
+  /// [CourseImport] pipeline (schema migration + schema validation).
+  static Future<GenerationResult> generateViaApi({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String audience = 'beginners',
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+    }) {
+      totalTimer.stop();
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: AIGenerationDiagnostics(
+          requestId: requestId,
+          promptVersion: _promptVersion,
+          promptSource: 'api',
+          promptFingerprint: _fingerprintPrompt(description),
+          model: null,
+          modelAttempts: 1,
+          totalLatencyMs: totalTimer.elapsedMilliseconds,
+          generationLatencyMs: 0,
+          parseLatencyMs: 0,
+          validationLatencyMs: 0,
+          parseResult: success
+              ? AIGenerationParseResult.direct
+              : AIGenerationParseResult.failed,
+          validationPassed: success ? true : false,
+          validationErrorCount: 0,
+          validationWarningCount: 0,
+          stage: success ? 'complete' : 'generate',
+          success: success,
+          message: message,
+        ),
+      );
+    }
+
+    if (description.trim().isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Course description must not be empty',
+      );
+    }
+
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-generate-course-json',
+        body: {
+          'description': description.trim(),
+          'difficulty': difficulty,
+          'animationStyle': animationStyle,
+          'audience': audience,
+        },
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return buildResult(success: false, message: 'No response from server');
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        return buildResult(success: false, message: error);
+      }
+
+      final rawCourseJson = dataMap['courseJson'];
+      if (rawCourseJson == null) {
+        return buildResult(
+          success: false,
+          message: 'Server returned no course JSON',
+        );
+      }
+
+      final courseJsonMap = rawCourseJson is Map<String, dynamic>
+          ? rawCourseJson
+          : Map<String, dynamic>.from(rawCourseJson as Map);
+
+      // Normalise (type aliases, unique IDs, defaults) then encode as string
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        courseJsonMap,
+        fileName: description.trim(),
+      );
+      final rawJsonStr = jsonEncode(normalizedJson);
+
+      // Validate through the existing CourseImport pipeline
+      // (schema migration + schema validation)
+      final importResult = CourseImport.importFromString(rawJsonStr);
+      if (!importResult.success || importResult.course == null) {
+        return buildResult(
+          success: false,
+          message: importResult.message,
+          rawJson: rawJsonStr,
+        );
+      }
+
+      return buildResult(
+        success: true,
+        message: 'Course generated via API',
+        course: importResult.course,
+        rawJson: rawJsonStr,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return buildResult(success: false, message: 'Server error: $detail');
+    } on http.ClientException catch (e) {
+      // "Failed to fetch" in Flutter Web = CORS blocked or function not deployed.
+      // The most common cause: the Edge Function has never been deployed to Supabase.
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy ai-generate-course-json\n'
+                '并设置：supabase secrets set GEMINI_API_KEY=<your_key>'
+          : 'Network error: ${e.message}';
+      return buildResult(success: false, message: msg);
+    } catch (e) {
+      return buildResult(success: false, message: 'Error: $e');
+    }
+  }
+
+  /// Agentic course generation via the `agentic-generate-course` Edge Function.
+  ///
+  /// Internally the function runs three stages:
+  ///   1. ai-plan-course      → decides N lessons and their key_points
+  ///   2. ai-generate-lesson-blocks × N → content blocks per lesson
+  ///   3. DB write            → inserts courses + lessons rows
+  ///
+  /// The course is written to the database before this method returns.
+  /// [AgentCourseResult.courseId] identifies the new row.
+  static Future<AgentCourseResult> generateCourseAgentViaApi({
+    required String description,
+    String difficulty = 'beginner',
+    String animationStyle = 'minimal',
+    String language = 'zh',
+  }) async {
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'agentic-generate-course',
+        body: {
+          'description': description.trim(),
+          'difficulty': difficulty,
+          'animationStyle': animationStyle,
+          'language': language,
+        },
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return const AgentCourseResult(
+          success: false,
+          message: 'No response from server',
+        );
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        final stage = dataMap['stage']?.toString();
+        return AgentCourseResult(
+          success: false,
+          message: stage != null ? '[$stage] $error' : error,
+        );
+      }
+
+      final qr = dataMap['qualityReport'] as Map<String, dynamic>?;
+      final qualityScore  = (qr?['score'] as num?)?.toInt() ?? 100;
+      final qualityPassed = qr?['passed'] as bool? ?? true;
+      final rawIssues     = qr?['issues'] as List<dynamic>? ?? [];
+      final qualityIssues = rawIssues
+          .whereType<Map<String, dynamic>>()
+          .map((i) => i['message']?.toString() ?? '')
+          .where((s) => s.isNotEmpty)
+          .toList();
+
+      return AgentCourseResult(
+        success:       true,
+        message:       'Course generated successfully',
+        courseId:      dataMap['courseId']?.toString(),
+        lessonCount:   (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
+        qualityScore:  qualityScore,
+        qualityPassed: qualityPassed,
+        qualityIssues: qualityIssues,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return AgentCourseResult(
+        success: false,
+        message: 'Server error: $detail',
+      );
+    } on http.ClientException catch (e) {
+      final isFailedToFetch =
+          e.message.toLowerCase().contains('failed to fetch');
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy agentic-generate-course\n'
+                '并设置：supabase secrets set GEMINI_API_KEY=<your_key>'
+          : 'Network error: ${e.message}';
+      return AgentCourseResult(success: false, message: msg);
+    } catch (e) {
+      return AgentCourseResult(success: false, message: 'Error: $e');
+    }
+  }
+
+  /// Enhance an existing AI-generated course in the database.
+  ///
+  /// [type] is either `'add-interactive'` (re-generate lessons that have no
+  /// interactive blocks) or `'add-final-quiz'` (append a new quiz lesson).
+  static Future<EnhanceCourseResult> enhanceCourseViaApi({
+    required String courseId,
+    required String type,
+  }) async {
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-enhance-course',
+        body: {'courseId': courseId, 'type': type},
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return const EnhanceCourseResult(
+          success: false,
+          message: 'No response from server',
+        );
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      if (dataMap['success'] != true) {
+        return EnhanceCourseResult(
+          success: false,
+          message: dataMap['error']?.toString() ?? 'Enhancement failed',
+        );
+      }
+
+      return EnhanceCourseResult(
+        success: true,
+        message: dataMap['message']?.toString() ?? 'Done',
+      );
+    } on FunctionException catch (e) {
+      return EnhanceCourseResult(
+        success: false,
+        message: 'Server error: ${e.details ?? e}',
+      );
+    } catch (e) {
+      return EnhanceCourseResult(success: false, message: 'Error: $e');
+    }
+  }
+
+  /// Generate course from PDF via backend Supabase Edge Function.
+  ///
+  /// This method does not require a client-side Gemini API key.
+  /// The PDF is sent as base64 to `ai-generate-course-json`.
+  static Future<GenerationResult> generateFromPdfViaApi({
+    required Uint8List pdfBytes,
+    required String fileName,
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+      String? model,
+    }) {
+      totalTimer.stop();
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: AIGenerationDiagnostics(
+          requestId: requestId,
+          promptVersion: _promptVersion,
+          promptSource: 'api_pdf',
+          promptFingerprint: _fingerprintPrompt(
+            'pdf:$fileName:${pdfBytes.length}',
+          ),
+          model: model,
+          modelAttempts: 1,
+          totalLatencyMs: totalTimer.elapsedMilliseconds,
+          generationLatencyMs: 0,
+          parseLatencyMs: 0,
+          validationLatencyMs: 0,
+          parseResult: success
+              ? AIGenerationParseResult.direct
+              : AIGenerationParseResult.failed,
+          validationPassed: success ? true : false,
+          validationErrorCount: 0,
+          validationWarningCount: 0,
+          stage: success ? 'complete' : 'generate',
+          success: success,
+          message: message,
+        ),
+      );
+    }
+
+    if (pdfBytes.isEmpty) {
+      return buildResult(success: false, message: 'PDF file must not be empty');
+    }
+
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-generate-course-json',
+        body: {'pdfBase64': base64Encode(pdfBytes), 'fileName': fileName},
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return buildResult(success: false, message: 'No response from server');
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      final model = dataMap['model']?.toString();
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        return buildResult(success: false, message: error, model: model);
+      }
+
+      final rawCourseJson = dataMap['courseJson'];
+      if (rawCourseJson == null) {
+        return buildResult(
+          success: false,
+          message: 'Server returned no course JSON',
+          model: model,
+        );
+      }
+
+      final courseJsonMap = rawCourseJson is Map<String, dynamic>
+          ? rawCourseJson
+          : Map<String, dynamic>.from(rawCourseJson as Map);
+
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        courseJsonMap,
+        fileName: fileName.trim().isEmpty ? 'Uploaded PDF' : fileName,
+      );
+      final rawJsonStr = jsonEncode(normalizedJson);
+
+      final importResult = CourseImport.importFromString(rawJsonStr);
+      if (!importResult.success || importResult.course == null) {
+        return buildResult(
+          success: false,
+          message: importResult.message,
+          rawJson: rawJsonStr,
+          model: model,
+        );
+      }
+
+      return buildResult(
+        success: true,
+        message: model != null && model.isNotEmpty
+            ? 'Course generated via API ($model)'
+            : 'Course generated via API',
+        course: importResult.course,
+        rawJson: rawJsonStr,
+        model: model,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return buildResult(success: false, message: 'Server error: $detail');
+    } on http.ClientException catch (e) {
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy ai-generate-course-json\n'
+                '并设置：supabase secrets set GEMINI_API_KEY=<your_key>'
+          : 'Network error: ${e.message}';
+      return buildResult(success: false, message: msg);
+    } catch (e) {
+      return buildResult(success: false, message: 'Error: $e');
+    }
+  }
+
   /// Call Gemini to generate content
   static Future<_ContentResult> _generateContent({
     String? inlineData,
@@ -333,7 +932,7 @@ Generate the course based on the PDF:
         ],
         'generationConfig': {
           'temperature': 0.6,
-          'maxOutputTokens': 65536,
+          'maxOutputTokens': _maxOutputTokens,
           'responseMimeType': 'application/json',
         },
       };
@@ -602,7 +1201,7 @@ $rawContent
         ],
         'generationConfig': {
           'temperature': 0.0,
-          'maxOutputTokens': 65536,
+          'maxOutputTokens': _maxOutputTokens,
           'responseMimeType': 'application/json',
         },
       };
@@ -670,9 +1269,23 @@ $rawContent
     final statusCode = result.statusCode;
     if (statusCode == 404) return true;
     if (statusCode == 429) return true;
-    if (statusCode != 400 && statusCode != 403) return false;
+    if (statusCode == 500 ||
+        statusCode == 502 ||
+        statusCode == 503 ||
+        statusCode == 504) {
+      return true;
+    }
 
     final message = (result.message ?? '').toLowerCase();
+    if (message.contains('high demand') ||
+        message.contains('resource_exhausted') ||
+        message.contains('resource exhausted') ||
+        message.contains('unavailable')) {
+      return true;
+    }
+
+    if (statusCode != 400 && statusCode != 403) return false;
+
     return message.contains('model') &&
             (message.contains('not found') ||
                 message.contains('unsupported') ||
@@ -898,6 +1511,9 @@ $rawContent
       'code-playground': 'code-playground',
       'codeplayground': 'code-playground',
       'code_playground': 'code-playground',
+      'code-execution': 'code-execution',
+      'codeexecution': 'code-execution',
+      'code_execution': 'code-execution',
       'multiple-choice': 'multiple-choice',
       'multiplechoice': 'multiple-choice',
       'multiple_choice': 'multiple-choice',
@@ -1003,6 +1619,8 @@ $rawContent
           'hints': _stringListFromDynamic(content['hints']),
           'runnable': _asBool(content['runnable']) ?? true,
         };
+      case 'code-execution':
+        return _normalizeCodeExecutionContent(content);
       case 'multiple-choice':
         return _normalizeMultipleChoiceContent(content);
       case 'fill-blank':
@@ -1202,6 +1820,98 @@ $rawContent
       'correctPairs': pairs,
       if (explanation != null && explanation.isNotEmpty)
         'explanation': explanation,
+    };
+  }
+
+  static Map<String, dynamic> _normalizeCodeExecutionContent(
+    Map<String, dynamic> content,
+  ) {
+    final sourceCode =
+        _asString(content['sourceCode']) ?? _asString(content['code']) ?? '';
+
+    final rawTraceSteps = content['traceSteps'];
+    final traceSteps = <Map<String, dynamic>>[];
+    if (rawTraceSteps is List) {
+      for (final rawStep in rawTraceSteps) {
+        if (rawStep is! Map) continue;
+        final map = _mapFromDynamic(rawStep);
+        final lineRaw = map['line'] ?? map['lineNumber'];
+        final line = lineRaw is num ? lineRaw.toInt() : 1;
+        final variables = map['variables'] is Map
+            ? Map<String, dynamic>.from(map['variables'] as Map)
+            : <String, dynamic>{};
+        final stdoutDelta = _asString(map['stdoutDelta'])?.trim();
+        final note = _asString(map['note'])?.trim();
+        final callStack = _stringListFromDynamic(map['callStack']);
+        traceSteps.add({
+          'line': line <= 0 ? 1 : line,
+          'variables': variables,
+          if (stdoutDelta != null && stdoutDelta.isNotEmpty)
+            'stdoutDelta': stdoutDelta,
+          if (callStack.isNotEmpty) 'callStack': callStack,
+          if (note != null && note.isNotEmpty) 'note': note,
+        });
+      }
+    }
+    if (traceSteps.isEmpty) {
+      traceSteps.add(const {'line': 1, 'variables': <String, dynamic>{}});
+    }
+
+    final checkpoints = <Map<String, dynamic>>[];
+    final rawCheckpoints = content['checkpoints'];
+    if (rawCheckpoints is List) {
+      for (final rawCheckpoint in rawCheckpoints) {
+        if (rawCheckpoint is! Map) continue;
+        final map = _mapFromDynamic(rawCheckpoint);
+        final options = _stringListFromDynamic(map['options']);
+        if (options.isEmpty) continue;
+        final stepIndexRaw = map['stepIndex'];
+        final correctIndexRaw = map['correctIndex'];
+        final stepIndex = stepIndexRaw is num ? stepIndexRaw.toInt() : 0;
+        final correctIndex = correctIndexRaw is num
+            ? correctIndexRaw.toInt()
+            : 0;
+        checkpoints.add({
+          'stepIndex': stepIndex < 0 ? 0 : stepIndex,
+          'question': _asString(map['question'])?.trim().isNotEmpty == true
+              ? _asString(map['question'])!.trim()
+              : 'What happens next?',
+          'options': options,
+          'correctIndex': correctIndex < 0 ? 0 : correctIndex,
+          if (_asString(map['explanation'])?.trim().isNotEmpty == true)
+            'explanation': _asString(map['explanation'])!.trim(),
+        });
+      }
+    }
+
+    final controls = _mapFromDynamic(content['controls']);
+    final style = _mapFromDynamic(content['style']);
+    final initialVariables = content['initialVariables'] is Map
+        ? Map<String, dynamic>.from(content['initialVariables'] as Map)
+        : <String, dynamic>{};
+
+    return {
+      'title': _asString(content['title'])?.trim().isNotEmpty == true
+          ? _asString(content['title'])!.trim()
+          : 'Code Execution',
+      'language': _asString(content['language'])?.trim().isNotEmpty == true
+          ? _asString(content['language'])!.trim()
+          : 'python',
+      'sourceCode': sourceCode,
+      'traceSteps': traceSteps,
+      if (initialVariables.isNotEmpty) 'initialVariables': initialVariables,
+      if (checkpoints.isNotEmpty) 'checkpoints': checkpoints,
+      'controls': {
+        'autoplay': _asBool(controls['autoplay']) ?? false,
+        'stepDurationMs': _asInt(controls['stepDurationMs']) ?? 1200,
+        'allowScrub': _asBool(controls['allowScrub']) ?? true,
+      },
+      'style': {
+        'theme': _asString(style['theme']) ?? 'indigo',
+        'showLineNumbers': _asBool(style['showLineNumbers']) ?? true,
+        'showVariablesPanel': _asBool(style['showVariablesPanel']) ?? true,
+        'showStdoutPanel': _asBool(style['showStdoutPanel']) ?? true,
+      },
     };
   }
 
@@ -1417,4 +2127,49 @@ class _ParsedJsonResult {
   final AIGenerationParseResult result;
 
   const _ParsedJsonResult({required this.json, required this.result});
+}
+
+/// Result returned by [AICourseGenerator.generateCourseAgentViaApi].
+///
+/// Unlike [GenerationResult], the course is already persisted to the database
+/// by the time this is returned — only [courseId] is provided, not a Course object.
+class AgentCourseResult {
+  const AgentCourseResult({
+    required this.success,
+    required this.message,
+    this.courseId,
+    this.lessonCount = 0,
+    this.qualityScore = 100,
+    this.qualityPassed = true,
+    this.qualityIssues = const [],
+  });
+
+  final bool success;
+  final String message;
+
+  /// Supabase UUID of the newly-created course row (null on failure).
+  final String? courseId;
+
+  /// Number of lessons generated and saved to the database.
+  final int lessonCount;
+
+  /// Quality score from the server-side quality check (0–100).
+  final int qualityScore;
+
+  /// Whether the quality check passed (score ≥ 80).
+  final bool qualityPassed;
+
+  /// Human-readable descriptions of quality issues (empty if none).
+  final List<String> qualityIssues;
+}
+
+/// Result returned by [AICourseGenerator.enhanceCourseViaApi].
+class EnhanceCourseResult {
+  const EnhanceCourseResult({
+    required this.success,
+    required this.message,
+  });
+
+  final bool success;
+  final String message;
 }

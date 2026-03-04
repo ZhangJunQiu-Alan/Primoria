@@ -105,6 +105,145 @@ void main() {
       expect(exportedJson[r'$schema'], Course.schemaUrl);
       expect(exportedJson['schemaVersion'], Course.schemaVersion);
     });
+
+    test('migrates functionFlow alias to function-flow', () {
+      final legacy = {
+        'courseId': 'course-legacy-flow',
+        'metadata': {'title': 'Legacy Flow'},
+        'pages': [
+          {
+            'pageId': 'p1',
+            'title': 'Page 1',
+            'blocks': [
+              {
+                'id': 'b1',
+                'type': 'functionFlow',
+                'position': {'order': 0},
+                'style': {'alignment': 'left', 'spacing': 'md'},
+                'content': {
+                  'title': 'Legacy Function Flow',
+                  'nodes': [
+                    {
+                      'id': 'n1',
+                      'label': 'Start',
+                      'x': 10,
+                      'y': 50,
+                      'kind': 'start',
+                    },
+                    {
+                      'id': 'n2',
+                      'label': 'run()',
+                      'x': 60,
+                      'y': 50,
+                      'kind': 'function',
+                    },
+                  ],
+                  'edges': [
+                    {'from': 'n1', 'to': 'n2', 'label': 'call'},
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      final result = CourseImport.importFromString(jsonEncode(legacy));
+      expect(result.success, isTrue);
+      final block = result.course!.pages.first.blocks.first;
+      expect(block.type, BlockType.functionFlow);
+    });
+
+    test('migrates codeExecution alias to code-execution', () {
+      final legacy = {
+        'courseId': 'course-legacy-code-execution',
+        'metadata': {'title': 'Legacy Code Execution'},
+        'pages': [
+          {
+            'pageId': 'p1',
+            'title': 'Page 1',
+            'blocks': [
+              {
+                'id': 'b1',
+                'type': 'codeExecution',
+                'position': {'order': 0},
+                'style': {'alignment': 'left', 'spacing': 'md'},
+                'content': {
+                  'title': 'Legacy Execution',
+                  'language': 'python',
+                  'code': 'x = 1\\nprint(x)',
+                  'traceSteps': [
+                    {
+                      'line': 1,
+                      'variables': {'x': 1},
+                    },
+                    {
+                      'line': 2,
+                      'stdoutDelta': '1',
+                      'variables': {'x': 1},
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      final result = CourseImport.importFromString(jsonEncode(legacy));
+      expect(result.success, isTrue);
+      final block = result.course!.pages.first.blocks.first;
+      expect(block.type, BlockType.codeExecution);
+      final content = block.content as CodeExecutionContent;
+      expect(content.sourceCode, contains('print(x)'));
+      expect(content.traceSteps.length, 2);
+    });
+
+    test('migrates legacy matching content with graph-compatible fields', () {
+      final legacy = {
+        'courseId': 'course-legacy-matching',
+        'metadata': {'title': 'Legacy Matching'},
+        'pages': [
+          {
+            'pageId': 'p1',
+            'title': 'Page 1',
+            'blocks': [
+              {
+                'id': 'b1',
+                'type': 'matching',
+                'position': {'order': 0},
+                'style': {'alignment': 'left', 'spacing': 'md'},
+                'content': {
+                  'question': 'Match terms',
+                  'leftItems': [
+                    {'id': 'l1', 'text': 'Input'},
+                    {'id': 'l2', 'text': 'Output'},
+                  ],
+                  'rightItems': [
+                    {'id': 'r1', 'text': 'Source'},
+                    {'id': 'r2', 'text': 'Result'},
+                  ],
+                  'correctPairs': [
+                    {'leftId': 'l1', 'rightId': 'r1'},
+                    {'leftId': 'l2', 'rightId': 'r2'},
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      final result = CourseImport.importFromString(jsonEncode(legacy));
+      expect(result.success, isTrue);
+      final block = result.course!.pages.first.blocks.first;
+      final content = block.content as MatchingContent;
+      expect(block.type, BlockType.matching);
+      expect(content.mode, MatchingContent.modeList);
+      expect(content.nodes.length, 4);
+      expect(content.edges.length, 2);
+      expect(content.rules.directed, isTrue);
+    });
   });
 }
 

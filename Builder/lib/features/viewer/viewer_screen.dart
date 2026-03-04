@@ -3,6 +3,7 @@
 library;
 
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -12,20 +13,49 @@ import '../../theme/design_tokens.dart';
 import '../../providers/course_provider.dart';
 import '../../models/models.dart';
 import '../../widgets/block_widgets/animation_block_widget.dart';
+import '../../widgets/block_widgets/code_execution_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
+import '../../widgets/block_widgets/function_flow_block_widget.dart';
 
-class ViewerScreen extends ConsumerWidget {
+class ViewerScreen extends ConsumerStatefulWidget {
   final String? courseId;
+  final bool addLesson;
+  final String? draftId;
+  final int? pageIndex;
+  final bool singlePage;
 
-  const ViewerScreen({super.key, this.courseId});
+  const ViewerScreen({
+    super.key,
+    this.courseId,
+    this.addLesson = false,
+    this.draftId,
+    this.pageIndex,
+    this.singlePage = false,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ViewerScreen> createState() => _ViewerScreenState();
+}
+
+class _ViewerScreenState extends ConsumerState<ViewerScreen> {
+  String _viewMode = 'desktop';
+
+  @override
+  Widget build(BuildContext context) {
     final course = ref.watch(courseProvider);
     final pages = course.pages;
+    final resolvedPageIndex =
+        (widget.pageIndex != null &&
+                widget.pageIndex! >= 0 &&
+                widget.pageIndex! < pages.length)
+            ? widget.pageIndex!
+            : 0;
+    final previewPages = (widget.singlePage && pages.isNotEmpty)
+        ? <CoursePage>[pages[resolvedPageIndex]]
+        : pages;
 
     return DefaultTabController(
-      length: pages.isEmpty ? 1 : pages.length,
+      length: previewPages.isEmpty ? 1 : previewPages.length,
       child: Scaffold(
         backgroundColor: AppColors.neutral100,
         appBar: AppBar(
@@ -37,21 +67,48 @@ class ViewerScreen extends ConsumerWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              final id = courseId ?? '';
+              final id = widget.courseId ?? '';
+              final pagePart =
+                  (widget.pageIndex != null && widget.pageIndex! >= 0)
+                      ? '&lessonIndex=${widget.pageIndex}'
+                      : '';
               if (id.isNotEmpty) {
-                context.go('/builder?courseId=$id');
+                if (widget.addLesson) {
+                  final draftPart =
+                      (widget.draftId != null && widget.draftId!.isNotEmpty)
+                          ? '&draftId=${Uri.encodeQueryComponent(widget.draftId!)}'
+                          : '';
+                  context.go(
+                    '/builder?courseId=$id&addLesson=1$pagePart$draftPart',
+                  );
+                } else {
+                  context.go('/builder?courseId=$id$pagePart');
+                }
               } else {
                 context.go('/builder');
               }
             },
           ),
+          actions: [
+            _ViewportButton(
+              icon: Icons.laptop_mac,
+              active: _viewMode == 'desktop',
+              onTap: () => setState(() => _viewMode = 'desktop'),
+            ),
+            _ViewportButton(
+              icon: Icons.smartphone,
+              active: _viewMode == 'mobile',
+              onTap: () => setState(() => _viewMode = 'mobile'),
+            ),
+            const SizedBox(width: 8),
+          ],
         ),
-        body: pages.isEmpty
+        body: previewPages.isEmpty
             ? _buildEmptyState()
             : Column(
                 children: [
-                  // Page tabs outside the phone frame
-                  if (pages.length > 1)
+                  // Page tabs
+                  if (!widget.singlePage && previewPages.length > 1)
                     Material(
                       color: Colors.white,
                       child: TabBar(
@@ -59,88 +116,131 @@ class ViewerScreen extends ConsumerWidget {
                         labelColor: AppColors.primary500,
                         unselectedLabelColor: AppColors.neutral500,
                         indicatorColor: AppColors.primary500,
-                        tabs: pages
+                        tabs: previewPages
                             .asMap()
                             .entries
                             .map((entry) => Tab(text: 'Page ${entry.key + 1}'))
                             .toList(),
                       ),
                     ),
-                  // Phone mockup
                   Expanded(
-                    child: Center(
-                      child: Container(
-                        width: 375,
-                        height: 812,
-                        margin: const EdgeInsets.all(AppSpacing.lg),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          border: Border.all(
-                            color: AppColors.neutral300,
-                            width: 4,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
-                              blurRadius: 30,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(36),
-                          child: Column(
-                            children: [
-                              // Phone status bar
-                              Container(
-                                height: 44,
-                                color: AppColors.primary500,
-                                child: const Center(
-                                  child: Text(
-                                    'Primoria Preview',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: AppFontSize.xs,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Course content
-                              Expanded(
-                                child: TabBarView(
-                                  children: pages
-                                      .map(
-                                        (page) =>
-                                            _InteractivePageView(page: page),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                              // Phone home indicator
-                              Container(
-                                height: 34,
-                                color: Colors.white,
-                                child: Center(
-                                  child: Container(
-                                    width: 134,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.neutral300,
-                                      borderRadius: BorderRadius.circular(2.5),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: _viewMode == 'desktop'
+                        ? _buildDesktopLayout(previewPages)
+                        : _buildMobileLayout(previewPages),
                   ),
                 ],
               ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopLayout(List<CoursePage> previewPages) {
+    return Container(
+      color: const Color.fromRGBO(245, 246, 248, 1),
+      child: TabBarView(
+        children: previewPages
+            .map(
+              (page) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 24,
+                  horizontal: 32,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.06),
+                              blurRadius: 16,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: _InteractivePageView(page: page),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+
+  Widget _buildMobileLayout(List<CoursePage> previewPages) {
+    return Center(
+      child: Container(
+        width: 375,
+        height: 812,
+        margin: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(
+            color: AppColors.neutral300,
+            width: 4,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              blurRadius: 30,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(36),
+          child: Column(
+            children: [
+              // Phone status bar
+              Container(
+                height: 44,
+                color: AppColors.primary500,
+                child: const Center(
+                  child: Text(
+                    'Primoria Preview',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: AppFontSize.xs,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              // Course content
+              Expanded(
+                child: TabBarView(
+                  children: previewPages
+                      .map((page) => _InteractivePageView(page: page))
+                      .toList(),
+                ),
+              ),
+              // Phone home indicator
+              Container(
+                height: 34,
+                color: Colors.white,
+                child: Center(
+                  child: Container(
+                    width: 134,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: AppColors.neutral300,
+                      borderRadius: BorderRadius.circular(2.5),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -169,6 +269,43 @@ class ViewerScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Viewport toggle button
+// ---------------------------------------------------------------------------
+class _ViewportButton extends StatelessWidget {
+  final IconData icon;
+  final bool active;
+  final VoidCallback onTap;
+
+  const _ViewportButton({
+    required this.icon,
+    required this.active,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: active
+              ? AppColors.primary500.withValues(alpha: 0.12)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          icon,
+          size: 20,
+          color: active ? AppColors.primary500 : AppColors.neutral400,
+        ),
       ),
     );
   }
@@ -455,6 +592,14 @@ class _InteractiveBlockPreview extends StatelessWidget {
       case BlockType.codePlayground:
         final content = block.content as CodePlaygroundContent;
         return CodePlaygroundWidget(content: content);
+      case BlockType.codeExecution:
+        return CodeExecutionBlockWidget(
+          content: block.content as CodeExecutionContent,
+        );
+      case BlockType.functionFlow:
+        return FunctionFlowBlockWidget(
+          content: block.content as FunctionFlowContent,
+        );
       case BlockType.multipleChoice:
         return _InteractiveMultipleChoice(
           content: block.content as MultipleChoiceContent,
@@ -1052,8 +1197,10 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
   ];
 
   final Map<String, String> _userPairs = {};
+  final List<MatchingEdge> _userGraphEdges = [];
   bool _submitted = false;
   String? _selectedLeftId;
+  String? _selectedNodeId;
   late List<MatchingItem> _shuffledRightItems;
 
   @override
@@ -1068,6 +1215,66 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
   void dispose() {
     widget.checkTrigger.removeListener(_onCheck);
     super.dispose();
+  }
+
+  bool get _isGraphMode => widget.content.mode == MatchingContent.modeGraph;
+
+  List<MatchingNode> get _graphNodes {
+    if (widget.content.nodes.isNotEmpty) return widget.content.nodes;
+
+    final nodes = <MatchingNode>[];
+    final leftStep = widget.content.leftItems.isEmpty
+        ? 50.0
+        : 80.0 / (widget.content.leftItems.length + 1);
+    for (int i = 0; i < widget.content.leftItems.length; i++) {
+      final item = widget.content.leftItems[i];
+      nodes.add(
+        MatchingNode(
+          id: item.id,
+          label: item.text,
+          x: 18,
+          y: 10 + leftStep * (i + 1),
+          group: MatchingNode.groupLeft,
+        ),
+      );
+    }
+    final rightStep = widget.content.rightItems.isEmpty
+        ? 50.0
+        : 80.0 / (widget.content.rightItems.length + 1);
+    for (int i = 0; i < widget.content.rightItems.length; i++) {
+      final item = widget.content.rightItems[i];
+      nodes.add(
+        MatchingNode(
+          id: item.id,
+          label: item.text,
+          x: 82,
+          y: 10 + rightStep * (i + 1),
+          group: MatchingNode.groupRight,
+        ),
+      );
+    }
+    return nodes;
+  }
+
+  List<MatchingEdge> get _expectedGraphEdges {
+    if (widget.content.edges.isNotEmpty) return widget.content.edges;
+    return widget.content.correctPairs
+        .map(
+          (pair) => MatchingEdge(
+            from: pair.leftId,
+            to: pair.rightId,
+            directed: widget.content.rules.directed,
+          ),
+        )
+        .toList();
+  }
+
+  String _edgeKey(MatchingEdge edge) {
+    final directed = edge.directed ?? widget.content.rules.directed;
+    final from = edge.from.trim();
+    final to = edge.to.trim();
+    if (directed) return '$from->$to';
+    return from.compareTo(to) <= 0 ? '$from<->$to' : '$to<->$from';
   }
 
   /// Returns the pair index (0-based) for a left item, or -1 if unpaired.
@@ -1127,9 +1334,14 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
   }
 
   void _onCheck() {
-    setState(() {
-      _submitted = true;
-    });
+    if (_isGraphMode) {
+      setState(() {
+        _submitted = true;
+      });
+      widget.onAnswered(_isGraphAnswerCorrect());
+      return;
+    }
+    setState(() => _submitted = true);
     final allCorrect = _getCorrectCount() == widget.content.leftItems.length;
     widget.onAnswered(allCorrect);
   }
@@ -1149,6 +1361,79 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
       if (_isPairCorrect(entry.key, entry.value)) count++;
     }
     return count;
+  }
+
+  bool _isGraphAnswerCorrect() {
+    final expected = _expectedGraphEdges.map(_edgeKey).toSet();
+    final actual = _userGraphEdges.map(_edgeKey).toSet();
+    if (expected.length != actual.length) return false;
+    return expected.containsAll(actual);
+  }
+
+  int _graphCorrectCount() {
+    final expected = _expectedGraphEdges.map(_edgeKey).toSet();
+    return _userGraphEdges
+        .where((edge) => expected.contains(_edgeKey(edge)))
+        .length;
+  }
+
+  void _handleGraphNodeTap(String nodeId) {
+    if (_submitted) return;
+    setState(() {
+      if (_selectedNodeId == null) {
+        _selectedNodeId = nodeId;
+        return;
+      }
+      if (_selectedNodeId == nodeId) {
+        _selectedNodeId = null;
+        return;
+      }
+
+      var from = _selectedNodeId!;
+      var to = nodeId;
+      final directed = widget.content.rules.directed;
+      if (!directed && from.compareTo(to) > 0) {
+        final tmp = from;
+        from = to;
+        to = tmp;
+      }
+
+      final existingIndex = _userGraphEdges.indexWhere(
+        (edge) =>
+            _edgeKey(edge) ==
+            _edgeKey(MatchingEdge(from: from, to: to, directed: directed)),
+      );
+      if (existingIndex >= 0) {
+        _userGraphEdges.removeAt(existingIndex);
+        _selectedNodeId = null;
+        return;
+      }
+
+      if (!widget.content.rules.allowManyToMany) {
+        if (!widget.content.rules.allowOneToMany) {
+          _userGraphEdges.removeWhere((edge) => edge.from == from);
+        }
+        _userGraphEdges.removeWhere((edge) => edge.to == to);
+      }
+
+      _userGraphEdges.add(MatchingEdge(from: from, to: to, directed: directed));
+      _selectedNodeId = null;
+    });
+  }
+
+  void _resetGraphSelection() {
+    if (_submitted) {
+      setState(() {
+        _submitted = false;
+        _selectedNodeId = null;
+        _userGraphEdges.clear();
+      });
+      return;
+    }
+    setState(() {
+      _selectedNodeId = null;
+      _userGraphEdges.clear();
+    });
   }
 
   Widget _buildPairBadge(int pairIndex) {
@@ -1172,6 +1457,10 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isGraphMode) {
+      return _buildGraphMode(context);
+    }
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
@@ -1407,6 +1696,357 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
         ],
       ),
     );
+  }
+
+  Widget _buildGraphMode(BuildContext context) {
+    final nodes = _graphNodes;
+    final expectedEdges = _expectedGraphEdges;
+    final scoreText = '${_graphCorrectCount()}/${expectedEdges.length}';
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: AppColors.neutral50,
+        borderRadius: BorderRadius.circular(AppBorderRadius.md),
+        border: Border.all(color: AppColors.neutral200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.content.question,
+            style: const TextStyle(
+              fontSize: AppFontSize.md,
+              fontWeight: FontWeight.w600,
+              color: AppColors.neutral800,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            _submitted
+                ? 'Graph submitted. Tap Reset to retry.'
+                : 'Tap node A, then node B to create A -> B.',
+            style: const TextStyle(
+              fontSize: AppFontSize.xs,
+              color: AppColors.neutral500,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              border: Border.all(color: AppColors.neutral200),
+            ),
+            child: nodes.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No graph nodes configured',
+                      style: TextStyle(
+                        fontSize: AppFontSize.sm,
+                        color: AppColors.neutral500,
+                      ),
+                    ),
+                  )
+                : LayoutBuilder(
+                    builder: (context, constraints) {
+                      final canvasSize = constraints.biggest;
+                      return Stack(
+                        children: [
+                          Positioned.fill(
+                            child: CustomPaint(
+                              painter: _MatchingInteractiveGraphPainter(
+                                nodes: nodes,
+                                userEdges: _userGraphEdges,
+                                expectedEdges: expectedEdges,
+                                rules: widget.content.rules,
+                                submitted: _submitted,
+                              ),
+                            ),
+                          ),
+                          ...nodes.map((node) {
+                            final center = _matchingViewerNodeCenter(
+                              node,
+                              canvasSize,
+                            );
+                            final isSelected = _selectedNodeId == node.id;
+                            return Positioned(
+                              left:
+                                  center.dx -
+                                  _MatchingInteractiveGraphPainter.nodeSize / 2,
+                              top:
+                                  center.dy -
+                                  _MatchingInteractiveGraphPainter.nodeSize / 2,
+                              child: GestureDetector(
+                                key: Key('matching_graph_node_${node.id}'),
+                                onTap: () => _handleGraphNodeTap(node.id),
+                                child: _buildGraphNode(
+                                  node,
+                                  isSelected: isSelected,
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
+                      );
+                    },
+                  ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth >= 340) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _selectedNodeId == null
+                            ? 'Selected: none'
+                            : 'Selected: $_selectedNodeId',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: AppFontSize.xs,
+                          color: AppColors.neutral500,
+                        ),
+                      ),
+                    ),
+                    TextButton.icon(
+                      key: const Key('matching_graph_reset'),
+                      onPressed: _resetGraphSelection,
+                      icon: const Icon(Icons.restart_alt, size: 16),
+                      label: const Text('Reset'),
+                    ),
+                  ],
+                );
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _selectedNodeId == null
+                        ? 'Selected: none'
+                        : 'Selected: $_selectedNodeId',
+                    style: const TextStyle(
+                      fontSize: AppFontSize.xs,
+                      color: AppColors.neutral500,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton.icon(
+                      key: const Key('matching_graph_reset'),
+                      onPressed: _resetGraphSelection,
+                      icon: const Icon(Icons.restart_alt, size: 16),
+                      label: const Text('Reset'),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+          if (_submitted) ...[
+            _FeedbackBanner(
+              isCorrect: _isGraphAnswerCorrect(),
+              message: 'Score: $scoreText',
+            ),
+            if (widget.content.explanation != null &&
+                widget.content.explanation!.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.sm),
+              _ExplanationBox(text: widget.content.explanation!),
+            ],
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGraphNode(MatchingNode node, {required bool isSelected}) {
+    Color color;
+    switch (node.group) {
+      case MatchingNode.groupLeft:
+        color = AppColors.primary500;
+        break;
+      case MatchingNode.groupRight:
+        color = AppColors.success;
+        break;
+      case MatchingNode.groupNeutral:
+      default:
+        color = AppColors.neutral700;
+        break;
+    }
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 120),
+      width: _MatchingInteractiveGraphPainter.nodeSize,
+      height: _MatchingInteractiveGraphPainter.nodeSize,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isSelected ? Colors.black : Colors.white,
+          width: isSelected ? 2.2 : 1.6,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.25),
+            blurRadius: isSelected ? 10 : 6,
+            spreadRadius: isSelected ? 1 : 0,
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          _shortNodeLabel(node.label),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _shortNodeLabel(String label) {
+    final trimmed = label.trim();
+    if (trimmed.isEmpty) return '?';
+    final words = trimmed.split(RegExp(r'\\s+'));
+    if (words.length == 1) {
+      final single = words.first;
+      return single.length <= 4 ? single : single.substring(0, 4);
+    }
+    return words.take(2).map((word) => word[0]).join().toUpperCase();
+  }
+}
+
+Offset _matchingViewerNodeCenter(MatchingNode node, Size size) {
+  final safeWidth = math.max(
+    0.0,
+    size.width - _MatchingInteractiveGraphPainter.nodeSize,
+  );
+  final safeHeight = math.max(
+    0.0,
+    size.height - _MatchingInteractiveGraphPainter.nodeSize,
+  );
+  final x =
+      _MatchingInteractiveGraphPainter.nodeSize / 2 +
+      safeWidth * (node.x / 100);
+  final y =
+      _MatchingInteractiveGraphPainter.nodeSize / 2 +
+      safeHeight * (node.y / 100);
+  return Offset(x, y);
+}
+
+class _MatchingInteractiveGraphPainter extends CustomPainter {
+  static const double nodeSize = 38;
+
+  final List<MatchingNode> nodes;
+  final List<MatchingEdge> userEdges;
+  final List<MatchingEdge> expectedEdges;
+  final MatchingRules rules;
+  final bool submitted;
+
+  const _MatchingInteractiveGraphPainter({
+    required this.nodes,
+    required this.userEdges,
+    required this.expectedEdges,
+    required this.rules,
+    required this.submitted,
+  });
+
+  String _edgeKey(MatchingEdge edge) {
+    final directed = edge.directed ?? rules.directed;
+    if (directed) return '${edge.from}->${edge.to}';
+    return edge.from.compareTo(edge.to) <= 0
+        ? '${edge.from}<->${edge.to}'
+        : '${edge.to}<->${edge.from}';
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final nodeMap = <String, MatchingNode>{for (final n in nodes) n.id: n};
+    final expectedKeys = expectedEdges.map(_edgeKey).toSet();
+    final userKeys = userEdges.map(_edgeKey).toSet();
+
+    if (submitted) {
+      for (final edge in expectedEdges) {
+        final from = nodeMap[edge.from];
+        final to = nodeMap[edge.to];
+        if (from == null || to == null) continue;
+        final key = _edgeKey(edge);
+        if (userKeys.contains(key)) continue;
+        _drawEdge(
+          canvas,
+          from: _matchingViewerNodeCenter(from, size),
+          to: _matchingViewerNodeCenter(to, size),
+          color: AppColors.warning.withValues(alpha: 0.45),
+          directed: edge.directed ?? rules.directed,
+          width: 2,
+        );
+      }
+    }
+
+    for (final edge in userEdges) {
+      final from = nodeMap[edge.from];
+      final to = nodeMap[edge.to];
+      if (from == null || to == null) continue;
+      final key = _edgeKey(edge);
+      final isCorrect = !submitted || expectedKeys.contains(key);
+      _drawEdge(
+        canvas,
+        from: _matchingViewerNodeCenter(from, size),
+        to: _matchingViewerNodeCenter(to, size),
+        color: isCorrect ? AppColors.success : AppColors.error,
+        directed: edge.directed ?? rules.directed,
+        width: 2.4,
+      );
+    }
+  }
+
+  void _drawEdge(
+    Canvas canvas, {
+    required Offset from,
+    required Offset to,
+    required Color color,
+    required bool directed,
+    required double width,
+  }) {
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width
+      ..color = color;
+    canvas.drawLine(from, to, paint);
+
+    if (!directed) return;
+
+    final angle = math.atan2(to.dy - from.dy, to.dx - from.dx);
+    const arrowLength = 10.0;
+    const spread = 0.45;
+    final p1 = Offset(
+      to.dx - arrowLength * math.cos(angle - spread),
+      to.dy - arrowLength * math.sin(angle - spread),
+    );
+    final p2 = Offset(
+      to.dx - arrowLength * math.cos(angle + spread),
+      to.dy - arrowLength * math.sin(angle + spread),
+    );
+    final arrowPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width
+      ..color = color;
+    canvas.drawLine(to, p1, arrowPaint);
+    canvas.drawLine(to, p2, arrowPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _MatchingInteractiveGraphPainter oldDelegate) {
+    return oldDelegate.nodes != nodes ||
+        oldDelegate.userEdges != userEdges ||
+        oldDelegate.expectedEdges != expectedEdges ||
+        oldDelegate.rules != rules ||
+        oldDelegate.submitted != submitted;
   }
 }
 

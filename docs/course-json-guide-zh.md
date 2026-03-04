@@ -74,10 +74,12 @@
 | `pages` | 是 | 页面数组，至少一页 |
 
 旧版兼容说明：
-- 历史文件可能使用旧 block 类型别名，如 `codeBlock`、`codePlayground`、`multipleChoice`、`fillBlank`、`trueFalse`、`animationBlock`。
+- 历史文件可能使用旧 block 类型别名，如 `codeBlock`、`codePlayground`、`codeExecution`、`functionFlow`、`multipleChoice`、`fillBlank`、`trueFalse`、`animationBlock`。
 - 导入时会自动迁移为规范值：
   - `code-block`
   - `code-playground`
+  - `code-execution`
+  - `function-flow`
   - `multiple-choice`
   - `fill-blank`
   - `true-false`
@@ -431,6 +433,97 @@
 | `durationMs` | 否 | 动画时长（毫秒），建议 `300`-`10000` |
 | `loop` | 否 | 是否循环，默认 `true` |
 | `speed` | 否 | 播放倍率，建议 `0.25`-`3.0` |
+
+---
+
+### 9. video - 视频块
+
+```json
+{
+  "type": "video",
+  "id": "video-001",
+  "position": { "order": 6 },
+  "style": { "spacing": "md", "alignment": "center" },
+  "content": {
+    "url": "https://example.com/video.mp4",
+    "title": "Python Installation Tutorial"
+  }
+}
+```
+
+**content 字段：**
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `url` | 是 | 视频 URL |
+| `title` | 否 | 视频标题 |
+
+---
+
+### 10. code-execution - 代码执行块
+
+用于“逐行执行代码”教学，支持当前行高亮、变量面板、输出面板和 checkpoint 互动问答。
+
+```json
+{
+  "type": "code-execution",
+  "id": "ce-001",
+  "position": { "order": 8 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "title": "Trace Variable Updates",
+    "language": "python",
+    "sourceCode": "a = 1\nb = a + 2\nprint(b)",
+    "traceSteps": [
+      { "line": 1, "variables": { "a": 1 } },
+      { "line": 2, "variables": { "a": 1, "b": 3 }, "note": "b 已计算完成" },
+      { "line": 3, "variables": { "a": 1, "b": 3 }, "stdoutDelta": "3" }
+    ],
+    "initialVariables": { "seed": 0 },
+    "checkpoints": [
+      {
+        "stepIndex": 1,
+        "question": "此时 b 的值是多少？",
+        "options": ["2", "3"],
+        "correctIndex": 1,
+        "explanation": "b = a + 2 = 3"
+      }
+    ],
+    "controls": {
+      "autoplay": false,
+      "stepDurationMs": 1200,
+      "allowScrub": true
+    },
+    "style": {
+      "theme": "indigo",
+      "showLineNumbers": true,
+      "showVariablesPanel": true,
+      "showStdoutPanel": true
+    }
+  }
+}
+```
+
+**content 字段：**
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `title` | 否 | Block 标题 |
+| `language` | 否 | 语言标签，默认 `python` |
+| `sourceCode` | 是 | 完整源码字符串（支持换行） |
+| `traceSteps` | 是 | 执行步骤数组 |
+| `traceSteps[].line` | 是 | 当前执行行号（1-based，需在源码行范围内） |
+| `traceSteps[].stdoutDelta` | 否 | 该步新增输出 |
+| `traceSteps[].variables` | 是 | 当前变量快照对象 |
+| `traceSteps[].callStack` | 否 | 调用栈数组 |
+| `traceSteps[].note` | 否 | 教学说明 |
+| `initialVariables` | 否 | 第一步前初始变量 |
+| `checkpoints` | 否 | 步骤触发互动问答 |
+| `checkpoints[].stepIndex` | 是（存在 checkpoint 时） | 触发步骤索引（0-based） |
+| `checkpoints[].options` | 是（存在 checkpoint 时） | 选项数组 |
+| `checkpoints[].correctIndex` | 是（存在 checkpoint 时） | 正确选项索引（必须在 options 范围内） |
+| `controls` | 否 | 播放控制（`autoplay`、`stepDurationMs`、`allowScrub`） |
+| `style` | 否 | 视觉配置（主题、行号、变量面板、输出面板） |
+
+**Schema 迁移器支持的旧别名：** `codeExecution`、`code_execution`
 
 ---
 

@@ -74,10 +74,12 @@ Save it as a `.json` file, then click "Import" in Builder to load it.
 | `pages` | Yes | Page array, at least one page |
 
 Legacy compatibility note:
-- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `multipleChoice`, `fillBlank`, `trueFalse`, and `animationBlock`.
+- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `codeExecution`, `functionFlow`, `multipleChoice`, `fillBlank`, `trueFalse`, and `animationBlock`.
 - Import will migrate these aliases to canonical values:
   - `code-block`
   - `code-playground`
+  - `code-execution`
+  - `function-flow`
   - `multiple-choice`
   - `fill-blank`
   - `true-false`
@@ -431,6 +433,156 @@ Multi-select example:
 | `durationMs` | No | Duration in milliseconds, recommended `300`-`10000` |
 | `loop` | No | Whether to loop animation, default `true` |
 | `speed` | No | Playback speed multiplier, recommended `0.25`-`3.0` |
+
+---
+
+### 9. video - Video Block
+
+```json
+{
+  "type": "video",
+  "id": "video-001",
+  "position": { "order": 6 },
+  "style": { "spacing": "md", "alignment": "center" },
+  "content": {
+    "url": "https://example.com/video.mp4",
+    "title": "Python Installation Tutorial"
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `url` | Yes | Video URL |
+| `title` | No | Video title |
+
+---
+
+### 10. function-flow - Function Flow Block
+
+Visualises caller-callee execution paths as an interactive node-edge diagram with optional step-through playback.
+
+```json
+{
+  "type": "function-flow",
+  "id": "ff-001",
+  "position": { "order": 7 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "title": "How solve() calls helper()",
+    "nodes": [
+      { "id": "start",  "label": "Start",    "x": 10, "y": 50, "kind": "start" },
+      { "id": "solve",  "label": "solve()",  "x": 40, "y": 50, "kind": "function", "description": "Entry point" },
+      { "id": "helper", "label": "helper()", "x": 70, "y": 50, "kind": "function" },
+      { "id": "end",    "label": "End",      "x": 90, "y": 50, "kind": "end" }
+    ],
+    "edges": [
+      { "from": "start",  "to": "solve",  "label": "" },
+      { "from": "solve",  "to": "helper", "label": "calls" },
+      { "from": "helper", "to": "end",    "label": "" }
+    ],
+    "entryNodeId": "start",
+    "steps": [
+      { "activeNodeId": "start",  "edgeIndex": 0, "description": "Program begins" },
+      { "activeNodeId": "solve",  "edgeIndex": 1, "description": "solve() runs, calls helper()" },
+      { "activeNodeId": "helper", "edgeIndex": 2, "description": "helper() executes" },
+      { "activeNodeId": "end",    "edgeIndex": -1, "description": "Execution complete" }
+    ],
+    "style": { "nodeColor": "#4A90E2", "edgeColor": "#999999", "activeColor": "#FF8C00" }
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `title` | No | Diagram heading shown above the canvas |
+| `nodes` | Yes | Array of node objects |
+| `nodes[].id` | Yes | Unique node identifier |
+| `nodes[].label` | Yes | Display label |
+| `nodes[].x` / `nodes[].y` | Yes | Position (0–100 percentage units) |
+| `nodes[].kind` | No | `start` / `function` / `end`; defaults to `function` |
+| `nodes[].description` | No | Tooltip / annotation text |
+| `edges` | Yes | Array of directed edges |
+| `edges[].from` / `edges[].to` | Yes | Node IDs; must exist in `nodes` |
+| `edges[].label` | No | Edge annotation |
+| `entryNodeId` | No | ID of the first node to highlight on load |
+| `steps` | No | Ordered step list for playback mode |
+| `steps[].activeNodeId` | Yes (per step) | Node to highlight at this step |
+| `steps[].edgeIndex` | No | Index into `edges` to highlight (`-1` = none) |
+| `steps[].description` | No | Narration text for this step |
+| `style` | No | Visual overrides: `nodeColor`, `edgeColor`, `activeColor` |
+
+**Legacy aliases accepted by the schema migrator:** `functionflow`, `function_flow`
+
+---
+
+### 11. code-execution - Code Execution Block
+
+Interactive line-by-line execution playback for teaching runtime flow, variable changes, and output accumulation.
+
+```json
+{
+  "type": "code-execution",
+  "id": "ce-001",
+  "position": { "order": 8 },
+  "style": { "spacing": "md", "alignment": "left" },
+  "content": {
+    "title": "Trace Variable Updates",
+    "language": "python",
+    "sourceCode": "a = 1\nb = a + 2\nprint(b)",
+    "traceSteps": [
+      { "line": 1, "variables": { "a": 1 } },
+      { "line": 2, "variables": { "a": 1, "b": 3 }, "note": "b is computed" },
+      { "line": 3, "variables": { "a": 1, "b": 3 }, "stdoutDelta": "3" }
+    ],
+    "initialVariables": { "seed": 0 },
+    "checkpoints": [
+      {
+        "stepIndex": 1,
+        "question": "What is b now?",
+        "options": ["2", "3"],
+        "correctIndex": 1,
+        "explanation": "b = a + 2 = 3"
+      }
+    ],
+    "controls": {
+      "autoplay": false,
+      "stepDurationMs": 1200,
+      "allowScrub": true
+    },
+    "style": {
+      "theme": "indigo",
+      "showLineNumbers": true,
+      "showVariablesPanel": true,
+      "showStdoutPanel": true
+    }
+  }
+}
+```
+
+**content fields:**
+| Field | Required | Description |
+|------|------|------|
+| `title` | No | Block title shown in Builder/Viewer |
+| `language` | No | Language label, default `python` |
+| `sourceCode` | Yes | Full source code string (line breaks supported) |
+| `traceSteps` | Yes | Ordered execution steps |
+| `traceSteps[].line` | Yes | 1-based active line number; must be within source range |
+| `traceSteps[].stdoutDelta` | No | Output appended at this step |
+| `traceSteps[].variables` | Yes | Variable snapshot object at this step |
+| `traceSteps[].callStack` | No | Call stack frames |
+| `traceSteps[].note` | No | Teaching note for this step |
+| `initialVariables` | No | Initial variable snapshot before step 1 |
+| `checkpoints` | No | Quiz prompts triggered by step index |
+| `checkpoints[].stepIndex` | Yes (if checkpoint exists) | Trigger step index (0-based, must be in range) |
+| `checkpoints[].options` | Yes (if checkpoint exists) | Option list |
+| `checkpoints[].correctIndex` | Yes (if checkpoint exists) | Correct option index in `options` |
+| `controls` | No | Playback settings (`autoplay`, `stepDurationMs`, `allowScrub`) |
+| `style` | No | Visual settings (`theme`, line numbers, variables/stdout panels) |
+
+**Legacy aliases accepted by the schema migrator:** `codeExecution`, `code_execution`
 
 ---
 

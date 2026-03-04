@@ -30,7 +30,7 @@ The Dashboard (`/dashboard`) is the logged-in user's home — sidebar + tab-swit
 
 **Home Page** — Course Data card, Income Overview card, Comments card. Layout switches row/column at 700px.
 
-**Course Manage** — Fetches courses via `getMyCourses()`. Sort dropdown + Create Course button. Each course card: title, time ago, Edit/Delete, lesson boxes (async loaded), Add lesson box. States: loading, sign-in prompt, empty, course list.
+**Course Manage** — Fetches courses via `getMyCourses()`. Sort dropdown + Create Course button. Each course card: title, time ago, Edit/Delete, lesson boxes (async loaded, hover to reveal ✕ delete button), Add lesson box. States: loading, sign-in prompt, empty, course list.
 
 **Data Center / Fans Manage** — Placeholder (renders Home Page content).
 
@@ -50,7 +50,8 @@ Card render → _loadCourseLessons(id) → getCourseLessonTitles(id) → _course
 | Build Course | `/builder` |
 | Create Course | Dialog → `createCourseRow()` → stays on Course Manage (refreshes list) |
 | Edit / Lesson box / Add lesson | `/builder?courseId=<id>` |
-| Delete | Confirmation → `deleteCourse()` → refresh |
+| Delete course | Confirmation → `deleteCourse()` → refresh |
+| Delete lesson (✕ on hover) | Confirmation → `getCourseContent()` → `removePage()` → `saveCourse()` → refresh lesson cache |
 
 Builder title edits + Save update `courses.title` in DB. Returning to Dashboard reloads course data, keeping titles in sync.
 

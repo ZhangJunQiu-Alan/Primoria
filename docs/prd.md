@@ -65,7 +65,7 @@ A **UGC course authoring platform** for STEM education. Users can build interact
 | **State management** | Riverpod / Bloc | Mature Flutter ecosystem options |
 | **Animation engine** | Flutter CustomPainter + AnimationController | Native high performance |
 | **Drag-and-drop** | flutter_draggable_gridview | Modular drag-and-drop |
-| **Backend framework** | Node.js | Fast iteration, large ecosystem |
+| **Backend language/runtime** | TypeScript + Deno (Supabase Edge Functions) | Unified TS stack with serverless operations and edge deployment |
 | **Database** | PostgreSQL | Relational, strong JSON support |
 | **Object storage** | S3 / OSS / MinIO | Media asset storage |
 
@@ -95,7 +95,7 @@ A **UGC course authoring platform** for STEM education. Users can build interact
 │  ├────────┤  │                              │                   │
 │  │ Fill-in│  │                              │                   │
 │  ├────────┤  │                              │                   │
-│  │ Connect│  │                              │                   │
+│  │        │  │                              │                   │
 │  └────────┘  │                              │                   │
 │              │                              │                   │
 └──────────────┴──────────────────────────────┴───────────────────┘
@@ -432,7 +432,7 @@ Week 5-6: Question modules
 
 Week 7-8: Code Playground
 ├── Code editor integration (code_text_field or custom)
-├── Python backend execution service
+├── TypeScript (Deno) execution service
 ├── Output display
 └── Error messages
 

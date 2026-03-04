@@ -65,7 +65,7 @@
 | **状态管理** | Riverpod / Bloc | Flutter 生态成熟，便于扩展 |
 | **动画引擎** | Flutter CustomPainter + AnimationController | 原生性能高、可控性强 |
 | **拖拽实现** | flutter_draggable_gridview | 模块化拖拽落地快 |
-| **后端框架** | Node.js | 迭代快，生态丰富 |
+| **后端语言/运行时** | TypeScript + Deno（Supabase Edge Functions） | 与前端统一 TypeScript 生态，便于 Serverless 和边缘部署 |
 | **数据库** | PostgreSQL | 关系能力强，JSON 支持好 |
 | **对象存储** | S3 / OSS / MinIO | 媒体资源存储 |
 
@@ -95,7 +95,7 @@
 │  ├────────┤  │                              │                   │
 │  │ Fill-in│  │                              │                   │
 │  ├────────┤  │                              │                   │
-│  │ Connect│  │                              │                   │
+│  │        │  │                              │                   │
 │  └────────┘  │                              │                   │
 │              │                              │                   │
 └──────────────┴──────────────────────────────┴───────────────────┘
@@ -432,7 +432,7 @@ Week 5-6: Question modules
 
 Week 7-8: Code Playground
 ├── Code editor integration (code_text_field or custom)
-├── Python backend execution service
+├── TypeScript（Deno）执行服务
 ├── Output display
 └── Error messages
 
@@ -531,11 +531,6 @@ Month 2: Platform features
 
 ## 10. 参考资料
 
-### Flutter
-- [Flutter CustomPainter Docs](https://api.flutter.dev/flutter/rendering/CustomPainter-class.html)
-- [Flutter Animation Guide](https://docs.flutter.dev/ui/animations)
-- [Riverpod Docs](https://riverpod.dev/)
-
 ### 动画参考
 - [Brilliant](https://brilliant.org/) - 交互体验对标
 - [Manim Community](https://www.manim.community/) - 数学动画参考
@@ -546,45 +541,3 @@ Month 2: Platform features
 - [Articulate Rise](https://articulate.com/360/rise) - 课程构建器参考
 - [Observable](https://observablehq.com/) - 交互文档参考
 
----
-
-## 附录：设计稿参考
-
-### Builder UI 草图
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│  Logo    Course Name: Python Intro ▼     [Preview] [Save] [Export] [Publish] │
-├─────────┬───────────────────────────────────────────────────┬───────────┤
-│         │                                                   │           │
-│  Module │              Page 1: What is a variable?          │  Props    │
-│  Library│                                                   │           │
-│ ┌─────┐ │  ┌─────────────────────────────────────────────┐  │  Selected │
-│ │ Aa  │ │  │  ## What is a variable?                     │  │  ──────── │
-│ │Text │ │  │  A variable is like a box that stores data...│  │  Type:Text│
-│ └─────┘ │  └─────────────────────────────────────────────┘  │           │
-│ ┌─────┐ │                                                   │  Font: 16 │
-│ │ 🖼  │ │  ┌─────────────────────────────────────────────┐  │  Align: L │
-│ │Image│ │  │  name = "Alice"                              │  │           │
-│ └─────┘ │  │  print(f"Hello, {name}!")                   │  │  Spacing: md │
-│ ┌─────┐ │  │                              [▶ Run]        │  │           │
-│ │ </> │ │  └─────────────────────────────────────────────┘  │           │
-│ │Code │ │                                                   │           │
-│ └─────┘ │  ┌─────────────────────────────────────────────┐  │           │
-│ ┌─────┐ │  │  (?) Which is a valid variable name?        │  │           │
-│ │ ✓   │ │  │                                             │  │           │
-│ │Quiz │ │  │  ○ my_variable                              │  │           │
-│ └─────┘ │  │  ○ 2nd_var                                  │  │           │
-│ ┌─────┐ │  │  ○ my-var                                   │  │           │
-│ │ ___ │ │  └─────────────────────────────────────────────┘  │           │
-│ │Fill │ │                                                   │           │
-│ └─────┘ │                                                   │           │
-│ ┌─────┐ │                                                   │           │
-│ │ ⚡  │ │                                                   │           │
-│ │Anim │ │                                                   │           │
-│ └─────┘ │                                                   │           │
-│         │                                                   │           │
-├─────────┴───────────────────────────────────────────────────┴───────────┤
-│  Pages: [1] [2] [3] [+]                                                │
-└─────────────────────────────────────────────────────────────────────────┘
-```

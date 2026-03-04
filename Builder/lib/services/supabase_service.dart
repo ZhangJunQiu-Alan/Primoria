@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
+import '../models/page.dart';
 import 'id_generator.dart';
 import 'course_schema_validator.dart';
 
@@ -354,6 +355,135 @@ class SupabaseService {
     }
   }
 
+  /// Save a lesson under an existing course.
+  ///
+  /// - If [lessonId] is null, append a new lesson to the course.
+  /// - If [lessonId] is provided, update that lesson in place.
+  /// - Never creates a new course row.
+  static Future<CourseResult> saveLessonToCourse({
+    required String courseId,
+    required Course lessonCourse,
+    String? lessonId,
+  }) async {
+    if (currentUser == null) {
+      return const CourseResult(
+        success: false,
+        message: 'Please sign in first',
+      );
+    }
+
+    final normalizedCourse = lessonCourse.copyWith(courseId: courseId);
+    final validation = CourseSchemaValidator.validateCourse(
+      normalizedCourse,
+      mode: CourseSchemaValidationMode.save,
+    );
+    if (validation.hasBlockingErrors) {
+      return CourseResult(
+        success: false,
+        message: _formatSchemaValidationMessage(
+          action: 'Save',
+          errors: validation.errorMessages,
+        ),
+        validation: validation,
+      );
+    }
+
+    try {
+      final existingCourse = await client
+          .from('courses')
+          .select('id, author_id')
+          .eq('id', courseId)
+          .maybeSingle();
+      if (existingCourse == null) {
+        return const CourseResult(success: false, message: 'Course not found');
+      }
+      if (existingCourse['author_id'] != currentUser!.id) {
+        return const CourseResult(
+          success: false,
+          message: 'You do not have permission to edit this course',
+        );
+      }
+
+      final title = normalizedCourse.metadata.title.trim().isEmpty
+          ? 'Untitled Lesson'
+          : normalizedCourse.metadata.title.trim();
+      final lessonPayload = {
+        'title': title,
+        'content_json': normalizedCourse.toJson(),
+        'type': 'interactive',
+      };
+
+      String persistedLessonId;
+      final trimmedLessonId = lessonId?.trim();
+      if (trimmedLessonId != null && trimmedLessonId.isNotEmpty) {
+        final existingLesson = await client
+            .from('lessons')
+            .select('id')
+            .eq('id', trimmedLessonId)
+            .eq('course_id', courseId)
+            .maybeSingle();
+        if (existingLesson == null) {
+          return const CourseResult(
+            success: false,
+            message: 'Lesson not found for this course',
+          );
+        }
+
+        await client
+            .from('lessons')
+            .update(lessonPayload)
+            .eq('id', trimmedLessonId);
+        persistedLessonId = trimmedLessonId;
+      } else {
+        final lastLesson = await client
+            .from('lessons')
+            .select('sort_key')
+            .eq('course_id', courseId)
+            .order('sort_key', ascending: false)
+            .limit(1)
+            .maybeSingle();
+
+        final lastSortKey = (lastLesson?['sort_key'] as num?)?.toInt() ?? 0;
+        final nextSortKey = lastSortKey + 1000;
+
+        final inserted = await client
+            .from('lessons')
+            .insert({
+              'course_id': courseId,
+              'sort_key': nextSortKey,
+              ...lessonPayload,
+              'is_locked': false,
+              'unlock_type': 'none',
+              'prerequisite_lesson_id': null,
+              'paywall_product_id': null,
+            })
+            .select('id')
+            .single();
+        persistedLessonId = inserted['id'] as String;
+      }
+
+      // Touch the course row so Dashboard ordering/time reflects lesson save.
+      await client
+          .from('courses')
+          .update({'status': 'draft'})
+          .eq('id', courseId)
+          .eq('author_id', currentUser!.id);
+
+      return CourseResult(
+        success: true,
+        message: validation.warnings.isEmpty
+            ? 'Saved'
+            : 'Saved with ${validation.warnings.length} warning(s)',
+        courseId: courseId,
+        versionId: courseId,
+        validation: validation,
+        lessonId: persistedLessonId,
+      );
+    } catch (e) {
+      return CourseResult(success: false, message: 'Save failed: $e');
+    }
+  }
+
   /// Publish course
   static Future<CourseResult> publishCourse(
     String courseId,
@@ -444,7 +574,12 @@ class SupabaseService {
         return Course.fromJson(normalizedSnapshot);
       }
 
-      // Fallback: at least open the builder with base metadata.
+      // Fallback: reconstruct from individual lesson rows (agentic-generated
+      // courses store {blocks:[...]} per lesson, not a full course snapshot).
+      final reconstructed = await _reconstructCourseFromLessons(courseId);
+      if (reconstructed != null) return reconstructed;
+
+      // Last resort: open builder with title only (no content).
       final courseRow = await client
           .from('courses')
           .select('id, title')
@@ -458,6 +593,69 @@ class SupabaseService {
     } catch (e) {
       return null;
     }
+  }
+
+  /// Reconstruct a Course from individual lesson rows written by the agentic
+  /// generator. Each lesson row has content_json = {blocks: [...]}.
+  static Future<Course?> _reconstructCourseFromLessons(
+    String courseId,
+  ) async {
+    final courseRow = await client
+        .from('courses')
+        .select(
+            'id, title, description, difficulty_level, estimated_minutes, tags')
+        .eq('id', courseId)
+        .maybeSingle();
+    if (courseRow == null) return null;
+
+    final lessons = await client
+        .from('lessons')
+        .select('id, title, content_json, sort_key')
+        .eq('course_id', courseId)
+        .order('sort_key', ascending: true);
+
+    final lessonList = List<Map<String, dynamic>>.from(lessons as List);
+    // Only use lessons that carry the agentic {blocks:[...]} format.
+    final agenticLessons = lessonList.where((l) {
+      final cj = l['content_json'];
+      if (cj is! Map) return false;
+      return (cj as Map).containsKey('blocks');
+    }).toList();
+
+    if (agenticLessons.isEmpty) return null;
+
+    final pages = agenticLessons.map((l) {
+      final cj = Map<String, dynamic>.from(l['content_json'] as Map);
+      final rawBlocks = cj['blocks'] as List<dynamic>? ?? [];
+      return CoursePage.fromJson({
+        'pageId': l['id'] as String,
+        'title': l['title'] as String? ?? 'Untitled',
+        'blocks': rawBlocks,
+      });
+    }).toList();
+
+    final rawTags = courseRow['tags'];
+    final tags = rawTags is List
+        ? rawTags.map((e) => e.toString()).toList()
+        : <String>[];
+
+    return Course(
+      courseId: courseId,
+      metadata: CourseMetadata(
+        title: courseRow['title'] as String? ?? 'Untitled Course',
+        description: courseRow['description'] as String? ?? '',
+        author: const CourseAuthor(userId: 'ai', displayName: 'AI'),
+        tags: tags,
+        difficulty:
+            _normalizeDifficulty(courseRow['difficulty_level'] as String?),
+        estimatedMinutes: courseRow['estimated_minutes'] as int? ?? 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        version: '1.0.0',
+      ),
+      settings: const CourseSettings(),
+      pages: pages,
+    );
   }
 
   /// Search published courses
@@ -711,7 +909,6 @@ class SupabaseService {
           .from('lessons')
           .select('title')
           .eq('course_id', courseId)
-          .order('group_sort_key', ascending: true)
           .order('sort_key', ascending: true);
 
       return (lessons as List)
@@ -840,42 +1037,92 @@ class SupabaseService {
   // ==================== Helper methods ====================
 
   static Future<void> _saveCourseSnapshot(Course course) async {
-    final lesson = await client
+    final pages = course.pages;
+    final fullJson = course.toJson();
+
+    // Fetch existing snapshot rows (sort_key in [1000, 2000)).
+    // saveLessonToCourse uses lastSortKey+1000, so add-lesson rows land at ≥2000
+    // and are never touched here.
+    final existingRaw = await client
         .from('lessons')
         .select('id')
         .eq('course_id', course.courseId)
-        .order('group_sort_key', ascending: true)
-        .order('sort_key', ascending: true)
-        .limit(1)
-        .maybeSingle();
+        .gte('sort_key', 1000)
+        .lt('sort_key', 2000)
+        .order('sort_key', ascending: true);
+    final existingIds = (existingRaw as List)
+        .map((l) => l['id'] as String)
+        .toList();
 
-    final lessonPayload = {
-      'title': course.metadata.title.isEmpty
-          ? 'Untitled Lesson'
-          : course.metadata.title,
-      'content_json': course.toJson(),
-      'type': 'interactive',
-      'sort_key': 1000,
-    };
-
-    if (lesson == null) {
-      await client.from('lessons').insert({
-        'course_id': course.courseId,
-        'group_title': 'Chapter 1',
-        'group_sort_key': 1000,
-        ...lessonPayload,
-        'is_locked': false,
-        'unlock_type': 'none',
-        'prerequisite_lesson_id': null,
-        'paywall_product_id': null,
-      });
+    if (pages.isEmpty) {
+      // Fallback: single row with course title (shouldn't normally occur)
+      final payload = {
+        'title': course.metadata.title.isEmpty
+            ? 'Untitled Lesson'
+            : course.metadata.title,
+        'content_json': fullJson,
+        'type': 'interactive',
+        'sort_key': 1000,
+      };
+      if (existingIds.isEmpty) {
+        await client.from('lessons').insert({
+          'course_id': course.courseId,
+          'is_locked': false,
+          'unlock_type': 'none',
+          'prerequisite_lesson_id': null,
+          'paywall_product_id': null,
+          ...payload,
+        });
+      } else {
+        await client.from('lessons').update(payload).eq('id', existingIds[0]);
+        if (existingIds.length > 1) {
+          await client
+              .from('lessons')
+              .delete()
+              .inFilter('id', existingIds.sublist(1));
+        }
+      }
       return;
     }
 
-    await client
-        .from('lessons')
-        .update(lessonPayload)
-        .eq('id', lesson['id'] as String);
+    // One lesson row per page.  Only the first row carries content_json
+    // (the full course snapshot); remaining rows carry just the page title.
+    for (int i = 0; i < pages.length; i++) {
+      final pageTitle = pages[i].title.trim().isNotEmpty
+          ? pages[i].title.trim()
+          : (i == 0
+                ? (course.metadata.title.isEmpty
+                      ? 'Untitled'
+                      : course.metadata.title)
+                : 'Lesson ${i + 1}');
+      final payload = <String, dynamic>{
+        'title': pageTitle,
+        'type': 'interactive',
+        'sort_key': 1000 + i * 10,
+        if (i == 0) 'content_json': fullJson,
+      };
+
+      if (i < existingIds.length) {
+        await client.from('lessons').update(payload).eq('id', existingIds[i]);
+      } else {
+        await client.from('lessons').insert({
+          'course_id': course.courseId,
+          'is_locked': false,
+          'unlock_type': 'none',
+          'prerequisite_lesson_id': null,
+          'paywall_product_id': null,
+          ...payload,
+        });
+      }
+    }
+
+    // Delete any extra snapshot rows if page count decreased.
+    if (existingIds.length > pages.length) {
+      await client
+          .from('lessons')
+          .delete()
+          .inFilter('id', existingIds.sublist(pages.length));
+    }
   }
 
   static Future<void> _writeSnapshotToFirstLesson({
@@ -886,7 +1133,6 @@ class SupabaseService {
         .from('lessons')
         .select('id')
         .eq('course_id', courseId)
-        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
@@ -912,7 +1158,6 @@ class SupabaseService {
         .from('lessons')
         .select('content_json')
         .eq('course_id', courseId)
-        .order('group_sort_key', ascending: true)
         .order('sort_key', ascending: true)
         .limit(1)
         .maybeSingle();
@@ -1040,6 +1285,7 @@ class CourseResult {
   final String message;
   final String? courseId;
   final String? versionId;
+  final String? lessonId;
   final CourseSchemaValidationResult? validation;
 
   const CourseResult({
@@ -1047,6 +1293,7 @@ class CourseResult {
     required this.message,
     this.courseId,
     this.versionId,
+    this.lessonId,
     this.validation,
   });
 }

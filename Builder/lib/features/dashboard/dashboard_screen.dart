@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
+import '../../services/ai_course_generator.dart';
 import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
@@ -190,13 +192,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
               const SizedBox(height: 18),
 
-              // "Build Course" button → navigate to Builder
-              _SideAction(
-                label: t.sidebarBuildCourse,
-                onTap: () => context.go('/builder'),
-              ),
-              const SizedBox(height: 18),
-
               // Nav items
               _NavItem(
                 label: t.navHomePage,
@@ -361,9 +356,20 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
               ),
             ),
-            _GhostButton(
-              label: t.createCourse,
-              onTap: () => _showCreateCourseDialog(t),
+            // Right-side actions: AI Generate (Beta) + Create Course
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _AiBetaButton(
+                  label: t.aiGenerateBeta,
+                  onTap: () => _showOneSentenceGenerateDialog(t),
+                ),
+                const SizedBox(width: 10),
+                _GhostButton(
+                  label: t.createCourse,
+                  onTap: () => _showCreateCourseDialog(t),
+                ),
+              ],
             ),
           ],
         ),
@@ -909,18 +915,640 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 _LessonBox(
                   lessonLabel: t.lessonN(i + 1),
                   title: _formatLessonCardTitle(lessons[i], courseTitle: title),
-                  onTap: () => context.go('/builder?courseId=$courseId'),
+                  onDelete: () => _confirmDeleteLesson(
+                    courseId: courseId,
+                    lessonIndex: i,
+                    lessonTitle: _formatLessonCardTitle(
+                      lessons[i],
+                      courseTitle: title,
+                    ),
+                    t: t,
+                  ),
+                  onTap: () {
+                    final lessonTitle = _formatLessonCardTitle(
+                      lessons[i],
+                      courseTitle: title,
+                    );
+                    final encodedLessonTitle = Uri.encodeQueryComponent(
+                      lessonTitle,
+                    );
+                    final encodedCourseTitle = Uri.encodeQueryComponent(title);
+                    context.go(
+                      '/builder?courseId=$courseId&lessonIndex=$i&lessonTitle=$encodedLessonTitle&courseTitle=$encodedCourseTitle',
+                    );
+                  },
                 ),
-              // "Add lesson" dashed box → opens builder
+              // "Add lesson" dashed box → opens blank builder
               _LessonBox(
                 title: t.addLesson,
                 dashed: true,
-                onTap: () => context.go('/builder?courseId=$courseId'),
+                onTap: () {
+                  final encodedCourseTitle = Uri.encodeQueryComponent(title);
+                  context.go(
+                    '/builder?courseId=$courseId&addLesson=1&courseTitle=$encodedCourseTitle',
+                  );
+                },
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  // ─────────────────────────────────────────────────────
+  //  AI one-sentence generate dialog (Beta)
+  // ─────────────────────────────────────────────────────
+
+  Future<void> _showOneSentenceGenerateDialog(BuilderLocalizations t) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final descController = TextEditingController();
+    String difficulty = 'beginner';
+    String animationStyle = 'minimal';
+    String audience = 'beginners';
+    bool isGenerating = false;
+    String? errorMessage;
+    String progressStage = '';
+    double progressValue = 0.0;
+    Timer? progressTimer;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: !isGenerating,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final hasText = descController.text.trim().isNotEmpty;
+
+          // ── helpers ──
+          Widget _sectionLabel(String text) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: _C.muted,
+              ),
+            ),
+          );
+
+          Widget _dropdown<T>({
+            required T value,
+            required List<DropdownMenuItem<T>> items,
+            required ValueChanged<T?> onChanged,
+          }) => DropdownButtonFormField<T>(
+            value: value,
+            items: items,
+            onChanged: isGenerating ? null : onChanged,
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          );
+
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            titlePadding: const EdgeInsets.fromLTRB(24, 20, 16, 0),
+            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+            actionsPadding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            t.aiGenerateDialogTitle,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: _C.text,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          // Orange "Beta" badge
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 7,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                0xFFFF8C00,
+                              ).withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(
+                                color: const Color(
+                                  0xFFFF8C00,
+                                ).withValues(alpha: 0.5),
+                              ),
+                            ),
+                            child: const Text(
+                              'Beta',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFCC6600),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        t.aiGenerateDialogSubtitle,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: _C.muted,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: isGenerating ? null : () => Navigator.pop(ctx),
+                  icon: const Icon(Icons.close, color: _C.muted, size: 20),
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: 480,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // ── Description textarea ──────────────────────────
+                    TextField(
+                      controller: descController,
+                      enabled: !isGenerating,
+                      autofocus: true,
+                      minLines: 3,
+                      maxLines: 6,
+                      decoration: InputDecoration(
+                        hintText: t.aiGeneratePlaceholder,
+                        hintStyle: const TextStyle(
+                          fontSize: 13,
+                          color: _C.muted,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: _C.accent,
+                            width: 1.5,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(14),
+                      ),
+                      onChanged: (_) => setDialogState(() {}),
+                    ),
+
+                    // ── Options (animate in when text is present) ─────
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOut,
+                      child: hasText
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const SizedBox(height: 20),
+                                // Options header
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.tune_rounded,
+                                      size: 15,
+                                      color: _C.muted,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      t.aiGenerateOptionsLabel,
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: _C.muted,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                // Difficulty
+                                _sectionLabel(t.aiGenerateDifficulty),
+                                _dropdown<String>(
+                                  value: difficulty,
+                                  onChanged: (v) =>
+                                      setDialogState(() => difficulty = v!),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'beginner',
+                                      child: Text(t.aiGenerateDiffBeginner),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'intermediate',
+                                      child: Text(t.aiGenerateDiffIntermediate),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'advanced',
+                                      child: Text(t.aiGenerateDiffAdvanced),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                // Animation style
+                                _sectionLabel(t.aiGenerateStyle),
+                                _dropdown<String>(
+                                  value: animationStyle,
+                                  onChanged: (v) =>
+                                      setDialogState(() => animationStyle = v!),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'minimal',
+                                      child: Text(t.aiGenerateStyleMinimal),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'cartoon',
+                                      child: Text(t.aiGenerateStyleCartoon),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'realistic',
+                                      child: Text(t.aiGenerateStyleRealistic),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                // Target audience
+                                _sectionLabel(t.aiGenerateAudience),
+                                _dropdown<String>(
+                                  value: audience,
+                                  onChanged: (v) =>
+                                      setDialogState(() => audience = v!),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'beginners',
+                                      child: Text(t.aiGenerateAudienceBeginner),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'intermediate',
+                                      child: Text(
+                                        t.aiGenerateAudienceIntermediate,
+                                      ),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'advanced',
+                                      child: Text(t.aiGenerateAudienceAdvanced),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+
+                    // ── Error message ─────────────────────────────────
+                    if (errorMessage != null) ...[
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.error.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppColors.error.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.error_outline,
+                              size: 16,
+                              color: AppColors.error,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                errorMessage!,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.error,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    // ── Progress stages (shown while generating) ──────
+                    if (isGenerating) ...[
+                      const SizedBox(height: 14),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: progressValue,
+                          minHeight: 4,
+                          backgroundColor:
+                              const Color(0xFFFF8C00).withValues(alpha: 0.12),
+                          color: const Color(0xFFFF8C00),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        progressStage,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: _C.muted,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                    const SizedBox(height: 4),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isGenerating ? null : () => Navigator.pop(ctx),
+                child: Text(t.cancel, style: const TextStyle(color: _C.muted)),
+              ),
+              ElevatedButton.icon(
+                onPressed: isGenerating
+                    ? null
+                    : () async {
+                        final desc = descController.text.trim();
+                        if (desc.isEmpty) {
+                          setDialogState(
+                            () => errorMessage = t.aiGenerateEmptyHint,
+                          );
+                          return;
+                        }
+                        setDialogState(() {
+                          isGenerating = true;
+                          errorMessage = null;
+                          progressValue = 0.0;
+                          progressStage = t.aiAgentStagePlan;
+                        });
+
+                        // Simulate progress through 3 stages while the
+                        // server orchestrates plan → blocks → DB write.
+                        progressTimer = Timer.periodic(
+                          const Duration(milliseconds: 450),
+                          (timer) {
+                            setDialogState(() {
+                              if (progressValue < 0.15) {
+                                progressValue += 0.025; // ~3 s to reach 15 %
+                                progressStage = t.aiAgentStagePlan;
+                              } else if (progressValue < 0.82) {
+                                progressValue += 0.010; // ~30 s to reach 82 %
+                                progressStage = t.aiAgentStageGenerate;
+                              } else if (progressValue < 0.92) {
+                                progressValue += 0.008;
+                                progressStage = t.aiAgentStageValidate;
+                              }
+                              // Pause at 92 % — wait for actual response.
+                            });
+                          },
+                        );
+
+                        final language = t.isZh ? 'zh' : 'en';
+                        final result =
+                            await AICourseGenerator.generateCourseAgentViaApi(
+                          description: desc,
+                          difficulty: difficulty,
+                          animationStyle: animationStyle,
+                          language: language,
+                        );
+
+                        progressTimer?.cancel();
+                        progressTimer = null;
+
+                        if (!ctx.mounted) return;
+
+                        if (!result.success) {
+                          setDialogState(() {
+                            isGenerating = false;
+                            progressValue = 0.0;
+                            progressStage = '';
+                            errorMessage = result.message.isNotEmpty
+                                ? result.message
+                                : t.aiGenerateFailed;
+                          });
+                          return;
+                        }
+
+                        // Course is already in the database — just refresh.
+                        if (ctx.mounted) Navigator.pop(ctx);
+                        if (messenger.mounted) {
+                          messenger.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                t.aiAgentSuccessN(result.lessonCount),
+                              ),
+                              backgroundColor: AppColors.success,
+                            ),
+                          );
+                        }
+
+                        if (mounted) {
+                          await _loadCourses();
+                        }
+
+                        // Show quality improvement dialog if score < 80
+                        if (mounted &&
+                            !result.qualityPassed &&
+                            result.courseId != null) {
+                          await _showQualityDialog(
+                            t: t,
+                            courseId: result.courseId!,
+                            qualityScore: result.qualityScore,
+                            qualityIssues: result.qualityIssues,
+                          );
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF8C00),
+                  foregroundColor: Colors.white,
+                  disabledBackgroundColor: const Color(
+                    0xFFFF8C00,
+                  ).withValues(alpha: 0.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                ),
+                icon: isGenerating
+                    ? const SizedBox(
+                        width: 14,
+                        height: 14,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                        ),
+                      )
+                    : const Icon(Icons.auto_awesome, size: 16),
+                label: Text(
+                  isGenerating ? t.aiGenerating : t.aiGenerateBtn,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  /// Show the post-generation quality report dialog and let the user choose
+  /// to enhance the course or skip.
+  Future<void> _showQualityDialog({
+    required BuilderLocalizations t,
+    required String courseId,
+    required int qualityScore,
+    required List<String> qualityIssues,
+  }) async {
+    final hasMissingInteractive = qualityIssues.any(
+      (s) => s.toLowerCase().contains('interactive'),
+    );
+
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) {
+        bool isEnhancing = false;
+        String statusMessage = '';
+
+        return StatefulBuilder(
+          builder: (ctx2, setS) => AlertDialog(
+            title: Text(
+              t.qualityDialogTitle,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+            ),
+            content: SizedBox(
+              width: 380,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    t.qualityDialogBody(qualityScore),
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  if (qualityIssues.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    ...qualityIssues.take(3).map(
+                      (issue) => Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('• ',
+                                style: TextStyle(
+                                    color: Color(0xFFFF8C00), fontSize: 13)),
+                            Expanded(
+                              child: Text(issue,
+                                  style: const TextStyle(fontSize: 13)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                  if (isEnhancing) ...[
+                    const SizedBox(height: 16),
+                    const LinearProgressIndicator(),
+                    const SizedBox(height: 6),
+                    Text(t.qualityEnhancing,
+                        style: const TextStyle(fontSize: 12)),
+                  ],
+                  if (statusMessage.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text(statusMessage,
+                        style: const TextStyle(fontSize: 13)),
+                  ],
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isEnhancing ? null : () => Navigator.pop(ctx2),
+                child: Text(t.qualityActionIgnore),
+              ),
+              if (hasMissingInteractive)
+                TextButton(
+                  onPressed: isEnhancing
+                      ? null
+                      : () async {
+                          setS(() => isEnhancing = true);
+                          final r = await AICourseGenerator.enhanceCourseViaApi(
+                            courseId: courseId,
+                            type: 'add-interactive',
+                          );
+                          if (!ctx2.mounted) return;
+                          if (r.success) {
+                            setS(() {
+                              isEnhancing = false;
+                              statusMessage =
+                                  '${t.qualityEnhanceDone}: ${r.message}';
+                            });
+                            if (mounted) await _loadCourses();
+                          } else {
+                            setS(() {
+                              isEnhancing = false;
+                              statusMessage = t.qualityEnhanceFailed;
+                            });
+                          }
+                        },
+                  child: Text(t.qualityActionAddInteractive),
+                ),
+              ElevatedButton(
+                onPressed: isEnhancing
+                    ? null
+                    : () async {
+                        setS(() => isEnhancing = true);
+                        final r = await AICourseGenerator.enhanceCourseViaApi(
+                          courseId: courseId,
+                          type: 'add-final-quiz',
+                        );
+                        if (!ctx2.mounted) return;
+                        if (r.success) {
+                          setS(() {
+                            isEnhancing = false;
+                            statusMessage =
+                                '${t.qualityEnhanceDone}: ${r.message}';
+                          });
+                          if (mounted) await _loadCourses();
+                        } else {
+                          setS(() {
+                            isEnhancing = false;
+                            statusMessage = t.qualityEnhanceFailed;
+                          });
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF8C00),
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(t.qualityActionAddQuiz),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -1382,6 +2010,80 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
         );
       }
+    }
+  }
+
+  Future<void> _confirmDeleteLesson({
+    required String courseId,
+    required int lessonIndex,
+    required String lessonTitle,
+    required BuilderLocalizations t,
+  }) async {
+    // Guard: prevent deleting last lesson
+    final currentLessons = _courseLessons[courseId] ?? [];
+    if (currentLessons.length <= 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.cannotDeleteLastLesson)),
+      );
+      return;
+    }
+
+    final messenger = ScaffoldMessenger.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(t.deleteLessonTitle),
+        content: Text(t.deleteLessonConfirm(lessonIndex + 1, lessonTitle)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(t.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _C.danger,
+              foregroundColor: Colors.white,
+            ),
+            child: Text(t.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    // Load full course, remove the page, save back
+    final course = await SupabaseService.getCourseContent(courseId);
+    if (!mounted) return;
+    if (course == null || lessonIndex >= course.pages.length) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(t.errorLoading)),
+      );
+      return;
+    }
+
+    final pageId = course.pages[lessonIndex].pageId;
+    final updated = course.removePage(pageId);
+    final result = await SupabaseService.saveCourse(updated);
+    if (!mounted) return;
+
+    if (result.success) {
+      _courseLessons.remove(courseId); // invalidate cache
+      await _loadCourseLessons(courseId); // reload titles
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(t.lessonDeleted),
+          backgroundColor: AppColors.success,
+        ),
+      );
+    } else {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(result.message),
+          backgroundColor: AppColors.error,
+        ),
+      );
     }
   }
 
@@ -1886,42 +2588,6 @@ class _NavItem extends StatelessWidget {
   }
 }
 
-/// "Build Course" side action button
-class _SideAction extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const _SideAction({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(999),
-          gradient: LinearGradient(
-            colors: [
-              _C.primary.withValues(alpha: 0.18),
-              _C.accent.withValues(alpha: 0.18),
-            ],
-          ),
-          border: Border.all(color: _C.accent.withValues(alpha: 0.35)),
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: _C.text,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Ghost-style button (outlined, no fill)
 class _GhostButton extends StatelessWidget {
   final String label;
@@ -2129,86 +2795,134 @@ class _CommentBlock extends StatelessWidget {
 }
 
 /// Lesson box (200x200)
-class _LessonBox extends StatelessWidget {
+class _LessonBox extends StatefulWidget {
   final String title;
   final String? lessonLabel;
   final bool dashed;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
 
   const _LessonBox({
     required this.title,
     this.lessonLabel,
     this.dashed = false,
     this.onTap,
+    this.onDelete,
   });
 
   @override
+  State<_LessonBox> createState() => _LessonBoxState();
+}
+
+class _LessonBoxState extends State<_LessonBox> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 200,
-        height: 200,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          gradient: dashed
-              ? null
-              : const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0x1F4D7CFF), Color(0x1F58CC02)],
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: widget.onTap,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: widget.dashed
+                    ? null
+                    : const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0x1F4D7CFF), Color(0x1F58CC02)],
+                      ),
+                color: widget.dashed ? const Color(0x99FFFFFF) : null,
+                border: Border.all(
+                  color: widget.dashed
+                      ? const Color(0x66506E96)
+                      : const Color(0x4D506E96),
+                  width: widget.dashed ? 2 : 1,
                 ),
-          color: dashed ? const Color(0x99FFFFFF) : null,
-          border: Border.all(
-            color: dashed ? const Color(0x66506E96) : const Color(0x4D506E96),
-            width: dashed ? 2 : 1,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-          child: Center(
-            child: dashed
-                ? Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                      color: _C.muted,
-                    ),
-                  )
-                : Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (lessonLabel != null) ...[
-                        Text(
-                          lessonLabel!,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                child: Center(
+                  child: widget.dashed
+                      ? Text(
+                          widget.title,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 12,
+                            fontSize: 15,
                             color: _C.muted,
-                            letterSpacing: 0.6,
                           ),
+                        )
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (widget.lessonLabel != null) ...[
+                              Text(
+                                widget.lessonLabel!,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                  color: _C.muted,
+                                  letterSpacing: 0.6,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                            Text(
+                              widget.title,
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15,
+                                height: 1.35,
+                                color: _C.text,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                      ],
-                      Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                          height: 1.35,
-                          color: _C.text,
-                        ),
-                      ),
-                    ],
-                  ),
+                ),
+              ),
+            ),
           ),
-        ),
+          // Delete button — fades in on hover for non-dashed cards
+          if (widget.onDelete != null)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: AnimatedOpacity(
+                opacity: _isHovered ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 150),
+                child: GestureDetector(
+                  onTap: widget.onDelete,
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(color: Colors.black26, blurRadius: 4),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      size: 14,
+                      color: Color(0xFFE53E3E),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -2362,6 +3076,52 @@ class _UploadPreviewBox extends StatelessWidget {
                 ),
               ],
             ),
+    );
+  }
+}
+
+/// Orange pill button with a β badge — entry point for AI one-sentence generation.
+class _AiBetaButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+
+  const _AiBetaButton({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(999),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFF8C00), Color(0xFFFFAA33)],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF8C00).withValues(alpha: 0.28),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.auto_awesome, size: 14, color: Colors.white),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

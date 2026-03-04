@@ -23,8 +23,21 @@ import '../../widgets/user_avatar.dart';
 /// Builder main screen - course editor
 class BuilderScreen extends ConsumerStatefulWidget {
   final String? courseId;
+  final bool addLesson;
+  final String? draftId;
+  final int? lessonIndex;
+  final String? lessonTitle;
+  final String? parentCourseTitle;
 
-  const BuilderScreen({super.key, this.courseId});
+  const BuilderScreen({
+    super.key,
+    this.courseId,
+    this.addLesson = false,
+    this.draftId,
+    this.lessonIndex,
+    this.lessonTitle,
+    this.parentCourseTitle,
+  });
 
   @override
   ConsumerState<BuilderScreen> createState() => _BuilderScreenState();
@@ -34,11 +47,36 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   bool _courseLoaded = false;
   bool _draftAutoSaveEnabled = false;
   String? _courseId;
+  String? _draftId;
+  String? _addFlowLessonId;
+  int? _entryLessonIndex;
+  String? _entryLessonTitle;
+  String? _parentCourseTitle;
 
   @override
   void initState() {
     super.initState();
-    _courseId = widget.courseId;
+    final routeCourseId = widget.courseId?.trim();
+    _courseId = (routeCourseId == null || routeCourseId.isEmpty)
+        ? null
+        : routeCourseId;
+    final routeDraftId = widget.draftId?.trim();
+    _draftId = (routeDraftId == null || routeDraftId.isEmpty)
+        ? null
+        : routeDraftId;
+    final routeLessonIndex = widget.lessonIndex;
+    _entryLessonIndex = (routeLessonIndex != null && routeLessonIndex >= 0)
+        ? routeLessonIndex
+        : null;
+    final routeLessonTitle = widget.lessonTitle?.trim();
+    _entryLessonTitle = (routeLessonTitle == null || routeLessonTitle.isEmpty)
+        ? null
+        : routeLessonTitle;
+    final routeParentCourseTitle = widget.parentCourseTitle?.trim();
+    _parentCourseTitle =
+        (routeParentCourseTitle == null || routeParentCourseTitle.isEmpty)
+        ? null
+        : routeParentCourseTitle;
     _bootstrapProtectedScreen();
   }
 
@@ -51,9 +89,99 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       context.go('/');
       return;
     }
-    if (_courseId != null) {
-      _loadCourse();
+    if (_isAddLessonFlow) {
+      await _loadOrInitAddLessonCourse();
+      return;
     }
+
+    if (_courseId != null && _courseId!.isNotEmpty) {
+      _loadCourse();
+      return;
+    }
+    _initializeBlankCourse();
+  }
+
+  bool get _isAddLessonFlow =>
+      widget.addLesson && _courseId != null && _courseId!.isNotEmpty;
+
+  String? get _activeDraftStorageId {
+    if (_isAddLessonFlow) {
+      final id = _draftId;
+      if (id != null && id.isNotEmpty) return id;
+    }
+    final id = _courseId;
+    if (id != null && id.isNotEmpty) return id;
+    return null;
+  }
+
+  int _resolveEntryPageIndex(Course course) {
+    final target = _entryLessonIndex;
+    if (target == null || target < 0) return 0;
+    if (course.pages.isEmpty) return 0;
+    if (target >= course.pages.length) return course.pages.length - 1;
+    return target;
+  }
+
+  Future<void> _hydrateParentCourseTitleIfNeeded() async {
+    if (!_isAddLessonFlow) return;
+    final existing = _parentCourseTitle?.trim();
+    if (existing != null && existing.isNotEmpty) return;
+    final courseId = _courseId;
+    if (courseId == null || courseId.isEmpty) return;
+
+    try {
+      final course = await SupabaseService.client
+          .from('courses')
+          .select('title')
+          .eq('id', courseId)
+          .maybeSingle();
+      final title = (course?['title'] as String?)?.trim();
+      if (title != null && title.isNotEmpty) {
+        _parentCourseTitle = title;
+      }
+    } catch (_) {}
+  }
+
+  Future<void> _loadOrInitAddLessonCourse() async {
+    await _hydrateParentCourseTitleIfNeeded();
+    if (!mounted) return;
+
+    if (_draftId != null && _draftId!.isNotEmpty) {
+      final draft = await StorageService.loadCourseDraft(_draftId!);
+      if (!mounted) return;
+      if (draft != null) {
+        ref.read(courseProvider.notifier).loadCourse(draft);
+        ref
+            .read(builderStateProvider.notifier)
+            .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
+        ref.read(builderStateProvider.notifier).setCurrentPage(0);
+        ref.read(builderStateProvider.notifier).clearSelection();
+        _draftAutoSaveEnabled = true;
+        return;
+      }
+    }
+
+    _initializeBlankCourse(preserveCourseId: true);
+  }
+
+  void _initializeBlankCourse({bool preserveCourseId = false}) {
+    ref.read(courseProvider.notifier).createNewCourse();
+    final created = ref.read(courseProvider);
+
+    if (!preserveCourseId) {
+      _courseId = created.courseId;
+      _draftId = null;
+    } else {
+      _draftId = created.courseId;
+    }
+
+    _draftAutoSaveEnabled = true;
+    ref
+        .read(builderStateProvider.notifier)
+        .syncCourseTitle(created.metadata.title, hasUnsavedChanges: false);
+    ref.read(builderStateProvider.notifier).setCurrentPage(0);
+    ref.read(builderStateProvider.notifier).clearSelection();
+    ref.read(builderStateProvider.notifier).markAsSaved();
   }
 
   Future<void> _loadCourse() async {
@@ -63,15 +191,23 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
     // Restore browser draft first to prevent unsaved edits from being
     // overwritten when navigating Builder -> Preview -> Builder.
-    final draft = await StorageService.loadCourseDraft(courseId);
+    final draftKey = _activeDraftStorageId ?? courseId;
+    final draft = await StorageService.loadCourseDraft(draftKey);
     if (!mounted) return;
-    if (draft != null) {
-      ref
-          .read(courseProvider.notifier)
-          .loadCourse(draft.copyWith(courseId: courseId));
+    // Only restore draft if it actually contains content. An empty draft is a
+    // stale artefact from a previously failed DB load and should be discarded
+    // so the fresh DB content (e.g. agentic-generated lessons) can be shown.
+    final draftHasContent =
+        draft != null && draft.pages.any((p) => p.blocks.isNotEmpty);
+    if (draftHasContent) {
+      final hydratedDraft = draft.copyWith(courseId: courseId);
+      ref.read(courseProvider.notifier).loadCourse(hydratedDraft);
       ref
           .read(builderStateProvider.notifier)
           .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
+      final entryPageIndex = _resolveEntryPageIndex(hydratedDraft);
+      _entryLessonIndex = entryPageIndex;
+      ref.read(builderStateProvider.notifier).setCurrentPage(entryPageIndex);
       _draftAutoSaveEnabled = true;
       _showDraftRestoredHint();
       return;
@@ -84,6 +220,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       ref
           .read(builderStateProvider.notifier)
           .syncCourseTitle(course.metadata.title, hasUnsavedChanges: false);
+      final entryPageIndex = _resolveEntryPageIndex(course);
+      _entryLessonIndex = entryPageIndex;
+      ref.read(builderStateProvider.notifier).setCurrentPage(entryPageIndex);
     }
     _draftAutoSaveEnabled = true;
   }
@@ -102,25 +241,29 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   Future<void> _saveBrowserDraft(WidgetRef ref) async {
-    final courseId = _courseId;
-    if (courseId == null || courseId.isEmpty) return;
-    await StorageService.saveCourseDraft(courseId, ref.read(courseProvider));
+    final draftStorageId = _activeDraftStorageId;
+    if (draftStorageId == null || draftStorageId.isEmpty) return;
+    await StorageService.saveCourseDraft(
+      draftStorageId,
+      ref.read(courseProvider),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen(courseProvider, (previous, next) {
       if (!_draftAutoSaveEnabled) return;
-      final courseId = _courseId;
-      if (courseId == null || courseId.isEmpty) return;
-      StorageService.saveCourseDraft(courseId, next);
+      final draftStorageId = _activeDraftStorageId;
+      if (draftStorageId == null || draftStorageId.isEmpty) return;
+      StorageService.saveCourseDraft(draftStorageId, next);
     });
 
     final builderState = ref.watch(builderStateProvider);
+    final course = ref.watch(courseProvider);
     final t = BuilderLocalizations(ref.watch(languageProvider));
 
     return Scaffold(
-      appBar: _buildAppBar(context, ref, builderState, t),
+      appBar: _buildAppBar(context, ref, builderState, course, t),
       body: const BuilderLayout(
         leftPanel: ModulePanel(),
         canvas: BuilderCanvas(),
@@ -133,9 +276,17 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     BuildContext context,
     WidgetRef ref,
     BuilderState state,
+    Course course,
     BuilderLocalizations t,
   ) {
     final isCompact = MediaQuery.of(context).size.width < 920;
+    final currentLessonTitle = _resolveCurrentLessonTitle(
+      course,
+      state.currentPageIndex,
+      t,
+    );
+    final displayCourseTitle = _resolveDisplayCourseTitle(state.courseTitle);
+    final appBarTitle = '$displayCourseTitle/$currentLessonTitle';
     final pillOutlinedStyle = OutlinedButton.styleFrom(
       foregroundColor: AppColors.neutral700,
       side: const BorderSide(color: AppColors.neutral300),
@@ -174,11 +325,12 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                state.courseTitle,
+                appBarTitle,
                 style: const TextStyle(
                   fontSize: AppFontSize.md,
                   fontWeight: FontWeight.w600,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(width: AppSpacing.xs),
               const Icon(Icons.edit, size: 16, color: AppColors.neutral400),
@@ -222,13 +374,31 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         // Preview button
         OutlinedButton(
           onPressed: () async {
+            final previewCourseId = (_courseId ?? '').isNotEmpty
+                ? _courseId!
+                : ref.read(courseProvider).courseId;
+            final previewPageIndex = state.currentPageIndex;
+            _courseId = previewCourseId;
+            if (_isAddLessonFlow && (_draftId == null || _draftId!.isEmpty)) {
+              _draftId = ref.read(courseProvider).courseId;
+            }
             await _saveBrowserDraft(ref);
             if (!context.mounted) return;
-            final id = _courseId ?? '';
-            if (id.isNotEmpty) {
-              context.go('/viewer?courseId=$id');
+            if (previewCourseId.isNotEmpty) {
+              if (_isAddLessonFlow) {
+                final draftPart = (_draftId != null && _draftId!.isNotEmpty)
+                    ? '&draftId=${Uri.encodeQueryComponent(_draftId!)}'
+                    : '';
+                context.go(
+                  '/viewer?courseId=$previewCourseId&singlePage=1&pageIndex=$previewPageIndex&addLesson=1$draftPart',
+                );
+              } else {
+                context.go(
+                  '/viewer?courseId=$previewCourseId&singlePage=1&pageIndex=$previewPageIndex',
+                );
+              }
             } else {
-              context.go('/viewer');
+              context.go('/viewer?singlePage=1&pageIndex=$previewPageIndex');
             }
           },
           style: pillOutlinedStyle,
@@ -288,6 +458,60 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ),
       ],
     );
+  }
+
+  String _resolveCurrentLessonTitle(
+    Course course,
+    int pageIndex,
+    BuilderLocalizations t,
+  ) {
+    final page = course.getPage(pageIndex);
+    final title = page?.title.trim() ?? '';
+    final entryIndex = _entryLessonIndex;
+    final entryTitle = _entryLessonTitle;
+
+    if (entryIndex != null && entryTitle != null && pageIndex == entryIndex) {
+      return entryTitle;
+    }
+
+    if (_isAddLessonFlow) {
+      final metadataTitle = course.metadata.title.trim();
+      if (metadataTitle.isNotEmpty) {
+        return _looksLikePlaceholderLessonTitle(metadataTitle)
+            ? _untitledLessonLabel(t)
+            : metadataTitle;
+      }
+      if (title.isEmpty || _looksLikePlaceholderLessonTitle(title)) {
+        return _untitledLessonLabel(t);
+      }
+    }
+
+    if (title.isNotEmpty) return title;
+    if (entryIndex != null && entryTitle != null && pageIndex == entryIndex) {
+      return entryTitle;
+    }
+    final displayIndex = pageIndex >= 0 ? pageIndex + 1 : 1;
+    return t.lessonN(displayIndex);
+  }
+
+  String _resolveDisplayCourseTitle(String fallback) {
+    if (!_isAddLessonFlow) return fallback;
+    final title = _parentCourseTitle?.trim();
+    if (title != null && title.isNotEmpty) return title;
+    return fallback;
+  }
+
+  String _untitledLessonLabel(BuilderLocalizations t) {
+    return t.isZh ? '未命名课程' : 'Untitled Lesson';
+  }
+
+  bool _looksLikePlaceholderLessonTitle(String title) {
+    final normalized = title.trim().toLowerCase();
+    if (normalized.isEmpty) return true;
+    if (normalized == 'untitled lesson' || normalized == 'untitled course') {
+      return true;
+    }
+    return RegExp(r'^page\s*\d+$').hasMatch(normalized);
   }
 
   void _editCourseTitle(
@@ -547,7 +771,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       return;
     }
 
-    final course = _courseForPersist(ref.read(courseProvider));
+    final sourceCourse = ref.read(courseProvider);
+    final course = _courseForPersist(sourceCourse);
 
     // Show saving indicator
     ScaffoldMessenger.of(context).showSnackBar(
@@ -570,7 +795,13 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       ),
     );
 
-    final result = await SupabaseService.saveCourse(course);
+    final result = _isAddLessonFlow
+        ? await SupabaseService.saveLessonToCourse(
+            courseId: _courseId!,
+            lessonCourse: sourceCourse,
+            lessonId: _addFlowLessonId,
+          )
+        : await SupabaseService.saveCourse(course);
 
     if (!context.mounted) return;
 
@@ -578,12 +809,15 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (result.success) {
+      if (_isAddLessonFlow) {
+        _addFlowLessonId = result.lessonId ?? _addFlowLessonId;
+      }
       await _adoptPersistedCourseId(result.courseId, ref);
       if (!context.mounted) return;
       ref.read(builderStateProvider.notifier).markAsSaved();
-      final draftCourseId = _courseId;
-      if (draftCourseId != null && draftCourseId.isNotEmpty) {
-        await StorageService.clearCourseDraft(draftCourseId);
+      final draftStorageId = _activeDraftStorageId;
+      if (draftStorageId != null && draftStorageId.isNotEmpty) {
+        await StorageService.clearCourseDraft(draftStorageId);
         if (!context.mounted) return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
@@ -740,6 +974,8 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     WidgetRef ref,
   ) async {
     if (persistedId == null || persistedId.isEmpty) return;
+    if (_isAddLessonFlow) return;
+
     final previousId = _courseId;
     if (previousId == persistedId) return;
 

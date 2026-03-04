@@ -14,7 +14,6 @@ class AIGenerateDialog extends StatefulWidget {
 }
 
 class _AIGenerateDialogState extends State<AIGenerateDialog> {
-  final _apiKeyController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
   String? _statusMessage;
@@ -23,22 +22,6 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
   // PDF data
   dynamic _pdfBytes;
   String? _pdfFileName;
-
-  @override
-  void initState() {
-    super.initState();
-    // Restore saved API key
-    final savedKey = AICourseGenerator.apiKey;
-    if (savedKey != null) {
-      _apiKeyController.text = savedKey;
-    }
-  }
-
-  @override
-  void dispose() {
-    _apiKeyController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,33 +86,6 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
 
             const SizedBox(height: AppSpacing.lg),
             const Divider(),
-            const SizedBox(height: AppSpacing.lg),
-
-            // API key input
-            const Text(
-              'Gemini API Key',
-              style: TextStyle(
-                fontSize: AppFontSize.sm,
-                fontWeight: FontWeight.w500,
-                color: AppColors.neutral700,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            TextField(
-              controller: _apiKeyController,
-              obscureText: true,
-              enabled: !_isLoading,
-              decoration: InputDecoration(
-                hintText: 'Enter your Gemini API key',
-                prefixIcon: const Icon(Icons.key, size: 20),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.info_outline, size: 18),
-                  onPressed: () => _showApiKeyHelp(context),
-                  tooltip: 'Get API key',
-                ),
-              ),
-            ),
-
             const SizedBox(height: AppSpacing.lg),
 
             // PDF upload area
@@ -334,9 +290,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
   }
 
   bool _canGenerate() {
-    return !_isLoading &&
-        _apiKeyController.text.isNotEmpty &&
-        _pdfBytes != null;
+    return !_isLoading && _pdfBytes != null;
   }
 
   Future<void> _pickPdf() async {
@@ -368,17 +322,13 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
       _progress = 0.1;
     });
 
-    // Save API key
-    AICourseGenerator.setApiKey(_apiKeyController.text);
-
     setState(() {
-      _statusMessage =
-          'AI is analyzing the document (Gemini 3 Pro preferred)...';
+      _statusMessage = 'AI is analyzing the document...';
       _progress = 0.3;
     });
 
     // Call AI generation
-    final result = await AICourseGenerator.generateFromPdf(
+    final result = await AICourseGenerator.generateFromPdfViaApi(
       pdfBytes: _pdfBytes,
       fileName: _pdfFileName!,
     );
@@ -409,41 +359,5 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
         _progress = 0;
       });
     }
-  }
-
-  void _showApiKeyHelp(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Get Gemini API key'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('1. Visit Google AI Studio:'),
-            SizedBox(height: AppSpacing.xs),
-            SelectableText(
-              'https://aistudio.google.com/apikey',
-              style: TextStyle(
-                color: AppColors.primary500,
-                fontSize: AppFontSize.sm,
-              ),
-            ),
-            SizedBox(height: AppSpacing.md),
-            Text('2. Sign in with your Google account'),
-            SizedBox(height: AppSpacing.xs),
-            Text('3. Click "Create API Key"'),
-            SizedBox(height: AppSpacing.xs),
-            Text('4. Copy the key and paste it above'),
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Got it'),
-          ),
-        ],
-      ),
-    );
   }
 }
