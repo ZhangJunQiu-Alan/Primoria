@@ -234,6 +234,38 @@ void main() {
       expect(content.loop, isTrue);
       expect(content.speed, 1.0);
     });
+
+    test('AnimationContent custom preset serializes customHtml and aiPrompt', () {
+      const content = AnimationContent(
+        preset: AnimationContent.presetCustom,
+        customHtml: '<html><body>test</body></html>',
+        aiPrompt: 'Show bubble sort',
+      );
+      final json = content.toJson();
+
+      expect(json['preset'], AnimationContent.presetCustom);
+      expect(json['customHtml'], '<html><body>test</body></html>');
+      expect(json['aiPrompt'], 'Show bubble sort');
+
+      final roundtrip = AnimationContent.fromJson(json);
+      expect(roundtrip.preset, AnimationContent.presetCustom);
+      expect(roundtrip.customHtml, '<html><body>test</body></html>');
+      expect(roundtrip.aiPrompt, 'Show bubble sort');
+    });
+
+    test('AnimationContent copyWith clearCustomHtml removes customHtml', () {
+      const content = AnimationContent(
+        preset: AnimationContent.presetCustom,
+        customHtml: '<html/>',
+        aiPrompt: 'test',
+      );
+      final cleared = content.copyWith(
+        preset: AnimationContent.presetBouncingDot,
+        clearCustomHtml: true,
+      );
+      expect(cleared.customHtml, isNull);
+      expect(cleared.preset, AnimationContent.presetBouncingDot);
+    });
   });
 
   group('FunctionFlowContent', () {
