@@ -7,8 +7,13 @@ import '../../theme/design_tokens.dart';
 /// Lightweight animation preview for Builder + Viewer.
 class AnimationBlockWidget extends StatefulWidget {
   final AnimationContent content;
+  final double height;
 
-  const AnimationBlockWidget({super.key, required this.content});
+  const AnimationBlockWidget({
+    super.key,
+    required this.content,
+    this.height = 280,
+  });
 
   @override
   State<AnimationBlockWidget> createState() => _AnimationBlockWidgetState();
@@ -69,6 +74,7 @@ class _AnimationBlockWidgetState extends State<AnimationBlockWidget>
 
   @override
   Widget build(BuildContext context) {
+    final previewHeight = math.max(140.0, widget.height).toDouble();
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -122,7 +128,7 @@ class _AnimationBlockWidgetState extends State<AnimationBlockWidget>
           ),
           const SizedBox(height: AppSpacing.sm),
           Container(
-            height: 140,
+            height: previewHeight,
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -154,25 +160,9 @@ class _AnimationBlockWidgetState extends State<AnimationBlockWidget>
         final maxY = constraints.maxHeight - dotSize;
         final bounce = math.sin(t * math.pi).abs();
         final y = maxY * (1 - bounce);
-        final shadowOpacity = 0.15 + (1 - bounce) * 0.2;
 
         return Stack(
           children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 6,
-              child: Center(
-                child: Container(
-                  width: 36 - bounce * 10,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: shadowOpacity),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                ),
-              ),
-            ),
             Positioned(
               left: (constraints.maxWidth - dotSize) / 2,
               top: y,

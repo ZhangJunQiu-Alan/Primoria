@@ -5,7 +5,10 @@ import '../providers/builder_state.dart';
 import '../providers/course_provider.dart';
 import '../models/models.dart';
 import '../services/block_registry.dart';
+import '../services/ai_animation_generator.dart';
+import '../services/ai_course_generator.dart';
 import '../services/file_picker.dart' as file_picker;
+import 'block_widgets/html_animation_widget.dart';
 import 'code_execution_content_editor.dart';
 import 'function_flow_content_editor.dart';
 import 'matching_content_editor.dart';
@@ -277,6 +280,102 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                 },
               ),
             ),
+            if (widget.block.type == BlockType.animation) ...[
+              const SizedBox(height: AppSpacing.sm),
+              _PropertyField(
+                label: 'Width',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Slider(
+                            min: 260,
+                            max: 1400,
+                            divisions: 57,
+                            value: ((widget.block.style.width ?? 960).clamp(
+                              260.0,
+                              1400.0,
+                            )).toDouble(),
+                            label:
+                                '${((widget.block.style.width ?? 960).clamp(260.0, 1400.0)).toStringAsFixed(0)} px',
+                            onChanged: (value) {
+                              final updatedBlock = widget.block.copyWith(
+                                style: widget.block.style.copyWith(
+                                  width: value,
+                                ),
+                              );
+                              _updateBlock(updatedBlock);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 62,
+                          child: Text(
+                            widget.block.style.width == null
+                                ? 'Auto'
+                                : '${widget.block.style.width!.clamp(260.0, 1400.0).toStringAsFixed(0)}px',
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: AppFontSize.xs,
+                              color: AppColors.neutral500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        final updatedBlock = widget.block.copyWith(
+                          style: widget.block.style.copyWith(clearWidth: true),
+                        );
+                        _updateBlock(updatedBlock);
+                      },
+                      child: const Text('Fill container'),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              _PropertyField(
+                label: 'Height',
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Slider(
+                        min: 180,
+                        max: 900,
+                        divisions: 36,
+                        value: ((widget.block.style.height ?? 300).clamp(
+                          180.0,
+                          900.0,
+                        )).toDouble(),
+                        label:
+                            '${((widget.block.style.height ?? 300).clamp(180.0, 900.0)).toStringAsFixed(0)} px',
+                        onChanged: (value) {
+                          final updatedBlock = widget.block.copyWith(
+                            style: widget.block.style.copyWith(height: value),
+                          );
+                          _updateBlock(updatedBlock);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 56,
+                      child: Text(
+                        '${((widget.block.style.height ?? 300).clamp(180.0, 900.0)).toStringAsFixed(0)}px',
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                          fontSize: AppFontSize.xs,
+                          color: AppColors.neutral500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -794,124 +893,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
 
   Widget _buildAnimationEditor() {
     final content = widget.block.content as AnimationContent;
-
-    return _PropertySection(
-      title: 'Animation',
-      children: [
-        DropdownButtonFormField<String>(
-          initialValue: content.preset,
-          decoration: const InputDecoration(
-            labelText: 'Preset',
-            border: OutlineInputBorder(),
-          ),
-          items: const [
-            DropdownMenuItem(
-              value: AnimationContent.presetBouncingDot,
-              child: Text('Bouncing Dot'),
-            ),
-            DropdownMenuItem(
-              value: AnimationContent.presetPulseBars,
-              child: Text('Pulse Bars'),
-            ),
-          ],
-          onChanged: (value) {
-            if (value == null) return;
-            _updateBlock(
-              widget.block.copyWith(content: content.copyWith(preset: value)),
-            );
-          },
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Row(
-          children: [
-            const Text(
-              'Duration',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: AppColors.neutral500,
-              ),
-            ),
-            const Spacer(),
-            Text(
-              '${content.durationMs} ms',
-              style: const TextStyle(
-                fontSize: AppFontSize.xs,
-                color: AppColors.neutral600,
-              ),
-            ),
-          ],
-        ),
-        Slider(
-          value: content.durationMs.toDouble(),
-          min: 300,
-          max: 10000,
-          divisions: 97,
-          label: '${content.durationMs} ms',
-          onChanged: (value) {
-            _updateBlock(
-              widget.block.copyWith(
-                content: content.copyWith(durationMs: value.round()),
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Row(
-          children: [
-            const Text(
-              'Loop',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: AppColors.neutral500,
-              ),
-            ),
-            const Spacer(),
-            Switch(
-              value: content.loop,
-              onChanged: (value) {
-                _updateBlock(
-                  widget.block.copyWith(content: content.copyWith(loop: value)),
-                );
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Row(
-          children: [
-            const Text(
-              'Speed',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: AppColors.neutral500,
-              ),
-            ),
-            const Spacer(),
-            Text(
-              '${content.speed.toStringAsFixed(2)}x',
-              style: const TextStyle(
-                fontSize: AppFontSize.xs,
-                color: AppColors.neutral600,
-              ),
-            ),
-          ],
-        ),
-        Slider(
-          value: content.speed,
-          min: 0.25,
-          max: 3.0,
-          divisions: 11,
-          label: '${content.speed.toStringAsFixed(2)}x',
-          onChanged: (value) {
-            _updateBlock(
-              widget.block.copyWith(content: content.copyWith(speed: value)),
-            );
-          },
-        ),
-      ],
+    return _AnimationEditor(
+      content: content,
+      onChanged: (updated) {
+        _updateBlock(widget.block.copyWith(content: updated));
+      },
     );
   }
 
@@ -981,6 +967,398 @@ class _PropertyField extends StatelessWidget {
           ),
         ),
         Expanded(child: child),
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Animation Editor — AI generation only
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _AnimationEditor extends StatefulWidget {
+  final AnimationContent content;
+  final ValueChanged<AnimationContent> onChanged;
+
+  const _AnimationEditor({required this.content, required this.onChanged});
+
+  @override
+  State<_AnimationEditor> createState() => _AnimationEditorState();
+}
+
+class _AnimationEditorState extends State<_AnimationEditor> {
+  final _promptController = TextEditingController();
+  final _apiKeyController = TextEditingController();
+  bool _isGenerating = false;
+  String? _generationError;
+  String _selectedModel = 'gemini-3.1-flash-lite-preview';
+
+  static const _modelOptions = [
+    'gemini-2.5-flash-latest',
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.5-pro-latest',
+    'gemini-2.5-pro',
+    'gemini-3.1-flash-lite-preview',
+  ];
+  late TextEditingController _codeController;
+
+  static const _suggestionChips = [
+    'Physics simulation',
+    'Sorting algorithm',
+    'Math function plot',
+    'Data structure',
+    'Binary search tree',
+    'Bubble sort',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _promptController.text = widget.content.aiPrompt ?? '';
+    _apiKeyController.text = AICourseGenerator.apiKey ?? '';
+    _codeController = TextEditingController(
+      text: widget.content.customHtml ?? '',
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant _AnimationEditor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Sync code editor when HTML changes externally (e.g. after Generate)
+    if (oldWidget.content.customHtml != widget.content.customHtml) {
+      _codeController.text = widget.content.customHtml ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    _promptController.dispose();
+    _apiKeyController.dispose();
+    _codeController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _generate({
+    bool isRegenerate = false,
+    String? overridePrompt,
+  }) async {
+    final prompt = (overridePrompt ?? _promptController.text).trim();
+    if (prompt.isEmpty) return;
+
+    final key = _apiKeyController.text.trim();
+    if (key.isNotEmpty) AICourseGenerator.setApiKey(key);
+
+    final apiKey = AICourseGenerator.apiKey ?? '';
+    if (apiKey.isEmpty) {
+      setState(() => _generationError = 'Please enter a Gemini API key.');
+      return;
+    }
+
+    setState(() {
+      _isGenerating = true;
+      _generationError = null;
+    });
+
+    final result = await AIAnimationGenerator.generate(
+      prompt: prompt,
+      apiKey: apiKey,
+      previousHtml: isRegenerate ? widget.content.customHtml : null,
+      model: _selectedModel,
+    );
+
+    if (!mounted) return;
+
+    if (result.isSuccess) {
+      _codeController.text = result.html!;
+      widget.onChanged(
+        widget.content.copyWith(
+          preset: AnimationContent.presetCustom,
+          customHtml: result.html,
+          aiPrompt: prompt,
+        ),
+      );
+      setState(() {
+        _isGenerating = false;
+      });
+    } else {
+      setState(() {
+        _isGenerating = false;
+        _generationError = result.error ?? 'Generation failed.';
+      });
+    }
+  }
+
+  void _applyCodeEdit() {
+    final html = _codeController.text.trim();
+    if (html.isEmpty) return;
+    widget.onChanged(
+      widget.content.copyWith(
+        preset: AnimationContent.presetCustom,
+        customHtml: html,
+      ),
+    );
+  }
+
+  Future<void> _showRegenerateDialog() async {
+    final controller = TextEditingController();
+    setHtmlAnimationInteractionEnabled(false);
+    final desc = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Regenerate Animation'),
+          content: TextField(
+            controller: controller,
+            maxLines: 4,
+            autofocus: true,
+            decoration: const InputDecoration(
+              hintText: 'Describe what to improve...',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () =>
+                  Navigator.of(context).pop(controller.text.trim()),
+              child: const Text('Regenerate'),
+            ),
+          ],
+        );
+      },
+    );
+    setHtmlAnimationInteractionEnabled(true);
+    controller.dispose();
+
+    if (!mounted) return;
+    final improvement = (desc ?? '').trim();
+    if (improvement.isEmpty) {
+      setState(() {
+        _generationError = 'Please describe what to improve before regenerate.';
+      });
+      return;
+    }
+    await _generate(isRegenerate: true, overridePrompt: improvement);
+  }
+
+  Future<void> _showEditCodeDialog() async {
+    final dialogController = TextEditingController(text: _codeController.text);
+    setHtmlAnimationInteractionEnabled(false);
+    final updatedHtml = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit HTML Code'),
+          content: SizedBox(
+            width: 700,
+            child: TextField(
+              controller: dialogController,
+              maxLines: 18,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: AppFontSize.xs,
+              ),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Edit HTML…',
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () =>
+                  Navigator.of(context).pop(dialogController.text.trim()),
+              child: const Text('Apply'),
+            ),
+          ],
+        );
+      },
+    );
+    setHtmlAnimationInteractionEnabled(true);
+    dialogController.dispose();
+
+    if (!mounted) return;
+    if (updatedHtml == null || updatedHtml.isEmpty) return;
+    _codeController.text = updatedHtml;
+    _applyCodeEdit();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hasGenerated =
+        widget.content.preset == AnimationContent.presetCustom &&
+        widget.content.customHtml != null;
+
+    return _PropertySection(
+      title: 'Animation',
+      children: [
+        // API key field
+        TextField(
+          controller: _apiKeyController,
+          obscureText: true,
+          decoration: const InputDecoration(
+            labelText: 'Gemini API Key',
+            hintText: 'Paste your Gemini API key…',
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.key, size: 16),
+          ),
+          style: const TextStyle(fontSize: AppFontSize.sm),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+
+        // Model selector
+        DropdownButtonFormField<String>(
+          initialValue: _selectedModel,
+          isExpanded: true,
+          decoration: const InputDecoration(
+            labelText: 'Model',
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.psychology, size: 16),
+          ),
+          style: const TextStyle(fontSize: AppFontSize.sm),
+          items: _modelOptions.map((m) {
+            return DropdownMenuItem(
+              value: m,
+              child: Text(m, maxLines: 1, overflow: TextOverflow.ellipsis),
+            );
+          }).toList(),
+          selectedItemBuilder: (context) {
+            return _modelOptions
+                .map(
+                  (m) => Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      m,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          onChanged: (v) {
+            if (v != null) setState(() => _selectedModel = v);
+          },
+        ),
+        const SizedBox(height: AppSpacing.md),
+
+        // Suggestion chips
+        Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          children: _suggestionChips.map((chip) {
+            return ActionChip(
+              label: Text(
+                chip,
+                style: const TextStyle(fontSize: AppFontSize.xs),
+              ),
+              onPressed: () {
+                _promptController.text = chip;
+                _promptController.selection = TextSelection.fromPosition(
+                  TextPosition(offset: chip.length),
+                );
+              },
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+
+        // Prompt text field
+        TextField(
+          controller: _promptController,
+          maxLines: 3,
+          decoration: const InputDecoration(
+            hintText: 'Describe your animation…',
+            border: OutlineInputBorder(),
+          ),
+          style: const TextStyle(fontSize: AppFontSize.sm),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+
+        // Generate button
+        SizedBox(
+          width: double.infinity,
+          child: FilledButton.icon(
+            onPressed: _isGenerating ? null : () => _generate(),
+            icon: _isGenerating
+                ? const SizedBox(
+                    width: 14,
+                    height: 14,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : const Icon(Icons.auto_awesome, size: 16),
+            label: Text(_isGenerating ? 'Generating…' : 'Generate'),
+          ),
+        ),
+
+        // Error
+        if (_generationError != null) ...[
+          const SizedBox(height: AppSpacing.sm),
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.error.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              border: Border.all(color: AppColors.error.withValues(alpha: 0.4)),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.error_outline, size: 14, color: AppColors.error),
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  child: Text(
+                    _generationError!,
+                    style: TextStyle(
+                      fontSize: AppFontSize.xs,
+                      color: AppColors.error,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+
+        // Preview + action buttons
+        if (hasGenerated) ...[
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _isGenerating ? null : _showRegenerateDialog,
+                  icon: const Icon(Icons.refresh, size: 14),
+                  label: const Text('Regenerate'),
+                  style: OutlinedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: AppFontSize.xs),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _showEditCodeDialog,
+                  icon: const Icon(Icons.code, size: 14),
+                  label: const Text('Edit Code'),
+                  style: OutlinedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: AppFontSize.xs),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }
