@@ -16,6 +16,7 @@ import '../../widgets/block_widgets/animation_block_widget.dart';
 import '../../widgets/block_widgets/code_execution_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
 import '../../widgets/block_widgets/function_flow_block_widget.dart';
+import '../../widgets/block_widgets/html_animation_widget.dart';
 
 class ViewerScreen extends ConsumerStatefulWidget {
   final String? courseId;
@@ -46,10 +47,10 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     final lessons = course.lessons;
     final resolvedLessonIndex =
         (widget.lessonIndex != null &&
-                widget.lessonIndex! >= 0 &&
-                widget.lessonIndex! < lessons.length)
-            ? widget.lessonIndex!
-            : 0;
+            widget.lessonIndex! >= 0 &&
+            widget.lessonIndex! < lessons.length)
+        ? widget.lessonIndex!
+        : 0;
     final previewLessons = (widget.singlePage && lessons.isNotEmpty)
         ? <CourseLesson>[lessons[resolvedLessonIndex]]
         : lessons;
@@ -70,14 +71,14 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
               final id = widget.courseId ?? '';
               final pagePart =
                   (widget.lessonIndex != null && widget.lessonIndex! >= 0)
-                      ? '&lessonIndex=${widget.lessonIndex}'
-                      : '';
+                  ? '&lessonIndex=${widget.lessonIndex}'
+                  : '';
               if (id.isNotEmpty) {
                 if (widget.addLesson) {
                   final draftPart =
                       (widget.draftId != null && widget.draftId!.isNotEmpty)
-                          ? '&draftId=${Uri.encodeQueryComponent(widget.draftId!)}'
-                          : '';
+                      ? '&draftId=${Uri.encodeQueryComponent(widget.draftId!)}'
+                      : '';
                   context.go(
                     '/builder?courseId=$id&addLesson=1$pagePart$draftPart',
                   );
@@ -120,8 +121,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
                             .asMap()
                             .entries
                             .map(
-                              (entry) =>
-                                  Tab(text: 'Lesson ${entry.key + 1}'),
+                              (entry) => Tab(text: 'Lesson ${entry.key + 1}'),
                             )
                             .toList(),
                       ),
@@ -189,10 +189,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(40),
-          border: Border.all(
-            color: AppColors.neutral300,
-            width: 4,
-          ),
+          border: Border.all(color: AppColors.neutral300, width: 4),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.15),
@@ -630,7 +627,25 @@ class _InteractiveBlockPreview extends StatelessWidget {
           onAnswered: onAnswered,
         );
       case BlockType.animation:
-        return AnimationBlockWidget(content: block.content as AnimationContent);
+        final animContent = block.content as AnimationContent;
+        final height = ((block.style.height ?? 300).clamp(
+          180.0,
+          900.0,
+        )).toDouble();
+        final width = block.style.width == null
+            ? null
+            : ((block.style.width!).clamp(260.0, 1400.0)).toDouble();
+        final animation =
+            animContent.preset == AnimationContent.presetCustom &&
+                (animContent.customHtml ?? '').trim().isNotEmpty
+            ? HtmlAnimationWidget(
+                key: ValueKey('viewer-html-${animContent.customHtml.hashCode}'),
+                htmlContent: animContent.customHtml!,
+                height: height,
+              )
+            : AnimationBlockWidget(content: animContent, height: height);
+        if (width == null) return animation;
+        return SizedBox(width: width, child: animation);
       case BlockType.video:
         return Container(
           height: 180,

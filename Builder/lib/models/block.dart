@@ -23,28 +23,44 @@ class BlockStyle {
   final String spacing;
   final String alignment;
   final double? height;
+  final double? width;
 
-  const BlockStyle({this.spacing = 'md', this.alignment = 'left', this.height});
+  const BlockStyle({
+    this.spacing = 'md',
+    this.alignment = 'left',
+    this.height,
+    this.width,
+  });
 
   factory BlockStyle.fromJson(Map<String, dynamic> json) {
     return BlockStyle(
       spacing: json['spacing'] as String? ?? 'md',
       alignment: json['alignment'] as String? ?? 'left',
       height: (json['height'] as num?)?.toDouble(),
+      width: (json['width'] as num?)?.toDouble(),
     );
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{'spacing': spacing, 'alignment': alignment};
     if (height != null) map['height'] = height;
+    if (width != null) map['width'] = width;
     return map;
   }
 
-  BlockStyle copyWith({String? spacing, String? alignment, double? height}) {
+  BlockStyle copyWith({
+    String? spacing,
+    String? alignment,
+    double? height,
+    double? width,
+    bool clearHeight = false,
+    bool clearWidth = false,
+  }) {
     return BlockStyle(
       spacing: spacing ?? this.spacing,
       alignment: alignment ?? this.alignment,
-      height: height ?? this.height,
+      height: clearHeight ? null : (height ?? this.height),
+      width: clearWidth ? null : (width ?? this.width),
     );
   }
 }
