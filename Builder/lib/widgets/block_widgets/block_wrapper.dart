@@ -10,6 +10,7 @@ import 'animation_block_widget.dart';
 import 'code_execution_block_widget.dart';
 import 'code_playground_widget.dart';
 import 'function_flow_block_widget.dart';
+import 'html_animation_widget.dart';
 
 /// Block wrapper - handles selection, delete, and other common behavior
 class BlockWrapper extends StatelessWidget {
@@ -204,7 +205,12 @@ class BlockWrapper extends StatelessWidget {
       case BlockType.matching:
         return _MatchingBlockContent(content: block.content as MatchingContent);
       case BlockType.animation:
-        return AnimationBlockWidget(content: block.content as AnimationContent);
+        final animContent = block.content as AnimationContent;
+        if (animContent.preset == AnimationContent.presetCustom &&
+            animContent.customHtml != null) {
+          return HtmlAnimationWidget(htmlContent: animContent.customHtml!);
+        }
+        return AnimationBlockWidget(content: animContent);
       case BlockType.video:
         return _VideoBlockContent(content: block.content as VideoContent);
     }
