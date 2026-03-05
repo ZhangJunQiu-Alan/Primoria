@@ -1475,21 +1475,28 @@ class MatchingContent implements BlockContent {
 class AnimationContent implements BlockContent {
   static const String presetBouncingDot = 'bouncing-dot';
   static const String presetPulseBars = 'pulse-bars';
+  static const String presetCustom = 'custom';
   static const Set<String> supportedPresets = {
     presetBouncingDot,
     presetPulseBars,
+    presetCustom,
   };
 
   final String preset;
   final int durationMs;
   final bool loop;
   final double speed;
+  // AI-generated animation fields
+  final String? customHtml;
+  final String? aiPrompt;
 
   const AnimationContent({
     this.preset = presetBouncingDot,
     this.durationMs = 2000,
     this.loop = true,
     this.speed = 1.0,
+    this.customHtml,
+    this.aiPrompt,
   });
 
   factory AnimationContent.fromJson(Map<String, dynamic> json) {
@@ -1504,6 +1511,8 @@ class AnimationContent implements BlockContent {
       durationMs: _normalizeDuration(rawDuration),
       loop: json['loop'] as bool? ?? true,
       speed: _normalizeSpeed(rawSpeed),
+      customHtml: json['customHtml'] as String?,
+      aiPrompt: json['aiPrompt'] as String?,
     );
   }
 
@@ -1513,6 +1522,8 @@ class AnimationContent implements BlockContent {
     'durationMs': durationMs,
     'loop': loop,
     'speed': speed,
+    if (customHtml != null) 'customHtml': customHtml,
+    if (aiPrompt != null) 'aiPrompt': aiPrompt,
   };
 
   AnimationContent copyWith({
@@ -1520,6 +1531,9 @@ class AnimationContent implements BlockContent {
     int? durationMs,
     bool? loop,
     double? speed,
+    String? customHtml,
+    String? aiPrompt,
+    bool clearCustomHtml = false,
   }) {
     final nextPreset = preset ?? this.preset;
     return AnimationContent(
@@ -1529,6 +1543,8 @@ class AnimationContent implements BlockContent {
       durationMs: _normalizeDuration(durationMs ?? this.durationMs),
       loop: loop ?? this.loop,
       speed: _normalizeSpeed(speed ?? this.speed),
+      customHtml: clearCustomHtml ? null : (customHtml ?? this.customHtml),
+      aiPrompt: aiPrompt ?? this.aiPrompt,
     );
   }
 
