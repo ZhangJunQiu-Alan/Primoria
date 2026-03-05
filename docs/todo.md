@@ -82,6 +82,12 @@
 18. [x] Profile Personal Info data bound to DB — edit `username`/`bio`, show `role`, show joined month-year from `profiles.created_at` (2026-02-23)
 19. [x] Avatar upload end-to-end in Settings — web/native picker + Supabase Storage (`avatars`) + immediate DB persistence and profile refresh (2026-02-23)
 20. [x] Remove redundant bottom settings block from Profile tab; keep settings entry only in top-right menu (2026-02-23)
+21. [x] Profile cover image upload — web picker + 5 MB guard + Supabase Storage + DB persistence + instant banner refresh (2026-03-05)
+22. [x] XP heatmap on Profile — GitHub-style 53×7 grid; 5-tier indigo colour scale from xp_transactions; month/day labels; scroll-to-right; tap SnackBar (2026-03-05)
+23. [x] Session auth hardening — `ensureAuthenticated()` refresh + `lastOperationError` exposed to UI; avatar/cover upload now pre-checks session (2026-03-05)
+24. [x] Profile banner edge-to-edge — SafeArea refactored so banner bleeds behind status bar; IndexedStack tabs manage their own SafeArea (2026-03-05)
+25. [x] getUserStats live aggregation — stats now computed from xp_transactions / enrollments / lesson_completions in real time; home screen calls refreshStats() on load (2026-03-05)
+26. [x] Home streak badge semantics + scrollbar alignment — top-right star badge now shows streak days (derived from consecutive positive-XP days, consistent with heatmap), and home scroll container is full-width so scrollbar stays at the far-right viewport edge (2026-03-05)
 
 ## Content & Curriculum
 1. [ ] Course content management system
@@ -90,11 +96,12 @@
 4. [ ] Prerequisites and learning paths
 
 ## Gamification
-1. [ ] Achievement system with badges
+1. [x] Achievement system with badges — achievement definitions + user_achievements table; AchievementWallScreen; pinned achievements on Profile (2026-03-05)
 2. [ ] Leaderboards
-3. [ ] XP and leveling system
-4. [ ] Daily/weekly challenges
-5. [ ] Streak rewards
+3. [x] XP and leveling system — xp_transactions; complete_lesson_and_award_xp RPC; XP heatmap (2026-03-05)
+4. [x] Daily/weekly challenges — DailyTaskService; daily tasks card on Home (2026-03-05)
+5. [x] Streak rewards — streak computed from xp_transactions positive days; streak stat on Profile (2026-03-05)
+6. [ ] XP heatmap prompt — add getDailyXpHistory query to heatmap widget (design prompt ready)
 
 ## Social
 1. [ ] User profiles

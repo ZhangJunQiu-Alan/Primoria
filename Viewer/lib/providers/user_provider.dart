@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/storage_service.dart';
 import '../services/audio_service.dart';
 import '../services/supabase_service.dart';
@@ -11,6 +12,7 @@ class UserData {
   final String name;
   final String email;
   final String? avatarUrl;
+  final String? coverImageUrl;
   final String? bio;
   final String role;
   final bool isPro;
@@ -21,6 +23,7 @@ class UserData {
     required this.name,
     required this.email,
     this.avatarUrl,
+    this.coverImageUrl,
     this.bio,
     this.role = 'user',
     this.isPro = false,
@@ -33,6 +36,7 @@ class UserData {
       name: json['name'] ?? '',
       email: json['email'] ?? '',
       avatarUrl: json['avatarUrl'],
+      coverImageUrl: json['coverImageUrl'],
       bio: json['bio'],
       role: (json['role'] as String?) ?? 'user',
       isPro: json['isPro'] ?? false,
@@ -48,6 +52,7 @@ class UserData {
       'name': name,
       'email': email,
       'avatarUrl': avatarUrl,
+      'coverImageUrl': coverImageUrl,
       'bio': bio,
       'role': role,
       'isPro': isPro,
@@ -64,6 +69,7 @@ class UserProvider extends ChangeNotifier {
   bool _isLoggedIn = false;
   bool _isLoading = false;
   String _errorMessage = '';
+  StreamSubscription<AuthState>? _authStateSub;
 
   // Learning statistics (local cache, overridden by backend on sync)
   int _streak = 0;
@@ -106,6 +112,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> initialize() async {
     _storage = await StorageService.getInstance();
+    _bindAuthState();
     await _restoreSession();
     await _loadStats();
     await _checkAndUpdateStreak();
@@ -125,6 +132,7 @@ class UserProvider extends ChangeNotifier {
       await _storage?.saveUser(_user!.toJson());
       _isLoggedIn = true;
     } else {
+      _user = null;
       final userData = _storage?.getUser();
       if (userData != null) {
         // Stale local cache but no Supabase session — clear it
@@ -133,6 +141,35 @@ class UserProvider extends ChangeNotifier {
       _isLoggedIn = false;
     }
     notifyListeners();
+  }
+
+  void _bindAuthState() {
+    _authStateSub?.cancel();
+    _authStateSub = SupabaseService.authStateChanges.listen((state) async {
+      final supabaseUser = SupabaseService.currentUser;
+      if (supabaseUser == null) {
+        final changed = _isLoggedIn || _user != null;
+        _isLoggedIn = false;
+        _user = null;
+        await _storage?.clearUser();
+        if (changed) notifyListeners();
+        return;
+      }
+
+      final previousId = _user?.id;
+      _user = _userDataFromSupabase(supabaseUser);
+      _isLoggedIn = true;
+      await _storage?.saveUser(_user!.toJson());
+      notifyListeners();
+
+      // Keep profile fields (username/avatar/bio/cover) in sync after auth events.
+      if (state.event == AuthChangeEvent.signedIn ||
+          state.event == AuthChangeEvent.initialSession ||
+          state.event == AuthChangeEvent.userUpdated ||
+          previousId != _user!.id) {
+        unawaited(_loadProfileFromBackend());
+      }
+    });
   }
 
   UserData _userDataFromSupabase(dynamic supabaseUser) {
@@ -171,6 +208,8 @@ class UserProvider extends ChangeNotifier {
               ? username
               : _user!.name,
           avatarUrl: (profile['avatar_url'] as String?) ?? _user!.avatarUrl,
+          coverImageUrl:
+              (profile['cover_image_url'] as String?) ?? _user!.coverImageUrl,
           bio: profile['bio'] as String?,
           role: (role != null && role.isNotEmpty) ? role : _user!.role,
           isPro: _user!.isPro,
@@ -189,12 +228,14 @@ class UserProvider extends ChangeNotifier {
     required String username,
     String? bio,
     String? avatarUrl,
+    String? coverImageUrl,
   }) async {
     if (!_isLoggedIn || _user == null) return false;
     final ok = await SupabaseService.updateProfile(
       username: username,
       bio: bio,
       avatarUrl: avatarUrl,
+      coverImageUrl: coverImageUrl,
     );
     if (ok) {
       await _loadProfileFromBackend();
@@ -414,6 +455,7 @@ class UserProvider extends ChangeNotifier {
         name: _user!.name,
         email: _user!.email,
         avatarUrl: _user!.avatarUrl,
+        coverImageUrl: _user!.coverImageUrl,
         bio: _user!.bio,
         role: _user!.role,
         isPro: true,
@@ -422,5 +464,11 @@ class UserProvider extends ChangeNotifier {
       await _storage?.saveUser(_user!.toJson());
       notifyListeners();
     }
+  }
+
+  @override
+  void dispose() {
+    _authStateSub?.cancel();
+    super.dispose();
   }
 }
