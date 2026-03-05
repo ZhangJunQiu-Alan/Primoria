@@ -280,6 +280,102 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                 },
               ),
             ),
+            if (widget.block.type == BlockType.animation) ...[
+              const SizedBox(height: AppSpacing.sm),
+              _PropertyField(
+                label: 'Width',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Slider(
+                            min: 260,
+                            max: 1400,
+                            divisions: 57,
+                            value: ((widget.block.style.width ?? 960).clamp(
+                              260.0,
+                              1400.0,
+                            )).toDouble(),
+                            label:
+                                '${((widget.block.style.width ?? 960).clamp(260.0, 1400.0)).toStringAsFixed(0)} px',
+                            onChanged: (value) {
+                              final updatedBlock = widget.block.copyWith(
+                                style: widget.block.style.copyWith(
+                                  width: value,
+                                ),
+                              );
+                              _updateBlock(updatedBlock);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 62,
+                          child: Text(
+                            widget.block.style.width == null
+                                ? 'Auto'
+                                : '${widget.block.style.width!.clamp(260.0, 1400.0).toStringAsFixed(0)}px',
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: AppFontSize.xs,
+                              color: AppColors.neutral500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        final updatedBlock = widget.block.copyWith(
+                          style: widget.block.style.copyWith(clearWidth: true),
+                        );
+                        _updateBlock(updatedBlock);
+                      },
+                      child: const Text('Fill container'),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              _PropertyField(
+                label: 'Height',
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Slider(
+                        min: 180,
+                        max: 900,
+                        divisions: 36,
+                        value: ((widget.block.style.height ?? 300).clamp(
+                          180.0,
+                          900.0,
+                        )).toDouble(),
+                        label:
+                            '${((widget.block.style.height ?? 300).clamp(180.0, 900.0)).toStringAsFixed(0)} px',
+                        onChanged: (value) {
+                          final updatedBlock = widget.block.copyWith(
+                            style: widget.block.style.copyWith(height: value),
+                          );
+                          _updateBlock(updatedBlock);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 56,
+                      child: Text(
+                        '${((widget.block.style.height ?? 300).clamp(180.0, 900.0)).toStringAsFixed(0)}px',
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                          fontSize: AppFontSize.xs,
+                          color: AppColors.neutral500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -895,7 +991,16 @@ class _AnimationEditorState extends State<_AnimationEditor> {
   final _apiKeyController = TextEditingController();
   bool _isGenerating = false;
   String? _generationError;
-  bool _showEditCode = false;
+  String _selectedModel = 'gemini-3.1-flash-lite-preview';
+
+  static const _modelOptions = [
+    'gemini-2.5-flash-latest',
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.5-pro-latest',
+    'gemini-2.5-pro',
+    'gemini-3.1-flash-lite-preview',
+  ];
   late TextEditingController _codeController;
 
   static const _suggestionChips = [
@@ -918,6 +1023,15 @@ class _AnimationEditorState extends State<_AnimationEditor> {
   }
 
   @override
+  void didUpdateWidget(covariant _AnimationEditor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Sync code editor when HTML changes externally (e.g. after Generate)
+    if (oldWidget.content.customHtml != widget.content.customHtml) {
+      _codeController.text = widget.content.customHtml ?? '';
+    }
+  }
+
+  @override
   void dispose() {
     _promptController.dispose();
     _apiKeyController.dispose();
@@ -925,8 +1039,11 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     super.dispose();
   }
 
-  Future<void> _generate({bool isRegenerate = false}) async {
-    final prompt = _promptController.text.trim();
+  Future<void> _generate({
+    bool isRegenerate = false,
+    String? overridePrompt,
+  }) async {
+    final prompt = (overridePrompt ?? _promptController.text).trim();
     if (prompt.isEmpty) return;
 
     final key = _apiKeyController.text.trim();
@@ -947,6 +1064,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
       prompt: prompt,
       apiKey: apiKey,
       previousHtml: isRegenerate ? widget.content.customHtml : null,
+      model: _selectedModel,
     );
 
     if (!mounted) return;
@@ -962,7 +1080,6 @@ class _AnimationEditorState extends State<_AnimationEditor> {
       );
       setState(() {
         _isGenerating = false;
-        _showEditCode = false;
       });
     } else {
       setState(() {
@@ -981,13 +1098,104 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         customHtml: html,
       ),
     );
-    setState(() => _showEditCode = false);
+  }
+
+  Future<void> _showRegenerateDialog() async {
+    final controller = TextEditingController();
+    setHtmlAnimationInteractionEnabled(false);
+    final desc = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Regenerate Animation'),
+          content: TextField(
+            controller: controller,
+            maxLines: 4,
+            autofocus: true,
+            decoration: const InputDecoration(
+              hintText: 'Describe what to improve...',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () =>
+                  Navigator.of(context).pop(controller.text.trim()),
+              child: const Text('Regenerate'),
+            ),
+          ],
+        );
+      },
+    );
+    setHtmlAnimationInteractionEnabled(true);
+    controller.dispose();
+
+    if (!mounted) return;
+    final improvement = (desc ?? '').trim();
+    if (improvement.isEmpty) {
+      setState(() {
+        _generationError = 'Please describe what to improve before regenerate.';
+      });
+      return;
+    }
+    await _generate(isRegenerate: true, overridePrompt: improvement);
+  }
+
+  Future<void> _showEditCodeDialog() async {
+    final dialogController = TextEditingController(text: _codeController.text);
+    setHtmlAnimationInteractionEnabled(false);
+    final updatedHtml = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit HTML Code'),
+          content: SizedBox(
+            width: 700,
+            child: TextField(
+              controller: dialogController,
+              maxLines: 18,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: AppFontSize.xs,
+              ),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Edit HTML…',
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () =>
+                  Navigator.of(context).pop(dialogController.text.trim()),
+              child: const Text('Apply'),
+            ),
+          ],
+        );
+      },
+    );
+    setHtmlAnimationInteractionEnabled(true);
+    dialogController.dispose();
+
+    if (!mounted) return;
+    if (updatedHtml == null || updatedHtml.isEmpty) return;
+    _codeController.text = updatedHtml;
+    _applyCodeEdit();
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasGenerated = widget.content.preset == AnimationContent.presetCustom
-        && widget.content.customHtml != null;
+    final hasGenerated =
+        widget.content.preset == AnimationContent.presetCustom &&
+        widget.content.customHtml != null;
 
     return _PropertySection(
       title: 'Animation',
@@ -1004,6 +1212,42 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           ),
           style: const TextStyle(fontSize: AppFontSize.sm),
         ),
+        const SizedBox(height: AppSpacing.sm),
+
+        // Model selector
+        DropdownButtonFormField<String>(
+          initialValue: _selectedModel,
+          isExpanded: true,
+          decoration: const InputDecoration(
+            labelText: 'Model',
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.psychology, size: 16),
+          ),
+          style: const TextStyle(fontSize: AppFontSize.sm),
+          items: _modelOptions.map((m) {
+            return DropdownMenuItem(
+              value: m,
+              child: Text(m, maxLines: 1, overflow: TextOverflow.ellipsis),
+            );
+          }).toList(),
+          selectedItemBuilder: (context) {
+            return _modelOptions
+                .map(
+                  (m) => Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      m,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          onChanged: (v) {
+            if (v != null) setState(() => _selectedModel = v);
+          },
+        ),
         const SizedBox(height: AppSpacing.md),
 
         // Suggestion chips
@@ -1012,7 +1256,10 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           runSpacing: AppSpacing.xs,
           children: _suggestionChips.map((chip) {
             return ActionChip(
-              label: Text(chip, style: const TextStyle(fontSize: AppFontSize.xs)),
+              label: Text(
+                chip,
+                style: const TextStyle(fontSize: AppFontSize.xs),
+              ),
               onPressed: () {
                 _promptController.text = chip;
                 _promptController.selection = TextSelection.fromPosition(
@@ -1086,19 +1333,11 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         // Preview + action buttons
         if (hasGenerated) ...[
           const SizedBox(height: AppSpacing.md),
-          HtmlAnimationWidget(
-            key: ValueKey(widget.content.customHtml.hashCode),
-            htmlContent: widget.content.customHtml!,
-            height: 300,
-          ),
-          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _isGenerating
-                      ? null
-                      : () => _generate(isRegenerate: true),
+                  onPressed: _isGenerating ? null : _showRegenerateDialog,
                   icon: const Icon(Icons.refresh, size: 14),
                   label: const Text('Regenerate'),
                   style: OutlinedButton.styleFrom(
@@ -1109,8 +1348,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () =>
-                      setState(() => _showEditCode = !_showEditCode),
+                  onPressed: _showEditCodeDialog,
                   icon: const Icon(Icons.code, size: 14),
                   label: const Text('Edit Code'),
                   style: OutlinedButton.styleFrom(
@@ -1120,34 +1358,8 @@ class _AnimationEditorState extends State<_AnimationEditor> {
               ),
             ],
           ),
-
-          // Inline code editor
-          if (_showEditCode) ...[
-            const SizedBox(height: AppSpacing.sm),
-            TextField(
-              controller: _codeController,
-              maxLines: 10,
-              style: const TextStyle(
-                fontFamily: 'monospace',
-                fontSize: AppFontSize.xs,
-              ),
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Edit HTML…',
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: _applyCodeEdit,
-                child: const Text('Apply'),
-              ),
-            ),
-          ],
         ],
       ],
     );
   }
 }
-

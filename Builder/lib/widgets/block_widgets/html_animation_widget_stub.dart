@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../theme/design_tokens.dart';
 
+void setHtmlAnimationInteractionEnabled(bool enabled) {}
+
 /// Stub for non-web platforms: shows a placeholder instead of the iframe.
 class HtmlAnimationWidget extends StatelessWidget {
   final String htmlContent;
