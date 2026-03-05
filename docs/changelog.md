@@ -1,5 +1,24 @@
 # Changelog
 
+## [Unreleased] - 2026-03-05 (Viewer 首页星标口径修正 + 滚动条对齐)
+
+### Summary
+修复 Viewer 首页两个体验与数据口径问题：右上角星标从“总 XP”改为“连续学习天数”；并调整首页滚动布局，让浏览器滚动条回到最右侧视口边缘。同时将连续学习口径与 XP 热力图统一为“当日存在正向 XP 入账即记为学习日”。
+
+### Changed
+- **`Viewer/lib/screens/home_screen.dart`**
+  - 顶部星标数值由 `up.totalXp` 改为 `up.streak`
+  - 首页滚动容器改为全宽 `CustomScrollView`，内容区域保持 `maxWidth: 600` 居中，滚动条定位到视口最右侧
+- **`Viewer/lib/services/supabase_service.dart`**
+  - `getActiveDates()` 改为基于 `xp_transactions.amount > 0` 计算活跃日
+  - `getUserStats()` 的 `current_streak` / `longest_streak` 改为按 XP 入账日期连续性计算（本地日期口径）
+
+### Fixed
+- 首页右上角星标与“学习热力图/XP 入账”口径不一致
+- 桌面端首页滚动条偏离右侧边缘
+
+---
+
 ## [Unreleased] - 2026-03-05 (Viewer 个人主页重构：XP 热力图 + 封面图上传 + 会话加固)
 
 ### Summary
