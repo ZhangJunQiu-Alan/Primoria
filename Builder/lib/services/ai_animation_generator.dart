@@ -40,12 +40,18 @@ STRICT RULES — follow all of these exactly:
 3. All CSS must be inline inside a <style> tag within <head>.
 4. All JavaScript must be inline inside a <script> tag (defer or at end of body).
 5. NO external resources — no CDN links, no fetch(), no import from URLs.
-6. Target viewport: 600x400px. Set body margin:0; overflow:hidden; width:600px; height:400px.
-7. Use a dark or neutral background that contrasts well with animation elements.
-8. Prefer canvas-based or CSS animations. Avoid DOM-heavy approaches for performance.
-9. If interactive (play/pause, step, slider), add simple controls at the bottom.
+6. RESPONSIVE SIZING — CRITICAL:
+   - Set html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#1a1a2e; }
+   - For canvas elements: set width and height in JS using window.innerWidth and window.innerHeight
+     (e.g. canvas.width = window.innerWidth; canvas.height = window.innerHeight;)
+   - DO NOT use any fixed pixel widths like width:600px. Use 100%, 100vw, 100vh, or window.innerWidth/Height.
+   - All element positions must be computed relative to canvas.width / canvas.height, never hardcoded.
+7. Use a dark background (#1a1a2e or similar) that contrasts well with animation elements.
+8. Prefer canvas-based animations using requestAnimationFrame. Avoid fixed-pixel DOM layouts.
+9. If interactive (play/pause, step, slider), add simple controls at the bottom with position:absolute.
 10. Make it visually clear and educational — label key parts where helpful.
-11. The animation must start automatically on load.
+11. The animation must start automatically on load (call the animation loop immediately).
+12. Add a window resize listener that re-sizes canvas and re-initializes layout when the window is resized.
 
 STEM DOMAIN GUIDANCE:
 - Physics: show realistic motion, forces, collisions with labels (velocity, force vectors)
@@ -63,7 +69,7 @@ and a modification request from a teacher. Update the HTML to fulfill the reques
 STRICT RULES:
 1. Output ONLY the modified raw HTML document. No markdown, no code fences, no explanation.
 2. Preserve the self-contained structure: all CSS inline, all JS inline, no external resources.
-3. Keep the 600x400px viewport constraint.
+3. KEEP responsive sizing: canvas dimensions must use window.innerWidth/innerHeight, not fixed pixels.
 4. The animation must still start automatically on load.
 5. Apply the teacher's requested changes while keeping the rest of the animation intact.
 
@@ -78,6 +84,7 @@ Output ONLY the updated HTML document. Nothing else.
     required String prompt,
     required String apiKey,
     String? previousHtml,
+    String? model,
   }) async {
     final isIteration = previousHtml != null && previousHtml.isNotEmpty;
     final systemPrompt =
@@ -87,17 +94,21 @@ Output ONLY the updated HTML document. Nothing else.
         ? 'Current animation HTML:\n\n$previousHtml\n\nTeacher modification request: $prompt'
         : prompt;
 
-    for (final model in _modelCandidates) {
+    final modelsToTry = model != null
+        ? [model, ..._modelCandidates.where((m) => m != model)]
+        : _modelCandidates;
+
+    for (final m in modelsToTry) {
       try {
         final result = await _callGemini(
           apiKey: apiKey,
-          model: model,
+          model: m,
           systemPrompt: systemPrompt,
           userMessage: userMessage,
         );
         if (result != null) return AnimationGenerationResult(html: result);
       } catch (e) {
-        debugPrint('[AIAnimationGenerator] Model $model failed: $e');
+        debugPrint('[AIAnimationGenerator] Model $m failed: $e');
         continue;
       }
     }
