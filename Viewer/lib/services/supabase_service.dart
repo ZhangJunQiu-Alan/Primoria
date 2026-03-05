@@ -8,6 +8,10 @@ class SupabaseService {
   SupabaseService._();
 
   static SupabaseClient get client => Supabase.instance.client;
+  static String? _lastOperationError;
+
+  /// Last detailed error captured by profile/storage operations.
+  static String? get lastOperationError => _lastOperationError;
 
   /// Current user
   static User? get currentUser => client.auth.currentUser;
@@ -18,6 +22,34 @@ class SupabaseService {
   /// Auth state changes
   static Stream<AuthState> get authStateChanges =>
       client.auth.onAuthStateChange;
+
+  /// Ensure we still have an authenticated user.
+  /// Attempts a session refresh when [currentUser] is null but a session exists.
+  static Future<bool> ensureAuthenticated() async {
+    final user = currentUser;
+    if (user != null) {
+      _lastOperationError = null;
+      return true;
+    }
+
+    try {
+      final session = client.auth.currentSession;
+      final refreshToken = session?.refreshToken;
+      if (refreshToken != null && refreshToken.isNotEmpty) {
+        final refreshed = await client.auth.refreshSession(refreshToken);
+        if (refreshed.session?.user != null || currentUser != null) {
+          _lastOperationError = null;
+          return true;
+        }
+      }
+    } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
+      return false;
+    }
+
+    _lastOperationError = 'Not authenticated: current user is null';
+    return false;
+  }
 
   // ==================== Auth ====================
 
@@ -385,39 +417,308 @@ class SupabaseService {
   }
 
   /// Complete a lesson and award XP via the atomic RPC.
-  static Future<bool> completeLessonAndAwardXp({
+  /// Returns the XP breakdown map from the server, or null on error.
+  static Future<Map<String, dynamic>?> completeLessonAndAwardXp({
     required String lessonId,
     int score = 0,
     int timeSpentSeconds = 0,
+    int correctCount = 0,
+    int totalCount = 0,
   }) async {
-    if (currentUser == null) return false;
+    if (currentUser == null) return null;
     try {
-      await client.rpc(
+      final result = await client.rpc(
         'complete_lesson_and_award_xp',
         params: {
           'p_lesson_id': lessonId,
           'p_score': score,
           'p_seconds': timeSpentSeconds,
+          'p_correct_count': correctCount,
+          'p_total_count': totalCount,
         },
       );
-      return true;
+      if (result is Map) {
+        return Map<String, dynamic>.from(result);
+      }
+      return {};
     } catch (_) {
-      return false;
+      return null;
+    }
+  }
+
+  // ==================== Gamification — Achievements ====================
+
+  /// Fetch all achievements with the current user's earned state.
+  static Future<List<Map<String, dynamic>>> getAchievementsWithStatus() async {
+    try {
+      // All achievement definitions
+      final all = await client
+          .from('achievements')
+          .select('id, slug, name, description, category, rarity')
+          .order('rarity', ascending: true);
+
+      if (currentUser == null) return List<Map<String, dynamic>>.from(all);
+
+      // User's earned achievements
+      final earned = await client
+          .from('user_achievements')
+          .select('achievement_id, earned_at')
+          .eq('user_id', currentUser!.id);
+
+      final earnedMap = <String, String>{};
+      for (final row in earned as List) {
+        earnedMap[row['achievement_id'].toString()] = row['earned_at']
+            .toString();
+      }
+
+      return (all as List).map<Map<String, dynamic>>((a) {
+        final m = Map<String, dynamic>.from(a);
+        m['earned_at'] = earnedMap[m['id']?.toString()];
+        return m;
+      }).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Record a newly unlocked achievement for the current user.
+  static Future<void> unlockAchievement(String achievementId) async {
+    if (currentUser == null) return;
+    try {
+      await client.from('user_achievements').upsert({
+        'user_id': currentUser!.id,
+        'achievement_id': achievementId,
+      });
+    } catch (_) {}
+  }
+
+  /// Get IDs of achievements already earned by the current user.
+  static Future<Set<String>> getEarnedAchievementIds() async {
+    if (currentUser == null) return {};
+    try {
+      final rows = await client
+          .from('user_achievements')
+          .select('achievement_id')
+          .eq('user_id', currentUser!.id);
+      return {for (final r in rows as List) r['achievement_id'].toString()};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  /// Fetch the user's pinned achievement IDs from their profile.
+  static Future<List<String>> getPinnedAchievementIds() async {
+    if (currentUser == null) return [];
+    try {
+      final row = await client
+          .from('profiles')
+          .select('pinned_achievement_ids')
+          .eq('id', currentUser!.id)
+          .maybeSingle();
+      final raw = row?['pinned_achievement_ids'];
+      if (raw is List) return raw.map((e) => e.toString()).toList();
+      return [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Save pinned achievement IDs to the user's profile (max 3).
+  static Future<void> savePinnedAchievementIds(List<String> ids) async {
+    if (currentUser == null) return;
+    try {
+      await client
+          .from('profiles')
+          .update({'pinned_achievement_ids': ids.take(3).toList()})
+          .eq('id', currentUser!.id);
+    } catch (_) {}
+  }
+
+  // ==================== Gamification — Daily Tasks ====================
+
+  /// Fetch today's daily tasks for the current user.
+  static Future<List<Map<String, dynamic>>> getTodayTasks() async {
+    if (currentUser == null) return [];
+    try {
+      final today = DateTime.now().toLocal();
+      final dateStr =
+          '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+      final rows = await client
+          .from('daily_tasks')
+          .select()
+          .eq('user_id', currentUser!.id)
+          .eq('task_date', dateStr)
+          .order('created_at');
+      return List<Map<String, dynamic>>.from(rows);
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Insert a batch of new daily tasks for today.
+  static Future<void> insertTodayTasks(List<Map<String, dynamic>> tasks) async {
+    if (currentUser == null) return;
+    try {
+      await client.from('daily_tasks').upsert(tasks);
+    } catch (_) {}
+  }
+
+  /// Increment a task's current_value. Marks complete if target reached.
+  static Future<Map<String, dynamic>?> incrementTaskProgress({
+    required String taskId,
+    required int increment,
+    required int targetValue,
+  }) async {
+    if (currentUser == null) return null;
+    try {
+      // Fetch current value first
+      final row = await client
+          .from('daily_tasks')
+          .select('current_value, is_completed')
+          .eq('id', taskId)
+          .eq('user_id', currentUser!.id)
+          .maybeSingle();
+      if (row == null) return null;
+      if (row['is_completed'] == true) return row;
+
+      final newValue =
+          ((row['current_value'] as num?)?.toInt() ?? 0) + increment;
+      final clamped = newValue.clamp(0, targetValue);
+      final completed = clamped >= targetValue;
+
+      final updated = await client
+          .from('daily_tasks')
+          .update({
+            'current_value': clamped,
+            'is_completed': completed,
+            if (completed)
+              'completed_at': DateTime.now().toUtc().toIso8601String(),
+          })
+          .eq('id', taskId)
+          .eq('user_id', currentUser!.id)
+          .select()
+          .maybeSingle();
+      return updated;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // ==================== Gamification — Star Chain ====================
+
+  /// Fetch active study dates for the past [days] days.
+  /// A day is considered active when the user has at least one positive XP
+  /// transaction on that local date.
+  static Future<Set<String>> getActiveDates({int days = 14}) async {
+    if (currentUser == null) return {};
+    try {
+      final now = DateTime.now().toLocal();
+      final localStartOfToday = DateTime(now.year, now.month, now.day);
+      final sinceLocal = localStartOfToday.subtract(Duration(days: days));
+      final sinceUtc = sinceLocal.toUtc();
+      final rows = await client
+          .from('xp_transactions')
+          .select('amount, created_at')
+          .eq('user_id', currentUser!.id)
+          .gte('created_at', sinceUtc.toIso8601String());
+      final activeDates = <String>{};
+      for (final row in rows as List) {
+        final amount = _toInt((row as Map<String, dynamic>)['amount']);
+        if (amount <= 0) continue;
+        final ts = DateTime.parse(row['created_at'] as String).toLocal();
+        activeDates.add(_dateKeyFromLocal(ts));
+      }
+      return activeDates;
+    } catch (_) {
+      return {};
+    }
+  }
+
+  // ==================== Gamification — XP History ====================
+
+  /// Query xp_transactions for the past [days] days and aggregate by local date.
+  /// Returns a map of UTC-midnight keys (built from local date components)
+  /// to total XP for that day, for use in the heatmap widget.
+  static Future<Map<DateTime, int>> getDailyXpHistory({int days = 365}) async {
+    if (currentUser == null) return {};
+    try {
+      final since = DateTime.now().subtract(Duration(days: days));
+      final rows = await client
+          .from('xp_transactions')
+          .select('amount, created_at')
+          .eq('user_id', currentUser!.id)
+          .gte('created_at', since.toIso8601String());
+      final Map<DateTime, int> result = {};
+      for (final row in rows as List) {
+        final ts = DateTime.parse(row['created_at'] as String).toLocal();
+        final key = DateTime.utc(ts.year, ts.month, ts.day);
+        result[key] = (result[key] ?? 0) + _toInt((row as Map)['amount']);
+      }
+      return result;
+    } catch (_) {
+      return {};
     }
   }
 
   // ==================== Gamification ====================
 
-  /// Get user stats from user_stats table
+  /// Get user stats — aggregated live from source tables so the values are
+  /// always accurate regardless of whether the denormalised user_stats row
+  /// has been synced by an RPC.
+  ///
+  /// * total_xp          → SUM(amount) from xp_transactions
+  /// * courses_completed → COUNT of enrollments with status='completed'
+  /// * lessons_completed → COUNT of lesson_completions rows
+  /// * current_streak    → computed from positive XP days (local date)
+  /// * longest_streak    → computed from positive XP days (local date)
   static Future<Map<String, dynamic>?> getUserStats() async {
     if (currentUser == null) return null;
     try {
-      final response = await client
-          .from('user_stats')
-          .select()
-          .eq('user_id', currentUser!.id)
-          .maybeSingle();
-      return response;
+      final uid = currentUser!.id;
+
+      // Run list queries concurrently.
+      final listResults = await Future.wait<List>([
+        client
+            .from('xp_transactions')
+            .select('amount, created_at')
+            .eq('user_id', uid),
+        client
+            .from('enrollments')
+            .select('id')
+            .eq('user_id', uid)
+            .eq('status', 'completed'),
+        client.from('lesson_completions').select('id').eq('user_id', uid),
+      ]);
+
+      final xpRows = listResults[0].cast<Map<String, dynamic>>();
+      final totalXp = xpRows.fold<int>(
+        0,
+        (sum, row) => sum + _toInt(row['amount']),
+      );
+      final activeDayKeys = <DateTime>{};
+      for (final row in xpRows) {
+        final amount = _toInt(row['amount']);
+        if (amount <= 0) continue;
+        final createdAt = row['created_at'] as String?;
+        if (createdAt == null || createdAt.isEmpty) continue;
+        final localTs = DateTime.parse(createdAt).toLocal();
+        activeDayKeys.add(
+          DateTime.utc(localTs.year, localTs.month, localTs.day),
+        );
+      }
+
+      final coursesCompleted = listResults[1].length;
+      final lessonsCompleted = listResults[2].length;
+      final currentStreak = _computeCurrentStreak(activeDayKeys);
+      final longestStreak = _computeLongestStreak(activeDayKeys);
+
+      return {
+        'total_xp': totalXp,
+        'courses_completed': coursesCompleted,
+        'lessons_completed': lessonsCompleted,
+        'current_streak': currentStreak,
+        'longest_streak': longestStreak,
+      };
     } catch (_) {
       return null;
     }
@@ -449,8 +750,12 @@ class SupabaseService {
     String? username,
     String? bio,
     String? avatarUrl,
+    String? coverImageUrl,
   }) async {
-    if (currentUser == null) return false;
+    final authed = await ensureAuthenticated();
+    if (!authed || currentUser == null) {
+      return false;
+    }
 
     try {
       await client
@@ -459,11 +764,124 @@ class SupabaseService {
             if (username != null) 'username': username,
             if (bio != null) 'bio': bio,
             if (avatarUrl != null) 'avatar_url': avatarUrl,
+            if (coverImageUrl != null) 'cover_image_url': coverImageUrl,
           })
           .eq('id', currentUser!.id);
+      _lastOperationError = null;
       return true;
     } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
       return false;
+    }
+  }
+
+  static int _toInt(dynamic value) {
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    return int.tryParse(value?.toString() ?? '') ?? 0;
+  }
+
+  static String _dateKeyFromLocal(DateTime local) =>
+      '${local.year}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+
+  static int _computeCurrentStreak(Set<DateTime> activeDayKeys) {
+    if (activeDayKeys.isEmpty) return 0;
+    final now = DateTime.now().toLocal();
+    final today = DateTime.utc(now.year, now.month, now.day);
+    DateTime cursor = today;
+
+    // Keep streak if user studied yesterday but not yet today.
+    if (!activeDayKeys.contains(cursor)) {
+      final yesterday = cursor.subtract(const Duration(days: 1));
+      if (!activeDayKeys.contains(yesterday)) return 0;
+      cursor = yesterday;
+    }
+
+    var streak = 0;
+    while (activeDayKeys.contains(cursor)) {
+      streak++;
+      cursor = cursor.subtract(const Duration(days: 1));
+    }
+    return streak;
+  }
+
+  static int _computeLongestStreak(Set<DateTime> activeDayKeys) {
+    if (activeDayKeys.isEmpty) return 0;
+    final sorted = activeDayKeys.toList()..sort();
+    var longest = 1;
+    var current = 1;
+    for (var i = 1; i < sorted.length; i++) {
+      final diff = sorted[i].difference(sorted[i - 1]).inDays;
+      if (diff == 1) {
+        current++;
+        if (current > longest) longest = current;
+      } else {
+        current = 1;
+      }
+    }
+    return longest;
+  }
+
+  /// Upload cover image bytes and return public URL.
+  /// Uses a fixed path (upsert) to ensure only one cover per user.
+  static Future<String?> uploadCoverImage(
+    Uint8List bytes, {
+    String fileExt = 'jpg',
+  }) async {
+    final authed = await ensureAuthenticated();
+    if (!authed || currentUser == null) {
+      return null;
+    }
+    try {
+      final ext = fileExt.replaceAll('.', '').trim().toLowerCase();
+      final normalizedExt = ext.isEmpty ? 'jpg' : ext;
+      final contentType = _avatarContentTypeForExt(normalizedExt);
+      // Primary fixed filename for single-current-cover semantics.
+      final fixedPath =
+          'public/${currentUser!.id}/profile_cover.$normalizedExt';
+
+      try {
+        await client.storage
+            .from('avatars')
+            .uploadBinary(
+              fixedPath,
+              bytes,
+              fileOptions: FileOptions(upsert: true, contentType: contentType),
+            );
+        _lastOperationError = null;
+        final url = client.storage.from('avatars').getPublicUrl(fixedPath);
+        return '$url?v=${DateTime.now().millisecondsSinceEpoch}';
+      } catch (fixedErr) {
+        final fixedErrorMessage = _describeSupabaseError(fixedErr);
+
+        // Fallback path avoids RLS update-owner mismatch on pre-existing files
+        // created outside the current user context.
+        final fallbackPath =
+            'public/${currentUser!.id}/profile_cover_${DateTime.now().millisecondsSinceEpoch}.$normalizedExt';
+        try {
+          await client.storage
+              .from('avatars')
+              .uploadBinary(
+                fallbackPath,
+                bytes,
+                fileOptions: FileOptions(
+                  upsert: false,
+                  contentType: contentType,
+                ),
+              );
+          _lastOperationError = null;
+          final url = client.storage.from('avatars').getPublicUrl(fallbackPath);
+          return '$url?v=${DateTime.now().millisecondsSinceEpoch}';
+        } catch (fallbackErr) {
+          final fallbackErrorMessage = _describeSupabaseError(fallbackErr);
+          _lastOperationError =
+              'Fixed-path upload failed: $fixedErrorMessage | Fallback upload failed: $fallbackErrorMessage';
+          return null;
+        }
+      }
+    } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
+      return null;
     }
   }
 
@@ -472,7 +890,10 @@ class SupabaseService {
     Uint8List bytes, {
     String fileExt = 'jpg',
   }) async {
-    if (currentUser == null) return null;
+    final authed = await ensureAuthenticated();
+    if (!authed || currentUser == null) {
+      return null;
+    }
     try {
       final ext = fileExt.replaceAll('.', '').trim().toLowerCase();
       final normalizedExt = ext.isEmpty ? 'jpg' : ext;
@@ -489,8 +910,10 @@ class SupabaseService {
               contentType: _avatarContentTypeForExt(normalizedExt),
             ),
           );
+      _lastOperationError = null;
       return client.storage.from('avatars').getPublicUrl(path);
-    } catch (_) {
+    } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
       return null;
     }
   }
@@ -508,6 +931,39 @@ class SupabaseService {
       default:
         return 'image/jpeg';
     }
+  }
+
+  static String _describeSupabaseError(Object error) {
+    if (error is StorageException) {
+      final parts = <String>[
+        'type=StorageException',
+        if ((error.statusCode ?? '').toString().isNotEmpty)
+          'statusCode=${error.statusCode}',
+        if ((error.error ?? '').toString().isNotEmpty) 'error=${error.error}',
+        if (error.message.isNotEmpty) 'message=${error.message}',
+      ];
+      return parts.join(', ');
+    }
+
+    if (error is PostgrestException) {
+      final code = error.code?.toString().trim() ?? '';
+      final details = error.details?.toString().trim() ?? '';
+      final hint = error.hint?.toString().trim() ?? '';
+      final parts = <String>[
+        'type=PostgrestException',
+        if (code.isNotEmpty) 'code=$code',
+        if (details.isNotEmpty) 'details=$details',
+        if (hint.isNotEmpty) 'hint=$hint',
+        'message=${error.message}',
+      ];
+      return parts.join(', ');
+    }
+
+    if (error is AuthException) {
+      return 'type=AuthException, message=${error.message}';
+    }
+
+    return error.toString();
   }
 
   // ==================== Helper methods ====================

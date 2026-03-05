@@ -52,6 +52,9 @@
 17. [x] Personal Info 全量接库：支持修改 `username`、`bio`，展示 `role`，并按月年展示 `profiles.created_at`（2026-02-23）
 18. [x] Settings 头像上传打通：Web/非 Web 图片选择 + Supabase Storage `avatars` + 立即回写数据库并刷新资料（2026-02-23）
 19. [x] 移除 Profile 页底部冗余设置区域，仅保留右上角菜单入口（2026-02-23）
+20. [x] 首页右上角星标口径修正：由总 XP 改为连续学习天数（按“当日有正向 XP 入账”定义学习日）（2026-03-05）
+21. [x] 星链活跃日与连续天数统一口径：改为基于 `xp_transactions.amount > 0` 的本地日期连续计算（2026-03-05）
+22. [x] 首页滚动条位置修复：滚动容器改为全宽，内容保持 `maxWidth: 600` 居中，滚动条贴右侧视口边缘（2026-03-05）
 
 ## Builder（续）
 32. [x] Builder + Viewer 迁移至云端 Supabase — 两端默认连接 `rygafvlzzkvqhhenajzi.supabase.co`；18 条迁移全部推送；`uuid_generate_v4()` → `gen_random_uuid()` 适配云端（2026-02-25）
