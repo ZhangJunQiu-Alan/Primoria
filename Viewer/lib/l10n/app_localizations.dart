@@ -196,8 +196,9 @@ class AppLocalizations {
   // ── Star Chain ───────────────────────────────────────────────
   String get starChainTitle => isZh ? '今日星星' : "Today's Star";
   String get starChainComplete => isZh ? '本周全勤！' : 'Perfect Week!';
-  List<String> get weekDayLabels =>
-      isZh ? ['一', '二', '三', '四', '五', '六', '日'] : ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  List<String> get weekDayLabels => isZh
+      ? ['一', '二', '三', '四', '五', '六', '日']
+      : ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
   // ── Daily Tasks ──────────────────────────────────────────────
   String get dailyTaskTitle => isZh ? '每日任务' : 'Daily Quests';
@@ -243,4 +244,29 @@ class AppLocalizations {
   String get profileWeekPerfect => isZh ? '🌈 全勤' : '🌈 Perfect';
   String get profileNoPinnedAchievements =>
       isZh ? '暂无置顶成就' : 'No pinned achievements yet';
+
+  // ── Profile XP Heatmap ───────────────────────────────────────
+  String get profileXpHeatmapTitle => isZh ? '学习热力图' : 'Learning Activity';
+  String profileXpHeatmapTotal(int n) =>
+      isZh ? '今年 $n XP' : '$n XP this year';
+  String profileXpHeatmapDay(DateTime d, int xp) {
+    if (isZh) {
+      return '${d.year}年${d.month}月${d.day}日 · $xp XP';
+    }
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ];
+    return '${months[d.month - 1]} ${d.day}, ${d.year} · $xp XP';
+  }
+
+  // ── Profile cover image ───────────────────────────────────────
+  String get profileCoverImage => isZh ? '封面图' : 'Cover Image';
+  String get profileChangeCover => isZh ? '更换封面' : 'Change Cover';
+  String get profileCoverUploadFailed =>
+      isZh ? '封面上传失败' : 'Cover upload failed';
+  String get profileCoverUploadSuccess => isZh ? '封面已更新' : 'Cover updated';
+  String profileImageTooLarge(int maxMb) => isZh
+      ? '图片过大，请选择不超过 ${maxMb}MB 的图片'
+      : 'Image is too large. Please choose an image up to ${maxMb}MB.';
 }

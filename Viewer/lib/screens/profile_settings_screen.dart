@@ -19,6 +19,9 @@ class ProfileSettingsScreen extends StatefulWidget {
 }
 
 class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
+  static const int _maxUploadBytes = 5 * 1024 * 1024;
+  static const int _maxUploadMb = 5;
+
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _bioController = TextEditingController();
@@ -26,10 +29,12 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   bool _loading = true;
   bool _saving = false;
   bool _uploadingAvatar = false;
+  bool _uploadingCover = false;
 
   String _role = 'user';
   DateTime _joinedAt = DateTime.now();
   String? _avatarUrl;
+  String? _coverImageUrl;
 
   @override
   void initState() {
@@ -60,11 +65,18 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
       _role = role;
       _joinedAt = joined ?? user?.joinedAt ?? DateTime.now();
       _avatarUrl = (profile?['avatar_url'] as String?) ?? user?.avatarUrl;
+      _coverImageUrl =
+          (profile?['cover_image_url'] as String?) ?? user?.coverImageUrl;
       _loading = false;
     });
   }
 
   Future<void> _pickAndUploadAvatar(AppLocalizations t) async {
+    if (!await SupabaseService.ensureAuthenticated()) {
+      await _handleSessionExpired();
+      return;
+    }
+
     final picked = await image_picker_service.pickImageFileBytes();
     if (!mounted || picked.cancelled) return;
     if (!picked.success || picked.bytes == null) {
@@ -74,6 +86,12 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
             '${t.profileAvatarUploadFailed}: ${picked.message ?? 'unknown error'}',
           ),
         ),
+      );
+      return;
+    }
+    if (picked.bytes!.lengthInBytes > _maxUploadBytes) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.profileImageTooLarge(_maxUploadMb))),
       );
       return;
     }
@@ -93,9 +111,12 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     setState(() => _uploadingAvatar = false);
 
     if (url == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(t.profileAvatarUploadFailed)));
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_withDetail(t.profileAvatarUploadFailed, detail)),
+        ),
+      );
       return;
     }
 
@@ -111,20 +132,97 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text(t.profileSaveSuccess)));
     } else {
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_withDetail(t.profileSaveFailed, detail))),
+      );
+    }
+  }
+
+  Future<void> _pickAndUploadCover(AppLocalizations t) async {
+    if (!await SupabaseService.ensureAuthenticated()) {
+      await _handleSessionExpired();
+      return;
+    }
+
+    final picked = await image_picker_service.pickImageFileBytes();
+    if (!mounted || picked.cancelled) return;
+    if (!picked.success || picked.bytes == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '${t.profileCoverUploadFailed}: ${picked.message ?? 'unknown error'}',
+          ),
+        ),
+      );
+      return;
+    }
+    if (picked.bytes!.lengthInBytes > _maxUploadBytes) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.profileImageTooLarge(_maxUploadMb))),
+      );
+      return;
+    }
+
+    setState(() => _uploadingCover = true);
+
+    final ext = p
+        .extension(picked.fileName ?? '')
+        .replaceFirst('.', '')
+        .toLowerCase();
+    final url = await SupabaseService.uploadCoverImage(
+      picked.bytes!,
+      fileExt: ext.isEmpty ? 'jpg' : ext,
+    );
+
+    if (!mounted) return;
+    setState(() => _uploadingCover = false);
+
+    if (url == null) {
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_withDetail(t.profileCoverUploadFailed, detail)),
+        ),
+      );
+      return;
+    }
+
+    setState(() => _coverImageUrl = url);
+
+    // Persist immediately — single current cover overwritten.
+    final saved = await SupabaseService.updateProfile(coverImageUrl: url);
+    if (!mounted) return;
+    if (saved) {
+      await context.read<UserProvider>().refreshProfile();
+      if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(t.profileSaveFailed)));
+      ).showSnackBar(SnackBar(content: Text(t.profileCoverUploadSuccess)));
+    } else {
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_withDetail(t.profileCoverUploadFailed, detail)),
+        ),
+      );
     }
   }
 
   Future<void> _save(AppLocalizations t) async {
+    final userProvider = context.read<UserProvider>();
+    if (!await SupabaseService.ensureAuthenticated()) {
+      await _handleSessionExpired();
+      return;
+    }
+
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _saving = true);
     final username = _usernameController.text.trim();
     final bio = _bioController.text.trim();
 
-    final ok = await context.read<UserProvider>().updateProfile(
+    final ok = await userProvider.updateProfile(
       username: username,
       bio: bio.isEmpty ? null : bio,
       avatarUrl: _avatarUrl,
@@ -139,10 +237,31 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
       ).showSnackBar(SnackBar(content: Text(t.profileSaveSuccess)));
       Navigator.pop(context, true);
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(t.profileSaveFailed)));
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_withDetail(t.profileSaveFailed, detail))),
+      );
     }
+  }
+
+  String _withDetail(String base, String? detail) {
+    final cleaned = detail?.trim() ?? '';
+    if (cleaned.isEmpty) return base;
+    return '$base: $cleaned';
+  }
+
+  Future<void> _handleSessionExpired() async {
+    if (!mounted) return;
+    final detail = SupabaseService.lastOperationError;
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final userProvider = context.read<UserProvider>();
+    messenger.showSnackBar(
+      SnackBar(content: Text(_withDetail('登录已过期，请重新登录', detail))),
+    );
+    await userProvider.logout();
+    if (!mounted) return;
+    navigator.pushNamedAndRemoveUntil('/login', (route) => false);
   }
 
   @override
@@ -177,6 +296,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                             color: Color(0xFF1E293B),
                           ),
                         ),
+                        const SizedBox(height: 16),
+                        // Cover image preview + upload
+                        _buildCoverPreview(t),
                         const SizedBox(height: 16),
                         Row(
                           children: [
@@ -290,6 +412,85 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _buildCoverPreview(AppLocalizations t) {
+    final hasCover =
+        _coverImageUrl != null && _coverImageUrl!.trim().isNotEmpty;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.profileCoverImage,
+          style: AppTypography.label.copyWith(color: const Color(0xFF475569)),
+        ),
+        const SizedBox(height: 8),
+        Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: SizedBox(
+                height: 100,
+                width: double.infinity,
+                child: hasCover
+                    ? Image.network(
+                        _coverImageUrl!,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        errorBuilder: (_, __, ___) => _coverPlaceholder(),
+                      )
+                    : _coverPlaceholder(),
+              ),
+            ),
+            Positioned(
+              right: 8,
+              bottom: 8,
+              child: OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.white.withValues(alpha: 0.85),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  side: const BorderSide(color: Color(0xFFE2E8F0)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: _uploadingCover
+                    ? null
+                    : () => _pickAndUploadCover(t),
+                icon: _uploadingCover
+                    ? const SizedBox(
+                        width: 14,
+                        height: 14,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.edit_outlined, size: 16),
+                label: Text(
+                  t.profileChangeCover,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _coverPlaceholder() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF6366F1), Color(0xFFEC4899)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
     );
   }
 
