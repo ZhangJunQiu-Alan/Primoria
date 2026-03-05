@@ -87,6 +87,7 @@
 23. [x] Session auth hardening — `ensureAuthenticated()` refresh + `lastOperationError` exposed to UI; avatar/cover upload now pre-checks session (2026-03-05)
 24. [x] Profile banner edge-to-edge — SafeArea refactored so banner bleeds behind status bar; IndexedStack tabs manage their own SafeArea (2026-03-05)
 25. [x] getUserStats live aggregation — stats now computed from xp_transactions / enrollments / lesson_completions in real time; home screen calls refreshStats() on load (2026-03-05)
+26. [x] Home streak badge semantics + scrollbar alignment — top-right star badge now shows streak days (derived from consecutive positive-XP days, consistent with heatmap), and home scroll container is full-width so scrollbar stays at the far-right viewport edge (2026-03-05)
 
 ## Content & Curriculum
 1. [ ] Course content management system
