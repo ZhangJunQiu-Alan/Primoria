@@ -173,8 +173,9 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.disabled))
+            if (states.contains(WidgetState.disabled)) {
               return AppColors.borderDark;
+            }
             return AppColors.primary;
           }),
           foregroundColor: WidgetStateProperty.all(AppColors.textOnPrimary),
