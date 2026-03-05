@@ -52,11 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadHomeData() async {
+    final userProvider = context.read<UserProvider>();
     final results = await Future.wait([
       SupabaseService.getEnrollments(),
       SupabaseService.getActiveDates(),
       DailyTaskService.loadOrCreateTodayTasks(),
     ]);
+    await userProvider.refreshStats();
 
     if (!mounted) return;
 
@@ -150,16 +152,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FC),
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentNavIndex,
-          children: [
-            _buildHomeContent(),
-            SearchScreen(onEnrolled: _onEnrolled),
-            const CoursesScreen(),
-            const ProfileScreen(),
-          ],
-        ),
+      body: IndexedStack(
+        index: _currentNavIndex,
+        children: [
+          SafeArea(child: _buildHomeContent()),
+          SafeArea(child: SearchScreen(onEnrolled: _onEnrolled)),
+          SafeArea(child: const CoursesScreen()),
+          // ProfileScreen manages its own safe area so the banner can bleed to top.
+          const ProfileScreen(),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentNavIndex,
@@ -170,18 +171,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildHomeContent() {
     final t = context.watch<LanguageProvider>().t;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 600),
-        child: Column(
-          children: [
-            _buildHeader(),
-            Expanded(
-              child: _loadingHome
-                  ? const Center(child: CircularProgressIndicator())
-                  : CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
+    return Column(
+      children: [
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: _buildHeader(),
+          ),
+        ),
+        Expanded(
+          child: _loadingHome
+              ? const Center(child: CircularProgressIndicator())
+              : CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 600),
                           child: Column(
                             children: [
                               const SizedBox(height: 8),
@@ -189,16 +195,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        SliverFillRemaining(
-                          hasScrollBody: false,
+                      ),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 600),
                           child: _buildDrawerPanel(t),
                         ),
-                      ],
+                      ),
                     ),
-            ),
-          ],
+                  ],
+                ),
         ),
-      ),
+      ],
     );
   }
 
@@ -208,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         children: [
           const Spacer(),
-          // XP counter from backend
+          // Current streak days from backend
           Consumer<UserProvider>(
             builder: (context, up, _) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -234,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    '${up.totalXp}',
+                    '${up.streak}',
                     style: AppTypography.label.copyWith(
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF334155),

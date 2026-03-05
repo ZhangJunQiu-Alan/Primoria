@@ -4,9 +4,10 @@ import '../providers/language_provider.dart';
 
 /// Weekly 7-star chain widget.
 /// [activeDates] is a Set of 'yyyy-MM-dd' strings where the user completed
-/// at least one lesson.
+/// at least one positive XP transaction.
 class StarChainWidget extends StatefulWidget {
   final Set<String> activeDates;
+
   /// If true, renders a compact single-row version (used on result screen).
   final bool compact;
 
@@ -32,9 +33,10 @@ class _StarChainWidgetState extends State<StarChainWidget>
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
-    _pulseAnim = Tween<double>(begin: 0.85, end: 1.0).animate(
-      CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut),
-    );
+    _pulseAnim = Tween<double>(
+      begin: 0.85,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut));
   }
 
   @override
@@ -54,13 +56,10 @@ class _StarChainWidgetState extends State<StarChainWidget>
 
   bool _isToday(DateTime dt) {
     final now = DateTime.now().toLocal();
-    return dt.year == now.year &&
-        dt.month == now.month &&
-        dt.day == now.day;
+    return dt.year == now.year && dt.month == now.month && dt.day == now.day;
   }
 
-  bool _isFuture(DateTime dt) =>
-      dt.isAfter(DateTime.now().toLocal());
+  bool _isFuture(DateTime dt) => dt.isAfter(DateTime.now().toLocal());
 
   @override
   Widget build(BuildContext context) {
@@ -149,11 +148,7 @@ class _StarDay extends StatelessWidget {
       // Rainbow when week is perfect
       star = ShaderMask(
         shaderCallback: (bounds) => const LinearGradient(
-          colors: [
-            Color(0xFFF59E0B),
-            Color(0xFF10B981),
-            Color(0xFF6366F1),
-          ],
+          colors: [Color(0xFFF59E0B), Color(0xFF10B981), Color(0xFF6366F1)],
         ).createShader(bounds),
         child: Icon(Icons.star_rounded, size: starSize, color: Colors.white),
       );
@@ -181,9 +176,7 @@ class _StarDay extends StatelessWidget {
       star = Icon(
         Icons.star_border_rounded,
         size: starSize,
-        color: isFuture
-            ? const Color(0xFFCBD5E1)
-            : const Color(0xFFCBD5E1),
+        color: isFuture ? const Color(0xFFCBD5E1) : const Color(0xFFCBD5E1),
       );
     }
 

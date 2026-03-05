@@ -9,7 +9,6 @@ import '../providers/user_provider.dart';
 import '../services/achievement_service.dart';
 import '../services/supabase_service.dart';
 import '../theme/theme.dart';
-import '../widgets/star_chain_widget.dart';
 import 'achievement_wall_screen.dart';
 import 'profile_settings_screen.dart';
 
@@ -25,8 +24,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   List<AchievementModel> _pinnedAchievements = [];
-  Set<String> _activeDates = {};
+  Map<DateTime, int> _xpHistory = {};
   bool _loadingGamification = true;
+  final ScrollController _heatmapScrollController = ScrollController();
 
   @override
   void initState() {
@@ -34,13 +34,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _loadGamification();
   }
 
+  @override
+  void dispose() {
+    _heatmapScrollController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadGamification() async {
     final results = await Future.wait([
       SupabaseService.getPinnedAchievementIds(),
-      SupabaseService.getActiveDates(),
+      SupabaseService.getDailyXpHistory(),
     ]);
     final pinnedIds = results[0] as List<String>;
-    final activeDates = results[1] as Set<String>;
+    final xpHistory = results[1] as Map<DateTime, int>;
 
     List<AchievementModel> pinned = [];
     if (pinnedIds.isNotEmpty) {
@@ -56,26 +62,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!mounted) return;
     setState(() {
       _pinnedAchievements = pinned;
-      _activeDates = activeDates;
+      _xpHistory = xpHistory;
       _loadingGamification = false;
+    });
+
+    // Scroll heatmap to the right (most recent) after layout.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_heatmapScrollController.hasClients) {
+        _heatmapScrollController.jumpTo(
+          _heatmapScrollController.position.maxScrollExtent,
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final t = context.watch<LanguageProvider>().t;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 600),
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildBannerAndAvatar(context, t),
               _buildUserInfo(context, t),
               const SizedBox(height: 24),
               _buildStatsCard(context, t),
               const SizedBox(height: 24),
-              _buildStarChainCard(context, t),
+              _buildXpHeatmap(context, t),
               const SizedBox(height: 24),
               _buildPinnedAchievements(context, t),
               const SizedBox(height: 40),
@@ -87,22 +103,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildBannerAndAvatar(BuildContext context, AppLocalizations t) {
-    return SizedBox(
-      height: 220,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Gradient banner
-          Container(
-            height: 160,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: AppColors.profileBannerGradient,
-            ),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
+    final topPadding = MediaQuery.of(context).padding.top;
+    // Banner height + avatar overlap area below banner.
+    const bannerHeight = 160.0;
+    const avatarSize = 96.0;
+    const avatarOverlap = 36.0; // how much avatar sticks below banner
+    final totalHeight = topPadding + bannerHeight + avatarSize - avatarOverlap;
+
+    return Consumer<UserProvider>(
+      builder: (context, userProvider, _) {
+        final user = userProvider.user;
+        final coverImageUrl = user?.coverImageUrl;
+        final hasCover =
+            coverImageUrl != null && coverImageUrl.trim().isNotEmpty;
+
+        return SizedBox(
+          height: totalHeight,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Cover image or gradient banner — extends to absolute top
+              SizedBox(
+                height: topPadding + bannerHeight,
+                width: double.infinity,
+                child: hasCover
+                    ? Image.network(
+                        coverImageUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        errorBuilder: (_, __, ___) => Container(
+                          decoration: const BoxDecoration(
+                            gradient: AppColors.profileBannerGradient,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: const BoxDecoration(
+                          gradient: AppColors.profileBannerGradient,
+                        ),
+                      ),
+              ),
+              // Menu button — positioned below safe area
+              Positioned(
+                top: topPadding + 8,
+                right: 16,
                 child: PopupMenuButton<_ProfileMenuAction>(
                   tooltip: '',
                   onSelected: (action) =>
@@ -140,77 +184,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-            ),
-          ),
-          // Avatar overlapping banner bottom
-          Positioned(
-            bottom: 0,
-            left: 24,
-            child: Transform.rotate(
-              angle: 0.05,
-              child: Container(
-                width: 96,
-                height: 96,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: AppShadows.md,
-                ),
-                child: Consumer<UserProvider>(
-                  builder: (context, userProvider, _) {
-                    final user = userProvider.user;
-                    final avatarProvider = _avatarImageProvider(
-                      user?.avatarUrl,
-                    );
-                    final initial = (user != null && user.name.isNotEmpty)
-                        ? user.name[0].toUpperCase()
-                        : 'A';
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.indigo100,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: avatarProvider != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image(
-                                image: avatarProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : Center(
-                              child: Text(
-                                initial,
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColors.indigo,
+              // Avatar overlapping banner bottom
+              Positioned(
+                bottom: 0,
+                left: 24,
+                child: Transform.rotate(
+                  angle: 0.05,
+                  child: Container(
+                    width: avatarSize,
+                    height: avatarSize,
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: AppShadows.md,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        final avatarProvider = _avatarImageProvider(
+                          user?.avatarUrl,
+                        );
+                        final initial = (user != null && user.name.isNotEmpty)
+                            ? user.name[0].toUpperCase()
+                            : 'A';
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.indigo100,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: avatarProvider != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image(
+                                    image: avatarProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Center(
+                                  child: Text(
+                                    initial,
+                                    style: TextStyle(
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.indigo,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          // Online indicator
-          Positioned(
-            bottom: -2,
-            left: 100,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: const Color(0xFF10B981),
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
+              // Online indicator
+              Positioned(
+                bottom: -2,
+                left: avatarSize + 4,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF10B981),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 4),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -405,7 +448,142 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStarChainCard(BuildContext context, AppLocalizations t) {
+  Widget _buildXpHeatmap(BuildContext context, AppLocalizations t) {
+    const cellSize = 10.0;
+    const cellGap = 2.0;
+    const cellStep = cellSize + cellGap; // 12 px per column
+    const cols = 53;
+    const dayLabelWidth = 24.0;
+
+    final now = DateTime.now();
+    final todayKey = DateTime.utc(now.year, now.month, now.day);
+    final firstDay = todayKey.subtract(const Duration(days: 364));
+    // Snap to Monday of that week (Dart weekday: 1=Mon … 7=Sun).
+    final daysToMon = firstDay.weekday - 1;
+    final gridStart = firstDay.subtract(Duration(days: daysToMon));
+
+    // Year-to-date total XP.
+    final yearStart = DateTime.utc(now.year, 1, 1);
+    int yearTotal = 0;
+    for (final entry in _xpHistory.entries) {
+      if (!entry.key.isBefore(yearStart)) yearTotal += entry.value;
+    }
+
+    Color cellColor(int xp) {
+      if (xp <= 0) return const Color(0xFFEEF2FF);
+      if (xp <= 30) return const Color(0xFFC7D2FE);
+      if (xp <= 80) return const Color(0xFF818CF8);
+      if (xp <= 150) return const Color(0xFF4F46E5);
+      return const Color(0xFF3730A3);
+    }
+
+    final isZh = t.isZh;
+    final dayLabels = isZh
+        ? ['一', '', '三', '', '五', '', '']
+        : ['M', '', 'W', '', 'F', '', ''];
+
+    final monthAbbr = isZh
+        ? [
+            '1月', '2月', '3月', '4月', '5月', '6月',
+            '7月', '8月', '9月', '10月', '11月', '12月',
+          ]
+        : [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+          ];
+
+    // Build a single cell widget for (col, row).
+    Widget buildCell(int col, int row) {
+      final date = gridStart.add(Duration(days: col * 7 + row));
+      final inRange = !date.isBefore(firstDay) && !date.isAfter(todayKey);
+      if (!inRange) return SizedBox(width: cellSize, height: cellSize);
+      final xp = _xpHistory[date] ?? 0;
+      return GestureDetector(
+        onTap: () {
+          final local = DateTime(date.year, date.month, date.day);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(t.profileXpHeatmapDay(local, xp)),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        },
+        child: Container(
+          width: cellSize,
+          height: cellSize,
+          decoration: BoxDecoration(
+            color: cellColor(xp),
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+      );
+    }
+
+    // Month label row (53 cells wide).
+    int? prevMonth;
+    final monthRow = <Widget>[];
+    for (int col = 0; col < cols; col++) {
+      final date = gridStart.add(Duration(days: col * 7));
+      if (date.month != prevMonth) {
+        prevMonth = date.month;
+        monthRow.add(SizedBox(
+          width: cellStep,
+          child: Text(
+            monthAbbr[date.month - 1],
+            style: const TextStyle(fontSize: 8, color: Color(0xFF94A3B8)),
+            overflow: TextOverflow.visible,
+            softWrap: false,
+          ),
+        ));
+      } else {
+        monthRow.add(SizedBox(width: cellStep));
+      }
+    }
+
+    // 7 weekday rows.
+    final weekRows = <Widget>[];
+    for (int row = 0; row < 7; row++) {
+      final cells = <Widget>[];
+      for (int col = 0; col < cols; col++) {
+        cells.add(buildCell(col, row));
+        if (col < cols - 1) cells.add(const SizedBox(width: cellGap));
+      }
+      weekRows.add(Row(children: cells));
+      if (row < 6) weekRows.add(const SizedBox(height: cellGap));
+    }
+
+    // Legend row.
+    final legendColors = [
+      const Color(0xFFEEF2FF),
+      const Color(0xFFC7D2FE),
+      const Color(0xFF818CF8),
+      const Color(0xFF4F46E5),
+      const Color(0xFF3730A3),
+    ];
+    final labelStyle =
+        const TextStyle(fontSize: 10, color: Color(0xFF94A3B8));
+    final legend = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(isZh ? '少' : 'Less', style: labelStyle),
+        const SizedBox(width: 4),
+        ...legendColors.map(
+          (c) => Padding(
+            padding: const EdgeInsets.only(right: 2),
+            child: Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                color: c,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+        ),
+        Text(isZh ? '多' : 'More', style: labelStyle),
+      ],
+    );
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(20),
@@ -424,16 +602,92 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            t.profileStarThisWeek,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF1E293B),
-            ),
+          // Title row
+          Row(
+            children: [
+              Text(
+                t.profileXpHeatmapTitle,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1E293B),
+                  fontSize: 16,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                t.profileXpHeatmapTotal(yearTotal),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF94A3B8),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 14),
-          StarChainWidget(activeDates: _activeDates),
+          const SizedBox(height: 12),
+          // Grid or shimmer
+          if (_loadingGamification)
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            )
+          else
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Day-of-week labels (Mon/Wed/Fri)
+                Padding(
+                  padding: const EdgeInsets.only(top: 14), // skip month row
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: List.generate(7, (row) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          bottom: row < 6 ? cellGap : 0,
+                        ),
+                        child: SizedBox(
+                          width: dayLabelWidth,
+                          height: cellSize,
+                          child: Text(
+                            dayLabels[row],
+                            style: const TextStyle(
+                              fontSize: 8,
+                              color: Color(0xFF94A3B8),
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                // Scrollable grid (month row + 7 weekday rows)
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _heatmapScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(children: monthRow),
+                        const SizedBox(height: 2),
+                        ...weekRows,
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 10),
+          // Legend
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [legend],
+          ),
         ],
       ),
     );
