@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:js_interop';
 import 'dart:typed_data';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'package:web/web.dart' as web;
 
 class ImagePickResult {
   final bool success;
@@ -21,49 +21,66 @@ class ImagePickResult {
 
 Future<ImagePickResult> pickImageFileBytes() async {
   final completer = Completer<ImagePickResult>();
-  final input = html.FileUploadInputElement()
-    ..accept = 'image/png,image/jpeg,image/gif,image/webp'
-    ..multiple = false;
+  final input =
+      web.document.createElement('input') as web.HTMLInputElement
+        ..type = 'file'
+        ..accept = 'image/png,image/jpeg,image/gif,image/webp'
+        ..multiple = false;
 
-  input.onChange.listen((_) {
-    final files = input.files;
-    if (files == null || files.isEmpty) {
-      completer.complete(
-        const ImagePickResult(success: false, cancelled: true),
-      );
-      return;
-    }
-
-    final file = files.first;
-    final reader = html.FileReader();
-
-    reader.onLoadEnd.listen((_) {
-      final bytes = reader.result as Uint8List?;
-      if (bytes == null) {
+  input.addEventListener(
+    'change',
+    (web.Event _) {
+      final files = input.files;
+      if (files == null || files.length == 0) {
         completer.complete(
-          const ImagePickResult(
-            success: false,
-            message: 'Failed to read selected image bytes',
-          ),
+          const ImagePickResult(success: false, cancelled: true),
         );
         return;
       }
-      completer.complete(
-        ImagePickResult(success: true, bytes: bytes, fileName: file.name),
-      );
-    });
 
-    reader.onError.listen((_) {
-      completer.complete(
-        const ImagePickResult(
-          success: false,
-          message: 'Failed to read selected image',
-        ),
-      );
-    });
+      final file = files.item(0)!;
+      final reader = web.FileReader();
 
-    reader.readAsArrayBuffer(file);
-  });
+      reader.addEventListener(
+        'loadend',
+        (web.Event _) {
+          final result = reader.result;
+          if (result == null) {
+            completer.complete(
+              const ImagePickResult(
+                success: false,
+                message: 'Failed to read selected image bytes',
+              ),
+            );
+            return;
+          }
+          final bytes =
+              (result as JSArrayBuffer).toDart.asUint8List();
+          completer.complete(
+            ImagePickResult(
+              success: true,
+              bytes: bytes,
+              fileName: file.name,
+            ),
+          );
+        }.toJS,
+      );
+
+      reader.addEventListener(
+        'error',
+        (web.Event _) {
+          completer.complete(
+            const ImagePickResult(
+              success: false,
+              message: 'Failed to read selected image',
+            ),
+          );
+        }.toJS,
+      );
+
+      reader.readAsArrayBuffer(file);
+    }.toJS,
+  );
 
   input.click();
   return completer.future;

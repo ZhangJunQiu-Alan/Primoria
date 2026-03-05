@@ -5,7 +5,11 @@ import '../components/common/bottom_nav_bar.dart';
 import '../providers/user_provider.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../models/daily_task_model.dart';
 import '../services/supabase_service.dart';
+import '../services/daily_task_service.dart';
+import '../widgets/star_chain_widget.dart';
+import '../widgets/daily_task_card.dart';
 import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'profile_screen.dart';
@@ -30,6 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Set<String> _completedLessonIds = {};
   bool _loadingHome = true;
 
+  // Gamification data
+  Set<String> _activeDates = {};
+  List<DailyTask> _dailyTasks = [];
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadHomeData() async {
-    final enrollments = await SupabaseService.getEnrollments();
+    final userProvider = context.read<UserProvider>();
+    final results = await Future.wait([
+      SupabaseService.getEnrollments(),
+      SupabaseService.getActiveDates(),
+      DailyTaskService.loadOrCreateTodayTasks(),
+    ]);
+    await userProvider.refreshStats();
+
     if (!mounted) return;
+
+    final enrollments = results[0] as List<Map<String, dynamic>>;
+    final activeDates = results[1] as Set<String>;
+    final tasks = results[2] as List<DailyTask>;
 
     Map<String, dynamic>? resolvedCourse;
     var resolvedChapters = <Map<String, dynamic>>[];
@@ -78,6 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _course = resolvedCourse;
       _chapters = resolvedChapters;
       _completedLessonIds = resolvedCompletedLessonIds;
+      _activeDates = activeDates;
+      _dailyTasks = tasks;
       _loadingHome = false;
     });
   }
@@ -131,16 +152,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FC),
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentNavIndex,
-          children: [
-            _buildHomeContent(),
-            SearchScreen(onEnrolled: _onEnrolled),
-            const CoursesScreen(),
-            const ProfileScreen(),
-          ],
-        ),
+      body: IndexedStack(
+        index: _currentNavIndex,
+        children: [
+          SafeArea(child: _buildHomeContent()),
+          SafeArea(child: SearchScreen(onEnrolled: _onEnrolled)),
+          SafeArea(child: const CoursesScreen()),
+          // ProfileScreen manages its own safe area so the banner can bleed to top.
+          const ProfileScreen(),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentNavIndex,
@@ -151,18 +171,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildHomeContent() {
     final t = context.watch<LanguageProvider>().t;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 600),
-        child: Column(
-          children: [
-            _buildHeader(),
-            Expanded(
-              child: _loadingHome
-                  ? const Center(child: CircularProgressIndicator())
-                  : CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
+    return Column(
+      children: [
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: _buildHeader(),
+          ),
+        ),
+        Expanded(
+          child: _loadingHome
+              ? const Center(child: CircularProgressIndicator())
+              : CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 600),
                           child: Column(
                             children: [
                               const SizedBox(height: 8),
@@ -170,16 +195,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        SliverFillRemaining(
-                          hasScrollBody: false,
+                      ),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 600),
                           child: _buildDrawerPanel(t),
                         ),
-                      ],
+                      ),
                     ),
-            ),
-          ],
+                  ],
+                ),
         ),
-      ),
+      ],
     );
   }
 
@@ -189,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         children: [
           const Spacer(),
-          // XP counter from backend
+          // Current streak days from backend
           Consumer<UserProvider>(
             builder: (context, up, _) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -215,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    '${up.totalXp}',
+                    '${up.streak}',
                     style: AppTypography.label.copyWith(
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF334155),
@@ -348,6 +378,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
+          // ── Gamification section ──────────────────────────────
+          _buildStarChainSection(t),
+          const SizedBox(height: 16),
+          DailyTaskCard(tasks: _dailyTasks, t: t),
+          const SizedBox(height: 24),
+          // ── Course section ────────────────────────────────────
           if (!hasCourse)
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
@@ -411,6 +447,24 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 8),
         ],
       ),
+    );
+  }
+
+  Widget _buildStarChainSection(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.starChainTitle,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1E293B),
+          ),
+        ),
+        const SizedBox(height: 12),
+        StarChainWidget(activeDates: _activeDates),
+      ],
     );
   }
 

@@ -1,5 +1,56 @@
 # Changelog
 
+## [Unreleased] - 2026-03-05 (Viewer 首页星标口径修正 + 滚动条对齐)
+
+### Summary
+修复 Viewer 首页两个体验与数据口径问题：右上角星标从“总 XP”改为“连续学习天数”；并调整首页滚动布局，让浏览器滚动条回到最右侧视口边缘。同时将连续学习口径与 XP 热力图统一为“当日存在正向 XP 入账即记为学习日”。
+
+### Changed
+- **`Viewer/lib/screens/home_screen.dart`**
+  - 顶部星标数值由 `up.totalXp` 改为 `up.streak`
+  - 首页滚动容器改为全宽 `CustomScrollView`，内容区域保持 `maxWidth: 600` 居中，滚动条定位到视口最右侧
+- **`Viewer/lib/services/supabase_service.dart`**
+  - `getActiveDates()` 改为基于 `xp_transactions.amount > 0` 计算活跃日
+  - `getUserStats()` 的 `current_streak` / `longest_streak` 改为按 XP 入账日期连续性计算（本地日期口径）
+
+### Fixed
+- 首页右上角星标与“学习热力图/XP 入账”口径不一致
+- 桌面端首页滚动条偏离右侧边缘
+
+---
+
+## [Unreleased] - 2026-03-05 (Viewer 个人主页重构：XP 热力图 + 封面图上传 + 会话加固)
+
+### Summary
+对 Viewer 个人主页进行系统性升级：新增 GitHub 风格 XP 热力图卡片（基于 xp_transactions 实时聚合）；个人资料设置支持封面图上传；SafeArea 改造让 banner 真正出血到顶部；新增 `ensureAuthenticated()` 会话刷新工具；`getUserStats()` 改为从源表实时聚合；主页加载时同步刷新后端统计。
+
+### Added
+- **`SupabaseService.getDailyXpHistory()`** — 查询 xp_transactions 最近 365 天记录，按本地日期聚合，返回 `Map<DateTime, int>`（UTC-midnight key），供热力图使用
+- **`SupabaseService.ensureAuthenticated()`** — 检测 currentUser 是否存在，为 null 时尝试 refreshSession；失败时设置 `lastOperationError` 供 UI 展示
+- **`SupabaseService.lastOperationError`** — static getter，暴露最近一次操作的错误详情
+- **`ProfileScreen._buildXpHeatmap()`** — GitHub 风格学习热力图卡片：53 列 × 7 行网格；5 档 indigo 色阶（0 / 1-30 / 31-80 / 81-150 / >150 XP）；月份 X 轴；星期 Y 轴；图例行；横向可滚动默认定位最右（最新）；点击 SnackBar 显示日期+XP
+- **`ProfileSettingsScreen._pickAndUploadCover()`** — 封面图上传：web 图片选择、5MB 限制、Supabase Storage、DB 持久化、即时刷新
+- **`UserData.coverImageUrl`** — 新增字段，序列化/反序列化 + _loadProfileFromBackend 同步
+- **`UserProvider._authStateSub`** — 订阅 Supabase auth 状态变化，自动刷新 profile/stats
+- **`supabase/migrations/20260305000010_add_cover_image_to_profiles.sql`** — profiles 表新增 cover_image_url 列
+
+### Changed
+- **`ProfileScreen._buildBannerAndAvatar()`** — 支持封面图替代渐变 banner；banner 高度包含 topPadding，出血到状态栏
+- **`ProfileScreen._loadGamification()`** — 从 `getActiveDates()` 改为 `getDailyXpHistory()`；加载后 `addPostFrameCallback` 跳转热力图到最右
+- **`HomeScreen` SafeArea 策略** — 各 Tab 独立控制 SafeArea；ProfileScreen 自行管理以支持 banner 出血
+- **`HomeScreen._loadHomeData()`** — 加载后调用 `userProvider.refreshStats()` 确保 XP/streak 与后端同步
+- **`SupabaseService.getActiveDates()`** — 改为从 xp_transactions 派生，不再依赖已废弃的 daily_activity_log
+- **`SupabaseService.getUserStats()`** — 从 xp_transactions / enrollments / lesson_completions 实时聚合
+- **`ProfileSettingsScreen._pickAndUploadAvatar()`** — 上传前调用 `ensureAuthenticated()`；5MB 大小限制；错误附带 lastOperationError 详情
+- **`pubspec.yaml`** — 新增 `web: ^1.1.0` 替代已弃用的 dart:html
+
+### Fixed
+- Profile banner 在移动端不出血到状态栏（SafeArea 双重包裹）
+- uploadAvatar 在 token 过期后静默失败，现在上传前主动刷新会话
+- getUserStats 读取冗余行导致数据滞后，改为实时聚合
+
+---
+
 ## [Unreleased] - 2026-03-05 (AI Agentic Local Execution + Reliability)
 
 ### Summary

@@ -3,34 +3,97 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
+import '../models/achievement_model.dart';
 import '../providers/language_provider.dart';
 import '../providers/user_provider.dart';
+import '../services/achievement_service.dart';
+import '../services/supabase_service.dart';
 import '../theme/theme.dart';
+import 'achievement_wall_screen.dart';
 import 'profile_settings_screen.dart';
 
 enum _ProfileMenuAction { settings, about, help, logout }
 
-/// Profile screen — ported from Figma ProfileScreen template
-class ProfileScreen extends StatelessWidget {
+/// Profile screen with gamification: pinned achievements, XP, star chain.
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  List<AchievementModel> _pinnedAchievements = [];
+  Map<DateTime, int> _xpHistory = {};
+  bool _loadingGamification = true;
+  final ScrollController _heatmapScrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGamification();
+  }
+
+  @override
+  void dispose() {
+    _heatmapScrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadGamification() async {
+    final results = await Future.wait([
+      SupabaseService.getPinnedAchievementIds(),
+      SupabaseService.getDailyXpHistory(),
+    ]);
+    final pinnedIds = results[0] as List<String>;
+    final xpHistory = results[1] as Map<DateTime, int>;
+
+    List<AchievementModel> pinned = [];
+    if (pinnedIds.isNotEmpty) {
+      final all = await SupabaseService.getAchievementsWithStatus();
+      final allModels = all.map(AchievementModel.fromMap).toList();
+      // Preserve pinned order
+      for (final id in pinnedIds) {
+        final match = allModels.where((a) => a.id == id).toList();
+        if (match.isNotEmpty) pinned.add(match.first);
+      }
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _pinnedAchievements = pinned;
+      _xpHistory = xpHistory;
+      _loadingGamification = false;
+    });
+
+    // Scroll heatmap to the right (most recent) after layout.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_heatmapScrollController.hasClients) {
+        _heatmapScrollController.jumpTo(
+          _heatmapScrollController.position.maxScrollExtent,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final t = context.watch<LanguageProvider>().t;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 600),
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildBannerAndAvatar(context, t),
               _buildUserInfo(context, t),
               const SizedBox(height: 24),
               _buildStatsCard(context, t),
               const SizedBox(height: 24),
-              _buildDailyBadge(context, t),
+              _buildXpHeatmap(context, t),
               const SizedBox(height: 24),
-              _buildAchievements(context, t),
+              _buildPinnedAchievements(context, t),
               const SizedBox(height: 40),
             ],
           ),
@@ -40,22 +103,50 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildBannerAndAvatar(BuildContext context, AppLocalizations t) {
-    return SizedBox(
-      height: 220,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Gradient banner
-          Container(
-            height: 160,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: AppColors.profileBannerGradient,
-            ),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
+    final topPadding = MediaQuery.of(context).padding.top;
+    // Banner height + avatar overlap area below banner.
+    const bannerHeight = 160.0;
+    const avatarSize = 96.0;
+    const avatarOverlap = 36.0; // how much avatar sticks below banner
+    final totalHeight = topPadding + bannerHeight + avatarSize - avatarOverlap;
+
+    return Consumer<UserProvider>(
+      builder: (context, userProvider, _) {
+        final user = userProvider.user;
+        final coverImageUrl = user?.coverImageUrl;
+        final hasCover =
+            coverImageUrl != null && coverImageUrl.trim().isNotEmpty;
+
+        return SizedBox(
+          height: totalHeight,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Cover image or gradient banner — extends to absolute top
+              SizedBox(
+                height: topPadding + bannerHeight,
+                width: double.infinity,
+                child: hasCover
+                    ? Image.network(
+                        coverImageUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        errorBuilder: (_, __, ___) => Container(
+                          decoration: const BoxDecoration(
+                            gradient: AppColors.profileBannerGradient,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: const BoxDecoration(
+                          gradient: AppColors.profileBannerGradient,
+                        ),
+                      ),
+              ),
+              // Menu button — positioned below safe area
+              Positioned(
+                top: topPadding + 8,
+                right: 16,
                 child: PopupMenuButton<_ProfileMenuAction>(
                   tooltip: '',
                   onSelected: (action) =>
@@ -93,77 +184,76 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ),
-          // Avatar overlapping banner bottom
-          Positioned(
-            bottom: 0,
-            left: 24,
-            child: Transform.rotate(
-              angle: 0.05, // ~3 degrees
-              child: Container(
-                width: 96,
-                height: 96,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: AppShadows.md,
-                ),
-                child: Consumer<UserProvider>(
-                  builder: (context, userProvider, _) {
-                    final user = userProvider.user;
-                    final avatarProvider = _avatarImageProvider(
-                      user?.avatarUrl,
-                    );
-                    final initial = (user != null && user.name.isNotEmpty)
-                        ? user.name[0].toUpperCase()
-                        : 'A';
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.indigo100,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: avatarProvider != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image(
-                                image: avatarProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : Center(
-                              child: Text(
-                                initial,
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColors.indigo,
+              // Avatar overlapping banner bottom
+              Positioned(
+                bottom: 0,
+                left: 24,
+                child: Transform.rotate(
+                  angle: 0.05,
+                  child: Container(
+                    width: avatarSize,
+                    height: avatarSize,
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: AppShadows.md,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        final avatarProvider = _avatarImageProvider(
+                          user?.avatarUrl,
+                        );
+                        final initial = (user != null && user.name.isNotEmpty)
+                            ? user.name[0].toUpperCase()
+                            : 'A';
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.indigo100,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: avatarProvider != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image(
+                                    image: avatarProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Center(
+                                  child: Text(
+                                    initial,
+                                    style: TextStyle(
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.indigo,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          // Online indicator
-          Positioned(
-            bottom: -2,
-            left: 100,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: const Color(0xFF10B981),
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
+              // Online indicator
+              Positioned(
+                bottom: -2,
+                left: avatarSize + 4,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF10B981),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 4),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -195,7 +285,6 @@ class ProfileScreen extends StatelessWidget {
         final joined = user != null
             ? t.profileJoinedAtMonthYear(user.joinedAt)
             : t.profileJoinedAtMonthYear(DateTime(2023, 1, 1));
-
         final bio = user?.bio;
 
         return Padding(
@@ -260,7 +349,6 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Row 1: Courses + Total XP
               Row(
                 children: [
                   Expanded(
@@ -287,16 +375,15 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Divider(height: 1, color: Color(0xFFF1F5F9)),
               ),
-              // Row 2: Following + Fans
               Row(
                 children: [
                   Expanded(
                     child: _statItem(
-                      icon: Icons.how_to_reg,
-                      iconBg: const Color(0xFFDBEAFE),
-                      iconColor: const Color(0xFF3B82F6),
-                      value: _formatStat(userProvider.followingCount),
-                      label: t.profileFollowing,
+                      icon: Icons.local_fire_department_rounded,
+                      iconBg: const Color(0xFFFEF3C7),
+                      iconColor: const Color(0xFFF59E0B),
+                      value: '${userProvider.streak}',
+                      label: t.resultStreakLabel,
                     ),
                   ),
                   Expanded(
@@ -361,128 +448,148 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDailyBadge(BuildContext context, AppLocalizations t) {
-    return Consumer<UserProvider>(
-      builder: (context, userProvider, _) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFFFAF5FF), Color(0xFFFDF2F8)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: const Color(0xFFF3E8FF)),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x08000000),
-                blurRadius: 4,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    t.profileDailyBadge,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1E293B),
-                      fontSize: 16,
-                    ),
-                  ),
-                  Icon(
-                    Icons.auto_awesome,
-                    size: 20,
-                    color: const Color(0xFFA855F7),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFA855F7), Color(0xFFEC4899)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFA855F7).withValues(alpha: 0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.emoji_events,
-                      size: 32,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        t.profileStreakDays(userProvider.streak),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF1E293B),
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        t.profileBadgeSubtitle,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF64748B),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  Widget _buildXpHeatmap(BuildContext context, AppLocalizations t) {
+    const cellSize = 10.0;
+    const cellGap = 2.0;
+    const cellStep = cellSize + cellGap; // 12 px per column
+    const cols = 53;
+    const dayLabelWidth = 24.0;
 
-  Widget _buildAchievements(BuildContext context, AppLocalizations t) {
-    final badges = [
-      _Badge(Icons.bolt, const Color(0xFFEAB308), const Color(0xFFFEF9C3)),
-      _Badge(Icons.shield, const Color(0xFF10B981), const Color(0xFFD1FAE5)),
-      _Badge(
-        Icons.star_rounded,
-        const Color(0xFFA855F7),
-        const Color(0xFFF3E8FF),
-      ),
-      _Badge(
-        Icons.trending_up,
-        const Color(0xFF3B82F6),
-        const Color(0xFFDBEAFE),
-      ),
+    final now = DateTime.now();
+    final todayKey = DateTime.utc(now.year, now.month, now.day);
+    final firstDay = todayKey.subtract(const Duration(days: 364));
+    // Snap to Monday of that week (Dart weekday: 1=Mon … 7=Sun).
+    final daysToMon = firstDay.weekday - 1;
+    final gridStart = firstDay.subtract(Duration(days: daysToMon));
+
+    // Year-to-date total XP.
+    final yearStart = DateTime.utc(now.year, 1, 1);
+    int yearTotal = 0;
+    for (final entry in _xpHistory.entries) {
+      if (!entry.key.isBefore(yearStart)) yearTotal += entry.value;
+    }
+
+    Color cellColor(int xp) {
+      if (xp <= 0) return const Color(0xFFEEF2FF);
+      if (xp <= 30) return const Color(0xFFC7D2FE);
+      if (xp <= 80) return const Color(0xFF818CF8);
+      if (xp <= 150) return const Color(0xFF4F46E5);
+      return const Color(0xFF3730A3);
+    }
+
+    final isZh = t.isZh;
+    final dayLabels = isZh
+        ? ['一', '', '三', '', '五', '', '']
+        : ['M', '', 'W', '', 'F', '', ''];
+
+    final monthAbbr = isZh
+        ? [
+            '1月', '2月', '3月', '4月', '5月', '6月',
+            '7月', '8月', '9月', '10月', '11月', '12月',
+          ]
+        : [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+          ];
+
+    // Build a single cell widget for (col, row).
+    Widget buildCell(int col, int row) {
+      final date = gridStart.add(Duration(days: col * 7 + row));
+      final inRange = !date.isBefore(firstDay) && !date.isAfter(todayKey);
+      if (!inRange) return SizedBox(width: cellSize, height: cellSize);
+      final xp = _xpHistory[date] ?? 0;
+      return GestureDetector(
+        onTap: () {
+          final local = DateTime(date.year, date.month, date.day);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(t.profileXpHeatmapDay(local, xp)),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        },
+        child: Container(
+          width: cellSize,
+          height: cellSize,
+          decoration: BoxDecoration(
+            color: cellColor(xp),
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+      );
+    }
+
+    // Month label row (53 cells wide).
+    int? prevMonth;
+    final monthRow = <Widget>[];
+    for (int col = 0; col < cols; col++) {
+      final date = gridStart.add(Duration(days: col * 7));
+      if (date.month != prevMonth) {
+        prevMonth = date.month;
+        monthRow.add(SizedBox(
+          width: cellStep,
+          child: Text(
+            monthAbbr[date.month - 1],
+            style: const TextStyle(fontSize: 8, color: Color(0xFF94A3B8)),
+            overflow: TextOverflow.visible,
+            softWrap: false,
+          ),
+        ));
+      } else {
+        monthRow.add(SizedBox(width: cellStep));
+      }
+    }
+
+    // 7 weekday rows.
+    final weekRows = <Widget>[];
+    for (int row = 0; row < 7; row++) {
+      final cells = <Widget>[];
+      for (int col = 0; col < cols; col++) {
+        cells.add(buildCell(col, row));
+        if (col < cols - 1) cells.add(const SizedBox(width: cellGap));
+      }
+      weekRows.add(Row(children: cells));
+      if (row < 6) weekRows.add(const SizedBox(height: cellGap));
+    }
+
+    // Legend row.
+    final legendColors = [
+      const Color(0xFFEEF2FF),
+      const Color(0xFFC7D2FE),
+      const Color(0xFF818CF8),
+      const Color(0xFF4F46E5),
+      const Color(0xFF3730A3),
     ];
+    final labelStyle =
+        const TextStyle(fontSize: 10, color: Color(0xFF94A3B8));
+    final legend = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(isZh ? '少' : 'Less', style: labelStyle),
+        const SizedBox(width: 4),
+        ...legendColors.map(
+          (c) => Padding(
+            padding: const EdgeInsets.only(right: 2),
+            child: Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                color: c,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+        ),
+        Text(isZh ? '多' : 'More', style: labelStyle),
+      ],
+    );
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFF1F5F9)),
         boxShadow: const [
           BoxShadow(
@@ -493,24 +600,139 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Title row
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                t.profileAchievements,
+                t.profileXpHeatmapTitle,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF1E293B),
                   fontSize: 16,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.indigo50,
-                  borderRadius: BorderRadius.circular(6),
+              const Spacer(),
+              Text(
+                t.profileXpHeatmapTotal(yearTotal),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF94A3B8),
                 ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          // Grid or shimmer
+          if (_loadingGamification)
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            )
+          else
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Day-of-week labels (Mon/Wed/Fri)
+                Padding(
+                  padding: const EdgeInsets.only(top: 14), // skip month row
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: List.generate(7, (row) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          bottom: row < 6 ? cellGap : 0,
+                        ),
+                        child: SizedBox(
+                          width: dayLabelWidth,
+                          height: cellSize,
+                          child: Text(
+                            dayLabels[row],
+                            style: const TextStyle(
+                              fontSize: 8,
+                              color: Color(0xFF94A3B8),
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                // Scrollable grid (month row + 7 weekday rows)
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _heatmapScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(children: monthRow),
+                        const SizedBox(height: 2),
+                        ...weekRows,
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 10),
+          // Legend
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [legend],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPinnedAchievements(BuildContext context, AppLocalizations t) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFF1F5F9)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                t.profileMyAchievements,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1E293B),
+                  fontSize: 16,
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () async {
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const AchievementWallScreen(),
+                    ),
+                  );
+                  // Refresh in case pins changed
+                  _loadGamification();
+                },
                 child: Text(
                   t.profileViewAll,
                   style: TextStyle(
@@ -523,38 +745,99 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Row(
-            children: badges.map((badge) {
-              return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: badge.bg,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x08000000),
-                            blurRadius: 2,
-                            offset: Offset(0, 1),
+          if (_loadingGamification)
+            const Center(
+              child: SizedBox(
+                height: 40,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            )
+          else if (_pinnedAchievements.isEmpty)
+            Center(
+              child: Text(
+                t.profileNoPinnedAchievements,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Color(0xFFCBD5E1),
+                ),
+              ),
+            )
+          else
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: _pinnedAchievements.map((achievement) {
+                final style = AchievementService.rarityStyle(
+                  achievement.rarity,
+                  t.isZh,
+                );
+                final color = Color(style.color);
+                return Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: color.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: color.withValues(alpha: 0.3),
                           ),
-                        ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            AchievementService.categoryIcon(
+                              achievement.category,
+                            ),
+                            style: const TextStyle(fontSize: 28),
+                          ),
+                        ),
                       ),
-                      child: Icon(badge.icon, size: 32, color: badge.color),
-                    ),
+                      const SizedBox(height: 6),
+                      SizedBox(
+                        width: 64,
+                        child: Text(
+                          achievement.name,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF64748B),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                );
+              }).toList(),
+            ),
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const AchievementWallScreen(),
                 ),
               );
-            }).toList(),
+              _loadGamification();
+            },
+            child: Text(
+              t.profileViewAllAchievements,
+              style: TextStyle(
+                fontSize: 13,
+                color: AppColors.indigo500,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  /// Format a stat number: 1200 → "1.2K", 1000000 → "1M", etc.
   static String _formatStat(int n) {
     if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
     if (n >= 10000) return '${(n / 1000).round()}K';
@@ -638,7 +921,6 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Warning icon
                     Container(
                       width: 64,
                       height: 64,
@@ -653,8 +935,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-
-                    // Title
                     Text(
                       t.profileLogoutTitle,
                       style: const TextStyle(
@@ -664,8 +944,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-
-                    // Body
                     Text(
                       t.profileLogoutBody,
                       textAlign: TextAlign.center,
@@ -676,11 +954,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 28),
-
-                    // Buttons
                     Row(
                       children: [
-                        // Cancel
                         Expanded(
                           child: OutlinedButton(
                             onPressed: isLoggingOut
@@ -688,7 +963,9 @@ class ProfileScreen extends StatelessWidget {
                                 : () => Navigator.of(ctx).pop(),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 13),
-                              side: const BorderSide(color: Color(0xFFE2E8F0)),
+                              side: const BorderSide(
+                                color: Color(0xFFE2E8F0),
+                              ),
                               foregroundColor: const Color(0xFF64748B),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -703,14 +980,14 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-
-                        // Confirm logout
                         Expanded(
                           child: FilledButton(
                             onPressed: isLoggingOut
                                 ? null
                                 : () async {
-                                    setDialogState(() => isLoggingOut = true);
+                                    setDialogState(
+                                      () => isLoggingOut = true,
+                                    );
                                     await userProvider.logout();
                                     if (context.mounted) {
                                       Navigator.of(
@@ -755,11 +1032,4 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
-}
-
-class _Badge {
-  final IconData icon;
-  final Color color;
-  final Color bg;
-  const _Badge(this.icon, this.color, this.bg);
 }
