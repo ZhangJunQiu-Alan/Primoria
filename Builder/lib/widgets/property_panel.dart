@@ -877,7 +877,7 @@ class _PropertyField extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Animation Editor — AI Generate + Preset tabs
+// Animation Editor — AI generation only
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _AnimationEditor extends StatefulWidget {
@@ -890,9 +890,7 @@ class _AnimationEditor extends StatefulWidget {
   State<_AnimationEditor> createState() => _AnimationEditorState();
 }
 
-class _AnimationEditorState extends State<_AnimationEditor>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _AnimationEditorState extends State<_AnimationEditor> {
   final _promptController = TextEditingController();
   final _apiKeyController = TextEditingController();
   bool _isGenerating = false;
@@ -912,12 +910,6 @@ class _AnimationEditorState extends State<_AnimationEditor>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-      initialIndex:
-          widget.content.preset == AnimationContent.presetCustom ? 0 : 1,
-    );
     _promptController.text = widget.content.aiPrompt ?? '';
     _apiKeyController.text = AICourseGenerator.apiKey ?? '';
     _codeController = TextEditingController(
@@ -927,7 +919,6 @@ class _AnimationEditorState extends State<_AnimationEditor>
 
   @override
   void dispose() {
-    _tabController.dispose();
     _promptController.dispose();
     _apiKeyController.dispose();
     _codeController.dispose();
@@ -938,7 +929,6 @@ class _AnimationEditorState extends State<_AnimationEditor>
     final prompt = _promptController.text.trim();
     if (prompt.isEmpty) return;
 
-    // Persist API key for the session
     final key = _apiKeyController.text.trim();
     if (key.isNotEmpty) AICourseGenerator.setApiKey(key);
 
@@ -956,20 +946,20 @@ class _AnimationEditorState extends State<_AnimationEditor>
     final result = await AIAnimationGenerator.generate(
       prompt: prompt,
       apiKey: apiKey,
-      previousHtml:
-          isRegenerate ? widget.content.customHtml : null,
+      previousHtml: isRegenerate ? widget.content.customHtml : null,
     );
 
     if (!mounted) return;
 
     if (result.isSuccess) {
       _codeController.text = result.html!;
-      final updated = widget.content.copyWith(
-        preset: AnimationContent.presetCustom,
-        customHtml: result.html,
-        aiPrompt: prompt,
+      widget.onChanged(
+        widget.content.copyWith(
+          preset: AnimationContent.presetCustom,
+          customHtml: result.html,
+          aiPrompt: prompt,
+        ),
       );
-      widget.onChanged(updated);
       setState(() {
         _isGenerating = false;
         _showEditCode = false;
@@ -996,41 +986,11 @@ class _AnimationEditorState extends State<_AnimationEditor>
 
   @override
   Widget build(BuildContext context) {
-    return _PropertySection(
-      title: 'Animation',
-      children: [
-        TabBar(
-          controller: _tabController,
-          labelColor: AppColors.primary500,
-          unselectedLabelColor: AppColors.neutral500,
-          indicatorColor: AppColors.primary500,
-          labelStyle: const TextStyle(
-            fontSize: AppFontSize.xs,
-            fontWeight: FontWeight.w600,
-          ),
-          tabs: const [
-            Tab(text: 'AI Generate'),
-            Tab(text: 'Preset'),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.md),
-        SizedBox(
-          height: _tabController.index == 0 ? null : 240,
-          child: TabBarView(
-            controller: _tabController,
-            children: [_buildAiTab(), _buildPresetTab()],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAiTab() {
     final hasGenerated = widget.content.preset == AnimationContent.presetCustom
         && widget.content.customHtml != null;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return _PropertySection(
+      title: 'Animation',
       children: [
         // API key field
         TextField(
@@ -1046,16 +1006,13 @@ class _AnimationEditorState extends State<_AnimationEditor>
         ),
         const SizedBox(height: AppSpacing.md),
 
-        // Prompt chips
+        // Suggestion chips
         Wrap(
           spacing: AppSpacing.xs,
           runSpacing: AppSpacing.xs,
           children: _suggestionChips.map((chip) {
             return ActionChip(
-              label: Text(
-                chip,
-                style: const TextStyle(fontSize: AppFontSize.xs),
-              ),
+              label: Text(chip, style: const TextStyle(fontSize: AppFontSize.xs)),
               onPressed: () {
                 _promptController.text = chip;
                 _promptController.selection = TextSelection.fromPosition(
@@ -1098,7 +1055,7 @@ class _AnimationEditorState extends State<_AnimationEditor>
           ),
         ),
 
-        // Error message
+        // Error
         if (_generationError != null) ...[
           const SizedBox(height: AppSpacing.sm),
           Container(
@@ -1139,7 +1096,9 @@ class _AnimationEditorState extends State<_AnimationEditor>
             children: [
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _isGenerating ? null : () => _generate(isRegenerate: true),
+                  onPressed: _isGenerating
+                      ? null
+                      : () => _generate(isRegenerate: true),
                   icon: const Icon(Icons.refresh, size: 14),
                   label: const Text('Regenerate'),
                   style: OutlinedButton.styleFrom(
@@ -1150,7 +1109,8 @@ class _AnimationEditorState extends State<_AnimationEditor>
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () => setState(() => _showEditCode = !_showEditCode),
+                  onPressed: () =>
+                      setState(() => _showEditCode = !_showEditCode),
                   icon: const Icon(Icons.code, size: 14),
                   label: const Text('Edit Code'),
                   style: OutlinedButton.styleFrom(
@@ -1189,121 +1149,5 @@ class _AnimationEditorState extends State<_AnimationEditor>
       ],
     );
   }
-
-  Widget _buildPresetTab() {
-    final content = widget.content;
-    // When switching to preset tab, revert preset field if it was 'custom'
-    final displayPreset = content.preset == AnimationContent.presetCustom
-        ? AnimationContent.presetBouncingDot
-        : content.preset;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        DropdownButtonFormField<String>(
-          initialValue: displayPreset,
-          decoration: const InputDecoration(
-            labelText: 'Preset',
-            border: OutlineInputBorder(),
-          ),
-          items: const [
-            DropdownMenuItem(
-              value: AnimationContent.presetBouncingDot,
-              child: Text('Bouncing Dot'),
-            ),
-            DropdownMenuItem(
-              value: AnimationContent.presetPulseBars,
-              child: Text('Pulse Bars'),
-            ),
-          ],
-          onChanged: (value) {
-            if (value == null) return;
-            widget.onChanged(
-              content.copyWith(preset: value, clearCustomHtml: true),
-            );
-          },
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Row(
-          children: [
-            const Text(
-              'Duration',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: AppColors.neutral500,
-              ),
-            ),
-            const Spacer(),
-            Text(
-              '${content.durationMs} ms',
-              style: const TextStyle(
-                fontSize: AppFontSize.xs,
-                color: AppColors.neutral600,
-              ),
-            ),
-          ],
-        ),
-        Slider(
-          value: content.durationMs.toDouble(),
-          min: 300,
-          max: 10000,
-          divisions: 97,
-          label: '${content.durationMs} ms',
-          onChanged: (value) {
-            widget.onChanged(content.copyWith(durationMs: value.round()));
-          },
-        ),
-        Row(
-          children: [
-            const Text(
-              'Loop',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: AppColors.neutral500,
-              ),
-            ),
-            const Spacer(),
-            Switch(
-              value: content.loop,
-              onChanged: (value) {
-                widget.onChanged(content.copyWith(loop: value));
-              },
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            const Text(
-              'Speed',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: AppColors.neutral500,
-              ),
-            ),
-            const Spacer(),
-            Text(
-              '${content.speed.toStringAsFixed(2)}x',
-              style: const TextStyle(
-                fontSize: AppFontSize.xs,
-                color: AppColors.neutral600,
-              ),
-            ),
-          ],
-        ),
-        Slider(
-          value: content.speed,
-          min: 0.25,
-          max: 3.0,
-          divisions: 11,
-          label: '${content.speed.toStringAsFixed(2)}x',
-          onChanged: (value) {
-            widget.onChanged(content.copyWith(speed: value));
-          },
-        ),
-      ],
-    );
-  }
 }
+
