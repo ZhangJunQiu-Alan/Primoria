@@ -344,4 +344,134 @@ class AppLocalizations {
   String profileImageTooLarge(int maxMb) => isZh
       ? '图片过大，请选择不超过 ${maxMb}MB 的图片'
       : 'Image is too large. Please choose an image up to ${maxMb}MB.';
+
+  // ── Settings Center ───────────────────────────────────────────
+  String get profileSettingsSubtitle => isZh
+      ? '管理你的账号、学习偏好与隐私选项'
+      : 'Manage your account, learning preferences, and privacy controls';
+  String get settingsQuickAccess => isZh ? '快速导航' : 'Quick Access';
+  String get settingsSaved => isZh ? '设置已更新' : 'Settings updated';
+
+  String get settingsSectionAccount => isZh ? '账号与资料' : 'Account & Profile';
+  String get settingsSectionAccountDesc => isZh
+      ? '管理头像、封面、用户名和个人简介。'
+      : 'Manage avatar, cover image, username, and bio.';
+
+  String get settingsSectionAppearance =>
+      isZh ? '显示与语言' : 'Appearance & Language';
+  String get settingsSectionAppearanceDesc => isZh
+      ? '选择主题模式与界面语言。'
+      : 'Choose theme mode and app language.';
+
+  String get settingsSectionLearning => isZh ? '学习偏好' : 'Learning Preferences';
+  String get settingsSectionLearningDesc => isZh
+      ? '调整学习流程中的体验开关与目标。'
+      : 'Tune learning flow behavior and daily goals.';
+
+  String get settingsSectionNotifications =>
+      isZh ? '通知与提醒' : 'Notifications & Reminders';
+  String get settingsSectionNotificationsDesc => isZh
+      ? '控制推送权限、提醒开关和时间。'
+      : 'Control push permission, reminder toggles, and schedule.';
+
+  String get settingsSectionPrivacy => isZh ? '隐私与数据' : 'Privacy & Data';
+  String get settingsSectionPrivacyDesc => isZh
+      ? '管理可见性、社交权限与本地数据行为。'
+      : 'Manage visibility, social permissions, and local data behavior.';
+
+  String get settingsSectionSupport => isZh ? '支持与关于' : 'Support & About';
+  String get settingsSectionSupportDesc => isZh
+      ? '帮助、反馈与产品信息。'
+      : 'Help, feedback, and product information.';
+
+  String get settingsThemeModeLabel => isZh ? '主题模式' : 'Theme Mode';
+  String get settingsThemeSystem => isZh ? '跟随系统' : 'System';
+  String get settingsThemeLight => isZh ? '浅色' : 'Light';
+  String get settingsThemeDark => isZh ? '深色' : 'Dark';
+  String get settingsLanguageLabel => isZh ? '界面语言' : 'App Language';
+
+  String get settingsSoundEffects => isZh ? '声音反馈' : 'Sound Effects';
+  String get settingsSoundEffectsHint => isZh
+      ? '答题与操作时播放音效。'
+      : 'Play sounds during answers and key interactions.';
+  String get settingsHaptics => isZh ? '震动反馈' : 'Haptic Feedback';
+  String get settingsHapticsHint => isZh
+      ? '在支持设备上启用触觉反馈。'
+      : 'Enable tactile feedback on supported devices.';
+  String get settingsAutoplayAudio => isZh ? '自动播放讲解音频' : 'Auto-play Lesson Audio';
+  String get settingsAutoplayAudioHint => isZh
+      ? '进入支持音频的内容时自动播放。'
+      : 'Automatically start audio on supported content.';
+  String get settingsLearningHints => isZh ? '显示学习提示' : 'Show Learning Hints';
+  String get settingsLearningHintsHint => isZh
+      ? '在关键步骤展示引导提示。'
+      : 'Display guidance hints at key steps.';
+  String get settingsDailyGoal => isZh ? '每日学习目标（分钟）' : 'Daily Goal (minutes)';
+  String settingsDailyGoalValue(int minutes) =>
+      isZh ? '$minutes 分钟/天' : '$minutes min/day';
+
+  String get settingsNotificationsMaster => isZh ? '启用通知' : 'Enable Notifications';
+  String get settingsNotificationsMasterHint => isZh
+      ? '关闭后将停止应用内所有学习提醒。'
+      : 'Turn off all learning reminders from the app.';
+  String get settingsDailyReminder => isZh ? '每日学习提醒' : 'Daily Study Reminder';
+  String get settingsDailyReminderHint => isZh
+      ? '每天在固定时间提醒你继续学习。'
+      : 'Get a reminder at a fixed time every day.';
+  String get settingsStreakReminder => isZh ? '连击中断提醒' : 'Streak Reminder';
+  String get settingsStreakReminderHint => isZh
+      ? '快要断连击时发送提醒。'
+      : 'Get reminded before your streak expires.';
+  String get settingsAchievementReminder => isZh ? '成就解锁通知' : 'Achievement Alerts';
+  String get settingsAchievementReminderHint => isZh
+      ? '解锁成就时显示通知。'
+      : 'Notify when new achievements are unlocked.';
+  String get settingsReminderTime => isZh ? '提醒时间' : 'Reminder Time';
+  String get settingsReminderPickTime => isZh ? '选择时间' : 'Choose Time';
+  String get settingsReminderDisabledHint => isZh
+      ? '请先开启“每日学习提醒”。'
+      : 'Turn on daily reminder first.';
+  String get settingsNotificationPermissionDenied => isZh
+      ? '通知权限未开启，请在系统设置中允许通知。'
+      : 'Notification permission is disabled. Enable it in system settings.';
+
+  String get settingsPrivacyProfilePrivate => isZh ? '私密资料页' : 'Private Profile';
+  String get settingsPrivacyProfilePrivateHint => isZh
+      ? '仅允许你授权的用户查看资料。'
+      : 'Only approved users can view your profile.';
+  String get settingsPrivacyShareActivity => isZh ? '公开学习动态' : 'Share Learning Activity';
+  String get settingsPrivacyShareActivityHint => isZh
+      ? '允许他人看到你的学习进度变化。'
+      : 'Let others see your progress updates.';
+  String get settingsPrivacyAllowFollowers => isZh ? '允许被关注' : 'Allow Followers';
+  String get settingsPrivacyAllowFollowersHint => isZh
+      ? '关闭后他人将无法关注你。'
+      : 'If off, new users cannot follow you.';
+  String get settingsPrivacyWifiOnly => isZh ? '仅 Wi-Fi 下载资源' : 'Wi-Fi Only Downloads';
+  String get settingsPrivacyWifiOnlyHint => isZh
+      ? '节省流量，避免在移动网络下载。'
+      : 'Avoid downloading assets on cellular network.';
+  String get settingsClearLocalCache => isZh ? '清理本地缓存' : 'Clear Local Cache';
+  String get settingsClearLocalCacheHint => isZh
+      ? '清除图片与临时数据，不影响账号信息。'
+      : 'Remove images and temporary data without deleting your account.';
+  String get settingsClearLocalCacheDone =>
+      isZh ? '已清理本地缓存（示例行为）' : 'Local cache cleared (demo behavior)';
+
+  String get settingsSupportHelpCenter => isZh ? '帮助中心' : 'Help Center';
+  String get settingsSupportFeedback => isZh ? '提交反馈' : 'Send Feedback';
+  String get settingsSupportPrivacyPolicy => isZh ? '隐私政策' : 'Privacy Policy';
+  String get settingsSupportTerms => isZh ? '服务条款' : 'Terms of Service';
+  String settingsSupportVersion(String version) =>
+      isZh ? '版本 $version' : 'Version $version';
+  String get settingsComingSoon => isZh ? '该入口稍后接入' : 'This entry will be wired soon';
+
+  String get settingsSignOut => isZh ? '退出当前账号' : 'Sign Out';
+  String get settingsSignOutHint => isZh
+      ? '退出后需要重新登录才能继续学习。'
+      : 'You will need to sign in again to continue learning.';
+  String get settingsSignOutConfirmTitle => isZh ? '确认退出？' : 'Sign out now?';
+  String get settingsSignOutConfirmBody => isZh
+      ? '退出后当前设备的登录状态会被清除。'
+      : 'This will clear the current login session on this device.';
 }
