@@ -8,7 +8,7 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 
 当前 Tab：
 1. 首页（已重设计）
-2. 课程管理（保留现有生产逻辑）
+2. 课程管理（工作台已重设计，核心流程保留）
 3. 数据中心（已重设计）
 4. 粉丝管理（已重设计）
 
@@ -16,10 +16,11 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 
 - `Builder/lib/features/dashboard/dashboard_screen.dart`
   - 主壳、侧边栏、顶栏、Tab 切换
-  - 继续承载既有 Course Manage 逻辑
+  - 负责课程/课时数据动作编排与 Tab 回调路由
 - `Builder/lib/features/dashboard/dashboard_localizations.dart`
   - Dashboard 专用多语言扩展
 - `Builder/lib/features/dashboard/tabs/home_tab.dart`
+- `Builder/lib/features/dashboard/tabs/course_manage_tab.dart`
 - `Builder/lib/features/dashboard/tabs/data_center_tab.dart`
 - `Builder/lib/features/dashboard/tabs/fans_manage_tab.dart`
 - `Builder/lib/features/dashboard/providers/dashboard_provider.dart`
@@ -51,13 +52,30 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 - 最近活动时间线（最多 5 条）
 - 收入预留卡片（后端结算表未接入前使用派生值）
 
-### 2）课程管理（行为不变）
+### 2）课程管理
 
-- 课程列表来自 `SupabaseService.getMyCourses()`
-- 排序下拉
-- 创建/编辑/删除课程
-- 课时卡片 + 添加课时
-- 相关弹窗、提示、保护逻辑保持原实现
+- 独立创作者工作台 Tab（`DashboardCourseManageTab`）：
+  - 页面头部 + 主操作（创建课程、AI 生成、刷新）
+  - 摘要条（课程数/课时数/已发布/草稿/待补内容）
+  - 控制栏（搜索、状态筛选、排序菜单）
+- 课程卡片增强：
+  - 状态标签 + 更新时间 + 元数据标签
+  - 清晰主次操作（打开编辑器、编辑、删除）
+- 每个课程卡内部集成课时管理区：
+  - 课时卡片快速打开
+  - 添加课时卡
+  - 删除入口（沿用原确认与保护流程）
+- 状态覆盖：
+  - 未登录提示
+  - 骨架加载
+  - 空状态
+  - 无结果状态
+  - 全页错误 + 内联可恢复错误
+- 核心生产能力保持不变：
+  - 创建/编辑/删除课程
+  - 打开课程编辑器
+  - 添加/删除课时
+  - 原有弹窗、提示、保护逻辑
 
 ### 3）数据中心
 
@@ -94,6 +112,11 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 - Desktop：多列卡片布局
 - Tablet：卡片自动换行，图表/表格密度下调
 - Mobile：单列堆叠 + 紧凑表格卡片
+
+课程管理补充：
+- 内容区居中并限制最大宽度（`maxWidth: 1440`）
+- 卡片与课时网格在平板/移动端自动换行
+- 窄宽度下操作区自动折行
 
 ## 已知缺口
 
