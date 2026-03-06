@@ -328,7 +328,9 @@ class SupabaseService {
     try {
       final lesson = await client
           .from('lessons')
-          .select('id, title, content_json, xp_reward, duration_seconds')
+          .select(
+            'id, course_id, sort_key, title, content_json, xp_reward, duration_seconds',
+          )
           .eq('id', lessonId)
           .single();
 
@@ -355,6 +357,31 @@ class SupabaseService {
                 },
               )
               .toList();
+        }
+      }
+
+      // Builder stores the full course snapshot on the first lesson row.
+      // If this lesson has empty content_json and no content_blocks, fall back
+      // to the first non-empty snapshot in the same course.
+      if (_isLessonContentEmpty(map['content_json'])) {
+        final courseId = map['course_id']?.toString();
+        if (courseId != null && courseId.isNotEmpty) {
+          final lessonRows = await client
+              .from('lessons')
+              .select('content_json')
+              .eq('course_id', courseId)
+              .order('sort_key', ascending: true);
+
+          for (final row in lessonRows as List) {
+            final rowMap = row is Map
+                ? Map<String, dynamic>.from(row)
+                : const <String, dynamic>{};
+            final candidate = rowMap['content_json'];
+            if (!_isLessonContentEmpty(candidate)) {
+              map['content_json'] = candidate;
+              break;
+            }
+          }
         }
       }
 

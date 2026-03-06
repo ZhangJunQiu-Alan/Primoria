@@ -417,8 +417,10 @@ class CourseSchemaMigrator {
         if (_asString(style['spacing']) == null) style['spacing'] = 'md';
         if (_asString(style['alignment']) == null) style['alignment'] = 'left';
 
-        final visibilityRule =
-            _asString(blockMap['visibilityRule']) ?? 'always';
+        final visibilityRule = _normalizeVisibilityRule(
+          blockMap['visibilityRule'],
+          order: normalizedBlocks.length,
+        );
         final content = _normalizeBlockContent(
           type: normalizedType,
           blockMap: blockMap,
@@ -1401,6 +1403,17 @@ class CourseSchemaMigrator {
     if (value < 1.0) return 1.0;
     if (value > 6.0) return 6.0;
     return value;
+  }
+
+  static String _normalizeVisibilityRule(dynamic rawRule, {required int order}) {
+    final normalized = _asString(rawRule)?.trim().toLowerCase();
+    if (normalized == 'always') return 'always';
+    if (normalized == 'afterpreviouscorrect' ||
+        normalized == 'after_previous_correct' ||
+        normalized == 'after-previous-correct') {
+      return 'afterPreviousCorrect';
+    }
+    return order <= 0 ? 'always' : 'afterPreviousCorrect';
   }
 
   /// Renames 'pages' → 'lessons' and 'pageId' → 'lessonId' inside each lesson.

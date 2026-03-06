@@ -207,7 +207,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
       final entryLessonIndex = _resolveEntryLessonIndex(hydratedDraft);
       _entryLessonIndex = entryLessonIndex;
-      ref.read(builderStateProvider.notifier).setCurrentLesson(entryLessonIndex);
+      ref
+          .read(builderStateProvider.notifier)
+          .setCurrentLesson(entryLessonIndex);
       _draftAutoSaveEnabled = true;
       _showDraftRestoredHint();
       return;
@@ -222,7 +224,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           .syncCourseTitle(course.metadata.title, hasUnsavedChanges: false);
       final entryLessonIndex = _resolveEntryLessonIndex(course);
       _entryLessonIndex = entryLessonIndex;
-      ref.read(builderStateProvider.notifier).setCurrentLesson(entryLessonIndex);
+      ref
+          .read(builderStateProvider.notifier)
+          .setCurrentLesson(entryLessonIndex);
     }
     _draftAutoSaveEnabled = true;
   }
@@ -305,16 +309,26 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           ? null
           : Padding(
               padding: const EdgeInsets.all(AppSpacing.sm),
-              child: Image.asset(
-                'assets/imgs/logo32.png',
-                width: 32,
-                height: 32,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.school, color: AppColors.primary500),
+              child: InkWell(
+                onTap: () => context.go('/dashboard'),
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                child: Image.asset(
+                  'assets/imgs/logo32.png',
+                  width: 32,
+                  height: 32,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.school, color: AppColors.primary500),
+                ),
               ),
             ),
       title: InkWell(
-        onTap: () => _editCourseTitle(context, ref, state.courseTitle),
+        onTap: () => _editLessonTitle(
+          context,
+          ref,
+          course,
+          state.currentLessonIndex,
+          currentLessonTitle,
+        ),
         borderRadius: BorderRadius.circular(AppBorderRadius.sm),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -398,7 +412,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 );
               }
             } else {
-              context.go('/viewer?singlePage=1&lessonIndex=$previewLessonIndex');
+              context.go(
+                '/viewer?singlePage=1&lessonIndex=$previewLessonIndex',
+              );
             }
           },
           style: pillOutlinedStyle,
@@ -470,26 +486,20 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     final entryIndex = _entryLessonIndex;
     final entryTitle = _entryLessonTitle;
 
-    if (entryIndex != null && entryTitle != null && lessonIndex == entryIndex) {
-      return entryTitle;
-    }
+    final resolvedEntryTitle = (entryIndex != null && lessonIndex == entryIndex)
+        ? (entryTitle?.trim() ?? '')
+        : '';
+    final hasEntryTitle = resolvedEntryTitle.isNotEmpty;
 
-    if (_isAddLessonFlow) {
-      final metadataTitle = course.metadata.title.trim();
-      if (metadataTitle.isNotEmpty) {
-        return _looksLikePlaceholderLessonTitle(metadataTitle)
-            ? _untitledLessonLabel(t)
-            : metadataTitle;
-      }
-      if (title.isEmpty || _looksLikePlaceholderLessonTitle(title)) {
-        return _untitledLessonLabel(t);
-      }
+    if (title.isNotEmpty && !_looksLikePlaceholderLessonTitle(title)) {
+      return title;
     }
-
+    if (hasEntryTitle) return resolvedEntryTitle;
+    if (_isAddLessonFlow &&
+        (title.isEmpty || _looksLikePlaceholderLessonTitle(title))) {
+      return _untitledLessonLabel(t);
+    }
     if (title.isNotEmpty) return title;
-    if (entryIndex != null && entryTitle != null && lessonIndex == entryIndex) {
-      return entryTitle;
-    }
     final displayIndex = lessonIndex >= 0 ? lessonIndex + 1 : 1;
     return t.lessonN(displayIndex);
   }
@@ -511,25 +521,31 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     if (normalized == 'untitled lesson' || normalized == 'untitled course') {
       return true;
     }
-    return RegExp(r'^(page|lesson)\s*\d+$').hasMatch(normalized);
+    return RegExp(r'^(page|lesson)\s+\d+$').hasMatch(normalized);
   }
 
-  void _editCourseTitle(
+  void _editLessonTitle(
     BuildContext context,
     WidgetRef ref,
+    Course course,
+    int lessonIndex,
     String currentTitle,
   ) {
     final t = BuilderLocalizations(ref.read(languageProvider));
-    final controller = TextEditingController(text: currentTitle);
+    final lesson = course.getLesson(lessonIndex);
+    final initialTitle = (lesson?.title.trim().isNotEmpty ?? false)
+        ? lesson!.title.trim()
+        : currentTitle;
+    final controller = TextEditingController(text: initialTitle);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(t.editCourseTitleLabel),
+        title: Text(t.editLessonTitleLabel),
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: InputDecoration(hintText: t.enterCourseTitle),
+          decoration: InputDecoration(hintText: t.enterLessonTitle),
         ),
         actions: [
           TextButton(
@@ -538,11 +554,15 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              if (controller.text.isNotEmpty) {
+              final nextTitle = controller.text.trim();
+              if (nextTitle.isNotEmpty) {
                 ref
-                    .read(builderStateProvider.notifier)
-                    .setCourseTitle(controller.text);
-                ref.read(courseProvider.notifier).updateTitle(controller.text);
+                    .read(courseProvider.notifier)
+                    .updateLessonTitle(lessonIndex, nextTitle);
+                ref.read(builderStateProvider.notifier).markAsUnsaved();
+                if (_entryLessonIndex == lessonIndex) {
+                  _entryLessonTitle = nextTitle;
+                }
               }
               Navigator.pop(context);
             },

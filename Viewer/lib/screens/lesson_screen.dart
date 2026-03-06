@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:confetti/confetti.dart';
 import 'package:provider/provider.dart';
 import '../theme/theme.dart';
@@ -36,6 +37,7 @@ class _LessonScreenState extends State<LessonScreen> {
   // ── Loading state ─────────────────────────────────────────────
   bool _loadingLesson = true;
   bool _contentUnavailable = false;
+  String? _resolvedLessonTitle;
 
   // ── Question state ────────────────────────────────────────────
   List<_QuestionData> _questions = [];
@@ -54,8 +56,13 @@ class _LessonScreenState extends State<LessonScreen> {
   final _audioService = AudioService.getInstance();
   final DateTime _startTime = DateTime.now();
 
-  String _title(AppLocalizations t) =>
-      widget.lessonTitle ?? t.lessonDefaultTitle;
+  String _title(AppLocalizations t) {
+    final title = _firstNonEmptyString([
+      _resolvedLessonTitle,
+      widget.lessonTitle,
+    ]);
+    return title.isNotEmpty ? title : t.lessonDefaultTitle;
+  }
 
   // ── Lifecycle ─────────────────────────────────────────────────
 
@@ -78,11 +85,13 @@ class _LessonScreenState extends State<LessonScreen> {
   Future<void> _initLesson() async {
     final lessonId = widget.lessonId;
     List<_QuestionData> questions = [];
+    String resolvedLessonTitle = '';
 
     try {
       if (lessonId != null && lessonId != 'daily') {
         final content = await SupabaseService.getLessonContent(lessonId);
         if (content != null) {
+          resolvedLessonTitle = _firstNonEmptyString([content['title']]);
           questions = _parseContentJson(content);
         }
         if (questions.isEmpty) {
@@ -103,6 +112,10 @@ class _LessonScreenState extends State<LessonScreen> {
 
     if (!mounted) return;
     setState(() {
+      _resolvedLessonTitle = _firstNonEmptyString([
+        _resolvedLessonTitle,
+        resolvedLessonTitle,
+      ]);
       _questions = questions;
       _loadingLesson = false;
       // Init slider value from first question if it's a slider
@@ -126,7 +139,7 @@ class _LessonScreenState extends State<LessonScreen> {
   /// Detects content_json format and delegates to the appropriate parser.
   /// Handles two formats:
   ///   1. DB list format: [{block_id, type, content, config, sort_key}]
-  ///   2. Builder JSON map format: {pages: [{title, blocks: [{type, content}]}]}
+  ///   2. Builder JSON map format: {pages|lessons|blocks: ...}
   List<_QuestionData> _parseContentJson(Map<String, dynamic> lesson) {
     dynamic raw = lesson['content_json'];
     if (raw == null) return [];
@@ -143,8 +156,16 @@ class _LessonScreenState extends State<LessonScreen> {
         );
       } else if (raw is Map) {
         final map = Map<String, dynamic>.from(raw);
+        final lessons = map['lessons'];
         final pages = map['pages'];
-        if (pages is List && pages.isNotEmpty) {
+
+        if (lessons is List && lessons.isNotEmpty) {
+          questions = _parseBuilderLessons(
+            lessons.whereType<Map>().cast<Map<String, dynamic>>().toList(),
+            currentLessonId: lesson['id']?.toString(),
+            currentLessonTitle: lesson['title']?.toString(),
+          );
+        } else if (pages is List && pages.isNotEmpty) {
           questions = _parseBuilderPages(
             pages.whereType<Map>().cast<Map<String, dynamic>>().toList(),
           );
@@ -176,6 +197,58 @@ class _LessonScreenState extends State<LessonScreen> {
     );
 
     return questions;
+  }
+
+  /// Parse full course snapshot format:
+  /// {lessons: [{lessonId|pageId|id, title, blocks: [...]}, ...]}
+  /// and pick the lesson that matches the current lesson row.
+  List<_QuestionData> _parseBuilderLessons(
+    List<Map<String, dynamic>> lessons, {
+    String? currentLessonId,
+    String? currentLessonTitle,
+  }) {
+    if (lessons.isEmpty) return const [];
+
+    int targetIndex = -1;
+    final normalizedCurrentId = (currentLessonId ?? '').trim().toLowerCase();
+    final normalizedCurrentTitle = (currentLessonTitle ?? '')
+        .trim()
+        .toLowerCase();
+
+    if (normalizedCurrentId.isNotEmpty) {
+      targetIndex = lessons.indexWhere((lesson) {
+        final lessonId = _firstNonEmptyString([
+          lesson['lessonId'],
+          lesson['pageId'],
+          lesson['id'],
+        ]).toLowerCase();
+        return lessonId.isNotEmpty && lessonId == normalizedCurrentId;
+      });
+    }
+
+    if (targetIndex < 0 && normalizedCurrentTitle.isNotEmpty) {
+      targetIndex = lessons.indexWhere((lesson) {
+        final title = _firstNonEmptyString([lesson['title']]).toLowerCase();
+        return title.isNotEmpty && title == normalizedCurrentTitle;
+      });
+    }
+
+    final selected = lessons[targetIndex >= 0 ? targetIndex : 0];
+    final selectedTitle = _firstNonEmptyString([
+      selected['title'],
+      currentLessonTitle,
+      'Lesson',
+    ]);
+
+    final blocks = (selected['blocks'] as List? ?? [])
+        .whereType<Map>()
+        .map((b) => Map<String, dynamic>.from(b))
+        .toList();
+    if (blocks.isEmpty) return const [];
+
+    return _parseBuilderPages([
+      {'title': selectedTitle, 'blocks': blocks},
+    ]);
   }
 
   /// Parse DB list format: [{block_id, type, content, config, sort_key}]
@@ -248,11 +321,7 @@ class _LessonScreenState extends State<LessonScreen> {
           config['text'],
           config['body'],
         ]);
-        final title = _firstNonEmptyString([
-          content['title'],
-          pageTitle,
-          'Reading',
-        ]);
+        final title = _firstNonEmptyString([content['title']]);
         if (body.isEmpty) return null;
         return _QuestionData(
           type: QuestionType.info,
@@ -849,7 +918,10 @@ class _LessonScreenState extends State<LessonScreen> {
         MaterialPageRoute(
           builder: (_) => LessonResultScreen(
             lessonId: lessonId ?? '',
-            lessonTitle: widget.lessonTitle ?? '',
+            lessonTitle: _firstNonEmptyString([
+              _resolvedLessonTitle,
+              widget.lessonTitle,
+            ]),
             rpcResult: rpcResult,
             correctCount: _correctCount,
             totalCount: _totalCount,
@@ -992,27 +1064,72 @@ class _LessonScreenState extends State<LessonScreen> {
     bool isDark,
     AppLocalizations t,
   ) {
+    final showQuestionTitle =
+        question.title.trim().isNotEmpty &&
+        !_isSameDisplayTitle(question.title, _title(t));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          question.title,
-          style: AppTypography.headline2.copyWith(
-            color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
+        if (showQuestionTitle)
+          Text(
+            question.title,
+            style: AppTypography.headline2.copyWith(
+              color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
+            ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          question.content,
-          style: AppTypography.body1.copyWith(
-            height: 1.6,
-            color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
-          ),
-        ),
+        if (showQuestionTitle) const SizedBox(height: AppSpacing.md),
+        _buildMarkdownContent(question.content, isDark),
         const SizedBox(height: AppSpacing.xl),
         _buildInteractionWidget(question, isDark, t),
       ],
     );
+  }
+
+  Widget _buildMarkdownContent(String content, bool isDark) {
+    final textColor = isDark ? AppColors.textOnDark : AppColors.textPrimary;
+    final baseText = AppTypography.body1.copyWith(
+      height: 1.6,
+      color: textColor,
+    );
+    final codeBackground = isDark
+        ? AppColors.cardDark
+        : AppColors.surfaceVariant;
+
+    return MarkdownBody(
+      data: content,
+      styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+        p: baseText,
+        h1: AppTypography.headline1.copyWith(color: textColor),
+        h2: AppTypography.headline2.copyWith(color: textColor),
+        h3: AppTypography.headline3.copyWith(color: textColor),
+        h4: AppTypography.title.copyWith(color: textColor),
+        code: AppTypography.body2.copyWith(
+          color: textColor,
+          backgroundColor: codeBackground,
+          fontFamily: 'monospace',
+        ),
+        blockquote: baseText.copyWith(fontStyle: FontStyle.italic),
+        listBullet: baseText,
+        codeblockPadding: const EdgeInsets.all(AppSpacing.md),
+        codeblockDecoration: BoxDecoration(
+          color: codeBackground,
+          borderRadius: AppRadius.borderRadiusLg,
+          border: Border.all(
+            color: isDark ? AppColors.borderDark : AppColors.border,
+          ),
+        ),
+      ),
+    );
+  }
+
+  bool _isSameDisplayTitle(String left, String right) {
+    String normalize(String input) =>
+        input.trim().replaceAll(RegExp(r'\s+'), ' ').toLowerCase();
+
+    final a = normalize(left);
+    final b = normalize(right);
+    return a.isNotEmpty && b.isNotEmpty && a == b;
   }
 
   Widget _buildInteractionWidget(

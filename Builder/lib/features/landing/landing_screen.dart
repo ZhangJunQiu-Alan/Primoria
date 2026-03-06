@@ -113,8 +113,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           // Push content down when the denied banner is shown
-                          if (deniedMessage != null)
-                            const SizedBox(height: 56),
+                          if (deniedMessage != null) const SizedBox(height: 56),
                           _buildHeader(),
                           _buildHero(context, t),
                           const SizedBox(height: 40),
@@ -187,9 +186,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 11),
         decoration: const BoxDecoration(
           color: Color(0xFFFFF3CD),
-          border: Border(
-            bottom: BorderSide(color: Color(0x55D4A017)),
-          ),
+          border: Border(bottom: BorderSide(color: Color(0x55D4A017))),
           boxShadow: [
             BoxShadow(
               color: Color(0x18000000),
@@ -239,26 +236,30 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-      child: Row(
-        children: [
-          Image.asset(
-            'assets/imgs/logo32.png',
-            width: 32,
-            height: 32,
-            errorBuilder: (_, __, ___) =>
-                const Icon(Icons.school, color: AppColors.primary500),
-          ),
-          const SizedBox(width: 12),
-          const Text(
-            'Primoria',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.4,
-              color: _C.text,
+      child: InkWell(
+        onTap: () => context.go('/dashboard'),
+        borderRadius: BorderRadius.circular(10),
+        child: Row(
+          children: [
+            Image.asset(
+              'assets/imgs/logo32.png',
+              width: 32,
+              height: 32,
+              errorBuilder: (_, __, ___) =>
+                  const Icon(Icons.school, color: AppColors.primary500),
             ),
-          ),
-        ],
+            const SizedBox(width: 12),
+            const Text(
+              'Primoria',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.4,
+                color: _C.text,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

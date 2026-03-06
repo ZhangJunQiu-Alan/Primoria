@@ -1531,7 +1531,10 @@ $rawContent
         'id': id,
         'position': {'order': normalized.length},
         'style': _normalizeStyle(rawBlock['style']),
-        'visibilityRule': _normalizeVisibilityRule(rawBlock['visibilityRule']),
+        'visibilityRule': _normalizeVisibilityRule(
+          rawBlock['visibilityRule'],
+          order: normalized.length,
+        ),
         'content': content,
       });
     }
@@ -1628,10 +1631,18 @@ $rawContent
     return normalized;
   }
 
-  static String _normalizeVisibilityRule(dynamic rawRule) {
-    final rule = _asString(rawRule);
-    if (rule == 'afterPreviousCorrect') return 'afterPreviousCorrect';
-    return 'always';
+  static String _normalizeVisibilityRule(
+    dynamic rawRule, {
+    required int order,
+  }) {
+    final rule = _asString(rawRule)?.trim().toLowerCase();
+    if (rule == 'always') return 'always';
+    if (rule == 'afterpreviouscorrect' ||
+        rule == 'after_previous_correct' ||
+        rule == 'after-previous-correct') {
+      return 'afterPreviousCorrect';
+    }
+    return order <= 0 ? 'always' : 'afterPreviousCorrect';
   }
 
   static Map<String, dynamic> _normalizeBlockContent(
