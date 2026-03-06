@@ -9,12 +9,14 @@ import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/course_screen.dart';
 import 'screens/lesson_screen.dart';
+import 'screens/parent_dashboard_screen.dart';
 import 'providers/theme_provider.dart';
 import 'providers/user_provider.dart';
 import 'providers/language_provider.dart';
 import 'services/storage_service.dart';
 import 'services/audio_service.dart';
 import 'services/notification_service.dart';
+import 'utils/role_routes.dart';
 
 const supabaseUrl = String.fromEnvironment(
   'SUPABASE_URL',
@@ -78,6 +80,10 @@ class PrimoriaApp extends StatelessWidget {
               '/login': (context) => const LoginScreen(),
               '/register': (context) => const RegisterScreen(),
               '/home': (context) => const _AuthGuard(child: HomeScreen()),
+              '/parent': (context) => const _AuthGuard(
+                parentOnly: true,
+                child: ParentDashboardScreen(),
+              ),
               '/course': (context) => const _AuthGuard(child: CourseScreen()),
               '/lesson': (context) => const _AuthGuard(child: LessonScreen()),
             },
@@ -93,7 +99,9 @@ class PrimoriaApp extends StatelessWidget {
 /// (e.g., restoring a Supabase session on cold start).
 class _AuthGuard extends StatelessWidget {
   final Widget child;
-  const _AuthGuard({required this.child});
+  final bool parentOnly;
+
+  const _AuthGuard({required this.child, this.parentOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +116,23 @@ class _AuthGuard extends StatelessWidget {
         // No active session — redirect to login
         if (!up.isLoggedIn) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pushReplacementNamed('/login');
+            Navigator.of(context).pushReplacementNamed(RoleRoutes.login);
+          });
+          return const Scaffold(body: SizedBox.shrink());
+        }
+
+        final isParent = RoleRoutes.isParentRole(up.user?.role);
+        if (parentOnly && !isParent) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(RoleRoutes.home);
+          });
+          return const Scaffold(body: SizedBox.shrink());
+        }
+        if (!parentOnly && isParent) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(
+              context,
+            ).pushReplacementNamed(RoleRoutes.parentDashboard);
           });
           return const Scaffold(body: SizedBox.shrink());
         }

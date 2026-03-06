@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/supabase_service.dart';
+import '../utils/role_routes.dart';
 
 /// Register page color constants (matching CSS template)
 class _C {
@@ -102,7 +103,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (success && userProvider.isLoggedIn) {
       _setStatus('Registration successful.', 'success');
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushReplacementNamed(
+        RoleRoutes.authenticatedHomeForRole(userProvider.user?.role),
+      );
     } else if (success) {
       // Signed up but email confirmation required
       _setStatus(userProvider.errorMessage, 'info');
@@ -284,8 +287,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _buildPasswordInput(
                         controller: _passwordController,
                         obscure: _obscurePassword,
-                        onToggle: () =>
-                            setState(() => _obscurePassword = !_obscurePassword),
+                        onToggle: () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                         placeholder: 'At least 6 characters',
                       ),
                       const SizedBox(height: 14),
@@ -297,8 +301,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _confirmPasswordController,
                         obscure: _obscureConfirmPassword,
                         onToggle: () => setState(
-                          () =>
-                              _obscureConfirmPassword = !_obscureConfirmPassword,
+                          () => _obscureConfirmPassword =
+                              !_obscureConfirmPassword,
                         ),
                         placeholder: 'Repeat your password',
                       ),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/storage_service.dart';
 import '../services/supabase_service.dart';
+import '../utils/role_routes.dart';
 
 /// Login page color constants (matching CSS template)
 class _C {
@@ -116,7 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
       await storage.saveRememberMe(_rememberMe, _emailController.text.trim());
       if (!mounted) return;
       _setStatus('Login successful.', 'success');
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushReplacementNamed(
+        RoleRoutes.authenticatedHomeForRole(userProvider.user?.role),
+      );
     } else {
       _setStatus(userProvider.errorMessage, 'error');
     }

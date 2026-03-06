@@ -89,6 +89,7 @@ class UserProvider extends ChangeNotifier {
   UserData? get user => _user;
   bool get isInitialized => _isInitialized;
   bool get isLoggedIn => _isLoggedIn;
+  bool get isParent => (_user?.role.trim().toLowerCase() ?? '') == 'parent';
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   int get streak => _streak;
@@ -114,6 +115,9 @@ class UserProvider extends ChangeNotifier {
     _storage = await StorageService.getInstance();
     _bindAuthState();
     await _restoreSession();
+    if (_isLoggedIn) {
+      await _loadProfileFromBackend();
+    }
     await _loadStats();
     await _checkAndUpdateStreak();
     _isInitialized = true;
@@ -121,7 +125,6 @@ class UserProvider extends ChangeNotifier {
     // Non-blocking: refresh from backend after local init completes
     if (_isLoggedIn) {
       unawaited(_loadStatsFromBackend());
-      unawaited(_loadProfileFromBackend());
     }
   }
 
@@ -229,6 +232,7 @@ class UserProvider extends ChangeNotifier {
     String? bio,
     String? avatarUrl,
     String? coverImageUrl,
+    String? role,
   }) async {
     if (!_isLoggedIn || _user == null) return false;
     final ok = await SupabaseService.updateProfile(
@@ -236,6 +240,7 @@ class UserProvider extends ChangeNotifier {
       bio: bio,
       avatarUrl: avatarUrl,
       coverImageUrl: coverImageUrl,
+      role: role,
     );
     if (ok) {
       await _loadProfileFromBackend();
@@ -310,9 +315,9 @@ class UserProvider extends ChangeNotifier {
       _user = _userDataFromSupabase(SupabaseService.currentUser!);
       await _storage?.saveUser(_user!.toJson());
       _isLoggedIn = true;
+      await _loadProfileFromBackend();
       // Non-blocking backend sync
       unawaited(_loadStatsFromBackend());
-      unawaited(_loadProfileFromBackend());
     } else {
       _errorMessage = result.message;
     }
@@ -338,6 +343,7 @@ class UserProvider extends ChangeNotifier {
       _user = _userDataFromSupabase(SupabaseService.currentUser!);
       await _storage?.saveUser(_user!.toJson());
       _isLoggedIn = true;
+      await _loadProfileFromBackend();
     } else if (result.success) {
       // Sign-up succeeded but no session yet (email confirmation required)
       _errorMessage = 'Please check your email to confirm your account.';
