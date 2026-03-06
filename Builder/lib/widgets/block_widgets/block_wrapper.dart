@@ -159,30 +159,58 @@ class BlockWrapper extends StatelessWidget {
   Widget _getBlockContentWidget() {
     switch (block.type) {
       case BlockType.text:
+        final content = block.content as TextContent;
         return _TextBlockContent(
-          content: block.content as TextContent,
+          content: content,
           textAlign: _alignmentToTextAlign(block.style.alignment),
+          editable: isSelected && onBlockUpdated != null,
+          onChanged: onBlockUpdated == null
+              ? null
+              : (updatedContent) =>
+                    onBlockUpdated!(block.copyWith(content: updatedContent)),
         );
       case BlockType.image:
         return _ImageBlockContent(content: block.content as ImageContent);
       case BlockType.codeBlock:
-        return _CodeBlockContent(content: block.content as CodeBlockContent);
+        final content = block.content as CodeBlockContent;
+        return _CodeBlockContent(
+          content: content,
+          editable: isSelected && onBlockUpdated != null,
+          onChanged: onBlockUpdated == null
+              ? null
+              : (updatedContent) =>
+                    onBlockUpdated!(block.copyWith(content: updatedContent)),
+        );
       case BlockType.codePlayground:
-        return CodePlaygroundWidget(
-          content: block.content as CodePlaygroundContent,
+        final content = block.content as CodePlaygroundContent;
+        final isInlineEditable = isSelected && onBlockUpdated != null;
+        return _CodePlaygroundBlockContent(
+          content: content,
+          editable: isInlineEditable,
           onCodeChanged: (newCode) {
             if (onBlockUpdated != null) {
               final updatedContent = CodePlaygroundContent(
-                language: (block.content as CodePlaygroundContent).language,
+                language: content.language,
                 initialCode: newCode,
-                expectedOutput:
-                    (block.content as CodePlaygroundContent).expectedOutput,
-                hints: (block.content as CodePlaygroundContent).hints,
-                runnable: (block.content as CodePlaygroundContent).runnable,
+                expectedOutput: content.expectedOutput,
+                hints: content.hints,
+                runnable: content.runnable,
               );
               onBlockUpdated!(block.copyWith(content: updatedContent));
             }
           },
+          onExpectedOutputChanged: !isInlineEditable
+              ? null
+              : (expectedOutput) {
+                  final updatedContent = CodePlaygroundContent(
+                    language: content.language,
+                    initialCode: content.initialCode,
+                    expectedOutput: expectedOutput,
+                    hints: content.hints,
+                    runnable: content.runnable,
+                  );
+                  onBlockUpdated!(block.copyWith(content: updatedContent));
+                },
         );
       case BlockType.codeExecution:
         return CodeExecutionBlockWidget(
@@ -528,14 +556,93 @@ enum _ResizeHandle {
 }
 
 /// Text block content
-class _TextBlockContent extends StatelessWidget {
+class _TextBlockContent extends StatefulWidget {
   final TextContent content;
   final TextAlign textAlign;
+  final bool editable;
+  final ValueChanged<TextContent>? onChanged;
 
-  const _TextBlockContent({required this.content, required this.textAlign});
+  const _TextBlockContent({
+    required this.content,
+    required this.textAlign,
+    this.editable = false,
+    this.onChanged,
+  });
+
+  @override
+  State<_TextBlockContent> createState() => _TextBlockContentState();
+}
+
+class _TextBlockContentState extends State<_TextBlockContent> {
+  late final TextEditingController _valueController;
+
+  @override
+  void initState() {
+    super.initState();
+    _valueController = TextEditingController(text: widget.content.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant _TextBlockContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.content.value != _valueController.text) {
+      _valueController.text = widget.content.value;
+    }
+  }
+
+  @override
+  void dispose() {
+    _valueController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final content = widget.content;
+    final textAlign = widget.textAlign;
+    if (widget.editable && widget.onChanged != null) {
+      final selectedFormat = content.format == 'plain' ? 'plain' : 'markdown';
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SegmentedButton<String>(
+            segments: const [
+              ButtonSegment(value: 'markdown', label: Text('Markdown')),
+              ButtonSegment(value: 'plain', label: Text('Plain')),
+            ],
+            selected: {selectedFormat},
+            onSelectionChanged: (value) {
+              widget.onChanged!(content.copyWith(format: value.first));
+            },
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          TextField(
+            controller: _valueController,
+            minLines: 4,
+            maxLines: 10,
+            textAlign: textAlign,
+            style: TextStyle(
+              fontFamily: selectedFormat == 'markdown' ? 'monospace' : null,
+              fontSize: AppFontSize.md,
+              color: AppColors.neutral700,
+            ),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              ),
+              isDense: true,
+              hintText: selectedFormat == 'markdown'
+                  ? '# Heading\n\n**Bold** and *italic*\n\n- List item'
+                  : 'Enter text...',
+            ),
+            onChanged: (value) {
+              widget.onChanged!(content.copyWith(value: value));
+            },
+          ),
+        ],
+      );
+    }
+
     if (content.value.isEmpty) {
       return Text(
         'Click to edit text...',
@@ -549,10 +656,22 @@ class _TextBlockContent extends StatelessWidget {
     }
 
     if (content.format == 'markdown') {
+      final markdownAlignment = _textAlignToWrapAlignment(widget.textAlign);
       return MarkdownBody(
         data: content.value,
         selectable: true,
         styleSheet: MarkdownStyleSheet(
+          textAlign: markdownAlignment,
+          h1Align: markdownAlignment,
+          h2Align: markdownAlignment,
+          h3Align: markdownAlignment,
+          h4Align: markdownAlignment,
+          h5Align: markdownAlignment,
+          h6Align: markdownAlignment,
+          unorderedListAlign: markdownAlignment,
+          orderedListAlign: markdownAlignment,
+          blockquoteAlign: markdownAlignment,
+          codeblockAlign: markdownAlignment,
           p: const TextStyle(
             fontSize: AppFontSize.md,
             color: AppColors.neutral700,
@@ -603,6 +722,20 @@ class _TextBlockContent extends StatelessWidget {
         color: AppColors.neutral700,
       ),
     );
+  }
+
+  WrapAlignment _textAlignToWrapAlignment(TextAlign align) {
+    switch (align) {
+      case TextAlign.center:
+        return WrapAlignment.center;
+      case TextAlign.right:
+      case TextAlign.end:
+        return WrapAlignment.end;
+      case TextAlign.left:
+      case TextAlign.start:
+      case TextAlign.justify:
+        return WrapAlignment.start;
+    }
   }
 }
 
@@ -685,13 +818,68 @@ class _ImageBlockContent extends StatelessWidget {
 }
 
 /// Code block content
-class _CodeBlockContent extends StatelessWidget {
+class _CodeBlockContent extends StatefulWidget {
   final CodeBlockContent content;
+  final bool editable;
+  final ValueChanged<CodeBlockContent>? onChanged;
 
-  const _CodeBlockContent({required this.content});
+  const _CodeBlockContent({
+    required this.content,
+    this.editable = false,
+    this.onChanged,
+  });
+
+  @override
+  State<_CodeBlockContent> createState() => _CodeBlockContentState();
+}
+
+class _CodeBlockContentState extends State<_CodeBlockContent> {
+  static const List<MapEntry<String, String>> _languageOptions = [
+    MapEntry('python', 'Python'),
+    MapEntry('javascript', 'JavaScript'),
+    MapEntry('dart', 'Dart'),
+    MapEntry('java', 'Java'),
+    MapEntry('cpp', 'C++'),
+    MapEntry('html', 'HTML'),
+  ];
+
+  late final TextEditingController _codeController;
+  late String _selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    _codeController = TextEditingController(text: widget.content.code);
+    _selectedLanguage = _safeLanguage(widget.content.language);
+  }
+
+  @override
+  void didUpdateWidget(covariant _CodeBlockContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.content.code != _codeController.text) {
+      _codeController.text = widget.content.code;
+    }
+    final nextLanguage = _safeLanguage(widget.content.language);
+    if (nextLanguage != _selectedLanguage) {
+      _selectedLanguage = nextLanguage;
+    }
+  }
+
+  @override
+  void dispose() {
+    _codeController.dispose();
+    super.dispose();
+  }
+
+  String _safeLanguage(String value) {
+    if (_languageOptions.any((option) => option.key == value)) return value;
+    return 'python';
+  }
 
   @override
   Widget build(BuildContext context) {
+    final content = widget.content;
+    final editable = widget.editable && widget.onChanged != null;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -707,33 +895,191 @@ class _CodeBlockContent extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm,
-                  vertical: 2,
+                  vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
                   color: AppColors.neutral700,
                   borderRadius: BorderRadius.circular(AppBorderRadius.sm),
                 ),
-                child: Text(
-                  content.language,
-                  style: const TextStyle(
-                    fontSize: AppFontSize.xs,
-                    color: AppColors.neutral300,
-                  ),
-                ),
+                child: editable
+                    ? DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: _selectedLanguage,
+                          isDense: true,
+                          dropdownColor: AppColors.neutral700,
+                          iconEnabledColor: AppColors.neutral300,
+                          style: const TextStyle(
+                            fontSize: AppFontSize.xs,
+                            color: AppColors.neutral300,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          items: _languageOptions
+                              .map(
+                                (option) => DropdownMenuItem<String>(
+                                  value: option.key,
+                                  child: Text(option.value),
+                                ),
+                              )
+                              .toList(growable: false),
+                          onChanged: (value) {
+                            if (value == null) return;
+                            setState(() => _selectedLanguage = value);
+                            widget.onChanged!(
+                              CodeBlockContent(
+                                language: value,
+                                code: _codeController.text,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Text(
+                        content.language,
+                        style: const TextStyle(
+                          fontSize: AppFontSize.xs,
+                          color: AppColors.neutral300,
+                        ),
+                      ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
-          Text(
-            content.code,
-            style: const TextStyle(
-              fontFamily: 'monospace',
-              fontSize: AppFontSize.sm,
-              color: AppColors.neutral100,
+          if (editable)
+            TextField(
+              controller: _codeController,
+              minLines: 8,
+              maxLines: 14,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: AppFontSize.sm,
+                color: AppColors.neutral100,
+              ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  borderSide: BorderSide.none,
+                ),
+                isDense: true,
+                filled: true,
+                fillColor: AppColors.neutral700,
+                hintText: '# Enter code here',
+                hintStyle: const TextStyle(
+                  color: AppColors.neutral500,
+                  fontFamily: 'monospace',
+                ),
+              ),
+              onChanged: (value) {
+                widget.onChanged!(
+                  CodeBlockContent(language: _selectedLanguage, code: value),
+                );
+              },
+            )
+          else
+            Text(
+              content.code,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: AppFontSize.sm,
+                color: AppColors.neutral100,
+              ),
             ),
-          ),
         ],
       ),
+    );
+  }
+}
+
+class _CodePlaygroundBlockContent extends StatelessWidget {
+  final CodePlaygroundContent content;
+  final bool editable;
+  final ValueChanged<String>? onCodeChanged;
+  final ValueChanged<String?>? onExpectedOutputChanged;
+
+  const _CodePlaygroundBlockContent({
+    required this.content,
+    required this.editable,
+    this.onCodeChanged,
+    this.onExpectedOutputChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        CodePlaygroundWidget(content: content, onCodeChanged: onCodeChanged),
+        if (editable && onExpectedOutputChanged != null) ...[
+          const SizedBox(height: AppSpacing.sm),
+          _CodePlaygroundExpectedOutputField(
+            expectedOutput: content.expectedOutput,
+            onChanged: onExpectedOutputChanged!,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _CodePlaygroundExpectedOutputField extends StatefulWidget {
+  final String? expectedOutput;
+  final ValueChanged<String?> onChanged;
+
+  const _CodePlaygroundExpectedOutputField({
+    required this.expectedOutput,
+    required this.onChanged,
+  });
+
+  @override
+  State<_CodePlaygroundExpectedOutputField> createState() =>
+      _CodePlaygroundExpectedOutputFieldState();
+}
+
+class _CodePlaygroundExpectedOutputFieldState
+    extends State<_CodePlaygroundExpectedOutputField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.expectedOutput ?? '');
+  }
+
+  @override
+  void didUpdateWidget(covariant _CodePlaygroundExpectedOutputField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final nextValue = widget.expectedOutput ?? '';
+    if (_controller.text != nextValue) {
+      _controller.text = nextValue;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _controller,
+      minLines: 1,
+      maxLines: 3,
+      style: const TextStyle(
+        fontFamily: 'monospace',
+        fontSize: AppFontSize.sm,
+        color: AppColors.neutral700,
+      ),
+      decoration: InputDecoration(
+        labelText: 'Expected output',
+        isDense: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+        ),
+      ),
+      onChanged: (value) {
+        widget.onChanged(value.trim().isEmpty ? null : value);
+      },
     );
   }
 }

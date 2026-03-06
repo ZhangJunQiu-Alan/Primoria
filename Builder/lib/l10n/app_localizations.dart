@@ -42,14 +42,12 @@ class BuilderLocalizations {
   String get aiGenerateBeta => isZh ? 'AI 生成 (Beta)' : 'AI Generate (Beta)';
   String get aiGenerateDialogTitle =>
       isZh ? '一句话生成课程' : 'Generate Course with AI';
-  String get aiGenerateDialogSubtitle =>
-      isZh
-          ? '用一句话描述课程，AI 自动生成结构化内容'
-          : 'Describe your course in one sentence — AI builds the rest';
-  String get aiGeneratePlaceholder =>
-      isZh
-          ? "用一句话描述你想要的课程，例如'教 Python 基础编程，适合初学者，带互动练习'"
-          : "e.g. 'Teach Python basics for beginners with interactive exercises'";
+  String get aiGenerateDialogSubtitle => isZh
+      ? '用一句话描述课程，AI 自动生成结构化内容'
+      : 'Describe your course in one sentence — AI builds the rest';
+  String get aiGeneratePlaceholder => isZh
+      ? "用一句话描述你想要的课程，例如'教 Python 基础编程，适合初学者，带互动练习'"
+      : "e.g. 'Teach Python basics for beginners with interactive exercises'";
   String get aiGenerateOptionsLabel => isZh ? '高级选项' : 'Options';
   String get aiGenerateDifficulty => isZh ? '难度' : 'Difficulty';
   String get aiGenerateDiffBeginner => isZh ? '入门' : 'Beginner';
@@ -61,8 +59,7 @@ class BuilderLocalizations {
   String get aiGenerateStyleRealistic => isZh ? '写实' : 'Realistic';
   String get aiGenerateAudience => isZh ? '目标受众' : 'Target Audience';
   String get aiGenerateAudienceBeginner => isZh ? '初学者' : 'Beginners';
-  String get aiGenerateAudienceIntermediate =>
-      isZh ? '中级用户' : 'Intermediate';
+  String get aiGenerateAudienceIntermediate => isZh ? '中级用户' : 'Intermediate';
   String get aiGenerateAudienceAdvanced => isZh ? '高级用户' : 'Advanced';
   String get aiGenerateBtn => isZh ? '生成课程' : 'Generate Course';
   String get aiGenerating => isZh ? '正在生成...' : 'Generating...';
@@ -84,21 +81,16 @@ class BuilderLocalizations {
       isZh ? '课程已生成，共 $n 课' : 'Course generated with $n lessons';
 
   // Quality report dialog
-  String get qualityDialogTitle =>
-      isZh ? 'AI 质量反馈' : 'AI Quality Report';
+  String get qualityDialogTitle => isZh ? 'AI 质量反馈' : 'AI Quality Report';
   String qualityDialogBody(int score) => isZh
       ? '课程质量评分：$score / 100。AI 检测到一些可以改进的地方。'
       : 'Quality score: $score / 100. AI found areas to improve.';
   String get qualityActionAddInteractive =>
       isZh ? '自动补充互动练习' : 'Add Interactive Exercises';
-  String get qualityActionAddQuiz =>
-      isZh ? '添加期末测验页' : 'Add Final Quiz';
-  String get qualityActionIgnore =>
-      isZh ? '忽略，查看课程' : 'Skip & View Course';
-  String get qualityEnhancing =>
-      isZh ? '正在优化课程...' : 'Enhancing course...';
-  String get qualityEnhanceDone =>
-      isZh ? '课程已优化' : 'Course enhanced';
+  String get qualityActionAddQuiz => isZh ? '添加期末测验页' : 'Add Final Quiz';
+  String get qualityActionIgnore => isZh ? '忽略，查看课程' : 'Skip & View Course';
+  String get qualityEnhancing => isZh ? '正在优化课程...' : 'Enhancing course...';
+  String get qualityEnhanceDone => isZh ? '课程已优化' : 'Course enhanced';
   String get qualityEnhanceFailed =>
       isZh ? '优化失败，请稍后重试' : 'Enhancement failed, please try again';
 
@@ -179,9 +171,8 @@ class BuilderLocalizations {
       ? '确定删除第 $n 课「$title」吗？此操作不可撤销。'
       : 'Delete Lesson $n "$title"? This cannot be undone.';
   String get lessonDeleted => isZh ? '课时已删除' : 'Lesson deleted';
-  String get cannotDeleteLastLesson => isZh
-      ? '课程至少需要保留一个课时'
-      : 'A course must have at least one lesson';
+  String get cannotDeleteLastLesson =>
+      isZh ? '课程至少需要保留一个课时' : 'A course must have at least one lesson';
   String get errorLoading => isZh ? '加载失败，请重试' : 'Failed to load, please retry';
 
   // ── Snackbars ─────────────────────────────────────────────────
@@ -201,6 +192,8 @@ class BuilderLocalizations {
   // Builder — Edit course title dialog
   String get editCourseTitleLabel => isZh ? '编辑课程标题' : 'Edit course title';
   String get enterCourseTitle => isZh ? '输入课程标题' : 'Enter course title';
+  String get editLessonTitleLabel => isZh ? '编辑课时标题' : 'Edit lesson title';
+  String get enterLessonTitle => isZh ? '输入课时标题' : 'Enter lesson title';
   String get ok => isZh ? '确定' : 'OK';
 
   // Builder — Export

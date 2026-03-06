@@ -129,6 +129,27 @@ class _BlockPropertyEditor extends ConsumerStatefulWidget {
 }
 
 class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
+  static const Set<String> _supportedAlignments = {'left', 'center', 'right'};
+  static const Set<String> _supportedSpacing = {'xs', 'sm', 'md', 'lg', 'xl'};
+  static const Set<String> _supportedVisibilityRules = {
+    Block.alwaysVisible,
+    Block.afterPreviousCorrect,
+  };
+
+  String _safeAlignment(String value) {
+    return _supportedAlignments.contains(value) ? value : 'left';
+  }
+
+  String _safeSpacing(String value) {
+    return _supportedSpacing.contains(value) ? value : 'md';
+  }
+
+  String _safeVisibilityRule(String value) {
+    return _supportedVisibilityRules.contains(value)
+        ? value
+        : Block.alwaysVisible;
+  }
+
   void _updateBlock(Block updatedBlock) {
     ref
         .read(courseProvider.notifier)
@@ -174,6 +195,9 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   @override
   Widget build(BuildContext context) {
     final info = BlockRegistry.getInfo(widget.block.type);
+    final selectedAlignment = _safeAlignment(widget.block.style.alignment);
+    final selectedSpacing = _safeSpacing(widget.block.style.spacing);
+    final selectedVisibility = _safeVisibilityRule(widget.block.visibilityRule);
 
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -242,7 +266,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                     icon: Icon(Icons.format_align_right, size: 16),
                   ),
                 ],
-                selected: {widget.block.style.alignment},
+                selected: {selectedAlignment},
                 onSelectionChanged: (value) {
                   final updatedBlock = widget.block.copyWith(
                     style: widget.block.style.copyWith(alignment: value.first),
@@ -255,7 +279,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
             _PropertyField(
               label: 'Spacing',
               child: DropdownButtonFormField<String>(
-                initialValue: widget.block.style.spacing,
+                initialValue: selectedSpacing,
                 decoration: const InputDecoration(
                   isDense: true,
                   contentPadding: EdgeInsets.symmetric(
@@ -385,7 +409,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           title: 'Visibility',
           children: [
             DropdownButtonFormField<String>(
-              initialValue: widget.block.visibilityRule,
+              initialValue: selectedVisibility,
               decoration: const InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.symmetric(
@@ -395,11 +419,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
               ),
               items: const [
                 DropdownMenuItem(
-                  value: 'always',
+                  value: Block.alwaysVisible,
                   child: Text('Always visible'),
                 ),
                 DropdownMenuItem(
-                  value: 'afterPreviousCorrect',
+                  value: Block.afterPreviousCorrect,
                   child: Text('After previous correct'),
                 ),
               ],
@@ -422,13 +446,13 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildContentEditor() {
     switch (widget.block.type) {
       case BlockType.text:
-        return _buildTextEditor();
+        return const SizedBox.shrink();
       case BlockType.image:
         return _buildImageEditor();
       case BlockType.codeBlock:
-        return _buildCodeBlockEditor();
+        return const SizedBox.shrink();
       case BlockType.codePlayground:
-        return _buildCodePlaygroundEditor();
+        return const SizedBox.shrink();
       case BlockType.codeExecution:
         return _buildCodeExecutionEditor();
       case BlockType.functionFlow:
@@ -444,52 +468,6 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
       default:
         return const SizedBox.shrink();
     }
-  }
-
-  Widget _buildTextEditor() {
-    final content = widget.block.content as TextContent;
-    return _PropertySection(
-      title: 'Text',
-      children: [
-        _PropertyField(
-          label: 'Format',
-          child: SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'markdown', label: Text('Markdown')),
-              ButtonSegment(value: 'plain', label: Text('Plain')),
-            ],
-            selected: {content.format},
-            onSelectionChanged: (value) {
-              final updatedBlock = widget.block.copyWith(
-                content: content.copyWith(format: value.first),
-              );
-              _updateBlock(updatedBlock);
-            },
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        TextFormField(
-          initialValue: content.value,
-          maxLines: 8,
-          style: TextStyle(
-            fontFamily: content.format == 'markdown' ? 'monospace' : null,
-            fontSize: AppFontSize.sm,
-          ),
-          decoration: InputDecoration(
-            hintText: content.format == 'markdown'
-                ? '# Heading\n\n**Bold** and *italic*\n\n- List item'
-                : 'Enter text...',
-            border: const OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            final updatedBlock = widget.block.copyWith(
-              content: content.copyWith(value: value),
-            );
-            _updateBlock(updatedBlock);
-          },
-        ),
-      ],
-    );
   }
 
   Widget _buildImageEditor() {
@@ -548,112 +526,6 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                 url: content.url,
                 alt: content.alt,
                 caption: value,
-              ),
-            );
-            _updateBlock(updatedBlock);
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCodeBlockEditor() {
-    final content = widget.block.content as CodeBlockContent;
-    return _PropertySection(
-      title: 'Code Block',
-      children: [
-        DropdownButtonFormField<String>(
-          initialValue: content.language,
-          decoration: const InputDecoration(
-            labelText: 'Language',
-            border: OutlineInputBorder(),
-          ),
-          items: const [
-            DropdownMenuItem(value: 'python', child: Text('Python')),
-            DropdownMenuItem(value: 'javascript', child: Text('JavaScript')),
-            DropdownMenuItem(value: 'dart', child: Text('Dart')),
-            DropdownMenuItem(value: 'java', child: Text('Java')),
-            DropdownMenuItem(value: 'cpp', child: Text('C++')),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              final updatedBlock = widget.block.copyWith(
-                content: CodeBlockContent(language: value, code: content.code),
-              );
-              _updateBlock(updatedBlock);
-            }
-          },
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        TextFormField(
-          initialValue: content.code,
-          maxLines: 8,
-          style: const TextStyle(
-            fontFamily: 'monospace',
-            fontSize: AppFontSize.sm,
-          ),
-          decoration: const InputDecoration(
-            labelText: 'Code',
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            final updatedBlock = widget.block.copyWith(
-              content: CodeBlockContent(
-                language: content.language,
-                code: value,
-              ),
-            );
-            _updateBlock(updatedBlock);
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCodePlaygroundEditor() {
-    final content = widget.block.content as CodePlaygroundContent;
-    return _PropertySection(
-      title: 'Code Playground',
-      children: [
-        TextFormField(
-          initialValue: content.initialCode,
-          maxLines: 8,
-          style: const TextStyle(
-            fontFamily: 'monospace',
-            fontSize: AppFontSize.sm,
-          ),
-          decoration: const InputDecoration(
-            labelText: 'Starter code',
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            final updatedBlock = widget.block.copyWith(
-              content: CodePlaygroundContent(
-                language: content.language,
-                initialCode: value,
-                expectedOutput: content.expectedOutput,
-                hints: content.hints,
-                runnable: content.runnable,
-              ),
-            );
-            _updateBlock(updatedBlock);
-          },
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        TextFormField(
-          initialValue: content.expectedOutput ?? '',
-          decoration: const InputDecoration(
-            labelText: 'Expected output',
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            final updatedBlock = widget.block.copyWith(
-              content: CodePlaygroundContent(
-                language: content.language,
-                initialCode: content.initialCode,
-                expectedOutput: value.isEmpty ? null : value,
-                hints: content.hints,
-                runnable: content.runnable,
               ),
             );
             _updateBlock(updatedBlock);

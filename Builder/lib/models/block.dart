@@ -25,6 +25,9 @@ class BlockStyle {
   final double? height;
   final double? width;
 
+  static const Set<String> _supportedSpacing = {'xs', 'sm', 'md', 'lg', 'xl'};
+  static const Set<String> _supportedAlignment = {'left', 'center', 'right'};
+
   const BlockStyle({
     this.spacing = 'md',
     this.alignment = 'left',
@@ -34,8 +37,8 @@ class BlockStyle {
 
   factory BlockStyle.fromJson(Map<String, dynamic> json) {
     return BlockStyle(
-      spacing: json['spacing'] as String? ?? 'md',
-      alignment: json['alignment'] as String? ?? 'left',
+      spacing: _normalizeSpacing(json['spacing'] as String?),
+      alignment: _normalizeAlignment(json['alignment'] as String?),
       height: (json['height'] as num?)?.toDouble(),
       width: (json['width'] as num?)?.toDouble(),
     );
@@ -57,11 +60,19 @@ class BlockStyle {
     bool clearWidth = false,
   }) {
     return BlockStyle(
-      spacing: spacing ?? this.spacing,
-      alignment: alignment ?? this.alignment,
+      spacing: _normalizeSpacing(spacing ?? this.spacing),
+      alignment: _normalizeAlignment(alignment ?? this.alignment),
       height: clearHeight ? null : (height ?? this.height),
       width: clearWidth ? null : (width ?? this.width),
     );
+  }
+
+  static String _normalizeSpacing(String? spacing) {
+    return _supportedSpacing.contains(spacing) ? spacing! : 'md';
+  }
+
+  static String _normalizeAlignment(String? alignment) {
+    return _supportedAlignment.contains(alignment) ? alignment! : 'left';
   }
 }
 
@@ -104,11 +115,14 @@ class TextContent implements BlockContent {
   final String format; // 'markdown' | 'plain'
   final String value;
 
+  static const Set<String> _supportedFormats = {'markdown', 'plain'};
+
   const TextContent({this.format = 'markdown', this.value = ''});
 
   factory TextContent.fromJson(Map<String, dynamic> json) {
+    final format = (json['format'] as String? ?? '').trim();
     return TextContent(
-      format: json['format'] as String? ?? 'markdown',
+      format: _supportedFormats.contains(format) ? format : 'markdown',
       value: json['value'] as String? ?? '',
     );
   }
@@ -117,8 +131,9 @@ class TextContent implements BlockContent {
   Map<String, dynamic> toJson() => {'format': format, 'value': value};
 
   TextContent copyWith({String? format, String? value}) {
+    final nextFormat = (format ?? this.format).trim();
     return TextContent(
-      format: format ?? this.format,
+      format: _supportedFormats.contains(nextFormat) ? nextFormat : 'markdown',
       value: value ?? this.value,
     );
   }
@@ -1610,6 +1625,9 @@ class Block {
   final BlockContent content;
   final String visibilityRule; // 'always' | 'afterPreviousCorrect'
 
+  static const String alwaysVisible = 'always';
+  static const String afterPreviousCorrect = 'afterPreviousCorrect';
+
   const Block({
     required this.id,
     required this.type,
@@ -1627,6 +1645,7 @@ class Block {
       position: BlockPosition(order: order),
       style: const BlockStyle(),
       content: _getDefaultContent(type),
+      visibilityRule: _defaultVisibilityRuleForOrder(order),
     );
   }
 
@@ -1763,18 +1782,22 @@ class Block {
 
   factory Block.fromJson(Map<String, dynamic> json) {
     final type = BlockType.fromValue(json['type'] as String);
+    final position = BlockPosition.fromJson(
+      json['position'] as Map<String, dynamic>? ?? {},
+    );
     return Block(
       id: json['id'] as String,
       type: type,
-      position: BlockPosition.fromJson(
-        json['position'] as Map<String, dynamic>? ?? {},
-      ),
+      position: position,
       style: BlockStyle.fromJson(json['style'] as Map<String, dynamic>? ?? {}),
       content: BlockContent.fromJson(
         type,
         json['content'] as Map<String, dynamic>,
       ),
-      visibilityRule: json['visibilityRule'] as String? ?? 'always',
+      visibilityRule: _normalizeVisibilityRule(
+        json['visibilityRule'],
+        order: position.order,
+      ),
     );
   }
 
@@ -1795,13 +1818,38 @@ class Block {
     BlockContent? content,
     String? visibilityRule,
   }) {
+    final nextPosition = position ?? this.position;
     return Block(
       id: id ?? this.id,
       type: type ?? this.type,
-      position: position ?? this.position,
+      position: nextPosition,
       style: style ?? this.style,
       content: content ?? this.content,
-      visibilityRule: visibilityRule ?? this.visibilityRule,
+      visibilityRule: _normalizeVisibilityRule(
+        visibilityRule ?? this.visibilityRule,
+        order: nextPosition.order,
+      ),
     );
+  }
+
+  static String _defaultVisibilityRuleForOrder(int order) {
+    return order <= 0 ? alwaysVisible : afterPreviousCorrect;
+  }
+
+  static String _normalizeVisibilityRule(
+    dynamic rawRule, {
+    required int order,
+  }) {
+    final normalized = (rawRule is String ? rawRule : '').trim().toLowerCase();
+    switch (normalized) {
+      case alwaysVisible:
+        return alwaysVisible;
+      case 'afterpreviouscorrect':
+      case 'after_previous_correct':
+      case 'after-previous-correct':
+        return afterPreviousCorrect;
+      default:
+        return _defaultVisibilityRuleForOrder(order);
+    }
   }
 }

@@ -60,6 +60,11 @@
 53. [x] AI Agentic local execution — moved entire generation pipeline from Supabase Edge Functions to client-side Flutter (direct Gemini API calls); eliminates 60 s Edge Function timeout; `generateCourseAgentLocally()` with real progress callbacks; `get-gemini-key` Edge Function vends API key securely (2026-03-05)
 54. [x] Fix duplicate lessons on save — `_saveCourseSnapshot` upper-bound sort_key filter `< 2000` was missing agentic-created rows (sort_key = 2000, 3000…); removed upper bound so all existing lesson rows are fetched before upsert (2026-03-05)
 55. [x] AI lesson generation reliability — reduced max blocks per lesson 15 → 8; compact fallback prompt (4-6 blocks) for retry rounds; MAX_TOKENS partial-content repair; graceful placeholder lesson when all models fail so entire course is never abandoned (2026-03-05)
+56. [x] Builder app-bar title now edits current lesson title (not course title) — lesson rename dialog + i18n copy + unsaved-state update; placeholder-title logic updated so `lesson1` is treated as valid custom title (2026-03-06)
+57. [x] Inline editing in Builder canvas for Text / Code Block / Code Playground — direct block editing enabled; duplicated content editors removed from Property Panel for these three block types (2026-03-06)
+58. [x] Visibility default rule hardening — first block defaults `always`, subsequent blocks default `afterPreviousCorrect`; alias normalization added in Block model + AI generator + schema migrator; model tests extended (2026-03-06)
+59. [x] Logo click-to-dashboard across major Builder surfaces — Builder AppBar, Dashboard sidebar brand, and Landing header logo now navigate to `/dashboard` (2026-03-06)
+60. [x] Lesson-title consistency after save/publish — `saveLessonToCourse()` now writes lesson title from lesson payload, publish write-back keeps first-lesson title from snapshot, and Dashboard lesson cache is invalidated on reload (2026-03-06)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
@@ -88,6 +93,7 @@
 24. [x] Profile banner edge-to-edge — SafeArea refactored so banner bleeds behind status bar; IndexedStack tabs manage their own SafeArea (2026-03-05)
 25. [x] getUserStats live aggregation — stats now computed from xp_transactions / enrollments / lesson_completions in real time; home screen calls refreshStats() on load (2026-03-05)
 26. [x] Home streak badge semantics + scrollbar alignment — top-right star badge now shows streak days (derived from consecutive positive-XP days, consistent with heatmap), and home scroll container is full-width so scrollbar stays at the far-right viewport edge (2026-03-05)
+27. [x] Lesson practice rendering fixes — header now uses current lesson title from DB; duplicated lesson heading in body removed; markdown rendering enabled; and lesson-content fallback supports snapshots stored on other lesson rows (2026-03-06)
 
 ## Content & Curriculum
 1. [ ] Course content management system

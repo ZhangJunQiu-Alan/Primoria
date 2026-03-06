@@ -39,6 +39,11 @@ void main() {
       expect(block.visibilityRule, 'always');
     });
 
+    test('Block.create defaults non-first visibilityRule to gated', () {
+      final block = Block.create(BlockType.text, order: 1);
+      expect(block.visibilityRule, 'afterPreviousCorrect');
+    });
+
     test('Block visibilityRule serializes to JSON', () {
       final block = Block.create(
         BlockType.text,
@@ -66,6 +71,18 @@ void main() {
 
       expect(restored.visibilityRule, 'always');
     });
+
+    test(
+      'Block visibilityRule defaults to afterPreviousCorrect when non-first JSON is missing rule',
+      () {
+        final block = Block.create(BlockType.text, order: 2);
+        final json = block.toJson();
+        json.remove('visibilityRule');
+        final restored = Block.fromJson(json);
+
+        expect(restored.visibilityRule, 'afterPreviousCorrect');
+      },
+    );
 
     test('Block copyWith updates visibilityRule', () {
       final block = Block.create(BlockType.text, order: 0);
