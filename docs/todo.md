@@ -20,7 +20,7 @@ Last updated: 2026-03-06
 
 ## 3. Low Priority
 
-1. [ ] Introduce creator notification center and settings panel in dashboard shell.
+1. [ ] Introduce creator notification center in dashboard shell.
 2. [ ] Add advanced learner segmentation and cohort analysis.
 3. [ ] Add private messaging system between creators and learners.
 
@@ -37,3 +37,4 @@ Last updated: 2026-03-06
 9. [x] Redesigned Achievement Wall with badge images, progress display, derived unlock sync, and load/empty state handling.
 10. [x] Added centralized `AchievementDisplayService` and achievement badge asset bundle for consistent profile/wall rendering.
 11. [x] Rebuilt Viewer Settings into a multi-category settings center with section-switch panel navigation, persisted preferences, and integrated parent mode/support sections.
+12. [x] Added Builder Settings Center with category-based active-panel UX, integrated dashboard/avatar entry, and local persistence for workflow/AI/notifications/publishing/privacy preferences.

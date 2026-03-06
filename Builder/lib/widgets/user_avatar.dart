@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../services/supabase_service.dart';
 import '../theme/design_tokens.dart';
 import 'auth_dialog.dart';
-import 'profile_dialog.dart';
+import 'builder_settings_dialog.dart';
 
 /// Circular user avatar button that reacts to auth state.
 ///
@@ -16,7 +16,15 @@ class UserAvatar extends StatelessWidget {
   /// Optional callback fired after a successful sign-in.
   final VoidCallback? onSignedIn;
 
-  const UserAvatar({super.key, this.size = 38, this.onSignedIn});
+  /// Optional callback fired when opening settings from the profile menu.
+  final VoidCallback? onOpenSettings;
+
+  const UserAvatar({
+    super.key,
+    this.size = 38,
+    this.onSignedIn,
+    this.onOpenSettings,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +109,18 @@ class UserAvatar extends StatelessWidget {
           onSelected: (value) {
             switch (value) {
               case 'profile':
-                showDialog(
-                  context: context,
-                  builder: (_) => const ProfileDialog(),
-                );
+                if (onOpenSettings != null) {
+                  onOpenSettings!.call();
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (_) => const BuilderSettingsDialog(),
+                  );
+                }
+                break;
               case 'dashboard':
                 context.go('/dashboard');
+                break;
               case 'logout':
                 // Delay sign-out until the popup dismiss animation fully
                 // completes (~200 ms). addPostFrameCallback only skips one
@@ -118,6 +132,7 @@ class UserAvatar extends StatelessWidget {
                   const Duration(milliseconds: 300),
                   SupabaseService.signOut,
                 );
+                break;
             }
           },
         );
@@ -249,5 +264,4 @@ class UserAvatar extends StatelessWidget {
       ),
     );
   }
-
 }
