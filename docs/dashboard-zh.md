@@ -17,6 +17,12 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 - `Builder/lib/features/dashboard/dashboard_screen.dart`
   - 主壳、侧边栏、顶栏、Tab 切换
   - 负责课程/课时数据动作编排与 Tab 回调路由
+- `Builder/lib/widgets/builder_settings_dialog.dart`
+  - Builder 设置中心对话框（分类导航 + 单一激活面板渲染）
+- `Builder/lib/widgets/user_avatar.dart`
+  - 账号菜单中的 Profile 入口改为打开 Builder 设置中心
+- `Builder/lib/services/storage_service.dart`
+  - Builder 设置中心偏好项的本地持久化读写
 - `Builder/lib/features/dashboard/dashboard_localizations.dart`
   - Dashboard 专用多语言扩展
 - `Builder/lib/features/dashboard/tabs/home_tab.dart`
@@ -100,6 +106,34 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 - 消息中心预留
 - 批量操作入口（发送通知/导出数据）
 
+### 5）Builder 设置中心（全局对话框）
+
+- 入口：
+  - 右上角头像菜单 -> `Profile`
+  - Dashboard 已登录用户的 `_showProfile` 流程
+- 布局：
+  - Desktop：左侧竖向分类导航 + 右侧激活面板
+  - 窄屏：顶部横向分类导航 + 下方激活面板
+- 信息架构分类：
+  - 账号与品牌
+  - 创作工作流
+  - AI Studio
+  - 通知策略
+  - 发布与 SEO
+  - 集成与 API
+  - 安全与访问
+  - 计费与计划
+  - 数据控制
+- 已接入真实能力：
+  - 账号显示名与头像 URL 保存到 Supabase profile
+  - 界面语言切换
+  - 创作者偏好项本地持久化
+  - 清理本地课程草稿
+  - 退出登录
+- 说明：
+  - 部分动作仍为 UI 占位，待后端能力接入
+    （如完整计费工作台、API 凭证签发、全设备登出）
+
 ## 数据策略
 
 因部分分析域数据表尚未落地，当前 provider 采用混合策略：
@@ -123,3 +157,4 @@ Builder 的 Dashboard（`/dashboard`）是创作者工作台主壳，采用侧�
 1. 收入与高级分析目前仍是派生/fallback 数据。
 2. 粉丝回复/通知/导出暂为 UI 占位，待接后端接口。
 3. Course Manage 中按 student/comments 排序仍是占位逻辑。
+4. Builder 设置中心仍有少量占位动作，待后端 API 接入。
