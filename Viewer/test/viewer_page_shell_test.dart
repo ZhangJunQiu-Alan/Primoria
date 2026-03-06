@@ -19,7 +19,7 @@ void main() {
     );
 
     final contentSize = tester.getSize(find.byKey(const ValueKey('content')));
-    expect(contentSize.width, 1200);
+    expect(contentSize.width, 840);
   });
 
   testWidgets('uses full width on mobile viewports', (tester) async {
