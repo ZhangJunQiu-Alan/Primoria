@@ -180,6 +180,127 @@ class SupabaseService {
     }
   }
 
+  static Future<Map<String, dynamic>?> generateChildBindingCode({
+    int ttlMinutes = 30,
+  }) async {
+    final authed = await ensureAuthenticated();
+    if (!authed) return null;
+
+    try {
+      final response = ttlMinutes == 30
+          ? await client.rpc('generate_child_binding_code')
+          : await client.rpc(
+              'generate_child_binding_code',
+              params: {'p_ttl_minutes': ttlMinutes},
+            );
+      _lastOperationError = null;
+      return _firstMap(response);
+    } catch (e) {
+      if (ttlMinutes != 30 &&
+          _isMissingRpcFunctionError(e, 'generate_child_binding_code')) {
+        try {
+          final fallbackResponse = await client.rpc(
+            'generate_child_binding_code',
+          );
+          _lastOperationError = null;
+          return _firstMap(fallbackResponse);
+        } catch (fallbackError) {
+          _lastOperationError = _describeSupabaseError(fallbackError);
+          return null;
+        }
+      }
+      _lastOperationError = _describeSupabaseError(e);
+      return null;
+    }
+  }
+
+  static Future<Map<String, dynamic>?> bindChildWithCode(String code) async {
+    final authed = await ensureAuthenticated();
+    if (!authed) return null;
+
+    try {
+      final response = await client.rpc(
+        'bind_child_with_code',
+        params: {'p_code': code.trim()},
+      );
+      _lastOperationError = null;
+      return _firstMap(response);
+    } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
+      return null;
+    }
+  }
+
+  static Future<bool> unbindChild(String childId) async {
+    final authed = await ensureAuthenticated();
+    if (!authed) return false;
+
+    try {
+      final response = await client.rpc(
+        'unbind_child',
+        params: {'p_child_id': childId},
+      );
+      _lastOperationError = null;
+      return response == true;
+    } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
+      return false;
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> getParentChildrenOverview() async {
+    final authed = await ensureAuthenticated();
+    if (!authed) return [];
+
+    try {
+      final response = await client.rpc('get_parent_children_overview');
+      _lastOperationError = null;
+      return _toMapList(response);
+    } catch (e) {
+      _lastOperationError = _describeSupabaseError(e);
+      return [];
+    }
+  }
+
+  static Future<Map<String, dynamic>?> getParentChildReport(
+    String childId, {
+    int days = 7,
+  }) async {
+    final authed = await ensureAuthenticated();
+    if (!authed) return null;
+
+    try {
+      final response = days == 7
+          ? await client.rpc(
+              'get_parent_child_report',
+              params: {'p_child_id': childId},
+            )
+          : await client.rpc(
+              'get_parent_child_report',
+              params: {'p_child_id': childId, 'p_days': days},
+            );
+      _lastOperationError = null;
+      return _firstMap(response);
+    } catch (e) {
+      if (days != 7 &&
+          _isMissingRpcFunctionError(e, 'get_parent_child_report')) {
+        try {
+          final fallbackResponse = await client.rpc(
+            'get_parent_child_report',
+            params: {'p_child_id': childId},
+          );
+          _lastOperationError = null;
+          return _firstMap(fallbackResponse);
+        } catch (fallbackError) {
+          _lastOperationError = _describeSupabaseError(fallbackError);
+          return null;
+        }
+      }
+      _lastOperationError = _describeSupabaseError(e);
+      return null;
+    }
+  }
+
   // ==================== Course service ====================
 
   /// Fetch all subjects ordered by name.
@@ -751,6 +872,7 @@ class SupabaseService {
     String? bio,
     String? avatarUrl,
     String? coverImageUrl,
+    String? role,
   }) async {
     final authed = await ensureAuthenticated();
     if (!authed || currentUser == null) {
@@ -765,6 +887,7 @@ class SupabaseService {
             if (bio != null) 'bio': bio,
             if (avatarUrl != null) 'avatar_url': avatarUrl,
             if (coverImageUrl != null) 'cover_image_url': coverImageUrl,
+            if (role != null) 'role': role,
           })
           .eq('id', currentUser!.id);
       _lastOperationError = null;
@@ -779,6 +902,33 @@ class SupabaseService {
     if (value is int) return value;
     if (value is num) return value.toInt();
     return int.tryParse(value?.toString() ?? '') ?? 0;
+  }
+
+  static Map<String, dynamic>? _firstMap(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return value;
+    }
+    if (value is Map) {
+      return Map<String, dynamic>.from(value);
+    }
+    if (value is List && value.isNotEmpty) {
+      final first = value.first;
+      if (first is Map<String, dynamic>) {
+        return first;
+      }
+      if (first is Map) {
+        return Map<String, dynamic>.from(first);
+      }
+    }
+    return null;
+  }
+
+  static List<Map<String, dynamic>> _toMapList(dynamic value) {
+    if (value is! List) return const [];
+    return value
+        .whereType<Map>()
+        .map((row) => Map<String, dynamic>.from(row))
+        .toList();
   }
 
   static String _dateKeyFromLocal(DateTime local) =>
@@ -949,6 +1099,15 @@ class SupabaseService {
       final code = error.code?.toString().trim() ?? '';
       final details = error.details?.toString().trim() ?? '';
       final hint = error.hint?.toString().trim() ?? '';
+      if (code == 'PGRST202') {
+        return 'Parent mode backend function is unavailable. Please apply the latest parent mode migration or retry after the schema cache refreshes.';
+      }
+      if (code == '22P02' &&
+          (details.contains('enum user_role') ||
+              error.message.contains('enum user_role')) &&
+          (details.contains('parent') || error.message.contains('parent'))) {
+        return 'Parent mode backend role support is unavailable. Please apply the latest parent mode migration to the current Supabase project before switching to parent mode.';
+      }
       final parts = <String>[
         'type=PostgrestException',
         if (code.isNotEmpty) 'code=$code',
@@ -973,6 +1132,15 @@ class SupabaseService {
     return raw.contains('request_timeout') ||
         raw.contains('timed out') ||
         raw.contains('context deadline exceeded');
+  }
+
+  static bool _isMissingRpcFunctionError(Object error, String functionName) {
+    if (error is! PostgrestException) return false;
+    final code = error.code?.toString().trim() ?? '';
+    final details = error.details?.toString() ?? '';
+    final message = error.message;
+    return code == 'PGRST202' &&
+        (details.contains(functionName) || message.contains(functionName));
   }
 
   static String _translateAuthError(String message) {
