@@ -1,760 +1,188 @@
-# Course JSON Authoring Guide
+# Course JSON Guide (Current Canonical Format)
 
-This guide shows you how to manually write a JSON file to create a Primoria course.
+Last updated: 2026-03-06
 
----
+This is the format expected by Builder import/export and schema validator.
 
-## Quick Start
-
-The simplest course JSON only needs the following structure:
+## 1) Top-Level Shape
 
 ```json
 {
   "$schema": "https://primoria.com/course-schema/v1.json",
   "schemaVersion": "1.0.0",
-  "courseId": "my-first-course",
+  "courseId": "course-xxxx",
   "metadata": {
-    "title": "My First Course"
+    "title": "My Course",
+    "description": "Optional",
+    "author": { "userId": "u1", "displayName": "Author" },
+    "tags": ["tag1"],
+    "difficulty": "beginner",
+    "estimatedMinutes": 60,
+    "createdAt": "2026-03-06T00:00:00.000Z",
+    "updatedAt": "2026-03-06T00:00:00.000Z",
+    "version": "1.0.0"
   },
-  "pages": [
-    {
-      "pageId": "page-1",
-      "title": "First Page",
-      "blocks": []
-    }
-  ]
+  "settings": {
+    "theme": "light",
+    "primaryColor": "blue",
+    "fontFamily": "system"
+  },
+  "lessons": []
 }
 ```
 
-Save it as a `.json` file, then click "Import" in Builder to load it.
+Notes:
+- Canonical key is `lessons`.
+- Legacy `pages` is still accepted on import and migrated automatically.
 
-### Schema Versioning & Migration Policy
-
-- Current schema version: `1.0.0`
-- Current schema URL: `https://primoria.com/course-schema/v1.json`
-- New exports always include both `$schema` and `schemaVersion`.
-- Import path supports automatic migration for:
-  - unversioned legacy JSON (`schemaVersion` missing)
-  - legacy `0.8.x` and `0.9.x` JSON
-  - compatible `1.x` JSON
-- Import rejects unsupported versions (for example `2.x`/`9.x`) with explicit migration errors.
-- Migration steps are logged by `CourseImport` for debugging.
-
-### AI Generation Output Contract
-
-- Builder AI generates course JSON into exactly one page.
-- Total generated blocks are capped at 20.
-- AI generation prefers course-appropriate block diversity (for example, programming courses include `code-block` + `code-playground`; conceptual courses prioritize text + quizzes).
-- AI output is normalized into canonical block types and validated before loading.
-
----
-
-## Full Structure
-
-### 1. Top-Level Structure
+## 2) Lesson Shape
 
 ```json
 {
-  "$schema": "https://primoria.com/course-schema/v1.json",
-  "schemaVersion": "1.0.0",
-  "courseId": "unique-course-id",
-  "metadata": { ... },
-  "settings": { ... },
-  "pages": [ ... ]
+  "lessonId": "lesson-1",
+  "title": "Lesson 1",
+  "blocks": []
 }
 ```
 
-| Field | Required | Description |
-|------|------|------|
-| `$schema` | Yes (new exports) | Schema URL |
-| `schemaVersion` | Yes (new exports) | Schema version, currently `1.0.0` |
-| `courseId` | Yes | Unique course identifier, recommended to use letters and numbers |
-| `metadata` | Yes | Course metadata |
-| `settings` | No | Course settings (theme, colors, etc.) |
-| `pages` | Yes | Page array, at least one page |
+Legacy `pageId` is accepted and migrated to `lessonId`.
 
-Legacy compatibility note:
-- Older files may use legacy block type aliases such as `codeBlock`, `codePlayground`, `codeExecution`, `functionFlow`, `multipleChoice`, `fillBlank`, `trueFalse`, and `animationBlock`.
-- Import will migrate these aliases to canonical values:
-  - `code-block`
-  - `code-playground`
-  - `code-execution`
-  - `function-flow`
-  - `multiple-choice`
-  - `fill-blank`
-  - `true-false`
-  - `animation`
-
-### 2. metadata
-
-```json
-"metadata": {
-  "title": "Python Intro",
-  "description": "Learn Python from scratch",
-  "author": {
-    "userId": "teacher-001",
-    "displayName": "Teacher Zhang"
-  },
-  "tags": ["Python", "Programming"],
-  "difficulty": "beginner",
-  "estimatedMinutes": 30
-}
-```
-
-| Field | Required | Description |
-|------|------|------|
-| `title` | Yes | Course title |
-| `description` | No | Course description |
-| `author` | No | Author info |
-| `tags` | No | Tag array |
-| `difficulty` | No | `beginner` / `intermediate` / `advanced` |
-| `estimatedMinutes` | No | Estimated study time (minutes) |
-
-### 3. settings
-
-```json
-"settings": {
-  "theme": "light",
-  "primaryColor": "blue",
-  "fontFamily": "system"
-}
-```
-
-Usually optional; defaults are fine.
-
-### 4. pages
-
-```json
-"pages": [
-  {
-    "pageId": "page-1",
-    "title": "Chapter 1",
-    "blocks": [ ... ]
-  },
-  {
-    "pageId": "page-2",
-    "title": "Chapter 2",
-    "blocks": [ ... ]
-  }
-]
-```
-
-| Field | Required | Description |
-|------|------|------|
-| `pageId` | Yes | Unique page ID |
-| `title` | Yes | Page title |
-| `blocks` | Yes | Content block array |
-
----
-
-## Block Details
-
-Each Block has a basic structure like this:
+## 3) Block Shape
 
 ```json
 {
-  "type": "blockType",
-  "id": "unique-id",
+  "id": "block-1",
+  "type": "text",
   "position": { "order": 0 },
   "style": { "spacing": "md", "alignment": "left" },
-  "content": { ... }
+  "visibilityRule": "always",
+  "requiredForProgress": false,
+  "content": {}
 }
 ```
 
-### Common Fields
+### Visibility Rules
 
-| Field | Required | Description |
-|------|------|------|
-| `type` | Yes | Block type |
-| `id` | Yes | Unique identifier |
-| `position.order` | No | Sort order (starts at 0) |
-| `style.spacing` | No | Spacing: `sm` / `md` / `lg` |
-| `style.alignment` | No | Alignment: `left` / `center` / `right` |
+Allowed values:
+- `always`
+- `afterPreviousCorrect`
 
----
+Default behavior:
+- first block in a lesson defaults to `always`
+- non-first blocks default to `afterPreviousCorrect`
 
-## Block Type Quick Reference
+Import aliases accepted and normalized:
+- `after_previous_correct`
+- `after-previous-correct`
 
-### 1. text - Text Block
+## 4) Canonical Block Types
 
-Used for text explanations, supports Markdown.
+- `text`
+- `image`
+- `code-block`
+- `code-playground`
+- `code-execution`
+- `function-flow`
+- `multiple-choice`
+- `fill-blank`
+- `true-false`
+- `matching`
+- `animation`
+- `video`
 
+Common alias forms like `codeBlock`, `code_playground`, `functionFlow`, `multipleChoice`, `trueFalse`, `animationBlock` are auto-migrated during import.
+
+## 5) Minimal Content Examples
+
+### text
 ```json
 {
   "type": "text",
-  "id": "text-001",
-  "position": { "order": 0 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "format": "markdown",
-    "value": "# Title\n\nThis is a paragraph.\n\n- List item 1\n- List item 2"
+    "value": "# Title\n\nBody"
   }
 }
 ```
 
-**content fields:**
-| Field | Description |
-|------|------|
-| `format` | `markdown` or `plain` |
-| `value` | Text content (supports `\n` line breaks) |
-
-**Markdown tips:**
-- `# Title` -> H1
-- `## Subtitle` -> H2
-- `**bold**` -> bold
-- `*italic*` -> italic
-- `` `code` `` -> inline code
-- `- item` -> unordered list
-
----
-
-### 2. image - Image Block
-
-```json
-{
-  "type": "image",
-  "id": "img-001",
-  "position": { "order": 1 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "url": "https://example.com/image.png",
-    "alt": "Illustration",
-    "caption": "Figure 1: Program execution flow"
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `url` | Yes | Image URL |
-| `alt` | No | Alt text (when image cannot load) |
-| `caption` | No | Caption text |
-
----
-
-### 3. code-block - Code Display Block
-
-Used to display code (read-only, not runnable).
-
+### code-block
 ```json
 {
   "type": "code-block",
-  "id": "code-001",
-  "position": { "order": 2 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "language": "python",
-    "code": "def hello():\n    print(\"Hello!\")\n\nhello()"
+    "code": "print('hello')"
   }
 }
 ```
 
-**content fields:**
-| Field | Description |
-|------|------|
-| `language` | Language: `python` / `javascript` / `dart` / `java`, etc. |
-| `code` | Code content (use `\n` for line breaks) |
-
----
-
-### 4. code-playground - Runnable Code Block
-
-Students can edit and run code to verify output.
-
+### code-playground
 ```json
 {
   "type": "code-playground",
-  "id": "playground-001",
-  "position": { "order": 3 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "language": "python",
-    "initialCode": "# Calculate 1 + 1 and print the result\nresult = ___\nprint(result)",
+    "initialCode": "print(1+1)",
     "expectedOutput": "2",
-    "hints": [
-      "Use the + operator",
-      "The answer is 1 + 1"
-    ],
     "runnable": true
   }
 }
 ```
 
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `language` | Yes | Programming language |
-| `initialCode` | Yes | Starter code (template students see) |
-| `expectedOutput` | No | Expected output (used to validate answers) |
-| `hints` | No | Hint array (shown when students are stuck) |
-| `runnable` | No | Whether runnable, default `true` |
-
-Execution note:
-- Builder runs a local Python-like simulator (not a full interpreter). It supports common cases such as `print(...)`, variable assignment, arithmetic, and `type`/`int`/`float`/`round`.
-
----
-
-### 5. multiple-choice - Multiple Choice
-
-Single-select example:
-
+### multiple-choice
 ```json
 {
   "type": "multiple-choice",
-  "id": "quiz-001",
-  "position": { "order": 4 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "question": "Which function prints output in Python?",
+    "question": "2+2=?",
     "options": [
-      { "id": "a", "text": "print()" },
-      { "id": "b", "text": "echo()" },
-      { "id": "c", "text": "console.log()" },
-      { "id": "d", "text": "System.out.println()" }
+      { "id": "a", "text": "3" },
+      { "id": "b", "text": "4" }
     ],
-    "correctAnswer": "a",
-    "correctAnswers": ["a"],
-    "explanation": "Python uses print() to output content to the console.",
-    "multiSelect": false
+    "mode": "single",
+    "correctAnswers": ["b"]
   }
 }
 ```
 
-Multi-select example:
-
-```json
-{
-  "type": "multiple-choice",
-  "id": "quiz-002",
-  "position": { "order": 5 },
-  "style": { "spacing": "md", "alignment": "left" },
-  "content": {
-    "question": "Which are Python data types?",
-    "options": [
-      { "id": "a", "text": "int" },
-      { "id": "b", "text": "float" },
-      { "id": "c", "text": "loop" },
-      { "id": "d", "text": "str" }
-    ],
-    "correctAnswers": ["a", "b", "d"],
-    "correctAnswer": "a",
-    "explanation": "int/float/str are data types; loop is a control-flow concept.",
-    "multiSelect": true
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `question` | Yes | Question |
-| `options` | Yes | Options array, each includes `id` and `text` |
-| `correctAnswer` | Yes* | Legacy single correct option `id` (kept for backward compatibility) |
-| `correctAnswers` | Recommended | Correct option id list; for multi-select, order does not matter |
-| `explanation` | No | Explanation |
-| `multiSelect` | No | Multi-select, default `false` |
-
-\* Use `correctAnswers` as the source of truth for new content. `correctAnswer` is still exported for compatibility.
-
----
-
-### 6. fill-blank - Fill in the Blank
-
-```json
-{
-  "type": "fill-blank",
-  "id": "fill-001",
-  "position": { "order": 5 },
-  "style": { "spacing": "md", "alignment": "left" },
-  "content": {
-    "question": "The creator of Python is ______",
-    "correctAnswer": "Guido van Rossum",
-    "hint": "He is Dutch and his name starts with G"
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `question` | Yes | Prompt (use underscores for blanks) |
-| `correctAnswer` | Yes | Correct answer |
-| `hint` | No | Hint |
-
----
-
-### 7. true-false - True/False Question
-
-```json
-{
-  "type": "true-false",
-  "id": "tf-001",
-  "position": { "order": 6 },
-  "style": { "spacing": "md", "alignment": "left" },
-  "content": {
-    "question": "Python is a compiled language.",
-    "correctAnswer": false,
-    "explanation": "Python is an interpreted language."
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `question` | Yes | A statement that is either true or false |
-| `correctAnswer` | Yes | `true` or `false` |
-| `explanation` | No | Explanation shown after answering |
-
----
-
-### 8. animation - Animation Block
-
-```json
-{
-  "type": "animation",
-  "id": "anim-001",
-  "position": { "order": 7 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "preset": "bouncing-dot",
-    "durationMs": 2000,
-    "loop": true,
-    "speed": 1.0
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `preset` | Yes | `bouncing-dot` or `pulse-bars` |
-| `durationMs` | No | Duration in milliseconds, recommended `300`-`10000` |
-| `loop` | No | Whether to loop animation, default `true` |
-| `speed` | No | Playback speed multiplier, recommended `0.25`-`3.0` |
-
----
-
-### 9. video - Video Block
-
-```json
-{
-  "type": "video",
-  "id": "video-001",
-  "position": { "order": 6 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "url": "https://example.com/video.mp4",
-    "title": "Python Installation Tutorial"
-  }
-}
-```
-
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `url` | Yes | Video URL |
-| `title` | No | Video title |
-
----
-
-### 10. function-flow - Function Flow Block
-
-Visualises caller-callee execution paths as an interactive node-edge diagram with optional step-through playback.
-
+### function-flow
 ```json
 {
   "type": "function-flow",
-  "id": "ff-001",
-  "position": { "order": 7 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "title": "How solve() calls helper()",
-    "nodes": [
-      { "id": "start",  "label": "Start",    "x": 10, "y": 50, "kind": "start" },
-      { "id": "solve",  "label": "solve()",  "x": 40, "y": 50, "kind": "function", "description": "Entry point" },
-      { "id": "helper", "label": "helper()", "x": 70, "y": 50, "kind": "function" },
-      { "id": "end",    "label": "End",      "x": 90, "y": 50, "kind": "end" }
-    ],
-    "edges": [
-      { "from": "start",  "to": "solve",  "label": "" },
-      { "from": "solve",  "to": "helper", "label": "calls" },
-      { "from": "helper", "to": "end",    "label": "" }
-    ],
-    "entryNodeId": "start",
-    "steps": [
-      { "activeNodeId": "start",  "edgeIndex": 0, "description": "Program begins" },
-      { "activeNodeId": "solve",  "edgeIndex": 1, "description": "solve() runs, calls helper()" },
-      { "activeNodeId": "helper", "edgeIndex": 2, "description": "helper() executes" },
-      { "activeNodeId": "end",    "edgeIndex": -1, "description": "Execution complete" }
-    ],
-    "style": { "nodeColor": "#4A90E2", "edgeColor": "#999999", "activeColor": "#FF8C00" }
+    "entryNodeId": "n1",
+    "nodes": [{ "id": "n1", "label": "main" }],
+    "edges": [],
+    "steps": [{ "nodeId": "n1" }]
   }
 }
 ```
 
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `title` | No | Diagram heading shown above the canvas |
-| `nodes` | Yes | Array of node objects |
-| `nodes[].id` | Yes | Unique node identifier |
-| `nodes[].label` | Yes | Display label |
-| `nodes[].x` / `nodes[].y` | Yes | Position (0–100 percentage units) |
-| `nodes[].kind` | No | `start` / `function` / `end`; defaults to `function` |
-| `nodes[].description` | No | Tooltip / annotation text |
-| `edges` | Yes | Array of directed edges |
-| `edges[].from` / `edges[].to` | Yes | Node IDs; must exist in `nodes` |
-| `edges[].label` | No | Edge annotation |
-| `entryNodeId` | No | ID of the first node to highlight on load |
-| `steps` | No | Ordered step list for playback mode |
-| `steps[].activeNodeId` | Yes (per step) | Node to highlight at this step |
-| `steps[].edgeIndex` | No | Index into `edges` to highlight (`-1` = none) |
-| `steps[].description` | No | Narration text for this step |
-| `style` | No | Visual overrides: `nodeColor`, `edgeColor`, `activeColor` |
-
-**Legacy aliases accepted by the schema migrator:** `functionflow`, `function_flow`
-
----
-
-### 11. code-execution - Code Execution Block
-
-Interactive line-by-line execution playback for teaching runtime flow, variable changes, and output accumulation.
-
+### code-execution
 ```json
 {
   "type": "code-execution",
-  "id": "ce-001",
-  "position": { "order": 8 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "title": "Trace Variable Updates",
     "language": "python",
-    "sourceCode": "a = 1\nb = a + 2\nprint(b)",
+    "sourceCode": "x=1\nprint(x)",
     "traceSteps": [
-      { "line": 1, "variables": { "a": 1 } },
-      { "line": 2, "variables": { "a": 1, "b": 3 }, "note": "b is computed" },
-      { "line": 3, "variables": { "a": 1, "b": 3 }, "stdoutDelta": "3" }
-    ],
-    "initialVariables": { "seed": 0 },
-    "checkpoints": [
-      {
-        "stepIndex": 1,
-        "question": "What is b now?",
-        "options": ["2", "3"],
-        "correctIndex": 1,
-        "explanation": "b = a + 2 = 3"
-      }
-    ],
-    "controls": {
-      "autoplay": false,
-      "stepDurationMs": 1200,
-      "allowScrub": true
-    },
-    "style": {
-      "theme": "indigo",
-      "showLineNumbers": true,
-      "showVariablesPanel": true,
-      "showStdoutPanel": true
-    }
+      { "line": 1, "variables": { "x": 1 } },
+      { "line": 2, "stdoutDelta": "1" }
+    ]
   }
 }
 ```
 
-**content fields:**
-| Field | Required | Description |
-|------|------|------|
-| `title` | No | Block title shown in Builder/Viewer |
-| `language` | No | Language label, default `python` |
-| `sourceCode` | Yes | Full source code string (line breaks supported) |
-| `traceSteps` | Yes | Ordered execution steps |
-| `traceSteps[].line` | Yes | 1-based active line number; must be within source range |
-| `traceSteps[].stdoutDelta` | No | Output appended at this step |
-| `traceSteps[].variables` | Yes | Variable snapshot object at this step |
-| `traceSteps[].callStack` | No | Call stack frames |
-| `traceSteps[].note` | No | Teaching note for this step |
-| `initialVariables` | No | Initial variable snapshot before step 1 |
-| `checkpoints` | No | Quiz prompts triggered by step index |
-| `checkpoints[].stepIndex` | Yes (if checkpoint exists) | Trigger step index (0-based, must be in range) |
-| `checkpoints[].options` | Yes (if checkpoint exists) | Option list |
-| `checkpoints[].correctIndex` | Yes (if checkpoint exists) | Correct option index in `options` |
-| `controls` | No | Playback settings (`autoplay`, `stepDurationMs`, `allowScrub`) |
-| `style` | No | Visual settings (`theme`, line numbers, variables/stdout panels) |
+## 6) Validation Rules (Important)
 
-**Legacy aliases accepted by the schema migrator:** `codeExecution`, `code_execution`
+- `courseId`, `metadata.title`, `lessonId`, `lesson.title`, `block.id`, `block.type` must be valid.
+- block IDs must be globally unique within the course JSON.
+- unsupported block type values are rejected.
+- strict validation is applied during publish/export.
 
----
+## 7) Practical Import Guidance
 
-## Complete Example
-
-Below is a complete course example with multiple block types:
-
-```json
-{
-  "$schema": "https://primoria.com/course-schema/v1.json",
-  "schemaVersion": "1.0.0",
-  "courseId": "python-101",
-  "metadata": {
-    "title": "Intro to Python Programming",
-    "description": "A beginner-friendly Python course",
-    "author": {
-      "userId": "teacher-zhang",
-      "displayName": "Teacher Zhang"
-    },
-    "tags": ["Python", "Programming", "Intro"],
-    "difficulty": "beginner",
-    "estimatedMinutes": 45
-  },
-  "pages": [
-    {
-      "pageId": "intro",
-      "title": "Course Overview",
-      "blocks": [
-        {
-          "type": "text",
-          "id": "welcome",
-          "position": { "order": 0 },
-          "style": { "spacing": "lg", "alignment": "center" },
-          "content": {
-            "format": "markdown",
-            "value": "# Welcome to Python!\n\nIn this course, you will learn:\n\n- Basic syntax\n- Variables and data types\n- Conditionals and loops\n- Function definitions"
-          }
-        }
-      ]
-    },
-    {
-      "pageId": "hello-world",
-      "title": "Hello World",
-      "blocks": [
-        {
-          "type": "text",
-          "id": "intro-text",
-          "position": { "order": 0 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "format": "markdown",
-            "value": "## Your first program\n\nEvery programmer's first program prints \"Hello, World!\"."
-          }
-        },
-        {
-          "type": "code-playground",
-          "id": "hello-code",
-          "position": { "order": 1 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "language": "python",
-            "initialCode": "# Run this code and see the output\nprint(\"Hello, World!\")",
-            "expectedOutput": "Hello, World!",
-            "hints": ["Click the Run button to execute"],
-            "runnable": true
-          }
-        },
-        {
-          "type": "multiple-choice",
-          "id": "quiz-print",
-          "position": { "order": 2 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "question": "What does the print() function do?",
-            "options": [
-              { "id": "a", "text": "Print output to the screen" },
-              { "id": "b", "text": "Read user input" },
-              { "id": "c", "text": "Define variables" },
-              { "id": "d", "text": "Perform math" }
-            ],
-            "correctAnswer": "a",
-            "explanation": "print() outputs the content inside the parentheses to the screen (console)."
-          }
-        }
-      ]
-    },
-    {
-      "pageId": "variables",
-      "title": "Variables",
-      "blocks": [
-        {
-          "type": "text",
-          "id": "var-intro",
-          "position": { "order": 0 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "format": "markdown",
-            "value": "## What is a variable?\n\nA variable is like a **box** that can store data."
-          }
-        },
-        {
-          "type": "code-block",
-          "id": "var-example",
-          "position": { "order": 1 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "language": "python",
-            "code": "name = \"Alex\"\nage = 18\nprint(name)\nprint(age)"
-          }
-        },
-        {
-          "type": "code-playground",
-          "id": "var-practice",
-          "position": { "order": 2 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "language": "python",
-            "initialCode": "# Create a variable x with value 10\n# Then print x\n\n",
-            "expectedOutput": "10",
-            "hints": [
-              "Use = for assignment",
-              "x = 10",
-              "Then print(x)"
-            ],
-            "runnable": true
-          }
-        },
-        {
-          "type": "fill-blank",
-          "id": "fill-var",
-          "position": { "order": 3 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "question": "In Python, use ______ to assign a value to a variable",
-            "correctAnswer": "=",
-            "hint": "It is the equals sign"
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
----
-
-## FAQ
-
-### Q: Can IDs be duplicated?
-No. Every `courseId`, `pageId`, and Block `id` must be unique.
-
-### Q: How do I add line breaks?
-Use `\n` inside JSON strings.
-
-### Q: How do I validate the JSON format?
-Builder now performs centralized schema validation at key lifecycle gates:
-
-- **Import**: blocking errors prevent import.
-- **Save**: blocking errors prevent cloud save.
-- **Publish**: strict blocking validation prevents invalid courses from being published.
-
-Validation messages include JSON field paths (for example: `$.pages[0].blocks[1].content.correctAnswers[0]`) so issues can be fixed quickly.
-
-Syntax-only tools (like [jsonlint.com](https://jsonlint.com)) can still help catch malformed JSON, but they do not enforce Primoria's course schema rules.
-
----
-
-## Next Steps
-
-1. Copy the example above and save as `my-course.json`
-2. Open Builder and click "Import"
-3. Select your JSON file
-4. Start editing and previewing
-
-Questions? Check more examples in the `examples/` directory.
+1. Keep IDs stable when editing existing course exports.
+2. Prefer canonical keys (`lessons`, `lessonId`, canonical block types).
+3. For legacy JSON, import directly and let migrator normalize it.
+4. If import fails, fix the exact field path shown by schema errors.
