@@ -1,177 +1,84 @@
-# Builder MVP Manual Test Checklist
+# Regression Checklist (Builder + Viewer)
 
-## 1. Basic Startup
+Last updated: 2026-03-06
 
-- [ ] `flutter run -d chrome` starts successfully
-- [ ] Builder loads with three-column layout
-- [ ] Left panel shows all module types
-- [ ] Canvas shows empty-state prompt
-- [ ] Right panel shows "No module selected"
+## A. Build & Static Checks
 
-## 2. Drag-and-Drop
+- [ ] `cd Builder && flutter pub get`
+- [ ] `cd Builder && flutter analyze lib/features/dashboard`
+- [ ] `cd Builder && flutter test`
+- [ ] `cd Viewer && flutter pub get`
+- [ ] `cd Viewer && flutter analyze`
+- [ ] `cd Viewer && flutter test`
 
-- [ ] Drag Text → canvas creates text instance
-- [ ] Drag Image → canvas creates image instance
-- [ ] Drag Code Block → canvas creates code block
-- [ ] Drag Code Playground → canvas creates playground with Run button
-- [ ] Drag Multiple Choice → canvas creates quiz with options
+## B. Builder Routing & Access
 
-## 3. Selection and Property Editing
+- [ ] logged-out user opening `/dashboard` is redirected to `/`
+- [ ] logged-out user opening `/builder` is redirected to `/`
+- [ ] logged-in author/admin landing on `/` redirects to `/dashboard`
+- [ ] non-author role cannot enter protected builder routes
 
-- [ ] Click module → selection highlight + right panel shows properties
-- [ ] Edit text content → canvas updates in real time
-- [ ] Enter image URL → canvas displays image
-- [ ] Import local image file in Image block → canvas displays imported image
-- [ ] Edit code playground initial code / expected output
-- [ ] Insert Animation block, switch preset (`Bouncing Dot`/`Pulse Bars`), and adjust `durationMs` / `loop` / `speed` in PropertyPanel
+## C. Builder Editor Core
 
-## 4. Code Playground Run
+- [ ] create blank lesson in `/builder`
+- [ ] import JSON using canonical `lessons` key
+- [ ] import legacy JSON using `pages` key and verify migration success
+- [ ] save and publish complete without schema-blocking errors
+- [ ] text block markdown/plain mode renders correctly in preview
+- [ ] `text`, `code-block`, `code-playground` support inline editing on canvas
+- [ ] visibility defaults:
+  - first block = `always`
+  - non-first block = `afterPreviousCorrect`
 
-- [ ] Enter `print("Hello")` → Run → output shows `Hello`
-- [ ] Enter `print(type(5))`, `print(type(3.0))`, `print(int(3.9))`, `print(round(3.9))` → Run → output shows `<class 'int'>`, `<class 'float'>`, `3`, `4` (line by line)
-- [ ] With expected output set → shows "Correct" or "Try again"
+## D. Dashboard Tabs
 
-## 5. Module Ordering and Deletion
+### D1. Home (redesigned)
+- [ ] greeting changes by time period
+- [ ] quick action buttons work (create/continue/data center)
+- [ ] overview KPIs and completion trend render
+- [ ] top 3 courses list renders with open action
+- [ ] recent activity timeline renders
+- [ ] empty state shows when there are no courses
 
-- [ ] Drag handle to reorder → canvas updates order
-- [ ] While dragging, insertion position is clearly shown with indicator line/placeholder
-- [ ] Dragging near top/bottom edges auto-scrolls long block lists
-- [ ] Click delete → module removed, panel resets
+### D2. Course Manage (unchanged behavior)
+- [ ] loading / empty / list states work
+- [ ] create/edit/delete course still work
+- [ ] add lesson entry still works
+- [ ] lesson delete flow still works with confirmation and guard
 
-## 6. Course Info
+### D3. Data Center (redesigned)
+- [ ] KPI row renders
+- [ ] trend chart renders and range selector works (7/30/90/all)
+- [ ] performance bar chart and sorting selector render
+- [ ] geographic pie chart renders
+- [ ] heatmap renders
+- [ ] detail table renders
+- [ ] export action copies CSV text to clipboard
 
-- [ ] Click course title → edit dialog → title updates
-- [ ] Unsaved indicator (yellow dot) appears after changes
+### D4. Fans Management (redesigned)
+- [ ] fan KPI and trend render
+- [ ] search/filter/pagination work
+- [ ] engagement timeline renders
+- [ ] learner tag create/remove works in UI
+- [ ] batch actions are reachable and show reserved-action feedback
 
-## 7. JSON Export
+## E. Viewer Core
 
-- [ ] Export → validates title/pages → downloads JSON
-- [ ] Export includes `$schema` and `schemaVersion` metadata
-- [ ] JSON includes all pages and blocks
+- [ ] login/register flow works
+- [ ] course enrollment works
+- [ ] lesson screen displays current lesson title (not course title)
+- [ ] lesson body supports markdown rendering for text content
+- [ ] profile screen loads XP/streak and achievement-related data
+- [ ] logo/entry navigation paths return users to expected dashboard/home targets
 
-## 8. Schema Validation Gates
+## F. Data Consistency
 
-- [ ] Import invalid course JSON (e.g. `correctAnswers` contains unknown option id) → import is blocked and dialog shows field path (like `$.pages[0].blocks[0].content.correctAnswers[0]`)
-- [ ] Import legacy unversioned / `0.9.x` JSON → migration runs before validation and import succeeds
-- [ ] Import unsupported `schemaVersion` (e.g. `9.0.0`) → import is blocked with explicit migration error
-- [ ] Save course with blocking schema errors → cloud save is blocked and dialog lists actionable field paths
-- [ ] Publish course with blocking schema errors (e.g. empty quiz question) → publish is blocked and dialog lists field paths
-- [ ] Save/import with warnings only (non-blocking) still succeeds and reports warning count
+- [ ] rename lesson in Builder, save, return to dashboard, confirm new lesson title is visible
+- [ ] publish course after lesson rename, then open Viewer and verify lesson title consistency
+- [ ] course with sparse snapshot rows still loads in Viewer fallback path
 
-## 9. Preview
+## G. Known Non-Blocking Gaps
 
-- [ ] Preview button → navigates to Viewer with current content
-- [ ] Unsaved Builder edits survive Builder → Preview → Builder navigation for existing courses (`/builder?courseId=<id>`)
-- [ ] After successful cloud Save, reopening Builder does not restore stale draft content
-- [ ] Animation block preview in Viewer reflects selected preset and parameter changes (duration/loop/speed)
-- [ ] For `visibilityRule: afterPreviousCorrect`, hidden blocks show true blank space (no lock placeholder) before unlock
-- [ ] For chained blocks, if a preceding gated block is hidden, subsequent blocks remain hidden until the gated block is unlocked
-- [ ] Multiple Choice: can switch between Single Select and Multi Select in PropertyPanel
-- [ ] Multi Select question accepts multiple correct options and persists after refresh/export-import
-- [ ] Multi Select validation is order-independent (`A+C` equals `C+A`) and requires exact set match
-- [ ] Matching block: right column appears in shuffled order (not same as left)
-- [ ] Matching block: tapping left then right creates a color-coded pair with numbered badge
-- [ ] Matching block: tapping an already-paired item clears the pair (undo before submit)
-- [ ] Matching block: after Check, both columns show green/red borders and check/cross icons
-- [ ] Matching block in Builder canvas: left and right items show circled pair numbers
-
-## 10. Auth & Routing
-
-- [ ] `/dashboard` while logged out → redirects to `/`
-- [ ] `/builder` while logged out → redirects to `/`
-- [ ] Login on landing → auto-redirects to `/dashboard`
-- [ ] Sign out from avatar → redirects to `/`
-
-## 11. Dashboard — Home Page
-
-- [ ] Course Data, Income Overview, Comments cards visible
-- [ ] Cards render on both wide and narrow screens
-- [ ] Avatar circle in top-right corner
-
-## 12. Dashboard — Course Manage
-
-- [ ] Shows loading spinner → course list
-- [ ] Not logged in → sign-in prompt
-- [ ] No courses → empty state with Create Course button
-- [ ] Course cards: title, time ago, lesson boxes
-- [ ] Sort dropdown: 3 options (time/student/comments)
-- [ ] Edit → `/builder?courseId=<id>`
-- [ ] Delete → confirmation → deletes and refreshes
-- [ ] Add lesson → `/builder?courseId=<id>`
-- [ ] Delete lesson: hover lesson card → ✕ fades in at top-right; hover away → fades out
-- [ ] Delete lesson: click ✕ → `AlertDialog` shows correct lesson number and title
-- [ ] Delete lesson: Cancel → no change
-- [ ] Delete lesson: Confirm → lesson removed from grid, success snackbar shown
-- [ ] Delete lesson: only 1 lesson in course → error snackbar shown, no dialog
-- [ ] "Add lesson" dashed card never shows ✕
-- [ ] Create Course → opens full form dialog (not `/builder` directly)
-
-### 12a. Create Course Form
-- [ ] Create button opens 480 px scrollable dialog with: Name, Description, Thumbnail, Difficulty, Estimated Hours, Price Tier fields
-- [ ] Name is required — Create button disabled when blank
-- [ ] Description is optional — saving with empty description works
-- [ ] Thumbnail: "Upload Image" chip and "Enter URL" chip toggle between upload UI and text field
-- [ ] Upload chip → click placeholder → file picker opens → image preview shown
-- [ ] Upload fails (network error) → error message shown below preview box (not silent hang)
-- [ ] Uploading state → spinner shown, Create button disabled until upload completes
-- [ ] Enter URL chip → text field accepts image URL; switching back to Upload clears the URL field
-- [ ] Difficulty dropdown: Beginner / Intermediate / Advanced options, required (no blank selection)
-- [ ] Estimated Hours accepts decimal input (e.g. "2.5"); stored as minutes in DB
-- [ ] Price Tier: Free / Premium toggle
-- [ ] Selecting "Free" hides price field (AnimatedSize collapses smoothly)
-- [ ] Selecting "Premium" reveals price input field
-- [ ] Creating Premium course with empty price → validation error shown; Create button stays disabled
-- [ ] Price field accepts decimals (e.g. "9.99")
-- [ ] Cancel closes dialog without creating
-- [ ] Create with all valid fields → dialog closes, course list refreshes, snackbar shown
-- [ ] New course appears in list with correct title, thumbnail, and metadata
-
-### 12b. Edit Course Form
-- [ ] Edit button on course card opens full edit dialog (same layout as Create)
-- [ ] All fields pre-populated from existing course data
-- [ ] Thumbnail pre-populated: if URL exists, URL field shows it; upload area shows preview if previously uploaded
-- [ ] Changing difficulty → Save → reloading confirms DB updated
-- [ ] Switching from Premium to Free → price field hides, price saved as 0
-- [ ] Switching from Free to Premium → price field appears; must fill price before Save
-- [ ] Upload new image in Edit dialog → replaces previous thumbnail URL
-- [ ] Save → dialog closes, course card reflects updated info, snackbar "Course info updated"
-- [ ] Cancel → no changes committed
-
-## 13. User Avatar
-
-- [ ] Visible on Dashboard and Builder (blue circle)
-- [ ] Logged in → popup menu (Profile/Dashboard/Sign out)
-- [ ] Logged out → opens sign-in dialog
-- [ ] OAuth users show profile photo
-
-## 14. Builder — Course Loading
-
-- [ ] `/builder` → blank new course
-- [ ] `/builder?courseId=<id>` → loads existing course
-
-## 15. AI Diagnostics (Regression)
-
-- [ ] Trigger AI generation once and verify developer log includes one concise diagnostics line with `promptVersion`, selected `model`, latency fields (`total/generate/parse/validate`), `parseResult`, `validation.passed`, and final `stage`
-
-## 16. Viewer — Post-Login Home (4 Tabs)
-
-- [ ] `flutter run -d chrome` → login → lands on Home tab
-- [ ] Bottom nav shows 4 tabs: Home / Library / Community / Profile with indigo highlight
-- [ ] **Home tab**: Star counter (top-right), "Data Structures" + "LEVEL 4" title, blue-indigo logo block, white drawer with course list + "Learning" button
-- [ ] **Home → LevelMap**: Tap course area → pushes LevelMapScreen with back button, "Module 1" header, completed/current/locked nodes
-- [ ] **LevelMap → Lesson**: Tap "Start Coding" on current node → pushes LessonScreen
-- [ ] **Library tab**: Search bar, 5 category tabs (CS/Math/Science/Business/Social), recommended carousel, popular list; switching category updates both sections
-- [ ] **Community tab — Find**: Dark galaxy background with floating planet dots and "Find" button
-- [ ] **Community tab — Message**: Search box + conversation list with unread badges
-- [ ] **Community tab switching**: Tap "find" / "message" header toggles views
-- [ ] **Profile tab**: Gradient banner (indigo→purple→pink), rotated avatar, user name + handle, 2×2 stats grid, Daily Badge card, 4-column achievements, settings list
-- [ ] **Profile — Settings**: Theme picker works (Follow System / Light / Dark)
-- [ ] **Profile — Logout**: Logout button visible when logged in, shows snackbar on success
-- [ ] **Wide browser**: All tab content stays centered, max-width 600px on wide screens
-
-## Known Issues
-
-1. Builder text blocks do not render Markdown (Viewer does)
-2. Sort by student/comments are placeholders
-3. Data Center / Fans Manage tabs are placeholders
-4. "Learned X times" shows lesson count, not learner count
+1. Revenue metrics are fallback-derived in dashboard.
+2. Some analytics/fans actions are UI-ready but backend endpoints are not yet implemented.
+3. Course Manage sorting by student/comments is still placeholder logic.
