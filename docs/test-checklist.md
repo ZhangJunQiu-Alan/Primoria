@@ -40,11 +40,16 @@ Last updated: 2026-03-06
 - [ ] recent activity timeline renders
 - [ ] empty state shows when there are no courses
 
-### D2. Course Manage (unchanged behavior)
+### D2. Course Manage (redesigned workspace, core flows preserved)
 - [ ] loading / empty / list states work
+- [ ] summary strip renders (courses/lessons/published/drafts/need-content)
+- [ ] search and status filters work together (all/draft/published)
+- [ ] no-results state appears and clear-filters action resets view
 - [ ] create/edit/delete course still work
-- [ ] add lesson entry still works
+- [ ] open-course action routes to builder with `courseId` (and encoded `courseTitle`)
+- [ ] add lesson entry still works (routes with `addLesson=1`)
 - [ ] lesson delete flow still works with confirmation and guard
+- [ ] lesson titles lazy-load and recover after refresh
 
 ### D3. Data Center (redesigned)
 - [ ] KPI row renders
