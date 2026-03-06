@@ -8,7 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../models/achievement_model.dart';
 import '../providers/language_provider.dart';
 import '../providers/user_provider.dart';
-import '../services/achievement_service.dart';
+import '../services/achievement_display_service.dart';
 import '../services/supabase_service.dart';
 import '../theme/theme.dart';
 import '../utils/role_routes.dart';
@@ -27,6 +27,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   List<AchievementModel> _pinnedAchievements = [];
+  List<AchievementModel> _pendingAchievements = [];
+  Map<String, dynamic> _userStats = const {};
+  Map<String, dynamic> _followCounts = const {};
   Map<DateTime, int> _xpHistory = {};
   bool _loadingGamification = true;
   final ScrollController _heatmapScrollController = ScrollController();
@@ -47,24 +50,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final results = await Future.wait([
       SupabaseService.getPinnedAchievementIds(),
       SupabaseService.getDailyXpHistory(),
+      SupabaseService.getAchievementsWithStatus(),
+      SupabaseService.getUserStats(),
+      SupabaseService.getFollowCounts(),
     ]);
     final pinnedIds = results[0] as List<String>;
     final xpHistory = results[1] as Map<DateTime, int>;
-
-    List<AchievementModel> pinned = [];
-    if (pinnedIds.isNotEmpty) {
-      final all = await SupabaseService.getAchievementsWithStatus();
-      final allModels = all.map(AchievementModel.fromMap).toList();
-      // Preserve pinned order
-      for (final id in pinnedIds) {
-        final match = allModels.where((a) => a.id == id).toList();
-        if (match.isNotEmpty) pinned.add(match.first);
-      }
-    }
+    final allModels = (results[2] as List<Map<String, dynamic>>)
+        .map(AchievementModel.fromMap)
+        .toList();
+    final userStats = (results[3] as Map<String, dynamic>?) ?? {};
+    final followCounts = (results[4] as Map<String, dynamic>?) ?? {};
 
     if (!mounted) return;
+    final t = context.read<LanguageProvider>().t;
+
+    bool isEffectivelyUnlocked(AchievementModel achievement) {
+      if (achievement.isUnlocked) return true;
+      final progress = AchievementDisplayService.buildProgress(
+        achievement: achievement,
+        userStats: userStats,
+        followCounts: followCounts,
+        t: t,
+      );
+      return progress.current >= progress.target;
+    }
+
+    final pinned = <AchievementModel>[];
+    for (final id in pinnedIds) {
+      final match = allModels.where((a) => a.id == id);
+      if (match.isNotEmpty) pinned.add(match.first);
+    }
+
+    final pending = allModels.where((a) => !isEffectivelyUnlocked(a)).toList()
+      ..sort((a, b) {
+        final pa = AchievementDisplayService.buildProgress(
+          achievement: a,
+          userStats: userStats,
+          followCounts: followCounts,
+          t: t,
+        );
+        final pb = AchievementDisplayService.buildProgress(
+          achievement: b,
+          userStats: userStats,
+          followCounts: followCounts,
+          t: t,
+        );
+        final ratioCmp = pb.ratio.compareTo(pa.ratio);
+        if (ratioCmp != 0) return ratioCmp;
+        return a.name.compareTo(b.name);
+      });
+
     setState(() {
       _pinnedAchievements = pinned;
+      _pendingAchievements = pending;
+      _userStats = userStats;
+      _followCounts = followCounts;
       _xpHistory = xpHistory;
       _loadingGamification = false;
     });
@@ -90,8 +131,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             _buildBannerAndAvatar(context, t),
             _buildUserInfo(context, t),
-            const SizedBox(height: 16),
-            _buildQuickActions(context, t),
             const SizedBox(height: 24),
             _buildStatsCard(context, t),
             const SizedBox(height: 24),
@@ -259,10 +298,101 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              Positioned(
+                left: avatarSize + 28,
+                right: 24,
+                bottom: 14,
+                child: _buildPinnedAchievementStrip(context, t),
+              ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildPinnedAchievementStrip(
+    BuildContext context,
+    AppLocalizations t,
+  ) {
+    final isNarrow = MediaQuery.sizeOf(context).width < 560;
+    final slotSize = isNarrow ? 56.0 : 72.0;
+    final slots = List<AchievementModel?>.generate(
+      3,
+      (index) => index < _pinnedAchievements.length
+          ? _pinnedAchievements[index]
+          : null,
+    );
+    return GestureDetector(
+      onTap: () async {
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const AchievementWallScreen()),
+        );
+        _loadGamification();
+      },
+      child: SizedBox(
+        height: slotSize,
+        child: _loadingGamification
+            ? const Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              )
+            : Row(
+                children: slots.map((achievement) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: achievement == null
+                        ? _buildDashedPinnedPlaceholder(slotSize)
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: SizedBox(
+                              width: slotSize,
+                              height: slotSize,
+                              child: Image.asset(
+                                AchievementDisplayService.badgeAssetPath(
+                                  achievement,
+                                ),
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFF8FAFC),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Text(
+                                    _achievementCategoryEmoji(
+                                      achievement.category,
+                                    ),
+                                    style: TextStyle(fontSize: slotSize * 0.33),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                  );
+                }).toList(),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildDashedPinnedPlaceholder(double size) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: CustomPaint(
+        painter: _DashedRoundedRectPainter(
+          color: const Color(0xFF94A3B8),
+          radius: 16,
+          dashWidth: 6,
+          dashGap: 4,
+          strokeWidth: 1.5,
+        ),
+      ),
     );
   }
 
@@ -335,63 +465,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildQuickActions(BuildContext context, AppLocalizations t) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        children: [
-          Expanded(
-            child: FilledButton.tonalIcon(
-              onPressed: () async {
-                final updated = await Navigator.of(context).push<bool>(
-                  MaterialPageRoute(
-                    builder: (_) => const ProfileSettingsScreen(),
-                  ),
-                );
-                if (updated == true && context.mounted) {
-                  await context.read<UserProvider>().refreshProfile();
-                }
-              },
-              icon: const Icon(Icons.settings_outlined, size: 18),
-              label: Text(t.profileSettings),
-              style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFFF8FAFC),
-                foregroundColor: const Color(0xFF334155),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: const BorderSide(color: Color(0xFFE2E8F0)),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: OutlinedButton.icon(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const AchievementWallScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.workspace_premium_outlined, size: 18),
-              label: Text(t.profileAchievements),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.indigo600,
-                side: const BorderSide(color: Color(0xFFE0E7FF)),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -503,9 +576,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildXpHeatmap(BuildContext context, AppLocalizations t) {
-    const cellSize = 10.0;
     const cellGap = 2.0;
-    const cellStep = cellSize + cellGap; // 12 px per column
     const cols = 53;
     const dayLabelWidth = 24.0;
 
@@ -565,68 +636,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             'Nov',
             'Dec',
           ];
-
-    // Build a single cell widget for (col, row).
-    Widget buildCell(int col, int row) {
-      final date = gridStart.add(Duration(days: col * 7 + row));
-      final inRange = !date.isBefore(firstDay) && !date.isAfter(todayKey);
-      if (!inRange) return SizedBox(width: cellSize, height: cellSize);
-      final xp = _xpHistory[date] ?? 0;
-      return GestureDetector(
-        onTap: () {
-          final local = DateTime(date.year, date.month, date.day);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(t.profileXpHeatmapDay(local, xp)),
-              duration: const Duration(seconds: 2),
-            ),
-          );
-        },
-        child: Container(
-          width: cellSize,
-          height: cellSize,
-          decoration: BoxDecoration(
-            color: cellColor(xp),
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-      );
-    }
-
-    // Month label row (53 cells wide).
-    int? prevMonth;
-    final monthRow = <Widget>[];
-    for (int col = 0; col < cols; col++) {
-      final date = gridStart.add(Duration(days: col * 7));
-      if (date.month != prevMonth) {
-        prevMonth = date.month;
-        monthRow.add(
-          SizedBox(
-            width: cellStep,
-            child: Text(
-              monthAbbr[date.month - 1],
-              style: const TextStyle(fontSize: 8, color: Color(0xFF94A3B8)),
-              overflow: TextOverflow.visible,
-              softWrap: false,
-            ),
-          ),
-        );
-      } else {
-        monthRow.add(SizedBox(width: cellStep));
-      }
-    }
-
-    // 7 weekday rows.
-    final weekRows = <Widget>[];
-    for (int row = 0; row < 7; row++) {
-      final cells = <Widget>[];
-      for (int col = 0; col < cols; col++) {
-        cells.add(buildCell(col, row));
-        if (col < cols - 1) cells.add(const SizedBox(width: cellGap));
-      }
-      weekRows.add(Row(children: cells));
-      if (row < 6) weekRows.add(const SizedBox(height: cellGap));
-    }
 
     // Legend row.
     final legendColors = [
@@ -698,50 +707,153 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             )
           else
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Day-of-week labels (Mon/Wed/Fri)
-                Padding(
-                  padding: const EdgeInsets.only(top: 14), // skip month row
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: List.generate(7, (row) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: row < 6 ? cellGap : 0),
-                        child: SizedBox(
-                          width: dayLabelWidth,
-                          height: cellSize,
-                          child: Text(
-                            dayLabels[row],
-                            style: const TextStyle(
-                              fontSize: 8,
-                              color: Color(0xFF94A3B8),
-                            ),
-                            textAlign: TextAlign.right,
-                          ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                const minCellSize = 6.0;
+                final availableContentWidth = constraints.maxWidth;
+                final availableGridWidth =
+                    (availableContentWidth - dayLabelWidth - 4).clamp(
+                      120.0,
+                      double.infinity,
+                    );
+                final stretchCellSize =
+                    (availableGridWidth - (cols - 1) * cellGap) / cols;
+                final useScroll = stretchCellSize < minCellSize;
+                final dynamicCellSize = useScroll
+                    ? minCellSize
+                    : stretchCellSize;
+
+                Widget buildCell(int col, int row) {
+                  final date = gridStart.add(Duration(days: col * 7 + row));
+                  final inRange =
+                      !date.isBefore(firstDay) && !date.isAfter(todayKey);
+                  if (!inRange) {
+                    return SizedBox(
+                      width: dynamicCellSize,
+                      height: dynamicCellSize,
+                    );
+                  }
+                  final xp = _xpHistory[date] ?? 0;
+                  return GestureDetector(
+                    onTap: () {
+                      final local = DateTime(date.year, date.month, date.day);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(t.profileXpHeatmapDay(local, xp)),
+                          duration: const Duration(seconds: 2),
                         ),
                       );
-                    }),
-                  ),
-                ),
-                const SizedBox(width: 4),
-                // Scrollable grid (month row + 7 weekday rows)
-                Expanded(
-                  child: SingleChildScrollView(
-                    controller: _heatmapScrollController,
-                    scrollDirection: Axis.horizontal,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: monthRow),
-                        const SizedBox(height: 2),
-                        ...weekRows,
-                      ],
+                    },
+                    child: Container(
+                      width: dynamicCellSize,
+                      height: dynamicCellSize,
+                      decoration: BoxDecoration(
+                        color: cellColor(xp),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
                     ),
+                  );
+                }
+
+                int? prevMonth;
+                final monthRow = <Widget>[];
+                for (int col = 0; col < cols; col++) {
+                  final date = gridStart.add(Duration(days: col * 7));
+                  if (date.month != prevMonth) {
+                    prevMonth = date.month;
+                    monthRow.add(
+                      SizedBox(
+                        width: dynamicCellSize,
+                        child: Text(
+                          monthAbbr[date.month - 1],
+                          style: const TextStyle(
+                            fontSize: 8,
+                            color: Color(0xFF94A3B8),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.clip,
+                          softWrap: false,
+                        ),
+                      ),
+                    );
+                  } else {
+                    monthRow.add(SizedBox(width: dynamicCellSize));
+                  }
+                  if (col < cols - 1) {
+                    monthRow.add(const SizedBox(width: cellGap));
+                  }
+                }
+
+                final weekRows = <Widget>[];
+                for (int row = 0; row < 7; row++) {
+                  final cells = <Widget>[];
+                  for (int col = 0; col < cols; col++) {
+                    cells.add(buildCell(col, row));
+                    if (col < cols - 1) {
+                      cells.add(const SizedBox(width: cellGap));
+                    }
+                  }
+                  weekRows.add(Row(children: cells));
+                  if (row < 6) {
+                    weekRows.add(const SizedBox(height: cellGap));
+                  }
+                }
+
+                final fullGridWidth =
+                    cols * dynamicCellSize + (cols - 1) * cellGap;
+                final gridContent = SizedBox(
+                  width: useScroll ? fullGridWidth : availableGridWidth,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: monthRow),
+                      const SizedBox(height: 2),
+                      ...weekRows,
+                    ],
                   ),
-                ),
-              ],
+                );
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: List.generate(7, (row) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              bottom: row < 6 ? cellGap : 0,
+                            ),
+                            child: SizedBox(
+                              width: dayLabelWidth,
+                              height: dynamicCellSize,
+                              child: Text(
+                                dayLabels[row],
+                                style: const TextStyle(
+                                  fontSize: 8,
+                                  color: Color(0xFF94A3B8),
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: useScroll
+                          ? SingleChildScrollView(
+                              controller: _heatmapScrollController,
+                              scrollDirection: Axis.horizontal,
+                              child: gridContent,
+                            )
+                          : gridContent,
+                    ),
+                  ],
+                );
+              },
             ),
           const SizedBox(height: 10),
           // Legend
@@ -798,87 +910,149 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: CircularProgressIndicator(strokeWidth: 2),
               ),
             )
-          else if (_pinnedAchievements.isEmpty)
+          else if (_pendingAchievements.isEmpty)
             Center(
               child: Text(
-                t.profileNoPinnedAchievements,
+                t.isZh ? '你已完成全部成就 🎉' : 'All achievements completed 🎉',
                 style: const TextStyle(fontSize: 13, color: Color(0xFFCBD5E1)),
               ),
             )
           else
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: _pinnedAchievements.map((achievement) {
-                final style = AchievementService.rarityStyle(
-                  achievement.rarity,
-                  t.isZh,
-                );
-                final color = Color(style.color);
-                return Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 64,
-                        height: 64,
-                        decoration: BoxDecoration(
-                          color: color.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: color.withValues(alpha: 0.3),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            AchievementService.categoryIcon(
-                              achievement.category,
-                            ),
-                            style: const TextStyle(fontSize: 28),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      SizedBox(
-                        width: 64,
-                        child: Text(
-                          achievement.name,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF64748B),
-                          ),
-                        ),
-                      ),
-                    ],
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final items = _pendingAchievements.take(4).toList();
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: items.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    mainAxisExtent: 124,
                   ),
+                  itemBuilder: (context, index) {
+                    final achievement = items[index];
+                    final progress = AchievementDisplayService.buildProgress(
+                      achievement: achievement,
+                      userStats: _userStats,
+                      followCounts: _followCounts,
+                      t: t,
+                    );
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 9,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8FAFC),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: SizedBox(
+                              width: 58,
+                              height: 58,
+                              child: Image.asset(
+                                AchievementDisplayService.badgeAssetPath(
+                                  achievement,
+                                ),
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Center(
+                                  child: Text(
+                                    _achievementCategoryEmoji(
+                                      achievement.category,
+                                    ),
+                                    style: const TextStyle(fontSize: 26),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        achievement.name,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xFF334155),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      progress.counterLabel,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF94A3B8),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(999),
+                                  child: LinearProgressIndicator(
+                                    minHeight: 9,
+                                    value: progress.ratio,
+                                    backgroundColor: const Color(0xFFE5E7EB),
+                                    valueColor: const AlwaysStoppedAnimation(
+                                      Color(0xFFFACC15),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 7),
+                                Text(
+                                  progress.requirement,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF64748B),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 );
-              }).toList(),
+              },
             ),
-          const SizedBox(height: 12),
-          GestureDetector(
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const AchievementWallScreen(),
-                ),
-              );
-              _loadGamification();
-            },
-            child: Text(
-              t.profileViewAllAchievements,
-              style: TextStyle(
-                fontSize: 13,
-                color: AppColors.indigo500,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
         ],
       ),
     );
+  }
+
+  String _achievementCategoryEmoji(String category) {
+    switch (category) {
+      case 'streak':
+        return '🔥';
+      case 'challenge':
+        return '⚡';
+      case 'social':
+        return '🌟';
+      case 'learning':
+      default:
+        return '📚';
+    }
   }
 
   static String _formatStat(int n) {
@@ -1073,5 +1247,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       },
     );
+  }
+}
+
+class _DashedRoundedRectPainter extends CustomPainter {
+  final Color color;
+  final double radius;
+  final double dashWidth;
+  final double dashGap;
+  final double strokeWidth;
+
+  const _DashedRoundedRectPainter({
+    required this.color,
+    required this.radius,
+    required this.dashWidth,
+    required this.dashGap,
+    required this.strokeWidth,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+
+    final rect = Offset.zero & size;
+    final rrect = RRect.fromRectAndRadius(
+      rect.deflate(strokeWidth / 2),
+      Radius.circular(radius),
+    );
+    final path = Path()..addRRect(rrect);
+
+    for (final metric in path.computeMetrics()) {
+      var distance = 0.0;
+      while (distance < metric.length) {
+        final next = (distance + dashWidth).clamp(0, metric.length).toDouble();
+        canvas.drawPath(metric.extractPath(distance, next), paint);
+        distance += dashWidth + dashGap;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashedRoundedRectPainter oldDelegate) {
+    return oldDelegate.color != color ||
+        oldDelegate.radius != radius ||
+        oldDelegate.dashWidth != dashWidth ||
+        oldDelegate.dashGap != dashGap ||
+        oldDelegate.strokeWidth != strokeWidth;
   }
 }
