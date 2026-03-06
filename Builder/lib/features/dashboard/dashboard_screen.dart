@@ -12,6 +12,9 @@ import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
 import '../../widgets/user_avatar.dart';
+import 'tabs/data_center_tab.dart';
+import 'tabs/fans_manage_tab.dart';
+import 'tabs/home_tab.dart';
 
 // ─── Color tokens matching base.css variables ───
 class _C {
@@ -20,7 +23,6 @@ class _C {
   static const surface = Color(0xFFFFFFFF);
   static const text = Color(0xFF1C2B33);
   static const muted = Color(0xFF607086);
-  static const primary = Color(0xFF58CC02);
   static const accent = Color(0xFF4D7CFF);
   static const danger = Color(0xFFE53E3E);
 }
@@ -48,11 +50,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   // Cache: courseId → list of page titles (lessons)
   final Map<String, List<String>> _courseLessons = {};
 
-  // Dashboard metrics state
-  Map<String, int> _metrics = {'fans': 0, 'likes': 0, 'shares': 0, 'income': 0};
-  List<Map<String, dynamic>> _comments = [];
-  bool _metricsLoading = false;
-
   @override
   void initState() {
     super.initState();
@@ -63,7 +60,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     // Access is already guarded by BuilderAccessNotifier + GoRouter redirect.
     // Just kick off data loading.
     _loadCourses();
-    _loadDashboardData();
   }
 
   Future<void> _loadCourses() async {
@@ -84,26 +80,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       if (mounted) {
         setState(() => _coursesLoading = false);
       }
-    }
-  }
-
-  Future<void> _loadDashboardData() async {
-    if (!SupabaseService.isLoggedIn) return;
-    setState(() => _metricsLoading = true);
-    try {
-      final results = await Future.wait([
-        SupabaseService.getDashboardMetrics(),
-        SupabaseService.getRecentComments(limit: 4),
-      ]);
-      if (mounted) {
-        setState(() {
-          _metrics = results[0] as Map<String, int>;
-          _comments = results[1] as List<Map<String, dynamic>>;
-          _metricsLoading = false;
-        });
-      }
-    } catch (_) {
-      if (mounted) setState(() => _metricsLoading = false);
     }
   }
 
@@ -267,7 +243,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           size: 57,
           onSignedIn: () {
             _loadCourses();
-            _loadDashboardData();
           },
         ),
       ],
@@ -393,9 +368,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       case _NavTab.courseManage:
         return _buildCourseManage(t);
       case _NavTab.dataCenter:
-        return _buildHomePage(t);
+        return _buildDataCenterPage(t);
       case _NavTab.fansManage:
-        return _buildHomePage(t);
+        return _buildFansManagePage(t);
     }
   }
 
@@ -403,253 +378,29 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   //  Home Page content (dashboard)
   // ═══════════════════════════════════════════════
   Widget _buildHomePage(BuilderLocalizations t) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final wide = constraints.maxWidth > 700;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Metrics row: Course Data + Income overview
-            if (wide)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(flex: 3, child: _buildCourseDataCard(wide, t)),
-                  const SizedBox(width: 22),
-                  Expanded(flex: 2, child: _buildIncomeCard(t)),
-                ],
-              )
-            else ...[
-              _buildCourseDataCard(wide, t),
-              const SizedBox(height: 22),
-              _buildIncomeCard(t),
-            ],
-            const SizedBox(height: 24),
-            // Comments
-            _buildCommentsCard(wide, t),
-          ],
-        );
+    return DashboardHomeTab(
+      t: t,
+      onCreateCourse: () => _showCreateCourseDialog(t),
+      onContinueEditing: () {
+        setState(() => _currentTab = _NavTab.courseManage);
+        _loadCourses();
+      },
+      onViewDataCenter: () {
+        setState(() => _currentTab = _NavTab.dataCenter);
+      },
+      onOpenCourse: (courseId) {
+        if (courseId.isEmpty) return;
+        context.go('/builder?courseId=$courseId');
       },
     );
   }
 
-  Widget _buildCourseDataCard(bool wide, BuilderLocalizations t) {
-    return Container(
-      padding: const EdgeInsets.all(26),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFAFFFFFF), Color(0xE6F0F6FF)],
-        ),
-        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            t.dashCourseData,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: _C.text,
-            ),
-          ),
-          const SizedBox(height: 18),
-          _metricsLoading
-              ? const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: _C.accent,
-                      ),
-                    ),
-                  ),
-                )
-              : Wrap(
-                  spacing: 18,
-                  runSpacing: 18,
-                  children: [
-                    _MetricTile(
-                      label: t.dashFans,
-                      value: '${_metrics['fans'] ?? 0}',
-                    ),
-                    _MetricTile(
-                      label: t.dashLikes,
-                      value: '${_metrics['likes'] ?? 0}',
-                    ),
-                    _MetricTile(
-                      label: t.dashShares,
-                      value: '${_metrics['shares'] ?? 0}',
-                    ),
-                  ],
-                ),
-        ],
-      ),
-    );
+  Widget _buildDataCenterPage(BuilderLocalizations t) {
+    return DashboardDataCenterTab(t: t);
   }
 
-  Widget _buildIncomeCard(BuilderLocalizations t) {
-    final income = _metrics['income'] ?? 0;
-    return Container(
-      padding: const EdgeInsets.all(26),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFAFFFFFF), Color(0xE6FFF7E8)],
-        ),
-        border: Border.all(color: const Color(0x40FFBA49)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            t.dashIncomeOverview,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: _C.text,
-            ),
-          ),
-          const SizedBox(height: 18),
-          Text(
-            t.dashHoldMoney,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: _C.muted,
-            ),
-          ),
-          const SizedBox(height: 8),
-          _metricsLoading
-              ? const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Color(0xFFFFBA49),
-                  ),
-                )
-              : Text(
-                  '\$$income',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: _C.text,
-                  ),
-                ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCommentsCard(bool wide, BuilderLocalizations t) {
-    return Container(
-      padding: const EdgeInsets.all(26),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFAFFFFFF), Color(0xE6EBF8F0)],
-        ),
-        border: Border.all(color: _C.primary.withValues(alpha: 0.2)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with "more" link
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                t.dashComments,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: _C.text,
-                ),
-              ),
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() => _currentTab = _NavTab.dataCenter);
-                  },
-                  child: Text(
-                    t.dashMore,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: _C.accent,
-                      decoration: TextDecoration.underline,
-                      decorationColor: _C.accent,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          _metricsLoading
-              ? const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: _C.primary,
-                      ),
-                    ),
-                  ),
-                )
-              : _buildCommentsList(t),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCommentsList(BuilderLocalizations t) {
-    if (_comments.isEmpty) {
-      return _CommentPlaceholder(label: t.dashNoComments);
-    }
-
-    final displayComments = _comments.take(4).toList();
-    return Wrap(
-      spacing: 18,
-      runSpacing: 18,
-      children: displayComments.map((c) => _CommentBlock(comment: c)).toList(),
-    );
+  Widget _buildFansManagePage(BuilderLocalizations t) {
+    return DashboardFansManageTab(t: t);
   }
 
   // ═══════════════════════════════════════════════
@@ -988,7 +739,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           final hasText = descController.text.trim().isNotEmpty;
 
           // ── helpers ──
-          Widget _sectionLabel(String text) => Padding(
+          Widget sectionLabel(String text) => Padding(
             padding: const EdgeInsets.only(bottom: 6),
             child: Text(
               text,
@@ -1000,12 +751,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
           );
 
-          Widget _dropdown<T>({
+          Widget dropdown<T>({
             required T value,
             required List<DropdownMenuItem<T>> items,
             required ValueChanged<T?> onChanged,
           }) => DropdownButtonFormField<T>(
-            value: value,
+            initialValue: value,
             items: items,
             onChanged: isGenerating ? null : onChanged,
             decoration: InputDecoration(
@@ -1155,8 +906,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                 ),
                                 const SizedBox(height: 12),
                                 // Difficulty
-                                _sectionLabel(t.aiGenerateDifficulty),
-                                _dropdown<String>(
+                                sectionLabel(t.aiGenerateDifficulty),
+                                dropdown<String>(
                                   value: difficulty,
                                   onChanged: (v) =>
                                       setDialogState(() => difficulty = v!),
@@ -1177,8 +928,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                 ),
                                 const SizedBox(height: 12),
                                 // Animation style
-                                _sectionLabel(t.aiGenerateStyle),
-                                _dropdown<String>(
+                                sectionLabel(t.aiGenerateStyle),
+                                dropdown<String>(
                                   value: animationStyle,
                                   onChanged: (v) =>
                                       setDialogState(() => animationStyle = v!),
@@ -1199,8 +950,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                 ),
                                 const SizedBox(height: 12),
                                 // Target audience
-                                _sectionLabel(t.aiGenerateAudience),
-                                _dropdown<String>(
+                                sectionLabel(t.aiGenerateAudience),
+                                dropdown<String>(
                                   value: audience,
                                   onChanged: (v) =>
                                       setDialogState(() => audience = v!),
@@ -1724,7 +1475,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const SizedBox(height: 16),
                     // ── Difficulty ─────────────────────────────
                     DropdownButtonFormField<String>(
-                      value: difficulty,
+                      initialValue: difficulty,
                       decoration: InputDecoration(
                         labelText: '${t.courseDifficulty} *',
                         border: OutlineInputBorder(
@@ -1772,7 +1523,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const SizedBox(height: 16),
                     // ── Price Tier ─────────────────────────────
                     DropdownButtonFormField<String>(
-                      value: priceTier,
+                      initialValue: priceTier,
                       decoration: InputDecoration(
                         labelText: '${t.coursePriceTier} *',
                         border: OutlineInputBorder(
@@ -2302,7 +2053,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const SizedBox(height: 16),
                     // ── Difficulty ─────────────────────────────
                     DropdownButtonFormField<String>(
-                      value: difficulty,
+                      initialValue: difficulty,
                       decoration: InputDecoration(
                         labelText: '${t.courseDifficulty} *',
                         border: OutlineInputBorder(
@@ -2350,7 +2101,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const SizedBox(height: 16),
                     // ── Price Tier ─────────────────────────────
                     DropdownButtonFormField<String>(
-                      value: priceTier,
+                      initialValue: priceTier,
                       decoration: InputDecoration(
                         labelText: '${t.coursePriceTier} *',
                         border: OutlineInputBorder(
@@ -2536,7 +2287,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               );
               if (mounted) {
                 _loadCourses();
-                _loadDashboardData();
               }
             }
           },
@@ -2609,189 +2359,6 @@ class _GhostButton extends StatelessWidget {
         textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
       ),
       child: Text(label),
-    );
-  }
-}
-
-/// Single metric tile
-class _MetricTile extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _MetricTile({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 110,
-      height: 90,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0x2E506E96)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-              color: _C.text,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-              color: _C.muted,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Dashed placeholder when no comments exist
-class _CommentPlaceholder extends StatelessWidget {
-  final String label;
-  const _CommentPlaceholder({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: const Color(0x66506E96),
-          width: 2,
-          strokeAlign: BorderSide.strokeAlignInside,
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 14,
-          color: _C.muted,
-        ),
-      ),
-    );
-  }
-}
-
-/// Comment block showing real feedback data
-class _CommentBlock extends StatelessWidget {
-  final Map<String, dynamic> comment;
-
-  const _CommentBlock({required this.comment});
-
-  @override
-  Widget build(BuildContext context) {
-    final username = comment['username'] as String? ?? 'User';
-    final text = comment['comment'] as String? ?? '';
-    final rating = comment['rating'] as int? ?? 0;
-    final createdAt = comment['created_at'] as String?;
-    final avatarUrl = comment['avatar_url'] as String?;
-
-    String timeAgo = '';
-    if (createdAt != null) {
-      try {
-        final dt = DateTime.parse(createdAt);
-        final diff = DateTime.now().difference(dt);
-        if (diff.inDays > 0) {
-          timeAgo = '${diff.inDays}d ago';
-        } else if (diff.inHours > 0) {
-          timeAgo = '${diff.inHours}h ago';
-        } else {
-          timeAgo = 'just now';
-        }
-      } catch (_) {}
-    }
-
-    return Container(
-      width: 260,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0x33506E96)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // User row
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 14,
-                backgroundColor: _C.accent.withValues(alpha: 0.15),
-                backgroundImage: avatarUrl != null
-                    ? NetworkImage(avatarUrl)
-                    : null,
-                child: avatarUrl == null
-                    ? Text(
-                        username.isNotEmpty ? username[0].toUpperCase() : '?',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: _C.accent,
-                        ),
-                      )
-                    : null,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  username,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: _C.text,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              if (timeAgo.isNotEmpty)
-                Text(
-                  timeAgo,
-                  style: const TextStyle(fontSize: 11, color: _C.muted),
-                ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          // Rating stars
-          Row(
-            children: List.generate(
-              5,
-              (i) => Icon(
-                i < rating ? Icons.star_rounded : Icons.star_outline_rounded,
-                size: 14,
-                color: i < rating
-                    ? const Color(0xFFFFBA49)
-                    : const Color(0xFFCCD3DD),
-              ),
-            ),
-          ),
-          if (text.isNotEmpty) ...[
-            const SizedBox(height: 6),
-            Text(
-              text,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 13, color: _C.muted),
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

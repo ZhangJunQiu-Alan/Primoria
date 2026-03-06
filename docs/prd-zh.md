@@ -1,543 +1,110 @@
-# STEM 课程构建器 - 产品规划文档
-
-> 模块化课程创作工具 | UGC 驱动的 STEM 学习平台
-
----
-
-## 1. 项目概览
-
-### 1.1 产品定位
-这是一个面向 STEM 教育的 **UGC 课程创作平台**。用户可通过拖拽模块快速搭建互动课程，目标体验对标 Brilliant。
-
-### 1.2 核心价值
-- **创作者**：零代码创建专业互动课程
-- **学习者**：获得接近 Brilliant 的互动学习体验
-- **平台**：通过 UGC 模式快速扩展 STEM 内容供给
-
-### 1.3 上线策略
-| 阶段 | 内容方向 | 目标 |
-|------|----------|------|
-| Phase 1 | Python 编程 | 验证产品闭环 + 积累种子用户 |
-| Phase 2 | 数学 + 物理 | 扩展核心 STEM 学科 |
-| Phase 3 | 全 STEM | 开放更多学科方向 |
-
----
-
-## 2. 系统架构
-
-### 2.1 总体架构
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Frontend (Flutter Web)                     │
-├─────────────────────┬───────────────────────┬───────────────────┤
-│    Course Builder   │     Course Viewer     │    User Portal    │
-│       (Editor)      │      (Renderer)       │   (User Center)   │
-└─────────┬───────────┴───────────┬───────────┴─────────┬─────────┘
-          │                       │                     │
-          ▼                       ▼                     ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    JSON Schema (Data Layer)                     │
-│        Course structure / module definitions / animation config │
-│                           / user data                           │
-└─────────────────────────────────────────────────────────────────┘
-          │                       │                     │
-          ▼                       ▼                     ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        Backend Services                         │
-├─────────────────┬─────────────────┬─────────────────────────────┤
-│  User Auth Svc   │  Course Storage │          Other Svc          │
-│ (Auth Service)   │ (Course Service)|            (TBD)            │
-└─────────────────┴─────────────────┴─────────────────────────────┘
-          │                       │                     │
-          ▼                       ▼                     ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        Infrastructure                           │
-│         PostgreSQL / Redis / Object Storage / WebSocket         │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 2.2 技术栈
-
-| 层级 | 选型 | 选型原因 |
-|------|----------|------|
-| **前端框架** | Flutter Web | Builder/Viewer 渲染统一，团队已有经验 |
-| **状态管理** | Riverpod / Bloc | Flutter 生态成熟，便于扩展 |
-| **动画引擎** | Flutter CustomPainter + AnimationController | 原生性能高、可控性强 |
-| **拖拽实现** | flutter_draggable_gridview | 模块化拖拽落地快 |
-| **后端语言/运行时** | TypeScript + Deno（Supabase Edge Functions） | 与前端统一 TypeScript 生态，便于 Serverless 和边缘部署 |
-| **数据库** | PostgreSQL | 关系能力强，JSON 支持好 |
-| **对象存储** | S3 / OSS / MinIO | 媒体资源存储 |
-
----
-
-## 3. Course Builder（编辑器）
-
-### 3.1 核心能力
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  Course Builder UI                                              │
-├──────────────┬──────────────────────────────┬───────────────────┤
-│              │                              │                   │
-│  Module Panel│         Canvas Area          │   Properties      │
-│              │                              │      Panel        │
-│  ┌────────┐  │   ┌──────────────────────┐   │  ┌─────────────┐  │
-│  │ Text   │  │   │                      │   │  │ Module Props│  │
-│  ├────────┤  │   │   [Dropped Module]   │   │  ├─────────────┤  │
-│  │ Image  │  │   │                      │   │  │ Style        │  │
-│  ├────────┤  │   │   [Interactive Anim] │   │  ├─────────────┤  │
-│  │ Code   │  │   │                      │   │  │ Anim Params  │  │
-│  ├────────┤  │   │   [Quiz Module]      │   │  ├─────────────┤  │
-│  │ Anim   │  │   │                      │   │  │ Interaction  │  │
-│  ├────────┤  │   └──────────────────────┘   │  └─────────────┘  │
-│  │ Quiz   │  │                              │                   │
-│  ├────────┤  │                              │                   │
-│  │ Fill-in│  │                              │                   │
-│  ├────────┤  │                              │                   │
-│  │        │  │                              │                   │
-│  └────────┘  │                              │                   │
-│              │                              │                   │
-└──────────────┴──────────────────────────────┴───────────────────┘
-│  [Preview]  [Save]  [Export JSON]  [Publish]                    │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 3.2 模块类型定义
-
-#### 基础模块（MVP）
-
-| 模块类型 | 说明 | 优先级 |
-|----------|----------|--------|
-| `text` | 富文本 / Markdown | P0 |
-| `image` | 图片展示 | P0 |
-| `code-block` | 代码展示 + 语法高亮 | P0（Python 课程必需） |
-| `code-playground` | 可运行代码编辑器 | P0（Python 课程核心） |
-| `multiple-choice` | 单选/多选题 | P0 |
-| `fill-blank` | 填空题 | P1 |
-
-#### 交互动效模块（Phase 2）
-
-| 模块类型 | 说明 | 示例 |
-|----------|----------|------|
-| `function-flow` | 函数块连接关系 | 可视化 Python 函数调用 |
-| `data-structure` | 数据结构可视化 | 交互式 list/dict/tree 展示 |
-| `code-execution` | 代码执行动画 | 逐行执行 + 变量状态演示 |
-| `geometry` | 几何交互 | 点线面拖拽 |
-| `graph-plot` | 函数图像 | 参数可调的曲线演示 |
-| `custom-canvas` | 自定义画布 | 用户用代码定义动画 |
-
-### 3.3 拖拽交互设计
-
-```dart
-// Flutter drag-and-drop sketch
-class BuilderCanvas extends StatefulWidget {
-  @override
-  _BuilderCanvasState createState() => _BuilderCanvasState();
-}
-
-class _BuilderCanvasState extends State<BuilderCanvas> {
-  List<BlockData> blocks = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return DragTarget<BlockType>(
-      onAccept: (blockType) {
-        setState(() {
-          blocks.add(BlockData(
-            id: generateId(),
-            type: blockType,
-            position: currentDropPosition,
-          ));
-        });
-      },
-      builder: (context, candidateData, rejectedData) {
-        return Stack(
-          children: blocks.map((block) =>
-            Positioned(
-              left: block.position.x,
-              top: block.position.y,
-              child: DraggableBlock(
-                data: block,
-                onDragEnd: (newPosition) => updateBlockPosition(block.id, newPosition),
-              ),
-            )
-          ).toList(),
-        );
-      },
-    );
-  }
-}
-```
-
----
-
-## 4. 交互动画系统
-
-### 4.1 动画架构
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                       Animation System                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
-│  │  Presets    │    │ Parameters  │    │ User Scripts        │  │
-│  │ (Templates) │    │ (Params)    │    │ (Custom Script)     │  │
-│  └──────┬──────┘    └──────┬──────┘    └──────────┬──────────┘  │
-│         │                  │                      │             │
-│         ▼                  ▼                      ▼             │
-│  ┌─────────────────────────────────────────────────────────────┐│
-│  │              Animation Renderer (CustomPainter)             ││
-│  │                                                             ││
-│  │  - Vector drawing (Path, Canvas API)                        ││
-│  │  - Gesture handling (GestureDetector)                       ││
-│  │  - Animation control (AnimationController, Tween)           ││
-│  │  - State binding (data binding)                             ││
-│  └─────────────────────────────────────────────────────────────┘│
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 4.2 Flutter 动画实现示例
-
-```dart
-// Example: draggable function block connection animation
-class FunctionFlowAnimation extends StatefulWidget {
-  final FunctionFlowConfig config;
-
-  @override
-  _FunctionFlowAnimationState createState() => _FunctionFlowAnimationState();
-}
-
-class _FunctionFlowAnimationState extends State<FunctionFlowAnimation>
-    with TickerProviderStateMixin {
-
-  late AnimationController _controller;
-  List<FunctionBlock> blocks = [];
-  List<Connection> connections = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _initializeFromConfig();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanUpdate: _handleDrag,
-      onTapUp: _handleTap,
-      child: CustomPaint(
-        painter: FunctionFlowPainter(
-          blocks: blocks,
-          connections: connections,
-          animation: _controller,
-        ),
-        size: Size.infinite,
-      ),
-    );
-  }
-
-  void _handleTap(TapUpDetails details) {
-    // Detect tapped block, create connection
-    final tappedBlock = _findBlockAt(details.localPosition);
-    if (tappedBlock != null) {
-      _startConnection(tappedBlock);
-    }
-  }
-}
-
-// CustomPainter draws connections
-class FunctionFlowPainter extends CustomPainter {
-  final List<FunctionBlock> blocks;
-  final List<Connection> connections;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Draw connections (Bezier curves)
-    for (final conn in connections) {
-      final path = Path();
-      path.moveTo(conn.start.dx, conn.start.dy);
-      path.cubicTo(
-        conn.start.dx + 50, conn.start.dy,
-        conn.end.dx - 50, conn.end.dy,
-        conn.end.dx, conn.end.dy,
-      );
-      canvas.drawPath(path, connectionPaint);
-    }
-
-    // Draw blocks
-    for (final block in blocks) {
-      _drawRoundedBlock(canvas, block);
-    }
-  }
-
-  void _drawRoundedBlock(Canvas canvas, FunctionBlock block) {
-    final rrect = RRect.fromRectAndRadius(
-      block.rect,
-      Radius.circular(12),
-    );
-    canvas.drawRRect(rrect, blockPaint);
-    // Draw text...
-  }
-}
-```
-
-### 4.3 用户自定义动画（高级）
-
-**策略：提供可视化脚本编辑器 + Dart 沙箱执行环境**
-
-```dart
-// JSON description of a user custom animation
-{
-  "type": "custom-animation",
-  "id": "my-custom-viz",
-  "script": {
-    "elements": [
-      {
-        "id": "circle1",
-        "shape": "circle",
-        "position": { "x": 100, "y": 100 },
-        "radius": 30,
-        "color": "primary.500",
-        "draggable": true
-      },
-      {
-        "id": "label1",
-        "shape": "text",
-        "text": "Drag me",
-        "bindTo": "circle1"  // follow circle1
-      }
-    ],
-    "interactions": [
-      {
-        "trigger": "drag",
-        "target": "circle1",
-        "action": "updatePosition",
-        "constraints": { "minX": 0, "maxX": 300 }
-      }
-    ],
-    "animations": [
-      {
-        "trigger": "onDragEnd",
-        "target": "circle1",
-        "type": "spring",
-        "to": { "x": 150 }  // spring back to center
-      }
-    ]
-  }
-}
-```
-
-### 4.4 Python 课程专属动效组件
-
-| 组件 | 作用 | 交互方式 |
-|------|------|----------|
-| `CodeExecutionViz` | 代码逐行执行可视化 | 播放 / 暂停 / 单步 |
-| `VariableInspector` | 变量状态实时展示 | 自动更新 |
-| `CallStackViz` | 函数调用栈展示 | 展开 / 收起 |
-| `DataStructureViz` | list/dict/set 可视化 | 点击查看细节 |
-| `FlowchartViz` | 流程图交互 | 高亮当前路径 |
-| `MemoryModelViz` | 内存模型可视化 | 引用连线展示 |
-
----
-
-## 5. JSON Schema
-
-完整 Course JSON 编写规范见 **`course-json-guide.md`**。
-
-摘要：数据结构是 `Course → Pages → Blocks`。当前 Builder UI 的 MVP block 类型包括 `text`、`image`、`codeBlock`、`codePlayground`、`multipleChoice`、`fillBlank`。Phase 2 增加 `function-flow`、`data-structure`、`code-execution`、`geometry`、`graph-plot`、`custom-canvas`。
-
----
-
-## 6. 后端服务设计
-
-### 6.1 服务架构
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        API Gateway                              │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        ▼                   ▼                   ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────────────┐
-│  Auth Service │   │ Course Service│   │ Collaboration Service │
-├───────────────┤   ├───────────────┤   ├───────────────────────┤
-│ - User signup │   │ - Course CRUD │   │ - Realtime sync       │
-│ - Login       │   │ - Versioning  │   │ - Conflict resolution │
-│ - OAuth       │   │ - Publish/rev │   │ - Operation history   │
-│ - Permissions │   │              │   │                       │
-└───────┬───────┘   └───────┬───────┘   └───────────┬───────────┘
-        │                   │                       │
-        ▼                   ▼                       ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────────────┐
-│   PostgreSQL  │   │ Object Storage│   │    Redis + WebSocket  │
-│  (User Data)  │   │  (Media Assets)│  │    (Realtime Comms)   │
-└───────────────┘   └───────────────┘   └───────────────────────┘
-```
-
-### 6.2 核心 API
-
-```yaml
-# Auth Service
-POST   /api/v1/auth/register
-POST   /api/v1/auth/login
-POST   /api/v1/auth/oauth/{provider}
-GET    /api/v1/users/me
-
-# Course Service
-GET    /api/v1/courses                    # 课程列表
-POST   /api/v1/courses                    # 创建课程
-GET    /api/v1/courses/{id}               # 获取课程详情
-PUT    /api/v1/courses/{id}               # 更新课程
-DELETE /api/v1/courses/{id}               # 删除课程
-GET    /api/v1/courses/{id}/versions      # 版本历史
-POST   /api/v1/courses/{id}/publish       # 发布课程
-GET    /api/v1/courses/{id}/export        # 导出 JSON
-```
-
----
-
-## 7. 开发路线图
-
-### Phase 1：MVP（核心闭环）
-
-**目标**：验证产品概念，打通 Builder -> JSON -> Viewer 闭环。
-
-```
-Week 1-2: Project initialization
-├── Flutter Web setup
-├── State management architecture (Riverpod/Bloc)
-├── Design System base components
-└── JSON Schema definition
-
-Week 3-4: Builder foundation
-├── Canvas area
-├── Module panel (text, image, code)
-├── Drag-and-drop placement
-├── Properties panel basics
-└── JSON export
-
-Week 5-6: Question modules
-├── Multiple choice module
-├── Fill-in-the-blank module
-├── Answer validation logic
-└── Viewer basic rendering
-
-Week 7-8: Code Playground
-├── Code editor integration (code_text_field or custom)
-├── TypeScript（Deno）执行服务
-├── Output display
-└── Error messages
-
-Week 9-10: Backend MVP
-├── User auth service
-├── Course CRUD API
-├── Cloud storage integration
-└── Basic access control
-
-Week 11-12: Polish & testing
-├── UX improvements
-├── Bug fixes
-├── Performance optimization
-└── Internal testing
-```
-
-**MVP 交付物：**
-- 可拖拽 Builder（5 类基础模块）
-- Code Playground（可运行 Python）
-- JSON 导入/导出
-- Viewer 完整渲染
-- 用户账号系统
-- 云端保存
-
----
-
-### Phase 2：交互动画
-
-**目标**：提供对标 Brilliant 的交互动画体验。
-
-```
-Week 1-4: Animation engine
-├── CustomPainter framework
-├── Gesture interaction system
-├── Animation state management
-└── Preset animation library
-
-Week 5-8: Python-specific components
-├── Code execution visualization
-├── Variable state display
-├── Data structure visualization
-├── Function call flowchart
-└── Function block connection component
-
-Week 9-12: Animation editor
-├── Animation parameter panel
-├── Preview
-├── Animation templates library
-└── Simple script configuration
-```
-
----
-
-### Phase 3：开放平台
-
-```
-Month 1: User customization
-├── Custom animation scripts
-├── Component template system
-├── Component marketplace (optional)
-└── Plugin API
-
-Month 2: Platform features
-├── Course publish / review flow
-├── Course discovery / recommendation
-├── Learning progress tracking
-├── Analytics dashboard
-└── Creator incentive system
-```
-
----
-
-## 8. 关键技术决策
-
-| 决策项 | 选型 | 原因 | 备选方案 |
-|--------|------|------|----------|
-| 前端框架 | Flutter Web | 渲染统一、团队熟悉、动画能力强 | React + Canvas |
-| 动画方案 | CustomPainter | 原生性能好、自由度高 | Rive、Lottie |
-| 拖拽实现 | Custom + GestureDetector | 灵活，可深度定制 | flutter_draggable |
-| 状态管理 | Riverpod | 简洁、可测试性好 | Bloc、GetX |
-| 代码编辑器 | code_text_field | 轻量、可定制 | CodeMirror（WebView） |
-| JSON 校验 | json_schema | 标准化、跨平台 | 手写校验 |
-
----
-
-## 9. 风险与应对
-
-| 风险 | 影响 | 应对策略 |
-|------|------|----------|
-| Flutter Web 性能瓶颈 | 复杂动画掉帧 | 使用 CanvasKit 渲染器 + 持续性能监控 |
-| 代码执行安全风险 | Python 代码可能被滥用 | 沙箱隔离、资源限流、代码审计 |
-| JSON Schema 演进兼容 | 老版本文件不兼容 | 版本化 + 自动迁移脚本 |
-| UGC 内容质量参差 | 低质量课程涌入 | 审核机制、用户评分、推荐算法 |
-
----
-
-## 10. 参考资料
-
-### 动画参考
-- [Brilliant](https://brilliant.org/) - 交互体验对标
-- [Manim Community](https://www.manim.community/) - 数学动画参考
-- [Motion Canvas](https://motioncanvas.io/) - 可编程动画参考
-
-### 同类产品
-- [Notion](https://notion.so) - 模块化编辑器参考
-- [Articulate Rise](https://articulate.com/360/rise) - 课程构建器参考
-- [Observable](https://observablehq.com/) - 交互文档参考
-
+# Primoria 产品需求文档（当前基线）
+
+最后更新：2026-03-06
+
+## 1. 产品定义
+
+Primoria 是“创作者到学习者”的双端平台：
+- Builder：创作结构化互动课程
+- Viewer：学习已发布课程并获得游戏化反馈
+
+当前核心目标：
+- 快速搭课
+- 稳定发布与播放链路
+- 用数据帮助创作者持续优化课程
+
+## 2. 用户角色
+
+1. Learner（`user`）：在 Viewer 学习
+2. Subscriber（`subscriber`）：后续付费扩展
+3. Author（`author`）：可访问 Builder 工作台与编辑器
+4. Admin（`admin`）：平台管理
+
+## 3. 当前功能范围
+
+### 3.1 Builder
+
+- 落地页与认证（邮箱密码 + OAuth 回调）
+- `/dashboard` 与 `/builder` 角色门禁
+- Dashboard 四个 Tab：
+  - 首页（已重设计）
+  - 课程管理（保留原有核心流程）
+  - 数据中心（已重设计）
+  - 粉丝管理（已重设计）
+- 编辑器能力：
+  - block 增删改排
+  - `text`、`code-block`、`code-playground` 支持块内编辑
+  - 保存/发布/导入/导出
+  - AI 生成（含 agentic 流程和质量增强）
+
+### 3.2 Viewer
+
+- 登录注册和受保护路由
+- 首页/课程库/社区/我的
+- 报名、学习、完课
+- markdown 文本渲染
+- XP/连续学习/成就系统
+- 头像与封面更新
+
+### 3.3 共享 Schema 与兼容
+
+- 顶层规范键：`lessons`
+- 历史 `pages` 仍兼容并自动迁移
+- Schema 版本：`1.0.0`
+- 导入迁移器会归一化历史 block type 和 visibility 别名
+
+## 4. Dashboard 重设计需求（已交付）
+
+### 首页
+- 个性化问候
+- 快捷操作
+- 学习概览 KPI + 趋势线
+- 热门课程 Top3
+- 最近活动时间线
+- 收入预留模块
+
+### 数据中心
+- KPI 指标行
+- 时间范围切换趋势图
+- 课程表现对比
+- 地域分布
+- 学习时段热力图
+- 明细表 + 导出
+
+### 粉丝管理
+- 粉丝概览与增长趋势
+- 可搜索/筛选/分页的粉丝列表
+- 互动中心
+- 标签管理
+- 消息中心预留
+
+## 5. 非功能要求
+
+1. 响应式布局（桌面/平板/移动）
+2. Dashboard 模块组件化与复用
+3. 加载/空状态/错误状态完整
+4. 新增 Dashboard 文案具备 i18n
+5. 旧 JSON 导入兼容与迁移能力
+
+## 6. 数据与后端待补充需求
+
+为实现高精度分析，需补齐：
+1. 事件级日/周分析事实表
+2. 收入/结算数据表
+3. 粉丝互动动作接口（回复/标记/导出/通知）
+4. Dashboard 聚合接口或物化视图
+
+## 7. 迭代验收标准
+
+1. 首页/数据中心/粉丝管理可用且响应式正常
+2. 课程管理行为不变
+3. Builder Dashboard 模块静态检查通过
+4. docs/todo/changelog 与实现一致
+5. 不引入编辑/保存/发布主流程回归
+
+## 8. 当前迭代范围外
+
+1. 多人实时协作编辑
+2. 完整收入结算系统
+3. 完整私信系统
+4. 企业多租户能力

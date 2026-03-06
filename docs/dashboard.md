@@ -1,67 +1,102 @@
 # Dashboard Architecture
 
-## Overview
+Last updated: 2026-03-06
 
-The Dashboard (`/dashboard`) is the logged-in user's home — sidebar + tab-switched content area.
+## Scope
 
-```
-┌────────────┬─────────────────────────────┐
-│  Sidebar   │  Topbar (avatar / sort)     │
-│            ├─────────────────────────────┤
-│  [Logo]    │                             │
-│  [Build]   │  Tab Content (scrollable)   │
-│            │                             │
-│  Home Page │                             │
-│  Course Mg │                             │
-│  Data Ctr  │                             │
-│  Fans Mg   │                             │
-└────────────┴─────────────────────────────┘
-```
+Builder dashboard (`/dashboard`) is the creator workspace shell with sidebar navigation and tabbed content.
 
-## Files
+Tabs:
+1. Home (redesigned)
+2. Course Manage (existing production behavior, intentionally preserved)
+3. Data Center (redesigned)
+4. Fans Management (redesigned)
 
-| File | Purpose |
-|------|---------|
-| `features/dashboard/dashboard_screen.dart` | Main screen — sidebar, tabs, all content |
-| `widgets/user_avatar.dart` | Shared circular avatar (Dashboard + Builder) |
-| `app/router.dart` | Auth guard, auto-redirect |
+## File Map
 
-## Tabs
+- `Builder/lib/features/dashboard/dashboard_screen.dart`
+  - shell, sidebar, topbar, tab switching
+  - keeps existing Course Manage logic and actions
+- `Builder/lib/features/dashboard/dashboard_localizations.dart`
+  - dashboard-only localization extension
+- `Builder/lib/features/dashboard/tabs/home_tab.dart`
+- `Builder/lib/features/dashboard/tabs/data_center_tab.dart`
+- `Builder/lib/features/dashboard/tabs/fans_manage_tab.dart`
+- `Builder/lib/features/dashboard/providers/dashboard_provider.dart`
+- `Builder/lib/features/dashboard/providers/analytics_provider.dart`
+- `Builder/lib/features/dashboard/widgets/`
+  - `kpi_card.dart`
+  - `trend_chart.dart`
+  - `activity_timeline.dart`
+  - `learner_table.dart`
 
-**Home Page** — Course Data card, Income Overview card, Comments card. Layout switches row/column at 700px.
+## Tab Details
 
-**Course Manage** — Fetches courses via `getMyCourses()`. Sort dropdown + Create Course button. Each course card: title, time ago, Edit/Delete, lesson boxes (async loaded, hover to reveal ✕ delete button), Add lesson box. States: loading, sign-in prompt, empty, course list.
+### 1) Home
 
-**Data Center / Fans Manage** — Placeholder (renders Home Page content).
+- Greeting by local time (morning/afternoon/evening)
+- Quick actions:
+  - Create New Course
+  - Continue Editing
+  - View Analytics
+- Learning Overview:
+  - weekly learners
+  - total study hours
+  - completion trend line + delta badge
+- Top 3 courses with:
+  - title
+  - views
+  - completion progress
+  - open-course action
+- Recent activity timeline (max 5)
+- Reserved income card (fallback-derived until billing tables are added)
 
-## Data Flow
+### 2) Course Manage (unchanged behavior)
 
-```
-initState → _loadCourses() → getMyCourses() → _courses → rebuild
-Card render → _loadCourseLessons(id) → getCourseLessonTitles(id) → _courseLessons cache → rebuild
-```
+- Course list from `SupabaseService.getMyCourses()`
+- Sort dropdown
+- Create/Edit/Delete course
+- Lesson cards + add lesson
+- Existing dialogs/snackbars/guards remain intact
 
-`_loadCourseLessons` now queries `lessons` directly by `course_id` (not `getCourseContent`), so courses with no saved content show 0 lessons.
+### 3) Data Center
 
-## Navigation
+- Top KPI row:
+  - Total Learners
+  - Total Views
+  - Average Completion Rate
+  - Average Rating
+- Learning trend chart with range selector: 7D / 30D / 90D / All
+- Course performance bar chart with sort selector
+- Geographic distribution pie chart
+- Learning time heatmap
+- Course detail table
+- Export action (CSV copied to clipboard)
 
-| Action | Destination |
-|--------|-------------|
-| Build Course | `/builder` |
-| Create Course | Dialog → `createCourseRow()` → stays on Course Manage (refreshes list) |
-| Edit / Lesson box / Add lesson | `/builder?courseId=<id>` |
-| Delete course | Confirmation → `deleteCourse()` → refresh |
-| Delete lesson (✕ on hover) | Confirmation → `getCourseContent()` → `removePage()` → `saveCourse()` → refresh lesson cache |
+### 4) Fans Management
 
-Builder title edits + Save update `courses.title` in DB. Returning to Dashboard reloads course data, keeping titles in sync.
+- Fan overview KPIs + weekly growth trend
+- Search/filter + paginated fan table
+- Engagement timeline
+- Learner tags panel (create/delete and batch-tag entry)
+- Reserved messaging center
+- Bulk actions entry (send notice / export data)
 
-## Auth Guard
+## Data Strategy
 
-Protected routes: `/dashboard`, `/builder` — redirect to `/` if not logged in. Logged-in users on `/` auto-redirect to `/dashboard`. Uses `_GoRouterRefreshStream` to bridge Supabase auth stream → GoRouter `refreshListenable`.
+Because not all analytics tables exist yet, providers use a mixed strategy:
+- Prefer real Supabase data where available (`courses`, `follows`, `course_feedback`, `profiles`)
+- Derive fallback/mock metrics for unavailable domains (revenue/event-level analytics)
+- Explicit TODO markers are kept in provider files for backend hookup
 
-## Known Limitations
+## Responsive Behavior
 
-1. Lesson display depends on async `getCourseLessonTitles()` per card — can be slow with many courses
-2. Sort by student/comments are placeholders
-3. Data Center / Fans Manage tabs are placeholders
-4. "Learned X times" shows lesson count, not actual learner count
+- Desktop: multi-column dashboard composition
+- Tablet: card wrapping and reduced chart/table density
+- Mobile: single-column stack with compact cards/table cards
+
+## Known Gaps
+
+1. Revenue and advanced analytics are still fallback-derived.
+2. Fans reply/notification/export are UI-level placeholders pending backend endpoints.
+3. Course Manage sort by student/comments remains placeholder logic.
