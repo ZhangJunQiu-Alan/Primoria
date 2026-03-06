@@ -1,5 +1,40 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Dashboard redesign: Home + Data Center + Fans Management)
+
+### Summary
+Redesigned the three core Dashboard tabs with a modular architecture (`tabs/`, `providers/`, `widgets/`) while explicitly keeping Course Manage behavior unchanged. Added responsive layouts, chart-driven analytics UI, fan operations UI, and dashboard-specific localization extensions.
+
+### Added
+- **Dashboard modular structure**
+  - `Builder/lib/features/dashboard/tabs/home_tab.dart`
+  - `Builder/lib/features/dashboard/tabs/data_center_tab.dart`
+  - `Builder/lib/features/dashboard/tabs/fans_manage_tab.dart`
+  - `Builder/lib/features/dashboard/providers/dashboard_provider.dart`
+  - `Builder/lib/features/dashboard/providers/analytics_provider.dart`
+  - `Builder/lib/features/dashboard/widgets/kpi_card.dart`
+  - `Builder/lib/features/dashboard/widgets/trend_chart.dart`
+  - `Builder/lib/features/dashboard/widgets/activity_timeline.dart`
+  - `Builder/lib/features/dashboard/widgets/learner_table.dart`
+  - `Builder/lib/features/dashboard/dashboard_localizations.dart`
+- **Charts dependency**
+  - `fl_chart` added to `Builder/pubspec.yaml`
+
+### Changed
+- **Dashboard tab rendering**
+  - `Builder/lib/features/dashboard/dashboard_screen.dart` now routes:
+    - Home → redesigned Home tab
+    - Data Center → redesigned Data Center tab
+    - Fans Manage → redesigned Fans tab
+  - Course Manage flow remains on existing code path (no functional changes to create/edit/delete/add-lesson workflow)
+- **Responsive behavior**
+  - New tabs support desktop/tablet/mobile layout shifts with card-grid/table stacking
+- **Data shaping**
+  - Home/Data/Fans providers aggregate available Supabase data and apply fallback/mock derivations where schema is not yet available
+
+### Notes
+- Existing TODOs were added for metrics that still require new backend tables (event-level analytics, revenue settlement, fan engagement actions).
+
 ## [Unreleased] - 2026-03-06 (Builder lesson-title workflow + Viewer lesson rendering fixes)
 
 ### Summary
