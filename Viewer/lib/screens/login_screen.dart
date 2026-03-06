@@ -4,28 +4,31 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/storage_service.dart';
 import '../services/supabase_service.dart';
-import '../utils/role_routes.dart';
 
-/// Login page color constants (matching CSS template)
 class _C {
-  static const Color pageBg = Color(0xFF174A6B);
-  static const Color cardBg = Color(0xFFF3F4F6);
-  static const Color titleColor = Color(0xFF5A6678);
-  static const Color mutedColor = Color(0xFFA2ACB8);
-  static const Color lineColor = Color(0xFFDCE3EB);
-  static const Color buttonBg = Color(0xFF42516A);
-  static const Color errorColor = Color(0xFFD9534F);
-  static const Color successColor = Color(0xFF2F8D59);
-  static const Color inputText = Color(0xFF455366);
-  static const Color inputFocusBorder = Color(0xFF99B3CE);
-  static const Color subtitleColor = Color(0xFF8593A5);
-  static const Color metaColor = Color(0xFF778599);
-  static const Color toggleColor = Color(0xFF5F7088);
-  static const Color socialBorder = Color(0xFFD8DFE8);
-  static const Color signupLink = Color(0xFF74849A);
-  static const Color dividerText = Color(0xFF7B8796);
-  static const Color statusInfo = Color(0xFF8692A0);
-  static const Color visualBg = Color(0xFF102B45);
+  const _C._();
+
+  static const pageBg = Color(0xFF133151);
+  static const shell = Color(0xFF102A46);
+
+  static const formTop = Color(0xFF202C4C);
+  static const formBottom = Color(0xFFC65957);
+
+  static const heading = Color(0xFFF4F0F0);
+  static const label = Color(0xFFECE8E9);
+  static const input = Color(0xFF111217);
+  static const hint = Color(0xFF7A7D86);
+  static const line = Color(0x66FFFFFF);
+  static const meta = Color(0xC9F0ECED);
+  static const toggle = Color(0xFF32343A);
+
+  static const button = Color(0xFF2E3138);
+  static const buttonText = Color(0xFFFDFDFE);
+  static const socialBg = Color(0xFFF4F5F7);
+
+  static const error = Color(0xFFFFC0B8);
+  static const success = Color(0xFFCCF4CF);
+  static const info = Color(0xFFF3DFDF);
 }
 
 class LoginScreen extends StatefulWidget {
@@ -36,14 +39,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _rememberMe = false;
-  String _statusMessage = '';
-  String _statusState = ''; // '', 'error', 'success', 'info'
   bool _isSubmitting = false;
+  String _statusMessage = '';
+  String _statusState = '';
 
   @override
   void initState() {
@@ -55,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final storage = await StorageService.getInstance();
     final remember = storage.getRememberMe();
     final email = storage.getRememberedEmail();
-    if (remember && email.isNotEmpty) {
+    if (remember && email.isNotEmpty && mounted) {
       setState(() {
         _rememberMe = true;
         _emailController.text = email;
@@ -70,13 +72,22 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  String? get _fontFamily => GoogleFonts.notoSansSc().fontFamily;
-
   void _setStatus(String message, String state) {
     setState(() {
       _statusMessage = message;
       _statusState = state;
     });
+  }
+
+  Color _statusColor() {
+    switch (_statusState) {
+      case 'error':
+        return _C.error;
+      case 'success':
+        return _C.success;
+      default:
+        return _C.info;
+    }
   }
 
   String? _validate() {
@@ -117,44 +128,45 @@ class _LoginScreenState extends State<LoginScreen> {
       await storage.saveRememberMe(_rememberMe, _emailController.text.trim());
       if (!mounted) return;
       _setStatus('Login successful.', 'success');
-      Navigator.of(context).pushReplacementNamed(
-        RoleRoutes.authenticatedHomeForRole(userProvider.user?.role),
-      );
+      Navigator.of(context).pushReplacementNamed('/home');
     } else {
       _setStatus(userProvider.errorMessage, 'error');
     }
 
-    setState(() => _isSubmitting = false);
+    if (mounted) setState(() => _isSubmitting = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth <= 900;
+    final size = MediaQuery.of(context).size;
+    final isMobile = size.width < 980;
+    final desktopHeight = (size.height - 24).clamp(700.0, 920.0).toDouble();
 
     return Scaffold(
       backgroundColor: _C.pageBg,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: 1360,
-              maxHeight: isMobile ? double.infinity : 820,
-            ),
-            decoration: BoxDecoration(
-              color: _C.cardBg,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x2E000000),
-                  blurRadius: 30,
-                  offset: Offset(0, 14),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(isMobile ? 0 : 12),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1420),
+              child: Container(
+                height: isMobile ? null : desktopHeight,
+                decoration: BoxDecoration(
+                  color: _C.shell,
+                  borderRadius: BorderRadius.circular(isMobile ? 0 : 8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x2A000000),
+                      blurRadius: 24,
+                      offset: Offset(0, 10),
+                    ),
+                  ],
                 ),
-              ],
+                clipBehavior: Clip.antiAlias,
+                child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+              ),
             ),
-            clipBehavior: Clip.antiAlias,
-            child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
           ),
         ),
       ),
@@ -164,10 +176,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildDesktopLayout() {
     return Row(
       children: [
-        // Visual panel (left 52%)
-        Expanded(flex: 52, child: _buildVisualPanel()),
-        // Form panel (right 48%)
-        Expanded(flex: 48, child: _buildFormPanel()),
+        Expanded(flex: 53, child: _buildVisualPanel('assets/imgs/login.jpg')),
+        Expanded(flex: 47, child: _buildFormPanel(isMobile: false)),
       ],
     );
   }
@@ -177,273 +187,271 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.38,
-            child: _buildVisualPanel(),
+            height: 280,
+            width: double.infinity,
+            child: _buildVisualPanel('assets/imgs/login.jpg'),
           ),
-          _buildFormPanel(),
+          _buildFormPanel(isMobile: true),
         ],
       ),
     );
   }
 
-  Widget _buildVisualPanel() {
-    return Container(
-      color: _C.visualBg,
-      child: Image.asset(
-        'assets/imgs/login.jpg',
-        fit: BoxFit.cover,
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.centerLeft,
-        errorBuilder: (_, __, ___) =>
-            const SizedBox.expand(child: ColoredBox(color: _C.visualBg)),
-      ),
+  Widget _buildVisualPanel(String asset) {
+    return Image.asset(
+      asset,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+      alignment: Alignment.centerLeft,
+      errorBuilder: (_, __, ___) =>
+          const SizedBox.expand(child: ColoredBox(color: _C.shell)),
     );
   }
 
-  Widget _buildFormPanel() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth <= 900;
+  Widget _buildFormPanel({required bool isMobile}) {
+    final titleSize = isMobile ? 40.0 : 52.0;
+    final horizontalPad = isMobile ? 24.0 : 38.0;
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 18 : 42,
-        vertical: isMobile ? 18 : 16,
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [_C.formTop, _C.formBottom],
+        ),
       ),
-      child: Column(
-        mainAxisAlignment: isMobile
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.spaceEvenly,
-        children: [
-          // Logo
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: Image.asset(
-              'assets/imgs/logo_with_bg.png',
-              width: 80,
-              height: 80,
-              fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) => Container(
-                width: 80,
-                height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _C.pageBg,
-                ),
-                child: Center(
-                  child: Text(
-                    'P',
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 42,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final content = Padding(
+            padding: EdgeInsets.fromLTRB(
+              horizontalPad,
+              isMobile ? 22 : 30,
+              horizontalPad,
+              isMobile ? 24 : 20,
             ),
-          ),
-          const SizedBox(height: 2),
-
-          // Title
-          Text(
-            'Welcome! This is Primoria',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: _fontFamily,
-              fontSize: isMobile ? 22 : 28,
-              fontWeight: FontWeight.w700,
-              color: _C.titleColor,
-              height: 1.16,
-            ),
-          ),
-
-          // Subtitle
-          Text(
-            'Sign in to continue to your workspace.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: _fontFamily,
-              fontSize: 13.5,
-              color: _C.subtitleColor,
-            ),
-          ),
-          if (isMobile) const SizedBox(height: 10),
-
-          // Form
-          Form(
-            key: _formKey,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 500),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Email + Password wrapped in AutofillGroup so the
-                  // browser/password-manager can offer to save & autofill.
-                  AutofillGroup(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildLabel('Email'),
-                        const SizedBox(height: 8),
-                        _buildInput(
-                          controller: _emailController,
-                          placeholder: 'you@example.com or phone',
-                          keyboardType: TextInputType.emailAddress,
-                          autofillHints: const [AutofillHints.email],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildBrandTile(isMobile ? 82 : 104),
+                    SizedBox(width: isMobile ? 16 : 20),
+                    Expanded(
+                      child: Text(
+                        'Welcome to\nPrimoria',
+                        style: GoogleFonts.sora(
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.w700,
+                          height: 0.98,
+                          color: _C.heading,
                         ),
-                        const SizedBox(height: 14),
-                        _buildLabel('Password'),
-                        const SizedBox(height: 8),
-                        _buildPasswordInput(),
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Remember me + Forgot password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+                  ],
+                ),
+                const SizedBox(height: 22),
+                _buildLabel('Email'),
+                _buildInput(
+                  controller: _emailController,
+                  hint: 'you@example.com or phone',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 18),
+                _buildLabel('Password'),
+                _buildInput(
+                  controller: _passwordController,
+                  hint: 'At least 6 characters',
+                  obscure: _obscurePassword,
+                  suffixText: _obscurePassword ? 'Show' : 'Hide',
+                  onSuffixTap: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
                         children: [
                           SizedBox(
-                            width: 16,
-                            height: 16,
+                            width: 20,
+                            height: 20,
                             child: Checkbox(
                               value: _rememberMe,
-                              onChanged: (v) =>
-                                  setState(() => _rememberMe = v ?? false),
-                              activeColor: _C.buttonBg,
+                              side: const BorderSide(
+                                color: _C.meta,
+                                width: 1.2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              activeColor: Colors.white,
+                              checkColor: _C.formTop,
+                              onChanged: (value) =>
+                                  setState(() => _rememberMe = value ?? false),
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            'Remember me',
-                            style: TextStyle(
-                              fontFamily: _fontFamily,
-                              fontSize: 12.6,
-                              color: _C.metaColor,
+                          Flexible(
+                            child: Text(
+                              'Remember Me',
+                              style: GoogleFonts.manrope(
+                                fontSize: 13.5,
+                                color: _C.meta,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: _showForgotPasswordDialog,
-                          child: Text(
-                            'Forgot password?',
-                            style: TextStyle(
-                              fontFamily: _fontFamily,
-                              fontSize: 12.6,
-                              color: _C.metaColor,
+                    ),
+                    GestureDetector(
+                      onTap: _showForgotPasswordDialog,
+                      child: Text(
+                        'Forgot Password?',
+                        style: GoogleFonts.manrope(
+                          fontSize: 13.5,
+                          color: _C.meta,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 22),
+                Center(
+                  child: SizedBox(
+                    width: isMobile ? double.infinity : 250,
+                    height: 56,
+                    child: _buildLoginButton(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 20,
+                  child: Center(
+                    child: Text(
+                      _statusMessage,
+                      style: GoogleFonts.manrope(
+                        fontSize: 12,
+                        color: _statusColor(),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    const Expanded(
+                      child: Divider(color: _C.line, thickness: 1),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Text(
+                        'Login Via',
+                        style: GoogleFonts.manrope(
+                          color: _C.meta,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Divider(color: _C.line, thickness: 1),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildSocialButton('assets/imgs/google.png', 34, 'google'),
+                    const SizedBox(width: 16),
+                    _buildSocialButton('assets/imgs/wechat.png', 38, 'wechat'),
+                    const SizedBox(width: 16),
+                    _buildSocialButton('assets/imgs/ins.png', 38, 'ins'),
+                    const SizedBox(width: 16),
+                    _buildSocialButton(
+                      'assets/imgs/whatsapp.png',
+                      38,
+                      'whatsapp',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Center(
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Don’t Have an account? ",
+                      style: GoogleFonts.manrope(
+                        fontSize: 14.5,
+                        color: _C.meta,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      children: [
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.baseline,
+                          baseline: TextBaseline.alphabetic,
+                          child: GestureDetector(
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushReplacementNamed('/register'),
+                            child: Text(
+                              'Sign Up',
+                              style: GoogleFonts.manrope(
+                                fontSize: 14.5,
+                                color: _C.heading,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Login button
-                  Center(
-                    child: SizedBox(
-                      width: isMobile ? double.infinity : 220,
-                      height: 48,
-                      child: _buildLoginButton(),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 4),
-
-                  // Status message
-                  SizedBox(
-                    height: 18,
-                    child: Text(
-                      _statusMessage,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: _fontFamily,
-                        fontSize: 12.6,
-                        color: _statusState == 'error'
-                            ? _C.errorColor
-                            : _statusState == 'success'
-                            ? _C.successColor
-                            : _C.statusInfo,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Divider
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: Row(
-              children: [
-                Expanded(child: Container(height: 1, color: _C.lineColor)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    'Other Login Way',
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 14.2,
-                      color: _C.dividerText,
-                    ),
-                  ),
-                ),
-                Expanded(child: Container(height: 1, color: _C.lineColor)),
-              ],
-            ),
-          ),
-          const SizedBox(height: 6),
-
-          // Social buttons
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: _buildSocialGrid(isMobile),
-          ),
-          const SizedBox(height: 4),
-
-          // Sign up text
-          Text.rich(
-            TextSpan(
-              text: "Don't have an account? ",
-              style: TextStyle(
-                fontFamily: _fontFamily,
-                fontSize: 14.4,
-                color: _C.signupLink,
-              ),
-              children: [
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.baseline,
-                  baseline: TextBaseline.alphabetic,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(
-                        context,
-                      ).pushReplacementNamed('/register'),
-                      child: Text(
-                        'Sign-up',
-                        style: TextStyle(
-                          fontFamily: _fontFamily,
-                          fontSize: 14.4,
-                          fontWeight: FontWeight.w700,
-                          color: _C.buttonBg,
-                        ),
-                      ),
-                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
             ),
+          );
+
+          if (isMobile) return content;
+
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: content,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildBrandTile(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFE66558), Color(0xFF8E42F5)],
+        ),
+      ),
+      child: Center(
+        child: Text(
+          'V',
+          style: GoogleFonts.sora(
+            fontSize: size * 0.55,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            height: 1,
           ),
-        ],
+        ),
       ),
     );
   }
@@ -451,191 +459,125 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLabel(String text) {
     return Text(
       text,
-      style: TextStyle(
-        fontFamily: _fontFamily,
+      style: GoogleFonts.sora(
+        color: _C.label,
         fontSize: 18,
-        fontWeight: FontWeight.w600,
-        color: _C.mutedColor,
+        fontWeight: FontWeight.w700,
       ),
     );
   }
 
   Widget _buildInput({
     required TextEditingController controller,
-    required String placeholder,
+    required String hint,
     TextInputType? keyboardType,
-    List<String>? autofillHints,
+    bool obscure = false,
+    String? suffixText,
+    VoidCallback? onSuffixTap,
   }) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
-      autofillHints: autofillHints,
+      obscureText: obscure,
+      textInputAction: TextInputAction.next,
       onChanged: (_) {
         if (_statusState == 'error') _setStatus('', '');
       },
-      style: TextStyle(
-        fontFamily: _fontFamily,
-        fontSize: 14.7,
-        color: _C.inputText,
+      style: GoogleFonts.manrope(
+        color: _C.input,
+        fontSize: 15.5,
+        fontWeight: FontWeight.w600,
       ),
       decoration: InputDecoration(
-        hintText: placeholder,
-        hintStyle: TextStyle(
-          fontFamily: _fontFamily,
-          fontSize: 14.7,
-          color: _C.mutedColor.withValues(alpha: 0.6),
+        hintText: hint,
+        hintStyle: GoogleFonts.manrope(
+          color: _C.hint,
+          fontSize: 15.5,
+          fontWeight: FontWeight.w700,
         ),
-        filled: false,
         contentPadding: const EdgeInsets.only(bottom: 10),
-        border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
-        ),
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
+          borderSide: BorderSide(color: _C.line),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.inputFocusBorder),
+          borderSide: BorderSide(color: Colors.white),
         ),
-      ),
-    );
-  }
-
-  Widget _buildPasswordInput() {
-    return TextField(
-      controller: _passwordController,
-      obscureText: _obscurePassword,
-      autofillHints: const [AutofillHints.password],
-      onChanged: (_) {
-        if (_statusState == 'error') _setStatus('', '');
-      },
-      style: TextStyle(
-        fontFamily: _fontFamily,
-        fontSize: 14.7,
-        color: _C.inputText,
-      ),
-      decoration: InputDecoration(
-        hintText: 'At least 6 characters',
-        hintStyle: TextStyle(
-          fontFamily: _fontFamily,
-          fontSize: 14.7,
-          color: _C.mutedColor.withValues(alpha: 0.6),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.only(bottom: 10, right: 62),
-        border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
-        ),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.lineColor),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: _C.inputFocusBorder),
-        ),
-        suffixIcon: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => setState(() => _obscurePassword = !_obscurePassword),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                _obscurePassword ? 'Show' : 'Hide',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontSize: 12.9,
-                  fontWeight: FontWeight.w600,
-                  color: _C.toggleColor,
+        suffixIcon: suffixText == null
+            ? null
+            : GestureDetector(
+                onTap: onSuffixTap,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    suffixText,
+                    style: GoogleFonts.manrope(
+                      color: _C.toggle,
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+        suffixIconConstraints: const BoxConstraints(minHeight: 0, minWidth: 0),
       ),
+      onSubmitted: (_) => _submit(),
     );
   }
 
   Widget _buildLoginButton() {
-    return MouseRegion(
-      cursor: _isSubmitting
-          ? SystemMouseCursors.wait
-          : SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: _isSubmitting ? null : _submit,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          decoration: BoxDecoration(
-            color: _C.buttonBg,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: _C.button,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: TextButton(
+        onPressed: _isSubmitting ? null : _submit,
+        style: TextButton.styleFrom(
+          foregroundColor: _C.buttonText,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          child: Center(
-            child: _isSubmitting
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    'Login',
-                    style: TextStyle(
-                      fontFamily: _fontFamily,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFFF8FBFF),
-                    ),
-                  ),
+          textStyle: GoogleFonts.sora(
+            fontSize: 15.5,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.8,
           ),
         ),
+        child: _isSubmitting
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : const Text('LOGIN'),
       ),
     );
   }
 
-  Widget _buildSocialGrid(bool isMobile) {
-    final icons = [
-      {'asset': 'assets/imgs/google.png', 'size': 38.0, 'key': 'google'},
-      {'asset': 'assets/imgs/wechat.png', 'size': 44.0, 'key': 'wechat'},
-      {'asset': 'assets/imgs/ins.png', 'size': 44.0, 'key': 'ins'},
-      {'asset': 'assets/imgs/whatsapp.png', 'size': 44.0, 'key': 'whatsapp'},
-    ];
-
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: isMobile ? 2 : 4,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: isMobile ? 2.5 : 1.6,
-      ),
-      itemCount: icons.length,
-      itemBuilder: (context, index) {
-        final icon = icons[index];
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => _onSocialTap(icon['key'] as String),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: _C.socialBorder),
-              ),
-              child: Center(
-                child: Image.asset(
-                  icon['asset'] as String,
-                  width: icon['size'] as double,
-                  height: icon['size'] as double,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.link, color: _C.titleColor),
-                ),
-              ),
-            ),
+  Widget _buildSocialButton(String asset, double iconSize, String key) {
+    return GestureDetector(
+      onTap: () => _onSocialTap(key),
+      child: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: _C.socialBg,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Image.asset(
+            asset,
+            width: iconSize,
+            height: iconSize,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) =>
+                const Icon(Icons.link, color: Colors.black54),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -648,76 +590,58 @@ class _LoginScreenState extends State<LoginScreen> {
         _setStatus(result.message, 'error');
       }
     }
-    // Other providers are placeholders — no action
   }
 
   void _showForgotPasswordDialog() {
     final resetEmailController = TextEditingController();
-
     showDialog(
       context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          title: Text(
-            'Reset Password',
-            style: TextStyle(fontFamily: _fontFamily),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Enter your email and we will send you a password reset link.',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontSize: 13.5,
-                  color: _C.subtitleColor,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: resetEmailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'you@example.com',
-                  hintStyle: TextStyle(
-                    fontFamily: _fontFamily,
-                    color: _C.mutedColor,
-                  ),
-                  border: const UnderlineInputBorder(),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: Text('Cancel', style: TextStyle(fontFamily: _fontFamily)),
+      builder: (ctx) => AlertDialog(
+        title: Text('Reset Password', style: GoogleFonts.manrope()),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Enter your email and we will send a password reset link.',
+              style: GoogleFonts.manrope(fontSize: 14),
             ),
-            TextButton(
-              onPressed: () async {
-                final email = resetEmailController.text.trim();
-                if (email.isEmpty) return;
-                Navigator.of(ctx).pop();
-                final userProvider = context.read<UserProvider>();
-                final result = await userProvider.resetPassword(email);
-                if (!mounted) return;
-                if (result.success) {
-                  _setStatus('Reset link sent! Check your email.', 'success');
-                } else {
-                  _setStatus(result.message, 'error');
-                }
-              },
-              child: Text(
-                'Send',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
+            const SizedBox(height: 14),
+            TextField(
+              controller: resetEmailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: 'you@example.com',
+                hintStyle: GoogleFonts.manrope(color: Colors.black45),
               ),
             ),
           ],
-        );
-      },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text('Cancel', style: GoogleFonts.manrope()),
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = resetEmailController.text.trim();
+              if (email.isEmpty) return;
+              Navigator.of(ctx).pop();
+              final userProvider = context.read<UserProvider>();
+              final result = await userProvider.resetPassword(email);
+              if (!mounted) return;
+              if (result.success) {
+                _setStatus('Reset link sent! Check your email.', 'success');
+              } else {
+                _setStatus(result.message, 'error');
+              }
+            },
+            child: Text(
+              'Send',
+              style: GoogleFonts.manrope(fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

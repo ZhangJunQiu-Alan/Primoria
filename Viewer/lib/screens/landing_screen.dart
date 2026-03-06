@@ -1,36 +1,23 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Landing page color constants (matching CSS template)
 class _C {
-  static const Color pageBg = Color(0xFF174A6B);
-  static const Color gradientTop = Color(0xFF103452);
-  static const Color gradientBottom = Color(0xFF1F5677);
-  static const Color cardBg = Color(0xFFF3F4F6);
-  static const Color titleColor = Color(0xFF5A6678);
-  static const Color buttonBg = Color(0xFF42516A);
-  static const Color heroText = Color(0xFFF5F8FB);
-  static const Color heroSub = Color(0xE6EAF0F7); // rgba(234,240,247,0.9)
-  static const Color sectionTitle = Color(0xFFF6F9FD);
-  static const Color cardTitle = Color(0xFF485972);
-  static const Color cardBody = Color(0xFF5A687C);
-  static const Color cardBorder = Color(0xFFD2DDE9);
-  static const Color advantageBorder = Color(
-    0x8FCFDCEC,
-  ); // rgba(207,220,236,0.56)
-  static const Color advantageBg = Color(0x29F3F4F6); // rgba(243,244,246,0.16)
-  static const Color advantageText = Color(
-    0xF2F2F8FF,
-  ); // rgba(242,248,255,0.95)
-  static const Color footerBorder = Color(0xFFCFDAE7);
-  static const Color navPillBg = Color(0xFFEEF2F7);
-  static const Color navPillBorder = Color(0xFFD6DFEA);
-  static const Color navText = Color(0xFF5A6678);
-  static const Color brandText = Color(0xFF36485F);
-  static const Color brandLogoBorder = Color(
-    0x3D5F748B,
-  ); // rgba(95,116,139,0.24)
+  const _C._();
+
+  static const page = Color(0xFFF3F3F6);
+  static const ink = Color(0xFF05070C);
+  static const body = Color(0xFF4A4D56);
+  static const accent = Color(0xFF11B4FF);
+  static const accentDeep = Color(0xFF0D7DEB);
+
+  static const featureBuilderStart = Color(0xFF1AE86B);
+  static const featureBuilderEnd = Color(0xFF008FE8);
+  static const featureViewerStart = Color(0xFF1682F8);
+  static const featureViewerEnd = Color(0xFF6B48D9);
+
+  static const advantagesTop = Color(0xFF0E86E3);
+  static const advantagesBottom = Color(0xFF0C9DB7);
+  static const footer = Color(0xFF0E4AA7);
 }
 
 class LandingScreen extends StatefulWidget {
@@ -40,242 +27,106 @@ class LandingScreen extends StatefulWidget {
   State<LandingScreen> createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen> {
+class _LandingScreenState extends State<LandingScreen>
+    with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _featuresKey = GlobalKey();
   final GlobalKey _advantagesKey = GlobalKey();
+  final GlobalKey _communityKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
-  bool _mobileMenuOpen = false;
-  double _rocketProgress = 0;
+
+  late final AnimationController _introCtrl;
+  late final Animation<double> _fade;
+  late final Animation<Offset> _liftIn;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+    _introCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 780),
+    )..forward();
+    _fade = CurvedAnimation(parent: _introCtrl, curve: Curves.easeOutCubic);
+    _liftIn = Tween<Offset>(
+      begin: const Offset(0, 0.03),
+      end: Offset.zero,
+    ).animate(_fade);
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _introCtrl.dispose();
     super.dispose();
   }
 
-  void _onScroll() {
-    final screenH = MediaQuery.of(context).size.height;
-    final scrollY = _scrollController.offset;
-    final startY = 0.0;
-    final endY = screenH * 0.75;
-    if (endY <= startY) return;
-    final progress = ((scrollY - startY) / (endY - startY)).clamp(0.0, 1.0);
-    if ((progress - _rocketProgress).abs() > 0.005) {
-      setState(() => _rocketProgress = progress);
-    }
-  }
-
   void _scrollTo(GlobalKey key) {
-    final ctx = key.currentContext;
-    if (ctx != null) {
-      Scrollable.ensureVisible(
-        ctx,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOut,
-      );
-    }
-    if (_mobileMenuOpen) setState(() => _mobileMenuOpen = false);
-  }
-
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeInOut,
+    final targetContext = key.currentContext;
+    if (targetContext == null) return;
+    Scrollable.ensureVisible(
+      targetContext,
+      duration: const Duration(milliseconds: 550),
+      curve: Curves.easeInOutCubic,
     );
-    if (_mobileMenuOpen) setState(() => _mobileMenuOpen = false);
   }
 
-  String? get _fontFamily => GoogleFonts.notoSansSc().fontFamily;
+  void _goToLogin() => Navigator.of(context).pushNamed('/login');
+
+  TextStyle _headlineStyle(double size) => GoogleFonts.sora(
+    fontSize: size,
+    fontWeight: FontWeight.w700,
+    height: 0.98,
+    color: _C.ink,
+  );
+
+  TextStyle _bodyStyle(double size, {Color? color, FontWeight? weight}) =>
+      GoogleFonts.manrope(
+        fontSize: size,
+        height: 1.25,
+        color: color ?? _C.body,
+        fontWeight: weight ?? FontWeight.w500,
+      );
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth <= 900;
-    final isSmall = screenWidth <= 640;
-
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-0.3, -1),
-            end: Alignment(0.3, 1),
-            colors: [_C.gradientTop, _C.pageBg, _C.gradientBottom],
-          ),
-        ),
-        child: Stack(
-          children: [
-            // Background radial gradients
-            Positioned.fill(
-              child: IgnorePointer(child: CustomPaint(painter: _BgPainter())),
-            ),
-            // Main scrollable content
-            CustomScrollView(
+      backgroundColor: _C.page,
+      body: SafeArea(
+        child: FadeTransition(
+          opacity: _fade,
+          child: SlideTransition(
+            position: _liftIn,
+            child: ListView(
               controller: _scrollController,
-              slivers: [
-                // Sticky header
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _HeaderDelegate(
-                    isMobile: isMobile,
-                    isSmall: isSmall,
-                    fontFamily: _fontFamily,
-                    onHome: _scrollToTop,
-                    onFeatures: () => _scrollTo(_featuresKey),
-                    onAdvantages: () => _scrollTo(_advantagesKey),
-                    onContact: () => _scrollTo(_contactKey),
-                    onMenuToggle: () =>
-                        setState(() => _mobileMenuOpen = !_mobileMenuOpen),
-                    mobileMenuOpen: _mobileMenuOpen,
-                  ),
-                ),
-                // Mobile nav dropdown
-                if (_mobileMenuOpen && isMobile)
-                  SliverToBoxAdapter(child: _buildMobileNav()),
-                // Hero
-                SliverToBoxAdapter(child: _buildHero(isMobile)),
-                // Features
-                SliverToBoxAdapter(child: _buildFeatures(isMobile)),
-                // Advantages
-                SliverToBoxAdapter(child: _buildAdvantages(isMobile, isSmall)),
-                // Footer
-                SliverToBoxAdapter(child: _buildFooter()),
-                const SliverToBoxAdapter(child: SizedBox(height: 22)),
+              children: [
+                _buildHeader(),
+                _buildHero(),
+                _buildFeatures(),
+                _buildAdvantages(),
+                _buildCommunity(),
+                _buildFooter(),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMobileNav() {
-    return Center(
-      child: Container(
-        width: min(440, MediaQuery.of(context).size.width - 28),
-        margin: const EdgeInsets.only(top: 10),
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF3F5F9),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFD5DEEA)),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x29000000),
-              blurRadius: 30,
-              offset: Offset(0, 14),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            _mobileNavItem('Home', _scrollToTop),
-            _mobileNavItem('Features', () => _scrollTo(_featuresKey)),
-            _mobileNavItem('Advantages', () => _scrollTo(_advantagesKey)),
-            _mobileNavItem('Contact', () => _scrollTo(_contactKey)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _mobileNavItem(String label, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontFamily: _fontFamily,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF495A71),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHero(bool isMobile) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final lift = -320 * _rocketProgress;
-    final drift = 44 * _rocketProgress;
-    final wobble = sin(_rocketProgress * pi * 10) * 3.2;
-    final angle = (-14 + _rocketProgress * 22 + wobble) * pi / 180;
-    final fade = 0.82 + _rocketProgress * 0.18;
-
-    return SizedBox(
-      height: isMobile ? screenHeight - 104 : screenHeight - 132,
-      child: Stack(
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 14),
+      child: Row(
         children: [
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: isMobile ? 36 : 0,
-                left: 12,
-                right: 12,
-              ),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 760),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Learn by thinking, not just watching',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: _fontFamily,
-                        fontSize: isMobile ? 28 : 48,
-                        fontWeight: FontWeight.w700,
-                        color: _C.heroText,
-                        height: 1.08,
-                        letterSpacing: 0.01,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    Text(
-                      'Build and learn interactive STEM courses - from drag-and-drop authoring to brilliant-like lessons.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: _fontFamily,
-                        fontSize: isMobile ? 15 : 18,
-                        color: _C.heroSub,
-                        height: 1.62,
-                      ),
-                    ),
-                    const SizedBox(height: 28),
-                    _buildCtaButton(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          // Rocket
-          Positioned(
-            right: isMobile ? 4 : 80,
-            bottom: isMobile ? -8 : 40,
-            child: Transform.translate(
-              offset: Offset(drift, lift),
-              child: Transform.rotate(
-                angle: angle,
-                child: Opacity(
-                  opacity: fade,
-                  child: SizedBox(
-                    width: isMobile ? 70 : 90,
-                    child: const _RocketSvg(),
-                  ),
-                ),
-              ),
+          const _BrandMark(size: 22, withGlow: false),
+          const SizedBox(width: 10),
+          Text(
+            'PRIMORIA',
+            style: GoogleFonts.sora(
+              color: _C.accent,
+              fontSize: 24,
+              letterSpacing: 1.2,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -283,552 +134,647 @@ class _LandingScreenState extends State<LandingScreen> {
     );
   }
 
-  Widget _buildCtaButton() {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => Navigator.of(context).pushNamed('/login'),
-        child: Container(
-          padding: const EdgeInsets.only(
-            left: 12,
-            top: 12,
-            bottom: 12,
-            right: 24,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.34)),
-            color: const Color(0x24F3F4F6), // rgba(243,244,246,0.14)
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x47061929),
-                blurRadius: 24,
-                offset: Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+  Widget _buildHero() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth >= 980;
+        final hPad = wide ? 86.0 : 24.0;
+
+        return Container(
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, wide ? 112 : 78),
+          child: Stack(
+            clipBehavior: Clip.none,
             children: [
-              Container(
-                width: 34,
-                height: 34,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xC7C1D3E8), // rgba(193,211,232,0.78)
-                  ),
-                  gradient: const LinearGradient(
-                    begin: Alignment(-0.4, -0.8),
-                    end: Alignment(0.4, 0.8),
-                    colors: [Color(0xFFF5F8FC), Color(0xFFD7E1ED)],
-                  ),
-                ),
+              Positioned(
+                top: wide ? -8 : 36,
+                right: wide ? 170 : 6,
+                child: IgnorePointer(child: _GearBackdrop(isWide: wide)),
               ),
-              const SizedBox(width: 12),
-              Text(
-                'Get Start',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFFEFF5FA),
-                ),
-              ),
+              wide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 7, child: _buildHeroCopy(wide: true)),
+                        const SizedBox(width: 60),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 74),
+                          child: _buildGetStartedButton(fullWidth: false),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildHeroCopy(wide: false),
+                        const SizedBox(height: 30),
+                        _buildGetStartedButton(fullWidth: true),
+                      ],
+                    ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  Widget _buildHeroCopy({required bool wide}) {
+    final headlineSize = wide ? 68.0 : 46.0;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+          text: TextSpan(
+            style: _headlineStyle(headlineSize),
+            children: [
+              const TextSpan(text: 'Learn by '),
+              TextSpan(
+                text: 'Thinking',
+                style: _headlineStyle(headlineSize).copyWith(color: _C.accent),
+              ),
+              const TextSpan(text: '\nnot just Watching'),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: wide ? 610 : 420),
+          child: Text(
+            'Build and learn interactive STEM courses - from drag and drop '
+            'authoring to brilliant-like lessons',
+            style: _bodyStyle(wide ? 19 : 17),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGetStartedButton({required bool fullWidth}) {
+    return SizedBox(
+      width: fullWidth ? double.infinity : 260,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9),
+          gradient: const LinearGradient(
+            colors: [_C.accentDeep, Color(0xFF14D7E8)],
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x3210A6E3),
+              blurRadius: 20,
+              offset: Offset(0, 8),
+            ),
+          ],
+        ),
+        child: TextButton(
+          onPressed: _goToLogin,
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            textStyle: GoogleFonts.sora(
+              fontSize: 12,
+              letterSpacing: 0.7,
+              fontWeight: FontWeight.w700,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(9),
+            ),
+          ),
+          child: const Text('GET STARTED'),
         ),
       ),
     );
   }
 
-  Widget _buildFeatures(bool isMobile) {
-    return Container(
-      key: _featuresKey,
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 14 : 0,
-        vertical: isMobile ? 42 : 64,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1160),
+  Widget _buildFeatures() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth >= 1020;
+        final hPad = wide ? 86.0 : 24.0;
+
+        final builderItems = const [
+          'Drag and drop lesson blocks',
+          'Instant preview while editing',
+          'Export/Import as Course JSON schema',
+          'Cloud save & publish (Supabase-ready)',
+          'AI Assisted course drafting (Placeholder)',
+        ];
+        final viewerItems = const [
+          'Light/Dark Themes',
+          'Progress tracking and profiles',
+          'Interactive lessons (Sliders, Feedback, ...)',
+          'Learn by doing flows (Not passive video)',
+          'Search & Course discovery (Placeholder)',
+        ];
+
+        return Container(
+          key: _featuresKey,
+          padding: EdgeInsets.fromLTRB(hPad, 0, hPad, wide ? 92 : 72),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Features',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontSize: isMobile ? 24 : 32,
+                style: GoogleFonts.sora(
+                  fontSize: wide ? 32 : 28,
                   fontWeight: FontWeight.w700,
-                  color: _C.sectionTitle,
+                  color: _C.accent,
                 ),
               ),
-              const SizedBox(height: 24),
-              isMobile
-                  ? Column(
+              const SizedBox(height: 8),
+              Text(
+                'Everything You Need.',
+                style: _headlineStyle(wide ? 64 : 48),
+              ),
+              const SizedBox(height: 34),
+              wide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _featureCard('Builder', const [
-                          'Drag-and-drop lesson blocks',
-                          'Instant preview while editing',
-                          'Export/Import as Course JSON schema',
-                          'Cloud save & publish (Supabase-ready)',
-                          'AI-assisted course drafting (placeholder)',
-                        ]),
-                        const SizedBox(height: 16),
-                        _featureCard('Viewer', const [
-                          'Interactive lessons (sliders, feedback, animations)',
-                          'Learn-by-doing flows (not passive video)',
-                          'Progress tracking and profiles',
-                          'Search & course discovery (placeholder)',
-                          'Light/Dark themes',
-                        ]),
+                        Expanded(
+                          child: _FeatureCard(
+                            title: 'Builder',
+                            lines: builderItems,
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                _C.featureBuilderStart,
+                                _C.featureBuilderEnd,
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 44),
+                        Expanded(
+                          child: _FeatureCard(
+                            title: 'Viewer',
+                            lines: viewerItems,
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                _C.featureViewerStart,
+                                _C.featureViewerEnd,
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     )
-                  : Row(
+                  : Column(
                       children: [
-                        Expanded(
-                          child: _featureCard('Builder', const [
-                            'Drag-and-drop lesson blocks',
-                            'Instant preview while editing',
-                            'Export/Import as Course JSON schema',
-                            'Cloud save & publish (Supabase-ready)',
-                            'AI-assisted course drafting (placeholder)',
-                          ]),
+                        _FeatureCard(
+                          title: 'Builder',
+                          lines: builderItems,
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              _C.featureBuilderStart,
+                              _C.featureBuilderEnd,
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: _featureCard('Viewer', const [
-                            'Interactive lessons (sliders, feedback, animations)',
-                            'Learn-by-doing flows (not passive video)',
-                            'Progress tracking and profiles',
-                            'Search & course discovery (placeholder)',
-                            'Light/Dark themes',
-                          ]),
+                        const SizedBox(height: 18),
+                        _FeatureCard(
+                          title: 'Viewer',
+                          lines: viewerItems,
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              _C.featureViewerStart,
+                              _C.featureViewerEnd,
+                            ],
+                          ),
                         ),
                       ],
                     ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  Widget _buildAdvantages() {
+    final items = const [
+      _AdvantageData(
+        icon: Icons.flash_on_rounded,
+        title: 'Faster Authoring',
+        subtitle: 'Compose Lessons in Minutes',
+      ),
+      _AdvantageData(
+        icon: Icons.track_changes_rounded,
+        title: 'Better Retention',
+        subtitle: 'Active Learning over passive watching',
+      ),
+      _AdvantageData(
+        icon: Icons.description_rounded,
+        title: 'Portable Content',
+        subtitle: 'JSON decouples content from UI',
+      ),
+      _AdvantageData(
+        icon: Icons.public_rounded,
+        title: 'Web-First',
+        subtitle: 'Works Across Devices',
+      ),
+      _AdvantageData(
+        icon: Icons.design_services_rounded,
+        title: 'Consistent Design',
+        subtitle: 'Across Builder & Viewer',
+      ),
+      _AdvantageData(
+        icon: Icons.storage_rounded,
+        title: 'Scalable Backend Path',
+        subtitle: 'Auth/Storage/Search with Supabase',
+      ),
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final sideHeading = constraints.maxWidth >= 1220;
+        final hPad = sideHeading ? 36.0 : 18.0;
+
+        return Container(
+          key: _advantagesKey,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [_C.advantagesTop, _C.advantagesBottom],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              hPad,
+              sideHeading ? 64 : 50,
+              hPad,
+              sideHeading ? 66 : 56,
+            ),
+            child: sideHeading
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: _buildAdvantageCards(items, wide: true)),
+                      const SizedBox(width: 36),
+                      SizedBox(
+                        width: 390,
+                        child: _buildAdvantageHeading(wide: true),
+                      ),
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildAdvantageHeading(wide: false),
+                      const SizedBox(height: 26),
+                      _buildAdvantageCards(items, wide: false),
+                    ],
+                  ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildAdvantageHeading({required bool wide}) {
+    return Padding(
+      padding: EdgeInsets.only(left: wide ? 4 : 8, top: wide ? 8 : 0),
+      child: Column(
+        crossAxisAlignment: wide
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Advantages',
+            softWrap: false,
+            style: GoogleFonts.sora(
+              color: Colors.white,
+              fontSize: wide ? 62 : 48,
+              fontWeight: FontWeight.w700,
+              height: 1,
+            ),
+            textAlign: wide ? TextAlign.start : TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'WHY CHOOSE US',
+            softWrap: false,
+            style: GoogleFonts.sora(
+              color: Colors.white.withValues(alpha: 0.55),
+              fontSize: wide ? 30 : 24,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.7,
+            ),
+            textAlign: wide ? TextAlign.start : TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdvantageCards(
+    List<_AdvantageData> items, {
+    required bool wide,
+  }) {
+    const offsets = [0.0, 64.0, 126.0, 188.0, 250.0, 312.0];
+
+    if (!wide) {
+      return Column(
+        children: items
+            .map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: 14),
+                child: _AdvantageCard(data: item, maxWidth: double.infinity),
+              ),
+            )
+            .toList(),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(
+        items.length,
+        (index) => Padding(
+          padding: EdgeInsets.only(left: offsets[index], bottom: 14),
+          child: _AdvantageCard(data: items[index], maxWidth: 420),
         ),
       ),
     );
   }
 
-  Widget _featureCard(String title, List<String> items) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-      decoration: BoxDecoration(
-        color: _C.cardBg,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: _C.cardBorder),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x26000000),
-            blurRadius: 30,
-            offset: Offset(0, 14),
+  Widget _buildCommunity() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth >= 900;
+        return Container(
+          key: _communityKey,
+          padding: EdgeInsets.fromLTRB(20, wide ? 94 : 70, 20, wide ? 94 : 70),
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: wide ? 430 : 320,
+                    height: wide ? 430 : 320,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          _C.accent.withValues(alpha: 0.44),
+                          _C.accent.withValues(alpha: 0),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const _BrandMark(size: 148, withGlow: true),
+                ],
+              ),
+              const SizedBox(height: 26),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: _headlineStyle(wide ? 62 : 44),
+                  children: [
+                    const TextSpan(text: 'Join the '),
+                    TextSpan(
+                      text: 'community',
+                      style: _headlineStyle(
+                        wide ? 62 : 44,
+                      ).copyWith(color: _C.accentDeep),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Be part of the future of interactive learning',
+                textAlign: TextAlign.center,
+                style: _bodyStyle(wide ? 18 : 16),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontFamily: _fontFamily,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: _C.cardTitle,
-            ),
-          ),
-          const SizedBox(height: 14),
-          ...items.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
+        );
+      },
+    );
+  }
+
+  Widget _buildFooter() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth >= 900;
+        final hPad = wide ? 56.0 : 22.0;
+        final headingStyle = GoogleFonts.sora(
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+        );
+        final linkStyle = GoogleFonts.manrope(
+          fontSize: 16,
+          color: Colors.white.withValues(alpha: 0.86),
+          fontWeight: FontWeight.w500,
+        );
+
+        return Container(
+          key: _contactKey,
+          color: _C.footer,
+          padding: EdgeInsets.fromLTRB(hPad, 46, hPad, 28),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1160),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '  \u2022  ',
-                    style: TextStyle(color: _C.cardBody),
-                  ),
-                  Expanded(
-                    child: Text(
-                      item,
-                      style: TextStyle(
-                        fontFamily: _fontFamily,
-                        color: _C.cardBody,
-                        height: 1.42,
-                      ),
+                  wide
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: _buildFooterBrand(wide: true),
+                            ),
+                            const SizedBox(width: 90),
+                            _buildFooterColumn(
+                              heading: 'Product',
+                              headingStyle: headingStyle,
+                              linkStyle: linkStyle,
+                              links: [
+                                _FooterLink(
+                                  'Features',
+                                  () => _scrollTo(_featuresKey),
+                                ),
+                                _FooterLink(
+                                  'Advantages',
+                                  () => _scrollTo(_advantagesKey),
+                                ),
+                                _FooterLink(
+                                  'Pricing',
+                                  () => Navigator.of(
+                                    context,
+                                  ).pushNamed('/register'),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 72),
+                            _buildFooterColumn(
+                              heading: 'Company',
+                              headingStyle: headingStyle,
+                              linkStyle: linkStyle,
+                              links: [
+                                const _FooterLink('About', null),
+                                const _FooterLink('Blog', null),
+                                _FooterLink(
+                                  'Contact',
+                                  () => _scrollTo(_contactKey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildFooterBrand(wide: false),
+                            const SizedBox(height: 24),
+                            _buildFooterColumn(
+                              heading: 'Product',
+                              headingStyle: headingStyle,
+                              linkStyle: linkStyle,
+                              links: [
+                                _FooterLink(
+                                  'Features',
+                                  () => _scrollTo(_featuresKey),
+                                ),
+                                _FooterLink(
+                                  'Advantages',
+                                  () => _scrollTo(_advantagesKey),
+                                ),
+                                _FooterLink(
+                                  'Pricing',
+                                  () => Navigator.of(
+                                    context,
+                                  ).pushNamed('/register'),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 18),
+                            _buildFooterColumn(
+                              heading: 'Company',
+                              headingStyle: headingStyle,
+                              linkStyle: linkStyle,
+                              links: [
+                                const _FooterLink('About', null),
+                                const _FooterLink('Blog', null),
+                                _FooterLink(
+                                  'Contact',
+                                  () => _scrollTo(_contactKey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                  const SizedBox(height: 40),
+                  Text(
+                    'Copyright © 2026 PRIMORIA. All rights reserved. No part '
+                    'of this website or any of its contents may be reproduced, '
+                    'copied, modified, or adapted without prior written consent '
+                    'of the author, unless otherwise indicated for stand-alone '
+                    'materials. All content, including text, images, and graphics, '
+                    'is protected by international copyright laws.',
+                    style: GoogleFonts.manrope(
+                      fontSize: 13,
+                      color: Colors.white.withValues(alpha: 0.74),
+                      height: 1.5,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildAdvantages(bool isMobile, bool isSmall) {
-    final items = [
-      'Faster authoring: compose lessons in minutes',
-      'Better retention: active learning over passive watching',
-      'Portable content: JSON decouples content from UI',
-      'Web-first: works across devices',
-      'Scalable backend path: auth/storage/search with Supabase',
-      'Consistent design system across Builder & Viewer',
-    ];
-
-    final crossAxisCount = isSmall ? 1 : (isMobile ? 2 : 3);
-
-    return Container(
-      key: _advantagesKey,
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 14 : 0,
-        vertical: isMobile ? 42 : 64,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1160),
-          child: Column(
-            children: [
-              Text(
-                'Advantages',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  fontSize: isMobile ? 24 : 32,
-                  fontWeight: FontWeight.w700,
-                  color: _C.sectionTitle,
-                ),
-              ),
-              const SizedBox(height: 24),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 14,
-                  childAspectRatio: isSmall ? 4 : (isMobile ? 2.2 : 2.6),
-                ),
-                itemCount: items.length,
-                itemBuilder: (context, index) => _advantageCard(items[index]),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _advantageCard(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-      decoration: BoxDecoration(
-        color: _C.advantageBg,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: _C.advantageBorder),
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontFamily: _fontFamily,
-            fontWeight: FontWeight.w600,
-            color: _C.advantageText,
-            height: 1.45,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFooter() {
-    return Center(
-      key: _contactKey,
-      child: Container(
-        width: min(1160, MediaQuery.of(context).size.width - 28),
-        margin: const EdgeInsets.only(top: 8),
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: _C.cardBg,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: _C.footerBorder),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x24000000),
-              blurRadius: 20,
-              offset: Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Text.rich(
-          TextSpan(
-            text: 'Contact: ',
-            style: TextStyle(fontFamily: _fontFamily, color: _C.titleColor),
-            children: [
-              TextSpan(
-                text: 'hello@primoria.example',
-                style: TextStyle(
-                  fontFamily: _fontFamily,
-                  color: _C.buttonBg,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Header delegate ───────────────────────────────────────────────────────────
-
-class _HeaderDelegate extends SliverPersistentHeaderDelegate {
-  final bool isMobile;
-  final bool isSmall;
-  final String? fontFamily;
-  final VoidCallback onHome;
-  final VoidCallback onFeatures;
-  final VoidCallback onAdvantages;
-  final VoidCallback onContact;
-  final VoidCallback onMenuToggle;
-  final bool mobileMenuOpen;
-
-  _HeaderDelegate({
-    required this.isMobile,
-    required this.isSmall,
-    required this.fontFamily,
-    required this.onHome,
-    required this.onFeatures,
-    required this.onAdvantages,
-    required this.onContact,
-    required this.onMenuToggle,
-    required this.mobileMenuOpen,
-  });
-
-  @override
-  double get maxExtent => 80;
-  @override
-  double get minExtent => 80;
-
-  @override
-  bool shouldRebuild(covariant _HeaderDelegate oldDelegate) =>
-      isMobile != oldDelegate.isMobile ||
-      isSmall != oldDelegate.isSmall ||
-      mobileMenuOpen != oldDelegate.mobileMenuOpen;
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: isSmall ? 10 : 16,
-        left: isSmall ? 8 : 14,
-        right: isSmall ? 8 : 14,
-      ),
-      child: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 1160),
-          padding: EdgeInsets.symmetric(
-            horizontal: isSmall ? 10 : 10,
-            vertical: 8,
-          ),
-          decoration: BoxDecoration(
-            color: const Color(0xEBF3F4F6), // rgba(243,244,246,0.92)
-            borderRadius: BorderRadius.circular(999),
-            border: Border.all(
-              color: const Color(0x5CB2C5DA), // rgba(178,197,218,0.36)
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x2E000000),
-                blurRadius: 30,
-                offset: Offset(0, 14),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              // Brand
-              _buildBrand(context),
-              const Spacer(),
-              // Nav (desktop only)
-              if (!isMobile) _buildDesktopNav(),
-              if (!isMobile) const Spacer(),
-              // Actions
-              _buildActions(context),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBrand(BuildContext context) {
-    return GestureDetector(
-      onTap: onHome,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
+  Widget _buildFooterBrand({required bool wide}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(999),
-              child: Container(
-                width: isSmall ? 36 : 40,
-                height: isSmall ? 36 : 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: _C.brandLogoBorder),
-                  color: const Color(0xFFF8FCFF),
-                ),
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/imgs/logo_with_bg.png',
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Center(
-                      child: Text(
-                        'P',
-                        style: TextStyle(
-                          fontFamily: fontFamily,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF3F5370),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            const _BrandMark(size: 22, withGlow: false),
             const SizedBox(width: 10),
             Text(
-              'Primoria',
-              style: TextStyle(
-                fontFamily: fontFamily,
-                fontSize: isSmall ? 14.7 : 16.2,
+              'PRIMORIA',
+              style: GoogleFonts.sora(
+                color: Colors.white,
+                fontSize: 30,
+                letterSpacing: 1,
                 fontWeight: FontWeight.w700,
-                color: _C.brandText,
-                letterSpacing: 0.01,
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildDesktopNav() {
-    return Container(
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        color: _C.navPillBg,
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: _C.navPillBorder),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _navLink('Home', onHome),
-          const SizedBox(width: 6),
-          _navLink('Features', onFeatures),
-          const SizedBox(width: 6),
-          _navLink('Advantages', onAdvantages),
-        ],
-      ),
-    );
-  }
-
-  Widget _navLink(String label, VoidCallback onTap) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(999)),
+        const SizedBox(height: 16),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: wide ? 420 : double.infinity),
           child: Text(
-            label,
-            style: TextStyle(
-              fontFamily: fontFamily,
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: _C.navText,
+            'Building the future of interactive STEM education with powerful '
+            'authoring tools and engaging learning experiences',
+            style: _bodyStyle(
+              16,
+              color: Colors.white.withValues(alpha: 0.88),
+              weight: FontWeight.w500,
             ),
           ),
         ),
-      ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Icon(
+              Icons.mail_outline_rounded,
+              size: 18,
+              color: Colors.white.withValues(alpha: 0.92),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              'hello@primoria.example',
+              style: _bodyStyle(
+                15,
+                color: Colors.white.withValues(alpha: 0.92),
+                weight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
-  Widget _buildActions(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+  Widget _buildFooterColumn({
+    required String heading,
+    required TextStyle headingStyle,
+    required TextStyle linkStyle,
+    required List<_FooterLink> links,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Hamburger menu button
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: onMenuToggle,
-            child: Container(
-              width: isSmall ? 38 : 42,
-              height: isSmall ? 38 : 42,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFFF7F9FC),
-                border: Border.all(color: const Color(0xFFCFD9E5)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  3,
-                  (_) => Container(
-                    width: 16,
-                    height: 2,
-                    margin: const EdgeInsets.symmetric(vertical: 2),
-                    decoration: BoxDecoration(
-                      color: _C.navText,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        // Contact pill
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: onContact,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: isSmall ? 11 : 18,
-                vertical: isSmall ? 8 : 11,
-              ),
-              decoration: BoxDecoration(
-                color: _C.buttonBg,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Text(
-                'Contact',
-                style: TextStyle(
-                  fontFamily: fontFamily,
-                  fontWeight: FontWeight.w600,
-                  fontSize: isSmall ? 12.6 : 14.2,
-                  color: const Color(0xFFF8FBFF),
-                ),
+        Text(heading, style: headingStyle),
+        const SizedBox(height: 12),
+        ...links.map(
+          (link) => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: InkWell(
+              onTap: link.onTap,
+              borderRadius: BorderRadius.circular(6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Text(link.label, style: linkStyle),
               ),
             ),
           ),
@@ -838,117 +784,274 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-// ─── Background painter ────────────────────────────────────────────────────────
+class _FeatureCard extends StatelessWidget {
+  final String title;
+  final List<String> lines;
+  final Gradient gradient;
 
-class _BgPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Top-left radial gradient
-    final p1 = Paint()
-      ..shader = RadialGradient(
-        center: const Alignment(-0.64, -0.64),
-        radius: 0.48,
-        colors: [
-          const Color(0x38ACC3E0), // rgba(172,195,224,0.22)
-          const Color(0x00ACC3E0),
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), p1);
-
-    // Bottom-right radial gradient
-    final p2 = Paint()
-      ..shader = RadialGradient(
-        center: const Alignment(0.76, 0.56),
-        radius: 0.45,
-        colors: [
-          const Color(0x24FFFFFF), // rgba(255,255,255,0.14)
-          const Color(0x00FFFFFF),
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), p2);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-// ─── Rocket SVG (drawn via CustomPaint) ────────────────────────────────────────
-
-class _RocketSvg extends StatelessWidget {
-  const _RocketSvg();
+  const _FeatureCard({
+    required this.title,
+    required this.lines,
+    required this.gradient,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 64 / 128,
-      child: CustomPaint(painter: _RocketPainter()),
+    return Container(
+      constraints: const BoxConstraints(minHeight: 236),
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x3A0B1834),
+            blurRadius: 20,
+            offset: Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -36,
+            top: 16,
+            child: Container(
+              width: 138,
+              height: 138,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.12),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 16,
+            bottom: -34,
+            child: Transform.rotate(
+              angle: -0.6,
+              child: Container(
+                width: 112,
+                height: 38,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28),
+                  color: Colors.white.withValues(alpha: 0.12),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 22, 24, 22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.sora(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ...lines.map(
+                  (line) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      line,
+                      style: GoogleFonts.manrope(
+                        fontSize: 16,
+                        height: 1.3,
+                        color: Colors.white.withValues(alpha: 0.95),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _RocketPainter extends CustomPainter {
+class _AdvantageData {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  const _AdvantageData({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+}
+
+class _AdvantageCard extends StatelessWidget {
+  final _AdvantageData data;
+  final double maxWidth;
+
+  const _AdvantageCard({required this.data, required this.maxWidth});
+
   @override
-  void paint(Canvas canvas, Size size) {
-    final sx = size.width / 64;
-    final sy = size.height / 128;
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x1A002747),
+              blurRadius: 14,
+              offset: Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.26),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Icon(
+                data.icon,
+                color: Colors.white.withValues(alpha: 0.9),
+                size: 21,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.title,
+                    style: GoogleFonts.sora(
+                      fontSize: 17,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    data.subtitle,
+                    style: GoogleFonts.manrope(
+                      fontSize: 14,
+                      color: Colors.white.withValues(alpha: 0.9),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-    // Rocket body gradient
-    final bodyPaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-        colors: [const Color(0xFFDBE4EF), const Color(0xFFF7FBFF)],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+class _GearBackdrop extends StatelessWidget {
+  final bool isWide;
 
-    final bodyPath = Path()
-      ..moveTo(32 * sx, 6 * sy)
-      ..cubicTo(23 * sx, 16 * sy, 18 * sx, 29 * sy, 18 * sx, 51 * sy)
-      ..lineTo(18 * sx, 86 * sy)
-      ..lineTo(46 * sx, 86 * sy)
-      ..lineTo(46 * sx, 51 * sy)
-      ..cubicTo(46 * sx, 29 * sy, 41 * sx, 16 * sy, 32 * sx, 6 * sy)
-      ..close();
-    canvas.drawPath(bodyPath, bodyPaint);
+  const _GearBackdrop({required this.isWide});
 
-    // Window
-    canvas.drawCircle(
-      Offset(32 * sx, 42 * sy),
-      8 * sx,
-      Paint()..color = const Color(0xFF174A6B),
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: isWide ? 480 : 260,
+      height: isWide ? 340 : 220,
+      child: Stack(
+        children: [
+          Positioned(
+            left: isWide ? 92 : 24,
+            top: 6,
+            child: Icon(
+              Icons.settings_rounded,
+              size: isWide ? 188 : 108,
+              color: const Color(0x0B0C1320),
+            ),
+          ),
+          Positioned(
+            right: isWide ? 88 : 18,
+            top: isWide ? 96 : 68,
+            child: Icon(
+              Icons.settings_rounded,
+              size: isWide ? 156 : 96,
+              color: const Color(0x0A0C1320),
+            ),
+          ),
+          Positioned(
+            left: isWide ? 218 : 108,
+            top: isWide ? 164 : 114,
+            child: Icon(
+              Icons.settings_rounded,
+              size: isWide ? 140 : 78,
+              color: const Color(0x090C1320),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BrandMark extends StatelessWidget {
+  final double size;
+  final bool withGlow;
+
+  const _BrandMark({required this.size, required this.withGlow});
+
+  @override
+  Widget build(BuildContext context) {
+    final icon = Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.24),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [_C.accent, _C.accentDeep],
+        ),
+      ),
+      child: Center(
+        child: Text(
+          'V',
+          style: GoogleFonts.sora(
+            fontSize: size * 0.56,
+            height: 1,
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
     );
 
-    // Fins
-    final finPaint = Paint()..color = const Color(0xFF7388A4);
-    final leftFin = Path()
-      ..moveTo(18 * sx, 70 * sy)
-      ..lineTo(9 * sx, 84 * sy)
-      ..lineTo(18 * sx, 86 * sy)
-      ..close();
-    canvas.drawPath(leftFin, finPaint);
-    final rightFin = Path()
-      ..moveTo(46 * sx, 70 * sy)
-      ..lineTo(55 * sx, 84 * sy)
-      ..lineTo(46 * sx, 86 * sy)
-      ..close();
-    canvas.drawPath(rightFin, finPaint);
+    if (!withGlow) return icon;
 
-    // Flame outer
-    final flameOuter = Path()
-      ..moveTo(24 * sx, 86 * sy)
-      ..cubicTo(24 * sx, 104 * sy, 28 * sx, 116 * sy, 32 * sx, 122 * sy)
-      ..cubicTo(36 * sx, 116 * sy, 40 * sx, 104 * sy, 40 * sx, 86 * sy)
-      ..close();
-    canvas.drawPath(flameOuter, Paint()..color = const Color(0xFFF8B24C));
-
-    // Flame inner
-    final flameInner = Path()
-      ..moveTo(28 * sx, 86 * sy)
-      ..cubicTo(28 * sx, 96 * sy, 30 * sx, 103 * sy, 32 * sx, 108 * sy)
-      ..cubicTo(34 * sx, 103 * sy, 36 * sx, 96 * sy, 36 * sx, 86 * sy)
-      ..close();
-    canvas.drawPath(flameInner, Paint()..color = const Color(0xFFFFD79B));
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.28),
+        boxShadow: const [
+          BoxShadow(color: Color(0x5620C6FF), blurRadius: 56, spreadRadius: 12),
+        ],
+      ),
+      child: icon,
+    );
   }
+}
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+class _FooterLink {
+  final String label;
+  final VoidCallback? onTap;
+  const _FooterLink(this.label, this.onTap);
 }
