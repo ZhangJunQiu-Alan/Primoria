@@ -1,5 +1,65 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Viewer Layout Width Optimization)
+
+### Summary
+- Optimized Viewer content width strategy for Home, Library, Community, and Profile.
+- Introduced centralized responsive layout primitives to reduce per-page width hacks.
+- Improved desktop/web information density while preserving tablet/mobile readability.
+
+### Added
+- `Viewer/lib/components/common/viewer_page_shell.dart`
+- `Viewer/lib/components/common/viewer_section_header.dart`
+- `Viewer/lib/components/common/viewer_surface_card.dart`
+- `Viewer/test/viewer_layout_metrics_test.dart`
+- `Viewer/test/viewer_page_shell_test.dart`
+
+### Changed
+- `Viewer/lib/screens/home_screen.dart`
+- `Viewer/lib/screens/search_screen.dart`
+- `Viewer/lib/screens/courses_screen.dart`
+- `Viewer/lib/screens/profile_screen.dart`
+  - migrated to shared `ViewerPageShell` width presets
+  - standardized section header/surface card usage in key layout blocks
+  - widened central content area on desktop with adaptive constraints
+
+### Validation
+- `cd Viewer && flutter analyze lib/components/common/viewer_page_shell.dart lib/components/common/viewer_section_header.dart lib/components/common/viewer_surface_card.dart lib/screens/home_screen.dart lib/screens/search_screen.dart lib/screens/courses_screen.dart lib/screens/profile_screen.dart test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+- `cd Viewer && flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+
+---
+
+## [Unreleased] - 2026-03-06 (Course Manage Workspace Redesign)
+
+### Summary
+- Redesigned Builder Dashboard > Course Manage into a dedicated creator workspace tab.
+- Preserved all critical production flows (create/edit/delete/open course, add/delete lesson, guards/dialogs/snackbars).
+- Improved state coverage and reliability for lesson lazy-loading.
+
+### Added
+- `Builder/lib/features/dashboard/tabs/course_manage_tab.dart`
+- `Builder/test/dashboard_course_manage_tab_test.dart`
+- Course Manage localization strings in `Builder/lib/l10n/app_localizations.dart`
+
+### Changed
+- `Builder/lib/features/dashboard/dashboard_screen.dart`
+  - moved Course Manage rendering into tab module
+  - added error state handling for course loading
+  - added in-flight lesson-request deduping
+  - centralized builder route helpers for course/lesson/add-lesson entry
+- Upgraded Course Manage UX:
+  - header action area
+  - summary strip
+  - search/filter/sort controls
+  - richer course/lesson card hierarchy
+  - loading/empty/no-results/error states
+
+### Validation
+- `cd Builder && flutter analyze lib/features/dashboard/dashboard_screen.dart lib/features/dashboard/tabs/course_manage_tab.dart lib/l10n/app_localizations.dart test/dashboard_course_manage_tab_test.dart`
+- `cd Builder && flutter test test/dashboard_course_manage_tab_test.dart`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Docs Full Refresh)
 
 ### Summary
@@ -12,8 +72,8 @@
 ## [Unreleased] - 2026-03-06 (Dashboard Redesign)
 
 ### Summary
-- Redesigned Dashboard Home, Data Center, and Fans Management tabs.
-- Kept Course Manage behavior unchanged.
+- Phase 1 redesigned Dashboard Home, Data Center, and Fans Management tabs.
+- Course Manage redesign was delivered in a follow-up change (see latest entry).
 - Introduced modular dashboard architecture with `tabs/`, `providers/`, `widgets/`.
 
 ### Added

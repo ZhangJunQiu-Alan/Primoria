@@ -37,6 +37,34 @@ class BuilderLocalizations {
   String get sortByStudent => isZh ? '按学员排序' : 'Sort By student';
   String get sortByComments => isZh ? '按评论排序' : 'Sort By comments';
   String get createCourse => isZh ? '创建课程' : 'Create Course';
+  String get courseManageTitle =>
+      isZh ? '课程管理工作台' : 'Course Management Workspace';
+  String get courseManageSubtitle => isZh
+      ? '集中管理课程、课时与发布状态，快速回到编辑流程。'
+      : 'Manage courses, lessons, and publish status in one focused workspace.';
+  String get courseManageRefresh => isZh ? '刷新' : 'Refresh';
+  String get courseManageSummaryCourses => isZh ? '课程总数' : 'Courses';
+  String get courseManageSummaryLessons => isZh ? '课时总数' : 'Lessons';
+  String get courseManageSummaryPublished => isZh ? '已发布课程' : 'Published';
+  String get courseManageSummaryDraft => isZh ? '草稿课程' : 'Drafts';
+  String get courseManageSummaryNeedContent => isZh ? '待补充内容' : 'Need Content';
+  String get courseManageSearchPlaceholder => isZh
+      ? '搜索课程、简介或课时标题...'
+      : 'Search courses, descriptions, or lesson titles...';
+  String get courseManageFilterAll => isZh ? '全部状态' : 'All Status';
+  String get courseManageFilterDraft => isZh ? '仅草稿' : 'Draft Only';
+  String get courseManageFilterPublished => isZh ? '仅已发布' : 'Published Only';
+  String get courseManageNoResultsTitle =>
+      isZh ? '没有匹配的课程' : 'No matching courses';
+  String get courseManageNoResultsBody => isZh
+      ? '尝试清空搜索词或切换筛选条件。'
+      : 'Try clearing your query or adjusting filters.';
+  String get courseManageClearFilters => isZh ? '清空筛选' : 'Clear Filters';
+  String get courseManageOpenBuilder => isZh ? '打开编辑器' : 'Open Builder';
+  String get courseManageLessonsLabel => isZh ? '课时管理' : 'Lessons';
+  String get courseManageStatusDraft => isZh ? '草稿' : 'Draft';
+  String get courseManageStatusPublished => isZh ? '已发布' : 'Published';
+  String get courseManageStatusArchived => isZh ? '已归档' : 'Archived';
 
   // Course Manage — AI one-sentence generation (Beta)
   String get aiGenerateBeta => isZh ? 'AI 生成 (Beta)' : 'AI Generate (Beta)';
@@ -109,6 +137,7 @@ class BuilderLocalizations {
   String get courseDelete => isZh ? '删除' : 'Delete';
   String get addLesson => isZh ? '添加课时' : 'Add Lesson';
   String lessonN(int n) => isZh ? '第 $n 课' : 'Lesson $n';
+  String lessonCount(int n) => isZh ? '$n 课时' : '$n lessons';
   String learnedTimes(int n) => isZh ? '已学习 $n 次' : 'Learned $n times';
 
   // ── Time format ───────────────────────────────────────────────

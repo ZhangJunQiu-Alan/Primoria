@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/common/viewer_page_shell.dart';
+import '../components/common/viewer_surface_card.dart';
 import '../theme/theme.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
@@ -86,25 +88,23 @@ class _SearchScreenState extends State<SearchScreen>
   Widget build(BuildContext context) {
     super.build(context);
     final t = context.watch<LanguageProvider>().t;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 600),
-        child: Column(
-          children: [
-            _buildHeader(t),
-            Expanded(
-              child: _loadingSubjects
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView(
-                      padding: const EdgeInsets.all(24),
-                      children: [
-                        _buildCoursesSection(t),
-                        const SizedBox(height: 80),
-                      ],
-                    ),
-            ),
-          ],
-        ),
+    return ViewerPageShell(
+      preset: ViewerContentWidthPreset.feed,
+      child: Column(
+        children: [
+          _buildHeader(t),
+          Expanded(
+            child: _loadingSubjects
+                ? const Center(child: CircularProgressIndicator())
+                : ListView(
+                    padding: const EdgeInsets.all(24),
+                    children: [
+                      _buildCoursesSection(t),
+                      const SizedBox(height: 80),
+                    ],
+                  ),
+          ),
+        ],
       ),
     );
   }
@@ -127,7 +127,41 @@ class _SearchScreenState extends State<SearchScreen>
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: [
+              Text(
+                t.navLibrary,
+                style: AppTypography.headline3.copyWith(
+                  color: const Color(0xFF0F172A),
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const Spacer(),
+              if (!_loadingCourses)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8FAFC),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                  ),
+                  child: Text(
+                    '${_courses.length}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF475569),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
           // Search bar
           Container(
             decoration: BoxDecoration(
@@ -136,6 +170,10 @@ class _SearchScreenState extends State<SearchScreen>
             ),
             child: TextField(
               controller: _searchController,
+              onChanged: (v) {
+                setState(() {});
+                if (v.trim().isEmpty) _loadCourses();
+              },
               onSubmitted: (v) => _loadCourses(query: v.trim()),
               decoration: InputDecoration(
                 hintText: t.searchPlaceholder,
@@ -149,6 +187,21 @@ class _SearchScreenState extends State<SearchScreen>
                   color: Color(0xFF94A3B8),
                   size: 20,
                 ),
+                suffixIcon: _searchController.text.isEmpty
+                    ? null
+                    : IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _searchController.clear();
+                          });
+                          _loadCourses();
+                        },
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: Color(0xFF94A3B8),
+                          size: 18,
+                        ),
+                      ),
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(vertical: 14),
               ),
@@ -182,6 +235,23 @@ class _SearchScreenState extends State<SearchScreen>
               ],
             ),
           ),
+          if (_selectedSubjectName.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Chip(
+              label: Text(
+                _selectedSubjectName,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF334155),
+                ),
+              ),
+              deleteIcon: const Icon(Icons.close_rounded, size: 16),
+              onDeleted: _selectAllSubjects,
+              backgroundColor: const Color(0xFFF8FAFC),
+              side: const BorderSide(color: Color(0xFFE2E8F0)),
+            ),
+          ],
         ],
       ),
     );
@@ -286,16 +356,56 @@ class _SearchScreenState extends State<SearchScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          sectionTitle,
-          style: AppTypography.title.copyWith(color: const Color(0xFF1E293B)),
+        Row(
+          children: [
+            Text(
+              sectionTitle,
+              style: AppTypography.title.copyWith(
+                color: const Color(0xFF1E293B),
+              ),
+            ),
+            const Spacer(),
+            if (_selectedSubjectId != null || _searchController.text.isNotEmpty)
+              TextButton(
+                onPressed: _selectAllSubjects,
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.indigo600,
+                  visualDensity: VisualDensity.compact,
+                ),
+                child: Text(t.searchAllTab),
+              ),
+          ],
         ),
-        const SizedBox(height: 16),
-        ..._courses.map(
-          (course) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: _buildCourseCard(course),
-          ),
+        const SizedBox(height: 14),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth >= 980) {
+              final width = (constraints.maxWidth - 12) / 2;
+              return Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: _courses
+                    .map(
+                      (course) => SizedBox(
+                        width: width,
+                        child: _buildCourseCard(course),
+                      ),
+                    )
+                    .toList(),
+              );
+            }
+
+            return Column(
+              children: _courses
+                  .map(
+                    (course) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: _buildCourseCard(course),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
         ),
       ],
     );
@@ -323,20 +433,8 @@ class _SearchScreenState extends State<SearchScreen>
           ),
         ),
       ),
-      child: Container(
+      child: ViewerSurfaceCard(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFF1F5F9)),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x08000000),
-              blurRadius: 4,
-              offset: Offset(0, 1),
-            ),
-          ],
-        ),
         child: Row(
           children: [
             Container(

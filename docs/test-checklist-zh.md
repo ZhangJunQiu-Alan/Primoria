@@ -40,11 +40,16 @@
 - [ ] 最近活动时间线可渲染
 - [ ] 无课程时显示空状态
 
-### D2. 课程管理（行为不变）
+### D2. 课程管理（工作台已重构，核心流程保留）
 - [ ] loading / empty / list 状态正常
+- [ ] 摘要条可渲染（课程数/课时数/已发布/草稿/待补内容）
+- [ ] 搜索与状态筛选联动正常（all/draft/published）
+- [ ] 无结果状态正确出现，清空筛选可恢复列表
 - [ ] 创建/编辑/删除课程正常
-- [ ] 添加课时入口正常
+- [ ] 打开课程可正确跳转 builder（包含 `courseId` 与编码后的 `courseTitle`）
+- [ ] 添加课时入口正常（路由含 `addLesson=1`）
 - [ ] 删除课时确认流程与保底保护正常
+- [ ] 课时标题懒加载正常，刷新后可恢复加载
 
 ### D3. 数据中心（已重设计）
 - [ ] KPI 行可渲染
@@ -66,10 +71,14 @@
 
 - [ ] 登录/注册流程正常
 - [ ] 课程报名流程正常
+- [ ] Home / Library / Community / Profile 使用统一页面壳层宽度预设（standard/feed/wide/profile）
+- [ ] Viewer 桌面布局较平板/移动更宽，且内容仍居中可读
 - [ ] 课时页顶部标题显示当前 lesson 名（不是 course 名）
 - [ ] text 内容支持 markdown 渲染
 - [ ] 个人页 XP/连续学习/成就相关数据可加载
 - [ ] logo/入口跳转可回到预期 dashboard/home
+- [ ] `Viewer/test/viewer_layout_metrics_test.dart` 通过
+- [ ] `Viewer/test/viewer_page_shell_test.dart` 通过
 
 ## F. 数据一致性
 

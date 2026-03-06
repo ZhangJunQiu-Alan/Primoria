@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/common/viewer_page_shell.dart';
+import '../components/common/viewer_surface_card.dart';
 import '../l10n/app_localizations.dart';
 import '../models/achievement_model.dart';
 import '../providers/language_provider.dart';
@@ -80,24 +82,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final t = context.watch<LanguageProvider>().t;
-    return SingleChildScrollView(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildBannerAndAvatar(context, t),
-              _buildUserInfo(context, t),
-              const SizedBox(height: 24),
-              _buildStatsCard(context, t),
-              const SizedBox(height: 24),
-              _buildXpHeatmap(context, t),
-              const SizedBox(height: 24),
-              _buildPinnedAchievements(context, t),
-              const SizedBox(height: 40),
-            ],
-          ),
+    return ViewerPageShell(
+      preset: ViewerContentWidthPreset.profile,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildBannerAndAvatar(context, t),
+            _buildUserInfo(context, t),
+            const SizedBox(height: 16),
+            _buildQuickActions(context, t),
+            const SizedBox(height: 24),
+            _buildStatsCard(context, t),
+            const SizedBox(height: 24),
+            _buildXpHeatmap(context, t),
+            const SizedBox(height: 24),
+            _buildPinnedAchievements(context, t),
+            const SizedBox(height: 40),
+          ],
         ),
       ),
     );
@@ -336,24 +338,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildQuickActions(BuildContext context, AppLocalizations t) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        children: [
+          Expanded(
+            child: FilledButton.tonalIcon(
+              onPressed: () async {
+                final updated = await Navigator.of(context).push<bool>(
+                  MaterialPageRoute(
+                    builder: (_) => const ProfileSettingsScreen(),
+                  ),
+                );
+                if (updated == true && context.mounted) {
+                  await context.read<UserProvider>().refreshProfile();
+                }
+              },
+              icon: const Icon(Icons.settings_outlined, size: 18),
+              label: Text(t.profileSettings),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFFF8FAFC),
+                foregroundColor: const Color(0xFF334155),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: Color(0xFFE2E8F0)),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: OutlinedButton.icon(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const AchievementWallScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.workspace_premium_outlined, size: 18),
+              label: Text(t.profileAchievements),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.indigo600,
+                side: const BorderSide(color: Color(0xFFE0E7FF)),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildStatsCard(BuildContext context, AppLocalizations t) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
-        return Container(
+        return ViewerSurfaceCard(
           margin: const EdgeInsets.symmetric(horizontal: 24),
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFF1F5F9)),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x08000000),
-                blurRadius: 4,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
           child: Column(
             children: [
               Row(
@@ -612,21 +659,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
 
-    return Container(
+    return ViewerSurfaceCard(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 4,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -717,21 +752,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildPinnedAchievements(BuildContext context, AppLocalizations t) {
-    return Container(
+    return ViewerSurfaceCard(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 4,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
