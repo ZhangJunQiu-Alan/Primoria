@@ -79,6 +79,7 @@
 50. [x] Block 可见性默认规则加固 — 首个 block 默认 `always`，其余默认 `afterPreviousCorrect`；Block 模型、AI 生成器、Schema 迁移器统一了可见性别名归一化并补充测试（2026-03-06）
 51. [x] Logo 全局跳转 Dashboard — Builder 顶栏 Logo、Dashboard 侧边栏品牌区、Landing 顶部 Logo 全部支持点击进入 `/dashboard`（2026-03-06）
 52. [x] 发布后课时名一致性修复 — `saveLessonToCourse()` 以 lesson 标题为准写入；publish 快照回写优先使用首课标题（不再覆盖为课程标题）；Dashboard 课程列表刷新时清空课时标题缓存，确保改名后立即可见（2026-03-06）
+53. [x] Dashboard 三大核心页重设计 — 首页/数据中心/粉丝管理完成响应式改版；新增 tabs/providers/widgets 模块化结构与图表分析能力；课程管理（Course Manage）保持原有行为不变（2026-03-06）
 
 ## 内容与课程体系
 1. [ ] 课程内容管理系统

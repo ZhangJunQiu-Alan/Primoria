@@ -2,14 +2,14 @@
 
 ## Overview
 
-The Dashboard (`/dashboard`) is the logged-in user's home — sidebar + tab-switched content area.
+The Dashboard (`/dashboard`) is the logged-in creator workspace — sidebar + tab-switched content area.
 
 ```
 ┌────────────┬─────────────────────────────┐
 │  Sidebar   │  Topbar (avatar / sort)     │
 │            ├─────────────────────────────┤
 │  [Logo]    │                             │
-│  [Build]   │  Tab Content (scrollable)   │
+│  [Brand]   │  Tab Content (scrollable)   │
 │            │                             │
 │  Home Page │                             │
 │  Course Mg │                             │
@@ -22,32 +22,52 @@ The Dashboard (`/dashboard`) is the logged-in user's home — sidebar + tab-swit
 
 | File | Purpose |
 |------|---------|
-| `features/dashboard/dashboard_screen.dart` | Main screen — sidebar, tabs, all content |
+| `features/dashboard/dashboard_screen.dart` | Main shell — sidebar, topbar, tab switching, Course Manage (kept unchanged) |
+| `features/dashboard/dashboard_localizations.dart` | Dashboard-specific i18n extension over `BuilderLocalizations` |
+| `features/dashboard/tabs/home_tab.dart` | Redesigned Home tab |
+| `features/dashboard/tabs/data_center_tab.dart` | Redesigned Data Center tab |
+| `features/dashboard/tabs/fans_manage_tab.dart` | Redesigned Fans Management tab |
+| `features/dashboard/providers/dashboard_provider.dart` | Home tab aggregated data state |
+| `features/dashboard/providers/analytics_provider.dart` | Data Center + Fans analytics/fan state |
+| `features/dashboard/widgets/*.dart` | Reusable dashboard cards/charts/tables/timeline widgets |
 | `widgets/user_avatar.dart` | Shared circular avatar (Dashboard + Builder) |
 | `app/router.dart` | Auth guard, auto-redirect |
 
 ## Tabs
 
-**Home Page** — Course Data card, Income Overview card, Comments card. Layout switches row/column at 700px.
+**Home Page (redesigned)**  
+Includes personalized greeting, quick actions, learning overview KPI cards, completion trend chart, Top 3 courses, recent activity timeline, and reserved income overview card. Supports desktop/tablet/mobile responsive layout.
 
-**Course Manage** — Fetches courses via `getMyCourses()`. Sort dropdown + Create Course button. Each course card: title, time ago, Edit/Delete, lesson boxes (async loaded, hover to reveal ✕ delete button), Add lesson box. States: loading, sign-in prompt, empty, course list.
+**Course Manage (unchanged behavior)**  
+Existing flows remain as-is: fetch `getMyCourses()`, sorting, create/edit/delete course, lesson cards, add lesson, and all related dialogs/guards.
 
-**Data Center / Fans Manage** — Placeholder (renders Home Page content).
+**Data Center (redesigned)**  
+Includes KPI row (learners/views/completion/rating), time-range switchable trend chart, course performance bar chart, geographic distribution pie chart, learning-time heatmap, detail table, and CSV export action.
+
+**Fans Management (redesigned)**  
+Includes fan overview stats + growth trend, searchable/filterable paginated fan list, engagement timeline, learner tag management (batch-tag entry), and reserved messaging center.
 
 ## Data Flow
 
 ```
-initState → _loadCourses() → getMyCourses() → _courses → rebuild
-Card render → _loadCourseLessons(id) → getCourseLessonTitles(id) → _courseLessons cache → rebuild
-```
+DashboardScreen init → _loadCourses() (Course Manage data)
+Home tab mount → dashboardHomeProvider
+  ├─ getMyCourses()
+  ├─ getDashboardMetrics()
+  └─ getRecentComments()
 
-`_loadCourseLessons` now queries `lessons` directly by `course_id` (not `getCourseContent`), so courses with no saved content show 0 lessons.
+Data/Fans tab mount → analyticsDashboardProvider / fansDashboardProvider
+  ├─ getMyCourses()
+  ├─ getDashboardMetrics()
+  ├─ follows + profiles
+  └─ derived analytics (with fallback/mock where source tables are not ready)
+```
 
 ## Navigation
 
 | Action | Destination |
 |--------|-------------|
-| Build Course | `/builder` |
+| Sidebar brand click | `/dashboard` |
 | Create Course | Dialog → `createCourseRow()` → stays on Course Manage (refreshes list) |
 | Edit / Lesson box / Add lesson | `/builder?courseId=<id>` |
 | Delete course | Confirmation → `deleteCourse()` → refresh |
@@ -61,7 +81,6 @@ Protected routes: `/dashboard`, `/builder` — redirect to `/` if not logged in.
 
 ## Known Limitations
 
-1. Lesson display depends on async `getCourseLessonTitles()` per card — can be slow with many courses
-2. Sort by student/comments are placeholders
-3. Data Center / Fans Manage tabs are placeholders
-4. "Learned X times" shows lesson count, not actual learner count
+1. Some analytics are currently derived fallback/mock values because event-level tables are not complete yet.
+2. Fans reply/batch notification/export actions are UI-ready but backend handlers are pending.
+3. Course Manage sorting by student/comments remains placeholder logic from existing implementation.
