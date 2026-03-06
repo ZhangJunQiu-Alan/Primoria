@@ -1,86 +1,102 @@
 # Dashboard Architecture
 
-## Overview
+Last updated: 2026-03-06
 
-The Dashboard (`/dashboard`) is the logged-in creator workspace — sidebar + tab-switched content area.
+## Scope
 
-```
-┌────────────┬─────────────────────────────┐
-│  Sidebar   │  Topbar (avatar / sort)     │
-│            ├─────────────────────────────┤
-│  [Logo]    │                             │
-│  [Brand]   │  Tab Content (scrollable)   │
-│            │                             │
-│  Home Page │                             │
-│  Course Mg │                             │
-│  Data Ctr  │                             │
-│  Fans Mg   │                             │
-└────────────┴─────────────────────────────┘
-```
+Builder dashboard (`/dashboard`) is the creator workspace shell with sidebar navigation and tabbed content.
 
-## Files
+Tabs:
+1. Home (redesigned)
+2. Course Manage (existing production behavior, intentionally preserved)
+3. Data Center (redesigned)
+4. Fans Management (redesigned)
 
-| File | Purpose |
-|------|---------|
-| `features/dashboard/dashboard_screen.dart` | Main shell — sidebar, topbar, tab switching, Course Manage (kept unchanged) |
-| `features/dashboard/dashboard_localizations.dart` | Dashboard-specific i18n extension over `BuilderLocalizations` |
-| `features/dashboard/tabs/home_tab.dart` | Redesigned Home tab |
-| `features/dashboard/tabs/data_center_tab.dart` | Redesigned Data Center tab |
-| `features/dashboard/tabs/fans_manage_tab.dart` | Redesigned Fans Management tab |
-| `features/dashboard/providers/dashboard_provider.dart` | Home tab aggregated data state |
-| `features/dashboard/providers/analytics_provider.dart` | Data Center + Fans analytics/fan state |
-| `features/dashboard/widgets/*.dart` | Reusable dashboard cards/charts/tables/timeline widgets |
-| `widgets/user_avatar.dart` | Shared circular avatar (Dashboard + Builder) |
-| `app/router.dart` | Auth guard, auto-redirect |
+## File Map
 
-## Tabs
+- `Builder/lib/features/dashboard/dashboard_screen.dart`
+  - shell, sidebar, topbar, tab switching
+  - keeps existing Course Manage logic and actions
+- `Builder/lib/features/dashboard/dashboard_localizations.dart`
+  - dashboard-only localization extension
+- `Builder/lib/features/dashboard/tabs/home_tab.dart`
+- `Builder/lib/features/dashboard/tabs/data_center_tab.dart`
+- `Builder/lib/features/dashboard/tabs/fans_manage_tab.dart`
+- `Builder/lib/features/dashboard/providers/dashboard_provider.dart`
+- `Builder/lib/features/dashboard/providers/analytics_provider.dart`
+- `Builder/lib/features/dashboard/widgets/`
+  - `kpi_card.dart`
+  - `trend_chart.dart`
+  - `activity_timeline.dart`
+  - `learner_table.dart`
 
-**Home Page (redesigned)**  
-Includes personalized greeting, quick actions, learning overview KPI cards, completion trend chart, Top 3 courses, recent activity timeline, and reserved income overview card. Supports desktop/tablet/mobile responsive layout.
+## Tab Details
 
-**Course Manage (unchanged behavior)**  
-Existing flows remain as-is: fetch `getMyCourses()`, sorting, create/edit/delete course, lesson cards, add lesson, and all related dialogs/guards.
+### 1) Home
 
-**Data Center (redesigned)**  
-Includes KPI row (learners/views/completion/rating), time-range switchable trend chart, course performance bar chart, geographic distribution pie chart, learning-time heatmap, detail table, and CSV export action.
+- Greeting by local time (morning/afternoon/evening)
+- Quick actions:
+  - Create New Course
+  - Continue Editing
+  - View Analytics
+- Learning Overview:
+  - weekly learners
+  - total study hours
+  - completion trend line + delta badge
+- Top 3 courses with:
+  - title
+  - views
+  - completion progress
+  - open-course action
+- Recent activity timeline (max 5)
+- Reserved income card (fallback-derived until billing tables are added)
 
-**Fans Management (redesigned)**  
-Includes fan overview stats + growth trend, searchable/filterable paginated fan list, engagement timeline, learner tag management (batch-tag entry), and reserved messaging center.
+### 2) Course Manage (unchanged behavior)
 
-## Data Flow
+- Course list from `SupabaseService.getMyCourses()`
+- Sort dropdown
+- Create/Edit/Delete course
+- Lesson cards + add lesson
+- Existing dialogs/snackbars/guards remain intact
 
-```
-DashboardScreen init → _loadCourses() (Course Manage data)
-Home tab mount → dashboardHomeProvider
-  ├─ getMyCourses()
-  ├─ getDashboardMetrics()
-  └─ getRecentComments()
+### 3) Data Center
 
-Data/Fans tab mount → analyticsDashboardProvider / fansDashboardProvider
-  ├─ getMyCourses()
-  ├─ getDashboardMetrics()
-  ├─ follows + profiles
-  └─ derived analytics (with fallback/mock where source tables are not ready)
-```
+- Top KPI row:
+  - Total Learners
+  - Total Views
+  - Average Completion Rate
+  - Average Rating
+- Learning trend chart with range selector: 7D / 30D / 90D / All
+- Course performance bar chart with sort selector
+- Geographic distribution pie chart
+- Learning time heatmap
+- Course detail table
+- Export action (CSV copied to clipboard)
 
-## Navigation
+### 4) Fans Management
 
-| Action | Destination |
-|--------|-------------|
-| Sidebar brand click | `/dashboard` |
-| Create Course | Dialog → `createCourseRow()` → stays on Course Manage (refreshes list) |
-| Edit / Lesson box / Add lesson | `/builder?courseId=<id>` |
-| Delete course | Confirmation → `deleteCourse()` → refresh |
-| Delete lesson (✕ on hover) | Confirmation → `getCourseContent()` → `removePage()` → `saveCourse()` → refresh lesson cache |
+- Fan overview KPIs + weekly growth trend
+- Search/filter + paginated fan table
+- Engagement timeline
+- Learner tags panel (create/delete and batch-tag entry)
+- Reserved messaging center
+- Bulk actions entry (send notice / export data)
 
-Builder title edits + Save update `courses.title` in DB. Returning to Dashboard reloads course data, keeping titles in sync.
+## Data Strategy
 
-## Auth Guard
+Because not all analytics tables exist yet, providers use a mixed strategy:
+- Prefer real Supabase data where available (`courses`, `follows`, `course_feedback`, `profiles`)
+- Derive fallback/mock metrics for unavailable domains (revenue/event-level analytics)
+- Explicit TODO markers are kept in provider files for backend hookup
 
-Protected routes: `/dashboard`, `/builder` — redirect to `/` if not logged in. Logged-in users on `/` auto-redirect to `/dashboard`. Uses `_GoRouterRefreshStream` to bridge Supabase auth stream → GoRouter `refreshListenable`.
+## Responsive Behavior
 
-## Known Limitations
+- Desktop: multi-column dashboard composition
+- Tablet: card wrapping and reduced chart/table density
+- Mobile: single-column stack with compact cards/table cards
 
-1. Some analytics are currently derived fallback/mock values because event-level tables are not complete yet.
-2. Fans reply/batch notification/export actions are UI-ready but backend handlers are pending.
-3. Course Manage sorting by student/comments remains placeholder logic from existing implementation.
+## Known Gaps
+
+1. Revenue and advanced analytics are still fallback-derived.
+2. Fans reply/notification/export are UI-level placeholders pending backend endpoints.
+3. Course Manage sort by student/comments remains placeholder logic.
