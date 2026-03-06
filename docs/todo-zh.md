@@ -55,6 +55,7 @@
 20. [x] 首页右上角星标口径修正：由总 XP 改为连续学习天数（按“当日有正向 XP 入账”定义学习日）（2026-03-05）
 21. [x] 星链活跃日与连续天数统一口径：改为基于 `xp_transactions.amount > 0` 的本地日期连续计算（2026-03-05）
 22. [x] 首页滚动条位置修复：滚动容器改为全宽，内容保持 `maxWidth: 600` 居中，滚动条贴右侧视口边缘（2026-03-05）
+23. [x] 课时练习渲染修复：顶部标题改为当前 lesson 名（优先 DB 标题），正文去重同名标题，支持 Markdown 渲染，并在当前 lesson 行为空时回退读取同课程首个非空快照（2026-03-06）
 
 ## Builder（续）
 32. [x] Builder + Viewer 迁移至云端 Supabase — 两端默认连接 `rygafvlzzkvqhhenajzi.supabase.co`；18 条迁移全部推送；`uuid_generate_v4()` → `gen_random_uuid()` 适配云端（2026-02-25）
@@ -73,6 +74,11 @@
 45. [x] Add Lesson 流程 — 新增 `/builder?addLesson=1&courseId=…&draftId=…`；通过 `saveLessonToCourse()` 作为独立课时写入目标课程；支持草稿持久化；Viewer 返回 Builder 时保持 add-lesson 上下文（2026-03-04）
 46. [x] Function Flow 发布后稳定性收尾 — `function_flow_block_widget.dart` 改为迭代器方式读取 path metrics（箭头/标签渲染更稳）；viewer smoke test 改为断言 `function_flow_step` 控件存在，降低偶发波动（2026-03-04）
 47. [x] Code Execution 新 block 类型 — 完成 `code-execution` 全链路接入：model/registry/模块面板、属性编辑器、Builder+Viewer 交互渲染（播放/暂停/步进/回退/重置、当前行高亮、变量/输出面板、checkpoint 作答）、schema 迁移别名（`codeExecution`/`code_execution`）、路径级校验，以及 smoke/model/migration/validator 测试（2026-03-04）
+48. [x] Builder 顶部课时命名语义修正 — 点击 `课程/课时` 只编辑当前课时名（不再改课程名）；新增“编辑课时标题/输入课时标题”文案；`lesson1` 不再被误判为占位标题（2026-03-06）
+49. [x] Text / Code Block / Code Playground 支持块内直接编辑 — 在画布中可直接改文本与代码（含语言/期望输出），并移除这三类在 Property Panel 的重复内容编辑器（2026-03-06）
+50. [x] Block 可见性默认规则加固 — 首个 block 默认 `always`，其余默认 `afterPreviousCorrect`；Block 模型、AI 生成器、Schema 迁移器统一了可见性别名归一化并补充测试（2026-03-06）
+51. [x] Logo 全局跳转 Dashboard — Builder 顶栏 Logo、Dashboard 侧边栏品牌区、Landing 顶部 Logo 全部支持点击进入 `/dashboard`（2026-03-06）
+52. [x] 发布后课时名一致性修复 — `saveLessonToCourse()` 以 lesson 标题为准写入；publish 快照回写优先使用首课标题（不再覆盖为课程标题）；Dashboard 课程列表刷新时清空课时标题缓存，确保改名后立即可见（2026-03-06）
 
 ## 内容与课程体系
 1. [ ] 课程内容管理系统

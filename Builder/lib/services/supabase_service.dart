@@ -404,9 +404,13 @@ class SupabaseService {
         );
       }
 
-      final title = normalizedCourse.metadata.title.trim().isEmpty
-          ? 'Untitled Lesson'
-          : normalizedCourse.metadata.title.trim();
+      final lessonTitle = normalizedCourse.lessons
+          .map((lesson) => lesson.title.trim())
+          .firstWhere(
+            (title) => title.isNotEmpty,
+            orElse: () => normalizedCourse.metadata.title.trim(),
+          );
+      final title = lessonTitle.isEmpty ? 'Untitled Lesson' : lessonTitle;
       final lessonPayload = {
         'title': title,
         'content_json': normalizedCourse.toJson(),
@@ -597,13 +601,12 @@ class SupabaseService {
 
   /// Reconstruct a Course from individual lesson rows written by the agentic
   /// generator. Each lesson row has content_json = {blocks: [...]}.
-  static Future<Course?> _reconstructCourseFromLessons(
-    String courseId,
-  ) async {
+  static Future<Course?> _reconstructCourseFromLessons(String courseId) async {
     final courseRow = await client
         .from('courses')
         .select(
-            'id, title, description, difficulty_level, estimated_minutes, tags')
+          'id, title, description, difficulty_level, estimated_minutes, tags',
+        )
         .eq('id', courseId)
         .maybeSingle();
     if (courseRow == null) return null;
@@ -646,8 +649,9 @@ class SupabaseService {
         description: courseRow['description'] as String? ?? '',
         author: const CourseAuthor(userId: 'ai', displayName: 'AI'),
         tags: tags,
-        difficulty:
-            _normalizeDifficulty(courseRow['difficulty_level'] as String?),
+        difficulty: _normalizeDifficulty(
+          courseRow['difficulty_level'] as String?,
+        ),
         estimatedMinutes: courseRow['estimated_minutes'] as int? ?? 0,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -1139,13 +1143,36 @@ class SupabaseService {
 
     if (lesson == null) return;
 
-    final metadata = snapshot['metadata'] as Map<String, dynamic>?;
-    final title = (metadata?['title'] as String?)?.trim();
+    String? firstLessonTitle;
+    final lessons = snapshot['lessons'];
+    if (lessons is List && lessons.isNotEmpty) {
+      final first = lessons.first;
+      if (first is Map) {
+        final raw = first['title'];
+        if (raw is String && raw.trim().isNotEmpty) {
+          firstLessonTitle = raw.trim();
+        }
+      }
+    }
+    if ((firstLessonTitle == null || firstLessonTitle.isEmpty) &&
+        snapshot['pages'] is List) {
+      final pages = snapshot['pages'] as List;
+      if (pages.isNotEmpty) {
+        final first = pages.first;
+        if (first is Map) {
+          final raw = first['title'];
+          if (raw is String && raw.trim().isNotEmpty) {
+            firstLessonTitle = raw.trim();
+          }
+        }
+      }
+    }
 
     await client
         .from('lessons')
         .update({
-          if (title != null && title.isNotEmpty) 'title': title,
+          if (firstLessonTitle != null && firstLessonTitle.isNotEmpty)
+            'title': firstLessonTitle,
           'content_json': snapshot,
         })
         .eq('id', lesson['id'] as String);

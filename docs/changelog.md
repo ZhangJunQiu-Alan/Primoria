@@ -1,5 +1,51 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Builder lesson-title workflow + Viewer lesson rendering fixes)
+
+### Summary
+Stabilized lesson-title ownership across Builder/Dashboard/Publish, enabled inline editing on key programming/text blocks, and fixed Viewer lesson rendering to always show the correct lesson title with Markdown support.
+
+### Added
+- **Inline block editing on Builder canvas**
+  - `Text`, `Code Block`, and `Code Playground` now support direct editing in the block itself (including language/expected-output where applicable)
+  - Corresponding content editors were removed from `PropertyPanel` for these block types
+- **Lesson title edit UX in Builder AppBar**
+  - Clicking `course/lesson` now edits the current **lesson title** (not course title)
+  - Added i18n strings for lesson-title dialog (`editLessonTitleLabel`, `enterLessonTitle`)
+- **Viewer Markdown rendering**
+  - Added `flutter_markdown` dependency and switched lesson text content rendering to `MarkdownBody`
+
+### Changed
+- **Visibility defaults and normalization (Builder model + AI + migrator)**
+  - First block defaults to `always`
+  - Non-first blocks default to `afterPreviousCorrect`
+  - Normalized support for alias forms (`after_previous_correct`, `after-previous-correct`)
+- **Builder AppBar title behavior**
+  - Placeholder detection updated so values like `lesson1` are treated as valid custom titles
+  - Left-top logo in Builder now navigates to `/dashboard`
+- **Dashboard lesson-title freshness**
+  - Course reload now clears per-course lesson-title cache to avoid stale lesson names after Builder rename/save/publish
+  - Dashboard sidebar logo now navigates to `/dashboard`
+- **Landing brand behavior**
+  - Landing header logo now navigates to `/dashboard`
+- **Publish/write-back behavior**
+  - Post-publish snapshot write-back now preserves first lesson title from `snapshot.lessons[0].title` (or legacy `pages[0].title`) instead of forcing course metadata title
+- **Add-lesson save behavior**
+  - `saveLessonToCourse` now prioritizes lesson title from lesson payload instead of course metadata title
+- **Viewer lesson resolution and title rendering**
+  - Lesson header now resolves from actual lesson row title first
+  - Body no longer duplicates the same lesson title as a content heading
+  - Parser now supports full snapshot `{lessons:[...]}` selection by lesson id/title
+  - `getLessonContent` falls back to first non-empty snapshot row in the same course when current row content is empty
+
+### Fixed
+- Builder property-panel dropdown assertion caused by invalid persisted style/visibility values (safe normalization applied)
+- Dashboard first-lesson title not reflecting renamed value after publish
+- Viewer “Content unavailable” on published courses where snapshot lived on another lesson row
+- Viewer top header showing course/incorrect title and body repeating lesson name
+
+---
+
 ## [Unreleased] - 2026-03-05 (Viewer 首页星标口径修正 + 滚动条对齐)
 
 ### Summary

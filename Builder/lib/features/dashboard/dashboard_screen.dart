@@ -73,6 +73,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       final courses = await SupabaseService.getMyCourses();
       if (mounted) {
         setState(() {
+          // Always refresh lesson-title cache after a course list reload
+          // so Builder-side renames are visible when returning to Dashboard.
+          _courseLessons.clear();
           _courses = courses;
           _coursesLoading = false;
         });
@@ -168,26 +171,33 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Brand
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/imgs/logo32.png',
-                    width: 32,
-                    height: 32,
-                    errorBuilder: (_, __, ___) =>
-                        const Icon(Icons.school, color: _C.accent, size: 28),
-                  ),
-                  const SizedBox(width: 12),
-                  const Text(
-                    'Primoria',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0.4,
-                      color: _C.text,
+              InkWell(
+                onTap: () {
+                  setState(() => _currentTab = _NavTab.homePage);
+                  context.go('/dashboard');
+                },
+                borderRadius: BorderRadius.circular(10),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/imgs/logo32.png',
+                      width: 32,
+                      height: 32,
+                      errorBuilder: (_, __, ___) =>
+                          const Icon(Icons.school, color: _C.accent, size: 28),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Primoria',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.4,
+                        color: _C.text,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 18),
 
@@ -1257,18 +1267,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         child: LinearProgressIndicator(
                           value: progressValue,
                           minHeight: 4,
-                          backgroundColor:
-                              const Color(0xFFFF8C00).withValues(alpha: 0.12),
+                          backgroundColor: const Color(
+                            0xFFFF8C00,
+                          ).withValues(alpha: 0.12),
                           color: const Color(0xFFFF8C00),
                         ),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         progressStage,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: _C.muted,
-                        ),
+                        style: const TextStyle(fontSize: 11, color: _C.muted),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -1303,24 +1311,24 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         final language = t.isZh ? 'zh' : 'en';
                         final result =
                             await AICourseGenerator.generateCourseAgentLocally(
-                          description: desc,
-                          difficulty: difficulty,
-                          animationStyle: animationStyle,
-                          language: language,
-                          onProgress: (stage, progress) {
-                            if (!ctx.mounted) return;
-                            setDialogState(() {
-                              progressValue = progress;
-                              if (stage == 'plan') {
-                                progressStage = t.aiAgentStagePlan;
-                              } else if (stage == 'blocks') {
-                                progressStage = t.aiAgentStageGenerate;
-                              } else {
-                                progressStage = t.aiAgentStageValidate;
-                              }
-                            });
-                          },
-                        );
+                              description: desc,
+                              difficulty: difficulty,
+                              animationStyle: animationStyle,
+                              language: language,
+                              onProgress: (stage, progress) {
+                                if (!ctx.mounted) return;
+                                setDialogState(() {
+                                  progressValue = progress;
+                                  if (stage == 'plan') {
+                                    progressStage = t.aiAgentStagePlan;
+                                  } else if (stage == 'blocks') {
+                                    progressStage = t.aiAgentStageGenerate;
+                                  } else {
+                                    progressStage = t.aiAgentStageValidate;
+                                  }
+                                });
+                              },
+                            );
 
                         if (!ctx.mounted) return;
 
@@ -1437,35 +1445,44 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   ),
                   if (qualityIssues.isNotEmpty) ...[
                     const SizedBox(height: 12),
-                    ...qualityIssues.take(3).map(
-                      (issue) => Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('• ',
-                                style: TextStyle(
-                                    color: Color(0xFFFF8C00), fontSize: 13)),
-                            Expanded(
-                              child: Text(issue,
-                                  style: const TextStyle(fontSize: 13)),
+                    ...qualityIssues
+                        .take(3)
+                        .map(
+                          (issue) => Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  '• ',
+                                  style: TextStyle(
+                                    color: Color(0xFFFF8C00),
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    issue,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
                   ],
                   if (isEnhancing) ...[
                     const SizedBox(height: 16),
                     const LinearProgressIndicator(),
                     const SizedBox(height: 6),
-                    Text(t.qualityEnhancing,
-                        style: const TextStyle(fontSize: 12)),
+                    Text(
+                      t.qualityEnhancing,
+                      style: const TextStyle(fontSize: 12),
+                    ),
                   ],
                   if (statusMessage.isNotEmpty) ...[
                     const SizedBox(height: 12),
-                    Text(statusMessage,
-                        style: const TextStyle(fontSize: 13)),
+                    Text(statusMessage, style: const TextStyle(fontSize: 13)),
                   ],
                 ],
               ),
@@ -2009,9 +2026,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     // Guard: prevent deleting last lesson
     final currentLessons = _courseLessons[courseId] ?? [];
     if (currentLessons.length <= 1) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(t.cannotDeleteLastLesson)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(t.cannotDeleteLastLesson)));
       return;
     }
 
@@ -2044,9 +2061,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     final course = await SupabaseService.getCourseContent(courseId);
     if (!mounted) return;
     if (course == null || lessonIndex >= course.lessons.length) {
-      messenger.showSnackBar(
-        SnackBar(content: Text(t.errorLoading)),
-      );
+      messenger.showSnackBar(SnackBar(content: Text(t.errorLoading)));
       return;
     }
 
@@ -2834,7 +2849,10 @@ class _LessonBoxState extends State<_LessonBox> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 16,
+                ),
                 child: Center(
                   child: widget.dashed
                       ? Text(
