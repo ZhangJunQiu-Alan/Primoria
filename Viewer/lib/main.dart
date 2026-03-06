@@ -48,8 +48,10 @@ void main() async {
   );
 
   // Initialize services
-  await StorageService.getInstance();
+  final storage = await StorageService.getInstance();
   await AudioService.getInstance().initialize();
+  AudioService.getInstance().setSoundEnabled(storage.getSoundEnabled());
+  AudioService.getInstance().setHapticsEnabled(storage.getHapticsEnabled());
   await NotificationService.getInstance().initialize();
 
   runApp(const PrimoriaApp());
