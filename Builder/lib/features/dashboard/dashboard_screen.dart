@@ -12,6 +12,7 @@ import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/profile_dialog.dart';
 import '../../widgets/user_avatar.dart';
+import 'tabs/course_manage_tab.dart';
 import 'tabs/data_center_tab.dart';
 import 'tabs/fans_manage_tab.dart';
 import 'tabs/home_tab.dart';
@@ -45,10 +46,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   // Course Manage state
   List<Map<String, dynamic>> _courses = [];
   bool _coursesLoading = false;
+  String? _coursesError;
   String _sortOrder = 'time'; // 'time', 'student', 'comments'
 
   // Cache: courseId → list of page titles (lessons)
   final Map<String, List<String>> _courseLessons = {};
+  final Set<String> _courseLessonLoading = <String>{};
 
   @override
   void initState() {
@@ -64,7 +67,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   Future<void> _loadCourses() async {
     if (!SupabaseService.isLoggedIn) return;
-    setState(() => _coursesLoading = true);
+    setState(() {
+      _coursesLoading = true;
+      _coursesError = null;
+    });
     try {
       final courses = await SupabaseService.getMyCourses();
       if (mounted) {
@@ -72,13 +78,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           // Always refresh lesson-title cache after a course list reload
           // so Builder-side renames are visible when returning to Dashboard.
           _courseLessons.clear();
+          _courseLessonLoading.clear();
           _courses = courses;
           _coursesLoading = false;
+          _coursesError = null;
         });
       }
     } catch (e) {
       if (mounted) {
-        setState(() => _coursesLoading = false);
+        setState(() {
+          _coursesLoading = false;
+          _coursesError = e.toString();
+        });
       }
     }
   }
@@ -232,10 +243,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   Widget _buildTopbar(BuildContext context, BuilderLocalizations t) {
-    if (_currentTab == _NavTab.courseManage) {
-      return _buildCourseManageTopbar(context, t);
-    }
-    // Default dashboard topbar — avatar at right
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -247,17 +254,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         ),
       ],
     );
-  }
-
-  String _sortLabel(BuilderLocalizations t) {
-    switch (_sortOrder) {
-      case 'student':
-        return t.sortByStudent;
-      case 'comments':
-        return t.sortByComments;
-      default:
-        return t.sortByTime;
-    }
   }
 
   void _applySortOrder() {
@@ -279,94 +275,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     });
   }
 
-  Widget _buildCourseManageTopbar(
-    BuildContext context,
-    BuilderLocalizations t,
-  ) {
-    return Column(
-      children: [
-        // Avatar row
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [UserAvatar(size: 57, onSignedIn: _loadCourses)],
-        ),
-        const SizedBox(height: 16),
-        // Sort + Create row
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Sort dropdown
-            PopupMenuButton<String>(
-              onSelected: (value) {
-                _sortOrder = value;
-                _applySortOrder();
-              },
-              offset: const Offset(0, 40),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-              itemBuilder: (_) => [
-                PopupMenuItem(value: 'time', child: Text(t.sortByTime)),
-                PopupMenuItem(value: 'student', child: Text(t.sortByStudent)),
-                PopupMenuItem(value: 'comments', child: Text(t.sortByComments)),
-              ],
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: const Color(0x2E506E96)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      _sortLabel(t),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: _C.text,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    const Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 18,
-                      color: _C.muted,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // Right-side actions: AI Generate (Beta) + Create Course
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _AiBetaButton(
-                  label: t.aiGenerateBeta,
-                  onTap: () => _showOneSentenceGenerateDialog(t),
-                ),
-                const SizedBox(width: 10),
-                _GhostButton(
-                  label: t.createCourse,
-                  onTap: () => _showCreateCourseDialog(t),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   Widget _buildPageContent(BuilderLocalizations t) {
     switch (_currentTab) {
       case _NavTab.homePage:
         return _buildHomePage(t);
       case _NavTab.courseManage:
-        return _buildCourseManage(t);
+        return _buildCourseManagePage(t);
       case _NavTab.dataCenter:
         return _buildDataCenterPage(t);
       case _NavTab.fansManage:
@@ -406,313 +320,94 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   // ═══════════════════════════════════════════════
   //  Course Manage content
   // ═══════════════════════════════════════════════
-  Widget _buildCourseManage(BuilderLocalizations t) {
-    if (!SupabaseService.isLoggedIn) {
-      return _buildSignInPrompt(t);
-    }
-
-    if (_coursesLoading) {
-      return const Center(
-        child: Padding(
-          padding: EdgeInsets.all(60),
-          child: CircularProgressIndicator(color: _C.accent),
-        ),
-      );
-    }
-
-    if (_courses.isEmpty) {
-      return _buildEmptyCourses(t);
-    }
-
-    return Column(
-      children: [
-        for (int i = 0; i < _courses.length; i++) ...[
-          if (i > 0) const SizedBox(height: 24),
-          _buildCourseCard(_courses[i], t),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildSignInPrompt(BuilderLocalizations t) {
-    return Container(
-      padding: const EdgeInsets.all(48),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFAFFFFFF), Color(0xE6EEF4FF)],
-        ),
-        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
+  Widget _buildCourseManagePage(BuilderLocalizations t) {
+    return DashboardCourseManageTab(
+      t: t,
+      isLoggedIn: SupabaseService.isLoggedIn,
+      isLoading: _coursesLoading,
+      loadError: _coursesError,
+      courses: _courses,
+      courseLessons: _courseLessons,
+      sortOrder: _sortOrder,
+      onSortChanged: (value) {
+        _sortOrder = value;
+        _applySortOrder();
+      },
+      onRefresh: _loadCourses,
+      onSignIn: () => _showProfile(context),
+      onCreateCourse: () => _showCreateCourseDialog(t),
+      onAiGenerate: () => _showOneSentenceGenerateDialog(t),
+      onEnsureLessonsLoaded: _loadCourseLessons,
+      onOpenCourse: _openCourseBuilder,
+      onEditCourse: (course) => _showEditCourseDialog(course, t),
+      onDeleteCourse: (courseId, title) =>
+          _confirmDeleteCourse(courseId, title, t),
+      onOpenLesson: _openLessonBuilder,
+      onDeleteLesson: (courseId, lessonIndex, lessonTitle) =>
+          _confirmDeleteLesson(
+            courseId: courseId,
+            lessonIndex: lessonIndex,
+            lessonTitle: lessonTitle,
+            t: t,
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          const Icon(Icons.lock_outline, size: 48, color: _C.muted),
-          const SizedBox(height: 16),
-          Text(
-            t.signInToManage,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: _C.text,
-            ),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () => _showProfile(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _C.accent,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-            child: Text(
-              t.signIn,
-              style: const TextStyle(fontWeight: FontWeight.w700),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyCourses(BuilderLocalizations t) {
-    return Container(
-      padding: const EdgeInsets.all(48),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFAFFFFFF), Color(0xE6EEF4FF)],
-        ),
-        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          const Icon(Icons.school_outlined, size: 48, color: _C.muted),
-          const SizedBox(height: 16),
-          Text(
-            t.noCoursesYet,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: _C.text,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            t.createFirstCourse,
-            style: const TextStyle(fontSize: 14, color: _C.muted),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () => _showCreateCourseDialog(t),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _C.accent,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-            child: Text(
-              t.createCourse,
-              style: const TextStyle(fontWeight: FontWeight.w700),
-            ),
-          ),
-        ],
-      ),
+      onAddLesson: _openAddLessonBuilder,
+      formatLessonTitle: (rawTitle, courseTitle) =>
+          _formatLessonCardTitle(rawTitle, courseTitle: courseTitle),
     );
   }
 
   /// Load lesson titles for a single course (async, cached).
   Future<void> _loadCourseLessons(String courseId) async {
-    if (_courseLessons.containsKey(courseId)) return;
+    if (_courseLessons.containsKey(courseId) ||
+        _courseLessonLoading.contains(courseId)) {
+      return;
+    }
+    _courseLessonLoading.add(courseId);
     try {
       final titles = await SupabaseService.getCourseLessonTitles(courseId);
       if (mounted) {
-        setState(() => _courseLessons[courseId] = titles);
+        setState(() {
+          _courseLessons[courseId] = titles;
+          _courseLessonLoading.remove(courseId);
+        });
+      } else {
+        _courseLessonLoading.remove(courseId);
       }
     } catch (_) {
-      if (mounted) setState(() => _courseLessons[courseId] = []);
+      if (mounted) {
+        setState(() {
+          _courseLessons[courseId] = [];
+          _courseLessonLoading.remove(courseId);
+        });
+      } else {
+        _courseLessonLoading.remove(courseId);
+      }
     }
   }
 
-  String _formatTimeAgo(String? updatedAt, BuilderLocalizations t) {
-    if (updatedAt == null) return '';
-    try {
-      final dt = DateTime.parse(updatedAt);
-      final diff = DateTime.now().difference(dt);
-      if (diff.inDays > 0) {
-        return t.updatedDaysAgo(diff.inDays);
-      } else if (diff.inHours > 0) {
-        return t.updatedHoursAgo(diff.inHours);
-      }
-      return t.updatedJustNow;
-    } catch (_) {
-      return t.updatedRecently;
-    }
+  void _openCourseBuilder(String courseId, String courseTitle) {
+    if (courseId.trim().isEmpty) return;
+    final encodedCourseTitle = Uri.encodeQueryComponent(courseTitle);
+    context.go('/builder?courseId=$courseId&courseTitle=$encodedCourseTitle');
   }
 
-  Widget _buildCourseCard(Map<String, dynamic> course, BuilderLocalizations t) {
-    final courseId = course['id'] as String;
-    final title = course['title'] as String? ?? 'Untitled';
-    final updatedAgo = _formatTimeAgo(course['updated_at'] as String?, t);
+  void _openLessonBuilder(
+    String courseId,
+    String courseTitle,
+    int lessonIndex,
+    String lessonTitle,
+  ) {
+    final encodedLessonTitle = Uri.encodeQueryComponent(lessonTitle);
+    final encodedCourseTitle = Uri.encodeQueryComponent(courseTitle);
+    context.go(
+      '/builder?courseId=$courseId&lessonIndex=$lessonIndex&lessonTitle=$encodedLessonTitle&courseTitle=$encodedCourseTitle',
+    );
+  }
 
-    // Trigger async lesson loading
-    _loadCourseLessons(courseId);
-    final lessons = _courseLessons[courseId] ?? [];
-
-    return Container(
-      padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFAFFFFFF), Color(0xE6EEF4FF)],
-        ),
-        border: Border.all(color: _C.accent.withValues(alpha: 0.2)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x261E2E50),
-            blurRadius: 40,
-            offset: Offset(0, 18),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ── Header: summary + actions ──
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final wide = constraints.maxWidth > 500;
-
-              final summary = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1F2D3D),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  if (updatedAgo.isNotEmpty)
-                    Text(
-                      updatedAgo,
-                      style: const TextStyle(color: _C.muted, fontSize: 14),
-                    ),
-                  const SizedBox(height: 4),
-                  Text(
-                    t.learnedTimes(lessons.length),
-                    style: const TextStyle(color: _C.muted, fontSize: 14),
-                  ),
-                ],
-              );
-
-              final actions = Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _GhostButton(
-                    label: t.courseEdit,
-                    onTap: () => _showEditCourseDialog(course, t),
-                  ),
-                  const SizedBox(width: 16),
-                  _GhostButton(
-                    label: t.courseDelete,
-                    onTap: () => _confirmDeleteCourse(courseId, title, t),
-                  ),
-                ],
-              );
-
-              if (wide) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: summary),
-                    actions,
-                  ],
-                );
-              }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [summary, const SizedBox(height: 16), actions],
-              );
-            },
-          ),
-
-          const SizedBox(height: 24),
-
-          // ── Lesson boxes ──
-          Wrap(
-            spacing: 24,
-            runSpacing: 24,
-            children: [
-              // Existing lessons
-              for (int i = 0; i < lessons.length; i++)
-                _LessonBox(
-                  lessonLabel: t.lessonN(i + 1),
-                  title: _formatLessonCardTitle(lessons[i], courseTitle: title),
-                  onDelete: () => _confirmDeleteLesson(
-                    courseId: courseId,
-                    lessonIndex: i,
-                    lessonTitle: _formatLessonCardTitle(
-                      lessons[i],
-                      courseTitle: title,
-                    ),
-                    t: t,
-                  ),
-                  onTap: () {
-                    final lessonTitle = _formatLessonCardTitle(
-                      lessons[i],
-                      courseTitle: title,
-                    );
-                    final encodedLessonTitle = Uri.encodeQueryComponent(
-                      lessonTitle,
-                    );
-                    final encodedCourseTitle = Uri.encodeQueryComponent(title);
-                    context.go(
-                      '/builder?courseId=$courseId&lessonIndex=$i&lessonTitle=$encodedLessonTitle&courseTitle=$encodedCourseTitle',
-                    );
-                  },
-                ),
-              // "Add lesson" dashed box → opens blank builder
-              _LessonBox(
-                title: t.addLesson,
-                dashed: true,
-                onTap: () {
-                  final encodedCourseTitle = Uri.encodeQueryComponent(title);
-                  context.go(
-                    '/builder?courseId=$courseId&addLesson=1&courseTitle=$encodedCourseTitle',
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+  void _openAddLessonBuilder(String courseId, String courseTitle) {
+    final encodedCourseTitle = Uri.encodeQueryComponent(courseTitle);
+    context.go(
+      '/builder?courseId=$courseId&addLesson=1&courseTitle=$encodedCourseTitle',
     );
   }
 
@@ -2340,166 +2035,6 @@ class _NavItem extends StatelessWidget {
   }
 }
 
-/// Ghost-style button (outlined, no fill)
-class _GhostButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const _GhostButton({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: onTap,
-      style: OutlinedButton.styleFrom(
-        foregroundColor: _C.text,
-        side: const BorderSide(color: Color(0x2E506E96)),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
-        textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-      ),
-      child: Text(label),
-    );
-  }
-}
-
-/// Lesson box (200x200)
-class _LessonBox extends StatefulWidget {
-  final String title;
-  final String? lessonLabel;
-  final bool dashed;
-  final VoidCallback? onTap;
-  final VoidCallback? onDelete;
-
-  const _LessonBox({
-    required this.title,
-    this.lessonLabel,
-    this.dashed = false,
-    this.onTap,
-    this.onDelete,
-  });
-
-  @override
-  State<_LessonBox> createState() => _LessonBoxState();
-}
-
-class _LessonBoxState extends State<_LessonBox> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: Stack(
-        children: [
-          GestureDetector(
-            onTap: widget.onTap,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                gradient: widget.dashed
-                    ? null
-                    : const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Color(0x1F4D7CFF), Color(0x1F58CC02)],
-                      ),
-                color: widget.dashed ? const Color(0x99FFFFFF) : null,
-                border: Border.all(
-                  color: widget.dashed
-                      ? const Color(0x66506E96)
-                      : const Color(0x4D506E96),
-                  width: widget.dashed ? 2 : 1,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 16,
-                ),
-                child: Center(
-                  child: widget.dashed
-                      ? Text(
-                          widget.title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            color: _C.muted,
-                          ),
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (widget.lessonLabel != null) ...[
-                              Text(
-                                widget.lessonLabel!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12,
-                                  color: _C.muted,
-                                  letterSpacing: 0.6,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                            ],
-                            Text(
-                              widget.title,
-                              textAlign: TextAlign.center,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                                height: 1.35,
-                                color: _C.text,
-                              ),
-                            ),
-                          ],
-                        ),
-                ),
-              ),
-            ),
-          ),
-          // Delete button — fades in on hover for non-dashed cards
-          if (widget.onDelete != null)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: AnimatedOpacity(
-                opacity: _isHovered ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 150),
-                child: GestureDetector(
-                  onTap: widget.onDelete,
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(color: Colors.black26, blurRadius: 4),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      size: 14,
-                      color: Color(0xFFE53E3E),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
 // ─── Thumbnail mode toggle chip ────────────────────────────────────────────
 class _ThumbnailModeChip extends StatelessWidget {
   final String label;
@@ -2648,52 +2183,6 @@ class _UploadPreviewBox extends StatelessWidget {
                 ),
               ],
             ),
-    );
-  }
-}
-
-/// Orange pill button with a β badge — entry point for AI one-sentence generation.
-class _AiBetaButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const _AiBetaButton({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(999),
-          gradient: const LinearGradient(
-            colors: [Color(0xFFFF8C00), Color(0xFFFFAA33)],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFFFF8C00).withValues(alpha: 0.28),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.auto_awesome, size: 14, color: Colors.white),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
