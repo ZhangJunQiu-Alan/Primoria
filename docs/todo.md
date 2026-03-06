@@ -24,8 +24,9 @@ Last updated: 2026-03-06
 
 ## 4. Recently Completed
 
-1. [x] Dashboard redesign for Home/Data Center/Fans Management (responsive + modular providers/widgets).
+1. [x] Dashboard redesign completed for Home/Course Manage/Data Center/Fans Management (responsive + modular tabs/widgets/providers).
 2. [x] Builder inline editing on canvas for Text/Code Block/Code Playground.
 3. [x] Visibility default normalization (`always` for first block, `afterPreviousCorrect` for others).
 4. [x] Viewer lesson-title and markdown rendering fixes.
 5. [x] Logo navigation consistency to dashboard entry points.
+6. [x] Added widget tests for redesigned Course Manage states and core callbacks.
