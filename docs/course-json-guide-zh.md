@@ -1,701 +1,188 @@
-# Course JSON 编写指南
+# Course JSON 指南（当前规范）
 
-本文档介绍如何手动编写 JSON 文件来创建 Primoria 课程。
+最后更新：2026-03-06
 
----
+本文档是 Builder 导入/导出与 Schema 校验的当前口径。
 
-## 快速开始
-
-最小可用课程 JSON 结构如下：
+## 1）顶层结构
 
 ```json
 {
   "$schema": "https://primoria.com/course-schema/v1.json",
   "schemaVersion": "1.0.0",
-  "courseId": "my-first-course",
+  "courseId": "course-xxxx",
   "metadata": {
-    "title": "My First Course"
+    "title": "My Course",
+    "description": "可选",
+    "author": { "userId": "u1", "displayName": "Author" },
+    "tags": ["tag1"],
+    "difficulty": "beginner",
+    "estimatedMinutes": 60,
+    "createdAt": "2026-03-06T00:00:00.000Z",
+    "updatedAt": "2026-03-06T00:00:00.000Z",
+    "version": "1.0.0"
   },
-  "pages": [
-    {
-      "pageId": "page-1",
-      "title": "First Page",
-      "blocks": []
-    }
-  ]
+  "settings": {
+    "theme": "light",
+    "primaryColor": "blue",
+    "fontFamily": "system"
+  },
+  "lessons": []
 }
 ```
 
-将其保存为 `.json` 文件，然后在 Builder 中点击 “Import” 导入。
+说明：
+- 规范键是 `lessons`。
+- 导入仍兼容历史键 `pages`，会自动迁移。
 
-### Schema 版本与迁移策略
-
-- 当前 schema 版本：`1.0.0`
-- 当前 schema URL：`https://primoria.com/course-schema/v1.json`
-- 新导出文件会同时包含 `$schema` 与 `schemaVersion`。
-- 导入链路支持自动迁移：
-  - 无 `schemaVersion` 的旧版 JSON
-  - `0.8.x` 与 `0.9.x` 旧版 JSON
-  - 兼容的 `1.x` JSON
-- 不支持的版本（如 `2.x` / `9.x`）会在导入时被拒绝，并显示明确迁移错误。
-- 迁移过程由 `CourseImport` 记录日志，便于排障。
-
-### AI 生成输出契约
-
-- Builder AI 会将课程 JSON 生成到**单页**中。
-- 生成 block 总数上限为 **20**。
-- AI 会根据课程类型优先生成更合适的 block 组合（例如编程课优先 `code-block` + `code-playground`，概念课优先文本 + 题目）。
-- AI 输出在加载前会先做结构归一化，并通过 schema 校验。
-
----
-
-## 完整结构
-
-### 1. 顶层结构
+## 2）Lesson 结构
 
 ```json
 {
-  "$schema": "https://primoria.com/course-schema/v1.json",
-  "schemaVersion": "1.0.0",
-  "courseId": "unique-course-id",
-  "metadata": { ... },
-  "settings": { ... },
-  "pages": [ ... ]
+  "lessonId": "lesson-1",
+  "title": "Lesson 1",
+  "blocks": []
 }
 ```
 
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `$schema` | 是（新导出） | Schema URL |
-| `schemaVersion` | 是（新导出） | Schema 版本，当前为 `1.0.0` |
-| `courseId` | 是 | 课程唯一 ID，建议使用字母数字 |
-| `metadata` | 是 | 课程元数据 |
-| `settings` | 否 | 课程设置（主题、颜色等） |
-| `pages` | 是 | 页面数组，至少一页 |
+历史 `pageId` 导入时会迁移为 `lessonId`。
 
-旧版兼容说明：
-- 历史文件可能使用旧 block 类型别名，如 `codeBlock`、`codePlayground`、`codeExecution`、`functionFlow`、`multipleChoice`、`fillBlank`、`trueFalse`、`animationBlock`。
-- 导入时会自动迁移为规范值：
-  - `code-block`
-  - `code-playground`
-  - `code-execution`
-  - `function-flow`
-  - `multiple-choice`
-  - `fill-blank`
-  - `true-false`
-  - `animation`
-
-### 2. metadata
-
-```json
-"metadata": {
-  "title": "Python Intro",
-  "description": "Learn Python from scratch",
-  "author": {
-    "userId": "teacher-001",
-    "displayName": "Teacher Zhang"
-  },
-  "tags": ["Python", "Programming"],
-  "difficulty": "beginner",
-  "estimatedMinutes": 30
-}
-```
-
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `title` | 是 | 课程标题 |
-| `description` | 否 | 课程简介 |
-| `author` | 否 | 作者信息 |
-| `tags` | 否 | 标签数组 |
-| `difficulty` | 否 | `beginner` / `intermediate` / `advanced` |
-| `estimatedMinutes` | 否 | 预计学习时长（分钟） |
-
-### 3. settings
-
-```json
-"settings": {
-  "theme": "light",
-  "primaryColor": "blue",
-  "fontFamily": "system"
-}
-```
-
-通常可选，不配置也有默认值。
-
-### 4. pages
-
-```json
-"pages": [
-  {
-    "pageId": "page-1",
-    "title": "Chapter 1",
-    "blocks": [ ... ]
-  },
-  {
-    "pageId": "page-2",
-    "title": "Chapter 2",
-    "blocks": [ ... ]
-  }
-]
-```
-
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `pageId` | 是 | 页面唯一 ID |
-| `title` | 是 | 页面标题 |
-| `blocks` | 是 | 内容块数组 |
-
----
-
-## Block 详解
-
-每个 Block 的基础结构如下：
+## 3）Block 结构
 
 ```json
 {
-  "type": "blockType",
-  "id": "unique-id",
+  "id": "block-1",
+  "type": "text",
   "position": { "order": 0 },
   "style": { "spacing": "md", "alignment": "left" },
-  "content": { ... }
+  "visibilityRule": "always",
+  "requiredForProgress": false,
+  "content": {}
 }
 ```
 
-### 通用字段
+### 可见性规则
 
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `type` | 是 | Block 类型 |
-| `id` | 是 | 唯一标识 |
-| `position.order` | 否 | 排序值（从 0 开始） |
-| `style.spacing` | 否 | 间距：`sm` / `md` / `lg` |
-| `style.alignment` | 否 | 对齐：`left` / `center` / `right` |
+可选值：
+- `always`
+- `afterPreviousCorrect`
 
----
+默认逻辑：
+- 每个 lesson 的第一个 block 默认 `always`
+- 非第一个 block 默认 `afterPreviousCorrect`
 
-## Block 类型速查
+导入兼容别名并自动归一化：
+- `after_previous_correct`
+- `after-previous-correct`
 
-### 1. text - 文本块
+## 4）Block 类型（规范值）
 
-用于文本讲解，支持 Markdown。
+- `text`
+- `image`
+- `code-block`
+- `code-playground`
+- `code-execution`
+- `function-flow`
+- `multiple-choice`
+- `fill-blank`
+- `true-false`
+- `matching`
+- `animation`
+- `video`
 
+`codeBlock`、`code_playground`、`functionFlow`、`multipleChoice`、`trueFalse`、`animationBlock` 等历史写法在导入时会自动迁移。
+
+## 5）最小 content 示例
+
+### text
 ```json
 {
   "type": "text",
-  "id": "text-001",
-  "position": { "order": 0 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "format": "markdown",
-    "value": "# Title\n\nThis is a paragraph.\n\n- List item 1\n- List item 2"
+    "value": "# Title\n\nBody"
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 说明 |
-|------|------|
-| `format` | `markdown` 或 `plain` |
-| `value` | 文本内容（支持 `\n` 换行） |
-
-**Markdown 小贴士：**
-- `# Title` -> 一级标题
-- `## Subtitle` -> 二级标题
-- `**bold**` -> 粗体
-- `*italic*` -> 斜体
-- `` `code` `` -> 行内代码
-- `- item` -> 无序列表
-
----
-
-### 2. image - 图片块
-
-```json
-{
-  "type": "image",
-  "id": "img-001",
-  "position": { "order": 1 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "url": "https://example.com/image.png",
-    "alt": "Illustration",
-    "caption": "Figure 1: Program execution flow"
-  }
-}
-```
-
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `url` | 是 | 图片 URL |
-| `alt` | 否 | 图片加载失败时的替代文本 |
-| `caption` | 否 | 图片说明文字 |
-
----
-
-### 3. code-block - 代码展示块
-
-用于展示代码（只读，不可运行）。
-
+### code-block
 ```json
 {
   "type": "code-block",
-  "id": "code-001",
-  "position": { "order": 2 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "language": "python",
-    "code": "def hello():\n    print(\"Hello!\")\n\nhello()"
+    "code": "print('hello')"
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 说明 |
-|------|------|
-| `language` | 语言类型：`python` / `javascript` / `dart` / `java` 等 |
-| `code` | 代码文本（使用 `\n` 换行） |
-
----
-
-### 4. code-playground - 可运行代码块
-
-学生可编辑并运行代码验证输出。
-
+### code-playground
 ```json
 {
   "type": "code-playground",
-  "id": "playground-001",
-  "position": { "order": 3 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
     "language": "python",
-    "initialCode": "# Calculate 1 + 1 and print the result\nresult = ___\nprint(result)",
+    "initialCode": "print(1+1)",
     "expectedOutput": "2",
-    "hints": [
-      "Use the + operator",
-      "The answer is 1 + 1"
-    ],
     "runnable": true
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `language` | 是 | 编程语言 |
-| `initialCode` | 是 | 初始代码（学生看到的模板） |
-| `expectedOutput` | 否 | 期望输出（用于判题） |
-| `hints` | 否 | 提示数组（卡住时显示） |
-| `runnable` | 否 | 是否可运行，默认 `true` |
-
-执行说明：
-- Builder 使用本地 Python-like 模拟器（非完整解释器），支持常见语法场景，如 `print(...)`、变量赋值、四则运算、`type`/`int`/`float`/`round`。
-
----
-
-### 5. multiple-choice - 选择题
-
-单选示例：
-
+### multiple-choice
 ```json
 {
   "type": "multiple-choice",
-  "id": "quiz-001",
-  "position": { "order": 4 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "question": "Which function prints output in Python?",
+    "question": "2+2=?",
     "options": [
-      { "id": "a", "text": "print()" },
-      { "id": "b", "text": "echo()" },
-      { "id": "c", "text": "console.log()" },
-      { "id": "d", "text": "System.out.println()" }
+      { "id": "a", "text": "3" },
+      { "id": "b", "text": "4" }
     ],
-    "correctAnswer": "a",
-    "correctAnswers": ["a"],
-    "explanation": "Python uses print() to output content to the console.",
-    "multiSelect": false
+    "mode": "single",
+    "correctAnswers": ["b"]
   }
 }
 ```
 
-多选示例：
-
+### function-flow
 ```json
 {
-  "type": "multiple-choice",
-  "id": "quiz-002",
-  "position": { "order": 5 },
-  "style": { "spacing": "md", "alignment": "left" },
+  "type": "function-flow",
   "content": {
-    "question": "Which are Python data types?",
-    "options": [
-      { "id": "a", "text": "int" },
-      { "id": "b", "text": "float" },
-      { "id": "c", "text": "loop" },
-      { "id": "d", "text": "str" }
-    ],
-    "correctAnswers": ["a", "b", "d"],
-    "correctAnswer": "a",
-    "explanation": "int/float/str are data types; loop is a control-flow concept.",
-    "multiSelect": true
+    "entryNodeId": "n1",
+    "nodes": [{ "id": "n1", "label": "main" }],
+    "edges": [],
+    "steps": [{ "nodeId": "n1" }]
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `question` | 是 | 题干 |
-| `options` | 是 | 选项数组，每项包含 `id` 和 `text` |
-| `correctAnswer` | 是* | 旧版单答案字段（兼容保留） |
-| `correctAnswers` | 推荐 | 正确选项 ID 列表；多选时顺序无关 |
-| `explanation` | 否 | 解析说明 |
-| `multiSelect` | 否 | 是否多选，默认 `false` |
-
-\* 新内容请以 `correctAnswers` 为准；`correctAnswer` 仅用于兼容导出。
-
----
-
-### 6. fill-blank - 填空题
-
-```json
-{
-  "type": "fill-blank",
-  "id": "fill-001",
-  "position": { "order": 5 },
-  "style": { "spacing": "md", "alignment": "left" },
-  "content": {
-    "question": "The creator of Python is ______",
-    "correctAnswer": "Guido van Rossum",
-    "hint": "He is Dutch and his name starts with G"
-  }
-}
-```
-
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `question` | 是 | 题干（空位可用下划线） |
-| `correctAnswer` | 是 | 正确答案 |
-| `hint` | 否 | 提示 |
-
----
-
-### 7. true-false - 判断题
-
-```json
-{
-  "type": "true-false",
-  "id": "tf-001",
-  "position": { "order": 6 },
-  "style": { "spacing": "md", "alignment": "left" },
-  "content": {
-    "question": "Python is a compiled language.",
-    "correctAnswer": false,
-    "explanation": "Python is an interpreted language."
-  }
-}
-```
-
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `question` | 是 | 一个可判定真假的陈述 |
-| `correctAnswer` | 是 | `true` 或 `false` |
-| `explanation` | 否 | 作答后展示解析 |
-
----
-
-### 8. animation - 动画块
-
-```json
-{
-  "type": "animation",
-  "id": "anim-001",
-  "position": { "order": 7 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "preset": "bouncing-dot",
-    "durationMs": 2000,
-    "loop": true,
-    "speed": 1.0
-  }
-}
-```
-
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `preset` | 是 | `bouncing-dot` 或 `pulse-bars` |
-| `durationMs` | 否 | 动画时长（毫秒），建议 `300`-`10000` |
-| `loop` | 否 | 是否循环，默认 `true` |
-| `speed` | 否 | 播放倍率，建议 `0.25`-`3.0` |
-
----
-
-### 9. video - 视频块
-
-```json
-{
-  "type": "video",
-  "id": "video-001",
-  "position": { "order": 6 },
-  "style": { "spacing": "md", "alignment": "center" },
-  "content": {
-    "url": "https://example.com/video.mp4",
-    "title": "Python Installation Tutorial"
-  }
-}
-```
-
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `url` | 是 | 视频 URL |
-| `title` | 否 | 视频标题 |
-
----
-
-### 10. code-execution - 代码执行块
-
-用于“逐行执行代码”教学，支持当前行高亮、变量面板、输出面板和 checkpoint 互动问答。
-
+### code-execution
 ```json
 {
   "type": "code-execution",
-  "id": "ce-001",
-  "position": { "order": 8 },
-  "style": { "spacing": "md", "alignment": "left" },
   "content": {
-    "title": "Trace Variable Updates",
     "language": "python",
-    "sourceCode": "a = 1\nb = a + 2\nprint(b)",
+    "sourceCode": "x=1\nprint(x)",
     "traceSteps": [
-      { "line": 1, "variables": { "a": 1 } },
-      { "line": 2, "variables": { "a": 1, "b": 3 }, "note": "b 已计算完成" },
-      { "line": 3, "variables": { "a": 1, "b": 3 }, "stdoutDelta": "3" }
-    ],
-    "initialVariables": { "seed": 0 },
-    "checkpoints": [
-      {
-        "stepIndex": 1,
-        "question": "此时 b 的值是多少？",
-        "options": ["2", "3"],
-        "correctIndex": 1,
-        "explanation": "b = a + 2 = 3"
-      }
-    ],
-    "controls": {
-      "autoplay": false,
-      "stepDurationMs": 1200,
-      "allowScrub": true
-    },
-    "style": {
-      "theme": "indigo",
-      "showLineNumbers": true,
-      "showVariablesPanel": true,
-      "showStdoutPanel": true
-    }
+      { "line": 1, "variables": { "x": 1 } },
+      { "line": 2, "stdoutDelta": "1" }
+    ]
   }
 }
 ```
 
-**content 字段：**
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| `title` | 否 | Block 标题 |
-| `language` | 否 | 语言标签，默认 `python` |
-| `sourceCode` | 是 | 完整源码字符串（支持换行） |
-| `traceSteps` | 是 | 执行步骤数组 |
-| `traceSteps[].line` | 是 | 当前执行行号（1-based，需在源码行范围内） |
-| `traceSteps[].stdoutDelta` | 否 | 该步新增输出 |
-| `traceSteps[].variables` | 是 | 当前变量快照对象 |
-| `traceSteps[].callStack` | 否 | 调用栈数组 |
-| `traceSteps[].note` | 否 | 教学说明 |
-| `initialVariables` | 否 | 第一步前初始变量 |
-| `checkpoints` | 否 | 步骤触发互动问答 |
-| `checkpoints[].stepIndex` | 是（存在 checkpoint 时） | 触发步骤索引（0-based） |
-| `checkpoints[].options` | 是（存在 checkpoint 时） | 选项数组 |
-| `checkpoints[].correctIndex` | 是（存在 checkpoint 时） | 正确选项索引（必须在 options 范围内） |
-| `controls` | 否 | 播放控制（`autoplay`、`stepDurationMs`、`allowScrub`） |
-| `style` | 否 | 视觉配置（主题、行号、变量面板、输出面板） |
+## 6）关键校验点
 
-**Schema 迁移器支持的旧别名：** `codeExecution`、`code_execution`
+- `courseId`、`metadata.title`、`lessonId`、`lesson.title`、`block.id`、`block.type` 必须合法。
+- block ID 在整个课程 JSON 内必须唯一。
+- 不支持的 block type 会被拒绝。
+- 发布/导出阶段启用更严格校验。
 
----
+## 7）导入建议
 
-## 完整示例
-
-下面是一个包含多种 block 类型的完整课程示例：
-
-```json
-{
-  "$schema": "https://primoria.com/course-schema/v1.json",
-  "schemaVersion": "1.0.0",
-  "courseId": "python-101",
-  "metadata": {
-    "title": "Intro to Python Programming",
-    "description": "A beginner-friendly Python course",
-    "author": {
-      "userId": "teacher-zhang",
-      "displayName": "Teacher Zhang"
-    },
-    "tags": ["Python", "Programming", "Intro"],
-    "difficulty": "beginner",
-    "estimatedMinutes": 45
-  },
-  "pages": [
-    {
-      "pageId": "intro",
-      "title": "Course Overview",
-      "blocks": [
-        {
-          "type": "text",
-          "id": "welcome",
-          "position": { "order": 0 },
-          "style": { "spacing": "lg", "alignment": "center" },
-          "content": {
-            "format": "markdown",
-            "value": "# Welcome to Python!\n\nIn this course, you will learn:\n\n- Basic syntax\n- Variables and data types\n- Conditionals and loops\n- Function definitions"
-          }
-        }
-      ]
-    },
-    {
-      "pageId": "hello-world",
-      "title": "Hello World",
-      "blocks": [
-        {
-          "type": "text",
-          "id": "intro-text",
-          "position": { "order": 0 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "format": "markdown",
-            "value": "## Your first program\n\nEvery programmer's first program prints \"Hello, World!\"."
-          }
-        },
-        {
-          "type": "code-playground",
-          "id": "hello-code",
-          "position": { "order": 1 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "language": "python",
-            "initialCode": "# Run this code and see the output\nprint(\"Hello, World!\")",
-            "expectedOutput": "Hello, World!",
-            "hints": ["Click the Run button to execute"],
-            "runnable": true
-          }
-        },
-        {
-          "type": "multiple-choice",
-          "id": "quiz-print",
-          "position": { "order": 2 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "question": "What does the print() function do?",
-            "options": [
-              { "id": "a", "text": "Print output to the screen" },
-              { "id": "b", "text": "Read user input" },
-              { "id": "c", "text": "Define variables" },
-              { "id": "d", "text": "Perform math" }
-            ],
-            "correctAnswer": "a",
-            "explanation": "print() outputs the content inside the parentheses to the screen (console)."
-          }
-        }
-      ]
-    },
-    {
-      "pageId": "variables",
-      "title": "Variables",
-      "blocks": [
-        {
-          "type": "text",
-          "id": "var-intro",
-          "position": { "order": 0 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "format": "markdown",
-            "value": "## What is a variable?\n\nA variable is like a **box** that can store data."
-          }
-        },
-        {
-          "type": "code-block",
-          "id": "var-example",
-          "position": { "order": 1 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "language": "python",
-            "code": "name = \"Alex\"\nage = 18\nprint(name)\nprint(age)"
-          }
-        },
-        {
-          "type": "code-playground",
-          "id": "var-practice",
-          "position": { "order": 2 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "language": "python",
-            "initialCode": "# Create a variable x with value 10\n# Then print x\n\n",
-            "expectedOutput": "10",
-            "hints": [
-              "Use = for assignment",
-              "x = 10",
-              "Then print(x)"
-            ],
-            "runnable": true
-          }
-        },
-        {
-          "type": "fill-blank",
-          "id": "fill-var",
-          "position": { "order": 3 },
-          "style": { "spacing": "md", "alignment": "left" },
-          "content": {
-            "question": "In Python, use ______ to assign a value to a variable",
-            "correctAnswer": "=",
-            "hint": "It is the equals sign"
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
----
-
-## 常见问题（FAQ）
-
-### 问：ID 可以重复吗？
-不可以。`courseId`、`pageId` 与每个 Block 的 `id` 都必须唯一。
-
-### 问：如何表示换行？
-在 JSON 字符串中使用 `\n`。
-
-### 问：如何校验 JSON 格式与结构？
-Builder 已在关键生命周期节点启用集中 schema 校验：
-
-- **Import**：阻断级错误会禁止导入。
-- **Save**：阻断级错误会禁止云端保存。
-- **Publish**：阻断级错误会禁止发布。
-
-校验消息会带 JSON 字段路径（例如：`$.pages[0].blocks[1].content.correctAnswers[0]`），便于快速定位并修复。
-
-语法工具（如 [jsonlint.com](https://jsonlint.com)）仍可用于检查 JSON 是否格式正确，但它不会校验 Primoria 的课程 schema 业务规则。
-
----
-
-## 下一步
-
-1. 复制上方示例并保存为 `my-course.json`
-2. 打开 Builder，点击 “Import”
-3. 选择你的 JSON 文件
-4. 开始编辑与预览
-
-如需更多示例，可查看 `examples/` 目录。
+1. 修改已有导出文件时，尽量保持 ID 稳定。
+2. 优先使用规范键（`lessons`、`lessonId`、规范 block type）。
+3. 历史 JSON 可直接导入，由迁移器自动归一化。
+4. 导入失败时按错误提示中的字段路径逐项修复。

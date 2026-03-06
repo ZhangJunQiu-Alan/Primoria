@@ -1,143 +1,62 @@
-# Primoria（中文文档）
+# Primoria 文档索引
 
-Primoria 是一个由两部分组成的 Flutter 系统，用于创建和学习交互式 STEM 课程。
+最后更新：2026-03-06
 
-- **Builder**：基于 Flutter Web 的课程创作工具，支持拖拽模块搭课并导出 JSON。
-- **Viewer**：受 Brilliant.org 启发的 Flutter Web 学习端，用于消费课程内容并完成交互式学习。
+Primoria 由两个 Flutter 应用组成：
+- `Builder/`：课程创作端（Flutter Web + Riverpod + GoRouter + Supabase）
+- `Viewer/`：学习端（Flutter + Provider + Supabase）
 
-本仓库包含这两个应用，以及共享课程 Schema 与产品文档。
+## 当前产品状态
 
-## 系统架构
+- Builder 已具备登录鉴权与角色门禁（`author` / `admin` 才能访问 Builder 受保护页面）。
+- Builder 支持 AI 生成、保存/发布、JSON 导入导出、课时级编辑。
+- Dashboard 当前 4 个 Tab：
+  - 首页：已重设计
+  - 课程管理：沿用现有生产逻辑（本轮重设计保持不变）
+  - 数据中心：已重设计
+  - 粉丝管理：已重设计
+- Viewer 支持课程发现、报名、课时学习、个人设置、XP/连续学习/成就，以及 markdown 文本渲染。
 
-```
-[Builder (Flutter Web)]
-        |
-        |  导出课程 JSON
-        v
-[课程 Schema (Course/Page/Block)]
-        |
-        |  在网站端加载/预览
-        v
-[Viewer (Flutter Website)]
-```
+## Builder 核心路由
 
-后端：**Supabase（Postgres + Edge Functions）**，用于账号、课程云端保存/发布、搜索/推荐等能力。
-后端语言/运行时基线：**TypeScript + Deno**（Supabase Edge Functions）。
+- `/`：落地页
+- `/dashboard`：创作者工作台
+- `/builder`：编辑器
+- `/viewer`：Builder 内预览
+- `/auth/callback`：OAuth 回调
 
-## 仓库结构
+## Block 类型（规范值）
 
-```
-Primoria/
-├── Builder/                     # 课程创作应用（Flutter Web）
-├── Viewer/                      # 学习应用（Flutter Web）
-├── supabase/                    # Supabase 后端（迁移、配置）
-├── docs/                        # 项目文档
-├── Design/                      # UI 设计稿（PNG）
-├── Builder_temple/              # HTML 模板/原型
-├── img/                         # 项目图片资源
-├── CLAUDE.md                    # Claude Code 项目指南
-└── .env.example                 # 环境变量模板
-```
+`text`、`image`、`code-block`、`code-playground`、`code-execution`、`function-flow`、`multiple-choice`、`fill-blank`、`true-false`、`matching`、`animation`、`video`
 
-## 环境准备
+## docs 目录文件说明
 
-### 前置要求
-- **Flutter SDK**：3.35.0 或更高版本
-- **Dart SDK**：3.9.0 或更高版本
-- **IDE**：VS Code（Flutter 插件）或 Android Studio（Flutter 插件）
+- `prd.md` / `prd-zh.md`：当前需求基线
+- `database-schema.md` / `database-schema-zh.md`：Supabase 实际 schema 与迁移说明
+- `course-json-guide.md` / `course-json-guide-zh.md`：课程 JSON 规范
+- `dashboard.md` / `dashboard-zh.md`：Dashboard 架构与 Tab 说明
+- `test-checklist.md` / `test-checklist-zh.md`：与当前代码一致的回归清单
+- `todo.md` / `todo-zh.md`：仅保留当前待办
+- `changelog.md`：近期版本和关键架构变更
+- `prompt.txt`：当前 block 规划提示模板
 
-### 安装步骤
+## 运行与验证
 
-1. **安装 Flutter**：参考 [Flutter 官方安装文档](https://docs.flutter.dev/get-started/install)。
+```bash
+# Builder
+cd Builder
+flutter pub get
+flutter analyze lib/features/dashboard
+flutter test
 
-2. **验证安装**
-   ```bash
-   flutter doctor
-   ```
-
-3. **克隆仓库并安装依赖**
-   ```bash
-   git clone https://github.com/ZhangJunQiu-Alan/primoria.git
-   cd primoria
-   cd Builder && flutter pub get
-   cd ../Viewer && flutter pub get
-   ```
-
-4. **运行应用**
-   ```bash
-   # Builder（Flutter Web）
-   cd Builder && flutter run -d chrome
-
-   # Viewer（Flutter Web）
-   cd Viewer && flutter run -d chrome
-   ```
-
-## Builder 概览
-
-**路由流程：** `/`（Landing）→ `/dashboard`（控制台）→ `/builder`（编辑器）→ `/viewer`（预览）
-
-**核心能力：**
-- 带登录弹窗的落地页（Supabase 认证：邮箱/Google）
-- 含课程管理、数据概览、收入/评论卡片的 Dashboard
-- 可搜索、分类的拖拽式模块编辑器
-- 模块选中与属性编辑
-- JSON 导入/导出与 AI 课程生成（Gemini）
-- 代码运行模块（本地 Python-like 模拟器）
-
-**源码结构：**
-```
-Builder/lib/
-├── app/                         # GoRouter 路由
-├── features/landing/            # 落地页 + 登录弹窗
-├── features/dashboard/          # 课程管理控制台
-├── features/builder/            # 模块编辑器 UI
-├── features/viewer/             # 应用内预览
-├── models/                      # 课程 Schema（Riverpod）
-├── providers/                   # 状态管理
-├── services/                    # Supabase、AI、导入导出
-└── widgets/                     # 面板、画布、模块组件
+# Viewer
+cd ../Viewer
+flutter pub get
+flutter analyze
+flutter test
 ```
 
-## Viewer 概览
+## 说明
 
-**核心能力：**
-- 首页、搜索、课程、课时、个人中心等页面
-- 交互式组件（滑块、反馈、动画）
-- 本地持久化与基础服务
-- 明暗主题支持
-
-**源码结构：**
-```
-Viewer/lib/
-├── components/                  # UI 组件
-├── models/                      # 数据模型
-├── providers/                   # 状态管理（Provider）
-├── screens/                     # 页面
-├── services/                    # 应用服务
-└── theme/                       # 设计系统
-```
-
-## 文档索引
-
-| 文件 | 用途 |
-|------|------|
-| `docs/prd.md` | 产品需求文档 |
-| `docs/database-schema.md` | PostgreSQL 表结构设计 |
-| `docs/course-json-guide.md` | Course JSON 编写指南 |
-| `docs/dashboard.md` | Dashboard 架构说明 |
-| `docs/test-checklist.md` | MVP 手工测试清单 |
-| `docs/changelog.md` | 变更日志 |
-| `docs/todo.md` | 任务待办 |
-
-## 贡献
-
-欢迎贡献。请提交清晰描述的问题或 PR。
-
-## 许可证
-
-当前许可证见 `Viewer/LICENSE`。
-
-## 致谢
-
-- 设计灵感：Brilliant.org
-- 技术栈：Flutter
+- 文档按“当前实现状态”维护，不再保留已失效草案描述。
+- 历史上下文请查 git 提交记录。
