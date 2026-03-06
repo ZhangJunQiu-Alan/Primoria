@@ -138,6 +138,15 @@ class StorageService {
     return _prefs?.getBool('soundEnabled') ?? true;
   }
 
+  // Haptics settings
+  Future<void> saveHapticsEnabled(bool enabled) async {
+    await _prefs?.setBool('hapticsEnabled', enabled);
+  }
+
+  bool getHapticsEnabled() {
+    return _prefs?.getBool('hapticsEnabled') ?? true;
+  }
+
   // Notification settings
   Future<void> saveNotificationsEnabled(bool enabled) async {
     await _prefs?.setBool('notificationsEnabled', enabled);
@@ -145,6 +154,104 @@ class StorageService {
 
   bool getNotificationsEnabled() {
     return _prefs?.getBool('notificationsEnabled') ?? true;
+  }
+
+  Future<void> saveDailyReminderEnabled(bool enabled) async {
+    await _prefs?.setBool('dailyReminderEnabled', enabled);
+  }
+
+  bool getDailyReminderEnabled() {
+    return _prefs?.getBool('dailyReminderEnabled') ?? false;
+  }
+
+  Future<void> saveDailyReminderTime({
+    required int hour,
+    required int minute,
+  }) async {
+    await _prefs?.setInt('dailyReminderHour', hour);
+    await _prefs?.setInt('dailyReminderMinute', minute);
+  }
+
+  int getDailyReminderHour() {
+    return _prefs?.getInt('dailyReminderHour') ?? 20;
+  }
+
+  int getDailyReminderMinute() {
+    return _prefs?.getInt('dailyReminderMinute') ?? 0;
+  }
+
+  Future<void> saveStreakReminderEnabled(bool enabled) async {
+    await _prefs?.setBool('streakReminderEnabled', enabled);
+  }
+
+  bool getStreakReminderEnabled() {
+    return _prefs?.getBool('streakReminderEnabled') ?? true;
+  }
+
+  Future<void> saveAchievementReminderEnabled(bool enabled) async {
+    await _prefs?.setBool('achievementReminderEnabled', enabled);
+  }
+
+  bool getAchievementReminderEnabled() {
+    return _prefs?.getBool('achievementReminderEnabled') ?? true;
+  }
+
+  // Learning settings
+  Future<void> saveAutoplayEnabled(bool enabled) async {
+    await _prefs?.setBool('autoplayEnabled', enabled);
+  }
+
+  bool getAutoplayEnabled() {
+    return _prefs?.getBool('autoplayEnabled') ?? true;
+  }
+
+  Future<void> saveLearningHintEnabled(bool enabled) async {
+    await _prefs?.setBool('learningHintEnabled', enabled);
+  }
+
+  bool getLearningHintEnabled() {
+    return _prefs?.getBool('learningHintEnabled') ?? true;
+  }
+
+  Future<void> saveDailyGoalMinutes(int minutes) async {
+    await _prefs?.setInt('dailyGoalMinutes', minutes);
+  }
+
+  int getDailyGoalMinutes() {
+    return _prefs?.getInt('dailyGoalMinutes') ?? 20;
+  }
+
+  // Privacy settings
+  Future<void> savePrivateProfile(bool enabled) async {
+    await _prefs?.setBool('privateProfile', enabled);
+  }
+
+  bool getPrivateProfile() {
+    return _prefs?.getBool('privateProfile') ?? false;
+  }
+
+  Future<void> saveShareLearningActivity(bool enabled) async {
+    await _prefs?.setBool('shareLearningActivity', enabled);
+  }
+
+  bool getShareLearningActivity() {
+    return _prefs?.getBool('shareLearningActivity') ?? true;
+  }
+
+  Future<void> saveAllowFollowers(bool enabled) async {
+    await _prefs?.setBool('allowFollowers', enabled);
+  }
+
+  bool getAllowFollowers() {
+    return _prefs?.getBool('allowFollowers') ?? true;
+  }
+
+  Future<void> saveWifiOnlyDownloads(bool enabled) async {
+    await _prefs?.setBool('wifiOnlyDownloads', enabled);
+  }
+
+  bool getWifiOnlyDownloads() {
+    return _prefs?.getBool('wifiOnlyDownloads') ?? false;
   }
 
   // Favorite courses

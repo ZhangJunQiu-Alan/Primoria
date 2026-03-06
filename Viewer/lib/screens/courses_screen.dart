@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../components/common/viewer_page_shell.dart';
 import '../theme/theme.dart';
 
 /// Community screen — ported from Figma FriendsScreen template
@@ -672,20 +673,24 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isWideLayout = MediaQuery.of(context).size.width >= 980;
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: isWideLayout ? 980 : 600),
-        child: isWideLayout
-            ? Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildCategorySidebar(),
-                  const SizedBox(width: 14),
-                  Expanded(child: _buildMainPanel(showInlineCategories: false)),
-                ],
-              )
-            : _buildMainPanel(showInlineCategories: true),
+    return ViewerPageShell(
+      preset: ViewerContentWidthPreset.feed,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWideLayout = constraints.maxWidth >= 980;
+          return isWideLayout
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildCategorySidebar(),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: _buildMainPanel(showInlineCategories: false),
+                    ),
+                  ],
+                )
+              : _buildMainPanel(showInlineCategories: true);
+        },
       ),
     );
   }
