@@ -1,5 +1,51 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Builder Settings Center Redesign)
+
+### Summary
+- Added a dedicated Builder Settings Center with category-based panel switching (single-section rendering).
+- Replaced legacy profile dialog entry with the new settings center entry from dashboard/avatar flows.
+- Wired real persistence for creator preferences (workflow, AI, notifications, publishing, privacy) via local storage.
+
+### Added
+- `Builder/lib/widgets/builder_settings_dialog.dart`
+  - 9 settings categories:
+    - Account & Brand
+    - Creator Workflow
+    - AI Studio
+    - Notifications
+    - Publishing & SEO
+    - Integrations & API
+    - Security & Access
+    - Billing & Plans
+    - Data Controls
+  - Section switch navigation (left vertical on desktop / top horizontal on compact widths)
+  - Account profile save, language switch, preference save, draft cleanup, sign-out entry
+- Expanded Builder `StorageService` settings APIs:
+  - default difficulty / price tier
+  - publish checklist / confirm gate
+  - AI quality/quiz/schema toggles
+  - email/comment/fan/weekly digest toggles
+  - webhook/custom domain
+  - public profile / usage telemetry
+  - clear all local course drafts
+
+### Changed
+- `Builder/lib/features/dashboard/dashboard_screen.dart`
+  - `showProfile` now opens `BuilderSettingsDialog` for authenticated users.
+- `Builder/lib/widgets/user_avatar.dart`
+  - profile action now opens `BuilderSettingsDialog`
+  - fixed popup action `switch` branch fallthrough with explicit `break`
+- `Builder/lib/widgets/builder_settings_dialog.dart`
+  - fixed wide-layout vertical alignment (`Row` start alignment) to avoid apparent top blank area
+  - section content scroll view keyed per active section for stable panel switching
+
+### Validation
+- `cd Builder && flutter analyze lib/widgets/builder_settings_dialog.dart`
+- `cd Builder && flutter analyze`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Viewer Settings Center Redesign)
 
 ### Summary
