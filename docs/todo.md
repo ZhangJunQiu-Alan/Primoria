@@ -65,6 +65,7 @@
 58. [x] Visibility default rule hardening — first block defaults `always`, subsequent blocks default `afterPreviousCorrect`; alias normalization added in Block model + AI generator + schema migrator; model tests extended (2026-03-06)
 59. [x] Logo click-to-dashboard across major Builder surfaces — Builder AppBar, Dashboard sidebar brand, and Landing header logo now navigate to `/dashboard` (2026-03-06)
 60. [x] Lesson-title consistency after save/publish — `saveLessonToCourse()` now writes lesson title from lesson payload, publish write-back keeps first-lesson title from snapshot, and Dashboard lesson cache is invalidated on reload (2026-03-06)
+61. [x] Dashboard core-page redesign — rebuilt Home/Data Center/Fans Management with responsive layouts, modular tabs/providers/widgets architecture, and chart-based analytics/fan-operation UI; Course Manage behavior kept unchanged (2026-03-06)
 
 ## Viewer
 1. [x] Build learning home page: support common features (Profile, achievements, etc.) — Home/Library/Community/Profile 4-tab redesign ported from Figma templates with LevelMap navigation (2026-02-18)
