@@ -15,7 +15,7 @@ Primoria is a dual-app Flutter system:
   - Course Manage: redesigned creator workspace (core production flows preserved)
   - Data Center: redesigned
   - Fans Management: redesigned
-- Viewer supports course discovery, enrollment, lesson learning, profile settings, XP/streak/achievements, and markdown lesson text rendering.
+- Viewer supports course discovery, enrollment, lesson learning, profile settings, XP/streak/achievements, markdown lesson text rendering, and a shared responsive content-width shell across Home/Library/Community/Profile.
 
 ## Core Routes (Builder app)
 
@@ -54,6 +54,7 @@ flutter test
 cd ../Viewer
 flutter pub get
 flutter analyze
+flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart
 flutter test
 ```
 

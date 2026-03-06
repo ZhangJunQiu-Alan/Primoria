@@ -71,10 +71,14 @@
 
 - [ ] 登录/注册流程正常
 - [ ] 课程报名流程正常
+- [ ] Home / Library / Community / Profile 使用统一页面壳层宽度预设（standard/feed/wide/profile）
+- [ ] Viewer 桌面布局较平板/移动更宽，且内容仍居中可读
 - [ ] 课时页顶部标题显示当前 lesson 名（不是 course 名）
 - [ ] text 内容支持 markdown 渲染
 - [ ] 个人页 XP/连续学习/成就相关数据可加载
 - [ ] logo/入口跳转可回到预期 dashboard/home
+- [ ] `Viewer/test/viewer_layout_metrics_test.dart` 通过
+- [ ] `Viewer/test/viewer_page_shell_test.dart` 通过
 
 ## F. 数据一致性
 

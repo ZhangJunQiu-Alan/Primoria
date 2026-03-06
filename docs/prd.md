@@ -45,6 +45,7 @@ Primary focus:
 - Markdown lesson text rendering
 - XP/streak/achievement systems
 - Profile avatar + cover image update
+- Shared responsive content shell and width presets for desktop/tablet/mobile layout consistency
 
 ### 3.3 Shared Schema & Compatibility
 
@@ -91,9 +92,10 @@ Primary focus:
 
 1. Responsive layout: desktop/tablet/mobile
 2. Reusable UI componentization for dashboard modules
-3. Graceful loading/empty/error states
-4. i18n coverage for newly added dashboard copy
-5. Backward compatibility for old imported JSON
+3. Reusable UI componentization for Viewer layout primitives (`ViewerPageShell`, section header, surface card)
+4. Graceful loading/empty/error states
+5. i18n coverage for newly added dashboard copy
+6. Backward compatibility for old imported JSON
 
 ## 6. Data & Backend Requirements (Pending)
 

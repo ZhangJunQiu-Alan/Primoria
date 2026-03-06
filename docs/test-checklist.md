@@ -71,10 +71,14 @@ Last updated: 2026-03-06
 
 - [ ] login/register flow works
 - [ ] course enrollment works
+- [ ] Home / Library / Community / Profile use shared page shell widths (standard/feed/wide/profile presets)
+- [ ] desktop layout in Viewer is wider than mobile/tablet and remains centered/readable
 - [ ] lesson screen displays current lesson title (not course title)
 - [ ] lesson body supports markdown rendering for text content
 - [ ] profile screen loads XP/streak and achievement-related data
 - [ ] logo/entry navigation paths return users to expected dashboard/home targets
+- [ ] `Viewer/test/viewer_layout_metrics_test.dart` passes
+- [ ] `Viewer/test/viewer_page_shell_test.dart` passes
 
 ## F. Data Consistency
 

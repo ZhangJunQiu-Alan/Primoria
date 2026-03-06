@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/common/viewer_page_shell.dart';
+import '../components/common/viewer_surface_card.dart';
 import '../theme/theme.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
@@ -107,100 +109,119 @@ class _CoursesScreenState extends State<CoursesScreen>
   @override
   Widget build(BuildContext context) {
     final t = context.watch<LanguageProvider>().t;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 600),
-        child: Column(
-          children: [
-            _buildHeader(t),
-            Expanded(
-              child: _view == 'find' ? _buildFindView(t) : _buildMessageView(t),
-            ),
-          ],
-        ),
+    return ViewerPageShell(
+      preset: ViewerContentWidthPreset.wide,
+      child: Column(
+        children: [
+          _buildHeader(t),
+          Expanded(
+            child: _view == 'find' ? _buildFindView(t) : _buildMessageView(t),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildHeader(AppLocalizations t) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+      padding: const EdgeInsets.fromLTRB(24, 18, 24, 14),
       color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          const Spacer(),
-          // Find tab
-          GestureDetector(
-            onTap: () => setState(() => _view = 'find'),
-            child: Column(
-              children: [
-                Text(
-                  t.communityFind,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: _view == 'find'
-                        ? const Color(0xFF0F172A)
-                        : const Color(0xFF94A3B8),
+          Row(
+            children: [
+              Text(
+                t.navCommunity,
+                style: AppTypography.headline3.copyWith(
+                  color: const Color(0xFF0F172A),
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () => setState(() => _showMenu = !_showMenu),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8FAFC),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                  ),
+                  child: const Icon(
+                    Icons.person_add_outlined,
+                    size: 20,
+                    color: Color(0xFF334155),
                   ),
                 ),
-                const SizedBox(height: 4),
-                Container(
-                  height: 2,
-                  width: 30,
-                  color: _view == 'find'
-                      ? const Color(0xFF0F172A)
-                      : Colors.transparent,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const SizedBox(width: 32),
-          // Message tab
-          GestureDetector(
-            onTap: () => setState(() => _view = 'message'),
-            child: Column(
+          const SizedBox(height: 12),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFF8FAFC),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+            ),
+            child: Row(
               children: [
-                Text(
-                  t.communityMessage,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: _view == 'message'
-                        ? const Color(0xFF0F172A)
-                        : const Color(0xFF94A3B8),
-                  ),
+                _buildViewTab(
+                  label: t.communityFind,
+                  selected: _view == 'find',
+                  onTap: () => setState(() => _view = 'find'),
                 ),
-                const SizedBox(height: 4),
-                Container(
-                  height: 2,
-                  width: 50,
-                  color: _view == 'message'
-                      ? const Color(0xFF0F172A)
-                      : Colors.transparent,
+                _buildViewTab(
+                  label: t.communityMessage,
+                  selected: _view == 'message',
+                  onTap: () => setState(() => _view = 'message'),
                 ),
               ],
-            ),
-          ),
-          const Spacer(),
-          // Add friend button
-          GestureDetector(
-            onTap: () => setState(() => _showMenu = !_showMenu),
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(
-                Icons.person_add_outlined,
-                size: 20,
-                color: Color(0xFF334155),
-              ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildViewTab({
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          margin: const EdgeInsets.all(4),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: selected ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: selected
+                ? const [
+                    BoxShadow(
+                      color: Color(0x12000000),
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: selected
+                  ? const Color(0xFF0F172A)
+                  : const Color(0xFF64748B),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -317,18 +338,14 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   Widget _buildMessageView(AppLocalizations t) {
     return Container(
-      color: Colors.white,
+      color: const Color(0xFFF8FAFC),
       child: Column(
         children: [
           // Search box
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
-              ),
+            padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+            child: ViewerSurfaceCard(
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: t.communitySearch,
@@ -351,6 +368,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           // Conversation list
           Expanded(
             child: ListView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
               itemCount: _conversations.length,
               itemBuilder: (context, index) {
                 return _buildConversationItem(_conversations[index]);
@@ -363,102 +381,111 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildConversationItem(_Conversation conv) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9))),
-        ),
-        child: Row(
-          children: [
-            // Avatar
-            Stack(
-              clipBehavior: Clip.none,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: const Color(0xFFF1F5F9)),
+            ),
+            child: Row(
               children: [
-                CircleAvatar(
-                  radius: 24,
-                  backgroundColor: const Color(0xFFE2E8F0),
-                  child: Text(
-                    conv.name[0],
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF64748B),
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                if (conv.unread)
-                  Positioned(
-                    top: -2,
-                    right: -2,
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEF4444),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                // Avatar
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: const Color(0xFFE2E8F0),
+                      child: Text(
+                        conv.name[0],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF64748B),
+                          fontSize: 18,
+                        ),
                       ),
-                      child: const Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                    ),
+                    if (conv.unread)
+                      Positioned(
+                        top: -2,
+                        right: -2,
+                        child: Container(
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEF4444),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 2),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '1',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(width: 16),
-            // Content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ],
+                ),
+                const SizedBox(width: 16),
+                // Content
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        conv.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
-                          fontSize: 15,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            conv.name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF0F172A),
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            conv.time,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF94A3B8),
+                            ),
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 4),
                       Text(
-                        conv.time,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF94A3B8),
+                        conv.message,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: conv.unread
+                              ? const Color(0xFF0F172A)
+                              : const Color(0xFF64748B),
+                          fontWeight: conv.unread
+                              ? FontWeight.w500
+                              : FontWeight.w400,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    conv.message,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: conv.unread
-                          ? const Color(0xFF0F172A)
-                          : const Color(0xFF64748B),
-                      fontWeight: conv.unread
-                          ? FontWeight.w500
-                          : FontWeight.w400,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

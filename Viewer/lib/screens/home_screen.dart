@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../theme/theme.dart';
 import '../components/common/bottom_nav_bar.dart';
+import '../components/common/viewer_page_shell.dart';
+import '../components/common/viewer_section_header.dart';
+import '../components/common/viewer_surface_card.dart';
 import '../providers/user_provider.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../models/daily_task_model.dart';
 import '../services/supabase_service.dart';
 import '../services/daily_task_service.dart';
+import '../theme/theme.dart';
 import '../widgets/star_chain_widget.dart';
 import '../widgets/daily_task_card.dart';
 import 'search_screen.dart';
@@ -171,93 +174,190 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildHomeContent() {
     final t = context.watch<LanguageProvider>().t;
-    return Column(
-      children: [
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
-            child: _buildHeader(),
-          ),
-        ),
-        Expanded(
-          child: _loadingHome
-              ? const Center(child: CircularProgressIndicator())
-              : CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 600),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 8),
-                              _buildCourseHero(t),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 600),
-                          child: _buildDrawerPanel(t),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-      child: Row(
+    return ViewerPageShell(
+      preset: ViewerContentWidthPreset.standard,
+      child: Column(
         children: [
-          const Spacer(),
-          // Current streak days from backend
-          Consumer<UserProvider>(
-            builder: (context, up, _) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: const Color(0xFFF1F5F9)),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x08000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 1),
+          _buildHeader(t),
+          Expanded(
+            child: _loadingHome
+                ? const Center(child: CircularProgressIndicator())
+                : CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(child: _buildOverviewStrip(t)),
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 4),
+                            _buildCourseHero(t),
+                          ],
+                        ),
+                      ),
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: _buildDrawerPanel(t),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Color(0xFFFBBF24),
-                    size: 20,
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    '${up.streak}',
-                    style: AppTypography.label.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: const Color(0xFF334155),
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader(AppLocalizations t) {
+    return Consumer<UserProvider>(
+      builder: (context, up, _) {
+        final name = up.user?.name.trim();
+        final subtitle = (name == null || name.isEmpty)
+            ? t.homeStartLearning
+            : name;
+
+        return ViewerSectionHeader(
+          title: _timeGreeting(t),
+          subtitle: subtitle,
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 8),
+          trailing: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: const Color(0xFFF1F5F9)),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x08000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 1),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.local_fire_department_rounded,
+                  color: Color(0xFFF59E0B),
+                  size: 18,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  '${up.streak}',
+                  style: AppTypography.label.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFF334155),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildOverviewStrip(AppLocalizations t) {
+    final totalLessons = _chapters
+        .expand((ch) => (ch['lessons'] as List? ?? []))
+        .length;
+    final completedLessons = _completedLessonIds.length;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+      child: Consumer<UserProvider>(
+        builder: (context, up, _) => ViewerSurfaceCard(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              Expanded(
+                child: _buildOverviewItem(
+                  icon: Icons.menu_book_rounded,
+                  value: totalLessons == 0
+                      ? '--'
+                      : '$completedLessons/$totalLessons',
+                  label: t.homeContinueLearning,
+                ),
+              ),
+              const SizedBox(
+                height: 32,
+                child: VerticalDivider(
+                  width: 20,
+                  thickness: 1,
+                  color: Color(0xFFF1F5F9),
+                ),
+              ),
+              Expanded(
+                child: _buildOverviewItem(
+                  icon: Icons.star_rounded,
+                  value: _formatCompactNumber(up.totalXp),
+                  label: t.profileTotalXp,
+                ),
+              ),
+              const SizedBox(
+                height: 32,
+                child: VerticalDivider(
+                  width: 20,
+                  thickness: 1,
+                  color: Color(0xFFF1F5F9),
+                ),
+              ),
+              Expanded(
+                child: _buildOverviewItem(
+                  icon: Icons.local_fire_department_rounded,
+                  value: '${up.streak}',
+                  label: t.resultStreakLabel,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOverviewItem({
+    required IconData icon,
+    required String value,
+    required String label,
+  }) {
+    return Row(
+      children: [
+        Container(
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF8FAFC),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, size: 17, color: const Color(0xFF64748B)),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF0F172A),
+                ),
+              ),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF64748B),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -290,6 +390,9 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 8),
           Text(
             courseTitle,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: AppTypography.headline1.copyWith(
               fontSize: 30,
               fontWeight: FontWeight.w800,
@@ -393,11 +496,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
               ),
             )
-          else
+          else ...[
+            _buildNextStepCard(
+              t: t,
+              nextLessonTitle: nextLessonTitle,
+              canContinue: canContinue,
+            ),
+            const SizedBox(height: 20),
             for (int i = 0; i < chaptersToShow.length; i++) ...[
               _buildChapterItem(chaptersToShow[i], t),
               if (i < chaptersToShow.length - 1) const SizedBox(height: 24),
             ],
+          ],
           const Spacer(),
           const SizedBox(height: 24),
           SizedBox(
@@ -407,18 +517,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? () => setState(() => _currentNavIndex = 1)
                   : !canContinue
                   ? null
-                  : () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => LessonScreen(
-                            lessonId: nextLessonId,
-                            lessonTitle: nextLessonTitle ?? 'Lesson',
-                            gradient: AppColors.indigoGradient,
-                          ),
-                        ),
-                      ).then((_) => _loadHomeData());
-                    },
+                  : () => _startLesson(
+                      nextLessonId,
+                      nextLessonTitle ?? t.lessonDefaultTitle,
+                    ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: hasCourse
                     ? (canContinue
@@ -466,6 +568,92 @@ class _HomeScreenState extends State<HomeScreen> {
         StarChainWidget(activeDates: _activeDates),
       ],
     );
+  }
+
+  Widget _buildNextStepCard({
+    required AppLocalizations t,
+    required String? nextLessonTitle,
+    required bool canContinue,
+  }) {
+    return ViewerSurfaceCard(
+      padding: const EdgeInsets.all(16),
+      backgroundColor: const Color(0xFFF8FAFF),
+      borderSide: const BorderSide(color: Color(0xFFE0E7FF)),
+      shadows: const [],
+      child: Row(
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: AppColors.indigo100,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(
+              Icons.play_lesson_rounded,
+              color: AppColors.indigo600,
+              size: 18,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  t.courseUpNext,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Color(0xFF64748B),
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.4,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  nextLessonTitle ?? t.homeExploreCourses,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF0F172A),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FilledButton.tonal(
+            onPressed: !canContinue
+                ? null
+                : () => _startLesson(
+                    _nextLessonId,
+                    nextLessonTitle ?? t.lessonDefaultTitle,
+                  ),
+            style: FilledButton.styleFrom(
+              visualDensity: VisualDensity.compact,
+              backgroundColor: AppColors.indigo100,
+              foregroundColor: AppColors.indigo700,
+            ),
+            child: Text(t.lessonContinue),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _startLesson(String? lessonId, String lessonTitle) {
+    if (lessonId == null) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => LessonScreen(
+          lessonId: lessonId,
+          lessonTitle: lessonTitle,
+          gradient: AppColors.indigoGradient,
+        ),
+      ),
+    ).then((_) => _loadHomeData());
   }
 
   Widget _buildChapterItem(Map<String, dynamic> chapter, AppLocalizations t) {
@@ -542,6 +730,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // ── Helpers ──────────────────────────────────────────────────
+
+  String _timeGreeting(AppLocalizations t) {
+    final hour = DateTime.now().hour;
+    if (t.isZh) {
+      if (hour < 12) return '早上好';
+      if (hour < 18) return '下午好';
+      return '晚上好';
+    }
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  }
+
+  String _formatCompactNumber(int value) {
+    if (value >= 1000000) return '${(value / 1000000).toStringAsFixed(1)}M';
+    if (value >= 1000) return '${(value / 1000).toStringAsFixed(1)}K';
+    return '$value';
+  }
 
   Color _subjectColor(Map<String, dynamic>? course) {
     final subject = course?['subjects'] as Map<String, dynamic>?;

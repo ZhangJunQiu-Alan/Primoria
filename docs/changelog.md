@@ -1,5 +1,34 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Viewer Layout Width Optimization)
+
+### Summary
+- Optimized Viewer content width strategy for Home, Library, Community, and Profile.
+- Introduced centralized responsive layout primitives to reduce per-page width hacks.
+- Improved desktop/web information density while preserving tablet/mobile readability.
+
+### Added
+- `Viewer/lib/components/common/viewer_page_shell.dart`
+- `Viewer/lib/components/common/viewer_section_header.dart`
+- `Viewer/lib/components/common/viewer_surface_card.dart`
+- `Viewer/test/viewer_layout_metrics_test.dart`
+- `Viewer/test/viewer_page_shell_test.dart`
+
+### Changed
+- `Viewer/lib/screens/home_screen.dart`
+- `Viewer/lib/screens/search_screen.dart`
+- `Viewer/lib/screens/courses_screen.dart`
+- `Viewer/lib/screens/profile_screen.dart`
+  - migrated to shared `ViewerPageShell` width presets
+  - standardized section header/surface card usage in key layout blocks
+  - widened central content area on desktop with adaptive constraints
+
+### Validation
+- `cd Viewer && flutter analyze lib/components/common/viewer_page_shell.dart lib/components/common/viewer_section_header.dart lib/components/common/viewer_surface_card.dart lib/screens/home_screen.dart lib/screens/search_screen.dart lib/screens/courses_screen.dart lib/screens/profile_screen.dart test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+- `cd Viewer && flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Course Manage Workspace Redesign)
 
 ### Summary
