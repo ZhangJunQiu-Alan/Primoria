@@ -1,5 +1,40 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Viewer Profile & Achievement UX Refresh)
+
+### Summary
+- Refreshed Viewer profile gamification UX with progress-first achievement surfaces.
+- Introduced centralized achievement display logic for badge assets and progress derivation.
+- Tightened desktop content density with a 60% width strategy on key Viewer surfaces.
+
+### Added
+- `Viewer/lib/services/achievement_display_service.dart`
+- `Viewer/assets/achievements/*` (badge/category artwork set)
+
+### Changed
+- `Viewer/lib/screens/profile_screen.dart`
+  - replaced quick-action row with menu-first settings entry + pinned badge strip
+  - upgraded "My Achievements" to pending-progress cards (top unlock candidates)
+  - made XP heatmap adaptive to card width with horizontal fallback scrolling
+- `Viewer/lib/screens/achievement_wall_screen.dart`
+  - computes effective unlock state from user stats + follow counts
+  - syncs derived unlocks back to backend status
+  - adds load-error/empty handling and redesigns cards with badge/progress/chips
+- `Viewer/lib/components/common/viewer_page_shell.dart`
+- `Viewer/lib/screens/courses_screen.dart`
+  - migrated to shared `ViewerPageShell` and aligned desktop width behavior
+- `Viewer/pubspec.yaml`
+  - registered `assets/achievements/`
+- `Viewer/test/viewer_layout_metrics_test.dart`
+- `Viewer/test/viewer_page_shell_test.dart`
+  - updated expected layout widths for ratio-based desktop constraints
+
+### Validation
+- `cd Viewer && flutter analyze lib/components/common/viewer_page_shell.dart lib/services/achievement_display_service.dart lib/screens/profile_screen.dart lib/screens/achievement_wall_screen.dart lib/screens/courses_screen.dart test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+- `cd Viewer && flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Viewer Layout Width Optimization)
 
 ### Summary

@@ -15,6 +15,7 @@ Last updated: 2026-03-06
 2. [ ] Add block-level autosave conflict strategy for future multi-user collaboration.
 3. [ ] Expand Viewer offline/cache support for lesson playback.
 4. [ ] Add observability dashboard for AI generation success/failure metrics.
+5. [ ] Expose backend counters for challenge achievements (`perfect_*`, `speed_lesson`, `daily_tasks_30`) to replace temporary progress fallbacks.
 
 ## 3. Low Priority
 
@@ -31,3 +32,6 @@ Last updated: 2026-03-06
 5. [x] Logo navigation consistency to dashboard entry points.
 6. [x] Added widget tests for redesigned Course Manage states and core callbacks.
 7. [x] Centralized Viewer page width strategy with shared layout primitives and responsive tests.
+8. [x] Refreshed Viewer profile gamification UX (menu-first settings entry, pinned badge strip, pending-achievement progress cards).
+9. [x] Redesigned Achievement Wall with badge images, progress display, derived unlock sync, and load/empty state handling.
+10. [x] Added centralized `AchievementDisplayService` and achievement badge asset bundle for consistent profile/wall rendering.
