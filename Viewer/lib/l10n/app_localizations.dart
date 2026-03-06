@@ -124,6 +124,8 @@ class AppLocalizations {
       : 'Primoria is an interactive learning platform designed for effective learning.';
   String profileRoleLabel(String role) {
     switch (role.trim().toLowerCase()) {
+      case 'parent':
+        return isZh ? '家长' : 'Parent';
       case 'subscriber':
         return isZh ? '订阅用户' : 'Subscriber';
       case 'author':
@@ -159,6 +161,70 @@ class AppLocalizations {
       ? '确定要退出登录吗？\n您需要重新登录才能访问您的账户。'
       : "Are you sure you want to log out?\nYou'll need to sign in again to access your account.";
   String get profileLogoutConfirm => isZh ? '退出' : 'Log Out';
+  String get parentDashboardTitle => isZh ? '家长看板' : 'Parent Dashboard';
+  String get parentDashboardOpen => isZh ? '打开家长看板' : 'Open Parent Dashboard';
+  String get parentModeSectionTitle => isZh ? '家长模式' : 'Parent Mode';
+  String get parentModeCurrentRole => isZh ? '当前模式' : 'Current Mode';
+  String get parentModeLearnerBody => isZh
+      ? '生成绑定码后，家长账号即可关联并查看你的学习报告。'
+      : 'Generate a binding code so a parent account can link and view your learning report.';
+  String get parentModeParentBody => isZh
+      ? '你当前是家长账号，可以在家长看板中绑定孩子并查看学习报告。'
+      : 'You are using a parent account. Open the dashboard to bind children and review reports.';
+  String get parentSwitchToParent => isZh ? '切换为家长模式' : 'Switch to Parent Mode';
+  String get parentSwitchToLearner =>
+      isZh ? '切换为学习者模式' : 'Switch to Learner Mode';
+  String get parentSwitching => isZh ? '切换中…' : 'Switching…';
+  String get parentSwitchToParentSuccess =>
+      isZh ? '已切换为家长模式' : 'Switched to parent mode';
+  String get parentSwitchToLearnerSuccess =>
+      isZh ? '已切换为学习者模式' : 'Switched to learner mode';
+  String get parentBindingCodeTitle => isZh ? '孩子绑定码' : 'Child Binding Code';
+  String get parentBindingCodeGenerate => isZh ? '生成绑定码' : 'Generate Code';
+  String get parentBindingCodeRefresh => isZh ? '刷新绑定码' : 'Refresh Code';
+  String get parentBindingCodeCopied => isZh ? '绑定码已复制' : 'Binding code copied';
+  String parentBindingCodeExpiresAt(DateTime time) {
+    if (isZh) {
+      return '有效期至 ${time.month}月${time.day}日 ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+    }
+    return 'Expires at ${time.month}/${time.day} ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+  }
+
+  String get parentBindSectionTitle => isZh ? '绑定孩子' : 'Bind a Child';
+  String get parentBindSectionBody => isZh
+      ? '输入孩子设备上生成的绑定码，建立家长与孩子的只读关联。'
+      : 'Enter the binding code generated on the child device to create a read-only parent link.';
+  String get parentBindCodeLabel => isZh ? '绑定码' : 'Binding Code';
+  String get parentBindCodeHint =>
+      isZh ? '输入 8 位绑定码' : 'Enter 8-character code';
+  String get parentBindSubmit => isZh ? '确认绑定' : 'Bind Child';
+  String get parentBindSuccess => isZh ? '绑定成功' : 'Child linked successfully';
+  String get parentUnbind => isZh ? '解绑' : 'Unbind';
+  String get parentUnbindSuccess => isZh ? '已解绑' : 'Child unbound';
+  String get parentChildrenTitle => isZh ? '已绑定孩子' : 'Linked Children';
+  String parentChildrenCount(int count) =>
+      isZh ? '共 $count 位孩子' : '$count children linked';
+  String get parentChildrenEmpty => isZh
+      ? '还没有绑定任何孩子，先输入绑定码开始。'
+      : 'No linked children yet. Start by entering a binding code.';
+  String parentReportTitle(String childName) =>
+      isZh ? '$childName 的学习报告' : "$childName's report";
+  String get parentReportEmpty =>
+      isZh ? '选择一个孩子后查看学习数据。' : 'Select a child to view learning data.';
+  String get parentReportLoading => isZh ? '加载报告中…' : 'Loading report…';
+  String get parentReportStatsTitle => isZh ? '核心数据' : 'Key Stats';
+  String get parentReportTrendTitle =>
+      isZh ? '近 7 天活跃趋势' : '7-Day Activity Trend';
+  String get parentReportCoursesTitle => isZh ? '课程进度' : 'Course Progress';
+  String get parentReportLessonsTitle => isZh ? '最近完成课时' : 'Recent Lessons';
+  String get parentReportNoCourses => isZh ? '暂无课程数据' : 'No course data yet';
+  String get parentReportNoLessons => isZh ? '暂无课时记录' : 'No lesson records yet';
+  String get parentReportNoTrend => isZh ? '暂无趋势数据' : 'No trend data yet';
+  String get parentStatXp => isZh ? '总 XP' : 'Total XP';
+  String get parentStatStreak => isZh ? '连续天数' : 'Streak';
+  String get parentStatLessons => isZh ? '完成课时' : 'Lessons';
+  String get parentStatCourses => isZh ? '完成课程' : 'Courses';
+  String get parentStatAccuracy => isZh ? '正确率' : 'Accuracy';
 
   // ── Theme Picker ────────────────────────────────────────────
   String get themeSelectTitle => isZh ? '选择主题' : 'Select Theme';
@@ -247,15 +313,24 @@ class AppLocalizations {
 
   // ── Profile XP Heatmap ───────────────────────────────────────
   String get profileXpHeatmapTitle => isZh ? '学习热力图' : 'Learning Activity';
-  String profileXpHeatmapTotal(int n) =>
-      isZh ? '今年 $n XP' : '$n XP this year';
+  String profileXpHeatmapTotal(int n) => isZh ? '今年 $n XP' : '$n XP this year';
   String profileXpHeatmapDay(DateTime d, int xp) {
     if (isZh) {
       return '${d.year}年${d.month}月${d.day}日 · $xp XP';
     }
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[d.month - 1]} ${d.day}, ${d.year} · $xp XP';
   }

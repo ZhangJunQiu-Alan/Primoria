@@ -7,7 +7,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- -------------------- Enums --------------------
 
-CREATE TYPE user_role AS ENUM ('user', 'subscriber', 'author', 'admin');
+CREATE TYPE user_role AS ENUM ('user', 'subscriber', 'author', 'admin', 'parent');
 CREATE TYPE theme_mode AS ENUM ('system', 'light', 'dark');
 CREATE TYPE difficulty_level AS ENUM ('beginner', 'intermediate', 'advanced');
 CREATE TYPE course_status AS ENUM ('draft', 'published', 'archived');

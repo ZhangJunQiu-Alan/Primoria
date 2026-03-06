@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ import '../providers/user_provider.dart';
 import '../services/image_picker_service.dart' as image_picker_service;
 import '../services/supabase_service.dart';
 import '../theme/theme.dart';
+import '../utils/role_routes.dart';
 
 class ProfileSettingsScreen extends StatefulWidget {
   const ProfileSettingsScreen({super.key});
@@ -35,6 +37,10 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   DateTime _joinedAt = DateTime.now();
   String? _avatarUrl;
   String? _coverImageUrl;
+  String? _bindingCode;
+  DateTime? _bindingCodeExpiresAt;
+  bool _generatingBindingCode = false;
+  bool _switchingRole = false;
 
   @override
   void initState() {
@@ -244,6 +250,97 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     }
   }
 
+  Future<void> _generateBindingCode(AppLocalizations t) async {
+    if (!await SupabaseService.ensureAuthenticated()) {
+      await _handleSessionExpired();
+      return;
+    }
+
+    setState(() => _generatingBindingCode = true);
+    final result = await SupabaseService.generateChildBindingCode();
+    if (!mounted) return;
+    setState(() => _generatingBindingCode = false);
+
+    if (result == null) {
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_withDetail(t.profileSaveFailed, detail))),
+      );
+      return;
+    }
+
+    final expiresAt = DateTime.tryParse(result['expires_at']?.toString() ?? '');
+    setState(() {
+      _bindingCode = result['code']?.toString();
+      _bindingCodeExpiresAt = expiresAt?.toLocal();
+    });
+  }
+
+  Future<void> _copyBindingCode(AppLocalizations t) async {
+    final code = _bindingCode?.trim() ?? '';
+    if (code.isEmpty) return;
+    await Clipboard.setData(ClipboardData(text: code));
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(t.parentBindingCodeCopied)));
+  }
+
+  Future<void> _switchRole(String nextRole, AppLocalizations t) async {
+    final userProvider = context.read<UserProvider>();
+    if (!await SupabaseService.ensureAuthenticated()) {
+      await _handleSessionExpired();
+      return;
+    }
+
+    setState(() => _switchingRole = true);
+    final ok = await userProvider.updateProfile(
+      username: _usernameController.text.trim(),
+      bio: _bioController.text.trim().isEmpty
+          ? null
+          : _bioController.text.trim(),
+      avatarUrl: _avatarUrl,
+      coverImageUrl: _coverImageUrl,
+      role: nextRole,
+    );
+
+    if (!mounted) return;
+    setState(() {
+      _switchingRole = false;
+      if (ok) {
+        _role = nextRole;
+        if (RoleRoutes.isParentRole(nextRole)) {
+          _bindingCode = null;
+          _bindingCodeExpiresAt = null;
+        }
+      }
+    });
+
+    if (!ok) {
+      final detail = SupabaseService.lastOperationError;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_withDetail(t.profileSaveFailed, detail))),
+      );
+      return;
+    }
+
+    final isParent = RoleRoutes.isParentRole(nextRole);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          isParent
+              ? t.parentSwitchToParentSuccess
+              : t.parentSwitchToLearnerSuccess,
+        ),
+      ),
+    );
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      isParent ? RoleRoutes.parentDashboard : RoleRoutes.home,
+      (route) => false,
+    );
+  }
+
   String _withDetail(String base, String? detail) {
     final cleaned = detail?.trim() ?? '';
     if (cleaned.isEmpty) return base;
@@ -378,6 +475,8 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  _buildParentModeSection(t),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
@@ -522,6 +621,147 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                 ),
               ),
             ),
+    );
+  }
+
+  Widget _buildParentModeSection(AppLocalizations t) {
+    final isParent = RoleRoutes.isParentRole(_role);
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            t.parentModeSectionTitle,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF1E293B),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            isParent ? t.parentModeParentBody : t.parentModeLearnerBody,
+            style: const TextStyle(
+              fontSize: 14,
+              height: 1.5,
+              color: Color(0xFF64748B),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _infoRow(t.parentModeCurrentRole, t.profileRoleLabel(_role)),
+          const SizedBox(height: 12),
+          FilledButton.icon(
+            onPressed: _switchingRole
+                ? null
+                : () => _switchRole(isParent ? 'user' : 'parent', t),
+            icon: _switchingRole
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : Icon(
+                    isParent ? Icons.school_outlined : Icons.family_restroom,
+                  ),
+            label: Text(
+              _switchingRole
+                  ? t.parentSwitching
+                  : isParent
+                  ? t.parentSwitchToLearner
+                  : t.parentSwitchToParent,
+            ),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.indigo600,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+          ),
+          const SizedBox(height: 12),
+          if (isParent)
+            OutlinedButton.icon(
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(RoleRoutes.parentDashboard),
+              icon: const Icon(Icons.dashboard_customize_outlined),
+              label: Text(t.parentDashboardOpen),
+            )
+          else ...[
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        t.parentBindingCodeTitle,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF0F172A),
+                        ),
+                      ),
+                      if (_bindingCode != null) ...[
+                        const SizedBox(height: 10),
+                        SelectableText(
+                          _bindingCode!,
+                          style: const TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 3,
+                            color: AppColors.indigo600,
+                          ),
+                        ),
+                        if (_bindingCodeExpiresAt != null) ...[
+                          const SizedBox(height: 6),
+                          Text(
+                            t.parentBindingCodeExpiresAt(
+                              _bindingCodeExpiresAt!,
+                            ),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF64748B),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ],
+                  ),
+                ),
+                if (_bindingCode != null)
+                  IconButton(
+                    onPressed: () => _copyBindingCode(t),
+                    icon: const Icon(Icons.copy_rounded),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            FilledButton.tonal(
+              onPressed: _generatingBindingCode
+                  ? null
+                  : () => _generateBindingCode(t),
+              child: _generatingBindingCode
+                  ? const SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Text(
+                      _bindingCode == null
+                          ? t.parentBindingCodeGenerate
+                          : t.parentBindingCodeRefresh,
+                    ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
