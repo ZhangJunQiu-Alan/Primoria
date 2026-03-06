@@ -1,8 +1,5 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../components/common/viewer_page_shell.dart';
-import '../components/common/viewer_surface_card.dart';
 import '../theme/theme.dart';
 
 /// Community screen — ported from Figma FriendsScreen template
@@ -894,41 +891,44 @@ class _CoursesScreenState extends State<CoursesScreen>
       color: Colors.white,
       child: Column(
         children: [
-          _buildConnectionStats(),
-          const SizedBox(width: 16),
-          // Find tab
-          GestureDetector(
-            onTap: () => setState(() => _view = 'find'),
-            child: Column(
-              children: [
-                Text(
-                  'Find',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: _view == 'find'
-                        ? const Color(0xFF0F172A)
-                        : const Color(0xFF94A3B8),
-                  ),
-                ),
-              ),
+          Row(
+            children: [
+              _buildConnectionStats(),
               const Spacer(),
-              GestureDetector(
-                onTap: () => setState(() => _showMenu = !_showMenu),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFE2E8F0)),
-                  ),
-                  child: const Icon(
-                    Icons.person_add_outlined,
-                    size: 20,
-                    color: Color(0xFF334155),
+              if (_view == 'find') ...[
+                GestureDetector(
+                  onTap: _showRemoveUserDialog,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF8FAFC),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.person_remove_outlined,
+                      size: 20,
+                      color: Color(0xFF334155),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(width: 10),
+                GestureDetector(
+                  onTap: _showAddUserDialog,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF8FAFC),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.person_add_outlined,
+                      size: 20,
+                      color: Color(0xFF334155),
+                    ),
+                  ),
+                ),
+              ] else
+                const SizedBox(width: 76),
             ],
           ),
           const SizedBox(height: 12),
@@ -940,60 +940,63 @@ class _CoursesScreenState extends State<CoursesScreen>
             ),
             child: Row(
               children: [
-                Text(
-                  'Message',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: _view == 'message'
-                        ? const Color(0xFF0F172A)
-                        : const Color(0xFF94A3B8),
-                  ),
+                _buildViewTab(
+                  label: 'Find',
+                  selected: _view == 'find',
+                  onTap: () => setState(() => _view = 'find'),
                 ),
                 _buildViewTab(
-                  label: t.communityMessage,
+                  label: 'Message',
                   selected: _view == 'message',
                   onTap: () => setState(() => _view = 'message'),
                 ),
               ],
             ),
           ),
-          const Spacer(),
-          if (_view == 'find') ...[
-            GestureDetector(
-              onTap: _showRemoveUserDialog,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF8FAFC),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.person_remove_outlined,
-                  size: 20,
-                  color: Color(0xFF334155),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: _showAddUserDialog,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF8FAFC),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.person_add_outlined,
-                  size: 20,
-                  color: Color(0xFF334155),
-                ),
-              ),
-            ),
-          ] else
-            const SizedBox(width: 76),
         ],
+      ),
+    );
+  }
+
+  Widget _buildViewTab({
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          margin: const EdgeInsets.all(4),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: selected ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: selected
+                ? const [
+                    BoxShadow(
+                      color: Color(0x12000000),
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: selected
+                  ? const Color(0xFF0F172A)
+                  : const Color(0xFF64748B),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -1624,47 +1627,40 @@ class _CoursesScreenState extends State<CoursesScreen>
         ),
         child: Row(
           children: [
-            // Avatar
             Stack(
               clipBehavior: Clip.none,
               children: [
-                // Avatar
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundColor: const Color(0xFFE2E8F0),
-                      child: Text(
-                        conv.name[0],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF64748B),
-                          fontSize: 18,
-                        ),
-                      ),
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: const Color(0xFFE2E8F0),
+                  child: Text(
+                    conv.name[0],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF64748B),
+                      fontSize: 18,
                     ),
-                    if (conv.unread)
-                      Positioned(
-                        top: -2,
-                        right: -2,
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFEF4444),
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              '1',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
+                  ),
+                ),
+                if (conv.unread)
+                  Positioned(
+                    top: -2,
+                    right: -2,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEF4444),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          '1',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -1673,7 +1669,6 @@ class _CoursesScreenState extends State<CoursesScreen>
               ],
             ),
             const SizedBox(width: 16),
-            // Content
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1686,8 +1681,18 @@ class _CoursesScreenState extends State<CoursesScreen>
                       fontSize: 15,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    conv.message,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF64748B),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(width: 8),
             Column(
