@@ -17,6 +17,12 @@ Tabs:
 - `Builder/lib/features/dashboard/dashboard_screen.dart`
   - shell, sidebar, topbar, tab switching
   - orchestrates course/lesson data actions and routes tab callbacks
+- `Builder/lib/widgets/builder_settings_dialog.dart`
+  - Builder settings center dialog (category nav + active panel rendering)
+- `Builder/lib/widgets/user_avatar.dart`
+  - account menu entry now opens Builder settings center
+- `Builder/lib/services/storage_service.dart`
+  - local persistence for builder settings center toggles/fields
 - `Builder/lib/features/dashboard/dashboard_localizations.dart`
   - dashboard-only localization extension
 - `Builder/lib/features/dashboard/tabs/home_tab.dart`
@@ -100,6 +106,34 @@ Tabs:
 - Reserved messaging center
 - Bulk actions entry (send notice / export data)
 
+### 5) Builder Settings Center (Global Dialog)
+
+- Entry:
+  - Top-right avatar menu -> `Profile`
+  - Authenticated dashboard profile flow (`_showProfile`) opens settings center
+- Layout:
+  - Desktop: left-side vertical category nav + right active panel
+  - Compact width: top horizontal category nav + active panel
+- Information architecture:
+  - Account & Brand
+  - Creator Workflow
+  - AI Studio
+  - Notifications
+  - Publishing & SEO
+  - Integrations & API
+  - Security & Access
+  - Billing & Plans
+  - Data Controls
+- Real/connected actions:
+  - Save profile display name and avatar URL to Supabase profile
+  - Switch UI language
+  - Persist creator preferences to local storage
+  - Clear all local course drafts
+  - Sign out
+- Notes:
+  - Some actions remain UI placeholders until backend endpoints are added
+    (for example full billing workspace, API credential issuance, sign out all devices)
+
 ## Data Strategy
 
 Because not all analytics tables exist yet, providers use a mixed strategy:
@@ -123,3 +157,4 @@ Course Manage specifics:
 1. Revenue and advanced analytics are still fallback-derived.
 2. Fans reply/notification/export are UI-level placeholders pending backend endpoints.
 3. Course Manage sort by student/comments remains placeholder logic.
+4. Builder settings center contains a few placeholder actions awaiting backend API integration.

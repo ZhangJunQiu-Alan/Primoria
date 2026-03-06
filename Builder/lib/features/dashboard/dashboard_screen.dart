@@ -10,7 +10,7 @@ import '../../services/supabase_service.dart';
 import '../../services/ai_course_generator.dart';
 import '../../services/file_picker_web.dart';
 import '../../widgets/auth_dialog.dart';
-import '../../widgets/profile_dialog.dart';
+import '../../widgets/builder_settings_dialog.dart';
 import '../../widgets/user_avatar.dart';
 import 'tabs/course_manage_tab.dart';
 import 'tabs/data_center_tab.dart';
@@ -1989,7 +1989,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       );
       return;
     }
-    showDialog(context: context, builder: (ctx) => const ProfileDialog());
+    showDialog(
+      context: context,
+      builder: (ctx) => const BuilderSettingsDialog(),
+    );
   }
 }
 
