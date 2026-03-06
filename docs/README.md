@@ -16,6 +16,8 @@ Primoria is a dual-app Flutter system:
   - Data Center: redesigned
   - Fans Management: redesigned
 - Viewer supports course discovery, enrollment, lesson learning, profile settings, XP/streak/achievements, markdown lesson text rendering, and a shared responsive content-width shell across Home/Library/Community/Profile.
+- Profile and Achievement Wall now use centralized badge/progress rendering, with adaptive XP heatmap layout, pending-achievement progress cards, derived unlock sync, and improved load/empty/error states.
+- Viewer Settings is now a category-based settings center (account/appearance/learning/notifications/privacy/parent/support) with local preference persistence.
 
 ## Core Routes (Builder app)
 

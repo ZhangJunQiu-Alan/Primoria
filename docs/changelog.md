@@ -1,5 +1,79 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Viewer Settings Center Redesign)
+
+### Summary
+- Rebuilt Viewer settings into a multi-category settings center with section-switch navigation.
+- Added local-persisted controls for appearance, learning preferences, notifications, and privacy.
+- Preserved and integrated existing profile edit + parent mode flows into the new IA.
+
+### Added
+- Settings categories:
+  - Account & Profile
+  - Appearance & Language
+  - Learning Preferences
+  - Notifications & Reminders
+  - Privacy & Data
+  - Parent Mode
+  - Support & About
+- New persisted settings keys in `StorageService` for:
+  - haptics, reminder schedule, streak/achievement alerts
+  - autoplay/hints/daily-goal
+  - privacy/network preference toggles
+- New localization strings in `Viewer/lib/l10n/app_localizations.dart` for full settings-center UX.
+
+### Changed
+- `Viewer/lib/screens/profile_settings_screen.dart`
+  - redesigned to a left-menu / right-panel settings center
+  - menu selections now switch the active settings panel (single-section rendering)
+  - retained avatar/cover upload, profile save, parent role switching and binding code flow
+  - added sign-out and support/action entries (placeholder hooks for later integration)
+- `Viewer/lib/services/audio_service.dart`
+  - added haptics enable/disable support
+- `Viewer/lib/main.dart`
+  - now initializes audio sound/haptics from persisted settings
+
+### Validation
+- `cd Viewer && flutter analyze lib/screens/profile_settings_screen.dart lib/services/storage_service.dart lib/services/audio_service.dart lib/main.dart lib/l10n/app_localizations.dart`
+- `cd Viewer && flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+
+---
+
+## [Unreleased] - 2026-03-06 (Viewer Profile & Achievement UX Refresh)
+
+### Summary
+- Refreshed Viewer profile gamification UX with progress-first achievement surfaces.
+- Introduced centralized achievement display logic for badge assets and progress derivation.
+- Tightened desktop content density with a 60% width strategy on key Viewer surfaces.
+
+### Added
+- `Viewer/lib/services/achievement_display_service.dart`
+- `Viewer/assets/achievements/*` (badge/category artwork set)
+
+### Changed
+- `Viewer/lib/screens/profile_screen.dart`
+  - replaced quick-action row with menu-first settings entry + pinned badge strip
+  - upgraded "My Achievements" to pending-progress cards (top unlock candidates)
+  - made XP heatmap adaptive to card width with horizontal fallback scrolling
+- `Viewer/lib/screens/achievement_wall_screen.dart`
+  - computes effective unlock state from user stats + follow counts
+  - syncs derived unlocks back to backend status
+  - adds load-error/empty handling and redesigns cards with badge/progress/chips
+- `Viewer/lib/components/common/viewer_page_shell.dart`
+- `Viewer/lib/screens/courses_screen.dart`
+  - migrated to shared `ViewerPageShell` and aligned desktop width behavior
+- `Viewer/pubspec.yaml`
+  - registered `assets/achievements/`
+- `Viewer/test/viewer_layout_metrics_test.dart`
+- `Viewer/test/viewer_page_shell_test.dart`
+  - updated expected layout widths for ratio-based desktop constraints
+
+### Validation
+- `cd Viewer && flutter analyze lib/components/common/viewer_page_shell.dart lib/services/achievement_display_service.dart lib/screens/profile_screen.dart lib/screens/achievement_wall_screen.dart lib/screens/courses_screen.dart test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+- `cd Viewer && flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Viewer Layout Width Optimization)
 
 ### Summary

@@ -28,8 +28,8 @@ void main() {
         viewportWidth: 1280,
         preset: ViewerContentWidthPreset.wide,
       );
-      expect(standard, 1200);
-      expect(wide, 1232);
+      expect(standard, 768);
+      expect(wide, 768);
     });
 
     test('uses large desktop gutter and per-page preset cap', () {
@@ -41,8 +41,8 @@ void main() {
         viewportWidth: 1100,
         preset: ViewerContentWidthPreset.profile,
       );
-      expect(wide, 1320);
-      expect(profile, 1052);
+      expect(wide, 960);
+      expect(profile, 660);
     });
   });
 }

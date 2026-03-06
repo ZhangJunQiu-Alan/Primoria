@@ -16,6 +16,8 @@ class ViewerLayoutBreakpoints {
 class ViewerLayoutMetrics {
   ViewerLayoutMetrics._();
 
+  static const double desktopContentRatio = 0.60;
+
   static double resolveMaxWidth({
     required double viewportWidth,
     required ViewerContentWidthPreset preset,
@@ -40,9 +42,11 @@ class ViewerLayoutMetrics {
       ViewerContentWidthPreset.readable => 960.0,
     };
 
+    final ratioWidth = viewportWidth * desktopContentRatio;
+
     return math.min(
       desktopPresetWidth,
-      math.max(0.0, viewportWidth - sideGutter),
+      math.min(ratioWidth, math.max(0.0, viewportWidth - sideGutter)),
     );
   }
 }
