@@ -45,6 +45,7 @@ Primoria 是“创作者到学习者”的双端平台：
 - markdown 文本渲染
 - XP/连续学习/成就系统
 - 头像与封面更新
+- Home/Library/Community/Profile 统一响应式内容宽度壳层与页面布局预设
 
 ### 3.3 共享 Schema 与兼容
 
@@ -91,9 +92,10 @@ Primoria 是“创作者到学习者”的双端平台：
 
 1. 响应式布局（桌面/平板/移动）
 2. Dashboard 模块组件化与复用
-3. 加载/空状态/错误状态完整
-4. 新增 Dashboard 文案具备 i18n
-5. 旧 JSON 导入兼容与迁移能力
+3. Viewer 布局原语组件复用（`ViewerPageShell`、section header、surface card）
+4. 加载/空状态/错误状态完整
+5. 新增 Dashboard 文案具备 i18n
+6. 旧 JSON 导入兼容与迁移能力
 
 ## 6. 数据与后端待补充需求
 
