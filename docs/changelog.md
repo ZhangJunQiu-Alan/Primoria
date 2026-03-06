@@ -1,5 +1,36 @@
 # Changelog
 
+## [Unreleased] - 2026-03-06 (Course Manage Workspace Redesign)
+
+### Summary
+- Redesigned Builder Dashboard > Course Manage into a dedicated creator workspace tab.
+- Preserved all critical production flows (create/edit/delete/open course, add/delete lesson, guards/dialogs/snackbars).
+- Improved state coverage and reliability for lesson lazy-loading.
+
+### Added
+- `Builder/lib/features/dashboard/tabs/course_manage_tab.dart`
+- `Builder/test/dashboard_course_manage_tab_test.dart`
+- Course Manage localization strings in `Builder/lib/l10n/app_localizations.dart`
+
+### Changed
+- `Builder/lib/features/dashboard/dashboard_screen.dart`
+  - moved Course Manage rendering into tab module
+  - added error state handling for course loading
+  - added in-flight lesson-request deduping
+  - centralized builder route helpers for course/lesson/add-lesson entry
+- Upgraded Course Manage UX:
+  - header action area
+  - summary strip
+  - search/filter/sort controls
+  - richer course/lesson card hierarchy
+  - loading/empty/no-results/error states
+
+### Validation
+- `cd Builder && flutter analyze lib/features/dashboard/dashboard_screen.dart lib/features/dashboard/tabs/course_manage_tab.dart lib/l10n/app_localizations.dart test/dashboard_course_manage_tab_test.dart`
+- `cd Builder && flutter test test/dashboard_course_manage_tab_test.dart`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Docs Full Refresh)
 
 ### Summary
@@ -12,8 +43,8 @@
 ## [Unreleased] - 2026-03-06 (Dashboard Redesign)
 
 ### Summary
-- Redesigned Dashboard Home, Data Center, and Fans Management tabs.
-- Kept Course Manage behavior unchanged.
+- Phase 1 redesigned Dashboard Home, Data Center, and Fans Management tabs.
+- Course Manage redesign was delivered in a follow-up change (see latest entry).
 - Introduced modular dashboard architecture with `tabs/`, `providers/`, `widgets/`.
 
 ### Added

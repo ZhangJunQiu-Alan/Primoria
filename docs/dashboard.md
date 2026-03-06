@@ -8,7 +8,7 @@ Builder dashboard (`/dashboard`) is the creator workspace shell with sidebar nav
 
 Tabs:
 1. Home (redesigned)
-2. Course Manage (existing production behavior, intentionally preserved)
+2. Course Manage (redesigned workspace, core flows preserved)
 3. Data Center (redesigned)
 4. Fans Management (redesigned)
 
@@ -16,10 +16,11 @@ Tabs:
 
 - `Builder/lib/features/dashboard/dashboard_screen.dart`
   - shell, sidebar, topbar, tab switching
-  - keeps existing Course Manage logic and actions
+  - orchestrates course/lesson data actions and routes tab callbacks
 - `Builder/lib/features/dashboard/dashboard_localizations.dart`
   - dashboard-only localization extension
 - `Builder/lib/features/dashboard/tabs/home_tab.dart`
+- `Builder/lib/features/dashboard/tabs/course_manage_tab.dart`
 - `Builder/lib/features/dashboard/tabs/data_center_tab.dart`
 - `Builder/lib/features/dashboard/tabs/fans_manage_tab.dart`
 - `Builder/lib/features/dashboard/providers/dashboard_provider.dart`
@@ -51,13 +52,30 @@ Tabs:
 - Recent activity timeline (max 5)
 - Reserved income card (fallback-derived until billing tables are added)
 
-### 2) Course Manage (unchanged behavior)
+### 2) Course Manage
 
-- Course list from `SupabaseService.getMyCourses()`
-- Sort dropdown
-- Create/Edit/Delete course
-- Lesson cards + add lesson
-- Existing dialogs/snackbars/guards remain intact
+- Dedicated creator workspace tab (`DashboardCourseManageTab`) with:
+  - page header + primary actions (`Create`, `AI Generate`, `Refresh`)
+  - summary strip (courses/lessons/published/drafts/need-content)
+  - control bar (search, status filters, sort menu)
+- Course cards now include:
+  - status chip + updated-at hint + metadata chips
+  - clear primary/secondary actions (`Open Builder`, `Edit`, `Delete`)
+- Lesson management zone is integrated inside each course card:
+  - lesson tiles with quick open
+  - add-lesson tile
+  - delete affordance (guarded by existing confirmation/protection flow)
+- States:
+  - signed-out prompt
+  - loading skeleton
+  - empty
+  - no-results
+  - full-page error and inline recoverable error
+- Core production behavior remains preserved:
+  - create/edit/delete course
+  - open course builder
+  - add/delete lesson
+  - existing dialogs/snackbars/guards
 
 ### 3) Data Center
 
@@ -94,6 +112,11 @@ Because not all analytics tables exist yet, providers use a mixed strategy:
 - Desktop: multi-column dashboard composition
 - Tablet: card wrapping and reduced chart/table density
 - Mobile: single-column stack with compact cards/table cards
+
+Course Manage specifics:
+- content area centered with max-width constraint (`maxWidth: 1440`)
+- cards and lesson tiles auto-wrap for tablet/mobile
+- action clusters collapse to wrapped layout on narrower widths
 
 ## Known Gaps
 

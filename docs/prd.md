@@ -28,7 +28,7 @@ Primary focus:
 - Role-gated access to `/dashboard` and `/builder`
 - Dashboard tabs:
   - Home (redesigned)
-  - Course Manage (existing core flow)
+  - Course Manage (redesigned workspace, core flow preserved)
   - Data Center (redesigned)
   - Fans Management (redesigned)
 - Course editor:
@@ -78,6 +78,15 @@ Primary focus:
 - learner tag manager
 - reserved messaging module
 
+### Course Manage
+- dedicated course-management workspace tab
+- header actions (create / AI generate / refresh)
+- summary strip + search/filter/sort controls
+- enhanced course cards with status and metadata
+- integrated lesson management tiles per course
+- improved loading/empty/no-results/error state handling
+- preserve existing create/edit/delete/open/add-lesson/delete-lesson behaviors
+
 ## 5. Non-Functional Requirements
 
 1. Responsive layout: desktop/tablet/mobile
@@ -96,8 +105,8 @@ To complete full analytics fidelity, add backend support for:
 
 ## 7. Release Acceptance Criteria
 
-1. Home/Data/Fans tabs available and responsive
-2. Course Manage behavior unchanged
+1. Home/Course Manage/Data/Fans tabs available and responsive
+2. Course Manage redesign is live while preserving core production behaviors
 3. Dashboard analyze passes in Builder module
 4. Docs and TODO/changelog synchronized
 5. No regression in core Builder edit/save/publish loop

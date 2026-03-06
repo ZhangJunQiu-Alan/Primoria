@@ -12,7 +12,7 @@ Primoria is a dual-app Flutter system:
 - Builder supports AI-assisted course generation, save/publish, JSON import/export, and lesson-level editing.
 - Dashboard has 4 tabs:
   - Home: redesigned
-  - Course Manage: existing production flow (kept unchanged in redesign)
+  - Course Manage: redesigned creator workspace (core production flows preserved)
   - Data Center: redesigned
   - Fans Management: redesigned
 - Viewer supports course discovery, enrollment, lesson learning, profile settings, XP/streak/achievements, and markdown lesson text rendering.
@@ -47,6 +47,7 @@ Primoria is a dual-app Flutter system:
 cd Builder
 flutter pub get
 flutter analyze lib/features/dashboard
+flutter test test/dashboard_course_manage_tab_test.dart
 flutter test
 
 # Viewer

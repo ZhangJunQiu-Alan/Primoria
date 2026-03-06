@@ -24,8 +24,9 @@
 
 ## 4. 最近已完成
 
-1. [x] Dashboard 首页/数据中心/粉丝管理三页重设计（响应式 + 模块化 providers/widgets）。
+1. [x] Dashboard 首页/课程管理/数据中心/粉丝管理四页重设计完成（响应式 + 模块化 tabs/widgets/providers）。
 2. [x] Builder 画布内联编辑：Text / Code Block / Code Playground。
 3. [x] 可见性默认规则统一（首块 `always`，后续 `afterPreviousCorrect`）。
 4. [x] Viewer lesson 标题与 markdown 渲染修复。
 5. [x] Logo 跳转 Dashboard 路径统一。
+6. [x] 为重构后的课程管理新增关键状态与回调的 Widget 测试。
