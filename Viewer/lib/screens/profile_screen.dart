@@ -9,10 +9,11 @@ import '../providers/user_provider.dart';
 import '../services/achievement_service.dart';
 import '../services/supabase_service.dart';
 import '../theme/theme.dart';
+import '../utils/role_routes.dart';
 import 'achievement_wall_screen.dart';
 import 'profile_settings_screen.dart';
 
-enum _ProfileMenuAction { settings, about, help, logout }
+enum _ProfileMenuAction { parentDashboard, settings, about, help, logout }
 
 /// Profile screen with gamification: pinned achievements, XP, star chain.
 class ProfileScreen extends StatefulWidget {
@@ -116,6 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final coverImageUrl = user?.coverImageUrl;
         final hasCover =
             coverImageUrl != null && coverImageUrl.trim().isNotEmpty;
+        final isParent = RoleRoutes.isParentRole(user?.role);
 
         return SizedBox(
           height: totalHeight,
@@ -152,6 +154,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onSelected: (action) =>
                       _onProfileMenuSelected(context, action),
                   itemBuilder: (context) => [
+                    if (isParent)
+                      PopupMenuItem(
+                        value: _ProfileMenuAction.parentDashboard,
+                        child: Text(t.parentDashboardTitle),
+                      ),
                     PopupMenuItem(
                       value: _ProfileMenuAction.settings,
                       child: Text(t.profileSettings),
@@ -484,12 +491,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final monthAbbr = isZh
         ? [
-            '1月', '2月', '3月', '4月', '5月', '6月',
-            '7月', '8月', '9月', '10月', '11月', '12月',
+            '1月',
+            '2月',
+            '3月',
+            '4月',
+            '5月',
+            '6月',
+            '7月',
+            '8月',
+            '9月',
+            '10月',
+            '11月',
+            '12月',
           ]
         : [
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
           ];
 
     // Build a single cell widget for (col, row).
@@ -526,15 +553,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final date = gridStart.add(Duration(days: col * 7));
       if (date.month != prevMonth) {
         prevMonth = date.month;
-        monthRow.add(SizedBox(
-          width: cellStep,
-          child: Text(
-            monthAbbr[date.month - 1],
-            style: const TextStyle(fontSize: 8, color: Color(0xFF94A3B8)),
-            overflow: TextOverflow.visible,
-            softWrap: false,
+        monthRow.add(
+          SizedBox(
+            width: cellStep,
+            child: Text(
+              monthAbbr[date.month - 1],
+              style: const TextStyle(fontSize: 8, color: Color(0xFF94A3B8)),
+              overflow: TextOverflow.visible,
+              softWrap: false,
+            ),
           ),
-        ));
+        );
       } else {
         monthRow.add(SizedBox(width: cellStep));
       }
@@ -560,8 +589,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       const Color(0xFF4F46E5),
       const Color(0xFF3730A3),
     ];
-    final labelStyle =
-        const TextStyle(fontSize: 10, color: Color(0xFF94A3B8));
+    final labelStyle = const TextStyle(fontSize: 10, color: Color(0xFF94A3B8));
     final legend = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -645,9 +673,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: List.generate(7, (row) {
                       return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: row < 6 ? cellGap : 0,
-                        ),
+                        padding: EdgeInsets.only(bottom: row < 6 ? cellGap : 0),
                         child: SizedBox(
                           width: dayLabelWidth,
                           height: cellSize,
@@ -684,10 +710,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           const SizedBox(height: 10),
           // Legend
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [legend],
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [legend]),
         ],
       ),
     );
@@ -756,10 +779,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Center(
               child: Text(
                 t.profileNoPinnedAchievements,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFFCBD5E1),
-                ),
+                style: const TextStyle(fontSize: 13, color: Color(0xFFCBD5E1)),
               ),
             )
           else
@@ -854,6 +874,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ) async {
     final t = context.read<LanguageProvider>().t;
     switch (action) {
+      case _ProfileMenuAction.parentDashboard:
+        Navigator.of(context).pushNamed(RoleRoutes.parentDashboard);
+        break;
       case _ProfileMenuAction.settings:
         final updated = await Navigator.of(context).push<bool>(
           MaterialPageRoute(builder: (_) => const ProfileSettingsScreen()),
@@ -963,9 +986,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 : () => Navigator.of(ctx).pop(),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 13),
-                              side: const BorderSide(
-                                color: Color(0xFFE2E8F0),
-                              ),
+                              side: const BorderSide(color: Color(0xFFE2E8F0)),
                               foregroundColor: const Color(0xFF64748B),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -985,9 +1006,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onPressed: isLoggingOut
                                 ? null
                                 : () async {
-                                    setDialogState(
-                                      () => isLoggingOut = true,
-                                    );
+                                    setDialogState(() => isLoggingOut = true);
                                     await userProvider.logout();
                                     if (context.mounted) {
                                       Navigator.of(
