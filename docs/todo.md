@@ -30,3 +30,4 @@ Last updated: 2026-03-06
 4. [x] Viewer lesson-title and markdown rendering fixes.
 5. [x] Logo navigation consistency to dashboard entry points.
 6. [x] Added widget tests for redesigned Course Manage states and core callbacks.
+7. [x] Centralized Viewer page width strategy with shared layout primitives and responsive tests.

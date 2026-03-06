@@ -15,7 +15,7 @@ Primoria 由两个 Flutter 应用组成：
   - 课程管理：已重构为创作者工作台（核心生产流程保持）
   - 数据中心：已重设计
   - 粉丝管理：已重设计
-- Viewer 支持课程发现、报名、课时学习、个人设置、XP/连续学习/成就，以及 markdown 文本渲染。
+- Viewer 支持课程发现、报名、课时学习、个人设置、XP/连续学习/成就、markdown 文本渲染，以及 Home/Library/Community/Profile 统一的响应式内容宽度壳层。
 
 ## Builder 核心路由
 
@@ -54,6 +54,7 @@ flutter test
 cd ../Viewer
 flutter pub get
 flutter analyze
+flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart
 flutter test
 ```
 

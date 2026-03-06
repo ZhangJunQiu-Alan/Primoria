@@ -30,3 +30,4 @@
 4. [x] Viewer lesson 标题与 markdown 渲染修复。
 5. [x] Logo 跳转 Dashboard 路径统一。
 6. [x] 为重构后的课程管理新增关键状态与回调的 Widget 测试。
+7. [x] Viewer 页面宽度策略集中化（共享布局组件 + 响应式测试）。
