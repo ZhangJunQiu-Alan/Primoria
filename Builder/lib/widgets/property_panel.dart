@@ -41,20 +41,50 @@ class PropertyPanel extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Panel title
         Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.md,
+            AppSpacing.md,
+            AppSpacing.md,
+            AppSpacing.xs,
+          ),
           child: const Text(
-            'Properties',
+            'Inspector',
             style: TextStyle(
               fontSize: AppFontSize.md,
-              fontWeight: FontWeight.w600,
-              color: AppColors.neutral800,
+              fontWeight: FontWeight.w700,
+              color: AppColors.neutral900,
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          child: Row(
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.primary400,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              const Expanded(
+                child: Text(
+                  'Block settings',
+                  style: TextStyle(
+                    fontSize: AppFontSize.xs,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.neutral600,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         const Divider(height: 1),
-        // Properties content
         Expanded(
           child: selectedBlock == null
               ? _buildEmptyState()
@@ -69,46 +99,47 @@ class PropertyPanel extends ConsumerWidget {
   }
 
   Widget _buildEmptyState() {
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildMetadataRow('Block', 'None selected'),
-          const SizedBox(height: AppSpacing.sm),
-          _buildMetadataRow('Type', '--'),
-          const SizedBox(height: AppSpacing.sm),
-          _buildMetadataRow('Status', '--'),
-          const SizedBox(height: AppSpacing.sm),
-          _buildMetadataRow('Last update', '--'),
-        ],
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF7FAFC),
+            borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            border: Border.all(color: AppColors.neutral200),
+          ),
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.touch_app_outlined,
+                size: 32,
+                color: AppColors.neutral400,
+              ),
+              SizedBox(height: AppSpacing.md),
+              Text(
+                'Select a block',
+                style: TextStyle(
+                  fontSize: AppFontSize.sm,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.neutral800,
+                ),
+              ),
+              SizedBox(height: AppSpacing.xs),
+              Text(
+                'The right sidebar will show only the settings that matter for the selected block.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: AppFontSize.xs,
+                  color: AppColors.neutral500,
+                  height: 1.45,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-    );
-  }
-
-  Widget _buildMetadataRow(String label, String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: AppFontSize.sm,
-            fontWeight: FontWeight.w500,
-            color: AppColors.neutral600,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: Text(
-            value,
-            style: const TextStyle(
-              fontSize: AppFontSize.sm,
-              color: AppColors.neutral400,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -189,57 +220,50 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     final selectedVisibility = _safeVisibilityRule(widget.block.visibilityRule);
 
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.md,
+        AppSpacing.md,
+        AppSpacing.xl,
+      ),
       children: [
-        // Module info
+        _BlockSummaryRow(
+          icon: info?.icon ?? Icons.widgets,
+          title: info?.name ?? widget.block.type.label,
+          meta: _displayId(widget.block.id),
+          accentColor: _accentColorFor(widget.block.type),
+        ),
+        const SizedBox(height: AppSpacing.md),
         _PropertySection(
-          title: 'Block',
+          title: 'Visibility',
           children: [
-            Row(
-              children: [
-                Icon(
-                  info?.icon ?? Icons.widgets,
-                  size: 16,
-                  color: AppColors.primary500,
+            AppDropdown<String>(
+              value: selectedVisibility,
+              light: true,
+              isDense: true,
+              items: const [
+                AppDropdownItem(
+                  value: Block.alwaysVisible,
+                  label: 'Always visible',
                 ),
-                const SizedBox(width: AppSpacing.xs),
-                Text(
-                  info?.name ?? widget.block.type.label,
-                  style: const TextStyle(
-                    fontSize: AppFontSize.sm,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.neutral700,
-                  ),
+                AppDropdownItem(
+                  value: Block.afterPreviousCorrect,
+                  label: 'After previous correct',
                 ),
               ],
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            Builder(
-              builder: (context) {
-                final blockId = widget.block.id;
-                final displayId = blockId.length > 20
-                    ? '${blockId.substring(0, 20)}...'
-                    : blockId;
-                return Text(
-                  'ID: $displayId',
-                  style: const TextStyle(
-                    fontSize: AppFontSize.xs,
-                    color: AppColors.neutral400,
-                    fontFamily: 'monospace',
-                  ),
-                );
+              onChanged: (value) {
+                if (value != null) {
+                  _updateBlock(widget.block.copyWith(visibilityRule: value));
+                }
               },
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.lg),
-
-        // Style settings
-        _PropertySection(
-          title: 'Style',
-          children: [
-            if (widget.block.type == BlockType.animation) ...[
-              const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: AppSpacing.md),
+        if (widget.block.type == BlockType.animation) ...[
+          _PropertySection(
+            title: 'Layout',
+            children: [
               _PropertyField(
                 label: 'Width',
                 child: Column(
@@ -334,41 +358,36 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                 ),
               ),
             ],
-          ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
-
-        // Visibility rule
-        _PropertySection(
-          title: 'Visibility',
-          children: [
-            AppDropdown<String>(
-              value: selectedVisibility,
-              isDense: true,
-              items: const [
-                AppDropdownItem(
-                  value: Block.alwaysVisible,
-                  label: 'Always visible',
-                ),
-                AppDropdownItem(
-                  value: Block.afterPreviousCorrect,
-                  label: 'After previous correct',
-                ),
-              ],
-              onChanged: (value) {
-                if (value != null) {
-                  _updateBlock(widget.block.copyWith(visibilityRule: value));
-                }
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
-
-        // Content editor (by type)
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
         _buildContentEditor(),
       ],
     );
+  }
+
+  String _displayId(String blockId) {
+    return blockId.length > 18 ? '${blockId.substring(0, 18)}…' : blockId;
+  }
+
+  Color _accentColorFor(BlockType type) {
+    switch (type) {
+      case BlockType.text:
+      case BlockType.image:
+      case BlockType.multipleChoice:
+      case BlockType.trueFalse:
+      case BlockType.matching:
+      case BlockType.fillBlank:
+        return AppColors.primary500;
+      case BlockType.codeBlock:
+      case BlockType.codePlayground:
+      case BlockType.codeExecution:
+      case BlockType.functionFlow:
+        return AppColors.secondary500;
+      case BlockType.animation:
+      case BlockType.video:
+        return AppColors.accent500;
+    }
   }
 
   Widget _buildContentEditor() {
@@ -729,16 +748,31 @@ class _PropertySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: AppFontSize.xs,
-            fontWeight: FontWeight.w600,
-            color: AppColors.neutral500,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFFEFE),
+            borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            border: Border.all(color: AppColors.neutral200),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: AppFontSize.xs,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.neutral900,
+                  letterSpacing: 0.2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              ...children,
+            ],
           ),
         ),
-        const SizedBox(height: AppSpacing.sm),
-        ...children,
       ],
     );
   }
@@ -754,19 +788,70 @@ class _PropertyField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 50,
+          width: 60,
           child: Text(
             label,
             style: const TextStyle(
-              fontSize: AppFontSize.sm,
-              color: AppColors.neutral600,
+              fontSize: AppFontSize.xs,
+              color: AppColors.neutral500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
         Expanded(child: child),
+      ],
+    );
+  }
+}
+
+class _BlockSummaryRow extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String meta;
+  final Color accentColor;
+
+  const _BlockSummaryRow({
+    required this.icon,
+    required this.title,
+    required this.meta,
+    required this.accentColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            color: accentColor.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+          ),
+          child: Icon(icon, color: accentColor, size: 16),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: AppFontSize.sm,
+              fontWeight: FontWeight.w700,
+              color: AppColors.neutral900,
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Text(
+          meta,
+          style: const TextStyle(
+            fontSize: AppFontSize.xs,
+            color: AppColors.neutral500,
+          ),
+        ),
       ],
     );
   }

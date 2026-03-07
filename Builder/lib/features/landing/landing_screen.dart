@@ -1219,7 +1219,7 @@ class _StatTile extends StatelessWidget {
         : const Color(0xFFDC2626);
 
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: const Color(0xF8FFFFFF),
         borderRadius: BorderRadius.circular(16),
@@ -1235,23 +1235,24 @@ class _StatTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             data.value,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 17,
               fontWeight: FontWeight.w800,
               color: _C.text,
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 1),
           Text(
             data.label,
             style: const TextStyle(fontSize: 12, color: _C.muted),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
               color: deltaColor.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(999),
@@ -1259,7 +1260,7 @@ class _StatTile extends StatelessWidget {
             child: Text(
               data.delta,
               style: TextStyle(
-                fontSize: 10,
+                fontSize: 9,
                 fontWeight: FontWeight.w700,
                 color: deltaColor,
               ),

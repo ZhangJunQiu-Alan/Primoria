@@ -25,7 +25,9 @@ class BuilderLayout extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final availableWidth = constraints.maxWidth;
-        final isCompact = availableWidth < (leftPanelWidth + minCanvasWidth + rightPanelWidth);
+        final isCompact =
+            availableWidth <
+            (leftPanelWidth + minCanvasWidth + rightPanelWidth);
 
         if (isCompact) {
           // Compact mode: collapse sidebars
@@ -39,45 +41,38 @@ class BuilderLayout extends StatelessWidget {
 
   Widget _buildFullLayout(BuildContext context) {
     return Container(
-      color: AppColors.background,
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFF4F8FC), Color(0xFFEEF4F8), Color(0xFFF7FAFC)],
+        ),
+      ),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.md,
+        AppSpacing.md,
+        AppSpacing.md,
+      ),
       child: Row(
         children: [
-          // Left module panel
-          Container(
+          _PanelShell(
             width: leftPanelWidth,
             margin: const EdgeInsets.only(right: AppSpacing.sm),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(AppBorderRadius.md),
-              boxShadow: AppShadows.sm,
-            ),
-            clipBehavior: Clip.antiAlias,
+            accentColor: AppColors.primary500,
             child: leftPanel,
           ),
-          // Center canvas
           Expanded(
-            child: Container(
+            child: _PanelShell(
               margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(AppBorderRadius.md),
-                boxShadow: AppShadows.sm,
-              ),
-              clipBehavior: Clip.antiAlias,
+              accentColor: AppColors.secondary500,
               child: canvas,
             ),
           ),
-          // Right properties panel
-          Container(
+          _PanelShell(
             width: rightPanelWidth,
             margin: const EdgeInsets.only(left: AppSpacing.sm),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(AppBorderRadius.md),
-              boxShadow: AppShadows.sm,
-            ),
-            clipBehavior: Clip.antiAlias,
+            accentColor: AppColors.accent500,
             child: rightPanel,
           ),
         ],
@@ -86,38 +81,68 @@ class BuilderLayout extends StatelessWidget {
   }
 
   Widget _buildCompactLayout(BuildContext context) {
-    // In compact mode, use Drawer or tabs
     return Container(
-      color: AppColors.background,
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFF4F8FC), Color(0xFFF7FAFC)],
+        ),
+      ),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
         children: [
-          // Collapsed left panel (icons only)
-          Container(
+          _PanelShell(
             width: 56,
             margin: const EdgeInsets.only(right: AppSpacing.sm),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(AppBorderRadius.md),
-              boxShadow: AppShadows.sm,
-            ),
-            clipBehavior: Clip.antiAlias,
+            accentColor: AppColors.primary500,
             child: leftPanel,
           ),
-          // Canvas takes remaining space
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(AppBorderRadius.md),
-                boxShadow: AppShadows.sm,
-              ),
-              clipBehavior: Clip.antiAlias,
+            child: _PanelShell(
+              accentColor: AppColors.secondary500,
               child: canvas,
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PanelShell extends StatelessWidget {
+  final Widget child;
+  final double? width;
+  final EdgeInsetsGeometry? margin;
+  final Color accentColor;
+
+  const _PanelShell({
+    required this.child,
+    required this.accentColor,
+    this.width,
+    this.margin,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      margin: margin,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+        border: Border.all(color: AppColors.neutral200),
+        boxShadow: [
+          ...AppShadows.md,
+          BoxShadow(
+            color: accentColor.withValues(alpha: 0.08),
+            blurRadius: 28,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: child,
     );
   }
 }
