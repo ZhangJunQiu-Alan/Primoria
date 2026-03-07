@@ -79,7 +79,12 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
         key: _listViewportKey,
         scrollController: _scrollController,
         buildDefaultDragHandles: false,
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.xl,
+          AppSpacing.lg,
+          AppSpacing.xl,
+          AppSpacing.xl,
+        ),
         itemCount: sortedBlocks.length,
         onReorderStart: _onReorderStart,
         onReorderEnd: _onReorderEnd,
@@ -87,7 +92,11 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
           if (newIndex > oldIndex) newIndex--;
           ref
               .read(courseProvider.notifier)
-              .reorderBlocks(builderState.currentLessonIndex, oldIndex, newIndex);
+              .reorderBlocks(
+                builderState.currentLessonIndex,
+                oldIndex,
+                newIndex,
+              );
           ref.read(builderStateProvider.notifier).markAsUnsaved();
         },
         footer: _draggingIndex != null && _insertionIndex == sortedBlocks.length
@@ -121,6 +130,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (index == 0) _buildCanvasHeader(sortedBlocks.length),
                 if (isInsertBefore) _buildInsertionIndicator(),
                 KeyedSubtree(
                   key: _itemKeyFor(block.id),
@@ -173,10 +183,11 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
       child: Tooltip(
         message: 'Drag to reorder',
         child: Container(
-          constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
           decoration: BoxDecoration(
-            color: AppColors.neutral100,
+            color: const Color(0xFFF7FAFC),
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            border: Border.all(color: AppColors.neutral200),
           ),
           child: const Icon(
             Icons.drag_indicator,
@@ -236,11 +247,133 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
 
   Widget _buildEmptyState(bool isDragOver) {
     return Center(
-      child: Text(
-        isDragOver ? 'Drop to add block' : 'Drag Blocks Here',
-        style: TextStyle(
-          fontSize: AppFontSize.md,
-          color: isDragOver ? AppColors.primary500 : AppColors.neutral400,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 520),
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+          border: Border.all(
+            color: isDragOver ? AppColors.primary300 : AppColors.neutral200,
+            width: isDragOver ? 2 : 1,
+          ),
+          boxShadow: AppShadows.md,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: isDragOver ? AppColors.primary50 : AppColors.neutral100,
+                borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              ),
+              child: Icon(
+                isDragOver
+                    ? Icons.add_circle_outline_rounded
+                    : Icons.view_agenda_outlined,
+                size: 32,
+                color: isDragOver ? AppColors.primary500 : AppColors.neutral500,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              isDragOver
+                  ? 'Drop block to add it here'
+                  : 'Start building this lesson',
+              style: TextStyle(
+                fontSize: AppFontSize.lg,
+                fontWeight: FontWeight.w700,
+                color: isDragOver ? AppColors.primary600 : AppColors.neutral900,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              'Use the block library on the left, then select any block to refine its settings on the right.',
+              style: TextStyle(
+                fontSize: AppFontSize.sm,
+                color: isDragOver ? AppColors.primary500 : AppColors.neutral500,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCanvasHeader(int blockCount) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF7FAFC),
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
+          border: Border.all(color: AppColors.neutral200),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.secondary50,
+                borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              ),
+              child: const Icon(
+                Icons.auto_stories_outlined,
+                color: AppColors.secondary700,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Lesson Canvas',
+                    style: TextStyle(
+                      fontSize: AppFontSize.md,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.neutral900,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '$blockCount block${blockCount == 1 ? '' : 's'} in this lesson',
+                    style: const TextStyle(
+                      fontSize: AppFontSize.sm,
+                      color: AppColors.neutral500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.sm,
+                vertical: AppSpacing.xs,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+                border: Border.all(color: AppColors.neutral200),
+              ),
+              child: const Text(
+                'Drag to reorder',
+                style: TextStyle(
+                  fontSize: AppFontSize.xs,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.neutral600,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -290,10 +290,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       t,
     );
     final displayCourseTitle = _resolveDisplayCourseTitle(state.courseTitle);
-    final appBarTitle = '$displayCourseTitle/$currentLessonTitle';
+    final appBarTitle = '$displayCourseTitle / $currentLessonTitle';
     final pillOutlinedStyle = OutlinedButton.styleFrom(
       foregroundColor: AppColors.neutral700,
-      side: const BorderSide(color: AppColors.neutral300),
+      side: const BorderSide(color: AppColors.neutral200),
+      backgroundColor: AppColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.pill),
       ),
@@ -304,6 +305,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     );
 
     return AppBar(
+      toolbarHeight: 76,
+      backgroundColor: const Color(0xFFF7FAFC),
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
       automaticallyImplyLeading: false,
       leading: isCompact
           ? null
@@ -321,50 +326,122 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 ),
               ),
             ),
-      title: InkWell(
-        onTap: () => _editLessonTitle(
-          context,
-          ref,
-          course,
-          state.currentLessonIndex,
-          currentLessonTitle,
-        ),
-        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm,
-            vertical: AppSpacing.xs,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                appBarTitle,
-                style: const TextStyle(
-                  fontSize: AppFontSize.md,
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
+      titleSpacing: AppSpacing.sm,
+      title: Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () => _editLessonTitle(
+                context,
+                ref,
+                course,
+                state.currentLessonIndex,
+                currentLessonTitle,
               ),
-              const SizedBox(width: AppSpacing.xs),
-              const Icon(Icons.edit, size: 16, color: AppColors.neutral400),
-              if (state.hasUnsavedChanges) ...[
-                const SizedBox(width: AppSpacing.sm),
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.warning,
-                    shape: BoxShape.circle,
-                  ),
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.sm,
                 ),
-              ],
-            ],
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                  border: Border.all(color: AppColors.neutral200),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary50,
+                        borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                      ),
+                      child: const Icon(
+                        Icons.dashboard_customize_outlined,
+                        color: AppColors.primary600,
+                        size: 18,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Course Builder',
+                            style: const TextStyle(
+                              fontSize: AppFontSize.xs,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.neutral500,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  appBarTitle,
+                                  style: const TextStyle(
+                                    fontSize: AppFontSize.md,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.neutral900,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.xs),
+                              const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: AppColors.neutral400,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: state.hasUnsavedChanges
+                            ? AppColors.accent50
+                            : AppColors.secondary50,
+                        borderRadius: BorderRadius.circular(
+                          AppBorderRadius.pill,
+                        ),
+                        border: Border.all(
+                          color: state.hasUnsavedChanges
+                              ? AppColors.accent200
+                              : AppColors.secondary200,
+                        ),
+                      ),
+                      child: Text(
+                        state.hasUnsavedChanges ? 'Draft changes' : 'Saved',
+                        style: TextStyle(
+                          fontSize: AppFontSize.xs,
+                          fontWeight: FontWeight.w700,
+                          color: state.hasUnsavedChanges
+                              ? AppColors.accent700
+                              : AppColors.secondary700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
       actions: [
-        // AI generate button
         OutlinedButton.icon(
           onPressed: () {
             _showAIGenerateDialog(context, ref);
@@ -374,7 +451,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.accent600,
             side: const BorderSide(color: AppColors.accent300),
-            backgroundColor: AppColors.accent50,
+            backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppBorderRadius.pill),
             ),
@@ -385,7 +462,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // Preview button
         OutlinedButton(
           onPressed: () async {
             final previewCourseId = (_courseId ?? '').isNotEmpty
@@ -421,7 +497,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           child: Text(t.builderPreview),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // Import button
         OutlinedButton(
           onPressed: () {
             _importCourse(context, ref, t);
@@ -430,7 +505,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           child: Text(t.builderImport),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // Export button
         OutlinedButton(
           onPressed: () {
             _exportCourse(context, ref, t);
@@ -439,7 +513,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           child: Text(t.builderExport),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // Cloud save button
         OutlinedButton(
           onPressed: () {
             _saveToCloud(context, ref, t);
@@ -448,7 +521,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           child: Text(t.builderSave),
         ),
         const SizedBox(width: AppSpacing.sm),
-        // Publish button
         ElevatedButton(
           onPressed: () {
             _publishCourse(context, ref, t);
@@ -456,6 +528,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary500,
             foregroundColor: Colors.white,
+            elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppBorderRadius.pill),
             ),

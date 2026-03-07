@@ -7,12 +7,14 @@ import '../services/block_registry.dart';
 class _BlockCategory {
   final String name;
   final List<BlockType> blockTypes;
-  final Color backgroundColor;
+  final String description;
+  final Color accentColor;
 
   const _BlockCategory({
     required this.name,
     required this.blockTypes,
-    required this.backgroundColor,
+    required this.description,
+    required this.accentColor,
   });
 }
 
@@ -31,6 +33,7 @@ class _ModulePanelState extends State<ModulePanel> {
   static const List<_BlockCategory> _categories = [
     _BlockCategory(
       name: 'General',
+      description: 'Narrative, media and quiz blocks for lesson flow',
       blockTypes: [
         BlockType.text,
         BlockType.image,
@@ -39,17 +42,18 @@ class _ModulePanelState extends State<ModulePanel> {
         BlockType.trueFalse,
         BlockType.matching,
       ],
-      backgroundColor: Color(0xFFE8EAF6), // indigo 50
+      accentColor: AppColors.primary500,
     ),
     _BlockCategory(
       name: 'Programming',
+      description: 'Interactive coding and execution visual blocks',
       blockTypes: [
         BlockType.codeBlock,
         BlockType.codePlayground,
         BlockType.codeExecution,
         BlockType.functionFlow,
       ],
-      backgroundColor: Color(0xFFE8F5E9), // green 50
+      accentColor: AppColors.secondary500,
     ),
   ];
 
@@ -82,65 +86,81 @@ class _ModulePanelState extends State<ModulePanel> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Panel title
             Container(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                'Block library',
-                style: TextStyle(
-                  fontSize: AppFontSize.md,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.neutral800,
-                ),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                AppSpacing.md,
+                AppSpacing.md,
+                AppSpacing.sm,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Block Library',
+                    style: TextStyle(
+                      fontSize: AppFontSize.lg,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.neutral900,
+                    ),
+                  ),
+                  SizedBox(height: AppSpacing.xs),
+                  Text(
+                    'Drag blocks into the canvas to build a polished lesson.',
+                    style: TextStyle(
+                      fontSize: AppFontSize.sm,
+                      color: AppColors.neutral500,
+                      height: 1.35,
+                    ),
+                  ),
+                ],
               ),
             ),
-            // Search field
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    _searchQuery = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: const TextStyle(
-                    fontSize: AppFontSize.sm,
-                    color: AppColors.neutral400,
-                  ),
-                  prefixIcon: const Icon(
-                    Icons.search,
-                    size: 18,
-                    color: AppColors.neutral400,
-                  ),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm,
-                    vertical: AppSpacing.sm,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                    borderSide: const BorderSide(color: AppColors.neutral200),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                    borderSide: const BorderSide(color: AppColors.neutral200),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                    borderSide: const BorderSide(color: AppColors.primary500),
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7FAFC),
+                  borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                  border: Border.all(color: AppColors.neutral200),
                 ),
-                style: const TextStyle(fontSize: AppFontSize.sm),
+                child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _searchQuery = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search blocks',
+                    hintStyle: const TextStyle(
+                      fontSize: AppFontSize.sm,
+                      color: AppColors.neutral400,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      size: 18,
+                      color: AppColors.neutral400,
+                    ),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                      vertical: AppSpacing.sm,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  style: const TextStyle(fontSize: AppFontSize.sm),
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            // Category list
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.md,
+                  AppSpacing.xs,
+                  AppSpacing.md,
+                  AppSpacing.md,
+                ),
                 children: _categories
                     .where(
                       (cat) => _searchQuery.isEmpty || _categoryHasResults(cat),
@@ -198,7 +218,6 @@ class _ModulePanelState extends State<ModulePanel> {
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Column(
         children: [
-          // Category header
           GestureDetector(
             onTap: () {
               setState(() {
@@ -210,39 +229,83 @@ class _ModulePanelState extends State<ModulePanel> {
               });
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.sm,
-              ),
+              padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
-                color: category.backgroundColor,
-                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                color: category.accentColor.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                border: Border.all(
+                  color: category.accentColor.withValues(alpha: 0.16),
+                ),
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      category.name,
-                      style: const TextStyle(
-                        fontSize: AppFontSize.sm,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral800,
-                      ),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: category.accentColor.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                    ),
+                    child: Icon(
+                      category.name == 'General'
+                          ? Icons.view_stream_outlined
+                          : Icons.terminal_outlined,
+                      color: category.accentColor,
+                      size: 18,
                     ),
                   ),
-                  Icon(
-                    isExpanded ? Icons.expand_less : Icons.add,
-                    size: 18,
-                    color: AppColors.neutral600,
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          category.name,
+                          style: const TextStyle(
+                            fontSize: AppFontSize.sm,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.neutral900,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          category.description,
+                          style: const TextStyle(
+                            fontSize: AppFontSize.xs,
+                            color: AppColors.neutral500,
+                            height: 1.35,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(
+                          '${blocks.length} block${blocks.length == 1 ? '' : 's'}',
+                          style: TextStyle(
+                            fontSize: AppFontSize.xs,
+                            color: category.accentColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppSpacing.xs),
+                    child: Icon(
+                      isExpanded
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
+                      size: 20,
+                      color: AppColors.neutral600,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          // Expanded block items
           if (isExpanded)
             Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              padding: const EdgeInsets.only(top: AppSpacing.sm),
               child: Column(
                 children: blocks
                     .map(
@@ -252,6 +315,7 @@ class _ModulePanelState extends State<ModulePanel> {
                         description: info.description,
                         type: info.type,
                         compact: false,
+                        accentColor: category.accentColor,
                       ),
                     )
                     .toList(),
@@ -270,6 +334,7 @@ class _ModuleItem extends StatelessWidget {
   final String description;
   final BlockType type;
   final bool compact;
+  final Color accentColor;
 
   const _ModuleItem({
     required this.icon,
@@ -277,6 +342,7 @@ class _ModuleItem extends StatelessWidget {
     required this.description,
     required this.type,
     required this.compact,
+    this.accentColor = AppColors.primary500,
   });
 
   @override
@@ -294,7 +360,7 @@ class _ModuleItem extends StatelessWidget {
               vertical: AppSpacing.sm,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primary500,
+              color: accentColor,
               borderRadius: BorderRadius.circular(AppBorderRadius.md),
             ),
             child: Row(
@@ -327,7 +393,7 @@ class _ModuleItem extends StatelessWidget {
         width: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColors.neutral50,
+          color: const Color(0xFFF7FAFC),
           borderRadius: BorderRadius.circular(AppBorderRadius.md),
           border: Border.all(color: AppColors.neutral200),
         ),
@@ -336,32 +402,64 @@ class _ModuleItem extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.neutral50,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
         border: Border.all(color: AppColors.neutral200),
+        boxShadow: AppShadows.sm,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.neutral600, size: 20),
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: accentColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            ),
+            child: Icon(icon, color: accentColor, size: 18),
+          ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: AppFontSize.sm,
-                color: AppColors.neutral700,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: AppFontSize.sm,
+                    color: AppColors.neutral800,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    fontSize: AppFontSize.xs,
+                    color: AppColors.neutral500,
+                    height: 1.35,
+                  ),
+                ),
+              ],
             ),
           ),
-          const Icon(
-            Icons.drag_indicator,
-            color: AppColors.neutral300,
-            size: 16,
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.xs,
+              vertical: AppSpacing.xs,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF7FAFC),
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            ),
+            child: const Icon(
+              Icons.drag_indicator,
+              color: AppColors.neutral400,
+              size: 16,
+            ),
           ),
         ],
       ),
