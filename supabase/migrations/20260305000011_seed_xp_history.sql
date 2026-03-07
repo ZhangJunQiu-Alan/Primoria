@@ -16,7 +16,8 @@ BEGIN
   LIMIT 1;
 
   IF v_user_id IS NULL THEN
-    RAISE EXCEPTION 'User 791667283@qq.com not found';
+    RAISE NOTICE 'Skipping XP seed: user 791667283@qq.com not found';
+    RETURN;
   END IF;
 
   FOR i IN 0..119 LOOP
