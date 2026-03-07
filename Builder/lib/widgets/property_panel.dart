@@ -864,6 +864,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
   bool _isGenerating = false;
   String? _generationError;
   String _selectedModel = 'gemini-3.1-flash-lite-preview';
+  String _selectedStyle = _animationStyles.first.key;
 
   static const _modelOptions = [
     'gemini-2.5-flash-latest',
@@ -874,14 +875,32 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     'gemini-3.1-flash-lite-preview',
   ];
   late TextEditingController _codeController;
-
-  static const _suggestionChips = [
-    'Physics simulation',
-    'Sorting algorithm',
-    'Math function plot',
-    'Data structure',
-    'Binary search tree',
-    'Bubble sort',
+  static const _animationStyles = [
+    (
+      key: 'anime',
+      label: 'Anime',
+      description: 'Bold motion, vivid colors, expressive teaching visuals',
+    ),
+    (
+      key: 'minimal',
+      label: 'Minimal',
+      description: 'Clean layouts, simple geometry, low visual noise',
+    ),
+    (
+      key: 'tech',
+      label: 'Tech',
+      description: 'HUD-like glow, data overlays, futuristic presentation',
+    ),
+    (
+      key: 'realistic',
+      label: 'Realistic',
+      description: 'Natural motion, physical spacing, grounded visuals',
+    ),
+    (
+      key: 'playful',
+      label: 'Playful Edu',
+      description: 'Friendly classroom style, colorful, approachable',
+    ),
   ];
 
   @override
@@ -915,8 +934,9 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     bool isRegenerate = false,
     String? overridePrompt,
   }) async {
-    final prompt = (overridePrompt ?? _promptController.text).trim();
-    if (prompt.isEmpty) return;
+    final rawPrompt = (overridePrompt ?? _promptController.text).trim();
+    if (rawPrompt.isEmpty) return;
+    final prompt = _composePrompt(rawPrompt);
 
     final key = _apiKeyController.text.trim();
     if (key.isNotEmpty) AICourseGenerator.setApiKey(key);
@@ -947,7 +967,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         widget.content.copyWith(
           preset: AnimationContent.presetCustom,
           customHtml: result.html,
-          aiPrompt: prompt,
+          aiPrompt: rawPrompt,
         ),
       );
       setState(() {
@@ -959,6 +979,15 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         _generationError = result.error ?? 'Generation failed.';
       });
     }
+  }
+
+  String _composePrompt(String prompt) {
+    final style = _animationStyles.firstWhere(
+      (style) => style.key == _selectedStyle,
+      orElse: () => _animationStyles.first,
+    );
+    return 'Animation style: ${style.label}. ${style.description}. '
+        'Create an educational STEM animation for: $prompt';
   }
 
   void _applyCodeEdit() {
@@ -1122,24 +1151,47 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         ),
         const SizedBox(height: AppSpacing.md),
 
-        // Suggestion chips
+        const Text(
+          'Style',
+          style: TextStyle(
+            fontSize: AppFontSize.sm,
+            fontWeight: FontWeight.w600,
+            color: AppColors.neutral700,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
         Wrap(
           spacing: AppSpacing.xs,
           runSpacing: AppSpacing.xs,
-          children: _suggestionChips.map((chip) {
-            return ActionChip(
-              label: Text(
-                chip,
-                style: const TextStyle(fontSize: AppFontSize.xs),
+          children: _animationStyles.map<Widget>((style) {
+            final isSelected = style.key == _selectedStyle;
+            return ChoiceChip(
+              label: Text(style.label),
+              selected: isSelected,
+              labelStyle: TextStyle(
+                fontSize: AppFontSize.xs,
+                color: isSelected ? Colors.white : AppColors.neutral700,
               ),
-              onPressed: () {
-                _promptController.text = chip;
-                _promptController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: chip.length),
-                );
+              onSelected: (_) {
+                setState(() => _selectedStyle = style.key);
               },
+              selectedColor: AppColors.primary500,
+              backgroundColor: AppColors.neutral100,
+              side: BorderSide(
+                color: isSelected ? AppColors.primary500 : AppColors.neutral200,
+              ),
             );
           }).toList(),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          _animationStyles
+              .firstWhere((style) => style.key == _selectedStyle)
+              .description,
+          style: const TextStyle(
+            fontSize: AppFontSize.xs,
+            color: AppColors.neutral500,
+          ),
         ),
         const SizedBox(height: AppSpacing.sm),
 
@@ -1148,7 +1200,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           controller: _promptController,
           maxLines: 3,
           decoration: const InputDecoration(
-            hintText: 'Describe your animation…',
+            hintText: 'Describe the animation you want to generate…',
             border: OutlineInputBorder(),
           ),
           style: const TextStyle(fontSize: AppFontSize.sm),
