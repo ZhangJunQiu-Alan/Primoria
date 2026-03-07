@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../widgets/app_dropdown.dart';
 import '../dashboard_localizations.dart';
 import '../providers/analytics_provider.dart';
 import '../widgets/kpi_card.dart';
@@ -633,20 +634,18 @@ class _SortSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return DropdownButton<CourseSortMetric>(
+    return AppDropdown<CourseSortMetric>(
       value: current,
+      isDense: true,
       items: [
-        DropdownMenuItem(
-          value: CourseSortMetric.views,
-          child: Text(t.dashSortByViews),
-        ),
-        DropdownMenuItem(
+        AppDropdownItem(value: CourseSortMetric.views, label: t.dashSortByViews),
+        AppDropdownItem(
           value: CourseSortMetric.completion,
-          child: Text(t.dashSortByCompletion),
+          label: t.dashSortByCompletion,
         ),
-        DropdownMenuItem(
+        AppDropdownItem(
           value: CourseSortMetric.rating,
-          child: Text(t.dashSortByRating),
+          label: t.dashSortByRating,
         ),
       ],
       onChanged: (value) {

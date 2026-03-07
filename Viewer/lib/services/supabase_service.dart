@@ -333,7 +333,7 @@ class SupabaseService {
       var q = client
           .from('courses')
           .select(
-            'id, title, slug, description, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex)',
+            'id, title, slug, description, thumbnail_url, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex)',
           )
           .eq('status', 'published');
 
@@ -355,7 +355,7 @@ class SupabaseService {
       final res = await client
           .from('enrollments')
           .select(
-            '*, courses(id, title, slug, description, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex))',
+            '*, courses(id, title, slug, description, thumbnail_url, difficulty_level, estimated_minutes, tags, subject_id, subjects(id, name, color_hex))',
           )
           .eq('user_id', currentUser!.id)
           .order('last_accessed_at', ascending: false);
