@@ -114,11 +114,23 @@ final courseProvider = StateNotifierProvider<CourseNotifier, Course>((ref) {
   return CourseNotifier();
 });
 
-/// Current lesson blocks provider
+/// Current lesson blocks provider (unordered)
 final currentLessonBlocksProvider = Provider.family<List<Block>, int>((
   ref,
   lessonIndex,
 ) {
   final course = ref.watch(courseProvider);
   return course.getLesson(lessonIndex)?.blocks ?? [];
+});
+
+/// Sorted lesson blocks provider — blocks ordered by position.order.
+/// Sorting is only recomputed when the blocks list actually changes.
+final sortedLessonBlocksProvider = Provider.family<List<Block>, int>((
+  ref,
+  lessonIndex,
+) {
+  final blocks = ref.watch(currentLessonBlocksProvider(lessonIndex));
+  final sorted = List<Block>.from(blocks)
+    ..sort((a, b) => a.position.order.compareTo(b.position.order));
+  return sorted;
 });

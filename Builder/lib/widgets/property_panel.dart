@@ -8,6 +8,7 @@ import '../services/block_registry.dart';
 import '../services/ai_animation_generator.dart';
 import '../services/ai_course_generator.dart';
 import '../services/file_picker.dart' as file_picker;
+import 'app_dropdown.dart';
 import 'block_widgets/html_animation_widget.dart';
 import 'code_execution_content_editor.dart';
 import 'function_flow_content_editor.dart';
@@ -129,20 +130,10 @@ class _BlockPropertyEditor extends ConsumerStatefulWidget {
 }
 
 class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
-  static const Set<String> _supportedAlignments = {'left', 'center', 'right'};
-  static const Set<String> _supportedSpacing = {'xs', 'sm', 'md', 'lg', 'xl'};
   static const Set<String> _supportedVisibilityRules = {
     Block.alwaysVisible,
     Block.afterPreviousCorrect,
   };
-
-  String _safeAlignment(String value) {
-    return _supportedAlignments.contains(value) ? value : 'left';
-  }
-
-  String _safeSpacing(String value) {
-    return _supportedSpacing.contains(value) ? value : 'md';
-  }
 
   String _safeVisibilityRule(String value) {
     return _supportedVisibilityRules.contains(value)
@@ -195,8 +186,6 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   @override
   Widget build(BuildContext context) {
     final info = BlockRegistry.getInfo(widget.block.type);
-    final selectedAlignment = _safeAlignment(widget.block.style.alignment);
-    final selectedSpacing = _safeSpacing(widget.block.style.spacing);
     final selectedVisibility = _safeVisibilityRule(widget.block.visibilityRule);
 
     return ListView(
@@ -249,61 +238,6 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         _PropertySection(
           title: 'Style',
           children: [
-            _PropertyField(
-              label: 'Align',
-              child: SegmentedButton<String>(
-                segments: const [
-                  ButtonSegment(
-                    value: 'left',
-                    icon: Icon(Icons.format_align_left, size: 16),
-                  ),
-                  ButtonSegment(
-                    value: 'center',
-                    icon: Icon(Icons.format_align_center, size: 16),
-                  ),
-                  ButtonSegment(
-                    value: 'right',
-                    icon: Icon(Icons.format_align_right, size: 16),
-                  ),
-                ],
-                selected: {selectedAlignment},
-                onSelectionChanged: (value) {
-                  final updatedBlock = widget.block.copyWith(
-                    style: widget.block.style.copyWith(alignment: value.first),
-                  );
-                  _updateBlock(updatedBlock);
-                },
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            _PropertyField(
-              label: 'Spacing',
-              child: DropdownButtonFormField<String>(
-                initialValue: selectedSpacing,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm,
-                    vertical: AppSpacing.xs,
-                  ),
-                ),
-                items: const [
-                  DropdownMenuItem(value: 'xs', child: Text('Extra small')),
-                  DropdownMenuItem(value: 'sm', child: Text('Small')),
-                  DropdownMenuItem(value: 'md', child: Text('Medium')),
-                  DropdownMenuItem(value: 'lg', child: Text('Large')),
-                  DropdownMenuItem(value: 'xl', child: Text('Extra large')),
-                ],
-                onChanged: (value) {
-                  if (value != null) {
-                    final updatedBlock = widget.block.copyWith(
-                      style: widget.block.style.copyWith(spacing: value),
-                    );
-                    _updateBlock(updatedBlock);
-                  }
-                },
-              ),
-            ),
             if (widget.block.type == BlockType.animation) ...[
               const SizedBox(height: AppSpacing.sm),
               _PropertyField(
@@ -408,23 +342,17 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         _PropertySection(
           title: 'Visibility',
           children: [
-            DropdownButtonFormField<String>(
-              initialValue: selectedVisibility,
-              decoration: const InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xs,
-                ),
-              ),
+            AppDropdown<String>(
+              value: selectedVisibility,
+              isDense: true,
               items: const [
-                DropdownMenuItem(
+                AppDropdownItem(
                   value: Block.alwaysVisible,
-                  child: Text('Always visible'),
+                  label: 'Always visible',
                 ),
-                DropdownMenuItem(
+                AppDropdownItem(
                   value: Block.afterPreviousCorrect,
-                  child: Text('After previous correct'),
+                  label: 'After previous correct',
                 ),
               ],
               onChanged: (value) {
@@ -1087,35 +1015,17 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         const SizedBox(height: AppSpacing.sm),
 
         // Model selector
-        DropdownButtonFormField<String>(
-          initialValue: _selectedModel,
-          isExpanded: true,
-          decoration: const InputDecoration(
-            labelText: 'Model',
-            border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.psychology, size: 16),
+        AppDropdown<String>(
+          value: _selectedModel,
+          labelText: 'Model',
+          prefixIcon: const Icon(
+            Icons.psychology,
+            size: 16,
+            color: AppColors.secondary200,
           ),
-          style: const TextStyle(fontSize: AppFontSize.sm),
-          items: _modelOptions.map((m) {
-            return DropdownMenuItem(
-              value: m,
-              child: Text(m, maxLines: 1, overflow: TextOverflow.ellipsis),
-            );
-          }).toList(),
-          selectedItemBuilder: (context) {
-            return _modelOptions
-                .map(
-                  (m) => Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      m,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                )
-                .toList();
-          },
+          items: _modelOptions
+              .map((m) => AppDropdownItem(value: m, label: m))
+              .toList(),
           onChanged: (v) {
             if (v != null) setState(() => _selectedModel = v);
           },

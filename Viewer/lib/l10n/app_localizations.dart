@@ -12,6 +12,7 @@ class AppLocalizations {
   String get navHome => isZh ? '主页' : 'Home';
   String get navLibrary => isZh ? '课程库' : 'Library';
   String get navCommunity => isZh ? '社区' : 'Community';
+  String get navAiTutor => isZh ? 'AI导师' : 'AI Tutor';
   String get navProfile => isZh ? '我的' : 'Profile';
 
   // ── Common ──────────────────────────────────────────────────

@@ -9,6 +9,7 @@ import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
 import '../../services/ai_course_generator.dart';
 import '../../services/file_picker_web.dart';
+import '../../widgets/app_dropdown.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/builder_settings_dialog.dart';
 import '../../widgets/user_avatar.dart';
@@ -448,22 +449,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
           Widget dropdown<T>({
             required T value,
-            required List<DropdownMenuItem<T>> items,
+            required List<AppDropdownItem<T>> items,
             required ValueChanged<T?> onChanged,
-          }) => DropdownButtonFormField<T>(
-            initialValue: value,
+          }) => AppDropdown<T>(
+            value: value,
             items: items,
             onChanged: isGenerating ? null : onChanged,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
+            light: true,
           );
 
           return AlertDialog(
@@ -607,17 +599,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                   onChanged: (v) =>
                                       setDialogState(() => difficulty = v!),
                                   items: [
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'beginner',
-                                      child: Text(t.aiGenerateDiffBeginner),
+                                      label: t.aiGenerateDiffBeginner,
                                     ),
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'intermediate',
-                                      child: Text(t.aiGenerateDiffIntermediate),
+                                      label: t.aiGenerateDiffIntermediate,
                                     ),
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'advanced',
-                                      child: Text(t.aiGenerateDiffAdvanced),
+                                      label: t.aiGenerateDiffAdvanced,
                                     ),
                                   ],
                                 ),
@@ -629,17 +621,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                   onChanged: (v) =>
                                       setDialogState(() => animationStyle = v!),
                                   items: [
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'minimal',
-                                      child: Text(t.aiGenerateStyleMinimal),
+                                      label: t.aiGenerateStyleMinimal,
                                     ),
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'cartoon',
-                                      child: Text(t.aiGenerateStyleCartoon),
+                                      label: t.aiGenerateStyleCartoon,
                                     ),
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'realistic',
-                                      child: Text(t.aiGenerateStyleRealistic),
+                                      label: t.aiGenerateStyleRealistic,
                                     ),
                                   ],
                                 ),
@@ -651,19 +643,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                   onChanged: (v) =>
                                       setDialogState(() => audience = v!),
                                   items: [
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'beginners',
-                                      child: Text(t.aiGenerateAudienceBeginner),
+                                      label: t.aiGenerateAudienceBeginner,
                                     ),
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'intermediate',
-                                      child: Text(
-                                        t.aiGenerateAudienceIntermediate,
-                                      ),
+                                      label: t.aiGenerateAudienceIntermediate,
                                     ),
-                                    DropdownMenuItem(
+                                    AppDropdownItem(
                                       value: 'advanced',
-                                      child: Text(t.aiGenerateAudienceAdvanced),
+                                      label: t.aiGenerateAudienceAdvanced,
                                     ),
                                   ],
                                 ),
@@ -1169,30 +1159,22 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ],
                     const SizedBox(height: 16),
                     // ── Difficulty ─────────────────────────────
-                    DropdownButtonFormField<String>(
-                      initialValue: difficulty,
-                      decoration: InputDecoration(
-                        labelText: '${t.courseDifficulty} *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
-                      ),
+                    AppDropdown<String>(
+                      light: true,
+                      value: difficulty,
+                      labelText: '${t.courseDifficulty} *',
                       items: [
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: 'beginner',
-                          child: Text(t.difficultyBeginner),
+                          label: t.difficultyBeginner,
                         ),
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: 'intermediate',
-                          child: Text(t.difficultyIntermediate),
+                          label: t.difficultyIntermediate,
                         ),
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: 'advanced',
-                          child: Text(t.difficultyAdvanced),
+                          label: t.difficultyAdvanced,
                         ),
                       ],
                       onChanged: (v) =>
@@ -1217,26 +1199,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                     const SizedBox(height: 16),
                     // ── Price Tier ─────────────────────────────
-                    DropdownButtonFormField<String>(
-                      initialValue: priceTier,
-                      decoration: InputDecoration(
-                        labelText: '${t.coursePriceTier} *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
-                      ),
+                    AppDropdown<String>(
+                      light: true,
+                      value: priceTier,
+                      labelText: '${t.coursePriceTier} *',
                       items: [
-                        DropdownMenuItem(
-                          value: 'free',
-                          child: Text(t.priceFree),
-                        ),
-                        DropdownMenuItem(
+                        AppDropdownItem(value: 'free', label: t.priceFree),
+                        AppDropdownItem(
                           value: 'premium',
-                          child: Text(t.pricePremium),
+                          label: t.pricePremium,
                         ),
                       ],
                       onChanged: (v) => setDialogState(() {
@@ -1747,30 +1718,22 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ],
                     const SizedBox(height: 16),
                     // ── Difficulty ─────────────────────────────
-                    DropdownButtonFormField<String>(
-                      initialValue: difficulty,
-                      decoration: InputDecoration(
-                        labelText: '${t.courseDifficulty} *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
-                      ),
+                    AppDropdown<String>(
+                      light: true,
+                      value: difficulty,
+                      labelText: '${t.courseDifficulty} *',
                       items: [
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: 'beginner',
-                          child: Text(t.difficultyBeginner),
+                          label: t.difficultyBeginner,
                         ),
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: 'intermediate',
-                          child: Text(t.difficultyIntermediate),
+                          label: t.difficultyIntermediate,
                         ),
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: 'advanced',
-                          child: Text(t.difficultyAdvanced),
+                          label: t.difficultyAdvanced,
                         ),
                       ],
                       onChanged: (v) =>
@@ -1795,26 +1758,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                     const SizedBox(height: 16),
                     // ── Price Tier ─────────────────────────────
-                    DropdownButtonFormField<String>(
-                      initialValue: priceTier,
-                      decoration: InputDecoration(
-                        labelText: '${t.coursePriceTier} *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
-                      ),
+                    AppDropdown<String>(
+                      light: true,
+                      value: priceTier,
+                      labelText: '${t.coursePriceTier} *',
                       items: [
-                        DropdownMenuItem(
-                          value: 'free',
-                          child: Text(t.priceFree),
-                        ),
-                        DropdownMenuItem(
+                        AppDropdownItem(value: 'free', label: t.priceFree),
+                        AppDropdownItem(
                           value: 'premium',
-                          child: Text(t.pricePremium),
+                          label: t.pricePremium,
                         ),
                       ],
                       onChanged: (v) => setDialogState(() {

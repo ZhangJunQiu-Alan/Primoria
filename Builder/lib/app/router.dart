@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../services/supabase_service.dart';
 import '../providers/builder_access_provider.dart';
 import '../features/auth/auth_callback_screen.dart';
+import '../features/auth/login_screen.dart';
 import '../features/landing/landing_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/builder/builder_screen.dart';
@@ -51,8 +52,10 @@ final appRouter = GoRouter(
       return '/';
     }
 
-    // Logged in + role verified → advance from landing to dashboard
-    if (loggedIn && access == AccessState.allowed && location == '/') {
+    // Logged in + role verified → advance from landing/login to dashboard
+    if (loggedIn &&
+        access == AccessState.allowed &&
+        (location == '/' || location == '/login')) {
       return '/dashboard';
     }
 
@@ -63,6 +66,11 @@ final appRouter = GoRouter(
       path: '/',
       name: 'landing',
       builder: (context, state) => const LandingScreen(),
+    ),
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
       path: '/dashboard',

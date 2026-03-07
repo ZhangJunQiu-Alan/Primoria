@@ -8,6 +8,6 @@ void main() {
     await tester.pumpWidget(const PrimoriaApp());
 
     // Verify that the app loads with the landing screen
-    expect(find.text('Learn by thinking, not just watching'), findsOneWidget);
+    expect(find.text('PRIMORIA'), findsOneWidget);
   });
 }

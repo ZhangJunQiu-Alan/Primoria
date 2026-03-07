@@ -419,15 +419,6 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
           child: ListView(
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [
-              Text(
-                widget.lesson.title,
-                style: const TextStyle(
-                  fontSize: AppFontSize.lg,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.neutral800,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
               if (blocks.isEmpty)
                 const Text(
                   'This page is empty.',

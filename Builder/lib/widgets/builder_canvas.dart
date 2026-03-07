@@ -36,8 +36,8 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   @override
   Widget build(BuildContext context) {
     final builderState = ref.watch(builderStateProvider);
-    final blocks = ref.watch(
-      currentLessonBlocksProvider(builderState.currentLessonIndex),
+    final sortedBlocks = ref.watch(
+      sortedLessonBlocksProvider(builderState.currentLessonIndex),
     );
 
     return DragTarget<BlockType>(
@@ -50,24 +50,20 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
       },
       builder: (context, candidateData, rejectedData) {
         final isDragOver = candidateData.isNotEmpty;
-        final sortedBlocks = List<Block>.from(blocks)
-          ..sort((a, b) => a.position.order.compareTo(b.position.order));
         _syncItemKeyMap(sortedBlocks);
 
-        return Container(
-          margin: const EdgeInsets.all(AppSpacing.lg),
+        final child = sortedBlocks.isEmpty
+            ? _buildEmptyState(isDragOver)
+            : _buildBlocksList(sortedBlocks, builderState);
+
+        if (!isDragOver) return child;
+
+        return DecoratedBox(
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            border: Border.all(color: AppColors.primary500, width: 2),
             borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-            border: Border.all(
-              color: isDragOver ? AppColors.primary500 : AppColors.neutral200,
-              width: isDragOver ? 2 : 1,
-            ),
-            boxShadow: AppShadows.sm,
           ),
-          child: sortedBlocks.isEmpty
-              ? _buildEmptyState(isDragOver)
-              : _buildBlocksList(sortedBlocks, builderState),
+          child: child,
         );
       },
     );
@@ -365,10 +361,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
 
   List<Block> _readSortedBlocks() {
     final state = ref.read(builderStateProvider);
-    final blocks = ref.read(currentLessonBlocksProvider(state.currentLessonIndex));
-    final sorted = List<Block>.from(blocks)
-      ..sort((a, b) => a.position.order.compareTo(b.position.order));
-    return sorted;
+    return ref.read(sortedLessonBlocksProvider(state.currentLessonIndex));
   }
 
   void _syncItemKeyMap(List<Block> sortedBlocks) {

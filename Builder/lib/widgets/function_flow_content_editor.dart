@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../theme/design_tokens.dart';
+import 'app_dropdown.dart';
 
 class FunctionFlowContentEditor extends StatelessWidget {
   final FunctionFlowContent content;
@@ -76,16 +77,13 @@ class FunctionFlowContentEditor extends StatelessWidget {
           },
         ),
         const SizedBox(height: AppSpacing.xs),
-        DropdownButtonFormField<String>(
-          initialValue: content.style.theme,
-          decoration: const InputDecoration(
-            labelText: 'Theme',
-            border: OutlineInputBorder(),
-          ),
+        AppDropdown<String>(
+          value: content.style.theme,
+          labelText: 'Theme',
           items: const [
-            DropdownMenuItem(value: 'indigo', child: Text('Indigo')),
-            DropdownMenuItem(value: 'emerald', child: Text('Emerald')),
-            DropdownMenuItem(value: 'amber', child: Text('Amber')),
+            AppDropdownItem(value: 'indigo', label: 'Indigo'),
+            AppDropdownItem(value: 'emerald', label: 'Emerald'),
+            AppDropdownItem(value: 'amber', label: 'Amber'),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -120,36 +118,15 @@ class FunctionFlowContentEditor extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
-        DropdownButtonFormField<String?>(
-          initialValue: content.entryNodeId,
-          isExpanded: true,
-          decoration: const InputDecoration(
-            labelText: 'Entry Node',
-            border: OutlineInputBorder(),
-          ),
+        AppDropdown<String?>(
+          value: content.entryNodeId,
+          labelText: 'Entry Node',
           items: [
-            const DropdownMenuItem<String?>(
-              value: null,
-              child: Text('None', overflow: TextOverflow.ellipsis, maxLines: 1),
-            ),
+            const AppDropdownItem<String?>(value: null, label: 'None'),
             ...content.nodes.map(
-              (node) => DropdownMenuItem<String?>(
+              (node) => AppDropdownItem<String?>(
                 value: node.id,
-                child: Text(
-                  '${node.label} (${node.id})',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-            ),
-          ],
-          selectedItemBuilder: (context) => [
-            const Text('None', overflow: TextOverflow.ellipsis, maxLines: 1),
-            ...content.nodes.map(
-              (node) => Text(
-                '${node.label} (${node.id})',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+                label: '${node.label} (${node.id})',
               ),
             ),
           ],
@@ -561,24 +538,22 @@ class _NodeEditorCard extends StatelessWidget {
               },
             ),
             const SizedBox(height: AppSpacing.sm),
-            DropdownButtonFormField<String>(
-              initialValue: node.kind,
-              decoration: const InputDecoration(
-                labelText: 'Kind',
-                isDense: true,
-              ),
+            AppDropdown<String>(
+              value: node.kind,
+              labelText: 'Kind',
+              isDense: true,
               items: const [
-                DropdownMenuItem(
+                AppDropdownItem(
                   value: FunctionFlowNode.kindStart,
-                  child: Text('start'),
+                  label: 'start',
                 ),
-                DropdownMenuItem(
+                AppDropdownItem(
                   value: FunctionFlowNode.kindFunction,
-                  child: Text('function'),
+                  label: 'function',
                 ),
-                DropdownMenuItem(
+                AppDropdownItem(
                   value: FunctionFlowNode.kindEnd,
-                  child: Text('end'),
+                  label: 'end',
                 ),
               ],
               onChanged: (value) {
@@ -689,33 +664,15 @@ class _EdgeEditorCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: DropdownButtonFormField<String>(
-                    initialValue: nodeIds.contains(edge.from)
-                        ? edge.from
-                        : null,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText: 'From',
-                      isDense: true,
-                    ),
+                  child: AppDropdown<String>(
+                    value: nodeIds.contains(edge.from) ? edge.from : null,
+                    labelText: 'From',
+                    isDense: true,
                     items: nodeIds
                         .map(
-                          (id) => DropdownMenuItem(
+                          (id) => AppDropdownItem<String>(
                             value: id,
-                            child: Text(
-                              id,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    selectedItemBuilder: (context) => nodeIds
-                        .map(
-                          (id) => Text(
-                            id,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                            label: id,
                           ),
                         )
                         .toList(),
@@ -727,31 +684,15 @@ class _EdgeEditorCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  child: DropdownButtonFormField<String>(
-                    initialValue: nodeIds.contains(edge.to) ? edge.to : null,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText: 'To',
-                      isDense: true,
-                    ),
+                  child: AppDropdown<String>(
+                    value: nodeIds.contains(edge.to) ? edge.to : null,
+                    labelText: 'To',
+                    isDense: true,
                     items: nodeIds
                         .map(
-                          (id) => DropdownMenuItem(
+                          (id) => AppDropdownItem<String>(
                             value: id,
-                            child: Text(
-                              id,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    selectedItemBuilder: (context) => nodeIds
-                        .map(
-                          (id) => Text(
-                            id,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                            label: id,
                           ),
                         )
                         .toList(),
@@ -849,20 +790,15 @@ class _StepEditorCard extends StatelessWidget {
                 ),
               ],
             ),
-            DropdownButtonFormField<int>(
-              initialValue: edgeIndexes.contains(step.edgeIndex)
+            AppDropdown<int>(
+              value: edgeIndexes.contains(step.edgeIndex)
                   ? step.edgeIndex
                   : null,
-              decoration: const InputDecoration(
-                labelText: 'Edge index',
-                isDense: true,
-              ),
+              labelText: 'Edge index',
+              isDense: true,
               items: edgeIndexes
                   .map(
-                    (i) => DropdownMenuItem<int>(
-                      value: i,
-                      child: Text(i.toString()),
-                    ),
+                    (i) => AppDropdownItem<int>(value: i, label: i.toString()),
                   )
                   .toList(),
               onChanged: (value) {

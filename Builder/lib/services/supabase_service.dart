@@ -163,6 +163,32 @@ class SupabaseService {
     }
   }
 
+  /// Sign in with Apple
+  static Future<AuthResult> signInWithApple() async {
+    try {
+      await client.auth.signInWithOAuth(
+        OAuthProvider.apple,
+        redirectTo: _getRedirectUrl(),
+      );
+      return const AuthResult(success: true, message: 'Redirecting...');
+    } on AuthException catch (e) {
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+      );
+    } catch (e) {
+      return AuthResult(success: false, message: 'Sign in failed: $e');
+    }
+  }
+
+  /// Sign in with WeChat (placeholder — requires WeChat Open Platform setup)
+  static Future<AuthResult> signInWithWeChat() async {
+    return const AuthResult(
+      success: false,
+      message: 'WeChat login is not yet available.',
+    );
+  }
+
   /// Pending redirect path to restore after OAuth callback
   static String? pendingRedirect;
 

@@ -6,6 +6,7 @@ import '../providers/language_provider.dart';
 import '../services/storage_service.dart';
 import '../services/supabase_service.dart';
 import '../theme/design_tokens.dart';
+import 'app_dropdown.dart';
 
 enum _BuilderSettingsSection {
   account,
@@ -797,23 +798,21 @@ class _BuilderSettingsDialogState extends ConsumerState<BuilderSettingsDialog> {
                 onChanged: (v) => setState(() => _autoSave = v),
               ),
               const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                initialValue: _defaultDifficulty,
-                decoration: InputDecoration(
-                  labelText: _tr(t, '默认难度', 'Default Difficulty'),
-                ),
+              AppDropdown<String>(
+                value: _defaultDifficulty,
+                labelText: _tr(t, '默认难度', 'Default Difficulty'),
                 items: [
-                  DropdownMenuItem(
+                  AppDropdownItem(
                     value: 'beginner',
-                    child: Text(t.difficultyBeginner),
+                    label: t.difficultyBeginner,
                   ),
-                  DropdownMenuItem(
+                  AppDropdownItem(
                     value: 'intermediate',
-                    child: Text(t.difficultyIntermediate),
+                    label: t.difficultyIntermediate,
                   ),
-                  DropdownMenuItem(
+                  AppDropdownItem(
                     value: 'advanced',
-                    child: Text(t.difficultyAdvanced),
+                    label: t.difficultyAdvanced,
                   ),
                 ],
                 onChanged: (v) => setState(
@@ -821,17 +820,12 @@ class _BuilderSettingsDialogState extends ConsumerState<BuilderSettingsDialog> {
                 ),
               ),
               const SizedBox(height: 10),
-              DropdownButtonFormField<String>(
-                initialValue: _defaultPriceTier,
-                decoration: InputDecoration(
-                  labelText: _tr(t, '默认定价', 'Default Price Tier'),
-                ),
+              AppDropdown<String>(
+                value: _defaultPriceTier,
+                labelText: _tr(t, '默认定价', 'Default Price Tier'),
                 items: [
-                  DropdownMenuItem(value: 'free', child: Text(t.priceFree)),
-                  DropdownMenuItem(
-                    value: 'premium',
-                    child: Text(t.pricePremium),
-                  ),
+                  AppDropdownItem(value: 'free', label: t.priceFree),
+                  AppDropdownItem(value: 'premium', label: t.pricePremium),
                 ],
                 onChanged: (v) =>
                     setState(() => _defaultPriceTier = v ?? _defaultPriceTier),

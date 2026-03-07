@@ -279,6 +279,28 @@ class BuilderLocalizations {
   String get profileLanguage => isZh ? '语言' : 'Language';
   String get profileLanguageTitle => isZh ? '选择语言' : 'Select Language';
 
+  // ── Login page ────────────────────────────────────────────────
+  String get loginWelcome => isZh ? '欢迎回来' : 'Welcome back';
+  String get loginSubtitle =>
+      isZh ? '登录您的 Primoria 账号' : 'Sign in to your Primoria account';
+  String get loginWithGoogle => isZh ? '使用 Google 继续' : 'Continue with Google';
+  String get loginWithApple => isZh ? '使用 Apple 继续' : 'Continue with Apple';
+  String get loginWithWeChat => isZh ? '使用微信继续' : 'Continue with WeChat';
+  String get loginWithEmail => isZh ? '使用邮箱继续' : 'Continue with email';
+  String get loginEmailLabel => isZh ? '电子邮件' : 'Email address';
+  String get loginPasswordLabel => isZh ? '密码' : 'Password';
+  String get loginSignInButton => isZh ? '登录' : 'Sign in';
+  String get loginForgotPassword => isZh ? '忘记密码？' : 'Forgot password?';
+  String get loginResetSent =>
+      isZh ? '重置链接已发送，请查收邮件' : 'Reset link sent — check your email';
+  String get loginNewUser => isZh ? '新用户？申请访问权限' : 'New here? Apply for access';
+  String get loginWeChatComingSoon =>
+      isZh ? '微信登录即将上线' : 'WeChat login coming soon';
+  String get loginFeature1 => isZh ? '拖拽式课程编辑器' : 'Drag-and-drop course editor';
+  String get loginFeature2 => isZh ? 'AI 智能生成' : 'AI-powered generation';
+  String get loginFeature3 => isZh ? '实时学生预览' : 'Real-time student preview';
+  String get loginTagline => isZh ? '构建激励人心的课程' : 'Build courses that inspire.';
+
   // ── Landing page ──────────────────────────────────────────────
   String get landingTagline => isZh ? '从教中学' : 'Learn by teaching';
   String get landingHeadline => isZh
