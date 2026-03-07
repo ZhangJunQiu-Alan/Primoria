@@ -73,7 +73,7 @@ AS $$
     SELECT 1
     FROM public.profiles
     WHERE id = p_user_id
-      AND role = 'parent'::user_role
+      AND role::TEXT = 'parent'
   );
 $$;
 
