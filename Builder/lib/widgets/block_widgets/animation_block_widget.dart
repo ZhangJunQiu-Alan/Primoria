@@ -75,6 +75,15 @@ class _AnimationBlockWidgetState extends State<AnimationBlockWidget>
   @override
   Widget build(BuildContext context) {
     final previewHeight = math.max(140.0, widget.height).toDouble();
+    final shouldShowEmptyState =
+        widget.content.preset == AnimationContent.presetBouncingDot &&
+        (widget.content.aiPrompt == null || widget.content.aiPrompt!.isEmpty) &&
+        widget.content.customHtml == null;
+
+    if (shouldShowEmptyState) {
+      return _buildEmptyState(previewHeight);
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -149,6 +158,59 @@ class _AnimationBlockWidgetState extends State<AnimationBlockWidget>
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(double previewHeight) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.neutral50,
+        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+        border: Border.all(color: AppColors.neutral200),
+      ),
+      child: Container(
+        height: previewHeight,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+          border: Border.all(color: AppColors.neutral200),
+        ),
+        child: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.animation_outlined,
+                  size: 28,
+                  color: AppColors.primary500,
+                ),
+                SizedBox(height: AppSpacing.sm),
+                Text(
+                  'No preview yet',
+                  style: TextStyle(
+                    fontSize: AppFontSize.md,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.neutral700,
+                  ),
+                ),
+                SizedBox(height: AppSpacing.xs),
+                Text(
+                  'Choose a style and describe your animation to generate a preview.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: AppFontSize.sm,
+                    color: AppColors.neutral500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
