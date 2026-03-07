@@ -34,28 +34,35 @@ class BlockWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final info = BlockRegistry.getInfo(block.type);
+    final accentColor = _accentColorFor(block.type);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
+          duration: AppDurations.fast,
           decoration: BoxDecoration(
             color: AppColors.surface,
-            borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
             border: Border.all(
-              color: isSelected ? AppColors.primary500 : AppColors.neutral200,
+              color: isSelected ? accentColor : AppColors.neutral200,
               width: isSelected ? 2 : 1,
             ),
-            boxShadow: isSelected ? AppShadows.md : AppShadows.sm,
+            boxShadow: [
+              ...(isSelected ? AppShadows.md : AppShadows.sm),
+              if (isSelected)
+                BoxShadow(
+                  color: accentColor.withValues(alpha: 0.12),
+                  blurRadius: 22,
+                  offset: const Offset(0, 10),
+                ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Block header (type label + actions)
-              _buildHeader(context, info),
-              // Block content
+              _buildHeader(context, info, accentColor),
               _buildContent(context),
             ],
           ),
@@ -64,79 +71,128 @@ class BlockWrapper extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, BlockTypeInfo? info) {
+  Widget _buildHeader(
+    BuildContext context,
+    BlockTypeInfo? info,
+    Color accentColor,
+  ) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.md,
+        AppSpacing.md,
+        AppSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.primary50 : AppColors.neutral50,
+        color: isSelected
+            ? accentColor.withValues(alpha: 0.08)
+            : const Color(0xFFF8FAFC),
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(AppBorderRadius.md - 1),
-          topRight: Radius.circular(AppBorderRadius.md - 1),
+          topLeft: Radius.circular(AppBorderRadius.lg - 1),
+          topRight: Radius.circular(AppBorderRadius.lg - 1),
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            info?.icon ?? Icons.widgets,
-            size: 14,
-            color: isSelected ? AppColors.primary600 : AppColors.neutral500,
-          ),
-          const SizedBox(width: AppSpacing.xs),
-          Text(
-            info?.name ?? block.type.label,
-            style: TextStyle(
-              fontSize: AppFontSize.xs,
-              fontWeight: FontWeight.w500,
-              color: isSelected ? AppColors.primary600 : AppColors.neutral500,
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: accentColor.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+            ),
+            child: Icon(
+              info?.icon ?? Icons.widgets,
+              size: 18,
+              color: accentColor,
             ),
           ),
-          if (block.visibilityRule == 'afterPreviousCorrect') ...[
-            const SizedBox(width: AppSpacing.xs),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.xs,
-                vertical: 1,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.warning.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.lock, size: 10, color: AppColors.warning),
-                  SizedBox(width: 2),
-                  Text(
-                    'Gated',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.warning,
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  info?.name ?? block.type.label,
+                  style: const TextStyle(
+                    fontSize: AppFontSize.sm,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.neutral900,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  info?.description ?? 'Interactive lesson block',
+                  style: const TextStyle(
+                    fontSize: AppFontSize.xs,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.neutral500,
+                  ),
+                ),
+                if (block.visibilityRule == 'afterPreviousCorrect') ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.xs,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.warning.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.lock, size: 10, color: AppColors.warning),
+                        SizedBox(width: 2),
+                        Text(
+                          'Gated visibility',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.warning,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
-              ),
+              ],
             ),
-          ],
-          const Spacer(),
-          // Drag handle
-          dragHandle ??
-              const Icon(
-                Icons.drag_indicator,
-                size: 16,
-                color: AppColors.neutral400,
-              ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.xs),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              border: Border.all(color: AppColors.neutral200),
+            ),
+            child:
+                dragHandle ??
+                const Icon(
+                  Icons.drag_indicator,
+                  size: 16,
+                  color: AppColors.neutral400,
+                ),
+          ),
           const SizedBox(width: AppSpacing.xs),
-          // Delete button
           InkWell(
             onTap: onDelete,
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-            child: const Padding(
-              padding: EdgeInsets.all(2),
-              child: Icon(Icons.close, size: 14, color: AppColors.neutral400),
+            child: Container(
+              padding: const EdgeInsets.all(AppSpacing.xs),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                border: Border.all(color: AppColors.neutral200),
+              ),
+              child: const Icon(
+                Icons.close,
+                size: 14,
+                color: AppColors.neutral400,
+              ),
             ),
           ),
         ],
@@ -148,7 +204,12 @@ class BlockWrapper extends StatelessWidget {
     final spacing = _spacingToValue(block.style.spacing);
     final alignment = _alignmentToAlignment(block.style.alignment);
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.sm,
+        AppSpacing.md,
+        AppSpacing.md,
+      ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: spacing),
         child: Align(alignment: alignment, child: _getBlockContentWidget()),
@@ -317,6 +378,26 @@ class BlockWrapper extends StatelessWidget {
       case 'md':
       default:
         return AppSpacing.md;
+    }
+  }
+
+  Color _accentColorFor(BlockType type) {
+    switch (type) {
+      case BlockType.text:
+      case BlockType.image:
+      case BlockType.multipleChoice:
+      case BlockType.trueFalse:
+      case BlockType.matching:
+      case BlockType.fillBlank:
+        return AppColors.primary500;
+      case BlockType.codeBlock:
+      case BlockType.codePlayground:
+      case BlockType.codeExecution:
+      case BlockType.functionFlow:
+        return AppColors.secondary500;
+      case BlockType.animation:
+      case BlockType.video:
+        return AppColors.accent500;
     }
   }
 }
