@@ -140,20 +140,46 @@ class AppDropdown<T> extends StatelessWidget {
       initialValue: value,
       isExpanded: isExpanded,
       dropdownColor: Colors.white,
+      menuMaxHeight: 280,
+      borderRadius: BorderRadius.circular(16),
       icon: Icon(
-        Icons.arrow_drop_down,
+        Icons.keyboard_arrow_down_rounded,
         color: AppColors.neutral600,
       ),
       style: const TextStyle(
         color: AppColors.neutral900,
         fontSize: AppFontSize.sm,
+        fontWeight: FontWeight.w600,
       ),
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: prefixIcon,
         isDense: isDense,
+        filled: true,
+        fillColor: const Color(0xFFF8FAFC),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: isDense ? 12 : AppSpacing.md,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.neutral200),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.neutral200),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.primary300, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
         ),
       ),
       selectedItemBuilder: (context) => items
@@ -167,21 +193,32 @@ class AppDropdown<T> extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.neutral900,
                   fontSize: AppFontSize.sm,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
           )
           .toList(),
       items: items.map((item) {
+        final isSelected = item.value == value;
         return DropdownMenuItem<T>(
           value: item.value,
-          child: Text(
-            item.label,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: const TextStyle(
-              color: AppColors.neutral900,
-              fontSize: AppFontSize.sm,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.primary50 : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              item.label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                color: isSelected ? AppColors.primary700 : AppColors.neutral800,
+                fontSize: 13,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+              ),
             ),
           ),
         );
