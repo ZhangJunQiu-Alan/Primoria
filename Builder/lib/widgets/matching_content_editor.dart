@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../theme/design_tokens.dart';
+import 'app_dropdown.dart';
 
 class MatchingContentEditor extends StatelessWidget {
   final MatchingContent content;
@@ -186,25 +187,18 @@ class MatchingContentEditor extends StatelessWidget {
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   flex: 3,
-                  child: DropdownButtonFormField<String>(
-                    initialValue: selectedRightId,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: AppSpacing.xs,
-                      ),
+                  child: AppDropdown<String>(
+                    value: selectedRightId,
+                    isDense: true,
+                    hint: const Text(
+                      'Select match',
+                      style: TextStyle(color: AppColors.secondary300),
                     ),
-                    hint: const Text('Select match'),
                     items: content.rightItems
                         .map(
-                          (rightItem) => DropdownMenuItem<String>(
+                          (rightItem) => AppDropdownItem<String>(
                             value: rightItem.id,
-                            child: Text(
-                              rightItem.text,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            label: rightItem.text,
                           ),
                         )
                         .toList(),
@@ -322,16 +316,14 @@ class MatchingContentEditor extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
-        DropdownButtonFormField<String>(
-          initialValue: relationMode,
-          decoration: const InputDecoration(
-            labelText: 'Connection pattern',
-            isDense: true,
-          ),
+        AppDropdown<String>(
+          value: relationMode,
+          labelText: 'Connection pattern',
+          isDense: true,
           items: const [
-            DropdownMenuItem(value: 'oneToOne', child: Text('One-to-one')),
-            DropdownMenuItem(value: 'oneToMany', child: Text('One-to-many')),
-            DropdownMenuItem(value: 'manyToMany', child: Text('Many-to-many')),
+            AppDropdownItem(value: 'oneToOne', label: 'One-to-one'),
+            AppDropdownItem(value: 'oneToMany', label: 'One-to-many'),
+            AppDropdownItem(value: 'manyToMany', label: 'Many-to-many'),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -514,24 +506,22 @@ class MatchingContentEditor extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    DropdownButtonFormField<String>(
-                      initialValue: node.group,
-                      decoration: const InputDecoration(
-                        labelText: 'Group',
-                        isDense: true,
-                      ),
+                    AppDropdown<String>(
+                      value: node.group,
+                      labelText: 'Group',
+                      isDense: true,
                       items: const [
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: MatchingNode.groupLeft,
-                          child: Text('left'),
+                          label: 'left',
                         ),
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: MatchingNode.groupRight,
-                          child: Text('right'),
+                          label: 'right',
                         ),
-                        DropdownMenuItem(
+                        AppDropdownItem(
                           value: MatchingNode.groupNeutral,
-                          child: Text('neutral'),
+                          label: 'neutral',
                         ),
                       ],
                       onChanged: (value) {
@@ -666,24 +656,17 @@ class MatchingContentEditor extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: DropdownButtonFormField<String>(
-                            initialValue: nodeIds.contains(edge.from)
+                          child: AppDropdown<String>(
+                            value: nodeIds.contains(edge.from)
                                 ? edge.from
                                 : null,
-                            isExpanded: true,
-                            decoration: const InputDecoration(
-                              labelText: 'From',
-                              isDense: true,
-                            ),
+                            labelText: 'From',
+                            isDense: true,
                             items: nodeIds
                                 .map(
-                                  (id) => DropdownMenuItem(
+                                  (id) => AppDropdownItem<String>(
                                     value: id,
-                                    child: Text(
-                                      id,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
+                                    label: id,
                                   ),
                                 )
                                 .toList(),
@@ -702,24 +685,15 @@ class MatchingContentEditor extends StatelessWidget {
                         ),
                         const SizedBox(width: AppSpacing.sm),
                         Expanded(
-                          child: DropdownButtonFormField<String>(
-                            initialValue: nodeIds.contains(edge.to)
-                                ? edge.to
-                                : null,
-                            isExpanded: true,
-                            decoration: const InputDecoration(
-                              labelText: 'To',
-                              isDense: true,
-                            ),
+                          child: AppDropdown<String>(
+                            value: nodeIds.contains(edge.to) ? edge.to : null,
+                            labelText: 'To',
+                            isDense: true,
                             items: nodeIds
                                 .map(
-                                  (id) => DropdownMenuItem(
+                                  (id) => AppDropdownItem<String>(
                                     value: id,
-                                    child: Text(
-                                      id,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
+                                    label: id,
                                   ),
                                 )
                                 .toList(),

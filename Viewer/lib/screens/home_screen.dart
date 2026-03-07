@@ -11,11 +11,11 @@ import '../models/daily_task_model.dart';
 import '../services/supabase_service.dart';
 import '../services/daily_task_service.dart';
 import '../theme/theme.dart';
-import '../widgets/star_chain_widget.dart';
 import '../widgets/daily_task_card.dart';
 import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'profile_screen.dart';
+import 'ai_tutor_screen.dart';
 import 'lesson_screen.dart';
 import 'course_screen.dart';
 
@@ -28,7 +28,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const int _tabCount = 5;
   int _currentNavIndex = 0;
+  final List<GlobalKey<NavigatorState>> _navigatorKeys =
+      List<GlobalKey<NavigatorState>>.generate(
+        _tabCount,
+        (_) => GlobalKey<NavigatorState>(),
+      );
+  final Set<int> _loadedTabs = <int>{0};
+  final ValueNotifier<int> _homeRebuildTick = ValueNotifier<int>(0);
 
   // Active enrolled course data loaded from backend
   Map<String, dynamic>?
@@ -38,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loadingHome = true;
 
   // Gamification data
-  Set<String> _activeDates = {};
   List<DailyTask> _dailyTasks = [];
 
   @override
@@ -47,73 +54,175 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadHomeData();
   }
 
+  @override
+  void dispose() {
+    _homeRebuildTick.dispose();
+    super.dispose();
+  }
+
   /// Called after the user enrolls in a course from the Library tab.
   /// Switches to the Home tab and refreshes enrolled-course data.
   void _onEnrolled() {
-    setState(() => _currentNavIndex = 0);
+    setState(() {
+      _currentNavIndex = 0;
+      _loadedTabs.add(0);
+    });
     _loadHomeData();
+  }
+
+  Widget _buildTabRoot(int index) {
+    switch (index) {
+      case 0:
+        return SafeArea(
+          child: ValueListenableBuilder<int>(
+            valueListenable: _homeRebuildTick,
+            builder: (_, __, ___) => _buildHomeContent(),
+          ),
+        );
+      case 1:
+        return SafeArea(child: SearchScreen(onEnrolled: _onEnrolled));
+      case 2:
+        return const SafeArea(child: CoursesScreen());
+      case 3:
+        return const SafeArea(child: AiTutorScreen());
+      case 4:
+        // ProfileScreen manages its own safe area so the banner can bleed to top.
+        return const ProfileScreen();
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildTabNavigator(int index) {
+    if (!_loadedTabs.contains(index)) {
+      return const SizedBox.shrink();
+    }
+    return Offstage(
+      offstage: _currentNavIndex != index,
+      child: TickerMode(
+        enabled: _currentNavIndex == index,
+        child: Navigator(
+          key: _navigatorKeys[index],
+          onGenerateRoute: (settings) => MaterialPageRoute<void>(
+            builder: (_) => _buildTabRoot(index),
+            settings: settings,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleSystemBackNavigation() {
+    final currentNavigator = _navigatorKeys[_currentNavIndex].currentState;
+    if (currentNavigator != null && currentNavigator.canPop()) {
+      currentNavigator.pop();
+      return;
+    }
+    Navigator.of(context).maybePop();
+  }
+
+  void _onNavTap(int index) {
+    if (index == _currentNavIndex) {
+      _navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
+      return;
+    }
+    setState(() {
+      _currentNavIndex = index;
+      _loadedTabs.add(index);
+    });
+  }
+
+  Future<T?> _pushOnHomeTab<T>(Route<T> route) {
+    final homeNavigator = _navigatorKeys[0].currentState;
+    if (homeNavigator != null) {
+      return homeNavigator.push(route);
+    }
+    return Navigator.of(context).push(route);
   }
 
   Future<void> _loadHomeData() async {
     final userProvider = context.read<UserProvider>();
-    final results = await Future.wait([
-      SupabaseService.getEnrollments(),
-      SupabaseService.getActiveDates(),
-      DailyTaskService.loadOrCreateTodayTasks(),
-    ]);
-    await userProvider.refreshStats();
+    try {
+      final results = await Future.wait([
+        SupabaseService.getEnrollments().timeout(
+          const Duration(seconds: 8),
+          onTimeout: () => <Map<String, dynamic>>[],
+        ),
+        DailyTaskService.loadOrCreateTodayTasks().timeout(
+          const Duration(seconds: 8),
+          onTimeout: () => <DailyTask>[],
+        ),
+      ]);
+      await userProvider.refreshStats().timeout(
+        const Duration(seconds: 8),
+        onTimeout: () {},
+      );
 
-    if (!mounted) return;
+      if (!mounted) return;
 
-    final enrollments = results[0] as List<Map<String, dynamic>>;
-    final activeDates = results[1] as Set<String>;
-    final tasks = results[2] as List<DailyTask>;
+      final enrollments = results[0] as List<Map<String, dynamic>>;
+      final tasks = results[1] as List<DailyTask>;
 
-    Map<String, dynamic>? resolvedCourse;
-    var resolvedChapters = <Map<String, dynamic>>[];
-    var resolvedCompletedLessonIds = <String>{};
+      Map<String, dynamic>? resolvedCourse;
+      var resolvedChapters = <Map<String, dynamic>>[];
+      var resolvedCompletedLessonIds = <String>{};
 
-    if (enrollments.isNotEmpty) {
-      final enrollment = enrollments.first;
-      final courseMap = enrollment['courses'] as Map<String, dynamic>?;
-      final courseId = (courseMap?['id'] ?? enrollment['course_id']) as String?;
-      if (courseId != null) {
-        final detail = await SupabaseService.getCourseDetail(courseId);
-        if (!mounted) return;
-        if (detail != null) {
-          resolvedCourse =
-              detail['course'] as Map<String, dynamic>? ?? courseMap;
-          resolvedChapters = List<Map<String, dynamic>>.from(
-            detail['chapters'] ?? [],
-          );
-          resolvedCompletedLessonIds = Set<String>.from(
-            (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
-          );
+      if (enrollments.isNotEmpty) {
+        final enrollment = _toMap(enrollments.first) ?? <String, dynamic>{};
+        final courseMap = _toMap(enrollment['courses']);
+        final courseId =
+            _readString(courseMap?['id']) ??
+            _readString(enrollment['course_id']);
+        if (courseId != null) {
+          final detail = await SupabaseService.getCourseDetail(courseId);
+          if (!mounted) return;
+          if (detail != null) {
+            resolvedCourse = _toMap(detail['course']) ?? courseMap;
+            resolvedChapters = _toMapList(detail['chapters']);
+            resolvedCompletedLessonIds = _toStringSet(
+              detail['completed_lesson_ids'],
+            );
+          } else {
+            resolvedCourse = courseMap;
+          }
         } else {
           resolvedCourse = courseMap;
         }
       }
-    }
 
-    if (!mounted) return;
-    setState(() {
-      _course = resolvedCourse;
-      _chapters = resolvedChapters;
-      _completedLessonIds = resolvedCompletedLessonIds;
-      _activeDates = activeDates;
-      _dailyTasks = tasks;
-      _loadingHome = false;
-    });
+      if (!mounted) return;
+      setState(() {
+        _course = resolvedCourse;
+        _chapters = resolvedChapters;
+        _completedLessonIds = resolvedCompletedLessonIds;
+        _dailyTasks = tasks;
+        _loadingHome = false;
+      });
+    } catch (error) {
+      debugPrint('[HomeScreen] _loadHomeData failed: $error');
+      if (!mounted) return;
+      setState(() {
+        _course = null;
+        _chapters = <Map<String, dynamic>>[];
+        _completedLessonIds = <String>{};
+        _dailyTasks = <DailyTask>[];
+        _loadingHome = false;
+      });
+    } finally {
+      if (mounted) {
+        _homeRebuildTick.value++;
+      }
+    }
   }
 
   bool _isLessonLocked(Map<String, dynamic> lesson) {
     final locked = lesson['is_locked'] == true;
     if (!locked) return false;
 
-    final unlockType = (lesson['unlock_type'] as String? ?? 'none')
+    final unlockType = (_readString(lesson['unlock_type']) ?? 'none')
         .trim()
         .toLowerCase();
-    final prerequisiteId = lesson['prerequisite_lesson_id'] as String?;
+    final prerequisiteId = _readString(lesson['prerequisite_lesson_id']);
     final prerequisiteDone =
         prerequisiteId != null && _completedLessonIds.contains(prerequisiteId);
 
@@ -134,10 +243,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Map<String, dynamic>? get _nextAvailableLesson {
     for (final ch in _chapters) {
-      final lessons = (ch['lessons'] as List? ?? [])
-          .cast<Map<String, dynamic>>();
-      for (final lesson in lessons) {
-        final id = lesson['id'] as String;
+      final lessons = _toRawList(ch['lessons']);
+      for (final rawLesson in lessons) {
+        final lesson = _toMap(rawLesson);
+        if (lesson == null) continue;
+        final id = _readString(lesson['id']);
+        if (id == null) continue;
         if (_completedLessonIds.contains(id)) continue;
         if (_isLessonLocked(lesson)) continue;
         return lesson;
@@ -147,27 +258,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   /// Returns the first incomplete lesson ID from chapters, or null.
-  String? get _nextLessonId => _nextAvailableLesson?['id'] as String?;
+  String? get _nextLessonId => _readString(_nextAvailableLesson?['id']);
 
-  String? get _nextLessonTitle => _nextAvailableLesson?['title'] as String?;
+  String? get _nextLessonTitle => _readString(_nextAvailableLesson?['title']);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FC),
-      body: IndexedStack(
-        index: _currentNavIndex,
-        children: [
-          SafeArea(child: _buildHomeContent()),
-          SafeArea(child: SearchScreen(onEnrolled: _onEnrolled)),
-          SafeArea(child: const CoursesScreen()),
-          // ProfileScreen manages its own safe area so the banner can bleed to top.
-          const ProfileScreen(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentNavIndex,
-        onTap: (index) => setState(() => _currentNavIndex = index),
+    return PopScope<void>(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        _handleSystemBackNavigation();
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FC),
+        body: Stack(
+          fit: StackFit.expand,
+          children: List<Widget>.generate(_tabCount, _buildTabNavigator),
+        ),
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: _currentNavIndex,
+          onTap: _onNavTap,
+        ),
       ),
     );
   }
@@ -181,10 +293,28 @@ class _HomeScreenState extends State<HomeScreen> {
           _buildHeader(t),
           Expanded(
             child: _loadingHome
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircularProgressIndicator(
+                          strokeWidth: 2.8,
+                          color: AppColors.indigo600,
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'Loading...',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF64748B),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 : CustomScrollView(
                     slivers: [
-                      SliverToBoxAdapter(child: _buildOverviewStrip(t)),
                       SliverToBoxAdapter(
                         child: Column(
                           children: [
@@ -218,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
           subtitle: subtitle,
           padding: const EdgeInsets.fromLTRB(24, 18, 24, 8),
           trailing: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(999),
@@ -235,11 +365,11 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
-                  Icons.local_fire_department_rounded,
-                  color: Color(0xFFF59E0B),
-                  size: 18,
+                  Icons.auto_awesome_rounded,
+                  color: Color(0xFF64748B),
+                  size: 22,
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 8),
                 Text(
                   '${up.streak}',
                   style: AppTypography.label.copyWith(
@@ -256,117 +386,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildOverviewStrip(AppLocalizations t) {
-    final totalLessons = _chapters
-        .expand((ch) => (ch['lessons'] as List? ?? []))
-        .length;
-    final completedLessons = _completedLessonIds.length;
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-      child: Consumer<UserProvider>(
-        builder: (context, up, _) => ViewerSurfaceCard(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
-            children: [
-              Expanded(
-                child: _buildOverviewItem(
-                  icon: Icons.menu_book_rounded,
-                  value: totalLessons == 0
-                      ? '--'
-                      : '$completedLessons/$totalLessons',
-                  label: t.homeContinueLearning,
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-                child: VerticalDivider(
-                  width: 20,
-                  thickness: 1,
-                  color: Color(0xFFF1F5F9),
-                ),
-              ),
-              Expanded(
-                child: _buildOverviewItem(
-                  icon: Icons.star_rounded,
-                  value: _formatCompactNumber(up.totalXp),
-                  label: t.profileTotalXp,
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-                child: VerticalDivider(
-                  width: 20,
-                  thickness: 1,
-                  color: Color(0xFFF1F5F9),
-                ),
-              ),
-              Expanded(
-                child: _buildOverviewItem(
-                  icon: Icons.local_fire_department_rounded,
-                  value: '${up.streak}',
-                  label: t.resultStreakLabel,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOverviewItem({
-    required IconData icon,
-    required String value,
-    required String label,
-  }) {
-    return Row(
-      children: [
-        Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Icon(icon, size: 17, color: const Color(0xFF64748B)),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
-                ),
-              ),
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF64748B),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildCourseHero(AppLocalizations t) {
-    final courseTitle = _course?['title'] as String? ?? t.homeStartLearning;
+    final courseTitle = _readString(_course?['title']) ?? t.homeStartLearning;
     final subjectColor = _subjectColor(_course);
+    final thumbnailUrl = _courseThumbnailUrl(_course);
     final completedCount = _completedLessonIds.length;
     final totalLessons = _chapters
-        .expand((ch) => (ch['lessons'] as List? ?? []))
+        .expand((ch) => _toRawList(ch['lessons']))
         .length;
     final levelLabel = totalLessons == 0
         ? t.homeExploreCourses
@@ -375,13 +401,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: _course == null
           ? null
-          : () => Navigator.push(
-              context,
-              MaterialPageRoute(
+          : () => _pushOnHomeTab<void>(
+              MaterialPageRoute<void>(
                 builder: (_) => CourseScreen(
-                  courseId: _course!['id'] as String?,
+                  courseId: _readString(_course?['id']),
                   title: courseTitle,
-                  description: _course!['description'] as String?,
+                  description: _readString(_course?['description']),
                 ),
               ),
             ),
@@ -411,54 +436,136 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 32),
-          Transform.rotate(
-            angle: 0.1,
-            child: Container(
-              width: 240,
-              height: 240,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    subjectColor,
-                    subjectColor.withValues(alpha: 0.7),
-                    AppColors.indigo,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(48),
-                boxShadow: [
-                  BoxShadow(
-                    color: subjectColor.withValues(alpha: 0.3),
-                    blurRadius: 40,
-                    offset: const Offset(0, 20),
-                  ),
-                ],
-                border: Border(
-                  top: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
-                  left: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  _courseInitials(courseTitle),
-                  style: TextStyle(
-                    fontSize: 64,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white.withValues(alpha: 0.4),
-                    letterSpacing: -4,
-                  ),
-                ),
-              ),
-            ),
+          _buildCourseArtwork(
+            thumbnailUrl: thumbnailUrl,
+            title: courseTitle,
+            subjectColor: subjectColor,
           ),
         ],
       ),
     );
   }
 
+  Widget _buildCourseArtwork({
+    required String? thumbnailUrl,
+    required String title,
+    required Color subjectColor,
+  }) {
+    if (thumbnailUrl == null) {
+      return _buildDefaultCourseArtwork(
+        title: title,
+        subjectColor: subjectColor,
+      );
+    }
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 520),
+      child: AspectRatio(
+        aspectRatio: 16 / 10,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: subjectColor.withValues(alpha: 0.22),
+                  blurRadius: 28,
+                  offset: const Offset(0, 14),
+                ),
+              ],
+            ),
+            child: Image.network(
+              thumbnailUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => _buildCourseCoverFallbackFill(
+                title: title,
+                subjectColor: subjectColor,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDefaultCourseArtwork({
+    required String title,
+    required Color subjectColor,
+  }) {
+    return Transform.rotate(
+      angle: 0.1,
+      child: Container(
+        width: 240,
+        height: 240,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              subjectColor,
+              subjectColor.withValues(alpha: 0.7),
+              AppColors.indigo,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(48),
+          boxShadow: [
+            BoxShadow(
+              color: subjectColor.withValues(alpha: 0.3),
+              blurRadius: 40,
+              offset: const Offset(0, 20),
+            ),
+          ],
+          border: Border(
+            top: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
+            left: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            _courseInitials(title),
+            style: TextStyle(
+              fontSize: 64,
+              fontWeight: FontWeight.w800,
+              color: Colors.white.withValues(alpha: 0.4),
+              letterSpacing: -4,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCourseCoverFallbackFill({
+    required String title,
+    required Color subjectColor,
+  }) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            subjectColor.withValues(alpha: 0.94),
+            subjectColor.withValues(alpha: 0.78),
+            AppColors.indigo,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Center(
+        child: Text(
+          _courseInitials(title),
+          style: TextStyle(
+            fontSize: 68,
+            fontWeight: FontWeight.w800,
+            color: Colors.white.withValues(alpha: 0.46),
+            letterSpacing: -4,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildDrawerPanel(AppLocalizations t) {
-    final chaptersToShow = _chapters.take(2).toList();
     final hasCourse = _course != null;
     final nextLessonId = _nextLessonId;
     final nextLessonTitle = _nextLessonTitle;
@@ -482,8 +589,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           // ── Gamification section ──────────────────────────────
-          _buildStarChainSection(t),
-          const SizedBox(height: 16),
           DailyTaskCard(tasks: _dailyTasks, t: t),
           const SizedBox(height: 24),
           // ── Course section ────────────────────────────────────
@@ -500,153 +605,168 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildNextStepCard(
               t: t,
               nextLessonTitle: nextLessonTitle,
-              canContinue: canContinue,
-            ),
-            const SizedBox(height: 20),
-            for (int i = 0; i < chaptersToShow.length; i++) ...[
-              _buildChapterItem(chaptersToShow[i], t),
-              if (i < chaptersToShow.length - 1) const SizedBox(height: 24),
-            ],
-          ],
-          const Spacer(),
-          const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: !hasCourse
-                  ? () => setState(() => _currentNavIndex = 1)
-                  : !canContinue
-                  ? null
-                  : () => _startLesson(
+              continueLabel: canContinue
+                  ? t.homeContinueLearning
+                  : t.courseLocked,
+              onContinue: canContinue
+                  ? () => _startLesson(
                       nextLessonId,
                       nextLessonTitle ?? t.lessonDefaultTitle,
-                    ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: hasCourse
-                    ? (canContinue
-                          ? AppColors.indigo600
-                          : AppColors.textDisabled)
-                    : AppColors.indigo600,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                    )
+                  : null,
+            ),
+            const SizedBox(height: 8),
+          ],
+          if (!hasCourse) ...[
+            const Spacer(),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _currentNavIndex = 1;
+                    _loadedTabs.add(1);
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.indigo600,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 0,
                 ),
-                elevation: 0,
-              ),
-              child: Text(
-                hasCourse
-                    ? (canContinue ? t.homeContinueLearning : t.courseLocked)
-                    : t.homeBrowseCourses,
-                style: AppTypography.button.copyWith(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18,
-                  letterSpacing: 0.5,
+                child: Text(
+                  t.homeBrowseCourses,
+                  style: AppTypography.button.copyWith(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                    letterSpacing: 0.5,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 8),
+            const SizedBox(height: 8),
+          ],
         ],
       ),
-    );
-  }
-
-  Widget _buildStarChainSection(AppLocalizations t) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          t.starChainTitle,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF1E293B),
-          ),
-        ),
-        const SizedBox(height: 12),
-        StarChainWidget(activeDates: _activeDates),
-      ],
     );
   }
 
   Widget _buildNextStepCard({
     required AppLocalizations t,
     required String? nextLessonTitle,
-    required bool canContinue,
+    required String continueLabel,
+    required VoidCallback? onContinue,
   }) {
     return ViewerSurfaceCard(
       padding: const EdgeInsets.all(16),
       backgroundColor: const Color(0xFFF8FAFF),
       borderSide: const BorderSide(color: Color(0xFFE0E7FF)),
       shadows: const [],
-      child: Row(
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppColors.indigo100,
-              borderRadius: BorderRadius.circular(12),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final compact = constraints.maxWidth < 760;
+
+          Widget lessonInfo = Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.indigo100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.play_lesson_rounded,
+                  color: AppColors.indigo600,
+                  size: 18,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      t.courseUpNext,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFF64748B),
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      nextLessonTitle ?? t.homeExploreCourses,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF0F172A),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+
+          Widget continueButton = ElevatedButton(
+            onPressed: onContinue,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: onContinue != null
+                  ? AppColors.indigo600
+                  : AppColors.textDisabled,
+              foregroundColor: Colors.white,
+              minimumSize: const Size(108, 42),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              elevation: 0,
             ),
-            child: const Icon(
-              Icons.play_lesson_rounded,
-              color: AppColors.indigo600,
-              size: 18,
+            child: Text(
+              continueLabel,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.2,
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          );
+
+          if (compact) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  t.courseUpNext,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Color(0xFF64748B),
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.4,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  nextLessonTitle ?? t.homeExploreCourses,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF0F172A),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                lessonInfo,
+                const SizedBox(height: 12),
+                Align(alignment: Alignment.centerRight, child: continueButton),
               ],
-            ),
-          ),
-          FilledButton.tonal(
-            onPressed: !canContinue
-                ? null
-                : () => _startLesson(
-                    _nextLessonId,
-                    nextLessonTitle ?? t.lessonDefaultTitle,
-                  ),
-            style: FilledButton.styleFrom(
-              visualDensity: VisualDensity.compact,
-              backgroundColor: AppColors.indigo100,
-              foregroundColor: AppColors.indigo700,
-            ),
-            child: Text(t.lessonContinue),
-          ),
-        ],
+            );
+          }
+
+          return Row(
+            children: [
+              Expanded(child: lessonInfo),
+              const SizedBox(width: 14),
+              continueButton,
+            ],
+          );
+        },
       ),
     );
   }
 
   void _startLesson(String? lessonId, String lessonTitle) {
     if (lessonId == null) return;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
+    _pushOnHomeTab<void>(
+      MaterialPageRoute<void>(
         builder: (_) => LessonScreen(
           lessonId: lessonId,
           lessonTitle: lessonTitle,
@@ -654,79 +774,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     ).then((_) => _loadHomeData());
-  }
-
-  Widget _buildChapterItem(Map<String, dynamic> chapter, AppLocalizations t) {
-    final title = chapter['title'] as String? ?? 'Chapter';
-    final lessons = (chapter['lessons'] as List? ?? [])
-        .cast<Map<String, dynamic>>();
-    final lessonCount = lessons.length;
-    final completedCount = lessons
-        .where((l) => _completedLessonIds.contains(l['id'] as String))
-        .length;
-    final isCompleted = lessonCount > 0 && completedCount == lessonCount;
-    final subtitle = isCompleted
-        ? t.completed
-        : lessonCount == 0
-        ? t.homeNoLessons
-        : t.homeLessonCount(lessonCount);
-
-    return Opacity(
-      opacity: isCompleted ? 1.0 : 0.7,
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.title.copyWith(
-                    color: const Color(0xFF1E293B),
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF94A3B8),
-                    letterSpacing: 1.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-              color: isCompleted
-                  ? const Color(0xFFD1FAE5)
-                  : const Color(0xFFF1F5F9),
-              shape: BoxShape.circle,
-              border: isCompleted
-                  ? null
-                  : Border.all(color: const Color(0xFFE2E8F0)),
-            ),
-            child: isCompleted
-                ? Center(
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF10B981),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  )
-                : null,
-          ),
-        ],
-      ),
-    );
   }
 
   // ── Helpers ──────────────────────────────────────────────────
@@ -743,21 +790,66 @@ class _HomeScreenState extends State<HomeScreen> {
     return 'Good evening';
   }
 
-  String _formatCompactNumber(int value) {
-    if (value >= 1000000) return '${(value / 1000000).toStringAsFixed(1)}M';
-    if (value >= 1000) return '${(value / 1000).toStringAsFixed(1)}K';
-    return '$value';
-  }
-
   Color _subjectColor(Map<String, dynamic>? course) {
-    final subject = course?['subjects'] as Map<String, dynamic>?;
-    final hex = subject?['color_hex'] as String?;
+    final subject = _normalizeSubject(course?['subjects']);
+    final hex = _readString(subject?['color_hex']);
     if (hex == null) return const Color(0xFF3B82F6);
     try {
       return Color(int.parse('FF${hex.replaceFirst('#', '')}', radix: 16));
     } catch (_) {
       return const Color(0xFF3B82F6);
     }
+  }
+
+  String? _courseThumbnailUrl(Map<String, dynamic>? course) {
+    final url = _readString(course?['thumbnail_url']);
+    if (url == null) return null;
+    return url.isEmpty ? null : url;
+  }
+
+  String? _readString(dynamic value) {
+    if (value == null) return null;
+    final text = value.toString().trim();
+    return text.isEmpty ? null : text;
+  }
+
+  Map<String, dynamic>? _toMap(dynamic value) {
+    if (value is Map<String, dynamic>) return value;
+    if (value is Map) {
+      try {
+        return Map<String, dynamic>.from(value);
+      } catch (_) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  List<dynamic> _toRawList(dynamic value) {
+    if (value is List) return value;
+    return const <dynamic>[];
+  }
+
+  List<Map<String, dynamic>> _toMapList(dynamic value) {
+    if (value is! List) return <Map<String, dynamic>>[];
+    return value.map(_toMap).whereType<Map<String, dynamic>>().toList();
+  }
+
+  Set<String> _toStringSet(dynamic value) {
+    if (value is! List) return <String>{};
+    final out = <String>{};
+    for (final item in value) {
+      final v = _readString(item);
+      if (v != null) out.add(v);
+    }
+    return out;
+  }
+
+  Map<String, dynamic>? _normalizeSubject(dynamic value) {
+    if (value is List && value.isNotEmpty) {
+      return _toMap(value.first);
+    }
+    return _toMap(value);
   }
 
   String _courseInitials(String title) {

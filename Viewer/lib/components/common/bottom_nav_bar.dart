@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../theme/theme.dart';
 import '../../providers/language_provider.dart';
 
-/// Bottom navigation bar — 4 tabs: Home / Library / Community / Profile
+/// Bottom navigation bar — 5 tabs: Home / Library / AI Tutor / Community / Profile
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -53,6 +53,13 @@ class BottomNavBar extends StatelessWidget {
                 onTap: () => onTap(1),
               ),
               _NavItem(
+                icon: Icons.auto_awesome_outlined,
+                activeIcon: Icons.auto_awesome,
+                label: t.navAiTutor,
+                isActive: currentIndex == 3,
+                onTap: () => onTap(3),
+              ),
+              _NavItem(
                 icon: Icons.people_outline,
                 activeIcon: Icons.people,
                 label: t.navCommunity,
@@ -63,8 +70,8 @@ class BottomNavBar extends StatelessWidget {
                 icon: Icons.person_outline,
                 activeIcon: Icons.person,
                 label: t.navProfile,
-                isActive: currentIndex == 3,
-                onTap: () => onTap(3),
+                isActive: currentIndex == 4,
+                onTap: () => onTap(4),
               ),
             ],
           ),

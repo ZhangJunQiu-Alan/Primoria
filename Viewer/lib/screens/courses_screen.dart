@@ -24,7 +24,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   int? _hoveredUserId;
   final math.Random _rng = math.Random();
   List<_GalaxyUser> _galaxyUsers = [];
-  final List<AnimationController> _floatControllers = [];
+  late final AnimationController _floatController;
   final List<_Conversation> _conversations = [];
   final Map<int, String> _userCategoryById = <int, String>{};
   final Map<int, bool> _userOnlineById = <int, bool>{};
@@ -115,10 +115,13 @@ class _CoursesScreenState extends State<CoursesScreen>
   @override
   void initState() {
     super.initState();
+    _floatController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 4200),
+    )..repeat();
     _galaxyUsers = List<_GalaxyUser>.from(_seedGalaxyUsers);
     _nextUserId = _galaxyUsers.length + 1;
     for (var i = 0; i < _galaxyUsers.length; i++) {
-      _floatControllers.add(_createFloatController(i));
       _userCategoryById[_galaxyUsers[i].id] =
           _communityCategories[i % _communityCategories.length];
       _userOnlineById[_galaxyUsers[i].id] = _defaultOnlineForUserId(
@@ -149,17 +152,8 @@ class _CoursesScreenState extends State<CoursesScreen>
   void dispose() {
     _findSearchController.dispose();
     _messageSearchController.dispose();
-    for (final c in _floatControllers) {
-      c.dispose();
-    }
+    _floatController.dispose();
     super.dispose();
-  }
-
-  AnimationController _createFloatController(int index) {
-    return AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 3000 + (index * 200 % 2000)),
-    )..repeat(reverse: true);
   }
 
   String _categoryForUser(_GalaxyUser user) {
@@ -531,7 +525,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       18 + _rng.nextDouble() * 56,
       _newUserColors[_rng.nextInt(_newUserColors.length)],
       'medium',
-      0,
+      _rng.nextDouble() * math.pi * 2,
       email: isEmail ? input : null,
     );
 
@@ -540,7 +534,6 @@ class _CoursesScreenState extends State<CoursesScreen>
       _galaxyUsers.add(newUser);
       _userCategoryById[newUser.id] = category;
       _userOnlineById[newUser.id] = true;
-      _floatControllers.add(_createFloatController(_floatControllers.length));
       _findQuery = input;
       _findSearchController.text = input;
       _selectedCategory = category;
@@ -552,7 +545,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     if (index < 0 || index >= _galaxyUsers.length) return null;
 
     final removedUser = _galaxyUsers[index];
-    final removedController = _floatControllers[index];
     setState(() {
       if (_hoveredUserId == removedUser.id) {
         _hoveredUserId = null;
@@ -560,9 +552,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       _userCategoryById.remove(removedUser.id);
       _userOnlineById.remove(removedUser.id);
       _galaxyUsers.removeAt(index);
-      _floatControllers.removeAt(index);
     });
-    removedController.dispose();
     return removedUser.name;
   }
 
@@ -1080,7 +1070,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                       )
                     else
                       for (final i in visibleUserIndexes)
-                        _buildPlanet(_galaxyUsers[i], i, constraints),
+                        _buildPlanet(_galaxyUsers[i], constraints),
                   ],
                 );
               },
@@ -1117,15 +1107,18 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildPlanet(_GalaxyUser user, int index, BoxConstraints constraints) {
-    final controller = _floatControllers[index];
+  Widget _buildPlanet(_GalaxyUser user, BoxConstraints constraints) {
     final dotSize = _planetSize(user.size);
     final isHovered = _hoveredUserId == user.id;
+    final speedFactor = 0.86 + (user.id % 5) * 0.07;
     return AnimatedBuilder(
-      animation: controller,
+      animation: _floatController,
       builder: (context, child) {
-        final yOffset = math.sin(controller.value * math.pi) * 8;
-        final xOffset = math.cos(controller.value * math.pi * 0.7) * 4;
+        final phase =
+            _floatController.value * math.pi * 2 * speedFactor +
+            user.floatDelay;
+        final yOffset = math.sin(phase) * 8;
+        final xOffset = math.cos(phase * 0.7) * 4;
         return Positioned(
           left: constraints.maxWidth * user.x / 100 - 20 + xOffset,
           top: constraints.maxHeight * user.y / 100 - 20 + yOffset,

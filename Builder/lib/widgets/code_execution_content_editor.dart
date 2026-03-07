@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../theme/design_tokens.dart';
+import 'app_dropdown.dart';
 
 class CodeExecutionContentEditor extends StatelessWidget {
   final CodeExecutionContent content;
@@ -40,18 +41,15 @@ class CodeExecutionContentEditor extends StatelessWidget {
           onChanged: (value) => onChanged(content.copyWith(title: value)),
         ),
         const SizedBox(height: AppSpacing.sm),
-        DropdownButtonFormField<String>(
-          initialValue: content.language,
-          decoration: const InputDecoration(
-            labelText: 'Language',
-            border: OutlineInputBorder(),
-          ),
+        AppDropdown<String>(
+          value: content.language,
+          labelText: 'Language',
           items: const [
-            DropdownMenuItem(value: 'python', child: Text('Python')),
-            DropdownMenuItem(value: 'javascript', child: Text('JavaScript')),
-            DropdownMenuItem(value: 'dart', child: Text('Dart')),
-            DropdownMenuItem(value: 'java', child: Text('Java')),
-            DropdownMenuItem(value: 'cpp', child: Text('C++')),
+            AppDropdownItem(value: 'python', label: 'Python'),
+            AppDropdownItem(value: 'javascript', label: 'JavaScript'),
+            AppDropdownItem(value: 'dart', label: 'Dart'),
+            AppDropdownItem(value: 'java', label: 'Java'),
+            AppDropdownItem(value: 'cpp', label: 'C++'),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -108,17 +106,14 @@ class CodeExecutionContentEditor extends StatelessWidget {
           },
         ),
         const SizedBox(height: AppSpacing.xs),
-        DropdownButtonFormField<String>(
-          initialValue: content.style.theme,
-          decoration: const InputDecoration(
-            labelText: 'Theme',
-            border: OutlineInputBorder(),
-          ),
+        AppDropdown<String>(
+          value: content.style.theme,
+          labelText: 'Theme',
           items: const [
-            DropdownMenuItem(value: 'indigo', child: Text('Indigo')),
-            DropdownMenuItem(value: 'emerald', child: Text('Emerald')),
-            DropdownMenuItem(value: 'amber', child: Text('Amber')),
-            DropdownMenuItem(value: 'slate', child: Text('Slate')),
+            AppDropdownItem(value: 'indigo', label: 'Indigo'),
+            AppDropdownItem(value: 'emerald', label: 'Emerald'),
+            AppDropdownItem(value: 'amber', label: 'Amber'),
+            AppDropdownItem(value: 'slate', label: 'Slate'),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -505,18 +500,15 @@ class CodeExecutionContentEditor extends StatelessWidget {
                         ),
                       ],
                     ),
-                    DropdownButtonFormField<int>(
-                      initialValue: stepCount == 0 ? null : validStepIndex,
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Trigger Step',
-                        isDense: true,
-                      ),
+                    AppDropdown<int>(
+                      value: stepCount == 0 ? null : validStepIndex,
+                      labelText: 'Trigger Step',
+                      isDense: true,
                       items: stepIndexes
                           .map(
-                            (stepIndex) => DropdownMenuItem(
+                            (stepIndex) => AppDropdownItem<int>(
                               value: stepIndex,
-                              child: Text('Step ${stepIndex + 1}'),
+                              label: 'Step ${stepIndex + 1}',
                             ),
                           )
                           .toList(),
@@ -566,22 +558,17 @@ class CodeExecutionContentEditor extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    DropdownButtonFormField<int>(
-                      initialValue: checkpoint.options.isEmpty
-                          ? null
-                          : validCorrectIndex,
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Correct Option Index',
-                        isDense: true,
-                      ),
+                    AppDropdown<int>(
+                      value: checkpoint.options.isEmpty ? null : validCorrectIndex,
+                      labelText: 'Correct Option Index',
+                      isDense: true,
                       items: checkpoint.options.isEmpty
                           ? const []
                           : List.generate(
                               checkpoint.options.length,
-                              (optionIndex) => DropdownMenuItem(
+                              (optionIndex) => AppDropdownItem<int>(
                                 value: optionIndex,
-                                child: Text('Option ${optionIndex + 1}'),
+                                label: 'Option ${optionIndex + 1}',
                               ),
                             ),
                       onChanged: checkpoint.options.isEmpty
