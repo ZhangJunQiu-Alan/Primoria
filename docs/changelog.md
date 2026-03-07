@@ -1,5 +1,22 @@
 # Changelog
 
+## [Unreleased] - 2026-03-07 (Builder Login Provider Logo Update)
+
+### Summary
+- Updated Builder login social buttons to show an Apple logo for Apple sign-in.
+- Updated WeChat sign-in button to use a white WeChat logo for proper contrast on the green button.
+
+### Changed
+- `Builder/lib/features/auth/login_screen.dart`
+  - Apple sign-in button now uses `Icons.apple` instead of the previous placeholder fallback icon flow.
+  - Added `logoTintColor` support to `_SocialButton` so provider assets can be tinted when needed.
+  - Applied white tint to the WeChat logo on the WeChat sign-in button.
+
+### Validation
+- `cd Builder && flutter analyze lib/features/auth/login_screen.dart`
+
+---
+
 ## [Unreleased] - 2026-03-06 (Builder Settings Center Redesign)
 
 ### Summary
