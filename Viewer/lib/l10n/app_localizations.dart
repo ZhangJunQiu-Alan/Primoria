@@ -19,6 +19,117 @@ class AppLocalizations {
   String get cancel => isZh ? '取消' : 'Cancel';
   String get completed => isZh ? '已完成' : 'Completed';
 
+  // ── Auth Screens ────────────────────────────────────────────
+  String get authBackToHome => isZh ? '返回首页' : 'Back to home';
+  String get authBackShort => isZh ? '← 返回' : '← Back';
+  String get authWelcomeBackTitle => isZh ? '欢迎回来' : 'Welcome back';
+  String get authWelcomeBackSubtitle =>
+      isZh ? '登录后继续你的学习旅程。' : 'Sign in to continue your learning journey.';
+  String get authEmailLabel => isZh ? '邮箱' : 'Email';
+  String get authPasswordLabel => isZh ? '密码' : 'Password';
+  String get authPlaceholderEmail =>
+      isZh ? 'you@example.com' : 'you@example.com';
+  String get authPlaceholderPasswordMin6 =>
+      isZh ? '至少 6 个字符' : 'At least 6 characters';
+  String get authRememberMe => isZh ? '记住我' : 'Remember me';
+  String get authForgotPassword => isZh ? '忘记密码？' : 'Forgot password?';
+  String get authSignInButton => isZh ? '登录' : 'Sign In';
+  String get authOrContinueWith => isZh ? '或使用以下方式继续' : 'or continue with';
+  String get authContinueWithGoogle =>
+      isZh ? '使用 Google 继续' : 'Continue with Google';
+  String get authContinueWithApple =>
+      isZh ? '使用 Apple 继续' : 'Continue with Apple';
+  String get authContinueWithWeChat => isZh ? '使用微信继续' : 'Continue with WeChat';
+  String get authNoAccountPrompt => isZh ? '还没有账号？' : 'Don’t have an account? ';
+  String get authSignUpLink => isZh ? '注册' : 'Sign Up';
+
+  String get authValidationEmailOrPhoneRequired =>
+      isZh ? '请输入邮箱或手机号。' : 'Please enter your email or phone.';
+  String get authValidationEmailOrPhoneInvalid =>
+      isZh ? '请输入有效的邮箱或手机号。' : 'Please enter a valid email or phone number.';
+  String get authValidationPasswordRequired =>
+      isZh ? '请输入密码。' : 'Please enter your password.';
+  String get authValidationPasswordMin6 =>
+      isZh ? '密码至少需要 6 个字符。' : 'Password must be at least 6 characters.';
+
+  String get authStatusSigningIn => isZh ? '登录中…' : 'Signing in…';
+  String get authStatusWelcomeBack => isZh ? '欢迎回来！' : 'Welcome back!';
+  String get authStatusRedirectGoogle =>
+      isZh ? '正在跳转到 Google…' : 'Redirecting to Google…';
+  String get authStatusRedirectApple =>
+      isZh ? '正在跳转到 Apple…' : 'Redirecting to Apple…';
+
+  String get authResetPasswordTitle => isZh ? '重置密码' : 'Reset Password';
+  String get authResetPasswordBody => isZh
+      ? '请输入你的邮箱地址，我们会发送重置链接。'
+      : 'Enter your email address and we’ll send a reset link.';
+  String get authResetPasswordSend => isZh ? '发送链接' : 'Send Link';
+  String get authResetPasswordSent =>
+      isZh ? '重置链接已发送，请检查邮箱。' : 'Reset link sent! Check your email.';
+
+  String get authBrandHeadline =>
+      isZh ? '你的学习\n旅程从这里\n开始。' : 'Your learning\njourney starts\nhere.';
+  String get authBrandSubtitle => isZh
+      ? '加入 10,000+ 学习者，使用 AI 互动课程掌握 STEM。'
+      : 'Join 10,000+ students mastering STEM\nwith AI-powered interactive lessons.';
+  String get authFeatureInteractiveLessons =>
+      isZh ? '互动课程' : 'Interactive Lessons';
+  String get authFeatureAiTutor => isZh ? 'AI 个性导师' : 'AI Personal Tutor';
+  String get authFeatureXpAchievements => isZh ? 'XP 与成就' : 'XP & Achievements';
+  String get authFeatureStudyBuddy => isZh ? '学习伙伴匹配' : 'Study Buddy Match';
+  String get authTestimonialQuote => isZh
+      ? '“我已经连续学习 47 天了！AI 导师讲解非常清晰，我现在每天都很期待学习。”'
+      : '“47-day streak and counting! The AI tutor explains everything so clearly. I actually look forward to studying now.”';
+  String get authTestimonialRole => isZh ? '自学学习者' : 'Self-taught learner';
+
+  String get registerBrandHeadline =>
+      isZh ? '今天就免费\n开始学习。' : 'Start learning\nfor free today.';
+  String get registerBrandSubtitle =>
+      isZh ? '无需信用卡。\n可随时取消。' : 'No credit card required.\nCancel anytime.';
+  String get registerCreateTitle => isZh ? '创建你的账号' : 'Create your account';
+  String get registerCreateSubtitle =>
+      isZh ? '免费开启你的学习旅程。' : 'Start your learning journey for free today.';
+  String get registerUsernameLabel => isZh ? '用户名' : 'Username';
+  String get registerUsernameHint => isZh ? '输入用户名' : 'Choose a username';
+  String get registerConfirmPasswordLabel => isZh ? '确认密码' : 'Confirm Password';
+  String get registerConfirmPasswordHint =>
+      isZh ? '再次输入密码' : 'Repeat your password';
+  String get registerCreateButton => isZh ? '创建账号' : 'Create Account';
+  String get registerOrSignUpWith => isZh ? '或使用以下方式注册' : 'or sign up with';
+  String get registerAlreadyHaveAccount =>
+      isZh ? '已有账号？' : 'Already have an account? ';
+  String get registerTermsPrefix => isZh ? '我同意 ' : 'I agree to the ';
+  String get registerTermsOfService => isZh ? '服务条款' : 'Terms of Service';
+  String get registerTermsAnd => isZh ? ' 和 ' : ' and ';
+  String get registerPrivacyPolicy => isZh ? '隐私政策' : 'Privacy Policy';
+  String get registerStatusCreatingAccount =>
+      isZh ? '正在创建账号…' : 'Creating your account…';
+  String get registerStatusCreatedWelcome =>
+      isZh ? '账号已创建，欢迎来到 Primoria。' : 'Account created! Welcome to Primoria.';
+  String get registerStatLearners => isZh ? '学习者' : 'Learners';
+  String get registerStatCourses => isZh ? '课程' : 'Courses';
+  String get registerStatRating => isZh ? '评分' : 'Rating';
+  String get registerPasswordTooShort => isZh ? '过短' : 'Too Short';
+  String get registerPasswordWeak => isZh ? '较弱' : 'Weak';
+  String get registerPasswordGood => isZh ? '良好' : 'Good';
+  String get registerPasswordStrong => isZh ? '很强' : 'Strong';
+  String get registerValidationUsernameRequired =>
+      isZh ? '请输入用户名。' : 'Please enter a username.';
+  String get registerValidationUsernameMin3 =>
+      isZh ? '用户名至少需要 3 个字符。' : 'Username must be at least 3 characters.';
+  String get registerValidationEmailRequired =>
+      isZh ? '请输入邮箱。' : 'Please enter your email.';
+  String get registerValidationEmailInvalid =>
+      isZh ? '请输入有效的邮箱地址。' : 'Please enter a valid email address.';
+  String get registerValidationPasswordRequired =>
+      isZh ? '请输入密码。' : 'Please enter a password.';
+  String get registerValidationConfirmPasswordRequired =>
+      isZh ? '请确认密码。' : 'Please confirm your password.';
+  String get registerValidationPasswordsMismatch =>
+      isZh ? '两次输入的密码不一致。' : 'Passwords do not match.';
+  String get registerValidationAcceptTerms =>
+      isZh ? '请先同意《服务条款》和《隐私政策》。' : 'Please accept the Terms & Privacy Policy.';
+
   // ── Home Screen ─────────────────────────────────────────────
   String get homeStartLearning => isZh ? '开始学习' : 'Start Learning';
   String get homeExploreCourses => isZh ? '探索课程' : 'EXPLORE COURSES';
@@ -237,12 +348,72 @@ class AppLocalizations {
   String get langSelectTitle => isZh ? '选择语言' : 'Select Language';
   static const String langEnglish = 'English';
   static const String langChinese = '中文';
+  String get langEnglishOption => 'English';
+  String get langChineseOption => isZh ? '中文' : 'Chinese';
 
   // ── Community Screen ────────────────────────────────────────
-  String get communityFind => isZh ? '发现' : 'find';
-  String get communityMessage => isZh ? '消息' : 'message';
-  String get communitySearch => isZh ? '搜索' : 'search';
+  String get communityFind => isZh ? '发现' : 'Find';
+  String get communityMessage => isZh ? '消息' : 'Messages';
+  String get communitySearch => isZh ? '搜索' : 'Search';
   String get communityFindButton => isZh ? '寻找' : 'Find';
+  String communityConnected(int count) =>
+      isZh ? '已连接 $count' : 'Connected $count';
+  String communityOnline(int count) => isZh ? '在线 $count' : 'Online $count';
+  String get communityCategories => isZh ? '分类' : 'Categories';
+  String get communityCategoryAll => isZh ? '全部' : 'All';
+  String get communityCategoryFinance => isZh ? '金融' : 'Finance';
+  String get communityCategoryTechnology => isZh ? '科技' : 'Technology';
+  String get communityCategoryMathematics => isZh ? '数学' : 'Mathematics';
+  String get communityCategoryEngineering => isZh ? '工程' : 'Engineering';
+  String get communityCategoryScience => isZh ? '科学' : 'Science';
+  String get communityCategoryMultilingual => isZh ? '多语言' : 'Multilingual';
+  String get communityCategoryLabel => isZh ? '分类' : 'Category';
+  String communityUserHeadline(String category) => isZh
+      ? '$category 爱好者，正在寻找社区协作伙伴。'
+      : '$category enthusiast looking to collaborate with the community.';
+  String get communityStatusLabel => isZh ? '状态' : 'Status';
+  String get communityEmailLabel => isZh ? '邮箱' : 'Email';
+  String get communityUsernameLabel => isZh ? '用户名' : 'Username';
+  String get communityStatusOnlineNow => isZh ? '在线' : 'Online now';
+  String get communityStatusOffline => isZh ? '离线' : 'Offline';
+  String get communityButtonMessage => isZh ? '消息' : 'Message';
+  String get communityButtonCall => isZh ? '通话' : 'Call';
+  String communityCallingUser(String name) =>
+      isZh ? '正在呼叫 $name…' : 'Calling $name...';
+  String get communityAddUserTitle => isZh ? '添加用户' : 'Add user';
+  String get communityAddUserHint =>
+      isZh ? '输入邮箱或用户名。' : 'Enter an email or username.';
+  String get communityAddUserInputHint =>
+      isZh ? 'name@example.com 或用户名' : 'name@example.com or username';
+  String get communityAddButton => isZh ? '添加' : 'Add';
+  String communityAddedUser(String name) => isZh ? '已添加 $name' : 'Added $name';
+  String get communityValidationInputRequired =>
+      isZh ? '请输入邮箱或用户名。' : 'Please enter an email or username.';
+  String get communityValidationInputInvalid => isZh
+      ? '请输入有效的邮箱或用户名（3-32 位字母、数字、._-）。'
+      : 'Use a valid email or username (3-32 letters, numbers, ._-).';
+  String get communityValidationUserExists =>
+      isZh ? '用户已添加。' : 'User already added.';
+  String get communityRemoveUserTitle => isZh ? '移除用户' : 'Remove user';
+  String get communityNoUsers => isZh ? '暂无用户。' : 'No users available.';
+  String get communityUsernameOnly => isZh ? '仅用户名' : 'Username only';
+  String communityRemovedUser(String name) =>
+      isZh ? '已移除 $name' : 'Removed $name';
+  String get communityRemoveButton => isZh ? '移除' : 'Remove';
+  String get communityDoneButton => isZh ? '完成' : 'Done';
+  String get communitySearchUserHint => isZh ? '搜索用户' : 'Search user';
+  String get communityNoUserFound => isZh ? '未找到用户' : 'No user found';
+  String get communityTypeMessageHint => isZh ? '输入消息' : 'Type a message';
+  String get communitySearchBoxHint => isZh ? '搜索' : 'Search Box';
+  String get communityNoConversationFound =>
+      isZh ? '未找到会话' : 'No conversation found';
+  String communityDeletedChatWith(String name) =>
+      isZh ? '已删除与 $name 的聊天' : 'Deleted chat with $name';
+  String get communityDeleteChatTooltip => isZh ? '删除聊天' : 'Delete chat';
+  String get communityNewConnectionRequest =>
+      isZh ? '新的连接请求' : 'New connection request';
+  String communityGreetingUser(String name) =>
+      isZh ? '你好 $name，很高兴在这里认识你。' : 'Hi $name, great to connect here.';
 
   // ── Lesson Result Screen ─────────────────────────────────────
   String get resultTitle => isZh ? '课程完成！' : 'Lesson Complete!';
@@ -360,9 +531,8 @@ class AppLocalizations {
 
   String get settingsSectionAppearance =>
       isZh ? '显示与语言' : 'Appearance & Language';
-  String get settingsSectionAppearanceDesc => isZh
-      ? '选择主题模式与界面语言。'
-      : 'Choose theme mode and app language.';
+  String get settingsSectionAppearanceDesc =>
+      isZh ? '选择主题模式与界面语言。' : 'Choose theme mode and app language.';
 
   String get settingsSectionLearning => isZh ? '学习偏好' : 'Learning Preferences';
   String get settingsSectionLearningDesc => isZh
@@ -381,9 +551,8 @@ class AppLocalizations {
       : 'Manage visibility, social permissions, and local data behavior.';
 
   String get settingsSectionSupport => isZh ? '支持与关于' : 'Support & About';
-  String get settingsSectionSupportDesc => isZh
-      ? '帮助、反馈与产品信息。'
-      : 'Help, feedback, and product information.';
+  String get settingsSectionSupportDesc =>
+      isZh ? '帮助、反馈与产品信息。' : 'Help, feedback, and product information.';
 
   String get settingsThemeModeLabel => isZh ? '主题模式' : 'Theme Mode';
   String get settingsThemeSystem => isZh ? '跟随系统' : 'System';
@@ -392,63 +561,60 @@ class AppLocalizations {
   String get settingsLanguageLabel => isZh ? '界面语言' : 'App Language';
 
   String get settingsSoundEffects => isZh ? '声音反馈' : 'Sound Effects';
-  String get settingsSoundEffectsHint => isZh
-      ? '答题与操作时播放音效。'
-      : 'Play sounds during answers and key interactions.';
+  String get settingsSoundEffectsHint =>
+      isZh ? '答题与操作时播放音效。' : 'Play sounds during answers and key interactions.';
   String get settingsHaptics => isZh ? '震动反馈' : 'Haptic Feedback';
-  String get settingsHapticsHint => isZh
-      ? '在支持设备上启用触觉反馈。'
-      : 'Enable tactile feedback on supported devices.';
-  String get settingsAutoplayAudio => isZh ? '自动播放讲解音频' : 'Auto-play Lesson Audio';
+  String get settingsHapticsHint =>
+      isZh ? '在支持设备上启用触觉反馈。' : 'Enable tactile feedback on supported devices.';
+  String get settingsAutoplayAudio =>
+      isZh ? '自动播放讲解音频' : 'Auto-play Lesson Audio';
   String get settingsAutoplayAudioHint => isZh
       ? '进入支持音频的内容时自动播放。'
       : 'Automatically start audio on supported content.';
   String get settingsLearningHints => isZh ? '显示学习提示' : 'Show Learning Hints';
-  String get settingsLearningHintsHint => isZh
-      ? '在关键步骤展示引导提示。'
-      : 'Display guidance hints at key steps.';
+  String get settingsLearningHintsHint =>
+      isZh ? '在关键步骤展示引导提示。' : 'Display guidance hints at key steps.';
   String get settingsDailyGoal => isZh ? '每日学习目标（分钟）' : 'Daily Goal (minutes)';
   String settingsDailyGoalValue(int minutes) =>
       isZh ? '$minutes 分钟/天' : '$minutes min/day';
 
-  String get settingsNotificationsMaster => isZh ? '启用通知' : 'Enable Notifications';
+  String get settingsNotificationsMaster =>
+      isZh ? '启用通知' : 'Enable Notifications';
   String get settingsNotificationsMasterHint => isZh
       ? '关闭后将停止应用内所有学习提醒。'
       : 'Turn off all learning reminders from the app.';
   String get settingsDailyReminder => isZh ? '每日学习提醒' : 'Daily Study Reminder';
-  String get settingsDailyReminderHint => isZh
-      ? '每天在固定时间提醒你继续学习。'
-      : 'Get a reminder at a fixed time every day.';
+  String get settingsDailyReminderHint =>
+      isZh ? '每天在固定时间提醒你继续学习。' : 'Get a reminder at a fixed time every day.';
   String get settingsStreakReminder => isZh ? '连击中断提醒' : 'Streak Reminder';
-  String get settingsStreakReminderHint => isZh
-      ? '快要断连击时发送提醒。'
-      : 'Get reminded before your streak expires.';
-  String get settingsAchievementReminder => isZh ? '成就解锁通知' : 'Achievement Alerts';
-  String get settingsAchievementReminderHint => isZh
-      ? '解锁成就时显示通知。'
-      : 'Notify when new achievements are unlocked.';
+  String get settingsStreakReminderHint =>
+      isZh ? '快要断连击时发送提醒。' : 'Get reminded before your streak expires.';
+  String get settingsAchievementReminder =>
+      isZh ? '成就解锁通知' : 'Achievement Alerts';
+  String get settingsAchievementReminderHint =>
+      isZh ? '解锁成就时显示通知。' : 'Notify when new achievements are unlocked.';
   String get settingsReminderTime => isZh ? '提醒时间' : 'Reminder Time';
   String get settingsReminderPickTime => isZh ? '选择时间' : 'Choose Time';
-  String get settingsReminderDisabledHint => isZh
-      ? '请先开启“每日学习提醒”。'
-      : 'Turn on daily reminder first.';
+  String get settingsReminderDisabledHint =>
+      isZh ? '请先开启“每日学习提醒”。' : 'Turn on daily reminder first.';
   String get settingsNotificationPermissionDenied => isZh
       ? '通知权限未开启，请在系统设置中允许通知。'
       : 'Notification permission is disabled. Enable it in system settings.';
 
-  String get settingsPrivacyProfilePrivate => isZh ? '私密资料页' : 'Private Profile';
-  String get settingsPrivacyProfilePrivateHint => isZh
-      ? '仅允许你授权的用户查看资料。'
-      : 'Only approved users can view your profile.';
-  String get settingsPrivacyShareActivity => isZh ? '公开学习动态' : 'Share Learning Activity';
-  String get settingsPrivacyShareActivityHint => isZh
-      ? '允许他人看到你的学习进度变化。'
-      : 'Let others see your progress updates.';
-  String get settingsPrivacyAllowFollowers => isZh ? '允许被关注' : 'Allow Followers';
-  String get settingsPrivacyAllowFollowersHint => isZh
-      ? '关闭后他人将无法关注你。'
-      : 'If off, new users cannot follow you.';
-  String get settingsPrivacyWifiOnly => isZh ? '仅 Wi-Fi 下载资源' : 'Wi-Fi Only Downloads';
+  String get settingsPrivacyProfilePrivate =>
+      isZh ? '私密资料页' : 'Private Profile';
+  String get settingsPrivacyProfilePrivateHint =>
+      isZh ? '仅允许你授权的用户查看资料。' : 'Only approved users can view your profile.';
+  String get settingsPrivacyShareActivity =>
+      isZh ? '公开学习动态' : 'Share Learning Activity';
+  String get settingsPrivacyShareActivityHint =>
+      isZh ? '允许他人看到你的学习进度变化。' : 'Let others see your progress updates.';
+  String get settingsPrivacyAllowFollowers =>
+      isZh ? '允许被关注' : 'Allow Followers';
+  String get settingsPrivacyAllowFollowersHint =>
+      isZh ? '关闭后他人将无法关注你。' : 'If off, new users cannot follow you.';
+  String get settingsPrivacyWifiOnly =>
+      isZh ? '仅 Wi-Fi 下载资源' : 'Wi-Fi Only Downloads';
   String get settingsPrivacyWifiOnlyHint => isZh
       ? '节省流量，避免在移动网络下载。'
       : 'Avoid downloading assets on cellular network.';
@@ -465,7 +631,8 @@ class AppLocalizations {
   String get settingsSupportTerms => isZh ? '服务条款' : 'Terms of Service';
   String settingsSupportVersion(String version) =>
       isZh ? '版本 $version' : 'Version $version';
-  String get settingsComingSoon => isZh ? '该入口稍后接入' : 'This entry will be wired soon';
+  String get settingsComingSoon =>
+      isZh ? '该入口稍后接入' : 'This entry will be wired soon';
 
   String get settingsSignOut => isZh ? '退出当前账号' : 'Sign Out';
   String get settingsSignOutHint => isZh
@@ -475,4 +642,6 @@ class AppLocalizations {
   String get settingsSignOutConfirmBody => isZh
       ? '退出后当前设备的登录状态会被清除。'
       : 'This will clear the current login session on this device.';
+  String get settingsSessionExpired =>
+      isZh ? '登录已过期，请重新登录' : 'Session expired. Please sign in again.';
 }

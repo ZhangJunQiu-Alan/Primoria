@@ -114,7 +114,10 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     final joined = DateTime.tryParse((profile?['created_at'] as String?) ?? '');
 
     final reminderHour = storage.getDailyReminderHour().clamp(0, 23).toInt();
-    final reminderMinute = storage.getDailyReminderMinute().clamp(0, 59).toInt();
+    final reminderMinute = storage
+        .getDailyReminderMinute()
+        .clamp(0, 59)
+        .toInt();
 
     setState(() {
       _storage = storage;
@@ -440,9 +443,13 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     AudioService.getInstance().setHapticsEnabled(enabled);
   }
 
-  Future<void> _setNotificationsEnabled(bool enabled, AppLocalizations t) async {
+  Future<void> _setNotificationsEnabled(
+    bool enabled,
+    AppLocalizations t,
+  ) async {
     if (enabled) {
-      final granted = await NotificationService.getInstance().requestPermission();
+      final granted = await NotificationService.getInstance()
+          .requestPermission();
       if (!granted) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -466,7 +473,10 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     }
   }
 
-  Future<void> _setDailyReminderEnabled(bool enabled, AppLocalizations t) async {
+  Future<void> _setDailyReminderEnabled(
+    bool enabled,
+    AppLocalizations t,
+  ) async {
     if (enabled && !_notificationsEnabled) {
       ScaffoldMessenger.of(
         context,
@@ -606,9 +616,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     if (!mounted) return;
     final t = context.read<LanguageProvider>().t;
     final detail = SupabaseService.lastOperationError;
-    final message = t.isZh
-        ? '登录已过期，请重新登录'
-        : 'Session expired. Please sign in again.';
+    final message = t.settingsSessionExpired;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
     final userProvider = context.read<UserProvider>();
@@ -657,7 +665,11 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
 
   List<_SectionItem> _sectionItems(AppLocalizations t) {
     return [
-      _SectionItem(_SettingsSection.account, Icons.badge_outlined, t.settingsSectionAccount),
+      _SectionItem(
+        _SettingsSection.account,
+        Icons.badge_outlined,
+        t.settingsSectionAccount,
+      ),
       _SectionItem(
         _SettingsSection.appearance,
         Icons.palette_outlined,
@@ -678,7 +690,11 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
         Icons.lock_outline_rounded,
         t.settingsSectionPrivacy,
       ),
-      _SectionItem(_SettingsSection.parent, Icons.family_restroom, t.parentModeSectionTitle),
+      _SectionItem(
+        _SettingsSection.parent,
+        Icons.family_restroom,
+        t.parentModeSectionTitle,
+      ),
       _SectionItem(
         _SettingsSection.support,
         Icons.help_center_outlined,
@@ -742,9 +758,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 16),
-                                Expanded(
-                                  child: _buildActiveSection(t),
-                                ),
+                                Expanded(child: _buildActiveSection(t)),
                               ],
                             );
                           }
@@ -832,10 +846,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     );
   }
 
-  Widget _buildQuickAccess(
-    AppLocalizations t, {
-    required bool verticalLayout,
-  }) {
+  Widget _buildQuickAccess(AppLocalizations t, {required bool verticalLayout}) {
     final items = _sectionItems(t);
     Widget navButton(_SectionItem item) {
       final active = _activeSection == item.section;
@@ -919,7 +930,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
               const SizedBox(width: 14),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _uploadingAvatar ? null : () => _pickAndUploadAvatar(t),
+                  onPressed: _uploadingAvatar
+                      ? null
+                      : () => _pickAndUploadAvatar(t),
                   icon: _uploadingAvatar
                       ? const SizedBox(
                           width: 16,
@@ -940,7 +953,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: t.profileUsername,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
             validator: (v) {
               final text = (v ?? '').trim();
@@ -960,7 +975,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
             maxLength: 200,
             decoration: InputDecoration(
               hintText: t.profileBio,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -1028,8 +1045,8 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
             icon: Icons.language_rounded,
             title: t.settingsLanguageLabel,
             options: [
-              _ChoiceItem<String>('English', 'en'),
-              _ChoiceItem<String>('中文', 'zh'),
+              _ChoiceItem<String>(t.langEnglishOption, 'en'),
+              _ChoiceItem<String>(t.langChineseOption, 'zh'),
             ],
             selected: languageCode,
             onSelected: _setLanguage,
@@ -1390,7 +1407,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                         if (_bindingCodeExpiresAt != null) ...[
                           const SizedBox(height: 6),
                           Text(
-                            t.parentBindingCodeExpiresAt(_bindingCodeExpiresAt!),
+                            t.parentBindingCodeExpiresAt(
+                              _bindingCodeExpiresAt!,
+                            ),
                             style: const TextStyle(
                               fontSize: 13,
                               color: Color(0xFF64748B),
@@ -1620,10 +1639,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
               ],
             ),
           ),
-          Switch.adaptive(
-            value: value,
-            onChanged: enabled ? onChanged : null,
-          ),
+          Switch.adaptive(value: value, onChanged: enabled ? onChanged : null),
         ],
       ),
     );
@@ -1804,7 +1820,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: _uploadingCover ? null : () => _pickAndUploadCover(t),
+                onPressed: _uploadingCover
+                    ? null
+                    : () => _pickAndUploadCover(t),
                 icon: _uploadingCover
                     ? const SizedBox(
                         width: 14,

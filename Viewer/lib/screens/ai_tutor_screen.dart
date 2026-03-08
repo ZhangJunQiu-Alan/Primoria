@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../l10n/app_localizations.dart';
+import '../providers/language_provider.dart';
 import '../services/gemini_service.dart';
 
 class AiTutorScreen extends StatefulWidget {
@@ -13,10 +16,15 @@ class AiTutorScreen extends StatefulWidget {
 }
 
 class _AiTutorScreenState extends State<AiTutorScreen> {
-  static const List<String> _suggestedPrompts = [
+  static const List<String> _suggestedPromptsEn = [
     'Hello! Can you help me plan today\'s learning tasks?',
     'I am new here, what can you do for note-taking?',
     'Can you summarize my notes into a simple mind map?',
+  ];
+  static const List<String> _suggestedPromptsZh = [
+    '你好！可以帮我规划今天的学习任务吗？',
+    '我是新用户，你能怎么帮我做笔记？',
+    '可以把我的笔记总结成简单的思维导图吗？',
   ];
   static final RegExp _apiKeyPattern = RegExp(r'AIza[0-9A-Za-z_-]{20,}');
 
@@ -35,6 +43,12 @@ class _AiTutorScreenState extends State<AiTutorScreen> {
   DateTime? _latestMindMapAt;
   DateTime? _latestQuizAt;
   DateTime? _latestEvolutionAt;
+
+  AppLocalizations get _t => context.read<LanguageProvider>().t;
+
+  String _tr({required String en, required String zh}) {
+    return _t.isZh ? zh : en;
+  }
 
   @override
   void initState() {
@@ -69,9 +83,12 @@ class _AiTutorScreenState extends State<AiTutorScreen> {
     if (!mounted) return false;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(
-          'Gemini is not configured yet. Use --dart-define or send /apikey your_key first.',
+          _tr(
+            en: 'Gemini is not configured yet. Use --dart-define or send /apikey your_key first.',
+            zh: 'Gemini 尚未配置。请先使用 --dart-define，或先发送 /apikey your_key。',
+          ),
         ),
       ),
     );
@@ -118,9 +135,12 @@ class _AiTutorScreenState extends State<AiTutorScreen> {
     if (source.isEmpty) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Please chat with the tutor first, then generate a mind map.',
+            _tr(
+              en: 'Please chat with the tutor first, then generate a mind map.',
+              zh: '请先和导师对话，再生成思维导图。',
+            ),
           ),
         ),
       );
@@ -164,9 +184,16 @@ $source
       await _showMindMapDialog(data);
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Mind map generation failed: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _tr(
+              en: 'Mind map generation failed. Please try again.',
+              zh: '思维导图生成失败，请重试。',
+            ),
+          ),
+        ),
+      );
     } finally {
       if (mounted) {
         setState(() => _isMindMapLoading = false);
@@ -182,9 +209,12 @@ $source
     if (source.isEmpty) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Please chat with the tutor first, then generate a quiz.',
+            _tr(
+              en: 'Please chat with the tutor first, then generate a quiz.',
+              zh: '请先和导师对话，再生成测验。',
+            ),
           ),
         ),
       );
@@ -232,9 +262,16 @@ $source
       await _showQuizDialog(quiz);
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Quiz generation failed: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _tr(
+              en: 'Quiz generation failed. Please try again.',
+              zh: '测验生成失败，请重试。',
+            ),
+          ),
+        ),
+      );
     } finally {
       if (mounted) {
         setState(() => _isQuizLoading = false);
@@ -250,9 +287,12 @@ $source
     if (source.isEmpty) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Please chat with the tutor first, then generate an evolution replay.',
+            _tr(
+              en: 'Please chat with the tutor first, then generate an evolution replay.',
+              zh: '请先和导师对话，再生成演化回放。',
+            ),
           ),
         ),
       );
@@ -305,7 +345,14 @@ $source
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Evolution replay generation failed: $e')),
+        SnackBar(
+          content: Text(
+            _tr(
+              en: 'Evolution replay generation failed. Please try again.',
+              zh: '演化回放生成失败，请重试。',
+            ),
+          ),
+        ),
       );
     } finally {
       if (mounted) {
@@ -361,8 +408,11 @@ $source
 
     setState(() {
       _messages.add(
-        const _ConversationMessage.assistant(
-          'Gemini API key saved locally. Ask your question again.',
+        _ConversationMessage.assistant(
+          _tr(
+            en: 'Gemini API key saved locally. Ask your question again.',
+            zh: 'Gemini API Key 已保存在本地。请重新提问。',
+          ),
         ),
       );
     });
@@ -391,10 +441,11 @@ $source
     if (!isConfigured) {
       setState(() {
         _messages.add(
-          const _ConversationMessage.assistant(
-            'Gemini API key is missing. Start with '
-            '--dart-define=GEMINI_API_KEY=your_key, or send '
-            '"/apikey your_key" once in this chat.',
+          _ConversationMessage.assistant(
+            _tr(
+              en: 'Gemini API key is missing. Start with --dart-define=GEMINI_API_KEY=your_key, or send "/apikey your_key" once in this chat.',
+              zh: '缺少 Gemini API Key。请使用 --dart-define=GEMINI_API_KEY=your_key，或在本会话发送一次 "/apikey your_key"。',
+            ),
           ),
         );
         _isSending = false;
@@ -415,11 +466,14 @@ $source
       if (!mounted) return;
       final message = error is GeminiServiceException
           ? error.message
-          : 'Unexpected error: $error';
+          : _tr(en: 'Unexpected error: $error', zh: '未知错误：$error');
       setState(() {
         _messages.add(
           _ConversationMessage.assistant(
-            'I hit an error while contacting Gemini:\n$message',
+            _tr(
+              en: 'I hit an error while contacting Gemini:\n$message',
+              zh: '连接 Gemini 时发生错误：\n$message',
+            ),
           ),
         );
       });
@@ -460,6 +514,9 @@ $source
 
   @override
   Widget build(BuildContext context) {
+    final t = context.watch<LanguageProvider>().t;
+    final suggestedPrompts = t.isZh ? _suggestedPromptsZh : _suggestedPromptsEn;
+
     return Container(
       color: const Color(0xFFF3F4F6),
       child: LayoutBuilder(
@@ -474,6 +531,7 @@ $source
                   SizedBox(
                     height: 720,
                     child: _ConversationPanel(
+                      isZh: t.isZh,
                       messages: _messages,
                       isSending: _isSending,
                       isGeminiConfigured: GeminiService.isConfigured,
@@ -481,13 +539,14 @@ $source
                       conversationController: _conversationController,
                       onSendPressed: _sendCurrentInput,
                       onSuggestedPromptPressed: _sendSuggestedPrompt,
-                      suggestedPrompts: _suggestedPrompts,
+                      suggestedPrompts: suggestedPrompts,
                     ),
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
                     height: 520,
                     child: _StudioPanel(
+                      isZh: t.isZh,
                       isMindMapLoading: _isMindMapLoading,
                       isQuizLoading: _isQuizLoading,
                       isReplayLoading: _isReplayLoading,
@@ -529,6 +588,7 @@ $source
                       Expanded(
                         flex: 3,
                         child: _ConversationPanel(
+                          isZh: t.isZh,
                           messages: _messages,
                           isSending: _isSending,
                           isGeminiConfigured: GeminiService.isConfigured,
@@ -536,13 +596,14 @@ $source
                           conversationController: _conversationController,
                           onSendPressed: _sendCurrentInput,
                           onSuggestedPromptPressed: _sendSuggestedPrompt,
-                          suggestedPrompts: _suggestedPrompts,
+                          suggestedPrompts: suggestedPrompts,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         flex: 1,
                         child: _StudioPanel(
+                          isZh: t.isZh,
                           isMindMapLoading: _isMindMapLoading,
                           isQuizLoading: _isQuizLoading,
                           isReplayLoading: _isReplayLoading,
@@ -579,6 +640,7 @@ $source
 }
 
 class _ConversationPanel extends StatelessWidget {
+  final bool isZh;
   final List<_ConversationMessage> messages;
   final bool isSending;
   final bool isGeminiConfigured;
@@ -589,6 +651,7 @@ class _ConversationPanel extends StatelessWidget {
   final List<String> suggestedPrompts;
 
   const _ConversationPanel({
+    required this.isZh,
     required this.messages,
     required this.isSending,
     required this.isGeminiConfigured,
@@ -598,6 +661,10 @@ class _ConversationPanel extends StatelessWidget {
     required this.onSuggestedPromptPressed,
     required this.suggestedPrompts,
   });
+
+  String _tr({required String en, required String zh}) {
+    return isZh ? zh : en;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -616,9 +683,9 @@ class _ConversationPanel extends StatelessWidget {
               controller: conversationController,
               padding: const EdgeInsets.fromLTRB(28, 24, 28, 20),
               children: [
-                const Text(
-                  'Conversation',
-                  style: TextStyle(
+                Text(
+                  _tr(en: 'Conversation', zh: '对话'),
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                     color: textColor,
@@ -642,10 +709,13 @@ class _ConversationPanel extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Hi there! Welcome to your AI Tutor',
-                        style: TextStyle(
+                        _tr(
+                          en: 'Hi there! Welcome to your AI Tutor',
+                          zh: '你好，欢迎来到你的 AI 导师',
+                        ),
+                        style: const TextStyle(
                           fontSize: 32,
                           height: 1.15,
                           fontWeight: FontWeight.w500,
@@ -656,12 +726,12 @@ class _ConversationPanel extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Nice to meet you. I can help you organize notes, summarize '
-                  'long content, and turn ideas into clear knowledge '
-                  'structures. Start with a quick question and I will guide '
-                  'you step by step.',
-                  style: TextStyle(
+                Text(
+                  _tr(
+                    en: 'Nice to meet you. I can help you organize notes, summarize long content, and turn ideas into clear knowledge structures. Start with a quick question and I will guide you step by step.',
+                    zh: '很高兴认识你。我可以帮你整理笔记、总结长内容，并把想法转成清晰的知识结构。你可以从一个简单问题开始，我会一步步引导你。',
+                  ),
+                  style: const TextStyle(
                     fontSize: 16,
                     height: 1.6,
                     color: Color(0xFF7A7A7A),
@@ -676,11 +746,12 @@ class _ConversationPanel extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFFF5D9A4)),
                     ),
-                    child: const Text(
-                      'Gemini is not configured yet. Start with '
-                      '--dart-define=GEMINI_API_KEY=your_key, or send '
-                      '"/apikey your_key" once in this chat.',
-                      style: TextStyle(
+                    child: Text(
+                      _tr(
+                        en: 'Gemini is not configured yet. Start with --dart-define=GEMINI_API_KEY=your_key, or send "/apikey your_key" once in this chat.',
+                        zh: 'Gemini 尚未配置。请先使用 --dart-define=GEMINI_API_KEY=your_key，或在本会话发送一次 "/apikey your_key"。',
+                      ),
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Color(0xFF8C640A),
                         height: 1.4,
@@ -699,9 +770,9 @@ class _ConversationPanel extends StatelessWidget {
                 ],
                 if (messages.isNotEmpty || isSending) ...[
                   const SizedBox(height: 26),
-                  const Text(
-                    'Live Chat',
-                    style: TextStyle(
+                  Text(
+                    _tr(en: 'Live Chat', zh: '实时对话'),
+                    style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                       color: textColor,
@@ -737,7 +808,7 @@ class _ConversationPanel extends StatelessWidget {
                 maxLines: 4,
                 onSubmitted: (_) => onSendPressed(),
                 decoration: InputDecoration(
-                  hintText: '\u5f00\u59cb\u8f93\u5165...',
+                  hintText: _tr(en: 'Start typing...', zh: '开始输入...'),
                   hintStyle: const TextStyle(color: Color(0xFF9AA1AA)),
                   prefixIcon: const Icon(
                     Icons.edit_note_outlined,
@@ -768,6 +839,7 @@ class _ConversationPanel extends StatelessWidget {
 }
 
 class _StudioPanel extends StatelessWidget {
+  final bool isZh;
   final bool isMindMapLoading;
   final bool isQuizLoading;
   final bool isReplayLoading;
@@ -785,6 +857,7 @@ class _StudioPanel extends StatelessWidget {
   final VoidCallback? onOpenEvolution;
 
   const _StudioPanel({
+    required this.isZh,
     required this.isMindMapLoading,
     required this.isQuizLoading,
     required this.isReplayLoading,
@@ -802,13 +875,44 @@ class _StudioPanel extends StatelessWidget {
     required this.onOpenEvolution,
   });
 
+  String _tr({required String en, required String zh}) {
+    return isZh ? zh : en;
+  }
+
+  String _localizeGeneratedTitle(String title) {
+    if (!isZh) return title;
+    switch (title.trim()) {
+      case 'Study Mind Map':
+        return '学习思维导图';
+      case 'Practice Quiz':
+        return '练习测验';
+      case 'Mind Map Evolution Replay':
+        return '思维导图演化回放';
+      default:
+        return title;
+    }
+  }
+
   String _formatRelative(DateTime? time) {
-    if (time == null) return 'not generated yet';
+    if (time == null) return _tr(en: 'not generated yet', zh: '尚未生成');
     final diff = DateTime.now().difference(time);
-    if (diff.inMinutes < 1) return 'updated just now';
-    if (diff.inHours < 1) return 'updated ${diff.inMinutes} min ago';
-    if (diff.inDays < 1) return 'updated ${diff.inHours} hr ago';
-    return 'updated ${diff.inDays} day(s) ago';
+    if (diff.inMinutes < 1) return _tr(en: 'updated just now', zh: '刚刚更新');
+    if (diff.inHours < 1) {
+      return _tr(
+        en: 'updated ${diff.inMinutes} min ago',
+        zh: '${diff.inMinutes} 分钟前更新',
+      );
+    }
+    if (diff.inDays < 1) {
+      return _tr(
+        en: 'updated ${diff.inHours} hr ago',
+        zh: '${diff.inHours} 小时前更新',
+      );
+    }
+    return _tr(
+      en: 'updated ${diff.inDays} day(s) ago',
+      zh: '${diff.inDays} 天前更新',
+    );
   }
 
   @override
@@ -824,9 +928,9 @@ class _StudioPanel extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Studio',
-              style: TextStyle(
+            Text(
+              _tr(en: 'Studio', zh: '工作台'),
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF333333),
@@ -842,7 +946,7 @@ class _StudioPanel extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 _ModuleCard(
-                  label: 'Mind Map',
+                  label: _tr(en: 'Mind Map', zh: '思维导图'),
                   icon: Icons.account_tree_outlined,
                   background: Color(0xFFE7F3FF),
                   accent: Color(0xFF2E74C9),
@@ -850,13 +954,13 @@ class _StudioPanel extends StatelessWidget {
                   onTap: onMindMapTap,
                 ),
                 _ModuleCard(
-                  label: 'Report',
+                  label: _tr(en: 'Report', zh: '报告'),
                   icon: Icons.summarize_outlined,
                   background: Color(0xFFE8F6EE),
                   accent: Color(0xFF2F8F57),
                 ),
                 _ModuleCard(
-                  label: 'Quiz',
+                  label: _tr(en: 'Quiz', zh: '测验'),
                   icon: Icons.quiz_outlined,
                   background: Color(0xFFFFF8DB),
                   accent: Color(0xFF9A7C12),
@@ -864,7 +968,7 @@ class _StudioPanel extends StatelessWidget {
                   onTap: onQuizTap,
                 ),
                 _ModuleCard(
-                  label: 'Presentation',
+                  label: _tr(en: 'Presentation', zh: '演示'),
                   icon: Icons.slideshow_outlined,
                   background: Color(0xFFF0E9FF),
                   accent: Color(0xFF7350B6),
@@ -874,9 +978,9 @@ class _StudioPanel extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 22),
-            const Text(
-              'Notebooks',
-              style: TextStyle(
+            Text(
+              _tr(en: 'Notebooks', zh: '笔记本'),
+              style: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF333333),
@@ -887,47 +991,68 @@ class _StudioPanel extends StatelessWidget {
               child: ListView(
                 children: [
                   _NotebookItem(
-                    title: latestMindMap?.title ?? 'Mind Map',
+                    title: latestMindMap == null
+                        ? _tr(en: 'Mind Map', zh: '思维导图')
+                        : _localizeGeneratedTitle(latestMindMap!.title),
                     subtitle: _formatRelative(latestMindMapAt),
                     icon: Icons.account_tree_outlined,
                     onTap: onOpenMindMap,
                   ),
                   const SizedBox(height: 8),
                   _NotebookItem(
-                    title: latestQuiz?.title ?? 'Quiz',
+                    title: latestQuiz == null
+                        ? _tr(en: 'Quiz', zh: '测验')
+                        : _localizeGeneratedTitle(latestQuiz!.title),
                     subtitle: _formatRelative(latestQuizAt),
                     icon: Icons.quiz_outlined,
                     onTap: onOpenQuiz,
                   ),
                   const SizedBox(height: 8),
                   _NotebookItem(
-                    title: latestEvolution?.title ?? 'Evolution Replay',
+                    title: latestEvolution == null
+                        ? _tr(en: 'Evolution Replay', zh: '演化回放')
+                        : _localizeGeneratedTitle(latestEvolution!.title),
                     subtitle: _formatRelative(latestEvolutionAt),
                     icon: Icons.slideshow_outlined,
                     onTap: onOpenEvolution,
                   ),
                   const SizedBox(height: 8),
                   _NotebookItem(
-                    title: 'Networking Foundations',
-                    subtitle: '4 sources - updated today',
+                    title: _tr(en: 'Networking Foundations', zh: '网络基础'),
+                    subtitle: _tr(
+                      en: '4 sources - updated today',
+                      zh: '4 个来源 - 今日更新',
+                    ),
                     icon: Icons.hub_outlined,
                   ),
                   const SizedBox(height: 8),
                   _NotebookItem(
-                    title: 'Protocol Flashcards',
-                    subtitle: '12 cards - reviewed 2 hours ago',
+                    title: _tr(en: 'Protocol Flashcards', zh: '协议闪卡'),
+                    subtitle: _tr(
+                      en: '12 cards - reviewed 2 hours ago',
+                      zh: '12 张卡片 - 2 小时前复习',
+                    ),
                     icon: Icons.style_outlined,
                   ),
                   const SizedBox(height: 8),
                   _NotebookItem(
-                    title: 'OSI vs TCP/IP Notes',
-                    subtitle: '3 references - updated yesterday',
+                    title: _tr(
+                      en: 'OSI vs TCP/IP Notes',
+                      zh: 'OSI 与 TCP/IP 笔记',
+                    ),
+                    subtitle: _tr(
+                      en: '3 references - updated yesterday',
+                      zh: '3 份参考 - 昨日更新',
+                    ),
                     icon: Icons.menu_book_outlined,
                   ),
                   const SizedBox(height: 8),
                   _NotebookItem(
-                    title: 'Routing Exercises',
-                    subtitle: 'quiz draft - 8 questions',
+                    title: _tr(en: 'Routing Exercises', zh: '路由练习'),
+                    subtitle: _tr(
+                      en: 'quiz draft - 8 questions',
+                      zh: '测验草稿 - 8 题',
+                    ),
                     icon: Icons.route_outlined,
                   ),
                 ],
@@ -1583,9 +1708,9 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
                       color: const Color(0xFF7350B6),
                       borderRadius: BorderRadius.circular(999),
                     ),
-                    child: const Text(
-                      'NEW',
-                      style: TextStyle(
+                    child: Text(
+                      context.watch<LanguageProvider>().t.isZh ? '新增' : 'NEW',
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
@@ -1614,6 +1739,28 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String tr({required String en, required String zh}) => isZh ? zh : en;
+    String displayTitle(String title) {
+      if (!isZh) return title;
+      switch (title.trim()) {
+        case 'Mind Map Evolution Replay':
+          return '思维导图演化回放';
+        default:
+          return title;
+      }
+    }
+
+    String displayStageTitle(String title) {
+      if (!isZh) return title;
+      return title.trim() == 'Stage' ? '阶段' : title;
+    }
+
+    String displayFocus(String focus) {
+      if (!isZh) return focus;
+      return focus.trim() == 'Progressive understanding' ? '渐进式理解' : focus;
+    }
+
     final stages = widget.evolution.stages;
     final stage = stages[_stageIndex];
     final newNodeIds = _newNodeIds();
@@ -1649,7 +1796,7 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      widget.evolution.title,
+                      displayTitle(widget.evolution.title),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -1665,7 +1812,10 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
               ),
               const SizedBox(height: 6),
               Text(
-                'Stage ${_stageIndex + 1}/${stages.length}: ${stage.stageTitle}',
+                tr(
+                  en: 'Stage ${_stageIndex + 1}/${stages.length}: ${displayStageTitle(stage.stageTitle)}',
+                  zh: '阶段 ${_stageIndex + 1}/${stages.length}: ${displayStageTitle(stage.stageTitle)}',
+                ),
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -1674,7 +1824,7 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
               ),
               const SizedBox(height: 4),
               Text(
-                stage.focus,
+                displayFocus(stage.focus),
                 style: const TextStyle(fontSize: 12, color: Color(0xFF6A7380)),
               ),
               const SizedBox(height: 12),
@@ -1683,21 +1833,25 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
                   FilledButton.tonalIcon(
                     onPressed: _togglePlay,
                     icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
-                    label: Text(_isPlaying ? 'Pause Replay' : 'Play Replay'),
+                    label: Text(
+                      _isPlaying
+                          ? tr(en: 'Pause Replay', zh: '暂停回放')
+                          : tr(en: 'Play Replay', zh: '播放回放'),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   OutlinedButton(
                     onPressed: _stageIndex == 0
                         ? null
                         : () => _goToStage(_stageIndex - 1, pause: true),
-                    child: const Text('Prev'),
+                    child: Text(tr(en: 'Prev', zh: '上一步')),
                   ),
                   const SizedBox(width: 8),
                   OutlinedButton(
                     onPressed: _stageIndex == maxIndex
                         ? null
                         : () => _goToStage(_stageIndex + 1, pause: true),
-                    child: const Text('Next'),
+                    child: Text(tr(en: 'Next', zh: '下一步')),
                   ),
                   const Spacer(),
                   Container(
@@ -1710,7 +1864,10 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
-                      '+${newNodeIds.length} new node(s)',
+                      tr(
+                        en: '+${newNodeIds.length} new node(s)',
+                        zh: '+${newNodeIds.length} 个新节点',
+                      ),
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -1743,7 +1900,14 @@ class _MindMapEvolutionDialogState extends State<_MindMapEvolutionDialog> {
                     ),
                     child: ListView(
                       children: treeWidgets.isEmpty
-                          ? const [Text('No nodes generated for this stage.')]
+                          ? [
+                              Text(
+                                tr(
+                                  en: 'No nodes generated for this stage.',
+                                  zh: '该阶段未生成节点。',
+                                ),
+                              ),
+                            ]
                           : treeWidgets,
                     ),
                   ),
@@ -1820,6 +1984,13 @@ class _MindMapDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String tr({required String en, required String zh}) => isZh ? zh : en;
+    String displayTitle(String title) {
+      if (!isZh) return title;
+      return title.trim() == 'Study Mind Map' ? '学习思维导图' : title;
+    }
+
     final byParent = <String?, List<_MindMapNode>>{};
     for (final node in mindMap.nodes) {
       byParent.putIfAbsent(node.parentId, () => <_MindMapNode>[]).add(node);
@@ -1849,7 +2020,7 @@ class _MindMapDialog extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      mindMap.title,
+                      displayTitle(mindMap.title),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -1864,9 +2035,12 @@ class _MindMapDialog extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Generated from your recent tutor conversation.',
-                style: TextStyle(fontSize: 12, color: Color(0xFF7B838E)),
+              Text(
+                tr(
+                  en: 'Generated from your recent tutor conversation.',
+                  zh: '根据你最近与导师的对话生成。',
+                ),
+                style: const TextStyle(fontSize: 12, color: Color(0xFF7B838E)),
               ),
               const SizedBox(height: 14),
               Expanded(
@@ -1879,7 +2053,7 @@ class _MindMapDialog extends StatelessWidget {
                   ),
                   child: ListView(
                     children: treeWidgets.isEmpty
-                        ? const [Text('No nodes generated.')]
+                        ? [Text(tr(en: 'No nodes generated.', zh: '未生成节点。'))]
                         : treeWidgets,
                   ),
                 ),
@@ -1918,10 +2092,21 @@ class _QuizDialogState extends State<_QuizDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String tr({required String en, required String zh}) => isZh ? zh : en;
+    String displayTitle(String title) {
+      if (!isZh) return title;
+      return title.trim() == 'Practice Quiz' ? '练习测验' : title;
+    }
+
     final question = widget.quiz.questions[_index];
     final selected = _selected[_index];
     final total = widget.quiz.questions.length;
     final canSubmit = _selected.length == total;
+    final explanationText =
+        isZh && question.explanation == 'No explanation provided.'
+        ? '未提供解析。'
+        : question.explanation;
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -1938,7 +2123,7 @@ class _QuizDialogState extends State<_QuizDialog> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      widget.quiz.title,
+                      displayTitle(widget.quiz.title),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -1954,7 +2139,10 @@ class _QuizDialogState extends State<_QuizDialog> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Question ${_index + 1} of $total',
+                tr(
+                  en: 'Question ${_index + 1} of $total',
+                  zh: '第 ${_index + 1} 题 / 共 $total 题',
+                ),
                 style: const TextStyle(
                   fontSize: 12,
                   color: Color(0xFF7B838E),
@@ -2051,7 +2239,10 @@ class _QuizDialogState extends State<_QuizDialog> {
                     border: Border.all(color: const Color(0xFFE2E8F0)),
                   ),
                   child: Text(
-                    'Explanation: ${question.explanation}',
+                    tr(
+                      en: 'Explanation: $explanationText',
+                      zh: '解析：$explanationText',
+                    ),
                     style: const TextStyle(
                       fontSize: 13,
                       color: Color(0xFF4A5568),
@@ -2062,7 +2253,7 @@ class _QuizDialogState extends State<_QuizDialog> {
               const SizedBox(height: 12),
               if (_submitted)
                 Text(
-                  'Score: $_score / $total',
+                  tr(en: 'Score: $_score / $total', zh: '得分：$_score / $total'),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -2078,7 +2269,7 @@ class _QuizDialogState extends State<_QuizDialog> {
                         : () => setState(() {
                             _index--;
                           }),
-                    child: const Text('Previous'),
+                    child: Text(tr(en: 'Previous', zh: '上一题')),
                   ),
                   const SizedBox(width: 8),
                   OutlinedButton(
@@ -2087,7 +2278,7 @@ class _QuizDialogState extends State<_QuizDialog> {
                         : () => setState(() {
                             _index++;
                           }),
-                    child: const Text('Next'),
+                    child: Text(tr(en: 'Next', zh: '下一题')),
                   ),
                   const Spacer(),
                   TextButton(
@@ -2098,7 +2289,7 @@ class _QuizDialogState extends State<_QuizDialog> {
                             _selected.clear();
                             _index = 0;
                           }),
-                    child: const Text('Retry'),
+                    child: Text(tr(en: 'Retry', zh: '重试')),
                   ),
                   const SizedBox(width: 8),
                   FilledButton(
@@ -2107,7 +2298,7 @@ class _QuizDialogState extends State<_QuizDialog> {
                         : () => setState(() {
                             _submitted = true;
                           }),
-                    child: const Text('Submit'),
+                    child: Text(tr(en: 'Submit', zh: '提交')),
                   ),
                 ],
               ),

@@ -159,6 +159,33 @@ class SupabaseService {
     }
   }
 
+  /// Sign in with Apple (requires Apple Developer Sign In with Apple configuration)
+  static Future<AuthResult> signInWithApple() async {
+    try {
+      await client.auth.signInWithOAuth(
+        OAuthProvider.apple,
+        redirectTo: _getRedirectUrl(),
+      );
+      return const AuthResult(success: true, message: 'Redirecting...');
+    } on AuthException catch (e) {
+      return AuthResult(
+        success: false,
+        message: _translateAuthError(e.message),
+      );
+    } catch (e) {
+      return AuthResult(success: false, message: 'Apple sign-in failed: $e');
+    }
+  }
+
+  /// Sign in with WeChat (requires WeChat Open Platform + custom auth server)
+  /// Currently a placeholder — wire up a custom OAuth provider when ready.
+  static Future<AuthResult> signInWithWeChat() async {
+    return const AuthResult(
+      success: false,
+      message: 'WeChat sign-in coming soon.',
+    );
+  }
+
   /// Get OAuth redirect URL
   static String _getRedirectUrl() {
     return '${Uri.base.origin}/auth/callback';
