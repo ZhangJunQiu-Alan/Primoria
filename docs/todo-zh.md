@@ -42,3 +42,7 @@
 14. [x] 完成 Viewer 核心学习链路中英文适配（登录/注册/主页/课程库/社区/课时/结果/AI 导师/设置等），并确保与用户语言设置联动切换。
 15. [x] 完成 Builder 全链路中英文适配（鉴权、Dashboard、Builder 画布、Viewer 预览、交互模块组件），并确保跟随设置中心语言切换。
 16. [x] 完成 Viewer Landing Page 中英文适配，保证公开入口文案与语言设置一致。
+17. [x] 全面重设计 Viewer 落地页（以学习者为核心，11 个区块，浮动英雄模拟卡片，980px 响应式，移除 Builder 相关内容）。
+18. [x] 全面重设计 Viewer 登录页（双栏桌面布局，Google/Apple/WeChat 社交登录，动态输入框，暗色模式修复，品牌资产 Logo）。
+19. [x] 全面重设计 Viewer 注册页（镜像双栏布局，用户名字段，密码强度条，动效服务条款复选框，品牌栏统计数字）。
+20. [x] GitHub Pages 部署从 hackathon/ 迁移至 Viewer；删除 hackathon/ 项目；通过 CNAME 保留 primoria.dpdns.org 域名。

@@ -1,10 +1,15 @@
 # Primoria 文档索引
 
-最后更新：2026-03-06
+最后更新：2026-03-08
 
 Primoria 由两个 Flutter 应用组成：
 - `Builder/`：课程创作端（Flutter Web + Riverpod + GoRouter + Supabase）
 - `Viewer/`：学习端（Flutter + Provider + Supabase）
+
+## 部署
+
+- Viewer 已通过 GitHub Pages 部署至 **[primoria.dpdns.org](https://primoria.dpdns.org)**（`.github/workflows/deploy-viewer.yml`）。
+  推送到 `main` 分支的 `Viewer/**` 变更会自动触发构建部署。
 
 ## 当前产品状态
 
@@ -15,9 +20,12 @@ Primoria 由两个 Flutter 应用组成：
   - 课程管理：已重构为创作者工作台（核心生产流程保持）
   - 数据中心：已重设计
   - 粉丝管理：已重设计
+- Viewer 落地页已全面重设计——以学习者视角为主，包含 11 个区块（英雄区、功能特性、AI 家教、游戏化、社区、用户评价、CTA 等）。
+- Viewer 登录/注册页面已全面重设计，采用双栏桌面布局，支持 Google/Apple/WeChat 社交登录，并包含动态输入框与密码强度指示器。
 - Viewer 支持课程发现、报名、课时学习、个人设置、XP/连续学习/成就、markdown 文本渲染，以及 Home/Library/Community/Profile 统一的响应式内容宽度壳层。
 - 个人页与成就墙已统一到成就徽章/进度展示逻辑，并新增自适应 XP 热力图、待解锁进度卡片、派生解锁回写以及加载/空/失败状态处理。
 - Viewer 设置已升级为分类式设置中心（账号/显示/学习/通知/隐私/家长/支持），并支持本地偏好持久化。
+- Builder 与 Viewer 均支持中英文双语切换，由设置驱动并持久化。
 
 ## Builder 核心路由
 

@@ -1,6 +1,6 @@
 # Database Schema (Supabase/PostgreSQL)
 
-Last updated: 2026-03-06
+Last updated: 2026-03-08
 
 This document reflects the effective schema as evolved by migrations in `supabase/migrations/` and current app usage.
 
@@ -63,6 +63,16 @@ This document reflects the effective schema as evolved by migrations in `supabas
 - `follows`
 - `course_feedback`
 
+### Parent Mode
+
+- `parent_child_binding_codes`
+  - key fields: `child_id` (PK, FK → profiles), `code` (unique), `expires_at`
+  - child generates a short-lived code; parent scans/enters it to link
+- `parent_child_links`
+  - key fields: `parent_id` (FK → profiles), `child_id` (FK → profiles), PK = (parent_id, child_id)
+  - records confirmed parent–child relationships; RLS enforces parent-only SELECT
+- `user_role` enum extended with `'parent'` value
+
 ### System
 
 - `app_versions`
@@ -76,6 +86,8 @@ This document reflects the effective schema as evolved by migrations in `supabas
 - Lesson ordering now relies on `lessons.sort_key`.
 - `courses` gained AI planning fields and pricing fields.
 - `profiles` gained `cover_image_url` and pinned achievement list support.
+- Parent Mode v1 added `parent_child_binding_codes`, `parent_child_links` tables and `'parent'` role enum value.
+- Seed data course "Basics of Psychology" added as a published Social course (migration `20260308000001`).
 
 ## RPC / SQL Functions Used by Apps
 
@@ -85,6 +97,7 @@ This document reflects the effective schema as evolved by migrations in `supabas
 - `complete_lesson_and_award_xp(...)`
 - `upsert_daily_activity(...)`
 - `update_user_streak(...)`
+- `get_parent_child_report(p_child_id uuid, p_days integer)` — returns JSONB with stats, activity trend, courses, and recent lesson completions for a linked child; requires authenticated parent caller
 
 ## RLS
 

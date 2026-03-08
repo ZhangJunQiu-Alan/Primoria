@@ -1,10 +1,15 @@
 # Primoria Documentation Index
 
-Last updated: 2026-03-06
+Last updated: 2026-03-08
 
 Primoria is a dual-app Flutter system:
 - `Builder/`: course authoring (Flutter Web + Riverpod + GoRouter + Supabase)
 - `Viewer/`: learning experience (Flutter + Provider + Supabase)
+
+## Deployment
+
+- Viewer is deployed to **[primoria.dpdns.org](https://primoria.dpdns.org)** via GitHub Pages (`.github/workflows/deploy-viewer.yml`).
+  Triggered automatically on push to `Viewer/**` on `main`.
 
 ## Current Product Status
 
@@ -15,9 +20,12 @@ Primoria is a dual-app Flutter system:
   - Course Manage: redesigned creator workspace (core production flows preserved)
   - Data Center: redesigned
   - Fans Management: redesigned
+- Viewer landing page is fully redesigned — learner-focused with 11 sections (hero, features, AI tutor, gamification, community, testimonials, CTA).
+- Viewer login and register screens are fully redesigned with two-panel desktop layout, social OAuth (Google, Apple, WeChat), animated inputs, and password strength indicator.
 - Viewer supports course discovery, enrollment, lesson learning, profile settings, XP/streak/achievements, markdown lesson text rendering, and a shared responsive content-width shell across Home/Library/Community/Profile.
 - Profile and Achievement Wall now use centralized badge/progress rendering, with adaptive XP heatmap layout, pending-achievement progress cards, derived unlock sync, and improved load/empty/error states.
 - Viewer Settings is now a category-based settings center (account/appearance/learning/notifications/privacy/parent/support) with local preference persistence.
+- Both Builder and Viewer support full bilingual switching (Chinese / English), settings-driven with local persistence.
 
 ## Core Routes (Builder app)
 
