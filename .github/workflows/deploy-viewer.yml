@@ -1,11 +1,10 @@
-name: Deploy Hackathon Landing Page
+name: Deploy Viewer to GitHub Pages
 
 on:
   push:
     branches: [main]
     paths:
-      - 'hackathon/**'
-  # 允许手动触发
+      - 'Viewer/**'
   workflow_dispatch:
 
 permissions:
@@ -13,7 +12,6 @@ permissions:
   pages: write
   id-token: write
 
-# 同一时间只运行一个部署，不取消进行中的任务
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -31,17 +29,17 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        working-directory: hackathon
+        working-directory: Viewer
         run: flutter pub get
 
       - name: Build Flutter Web
-        working-directory: hackathon
+        working-directory: Viewer
         run: flutter build web --base-href "/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: hackathon/build/web
+          path: Viewer/build/web
 
   deploy:
     environment:
