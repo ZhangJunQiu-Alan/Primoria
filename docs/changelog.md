@@ -1,5 +1,48 @@
 # Changelog
 
+## [Unreleased] - 2026-03-08 (Viewer Auth & Landing Redesign + GitHub Pages Migration)
+
+### Summary
+- Completely redesigned Viewer landing page to focus on learner benefits (removed all Builder references).
+- Completely redesigned Viewer login and register screens with professional two-panel desktop layout, full social OAuth (Google, Apple, WeChat), animated input fields, and password strength indicator.
+- Fixed three reported UI bugs in login/register: feature-pill spacing gap, dark-mode invisible text in form inputs, incorrect social login logos.
+- Migrated GitHub Pages deployment from the deprecated `hackathon/` project to the Viewer app at primoria.dpdns.org.
+- Removed the `hackathon/` Flutter project from the repository.
+
+### Added
+- `Viewer/lib/screens/landing_screen.dart` — full rewrite with 11 sections: Header, Hero (floating mockup cards), StatsBar, Features (4 cards), HowItWorks, AiTutor, Gamification, Community, Testimonials, CtaBanner, Footer. Responsive at 980px breakpoint.
+- `Viewer/web/CNAME` — preserves `primoria.dpdns.org` custom domain for GitHub Pages.
+- `.github/workflows/deploy-viewer.yml` — new workflow replacing `deploy-hackathon.yml`; builds and deploys Viewer to GitHub Pages on push to `Viewer/**`.
+
+### Changed
+- `Viewer/lib/screens/login_screen.dart` — complete rewrite:
+  - Desktop: left dark brand panel (navy→purple gradient, dot-grid bg, feature pills, testimonial card) + right white form panel.
+  - Social auth buttons: Google (Image.asset google.png), Apple (Icons.apple), WeChat (Image.asset wechat.png with white color filter).
+  - `_FocusableField` stateful widget with `FocusNode`-driven `AnimatedContainer` border/shadow.
+  - Form panel wrapped in `Theme(data: ThemeData.light())` to prevent system dark-mode bleed-through into input fields.
+  - Feature pills column now has consistent 10px gaps (bug fix: last pill was flush against testimonial card).
+- `Viewer/lib/screens/register_screen.dart` — complete rewrite mirroring login with mirrored layout (form left, brand right):
+  - Additional username field with min-3-char validation.
+  - 4-segment password strength bar (Too Short / Weak / Good / Strong).
+  - Animated terms-of-service checkbox.
+  - Stats row (10K+ learners / 200+ courses / 4.9★) in brand panel.
+  - Same dark-mode and logo fixes applied.
+- `Viewer/lib/services/supabase_service.dart`
+  - Added `signInWithApple()` using `OAuthProvider.apple`.
+  - Added `signInWithWeChat()` returning stub message (WeChat OAuth not yet supported by Supabase).
+
+### Removed
+- `hackathon/` Flutter project (entire folder deleted).
+- `.github/workflows/deploy-hackathon.yml`.
+
+### Validation
+- `cd Viewer && flutter analyze`
+  - No new errors; one pre-existing info: `lib/services/gemini_service.dart:3:8 depend_on_referenced_packages`.
+- `cd Viewer && flutter test`
+  - All 10 tests passed.
+
+---
+
 ## [Unreleased] - 2026-03-08 (Builder Full I18N + Viewer Landing I18N)
 
 ### Summary
