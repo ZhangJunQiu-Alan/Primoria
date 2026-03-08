@@ -139,7 +139,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              'assets/imgs/logo32.png',
+              'assets/imgs/logo.png',
               width: 52,
               height: 52,
               errorBuilder: (_, __, ___) =>
@@ -229,7 +229,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
         child: Row(
           children: [
             Image.asset(
-              'assets/imgs/logo32.png',
+              'assets/imgs/logo.png',
               width: 32,
               height: 32,
               errorBuilder: (_, __, ___) =>

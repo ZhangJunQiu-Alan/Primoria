@@ -333,25 +333,13 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   Widget _buildPanelLogo() => Row(
     children: [
-      Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: const LinearGradient(
-            colors: [Color(0xFF11B4FF), Color(0xFF0D7DEB)],
-          ),
-        ),
-        child: Center(
-          child: Text(
-            'P',
-            style: GoogleFonts.sora(
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
-              height: 1,
-            ),
-          ),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Image.asset(
+          'assets/imgs/logo.png',
+          width: 36,
+          height: 36,
+          fit: BoxFit.cover,
         ),
       ),
       const SizedBox(width: 10),
@@ -443,25 +431,13 @@ class _RegisterScreenState extends State<RegisterScreen>
     padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
     child: Row(
       children: [
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(9),
-            gradient: const LinearGradient(
-              colors: [Color(0xFF11B4FF), Color(0xFF0D7DEB)],
-            ),
-          ),
-          child: Center(
-            child: Text(
-              'P',
-              style: GoogleFonts.sora(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                color: Colors.white,
-                height: 1,
-              ),
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(9),
+          child: Image.asset(
+            'assets/imgs/logo.png',
+            width: 32,
+            height: 32,
+            fit: BoxFit.cover,
           ),
         ),
         const SizedBox(width: 10),

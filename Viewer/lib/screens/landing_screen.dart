@@ -1732,27 +1732,13 @@ class _BrandMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.24),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [_C.accent, _C.accentDeep],
-        ),
-      ),
-      child: Center(
-        child: Text(
-          'P',
-          style: GoogleFonts.sora(
-            fontSize: size * 0.56,
-            height: 1,
-            color: Colors.white,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+    final icon = ClipRRect(
+      borderRadius: BorderRadius.circular(size * 0.24),
+      child: Image.asset(
+        'assets/imgs/logo.png',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
       ),
     );
 

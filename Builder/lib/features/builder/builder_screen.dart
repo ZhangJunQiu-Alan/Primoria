@@ -318,7 +318,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                 onTap: () => context.go('/dashboard'),
                 borderRadius: BorderRadius.circular(AppBorderRadius.sm),
                 child: Image.asset(
-                  'assets/imgs/logo32.png',
+                  'assets/imgs/logo.png',
                   width: 32,
                   height: 32,
                   errorBuilder: (context, error, stackTrace) =>
