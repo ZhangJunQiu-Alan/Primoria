@@ -64,6 +64,12 @@ class _LessonScreenState extends State<LessonScreen> {
     return title.isNotEmpty ? title : t.lessonDefaultTitle;
   }
 
+  AppLocalizations get _t => context.read<LanguageProvider>().t;
+
+  String _i18n({required String en, required String zh}) {
+    return _t.isZh ? zh : en;
+  }
+
   // ── Lifecycle ─────────────────────────────────────────────────
 
   @override
@@ -171,7 +177,10 @@ class _LessonScreenState extends State<LessonScreen> {
           );
         } else if (map['blocks'] is List) {
           questions = _parseBuilderPages([
-            {'title': lesson['title'] ?? 'Lesson', 'blocks': map['blocks']},
+            {
+              'title': lesson['title'] ?? _i18n(en: 'Lesson', zh: '课程'),
+              'blocks': map['blocks'],
+            },
           ]);
         } else {
           questions = [];
@@ -189,9 +198,11 @@ class _LessonScreenState extends State<LessonScreen> {
     questions.add(
       _QuestionData(
         type: QuestionType.info,
-        title: 'Lesson Complete!',
-        content:
-            'Great job! You\'ve finished this lesson.\n\nKeep learning every day!',
+        title: _i18n(en: 'Lesson Complete!', zh: '课程完成！'),
+        content: _i18n(
+          en: 'Great job! You\'ve finished this lesson.\n\nKeep learning every day!',
+          zh: '做得很棒！你已完成本节课程。\n\n坚持每天学习，进步会更快！',
+        ),
         isLast: true,
       ),
     );
@@ -237,7 +248,7 @@ class _LessonScreenState extends State<LessonScreen> {
     final selectedTitle = _firstNonEmptyString([
       selected['title'],
       currentLessonTitle,
-      'Lesson',
+      _i18n(en: 'Lesson', zh: '课程'),
     ]);
 
     final blocks = (selected['blocks'] as List? ?? [])
@@ -334,7 +345,7 @@ class _LessonScreenState extends State<LessonScreen> {
           content['question'],
           content['title'],
           pageTitle,
-          'Question',
+          _i18n(en: 'Question', zh: '问题'),
         ]);
         final promptBody = _firstNonEmptyString([
           content['body'],
@@ -429,13 +440,13 @@ class _LessonScreenState extends State<LessonScreen> {
             config['successMsg'],
             content['success_msg'],
             content['explanation'],
-            'Correct!',
+            _i18n(en: 'Correct!', zh: '回答正确！'),
           ]),
           failMsg: _firstNonEmptyString([
             config['fail_msg'],
             config['failMsg'],
             content['fail_msg'],
-            "That's not right. Try again!",
+            _i18n(en: "That's not right. Try again!", zh: '不太对，再试一次！'),
           ]),
         );
 
@@ -471,7 +482,7 @@ class _LessonScreenState extends State<LessonScreen> {
             content['title'],
             content['question'],
             pageTitle,
-            'Adjust Value',
+            _i18n(en: 'Adjust Value', zh: '调整数值'),
           ]),
           content: _firstNonEmptyString([
             content['body'],
@@ -492,17 +503,17 @@ class _LessonScreenState extends State<LessonScreen> {
             config['success_msg'],
             config['successMsg'],
             content['success_msg'],
-            'Great!',
+            _i18n(en: 'Great!', zh: '很好！'),
           ]),
           failMsgHigh: _firstNonEmptyString([
             config['fail_msg_high'],
             content['fail_msg_high'],
-            'Too high!',
+            _i18n(en: 'Too high!', zh: '太高了！'),
           ]),
           failMsgLow: _firstNonEmptyString([
             config['fail_msg_low'],
             content['fail_msg_low'],
-            'Too low!',
+            _i18n(en: 'Too low!', zh: '太低了！'),
           ]),
         );
 
@@ -522,18 +533,23 @@ class _LessonScreenState extends State<LessonScreen> {
         final hint = _firstNonEmptyString([content['hint'], config['hint']]);
         return _QuestionData(
           type: QuestionType.input,
-          title: _firstNonEmptyString([pageTitle, 'Fill in the Blank']),
-          content: hint.isNotEmpty ? '$question\n\nHint: $hint' : question,
+          title: _firstNonEmptyString([
+            pageTitle,
+            _i18n(en: 'Fill in the Blank', zh: '填空题'),
+          ]),
+          content: hint.isNotEmpty
+              ? '$question\n\n${_i18n(en: 'Hint', zh: '提示')}: $hint'
+              : question,
           correctAnswer: answer,
           successMsg: _firstNonEmptyString([
             content['success_msg'],
             config['success_msg'],
-            'Correct!',
+            _i18n(en: 'Correct!', zh: '回答正确！'),
           ]),
           failMsg: _firstNonEmptyString([
             content['fail_msg'],
             config['fail_msg'],
-            'Not quite. Try again!',
+            _i18n(en: 'Not quite. Try again!', zh: '还不完全正确，再试一次！'),
           ]),
         );
 
@@ -553,14 +569,19 @@ class _LessonScreenState extends State<LessonScreen> {
         ]);
         return _QuestionData(
           type: QuestionType.choice,
-          title: 'True or False?',
+          title: _i18n(en: 'True or False?', zh: '判断正误'),
           content: statement,
-          options: const ['True', 'False'],
+          options: [
+            _i18n(en: 'True', zh: '正确'),
+            _i18n(en: 'False', zh: '错误'),
+          ],
           correctIndex: isTrue ? 0 : 1,
-          successMsg: explanation.isNotEmpty ? explanation : 'Correct!',
+          successMsg: explanation.isNotEmpty
+              ? explanation
+              : _i18n(en: 'Correct!', zh: '回答正确！'),
           failMsg: explanation.isNotEmpty
               ? explanation
-              : "That's not right. Try again!",
+              : _i18n(en: "That's not right. Try again!", zh: '不太对，再试一次！'),
         );
 
       case 'code-block':
@@ -572,8 +593,8 @@ class _LessonScreenState extends State<LessonScreen> {
           title: pageTitle.isNotEmpty
               ? pageTitle
               : (language.isNotEmpty
-                    ? '${language.toUpperCase()} Code'
-                    : 'Code'),
+                    ? '${language.toUpperCase()} ${_i18n(en: 'Code', zh: '代码')}'
+                    : _i18n(en: 'Code', zh: '代码')),
           content: code,
         );
 
@@ -589,19 +610,28 @@ class _LessonScreenState extends State<LessonScreen> {
         if (expectedOutput.isNotEmpty) {
           return _QuestionData(
             type: QuestionType.input,
-            title: _firstNonEmptyString([pageTitle, 'Code Challenge']),
+            title: _firstNonEmptyString([
+              pageTitle,
+              _i18n(en: 'Code Challenge', zh: '代码挑战'),
+            ]),
             content: starterCode.isNotEmpty
-                ? 'Starting code:\n$starterCode\n\nExpected output: $expectedOutput'
-                : 'Expected output: $expectedOutput',
+                ? '${_i18n(en: 'Starting code', zh: '初始代码')}:\n$starterCode\n\n${_i18n(en: 'Expected output', zh: '期望输出')}: $expectedOutput'
+                : '${_i18n(en: 'Expected output', zh: '期望输出')}: $expectedOutput',
             correctAnswer: expectedOutput,
-            successMsg: 'Correct output!',
-            failMsg: "Output doesn't match. Try again!",
+            successMsg: _i18n(en: 'Correct output!', zh: '输出正确！'),
+            failMsg: _i18n(
+              en: "Output doesn't match. Try again!",
+              zh: '输出不匹配，再试一次！',
+            ),
           );
         }
         if (starterCode.isNotEmpty) {
           return _QuestionData(
             type: QuestionType.info,
-            title: _firstNonEmptyString([pageTitle, 'Code Example']),
+            title: _firstNonEmptyString([
+              pageTitle,
+              _i18n(en: 'Code Example', zh: '代码示例'),
+            ]),
             content: starterCode,
           );
         }
@@ -615,7 +645,10 @@ class _LessonScreenState extends State<LessonScreen> {
         if (desc.isEmpty) return null;
         return _QuestionData(
           type: QuestionType.info,
-          title: _firstNonEmptyString([pageTitle, 'Visual']),
+          title: _firstNonEmptyString([
+            pageTitle,
+            _i18n(en: 'Visual', zh: '可视内容'),
+          ]),
           content: desc,
         );
 
@@ -623,26 +656,36 @@ class _LessonScreenState extends State<LessonScreen> {
         final question = _firstNonEmptyString([
           content['question'],
           pageTitle,
-          'Matching',
+          _i18n(en: 'Matching', zh: '配对题'),
         ]);
         final leftItems = _extractItemTexts(content['leftItems']);
         final rightItems = _extractItemTexts(content['rightItems']);
         final body = [
-          if (leftItems.isNotEmpty) 'Left: ${leftItems.join(', ')}',
-          if (rightItems.isNotEmpty) 'Right: ${rightItems.join(', ')}',
+          if (leftItems.isNotEmpty)
+            '${_i18n(en: 'Left', zh: '左侧')}: ${leftItems.join(', ')}',
+          if (rightItems.isNotEmpty)
+            '${_i18n(en: 'Right', zh: '右侧')}: ${rightItems.join(', ')}',
         ].join('\n');
         return _QuestionData(
           type: QuestionType.info,
           title: question,
-          content: body.isNotEmpty ? body : 'Matching activity',
+          content: body.isNotEmpty
+              ? body
+              : _i18n(en: 'Matching activity', zh: '配对活动'),
         );
 
       case 'animation':
       case 'video':
         return _QuestionData(
           type: QuestionType.info,
-          title: _firstNonEmptyString([pageTitle, 'Interactive Content']),
-          content: 'This block type is not interactive in Viewer yet.',
+          title: _firstNonEmptyString([
+            pageTitle,
+            _i18n(en: 'Interactive Content', zh: '互动内容'),
+          ]),
+          content: _i18n(
+            en: 'This block type is not interactive in Viewer yet.',
+            zh: '该内容类型在 Viewer 中暂不支持交互。',
+          ),
         );
     }
     return null;
@@ -720,9 +763,11 @@ class _LessonScreenState extends State<LessonScreen> {
     return [
       _QuestionData(
         type: QuestionType.info,
-        title: 'Content unavailable',
-        content:
-            'This lesson has no readable content in database yet.\n\nPlease open Builder and republish this course, then try again.',
+        title: _i18n(en: 'Content unavailable', zh: '内容暂不可用'),
+        content: _i18n(
+          en: 'This lesson has no readable content in database yet.\n\nPlease open Builder and republish this course, then try again.',
+          zh: '该课程在数据库中暂时没有可读取内容。\n\n请在 Builder 中重新发布课程后再试。',
+        ),
         isLast: true,
       ),
     ];
@@ -734,15 +779,19 @@ class _LessonScreenState extends State<LessonScreen> {
     return [
       _QuestionData(
         type: QuestionType.info,
-        title: 'Welcome to This Lesson',
-        content:
-            'In this lesson, you will learn how to understand and master knowledge through interactive methods.\n\nAre you ready? Let\'s begin!',
+        title: _i18n(en: 'Welcome to This Lesson', zh: '欢迎来到本节课程'),
+        content: _i18n(
+          en: 'In this lesson, you will learn how to understand and master knowledge through interactive methods.\n\nAre you ready? Let\'s begin!',
+          zh: '在本节课程中，你将通过互动方式理解并掌握知识。\n\n准备好了吗？让我们开始吧！',
+        ),
       ),
       _QuestionData(
         type: QuestionType.slider,
-        title: 'Adjust Temperature',
-        content:
-            'Please adjust the water temperature to the ideal temperature for brewing green tea',
+        title: _i18n(en: 'Adjust Temperature', zh: '调整温度'),
+        content: _i18n(
+          en: 'Please adjust the water temperature to the ideal temperature for brewing green tea',
+          zh: '请将水温调整到冲泡绿茶的理想温度',
+        ),
         sliderConfig: const SliderConfig(
           min: 0,
           max: 100,
@@ -753,51 +802,93 @@ class _LessonScreenState extends State<LessonScreen> {
         ),
         targetValue: 85,
         tolerance: 5,
-        successMsg:
-            'Great! Around 85°C is the ideal temperature for brewing green tea.',
-        failMsgHigh:
-            'The temperature is too high, it will damage the nutrients in the tea leaves.',
-        failMsgLow:
-            'The temperature is too low, it cannot fully release the aroma of the tea.',
+        successMsg: _i18n(
+          en: 'Great! Around 85°C is the ideal temperature for brewing green tea.',
+          zh: '很好！约 85°C 是冲泡绿茶的理想温度。',
+        ),
+        failMsgHigh: _i18n(
+          en: 'The temperature is too high, it will damage the nutrients in the tea leaves.',
+          zh: '温度太高，会破坏茶叶中的营养成分。',
+        ),
+        failMsgLow: _i18n(
+          en: 'The temperature is too low, it cannot fully release the aroma of the tea.',
+          zh: '温度太低，无法充分释放茶香。',
+        ),
       ),
       _QuestionData(
         type: QuestionType.choice,
-        title: 'Choose the Correct Answer',
-        content: 'Which of the following is a valid logical reasoning?',
+        title: _i18n(en: 'Choose the Correct Answer', zh: '选择正确答案'),
+        content: _i18n(
+          en: 'Which of the following is a valid logical reasoning?',
+          zh: '以下哪一项是有效的逻辑推理？',
+        ),
         options: [
-          'If it rains, the ground gets wet. The ground is wet, so it rained.',
-          'If it rains, the ground gets wet. It rained, so the ground is wet.',
-          'If the ground is wet, it will rain. The ground is wet, so it rained.',
-          'If it doesn\'t rain, the ground won\'t be wet. The ground is not wet, so it didn\'t rain.',
+          _i18n(
+            en: 'If it rains, the ground gets wet. The ground is wet, so it rained.',
+            zh: '如果下雨，地面会湿。地面湿了，所以一定下过雨。',
+          ),
+          _i18n(
+            en: 'If it rains, the ground gets wet. It rained, so the ground is wet.',
+            zh: '如果下雨，地面会湿。下雨了，所以地面是湿的。',
+          ),
+          _i18n(
+            en: 'If the ground is wet, it will rain. The ground is wet, so it rained.',
+            zh: '如果地面湿，就会下雨。地面湿了，所以一定下过雨。',
+          ),
+          _i18n(
+            en: 'If it doesn\'t rain, the ground won\'t be wet. The ground is not wet, so it didn\'t rain.',
+            zh: '如果不下雨，地面不会湿。地面不湿，所以没有下雨。',
+          ),
         ],
         correctIndex: 1,
-        successMsg: 'Correct! This is a valid modus ponens reasoning.',
-        failMsg:
-            'This reasoning contains a logical fallacy, please think again.',
+        successMsg: _i18n(
+          en: 'Correct! This is a valid modus ponens reasoning.',
+          zh: '回答正确！这是一个有效的肯定前件推理。',
+        ),
+        failMsg: _i18n(
+          en: 'This reasoning contains a logical fallacy, please think again.',
+          zh: '该推理存在逻辑谬误，请再思考一下。',
+        ),
       ),
       _QuestionData(
         type: QuestionType.sorting,
-        title: 'Sorting Question',
-        content: 'Please arrange the following numbers in ascending order:',
+        title: _i18n(en: 'Sorting Question', zh: '排序题'),
+        content: _i18n(
+          en: 'Please arrange the following numbers in ascending order:',
+          zh: '请将下列数字按升序排列：',
+        ),
         sortingItems: ['42', '15', '8', '23', '31'],
         correctOrder: ['8', '15', '23', '31', '42'],
-        successMsg: 'Sorting correct!',
-        failMsg: 'The order is incorrect, please try again.',
+        successMsg: _i18n(en: 'Sorting correct!', zh: '排序正确！'),
+        failMsg: _i18n(
+          en: 'The order is incorrect, please try again.',
+          zh: '顺序不正确，请重试。',
+        ),
       ),
       _QuestionData(
         type: QuestionType.input,
-        title: 'Calculation',
-        content: 'If a square has a side length of 5, what is its area?',
+        title: _i18n(en: 'Calculation', zh: '计算题'),
+        content: _i18n(
+          en: 'If a square has a side length of 5, what is its area?',
+          zh: '如果正方形边长为 5，它的面积是多少？',
+        ),
         correctAnswer: '25',
-        successMsg:
-            'Absolutely correct! Square area = side × side = 5 × 5 = 25',
-        failMsg: 'Incorrect answer, remember: square area = side × side',
+        successMsg: _i18n(
+          en: 'Absolutely correct! Square area = side × side = 5 × 5 = 25',
+          zh: '完全正确！正方形面积 = 边长 × 边长 = 5 × 5 = 25。',
+        ),
+        failMsg: _i18n(
+          en: 'Incorrect answer, remember: square area = side × side',
+          zh: '答案不正确，记住：正方形面积 = 边长 × 边长。',
+        ),
       ),
       _QuestionData(
         type: QuestionType.info,
-        title: 'Congratulations!',
-        content:
-            'You have completed this lesson.\n\nKeep going, learn a little every day, and you\'ll get better and better!',
+        title: _i18n(en: 'Congratulations!', zh: '恭喜你！'),
+        content: _i18n(
+          en: 'You have completed this lesson.\n\nKeep going, learn a little every day, and you\'ll get better and better!',
+          zh: '你已经完成本节课程。\n\n继续加油，每天学一点，你会越来越好！',
+        ),
         isLast: true,
       ),
     ];

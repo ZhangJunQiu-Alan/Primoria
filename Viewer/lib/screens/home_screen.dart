@@ -7,11 +7,8 @@ import '../components/common/viewer_surface_card.dart';
 import '../providers/user_provider.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
-import '../models/daily_task_model.dart';
 import '../services/supabase_service.dart';
-import '../services/daily_task_service.dart';
 import '../theme/theme.dart';
-import '../widgets/daily_task_card.dart';
 import 'search_screen.dart';
 import 'courses_screen.dart';
 import 'profile_screen.dart';
@@ -44,9 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _chapters = [];
   Set<String> _completedLessonIds = {};
   bool _loadingHome = true;
-
-  // Gamification data
-  List<DailyTask> _dailyTasks = [];
 
   @override
   void initState() {
@@ -143,25 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadHomeData() async {
     final userProvider = context.read<UserProvider>();
     try {
-      final results = await Future.wait([
-        SupabaseService.getEnrollments().timeout(
-          const Duration(seconds: 8),
-          onTimeout: () => <Map<String, dynamic>>[],
-        ),
-        DailyTaskService.loadOrCreateTodayTasks().timeout(
-          const Duration(seconds: 8),
-          onTimeout: () => <DailyTask>[],
-        ),
-      ]);
+      final enrollments = await SupabaseService.getEnrollments().timeout(
+        const Duration(seconds: 8),
+        onTimeout: () => <Map<String, dynamic>>[],
+      );
       await userProvider.refreshStats().timeout(
         const Duration(seconds: 8),
         onTimeout: () {},
       );
 
       if (!mounted) return;
-
-      final enrollments = results[0] as List<Map<String, dynamic>>;
-      final tasks = results[1] as List<DailyTask>;
 
       Map<String, dynamic>? resolvedCourse;
       var resolvedChapters = <Map<String, dynamic>>[];
@@ -195,7 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _course = resolvedCourse;
         _chapters = resolvedChapters;
         _completedLessonIds = resolvedCompletedLessonIds;
-        _dailyTasks = tasks;
         _loadingHome = false;
       });
     } catch (error) {
@@ -205,7 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _course = null;
         _chapters = <Map<String, dynamic>>[];
         _completedLessonIds = <String>{};
-        _dailyTasks = <DailyTask>[];
         _loadingHome = false;
       });
     } finally {
@@ -313,21 +296,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   )
-                : CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
+                : LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const SizedBox(height: 4),
-                            _buildCourseHero(t),
+                            Column(
+                              children: [
+                                const SizedBox(height: 4),
+                                _buildCourseHero(t),
+                              ],
+                            ),
+                            _buildDrawerPanel(t),
                           ],
                         ),
                       ),
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: _buildDrawerPanel(t),
-                      ),
-                    ],
+                    ),
                   ),
           ),
         ],
@@ -411,6 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 8),
           Text(
@@ -588,9 +577,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
-          // ── Gamification section ──────────────────────────────
-          DailyTaskCard(tasks: _dailyTasks, t: t),
-          const SizedBox(height: 24),
           // ── Course section ────────────────────────────────────
           if (!hasCourse)
             Padding(
@@ -618,7 +604,6 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 8),
           ],
           if (!hasCourse) ...[
-            const Spacer(),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
@@ -853,10 +838,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String _courseInitials(String title) {
-    final words = title.trim().split(RegExp(r'\s+'));
+    final trimmed = title.trim();
+    if (trimmed.isEmpty) return 'PR';
+
+    final words = trimmed
+        .split(RegExp(r'\s+'))
+        .where((word) => word.isNotEmpty)
+        .toList();
     if (words.length >= 2) {
       return '${words[0][0]}${words[1][0]}'.toUpperCase();
     }
-    return title.substring(0, title.length.clamp(0, 2)).toUpperCase();
+
+    final upperBound = trimmed.length >= 2 ? 2 : 1;
+    return trimmed.substring(0, upperBound).toUpperCase();
   }
 }

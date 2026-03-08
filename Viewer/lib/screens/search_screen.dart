@@ -235,23 +235,6 @@ class _SearchScreenState extends State<SearchScreen>
               ],
             ),
           ),
-          if (_selectedSubjectName.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            Chip(
-              label: Text(
-                _selectedSubjectName,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
-                ),
-              ),
-              deleteIcon: const Icon(Icons.close_rounded, size: 16),
-              onDeleted: _selectAllSubjects,
-              backgroundColor: const Color(0xFFF8FAFC),
-              side: const BorderSide(color: Color(0xFFE2E8F0)),
-            ),
-          ],
         ],
       ),
     );

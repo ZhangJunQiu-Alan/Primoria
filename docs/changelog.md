@@ -1,5 +1,50 @@
 # Changelog
 
+## [Unreleased] - 2026-03-08 (Viewer Core I18N + UI Stability Fixes)
+
+### Summary
+- Completed core Viewer bilingual adaptation (Chinese/English) for authenticated learning flows and ensured language switch consistency with user settings.
+- Fixed multiple Viewer UX regressions on Home/Library/Auth pages (blank sections, duplicate selected subject chip, login overflow, icon contrast, scrollbar alignment).
+- Removed homepage daily task module and kept "continue learning" module behavior stable after layout adjustments.
+
+### Changed
+- `Viewer/lib/l10n/app_localizations.dart`
+  - Added/expanded localization keys used by auth/community/settings and bilingual profile options.
+- `Viewer/lib/screens/login_screen.dart`
+  - Localized login content and status/error flows.
+  - Fixed desktop split layout overflow.
+  - Updated social logos: Apple icon corrected, WeChat icon forced white for contrast.
+  - Moved scroll container structure so the right-side scrollbar aligns to the panel edge.
+- `Viewer/lib/screens/register_screen.dart`
+  - Localized registration labels/validation/terms/social section.
+  - Synchronized social logo rendering with login page.
+- `Viewer/lib/screens/profile_settings_screen.dart`
+  - Wired language option labels and session-expired messaging to localization.
+- `Viewer/lib/screens/home_screen.dart`
+  - Removed daily task block from homepage flow.
+  - Stabilized bottom "continue learning" card placement and resolved blank-content regressions from previous layout adjustments.
+- `Viewer/lib/screens/search_screen.dart`
+  - Removed duplicate selected category chip below subject tabs.
+- `Viewer/lib/screens/courses_screen.dart`
+  - Localized remaining community/find/message UI strings and dialogs.
+  - Localized seed conversation text by current language preference.
+- `Viewer/lib/screens/lesson_screen.dart`
+  - Localized fallback/demo lesson strings (question titles, hints, completion/capability fallback text).
+- `Viewer/lib/screens/lesson_result_screen.dart`
+  - Localized time-unit formatting and XP label rendering.
+- `Viewer/lib/screens/ai_tutor_screen.dart`
+  - Localized conversation/studio/notebook/dialog/action text and generation status/error messaging.
+  - Added language-aware suggested prompts.
+
+### Validation
+- `cd Viewer && flutter analyze`
+  - No new errors introduced; existing info remains:
+    - `lib/services/gemini_service.dart:3:8 depend_on_referenced_packages (http)`
+- `cd Viewer && flutter test`
+  - All tests passed.
+
+---
+
 ## [Unreleased] - 2026-03-07 (Builder Login Provider Logo Update)
 
 ### Summary

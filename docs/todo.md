@@ -1,6 +1,6 @@
 # TODO
 
-Last updated: 2026-03-06
+Last updated: 2026-03-08
 
 ## 1. High Priority
 
@@ -38,3 +38,5 @@ Last updated: 2026-03-06
 10. [x] Added centralized `AchievementDisplayService` and achievement badge asset bundle for consistent profile/wall rendering.
 11. [x] Rebuilt Viewer Settings into a multi-category settings center with section-switch panel navigation, persisted preferences, and integrated parent mode/support sections.
 12. [x] Added Builder Settings Center with category-based active-panel UX, integrated dashboard/avatar entry, and local persistence for workflow/AI/notifications/publishing/privacy preferences.
+13. [x] Fixed Viewer auth/community/home regressions: login overflow, social icon correctness/contrast, right-edge scrollbar alignment, homepage daily-task removal, and library duplicate selected subject chip cleanup.
+14. [x] Completed core Viewer bilingual adaptation (ZH/EN) across authenticated user flows (login/register/home/library/community/lesson/result/AI tutor/profile settings) with settings-driven language switching.
