@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../l10n/app_localizations.dart';
 import '../services/supabase_service.dart';
 import '../theme/design_tokens.dart';
 import 'auth_dialog.dart';
@@ -10,6 +11,8 @@ import 'builder_settings_dialog.dart';
 /// - Logged in  → shows profile photo (or initials fallback) + popup menu
 /// - Logged out → shows a person icon; tap opens auth dialog
 class UserAvatar extends StatelessWidget {
+  final BuilderLocalizations t;
+
   /// Diameter of the circle.
   final double size;
 
@@ -21,6 +24,7 @@ class UserAvatar extends StatelessWidget {
 
   const UserAvatar({
     super.key,
+    required this.t,
     this.size = 38,
     this.onSignedIn,
     this.onOpenSettings,
@@ -66,7 +70,7 @@ class UserAvatar extends StatelessWidget {
             PopupMenuItem(
               enabled: false,
               child: Text(
-                user?.email ?? 'Signed in',
+                user?.email ?? (t.isZh ? '已登录' : 'Signed in'),
                 style: const TextStyle(
                   fontSize: 13,
                   color: AppColors.neutral600,
@@ -74,34 +78,37 @@ class UserAvatar extends StatelessWidget {
               ),
             ),
             const PopupMenuDivider(),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'profile',
               child: Row(
                 children: [
                   Icon(Icons.settings_outlined, size: 18),
                   SizedBox(width: 8),
-                  Text('Profile'),
+                  Text(t.isZh ? '设置' : 'Profile'),
                 ],
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'dashboard',
               child: Row(
                 children: [
                   Icon(Icons.dashboard_outlined, size: 18),
                   SizedBox(width: 8),
-                  Text('Dashboard'),
+                  Text(t.isZh ? '控制台' : 'Dashboard'),
                 ],
               ),
             ),
             const PopupMenuDivider(),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'logout',
               child: Row(
                 children: [
                   Icon(Icons.logout, size: 18, color: AppColors.error),
                   SizedBox(width: 8),
-                  Text('Sign out', style: TextStyle(color: AppColors.error)),
+                  Text(
+                    t.isZh ? '退出登录' : 'Sign out',
+                    style: const TextStyle(color: AppColors.error),
+                  ),
                 ],
               ),
             ),
@@ -253,8 +260,8 @@ class UserAvatar extends StatelessWidget {
         onSuccess: () {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Signed in'),
+              SnackBar(
+                content: Text(t.isZh ? '登录成功' : 'Signed in'),
                 backgroundColor: AppColors.success,
               ),
             );

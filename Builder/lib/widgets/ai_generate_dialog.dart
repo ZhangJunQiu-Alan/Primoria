@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import '../services/ai_course_generator.dart';
 import '../models/course.dart';
 
 /// AI course generation dialog
 class AIGenerateDialog extends StatefulWidget {
+  final BuilderLocalizations t;
   final Function(Course course) onCourseGenerated;
 
-  const AIGenerateDialog({super.key, required this.onCourseGenerated});
+  const AIGenerateDialog({
+    super.key,
+    required this.t,
+    required this.onCourseGenerated,
+  });
 
   @override
   State<AIGenerateDialog> createState() => _AIGenerateDialogState();
@@ -22,6 +28,10 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
   // PDF data
   dynamic _pdfBytes;
   String? _pdfFileName;
+
+  String _tr(String zh, String en) {
+    return widget.t.isZh ? zh : en;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +62,12 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.md),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'AI Course Generator',
+                        _tr('AI 课程生成器', 'AI Course Generator'),
                         style: TextStyle(
                           fontSize: AppFontSize.lg,
                           fontWeight: FontWeight.w600,
@@ -65,7 +75,10 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                         ),
                       ),
                       Text(
-                        'Upload a PDF and generate a one-lesson course (max 20 blocks)',
+                        _tr(
+                          '上传 PDF 并生成单课时课程（最多 20 个模块）',
+                          'Upload a PDF and generate a one-lesson course (max 20 blocks)',
+                        ),
                         style: TextStyle(
                           fontSize: AppFontSize.sm,
                           color: AppColors.neutral500,
@@ -89,8 +102,8 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
             const SizedBox(height: AppSpacing.lg),
 
             // PDF upload area
-            const Text(
-              'PDF',
+            Text(
+              _tr('PDF 文件', 'PDF'),
               style: TextStyle(
                 fontSize: AppFontSize.sm,
                 fontWeight: FontWeight.w500,
@@ -129,7 +142,8 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      _pdfFileName ?? 'Click to choose a PDF file',
+                      _pdfFileName ??
+                          _tr('点击选择 PDF 文件', 'Click to choose a PDF file'),
                       style: TextStyle(
                         fontSize: AppFontSize.sm,
                         color: _pdfBytes != null
@@ -142,8 +156,11 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                     ),
                     if (_pdfBytes == null) ...[
                       const SizedBox(height: AppSpacing.xs),
-                      const Text(
-                        'PDF only. Recommended file size < 10MB',
+                      Text(
+                        _tr(
+                          '仅支持 PDF，建议小于 10MB',
+                          'PDF only. Recommended file size < 10MB',
+                        ),
                         style: TextStyle(
                           fontSize: AppFontSize.xs,
                           color: AppColors.neutral400,
@@ -155,8 +172,11 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
               ),
             ),
             const SizedBox(height: AppSpacing.xs),
-            const Text(
-              'Output strategy: single page, up to 20 blocks, with course-appropriate block types.',
+            Text(
+              _tr(
+                '输出策略：单页面、最多 20 个模块，自动选择适合课程的模块类型。',
+                'Output strategy: single page, up to 20 blocks, with course-appropriate block types.',
+              ),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -256,7 +276,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
               children: [
                 TextButton(
                   onPressed: _isLoading ? null : () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(_tr('取消', 'Cancel')),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 ElevatedButton.icon(
@@ -271,7 +291,11 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                           ),
                         )
                       : const Icon(Icons.auto_awesome, size: 18),
-                  label: Text(_isLoading ? 'Generating...' : 'Generate'),
+                  label: Text(
+                    _isLoading
+                        ? _tr('生成中...', 'Generating...')
+                        : _tr('生成', 'Generate'),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accent500,
                     foregroundColor: Colors.white,
@@ -318,12 +342,12 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
-      _statusMessage = 'Uploading PDF...';
+      _statusMessage = _tr('正在上传 PDF...', 'Uploading PDF...');
       _progress = 0.1;
     });
 
     setState(() {
-      _statusMessage = 'AI is analyzing the document...';
+      _statusMessage = _tr('AI 正在分析文档...', 'AI is analyzing the document...');
       _progress = 0.3;
     });
 
@@ -335,7 +359,7 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
 
     setState(() {
       _progress = 0.9;
-      _statusMessage = 'Parsing course structure...';
+      _statusMessage = _tr('正在解析课程结构...', 'Parsing course structure...');
     });
 
     if (result.success && result.course != null) {

@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+import '../../providers/language_provider.dart';
 import '../../services/supabase_service.dart';
 import '../../theme/design_tokens.dart';
 
@@ -11,14 +14,14 @@ import '../../theme/design_tokens.dart';
 ///
 /// Shows a spinner while waiting for auth completion, parses error params
 /// from the URL, and redirects to the intended destination on success.
-class AuthCallbackScreen extends StatefulWidget {
+class AuthCallbackScreen extends ConsumerStatefulWidget {
   const AuthCallbackScreen({super.key});
 
   @override
-  State<AuthCallbackScreen> createState() => _AuthCallbackScreenState();
+  ConsumerState<AuthCallbackScreen> createState() => _AuthCallbackScreenState();
 }
 
-class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
+class _AuthCallbackScreenState extends ConsumerState<AuthCallbackScreen> {
   StreamSubscription<AuthState>? _authSub;
   Timer? _timeoutTimer;
   String? _error;
@@ -40,28 +43,35 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
 
     final error = params['error'] ?? params['error_description'];
     if (error != null) {
-      setState(() => _error = _humanizeError(error));
+      final t = BuilderLocalizations(ref.read(languageProvider));
+      setState(() => _error = _humanizeError(error, t));
     }
   }
 
-  String _humanizeError(String raw) {
+  String _humanizeError(String raw, BuilderLocalizations t) {
     if (raw.contains('access_denied') || raw.contains('cancelled')) {
-      return 'Sign-in was cancelled. Please try again.';
+      return t.isZh ? '登录已取消，请重试。' : 'Sign-in was cancelled. Please try again.';
     }
     if (raw.contains('invalid_request') || raw.contains('invalid_state')) {
-      return 'The sign-in session has expired. Please try again.';
+      return t.isZh ? '登录会话已过期，请重试。' : 'The sign-in session has expired. Please try again.';
     }
     if (raw.contains('Unsupported provider') ||
         raw.contains('provider is not enabled')) {
-      return 'This login provider is not enabled in Supabase Auth.';
+      return t.isZh
+          ? 'Supabase Auth 尚未启用该登录提供商。'
+          : 'This login provider is not enabled in Supabase Auth.';
     }
     if (raw.contains('redirect_to') && raw.contains('not allowed')) {
-      return 'This callback URL is not allowed. Add it to Supabase redirect URLs.';
+      return t.isZh
+          ? '回调 URL 未被允许，请将其加入 Supabase redirect URLs。'
+          : 'This callback URL is not allowed. Add it to Supabase redirect URLs.';
     }
     if (raw.contains('server_error')) {
-      return 'The authentication server encountered an error. Please try again later.';
+      return t.isZh
+          ? '认证服务器发生错误，请稍后重试。'
+          : 'The authentication server encountered an error. Please try again later.';
     }
-    return 'Sign-in failed: $raw';
+    return t.isZh ? '登录失败：$raw' : 'Sign-in failed: $raw';
   }
 
   void _listenForAuth() {
@@ -84,7 +94,8 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
     // Timeout after 10 seconds
     _timeoutTimer = Timer(const Duration(seconds: 10), () {
       if (mounted && !SupabaseService.isLoggedIn && _error == null) {
-        setState(() => _error = 'Sign-in timed out. Please try again.');
+        final t = BuilderLocalizations(ref.read(languageProvider));
+        setState(() => _error = t.isZh ? '登录超时，请重试。' : 'Sign-in timed out. Please try again.');
       }
     });
   }
@@ -113,13 +124,16 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = BuilderLocalizations(ref.watch(languageProvider));
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Center(child: _error != null ? _buildErrorCard() : _buildLoading()),
+      body: Center(
+        child: _error != null ? _buildErrorCard(t) : _buildLoading(t),
+      ),
     );
   }
 
-  Widget _buildLoading() {
+  Widget _buildLoading(BuilderLocalizations t) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -133,7 +147,7 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(
-          'Signing in...',
+          t.isZh ? '登录中...' : 'Signing in...',
           style: TextStyle(
             fontSize: AppFontSize.lg,
             color: AppColors.neutral700,
@@ -143,7 +157,7 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
     );
   }
 
-  Widget _buildErrorCard() {
+  Widget _buildErrorCard(BuilderLocalizations t) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 420),
       margin: const EdgeInsets.all(AppSpacing.lg),
@@ -159,7 +173,7 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
           Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
           const SizedBox(height: AppSpacing.md),
           Text(
-            'Authentication Error',
+            t.isZh ? '认证错误' : 'Authentication Error',
             style: TextStyle(
               fontSize: AppFontSize.xl,
               fontWeight: FontWeight.w600,
@@ -188,7 +202,7 @@ class _AuthCallbackScreenState extends State<AuthCallbackScreen> {
                   borderRadius: BorderRadius.circular(AppBorderRadius.sm),
                 ),
               ),
-              child: const Text('Back to Home'),
+              child: Text(t.isZh ? '返回首页' : 'Back to Home'),
             ),
           ),
         ],
