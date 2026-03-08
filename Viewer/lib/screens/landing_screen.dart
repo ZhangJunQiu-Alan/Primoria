@@ -305,7 +305,7 @@ class _LandingScreenState extends State<LandingScreen>
           padding: EdgeInsets.fromLTRB(wide ? 48 : 20, 14, wide ? 48 : 20, 14),
           child: Row(
             children: [
-              const _BrandMark(size: 22, withGlow: false),
+              const _BrandMark(size: 44, withGlow: false),
               const SizedBox(width: 10),
               Text(
                 'PRIMORIA',
@@ -1565,7 +1565,7 @@ class _LandingScreenState extends State<LandingScreen>
       children: [
         Row(
           children: [
-            const _BrandMark(size: 22, withGlow: false),
+            const _BrandMark(size: 44, withGlow: false),
             const SizedBox(width: 10),
             Text(
               'PRIMORIA',
