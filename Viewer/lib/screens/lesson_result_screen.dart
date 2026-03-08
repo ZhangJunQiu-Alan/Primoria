@@ -48,6 +48,8 @@ class _LessonResultScreenState extends State<LessonResultScreen>
   Set<String> _activeDates = {};
   bool _loading = true;
 
+  AppLocalizations get _t => context.read<LanguageProvider>().t;
+
   @override
   void initState() {
     super.initState();
@@ -106,9 +108,13 @@ class _LessonResultScreenState extends State<LessonResultScreen>
   }
 
   String _formatTime(int seconds) {
-    if (seconds < 60) return '${seconds}s';
+    final t = _t;
+    if (seconds < 60) return t.isZh ? '$seconds秒' : '${seconds}s';
     final m = seconds ~/ 60;
     final s = seconds % 60;
+    if (t.isZh) {
+      return s > 0 ? '$m分 $s秒' : '$m分';
+    }
     return s > 0 ? '${m}m ${s}s' : '${m}m';
   }
 
@@ -226,7 +232,7 @@ class _LessonResultScreenState extends State<LessonResultScreen>
               color: AppColors.indigo500,
             ),
           ),
-          label: 'XP',
+          label: t.isZh ? '经验值' : 'XP',
           bg: AppColors.indigo50,
           isDark: isDark,
         ),
@@ -357,10 +363,7 @@ class _LessonResultScreenState extends State<LessonResultScreen>
             ],
           ),
           const SizedBox(height: 12),
-          StarChainWidget(
-            activeDates: _activeDates,
-            compact: true,
-          ),
+          StarChainWidget(activeDates: _activeDates, compact: true),
         ],
       ),
     );
@@ -405,7 +408,9 @@ class _LessonResultScreenState extends State<LessonResultScreen>
       child: Row(
         children: [
           Icon(
-            task.isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
+            task.isCompleted
+                ? Icons.check_circle
+                : Icons.radio_button_unchecked,
             size: 18,
             color: task.isCompleted
                 ? const Color(0xFF10B981)
@@ -425,7 +430,9 @@ class _LessonResultScreenState extends State<LessonResultScreen>
             style: TextStyle(
               fontSize: 12,
               color: task.isCompleted ? const Color(0xFF10B981) : sub,
-              fontWeight: task.isCompleted ? FontWeight.w600 : FontWeight.normal,
+              fontWeight: task.isCompleted
+                  ? FontWeight.w600
+                  : FontWeight.normal,
             ),
           ),
         ],
@@ -463,9 +470,7 @@ class _LessonResultScreenState extends State<LessonResultScreen>
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         elevation: 0,
       ),
       child: Text(
@@ -477,14 +482,10 @@ class _LessonResultScreenState extends State<LessonResultScreen>
 
   Widget _buildHomeButton(AppLocalizations t) {
     return TextButton(
-      onPressed: () =>
-          Navigator.of(context).popUntil((r) => r.isFirst),
+      onPressed: () => Navigator.of(context).popUntil((r) => r.isFirst),
       child: Text(
         t.resultGoHome,
-        style: TextStyle(
-          fontSize: 14,
-          color: AppColors.textSecondary,
-        ),
+        style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
       ),
     );
   }
@@ -521,9 +522,10 @@ class _AnimatedCounterState extends State<_AnimatedCounter>
       vsync: this,
       duration: const Duration(milliseconds: 900),
     );
-    _anim = IntTween(begin: 0, end: widget.value).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
-    );
+    _anim = IntTween(
+      begin: 0,
+      end: widget.value,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
     _ctrl.forward();
   }
 

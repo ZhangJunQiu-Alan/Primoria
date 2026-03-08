@@ -1,6 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../components/common/viewer_page_shell.dart';
+import '../l10n/app_localizations.dart';
+import '../providers/language_provider.dart';
 import '../theme/theme.dart';
 
 /// Community screen — ported from Figma FriendsScreen template
@@ -29,6 +32,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   final Map<int, String> _userCategoryById = <int, String>{};
   final Map<int, bool> _userOnlineById = <int, bool>{};
   int _nextUserId = 1;
+  AppLocalizations get _t => context.read<LanguageProvider>().t;
 
   // Galaxy user data
   static const _seedGalaxyUsers = [
@@ -80,37 +84,47 @@ class _CoursesScreenState extends State<CoursesScreen>
   ];
   static const _categoryTabs = ['All', ..._communityCategories];
 
-  static const _seedConversations = [
-    _ConversationSeed(
-      1,
-      'Sarah Connor',
-      'Python functions are so interesting!',
-      '10:30',
-      true,
-    ),
-    _ConversationSeed(
-      2,
-      'Mike Chen',
-      'Want to practice coding together tomorrow?',
-      '09:15',
-      true,
-    ),
-    _ConversationSeed(
-      3,
-      'Jessica Lee',
-      'Thank you for your help!',
-      'Yesterday',
-      false,
-    ),
-    _ConversationSeed(
-      4,
-      'Python Study Group',
-      "Alex: Today's homework is too hard...",
-      'Yesterday',
-      false,
-    ),
-    _ConversationSeed(5, 'David Park', 'See you this weekend!', 'Wed', false),
-  ];
+  List<_ConversationSeed> _seedConversations(AppLocalizations t) {
+    final yesterday = t.isZh ? '昨天' : 'Yesterday';
+    final weekday = t.isZh ? '周三' : 'Wed';
+    return [
+      _ConversationSeed(
+        1,
+        'Sarah Connor',
+        t.isZh ? 'Python 函数太有意思了！' : 'Python functions are so interesting!',
+        '10:30',
+        true,
+      ),
+      _ConversationSeed(
+        2,
+        'Mike Chen',
+        t.isZh ? '明天要不要一起练习编程？' : 'Want to practice coding together tomorrow?',
+        '09:15',
+        true,
+      ),
+      _ConversationSeed(
+        3,
+        'Jessica Lee',
+        t.isZh ? '谢谢你的帮助！' : 'Thank you for your help!',
+        yesterday,
+        false,
+      ),
+      _ConversationSeed(
+        4,
+        'Python Study Group',
+        t.isZh ? 'Alex：今天的作业太难了...' : "Alex: Today's homework is too hard...",
+        yesterday,
+        false,
+      ),
+      _ConversationSeed(
+        5,
+        'David Park',
+        t.isZh ? '周末见！' : 'See you this weekend!',
+        weekday,
+        false,
+      ),
+    ];
+  }
 
   @override
   void initState() {
@@ -128,7 +142,7 @@ class _CoursesScreenState extends State<CoursesScreen>
         _galaxyUsers[i].id,
       );
     }
-    for (final seed in _seedConversations) {
+    for (final seed in _seedConversations(_t)) {
       _conversations.add(
         _Conversation(
           id: seed.id,
@@ -158,6 +172,27 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   String _categoryForUser(_GalaxyUser user) {
     return _userCategoryById[user.id] ?? 'Technology';
+  }
+
+  String _categoryLabel(String category, AppLocalizations t) {
+    switch (category) {
+      case 'All':
+        return t.communityCategoryAll;
+      case 'Finance':
+        return t.communityCategoryFinance;
+      case 'Technology':
+        return t.communityCategoryTechnology;
+      case 'Mathematics':
+        return t.communityCategoryMathematics;
+      case 'Engineering':
+        return t.communityCategoryEngineering;
+      case 'Science':
+        return t.communityCategoryScience;
+      case 'Multilingual':
+        return t.communityCategoryMultilingual;
+      default:
+        return category;
+    }
   }
 
   IconData _iconForCategory(String category) {
@@ -193,8 +228,9 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   String _headlineForUser(_GalaxyUser user) {
-    final category = _categoryForUser(user);
-    return '$category enthusiast looking to collaborate with the community.';
+    final t = _t;
+    final category = _categoryLabel(_categoryForUser(user), t);
+    return t.communityUserHeadline(category);
   }
 
   bool _defaultOnlineForUserId(int id) {
@@ -229,12 +265,12 @@ class _CoursesScreenState extends State<CoursesScreen>
             ? 1
             : _conversations.map((c) => c.id).reduce(math.max) + 1,
         name: user.name,
-        message: 'New connection request',
+        message: _t.communityNewConnectionRequest,
         time: initialTime,
         unread: false,
         messages: [
           _ChatMessage(
-            text: 'Hi ${user.name}, great to connect here.',
+            text: _t.communityGreetingUser(user.name),
             isMine: false,
             sentAtLabel: initialTime,
           ),
@@ -251,10 +287,11 @@ class _CoursesScreenState extends State<CoursesScreen>
   void _callUser(_GalaxyUser user) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text('Calling ${user.name}...')));
+    ).showSnackBar(SnackBar(content: Text(_t.communityCallingUser(user.name))));
   }
 
   Future<void> _showUserProfileDialog(_GalaxyUser user) async {
+    final t = _t;
     final category = _categoryForUser(user);
     final username = _usernameForUser(user);
     final email = _emailForUser(user);
@@ -326,13 +363,18 @@ class _CoursesScreenState extends State<CoursesScreen>
                   ),
                 ),
                 const SizedBox(height: 12),
-                _buildProfileField('Category', category),
                 _buildProfileField(
-                  'Status',
-                  _isUserOnline(user) ? 'Online now' : 'Offline',
+                  t.communityCategoryLabel,
+                  _categoryLabel(category, t),
                 ),
-                _buildProfileField('Email', email),
-                _buildProfileField('Username', '@$username'),
+                _buildProfileField(
+                  t.communityStatusLabel,
+                  _isUserOnline(user)
+                      ? t.communityStatusOnlineNow
+                      : t.communityStatusOffline,
+                ),
+                _buildProfileField(t.communityEmailLabel, email),
+                _buildProfileField(t.communityUsernameLabel, '@$username'),
               ],
             ),
           ),
@@ -343,7 +385,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 _startChatWithUser(user);
               },
               icon: const Icon(Icons.chat_bubble_outline_rounded, size: 18),
-              label: const Text('Message'),
+              label: Text(t.communityButtonMessage),
             ),
             FilledButton.icon(
               onPressed: () {
@@ -351,7 +393,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 _callUser(user);
               },
               icon: const Icon(Icons.call_outlined, size: 18),
-              label: const Text('Call'),
+              label: Text(t.communityButtonCall),
             ),
           ],
         );
@@ -392,6 +434,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Future<void> _showAddUserDialog() async {
+    final t = _t;
     final inputController = TextEditingController();
     String? errorText;
     var selectedCategory = _selectedCategory == 'All'
@@ -404,14 +447,14 @@ class _CoursesScreenState extends State<CoursesScreen>
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: const Text('Add user'),
+              title: Text(t.communityAddUserTitle),
               content: SizedBox(
                 width: 360,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Enter an email or username.'),
+                    Text(t.communityAddUserHint),
                     const SizedBox(height: 12),
                     TextField(
                       controller: inputController,
@@ -422,7 +465,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                         }
                       },
                       decoration: InputDecoration(
-                        hintText: 'name@example.com or username',
+                        hintText: t.communityAddUserInputHint,
                         errorText: errorText,
                         border: const OutlineInputBorder(),
                       ),
@@ -430,14 +473,14 @@ class _CoursesScreenState extends State<CoursesScreen>
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       initialValue: selectedCategory,
-                      decoration: const InputDecoration(
-                        labelText: 'Category',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: t.communityCategoryLabel,
+                        border: const OutlineInputBorder(),
                       ),
                       items: _communityCategories.map((category) {
                         return DropdownMenuItem<String>(
                           value: category,
-                          child: Text(category),
+                          child: Text(_categoryLabel(category, t)),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -451,7 +494,7 @@ class _CoursesScreenState extends State<CoursesScreen>
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: const Text('Cancel'),
+                  child: Text(t.cancel),
                 ),
                 FilledButton(
                   onPressed: () {
@@ -465,7 +508,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                       dialogContext,
                     ).pop(_AddUserInput(value, selectedCategory));
                   },
-                  child: const Text('Add'),
+                  child: Text(t.communityAddButton),
                 ),
               ],
             );
@@ -478,20 +521,21 @@ class _CoursesScreenState extends State<CoursesScreen>
     if (!mounted || input == null) return;
 
     final addedUser = _addUserFromInput(input.identifier, input.category);
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Added ${addedUser.name}')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(t.communityAddedUser(addedUser.name))),
+    );
   }
 
   String? _validateAddUserInput(String input) {
+    final t = _t;
     if (input.isEmpty) {
-      return 'Please enter an email or username.';
+      return t.communityValidationInputRequired;
     }
 
     final isEmail = _isValidEmail(input);
     final isUsername = _isValidUsername(input);
     if (!isEmail && !isUsername) {
-      return 'Use a valid email or username (3-32 letters, numbers, ._-).';
+      return t.communityValidationInputInvalid;
     }
 
     final normalizedInput = input.toLowerCase();
@@ -501,7 +545,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       return nameMatches || emailMatches;
     });
     if (exists) {
-      return 'User already added.';
+      return t.communityValidationUserExists;
     }
 
     return null;
@@ -557,21 +601,22 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Future<void> _showRemoveUserDialog() async {
+    final t = _t;
     await showDialog<void>(
       context: context,
       builder: (dialogContext) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: const Text('Remove user'),
+              title: Text(t.communityRemoveUserTitle),
               content: SizedBox(
                 width: 420,
                 height: 360,
                 child: _galaxyUsers.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
-                          'No users available.',
-                          style: TextStyle(
+                          t.communityNoUsers,
+                          style: const TextStyle(
                             color: Color(0xFF64748B),
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -609,7 +654,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                               ),
                             ),
                             subtitle: Text(
-                              '${user.email ?? 'Username only'}  •  ${_categoryForUser(user)}',
+                              '${user.email ?? t.communityUsernameOnly}  •  ${_categoryLabel(_categoryForUser(user), t)}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -630,7 +675,9 @@ class _CoursesScreenState extends State<CoursesScreen>
 
                                 ScaffoldMessenger.of(this.context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Removed $removedName'),
+                                    content: Text(
+                                      t.communityRemovedUser(removedName),
+                                    ),
                                   ),
                                 );
                               },
@@ -639,9 +686,11 @@ class _CoursesScreenState extends State<CoursesScreen>
                                 size: 18,
                                 color: Color(0xFFDC2626),
                               ),
-                              label: const Text(
-                                'Remove',
-                                style: TextStyle(color: Color(0xFFDC2626)),
+                              label: Text(
+                                t.communityRemoveButton,
+                                style: const TextStyle(
+                                  color: Color(0xFFDC2626),
+                                ),
                               ),
                             ),
                           );
@@ -651,7 +700,7 @@ class _CoursesScreenState extends State<CoursesScreen>
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: const Text('Done'),
+                  child: Text(t.communityDoneButton),
                 ),
               ],
             );
@@ -698,6 +747,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildCategorySidebar() {
+    final t = context.watch<LanguageProvider>().t;
     return Container(
       width: 220,
       margin: const EdgeInsets.symmetric(vertical: 12),
@@ -709,11 +759,11 @@ class _CoursesScreenState extends State<CoursesScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Text(
-              'Categories',
-              style: TextStyle(
+              t.communityCategories,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: Color(0xFF0F172A),
@@ -754,7 +804,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                category,
+                                _categoryLabel(category, t),
                                 style: TextStyle(
                                   color: isSelected
                                       ? const Color(0xFF1D4ED8)
@@ -781,6 +831,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildInlineCategoryTabs() {
+    final t = context.watch<LanguageProvider>().t;
     return SizedBox(
       height: 54,
       child: ListView.separated(
@@ -801,7 +852,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                   ? const Color(0xFF1D4ED8)
                   : const Color(0xFF64748B),
             ),
-            label: Text(category),
+            label: Text(_categoryLabel(category, t)),
             labelStyle: TextStyle(
               color: isSelected
                   ? const Color(0xFF1D4ED8)
@@ -819,6 +870,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildConnectionStats() {
+    final t = context.watch<LanguageProvider>().t;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
@@ -842,7 +894,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Connected $_connectedUsersCount',
+                  t.communityConnected(_connectedUsersCount),
                   style: const TextStyle(
                     fontSize: 11.5,
                     color: Color(0xFF64748B),
@@ -865,7 +917,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Online $_onlineUsersCountIncludingSelf',
+                  t.communityOnline(_onlineUsersCountIncludingSelf),
                   style: const TextStyle(
                     fontSize: 11.5,
                     color: Color(0xFF16A34A),
@@ -881,6 +933,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildHeader() {
+    final t = context.watch<LanguageProvider>().t;
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 18, 24, 14),
       color: Colors.white,
@@ -936,12 +989,12 @@ class _CoursesScreenState extends State<CoursesScreen>
             child: Row(
               children: [
                 _buildViewTab(
-                  label: 'Find',
+                  label: t.communityFind,
                   selected: _view == 'find',
                   onTap: () => setState(() => _view = 'find'),
                 ),
                 _buildViewTab(
-                  label: 'Message',
+                  label: t.communityMessage,
                   selected: _view == 'message',
                   onTap: () => setState(() => _view = 'message'),
                 ),
@@ -997,6 +1050,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildFindView() {
+    final t = context.watch<LanguageProvider>().t;
     final visibleUserIndexes = _visibleGalaxyUserIndexes;
     return Container(
       decoration: const BoxDecoration(gradient: AppColors.galaxyGradient),
@@ -1020,7 +1074,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Search user',
+                  hintText: t.communitySearchUserHint,
                   hintStyle: const TextStyle(
                     color: Color(0xFF94A3B8),
                     fontSize: 14,
@@ -1058,10 +1112,10 @@ class _CoursesScreenState extends State<CoursesScreen>
                   clipBehavior: Clip.none,
                   children: [
                     if (visibleUserIndexes.isEmpty)
-                      const Center(
+                      Center(
                         child: Text(
-                          'No user found',
-                          style: TextStyle(
+                          t.communityNoUserFound,
+                          style: const TextStyle(
                             color: Color(0xFFCBD5E1),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -1070,7 +1124,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                       )
                     else
                       for (final i in visibleUserIndexes)
-                        _buildPlanet(_galaxyUsers[i], constraints),
+                        _buildPlanet(_galaxyUsers[i], constraints, t),
                   ],
                 );
               },
@@ -1095,8 +1149,8 @@ class _CoursesScreenState extends State<CoursesScreen>
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
-                  'Find',
+                child: Text(
+                  t.communityFindButton,
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
               ),
@@ -1107,7 +1161,11 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildPlanet(_GalaxyUser user, BoxConstraints constraints) {
+  Widget _buildPlanet(
+    _GalaxyUser user,
+    BoxConstraints constraints,
+    AppLocalizations t,
+  ) {
     final dotSize = _planetSize(user.size);
     final isHovered = _hoveredUserId == user.id;
     final speedFactor = 0.86 + (user.id % 5) * 0.07;
@@ -1181,7 +1239,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                             ),
                             const SizedBox(height: 1),
                             Text(
-                              _categoryForUser(user),
+                              _categoryLabel(_categoryForUser(user), t),
                               style: const TextStyle(
                                 fontSize: 11,
                                 color: Color(0xFF64748B),
@@ -1462,7 +1520,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                                 textInputAction: TextInputAction.send,
                                 onSubmitted: (_) => sendMessage(),
                                 decoration: InputDecoration(
-                                  hintText: 'Type a message',
+                                  hintText: _t.communityTypeMessageHint,
                                   hintStyle: const TextStyle(
                                     color: Color(0xFF94A3B8),
                                   ),
@@ -1520,6 +1578,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildMessageView() {
+    final t = context.watch<LanguageProvider>().t;
     final visibleConversations = _visibleConversations;
     return Container(
       color: const Color(0xFFF8FAFC),
@@ -1537,7 +1596,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
-                hintText: 'Search Box',
+                hintText: t.communitySearchBoxHint,
                 hintStyle: const TextStyle(
                   color: Color(0xFF94A3B8),
                   fontSize: 14,
@@ -1582,10 +1641,10 @@ class _CoursesScreenState extends State<CoursesScreen>
           // Conversation list
           Expanded(
             child: visibleConversations.isEmpty
-                ? const Center(
+                ? Center(
                     child: Text(
-                      'No conversation found',
-                      style: TextStyle(
+                      t.communityNoConversationFound,
+                      style: const TextStyle(
                         color: Color(0xFF94A3B8),
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -1597,6 +1656,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                     itemBuilder: (context, index) {
                       return _buildConversationItem(
                         visibleConversations[index],
+                        t,
                       );
                     },
                   ),
@@ -1607,15 +1667,16 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   void _deleteConversation(_Conversation conv) {
+    final t = _t;
     setState(() {
       _conversations.removeWhere((item) => item.id == conv.id);
     });
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Deleted chat with ${conv.name}')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(t.communityDeletedChatWith(conv.name))),
+    );
   }
 
-  Widget _buildConversationItem(_Conversation conv) {
+  Widget _buildConversationItem(_Conversation conv, AppLocalizations t) {
     return InkWell(
       onTap: () => _openConversationChat(conv),
       child: Container(
@@ -1705,7 +1766,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 ),
                 const SizedBox(height: 8),
                 IconButton(
-                  tooltip: 'Delete chat',
+                  tooltip: t.communityDeleteChatTooltip,
                   onPressed: () => _deleteConversation(conv),
                   icon: const Icon(
                     Icons.delete_outline_rounded,
