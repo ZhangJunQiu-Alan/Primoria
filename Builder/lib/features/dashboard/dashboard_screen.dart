@@ -168,7 +168,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 child: Row(
                   children: [
                     Image.asset(
-                      'assets/imgs/logo32.png',
+                      'assets/imgs/logo.png',
                       width: 32,
                       height: 32,
                       errorBuilder: (_, __, ___) =>
