@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../theme/design_tokens.dart';
 import 'app_dropdown.dart';
 
 class MatchingContentEditor extends StatelessWidget {
+  final BuilderLocalizations t;
   final MatchingContent content;
   final ValueChanged<MatchingContent> onChanged;
 
   const MatchingContentEditor({
     super.key,
+    required this.t,
     required this.content,
     required this.onChanged,
   });
+
+  String _tr(String zh, String en) {
+    return t.isZh ? zh : en;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +28,8 @@ class MatchingContentEditor extends StatelessWidget {
       children: [
         TextFormField(
           initialValue: content.question,
-          decoration: const InputDecoration(
-            labelText: 'Question',
+          decoration: InputDecoration(
+            labelText: _tr('题目', 'Question'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -30,8 +37,8 @@ class MatchingContentEditor extends StatelessWidget {
           },
         ),
         const SizedBox(height: AppSpacing.md),
-        const Text(
-          'Mode',
+        Text(
+          _tr('模式', 'Mode'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -40,11 +47,14 @@ class MatchingContentEditor extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.sm),
         SegmentedButton<String>(
-          segments: const [
-            ButtonSegment(value: MatchingContent.modeList, label: Text('List')),
+          segments: [
+            ButtonSegment(
+              value: MatchingContent.modeList,
+              label: Text(_tr('列表', 'List')),
+            ),
             ButtonSegment(
               value: MatchingContent.modeGraph,
-              label: Text('Graph'),
+              label: Text(_tr('图谱', 'Graph')),
             ),
           ],
           selected: {
@@ -69,8 +79,8 @@ class MatchingContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         TextFormField(
           initialValue: content.explanation ?? '',
-          decoration: const InputDecoration(
-            labelText: 'Explanation',
+          decoration: InputDecoration(
+            labelText: _tr('解析', 'Explanation'),
             border: OutlineInputBorder(),
           ),
           maxLines: 2,
@@ -89,12 +99,12 @@ class MatchingContentEditor extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildItemSection(
-          title: 'Left Items',
+          title: _tr('左侧项目', 'Left Items'),
           items: content.leftItems,
           onAdd: () {
             final newItem = MatchingItem(
               id: _generateItemId(content.leftItems, 'l'),
-              text: 'Item ${content.leftItems.length + 1}',
+              text: '${_tr('项目', 'Item')} ${content.leftItems.length + 1}',
             );
             onChanged(
               content.copyWith(leftItems: [...content.leftItems, newItem]),
@@ -119,16 +129,16 @@ class MatchingContentEditor extends StatelessWidget {
             );
           },
           canRemove: content.leftItems.length > 1,
-          labelPrefix: 'Left',
+          labelPrefix: _tr('左侧', 'Left'),
         ),
         const SizedBox(height: AppSpacing.md),
         _buildItemSection(
-          title: 'Right Items',
+          title: _tr('右侧项目', 'Right Items'),
           items: content.rightItems,
           onAdd: () {
             final newItem = MatchingItem(
               id: _generateItemId(content.rightItems, 'r'),
-              text: 'Match ${content.rightItems.length + 1}',
+              text: '${_tr('匹配项', 'Match')} ${content.rightItems.length + 1}',
             );
             onChanged(
               content.copyWith(rightItems: [...content.rightItems, newItem]),
@@ -153,11 +163,11 @@ class MatchingContentEditor extends StatelessWidget {
             );
           },
           canRemove: content.rightItems.length > 1,
-          labelPrefix: 'Right',
+          labelPrefix: _tr('右侧', 'Right'),
         ),
         const SizedBox(height: AppSpacing.md),
-        const Text(
-          'Correct Pairs',
+        Text(
+          _tr('正确配对', 'Correct Pairs'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -190,8 +200,8 @@ class MatchingContentEditor extends StatelessWidget {
                   child: AppDropdown<String>(
                     value: selectedRightId,
                     isDense: true,
-                    hint: const Text(
-                      'Select match',
+                    hint: Text(
+                      _tr('选择匹配项', 'Select match'),
                       style: TextStyle(color: AppColors.secondary300),
                     ),
                     items: content.rightItems
@@ -241,8 +251,11 @@ class MatchingContentEditor extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
             border: Border.all(color: AppColors.neutral200),
           ),
-          child: const Text(
-            'Graph mode supports one-to-many / many-to-many and directed edges.',
+          child: Text(
+            _tr(
+              '图谱模式支持一对多 / 多对多和有向边。',
+              'Graph mode supports one-to-many / many-to-many and directed edges.',
+            ),
             style: TextStyle(
               fontSize: AppFontSize.xs,
               color: AppColors.neutral600,
@@ -270,8 +283,8 @@ class MatchingContentEditor extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Rule conflict',
+                Text(
+                  _tr('规则冲突', 'Rule conflict'),
                   style: TextStyle(
                     fontSize: AppFontSize.xs,
                     fontWeight: FontWeight.w700,
@@ -283,7 +296,7 @@ class MatchingContentEditor extends StatelessWidget {
                   (message) => Padding(
                     padding: const EdgeInsets.only(bottom: 2),
                     child: Text(
-                      '- $message',
+                      '- ${_localizedRuleMessage(message)}',
                       style: const TextStyle(
                         fontSize: AppFontSize.xs,
                         color: AppColors.neutral700,
@@ -307,8 +320,8 @@ class MatchingContentEditor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Rules',
+        Text(
+          _tr('规则', 'Rules'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -318,12 +331,12 @@ class MatchingContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         AppDropdown<String>(
           value: relationMode,
-          labelText: 'Connection pattern',
+          labelText: _tr('连接模式', 'Connection pattern'),
           isDense: true,
-          items: const [
-            AppDropdownItem(value: 'oneToOne', label: 'One-to-one'),
-            AppDropdownItem(value: 'oneToMany', label: 'One-to-many'),
-            AppDropdownItem(value: 'manyToMany', label: 'Many-to-many'),
+          items: [
+            AppDropdownItem(value: 'oneToOne', label: _tr('一对一', 'One-to-one')),
+            AppDropdownItem(value: 'oneToMany', label: _tr('一对多', 'One-to-many')),
+            AppDropdownItem(value: 'manyToMany', label: _tr('多对多', 'Many-to-many')),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -352,9 +365,9 @@ class MatchingContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Directed (A -> B)',
+                _tr('有向边（A -> B）', 'Directed (A -> B)'),
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
@@ -385,9 +398,9 @@ class MatchingContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Nodes',
+                _tr('节点', 'Nodes'),
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
@@ -397,11 +410,11 @@ class MatchingContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline, size: 20),
-              tooltip: 'Add node',
+              tooltip: _tr('添加节点', 'Add node'),
               onPressed: () {
                 final nextNode = MatchingNode(
                   id: _generateNodeId(graphContent.nodes),
-                  label: 'Node ${graphContent.nodes.length + 1}',
+                  label: '${_tr('节点', 'Node')} ${graphContent.nodes.length + 1}',
                   x: 20 + ((graphContent.nodes.length % 4) * 20),
                   y: 20 + ((graphContent.nodes.length % 3) * 20),
                   group: MatchingNode.groupNeutral,
@@ -425,8 +438,8 @@ class MatchingContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'Add your first node to start graph matching.',
+            child: Text(
+              _tr('添加第一个节点以开始图谱匹配。', 'Add your first node to start graph matching.'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -490,8 +503,8 @@ class MatchingContentEditor extends StatelessWidget {
                     ),
                     TextFormField(
                       initialValue: node.label,
-                      decoration: const InputDecoration(
-                        labelText: 'Label',
+                      decoration: InputDecoration(
+                        labelText: _tr('标签', 'Label'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -508,20 +521,20 @@ class MatchingContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     AppDropdown<String>(
                       value: node.group,
-                      labelText: 'Group',
+                      labelText: _tr('分组', 'Group'),
                       isDense: true,
-                      items: const [
+                      items: [
                         AppDropdownItem(
                           value: MatchingNode.groupLeft,
-                          label: 'left',
+                          label: _tr('左侧', 'left'),
                         ),
                         AppDropdownItem(
                           value: MatchingNode.groupRight,
-                          label: 'right',
+                          label: _tr('右侧', 'right'),
                         ),
                         AppDropdownItem(
                           value: MatchingNode.groupNeutral,
-                          label: 'neutral',
+                          label: _tr('中立', 'neutral'),
                         ),
                       ],
                       onChanged: (value) {
@@ -590,9 +603,9 @@ class MatchingContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Edges',
+                _tr('连线', 'Edges'),
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
@@ -602,7 +615,7 @@ class MatchingContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline, size: 20),
-              tooltip: 'Add edge',
+              tooltip: _tr('添加连线', 'Add edge'),
               onPressed: nodeIds.length < 2
                   ? null
                   : () {
@@ -634,8 +647,8 @@ class MatchingContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'Add graph edges to define correct connections.',
+            child: Text(
+              _tr('添加图谱连线来定义正确连接。', 'Add graph edges to define correct connections.'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -660,7 +673,7 @@ class MatchingContentEditor extends StatelessWidget {
                             value: nodeIds.contains(edge.from)
                                 ? edge.from
                                 : null,
-                            labelText: 'From',
+                            labelText: _tr('起点', 'From'),
                             isDense: true,
                             items: nodeIds
                                 .map(
@@ -687,7 +700,7 @@ class MatchingContentEditor extends StatelessWidget {
                         Expanded(
                           child: AppDropdown<String>(
                             value: nodeIds.contains(edge.to) ? edge.to : null,
-                            labelText: 'To',
+                            labelText: _tr('终点', 'To'),
                             isDense: true,
                             items: nodeIds
                                 .map(
@@ -739,8 +752,8 @@ class MatchingContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: edge.label ?? '',
-                      decoration: const InputDecoration(
-                        labelText: 'Label (optional)',
+                      decoration: InputDecoration(
+                        labelText: _tr('标签（可选）', 'Label (optional)'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -760,9 +773,9 @@ class MatchingContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     Row(
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: Text(
-                            'Directed override',
+                            _tr('有向覆盖', 'Directed override'),
                             style: TextStyle(
                               fontSize: AppFontSize.xs,
                               color: AppColors.neutral500,
@@ -974,6 +987,33 @@ class MatchingContentEditor extends StatelessWidget {
     }
 
     return messages.toList();
+  }
+
+  String _localizedRuleMessage(String message) {
+    if (!t.isZh) return message;
+
+    final duplicate = RegExp(r'^Duplicate edge (.+) -> (.+)$').firstMatch(
+      message,
+    );
+    if (duplicate != null) {
+      return '重复连线 ${duplicate.group(1)} -> ${duplicate.group(2)}';
+    }
+
+    final outMany = RegExp(
+      r'^Node (.+) has multiple outgoing edges in one-to-one mode$',
+    ).firstMatch(message);
+    if (outMany != null) {
+      return '节点 ${outMany.group(1)} 在一对一模式下存在多个出边';
+    }
+
+    final inMany = RegExp(
+      r'^Node (.+) has multiple incoming edges but many-to-one is disabled$',
+    ).firstMatch(message);
+    if (inMany != null) {
+      return '节点 ${inMany.group(1)} 存在多个入边，但当前不允许多对一';
+    }
+
+    return message;
   }
 }
 

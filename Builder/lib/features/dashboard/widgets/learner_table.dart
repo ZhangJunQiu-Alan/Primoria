@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class LearnerTableRow {
   const LearnerTableRow({
     required this.id,
@@ -25,6 +27,7 @@ class LearnerTableRow {
 class LearnerTable extends StatelessWidget {
   const LearnerTable({
     super.key,
+    required this.t,
     required this.rows,
     required this.selectedIds,
     required this.onToggleRow,
@@ -35,6 +38,7 @@ class LearnerTable extends StatelessWidget {
     required this.onPageChanged,
   });
 
+  final BuilderLocalizations t;
   final List<LearnerTableRow> rows;
   final Set<String> selectedIds;
   final ValueChanged<String> onToggleRow;
@@ -43,6 +47,13 @@ class LearnerTable extends StatelessWidget {
   final int total;
   final int pageSize;
   final ValueChanged<int> onPageChanged;
+
+  String get _labelUser => t.isZh ? '用户' : 'User';
+  String get _labelRegistered => t.isZh ? '注册时间' : 'Registered';
+  String get _labelCourses => t.isZh ? '课程数' : 'Courses';
+  String get _labelStudy => t.isZh ? '学习时长' : 'Study Time';
+  String get _labelLastActive => t.isZh ? '最近活跃' : 'Last Active';
+  String get _labelTags => t.isZh ? '标签' : 'Tags';
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +79,13 @@ class LearnerTable extends StatelessWidget {
         children: [
           for (final row in rows)
             _LearnerMobileCard(
+              t: t,
               row: row,
               selected: selectedIds.contains(row.id),
               onToggle: () => onToggleRow(row.id),
             ),
           _TablePager(
+            t: t,
             page: page,
             total: total,
             pageSize: pageSize,
@@ -90,14 +103,14 @@ class LearnerTable extends StatelessWidget {
             headingRowHeight: 42,
             columnSpacing: 24,
             horizontalMargin: 12,
-            columns: const [
-              DataColumn(label: SizedBox(width: 36)),
-              DataColumn(label: Text('User')),
-              DataColumn(label: Text('Registered')),
-              DataColumn(label: Text('Courses')),
-              DataColumn(label: Text('Study Time')),
-              DataColumn(label: Text('Last Active')),
-              DataColumn(label: Text('Tags')),
+            columns: [
+              const DataColumn(label: SizedBox(width: 36)),
+              DataColumn(label: Text(_labelUser)),
+              DataColumn(label: Text(_labelRegistered)),
+              DataColumn(label: Text(_labelCourses)),
+              DataColumn(label: Text(_labelStudy)),
+              DataColumn(label: Text(_labelLastActive)),
+              DataColumn(label: Text(_labelTags)),
             ],
             rows: [
               for (final row in rows)
@@ -142,7 +155,13 @@ class LearnerTable extends StatelessWidget {
                     ),
                     DataCell(Text(row.registeredAt)),
                     DataCell(Text('${row.learnedCourses}')),
-                    DataCell(Text('${row.totalStudyMinutes} min')),
+                    DataCell(
+                      Text(
+                        t.isZh
+                            ? '${row.totalStudyMinutes} 分钟'
+                            : '${row.totalStudyMinutes} min',
+                      ),
+                    ),
                     DataCell(Text(row.lastActive)),
                     DataCell(
                       Wrap(
@@ -177,6 +196,7 @@ class LearnerTable extends StatelessWidget {
           ),
         ),
         _TablePager(
+          t: t,
           page: page,
           total: total,
           pageSize: pageSize,
@@ -189,11 +209,13 @@ class LearnerTable extends StatelessWidget {
 
 class _LearnerMobileCard extends StatelessWidget {
   const _LearnerMobileCard({
+    required this.t,
     required this.row,
     required this.selected,
     required this.onToggle,
   });
 
+  final BuilderLocalizations t;
   final LearnerTableRow row;
   final bool selected;
   final VoidCallback onToggle;
@@ -246,10 +268,13 @@ class _LearnerMobileCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          _KvLine(label: 'Registered', value: row.registeredAt),
-          _KvLine(label: 'Courses', value: '${row.learnedCourses}'),
-          _KvLine(label: 'Study', value: '${row.totalStudyMinutes} min'),
-          _KvLine(label: 'Last Active', value: row.lastActive),
+          _KvLine(label: t.isZh ? '注册时间' : 'Registered', value: row.registeredAt),
+          _KvLine(label: t.isZh ? '课程数' : 'Courses', value: '${row.learnedCourses}'),
+          _KvLine(
+            label: t.isZh ? '学习时长' : 'Study',
+            value: t.isZh ? '${row.totalStudyMinutes} 分钟' : '${row.totalStudyMinutes} min',
+          ),
+          _KvLine(label: t.isZh ? '最近活跃' : 'Last Active', value: row.lastActive),
           const SizedBox(height: 6),
           Wrap(
             spacing: 6,
@@ -316,12 +341,14 @@ class _KvLine extends StatelessWidget {
 
 class _TablePager extends StatelessWidget {
   const _TablePager({
+    required this.t,
     required this.page,
     required this.total,
     required this.pageSize,
     required this.onPageChanged,
   });
 
+  final BuilderLocalizations t;
   final int page;
   final int total;
   final int pageSize;
@@ -336,7 +363,9 @@ class _TablePager extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Page ${page + 1} / $totalPages',
+            t.isZh
+                ? '第 ${page + 1} / $totalPages 页'
+                : 'Page ${page + 1} / $totalPages',
             style: const TextStyle(fontSize: 12, color: Color(0xFF73879E)),
           ),
           const Spacer(),

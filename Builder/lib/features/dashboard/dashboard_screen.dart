@@ -248,6 +248,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         UserAvatar(
+          t: t,
           size: 57,
           onSignedIn: () {
             _loadCourses();
@@ -499,8 +500,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                                 ).withValues(alpha: 0.5),
                               ),
                             ),
-                            child: const Text(
-                              'Beta',
+                            child: Text(
+                              t.isZh ? '测试版' : 'Beta',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
@@ -1268,7 +1269,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             setDialogState(
                               () => hoursError = t.isZh
                                   ? '请输入有效数字'
-                                  : 'Enter a valid number',
+                                  : (t.isZh
+                                        ? '请输入有效数字'
+                                        : 'Enter a valid number'),
                             );
                             return;
                           }
@@ -1283,7 +1286,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             setDialogState(
                               () => priceError = t.isZh
                                   ? '请输入有效价格'
-                                  : 'Enter a valid price',
+                                  : (t.isZh
+                                        ? '请输入有效价格'
+                                        : 'Enter a valid price'),
                             );
                             return;
                           }
@@ -1510,8 +1515,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     String rawTitle, {
     required String courseTitle,
   }) {
+    final t = BuilderLocalizations(ref.read(languageProvider));
     final cleaned = rawTitle.trim();
-    if (cleaned.isEmpty) return 'Untitled lesson';
+    if (cleaned.isEmpty) return t.isZh ? '未命名课时' : 'Untitled lesson';
 
     final base = courseTitle.trim();
     if (base.isEmpty) return cleaned;
@@ -1827,7 +1833,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             setDialogState(
                               () => hoursError = t.isZh
                                   ? '请输入有效数字'
-                                  : 'Enter a valid number',
+                                  : (t.isZh
+                                        ? '请输入有效数字'
+                                        : 'Enter a valid number'),
                             );
                             return;
                           }
@@ -1842,7 +1850,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             setDialogState(
                               () => priceError = t.isZh
                                   ? '请输入有效价格'
-                                  : 'Enter a valid price',
+                                  : (t.isZh
+                                        ? '请输入有效价格'
+                                        : 'Enter a valid price'),
                             );
                             return;
                           }

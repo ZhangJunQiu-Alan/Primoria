@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/models.dart';
 import '../../theme/design_tokens.dart';
 
@@ -11,12 +12,14 @@ class FunctionFlowBlockWidget extends StatefulWidget {
   final FunctionFlowContent content;
   final bool showControls;
   final bool showHeader;
+  final BuilderLocalizations? t;
 
   const FunctionFlowBlockWidget({
     super.key,
     required this.content,
     this.showControls = true,
     this.showHeader = true,
+    this.t,
   });
 
   @override
@@ -35,6 +38,8 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
   bool _isPlaying = false;
   String? _selectedNodeId;
   String? _hoveredNodeId;
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   @override
   void initState() {
@@ -238,7 +243,7 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
                 Expanded(
                   child: Text(
                     widget.content.title.isEmpty
-                        ? 'Function Flow'
+                        ? _tr('函数流程', 'Function Flow')
                         : widget.content.title,
                     style: const TextStyle(
                       fontSize: AppFontSize.sm,
@@ -248,7 +253,7 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
                   ),
                 ),
                 Text(
-                  'Step ${_currentStep >= 0 ? _currentStep + 1 : 0}/$totalSteps',
+                  '${_tr('步骤', 'Step')} ${_currentStep >= 0 ? _currentStep + 1 : 0}/$totalSteps',
                   key: const Key('function_flow_step_indicator'),
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
@@ -349,22 +354,26 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
                   icon: Icon(
                     _isPlaying ? Icons.pause_circle_outline : Icons.play_circle,
                   ),
-                  label: Text(_isPlaying ? 'Pause' : 'Play'),
+                  label: Text(
+                    _isPlaying ? _tr('暂停', 'Pause') : _tr('播放', 'Play'),
+                  ),
                 ),
                 OutlinedButton.icon(
                   key: const Key('function_flow_step'),
                   onPressed: totalSteps == 0 ? null : _stepForward,
                   icon: const Icon(Icons.skip_next),
-                  label: const Text('Step'),
+                  label: Text(_tr('前进', 'Step')),
                 ),
                 OutlinedButton.icon(
                   key: const Key('function_flow_reset'),
                   onPressed: totalSteps == 0 ? null : _reset,
                   icon: const Icon(Icons.restart_alt),
-                  label: const Text('Reset'),
+                  label: Text(_tr('重置', 'Reset')),
                 ),
                 Text(
-                  '${widget.content.style.stepDurationMs} ms/step',
+                  widget.t?.isZh == true
+                      ? '${widget.content.style.stepDurationMs} 毫秒/步'
+                      : '${widget.content.style.stepDurationMs} ms/step',
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
                     color: AppColors.neutral500,
@@ -381,9 +390,12 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
   Widget _buildSelectionPanel(_ResolvedFlowStep? activeStep) {
     final node = _selectedNode;
     if (node == null) {
-      return const Text(
-        'Tap a node to inspect details.',
-        style: TextStyle(fontSize: AppFontSize.xs, color: AppColors.neutral500),
+      return Text(
+        _tr('点击节点查看详情。', 'Tap a node to inspect details.'),
+        style: const TextStyle(
+          fontSize: AppFontSize.xs,
+          color: AppColors.neutral500,
+        ),
       );
     }
 
@@ -419,7 +431,7 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
                   borderRadius: BorderRadius.circular(AppBorderRadius.sm),
                 ),
                 child: Text(
-                  node.kind,
+                  _nodeKindLabel(node.kind),
                   style: TextStyle(
                     fontSize: AppFontSize.xs,
                     fontWeight: FontWeight.w600,
@@ -431,7 +443,7 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            'Node ID: ${node.id}',
+            '${_tr('节点 ID', 'Node ID')}: ${node.id}',
             style: const TextStyle(
               fontSize: AppFontSize.xs,
               color: AppColors.neutral500,
@@ -451,7 +463,7 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
           if (activeStep?.note?.trim().isNotEmpty == true) ...[
             const SizedBox(height: AppSpacing.xs),
             Text(
-              'Current step: ${activeStep!.note}',
+              '${_tr('当前步骤', 'Current step')}: ${activeStep!.note}',
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: _themePrimaryColor(),
@@ -537,6 +549,18 @@ class _FunctionFlowBlockWidgetState extends State<FunctionFlowBlockWidget>
       case FunctionFlowNode.kindFunction:
       default:
         return _themePrimaryColor();
+    }
+  }
+
+  String _nodeKindLabel(String kind) {
+    switch (kind) {
+      case FunctionFlowNode.kindStart:
+        return _tr('开始', 'Start');
+      case FunctionFlowNode.kindEnd:
+        return _tr('结束', 'End');
+      case FunctionFlowNode.kindFunction:
+      default:
+        return _tr('函数', 'Function');
     }
   }
 }

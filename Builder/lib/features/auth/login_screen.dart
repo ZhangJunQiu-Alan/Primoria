@@ -236,9 +236,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
 
                 // Divider
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
-                  child: _OrDivider(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: _OrDivider(t: t),
                 ),
 
                 // Email toggle button
@@ -372,7 +372,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   )
                 : Text(
-                    isForgot ? t.loginResetSent : t.loginSignInButton,
+                    isForgot
+                        ? (t.isZh ? '发送重置链接' : 'Send reset link')
+                        : t.loginSignInButton,
                   ),
           ),
         ),
@@ -736,7 +738,9 @@ class _SocialButtonState extends State<_SocialButton> {
 // ─── Or divider ──────────────────────────────────────────────────
 
 class _OrDivider extends StatelessWidget {
-  const _OrDivider();
+  final BuilderLocalizations t;
+
+  const _OrDivider({required this.t});
 
   @override
   Widget build(BuildContext context) {
@@ -746,7 +750,7 @@ class _OrDivider extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'or',
+            t.isZh ? '或' : 'or',
             style: const TextStyle(fontSize: 13, color: Color(0xFF9CA3AF)),
           ),
         ),

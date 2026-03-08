@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import '../models/models.dart';
 import '../providers/builder_state.dart';
@@ -10,7 +11,9 @@ import 'block_widgets/block_wrapper.dart';
 
 /// Center canvas area - display and edit blocks
 class BuilderCanvas extends ConsumerStatefulWidget {
-  const BuilderCanvas({super.key});
+  final BuilderLocalizations t;
+
+  const BuilderCanvas({super.key, required this.t});
 
   @override
   ConsumerState<BuilderCanvas> createState() => _BuilderCanvasState();
@@ -138,6 +141,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: BlockWrapper(
                       block: block,
+                      t: widget.t,
                       isSelected: isSelected,
                       dragHandle: _buildDragHandle(index),
                       onTap: () {
@@ -178,10 +182,11 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   }
 
   Widget _buildDragHandle(int index) {
+    final t = widget.t;
     return ReorderableDragStartListener(
       index: index,
       child: Tooltip(
-        message: 'Drag to reorder',
+        message: t.isZh ? '拖拽调整顺序' : 'Drag to reorder',
         child: Container(
           constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
           decoration: BoxDecoration(
@@ -200,6 +205,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   }
 
   Widget _buildInsertionIndicator() {
+    final t = widget.t;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
@@ -223,9 +229,9 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.primary300),
             ),
-            child: const Text(
-              'Drop here',
-              style: TextStyle(
+            child: Text(
+              t.isZh ? '放置到这里' : 'Drop here',
+              style: const TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.primary600,
                 fontWeight: FontWeight.w600,
@@ -246,6 +252,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   }
 
   Widget _buildEmptyState(bool isDragOver) {
+    final t = widget.t;
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 520),
@@ -280,8 +287,8 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
             const SizedBox(height: AppSpacing.md),
             Text(
               isDragOver
-                  ? 'Drop block to add it here'
-                  : 'Start building this lesson',
+                  ? (t.isZh ? '拖到这里添加模块' : 'Drop block to add it here')
+                  : (t.isZh ? '开始搭建这一课' : 'Start building this lesson'),
               style: TextStyle(
                 fontSize: AppFontSize.lg,
                 fontWeight: FontWeight.w700,
@@ -291,7 +298,9 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Use the block library on the left, then select any block to refine its settings on the right.',
+              t.isZh
+                  ? '先从左侧模块库拖入内容，再在右侧面板中细化属性。'
+                  : 'Use the block library on the left, then select any block to refine its settings on the right.',
               style: TextStyle(
                 fontSize: AppFontSize.sm,
                 color: isDragOver ? AppColors.primary500 : AppColors.neutral500,
@@ -306,6 +315,7 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   }
 
   Widget _buildCanvasHeader(int blockCount) {
+    final t = widget.t;
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Container(
@@ -335,8 +345,8 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Lesson Canvas',
+                  Text(
+                    t.isZh ? '课时画布' : 'Lesson Canvas',
                     style: TextStyle(
                       fontSize: AppFontSize.md,
                       fontWeight: FontWeight.w700,
@@ -345,7 +355,9 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '$blockCount block${blockCount == 1 ? '' : 's'} in this lesson',
+                    t.isZh
+                        ? '本课共 $blockCount 个模块'
+                        : '$blockCount block${blockCount == 1 ? '' : 's'} in this lesson',
                     style: const TextStyle(
                       fontSize: AppFontSize.sm,
                       color: AppColors.neutral500,
@@ -364,8 +376,8 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                 borderRadius: BorderRadius.circular(AppBorderRadius.pill),
                 border: Border.all(color: AppColors.neutral200),
               ),
-              child: const Text(
-                'Drag to reorder',
+              child: Text(
+                t.isZh ? '拖拽排序' : 'Drag to reorder',
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
