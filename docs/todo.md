@@ -1,6 +1,6 @@
 # TODO
 
-Last updated: 2026-03-08
+Last updated: 2026-03-08 (rev 2)
 
 ## 1. High Priority
 
@@ -42,3 +42,7 @@ Last updated: 2026-03-08
 14. [x] Completed core Viewer bilingual adaptation (ZH/EN) across authenticated user flows (login/register/home/library/community/lesson/result/AI tutor/profile settings) with settings-driven language switching.
 15. [x] Completed full Builder bilingual adaptation (ZH/EN) across auth, dashboard, builder canvas, viewer preview, and interactive block widgets with settings-driven language switching.
 16. [x] Added Viewer landing-page bilingual adaptation to keep public-entry copy fully language-consistent.
+17. [x] Redesigned Viewer landing page (learner-focused, 11 sections, floating hero mockup, responsive 980px breakpoint, removed all Builder references).
+18. [x] Redesigned Viewer login screen (two-panel desktop layout, social OAuth: Google/Apple/WeChat, animated inputs, dark-mode fix, brand-asset logos).
+19. [x] Redesigned Viewer register screen (mirrored layout, username field, password strength bar, animated terms checkbox, stats row in brand panel).
+20. [x] Migrated GitHub Pages from hackathon/ to Viewer app; removed hackathon/ project from repo; preserved primoria.dpdns.org via CNAME.
