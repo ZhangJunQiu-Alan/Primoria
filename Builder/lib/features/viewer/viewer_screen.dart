@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../l10n/app_localizations.dart';
+import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../providers/course_provider.dart';
 import '../../models/models.dart';
@@ -17,6 +19,9 @@ import '../../widgets/block_widgets/code_execution_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
 import '../../widgets/block_widgets/function_flow_block_widget.dart';
 import '../../widgets/block_widgets/html_animation_widget.dart';
+
+String _viewerTr(BuilderLocalizations t, String zh, String en) =>
+    t.isZh ? zh : en;
 
 class ViewerScreen extends ConsumerStatefulWidget {
   final String? courseId;
@@ -44,6 +49,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
   @override
   Widget build(BuildContext context) {
     final course = ref.watch(courseProvider);
+    final t = BuilderLocalizations(ref.watch(languageProvider));
     final lessons = course.lessons;
     final resolvedLessonIndex =
         (widget.lessonIndex != null &&
@@ -62,7 +68,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
         appBar: AppBar(
           title: Text(
             course.metadata.title.isEmpty
-                ? 'Course Preview'
+                ? _viewerTr(t, '课程预览', 'Course Preview')
                 : course.metadata.title,
           ),
           leading: IconButton(
@@ -105,7 +111,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
           ],
         ),
         body: previewLessons.isEmpty
-            ? _buildEmptyState()
+            ? _buildEmptyState(t)
             : Column(
                 children: [
                   // Lesson tabs
@@ -121,15 +127,19 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
                             .asMap()
                             .entries
                             .map(
-                              (entry) => Tab(text: 'Lesson ${entry.key + 1}'),
+                              (entry) => Tab(
+                                text: t.isZh
+                                    ? '第 ${entry.key + 1} 课'
+                                    : 'Lesson ${entry.key + 1}',
+                              ),
                             )
                             .toList(),
                       ),
                     ),
                   Expanded(
                     child: _viewMode == 'desktop'
-                        ? _buildDesktopLayout(previewLessons)
-                        : _buildMobileLayout(previewLessons),
+                        ? _buildDesktopLayout(previewLessons, t)
+                        : _buildMobileLayout(previewLessons, t),
                   ),
                 ],
               ),
@@ -137,7 +147,10 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     );
   }
 
-  Widget _buildDesktopLayout(List<CourseLesson> previewLessons) {
+  Widget _buildDesktopLayout(
+    List<CourseLesson> previewLessons,
+    BuilderLocalizations t,
+  ) {
     return Container(
       color: const Color.fromRGBO(245, 246, 248, 1),
       child: TabBarView(
@@ -167,7 +180,7 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
                               ),
                             ],
                           ),
-                          child: _InteractiveLessonView(lesson: lesson),
+                          child: _InteractiveLessonView(lesson: lesson, t: t),
                         ),
                       ),
                     ),
@@ -180,7 +193,10 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     );
   }
 
-  Widget _buildMobileLayout(List<CourseLesson> previewLessons) {
+  Widget _buildMobileLayout(
+    List<CourseLesson> previewLessons,
+    BuilderLocalizations t,
+  ) {
     return Center(
       child: Container(
         width: 375,
@@ -206,10 +222,10 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
               Container(
                 height: 44,
                 color: AppColors.primary500,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'Primoria Preview',
-                    style: TextStyle(
+                    _viewerTr(t, 'Primoria 预览', 'Primoria Preview'),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: AppFontSize.xs,
                       fontWeight: FontWeight.w600,
@@ -221,7 +237,10 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
               Expanded(
                 child: TabBarView(
                   children: previewLessons
-                      .map((lesson) => _InteractiveLessonView(lesson: lesson))
+                      .map(
+                        (lesson) =>
+                            _InteractiveLessonView(lesson: lesson, t: t),
+                      )
                       .toList(),
                 ),
               ),
@@ -247,25 +266,29 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     );
   }
 
-  Widget _buildEmptyState() {
-    return const Center(
+  Widget _buildEmptyState(BuilderLocalizations t) {
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.visibility, size: 80, color: AppColors.primary500),
-          SizedBox(height: AppSpacing.lg),
+          const Icon(Icons.visibility, size: 80, color: AppColors.primary500),
+          const SizedBox(height: AppSpacing.lg),
           Text(
-            'Course Preview',
-            style: TextStyle(
+            _viewerTr(t, '课程预览', 'Course Preview'),
+            style: const TextStyle(
               fontSize: AppFontSize.xxl,
               fontWeight: FontWeight.bold,
               color: AppColors.neutral800,
             ),
           ),
-          SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Text(
-            'No course content yet. Create one in Builder first.',
-            style: TextStyle(
+            _viewerTr(
+              t,
+              '暂无课程内容，请先在 Builder 中创建。',
+              'No course content yet. Create one in Builder first.',
+            ),
+            style: const TextStyle(
               fontSize: AppFontSize.md,
               color: AppColors.neutral500,
             ),
@@ -318,8 +341,9 @@ class _ViewportButton extends StatelessWidget {
 // ---------------------------------------------------------------------------
 class _InteractiveLessonView extends StatefulWidget {
   final CourseLesson lesson;
+  final BuilderLocalizations t;
 
-  const _InteractiveLessonView({required this.lesson});
+  const _InteractiveLessonView({required this.lesson, required this.t});
 
   @override
   State<_InteractiveLessonView> createState() => _InteractiveLessonViewState();
@@ -420,9 +444,9 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [
               if (blocks.isEmpty)
-                const Text(
-                  'This page is empty.',
-                  style: TextStyle(
+                Text(
+                  _viewerTr(widget.t, '此页面暂无内容。', 'This page is empty.'),
+                  style: const TextStyle(
                     fontSize: AppFontSize.sm,
                     color: AppColors.neutral500,
                   ),
@@ -442,6 +466,7 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
                     child: _InteractiveBlockPreview(
                       key: ValueKey('block_$idx'),
                       block: block,
+                      t: widget.t,
                       checkTrigger: _checkTrigger,
                       onAnswered: (correct) => _onBlockAnswered(idx, correct),
                     ),
@@ -479,7 +504,7 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  child: const Text('Check'),
+                  child: Text(_viewerTr(widget.t, '检查', 'Check')),
                 ),
               ),
             ),
@@ -494,12 +519,14 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
 // ---------------------------------------------------------------------------
 class _InteractiveBlockPreview extends StatelessWidget {
   final Block block;
+  final BuilderLocalizations t;
   final ValueNotifier<int> checkTrigger;
   final ValueChanged<bool> onAnswered;
 
   const _InteractiveBlockPreview({
     super.key,
     required this.block,
+    required this.t,
     required this.checkTrigger,
     required this.onAnswered,
   });
@@ -584,36 +611,42 @@ class _InteractiveBlockPreview extends StatelessWidget {
         );
       case BlockType.codePlayground:
         final content = block.content as CodePlaygroundContent;
-        return CodePlaygroundWidget(content: content);
+        return CodePlaygroundWidget(content: content, t: t);
       case BlockType.codeExecution:
         return CodeExecutionBlockWidget(
           content: block.content as CodeExecutionContent,
+          t: t,
         );
       case BlockType.functionFlow:
         return FunctionFlowBlockWidget(
           content: block.content as FunctionFlowContent,
+          t: t,
         );
       case BlockType.multipleChoice:
         return _InteractiveMultipleChoice(
           content: block.content as MultipleChoiceContent,
+          t: t,
           checkTrigger: checkTrigger,
           onAnswered: onAnswered,
         );
       case BlockType.trueFalse:
         return _InteractiveTrueFalse(
           content: block.content as TrueFalseContent,
+          t: t,
           checkTrigger: checkTrigger,
           onAnswered: onAnswered,
         );
       case BlockType.fillBlank:
         return _InteractiveFillBlank(
           content: block.content as FillBlankContent,
+          t: t,
           checkTrigger: checkTrigger,
           onAnswered: onAnswered,
         );
       case BlockType.matching:
         return _MatchingWidget(
           content: block.content as MatchingContent,
+          t: t,
           checkTrigger: checkTrigger,
           onAnswered: onAnswered,
         );
@@ -738,11 +771,13 @@ class _InteractiveBlockPreview extends StatelessWidget {
 // ---------------------------------------------------------------------------
 class _InteractiveMultipleChoice extends StatefulWidget {
   final MultipleChoiceContent content;
+  final BuilderLocalizations t;
   final ValueNotifier<int> checkTrigger;
   final ValueChanged<bool> onAnswered;
 
   const _InteractiveMultipleChoice({
     required this.content,
+    required this.t,
     required this.checkTrigger,
     required this.onAnswered,
   });
@@ -815,9 +850,9 @@ class _InteractiveMultipleChoiceState
           ),
           if (widget.content.multiSelect) ...[
             const SizedBox(height: AppSpacing.xs),
-            const Text(
-              'Select all that apply',
-              style: TextStyle(
+            Text(
+              _viewerTr(widget.t, '可多选', 'Select all that apply'),
+              style: const TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
               ),
@@ -900,7 +935,7 @@ class _InteractiveMultipleChoiceState
           }),
           if (_submitted) ...[
             const SizedBox(height: AppSpacing.sm),
-            _FeedbackBanner(isCorrect: _isCorrect),
+            _FeedbackBanner(isCorrect: _isCorrect, t: widget.t),
             if (widget.content.explanation != null &&
                 widget.content.explanation!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -918,11 +953,13 @@ class _InteractiveMultipleChoiceState
 // ---------------------------------------------------------------------------
 class _InteractiveTrueFalse extends StatefulWidget {
   final TrueFalseContent content;
+  final BuilderLocalizations t;
   final ValueNotifier<int> checkTrigger;
   final ValueChanged<bool> onAnswered;
 
   const _InteractiveTrueFalse({
     required this.content,
+    required this.t,
     required this.checkTrigger,
     required this.onAnswered,
   });
@@ -988,14 +1025,14 @@ class _InteractiveTrueFalseState extends State<_InteractiveTrueFalse> {
           const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              _buildOptionButton('True', true),
+              _buildOptionButton(_viewerTr(widget.t, '正确', 'True'), true),
               const SizedBox(width: AppSpacing.sm),
-              _buildOptionButton('False', false),
+              _buildOptionButton(_viewerTr(widget.t, '错误', 'False'), false),
             ],
           ),
           if (_submitted) ...[
             const SizedBox(height: AppSpacing.sm),
-            _FeedbackBanner(isCorrect: _isCorrect),
+            _FeedbackBanner(isCorrect: _isCorrect, t: widget.t),
             if (widget.content.explanation != null &&
                 widget.content.explanation!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -1060,11 +1097,13 @@ class _InteractiveTrueFalseState extends State<_InteractiveTrueFalse> {
 // ---------------------------------------------------------------------------
 class _InteractiveFillBlank extends StatefulWidget {
   final FillBlankContent content;
+  final BuilderLocalizations t;
   final ValueNotifier<int> checkTrigger;
   final ValueChanged<bool> onAnswered;
 
   const _InteractiveFillBlank({
     required this.content,
+    required this.t,
     required this.checkTrigger,
     required this.onAnswered,
   });
@@ -1127,7 +1166,7 @@ class _InteractiveFillBlankState extends State<_InteractiveFillBlank> {
           if (widget.content.hint != null &&
               widget.content.hint!.isNotEmpty) ...[
             Text(
-              'Hint: ${widget.content.hint}',
+              '${_viewerTr(widget.t, '提示', 'Hint')}: ${widget.content.hint}',
               style: const TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -1140,7 +1179,7 @@ class _InteractiveFillBlankState extends State<_InteractiveFillBlank> {
             controller: _controller,
             enabled: !_submitted,
             decoration: InputDecoration(
-              hintText: 'Type your answer...',
+              hintText: _viewerTr(widget.t, '输入你的答案...', 'Type your answer...'),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               ),
@@ -1158,11 +1197,11 @@ class _InteractiveFillBlankState extends State<_InteractiveFillBlank> {
           ),
           if (_submitted) ...[
             const SizedBox(height: AppSpacing.sm),
-            _FeedbackBanner(isCorrect: _isCorrect),
+            _FeedbackBanner(isCorrect: _isCorrect, t: widget.t),
             if (!_isCorrect) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Correct answer: ${widget.content.correctAnswer}',
+                '${_viewerTr(widget.t, '正确答案', 'Correct answer')}: ${widget.content.correctAnswer}',
                 style: const TextStyle(
                   fontSize: AppFontSize.sm,
                   color: AppColors.success,
@@ -1182,11 +1221,13 @@ class _InteractiveFillBlankState extends State<_InteractiveFillBlank> {
 // ---------------------------------------------------------------------------
 class _MatchingWidget extends StatefulWidget {
   final MatchingContent content;
+  final BuilderLocalizations t;
   final ValueNotifier<int> checkTrigger;
   final ValueChanged<bool> onAnswered;
 
   const _MatchingWidget({
     required this.content,
+    required this.t,
     required this.checkTrigger,
     required this.onAnswered,
   });
@@ -1493,8 +1534,12 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
           const SizedBox(height: AppSpacing.sm),
           Text(
             _submitted
-                ? 'Results shown below'
-                : 'Tap left then right to pair. Tap a paired item to undo.',
+                ? _viewerTr(widget.t, '结果如下', 'Results shown below')
+                : _viewerTr(
+                    widget.t,
+                    '先点左侧再点右侧配对；点击已配对项可取消。',
+                    'Tap left then right to pair. Tap a paired item to undo.',
+                  ),
             style: const TextStyle(
               fontSize: AppFontSize.xs,
               color: AppColors.neutral500,
@@ -1696,7 +1741,8 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
             _FeedbackBanner(
               isCorrect: _getCorrectCount() == widget.content.leftItems.length,
               message:
-                  'Score: ${_getCorrectCount()}/${widget.content.leftItems.length}',
+                  '${_viewerTr(widget.t, '得分', 'Score')}: ${_getCorrectCount()}/${widget.content.leftItems.length}',
+              t: widget.t,
             ),
             if (widget.content.explanation != null &&
                 widget.content.explanation!.isNotEmpty) ...[
@@ -1734,8 +1780,16 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
           const SizedBox(height: AppSpacing.sm),
           Text(
             _submitted
-                ? 'Graph submitted. Tap Reset to retry.'
-                : 'Tap node A, then node B to create A -> B.',
+                ? _viewerTr(
+                    widget.t,
+                    '图谱已提交，点击重置后可重试。',
+                    'Graph submitted. Tap Reset to retry.',
+                  )
+                : _viewerTr(
+                    widget.t,
+                    '先点节点 A，再点节点 B 创建 A -> B。',
+                    'Tap node A, then node B to create A -> B.',
+                  ),
             style: const TextStyle(
               fontSize: AppFontSize.xs,
               color: AppColors.neutral500,
@@ -1750,10 +1804,14 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
               border: Border.all(color: AppColors.neutral200),
             ),
             child: nodes.isEmpty
-                ? const Center(
+                ? Center(
                     child: Text(
-                      'No graph nodes configured',
-                      style: TextStyle(
+                      _viewerTr(
+                        widget.t,
+                        '未配置图谱节点',
+                        'No graph nodes configured',
+                      ),
+                      style: const TextStyle(
                         fontSize: AppFontSize.sm,
                         color: AppColors.neutral500,
                       ),
@@ -1812,8 +1870,8 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                     Expanded(
                       child: Text(
                         _selectedNodeId == null
-                            ? 'Selected: none'
-                            : 'Selected: $_selectedNodeId',
+                            ? _viewerTr(widget.t, '已选：无', 'Selected: none')
+                            : '${_viewerTr(widget.t, '已选', 'Selected')}: $_selectedNodeId',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: AppFontSize.xs,
@@ -1825,7 +1883,7 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                       key: const Key('matching_graph_reset'),
                       onPressed: _resetGraphSelection,
                       icon: const Icon(Icons.restart_alt, size: 16),
-                      label: const Text('Reset'),
+                      label: Text(_viewerTr(widget.t, '重置', 'Reset')),
                     ),
                   ],
                 );
@@ -1836,8 +1894,8 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                 children: [
                   Text(
                     _selectedNodeId == null
-                        ? 'Selected: none'
-                        : 'Selected: $_selectedNodeId',
+                        ? _viewerTr(widget.t, '已选：无', 'Selected: none')
+                        : '${_viewerTr(widget.t, '已选', 'Selected')}: $_selectedNodeId',
                     style: const TextStyle(
                       fontSize: AppFontSize.xs,
                       color: AppColors.neutral500,
@@ -1850,7 +1908,7 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
                       key: const Key('matching_graph_reset'),
                       onPressed: _resetGraphSelection,
                       icon: const Icon(Icons.restart_alt, size: 16),
-                      label: const Text('Reset'),
+                      label: Text(_viewerTr(widget.t, '重置', 'Reset')),
                     ),
                   ),
                 ],
@@ -1860,7 +1918,8 @@ class _MatchingWidgetState extends State<_MatchingWidget> {
           if (_submitted) ...[
             _FeedbackBanner(
               isCorrect: _isGraphAnswerCorrect(),
-              message: 'Score: $scoreText',
+              message: '${_viewerTr(widget.t, '得分', 'Score')}: $scoreText',
+              t: widget.t,
             ),
             if (widget.content.explanation != null &&
                 widget.content.explanation!.isNotEmpty) ...[
@@ -2066,9 +2125,14 @@ class _MatchingInteractiveGraphPainter extends CustomPainter {
 // ---------------------------------------------------------------------------
 class _FeedbackBanner extends StatelessWidget {
   final bool isCorrect;
+  final BuilderLocalizations t;
   final String? message;
 
-  const _FeedbackBanner({required this.isCorrect, this.message});
+  const _FeedbackBanner({
+    required this.isCorrect,
+    required this.t,
+    this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -2090,7 +2154,10 @@ class _FeedbackBanner extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              message ?? (isCorrect ? 'Correct!' : 'Incorrect'),
+              message ??
+                  (isCorrect
+                      ? _viewerTr(t, '正确！', 'Correct!')
+                      : _viewerTr(t, '不正确', 'Incorrect')),
               style: TextStyle(
                 fontSize: AppFontSize.sm,
                 fontWeight: FontWeight.w600,

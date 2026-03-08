@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart';
+import '../models/models.dart';
 import '../theme/design_tokens.dart';
-import '../models/block_type.dart';
 import '../services/block_registry.dart';
 
 /// Block category definition
 class _BlockCategory {
-  final String name;
+  final String key;
   final List<BlockType> blockTypes;
-  final String description;
   final Color accentColor;
 
   const _BlockCategory({
-    required this.name,
+    required this.key,
     required this.blockTypes,
-    required this.description,
     required this.accentColor,
   });
 }
 
 /// Left module panel - shows draggable module list organized by category
 class ModulePanel extends StatefulWidget {
-  const ModulePanel({super.key});
+  final BuilderLocalizations t;
+
+  const ModulePanel({super.key, required this.t});
 
   @override
   State<ModulePanel> createState() => _ModulePanelState();
@@ -28,12 +30,11 @@ class ModulePanel extends StatefulWidget {
 
 class _ModulePanelState extends State<ModulePanel> {
   String _searchQuery = '';
-  final Set<String> _expandedCategories = {'General', 'Programming'};
+  final Set<String> _expandedCategories = {'general', 'programming'};
 
   static const List<_BlockCategory> _categories = [
     _BlockCategory(
-      name: 'General',
-      description: 'Narrative, media and quiz blocks for lesson flow',
+      key: 'general',
       blockTypes: [
         BlockType.text,
         BlockType.image,
@@ -45,8 +46,7 @@ class _ModulePanelState extends State<ModulePanel> {
       accentColor: AppColors.primary500,
     ),
     _BlockCategory(
-      name: 'Programming',
-      description: 'Interactive coding and execution visual blocks',
+      key: 'programming',
       blockTypes: [
         BlockType.codeBlock,
         BlockType.codePlayground,
@@ -57,15 +57,101 @@ class _ModulePanelState extends State<ModulePanel> {
     ),
   ];
 
+  String _categoryLabel(String key) {
+    final t = widget.t;
+    switch (key) {
+      case 'general':
+        return t.isZh ? '通用模块' : 'General';
+      case 'programming':
+        return t.isZh ? '编程模块' : 'Programming';
+      default:
+        return key;
+    }
+  }
+
+  String _categoryDescription(String key) {
+    final t = widget.t;
+    switch (key) {
+      case 'general':
+        return t.isZh ? '叙事、媒体与测验模块' : 'Narrative, media, and quiz blocks';
+      case 'programming':
+        return t.isZh ? '代码与执行可视化模块' : 'Coding and execution visual blocks';
+      default:
+        return '';
+    }
+  }
+
+  String _blockName(BlockType type) {
+    final t = widget.t;
+    switch (type) {
+      case BlockType.text:
+        return t.isZh ? '文本' : 'Text';
+      case BlockType.image:
+        return t.isZh ? '图片' : 'Image';
+      case BlockType.codeBlock:
+        return t.isZh ? '代码块' : 'Code Block';
+      case BlockType.codePlayground:
+        return t.isZh ? '代码练习' : 'Code Playground';
+      case BlockType.codeExecution:
+        return t.isZh ? '代码执行' : 'Code Execution';
+      case BlockType.functionFlow:
+        return t.isZh ? '函数流程' : 'Function Flow';
+      case BlockType.multipleChoice:
+        return t.isZh ? '选择题' : 'Multiple Choice';
+      case BlockType.fillBlank:
+        return t.isZh ? '填空题' : 'Fill in the Blank';
+      case BlockType.trueFalse:
+        return t.isZh ? '判断题' : 'True/False';
+      case BlockType.matching:
+        return t.isZh ? '连线题' : 'Matching';
+      case BlockType.animation:
+        return t.isZh ? '动画' : 'Animation';
+      case BlockType.video:
+        return t.isZh ? '视频' : 'Video';
+    }
+  }
+
+  String _blockDescription(BlockType type) {
+    final t = widget.t;
+    switch (type) {
+      case BlockType.text:
+        return t.isZh ? '富文本 / Markdown' : 'Rich text / Markdown';
+      case BlockType.image:
+        return t.isZh ? '图像内容模块' : 'Image block';
+      case BlockType.codeBlock:
+        return t.isZh ? '代码片段与高亮' : 'Code snippet + syntax highlighting';
+      case BlockType.codePlayground:
+        return t.isZh ? '可运行代码编辑器' : 'Runnable code editor';
+      case BlockType.codeExecution:
+        return t.isZh ? '逐步执行可视化' : 'Step-by-step execution visualizer';
+      case BlockType.functionFlow:
+        return t.isZh ? '函数调用流程可视化' : 'Visualize caller-callee paths';
+      case BlockType.multipleChoice:
+        return t.isZh ? '单选 / 多选题' : 'Single / multi-select question';
+      case BlockType.fillBlank:
+        return t.isZh ? '填空练习' : 'Fill-in-the-blank exercise';
+      case BlockType.trueFalse:
+        return t.isZh ? '判断正误题' : 'True or false question';
+      case BlockType.matching:
+        return t.isZh ? '左右匹配连线' : 'Match items between two columns';
+      case BlockType.animation:
+        return t.isZh ? '预设动画与基础控制' : 'Preset animation with controls';
+      case BlockType.video:
+        return t.isZh ? '嵌入视频模块' : 'Embedded video';
+    }
+  }
+
   List<BlockTypeInfo> _getBlocksForCategory(_BlockCategory category) {
     final allMvp = BlockRegistry.mvpTypes;
+    final query = _searchQuery.trim().toLowerCase();
     return allMvp
         .where((info) => category.blockTypes.contains(info.type))
-        .where(
-          (info) =>
-              _searchQuery.isEmpty ||
-              info.name.toLowerCase().contains(_searchQuery.toLowerCase()),
-        )
+        .where((info) {
+          if (query.isEmpty) return true;
+          final name = _blockName(info.type).toLowerCase();
+          final description = _blockDescription(info.type).toLowerCase();
+          return name.contains(query) || description.contains(query);
+        })
         .toList();
   }
 
@@ -75,6 +161,7 @@ class _ModulePanelState extends State<ModulePanel> {
 
   @override
   Widget build(BuildContext context) {
+    final t = widget.t;
     return LayoutBuilder(
       builder: (context, constraints) {
         final isCompact = constraints.maxWidth < 120;
@@ -95,19 +182,21 @@ class _ModulePanelState extends State<ModulePanel> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Block Library',
-                    style: TextStyle(
+                    t.isZh ? '模块库' : 'Block Library',
+                    style: const TextStyle(
                       fontSize: AppFontSize.lg,
                       fontWeight: FontWeight.w700,
                       color: AppColors.neutral900,
                     ),
                   ),
-                  SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
-                    'Drag blocks into the canvas to build a polished lesson.',
-                    style: TextStyle(
+                    t.isZh
+                        ? '将模块拖入画布，快速搭建课程页面。'
+                        : 'Drag blocks into the canvas to build a polished lesson.',
+                    style: const TextStyle(
                       fontSize: AppFontSize.sm,
                       color: AppColors.neutral500,
                       height: 1.35,
@@ -131,7 +220,7 @@ class _ModulePanelState extends State<ModulePanel> {
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Search blocks',
+                    hintText: t.isZh ? '搜索模块' : 'Search blocks',
                     hintStyle: const TextStyle(
                       fontSize: AppFontSize.sm,
                       color: AppColors.neutral400,
@@ -198,8 +287,8 @@ class _ModulePanelState extends State<ModulePanel> {
               final info = modules[index];
               return _ModuleItem(
                 icon: info.icon,
-                label: info.name,
-                description: info.description,
+                label: _blockName(info.type),
+                description: _blockDescription(info.type),
                 type: info.type,
                 compact: true,
               );
@@ -211,8 +300,9 @@ class _ModulePanelState extends State<ModulePanel> {
   }
 
   Widget _buildCategorySection(_BlockCategory category) {
+    final t = widget.t;
     final blocks = _getBlocksForCategory(category);
-    final isExpanded = _expandedCategories.contains(category.name);
+    final isExpanded = _expandedCategories.contains(category.key);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -222,9 +312,9 @@ class _ModulePanelState extends State<ModulePanel> {
             onTap: () {
               setState(() {
                 if (isExpanded) {
-                  _expandedCategories.remove(category.name);
+                  _expandedCategories.remove(category.key);
                 } else {
-                  _expandedCategories.add(category.name);
+                  _expandedCategories.add(category.key);
                 }
               });
             },
@@ -248,7 +338,7 @@ class _ModulePanelState extends State<ModulePanel> {
                       borderRadius: BorderRadius.circular(AppBorderRadius.md),
                     ),
                     child: Icon(
-                      category.name == 'General'
+                      category.key == 'general'
                           ? Icons.view_stream_outlined
                           : Icons.terminal_outlined,
                       color: category.accentColor,
@@ -261,7 +351,7 @@ class _ModulePanelState extends State<ModulePanel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          category.name,
+                          _categoryLabel(category.key),
                           style: const TextStyle(
                             fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w700,
@@ -270,7 +360,7 @@ class _ModulePanelState extends State<ModulePanel> {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          category.description,
+                          _categoryDescription(category.key),
                           style: const TextStyle(
                             fontSize: AppFontSize.xs,
                             color: AppColors.neutral500,
@@ -279,7 +369,9 @@ class _ModulePanelState extends State<ModulePanel> {
                         ),
                         const SizedBox(height: AppSpacing.sm),
                         Text(
-                          '${blocks.length} block${blocks.length == 1 ? '' : 's'}',
+                          t.isZh
+                              ? '${blocks.length} 个模块'
+                              : '${blocks.length} block${blocks.length == 1 ? '' : 's'}',
                           style: TextStyle(
                             fontSize: AppFontSize.xs,
                             color: category.accentColor,
@@ -311,8 +403,8 @@ class _ModulePanelState extends State<ModulePanel> {
                     .map(
                       (info) => _ModuleItem(
                         icon: info.icon,
-                        label: info.name,
-                        description: info.description,
+                        label: _blockName(info.type),
+                        description: _blockDescription(info.type),
                         type: info.type,
                         compact: false,
                         accentColor: category.accentColor,

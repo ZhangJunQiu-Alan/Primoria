@@ -382,7 +382,9 @@ class DashboardDataCenterTab extends ConsumerWidget {
   }
 
   Widget _buildHeatmapCard(List<List<double>> heatmap) {
-    const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final dayLabels = t.isZh
+        ? const ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        : const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const slotLabels = [
       '0-3',
       '3-6',
@@ -504,7 +506,13 @@ class DashboardDataCenterTab extends ConsumerWidget {
                         DataCell(
                           Text('${(row.completion * 100).toStringAsFixed(1)}%'),
                         ),
-                        DataCell(Text('${row.avgStudyMinutes} min')),
+                        DataCell(
+                          Text(
+                            t.isZh
+                                ? '${row.avgStudyMinutes} 分钟'
+                                : '${row.avgStudyMinutes} min',
+                          ),
+                        ),
                         DataCell(Text(_formatDate(row.updatedAt))),
                         DataCell(
                           TextButton(
@@ -543,7 +551,11 @@ class DashboardDataCenterTab extends ConsumerWidget {
     if (!context.mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${t.dashExportDone} · Copied to clipboard')),
+      SnackBar(
+        content: Text(
+          t.isZh ? '${t.dashExportDone} · 已复制到剪贴板' : '${t.dashExportDone} · Copied to clipboard',
+        ),
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/models.dart';
 import '../../theme/design_tokens.dart';
 
@@ -11,12 +12,14 @@ class CodeExecutionBlockWidget extends StatefulWidget {
   final CodeExecutionContent content;
   final bool showControls;
   final bool showHeader;
+  final BuilderLocalizations? t;
 
   const CodeExecutionBlockWidget({
     super.key,
     required this.content,
     this.showControls = true,
     this.showHeader = true,
+    this.t,
   });
 
   @override
@@ -39,6 +42,8 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
   bool _checkpointSubmitted = false;
   bool? _checkpointCorrect;
   final Set<int> _completedCheckpointIndices = <int>{};
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   @override
   void initState() {
@@ -405,7 +410,7 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
               Expanded(
                 child: Text(
                   widget.content.title.trim().isEmpty
-                      ? 'Code Execution'
+                      ? _tr('代码执行', 'Code Execution')
                       : widget.content.title,
                   style: const TextStyle(
                     fontSize: AppFontSize.sm,
@@ -434,7 +439,7 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
               ),
               const SizedBox(width: AppSpacing.sm),
               Text(
-                'Step ${_currentStepIndex >= 0 ? _currentStepIndex + 1 : 0}/${_traceSteps.length}',
+                '${_tr('步骤', 'Step')} ${_currentStepIndex >= 0 ? _currentStepIndex + 1 : 0}/${_traceSteps.length}',
                 key: const Key('code_execution_step_indicator'),
                 style: const TextStyle(
                   fontSize: AppFontSize.xs,
@@ -570,9 +575,12 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
         borderRadius: BorderRadius.circular(AppBorderRadius.sm),
         border: Border.all(color: AppColors.neutral200),
       ),
-      child: const Text(
-        'Add source code and first trace step',
-        style: TextStyle(fontSize: AppFontSize.sm, color: AppColors.neutral500),
+      child: Text(
+        _tr('请先添加源码和第一步执行轨迹', 'Add source code and first trace step'),
+        style: const TextStyle(
+          fontSize: AppFontSize.sm,
+          color: AppColors.neutral500,
+        ),
       ),
     );
   }
@@ -708,9 +716,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Variables',
-            style: TextStyle(
+          Text(
+            _tr('变量', 'Variables'),
+            style: const TextStyle(
               fontSize: AppFontSize.xs,
               fontWeight: FontWeight.w700,
               color: AppColors.neutral600,
@@ -718,9 +726,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
           ),
           const SizedBox(height: AppSpacing.xs),
           if (variables.isEmpty)
-            const Text(
-              'No variables at this step.',
-              style: TextStyle(
+            Text(
+              _tr('当前步骤没有变量。', 'No variables at this step.'),
+              style: const TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
               ),
@@ -771,9 +779,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Stdout',
-            style: TextStyle(
+          Text(
+            _tr('标准输出', 'Stdout'),
+            style: const TextStyle(
               fontSize: AppFontSize.xs,
               fontWeight: FontWeight.w700,
               color: AppColors.neutral600,
@@ -789,7 +797,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
             ),
             child: Text(
-              stdoutText.isEmpty ? '(no output yet)' : stdoutText,
+              stdoutText.isEmpty
+                  ? _tr('（暂无输出）', '(no output yet)')
+                  : stdoutText,
               style: const TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral100,
@@ -817,9 +827,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Call Stack',
-            style: TextStyle(
+          Text(
+            _tr('调用栈', 'Call Stack'),
+            style: const TextStyle(
               fontSize: AppFontSize.xs,
               fontWeight: FontWeight.w700,
               color: AppColors.neutral600,
@@ -883,19 +893,21 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                   _isPlaying ? Icons.pause_circle_outline : Icons.play_circle,
                   color: theme.accent,
                 ),
-                label: Text(_isPlaying ? 'Pause' : 'Play'),
+                label: Text(
+                  _isPlaying ? _tr('暂停', 'Pause') : _tr('播放', 'Play'),
+                ),
               ),
               OutlinedButton.icon(
                 key: const Key('code_execution_step'),
                 onPressed: _canStepForward ? _advanceOneStep : null,
                 icon: const Icon(Icons.skip_next),
-                label: const Text('Step'),
+                label: Text(_tr('前进', 'Step')),
               ),
               OutlinedButton.icon(
                 key: const Key('code_execution_back'),
                 onPressed: _canStepBack ? _stepBack : null,
                 icon: const Icon(Icons.skip_previous),
-                label: const Text('Back'),
+                label: Text(_tr('后退', 'Back')),
               ),
               OutlinedButton.icon(
                 key: const Key('code_execution_reset'),
@@ -903,16 +915,16 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                     ? null
                     : _reset,
                 icon: const Icon(Icons.restart_alt),
-                label: const Text('Reset'),
+                label: Text(_tr('重置', 'Reset')),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              const Text(
-                'Step Duration',
-                style: TextStyle(
+              Text(
+                _tr('步进时长', 'Step Duration'),
+                style: const TextStyle(
                   fontSize: AppFontSize.xs,
                   color: AppColors.neutral500,
                   fontWeight: FontWeight.w600,
@@ -936,7 +948,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                 ),
               ),
               Text(
-                '$_stepDurationMs ms',
+                widget.t?.isZh == true
+                    ? '$_stepDurationMs 毫秒'
+                    : '$_stepDurationMs ms',
                 style: const TextStyle(
                   fontSize: AppFontSize.xs,
                   color: AppColors.neutral600,
@@ -967,9 +981,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Timeline',
-            style: TextStyle(
+          Text(
+            _tr('时间线', 'Timeline'),
+            style: const TextStyle(
               fontSize: AppFontSize.xs,
               color: AppColors.neutral500,
               fontWeight: FontWeight.w600,
@@ -1009,9 +1023,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Checkpoint',
-            style: TextStyle(
+          Text(
+            _tr('检查点', 'Checkpoint'),
+            style: const TextStyle(
               fontSize: AppFontSize.xs,
               fontWeight: FontWeight.w700,
               color: AppColors.neutral700,
@@ -1084,7 +1098,7 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                   : _submitCheckpoint,
               style: FilledButton.styleFrom(backgroundColor: theme.accent),
               icon: const Icon(Icons.check_circle_outline),
-              label: const Text('Submit'),
+              label: Text(_tr('提交', 'Submit')),
             )
           else
             Row(
@@ -1101,7 +1115,9 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
-                    _checkpointCorrect == true ? 'Correct' : 'Incorrect',
+                    _checkpointCorrect == true
+                        ? _tr('正确', 'Correct')
+                        : _tr('错误', 'Incorrect'),
                     style: TextStyle(
                       fontSize: AppFontSize.sm,
                       fontWeight: FontWeight.w600,
@@ -1114,7 +1130,7 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                 TextButton(
                   key: const Key('code_execution_checkpoint_continue'),
                   onPressed: _continueAfterCheckpoint,
-                  child: const Text('Continue'),
+                  child: Text(_tr('继续', 'Continue')),
                 ),
               ],
             ),

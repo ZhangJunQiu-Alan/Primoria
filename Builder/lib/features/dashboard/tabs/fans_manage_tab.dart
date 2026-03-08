@@ -219,7 +219,9 @@ class _DashboardFansManageTabState
           const SizedBox(height: 6),
           TrendChart(
             height: 140,
-            labels: const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: widget.t.isZh
+                ? const ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                : const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             series: [
               TrendLineSeries(
                 name: widget.t.dashFansGrowthTrend,
@@ -314,6 +316,7 @@ class _DashboardFansManageTabState
           ),
           const SizedBox(height: 12),
           LearnerTable(
+            t: t,
             rows: rows.map((fan) => _toRowData(fan)).toList(),
             selectedIds: _selectedIds,
             onToggleRow: (id) {

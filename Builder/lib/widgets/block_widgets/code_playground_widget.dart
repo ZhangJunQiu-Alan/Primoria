@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import '../../models/block.dart';
 import '../../services/code_runner.dart';
@@ -7,11 +8,13 @@ import '../../services/code_runner.dart';
 class CodePlaygroundWidget extends StatefulWidget {
   final CodePlaygroundContent content;
   final ValueChanged<String>? onCodeChanged;
+  final BuilderLocalizations? t;
 
   const CodePlaygroundWidget({
     super.key,
     required this.content,
     this.onCodeChanged,
+    this.t,
   });
 
   @override
@@ -23,6 +26,8 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
   String _output = '';
   bool _isRunning = false;
   bool _hasRun = false;
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   bool _matchesExpectedOutput() {
     final expected = widget.content.expectedOutput;
@@ -73,7 +78,9 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
     setState(() {
       _isRunning = false;
       _hasRun = true;
-      _output = result.success ? result.output : (result.error ?? 'Run error');
+      _output = result.success
+          ? result.output
+          : (result.error ?? _tr('运行错误', 'Run error'));
     });
   }
 
@@ -164,7 +171,9 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                                 ),
                               const SizedBox(width: 4),
                               Text(
-                                _isRunning ? 'Running...' : 'Run',
+                                _isRunning
+                                    ? _tr('运行中...', 'Running...')
+                                    : _tr('运行', 'Run'),
                                 style: const TextStyle(
                                   fontSize: AppFontSize.xs,
                                   color: Colors.white,
@@ -196,7 +205,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                     filled: true,
                     fillColor: AppColors.neutral800,
                     contentPadding: EdgeInsets.zero,
-                    hintText: '# Enter code here',
+                    hintText: _tr('# 在此输入代码', '# Enter code here'),
                     hintStyle: const TextStyle(
                       color: AppColors.neutral500,
                       fontFamily: 'monospace',
@@ -231,9 +240,9 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                       color: AppColors.neutral500,
                     ),
                     const SizedBox(width: AppSpacing.xs),
-                    const Text(
-                      'Output',
-                      style: TextStyle(
+                    Text(
+                      _tr('输出', 'Output'),
+                      style: const TextStyle(
                         fontSize: AppFontSize.xs,
                         fontWeight: FontWeight.w500,
                         color: AppColors.neutral500,
@@ -268,7 +277,9 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
                                 ),
                                 const SizedBox(width: 2),
                                 Text(
-                                  isCorrect ? 'Correct' : 'Try again',
+                                  isCorrect
+                                      ? _tr('正确', 'Correct')
+                                      : _tr('再试一次', 'Try again'),
                                   style: const TextStyle(
                                     fontSize: AppFontSize.xs,
                                     color: Colors.white,
@@ -308,7 +319,7 @@ class _CodePlaygroundWidgetState extends State<CodePlaygroundWidget> {
               const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: Text(
-                  'Hint: ${widget.content.hints.first}',
+                  '${_tr('提示', 'Hint')}: ${widget.content.hints.first}',
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
                     color: AppColors.neutral500,

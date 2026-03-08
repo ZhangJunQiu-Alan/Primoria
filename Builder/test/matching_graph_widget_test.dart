@@ -1,4 +1,5 @@
 import 'package:builder/features/viewer/viewer_screen.dart';
+import 'package:builder/l10n/app_localizations.dart';
 import 'package:builder/models/models.dart';
 import 'package:builder/providers/course_provider.dart';
 import 'package:builder/widgets/matching_content_editor.dart';
@@ -39,7 +40,9 @@ void main() {
       ),
     );
 
-    final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
+    final lesson = CourseLesson.create(
+      title: 'Lesson 1',
+    ).copyWith(blocks: [block]);
     final course = Course.create(
       title: 'Matching Graph',
     ).copyWith(lessons: [lesson]);
@@ -66,10 +69,19 @@ void main() {
     await tester.tap(find.byKey(const Key('matching_graph_node_callee')));
     await tester.pump(const Duration(milliseconds: 150));
 
-    await tester.tap(find.text('Check'));
+    final checkButtonFinder = find.byWidgetPredicate(
+      (widget) =>
+          widget is Text && (widget.data == 'Check' || widget.data == '检查'),
+    );
+    await tester.tap(checkButtonFinder.first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Score: 1/1'), findsOneWidget);
+    final scoreFinder = find.byWidgetPredicate(
+      (widget) =>
+          widget is Text &&
+          (widget.data == 'Score: 1/1' || widget.data == '得分: 1/1'),
+    );
+    expect(scoreFinder, findsOneWidget);
   });
 
   testWidgets('matching editor can switch to graph mode', (tester) async {
@@ -96,6 +108,7 @@ void main() {
             builder: (context, setState) {
               return SingleChildScrollView(
                 child: MatchingContentEditor(
+                  t: const BuilderLocalizations('en'),
                   content: current,
                   onChanged: (next) {
                     setState(() {

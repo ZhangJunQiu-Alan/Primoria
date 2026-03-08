@@ -2,19 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../theme/design_tokens.dart';
 import 'app_dropdown.dart';
 
 class CodeExecutionContentEditor extends StatelessWidget {
+  final BuilderLocalizations t;
   final CodeExecutionContent content;
   final ValueChanged<CodeExecutionContent> onChanged;
 
   const CodeExecutionContentEditor({
     super.key,
+    required this.t,
     required this.content,
     required this.onChanged,
   });
+
+  String _tr(String zh, String en) {
+    return t.isZh ? zh : en;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +30,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Code Execution',
+        Text(
+          _tr('代码执行', 'Code Execution'),
           style: TextStyle(
             fontSize: AppFontSize.sm,
             fontWeight: FontWeight.w600,
@@ -34,8 +41,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.title,
-          decoration: const InputDecoration(
-            labelText: 'Title',
+          decoration: InputDecoration(
+            labelText: _tr('标题', 'Title'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) => onChanged(content.copyWith(title: value)),
@@ -43,7 +50,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         AppDropdown<String>(
           value: content.language,
-          labelText: 'Language',
+          labelText: _tr('语言', 'Language'),
           items: const [
             AppDropdownItem(value: 'python', label: 'Python'),
             AppDropdownItem(value: 'javascript', label: 'JavaScript'),
@@ -61,9 +68,9 @@ class CodeExecutionContentEditor extends StatelessWidget {
           initialValue: content.sourceCode,
           maxLines: 8,
           style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-          decoration: const InputDecoration(
-            labelText: 'Source Code',
-            hintText: 'Add source code with line breaks',
+          decoration: InputDecoration(
+            labelText: _tr('源代码', 'Source Code'),
+            hintText: _tr('输入包含换行的源代码', 'Add source code with line breaks'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) => onChanged(content.copyWith(sourceCode: value)),
@@ -71,9 +78,9 @@ class CodeExecutionContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Step Duration',
+                _tr('步骤时长', 'Step Duration'),
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
@@ -108,12 +115,12 @@ class CodeExecutionContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         AppDropdown<String>(
           value: content.style.theme,
-          labelText: 'Theme',
-          items: const [
-            AppDropdownItem(value: 'indigo', label: 'Indigo'),
-            AppDropdownItem(value: 'emerald', label: 'Emerald'),
-            AppDropdownItem(value: 'amber', label: 'Amber'),
-            AppDropdownItem(value: 'slate', label: 'Slate'),
+          labelText: _tr('主题', 'Theme'),
+          items: [
+            AppDropdownItem(value: 'indigo', label: _tr('靛蓝', 'Indigo')),
+            AppDropdownItem(value: 'emerald', label: _tr('祖母绿', 'Emerald')),
+            AppDropdownItem(value: 'amber', label: _tr('琥珀', 'Amber')),
+            AppDropdownItem(value: 'slate', label: _tr('岩板灰', 'Slate')),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -124,7 +131,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.sm),
         _buildBoolSwitch(
-          label: 'Autoplay',
+          label: _tr('自动播放', 'Autoplay'),
           value: content.controls.autoplay,
           onChanged: (value) {
             onChanged(
@@ -135,7 +142,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
           },
         ),
         _buildBoolSwitch(
-          label: 'Allow scrub',
+          label: _tr('允许拖动时间轴', 'Allow scrub'),
           value: content.controls.allowScrub,
           onChanged: (value) {
             onChanged(
@@ -146,7 +153,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
           },
         ),
         _buildBoolSwitch(
-          label: 'Show line numbers',
+          label: _tr('显示行号', 'Show line numbers'),
           value: content.style.showLineNumbers,
           onChanged: (value) {
             onChanged(
@@ -157,7 +164,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
           },
         ),
         _buildBoolSwitch(
-          label: 'Show variables panel',
+          label: _tr('显示变量面板', 'Show variables panel'),
           value: content.style.showVariablesPanel,
           onChanged: (value) {
             onChanged(
@@ -168,7 +175,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
           },
         ),
         _buildBoolSwitch(
-          label: 'Show stdout panel',
+          label: _tr('显示 stdout 面板', 'Show stdout panel'),
           value: content.style.showStdoutPanel,
           onChanged: (value) {
             onChanged(
@@ -217,9 +224,9 @@ class CodeExecutionContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Trace Steps',
+                _tr('执行步骤', 'Trace Steps'),
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w600,
@@ -229,7 +236,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
-              tooltip: 'Add trace step',
+              tooltip: _tr('添加步骤', 'Add trace step'),
               onPressed: () {
                 final next = [
                   ...steps,
@@ -249,8 +256,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'Add source code and first trace step',
+            child: Text(
+              _tr('请先输入源代码并添加第一步', 'Add source code and first trace step'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -275,7 +282,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            'Step ${index + 1}',
+                            '${_tr('步骤', 'Step')} ${index + 1}',
                             style: const TextStyle(
                               fontSize: AppFontSize.xs,
                               fontWeight: FontWeight.w700,
@@ -310,8 +317,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     TextFormField(
                       initialValue: '${step.line}',
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Line Number (1-based)',
+                      decoration: InputDecoration(
+                        labelText: _tr('行号（从 1 开始）', 'Line Number (1-based)'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -323,8 +330,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: step.stdoutDelta ?? '',
-                      decoration: const InputDecoration(
-                        labelText: 'stdoutDelta (optional)',
+                      decoration: InputDecoration(
+                        labelText: _tr('stdout 增量（可选）', 'stdoutDelta (optional)'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -340,10 +347,10 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: variablesText,
-                      decoration: const InputDecoration(
-                        labelText: 'Variables JSON',
+                      decoration: InputDecoration(
+                        labelText: _tr('变量 JSON', 'Variables JSON'),
                         hintText: '{"x": 1, "name": "demo"}',
-                        helperText: 'Only valid JSON object will be applied',
+                        helperText: _tr('仅会应用合法 JSON 对象', 'Only valid JSON object will be applied'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -355,8 +362,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: callStackText,
-                      decoration: const InputDecoration(
-                        labelText: 'Call Stack (comma separated)',
+                      decoration: InputDecoration(
+                        labelText: _tr('调用栈（逗号分隔）', 'Call Stack (comma separated)'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -373,8 +380,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: step.note ?? '',
-                      decoration: const InputDecoration(
-                        labelText: 'Teaching Note (optional)',
+                      decoration: InputDecoration(
+                        labelText: _tr('教学备注（可选）', 'Teaching Note (optional)'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -405,9 +412,9 @@ class CodeExecutionContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Checkpoints',
+                _tr('检查点', 'Checkpoints'),
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w600,
@@ -417,16 +424,16 @@ class CodeExecutionContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
-              tooltip: 'Add checkpoint',
+              tooltip: _tr('添加检查点', 'Add checkpoint'),
               onPressed: stepCount == 0
                   ? null
                   : () {
                       final next = [
                         ...checkpoints,
-                        const CodeExecutionCheckpoint(
+                        CodeExecutionCheckpoint(
                           stepIndex: 0,
-                          question: 'What happens next?',
-                          options: ['Option A', 'Option B'],
+                          question: _tr('下一步会发生什么？', 'What happens next?'),
+                          options: [_tr('选项 A', 'Option A'), _tr('选项 B', 'Option B')],
                           correctIndex: 0,
                         ),
                       ];
@@ -444,8 +451,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'Optional: add checkpoint questions for learner prediction.',
+            child: Text(
+              _tr('可选：添加检查点问题，引导学习者预测下一步。', 'Optional: add checkpoint questions for learner prediction.'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -478,7 +485,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            'Checkpoint ${index + 1}',
+                            '${_tr('检查点', 'Checkpoint')} ${index + 1}',
                             style: const TextStyle(
                               fontSize: AppFontSize.xs,
                               fontWeight: FontWeight.w700,
@@ -502,13 +509,13 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     ),
                     AppDropdown<int>(
                       value: stepCount == 0 ? null : validStepIndex,
-                      labelText: 'Trigger Step',
+                      labelText: _tr('触发步骤', 'Trigger Step'),
                       isDense: true,
                       items: stepIndexes
                           .map(
                             (stepIndex) => AppDropdownItem<int>(
                               value: stepIndex,
-                              label: 'Step ${stepIndex + 1}',
+                              label: '${_tr('步骤', 'Step')} ${stepIndex + 1}',
                             ),
                           )
                           .toList(),
@@ -525,8 +532,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: checkpoint.question,
-                      decoration: const InputDecoration(
-                        labelText: 'Question',
+                      decoration: InputDecoration(
+                        labelText: _tr('题目', 'Question'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -539,8 +546,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: optionsText,
-                      decoration: const InputDecoration(
-                        labelText: 'Options (comma separated)',
+                      decoration: InputDecoration(
+                        labelText: _tr('选项（逗号分隔）', 'Options (comma separated)'),
                         isDense: true,
                       ),
                       onChanged: (value) {
@@ -560,7 +567,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     AppDropdown<int>(
                       value: checkpoint.options.isEmpty ? null : validCorrectIndex,
-                      labelText: 'Correct Option Index',
+                      labelText: _tr('正确选项索引', 'Correct Option Index'),
                       isDense: true,
                       items: checkpoint.options.isEmpty
                           ? const []
@@ -568,7 +575,7 @@ class CodeExecutionContentEditor extends StatelessWidget {
                               checkpoint.options.length,
                               (optionIndex) => AppDropdownItem<int>(
                                 value: optionIndex,
-                                label: 'Option ${optionIndex + 1}',
+                                label: '${_tr('选项', 'Option')} ${optionIndex + 1}',
                               ),
                             ),
                       onChanged: checkpoint.options.isEmpty
@@ -584,8 +591,8 @@ class CodeExecutionContentEditor extends StatelessWidget {
                     const SizedBox(height: AppSpacing.sm),
                     TextFormField(
                       initialValue: checkpoint.explanation ?? '',
-                      decoration: const InputDecoration(
-                        labelText: 'Explanation (optional)',
+                      decoration: InputDecoration(
+                        labelText: _tr('解析（可选）', 'Explanation (optional)'),
                         isDense: true,
                       ),
                       onChanged: (value) {

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import '../../models/models.dart';
 import '../../services/block_registry.dart';
@@ -20,6 +21,7 @@ class BlockWrapper extends StatelessWidget {
   final VoidCallback onDelete;
   final Widget? dragHandle;
   final ValueChanged<Block>? onBlockUpdated;
+  final BuilderLocalizations? t;
 
   const BlockWrapper({
     super.key,
@@ -29,7 +31,10 @@ class BlockWrapper extends StatelessWidget {
     required this.onDelete,
     this.dragHandle,
     this.onBlockUpdated,
+    this.t,
   });
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +128,8 @@ class BlockWrapper extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  info?.description ?? 'Interactive lesson block',
+                  info?.description ??
+                      _tr('互动课程模块', 'Interactive lesson block'),
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
                     fontWeight: FontWeight.w500,
@@ -141,14 +147,18 @@ class BlockWrapper extends StatelessWidget {
                       color: AppColors.warning.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(AppBorderRadius.sm),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.lock, size: 10, color: AppColors.warning),
-                        SizedBox(width: 2),
+                        const Icon(
+                          Icons.lock,
+                          size: 10,
+                          color: AppColors.warning,
+                        ),
+                        const SizedBox(width: 2),
                         Text(
-                          'Gated visibility',
-                          style: TextStyle(
+                          _tr('按答题结果解锁', 'Gated visibility'),
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: AppColors.warning,
@@ -223,6 +233,7 @@ class BlockWrapper extends StatelessWidget {
         final content = block.content as TextContent;
         return _TextBlockContent(
           content: content,
+          t: t,
           textAlign: _alignmentToTextAlign(block.style.alignment),
           editable: isSelected && onBlockUpdated != null,
           onChanged: onBlockUpdated == null
@@ -231,11 +242,12 @@ class BlockWrapper extends StatelessWidget {
                     onBlockUpdated!(block.copyWith(content: updatedContent)),
         );
       case BlockType.image:
-        return _ImageBlockContent(content: block.content as ImageContent);
+        return _ImageBlockContent(content: block.content as ImageContent, t: t);
       case BlockType.codeBlock:
         final content = block.content as CodeBlockContent;
         return _CodeBlockContent(
           content: content,
+          t: t,
           editable: isSelected && onBlockUpdated != null,
           onChanged: onBlockUpdated == null
               ? null
@@ -247,6 +259,7 @@ class BlockWrapper extends StatelessWidget {
         final isInlineEditable = isSelected && onBlockUpdated != null;
         return _CodePlaygroundBlockContent(
           content: content,
+          t: t,
           editable: isInlineEditable,
           onCodeChanged: (newCode) {
             if (onBlockUpdated != null) {
@@ -276,23 +289,33 @@ class BlockWrapper extends StatelessWidget {
       case BlockType.codeExecution:
         return CodeExecutionBlockWidget(
           content: block.content as CodeExecutionContent,
+          t: t,
         );
       case BlockType.functionFlow:
         return FunctionFlowBlockWidget(
           content: block.content as FunctionFlowContent,
+          t: t,
         );
       case BlockType.multipleChoice:
         return _MultipleChoiceContent(
           content: block.content as MultipleChoiceContent,
+          t: t,
         );
       case BlockType.fillBlank:
-        return _FillBlankContent(content: block.content as FillBlankContent);
+        return _FillBlankContent(
+          content: block.content as FillBlankContent,
+          t: t,
+        );
       case BlockType.trueFalse:
         return _TrueFalseBlockContent(
           content: block.content as TrueFalseContent,
+          t: t,
         );
       case BlockType.matching:
-        return _MatchingBlockContent(content: block.content as MatchingContent);
+        return _MatchingBlockContent(
+          content: block.content as MatchingContent,
+          t: t,
+        );
       case BlockType.animation:
         final animContent = block.content as AnimationContent;
         final animationHeight = ((block.style.height ?? 300).clamp(
@@ -337,7 +360,7 @@ class BlockWrapper extends StatelessWidget {
               AnimationBlockWidget(content: animContent, height: height),
         );
       case BlockType.video:
-        return _VideoBlockContent(content: block.content as VideoContent);
+        return _VideoBlockContent(content: block.content as VideoContent, t: t);
     }
   }
 
@@ -639,12 +662,14 @@ enum _ResizeHandle {
 /// Text block content
 class _TextBlockContent extends StatefulWidget {
   final TextContent content;
+  final BuilderLocalizations? t;
   final TextAlign textAlign;
   final bool editable;
   final ValueChanged<TextContent>? onChanged;
 
   const _TextBlockContent({
     required this.content,
+    required this.t,
     required this.textAlign,
     this.editable = false,
     this.onChanged,
@@ -656,6 +681,8 @@ class _TextBlockContent extends StatefulWidget {
 
 class _TextBlockContentState extends State<_TextBlockContent> {
   late final TextEditingController _valueController;
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   @override
   void initState() {
@@ -687,9 +714,12 @@ class _TextBlockContentState extends State<_TextBlockContent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'markdown', label: Text('Markdown')),
-              ButtonSegment(value: 'plain', label: Text('Plain')),
+            segments: [
+              ButtonSegment(
+                value: 'markdown',
+                label: Text(_tr('Markdown', 'Markdown')),
+              ),
+              ButtonSegment(value: 'plain', label: Text(_tr('纯文本', 'Plain'))),
             ],
             selected: {selectedFormat},
             onSelectionChanged: (value) {
@@ -713,8 +743,11 @@ class _TextBlockContentState extends State<_TextBlockContent> {
               ),
               isDense: true,
               hintText: selectedFormat == 'markdown'
-                  ? '# Heading\n\n**Bold** and *italic*\n\n- List item'
-                  : 'Enter text...',
+                  ? _tr(
+                      '# 标题\n\n**加粗** 与 *斜体*\n\n- 列表项',
+                      '# Heading\n\n**Bold** and *italic*\n\n- List item',
+                    )
+                  : _tr('输入文本...', 'Enter text...'),
             ),
             onChanged: (value) {
               widget.onChanged!(content.copyWith(value: value));
@@ -726,7 +759,7 @@ class _TextBlockContentState extends State<_TextBlockContent> {
 
     if (content.value.isEmpty) {
       return Text(
-        'Click to edit text...',
+        _tr('点击编辑文本...', 'Click to edit text...'),
         textAlign: textAlign,
         style: const TextStyle(
           fontSize: AppFontSize.md,
@@ -823,8 +856,11 @@ class _TextBlockContentState extends State<_TextBlockContent> {
 /// Image block content
 class _ImageBlockContent extends StatelessWidget {
   final ImageContent content;
+  final BuilderLocalizations? t;
 
-  const _ImageBlockContent({required this.content});
+  const _ImageBlockContent({required this.content, required this.t});
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   @override
   Widget build(BuildContext context) {
@@ -839,19 +875,19 @@ class _ImageBlockContent extends StatelessWidget {
             style: BorderStyle.solid,
           ),
         ),
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.add_photo_alternate,
                 size: 32,
                 color: AppColors.neutral400,
               ),
-              SizedBox(height: AppSpacing.xs),
+              const SizedBox(height: AppSpacing.xs),
               Text(
-                'Click to add an image',
-                style: TextStyle(
+                _tr('点击添加图片', 'Click to add an image'),
+                style: const TextStyle(
                   fontSize: AppFontSize.sm,
                   color: AppColors.neutral400,
                 ),
@@ -901,11 +937,13 @@ class _ImageBlockContent extends StatelessWidget {
 /// Code block content
 class _CodeBlockContent extends StatefulWidget {
   final CodeBlockContent content;
+  final BuilderLocalizations? t;
   final bool editable;
   final ValueChanged<CodeBlockContent>? onChanged;
 
   const _CodeBlockContent({
     required this.content,
+    required this.t,
     this.editable = false,
     this.onChanged,
   });
@@ -926,6 +964,8 @@ class _CodeBlockContentState extends State<_CodeBlockContent> {
 
   late final TextEditingController _codeController;
   late String _selectedLanguage;
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   @override
   void initState() {
@@ -1043,7 +1083,7 @@ class _CodeBlockContentState extends State<_CodeBlockContent> {
                 isDense: true,
                 filled: true,
                 fillColor: AppColors.neutral700,
-                hintText: '# Enter code here',
+                hintText: _tr('# 在此输入代码', '# Enter code here'),
                 hintStyle: const TextStyle(
                   color: AppColors.neutral500,
                   fontFamily: 'monospace',
@@ -1072,12 +1112,14 @@ class _CodeBlockContentState extends State<_CodeBlockContent> {
 
 class _CodePlaygroundBlockContent extends StatelessWidget {
   final CodePlaygroundContent content;
+  final BuilderLocalizations? t;
   final bool editable;
   final ValueChanged<String>? onCodeChanged;
   final ValueChanged<String?>? onExpectedOutputChanged;
 
   const _CodePlaygroundBlockContent({
     required this.content,
+    required this.t,
     required this.editable,
     this.onCodeChanged,
     this.onExpectedOutputChanged,
@@ -1088,10 +1130,15 @@ class _CodePlaygroundBlockContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        CodePlaygroundWidget(content: content, onCodeChanged: onCodeChanged),
+        CodePlaygroundWidget(
+          content: content,
+          t: t,
+          onCodeChanged: onCodeChanged,
+        ),
         if (editable && onExpectedOutputChanged != null) ...[
           const SizedBox(height: AppSpacing.sm),
           _CodePlaygroundExpectedOutputField(
+            t: t,
             expectedOutput: content.expectedOutput,
             onChanged: onExpectedOutputChanged!,
           ),
@@ -1102,10 +1149,12 @@ class _CodePlaygroundBlockContent extends StatelessWidget {
 }
 
 class _CodePlaygroundExpectedOutputField extends StatefulWidget {
+  final BuilderLocalizations? t;
   final String? expectedOutput;
   final ValueChanged<String?> onChanged;
 
   const _CodePlaygroundExpectedOutputField({
+    required this.t,
     required this.expectedOutput,
     required this.onChanged,
   });
@@ -1118,6 +1167,8 @@ class _CodePlaygroundExpectedOutputField extends StatefulWidget {
 class _CodePlaygroundExpectedOutputFieldState
     extends State<_CodePlaygroundExpectedOutputField> {
   late final TextEditingController _controller;
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   @override
   void initState() {
@@ -1152,7 +1203,7 @@ class _CodePlaygroundExpectedOutputFieldState
         color: AppColors.neutral700,
       ),
       decoration: InputDecoration(
-        labelText: 'Expected output',
+        labelText: _tr('期望输出', 'Expected output'),
         isDense: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppBorderRadius.sm),
@@ -1168,8 +1219,11 @@ class _CodePlaygroundExpectedOutputFieldState
 /// Multiple choice content
 class _MultipleChoiceContent extends StatelessWidget {
   final MultipleChoiceContent content;
+  final BuilderLocalizations? t;
 
-  const _MultipleChoiceContent({required this.content});
+  const _MultipleChoiceContent({required this.content, required this.t});
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   @override
   Widget build(BuildContext context) {
@@ -1178,7 +1232,9 @@ class _MultipleChoiceContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          content.question.isEmpty ? 'Enter a question' : content.question,
+          content.question.isEmpty
+              ? _tr('请输入题目', 'Enter a question')
+              : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
             fontWeight: FontWeight.w500,
@@ -1235,8 +1291,11 @@ class _MultipleChoiceContent extends StatelessWidget {
 /// Fill-in-the-blank content
 class _FillBlankContent extends StatelessWidget {
   final FillBlankContent content;
+  final BuilderLocalizations? t;
 
-  const _FillBlankContent({required this.content});
+  const _FillBlankContent({required this.content, required this.t});
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   @override
   Widget build(BuildContext context) {
@@ -1245,7 +1304,7 @@ class _FillBlankContent extends StatelessWidget {
       children: [
         Text(
           content.question.isEmpty
-              ? 'Enter a fill-in-the-blank question'
+              ? _tr('请输入填空题题目', 'Enter a fill-in-the-blank question')
               : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
@@ -1264,9 +1323,9 @@ class _FillBlankContent extends StatelessWidget {
             border: Border.all(color: AppColors.neutral300),
             borderRadius: BorderRadius.circular(AppBorderRadius.sm),
           ),
-          child: const Text(
-            'Answer input',
-            style: TextStyle(
+          child: Text(
+            _tr('答案输入框', 'Answer input'),
+            style: const TextStyle(
               fontSize: AppFontSize.sm,
               color: AppColors.neutral400,
             ),
@@ -1280,8 +1339,11 @@ class _FillBlankContent extends StatelessWidget {
 /// Matching question content
 class _MatchingBlockContent extends StatelessWidget {
   final MatchingContent content;
+  final BuilderLocalizations? t;
 
-  const _MatchingBlockContent({required this.content});
+  const _MatchingBlockContent({required this.content, required this.t});
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   /// Returns the 1-based pair number for a given item id (left or right side).
   int? _pairNumberFor(String itemId, {required bool isLeft}) {
@@ -1379,7 +1441,7 @@ class _MatchingBlockContent extends StatelessWidget {
       children: [
         Text(
           content.question.isEmpty
-              ? 'Enter a graph matching question'
+              ? _tr('请输入图谱匹配题目', 'Enter a graph matching question')
               : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
@@ -1392,8 +1454,8 @@ class _MatchingBlockContent extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         Text(
           content.rules.directed
-              ? 'Directed graph mode (A -> B)'
-              : 'Undirected graph mode',
+              ? _tr('有向图模式 (A -> B)', 'Directed graph mode (A -> B)')
+              : _tr('无向图模式', 'Undirected graph mode'),
           style: const TextStyle(
             fontSize: AppFontSize.xs,
             color: AppColors.neutral500,
@@ -1408,10 +1470,10 @@ class _MatchingBlockContent extends StatelessWidget {
             border: Border.all(color: AppColors.neutral200),
           ),
           child: nodes.isEmpty
-              ? const Center(
+              ? Center(
                   child: Text(
-                    'No graph nodes configured',
-                    style: TextStyle(
+                    _tr('未配置图谱节点', 'No graph nodes configured'),
+                    style: const TextStyle(
                       fontSize: AppFontSize.sm,
                       color: AppColors.neutral500,
                     ),
@@ -1506,7 +1568,7 @@ class _MatchingBlockContent extends StatelessWidget {
       children: [
         Text(
           content.question.isEmpty
-              ? 'Enter a matching question'
+              ? _tr('请输入匹配题题目', 'Enter a matching question')
               : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
@@ -1535,9 +1597,9 @@ class _MatchingBlockContent extends StatelessWidget {
                             ),
                             border: Border.all(color: AppColors.neutral300),
                           ),
-                          child: const Text(
-                            'No left items',
-                            style: TextStyle(
+                          child: Text(
+                            _tr('左侧暂无条目', 'No left items'),
+                            style: const TextStyle(
                               fontSize: AppFontSize.sm,
                               color: AppColors.neutral400,
                             ),
@@ -1605,9 +1667,9 @@ class _MatchingBlockContent extends StatelessWidget {
                             ),
                             border: Border.all(color: AppColors.neutral300),
                           ),
-                          child: const Text(
-                            'No right items',
-                            style: TextStyle(
+                          child: Text(
+                            _tr('右侧暂无条目', 'No right items'),
+                            style: const TextStyle(
                               fontSize: AppFontSize.sm,
                               color: AppColors.neutral400,
                             ),
@@ -1767,8 +1829,11 @@ class _MatchingGraphPreviewPainter extends CustomPainter {
 /// True/False content
 class _TrueFalseBlockContent extends StatelessWidget {
   final TrueFalseContent content;
+  final BuilderLocalizations? t;
 
-  const _TrueFalseBlockContent({required this.content});
+  const _TrueFalseBlockContent({required this.content, required this.t});
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   @override
   Widget build(BuildContext context) {
@@ -1777,7 +1842,7 @@ class _TrueFalseBlockContent extends StatelessWidget {
       children: [
         Text(
           content.question.isEmpty
-              ? 'Enter a true or false statement'
+              ? _tr('请输入判断题题干', 'Enter a true or false statement')
               : content.question,
           style: TextStyle(
             fontSize: AppFontSize.md,
@@ -1790,9 +1855,12 @@ class _TrueFalseBlockContent extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         Row(
           children: [
-            _buildAnswerChip('True', content.correctAnswer == true),
+            _buildAnswerChip(_tr('正确', 'True'), content.correctAnswer == true),
             const SizedBox(width: AppSpacing.sm),
-            _buildAnswerChip('False', content.correctAnswer == false),
+            _buildAnswerChip(
+              _tr('错误', 'False'),
+              content.correctAnswer == false,
+            ),
           ],
         ),
       ],
@@ -1839,8 +1907,11 @@ class _TrueFalseBlockContent extends StatelessWidget {
 /// Video content
 class _VideoBlockContent extends StatelessWidget {
   final VideoContent content;
+  final BuilderLocalizations? t;
 
-  const _VideoBlockContent({required this.content});
+  const _VideoBlockContent({required this.content, required this.t});
+
+  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
 
   @override
   Widget build(BuildContext context) {
@@ -1862,8 +1933,8 @@ class _VideoBlockContent extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             Text(
               content.url.isEmpty
-                  ? 'Click to add a video'
-                  : content.title ?? 'Video',
+                  ? _tr('点击添加视频', 'Click to add a video')
+                  : content.title ?? _tr('视频', 'Video'),
               style: const TextStyle(
                 fontSize: AppFontSize.sm,
                 color: AppColors.neutral400,

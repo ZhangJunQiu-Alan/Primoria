@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../theme/design_tokens.dart';
 import 'app_dropdown.dart';
 
 class FunctionFlowContentEditor extends StatelessWidget {
+  final BuilderLocalizations t;
   final FunctionFlowContent content;
   final ValueChanged<FunctionFlowContent> onChanged;
 
   const FunctionFlowContentEditor({
     super.key,
+    required this.t,
     required this.content,
     required this.onChanged,
   });
+
+  String _tr(String zh, String en) {
+    return t.isZh ? zh : en;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +28,8 @@ class FunctionFlowContentEditor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Function Flow',
+        Text(
+          _tr('函数流程', 'Function Flow'),
           style: TextStyle(
             fontSize: AppFontSize.sm,
             fontWeight: FontWeight.w600,
@@ -32,8 +39,8 @@ class FunctionFlowContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.title,
-          decoration: const InputDecoration(
-            labelText: 'Title',
+          decoration: InputDecoration(
+            labelText: _tr('标题', 'Title'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -43,9 +50,9 @@ class FunctionFlowContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Step Duration',
+                _tr('步骤时长', 'Step Duration'),
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
@@ -79,11 +86,11 @@ class FunctionFlowContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         AppDropdown<String>(
           value: content.style.theme,
-          labelText: 'Theme',
-          items: const [
-            AppDropdownItem(value: 'indigo', label: 'Indigo'),
-            AppDropdownItem(value: 'emerald', label: 'Emerald'),
-            AppDropdownItem(value: 'amber', label: 'Amber'),
+          labelText: _tr('主题', 'Theme'),
+          items: [
+            AppDropdownItem(value: 'indigo', label: _tr('靛蓝', 'Indigo')),
+            AppDropdownItem(value: 'emerald', label: _tr('祖母绿', 'Emerald')),
+            AppDropdownItem(value: 'amber', label: _tr('琥珀', 'Amber')),
           ],
           onChanged: (value) {
             if (value == null) return;
@@ -95,9 +102,9 @@ class FunctionFlowContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Show arrows',
+                _tr('显示箭头', 'Show arrows'),
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
                   fontWeight: FontWeight.w600,
@@ -120,9 +127,12 @@ class FunctionFlowContentEditor extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         AppDropdown<String?>(
           value: content.entryNodeId,
-          labelText: 'Entry Node',
+          labelText: _tr('入口节点', 'Entry Node'),
           items: [
-            const AppDropdownItem<String?>(value: null, label: 'None'),
+            AppDropdownItem<String?>(
+              value: null,
+              label: _tr('无', 'None'),
+            ),
             ...content.nodes.map(
               (node) => AppDropdownItem<String?>(
                 value: node.id,
@@ -154,9 +164,9 @@ class FunctionFlowContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Nodes',
+                _tr('节点', 'Nodes'),
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w600,
@@ -166,14 +176,14 @@ class FunctionFlowContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
-              tooltip: 'Add node',
+              tooltip: _tr('添加节点', 'Add node'),
               onPressed: () {
                 final id = _generateNodeId(content.nodes);
                 final nodes = [
                   ...content.nodes,
                   FunctionFlowNode(
                     id: id,
-                    label: 'function${content.nodes.length + 1}()',
+                    label: '${_tr('函数', 'function')}${content.nodes.length + 1}()',
                     x: 20 + (content.nodes.length % 5) * 18,
                     y: 20 + (content.nodes.length % 3) * 24,
                     kind: FunctionFlowNode.kindFunction,
@@ -197,8 +207,8 @@ class FunctionFlowContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'Add first function node',
+            child: Text(
+              _tr('添加第一个函数节点', 'Add first function node'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -211,6 +221,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
             final node = entry.value;
             return _NodeEditorCard(
               key: ValueKey('node_${node.id}'),
+              t: t,
               node: node,
               canRemove: content.nodes.length > 1,
               onChanged: (updated) {
@@ -279,9 +290,9 @@ class FunctionFlowContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Edges',
+                _tr('连线', 'Edges'),
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w600,
@@ -291,7 +302,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
-              tooltip: 'Add edge',
+              tooltip: _tr('添加连线', 'Add edge'),
               onPressed: content.nodes.length < 2
                   ? null
                   : () {
@@ -304,7 +315,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
                         FunctionFlowEdge(
                           from: from,
                           to: to,
-                          label: 'step ${content.edges.length + 1}',
+                          label: '${_tr('步骤', 'step')} ${content.edges.length + 1}',
                         ),
                       ];
                       onChanged(
@@ -326,8 +337,8 @@ class FunctionFlowContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'Add a connection edge (caller -> callee)',
+            child: Text(
+              _tr('添加连接边（调用者 -> 被调用者）', 'Add a connection edge (caller -> callee)'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -340,6 +351,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
             final edge = entry.value;
             return _EdgeEditorCard(
               key: ValueKey('edge_$index'),
+              t: t,
               edge: edge,
               nodeIds: nodeIds,
               onChanged: (updated) {
@@ -373,9 +385,9 @@ class FunctionFlowContentEditor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Steps (Optional)',
+                _tr('步骤（可选）', 'Steps (Optional)'),
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w600,
@@ -385,7 +397,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
-              tooltip: 'Add step',
+              tooltip: _tr('添加步骤', 'Add step'),
               onPressed: content.edges.isEmpty
                   ? null
                   : () {
@@ -398,8 +410,8 @@ class FunctionFlowContentEditor extends StatelessWidget {
             ),
           ],
         ),
-        const Text(
-          'If empty, edges are played in listed order.',
+        Text(
+          _tr('若为空，将按连线列表顺序播放。', 'If empty, edges are played in listed order.'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             color: AppColors.neutral500,
@@ -415,8 +427,8 @@ class FunctionFlowContentEditor extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppBorderRadius.sm),
               border: Border.all(color: AppColors.neutral200),
             ),
-            child: const Text(
-              'No custom steps configured.',
+            child: Text(
+              _tr('尚未配置自定义步骤。', 'No custom steps configured.'),
               style: TextStyle(
                 fontSize: AppFontSize.xs,
                 color: AppColors.neutral500,
@@ -429,6 +441,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
             final step = entry.value;
             return _StepEditorCard(
               key: ValueKey('step_$index'),
+              t: t,
               index: index,
               step: step,
               edgeCount: content.edges.length,
@@ -483,6 +496,7 @@ class FunctionFlowContentEditor extends StatelessWidget {
 }
 
 class _NodeEditorCard extends StatelessWidget {
+  final BuilderLocalizations t;
   final FunctionFlowNode node;
   final bool canRemove;
   final ValueChanged<FunctionFlowNode> onChanged;
@@ -490,6 +504,7 @@ class _NodeEditorCard extends StatelessWidget {
 
   const _NodeEditorCard({
     super.key,
+    required this.t,
     required this.node,
     required this.canRemove,
     required this.onChanged,
@@ -529,8 +544,8 @@ class _NodeEditorCard extends StatelessWidget {
             ),
             TextFormField(
               initialValue: node.label,
-              decoration: const InputDecoration(
-                labelText: 'Label',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '标签' : 'Label',
                 isDense: true,
               ),
               onChanged: (value) {
@@ -540,20 +555,20 @@ class _NodeEditorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             AppDropdown<String>(
               value: node.kind,
-              labelText: 'Kind',
+              labelText: t.isZh ? '类型' : 'Kind',
               isDense: true,
-              items: const [
+              items: [
                 AppDropdownItem(
                   value: FunctionFlowNode.kindStart,
-                  label: 'start',
+                  label: t.isZh ? '开始' : 'start',
                 ),
                 AppDropdownItem(
                   value: FunctionFlowNode.kindFunction,
-                  label: 'function',
+                  label: t.isZh ? '函数' : 'function',
                 ),
                 AppDropdownItem(
                   value: FunctionFlowNode.kindEnd,
-                  label: 'end',
+                  label: t.isZh ? '结束' : 'end',
                 ),
               ],
               onChanged: (value) {
@@ -584,8 +599,8 @@ class _NodeEditorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             TextFormField(
               initialValue: node.description ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Description (optional)',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '描述（可选）' : 'Description (optional)',
                 isDense: true,
               ),
               onChanged: (value) {
@@ -640,6 +655,7 @@ class _CoordinateSlider extends StatelessWidget {
 }
 
 class _EdgeEditorCard extends StatelessWidget {
+  final BuilderLocalizations t;
   final FunctionFlowEdge edge;
   final List<String> nodeIds;
   final ValueChanged<FunctionFlowEdge> onChanged;
@@ -647,6 +663,7 @@ class _EdgeEditorCard extends StatelessWidget {
 
   const _EdgeEditorCard({
     super.key,
+    required this.t,
     required this.edge,
     required this.nodeIds,
     required this.onChanged,
@@ -666,7 +683,7 @@ class _EdgeEditorCard extends StatelessWidget {
                 Expanded(
                   child: AppDropdown<String>(
                     value: nodeIds.contains(edge.from) ? edge.from : null,
-                    labelText: 'From',
+                    labelText: t.isZh ? '起点' : 'From',
                     isDense: true,
                     items: nodeIds
                         .map(
@@ -686,7 +703,7 @@ class _EdgeEditorCard extends StatelessWidget {
                 Expanded(
                   child: AppDropdown<String>(
                     value: nodeIds.contains(edge.to) ? edge.to : null,
-                    labelText: 'To',
+                    labelText: t.isZh ? '终点' : 'To',
                     isDense: true,
                     items: nodeIds
                         .map(
@@ -722,8 +739,8 @@ class _EdgeEditorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             TextFormField(
               initialValue: edge.label ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Label (optional)',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '标签（可选）' : 'Label (optional)',
                 isDense: true,
               ),
               onChanged: (value) {
@@ -743,6 +760,7 @@ class _EdgeEditorCard extends StatelessWidget {
 }
 
 class _StepEditorCard extends StatelessWidget {
+  final BuilderLocalizations t;
   final int index;
   final FunctionFlowStep step;
   final int edgeCount;
@@ -751,6 +769,7 @@ class _StepEditorCard extends StatelessWidget {
 
   const _StepEditorCard({
     super.key,
+    required this.t,
     required this.index,
     required this.step,
     required this.edgeCount,
@@ -772,7 +791,7 @@ class _StepEditorCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Step ${index + 1}',
+                  '${t.isZh ? '步骤' : 'Step'} ${index + 1}',
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
                     fontWeight: FontWeight.w600,
@@ -794,7 +813,7 @@ class _StepEditorCard extends StatelessWidget {
               value: edgeIndexes.contains(step.edgeIndex)
                   ? step.edgeIndex
                   : null,
-              labelText: 'Edge index',
+              labelText: t.isZh ? '连线索引' : 'Edge index',
               isDense: true,
               items: edgeIndexes
                   .map(
@@ -809,8 +828,8 @@ class _StepEditorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             TextFormField(
               initialValue: step.durationMs?.toString() ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Duration ms (optional)',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '时长毫秒（可选）' : 'Duration ms (optional)',
                 isDense: true,
               ),
               keyboardType: TextInputType.number,
@@ -827,8 +846,8 @@ class _StepEditorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             TextFormField(
               initialValue: step.note ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Note (optional)',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '备注（可选）' : 'Note (optional)',
                 isDense: true,
               ),
               onChanged: (value) {

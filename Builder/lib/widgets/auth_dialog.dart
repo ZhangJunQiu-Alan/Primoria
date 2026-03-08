@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/app_localizations.dart';
+import '../providers/language_provider.dart';
 import '../theme/design_tokens.dart';
 import '../services/supabase_service.dart';
 
 /// Sign in / sign up dialog
-class AuthDialog extends StatefulWidget {
+class AuthDialog extends ConsumerStatefulWidget {
   final VoidCallback? onSuccess;
 
   const AuthDialog({super.key, this.onSuccess});
 
   @override
-  State<AuthDialog> createState() => _AuthDialogState();
+  ConsumerState<AuthDialog> createState() => _AuthDialogState();
 }
 
 enum AuthMode { login, register, forgotPassword }
 
-class _AuthDialogState extends State<AuthDialog> {
+class _AuthDialogState extends ConsumerState<AuthDialog> {
   AuthMode _mode = AuthMode.login;
   bool _isLoading = false;
   String? _errorMessage;
@@ -37,30 +40,31 @@ class _AuthDialogState extends State<AuthDialog> {
     super.dispose();
   }
 
-  String get _title {
+  String _title(BuilderLocalizations t) {
     switch (_mode) {
       case AuthMode.login:
-        return 'Sign in';
+        return t.isZh ? '登录' : 'Sign in';
       case AuthMode.register:
-        return 'Sign up';
+        return t.isZh ? '注册' : 'Sign up';
       case AuthMode.forgotPassword:
-        return 'Reset password';
+        return t.isZh ? '重置密码' : 'Reset password';
     }
   }
 
-  String get _subtitle {
+  String _subtitle(BuilderLocalizations t) {
     switch (_mode) {
       case AuthMode.login:
-        return 'Sign in to save and publish courses';
+        return t.isZh ? '登录后可保存并发布课程' : 'Sign in to save and publish courses';
       case AuthMode.register:
-        return 'Create an account to start building';
+        return t.isZh ? '创建账号以开始创作' : 'Create an account to start building';
       case AuthMode.forgotPassword:
-        return 'Enter your email and we’ll send a reset link';
+        return t.isZh ? '输入邮箱后我们将发送重置链接' : 'Enter your email and we’ll send a reset link';
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = BuilderLocalizations(ref.watch(languageProvider));
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.lg),
@@ -75,12 +79,12 @@ class _AuthDialogState extends State<AuthDialog> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header
-              _buildHeader(),
+              _buildHeader(t),
 
               const SizedBox(height: AppSpacing.lg),
 
               // Form content
-              _buildForm(),
+              _buildForm(t),
 
               // Message area
               _buildMessages(),
@@ -88,7 +92,7 @@ class _AuthDialogState extends State<AuthDialog> {
               const SizedBox(height: AppSpacing.lg),
 
               // Action buttons
-              _buildActions(),
+              _buildActions(t),
 
               const SizedBox(height: AppSpacing.md),
 
@@ -97,12 +101,12 @@ class _AuthDialogState extends State<AuthDialog> {
                 _buildDivider(),
                 const SizedBox(height: AppSpacing.md),
                 // Social sign-in
-                _buildSocialLogin(),
+                _buildSocialLogin(t),
                 const SizedBox(height: AppSpacing.md),
               ],
 
               // Mode switch
-              _buildModeSwitch(),
+              _buildModeSwitch(t),
             ],
           ),
         ),
@@ -110,7 +114,7 @@ class _AuthDialogState extends State<AuthDialog> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuilderLocalizations t) {
     return Row(
       children: [
         Container(
@@ -133,7 +137,7 @@ class _AuthDialogState extends State<AuthDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _title,
+                _title(t),
                 style: const TextStyle(
                   fontSize: AppFontSize.xl,
                   fontWeight: FontWeight.w600,
@@ -141,7 +145,7 @@ class _AuthDialogState extends State<AuthDialog> {
                 ),
               ),
               Text(
-                _subtitle,
+                _subtitle(t),
                 style: const TextStyle(
                   fontSize: AppFontSize.sm,
                   color: AppColors.neutral500,
@@ -158,7 +162,7 @@ class _AuthDialogState extends State<AuthDialog> {
     );
   }
 
-  Widget _buildForm() {
+  Widget _buildForm(BuilderLocalizations t) {
     return AutofillGroup(
       child: Column(
         children: [
@@ -168,9 +172,9 @@ class _AuthDialogState extends State<AuthDialog> {
               controller: _nameController,
               enabled: !_isLoading,
               autofillHints: const [AutofillHints.name],
-              decoration: const InputDecoration(
-                labelText: 'Display name',
-                hintText: 'How should we call you?',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '显示名称' : 'Display name',
+                hintText: t.isZh ? '我们怎么称呼你？' : 'How should we call you?',
                 prefixIcon: Icon(Icons.person_outline, size: 20),
               ),
               textInputAction: TextInputAction.next,
@@ -184,18 +188,18 @@ class _AuthDialogState extends State<AuthDialog> {
             enabled: !_isLoading,
             keyboardType: TextInputType.emailAddress,
             autofillHints: const [AutofillHints.email],
-            decoration: const InputDecoration(
-              labelText: 'Email',
+            decoration: InputDecoration(
+              labelText: t.isZh ? '邮箱' : 'Email',
               hintText: 'example@email.com',
               prefixIcon: Icon(Icons.email_outlined, size: 20),
             ),
             textInputAction: TextInputAction.next,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email';
+                return t.isZh ? '请输入邮箱' : 'Please enter your email';
               }
               if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                return 'Please enter a valid email address';
+                return t.isZh ? '请输入有效邮箱地址' : 'Please enter a valid email address';
               }
               return null;
             },
@@ -212,10 +216,10 @@ class _AuthDialogState extends State<AuthDialog> {
                   ? const [AutofillHints.newPassword]
                   : const [AutofillHints.password],
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: t.isZh ? '密码' : 'Password',
                 hintText: _mode == AuthMode.register
-                    ? 'At least 6 characters'
-                    : 'Enter your password',
+                    ? (t.isZh ? '至少 6 个字符' : 'At least 6 characters')
+                    : (t.isZh ? '请输入密码' : 'Enter your password'),
                 prefixIcon: const Icon(Icons.lock_outline, size: 20),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -236,10 +240,10 @@ class _AuthDialogState extends State<AuthDialog> {
               onFieldSubmitted: _mode == AuthMode.login ? (_) => _submit() : null,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
+                  return t.isZh ? '请输入密码' : 'Please enter a password';
                 }
                 if (_mode == AuthMode.register && value.length < 6) {
-                  return 'Password must be at least 6 characters';
+                  return t.isZh ? '密码至少需要 6 位' : 'Password must be at least 6 characters';
                 }
                 return null;
               },
@@ -254,19 +258,19 @@ class _AuthDialogState extends State<AuthDialog> {
               enabled: !_isLoading,
               obscureText: _obscurePassword,
               autofillHints: const [AutofillHints.newPassword],
-              decoration: const InputDecoration(
-                labelText: 'Confirm password',
-                hintText: 'Enter password again',
+              decoration: InputDecoration(
+                labelText: t.isZh ? '确认密码' : 'Confirm password',
+                hintText: t.isZh ? '再次输入密码' : 'Enter password again',
                 prefixIcon: Icon(Icons.lock_outline, size: 20),
               ),
               textInputAction: TextInputAction.done,
               onFieldSubmitted: (_) => _submit(),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please confirm your password';
+                return t.isZh ? '请再次输入密码' : 'Please confirm your password';
               }
               if (value != _passwordController.text) {
-                return 'Passwords do not match';
+                return t.isZh ? '两次输入的密码不一致' : 'Passwords do not match';
               }
               return null;
             },
@@ -293,8 +297,8 @@ class _AuthDialogState extends State<AuthDialog> {
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: const Text(
-                'Forgot password?',
+              child: Text(
+                t.isZh ? '忘记密码？' : 'Forgot password?',
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   color: AppColors.primary500,
@@ -380,17 +384,17 @@ class _AuthDialogState extends State<AuthDialog> {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(BuilderLocalizations t) {
     String buttonText;
     switch (_mode) {
       case AuthMode.login:
-        buttonText = 'Sign in';
+        buttonText = t.isZh ? '登录' : 'Sign in';
         break;
       case AuthMode.register:
-        buttonText = 'Create account';
+        buttonText = t.isZh ? '创建账号' : 'Create account';
         break;
       case AuthMode.forgotPassword:
-        buttonText = 'Send reset link';
+        buttonText = t.isZh ? '发送重置链接' : 'Send reset link';
         break;
     }
 
@@ -413,14 +417,15 @@ class _AuthDialogState extends State<AuthDialog> {
   }
 
   Widget _buildDivider() {
-    return const Row(
+    final t = BuilderLocalizations(ref.read(languageProvider));
+    return Row(
       children: [
         Expanded(child: Divider()),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppSpacing.md),
           child: Text(
-            'OR',
-            style: TextStyle(
+            t.isZh ? '或' : 'OR',
+            style: const TextStyle(
               fontSize: AppFontSize.sm,
               color: AppColors.neutral400,
             ),
@@ -431,7 +436,7 @@ class _AuthDialogState extends State<AuthDialog> {
     );
   }
 
-  Widget _buildSocialLogin() {
+  Widget _buildSocialLogin(BuilderLocalizations t) {
     return Column(
       children: [
         // Google sign-in
@@ -444,7 +449,7 @@ class _AuthDialogState extends State<AuthDialog> {
             errorBuilder: (_, __, ___) =>
                 const Icon(Icons.g_mobiledata, size: 20),
           ),
-          label: const Text('Continue with Google'),
+          label: Text(t.isZh ? '使用 Google 继续' : 'Continue with Google'),
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
             foregroundColor: AppColors.neutral700,
@@ -454,7 +459,7 @@ class _AuthDialogState extends State<AuthDialog> {
     );
   }
 
-  Widget _buildModeSwitch() {
+  Widget _buildModeSwitch(BuilderLocalizations t) {
     if (_mode == AuthMode.forgotPassword) {
       return TextButton(
         onPressed: _isLoading
@@ -466,8 +471,8 @@ class _AuthDialogState extends State<AuthDialog> {
                   _successMessage = null;
                 });
               },
-        child: const Text(
-          'Back to sign in',
+        child: Text(
+          t.isZh ? '返回登录' : 'Back to sign in',
           style: TextStyle(color: AppColors.primary500),
         ),
       );
@@ -478,8 +483,8 @@ class _AuthDialogState extends State<AuthDialog> {
       children: [
         Text(
           _mode == AuthMode.login
-              ? "Don't have an account?"
-              : 'Already have an account?',
+              ? (t.isZh ? '还没有账号？' : "Don't have an account?")
+              : (t.isZh ? '已有账号？' : 'Already have an account?'),
           style: const TextStyle(
             fontSize: AppFontSize.sm,
             color: AppColors.neutral500,
@@ -504,7 +509,9 @@ class _AuthDialogState extends State<AuthDialog> {
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: Text(
-            _mode == AuthMode.login ? 'Sign up' : 'Sign in',
+            _mode == AuthMode.login
+                ? (t.isZh ? '注册' : 'Sign up')
+                : (t.isZh ? '登录' : 'Sign in'),
             style: const TextStyle(
               fontSize: AppFontSize.sm,
               fontWeight: FontWeight.w600,
@@ -576,9 +583,11 @@ class _AuthDialogState extends State<AuthDialog> {
     if (!mounted) return;
 
     if (result.success) {
+      final t = BuilderLocalizations(ref.read(languageProvider));
       setState(() {
-        _successMessage =
-            'Sign up successful! Please check your email to confirm your address, then sign in.';
+        _successMessage = t.isZh
+            ? '注册成功！请先前往邮箱完成验证，再回来登录。'
+            : 'Sign up successful! Please check your email to confirm your address, then sign in.';
         _mode = AuthMode.login;
         _passwordController.clear();
         _confirmPasswordController.clear();
@@ -599,8 +608,11 @@ class _AuthDialogState extends State<AuthDialog> {
     if (!mounted) return;
 
     if (result.success) {
+      final t = BuilderLocalizations(ref.read(languageProvider));
       setState(() {
-        _successMessage = 'Reset link sent. Please check your email.';
+        _successMessage = t.isZh
+            ? '重置链接已发送，请查收邮箱。'
+            : 'Reset link sent. Please check your email.';
       });
     } else {
       setState(() {

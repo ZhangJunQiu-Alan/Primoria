@@ -1,5 +1,52 @@
 # Changelog
 
+## [Unreleased] - 2026-03-08 (Builder Full I18N + Viewer Landing I18N)
+
+### Summary
+- Completed end-to-end Builder bilingual adaptation (Chinese/English) across auth, dashboard, builder canvas, viewer preview, and interactive block widgets.
+- Ensured Builder language switching is settings-driven and consistent in both editing and preview experiences.
+- Added Viewer landing-page bilingual adaptation to keep public-entry copy aligned with language preference.
+
+### Changed
+- Builder core localization wiring:
+  - `Builder/lib/features/builder/builder_screen.dart`
+  - `Builder/lib/widgets/module_panel.dart`
+  - `Builder/lib/widgets/builder_canvas.dart`
+  - `Builder/lib/widgets/property_panel.dart`
+  - `Builder/lib/widgets/user_avatar.dart`
+- Builder auth/dashboard localization coverage:
+  - `Builder/lib/features/auth/login_screen.dart`
+  - `Builder/lib/features/auth/auth_callback_screen.dart`
+  - `Builder/lib/widgets/auth_dialog.dart`
+  - `Builder/lib/widgets/ai_generate_dialog.dart`
+  - `Builder/lib/features/dashboard/dashboard_screen.dart`
+  - `Builder/lib/features/dashboard/tabs/data_center_tab.dart`
+  - `Builder/lib/features/dashboard/tabs/fans_manage_tab.dart`
+  - `Builder/lib/features/dashboard/widgets/learner_table.dart`
+- Builder interactive preview/widget localization:
+  - `Builder/lib/features/viewer/viewer_screen.dart`
+  - `Builder/lib/widgets/block_widgets/block_wrapper.dart`
+  - `Builder/lib/widgets/block_widgets/code_playground_widget.dart`
+  - `Builder/lib/widgets/block_widgets/code_execution_block_widget.dart`
+  - `Builder/lib/widgets/block_widgets/function_flow_block_widget.dart`
+  - `Builder/lib/widgets/matching_content_editor.dart`
+  - `Builder/lib/widgets/code_execution_content_editor.dart`
+  - `Builder/lib/widgets/function_flow_content_editor.dart`
+- Viewer landing localization:
+  - `Viewer/lib/screens/landing_screen.dart`
+- Tests:
+  - `Builder/test/matching_graph_widget_test.dart`
+    - Updated to pass localization dependency and accept bilingual assertions.
+
+### Validation
+- `cd Builder && flutter analyze`
+  - No analyzer errors after this change set.
+  - Existing non-blocking items remain (deprecated `dart:html`, one unused field, test string-escape infos).
+- `cd Builder && flutter test test/matching_graph_widget_test.dart`
+  - Passed.
+
+---
+
 ## [Unreleased] - 2026-03-08 (Viewer Core I18N + UI Stability Fixes)
 
 ### Summary

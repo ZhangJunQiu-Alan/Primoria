@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/language_provider.dart';
 
 class _C {
   const _C._();
@@ -68,6 +71,147 @@ class _LandingScreenState extends State<LandingScreen>
   late final Animation<double> _fade;
   late final Animation<Offset> _liftIn;
 
+  static const Map<String, String> _zhTexts = {
+    'Features': '功能',
+    'How It Works': '学习流程',
+    'AI Tutor': 'AI导师',
+    'Community': '社区',
+    'Log In': '登录',
+    'Get Started': '立即开始',
+    'Start Free': '免费开始',
+    'AI-Powered Learning — Now Available': 'AI驱动学习，现已上线',
+    'Master Any\nSubject — ': '掌握任何\n学科 — ',
+    'Level Up\nEvery Day': '每天都能\n升级进步',
+    'Interactive STEM lessons, real-time AI guidance, and a community of study buddies. Stop watching — start doing.':
+        '互动式 STEM 课程、实时 AI 指导，以及学习伙伴社区。别再只看视频，现在就动手学习。',
+    'Start Learning Free': '免费开始学习',
+    'Explore Courses': '探索课程',
+    'Free to start': '免费起步',
+    'No credit card': '无需信用卡',
+    'Cancel anytime': '随时取消',
+    'Active Learners': '活跃学习者',
+    'Interactive Courses': '互动课程',
+    'Average Rating': '平均评分',
+    'Countries Reached': '覆盖国家',
+    'Learn By Doing': '动手学',
+    'Interactive, not passive': '互动学习，拒绝被动',
+    'Tap-to-reveal explanations': '点击展开讲解',
+    'Interactive sliders & simulations': '交互滑杆与模拟',
+    'Code playgrounds — run & debug': '代码练习场：运行与调试',
+    'Fill-in-the-blank challenges': '填空挑战',
+    'Instant right/wrong feedback': '即时对错反馈',
+    'AI Personal Tutor': 'AI 个性导师',
+    'Powered by Gemini AI': '由 Gemini AI 提供支持',
+    'Ask anything, get instant answers': '随时提问，立即解答',
+    'Step-by-step problem solving': '分步骤问题求解',
+    'Auto-generated mind maps': '自动生成思维导图',
+    'Practice quiz generation': '自动生成练习测验',
+    'Available 24 / 7, never judging': '7×24 全天在线，始终耐心',
+    'Study Buddy Match': '学习搭子匹配',
+    'Learning is better together': '一起学习更高效',
+    'Match with same-level learners': '匹配同水平学习者',
+    'Shared progress accountability': '共享进度与监督',
+    'Community leaderboards': '社区排行榜',
+    'Peer encouragement system': '同伴激励机制',
+    'Group challenges & missions': '小组挑战与任务',
+    'Level Up & Earn': '升级并赢奖励',
+    'Gamified from start to finish': '全程游戏化学习',
+    'Earn XP for every lesson': '每节课都能获得 XP',
+    'Daily quests & bonus rewards': '每日任务与额外奖励',
+    'Streak system — keep the fire': '连击系统，保持热度',
+    'Unlock achievement badges': '解锁成就徽章',
+    'Profile levels & ranked tiers': '个人等级与段位体系',
+    'Everything You Need\nto Succeed': '成功所需，一应俱全',
+    'Four pillars that make Primoria the most engaging way to learn STEM.':
+        '四大核心能力，让 Primoria 成为最有沉浸感的 STEM 学习方式。',
+    'Choose Your Path': '选择你的路径',
+    'Browse 200+ expert-crafted courses across physics, math, computer science, and more. Filter by topic, difficulty, or duration.':
+        '浏览 200+ 专家打造课程，覆盖物理、数学、计算机等领域。可按主题、难度、时长筛选。',
+    'Learn Interactively': '互动式学习',
+    'Every lesson is hands-on. Solve problems, run code, drag sliders — no passive video watching. Your AI tutor explains anything you\'re stuck on.':
+        '每节课都强调动手实践。解题、跑代码、拖动滑杆，不再被动看视频。遇到卡点，AI 导师会立即讲解。',
+    'Track & Level Up': '追踪进度并升级',
+    'Earn XP, build daily streaks, unlock achievements, and climb the leaderboard. Watch your progress heatmap fill up week by week.':
+        '赚取 XP、保持每日连击、解锁成就并冲击排行榜。看着你的学习热力图一周周点亮。',
+    'From Zero to Expert\nin 3 Steps': '从零到高手\n只需 3 步',
+    'Ask questions in plain English — no jargon needed': '用自然语言提问，无需术语',
+    'Get step-by-step breakdowns of complex topics': '复杂知识点分步拆解',
+    'Request practice quizzes tailored to your level': '按你的水平生成练习题',
+    'Generate mind maps to visualize any concept': '把任意概念可视化为思维导图',
+    'Review and replay key moments from lessons': '复盘并回放课程关键节点',
+    'Your Personal AI\nTutor, Always On': '你的专属 AI\n导师，始终在线',
+    'Stuck on a concept at 2 AM? Your AI tutor never sleeps. Ask anything, get clear explanations, and keep your momentum going.':
+        '凌晨两点遇到难点？你的 AI 导师从不下线。随时提问，获得清晰讲解，保持学习势头。',
+    'Try AI Tutor Free': '免费体验 AI 导师',
+    'Gamification': '成长体系',
+    'Make Every Lesson\nCount': '让每一节课\n都有价值',
+    'Science says rewards wire your brain to love learning. Primoria is built on that insight — every lesson earns XP, every day extends your streak, and every milestone unlocks a new achievement.':
+        '科学研究表明，奖励机制能让大脑更爱学习。Primoria 基于这一点打造：每节课赚 XP，每天延续连击，每个里程碑解锁新成就。',
+    'Daily Streak': '每日连击',
+    'Build momentum with unbroken learning days': '用连续学习天数建立惯性',
+    'Experience Points (XP)': '经验值（XP）',
+    'Every lesson, quiz, and activity earns XP': '课程、测验、活动都能获得 XP',
+    'Achievement Badges': '成就徽章',
+    'Unlock rare badges for reaching milestones': '达成里程碑可解锁稀有徽章',
+    'Daily Quests': '每日任务',
+    'Fresh missions every day to keep things interesting': '每天新任务，保持新鲜感',
+    'Find Your Study Buddy': '找到你的学习搭子',
+    'Learning alone is tough. Our smart matching algorithm connects you with learners at the same level, in the same topic. Motivate each other, compete on leaderboards, and hit goals together.':
+        '一个人学习并不容易。我们的智能匹配算法会把你与同水平、同主题学习者连接起来。互相激励、排行榜竞争、一起达成目标。',
+    'Smart Matching': '智能匹配',
+    'Paired by skill level and topic interest': '按能力水平与主题兴趣匹配',
+    'Leaderboards': '排行榜',
+    'Weekly rankings to spark healthy competition': '每周排名激发良性竞争',
+    'Group Challenges': '组队挑战',
+    'Tackle special missions with your squad': '和小队一起完成特别任务',
+    'Join the Community': '加入社区',
+    'Testimonials': '用户评价',
+    'Learners Love Primoria': '学习者喜爱 Primoria',
+    'High School Student': '高中生',
+    'University Sophomore': '大学二年级',
+    'Self-taught Learner': '自学者',
+    'Ready to Start Your\nLearning Journey?': '准备开启你的\n学习旅程了吗？',
+    'Join 10,000+ learners who chose to learn by doing, not just watching.':
+        '加入 10,000+ 位学习者，选择动手学习，而不只是观看。',
+    'Create Free Account': '免费创建账号',
+    'Learn': '学习',
+    'Company': '公司',
+    'About': '关于我们',
+    'Blog': '博客',
+    'Pricing': '价格方案',
+    'Contact': '联系我们',
+    'Copyright © 2026 PRIMORIA. All rights reserved. No part of this website or any of its contents may be reproduced, copied, modified, or adapted without prior written consent of the author.':
+        '版权所有 © 2026 PRIMORIA。保留所有权利。未经作者事先书面同意，不得复制、修改或传播本网站及其任何内容。',
+    'Interactive STEM learning, powered by AI.\nJoin thousands mastering science the fun way.':
+        'AI 驱动的互动式 STEM 学习。\n加入成千上万学习者，以更有趣的方式掌握科学。',
+    'Physics 101': '物理 101',
+    '65% · Lesson 7 of 11': '65% · 第 7 / 11 课',
+    'Day Streak': '天连击',
+    'Why does E = mc²?': '为什么 E = mc²？',
+    '+50 XP': '+50 XP',
+    'Primoria AI Tutor': 'Primoria AI 导师',
+    'Always online': '始终在线',
+    'Why does water expand when it freezes? That seems counterintuitive.':
+        '水在结冰时为什么会膨胀？这听起来有点反直觉。',
+    'Great question! Water molecules form a rigid hexagonal lattice in ice, which actually takes up more space than the liquid arrangement. That’s why ice floats!':
+        '好问题！水分子在冰中会形成刚性的六边形晶格，这种结构比液态排列占据更大体积，所以冰会浮起来。',
+    'Can you quiz me on this?': '你可以就这个给我出几道题吗？',
+    'Sure! Here’s a quick question: Ice is less dense than water. True or False?':
+        '当然！先来个小问题：冰的密度比水低。对还是错？',
+    'Ask me anything…': '随便问我...',
+    '47-Day Streak': '47 天连击',
+    'You\'re on fire! Keep it up.': '状态火热！继续保持。',
+    'XP Progress': 'XP 进度',
+    'Recent Achievements': '最近成就',
+    'First Lesson': '第一节课',
+    '7-Day Streak': '7 天连击',
+    'Quiz Master': '测验达人',
+    'Top 10%': '前 10%',
+  };
+
+  bool get _isZh => context.read<LanguageProvider>().t.isZh;
+  String _s(String en) => _isZh ? (_zhTexts[en] ?? en) : en;
+
   @override
   void initState() {
     super.initState();
@@ -119,6 +263,7 @@ class _LandingScreenState extends State<LandingScreen>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>().t;
     return Scaffold(
       backgroundColor: _C.page,
       body: SafeArea(
@@ -173,20 +318,20 @@ class _LandingScreenState extends State<LandingScreen>
               ),
               if (wide) ...[
                 const Spacer(),
-                _navLink('Features', () => _scrollTo(_featuresKey)),
+                _navLink(_s('Features'), () => _scrollTo(_featuresKey)),
                 const SizedBox(width: 28),
-                _navLink('How It Works', () => _scrollTo(_howItWorksKey)),
+                _navLink(_s('How It Works'), () => _scrollTo(_howItWorksKey)),
                 const SizedBox(width: 28),
-                _navLink('AI Tutor', () => _scrollTo(_aiKey)),
+                _navLink(_s('AI Tutor'), () => _scrollTo(_aiKey)),
                 const SizedBox(width: 28),
-                _navLink('Community', () => _scrollTo(_communityKey)),
+                _navLink(_s('Community'), () => _scrollTo(_communityKey)),
                 const SizedBox(width: 36),
-                _outlineButton('Log In', _goToLogin),
+                _outlineButton(_s('Log In'), _goToLogin),
                 const SizedBox(width: 12),
-                _filledButton('Get Started', _goToRegister, small: true),
+                _filledButton(_s('Get Started'), _goToRegister, small: true),
               ] else ...[
                 const Spacer(),
-                _filledButton('Start Free', _goToRegister, small: true),
+                _filledButton(_s('Start Free'), _goToRegister, small: true),
               ],
             ],
           ),
@@ -261,9 +406,7 @@ class _LandingScreenState extends State<LandingScreen>
             letterSpacing: 0.6,
             fontWeight: FontWeight.w700,
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(9),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
         ),
         child: Text(label),
       ),
@@ -281,17 +424,19 @@ class _LandingScreenState extends State<LandingScreen>
 
         return Container(
           color: _C.surface,
-          padding: EdgeInsets.fromLTRB(hPad, wide ? 72 : 48, hPad, wide ? 88 : 56),
+          padding: EdgeInsets.fromLTRB(
+            hPad,
+            wide ? 72 : 48,
+            hPad,
+            wide ? 88 : 56,
+          ),
           child: wide
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(flex: 6, child: _buildHeroCopy(wide: true)),
                     const SizedBox(width: 48),
-                    Expanded(
-                      flex: 5,
-                      child: _HeroMockup(isWide: true),
-                    ),
+                    Expanded(flex: 5, child: _HeroMockup(isWide: true)),
                   ],
                 )
               : Column(
@@ -323,10 +468,14 @@ class _LandingScreenState extends State<LandingScreen>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.auto_awesome_rounded, size: 14, color: _C.accent),
+              const Icon(
+                Icons.auto_awesome_rounded,
+                size: 14,
+                color: _C.accent,
+              ),
               const SizedBox(width: 6),
               Text(
-                'AI-Powered Learning — Now Available',
+                _s('AI-Powered Learning — Now Available'),
                 style: GoogleFonts.manrope(
                   fontSize: 13,
                   color: _C.accentDeep,
@@ -341,9 +490,9 @@ class _LandingScreenState extends State<LandingScreen>
           text: TextSpan(
             style: _headlineStyle(hs),
             children: [
-              const TextSpan(text: 'Master Any\nSubject — '),
+              TextSpan(text: _s('Master Any\nSubject — ')),
               TextSpan(
-                text: 'Level Up\nEvery Day',
+                text: _s('Level Up\nEvery Day'),
                 style: _headlineStyle(hs).copyWith(color: _C.accent),
               ),
             ],
@@ -353,27 +502,28 @@ class _LandingScreenState extends State<LandingScreen>
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: wide ? 520 : 400),
           child: Text(
-            'Interactive STEM lessons, real-time AI guidance, and a community of study buddies. '
-            'Stop watching — start doing.',
+            _s(
+              'Interactive STEM lessons, real-time AI guidance, and a community of study buddies. Stop watching — start doing.',
+            ),
             style: _bodyStyle(wide ? 18 : 16),
           ),
         ),
         const SizedBox(height: 32),
         Row(
           children: [
-            _filledButton('Start Learning Free', _goToRegister),
+            _filledButton(_s('Start Learning Free'), _goToRegister),
             const SizedBox(width: 14),
-            _outlineButton('Explore Courses', _goToLogin),
+            _outlineButton(_s('Explore Courses'), _goToLogin),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _heroPill(Icons.check_circle_rounded, 'Free to start'),
+            _heroPill(Icons.check_circle_rounded, _s('Free to start')),
             const SizedBox(width: 16),
-            _heroPill(Icons.check_circle_rounded, 'No credit card'),
+            _heroPill(Icons.check_circle_rounded, _s('No credit card')),
             const SizedBox(width: 16),
-            _heroPill(Icons.check_circle_rounded, 'Cancel anytime'),
+            _heroPill(Icons.check_circle_rounded, _s('Cancel anytime')),
           ],
         ),
       ],
@@ -394,10 +544,10 @@ class _LandingScreenState extends State<LandingScreen>
   // ─────────────────────────────────────────────────────────────
   Widget _buildStatsBar() {
     final stats = [
-      _StatData('10,000+', 'Active Learners', Icons.people_alt_rounded),
-      _StatData('200+', 'Interactive Courses', Icons.school_rounded),
-      _StatData('4.9 / 5', 'Average Rating', Icons.star_rounded),
-      _StatData('50+', 'Countries Reached', Icons.public_rounded),
+      _StatData('10,000+', _s('Active Learners'), Icons.people_alt_rounded),
+      _StatData('200+', _s('Interactive Courses'), Icons.school_rounded),
+      _StatData('4.9 / 5', _s('Average Rating'), Icons.star_rounded),
+      _StatData('50+', _s('Countries Reached'), Icons.public_rounded),
     ];
 
     return LayoutBuilder(
@@ -418,9 +568,7 @@ class _LandingScreenState extends State<LandingScreen>
           child: wide
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: stats
-                      .map((s) => _StatBadge(data: s))
-                      .toList(),
+                  children: stats.map((s) => _StatBadge(data: s)).toList(),
                 )
               : GridView.count(
                   crossAxisCount: 2,
@@ -446,14 +594,14 @@ class _LandingScreenState extends State<LandingScreen>
           colors: [_C.feat1A, _C.feat1B],
         ),
         icon: Icons.touch_app_rounded,
-        title: 'Learn By Doing',
-        subtitle: 'Interactive, not passive',
+        title: _s('Learn By Doing'),
+        subtitle: _s('Interactive, not passive'),
         bullets: [
-          'Tap-to-reveal explanations',
-          'Interactive sliders & simulations',
-          'Code playgrounds — run & debug',
-          'Fill-in-the-blank challenges',
-          'Instant right/wrong feedback',
+          _s('Tap-to-reveal explanations'),
+          _s('Interactive sliders & simulations'),
+          _s('Code playgrounds — run & debug'),
+          _s('Fill-in-the-blank challenges'),
+          _s('Instant right/wrong feedback'),
         ],
       ),
       _FeatureData(
@@ -463,14 +611,14 @@ class _LandingScreenState extends State<LandingScreen>
           colors: [_C.feat2A, _C.feat2B],
         ),
         icon: Icons.smart_toy_rounded,
-        title: 'AI Personal Tutor',
-        subtitle: 'Powered by Gemini AI',
+        title: _s('AI Personal Tutor'),
+        subtitle: _s('Powered by Gemini AI'),
         bullets: [
-          'Ask anything, get instant answers',
-          'Step-by-step problem solving',
-          'Auto-generated mind maps',
-          'Practice quiz generation',
-          'Available 24 / 7, never judging',
+          _s('Ask anything, get instant answers'),
+          _s('Step-by-step problem solving'),
+          _s('Auto-generated mind maps'),
+          _s('Practice quiz generation'),
+          _s('Available 24 / 7, never judging'),
         ],
       ),
       _FeatureData(
@@ -480,14 +628,14 @@ class _LandingScreenState extends State<LandingScreen>
           colors: [_C.feat3A, _C.feat3B],
         ),
         icon: Icons.group_rounded,
-        title: 'Study Buddy Match',
-        subtitle: 'Learning is better together',
+        title: _s('Study Buddy Match'),
+        subtitle: _s('Learning is better together'),
         bullets: [
-          'Match with same-level learners',
-          'Shared progress accountability',
-          'Community leaderboards',
-          'Peer encouragement system',
-          'Group challenges & missions',
+          _s('Match with same-level learners'),
+          _s('Shared progress accountability'),
+          _s('Community leaderboards'),
+          _s('Peer encouragement system'),
+          _s('Group challenges & missions'),
         ],
       ),
       _FeatureData(
@@ -497,14 +645,14 @@ class _LandingScreenState extends State<LandingScreen>
           colors: [_C.feat4A, _C.feat4B],
         ),
         icon: Icons.emoji_events_rounded,
-        title: 'Level Up & Earn',
-        subtitle: 'Gamified from start to finish',
+        title: _s('Level Up & Earn'),
+        subtitle: _s('Gamified from start to finish'),
         bullets: [
-          'Earn XP for every lesson',
-          'Daily quests & bonus rewards',
-          'Streak system — keep the fire',
-          'Unlock achievement badges',
-          'Profile levels & ranked tiers',
+          _s('Earn XP for every lesson'),
+          _s('Daily quests & bonus rewards'),
+          _s('Streak system — keep the fire'),
+          _s('Unlock achievement badges'),
+          _s('Profile levels & ranked tiers'),
         ],
       ),
     ];
@@ -521,17 +669,19 @@ class _LandingScreenState extends State<LandingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _sectionLabel('Features'),
+              _sectionLabel(_s('Features')),
               const SizedBox(height: 8),
               Text(
-                'Everything You Need\nto Succeed',
+                _s('Everything You Need\nto Succeed'),
                 style: _headlineStyle(wide ? 56 : 40),
               ),
               const SizedBox(height: 12),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 520),
                 child: Text(
-                  'Four pillars that make Primoria the most engaging way to learn STEM.',
+                  _s(
+                    'Four pillars that make Primoria the most engaging way to learn STEM.',
+                  ),
                   style: _bodyStyle(wide ? 17 : 15),
                 ),
               ),
@@ -575,25 +725,28 @@ class _LandingScreenState extends State<LandingScreen>
         number: '01',
         color: _C.step1,
         icon: Icons.explore_rounded,
-        title: 'Choose Your Path',
-        body:
-            'Browse 200+ expert-crafted courses across physics, math, computer science, and more. Filter by topic, difficulty, or duration.',
+        title: _s('Choose Your Path'),
+        body: _s(
+          'Browse 200+ expert-crafted courses across physics, math, computer science, and more. Filter by topic, difficulty, or duration.',
+        ),
       ),
       _StepData(
         number: '02',
         color: _C.step2,
         icon: Icons.auto_fix_high_rounded,
-        title: 'Learn Interactively',
-        body:
-            'Every lesson is hands-on. Solve problems, run code, drag sliders — no passive video watching. Your AI tutor explains anything you\'re stuck on.',
+        title: _s('Learn Interactively'),
+        body: _s(
+          'Every lesson is hands-on. Solve problems, run code, drag sliders — no passive video watching. Your AI tutor explains anything you\'re stuck on.',
+        ),
       ),
       _StepData(
         number: '03',
         color: _C.step3,
         icon: Icons.trending_up_rounded,
-        title: 'Track & Level Up',
-        body:
-            'Earn XP, build daily streaks, unlock achievements, and climb the leaderboard. Watch your progress heatmap fill up week by week.',
+        title: _s('Track & Level Up'),
+        body: _s(
+          'Earn XP, build daily streaks, unlock achievements, and climb the leaderboard. Watch your progress heatmap fill up week by week.',
+        ),
       ),
     ];
 
@@ -609,10 +762,10 @@ class _LandingScreenState extends State<LandingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _sectionLabel('How It Works'),
+              _sectionLabel(_s('How It Works')),
               const SizedBox(height: 8),
               Text(
-                'From Zero to Expert\nin 3 Steps',
+                _s('From Zero to Expert\nin 3 Steps'),
                 style: _headlineStyle(wide ? 52 : 38),
               ),
               const SizedBox(height: 48),
@@ -700,11 +853,11 @@ class _LandingScreenState extends State<LandingScreen>
     );
 
     final bullets = [
-      'Ask questions in plain English — no jargon needed',
-      'Get step-by-step breakdowns of complex topics',
-      'Request practice quizzes tailored to your level',
-      'Generate mind maps to visualize any concept',
-      'Review and replay key moments from lessons',
+      _s('Ask questions in plain English — no jargon needed'),
+      _s('Get step-by-step breakdowns of complex topics'),
+      _s('Request practice quizzes tailored to your level'),
+      _s('Generate mind maps to visualize any concept'),
+      _s('Review and replay key moments from lessons'),
     ];
 
     return Column(
@@ -723,7 +876,7 @@ class _LandingScreenState extends State<LandingScreen>
               Icon(Icons.smart_toy_rounded, size: 14, color: _C.aiPurple),
               const SizedBox(width: 6),
               Text(
-                'Powered by Gemini AI',
+                _s('Powered by Gemini AI'),
                 style: GoogleFonts.manrope(
                   fontSize: 13,
                   color: _C.aiPurple,
@@ -735,7 +888,7 @@ class _LandingScreenState extends State<LandingScreen>
         ),
         const SizedBox(height: 20),
         Text(
-          'Your Personal AI\nTutor, Always On',
+          _s('Your Personal AI\nTutor, Always On'),
           style: GoogleFonts.sora(
             fontSize: wide ? 48 : 36,
             fontWeight: FontWeight.w700,
@@ -745,8 +898,9 @@ class _LandingScreenState extends State<LandingScreen>
         ),
         const SizedBox(height: 16),
         Text(
-          'Stuck on a concept at 2 AM? Your AI tutor never sleeps. '
-          'Ask anything, get clear explanations, and keep your momentum going.',
+          _s(
+            'Stuck on a concept at 2 AM? Your AI tutor never sleeps. Ask anything, get clear explanations, and keep your momentum going.',
+          ),
           style: GoogleFonts.manrope(
             fontSize: 16,
             color: Colors.white.withValues(alpha: 0.7),
@@ -781,7 +935,7 @@ class _LandingScreenState extends State<LandingScreen>
           ),
         ),
         const SizedBox(height: 32),
-        _filledButton('Try AI Tutor Free', _goToRegister),
+        _filledButton(_s('Try AI Tutor Free'), _goToRegister),
       ],
     );
   }
@@ -810,7 +964,10 @@ class _LandingScreenState extends State<LandingScreen>
                   children: [
                     Expanded(flex: 5, child: _GamificationMockup()),
                     const SizedBox(width: 60),
-                    Expanded(flex: 5, child: _buildGamificationCopy(wide: true)),
+                    Expanded(
+                      flex: 5,
+                      child: _buildGamificationCopy(wide: true),
+                    ),
                   ],
                 )
               : Column(
@@ -830,69 +987,83 @@ class _LandingScreenState extends State<LandingScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _sectionLabel('Gamification', color: _C.streakFire),
+        _sectionLabel(_s('Gamification'), color: _C.streakFire),
         const SizedBox(height: 8),
         Text(
-          'Make Every Lesson\nCount',
+          _s('Make Every Lesson\nCount'),
           style: _headlineStyle(wide ? 48 : 36),
         ),
         const SizedBox(height: 16),
         Text(
-          'Science says rewards wire your brain to love learning. '
-          'Primoria is built on that insight — every lesson earns '
-          'XP, every day extends your streak, and every milestone '
-          'unlocks a new achievement.',
+          _s(
+            'Science says rewards wire your brain to love learning. Primoria is built on that insight — every lesson earns XP, every day extends your streak, and every milestone unlocks a new achievement.',
+          ),
           style: _bodyStyle(wide ? 17 : 15),
         ),
         const SizedBox(height: 28),
-        _gamStat(Icons.local_fire_department_rounded, _C.streakFire,
-            'Daily Streak', 'Build momentum with unbroken learning days'),
+        _gamStat(
+          Icons.local_fire_department_rounded,
+          _C.streakFire,
+          _s('Daily Streak'),
+          _s('Build momentum with unbroken learning days'),
+        ),
         const SizedBox(height: 14),
-        _gamStat(Icons.star_rounded, _C.xpGold, 'Experience Points (XP)',
-            'Every lesson, quiz, and activity earns XP'),
+        _gamStat(
+          Icons.star_rounded,
+          _C.xpGold,
+          _s('Experience Points (XP)'),
+          _s('Every lesson, quiz, and activity earns XP'),
+        ),
         const SizedBox(height: 14),
-        _gamStat(Icons.emoji_events_rounded, const Color(0xFF6D40E7),
-            'Achievement Badges', 'Unlock rare badges for reaching milestones'),
+        _gamStat(
+          Icons.emoji_events_rounded,
+          const Color(0xFF6D40E7),
+          _s('Achievement Badges'),
+          _s('Unlock rare badges for reaching milestones'),
+        ),
         const SizedBox(height: 14),
-        _gamStat(Icons.task_alt_rounded, const Color(0xFF11D9A8), 'Daily Quests',
-            'Fresh missions every day to keep things interesting'),
+        _gamStat(
+          Icons.task_alt_rounded,
+          const Color(0xFF11D9A8),
+          _s('Daily Quests'),
+          _s('Fresh missions every day to keep things interesting'),
+        ),
       ],
     );
   }
 
-  Widget _gamStat(IconData icon, Color color, String title, String sub) =>
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(12),
+  Widget _gamStat(IconData icon, Color color, String title, String sub) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Icon(icon, color: color, size: 20),
+      ),
+      const SizedBox(width: 14),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.sora(
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                color: _C.ink,
+              ),
             ),
-            child: Icon(icon, color: color, size: 20),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.sora(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: _C.ink,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(sub, style: _bodyStyle(13, color: _C.body)),
-              ],
-            ),
-          ),
-        ],
-      );
+            const SizedBox(height: 2),
+            Text(sub, style: _bodyStyle(13, color: _C.body)),
+          ],
+        ),
+      ),
+    ],
+  );
 
   // ─────────────────────────────────────────────────────────────
   // Community
@@ -915,10 +1086,13 @@ class _LandingScreenState extends State<LandingScreen>
           padding: EdgeInsets.fromLTRB(hPad, 80, hPad, 80),
           child: Column(
             children: [
-              _sectionLabel('Community', color: Colors.white.withValues(alpha: 0.7)),
+              _sectionLabel(
+                _s('Community'),
+                color: Colors.white.withValues(alpha: 0.7),
+              ),
               const SizedBox(height: 8),
               Text(
-                'Find Your Study Buddy',
+                _s('Find Your Study Buddy'),
                 style: GoogleFonts.sora(
                   fontSize: wide ? 52 : 38,
                   fontWeight: FontWeight.w700,
@@ -931,9 +1105,9 @@ class _LandingScreenState extends State<LandingScreen>
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 560),
                 child: Text(
-                  'Learning alone is tough. Our smart matching algorithm '
-                  'connects you with learners at the same level, in the same topic. '
-                  'Motivate each other, compete on leaderboards, and hit goals together.',
+                  _s(
+                    'Learning alone is tough. Our smart matching algorithm connects you with learners at the same level, in the same topic. Motivate each other, compete on leaderboards, and hit goals together.',
+                  ),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.manrope(
                     fontSize: wide ? 17 : 15,
@@ -949,20 +1123,20 @@ class _LandingScreenState extends State<LandingScreen>
                       children: [
                         _communityCard(
                           Icons.connect_without_contact_rounded,
-                          'Smart Matching',
-                          'Paired by skill level and topic interest',
+                          _s('Smart Matching'),
+                          _s('Paired by skill level and topic interest'),
                         ),
                         const SizedBox(width: 24),
                         _communityCard(
                           Icons.leaderboard_rounded,
-                          'Leaderboards',
-                          'Weekly rankings to spark healthy competition',
+                          _s('Leaderboards'),
+                          _s('Weekly rankings to spark healthy competition'),
                         ),
                         const SizedBox(width: 24),
                         _communityCard(
                           Icons.groups_rounded,
-                          'Group Challenges',
-                          'Tackle special missions with your squad',
+                          _s('Group Challenges'),
+                          _s('Tackle special missions with your squad'),
                         ),
                       ],
                     )
@@ -970,25 +1144,25 @@ class _LandingScreenState extends State<LandingScreen>
                       children: [
                         _communityCard(
                           Icons.connect_without_contact_rounded,
-                          'Smart Matching',
-                          'Paired by skill level and topic interest',
+                          _s('Smart Matching'),
+                          _s('Paired by skill level and topic interest'),
                         ),
                         const SizedBox(height: 16),
                         _communityCard(
                           Icons.leaderboard_rounded,
-                          'Leaderboards',
-                          'Weekly rankings to spark healthy competition',
+                          _s('Leaderboards'),
+                          _s('Weekly rankings to spark healthy competition'),
                         ),
                         const SizedBox(height: 16),
                         _communityCard(
                           Icons.groups_rounded,
-                          'Group Challenges',
-                          'Tackle special missions with your squad',
+                          _s('Group Challenges'),
+                          _s('Tackle special missions with your squad'),
                         ),
                       ],
                     ),
               const SizedBox(height: 40),
-              _filledButton('Join the Community', _goToRegister),
+              _filledButton(_s('Join the Community'), _goToRegister),
             ],
           ),
         );
@@ -996,55 +1170,52 @@ class _LandingScreenState extends State<LandingScreen>
     );
   }
 
-  Widget _communityCard(IconData icon, String title, String sub) =>
-      Flexible(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 280),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.22),
-              ),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Icon(icon, color: Colors.white, size: 24),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  title,
-                  style: GoogleFonts.sora(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  sub,
-                  style: GoogleFonts.manrope(
-                    fontSize: 13,
-                    color: Colors.white.withValues(alpha: 0.8),
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
+  Widget _communityCard(IconData icon, String title, String sub) => Flexible(
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 280),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
         ),
-      );
+        child: Column(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Icon(icon, color: Colors.white, size: 24),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: GoogleFonts.sora(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              sub,
+              style: GoogleFonts.manrope(
+                fontSize: 13,
+                color: Colors.white.withValues(alpha: 0.8),
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 
   // ─────────────────────────────────────────────────────────────
   // Testimonials
@@ -1052,28 +1223,31 @@ class _LandingScreenState extends State<LandingScreen>
   Widget _buildTestimonials() {
     final items = [
       _TestimonialData(
-        quote:
-            'I used to dread physics. After two weeks on Primoria, I actually look forward to it. The interactive sliders make abstract concepts click instantly.',
+        quote: _s(
+          'I used to dread physics. After two weeks on Primoria, I actually look forward to it. The interactive sliders make abstract concepts click instantly.',
+        ),
         name: 'Aisha K.',
-        role: 'High School Student',
+        role: _s('High School Student'),
         rating: 5,
         initials: 'AK',
         color: const Color(0xFF8B5CF6),
       ),
       _TestimonialData(
-        quote:
-            'The AI tutor is a game-changer. I asked about quantum entanglement at midnight and got a step-by-step explanation with a quiz to test my understanding.',
+        quote: _s(
+          'The AI tutor is a game-changer. I asked about quantum entanglement at midnight and got a step-by-step explanation with a quiz to test my understanding.',
+        ),
         name: 'Marcus T.',
-        role: 'University Sophomore',
+        role: _s('University Sophomore'),
         rating: 5,
         initials: 'MT',
         color: const Color(0xFF11D9A8),
       ),
       _TestimonialData(
-        quote:
-            'My streak is at 47 days and counting! The daily quests make it hard to stop. I have learned more calculus in a month than I did in a whole semester.',
+        quote: _s(
+          'My streak is at 47 days and counting! The daily quests make it hard to stop. I have learned more calculus in a month than I did in a whole semester.',
+        ),
         name: 'Lingyun W.',
-        role: 'Self-taught Learner',
+        role: _s('Self-taught Learner'),
         rating: 5,
         initials: 'LW',
         color: const Color(0xFFFFAB40),
@@ -1090,10 +1264,10 @@ class _LandingScreenState extends State<LandingScreen>
           padding: EdgeInsets.fromLTRB(hPad, 80, hPad, 80),
           child: Column(
             children: [
-              _sectionLabel('Testimonials'),
+              _sectionLabel(_s('Testimonials')),
               const SizedBox(height: 8),
               Text(
-                'Learners Love Primoria',
+                _s('Learners Love Primoria'),
                 style: _headlineStyle(wide ? 48 : 36),
                 textAlign: TextAlign.center,
               ),
@@ -1153,7 +1327,7 @@ class _LandingScreenState extends State<LandingScreen>
           child: Column(
             children: [
               Text(
-                'Ready to Start Your\nLearning Journey?',
+                _s('Ready to Start Your\nLearning Journey?'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.sora(
                   fontSize: wide ? 52 : 36,
@@ -1164,7 +1338,9 @@ class _LandingScreenState extends State<LandingScreen>
               ),
               const SizedBox(height: 16),
               Text(
-                'Join 10,000+ learners who chose to learn by doing, not just watching.',
+                _s(
+                  'Join 10,000+ learners who chose to learn by doing, not just watching.',
+                ),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.manrope(
                   fontSize: 17,
@@ -1205,7 +1381,7 @@ class _LandingScreenState extends State<LandingScreen>
                           borderRadius: BorderRadius.circular(9),
                         ),
                       ),
-                      child: const Text('Create Free Account'),
+                      child: Text(_s('Create Free Account')),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -1213,10 +1389,7 @@ class _LandingScreenState extends State<LandingScreen>
                     onPressed: _goToLogin,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      side: const BorderSide(
-                        color: Colors.white,
-                        width: 2,
-                      ),
+                      side: const BorderSide(color: Colors.white, width: 2),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 28,
                         vertical: 16,
@@ -1230,7 +1403,7 @@ class _LandingScreenState extends State<LandingScreen>
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    child: const Text('Log In'),
+                    child: Text(_s('Log In')),
                   ),
                 ],
               ),
@@ -1280,44 +1453,44 @@ class _LandingScreenState extends State<LandingScreen>
                             ),
                             const SizedBox(width: 80),
                             _buildFooterColumn(
-                              heading: 'Learn',
+                              heading: _s('Learn'),
                               headingStyle: headingStyle,
                               linkStyle: linkStyle,
                               links: [
                                 _FooterLink(
-                                  'Features',
+                                  _s('Features'),
                                   () => _scrollTo(_featuresKey),
                                 ),
                                 _FooterLink(
-                                  'How It Works',
+                                  _s('How It Works'),
                                   () => _scrollTo(_howItWorksKey),
                                 ),
                                 _FooterLink(
-                                  'AI Tutor',
+                                  _s('AI Tutor'),
                                   () => _scrollTo(_aiKey),
                                 ),
                                 _FooterLink(
-                                  'Community',
+                                  _s('Community'),
                                   () => _scrollTo(_communityKey),
                                 ),
                               ],
                             ),
                             const SizedBox(width: 72),
                             _buildFooterColumn(
-                              heading: 'Company',
+                              heading: _s('Company'),
                               headingStyle: headingStyle,
                               linkStyle: linkStyle,
                               links: [
-                                const _FooterLink('About', null),
-                                const _FooterLink('Blog', null),
+                                _FooterLink(_s('About'), null),
+                                _FooterLink(_s('Blog'), null),
                                 _FooterLink(
-                                  'Pricing',
+                                  _s('Pricing'),
                                   () => Navigator.of(
                                     context,
                                   ).pushNamed('/register'),
                                 ),
                                 _FooterLink(
-                                  'Contact',
+                                  _s('Contact'),
                                   () => _scrollTo(_contactKey),
                                 ),
                               ],
@@ -1330,34 +1503,34 @@ class _LandingScreenState extends State<LandingScreen>
                             _buildFooterBrand(wide: false),
                             const SizedBox(height: 28),
                             _buildFooterColumn(
-                              heading: 'Learn',
+                              heading: _s('Learn'),
                               headingStyle: headingStyle,
                               linkStyle: linkStyle,
                               links: [
                                 _FooterLink(
-                                  'Features',
+                                  _s('Features'),
                                   () => _scrollTo(_featuresKey),
                                 ),
                                 _FooterLink(
-                                  'How It Works',
+                                  _s('How It Works'),
                                   () => _scrollTo(_howItWorksKey),
                                 ),
                                 _FooterLink(
-                                  'AI Tutor',
+                                  _s('AI Tutor'),
                                   () => _scrollTo(_aiKey),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 22),
                             _buildFooterColumn(
-                              heading: 'Company',
+                              heading: _s('Company'),
                               headingStyle: headingStyle,
                               linkStyle: linkStyle,
                               links: [
-                                const _FooterLink('About', null),
-                                const _FooterLink('Blog', null),
+                                _FooterLink(_s('About'), null),
+                                _FooterLink(_s('Blog'), null),
                                 _FooterLink(
-                                  'Contact',
+                                  _s('Contact'),
                                   () => _scrollTo(_contactKey),
                                 ),
                               ],
@@ -1368,9 +1541,9 @@ class _LandingScreenState extends State<LandingScreen>
                   Divider(color: Colors.white.withValues(alpha: 0.1)),
                   const SizedBox(height: 20),
                   Text(
-                    'Copyright \u00a9 2026 PRIMORIA. All rights reserved. '
-                    'No part of this website or any of its contents may be reproduced, '
-                    'copied, modified, or adapted without prior written consent of the author.',
+                    _s(
+                      'Copyright © 2026 PRIMORIA. All rights reserved. No part of this website or any of its contents may be reproduced, copied, modified, or adapted without prior written consent of the author.',
+                    ),
                     style: GoogleFonts.manrope(
                       fontSize: 13,
                       color: Colors.white.withValues(alpha: 0.5),
@@ -1409,7 +1582,9 @@ class _LandingScreenState extends State<LandingScreen>
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: wide ? 360 : double.infinity),
           child: Text(
-            'Interactive STEM learning, powered by AI.\nJoin thousands mastering science the fun way.',
+            _s(
+              'Interactive STEM learning, powered by AI.\nJoin thousands mastering science the fun way.',
+            ),
             style: GoogleFonts.manrope(
               fontSize: 15,
               color: Colors.white.withValues(alpha: 0.7),
@@ -1588,11 +1763,7 @@ class _BrandMark extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size * 0.28),
         boxShadow: const [
-          BoxShadow(
-            color: Color(0x5620C6FF),
-            blurRadius: 56,
-            spreadRadius: 12,
-          ),
+          BoxShadow(color: Color(0x5620C6FF), blurRadius: 56, spreadRadius: 12),
         ],
       ),
       child: icon,
@@ -1607,6 +1778,8 @@ class _HeroMockup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String s(String en) => isZh ? (_LandingScreenState._zhTexts[en] ?? en) : en;
     final w = isWide ? 360.0 : 300.0;
     final h = isWide ? 380.0 : 320.0;
 
@@ -1644,7 +1817,7 @@ class _HeroMockup extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Physics 101',
+                          s('Physics 101'),
                           style: GoogleFonts.sora(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -1660,13 +1833,14 @@ class _HeroMockup extends StatelessWidget {
                         value: 0.65,
                         minHeight: 6,
                         backgroundColor: _C.accent.withValues(alpha: 0.15),
-                        valueColor:
-                            const AlwaysStoppedAnimation<Color>(_C.accent),
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          _C.accent,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '65% \u00b7 Lesson 7 of 11',
+                      s('65% \u00b7 Lesson 7 of 11'),
                       style: GoogleFonts.manrope(
                         fontSize: 11,
                         color: _C.bodyMuted,
@@ -1689,10 +1863,7 @@ class _HeroMockup extends StatelessWidget {
                 bgColor: const Color(0xFFFFF3E0),
                 child: Row(
                   children: [
-                    const Text(
-                      '\uD83D\uDD25',
-                      style: TextStyle(fontSize: 26),
-                    ),
+                    const Text('\uD83D\uDD25', style: TextStyle(fontSize: 26)),
                     const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1706,7 +1877,7 @@ class _HeroMockup extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Day Streak',
+                          s('Day Streak'),
                           style: GoogleFonts.manrope(
                             fontSize: 11,
                             color: _C.body,
@@ -1748,7 +1919,7 @@ class _HeroMockup extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Why does E = mc\u00b2?',
+                      s('Why does E = mc\u00b2?'),
                       style: GoogleFonts.manrope(
                         fontSize: 12,
                         color: Colors.white.withValues(alpha: 0.8),
@@ -1783,14 +1954,10 @@ class _HeroMockup extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Colors.white,
-                    size: 13,
-                  ),
+                  const Icon(Icons.star_rounded, color: Colors.white, size: 13),
                   const SizedBox(width: 4),
                   Text(
-                    '+50 XP',
+                    s('+50 XP'),
                     style: GoogleFonts.sora(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -1812,11 +1979,7 @@ class _MockCard extends StatelessWidget {
   final Widget child;
   final Color? bgColor;
 
-  const _MockCard({
-    required this.width,
-    required this.child,
-    this.bgColor,
-  });
+  const _MockCard({required this.width, required this.child, this.bgColor});
 
   @override
   Widget build(BuildContext context) {
@@ -2061,6 +2224,8 @@ class _HowItWorksStep extends StatelessWidget {
 class _AiChatMockup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String s(String en) => isZh ? (_LandingScreenState._zhTexts[en] ?? en) : en;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -2094,7 +2259,7 @@ class _AiChatMockup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Primoria AI Tutor',
+                    s('Primoria AI Tutor'),
                     style: GoogleFonts.sora(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -2113,7 +2278,7 @@ class _AiChatMockup extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'Always online',
+                        s('Always online'),
                         style: GoogleFonts.manrope(
                           fontSize: 11,
                           color: Colors.white.withValues(alpha: 0.5),
@@ -2128,23 +2293,25 @@ class _AiChatMockup extends StatelessWidget {
           const SizedBox(height: 20),
           _chatMsg(
             isUser: true,
-            text: "Why does water expand when it freezes? That seems counterintuitive.",
+            text: s(
+              "Why does water expand when it freezes? That seems counterintuitive.",
+            ),
           ),
           const SizedBox(height: 12),
           _chatMsg(
             isUser: false,
-            text:
-                "Great question! Water molecules form a rigid hexagonal lattice in ice, which actually takes up more space than the liquid arrangement. That\u2019s why ice floats!",
+            text: s(
+              "Great question! Water molecules form a rigid hexagonal lattice in ice, which actually takes up more space than the liquid arrangement. That\u2019s why ice floats!",
+            ),
           ),
           const SizedBox(height: 12),
-          _chatMsg(
-            isUser: true,
-            text: "Can you quiz me on this?",
-          ),
+          _chatMsg(isUser: true, text: s("Can you quiz me on this?")),
           const SizedBox(height: 12),
           _chatMsg(
             isUser: false,
-            text: "Sure! Here\u2019s a quick question: Ice is less dense than water. True or False?",
+            text: s(
+              "Sure! Here\u2019s a quick question: Ice is less dense than water. True or False?",
+            ),
           ),
           const SizedBox(height: 16),
           // Input bar mockup
@@ -2159,18 +2326,14 @@ class _AiChatMockup extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Ask me anything\u2026',
+                    s('Ask me anything\u2026'),
                     style: GoogleFonts.manrope(
                       fontSize: 13,
                       color: Colors.white.withValues(alpha: 0.3),
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.send_rounded,
-                  size: 18,
-                  color: _C.aiPurple,
-                ),
+                Icon(Icons.send_rounded, size: 18, color: _C.aiPurple),
               ],
             ),
           ),
@@ -2215,6 +2378,12 @@ class _AiChatMockup extends StatelessWidget {
 class _GamificationMockup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String s(String en) => isZh ? (_LandingScreenState._zhTexts[en] ?? en) : en;
+    final week = isZh
+        ? const ['一', '二', '三', '四', '五', '六', '日']
+        : const ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
     return Container(
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
@@ -2240,7 +2409,7 @@ class _GamificationMockup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '47-Day Streak',
+                    s('47-Day Streak'),
                     style: GoogleFonts.sora(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -2248,11 +2417,8 @@ class _GamificationMockup extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'You\'re on fire! Keep it up.',
-                    style: GoogleFonts.manrope(
-                      fontSize: 12,
-                      color: _C.body,
-                    ),
+                    s('You\'re on fire! Keep it up.'),
+                    style: GoogleFonts.manrope(fontSize: 12, color: _C.body),
                   ),
                 ],
               ),
@@ -2262,7 +2428,7 @@ class _GamificationMockup extends StatelessWidget {
           // Week dots
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+            children: week
                 .asMap()
                 .entries
                 .map(
@@ -2283,7 +2449,7 @@ class _GamificationMockup extends StatelessWidget {
               const Icon(Icons.star_rounded, color: _C.xpGold, size: 18),
               const SizedBox(width: 6),
               Text(
-                'XP Progress',
+                s('XP Progress'),
                 style: GoogleFonts.sora(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -2314,7 +2480,7 @@ class _GamificationMockup extends StatelessWidget {
           const SizedBox(height: 20),
           // Achievements row
           Text(
-            'Recent Achievements',
+            s('Recent Achievements'),
             style: GoogleFonts.sora(
               fontSize: 13,
               fontWeight: FontWeight.w700,
@@ -2325,10 +2491,18 @@ class _GamificationMockup extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _AchBadge('\uD83C\uDF1F', 'First Lesson', const Color(0xFF8B5CF6)),
-              _AchBadge('\uD83D\uDD25', '7-Day Streak', _C.streakFire),
-              _AchBadge('\uD83E\uDDE0', 'Quiz Master', const Color(0xFF11D9A8)),
-              _AchBadge('\uD83C\uDFC6', 'Top 10%', _C.xpGold),
+              _AchBadge(
+                '\uD83C\uDF1F',
+                s('First Lesson'),
+                const Color(0xFF8B5CF6),
+              ),
+              _AchBadge('\uD83D\uDD25', s('7-Day Streak'), _C.streakFire),
+              _AchBadge(
+                '\uD83E\uDDE0',
+                s('Quiz Master'),
+                const Color(0xFF11D9A8),
+              ),
+              _AchBadge('\uD83C\uDFC6', s('Top 10%'), _C.xpGold),
             ],
           ),
         ],
@@ -2360,9 +2534,7 @@ class _StreakDot extends StatelessWidget {
             color: isLit
                 ? (isToday ? _C.streakFire : _C.xpGold)
                 : _C.accent.withValues(alpha: 0.08),
-            border: isToday
-                ? Border.all(color: _C.streakFire, width: 2)
-                : null,
+            border: isToday ? Border.all(color: _C.streakFire, width: 2) : null,
           ),
           child: Center(
             child: Text(
@@ -2408,7 +2580,9 @@ class _AchBadge extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: color.withValues(alpha: 0.25)),
           ),
-          child: Center(child: Text(emoji, style: const TextStyle(fontSize: 22))),
+          child: Center(
+            child: Text(emoji, style: const TextStyle(fontSize: 22)),
+          ),
         ),
         const SizedBox(height: 5),
         SizedBox(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import '../providers/builder_state.dart';
 import '../providers/course_provider.dart';
@@ -16,7 +17,9 @@ import 'matching_content_editor.dart';
 
 /// Right properties panel - shows properties of the selected module
 class PropertyPanel extends ConsumerWidget {
-  const PropertyPanel({super.key});
+  final BuilderLocalizations t;
+
+  const PropertyPanel({super.key, required this.t});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,8 +51,8 @@ class PropertyPanel extends ConsumerWidget {
             AppSpacing.md,
             AppSpacing.xs,
           ),
-          child: const Text(
-            'Inspector',
+          child: Text(
+            t.isZh ? '属性检查器' : 'Inspector',
             style: TextStyle(
               fontSize: AppFontSize.md,
               fontWeight: FontWeight.w700,
@@ -70,9 +73,9 @@ class PropertyPanel extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Block settings',
+                  t.isZh ? '模块设置' : 'Block settings',
                   style: TextStyle(
                     fontSize: AppFontSize.xs,
                     fontWeight: FontWeight.w700,
@@ -92,6 +95,7 @@ class PropertyPanel extends ConsumerWidget {
                   key: ValueKey(selectedBlock.id),
                   block: selectedBlock,
                   lessonIndex: builderState.currentLessonIndex,
+                  t: t,
                 ),
         ),
       ],
@@ -109,7 +113,7 @@ class PropertyPanel extends ConsumerWidget {
             borderRadius: BorderRadius.circular(AppBorderRadius.md),
             border: Border.all(color: AppColors.neutral200),
           ),
-          child: const Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -119,7 +123,7 @@ class PropertyPanel extends ConsumerWidget {
               ),
               SizedBox(height: AppSpacing.md),
               Text(
-                'Select a block',
+                t.isZh ? '选择一个模块' : 'Select a block',
                 style: TextStyle(
                   fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w700,
@@ -128,7 +132,9 @@ class PropertyPanel extends ConsumerWidget {
               ),
               SizedBox(height: AppSpacing.xs),
               Text(
-                'The right sidebar will show only the settings that matter for the selected block.',
+                t.isZh
+                    ? '右侧仅显示当前选中模块相关的设置。'
+                    : 'The right sidebar will show only the settings that matter for the selected block.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: AppFontSize.xs,
@@ -148,11 +154,13 @@ class PropertyPanel extends ConsumerWidget {
 class _BlockPropertyEditor extends ConsumerStatefulWidget {
   final Block block;
   final int lessonIndex;
+  final BuilderLocalizations t;
 
   const _BlockPropertyEditor({
     super.key,
     required this.block,
     required this.lessonIndex,
+    required this.t,
   });
 
   @override
@@ -177,6 +185,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         .read(courseProvider.notifier)
         .updateBlock(widget.lessonIndex, updatedBlock);
     ref.read(builderStateProvider.notifier).markAsUnsaved();
+  }
+
+  String _tr(String zh, String en) {
+    return widget.t.isZh ? zh : en;
   }
 
   Future<void> _pickLocalImage(ImageContent content) async {
@@ -206,8 +218,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
       SnackBar(
         content: Text(
           result.fileName == null
-              ? 'Local image imported'
-              : 'Imported: ${result.fileName}',
+              ? _tr('已导入本地图片', 'Local image imported')
+              : _tr('已导入: ${result.fileName}', 'Imported: ${result.fileName}'),
         ),
         duration: const Duration(seconds: 2),
       ),
@@ -235,20 +247,20 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         ),
         const SizedBox(height: AppSpacing.md),
         _PropertySection(
-          title: 'Visibility',
+          title: _tr('可见性', 'Visibility'),
           children: [
             AppDropdown<String>(
               value: selectedVisibility,
               light: true,
               isDense: true,
-              items: const [
+              items: [
                 AppDropdownItem(
                   value: Block.alwaysVisible,
-                  label: 'Always visible',
+                  label: _tr('始终可见', 'Always visible'),
                 ),
                 AppDropdownItem(
                   value: Block.afterPreviousCorrect,
-                  label: 'After previous correct',
+                  label: _tr('上一题答对后显示', 'After previous correct'),
                 ),
               ],
               onChanged: (value) {
@@ -262,10 +274,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         const SizedBox(height: AppSpacing.md),
         if (widget.block.type == BlockType.animation) ...[
           _PropertySection(
-            title: 'Layout',
+            title: _tr('布局', 'Layout'),
             children: [
               _PropertyField(
-                label: 'Width',
+                label: _tr('宽度', 'Width'),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -296,7 +308,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                           width: 62,
                           child: Text(
                             widget.block.style.width == null
-                                ? 'Auto'
+                                ? _tr('自动', 'Auto')
                                 : '${widget.block.style.width!.clamp(260.0, 1400.0).toStringAsFixed(0)}px',
                             textAlign: TextAlign.right,
                             style: const TextStyle(
@@ -314,14 +326,14 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                         );
                         _updateBlock(updatedBlock);
                       },
-                      child: const Text('Fill container'),
+                      child: Text(_tr('填满容器', 'Fill container')),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
               _PropertyField(
-                label: 'Height',
+                label: _tr('高度', 'Height'),
                 child: Row(
                   children: [
                     Expanded(
@@ -421,23 +433,23 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     final content = widget.block.content as ImageContent;
     final isLocalImage = content.url.startsWith('data:image/');
     return _PropertySection(
-      title: 'Image',
+      title: _tr('图片', 'Image'),
       children: [
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
             onPressed: () => _pickLocalImage(content),
             icon: const Icon(Icons.upload_file),
-            label: const Text('Import Local Image'),
+            label: Text(_tr('导入本地图片', 'Import Local Image')),
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.url,
           decoration: InputDecoration(
-            labelText: 'Image URL',
+            labelText: _tr('图片 URL', 'Image URL'),
             hintText: isLocalImage
-                ? 'Local image is stored as data URL'
+                ? _tr('本地图片以 data URL 形式保存', 'Local image is stored as data URL')
                 : 'https://...',
             border: const OutlineInputBorder(),
           ),
@@ -453,8 +465,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           },
         ),
         const SizedBox(height: AppSpacing.xs),
-        const Text(
-          'Supports both local import and network URLs.',
+        Text(
+          _tr('支持本地导入与网络 URL。', 'Supports both local import and network URLs.'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             color: AppColors.neutral500,
@@ -463,8 +475,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.caption ?? '',
-          decoration: const InputDecoration(
-            labelText: 'Caption',
+          decoration: InputDecoration(
+            labelText: _tr('图片说明', 'Caption'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -485,6 +497,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildFunctionFlowEditor() {
     final content = widget.block.content as FunctionFlowContent;
     return FunctionFlowContentEditor(
+      t: widget.t,
       content: content,
       onChanged: (updatedContent) {
         _updateBlock(widget.block.copyWith(content: updatedContent));
@@ -495,6 +508,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildCodeExecutionEditor() {
     final content = widget.block.content as CodeExecutionContent;
     return CodeExecutionContentEditor(
+      t: widget.t,
       content: content,
       onChanged: (updatedContent) {
         _updateBlock(widget.block.copyWith(content: updatedContent));
@@ -506,12 +520,18 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     final content = widget.block.content as MultipleChoiceContent;
     final correctAnswerIds = content.normalizedCorrectAnswers.toSet();
     return _PropertySection(
-      title: 'Multiple Choice',
+      title: _tr('选择题', 'Multiple Choice'),
       children: [
         SegmentedButton<bool>(
-          segments: const [
-            ButtonSegment(value: false, label: Text('Single Select')),
-            ButtonSegment(value: true, label: Text('Multi Select')),
+          segments: [
+            ButtonSegment(
+              value: false,
+              label: Text(_tr('单选', 'Single Select')),
+            ),
+            ButtonSegment(
+              value: true,
+              label: Text(_tr('多选', 'Multi Select')),
+            ),
           ],
           selected: {content.multiSelect},
           onSelectionChanged: (value) {
@@ -536,8 +556,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         const SizedBox(height: AppSpacing.md),
         TextFormField(
           initialValue: content.question,
-          decoration: const InputDecoration(
-            labelText: 'Question',
+          decoration: InputDecoration(
+            labelText: _tr('题目', 'Question'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -550,8 +570,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         const SizedBox(height: AppSpacing.md),
         Text(
           content.multiSelect
-              ? 'Options (select all correct answers)'
-              : 'Options (select the correct answer)',
+              ? _tr('选项（可选多个正确答案）', 'Options (select all correct answers)')
+              : _tr('选项（选择一个正确答案）', 'Options (select the correct answer)'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -608,7 +628,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
                   child: TextFormField(
                     initialValue: option.text,
                     decoration: InputDecoration(
-                      labelText: 'Option ${String.fromCharCode(65 + index)}',
+                      labelText: _tr(
+                        '选项 ${String.fromCharCode(65 + index)}',
+                        'Option ${String.fromCharCode(65 + index)}',
+                      ),
                       isDense: true,
                     ),
                     onChanged: (value) {
@@ -631,8 +654,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
           initialValue: content.explanation ?? '',
-          decoration: const InputDecoration(
-            labelText: 'Explanation',
+          decoration: InputDecoration(
+            labelText: _tr('解析', 'Explanation'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -652,12 +675,12 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildTrueFalseEditor() {
     final content = widget.block.content as TrueFalseContent;
     return _PropertySection(
-      title: 'True/False',
+      title: _tr('判断题', 'True/False'),
       children: [
         TextFormField(
           initialValue: content.question,
-          decoration: const InputDecoration(
-            labelText: 'Question',
+          decoration: InputDecoration(
+            labelText: _tr('题目', 'Question'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -668,8 +691,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           },
         ),
         const SizedBox(height: AppSpacing.md),
-        const Text(
-          'Correct Answer',
+        Text(
+          _tr('正确答案', 'Correct Answer'),
           style: TextStyle(
             fontSize: AppFontSize.xs,
             fontWeight: FontWeight.w600,
@@ -678,9 +701,9 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         ),
         const SizedBox(height: AppSpacing.sm),
         SegmentedButton<bool>(
-          segments: const [
-            ButtonSegment(value: true, label: Text('True')),
-            ButtonSegment(value: false, label: Text('False')),
+          segments: [
+            ButtonSegment(value: true, label: Text(_tr('正确', 'True'))),
+            ButtonSegment(value: false, label: Text(_tr('错误', 'False'))),
           ],
           selected: {content.correctAnswer},
           onSelectionChanged: (value) {
@@ -693,8 +716,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         const SizedBox(height: AppSpacing.md),
         TextFormField(
           initialValue: content.explanation ?? '',
-          decoration: const InputDecoration(
-            labelText: 'Explanation',
+          decoration: InputDecoration(
+            labelText: _tr('解析', 'Explanation'),
             border: OutlineInputBorder(),
           ),
           onChanged: (value) {
@@ -713,6 +736,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildAnimationEditor() {
     final content = widget.block.content as AnimationContent;
     return _AnimationEditor(
+      t: widget.t,
       content: content,
       onChanged: (updated) {
         _updateBlock(widget.block.copyWith(content: updated));
@@ -723,9 +747,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   Widget _buildMatchingEditor() {
     final content = widget.block.content as MatchingContent;
     return _PropertySection(
-      title: 'Matching',
+      title: _tr('匹配题', 'Matching'),
       children: [
         MatchingContentEditor(
+          t: widget.t,
           content: content,
           onChanged: (updatedContent) {
             _updateBlock(widget.block.copyWith(content: updatedContent));
@@ -862,10 +887,15 @@ class _BlockSummaryRow extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _AnimationEditor extends StatefulWidget {
+  final BuilderLocalizations t;
   final AnimationContent content;
   final ValueChanged<AnimationContent> onChanged;
 
-  const _AnimationEditor({required this.content, required this.onChanged});
+  const _AnimationEditor({
+    required this.t,
+    required this.content,
+    required this.onChanged,
+  });
 
   @override
   State<_AnimationEditor> createState() => _AnimationEditorState();
@@ -887,34 +917,74 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     'gemini-2.5-pro',
     'gemini-3.1-flash-lite-preview',
   ];
-  late TextEditingController _codeController;
+
   static const _animationStyles = [
     (
       key: 'anime',
-      label: 'Anime',
-      description: 'Bold motion, vivid colors, expressive teaching visuals',
+      labelEn: 'Anime',
+      labelZh: '动漫',
+      descriptionEn: 'Bold motion, vivid colors, expressive teaching visuals',
+      descriptionZh: '动作感强，色彩鲜明，适合表达式教学',
     ),
     (
       key: 'minimal',
-      label: 'Minimal',
-      description: 'Clean layouts, simple geometry, low visual noise',
+      labelEn: 'Minimal',
+      labelZh: '极简',
+      descriptionEn: 'Clean layouts, simple geometry, low visual noise',
+      descriptionZh: '布局简洁，几何元素清晰，视觉干扰少',
     ),
     (
       key: 'tech',
-      label: 'Tech',
-      description: 'HUD-like glow, data overlays, futuristic presentation',
+      labelEn: 'Tech',
+      labelZh: '科技',
+      descriptionEn: 'HUD-like glow, data overlays, futuristic presentation',
+      descriptionZh: 'HUD 发光风格，带数据叠层，未来感展示',
     ),
     (
       key: 'realistic',
-      label: 'Realistic',
-      description: 'Natural motion, physical spacing, grounded visuals',
+      labelEn: 'Realistic',
+      labelZh: '写实',
+      descriptionEn: 'Natural motion, physical spacing, grounded visuals',
+      descriptionZh: '运动自然，空间关系真实，画面稳重',
     ),
     (
       key: 'playful',
-      label: 'Playful Edu',
-      description: 'Friendly classroom style, colorful, approachable',
+      labelEn: 'Playful Edu',
+      labelZh: '趣味教学',
+      descriptionEn: 'Friendly classroom style, colorful, approachable',
+      descriptionZh: '课堂风格友好，色彩活泼，亲和力强',
     ),
   ];
+
+  late TextEditingController _codeController;
+
+  String _tr(String zh, String en) {
+    return widget.t.isZh ? zh : en;
+  }
+
+  String _styleLabel(
+    ({
+      String descriptionEn,
+      String descriptionZh,
+      String key,
+      String labelEn,
+      String labelZh,
+    }) style,
+  ) {
+    return widget.t.isZh ? style.labelZh : style.labelEn;
+  }
+
+  String _styleDescription(
+    ({
+      String descriptionEn,
+      String descriptionZh,
+      String key,
+      String labelEn,
+      String labelZh,
+    }) style,
+  ) {
+    return widget.t.isZh ? style.descriptionZh : style.descriptionEn;
+  }
 
   @override
   void initState() {
@@ -929,7 +999,6 @@ class _AnimationEditorState extends State<_AnimationEditor> {
   @override
   void didUpdateWidget(covariant _AnimationEditor oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Sync code editor when HTML changes externally (e.g. after Generate)
     if (oldWidget.content.customHtml != widget.content.customHtml) {
       _codeController.text = widget.content.customHtml ?? '';
     }
@@ -956,7 +1025,9 @@ class _AnimationEditorState extends State<_AnimationEditor> {
 
     final apiKey = AICourseGenerator.apiKey ?? '';
     if (apiKey.isEmpty) {
-      setState(() => _generationError = 'Please enter a Gemini API key.');
+      setState(() {
+        _generationError = _tr('请输入 Gemini API Key。', 'Please enter a Gemini API key.');
+      });
       return;
     }
 
@@ -989,18 +1060,22 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     } else {
       setState(() {
         _isGenerating = false;
-        _generationError = result.error ?? 'Generation failed.';
+        _generationError = result.error ?? _tr('生成失败。', 'Generation failed.');
       });
     }
   }
 
   String _composePrompt(String prompt) {
     final style = _animationStyles.firstWhere(
-      (style) => style.key == _selectedStyle,
+      (s) => s.key == _selectedStyle,
       orElse: () => _animationStyles.first,
     );
-    return 'Animation style: ${style.label}. ${style.description}. '
-        'Create an educational STEM animation for: $prompt';
+    final styleLabel = _styleLabel(style);
+    final styleDescription = _styleDescription(style);
+    return _tr(
+      '动画风格：$styleLabel。$styleDescription。请为以下内容生成一段 STEM 教学动画：$prompt',
+      'Animation style: $styleLabel. $styleDescription. Create an educational STEM animation for: $prompt',
+    );
   }
 
   void _applyCodeEdit() {
@@ -1021,25 +1096,25 @@ class _AnimationEditorState extends State<_AnimationEditor> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Regenerate Animation'),
+          title: Text(_tr('重新生成动画', 'Regenerate Animation')),
           content: TextField(
             controller: controller,
             maxLines: 4,
             autofocus: true,
-            decoration: const InputDecoration(
-              hintText: 'Describe what to improve...',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              hintText: _tr('描述希望改进的地方...', 'Describe what to improve...'),
+              border: const OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(_tr('取消', 'Cancel')),
             ),
             FilledButton(
               onPressed: () =>
                   Navigator.of(context).pop(controller.text.trim()),
-              child: const Text('Regenerate'),
+              child: Text(_tr('重新生成', 'Regenerate')),
             ),
           ],
         );
@@ -1052,7 +1127,10 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     final improvement = (desc ?? '').trim();
     if (improvement.isEmpty) {
       setState(() {
-        _generationError = 'Please describe what to improve before regenerate.';
+        _generationError = _tr(
+          '请先描述需要改进的内容，再重新生成。',
+          'Please describe what to improve before regenerate.',
+        );
       });
       return;
     }
@@ -1066,7 +1144,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Edit HTML Code'),
+          title: Text(_tr('编辑 HTML 代码', 'Edit HTML Code')),
           content: SizedBox(
             width: 700,
             child: TextField(
@@ -1076,21 +1154,21 @@ class _AnimationEditorState extends State<_AnimationEditor> {
                 fontFamily: 'monospace',
                 fontSize: AppFontSize.xs,
               ),
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Edit HTML…',
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: _tr('编辑 HTML...', 'Edit HTML...'),
               ),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(_tr('取消', 'Cancel')),
             ),
             FilledButton(
               onPressed: () =>
                   Navigator.of(context).pop(dialogController.text.trim()),
-              child: const Text('Apply'),
+              child: Text(_tr('应用', 'Apply')),
             ),
           ],
         );
@@ -1111,27 +1189,29 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         widget.content.preset == AnimationContent.presetCustom &&
         widget.content.customHtml != null;
 
+    final selectedStyle = _animationStyles.firstWhere(
+      (style) => style.key == _selectedStyle,
+      orElse: () => _animationStyles.first,
+    );
+
     return _PropertySection(
-      title: 'Animation',
+      title: _tr('动画', 'Animation'),
       children: [
-        // API key field
         TextField(
           controller: _apiKeyController,
           obscureText: true,
-          decoration: const InputDecoration(
-            labelText: 'Gemini API Key',
-            hintText: 'Paste your Gemini API key…',
-            border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.key, size: 16),
+          decoration: InputDecoration(
+            labelText: _tr('Gemini API Key', 'Gemini API Key'),
+            hintText: _tr('粘贴你的 Gemini API Key...', 'Paste your Gemini API key...'),
+            border: const OutlineInputBorder(),
+            prefixIcon: const Icon(Icons.key, size: 16),
           ),
           style: const TextStyle(fontSize: AppFontSize.sm),
         ),
         const SizedBox(height: AppSpacing.sm),
-
-        // Model selector
         AppDropdown<String>(
           value: _selectedModel,
-          labelText: 'Model',
+          labelText: _tr('模型', 'Model'),
           prefixIcon: const Icon(
             Icons.psychology,
             size: 16,
@@ -1145,10 +1225,9 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           },
         ),
         const SizedBox(height: AppSpacing.md),
-
-        const Text(
-          'Style',
-          style: TextStyle(
+        Text(
+          _tr('风格', 'Style'),
+          style: const TextStyle(
             fontSize: AppFontSize.sm,
             fontWeight: FontWeight.w600,
             color: AppColors.neutral700,
@@ -1161,7 +1240,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           children: _animationStyles.map<Widget>((style) {
             final isSelected = style.key == _selectedStyle;
             return ChoiceChip(
-              label: Text(style.label),
+              label: Text(_styleLabel(style)),
               selected: isSelected,
               labelStyle: TextStyle(
                 fontSize: AppFontSize.xs,
@@ -1180,29 +1259,23 @@ class _AnimationEditorState extends State<_AnimationEditor> {
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
-          _animationStyles
-              .firstWhere((style) => style.key == _selectedStyle)
-              .description,
+          _styleDescription(selectedStyle),
           style: const TextStyle(
             fontSize: AppFontSize.xs,
             color: AppColors.neutral500,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
-
-        // Prompt text field
         TextField(
           controller: _promptController,
           maxLines: 3,
-          decoration: const InputDecoration(
-            hintText: 'Describe the animation you want to generate…',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            hintText: _tr('描述你想生成的动画...', 'Describe the animation you want to generate...'),
+            border: const OutlineInputBorder(),
           ),
           style: const TextStyle(fontSize: AppFontSize.sm),
         ),
         const SizedBox(height: AppSpacing.sm),
-
-        // Generate button
         SizedBox(
           width: double.infinity,
           child: FilledButton.icon(
@@ -1217,11 +1290,13 @@ class _AnimationEditorState extends State<_AnimationEditor> {
                     ),
                   )
                 : const Icon(Icons.auto_awesome, size: 16),
-            label: Text(_isGenerating ? 'Generating…' : 'Generate'),
+            label: Text(
+              _isGenerating
+                  ? _tr('生成中...', 'Generating...')
+                  : _tr('生成', 'Generate'),
+            ),
           ),
         ),
-
-        // Error
         if (_generationError != null) ...[
           const SizedBox(height: AppSpacing.sm),
           Container(
@@ -1233,12 +1308,12 @@ class _AnimationEditorState extends State<_AnimationEditor> {
             ),
             child: Row(
               children: [
-                Icon(Icons.error_outline, size: 14, color: AppColors.error),
+                const Icon(Icons.error_outline, size: 14, color: AppColors.error),
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
                     _generationError!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: AppFontSize.xs,
                       color: AppColors.error,
                     ),
@@ -1248,8 +1323,6 @@ class _AnimationEditorState extends State<_AnimationEditor> {
             ),
           ),
         ],
-
-        // Preview + action buttons
         if (hasGenerated) ...[
           const SizedBox(height: AppSpacing.md),
           Row(
@@ -1258,7 +1331,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
                 child: OutlinedButton.icon(
                   onPressed: _isGenerating ? null : _showRegenerateDialog,
                   icon: const Icon(Icons.refresh, size: 14),
-                  label: const Text('Regenerate'),
+                  label: Text(_tr('重新生成', 'Regenerate')),
                   style: OutlinedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: AppFontSize.xs),
                   ),
@@ -1269,7 +1342,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
                 child: OutlinedButton.icon(
                   onPressed: _showEditCodeDialog,
                   icon: const Icon(Icons.code, size: 14),
-                  label: const Text('Edit Code'),
+                  label: Text(_tr('编辑代码', 'Edit Code')),
                   style: OutlinedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: AppFontSize.xs),
                   ),

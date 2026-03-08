@@ -268,10 +268,10 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
     return Scaffold(
       appBar: _buildAppBar(context, ref, builderState, course, t),
-      body: const BuilderLayout(
-        leftPanel: ModulePanel(),
-        canvas: BuilderCanvas(),
-        rightPanel: PropertyPanel(),
+      body: BuilderLayout(
+        leftPanel: ModulePanel(t: t),
+        canvas: BuilderCanvas(t: t),
+        rightPanel: PropertyPanel(t: t),
       ),
     );
   }
@@ -371,7 +371,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Course Builder',
+                            _tr(t, '课程编辑器', 'Course Builder'),
                             style: const TextStyle(
                               fontSize: AppFontSize.xs,
                               fontWeight: FontWeight.w600,
@@ -424,7 +424,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
                         ),
                       ),
                       child: Text(
-                        state.hasUnsavedChanges ? 'Draft changes' : 'Saved',
+                        state.hasUnsavedChanges
+                            ? _tr(t, '草稿未保存', 'Draft changes')
+                            : _tr(t, '已保存', 'Saved'),
                         style: TextStyle(
                           fontSize: AppFontSize.xs,
                           fontWeight: FontWeight.w700,
@@ -447,7 +449,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
             _showAIGenerateDialog(context, ref);
           },
           icon: const Icon(Icons.auto_awesome, size: 16),
-          label: const Text('AI'),
+          label: Text(_tr(t, 'AI 生成', 'AI')),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.accent600,
             side: const BorderSide(color: AppColors.accent300),
@@ -541,9 +543,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ),
         const SizedBox(width: AppSpacing.sm),
         // User avatar
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(right: AppSpacing.md),
-          child: UserAvatar(size: 36),
+          child: UserAvatar(t: t, size: 36),
         ),
       ],
     );
@@ -585,7 +587,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   String _untitledLessonLabel(BuilderLocalizations t) {
-    return t.isZh ? '未命名课程' : 'Untitled Lesson';
+    return _tr(t, '未命名课时', 'Untitled Lesson');
   }
 
   bool _looksLikePlaceholderLessonTitle(String title) {
@@ -744,6 +746,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AIGenerateDialog(
+        t: t,
         onCourseGenerated: (course) {
           // Load generated course
           ref.read(courseProvider.notifier).loadCourse(course);
@@ -831,7 +834,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       if (validation?.hasBlockingErrors ?? false) {
         _showSchemaValidationDialog(
           context,
-          title: 'Import blocked by schema validation',
+          title: _tr(t, '导入被结构校验阻止', 'Import blocked by schema validation'),
           validation: validation!,
         );
       } else {
@@ -930,7 +933,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       if (validation?.hasBlockingErrors ?? false) {
         _showSchemaValidationDialog(
           context,
-          title: 'Save blocked by schema validation',
+          title: _tr(t, '保存被结构校验阻止', 'Save blocked by schema validation'),
           validation: validation!,
         );
       } else {
@@ -974,7 +977,11 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         if (validation?.hasBlockingErrors ?? false) {
           _showSchemaValidationDialog(
             context,
-            title: 'Publish blocked (save validation failed)',
+            title: _tr(
+              t,
+              '发布被阻止（保存校验失败）',
+              'Publish blocked (save validation failed)',
+            ),
             validation: validation!,
           );
         } else {
@@ -1042,7 +1049,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       if (validation?.hasBlockingErrors ?? false) {
         _showSchemaValidationDialog(
           context,
-          title: 'Publish blocked by schema validation',
+          title: _tr(t, '发布被结构校验阻止', 'Publish blocked by schema validation'),
           validation: validation!,
         );
       } else {
@@ -1187,5 +1194,9 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ],
       ),
     );
+  }
+
+  String _tr(BuilderLocalizations t, String zh, String en) {
+    return t.isZh ? zh : en;
   }
 }
