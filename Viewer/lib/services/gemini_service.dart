@@ -1,20 +1,53 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'supabase_service.dart';
 
+// ─── LiteLLM-inspired Gemini client (Viewer) ────────────────────────────────
+//
+// Implements the same retry + fallback pattern as Builder's GeminiClient:
+//
+//  Retry   — on 429/5xx, wait with exponential backoff and retry the same model.
+//  Fallback — if a model exhausts retries, try the next one in [_fallbackModels].
+//
+// Both patterns reduce reliance on a single model and smooth over transient
+// provider outages without any change to the calling code.
+
 class GeminiService {
   GeminiService._();
+
+  static const String _baseUrl =
+      'https://generativelanguage.googleapis.com/v1beta';
 
   static const String _apiKeyFromDefine = String.fromEnvironment(
     'GEMINI_API_KEY',
   );
-  static const String _model = String.fromEnvironment(
+
+  /// Primary model (from compile-time define or defaults to fast flash).
+  static const String _primaryModel = String.fromEnvironment(
     'GEMINI_MODEL',
     defaultValue: 'gemini-2.0-flash',
   );
+
+  /// Fallback priority list — tried in order if [_primaryModel] fails.
+  static const List<String> _fallbackModels = [
+    'gemini-2.5-flash-latest',
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.5-pro-latest',
+    'gemini-2.5-pro',
+  ];
+
+  /// Status codes that trigger a retry on the same model.
+  static const Set<int> _retryOn = {429, 500, 502, 503, 504};
+
+  /// Status codes that trigger fallback to the next model.
+  static const Set<int> _fallbackOn = {404, 429, 500, 502, 503, 504};
+
   static const String _storageApiKey = 'gemini_api_key';
 
   static String _runtimeApiKey = '';
@@ -91,11 +124,15 @@ class GeminiService {
     }
   }
 
+  /// Generate a tutor reply for [history].
+  ///
+  /// Applies LiteLLM-inspired retry + fallback:
+  ///  - Retries the same model up to 2× on 429/5xx with exponential backoff.
+  ///  - Falls back to the next model in [_fallbackModels] when a model fails.
   static Future<String> generateReply({
     required List<GeminiMessage> history,
   }) async {
     await initialize();
-    final apiKey = _activeApiKey;
 
     if (!isConfigured) {
       throw const GeminiServiceException(
@@ -104,75 +141,106 @@ class GeminiService {
       );
     }
 
-    final uri = Uri.https(
-      'generativelanguage.googleapis.com',
-      '/v1beta/models/$_model:generateContent',
-      {'key': apiKey},
-    );
+    const systemText =
+        'You are Primoria AI Tutor. Be concise, clear, and helpful '
+        'for knowledge management and note-taking tasks.';
 
-    final requestBody = jsonEncode({
-      'systemInstruction': {
-        'parts': [
-          {
-            'text':
-                'You are Primoria AI Tutor. Be concise, clear, and helpful '
-                'for knowledge management and note-taking tasks.',
-          },
-        ],
-      },
-      'contents': history.map((message) => message.toApiJson()).toList(),
-      'generationConfig': {'temperature': 0.7, 'maxOutputTokens': 1024},
-    });
+    final contents = history.map((m) => m.toApiJson()).toList();
 
-    for (var attempt = 0; attempt < 3; attempt++) {
-      final response = await http.post(
-        uri,
-        headers: const {'Content-Type': 'application/json'},
-        body: requestBody,
-      );
+    // Build the ordered model list: primary first, then fallbacks (deduplicated).
+    final models = <String>[
+      _primaryModel,
+      ..._fallbackModels.where((m) => m != _primaryModel),
+    ];
 
-      final payload = _decodeJson(response.body);
-      final shouldRetry =
-          (response.statusCode == 429 || response.statusCode == 503) &&
-          attempt < 2;
-      if (shouldRetry) {
-        await Future<void>.delayed(Duration(milliseconds: 700 * (attempt + 1)));
-        continue;
-      }
+    String? lastError;
 
-      if (response.statusCode < 200 || response.statusCode >= 300) {
-        final message =
-            _extractErrorMessage(payload) ??
-            'Gemini request failed (${response.statusCode}).';
-        throw GeminiServiceException(message);
-      }
-
-      final text = _extractText(payload);
-      if (text == null || text.trim().isEmpty) {
-        final blockReason = _extractBlockReason(payload);
-        if (blockReason != null) {
-          throw GeminiServiceException(
-            'Gemini response was blocked by safety policy: $blockReason',
+    for (final model in models) {
+      // ── Retry loop (per model) ─────────────────────────────────────────
+      for (int attempt = 0; attempt <= 2; attempt++) {
+        if (attempt > 0) {
+          final delay = Duration(milliseconds: 500 * (1 << (attempt - 1)));
+          debugPrint(
+            '[GeminiService] Retry $attempt for $model — waiting ${delay.inMilliseconds}ms',
           );
+          await Future<void>.delayed(delay);
         }
-        throw const GeminiServiceException(
-          'Gemini returned an empty response.',
+
+        final url = Uri.parse(
+          '$_baseUrl/models/$model:generateContent?key=$_activeApiKey',
         );
+
+        late http.Response response;
+        try {
+          response = await http
+              .post(
+                url,
+                headers: const {'Content-Type': 'application/json'},
+                body: jsonEncode({
+                  'system_instruction': {
+                    'parts': [
+                      {'text': systemText},
+                    ],
+                  },
+                  'contents': contents,
+                  'generationConfig': {
+                    'temperature': 0.7,
+                    'maxOutputTokens': 1024,
+                  },
+                }),
+              )
+              .timeout(const Duration(seconds: 30));
+        } on TimeoutException {
+          lastError = 'Request timed out';
+          break; // try next model
+        } catch (e) {
+          lastError = e.toString();
+          break; // try next model
+        }
+
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          final payload = _decodeJson(response.body);
+          final blockReason = _extractBlockReason(payload);
+          if (blockReason != null) {
+            throw GeminiServiceException(
+              'Gemini response blocked by safety policy: $blockReason',
+            );
+          }
+          final text = _extractText(payload);
+          if (text != null && text.trim().isNotEmpty) return text.trim();
+          throw const GeminiServiceException('Gemini returned an empty response.');
+        }
+
+        lastError =
+            _extractErrorMessage(_decodeJson(response.body)) ??
+            'HTTP ${response.statusCode}';
+
+        // Retry on transient errors; break on permanent ones
+        if (!_retryOn.contains(response.statusCode)) break;
       }
 
-      return text.trim();
+      // ── Fallback decision ──────────────────────────────────────────────
+      final lastCode = _lastStatusCode(lastError);
+      if (!_fallbackOn.contains(lastCode) && lastCode != null) break;
+      debugPrint('[GeminiService] Falling back from $model to next model');
     }
 
-    throw const GeminiServiceException('Gemini request failed after retries.');
+    throw GeminiServiceException(
+      lastError ?? 'Gemini request failed after all retries and fallbacks.',
+    );
+  }
+
+  static int? _lastStatusCode(String? errorMsg) {
+    if (errorMsg == null) return null;
+    final match = RegExp(r'HTTP (\d+)').firstMatch(errorMsg);
+    return match != null ? int.tryParse(match.group(1)!) : null;
   }
 
   static Map<String, dynamic> _decodeJson(String source) {
     if (source.trim().isEmpty) return <String, dynamic>{};
     try {
       final decoded = jsonDecode(source);
-      if (decoded is Map<String, dynamic>) {
-        return decoded;
-      }
+      if (decoded is Map<String, dynamic>) return decoded;
     } catch (_) {}
     return <String, dynamic>{};
   }
@@ -181,9 +249,7 @@ class GeminiService {
     final error = payload['error'];
     if (error is Map<String, dynamic>) {
       final message = error['message']?.toString().trim();
-      if (message != null && message.isNotEmpty) {
-        return message;
-      }
+      if (message != null && message.isNotEmpty) return message;
     }
     return null;
   }
@@ -192,9 +258,7 @@ class GeminiService {
     final feedback = payload['promptFeedback'];
     if (feedback is Map<String, dynamic>) {
       final reason = feedback['blockReason']?.toString().trim();
-      if (reason != null && reason.isNotEmpty) {
-        return reason;
-      }
+      if (reason != null && reason.isNotEmpty) return reason;
     }
     return null;
   }
@@ -202,13 +266,10 @@ class GeminiService {
   static String? _extractText(Map<String, dynamic> payload) {
     final candidates = payload['candidates'];
     if (candidates is! List || candidates.isEmpty) return null;
-
     final first = candidates.first;
     if (first is! Map<String, dynamic>) return null;
-
     final content = first['content'];
     if (content is! Map<String, dynamic>) return null;
-
     final parts = content['parts'];
     if (parts is! List || parts.isEmpty) return null;
 
@@ -216,14 +277,10 @@ class GeminiService {
     for (final part in parts) {
       if (part is Map<String, dynamic>) {
         final text = part['text']?.toString();
-        if (text != null && text.trim().isNotEmpty) {
-          chunks.add(text.trim());
-        }
+        if (text != null && text.trim().isNotEmpty) chunks.add(text.trim());
       }
     }
-
-    if (chunks.isEmpty) return null;
-    return chunks.join('\n');
+    return chunks.isEmpty ? null : chunks.join('\n');
   }
 }
 

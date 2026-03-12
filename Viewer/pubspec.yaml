@@ -40,6 +40,9 @@ dependencies:
   # Web interop (replaces dart:html)
   web: ^1.1.0
 
+  # HTTP
+  http: ^1.2.0
+
   # Utilities
   intl: ^0.19.0
   uuid: ^4.2.1
