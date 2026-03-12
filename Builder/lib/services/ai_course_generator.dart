@@ -6,21 +6,13 @@ import '../models/course.dart';
 import 'course_import.dart';
 import 'course_schema_validator.dart';
 import 'file_picker.dart' as fp;
+import 'gemini_client.dart';
 
 /// AI course generation service (Gemini API)
 class AICourseGenerator {
   AICourseGenerator._();
 
   // Gemini API configuration
-  static const String _baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta';
-  static const List<String> _modelCandidates = [
-    'gemini-2.5-flash-latest',
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-2.5-pro-latest',
-    'gemini-2.5-pro',
-  ];
   static const int _maxOutputTokens = 16384;
   static const int _maxBlocksPerLesson = 20;
   static const String _promptVersion = '2026-02-13.ai-course-v1';
@@ -391,89 +383,86 @@ Additional requirements:
 ''';
 
     try {
-      // 1. Call Gemini with text-only prompt (no file upload needed)
+      // 1. Call Gemini — GeminiClient handles retry + model fallback
       stage = 'generate';
-      final models = _modelCandidates;
       final genTimer = Stopwatch()..start();
-      _ContentResult? lastFailure;
+      final genResponse = await GeminiClient.complete(
+        apiKey: _apiKey!,
+        contents: [
+          {
+            'parts': [
+              {'text': prompt},
+            ],
+          },
+        ],
+        maxOutputTokens: _maxOutputTokens,
+        temperature: 0.0,
+        responseMimeType: 'application/json',
+      );
+      genTimer.stop();
+      generationLatencyMs = genTimer.elapsedMilliseconds;
+      modelAttempts = genResponse.attempts;
+      selectedModel = genResponse.model;
 
-      for (final model in models) {
-        modelAttempts += 1;
-        final result = await _generateTextWithModel(
-          model: model,
-          prompt: prompt,
+      if (!genResponse.success || genResponse.text == null) {
+        return buildResult(
+          success: false,
+          message: 'Generation failed: ${genResponse.error ?? 'No available model'}',
         );
-        if (result.success) {
-          genTimer.stop();
-          generationLatencyMs = genTimer.elapsedMilliseconds;
-          selectedModel = result.model;
-          lastFailure = null;
-
-          // 2. Parse
-          stage = 'parse';
-          final parseTimer = Stopwatch()..start();
-          final parsedResult = await _parseJsonObjectWithRepair(
-            result.content!,
-            preferredModel: model,
-          );
-          parseTimer.stop();
-          parseLatencyMs = parseTimer.elapsedMilliseconds;
-          parseResult = parsedResult.result;
-
-          if (parsedResult.json == null) {
-            return buildResult(
-              success: false,
-              message: 'Failed to parse course JSON from AI output',
-              rawJson: _extractJson(result.content!),
-            );
-          }
-
-          final normalizedJson = _normalizeGeneratedCourseJson(
-            parsedResult.json!,
-            fileName: description.trim(),
-          );
-          final course = Course.fromJson(normalizedJson);
-
-          // 3. Validate
-          stage = 'validate';
-          final valTimer = Stopwatch()..start();
-          final validation = CourseSchemaValidator.validateCourse(
-            course,
-            mode: CourseSchemaValidationMode.import,
-          );
-          valTimer.stop();
-          validationLatencyMs = valTimer.elapsedMilliseconds;
-          validationPassed = validation.isValid;
-          validationErrorCount = validation.errors.length;
-          validationWarningCount = validation.warnings.length;
-
-          if (!validation.isValid) {
-            return buildResult(
-              success: false,
-              message: _formatValidationFailureMessage(
-                validation.errorMessages,
-              ),
-              rawJson: jsonEncode(normalizedJson),
-            );
-          }
-
-          stage = 'complete';
-          return buildResult(
-            success: true,
-            message: 'Course generated with $model',
-            course: course,
-            rawJson: jsonEncode(normalizedJson),
-          );
-        }
-        lastFailure = result;
-        if (!_shouldTryNextModel(result)) break;
       }
 
-      genTimer.stop();
+      // 2. Parse
+      stage = 'parse';
+      final parseTimer = Stopwatch()..start();
+      final parsedResult = await _parseJsonObjectWithRepair(
+        genResponse.text!,
+        preferredModel: genResponse.model,
+      );
+      parseTimer.stop();
+      parseLatencyMs = parseTimer.elapsedMilliseconds;
+      parseResult = parsedResult.result;
+
+      if (parsedResult.json == null) {
+        return buildResult(
+          success: false,
+          message: 'Failed to parse course JSON from AI output',
+          rawJson: _extractJson(genResponse.text!),
+        );
+      }
+
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        parsedResult.json!,
+        fileName: description.trim(),
+      );
+      final course = Course.fromJson(normalizedJson);
+
+      // 3. Validate
+      stage = 'validate';
+      final valTimer = Stopwatch()..start();
+      final validation = CourseSchemaValidator.validateCourse(
+        course,
+        mode: CourseSchemaValidationMode.import,
+      );
+      valTimer.stop();
+      validationLatencyMs = valTimer.elapsedMilliseconds;
+      validationPassed = validation.isValid;
+      validationErrorCount = validation.errors.length;
+      validationWarningCount = validation.warnings.length;
+
+      if (!validation.isValid) {
+        return buildResult(
+          success: false,
+          message: _formatValidationFailureMessage(validation.errorMessages),
+          rawJson: jsonEncode(normalizedJson),
+        );
+      }
+
+      stage = 'complete';
       return buildResult(
-        success: false,
-        message:
-            'Generation failed: ${lastFailure?.message ?? 'No available model'}',
+        success: true,
+        message: 'Course generated with ${genResponse.model ?? 'Gemini'}',
+        course: course,
+        rawJson: jsonEncode(normalizedJson),
       );
     } catch (e) {
       return buildResult(success: false, message: 'Generation error: $e');
@@ -889,7 +878,9 @@ Additional requirements:
     }
   }
 
-  /// Call Gemini to generate content
+  /// Call Gemini to generate content from a PDF (inline data).
+  ///
+  /// Delegates HTTP, retry, and model fallback to [GeminiClient].
   static Future<_ContentResult> _generateContent({
     String? inlineData,
     required String mimeType,
@@ -903,128 +894,33 @@ Additional requirements:
     }
 
     final timer = Stopwatch()..start();
-    _ContentResult? lastFailure;
-    var attempts = 0;
-    for (final model in _modelCandidates) {
-      attempts += 1;
-      final result = await _generateContentWithModel(
-        model: model,
-        inlineData: inlineData,
-        mimeType: mimeType,
-        prompt: prompt,
-      );
-
-      if (result.success) {
-        timer.stop();
-        return result.copyWith(
-          attemptCount: attempts,
-          latencyMs: timer.elapsedMilliseconds,
-        );
-      }
-      lastFailure = result;
-      if (!_shouldTryNextModel(result)) {
-        timer.stop();
-        return result.copyWith(
-          attemptCount: attempts,
-          latencyMs: timer.elapsedMilliseconds,
-        );
-      }
-    }
-
-    timer.stop();
-    return (lastFailure ??
-            const _ContentResult(
-              success: false,
-              message: 'No available Gemini model',
-            ))
-        .copyWith(attemptCount: attempts, latencyMs: timer.elapsedMilliseconds);
-  }
-
-  static Future<_ContentResult> _generateContentWithModel({
-    required String model,
-    required String inlineData,
-    required String mimeType,
-    required String prompt,
-  }) async {
-    try {
-      final url = '$_baseUrl/models/$model:generateContent?key=$_apiKey';
-
-      final requestBody = {
-        'contents': [
-          {
-            'parts': [
-              {
-                'inlineData': {'mimeType': mimeType, 'data': inlineData},
-              },
-              {'text': prompt},
-            ],
-          },
-        ],
-        'generationConfig': {
-          'temperature': 0.6,
-          'maxOutputTokens': _maxOutputTokens,
-          'responseMimeType': 'application/json',
+    final response = await GeminiClient.complete(
+      apiKey: _apiKey!,
+      contents: [
+        {
+          'parts': [
+            {'inlineData': {'mimeType': mimeType, 'data': inlineData}},
+            {'text': prompt},
+          ],
         },
-      };
+      ],
+      maxOutputTokens: _maxOutputTokens,
+      temperature: 0.6,
+      responseMimeType: 'application/json',
+    );
+    timer.stop();
 
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestBody),
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final candidates = data['candidates'];
-        if (candidates is! List || candidates.isEmpty) {
-          return _ContentResult(
-            success: false,
-            message: 'Empty response candidates',
-            statusCode: response.statusCode,
-            model: model,
-          );
-        }
-
-        final candidate = _mapFromDynamic(candidates.first);
-        final contentMap = _mapFromDynamic(candidate['content']);
-        final parts = contentMap['parts'];
-        if (parts is! List || parts.isEmpty) {
-          return _ContentResult(
-            success: false,
-            message: 'Response has no content parts',
-            statusCode: response.statusCode,
-            model: model,
-          );
-        }
-
-        final firstPart = _mapFromDynamic(parts.first);
-        final content = firstPart['text'] as String?;
-        if (content == null || content.trim().isEmpty) {
-          return _ContentResult(
-            success: false,
-            message: 'Model returned empty text',
-            statusCode: response.statusCode,
-            model: model,
-          );
-        }
-
-        return _ContentResult(success: true, content: content, model: model);
-      }
-
-      final errorMessage = _extractErrorMessage(response.body);
-      return _ContentResult(
-        success: false,
-        message: errorMessage,
-        statusCode: response.statusCode,
-        model: model,
-      );
-    } catch (e) {
-      return _ContentResult(
-        success: false,
-        message: e.toString(),
-        model: model,
-      );
-    }
+    return _ContentResult(
+      success: response.success,
+      content: response.text,
+      message: response.error,
+      statusCode: response.statusCode,
+      model: response.model,
+      attemptCount: response.attempts,
+      latencyMs: timer.elapsedMilliseconds,
+      truncated: response.truncated,
+      partialContent: response.truncated ? response.text : null,
+    );
   }
 
   static Future<_ParsedJsonResult> _parseJsonObjectWithRepair(
@@ -1194,173 +1090,80 @@ Content to repair:
 $rawContent
 ''';
 
-    final repairModels = <String>[
+    // Put the preferred model first; GeminiClient handles fallback to others.
+    final models = <String>[
       if (preferredModel != null && preferredModel.trim().isNotEmpty)
         preferredModel.trim(),
-      ..._modelCandidates,
-    ];
+      ...GeminiClient.defaultModels,
+    ].toSet().toList();
 
-    final tried = <String>{};
-    for (final model in repairModels) {
-      if (!tried.add(model)) continue;
-      final result = await _generateTextWithModel(
-        model: model,
-        prompt: repairPrompt,
-      );
-      if (result.success && (result.content?.trim().isNotEmpty ?? false)) {
-        return result.content!.trim();
-      }
-    }
+    final response = await GeminiClient.complete(
+      apiKey: _apiKey!,
+      contents: [
+        {
+          'parts': [
+            {'text': repairPrompt},
+          ],
+        },
+      ],
+      temperature: 0.0,
+      responseMimeType: 'application/json',
+      models: models,
+    );
 
-    return null;
+    return (response.success && (response.text?.trim().isNotEmpty ?? false))
+        ? response.text!.trim()
+        : null;
   }
 
+  /// Call a single Gemini model with retry (no cross-model fallback).
+  ///
+  /// Used in [generateCourseAgentLocally] where the outer loop handles
+  /// domain-level fallback (parse failure, validation failure).
   static Future<_ContentResult> _generateTextWithModel({
     required String model,
     required String prompt,
     double temperature = 0.0,
     int? maxOutputTokens,
   }) async {
-    try {
-      final url = '$_baseUrl/models/$model:generateContent?key=$_apiKey';
-      final requestBody = {
-        'contents': [
-          {
-            'parts': [
-              {'text': prompt},
-            ],
-          },
-        ],
-        'generationConfig': {
-          'temperature': temperature,
-          'maxOutputTokens': maxOutputTokens ?? _maxOutputTokens,
-          'responseMimeType': 'application/json',
+    final response = await GeminiClient.complete(
+      apiKey: _apiKey!,
+      contents: [
+        {
+          'parts': [
+            {'text': prompt},
+          ],
         },
-      };
+      ],
+      temperature: temperature,
+      maxOutputTokens: maxOutputTokens ?? _maxOutputTokens,
+      responseMimeType: 'application/json',
+      models: [model], // single model — no cross-model fallback
+    );
 
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestBody),
-      );
-
-      if (response.statusCode != 200) {
-        return _ContentResult(
-          success: false,
-          message: _extractErrorMessage(response.body),
-          statusCode: response.statusCode,
-          model: model,
-        );
-      }
-
-      final data = jsonDecode(response.body);
-      final candidates = data['candidates'];
-      if (candidates is! List || candidates.isEmpty) {
-        return _ContentResult(
-          success: false,
-          message: 'Empty response candidates',
-          statusCode: response.statusCode,
-          model: model,
-        );
-      }
-
-      final candidate = _mapFromDynamic(candidates.first);
-      final finishReason = _asString(candidate['finishReason']);
-      final contentMap = _mapFromDynamic(candidate['content']);
-      final parts = contentMap['parts'];
-      if (parts is! List || parts.isEmpty) {
-        return _ContentResult(
-          success: false,
-          message: 'Response has no content parts',
-          statusCode: response.statusCode,
-          model: model,
-        );
-      }
-
-      final firstPart = _mapFromDynamic(parts.first);
-      final content = _asString(firstPart['text']);
-      if (content == null || content.trim().isEmpty) {
-        return _ContentResult(
-          success: false,
-          message: 'Model returned empty text',
-          statusCode: response.statusCode,
-          model: model,
-        );
-      }
-
-      if (finishReason == 'MAX_TOKENS') {
-        return _ContentResult(
-          success: false,
-          message: 'MAX_TOKENS: output truncated by $model — try a model with larger context',
-          statusCode: response.statusCode,
-          model: model,
-          truncated: true,
-          partialContent: content,
-        );
-      }
-
-      return _ContentResult(success: true, content: content, model: model);
-    } catch (e) {
-      return _ContentResult(
-        success: false,
-        message: e.toString(),
-        model: model,
-      );
-    }
+    return _ContentResult(
+      success: response.success,
+      content: response.text,
+      message: response.error,
+      statusCode: response.statusCode,
+      model: response.model,
+      truncated: response.truncated,
+      partialContent: response.truncated ? response.text : null,
+    );
   }
 
-  static bool _isHighDemandError(String? message) {
-    final msg = (message ?? '').toLowerCase();
-    return msg.contains('high demand') ||
-        msg.contains('resource_exhausted') ||
-        msg.contains('resource exhausted') ||
-        msg.contains('overloaded') ||
-        msg.contains('503');
-  }
-
+  /// Whether [result] justifies trying the next model in the outer loop.
+  ///
+  /// Delegates to [GeminiClient.canFallback] so the fallback logic stays
+  /// in one place.
   static bool _shouldTryNextModel(_ContentResult result) {
-    final statusCode = result.statusCode;
-    if (statusCode == 404) return true;
-    if (statusCode == 429) return true;
-    if (statusCode == 500 ||
-        statusCode == 502 ||
-        statusCode == 503 ||
-        statusCode == 504) {
-      return true;
-    }
-
-    final message = (result.message ?? '').toLowerCase();
-    if (message.contains('high demand') ||
-        message.contains('resource_exhausted') ||
-        message.contains('resource exhausted') ||
-        message.contains('unavailable')) {
-      return true;
-    }
-
-    if (statusCode != 400 && statusCode != 403) return false;
-
-    return message.contains('model') &&
-            (message.contains('not found') ||
-                message.contains('unsupported') ||
-                message.contains('not available') ||
-                message.contains('not enabled')) ||
-        (message.contains('permission') && message.contains('model'));
-  }
-
-  static String _extractErrorMessage(String body) {
-    try {
-      final jsonBody = jsonDecode(body);
-      if (jsonBody is Map) {
-        final map = jsonBody.map((k, v) => MapEntry(k.toString(), v));
-        final error = _mapFromDynamic(map['error']);
-        final message = error['message'] as String?;
-        if (message != null && message.trim().isNotEmpty) return message;
-      }
-    } catch (_) {
-      // Ignore parse errors and fallback to raw response.
-    }
-
-    return body.isEmpty ? 'Unknown error' : body;
+    return GeminiClient.canFallback(
+      GeminiResponse(
+        success: result.success,
+        error: result.message,
+        statusCode: result.statusCode,
+      ),
+    );
   }
 
   static String _buildRequestId() {
@@ -2531,7 +2334,7 @@ $rawContent
 
       Map<String, dynamic>? planJson;
       String? planError;
-      for (final model in _modelCandidates) {
+      for (final model in GeminiClient.defaultModels) {
         final result = await _generateTextWithModel(
           model: model,
           prompt: planPrompt,
@@ -2541,7 +2344,7 @@ $rawContent
         if (!result.success) {
           planError = result.message;
           if (!_shouldTryNextModel(result)) break;
-          if (_isHighDemandError(result.message)) {
+          if (result.statusCode == 429) {
             await Future.delayed(const Duration(seconds: 2));
           }
           continue;
@@ -2604,7 +2407,7 @@ $rawContent
               ? _buildLessonBlocksPromptCompact(lesson, courseCtx)
               : lessonPrompt;
           final roundTokens = round > 0 ? 8192 : 12288;
-          for (final model in _modelCandidates) {
+          for (final model in GeminiClient.defaultModels) {
             final result = await _generateTextWithModel(
               model: model,
               prompt: roundPrompt,
@@ -2636,7 +2439,7 @@ $rawContent
                 }
               }
               if (!_shouldTryNextModel(result)) break;
-              if (_isHighDemandError(result.message)) {
+              if (result.statusCode == 429) {
                 await Future.delayed(const Duration(seconds: 2));
               }
               continue;

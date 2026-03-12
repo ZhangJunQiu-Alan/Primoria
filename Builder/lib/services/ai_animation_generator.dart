@@ -1,6 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+import 'gemini_client.dart';
 
 /// Result of an AI animation generation request.
 class AnimationGenerationResult {
@@ -15,19 +13,11 @@ class AnimationGenerationResult {
 /// AI animation generation service (Gemini API).
 ///
 /// Generates self-contained HTML/CSS/JS animations from natural language
-/// descriptions. Reuses the same Gemini infrastructure as [AICourseGenerator].
+/// descriptions. HTTP calls, retry, and model fallback are handled by
+/// [GeminiClient].
 class AIAnimationGenerator {
   AIAnimationGenerator._();
 
-  static const String _baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta';
-  static const List<String> _modelCandidates = [
-    'gemini-2.5-flash-latest',
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-2.5-pro-latest',
-    'gemini-2.5-pro',
-  ];
   static const int _maxOutputTokens = 8192;
 
   static const String _systemPrompt = '''
@@ -80,6 +70,8 @@ Output ONLY the updated HTML document. Nothing else.
   ///
   /// Pass [apiKey] (Gemini API key). Optionally pass [previousHtml] to
   /// refine an existing animation instead of generating from scratch.
+  ///
+  /// Retry and model fallback are handled by [GeminiClient].
   static Future<AnimationGenerationResult> generate({
     required String prompt,
     required String apiKey,
@@ -87,54 +79,19 @@ Output ONLY the updated HTML document. Nothing else.
     String? model,
   }) async {
     final isIteration = previousHtml != null && previousHtml.isNotEmpty;
-    final systemPrompt =
-        isIteration ? _iterationSystemPrompt : _systemPrompt;
-
+    final systemPrompt = isIteration ? _iterationSystemPrompt : _systemPrompt;
     final userMessage = isIteration
         ? 'Current animation HTML:\n\n$previousHtml\n\nTeacher modification request: $prompt'
         : prompt;
 
-    final modelsToTry = model != null
-        ? [model, ..._modelCandidates.where((m) => m != model)]
-        : _modelCandidates;
+    // When a preferred model is given, put it first; fall back to defaults.
+    final models = model != null
+        ? [model, ...GeminiClient.defaultModels.where((m) => m != model)]
+        : GeminiClient.defaultModels;
 
-    for (final m in modelsToTry) {
-      try {
-        final result = await _callGemini(
-          apiKey: apiKey,
-          model: m,
-          systemPrompt: systemPrompt,
-          userMessage: userMessage,
-        );
-        if (result != null) return AnimationGenerationResult(html: result);
-      } catch (e) {
-        debugPrint('[AIAnimationGenerator] Model $m failed: $e');
-        continue;
-      }
-    }
-
-    return const AnimationGenerationResult(
-      error: 'All Gemini models failed. Check your API key and network.',
-    );
-  }
-
-  static Future<String?> _callGemini({
-    required String apiKey,
-    required String model,
-    required String systemPrompt,
-    required String userMessage,
-  }) async {
-    final url = Uri.parse(
-      '$_baseUrl/models/$model:generateContent?key=$apiKey',
-    );
-
-    final body = jsonEncode({
-      'system_instruction': {
-        'parts': [
-          {'text': systemPrompt},
-        ],
-      },
-      'contents': [
+    final response = await GeminiClient.complete(
+      apiKey: apiKey,
+      contents: [
         {
           'role': 'user',
           'parts': [
@@ -142,36 +99,20 @@ Output ONLY the updated HTML document. Nothing else.
           ],
         },
       ],
-      'generationConfig': {
-        'maxOutputTokens': _maxOutputTokens,
-        'temperature': 0.7,
-      },
-    });
+      systemInstruction: systemPrompt,
+      maxOutputTokens: _maxOutputTokens,
+      temperature: 0.7,
+      models: models,
+    );
 
-    final response = await http
-        .post(
-          url,
-          headers: {'Content-Type': 'application/json'},
-          body: body,
-        )
-        .timeout(const Duration(seconds: 60));
-
-    if (response.statusCode != 200) {
-      throw Exception('HTTP ${response.statusCode}: ${response.body}');
+    if (!response.success || response.text == null) {
+      return AnimationGenerationResult(
+        error: response.error ??
+            'All Gemini models failed. Check your API key and network.',
+      );
     }
 
-    final json = jsonDecode(response.body) as Map<String, dynamic>;
-    final candidates = json['candidates'] as List<dynamic>?;
-    if (candidates == null || candidates.isEmpty) return null;
-
-    final content = candidates[0]['content'] as Map<String, dynamic>?;
-    final parts = content?['parts'] as List<dynamic>?;
-    if (parts == null || parts.isEmpty) return null;
-
-    final rawText = parts[0]['text'] as String?;
-    if (rawText == null || rawText.trim().isEmpty) return null;
-
-    return _extractHtml(rawText.trim());
+    return AnimationGenerationResult(html: _extractHtml(response.text!));
   }
 
   /// Strip any accidental markdown code fences the model might add.
