@@ -38,6 +38,7 @@ class _ModulePanelState extends State<ModulePanel> {
       blockTypes: [
         BlockType.text,
         BlockType.image,
+        BlockType.video,
         BlockType.animation,
         BlockType.multipleChoice,
         BlockType.trueFalse,
@@ -137,7 +138,7 @@ class _ModulePanelState extends State<ModulePanel> {
       case BlockType.animation:
         return t.isZh ? '预设动画与基础控制' : 'Preset animation with controls';
       case BlockType.video:
-        return t.isZh ? '嵌入视频模块' : 'Embedded video';
+        return t.isZh ? '上传或嵌入视频内容' : 'Upload or embed video content';
     }
   }
 

@@ -10,6 +10,7 @@ import '../services/supabase_service.dart';
 import '../providers/builder_access_provider.dart';
 import '../features/auth/auth_callback_screen.dart';
 import '../features/auth/login_screen.dart';
+import '../features/auth/register_screen.dart';
 import '../features/landing/landing_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/builder/builder_screen.dart';
@@ -55,7 +56,7 @@ final appRouter = GoRouter(
     // Logged in + role verified → advance from landing/login to dashboard
     if (loggedIn &&
         access == AccessState.allowed &&
-        (location == '/' || location == '/login')) {
+        (location == '/' || location == '/login' || location == '/register')) {
       return '/dashboard';
     }
 
@@ -71,6 +72,11 @@ final appRouter = GoRouter(
       path: '/login',
       name: 'login',
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
       path: '/dashboard',
@@ -113,7 +119,8 @@ final appRouter = GoRouter(
         final draftId = state.uri.queryParameters['draftId'];
         final lessonIndex = int.tryParse(
           state.uri.queryParameters['lessonIndex'] ??
-              state.uri.queryParameters['pageIndex'] ?? '',
+              state.uri.queryParameters['pageIndex'] ??
+              '',
         );
         final singlePage = state.uri.queryParameters['singlePage'] == '1';
         return ViewerScreen(
