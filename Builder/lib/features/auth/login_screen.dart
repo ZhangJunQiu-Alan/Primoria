@@ -82,11 +82,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       _loadingProvider = 'wechat';
       _clearStatus();
     });
-    await SupabaseService.signInWithWeChat();
+    final result = await SupabaseService.signInWithWeChat();
     if (!mounted) return;
     setState(() {
       _loadingProvider = null;
-      _error = t.loginWeChatComingSoon;
+      if (result.success) {
+        _success = result.message;
+      } else {
+        _error = result.message.isEmpty
+            ? t.loginWeChatComingSoon
+            : result.message;
+      }
     });
   }
 
@@ -101,7 +107,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       _loadingProvider = 'email';
       _clearStatus();
     });
-    final result = await SupabaseService.signIn(email: email, password: password);
+    final result = await SupabaseService.signIn(
+      email: email,
+      password: password,
+    );
     if (!mounted) return;
     setState(() => _loadingProvider = null);
     if (!result.success) {
@@ -285,7 +294,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Footnote
                 Center(
                   child: TextButton(
-                    onPressed: () => context.go('/'),
+                    onPressed: () => context.go('/register'),
                     style: TextButton.styleFrom(
                       foregroundColor: const Color(0xFF6B7280),
                     ),
@@ -317,8 +326,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           keyboardType: TextInputType.emailAddress,
           autofillHints: const [AutofillHints.email],
           enabled: !isLoading,
-          textInputAction:
-              isForgot ? TextInputAction.done : TextInputAction.next,
+          textInputAction: isForgot
+              ? TextInputAction.done
+              : TextInputAction.next,
           onSubmitted: isForgot ? (_) => _sendPasswordReset(t) : null,
         ),
         if (!isForgot) ...[
@@ -348,9 +358,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           child: ElevatedButton(
             onPressed: isLoading
                 ? null
-                : () => isForgot
-                    ? _sendPasswordReset(t)
-                    : _signInWithEmail(t),
+                : () => isForgot ? _sendPasswordReset(t) : _signInWithEmail(t),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary500,
               foregroundColor: Colors.white,
@@ -389,9 +397,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       _clearStatus();
                     });
                   },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary500,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary500),
             child: Text(
               isForgot ? t.loginSignInButton : t.loginForgotPassword,
               style: const TextStyle(fontSize: 14),
@@ -650,7 +656,8 @@ class _SocialButtonState extends State<_SocialButton> {
   @override
   Widget build(BuildContext context) {
     final isThisLoading = widget.loadingProvider == widget.provider;
-    final anyLoading = widget.loadingProvider != null &&
+    final anyLoading =
+        widget.loadingProvider != null &&
         widget.loadingProvider != 'emailToggle';
     final disabled = anyLoading && !isThisLoading;
 
@@ -672,13 +679,9 @@ class _SocialButtonState extends State<_SocialButton> {
         width: 20,
         height: 20,
         color: widget.logoTintColor,
-        colorBlendMode:
-            widget.logoTintColor != null ? BlendMode.srcIn : null,
-        errorBuilder: (_, __, ___) => Icon(
-          Icons.login,
-          size: 20,
-          color: widget.textColor,
-        ),
+        colorBlendMode: widget.logoTintColor != null ? BlendMode.srcIn : null,
+        errorBuilder: (_, __, ___) =>
+            Icon(Icons.login, size: 20, color: widget.textColor),
       );
     } else {
       leading = const SizedBox(width: 20);
@@ -798,10 +801,7 @@ class _FormField extends StatelessWidget {
       style: const TextStyle(fontSize: 15, color: Color(0xFF111827)),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(
-          fontSize: 14,
-          color: Color(0xFF6B7280),
-        ),
+        labelStyle: const TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
         filled: true,
         fillColor: _LC.formFill,
         suffixIcon: suffixIcon,
@@ -835,9 +835,7 @@ class _StatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = isError
-        ? const Color(0xFFFEF2F2)
-        : const Color(0xFFF0FDF4);
+    final bg = isError ? const Color(0xFFFEF2F2) : const Color(0xFFF0FDF4);
     final textColor = isError
         ? const Color(0xFFDC2626)
         : const Color(0xFF16A34A);

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -12,7 +13,11 @@ class SupabaseService {
   SupabaseService._();
 
   static SupabaseClient get client => Supabase.instance.client;
+  static const Duration _authTimeout = Duration(seconds: 45);
   static const Set<String> _builderRoles = {'author', 'admin'};
+  static const Set<String> _builderAccessEmailAllowlist = {
+    'kieransweg@gmail.com',
+  };
   static const String _builderAccessDeniedMessage =
       'This account does not have Builder access. '
       'Please use an author/admin account.';
@@ -38,13 +43,18 @@ class SupabaseService {
     String? displayName,
   }) async {
     try {
-      final response = await client.auth.signUp(
-        email: email,
-        password: password,
-        data: displayName != null ? {'name': displayName} : null,
+      final response = await _withAuthTimeout(
+        client.auth.signUp(
+          email: email,
+          password: password,
+          data: displayName != null ? {'name': displayName} : null,
+        ),
+        operation: 'Sign up',
       );
 
       if (response.user != null) {
+        // Do not block account creation on profile sync.
+        unawaited(_ensureAllowlistedUserRole());
         return AuthResult(success: true, message: 'Sign up successful');
       } else {
         return const AuthResult(success: false, message: 'Sign up failed');
@@ -55,7 +65,7 @@ class SupabaseService {
         message: _translateAuthError(e.message),
       );
     } catch (e) {
-      return AuthResult(success: false, message: 'Sign up failed: $e');
+      return AuthResult(success: false, message: _translateAuthError('$e'));
     }
   }
 
@@ -83,15 +93,25 @@ class SupabaseService {
     required String email,
     required String password,
   }) async {
-    for (var attempt = 0; attempt < 2; attempt++) {
+    const maxAttempts = 3;
+    for (var attempt = 0; attempt < maxAttempts; attempt++) {
       try {
-        final response = await client.auth.signInWithPassword(
-          email: email,
-          password: password,
+        final response = await _withAuthTimeout(
+          client.auth.signInWithPassword(email: email, password: password),
+          operation: 'Sign in',
         );
 
         if (response.user != null) {
-          final hasAccess = await ensureBuilderAccess(signOutIfDenied: true);
+          // Allowlisted Builder accounts should not block on profile-role sync.
+          if (_isBuilderAllowlistedEmail(response.user?.email ?? email)) {
+            unawaited(_ensureAllowlistedUserRole());
+            return const AuthResult(success: true, message: 'Signed in');
+          }
+
+          final hasAccess = await _withAuthTimeout(
+            ensureBuilderAccess(signOutIfDenied: true),
+            operation: 'Access check',
+          );
           if (!hasAccess) {
             return const AuthResult(
               success: false,
@@ -103,8 +123,8 @@ class SupabaseService {
           return const AuthResult(success: false, message: 'Sign in failed');
         }
       } on AuthException catch (e) {
-        if (_isRetryableAuthTimeout(e.message) && attempt == 0) {
-          await Future<void>.delayed(const Duration(milliseconds: 700));
+        if (_isRetryableAuthTimeout(e.message) && attempt < maxAttempts - 1) {
+          await Future<void>.delayed(_retryDelayForAttempt(attempt));
           continue;
         }
         return AuthResult(
@@ -114,11 +134,14 @@ class SupabaseService {
         );
       } catch (e) {
         final errorText = e.toString();
-        if (_isRetryableAuthTimeout(errorText) && attempt == 0) {
-          await Future<void>.delayed(const Duration(milliseconds: 700));
+        if (_isRetryableAuthTimeout(errorText) && attempt < maxAttempts - 1) {
+          await Future<void>.delayed(_retryDelayForAttempt(attempt));
           continue;
         }
-        return AuthResult(success: false, message: 'Sign in failed: $e');
+        return AuthResult(
+          success: false,
+          message: _translateAuthError(errorText),
+        );
       }
     }
 
@@ -133,7 +156,10 @@ class SupabaseService {
   /// Reset password (send reset email)
   static Future<AuthResult> resetPassword({required String email}) async {
     try {
-      await client.auth.resetPasswordForEmail(email);
+      await _withAuthTimeout(
+        client.auth.resetPasswordForEmail(email),
+        operation: 'Password reset',
+      );
       return const AuthResult(success: true, message: 'Reset link sent');
     } on AuthException catch (e) {
       return AuthResult(
@@ -148,9 +174,12 @@ class SupabaseService {
   /// Sign in with Google
   static Future<AuthResult> signInWithGoogle() async {
     try {
-      await client.auth.signInWithOAuth(
-        OAuthProvider.google,
-        redirectTo: _getRedirectUrl(),
+      await _withAuthTimeout(
+        client.auth.signInWithOAuth(
+          OAuthProvider.google,
+          redirectTo: _getRedirectUrl(),
+        ),
+        operation: 'Google sign in',
       );
       return const AuthResult(success: true, message: 'Redirecting...');
     } on AuthException catch (e) {
@@ -166,9 +195,12 @@ class SupabaseService {
   /// Sign in with Apple
   static Future<AuthResult> signInWithApple() async {
     try {
-      await client.auth.signInWithOAuth(
-        OAuthProvider.apple,
-        redirectTo: _getRedirectUrl(),
+      await _withAuthTimeout(
+        client.auth.signInWithOAuth(
+          OAuthProvider.apple,
+          redirectTo: _getRedirectUrl(),
+        ),
+        operation: 'Apple sign in',
       );
       return const AuthResult(success: true, message: 'Redirecting...');
     } on AuthException catch (e) {
@@ -185,7 +217,8 @@ class SupabaseService {
   static Future<AuthResult> signInWithWeChat() async {
     return const AuthResult(
       success: false,
-      message: 'WeChat login is not yet available.',
+      message:
+          'WeChat login requires provider setup in Supabase Auth before it can be used.',
     );
   }
 
@@ -225,14 +258,37 @@ class SupabaseService {
     return _builderRoles.contains(role);
   }
 
+  static bool _isBuilderAllowlistedEmail(String? email) {
+    final normalized = email?.trim().toLowerCase();
+    if (normalized == null || normalized.isEmpty) return false;
+    return _builderAccessEmailAllowlist.contains(normalized);
+  }
+
+  /// Ensures allowlisted users get persistent Builder role in profile.
+  static Future<void> _ensureAllowlistedUserRole() async {
+    final user = currentUser;
+    if (user == null || !_isBuilderAllowlistedEmail(user.email)) return;
+    try {
+      await client
+          .from('profiles')
+          .update({'role': 'author'})
+          .eq('id', user.id);
+    } catch (_) {
+      // Ignore failures and keep allowlist fallback in access check.
+    }
+  }
+
   static Future<String?> getCurrentUserRole() async {
     if (currentUser == null) return null;
     try {
-      final profile = await client
-          .from('profiles')
-          .select('role')
-          .eq('id', currentUser!.id)
-          .maybeSingle();
+      final profile = await _withAuthTimeout(
+        client
+            .from('profiles')
+            .select('role')
+            .eq('id', currentUser!.id)
+            .maybeSingle(),
+        operation: 'Role lookup',
+      );
       return profile?['role']?.toString();
     } catch (_) {
       return null;
@@ -244,6 +300,10 @@ class SupabaseService {
     bool signOutIfDenied = false,
   }) async {
     if (currentUser == null) return false;
+    if (_isBuilderAllowlistedEmail(currentUser!.email)) {
+      unawaited(_ensureAllowlistedUserRole());
+      return true;
+    }
     final role = await getCurrentUserRole();
     final allowed = isBuilderRole(role);
     if (!allowed && signOutIfDenied) {
@@ -1263,7 +1323,33 @@ class SupabaseService {
     final raw = message.toLowerCase();
     return raw.contains('request_timeout') ||
         raw.contains('timed out') ||
-        raw.contains('context deadline exceeded');
+        raw.contains('context deadline exceeded') ||
+        raw.contains('timeoutexception') ||
+        raw.contains('socketexception') ||
+        raw.contains('failed to fetch') ||
+        raw.contains('clientexception');
+  }
+
+  static Duration _retryDelayForAttempt(int attempt) {
+    switch (attempt) {
+      case 0:
+        return const Duration(milliseconds: 900);
+      case 1:
+        return const Duration(milliseconds: 1800);
+      default:
+        return const Duration(milliseconds: 2500);
+    }
+  }
+
+  static Future<T> _withAuthTimeout<T>(
+    Future<T> future, {
+    required String operation,
+  }) {
+    return future.timeout(
+      _authTimeout,
+      onTimeout: () =>
+          throw TimeoutException('$operation timed out', _authTimeout),
+    );
   }
 
   static String _translateAuthError(String message) {
@@ -1310,6 +1396,9 @@ class SupabaseService {
     }
     if (normalized.contains('redirect_to is not allowed')) {
       return 'This callback URL is not allowed. Add it to Supabase redirect URLs.';
+    }
+    if (normalized.toLowerCase().contains('failed to fetch')) {
+      return 'Sign-in service is temporarily unreachable. Please retry in a few seconds.';
     }
     if (_isRetryableAuthTimeout(normalized) ||
         normalized.contains('Database error querying schema')) {

@@ -7,11 +7,14 @@ import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import '../../models/models.dart';
 import '../../services/block_registry.dart';
+import '../../services/file_picker.dart' as file_picker;
 import 'animation_block_widget.dart';
 import 'code_execution_block_widget.dart';
 import 'code_playground_widget.dart';
 import 'function_flow_block_widget.dart';
 import 'html_animation_widget.dart';
+import 'video_embed_widget.dart';
+import 'video_drop_zone.dart';
 
 /// Block wrapper - handles selection, delete, and other common behavior
 class BlockWrapper extends StatelessWidget {
@@ -360,7 +363,16 @@ class BlockWrapper extends StatelessWidget {
               AnimationBlockWidget(content: animContent, height: height),
         );
       case BlockType.video:
-        return _VideoBlockContent(content: block.content as VideoContent, t: t);
+        final content = block.content as VideoContent;
+        return _VideoBlockContent(
+          content: content,
+          t: t,
+          editable: onBlockUpdated != null,
+          onChanged: onBlockUpdated == null
+              ? null
+              : (updatedContent) =>
+                    onBlockUpdated!(block.copyWith(content: updatedContent)),
+        );
     }
   }
 
@@ -1905,39 +1917,353 @@ class _TrueFalseBlockContent extends StatelessWidget {
 }
 
 /// Video content
-class _VideoBlockContent extends StatelessWidget {
+class _VideoBlockContent extends StatefulWidget {
   final VideoContent content;
   final BuilderLocalizations? t;
+  final bool editable;
+  final ValueChanged<VideoContent>? onChanged;
 
-  const _VideoBlockContent({required this.content, required this.t});
+  const _VideoBlockContent({
+    required this.content,
+    required this.t,
+    this.editable = false,
+    this.onChanged,
+  });
 
-  String _tr(String zh, String en) => (t?.isZh ?? false) ? zh : en;
+  @override
+  State<_VideoBlockContent> createState() => _VideoBlockContentState();
+}
+
+class _VideoBlockContentState extends State<_VideoBlockContent> {
+  bool _isImporting = false;
+  double _importProgress = 0;
+  int _loadedBytes = 0;
+  int _totalBytes = 0;
+  DateTime? _importStartedAt;
+
+  String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
+
+  void _startImport() {
+    setState(() {
+      _isImporting = true;
+      _importProgress = 0;
+      _loadedBytes = 0;
+      _totalBytes = 0;
+      _importStartedAt = DateTime.now();
+    });
+  }
+
+  void _endImport() {
+    if (!mounted) return;
+    setState(() => _isImporting = false);
+  }
+
+  void _onImportProgress(double progress, int loadedBytes, int totalBytes) {
+    if (!mounted) return;
+    setState(() {
+      _importProgress = progress.clamp(0.0, 1.0).toDouble();
+      _loadedBytes = loadedBytes;
+      _totalBytes = totalBytes;
+    });
+  }
+
+  String _etaText() {
+    if (!_isImporting) return '';
+    if (_totalBytes <= 0 || _loadedBytes <= 0 || _importStartedAt == null) {
+      return _tr('正在估算剩余时间...', 'Estimating time remaining...');
+    }
+    final elapsedMs = DateTime.now()
+        .difference(_importStartedAt!)
+        .inMilliseconds;
+    if (elapsedMs <= 0) {
+      return _tr('正在估算剩余时间...', 'Estimating time remaining...');
+    }
+
+    final bytesPerSecond = _loadedBytes / (elapsedMs / 1000);
+    if (bytesPerSecond <= 0 || _loadedBytes >= _totalBytes) {
+      return _tr('即将完成...', 'Almost done...');
+    }
+
+    final secondsLeft = ((_totalBytes - _loadedBytes) / bytesPerSecond).ceil();
+    if (secondsLeft <= 1) {
+      return _tr('即将完成...', 'Almost done...');
+    }
+    if (secondsLeft < 60) {
+      return _tr('约 $secondsLeft 秒剩余', 'About ${secondsLeft}s remaining');
+    }
+    final minutes = secondsLeft ~/ 60;
+    final seconds = secondsLeft % 60;
+    return _tr(
+      '约$minutes分$seconds秒剩余',
+      'About $minutes min $seconds sec remaining',
+    );
+  }
+
+  Widget _buildImportIndicator({
+    required Color primaryColor,
+    required Color secondaryColor,
+  }) {
+    final percent = (_importProgress * 100).clamp(0, 100).round();
+    final determinate = _importProgress > 0 && _importProgress < 1;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: 36,
+          height: 36,
+          child: CircularProgressIndicator(
+            value: determinate ? _importProgress : null,
+            strokeWidth: 3,
+            valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          _tr('正在导入视频... $percent%', 'Importing video... $percent%'),
+          style: TextStyle(
+            fontSize: AppFontSize.sm,
+            fontWeight: FontWeight.w700,
+            color: primaryColor,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        SizedBox(
+          width: 240,
+          child: LinearProgressIndicator(
+            value: determinate ? _importProgress : null,
+            minHeight: 6,
+            borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+            backgroundColor: secondaryColor.withValues(alpha: 0.24),
+            valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          _etaText(),
+          style: TextStyle(fontSize: AppFontSize.xs, color: secondaryColor),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _pickVideoFromDevice() async {
+    if (!widget.editable || _isImporting || widget.onChanged == null) return;
+
+    final result = await file_picker.pickVideoFile(
+      onReadStart: _startImport,
+      onProgress: _onImportProgress,
+    );
+    if (!mounted) return;
+    _endImport();
+    await _handlePickedVideo(result);
+  }
+
+  Future<void> _handleDroppedFiles(dynamic rawFiles) async {
+    if (!widget.editable || _isImporting || widget.onChanged == null) return;
+
+    final result = await file_picker.readDroppedVideoFile(
+      rawFiles,
+      onReadStart: _startImport,
+      onProgress: _onImportProgress,
+    );
+    if (!mounted) return;
+    _endImport();
+    await _handlePickedVideo(result);
+  }
+
+  Future<void> _handlePickedVideo(file_picker.FilePickResult result) async {
+    if (!mounted || widget.onChanged == null) return;
+
+    if (!result.success || (result.content ?? '').isEmpty) {
+      final message = (result.message.trim().isEmpty)
+          ? _tr('导入视频失败', 'Failed to import video')
+          : result.message;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), backgroundColor: AppColors.error),
+      );
+      return;
+    }
+
+    final nextTitle = (result.fileName?.trim().isNotEmpty ?? false)
+        ? result.fileName!.trim()
+        : widget.content.title;
+    widget.onChanged!(VideoContent(url: result.content!, title: nextTitle));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          result.fileName?.trim().isNotEmpty == true
+              ? _tr('已导入: ${result.fileName}', 'Imported: ${result.fileName}')
+              : _tr('视频已导入', 'Video imported'),
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Widget _buildEmptyUploadState(bool isHovering) {
+    final canInteract =
+        widget.editable && !_isImporting && widget.onChanged != null;
+    final borderColor = isHovering ? AppColors.accent500 : AppColors.neutral300;
+
+    return InkWell(
+      onTap: canInteract ? _pickVideoFromDevice : null,
+      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      child: AnimatedContainer(
+        duration: AppDurations.fast,
+        height: 220,
+        decoration: BoxDecoration(
+          color: isHovering ? AppColors.accent50 : AppColors.neutral50,
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
+          border: Border.all(color: borderColor, width: isHovering ? 2 : 1),
+        ),
+        child: Center(
+          child: _isImporting
+              ? _buildImportIndicator(
+                  primaryColor: AppColors.accent600,
+                  secondaryColor: AppColors.neutral600,
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isHovering
+                          ? Icons.video_library
+                          : Icons.cloud_upload_outlined,
+                      size: 44,
+                      color: isHovering
+                          ? AppColors.accent500
+                          : AppColors.neutral400,
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      _tr('拖拽视频文件到这里', 'Drag and drop video file here'),
+                      style: TextStyle(
+                        fontSize: AppFontSize.sm,
+                        fontWeight: FontWeight.w600,
+                        color: isHovering
+                            ? AppColors.accent700
+                            : AppColors.neutral700,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      _tr('或点击选择视频文件', 'or click to browse video files'),
+                      style: const TextStyle(
+                        fontSize: AppFontSize.xs,
+                        color: AppColors.neutral500,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      _tr(
+                        '支持 MP4 / WebM / OGG / MOV / M4V',
+                        'Supports MP4 / WebM / OGG / MOV / M4V',
+                      ),
+                      style: const TextStyle(
+                        fontSize: AppFontSize.xs,
+                        color: AppColors.neutral400,
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOverlayContent(bool isHovering) {
+    if (_isImporting) {
+      return _buildImportIndicator(
+        primaryColor: Colors.white,
+        secondaryColor: Colors.white.withValues(alpha: 0.88),
+      );
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.video_library_outlined, color: Colors.white, size: 40),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          _tr('拖拽视频以替换', 'Drop video to replace'),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: AppFontSize.sm,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          _tr('或点击选择视频文件', 'or click to browse video files'),
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontSize: AppFontSize.xs,
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 180,
-      decoration: BoxDecoration(
-        color: AppColors.neutral800,
+    final url = widget.content.url.trim();
+    final supportsInlineImport = widget.editable && widget.onChanged != null;
+
+    if (url.isEmpty) {
+      if (!supportsInlineImport) {
+        return _buildEmptyUploadState(false);
+      }
+
+      return VideoDropZone(
+        enabled: !_isImporting,
+        onVideoFilesDropped: _handleDroppedFiles,
+        builder: (context, isHovering) => _buildEmptyUploadState(isHovering),
+      );
+    }
+
+    final videoWidget = VideoEmbedWidget(
+      url: url,
+      title: widget.content.title ?? _tr('视频', 'Video'),
+      height: 220,
+    );
+
+    if (!supportsInlineImport) return videoWidget;
+
+    return VideoDropZone(
+      enabled: !_isImporting,
+      onVideoFilesDropped: _handleDroppedFiles,
+      builder: (context, isHovering) => InkWell(
+        onTap: _isImporting ? null : _pickVideoFromDevice,
         borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            const Icon(
-              Icons.play_circle_outline,
-              size: 48,
-              color: AppColors.neutral400,
+            AnimatedContainer(
+              duration: AppDurations.fast,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                border: Border.all(
+                  color: isHovering ? AppColors.accent500 : Colors.transparent,
+                  width: isHovering ? 2 : 0,
+                ),
+              ),
+              child: videoWidget,
             ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              content.url.isEmpty
-                  ? _tr('点击添加视频', 'Click to add a video')
-                  : content.title ?? _tr('视频', 'Video'),
-              style: const TextStyle(
-                fontSize: AppFontSize.sm,
-                color: AppColors.neutral400,
+            Positioned.fill(
+              child: IgnorePointer(
+                child: AnimatedOpacity(
+                  duration: AppDurations.fast,
+                  opacity: (isHovering || _isImporting) ? 1 : 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(
+                        alpha: _isImporting ? 0.58 : 0.36,
+                      ),
+                      borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                    ),
+                    child: Center(child: _buildOverlayContent(isHovering)),
+                  ),
+                ),
               ),
             ),
           ],

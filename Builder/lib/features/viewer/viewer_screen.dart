@@ -19,6 +19,7 @@ import '../../widgets/block_widgets/code_execution_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
 import '../../widgets/block_widgets/function_flow_block_widget.dart';
 import '../../widgets/block_widgets/html_animation_widget.dart';
+import '../../widgets/block_widgets/video_embed_widget.dart';
 
 String _viewerTr(BuilderLocalizations t, String zh, String en) =>
     t.isZh ? zh : en;
@@ -671,20 +672,33 @@ class _InteractiveBlockPreview extends StatelessWidget {
         if (width == null) return animation;
         return SizedBox(width: width, child: animation);
       case BlockType.video:
-        return Container(
-          height: 180,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: AppColors.neutral800,
-            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.play_circle_outline,
-              size: 48,
-              color: AppColors.neutral400,
+        final video = block.content as VideoContent;
+        final videoUrl = video.url.trim();
+        if (videoUrl.isEmpty) {
+          return Container(
+            height: 180,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: AppColors.neutral800,
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
             ),
-          ),
+            child: const Center(
+              child: Icon(
+                Icons.play_circle_outline,
+                size: 48,
+                color: AppColors.neutral400,
+              ),
+            ),
+          );
+        }
+        final height = ((block.style.height ?? 220).clamp(
+          180.0,
+          520.0,
+        )).toDouble();
+        return VideoEmbedWidget(
+          url: videoUrl,
+          title: video.title,
+          height: height,
         );
     }
   }

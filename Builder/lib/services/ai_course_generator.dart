@@ -54,12 +54,15 @@ class AICourseGenerator {
         }
         return 'Server returned empty key';
       }
-      final serverError = (data is Map ? data['error']?.toString() : null)
-          ?? 'Unexpected response: $data';
+      final serverError =
+          (data is Map ? data['error']?.toString() : null) ??
+          'Unexpected response: $data';
       return serverError;
     } on FunctionException catch (e) {
       final detail = e.details?.toString() ?? e.toString();
-      debugPrint('[AICourseGenerator] get-gemini-key FunctionException: $detail');
+      debugPrint(
+        '[AICourseGenerator] get-gemini-key FunctionException: $detail',
+      );
       return 'get-gemini-key error: $detail';
     } catch (e) {
       debugPrint('[AICourseGenerator] get-gemini-key exception: $e');
@@ -671,9 +674,9 @@ Additional requirements:
       }
 
       final qr = dataMap['qualityReport'] as Map<String, dynamic>?;
-      final qualityScore  = (qr?['score'] as num?)?.toInt() ?? 100;
+      final qualityScore = (qr?['score'] as num?)?.toInt() ?? 100;
       final qualityPassed = qr?['passed'] as bool? ?? true;
-      final rawIssues     = qr?['issues'] as List<dynamic>? ?? [];
+      final rawIssues = qr?['issues'] as List<dynamic>? ?? [];
       final qualityIssues = rawIssues
           .whereType<Map<String, dynamic>>()
           .map((i) => i['message']?.toString() ?? '')
@@ -681,11 +684,11 @@ Additional requirements:
           .toList();
 
       return AgentCourseResult(
-        success:       true,
-        message:       'Course generated successfully',
-        courseId:      dataMap['courseId']?.toString(),
-        lessonCount:   (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
-        qualityScore:  qualityScore,
+        success: true,
+        message: 'Course generated successfully',
+        courseId: dataMap['courseId']?.toString(),
+        lessonCount: (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
+        qualityScore: qualityScore,
         qualityPassed: qualityPassed,
         qualityIssues: qualityIssues,
       );
@@ -696,8 +699,9 @@ Additional requirements:
         message: 'Server error: $detail',
       );
     } on http.ClientException catch (e) {
-      final isFailedToFetch =
-          e.message.toLowerCase().contains('failed to fetch');
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
       final msg = isFailedToFetch
           ? 'Edge Function 不可访问（可能尚未部署）。\n'
                 '请运行：supabase functions deploy agentic-generate-course\n'
@@ -1291,7 +1295,8 @@ $rawContent
       if (finishReason == 'MAX_TOKENS') {
         return _ContentResult(
           success: false,
-          message: 'MAX_TOKENS: output truncated by $model — try a model with larger context',
+          message:
+              'MAX_TOKENS: output truncated by $model — try a model with larger context',
           statusCode: response.statusCode,
           model: model,
           truncated: true,
@@ -1403,7 +1408,9 @@ $rawContent
     final normalized = Map<String, dynamic>.from(rawJson);
     final metadata = _normalizeMetadata(normalized['metadata'], fileName);
     // Accept both 'lessons' (new) and 'pages' (legacy) key from AI output
-    final lessons = _normalizeLessons(normalized['lessons'] ?? normalized['pages']);
+    final lessons = _normalizeLessons(
+      normalized['lessons'] ?? normalized['pages'],
+    );
 
     normalized['courseId'] = _normalizeCourseId(normalized['courseId']);
     normalized['metadata'] = metadata;
@@ -2118,8 +2125,7 @@ $rawContent
         .map((e) => '  ${e.key + 1}. ${e.value}')
         .join('\n');
 
-    final animStyle =
-        courseContext['animation_style'] as String? ?? 'minimal';
+    final animStyle = courseContext['animation_style'] as String? ?? 'minimal';
     final String animationHint;
     if (animStyle == 'cartoon') {
       animationHint =
@@ -2284,8 +2290,9 @@ $rawContent
       block['id'] = '$prefix${block['id'] ?? 'b'}';
 
       if (block['type'] == 'matching') {
-        final content =
-            Map<String, dynamic>.from(_mapFromDynamic(block['content']));
+        final content = Map<String, dynamic>.from(
+          _mapFromDynamic(block['content']),
+        );
         if (content['leftItems'] is List) {
           content['leftItems'] = (content['leftItems'] as List).map((item) {
             final m = Map<String, dynamic>.from(_mapFromDynamic(item));
@@ -2301,8 +2308,9 @@ $rawContent
           }).toList();
         }
         if (content['correctPairs'] is List) {
-          content['correctPairs'] =
-              (content['correctPairs'] as List).map((pair) {
+          content['correctPairs'] = (content['correctPairs'] as List).map((
+            pair,
+          ) {
             final m = Map<String, dynamic>.from(_mapFromDynamic(pair));
             m['leftId'] = '$prefix${m['leftId']}';
             m['rightId'] = '$prefix${m['rightId']}';
@@ -2313,8 +2321,9 @@ $rawContent
       }
 
       if (block['type'] == 'multiple-choice') {
-        final content =
-            Map<String, dynamic>.from(_mapFromDynamic(block['content']));
+        final content = Map<String, dynamic>.from(
+          _mapFromDynamic(block['content']),
+        );
         if (content['options'] is List) {
           content['options'] = (content['options'] as List).map((opt) {
             final m = Map<String, dynamic>.from(_mapFromDynamic(opt));
@@ -2326,8 +2335,9 @@ $rawContent
           content['correctAnswer'] = '$prefix${content['correctAnswer']}';
         }
         if (content['correctAnswers'] is List) {
-          content['correctAnswers'] =
-              (content['correctAnswers'] as List).map((id) => '$prefix$id').toList();
+          content['correctAnswers'] = (content['correctAnswers'] as List)
+              .map((id) => '$prefix$id')
+              .toList();
         }
         block['content'] = content;
       }
@@ -2391,10 +2401,9 @@ $rawContent
     final lessonRows = List.generate(lessons.length, (i) {
       final l = _mapFromDynamic(lessons[i]);
       final lessonType = l['type'] as String? ?? 'interactive';
-      final blocks =
-          i < lessonJsons.length
-              ? (lessonJsons[i]['blocks'] as List? ?? [])
-              : [];
+      final blocks = i < lessonJsons.length
+          ? (lessonJsons[i]['blocks'] as List? ?? [])
+          : [];
       return {
         'course_id': courseId,
         'title': l['title'] ?? 'Untitled',
@@ -2461,7 +2470,8 @@ $rawContent
           'style': {'spacing': 'md', 'alignment': 'left'},
           'content': {
             'format': 'markdown',
-            'value': '## $title\n\n*Content for this lesson could not be '
+            'value':
+                '## $title\n\n*Content for this lesson could not be '
                 'generated automatically. Please edit this lesson in the '
                 'Builder to add your content.*',
           },
@@ -2526,8 +2536,12 @@ $rawContent
 
       // ── Stage 1: Plan course ──────────────────────────────────────
       onProgress?.call('plan', 0.05);
-      final planPrompt =
-          _buildPlanPrompt(description, difficulty, animationStyle, language);
+      final planPrompt = _buildPlanPrompt(
+        description,
+        difficulty,
+        animationStyle,
+        language,
+      );
 
       Map<String, dynamic>? planJson;
       String? planError;
@@ -2676,8 +2690,8 @@ $rawContent
             '[AICourseGenerator] Lesson ${i + 1} failed after all retries '
             '(${lessonError ?? "unknown error"}). Using placeholder.',
           );
-          final lessonTitle =
-              (lesson['title'] as String? ?? 'Lesson ${i + 1}').trim();
+          final lessonTitle = (lesson['title'] as String? ?? 'Lesson ${i + 1}')
+              .trim();
           lessonJson = _buildFallbackLesson(lessonTitle, lessonOrder);
         }
         lessonJsons.add(lessonJson);
@@ -2710,6 +2724,359 @@ $rawContent
     } catch (e) {
       return AgentCourseResult(success: false, message: 'Error: $e');
     }
+  }
+
+  static bool _isPdfSource(SourceFilePickResult file) {
+    final mime = file.mimeType.trim().toLowerCase();
+    final name = file.fileName.trim().toLowerCase();
+    return mime == 'application/pdf' || name.endsWith('.pdf');
+  }
+
+  static bool _isTextLikeSource(SourceFilePickResult file) {
+    final mime = file.mimeType.trim().toLowerCase();
+    final name = file.fileName.trim().toLowerCase();
+    if (mime.startsWith('text/')) return true;
+    if (mime == 'application/json' || mime == 'text/csv') return true;
+    return name.endsWith('.txt') ||
+        name.endsWith('.md') ||
+        name.endsWith('.json') ||
+        name.endsWith('.csv');
+  }
+
+  static List<String> _normalizeSourceUrls(List<String> urls) {
+    final cleaned = <String>{};
+    for (final raw in urls) {
+      final value = raw.trim();
+      if (value.isEmpty) continue;
+      final parsed = Uri.tryParse(value);
+
+      // Keep standard http/https URLs as-is.
+      if (parsed != null &&
+          (parsed.isScheme('http') || parsed.isScheme('https'))) {
+        cleaned.add(value);
+        continue;
+      }
+
+      // If user pasted a naked domain/path (e.g. youtube.com/watch?v=...),
+      // auto-prefix with https:// so URL-only input still works.
+      final withScheme = Uri.tryParse('https://$value');
+      if (withScheme != null && withScheme.host.contains('.')) {
+        cleaned.add(withScheme.toString());
+        continue;
+      }
+
+      // Fallback: keep the raw non-empty string as a reference source.
+      cleaned.add(value);
+    }
+    return cleaned.toList();
+  }
+
+  static String? _extractYouTubeVideoId(String url) {
+    final uri = Uri.tryParse(url.trim());
+    if (uri == null) return null;
+
+    final host = uri.host.toLowerCase();
+    if (host.contains('youtube.com')) {
+      final v = uri.queryParameters['v']?.trim();
+      if (v != null && v.isNotEmpty) return v;
+      final parts = uri.pathSegments;
+      if (parts.length >= 2 &&
+          (parts.first == 'embed' || parts.first == 'shorts')) {
+        return parts[1].trim();
+      }
+    }
+    if (host.contains('youtu.be')) {
+      if (uri.pathSegments.isNotEmpty) {
+        final id = uri.pathSegments.first.trim();
+        if (id.isNotEmpty) return id;
+      }
+    }
+    return null;
+  }
+
+  static String _decodeHtmlEntities(String value) {
+    var text = value
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'")
+        .replaceAll('&nbsp;', ' ');
+
+    text = text.replaceAllMapped(RegExp(r'&#x([0-9a-fA-F]+);'), (match) {
+      final code = int.tryParse(match.group(1)!, radix: 16);
+      return code == null ? match.group(0)! : String.fromCharCode(code);
+    });
+    text = text.replaceAllMapped(RegExp(r'&#([0-9]+);'), (match) {
+      final code = int.tryParse(match.group(1)!);
+      return code == null ? match.group(0)! : String.fromCharCode(code);
+    });
+    return text;
+  }
+
+  static String _normalizeWhitespace(String value) {
+    return value.replaceAll(RegExp(r'\s+'), ' ').trim();
+  }
+
+  static String? _truncate(String? value, {int maxLength = 900}) {
+    if (value == null) return null;
+    final normalized = _normalizeWhitespace(value);
+    if (normalized.isEmpty) return null;
+    if (normalized.length <= maxLength) return normalized;
+    return '${normalized.substring(0, maxLength)}...';
+  }
+
+  static Future<String?> _fetchYouTubeTranscriptSnippet(String videoId) async {
+    final queryCandidates = <Map<String, String>>[
+      {'lang': 'en'},
+      {'lang': 'en', 'kind': 'asr'},
+      {'lang': 'en-US'},
+      {'lang': 'zh-Hans'},
+      {'lang': 'zh-Hant'},
+    ];
+
+    for (final query in queryCandidates) {
+      try {
+        final uri = Uri.https(
+          'www.youtube.com',
+          '/api/timedtext',
+          <String, String>{'v': videoId, ...query},
+        );
+        final response = await http
+            .get(uri)
+            .timeout(const Duration(seconds: 6));
+        if (response.statusCode != 200 || response.body.trim().isEmpty) {
+          continue;
+        }
+
+        final matches = RegExp(
+          r'<text[^>]*>(.*?)</text>',
+          caseSensitive: false,
+          dotAll: true,
+        ).allMatches(response.body);
+
+        if (matches.isEmpty) continue;
+        final segments = <String>[];
+        for (final match in matches.take(50)) {
+          final decoded = _decodeHtmlEntities(match.group(1) ?? '');
+          final cleaned = _normalizeWhitespace(decoded);
+          if (cleaned.isNotEmpty) {
+            segments.add(cleaned);
+          }
+        }
+
+        if (segments.isNotEmpty) {
+          return _truncate(segments.join(' '), maxLength: 1200);
+        }
+      } catch (_) {
+        // Best effort only.
+      }
+    }
+    return null;
+  }
+
+  static Future<SourceUrlContext> _resolveUrlContext(String url) async {
+    final trimmedUrl = url.trim();
+    final youtubeId = _extractYouTubeVideoId(trimmedUrl);
+
+    if (youtubeId != null) {
+      String? title;
+      String? author;
+      try {
+        final oEmbedUri = Uri.https('www.youtube.com', '/oembed', {
+          'url': trimmedUrl,
+          'format': 'json',
+        });
+        final response = await http
+            .get(oEmbedUri)
+            .timeout(const Duration(seconds: 6));
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body) as Map<String, dynamic>;
+          title = _truncate(data['title']?.toString(), maxLength: 220);
+          author = _truncate(data['author_name']?.toString(), maxLength: 120);
+        }
+      } catch (_) {
+        // Best effort only.
+      }
+
+      final transcriptSnippet = await _fetchYouTubeTranscriptSnippet(youtubeId);
+      return SourceUrlContext(
+        url: trimmedUrl,
+        provider: 'YouTube',
+        title: title,
+        author: author,
+        snippet: transcriptSnippet,
+      );
+    }
+
+    // Best-effort metadata extraction for non-YouTube links.
+    try {
+      final noembedUri = Uri.parse(
+        'https://noembed.com/embed?url=${Uri.encodeComponent(trimmedUrl)}',
+      );
+      final response = await http
+          .get(noembedUri)
+          .timeout(const Duration(seconds: 6));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        return SourceUrlContext(
+          url: trimmedUrl,
+          provider: _truncate(
+            data['provider_name']?.toString(),
+            maxLength: 120,
+          ),
+          title: _truncate(data['title']?.toString(), maxLength: 220),
+          author: _truncate(data['author_name']?.toString(), maxLength: 120),
+          snippet: _truncate(data['description']?.toString(), maxLength: 800),
+        );
+      }
+    } catch (_) {
+      // Best effort only.
+    }
+
+    return SourceUrlContext(url: trimmedUrl);
+  }
+
+  static Future<List<SourceUrlContext>> _resolveUrlContexts(
+    List<String> urls,
+  ) async {
+    final contexts = <SourceUrlContext>[];
+    for (final url in urls) {
+      contexts.add(await _resolveUrlContext(url));
+    }
+    return contexts;
+  }
+
+  static String _safeUtf8Excerpt(SourceFilePickResult file) {
+    if (!_isTextLikeSource(file) || file.bytes.isEmpty) return '';
+    try {
+      final decoded = utf8.decode(file.bytes, allowMalformed: true).trim();
+      if (decoded.isEmpty) return '';
+      const maxChars = 800;
+      if (decoded.length <= maxChars) return decoded;
+      return '${decoded.substring(0, maxChars)}...';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  static String _buildSourceDescription({
+    required List<SourceFilePickResult> files,
+    required List<SourceUrlContext> urlContexts,
+  }) {
+    final buffer = StringBuffer();
+    buffer.writeln(
+      'Create a one-lesson Primoria course using the source materials below.',
+    );
+    buffer.writeln(
+      'Prioritize concepts clearly inferable from the sources and avoid hallucinations.',
+    );
+    buffer.writeln(
+      'If a source format is hard to parse, infer from filename/title and combine with other sources.',
+    );
+    buffer.writeln();
+
+    if (files.isNotEmpty) {
+      buffer.writeln('Uploaded files:');
+      for (var i = 0; i < files.length; i++) {
+        final file = files[i];
+        final sizeKb = (file.sizeBytes / 1024).toStringAsFixed(1);
+        buffer.writeln(
+          '- [${i + 1}] ${file.fileName} (${file.mimeType}, $sizeKb KB)',
+        );
+        final excerpt = _safeUtf8Excerpt(file);
+        if (excerpt.isNotEmpty) {
+          buffer.writeln('  Text excerpt: $excerpt');
+        }
+      }
+      buffer.writeln();
+    }
+
+    if (urlContexts.isNotEmpty) {
+      buffer.writeln('Reference links:');
+      for (var i = 0; i < urlContexts.length; i++) {
+        final context = urlContexts[i];
+        buffer.writeln('- [${i + 1}] ${context.url}');
+        if (context.provider != null && context.provider!.isNotEmpty) {
+          buffer.writeln('  Provider: ${context.provider}');
+        }
+        if (context.title != null && context.title!.isNotEmpty) {
+          buffer.writeln('  Title: ${context.title}');
+        }
+        if (context.author != null && context.author!.isNotEmpty) {
+          buffer.writeln('  Author: ${context.author}');
+        }
+        if (context.snippet != null && context.snippet!.isNotEmpty) {
+          buffer.writeln('  Extracted content hint: ${context.snippet}');
+        }
+      }
+      buffer.writeln();
+    }
+
+    buffer.writeln(
+      'Output constraints: one lesson, max 20 blocks, choose block types that best teach the source material.',
+    );
+    return buffer.toString();
+  }
+
+  /// Pick multiple files to be used as AI generation sources.
+  static Future<List<SourceFilePickResult>> pickSourceFiles() async {
+    final results = await fp.pickAIGenerationFiles();
+    final files = <SourceFilePickResult>[];
+    for (final result in results) {
+      if (!result.success || result.bytes == null || result.fileName == null) {
+        continue;
+      }
+      files.add(
+        SourceFilePickResult(
+          fileName: result.fileName!,
+          bytes: result.bytes!,
+          mimeType: (result.mimeType ?? 'application/octet-stream').trim(),
+          sizeBytes: result.sizeBytes ?? result.bytes!.length,
+        ),
+      );
+    }
+    return files;
+  }
+
+  /// Generate a course using mixed uploaded files and URL references.
+  ///
+  /// Strategy:
+  /// - If the sources are exactly one PDF and no URL, use the dedicated PDF API.
+  /// - Otherwise, generate via text API using a detailed source manifest.
+  static Future<GenerationResult> generateFromSourcesViaApi({
+    required List<SourceFilePickResult> files,
+    List<String> urls = const <String>[],
+  }) async {
+    final validFiles = files
+        .where(
+          (file) => file.fileName.trim().isNotEmpty && file.bytes.isNotEmpty,
+        )
+        .toList();
+    final normalizedUrls = _normalizeSourceUrls(urls);
+
+    if (validFiles.isEmpty && normalizedUrls.isEmpty) {
+      return const GenerationResult(
+        success: false,
+        message: 'Please upload at least one file or provide at least one URL.',
+      );
+    }
+
+    if (validFiles.length == 1 &&
+        normalizedUrls.isEmpty &&
+        _isPdfSource(validFiles.first)) {
+      return generateFromPdfViaApi(
+        pdfBytes: validFiles.first.bytes,
+        fileName: validFiles.first.fileName,
+      );
+    }
+
+    final urlContexts = await _resolveUrlContexts(normalizedUrls);
+    final description = _buildSourceDescription(
+      files: validFiles,
+      urlContexts: urlContexts,
+    );
+    return generateViaApi(description: description);
   }
 
   /// Pick and read PDF file
@@ -2757,6 +3124,38 @@ class PdfPickResult {
   });
 }
 
+/// Generic AI generation source file.
+class SourceFilePickResult {
+  final String fileName;
+  final Uint8List bytes;
+  final String mimeType;
+  final int sizeBytes;
+
+  const SourceFilePickResult({
+    required this.fileName,
+    required this.bytes,
+    required this.mimeType,
+    required this.sizeBytes,
+  });
+}
+
+/// Best-effort extracted context for a reference URL.
+class SourceUrlContext {
+  final String url;
+  final String? provider;
+  final String? title;
+  final String? author;
+  final String? snippet;
+
+  const SourceUrlContext({
+    required this.url,
+    this.provider,
+    this.title,
+    this.author,
+    this.snippet,
+  });
+}
+
 /// Content generation result (internal)
 class _ContentResult {
   final bool success;
@@ -2766,8 +3165,10 @@ class _ContentResult {
   final String? model;
   final int? attemptCount;
   final int? latencyMs;
+
   /// True when the model hit MAX_TOKENS and output was cut mid-JSON.
   final bool truncated;
+
   /// The partial (unparseable) content from a truncated response.
   final String? partialContent;
 
@@ -2925,10 +3326,7 @@ class AgentCourseResult {
 
 /// Result returned by [AICourseGenerator.enhanceCourseViaApi].
 class EnhanceCourseResult {
-  const EnhanceCourseResult({
-    required this.success,
-    required this.message,
-  });
+  const EnhanceCourseResult({required this.success, required this.message});
 
   final bool success;
   final String message;

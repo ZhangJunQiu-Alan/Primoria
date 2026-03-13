@@ -27,6 +27,7 @@ class DashboardHomeTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeAsync = ref.watch(dashboardHomeProvider);
+    final displayName = ref.watch(dashboardUserDisplayNameProvider).valueOrNull;
 
     return homeAsync.when(
       loading: () => const _HomeSkeleton(),
@@ -39,7 +40,7 @@ class DashboardHomeTab extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildWelcomeCard(context),
+            _buildWelcomeCard(context, displayName: displayName),
             const SizedBox(height: 20),
             if (isDesktop)
               Row(
@@ -109,8 +110,8 @@ class DashboardHomeTab extends ConsumerWidget {
     );
   }
 
-  Widget _buildWelcomeCard(BuildContext context) {
-    final greeting = _greetingText();
+  Widget _buildWelcomeCard(BuildContext context, {String? displayName}) {
+    final greeting = _greetingText(displayName: displayName);
 
     return DashboardCard(
       padding: const EdgeInsets.all(24),
@@ -124,7 +125,7 @@ class DashboardHomeTab extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$greeting 👋',
+            greeting,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w800,
@@ -546,11 +547,25 @@ class DashboardHomeTab extends ConsumerWidget {
     );
   }
 
-  String _greetingText() {
+  String _greetingText({String? displayName}) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return t.dashGreetingMorning;
-    if (hour < 18) return t.dashGreetingAfternoon;
-    return t.dashGreetingEvening;
+    final baseGreeting = _timeOfDayGreeting(hour);
+    final name = displayName?.trim();
+    if (name != null && name.isNotEmpty) {
+      return '$baseGreeting $name 👋';
+    }
+    return '$baseGreeting 👋';
+  }
+
+  String _timeOfDayGreeting(int hour) {
+    if (t.isZh) {
+      if (hour < 12) return t.dashGreetingMorning;
+      if (hour < 18) return t.dashGreetingAfternoon;
+      return t.dashGreetingEvening;
+    }
+    if (hour < 12) return 'Good Morning';
+    if (hour < 18) return 'Good Afternoon';
+    return 'Good Evening';
   }
 
   String _formatRelative(DateTime time) {
