@@ -142,6 +142,38 @@ final dashboardHomeProvider = FutureProvider.autoDispose<HomeDashboardData>((
   );
 });
 
+final dashboardUserDisplayNameProvider = FutureProvider.autoDispose<String?>((
+  ref,
+) async {
+  final user = SupabaseService.currentUser;
+  if (user == null) return null;
+
+  try {
+    final profile = await SupabaseService.getProfile();
+    final profileName = _firstNonEmptyString([
+      profile?['display_name']?.toString(),
+      profile?['username']?.toString(),
+    ]);
+    if (profileName != null) return profileName;
+  } catch (_) {
+    // Ignore profile lookup issues and keep metadata fallback.
+  }
+
+  final metadataName = _firstNonEmptyString([
+    user.userMetadata?['full_name']?.toString(),
+    user.userMetadata?['name']?.toString(),
+  ]);
+  if (metadataName != null) return metadataName;
+
+  final email = user.email?.trim();
+  if (email != null && email.isNotEmpty) {
+    final localPart = email.split('@').first.trim();
+    if (localPart.isNotEmpty) return localPart;
+  }
+
+  return null;
+});
+
 Map<String, dynamic> _findLatestCourse(List<Map<String, dynamic>> courses) {
   courses.sort((a, b) {
     final aTime =
@@ -239,4 +271,12 @@ List<DashboardActivityItem> _buildRecentActivities(
 
   activity.sort((a, b) => b.timestamp.compareTo(a.timestamp));
   return activity.take(5).toList(growable: false);
+}
+
+String? _firstNonEmptyString(Iterable<String?> candidates) {
+  for (final candidate in candidates) {
+    final value = candidate?.trim();
+    if (value != null && value.isNotEmpty) return value;
+  }
+  return null;
 }

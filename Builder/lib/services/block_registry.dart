@@ -107,7 +107,8 @@ class BlockRegistry {
             t.type == BlockType.multipleChoice ||
             t.type == BlockType.trueFalse ||
             t.type == BlockType.matching ||
-            t.type == BlockType.animation,
+            t.type == BlockType.animation ||
+            t.type == BlockType.video,
       )
       .toList();
 

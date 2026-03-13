@@ -173,6 +173,11 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     Block.alwaysVisible,
     Block.afterPreviousCorrect,
   };
+  bool _isVideoImporting = false;
+  double _videoImportProgress = 0;
+  int _videoImportLoadedBytes = 0;
+  int _videoImportTotalBytes = 0;
+  DateTime? _videoImportStartedAt;
 
   String _safeVisibilityRule(String value) {
     return _supportedVisibilityRules.contains(value)
@@ -189,6 +194,55 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
 
   String _tr(String zh, String en) {
     return widget.t.isZh ? zh : en;
+  }
+
+  void _onVideoImportProgress(
+    double progress,
+    int loadedBytes,
+    int totalBytes,
+  ) {
+    if (!mounted) return;
+    setState(() {
+      _videoImportProgress = progress.clamp(0.0, 1.0).toDouble();
+      _videoImportLoadedBytes = loadedBytes;
+      _videoImportTotalBytes = totalBytes;
+    });
+  }
+
+  String _videoEtaLabel() {
+    if (!_isVideoImporting) return '';
+    if (_videoImportTotalBytes <= 0 ||
+        _videoImportLoadedBytes <= 0 ||
+        _videoImportStartedAt == null) {
+      return _tr('正在估算剩余时间...', 'Estimating time remaining...');
+    }
+    final elapsedMs = DateTime.now()
+        .difference(_videoImportStartedAt!)
+        .inMilliseconds;
+    if (elapsedMs <= 0) {
+      return _tr('正在估算剩余时间...', 'Estimating time remaining...');
+    }
+
+    final speedBytesPerSecond = _videoImportLoadedBytes / (elapsedMs / 1000);
+    if (speedBytesPerSecond <= 0 ||
+        _videoImportLoadedBytes >= _videoImportTotalBytes) {
+      return _tr('即将完成...', 'Almost done...');
+    }
+
+    final secondsLeft =
+        ((_videoImportTotalBytes - _videoImportLoadedBytes) /
+                speedBytesPerSecond)
+            .ceil();
+    if (secondsLeft <= 1) return _tr('即将完成...', 'Almost done...');
+    if (secondsLeft < 60) {
+      return _tr('约 $secondsLeft 秒剩余', 'About ${secondsLeft}s remaining');
+    }
+    final minutes = secondsLeft ~/ 60;
+    final seconds = secondsLeft % 60;
+    return _tr(
+      '约$minutes分$seconds秒剩余',
+      'About $minutes min $seconds sec remaining',
+    );
   }
 
   Future<void> _pickLocalImage(ImageContent content) async {
@@ -219,6 +273,55 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         content: Text(
           result.fileName == null
               ? _tr('已导入本地图片', 'Local image imported')
+              : _tr('已导入: ${result.fileName}', 'Imported: ${result.fileName}'),
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Future<void> _pickLocalVideo(VideoContent content) async {
+    if (_isVideoImporting) return;
+
+    final result = await file_picker.pickVideoFile(
+      onReadStart: () {
+        if (!mounted) return;
+        setState(() {
+          _isVideoImporting = true;
+          _videoImportProgress = 0;
+          _videoImportLoadedBytes = 0;
+          _videoImportTotalBytes = 0;
+          _videoImportStartedAt = DateTime.now();
+        });
+      },
+      onProgress: _onVideoImportProgress,
+    );
+    if (!mounted) return;
+    setState(() => _isVideoImporting = false);
+
+    if (!result.success || (result.content ?? '').isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result.message),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    final inferredTitle = result.fileName?.trim().isNotEmpty == true
+        ? result.fileName!.trim()
+        : content.title;
+    final updatedBlock = widget.block.copyWith(
+      content: VideoContent(url: result.content!, title: inferredTitle),
+    );
+    _updateBlock(updatedBlock);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          result.fileName == null
+              ? _tr('已导入本地视频', 'Local video imported')
               : _tr('已导入: ${result.fileName}', 'Imported: ${result.fileName}'),
         ),
         duration: const Duration(seconds: 2),
@@ -424,6 +527,8 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         return _buildMatchingEditor();
       case BlockType.animation:
         return _buildAnimationEditor();
+      case BlockType.video:
+        return _buildVideoEditor();
       default:
         return const SizedBox.shrink();
     }
@@ -449,7 +554,10 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
           decoration: InputDecoration(
             labelText: _tr('图片 URL', 'Image URL'),
             hintText: isLocalImage
-                ? _tr('本地图片以 data URL 形式保存', 'Local image is stored as data URL')
+                ? _tr(
+                    '本地图片以 data URL 形式保存',
+                    'Local image is stored as data URL',
+                  )
                 : 'https://...',
             border: const OutlineInputBorder(),
           ),
@@ -494,6 +602,126 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     );
   }
 
+  Widget _buildVideoEditor() {
+    final content = widget.block.content as VideoContent;
+    final isLocalVideo = content.url.startsWith('data:video/');
+
+    return _PropertySection(
+      title: _tr('视频', 'Video'),
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            onPressed: _isVideoImporting
+                ? null
+                : () => _pickLocalVideo(content),
+            icon: const Icon(Icons.upload_file),
+            label: Text(
+              _isVideoImporting
+                  ? _tr('正在导入视频...', 'Importing video...')
+                  : _tr('导入本地视频', 'Import Local Video'),
+            ),
+          ),
+        ),
+        if (_isVideoImporting) ...[
+          const SizedBox(height: AppSpacing.sm),
+          Builder(
+            builder: (context) {
+              final percent = (_videoImportProgress * 100)
+                  .clamp(0, 100)
+                  .round();
+              final determinate =
+                  _videoImportProgress > 0 && _videoImportProgress < 1;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _tr('正在导入视频... $percent%', 'Importing video... $percent%'),
+                    style: const TextStyle(
+                      fontSize: AppFontSize.xs,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.accent700,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(AppBorderRadius.pill),
+                    child: LinearProgressIndicator(
+                      value: determinate ? _videoImportProgress : null,
+                      minHeight: 6,
+                      backgroundColor: AppColors.accent100,
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.accent500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    _videoEtaLabel(),
+                    style: const TextStyle(
+                      fontSize: AppFontSize.xs,
+                      color: AppColors.neutral500,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+        const SizedBox(height: AppSpacing.sm),
+        TextFormField(
+          initialValue: content.url,
+          decoration: InputDecoration(
+            labelText: _tr('视频 URL', 'Video URL'),
+            hintText: isLocalVideo
+                ? _tr(
+                    '本地视频以 data URL 形式保存',
+                    'Local video is stored as data URL',
+                  )
+                : 'https://...',
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            _updateBlock(
+              widget.block.copyWith(
+                content: VideoContent(url: value, title: content.title),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          _tr(
+            '支持 MP4 / WebM / OGG / MOV / M4V 及浏览器可播放的其他视频格式（建议优先使用可公开访问的 URL）。',
+            'Supports MP4 / WebM / OGG / MOV / M4V and other browser-playable video formats (public URLs are recommended for larger files).',
+          ),
+          style: const TextStyle(
+            fontSize: AppFontSize.xs,
+            color: AppColors.neutral500,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        TextFormField(
+          initialValue: content.title ?? '',
+          decoration: InputDecoration(
+            labelText: _tr('视频标题', 'Video Title'),
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            _updateBlock(
+              widget.block.copyWith(
+                content: VideoContent(
+                  url: content.url,
+                  title: value.trim().isEmpty ? null : value,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   Widget _buildFunctionFlowEditor() {
     final content = widget.block.content as FunctionFlowContent;
     return FunctionFlowContentEditor(
@@ -528,10 +756,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
               value: false,
               label: Text(_tr('单选', 'Single Select')),
             ),
-            ButtonSegment(
-              value: true,
-              label: Text(_tr('多选', 'Multi Select')),
-            ),
+            ButtonSegment(value: true, label: Text(_tr('多选', 'Multi Select'))),
           ],
           selected: {content.multiSelect},
           onSelectionChanged: (value) {
@@ -969,7 +1194,8 @@ class _AnimationEditorState extends State<_AnimationEditor> {
       String key,
       String labelEn,
       String labelZh,
-    }) style,
+    })
+    style,
   ) {
     return widget.t.isZh ? style.labelZh : style.labelEn;
   }
@@ -981,7 +1207,8 @@ class _AnimationEditorState extends State<_AnimationEditor> {
       String key,
       String labelEn,
       String labelZh,
-    }) style,
+    })
+    style,
   ) {
     return widget.t.isZh ? style.descriptionZh : style.descriptionEn;
   }
@@ -1026,7 +1253,10 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     final apiKey = AICourseGenerator.apiKey ?? '';
     if (apiKey.isEmpty) {
       setState(() {
-        _generationError = _tr('请输入 Gemini API Key。', 'Please enter a Gemini API key.');
+        _generationError = _tr(
+          '请输入 Gemini API Key。',
+          'Please enter a Gemini API key.',
+        );
       });
       return;
     }
@@ -1202,7 +1432,10 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           obscureText: true,
           decoration: InputDecoration(
             labelText: _tr('Gemini API Key', 'Gemini API Key'),
-            hintText: _tr('粘贴你的 Gemini API Key...', 'Paste your Gemini API key...'),
+            hintText: _tr(
+              '粘贴你的 Gemini API Key...',
+              'Paste your Gemini API key...',
+            ),
             border: const OutlineInputBorder(),
             prefixIcon: const Icon(Icons.key, size: 16),
           ),
@@ -1270,7 +1503,10 @@ class _AnimationEditorState extends State<_AnimationEditor> {
           controller: _promptController,
           maxLines: 3,
           decoration: InputDecoration(
-            hintText: _tr('描述你想生成的动画...', 'Describe the animation you want to generate...'),
+            hintText: _tr(
+              '描述你想生成的动画...',
+              'Describe the animation you want to generate...',
+            ),
             border: const OutlineInputBorder(),
           ),
           style: const TextStyle(fontSize: AppFontSize.sm),
@@ -1308,7 +1544,11 @@ class _AnimationEditorState extends State<_AnimationEditor> {
             ),
             child: Row(
               children: [
-                const Icon(Icons.error_outline, size: 14, color: AppColors.error),
+                const Icon(
+                  Icons.error_outline,
+                  size: 14,
+                  color: AppColors.error,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(

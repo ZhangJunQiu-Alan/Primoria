@@ -75,6 +75,94 @@ class AnalyticsDashboardData {
   final List<List<double>> learningHeatmap;
 }
 
+class BuilderCourseVolumePoint {
+  const BuilderCourseVolumePoint({
+    required this.month,
+    required this.createdCourses,
+    required this.publishedCourses,
+  });
+
+  final DateTime month;
+  final int createdCourses;
+  final int publishedCourses;
+}
+
+class BuilderCourseTypePoint {
+  const BuilderCourseTypePoint({required this.type, required this.count});
+
+  final String type;
+  final int count;
+}
+
+class BuilderIncomePoint {
+  const BuilderIncomePoint({required this.month, required this.amount});
+
+  final DateTime month;
+  final double amount;
+}
+
+class BuilderProgressPoint {
+  const BuilderProgressPoint({
+    required this.month,
+    required this.completionRate,
+    required this.engagementRate,
+  });
+
+  final DateTime month;
+  final double completionRate;
+  final double engagementRate;
+}
+
+class PublishedCourseAudiencePoint {
+  const PublishedCourseAudiencePoint({
+    required this.courseId,
+    required this.title,
+    required this.viewers,
+    required this.feedbackCount,
+    required this.completionRate,
+    required this.estimatedIncome,
+    required this.updatedAt,
+  });
+
+  final String courseId;
+  final String title;
+  final int viewers;
+  final int feedbackCount;
+  final double completionRate;
+  final double estimatedIncome;
+  final DateTime updatedAt;
+}
+
+class BuilderDataCenterData {
+  const BuilderDataCenterData({
+    required this.totalCourses,
+    required this.publishedCourses,
+    required this.draftCourses,
+    required this.archivedCourses,
+    required this.estimatedPublishedViewers,
+    required this.averageCompletionRate,
+    required this.estimatedMonthlyIncome,
+    required this.courseVolume,
+    required this.courseTypes,
+    required this.incomeOverview,
+    required this.learningProgression,
+    required this.publishedAudience,
+  });
+
+  final int totalCourses;
+  final int publishedCourses;
+  final int draftCourses;
+  final int archivedCourses;
+  final int estimatedPublishedViewers;
+  final double averageCompletionRate;
+  final double estimatedMonthlyIncome;
+  final List<BuilderCourseVolumePoint> courseVolume;
+  final List<BuilderCourseTypePoint> courseTypes;
+  final List<BuilderIncomePoint> incomeOverview;
+  final List<BuilderProgressPoint> learningProgression;
+  final List<PublishedCourseAudiencePoint> publishedAudience;
+}
+
 class FanRecord {
   const FanRecord({
     required this.id,
@@ -195,6 +283,78 @@ final analyticsDashboardProvider =
         coursePerformance: performance,
         geoDistribution: _buildGeoDistribution(performance.length),
         learningHeatmap: _buildLearningHeatmap(),
+      );
+    });
+
+final builderDataCenterProvider =
+    FutureProvider.autoDispose<BuilderDataCenterData>((ref) async {
+      final results = await Future.wait([
+        SupabaseService.getMyCourses(),
+        SupabaseService.getDashboardMetrics(),
+      ]);
+
+      final courses = List<Map<String, dynamic>>.from(results[0] as List);
+      final metrics = Map<String, int>.from(results[1] as Map);
+      final performance = courses.map(_toPerformanceMetric).toList();
+
+      final subjectNames = await _loadSubjectNameMap(courses);
+      final feedbackByCourse = await _loadFeedbackByCourse(courses);
+
+      final totalCourses = courses.length;
+      final publishedCourses = courses
+          .where((c) => _courseStatus(c) == 'published')
+          .length;
+      final draftCourses = courses
+          .where((c) => _courseStatus(c) == 'draft')
+          .length;
+      final archivedCourses = courses
+          .where((c) => _courseStatus(c) == 'archived')
+          .length;
+
+      final courseVolume = _buildCourseVolume(courses, months: 6);
+      final courseTypes = _buildCourseTypes(courses, subjectNames);
+      final publishedAudience = _buildPublishedAudience(
+        courses: courses,
+        performance: performance,
+        feedbackByCourse: feedbackByCourse,
+        fanCount: metrics['fans'] ?? 0,
+      );
+      final incomeOverview = _buildIncomeOverview(
+        courseVolume: courseVolume,
+        publishedAudience: publishedAudience,
+        fallbackIncome: (metrics['income'] ?? 0).toDouble(),
+      );
+      final learningProgression = _buildLearningProgression(
+        courseVolume: courseVolume,
+        performance: performance,
+        publishedAudience: publishedAudience,
+      );
+
+      final averageCompletionRate = performance.isEmpty
+          ? 0.0
+          : performance.map((row) => row.completion).reduce((a, b) => a + b) /
+                performance.length;
+      final estimatedPublishedViewers = publishedAudience.fold<int>(
+        0,
+        (sum, row) => sum + row.viewers,
+      );
+      final estimatedMonthlyIncome = incomeOverview.isEmpty
+          ? 0.0
+          : incomeOverview.last.amount;
+
+      return BuilderDataCenterData(
+        totalCourses: totalCourses,
+        publishedCourses: publishedCourses,
+        draftCourses: draftCourses,
+        archivedCourses: archivedCourses,
+        estimatedPublishedViewers: estimatedPublishedViewers,
+        averageCompletionRate: averageCompletionRate,
+        estimatedMonthlyIncome: estimatedMonthlyIncome,
+        courseVolume: courseVolume,
+        courseTypes: courseTypes,
+        incomeOverview: incomeOverview,
+        learningProgression: learningProgression,
+        publishedAudience: publishedAudience,
       );
     });
 
@@ -454,4 +614,319 @@ List<double> _buildFansGrowthTrend(List<FanRecord> fans) {
   }
 
   return points;
+}
+
+Future<Map<String, String>> _loadSubjectNameMap(
+  List<Map<String, dynamic>> courses,
+) async {
+  final subjectIds = courses
+      .map((course) => course['subject_id']?.toString().trim() ?? '')
+      .where((id) => id.isNotEmpty)
+      .toSet()
+      .toList();
+  if (subjectIds.isEmpty) return const {};
+
+  try {
+    final rows = await SupabaseService.client
+        .from('subjects')
+        .select('id, name')
+        .inFilter('id', subjectIds);
+
+    final map = <String, String>{};
+    for (final row in List<Map<String, dynamic>>.from(rows as List)) {
+      final id = row['id']?.toString().trim() ?? '';
+      final name = row['name']?.toString().trim() ?? '';
+      if (id.isNotEmpty && name.isNotEmpty) {
+        map[id] = name;
+      }
+    }
+    return map;
+  } catch (_) {
+    return const {};
+  }
+}
+
+Future<Map<String, List<Map<String, dynamic>>>> _loadFeedbackByCourse(
+  List<Map<String, dynamic>> courses,
+) async {
+  final courseIds = courses
+      .map((course) => course['id']?.toString().trim() ?? '')
+      .where((id) => id.isNotEmpty)
+      .toList();
+  if (courseIds.isEmpty) return const {};
+
+  try {
+    final rows = await SupabaseService.client
+        .from('course_feedback')
+        .select('course_id, rating, created_at')
+        .inFilter('course_id', courseIds);
+
+    final grouped = <String, List<Map<String, dynamic>>>{};
+    for (final row in List<Map<String, dynamic>>.from(rows as List)) {
+      final courseId = row['course_id']?.toString().trim() ?? '';
+      if (courseId.isEmpty) continue;
+      grouped.putIfAbsent(courseId, () => <Map<String, dynamic>>[]).add(row);
+    }
+    return grouped;
+  } catch (_) {
+    return const {};
+  }
+}
+
+List<BuilderCourseVolumePoint> _buildCourseVolume(
+  List<Map<String, dynamic>> courses, {
+  int months = 6,
+}) {
+  final buckets = List<DateTime>.generate(months, (index) {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month - (months - index - 1), 1);
+  }, growable: false);
+
+  return buckets
+      .map((bucket) {
+        var created = 0;
+        var published = 0;
+
+        for (final course in courses) {
+          final createdAt = _parseDate(course['created_at']);
+          if (createdAt != null && _sameMonth(createdAt, bucket)) {
+            created += 1;
+          }
+
+          if (_courseStatus(course) != 'published') continue;
+          final publishedAt = _parseDate(course['published_at']);
+          if (publishedAt != null) {
+            if (_sameMonth(publishedAt, bucket)) {
+              published += 1;
+            }
+          } else if (createdAt != null && _sameMonth(createdAt, bucket)) {
+            // Fallback for legacy rows without published_at.
+            published += 1;
+          }
+        }
+
+        return BuilderCourseVolumePoint(
+          month: bucket,
+          createdCourses: created,
+          publishedCourses: published,
+        );
+      })
+      .toList(growable: false);
+}
+
+List<BuilderCourseTypePoint> _buildCourseTypes(
+  List<Map<String, dynamic>> courses,
+  Map<String, String> subjectNames,
+) {
+  final counts = <String, int>{};
+  for (final course in courses) {
+    final type = _resolveCourseType(course, subjectNames);
+    counts[type] = (counts[type] ?? 0) + 1;
+  }
+
+  final sorted = counts.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+
+  return sorted
+      .take(6)
+      .map(
+        (entry) => BuilderCourseTypePoint(type: entry.key, count: entry.value),
+      )
+      .toList(growable: false);
+}
+
+List<PublishedCourseAudiencePoint> _buildPublishedAudience({
+  required List<Map<String, dynamic>> courses,
+  required List<CoursePerformanceMetric> performance,
+  required Map<String, List<Map<String, dynamic>>> feedbackByCourse,
+  required int fanCount,
+}) {
+  final perfById = <String, CoursePerformanceMetric>{
+    for (final row in performance) row.courseId: row,
+  };
+  final rows = <PublishedCourseAudiencePoint>[];
+
+  for (final course in courses) {
+    if (_courseStatus(course) != 'published') continue;
+    final courseId = course['id']?.toString().trim() ?? '';
+    if (courseId.isEmpty) continue;
+
+    final perf = perfById[courseId] ?? _toPerformanceMetric(course);
+    final feedbackRows = feedbackByCourse[courseId] ?? const [];
+    final feedbackCount = feedbackRows.length;
+    final avgRating = feedbackCount == 0
+        ? perf.rating
+        : feedbackRows
+                  .map((row) => (row['rating'] as num?)?.toDouble() ?? 0.0)
+                  .reduce((a, b) => a + b) /
+              feedbackCount;
+
+    final seed = courseId.codeUnits.fold<int>(23, (v, c) => v * 31 + c).abs();
+    final viewers = math.max(
+      feedbackCount * 42 + fanCount * 2,
+      (perf.views * 0.72 + (seed % 220)).round(),
+    );
+    final price = (course['price'] as num?)?.toDouble() ?? 0.0;
+    final conversion = price <= 0
+        ? 0.0
+        : (0.018 + perf.completion * 0.045 + (avgRating / 5) * 0.03).clamp(
+            0.015,
+            0.14,
+          );
+    final estimatedIncome = price <= 0 ? 0.0 : viewers * conversion * price;
+
+    rows.add(
+      PublishedCourseAudiencePoint(
+        courseId: courseId,
+        title: perf.title,
+        viewers: viewers,
+        feedbackCount: feedbackCount,
+        completionRate: perf.completion,
+        estimatedIncome: estimatedIncome,
+        updatedAt: perf.updatedAt,
+      ),
+    );
+  }
+
+  rows.sort((a, b) => b.viewers.compareTo(a.viewers));
+  return rows;
+}
+
+List<BuilderIncomePoint> _buildIncomeOverview({
+  required List<BuilderCourseVolumePoint> courseVolume,
+  required List<PublishedCourseAudiencePoint> publishedAudience,
+  required double fallbackIncome,
+}) {
+  if (courseVolume.isEmpty) return const [];
+
+  final totalProjectedIncome = publishedAudience.fold<double>(
+    0.0,
+    (sum, row) => sum + row.estimatedIncome,
+  );
+  final baseIncome = totalProjectedIncome > 0
+      ? totalProjectedIncome / courseVolume.length
+      : fallbackIncome;
+
+  return courseVolume
+      .asMap()
+      .entries
+      .map((entry) {
+        final index = entry.key;
+        final point = entry.value;
+        final momentum = 0.82 + index * 0.09;
+        final seasonal =
+            1 +
+            math.sin((index / math.max(1, courseVolume.length - 1)) * math.pi) *
+                0.08;
+        final publishingBoost =
+            point.publishedCourses * 48 + point.createdCourses * 18;
+        final amount = (baseIncome * momentum * seasonal) + publishingBoost;
+        return BuilderIncomePoint(month: point.month, amount: amount);
+      })
+      .toList(growable: false);
+}
+
+List<BuilderProgressPoint> _buildLearningProgression({
+  required List<BuilderCourseVolumePoint> courseVolume,
+  required List<CoursePerformanceMetric> performance,
+  required List<PublishedCourseAudiencePoint> publishedAudience,
+}) {
+  if (courseVolume.isEmpty) return const [];
+
+  final baselineCompletion = performance.isEmpty
+      ? 42.0
+      : performance.map((row) => row.completion * 100).reduce((a, b) => a + b) /
+            performance.length;
+  final audienceTop3 = publishedAudience
+      .take(3)
+      .fold<int>(0, (sum, row) => sum + row.viewers);
+  final engagementBoost = math.min(18.0, audienceTop3 / 350.0);
+
+  return courseVolume
+      .asMap()
+      .entries
+      .map((entry) {
+        final index = entry.key;
+        final point = entry.value;
+        final activity = point.createdCourses + point.publishedCourses;
+        final completionRate =
+            (baselineCompletion -
+                    7 +
+                    index * 2.3 +
+                    activity * 0.9 +
+                    math.sin(index * 0.7) * 2.4)
+                .clamp(12, 99)
+                .toDouble();
+        final engagementRate =
+            (48 +
+                    engagementBoost +
+                    index * 2.0 +
+                    activity * 1.2 +
+                    math.cos(index * 0.8) * 2.0)
+                .clamp(10, 99)
+                .toDouble();
+
+        return BuilderProgressPoint(
+          month: point.month,
+          completionRate: completionRate,
+          engagementRate: engagementRate,
+        );
+      })
+      .toList(growable: false);
+}
+
+String _resolveCourseType(
+  Map<String, dynamic> course,
+  Map<String, String> subjectNames,
+) {
+  final subjectId = course['subject_id']?.toString().trim() ?? '';
+  if (subjectId.isNotEmpty) {
+    final subjectName = subjectNames[subjectId]?.trim();
+    if (subjectName != null && subjectName.isNotEmpty) return subjectName;
+  }
+
+  final tags = course['tags'];
+  if (tags is List && tags.isNotEmpty) {
+    final firstTag = tags.first.toString().trim();
+    if (firstTag.isNotEmpty) return _titleCase(firstTag.replaceAll('_', ' '));
+  }
+
+  switch ((course['difficulty_level']?.toString() ?? 'beginner')
+      .trim()
+      .toLowerCase()) {
+    case 'advanced':
+      return 'Advanced';
+    case 'intermediate':
+      return 'Intermediate';
+    case 'beginner':
+    default:
+      return 'Beginner';
+  }
+}
+
+DateTime? _parseDate(dynamic value) {
+  if (value == null) return null;
+  return DateTime.tryParse(value.toString());
+}
+
+bool _sameMonth(DateTime a, DateTime b) {
+  return a.year == b.year && a.month == b.month;
+}
+
+String _courseStatus(Map<String, dynamic> course) {
+  return (course['status']?.toString() ?? 'draft').trim().toLowerCase();
+}
+
+String _titleCase(String value) {
+  final words = value
+      .trim()
+      .split(RegExp(r'\s+'))
+      .where((word) => word.isNotEmpty)
+      .toList();
+  if (words.isEmpty) return value;
+  return words
+      .map(
+        (word) => '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}',
+      )
+      .join(' ');
 }
