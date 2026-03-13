@@ -20,28 +20,32 @@ class _LC {
   static const formFill = Color(0xFFF9FAFB);
 }
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
-  String _mode = 'signin'; // 'signin' | 'forgot'
-  bool _showEmailForm = false;
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  bool _showEmailForm = true;
   String? _loadingProvider; // 'google'|'apple'|'wechat'|'email'|null
   String? _error;
   String? _success;
 
+  final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
+  final _confirmCtrl = TextEditingController();
   bool _obscurePassword = true;
+  bool _obscureConfirm = true;
 
   @override
   void dispose() {
+    _nameCtrl.dispose();
     _emailCtrl.dispose();
     _passwordCtrl.dispose();
+    _confirmCtrl.dispose();
     super.dispose();
   }
 
@@ -96,53 +100,78 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
   }
 
-  Future<void> _signInWithEmail(BuilderLocalizations t) async {
+  Future<void> _signUpWithEmail(BuilderLocalizations t) async {
+    final name = _nameCtrl.text.trim();
     final email = _emailCtrl.text.trim();
     final password = _passwordCtrl.text;
-    if (email.isEmpty || password.isEmpty) {
-      setState(() => _error = t.signInEmptyFields);
+    final confirmPassword = _confirmCtrl.text;
+    final emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
+
+    if (name.isEmpty) {
+      setState(() => _error = t.isZh ? '请输入你的姓名。' : 'Please enter your name.');
       return;
     }
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      setState(
+        () => _error = t.isZh
+            ? '请完整填写所有字段。'
+            : 'Please fill in all required fields.',
+      );
+      return;
+    }
+    if (!emailRegex.hasMatch(email)) {
+      setState(
+        () => _error = t.isZh
+            ? '请输入有效的邮箱地址。'
+            : 'Please enter a valid email address.',
+      );
+      return;
+    }
+    if (password.length < 6) {
+      setState(
+        () => _error = t.isZh
+            ? '密码至少需要 6 位。'
+            : 'Password must be at least 6 characters.',
+      );
+      return;
+    }
+    if (password != confirmPassword) {
+      setState(
+        () => _error = t.isZh ? '两次输入的密码不一致。' : 'Passwords do not match.',
+      );
+      return;
+    }
+
     setState(() {
       _loadingProvider = 'email';
       _clearStatus();
     });
-    final result = await SupabaseService.signIn(
+
+    final result = await SupabaseService.signUp(
       email: email,
       password: password,
+      displayName: name,
     );
-    if (!mounted) return;
-    setState(() => _loadingProvider = null);
-    if (!result.success) {
-      setState(
-        () => _error = result.isUserNotFound
-            ? t.signInInvalidCredentials
-            : result.message,
-      );
-    }
-    // success: router redirect handles navigation
-  }
 
-  Future<void> _sendPasswordReset(BuilderLocalizations t) async {
-    final email = _emailCtrl.text.trim();
-    if (email.isEmpty) {
-      setState(() => _error = t.signInEmptyFields);
+    if (!mounted) return;
+
+    setState(() => _loadingProvider = null);
+
+    if (!result.success) {
+      setState(() => _error = result.message);
       return;
     }
-    setState(() {
-      _loadingProvider = 'email';
-      _clearStatus();
-    });
-    final result = await SupabaseService.resetPassword(email: email);
-    if (!mounted) return;
-    setState(() {
-      _loadingProvider = null;
-      if (result.success) {
-        _success = t.loginResetSent;
-      } else {
-        _error = result.message;
-      }
-    });
+
+    if (SupabaseService.isLoggedIn) {
+      context.go('/dashboard');
+      return;
+    }
+
+    setState(
+      () => _success = t.isZh
+          ? '账号创建成功。请先验证邮箱，然后登录。'
+          : 'Account created. Please verify your email, then sign in.',
+    );
   }
 
   @override
@@ -193,7 +222,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 // Title
                 Text(
-                  t.loginWelcome,
+                  t.isZh ? '创建账号' : 'Create your account',
                   style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
@@ -203,7 +232,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  t.loginSubtitle,
+                  t.isZh
+                      ? '注册 Primoria 账号，开始构建课程'
+                      : 'Sign up for Primoria and start building courses',
                   style: const TextStyle(
                     fontSize: 15,
                     color: Color(0xFF6B7280),
@@ -253,7 +284,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Email toggle button
                 _SocialButton(
                   provider: 'emailToggle',
-                  label: t.loginWithEmail,
+                  label: t.isZh ? '使用邮箱创建账号' : 'Create with email',
                   leadingIcon: Icons.email_outlined,
                   bgColor: const Color(0xFFF3F4F6),
                   textColor: const Color(0xFF111827),
@@ -261,7 +292,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onTap: () {
                     setState(() {
                       _showEmailForm = !_showEmailForm;
-                      _mode = 'signin';
                       _clearStatus();
                     });
                   },
@@ -294,12 +324,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Footnote
                 Center(
                   child: TextButton(
-                    onPressed: () => context.go('/register'),
+                    onPressed: () => context.go('/login'),
                     style: TextButton.styleFrom(
                       foregroundColor: const Color(0xFF6B7280),
                     ),
                     child: Text(
-                      t.loginNewUser,
+                      t.isZh ? '已有账号？去登录' : 'Already have an account? Sign in',
                       style: const TextStyle(fontSize: 14),
                     ),
                   ),
@@ -313,7 +343,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Widget _buildEmailForm(BuilderLocalizations t) {
-    final isForgot = _mode == 'forgot';
     final isLoading = _loadingProvider == 'email';
 
     return Column(
@@ -321,44 +350,62 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       children: [
         const SizedBox(height: 20),
         _FormField(
+          controller: _nameCtrl,
+          label: t.isZh ? '姓名' : 'Name',
+          autofillHints: const [AutofillHints.name],
+          enabled: !isLoading,
+          textInputAction: TextInputAction.next,
+        ),
+        const SizedBox(height: 12),
+        _FormField(
           controller: _emailCtrl,
           label: t.loginEmailLabel,
           keyboardType: TextInputType.emailAddress,
           autofillHints: const [AutofillHints.email],
           enabled: !isLoading,
-          textInputAction: isForgot
-              ? TextInputAction.done
-              : TextInputAction.next,
-          onSubmitted: isForgot ? (_) => _sendPasswordReset(t) : null,
+          textInputAction: TextInputAction.next,
         ),
-        if (!isForgot) ...[
-          const SizedBox(height: 12),
-          _FormField(
-            controller: _passwordCtrl,
-            label: t.loginPasswordLabel,
-            obscureText: _obscurePassword,
-            autofillHints: const [AutofillHints.password],
-            enabled: !isLoading,
-            textInputAction: TextInputAction.done,
-            onSubmitted: (_) => _signInWithEmail(t),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                size: 18,
-                color: const Color(0xFF9CA3AF),
-              ),
-              onPressed: () =>
-                  setState(() => _obscurePassword = !_obscurePassword),
+        const SizedBox(height: 12),
+        _FormField(
+          controller: _passwordCtrl,
+          label: t.loginPasswordLabel,
+          obscureText: _obscurePassword,
+          autofillHints: const [AutofillHints.newPassword],
+          enabled: !isLoading,
+          textInputAction: TextInputAction.next,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+              size: 18,
+              color: const Color(0xFF9CA3AF),
             ),
+            onPressed: () =>
+                setState(() => _obscurePassword = !_obscurePassword),
           ),
-        ],
+        ),
+        const SizedBox(height: 12),
+        _FormField(
+          controller: _confirmCtrl,
+          label: t.isZh ? '确认密码' : 'Confirm password',
+          obscureText: _obscureConfirm,
+          autofillHints: const [AutofillHints.newPassword],
+          enabled: !isLoading,
+          textInputAction: TextInputAction.done,
+          onSubmitted: (_) => _signUpWithEmail(t),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscureConfirm ? Icons.visibility_off : Icons.visibility,
+              size: 18,
+              color: const Color(0xFF9CA3AF),
+            ),
+            onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+          ),
+        ),
         const SizedBox(height: 16),
         SizedBox(
           height: 52,
           child: ElevatedButton(
-            onPressed: isLoading
-                ? null
-                : () => isForgot ? _sendPasswordReset(t) : _signInWithEmail(t),
+            onPressed: isLoading ? null : () => _signUpWithEmail(t),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary500,
               foregroundColor: Colors.white,
@@ -379,29 +426,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       valueColor: AlwaysStoppedAnimation(Colors.white),
                     ),
                   )
-                : Text(
-                    isForgot
-                        ? (t.isZh ? '发送重置链接' : 'Send reset link')
-                        : t.loginSignInButton,
-                  ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Center(
-          child: TextButton(
-            onPressed: isLoading
-                ? null
-                : () {
-                    setState(() {
-                      _mode = isForgot ? 'signin' : 'forgot';
-                      _clearStatus();
-                    });
-                  },
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary500),
-            child: Text(
-              isForgot ? t.loginSignInButton : t.loginForgotPassword,
-              style: const TextStyle(fontSize: 14),
-            ),
+                : Text(t.isZh ? '创建账号' : 'Create account'),
           ),
         ),
       ],

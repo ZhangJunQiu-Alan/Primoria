@@ -8,7 +8,7 @@ import '../../providers/language_provider.dart';
 import '../../theme/design_tokens.dart';
 import '../../services/supabase_service.dart';
 import '../../services/ai_course_generator.dart';
-import '../../services/file_picker_web.dart';
+import '../../services/file_picker.dart';
 import '../../widgets/app_dropdown.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/builder_settings_dialog.dart';
