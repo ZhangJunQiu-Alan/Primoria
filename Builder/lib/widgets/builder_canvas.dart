@@ -470,7 +470,15 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
 // Page Navigation Strip
 // ---------------------------------------------------------------------------
 
-class _PageNavigationStrip extends ConsumerWidget {
+/// Compact page navigation strip.
+///
+/// Layout: [‹]  [1] [2] [3] … [N]  [›]   [+ 新建页]
+///
+/// • Numbered chips (≤30 px wide) replace verbose "第 N 页" labels.
+/// • Left/right arrow buttons appear only when there is overflow.
+/// • Active chip is always scrolled into view automatically.
+/// • "新建页" button is always anchored to the right and never hidden.
+class _PageNavigationStrip extends ConsumerStatefulWidget {
   final BuilderLocalizations t;
   final List<LessonPage> pages;
   final int currentPageIndex;
@@ -484,113 +492,247 @@ class _PageNavigationStrip extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_PageNavigationStrip> createState() =>
+      _PageNavigationStripState();
+}
+
+class _PageNavigationStripState extends ConsumerState<_PageNavigationStrip> {
+  final ScrollController _sc = ScrollController();
+  bool _canScrollLeft = false;
+  bool _canScrollRight = false;
+
+  // Each chip occupies this width (number + optional ×).
+  static const double _chipW = 34;
+  static const double _chipGap = 4;
+  static const double _scrollStep = 120;
+
+  @override
+  void initState() {
+    super.initState();
+    _sc.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _onScroll();
+      _scrollToActive();
+    });
+  }
+
+  @override
+  void didUpdateWidget(_PageNavigationStrip old) {
+    super.didUpdateWidget(old);
+    if (old.currentPageIndex != widget.currentPageIndex ||
+        old.pages.length != widget.pages.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _onScroll();
+        _scrollToActive();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _sc.removeListener(_onScroll);
+    _sc.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_sc.hasClients) return;
+    final pos = _sc.position;
+    final left = pos.pixels > 0;
+    final right = pos.pixels < pos.maxScrollExtent - 0.5;
+    if (left != _canScrollLeft || right != _canScrollRight) {
+      if (mounted) setState(() {
+        _canScrollLeft = left;
+        _canScrollRight = right;
+      });
+    }
+  }
+
+  void _scrollToActive() {
+    if (!_sc.hasClients) return;
+    final i = widget.currentPageIndex;
+    final target = i * (_chipW + _chipGap);
+    final viewWidth = _sc.position.viewportDimension;
+    final current = _sc.offset;
+    if (target < current) {
+      _sc.animateTo(
+        (target - _chipGap).clamp(0, _sc.position.maxScrollExtent),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+    } else if (target + _chipW > current + viewWidth) {
+      _sc.animateTo(
+        (target + _chipW - viewWidth + _chipGap)
+            .clamp(0, _sc.position.maxScrollExtent),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  void _scrollLeft() {
+    if (!_sc.hasClients) return;
+    _sc.animateTo(
+      (_sc.offset - _scrollStep).clamp(0, _sc.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _scrollRight() {
+    if (!_sc.hasClients) return;
+    _sc.animateTo(
+      (_sc.offset + _scrollStep).clamp(0, _sc.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pages = widget.pages;
+    final currentIndex = widget.currentPageIndex;
+    final lessonIndex = widget.lessonIndex;
+    final t = widget.t;
+
     final canAddPage = pages.isNotEmpty &&
-        currentPageIndex < pages.length &&
-        pages[currentPageIndex].blocks.isNotEmpty;
+        currentIndex < pages.length &&
+        pages[currentIndex].blocks.isNotEmpty;
 
     return Container(
       height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(bottom: BorderSide(color: AppColors.neutral200)),
       ),
       child: Row(
         children: [
+          // ── Left arrow ──────────────────────────────────────────────────
+          _ArrowBtn(
+            icon: Icons.chevron_left,
+            visible: _canScrollLeft,
+            onTap: _scrollLeft,
+          ),
+
+          // ── Scrollable chips ─────────────────────────────────────────────
           Expanded(
-            child: SingleChildScrollView(
+            child: ListView.separated(
+              controller: _sc,
               scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  for (int i = 0; i < pages.length; i++) ...[
-                    _PageTab(
-                      t: t,
-                      index: i,
-                      isActive: i == currentPageIndex,
-                      canDelete: pages.length > 1,
-                      onTap: () {
-                        ref
-                            .read(builderStateProvider.notifier)
-                            .setCurrentPage(i);
-                      },
-                      onDelete: () {
-                        // If deleting current page, move to previous
-                        final newIndex =
-                            (i == currentPageIndex && i > 0) ? i - 1 : (i < currentPageIndex ? currentPageIndex - 1 : currentPageIndex);
-                        ref
-                            .read(courseProvider.notifier)
-                            .removePage(lessonIndex, i);
-                        ref
-                            .read(builderStateProvider.notifier)
-                            .setCurrentPage(newIndex.clamp(0, pages.length - 2));
-                      },
-                    ),
-                    if (i < pages.length - 1)
-                      const SizedBox(width: AppSpacing.xs),
-                  ],
-                ],
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.sm,
+                vertical: 8,
+              ),
+              itemCount: pages.length,
+              separatorBuilder: (_, __) =>
+                  const SizedBox(width: _chipGap),
+              itemBuilder: (context, i) => _PageChip(
+                index: i,
+                isActive: i == currentIndex,
+                canDelete: pages.length > 1,
+                onTap: () => ref
+                    .read(builderStateProvider.notifier)
+                    .setCurrentPage(i),
+                onDelete: () {
+                  final newIndex = (i == currentIndex && i > 0)
+                      ? i - 1
+                      : (i < currentIndex
+                          ? currentIndex - 1
+                          : currentIndex);
+                  ref
+                      .read(courseProvider.notifier)
+                      .removePage(lessonIndex, i);
+                  ref
+                      .read(builderStateProvider.notifier)
+                      .setCurrentPage(
+                        newIndex.clamp(0, pages.length - 2),
+                      );
+                },
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
-          Tooltip(
-            message: canAddPage
-                ? (t.isZh ? '新建页' : 'New page')
-                : (t.isZh ? '请先在当前页添加模块' : 'Add a block first'),
-            child: InkWell(
-              onTap: canAddPage
-                  ? () {
-                      final added = ref
-                          .read(courseProvider.notifier)
-                          .addPage(lessonIndex, currentPageIndex);
-                      if (added) {
-                        ref
-                            .read(builderStateProvider.notifier)
-                            .setCurrentPage(pages.length);
-                        ref.read(builderStateProvider.notifier).markAsUnsaved();
+
+          // ── Right arrow ──────────────────────────────────────────────────
+          _ArrowBtn(
+            icon: Icons.chevron_right,
+            visible: _canScrollRight,
+            onTap: _scrollRight,
+          ),
+
+          // ── Divider ──────────────────────────────────────────────────────
+          const SizedBox(
+            height: 24,
+            child: VerticalDivider(
+              width: 1,
+              thickness: 1,
+              color: AppColors.neutral200,
+            ),
+          ),
+
+          // ── New-page button (always visible) ─────────────────────────────
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            child: Tooltip(
+              message: canAddPage
+                  ? (t.isZh ? '新建页' : 'New page')
+                  : (t.isZh ? '请先在当前页添加模块' : 'Add a block first'),
+              child: InkWell(
+                onTap: canAddPage
+                    ? () {
+                        final added = ref
+                            .read(courseProvider.notifier)
+                            .addPage(lessonIndex, currentIndex);
+                        if (added) {
+                          ref
+                              .read(builderStateProvider.notifier)
+                              .setCurrentPage(pages.length);
+                          ref
+                              .read(builderStateProvider.notifier)
+                              .markAsUnsaved();
+                        }
                       }
-                    }
-                  : null,
-              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: canAddPage
-                      ? AppColors.primary50
-                      : AppColors.neutral100,
-                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                  border: Border.all(
-                    color: canAddPage
-                        ? AppColors.primary300
-                        : AppColors.neutral200,
+                    : null,
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: 4,
                   ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.add,
-                      size: 14,
+                  decoration: BoxDecoration(
+                    color: canAddPage
+                        ? AppColors.primary50
+                        : AppColors.neutral100,
+                    borderRadius:
+                        BorderRadius.circular(AppBorderRadius.sm),
+                    border: Border.all(
                       color: canAddPage
-                          ? AppColors.primary500
-                          : AppColors.neutral400,
+                          ? AppColors.primary300
+                          : AppColors.neutral200,
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      t.isZh ? '新建页' : 'New page',
-                      style: TextStyle(
-                        fontSize: AppFontSize.xs,
-                        fontWeight: FontWeight.w600,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        size: 14,
                         color: canAddPage
                             ? AppColors.primary500
                             : AppColors.neutral400,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 3),
+                      Text(
+                        t.isZh ? '新建页' : 'New page',
+                        style: TextStyle(
+                          fontSize: AppFontSize.xs,
+                          fontWeight: FontWeight.w600,
+                          color: canAddPage
+                              ? AppColors.primary500
+                              : AppColors.neutral400,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -601,16 +743,51 @@ class _PageNavigationStrip extends ConsumerWidget {
   }
 }
 
-class _PageTab extends StatelessWidget {
-  final BuilderLocalizations t;
+// ── Arrow scroll button ───────────────────────────────────────────────────────
+
+class _ArrowBtn extends StatelessWidget {
+  final IconData icon;
+  final bool visible;
+  final VoidCallback onTap;
+
+  const _ArrowBtn({
+    required this.icon,
+    required this.visible,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 150),
+      opacity: visible ? 1.0 : 0.0,
+      child: IgnorePointer(
+        ignoring: !visible,
+        child: SizedBox(
+          width: 26,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            child: Center(
+              child: Icon(icon, size: 16, color: AppColors.neutral500),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Compact page chip ─────────────────────────────────────────────────────────
+
+class _PageChip extends StatefulWidget {
   final int index;
   final bool isActive;
   final bool canDelete;
   final VoidCallback onTap;
   final VoidCallback onDelete;
 
-  const _PageTab({
-    required this.t,
+  const _PageChip({
     required this.index,
     required this.isActive,
     required this.canDelete,
@@ -619,44 +796,75 @@ class _PageTab extends StatelessWidget {
   });
 
   @override
+  State<_PageChip> createState() => _PageChipState();
+}
+
+class _PageChipState extends State<_PageChip> {
+  bool _hovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
-        decoration: BoxDecoration(
-          color: isActive ? AppColors.primary500 : AppColors.neutral100,
-          borderRadius: BorderRadius.circular(AppBorderRadius.pill),
-          border: Border.all(
-            color: isActive ? AppColors.primary500 : AppColors.neutral300,
+    final showClose = widget.canDelete && (widget.isActive || _hovered);
+    final label = '${widget.index + 1}';
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 140),
+          height: 28,
+          constraints: BoxConstraints(minWidth: showClose ? 46 : 28),
+          padding: EdgeInsets.symmetric(
+            horizontal: showClose ? 8 : 6,
           ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              t.isZh ? '第 ${index + 1} 页' : 'Page ${index + 1}',
-              style: TextStyle(
-                fontSize: AppFontSize.xs,
-                fontWeight: FontWeight.w600,
-                color: isActive ? Colors.white : AppColors.neutral600,
-              ),
+          decoration: BoxDecoration(
+            color: widget.isActive
+                ? AppColors.primary500
+                : _hovered
+                    ? AppColors.primary50
+                    : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: widget.isActive
+                  ? AppColors.primary500
+                  : _hovered
+                      ? AppColors.primary300
+                      : AppColors.neutral300,
+              width: 1.5,
             ),
-            if (canDelete) ...[
-              const SizedBox(width: 4),
-              GestureDetector(
-                onTap: onDelete,
-                child: Icon(
-                  Icons.close,
-                  size: 12,
-                  color: isActive
-                      ? Colors.white.withValues(alpha: 0.8)
-                      : AppColors.neutral400,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: AppFontSize.xs,
+                  fontWeight: FontWeight.w700,
+                  color: widget.isActive
+                      ? Colors.white
+                      : AppColors.neutral700,
+                  height: 1,
                 ),
               ),
+              if (showClose) ...[
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: widget.onDelete,
+                  child: Icon(
+                    Icons.close,
+                    size: 11,
+                    color: widget.isActive
+                        ? Colors.white.withValues(alpha: 0.85)
+                        : AppColors.neutral500,
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

@@ -15,7 +15,7 @@ class AICourseGenerator {
   // Gemini API configuration
   static const int _maxOutputTokens = 16384;
   static const int _maxBlocksPerLesson = 20;
-  static const String _promptVersion = '2026-03-14.ai-course-v2';
+  static const String _promptVersion = '2026-03-14.ai-course-v4';
   static String? _apiKey;
 
   /// Set API key manually (optional — [generateCourseAgentLocally] will
@@ -86,8 +86,9 @@ JSON schema:
           "pageId": "page-1",
           "order": 0,
           "blocks": [
-            {"type":"text","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"format":"richtext","value":"## Heading\\n\\nContent here."}},
-            {"type":"multiple-choice","id":"b2","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Question?","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Because..."}}
+            {"type":"animation","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0,"aiPrompt":"Visualize a bouncing ball to introduce the concept of energy transfer."}},
+            {"type":"text","id":"b2","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"format":"richtext","value":"## Heading\\n\\nContent here."}},
+            {"type":"multiple-choice","id":"b3","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Question?","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Because..."}}
           ]
         },
         {
@@ -102,65 +103,85 @@ JSON schema:
 
 Hard constraints:
 - Put all content into exactly ONE lesson with multiple pages.
-- Each page holds 2-5 blocks. Total across all pages must be <= 20.
-- Prefer 3-4 pages with 3-5 blocks each; for short PDFs 2 pages of 3-4 blocks is fine.
+- Each page holds 3-5 blocks. Total across all pages must be <= 20.
+- Prefer 3-4 pages with 4-5 blocks each; for short PDFs 2 pages of 3-4 blocks is fine.
 - Every id (block id AND pageId) must be unique across the entire document.
 - position.order is 0-based and continuous within each page (not globally).
 - The first block of page 1 must have visibilityRule "always"; all other blocks use "afterPreviousCorrect".
 - Use \\n for newlines inside text values.
 - Keep metadata concise and useful.
-- text block content.format must be "richtext" (never "markdown" or "plain").
+- VISUAL FIRST: Every page MUST start with an animation block at position 0. This rule is mandatory — no exceptions.
+- NEVER generate image blocks — use animation blocks with aiPrompt instead.
+- Avoid consecutive text blocks. Break them up with animations or quizzes.
 
-Page structure rules:
-- Each page is one focused learning unit: 1-2 concept blocks followed by 1-2 practice/quiz blocks.
-- End each page (except possibly the last) with at least one interactive block so the learner checks understanding before moving on.
-- Interactive block types: multiple-choice, fill-blank, true-false, matching, code-playground.
+Text block rules (CRITICAL — follow exactly):
+- Each text block must contain EXACTLY 1 sentence (hard maximum: 20 words).
+- Write plain prose only. Do NOT use any markdown syntax.
+  BANNED: #, ##, ###, *, **, _, __, `, ~~, >, -, bullet points, numbered lists, headings.
+- The value field must be a plain sentence with no formatting symbols.
+  CORRECT: "A variable stores a value that can change during program execution."
+  WRONG:   "## Variables\\n\\n**Variables** store values that *can* change."
+- If you need to explain more, create a second text block — do not make one block longer.
+
+Page composition rules (strictly follow this rhythm):
+  Position 0:  animation (with aiPrompt) — visualizes the page core concept
+  Position 1:  text (1 sentence) OR code-block OR function-flow
+  Position 2+: interactive quiz block(s) — multiple-choice / fill-blank / true-false / matching / code-playground
+- Every page ends with at least one interactive block.
 - page.order starts at 0 and is consecutive (0, 1, 2…).
+- Do NOT place two text blocks back-to-back on the same page.
+
+Animation block rules:
+- Valid preset values: "bouncing-dot" and "pulse-bars" only. Do NOT use "custom".
+- Use "pulse-bars" for: data flow, rhythm, loading, signal processing, bar-chart concepts.
+- Use "bouncing-dot" for: motion, loops, iteration, introductions, attention-grabbing openers.
+- ALWAYS include aiPrompt: one sentence describing what the animation represents in course context.
+  Example: "Animate pulsing bars to illustrate how data packets travel through a network."
 
 Allowed block types and exact type values:
-1) text
-{"type":"text","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"format":"richtext","value":"## Heading\\n\\nParagraph text here."}}
+1) animation  ← USE THIS AS THE OPENER ON EVERY PAGE
+{"type":"animation","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"pulse-bars","durationMs":2000,"loop":true,"speed":1.0,"aiPrompt":"Animate pulsing bars to show CPU instruction cycles."}}
 
-2) image
-{"type":"image","id":"b2","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"url":"https://...","alt":"Alt text","caption":"Caption"}}
+2) animation variant — bouncing-dot opener
+{"type":"animation","id":"b2","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":1800,"loop":true,"speed":1.2,"aiPrompt":"A bouncing dot to introduce the concept of recursion."}}
 
-3) code-block
-{"type":"code-block","id":"b3","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"language":"python","code":"x = 1\\nprint(x)"}}
+3) text  ← 1 PLAIN SENTENCE ONLY, NO MARKDOWN
+{"type":"text","id":"b3","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"format":"richtext","value":"A variable stores a named value that can change as a program runs."}}
 
-4) code-playground
-{"type":"code-playground","id":"b4","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"language":"python","initialCode":"# complete the function\\ndef greet(name):\\n    return ___","expectedOutput":"Hello Alice","hints":["Use string concatenation"],"runnable":true}}
+5) code-block
+{"type":"code-block","id":"b5","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"language":"python","code":"x = 1\\nprint(x)"}}
 
-5) code-execution
-{"type":"code-execution","id":"b5","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"title":"Trace: swap variables","language":"python","sourceCode":"a = 1\\nb = 2\\na, b = b, a\\nprint(a, b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":2}},{"line":3,"variables":{"a":2,"b":1}},{"line":4,"stdoutDelta":"2 1","variables":{"a":2,"b":1}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}
+6) code-playground
+{"type":"code-playground","id":"b6","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"language":"python","initialCode":"# complete the function\\ndef greet(name):\\n    return ___","expectedOutput":"Hello Alice","hints":["Use string concatenation"],"runnable":true}}
 
-6) function-flow
-{"type":"function-flow","id":"b6","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"entryNodeId":"main","nodes":[{"id":"main","label":"main()","x":60,"y":120,"kind":"entry","description":"Entry point"},{"id":"helper","label":"helper()","x":220,"y":120,"kind":"function","description":"Helper function"}],"edges":[{"from":"main","to":"helper","label":"calls"}],"steps":[]}}
+7) code-execution
+{"type":"code-execution","id":"b7","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"title":"Trace: swap variables","language":"python","sourceCode":"a = 1\\nb = 2\\na, b = b, a\\nprint(a, b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":2}},{"line":3,"variables":{"a":2,"b":1}},{"line":4,"stdoutDelta":"2 1","variables":{"a":2,"b":1}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}
 
-7) multiple-choice
-{"type":"multiple-choice","id":"b7","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Question?","options":[{"id":"a","text":"Option A"},{"id":"b","text":"Option B"},{"id":"c","text":"Option C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Because A is correct."}}
+8) function-flow
+{"type":"function-flow","id":"b8","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"entryNodeId":"main","nodes":[{"id":"main","label":"main()","x":60,"y":120,"kind":"entry","description":"Entry point"},{"id":"helper","label":"helper()","x":220,"y":120,"kind":"function","description":"Helper function"}],"edges":[{"from":"main","to":"helper","label":"calls"}],"steps":[]}}
 
-8) fill-blank
-{"type":"fill-blank","id":"b8","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand the acronym CPU"}}
+9) multiple-choice
+{"type":"multiple-choice","id":"b9","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Question?","options":[{"id":"a","text":"Option A"},{"id":"b","text":"Option B"},{"id":"c","text":"Option C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Because A is correct."}}
 
-9) true-false
-{"type":"true-false","id":"b9","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted, not compiled."}}
+10) fill-blank
+{"type":"fill-blank","id":"b10","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand the acronym CPU"}}
 
-10) matching
-{"type":"matching","id":"b10","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Match each term to its definition.","leftItems":[{"id":"l1","text":"Variable"},{"id":"l2","text":"Function"}],"rightItems":[{"id":"r1","text":"Stores a value"},{"id":"r2","text":"Reusable code block"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Variables hold data; functions group reusable logic."}}
+11) true-false
+{"type":"true-false","id":"b11","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted, not compiled."}}
 
-11) video
-{"type":"video","id":"b11","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+12) matching
+{"type":"matching","id":"b12","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Match each term to its definition.","leftItems":[{"id":"l1","text":"Variable"},{"id":"l2","text":"Function"}],"rightItems":[{"id":"r1","text":"Stores a value"},{"id":"r2","text":"Reusable code block"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Variables hold data; functions group reusable logic."}}
 
-12) animation
-{"type":"animation","id":"b12","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
+13) video
+{"type":"video","id":"b13","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
 
 Course-adaptive block strategy:
-- Programming / CS: use code-block + code-execution or function-flow for concept, code-playground + quiz for practice.
-- Math / Physics / Engineering: use text for worked examples, fill-blank for formula checks, true-false for conceptual verification.
-- Language / History / Business / Humanities: use text + multiple-choice + fill-blank + matching; avoid fake image/video URLs.
-- Use at least 4 different block types when the source material supports it.
-- Rhythm per page: 1-2 concept blocks → 1-2 interactive practice blocks.
-- If real image/video URLs are unavailable, use text or quiz blocks instead of fake URLs.
+- ALL subjects: page 0 block must ALWAYS be animation. No image blocks.
+- Programming / CS: animation opener → code-block or code-execution → code-playground or quiz.
+- Math / Physics / Engineering: animation opener → text (1 sentence) → fill-blank or true-false.
+- Language / History / Business / Humanities: animation opener → text (1 sentence) → multiple-choice or matching.
+- Use at least 5 different block types across the full course.
+- Never use image or video blocks — use animation with aiPrompt to visualize everything.
 
 Generate the course based on the PDF:
 ''';
@@ -1233,6 +1254,8 @@ $rawContent
     // Accept both 'lessons' (new) and 'pages' (legacy) key from AI output
     final lessons = _normalizeLessons(normalized['lessons'] ?? normalized['pages']);
 
+    normalized['\$schema'] = Course.schemaUrl;
+    normalized['schemaVersion'] = Course.schemaVersion;
     normalized['courseId'] = _normalizeCourseId(normalized['courseId']);
     normalized['metadata'] = metadata;
     normalized['lessons'] = lessons;
@@ -1421,9 +1444,28 @@ $rawContent
     for (final rawBlock in rawBlocks) {
       if (normalized.length >= _maxBlocksPerLesson) break;
 
-      final type = _normalizeBlockType(_asString(rawBlock['type']));
+      var type = _normalizeBlockType(_asString(rawBlock['type']));
       final originalContent = _mapFromDynamic(rawBlock['content']);
-      final content = _normalizeBlockContent(type, originalContent);
+      var content = _normalizeBlockContent(type, originalContent);
+
+      // Convert image blocks with no real URL to animation blocks so the
+      // canvas always shows something meaningful rather than a blank box.
+      if (type == 'image') {
+        final url = _asString(content['url'])?.trim() ?? '';
+        if (url.isEmpty || url == 'https://...') {
+          final alt = _asString(content['alt'])?.trim() ?? '';
+          final caption = _asString(content['caption'])?.trim() ?? '';
+          final desc = alt.isNotEmpty ? alt : caption;
+          type = 'animation';
+          content = {
+            'preset': 'pulse-bars',
+            'durationMs': 2000,
+            'loop': true,
+            'speed': 1.0,
+            if (desc.isNotEmpty) 'aiPrompt': desc,
+          };
+        }
+      }
 
       final id = _normalizeBlockId(
         _asString(rawBlock['id']),
@@ -1451,9 +1493,11 @@ $rawContent
         'position': {'order': 0},
         'style': const {'spacing': 'md', 'alignment': 'left'},
         'visibilityRule': 'always',
-        'content': const {
+        'content': {
           'format': 'richtext',
-          'value': 'No valid content was extracted from the source.',
+          'value': _ensureQuillDelta(
+            'No valid content was extracted from the source.',
+          ),
         },
       });
     }
@@ -1623,11 +1667,13 @@ $rawContent
         final durationMs = rawDuration is num ? rawDuration.toInt() : 2000;
         final rawSpeed = content['speed'];
         final speed = rawSpeed is num ? rawSpeed.toDouble() : 1.0;
+        final aiPrompt = _asString(content['aiPrompt'])?.trim();
         return {
           'preset': normalizedPreset,
           'durationMs': durationMs,
           'loop': _asBool(content['loop']) ?? true,
           'speed': speed,
+          if (aiPrompt != null && aiPrompt.isNotEmpty) 'aiPrompt': aiPrompt,
         };
       case 'video':
         final videoUrl = _asString(content['url'])?.trim() ?? '';
@@ -1640,13 +1686,83 @@ $rawContent
         return _normalizeFunctionFlowContent(content);
       case 'text':
       default:
-        final fmt = _asString(content['format'])?.toLowerCase();
-        return {
-          'format': fmt == 'plain' ? 'plain' : 'richtext',
-          'value':
-              _asString(content['value']) ?? _asString(content['text']) ?? '',
-        };
+        final raw =
+            _asString(content['value']) ?? _asString(content['text']) ?? '';
+        return {'format': 'richtext', 'value': _ensureQuillDelta(raw)};
     }
+  }
+
+  /// Ensure a text value is stored as a valid Quill Delta JSON string.
+  ///
+  /// If [text] is already a valid Delta (JSON array), return it unchanged.
+  /// Otherwise treat it as plain/markdown text and convert line-by-line:
+  ///   - `## Heading` → header-2 Delta op
+  ///   - `* item` / `- item` → bullet-list Delta op
+  ///   - Inline `**bold**`, `*italic*`, `_x_`, `` `x` `` → stripped to plain
+  ///   - Everything else → plain paragraph Delta op
+  static String _ensureQuillDelta(String text) {
+    if (text.isEmpty) return jsonEncode([const {'insert': '\n'}]);
+    // If it's already a valid Delta JSON array, keep it as-is.
+    try {
+      final decoded = jsonDecode(text);
+      if (decoded is List) return text;
+    } catch (_) {}
+    // Convert plain / markdown text to Delta.
+    return _markdownToQuillDelta(text);
+  }
+
+  static String _markdownToQuillDelta(String markdown) {
+    final ops = <Map<String, dynamic>>[];
+    final lines = markdown.split('\n');
+
+    for (final line in lines) {
+      if (line.startsWith('# ')) {
+        final t = _stripInlineMarkdown(line.substring(2).trim());
+        if (t.isNotEmpty) ops.add({'insert': t});
+        ops.add({'insert': '\n', 'attributes': const {'header': 1}});
+      } else if (line.startsWith('## ')) {
+        final t = _stripInlineMarkdown(line.substring(3).trim());
+        if (t.isNotEmpty) ops.add({'insert': t});
+        ops.add({'insert': '\n', 'attributes': const {'header': 2}});
+      } else if (line.startsWith('### ')) {
+        final t = _stripInlineMarkdown(line.substring(4).trim());
+        if (t.isNotEmpty) ops.add({'insert': t});
+        ops.add({'insert': '\n', 'attributes': const {'header': 3}});
+      } else if (line.startsWith('* ') ||
+          line.startsWith('- ') ||
+          line.startsWith('• ')) {
+        final t = _stripInlineMarkdown(line.substring(2).trim());
+        if (t.isNotEmpty) ops.add({'insert': t});
+        ops.add({'insert': '\n', 'attributes': const {'list': 'bullet'}});
+      } else if (RegExp(r'^\d+\.\s').hasMatch(line)) {
+        final t = _stripInlineMarkdown(
+          line.replaceFirst(RegExp(r'^\d+\.\s'), '').trim(),
+        );
+        if (t.isNotEmpty) ops.add({'insert': t});
+        ops.add({'insert': '\n', 'attributes': const {'list': 'ordered'}});
+      } else {
+        final t = _stripInlineMarkdown(line);
+        ops.add({'insert': '${t.isEmpty ? '' : t}\n'});
+      }
+    }
+
+    if (ops.isEmpty) ops.add(const {'insert': '\n'});
+    return jsonEncode(ops);
+  }
+
+  static String _stripInlineMarkdown(String text) {
+    return text
+        .replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1) ?? '')
+        .replaceAllMapped(RegExp(r'\*(.+?)\*'), (m) => m.group(1) ?? '')
+        .replaceAllMapped(RegExp(r'__(.+?)__'), (m) => m.group(1) ?? '')
+        .replaceAllMapped(RegExp(r'_(.+?)_'), (m) => m.group(1) ?? '')
+        .replaceAllMapped(RegExp(r'`(.+?)`'), (m) => m.group(1) ?? '')
+        .replaceAllMapped(RegExp(r'~~(.+?)~~'), (m) => m.group(1) ?? '')
+        .replaceAllMapped(
+          RegExp(r'\[(.+?)\]\(.+?\)'),
+          (m) => m.group(1) ?? '',
+        )
+        .trim();
   }
 
   static Map<String, dynamic> _normalizeMultipleChoiceContent(
