@@ -111,7 +111,7 @@ void main() {
       BlockType.codeExecution,
       order: 0,
     ).copyWith(content: buildContent());
-    final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
+    final lesson = CourseLesson.create(title: 'Lesson 1').addBlock(block);
     final course = Course.create(
       title: 'Execution Course',
     ).copyWith(lessons: [lesson]);

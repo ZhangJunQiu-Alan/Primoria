@@ -67,7 +67,7 @@ void main() {
       BlockType.functionFlow,
       order: 0,
     ).copyWith(content: buildContent());
-    final lesson = CourseLesson.create(title: 'Lesson 1').copyWith(blocks: [block]);
+    final lesson = CourseLesson.create(title: 'Lesson 1').addBlock(block);
     final course = Course.create(title: 'Flow course').copyWith(lessons: [lesson]);
 
     await tester.pumpWidget(

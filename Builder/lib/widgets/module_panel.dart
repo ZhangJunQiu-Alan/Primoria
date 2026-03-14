@@ -116,7 +116,7 @@ class _ModulePanelState extends State<ModulePanel> {
     final t = widget.t;
     switch (type) {
       case BlockType.text:
-        return t.isZh ? '富文本 / Markdown' : 'Rich text / Markdown';
+        return t.isZh ? '富文本' : 'Rich text';
       case BlockType.image:
         return t.isZh ? '图像内容模块' : 'Image block';
       case BlockType.codeBlock:
@@ -495,7 +495,10 @@ class _ModuleItem extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
@@ -503,16 +506,16 @@ class _ModuleItem extends StatelessWidget {
         boxShadow: AppShadows.sm,
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: 30,
+            height: 30,
             decoration: BoxDecoration(
               color: accentColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
             ),
-            child: Icon(icon, color: accentColor, size: 18),
+            child: Icon(icon, color: accentColor, size: 16),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -524,34 +527,18 @@ class _ModuleItem extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: AppFontSize.sm,
                     color: AppColors.neutral800,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   description,
                   style: const TextStyle(
                     fontSize: AppFontSize.xs,
-                    color: AppColors.neutral500,
-                    height: 1.35,
+                    color: AppColors.neutral400,
+                    height: 1.3,
                   ),
                 ),
               ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.xs,
-              vertical: AppSpacing.xs,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF7FAFC),
-              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-            ),
-            child: const Icon(
-              Icons.drag_indicator,
-              color: AppColors.neutral400,
-              size: 16,
             ),
           ),
         ],

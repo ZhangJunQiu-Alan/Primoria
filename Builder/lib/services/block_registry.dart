@@ -11,7 +11,7 @@ class BlockRegistry {
     BlockTypeInfo(
       type: BlockType.text,
       name: 'Text',
-      description: 'Rich text / Markdown',
+      description: 'Rich text',
       icon: Icons.text_fields,
       priority: 0,
     ),

@@ -267,34 +267,69 @@ class CourseSchemaValidator {
         }
       }
 
-      final blocksPath = '$lessonPath.blocks';
-      final blocks = lesson['blocks'];
-      if (blocks == null) {
-        _addWarning(findings, blocksPath, 'Missing list; defaulting to empty');
-        continue;
-      }
-      if (blocks is! List) {
-        _addError(findings, blocksPath, 'Expected list');
-        continue;
-      }
-
-      for (int blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
-        final blockPath = '$blocksPath[$blockIndex]';
-        final blockValue = blocks[blockIndex];
-        if (blockValue is! Map) {
-          _addError(findings, blockPath, 'Expected object');
+      // Support new pages format and legacy blocks format
+      if (lesson.containsKey('pages') && lesson['pages'] is List) {
+        final pagesRaw = lesson['pages'] as List;
+        final pagesPath = '$lessonPath.pages';
+        for (int pageIndex = 0; pageIndex < pagesRaw.length; pageIndex++) {
+          final pageValue = pagesRaw[pageIndex];
+          final pagePath = '$pagesPath[$pageIndex]';
+          if (pageValue is! Map) {
+            _addError(findings, pagePath, 'Expected object');
+            continue;
+          }
+          final page = Map<String, dynamic>.from(pageValue);
+          final blocksRaw = page['blocks'];
+          if (blocksRaw == null) continue;
+          if (blocksRaw is! List) {
+            _addError(findings, '$pagePath.blocks', 'Expected list');
+            continue;
+          }
+          for (int blockIndex = 0; blockIndex < blocksRaw.length; blockIndex++) {
+            final blockPath = '$pagePath.blocks[$blockIndex]';
+            final blockValue = blocksRaw[blockIndex];
+            if (blockValue is! Map) {
+              _addError(findings, blockPath, 'Expected object');
+              continue;
+            }
+            _validateBlock(
+              Map<String, dynamic>.from(blockValue),
+              blockPath,
+              findings,
+              blockIds: blockIds,
+              blockIndex: blockIndex,
+              isStrict: isStrict,
+            );
+          }
+        }
+      } else {
+        // Legacy format: blocks at lesson level
+        final blocksPath = '$lessonPath.blocks';
+        final blocks = lesson['blocks'];
+        if (blocks == null) {
+          _addWarning(findings, blocksPath, 'Missing list; defaulting to empty');
           continue;
         }
-
-        final block = Map<String, dynamic>.from(blockValue);
-        _validateBlock(
-          block,
-          blockPath,
-          findings,
-          blockIds: blockIds,
-          blockIndex: blockIndex,
-          isStrict: isStrict,
-        );
+        if (blocks is! List) {
+          _addError(findings, blocksPath, 'Expected list');
+          continue;
+        }
+        for (int blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
+          final blockPath = '$blocksPath[$blockIndex]';
+          final blockValue = blocks[blockIndex];
+          if (blockValue is! Map) {
+            _addError(findings, blockPath, 'Expected object');
+            continue;
+          }
+          _validateBlock(
+            Map<String, dynamic>.from(blockValue),
+            blockPath,
+            findings,
+            blockIds: blockIds,
+            blockIndex: blockIndex,
+            isStrict: isStrict,
+          );
+        }
       }
     }
   }
