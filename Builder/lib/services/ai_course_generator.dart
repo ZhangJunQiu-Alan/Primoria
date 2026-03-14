@@ -2526,6 +2526,176 @@ $rawContent
       fileName: result.fileName,
     );
   }
+
+  /// Pick source files (PDF, images, docs) for AI course generation.
+  static Future<List<SourceFilePickResult>> pickSourceFiles() async {
+    final results = await fp.pickAIGenerationFiles();
+    return results
+        .where((r) => r.success && r.bytes != null && r.fileName != null)
+        .map(
+          (r) => SourceFilePickResult(
+            fileName: r.fileName!,
+            bytes: r.bytes!,
+            mimeType: (r.mimeType ?? 'application/octet-stream').trim(),
+            sizeBytes: r.sizeBytes ?? r.bytes!.length,
+          ),
+        )
+        .toList();
+  }
+
+  /// Generate a course from multiple source files and/or URLs via edge function.
+  static Future<GenerationResult> generateFromSourcesViaApi({
+    required List<SourceFilePickResult> files,
+    required List<String> urls,
+  }) async {
+    final totalTimer = Stopwatch()..start();
+    final requestId = _buildRequestId();
+
+    GenerationResult buildResult({
+      required bool success,
+      required String message,
+      Course? course,
+      String? rawJson,
+      String? model,
+    }) {
+      totalTimer.stop();
+      return GenerationResult(
+        success: success,
+        message: message,
+        course: course,
+        rawJson: rawJson,
+        diagnostics: AIGenerationDiagnostics(
+          requestId: requestId,
+          promptVersion: _promptVersion,
+          promptSource: 'api_sources',
+          promptFingerprint: _fingerprintPrompt(
+            'sources:${files.length}:${urls.join(',')}',
+          ),
+          model: model,
+          modelAttempts: 1,
+          totalLatencyMs: totalTimer.elapsedMilliseconds,
+          generationLatencyMs: 0,
+          parseLatencyMs: 0,
+          validationLatencyMs: 0,
+          parseResult: success
+              ? AIGenerationParseResult.direct
+              : AIGenerationParseResult.failed,
+          validationPassed: success ? true : false,
+          validationErrorCount: 0,
+          validationWarningCount: 0,
+          stage: success ? 'complete' : 'generate',
+          success: success,
+          message: message,
+        ),
+      );
+    }
+
+    if (files.isEmpty && urls.isEmpty) {
+      return buildResult(
+        success: false,
+        message: 'Please provide at least one file or URL',
+      );
+    }
+
+    try {
+      final encodedFiles = files
+          .map(
+            (f) => {
+              'base64': base64Encode(f.bytes),
+              'fileName': f.fileName,
+              'mimeType': f.mimeType,
+            },
+          )
+          .toList();
+
+      final body = <String, dynamic>{};
+      if (encodedFiles.isNotEmpty) body['sources'] = encodedFiles;
+      if (urls.isNotEmpty) body['urls'] = urls;
+      // Legacy fallback for single PDF
+      if (files.length == 1 && files.first.mimeType.contains('pdf')) {
+        body['pdfBase64'] = base64Encode(files.first.bytes);
+        body['fileName'] = files.first.fileName;
+      }
+
+      final response = await Supabase.instance.client.functions.invoke(
+        'ai-generate-course-json',
+        body: body,
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return buildResult(success: false, message: 'No response from server');
+      }
+
+      final dataMap = data is Map<String, dynamic>
+          ? data
+          : Map<String, dynamic>.from(data as Map);
+
+      final model = dataMap['model']?.toString();
+
+      if (dataMap['success'] != true) {
+        final error =
+            dataMap['error']?.toString() ?? 'Generation failed on server';
+        return buildResult(success: false, message: error, model: model);
+      }
+
+      final rawCourseJson = dataMap['courseJson'];
+      if (rawCourseJson == null) {
+        return buildResult(
+          success: false,
+          message: 'Server returned no course JSON',
+          model: model,
+        );
+      }
+
+      final courseJsonMap = rawCourseJson is Map<String, dynamic>
+          ? rawCourseJson
+          : Map<String, dynamic>.from(rawCourseJson as Map);
+
+      final firstName = files.isNotEmpty
+          ? files.first.fileName
+          : (urls.isNotEmpty ? urls.first : 'Generated Course');
+      final normalizedJson = _normalizeGeneratedCourseJson(
+        courseJsonMap,
+        fileName: firstName,
+      );
+      final rawJsonStr = jsonEncode(normalizedJson);
+
+      final importResult = CourseImport.importFromString(rawJsonStr);
+      if (!importResult.success || importResult.course == null) {
+        return buildResult(
+          success: false,
+          message: importResult.message,
+          rawJson: rawJsonStr,
+          model: model,
+        );
+      }
+
+      return buildResult(
+        success: true,
+        message: model != null && model.isNotEmpty
+            ? 'Course generated via API ($model)'
+            : 'Course generated via API',
+        course: importResult.course,
+        rawJson: rawJsonStr,
+        model: model,
+      );
+    } on FunctionException catch (e) {
+      final detail = e.details?.toString() ?? e.toString();
+      return buildResult(success: false, message: 'Server error: $detail');
+    } on http.ClientException catch (e) {
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
+      final msg = isFailedToFetch
+          ? 'Edge Function 不可访问（可能尚未部署）。\n'
+                '请运行：supabase functions deploy ai-generate-course-json'
+          : 'Network error: ${e.message}';
+      return buildResult(success: false, message: msg);
+    } catch (e) {
+      return buildResult(success: false, message: 'Error: $e');
+    }
+  }
 }
 
 /// Generation result
@@ -2542,6 +2712,21 @@ class GenerationResult {
     this.course,
     this.rawJson,
     this.diagnostics,
+  });
+}
+
+/// Source file for AI course generation (multi-format)
+class SourceFilePickResult {
+  final String fileName;
+  final Uint8List bytes;
+  final String mimeType;
+  final int sizeBytes;
+
+  const SourceFilePickResult({
+    required this.fileName,
+    required this.bytes,
+    required this.mimeType,
+    required this.sizeBytes,
   });
 }
 
