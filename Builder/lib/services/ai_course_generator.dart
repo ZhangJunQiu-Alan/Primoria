@@ -15,7 +15,7 @@ class AICourseGenerator {
   // Gemini API configuration
   static const int _maxOutputTokens = 16384;
   static const int _maxBlocksPerLesson = 20;
-  static const String _promptVersion = '2026-02-13.ai-course-v1';
+  static const String _promptVersion = '2026-03-14.ai-course-v2';
   static String? _apiKey;
 
   /// Set API key manually (optional — [generateCourseAgentLocally] will
@@ -79,62 +79,87 @@ JSON schema:
   },
   "lessons": [
     {
-      "lessonId": "p1",
+      "lessonId": "lesson-1",
       "title": "Lesson title",
-      "blocks": [...]
+      "pages": [
+        {
+          "pageId": "page-1",
+          "order": 0,
+          "blocks": [
+            {"type":"text","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"format":"richtext","value":"## Heading\\n\\nContent here."}},
+            {"type":"multiple-choice","id":"b2","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Question?","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Because..."}}
+          ]
+        },
+        {
+          "pageId": "page-2",
+          "order": 1,
+          "blocks": [...]
+        }
+      ]
     }
   ]
 }
 
 Hard constraints:
-- Put all generated blocks into exactly ONE lesson.
-- Total block count must be <= 20.
-- Prefer 10-20 blocks when content is sufficient; for short PDFs 6-12 is acceptable.
-- Every id must be unique.
-- position.order must be continuous from 0.
-- Use \\n for newlines in text.
+- Put all content into exactly ONE lesson with multiple pages.
+- Each page holds 2-5 blocks. Total across all pages must be <= 20.
+- Prefer 3-4 pages with 3-5 blocks each; for short PDFs 2 pages of 3-4 blocks is fine.
+- Every id (block id AND pageId) must be unique across the entire document.
+- position.order is 0-based and continuous within each page (not globally).
+- The first block of page 1 must have visibilityRule "always"; all other blocks use "afterPreviousCorrect".
+- Use \\n for newlines inside text values.
 - Keep metadata concise and useful.
+- text block content.format must be "richtext" (never "markdown" or "plain").
+
+Page structure rules:
+- Each page is one focused learning unit: 1-2 concept blocks followed by 1-2 practice/quiz blocks.
+- End each page (except possibly the last) with at least one interactive block so the learner checks understanding before moving on.
+- Interactive block types: multiple-choice, fill-blank, true-false, matching, code-playground.
+- page.order starts at 0 and is consecutive (0, 1, 2…).
 
 Allowed block types and exact type values:
 1) text
-{"type":"text","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"format":"markdown","value":"Text"}}
+{"type":"text","id":"b1","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"format":"richtext","value":"## Heading\\n\\nParagraph text here."}}
 
 2) image
-{"type":"image","id":"b2","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","alt":"Alt text","caption":"Caption"}}
+{"type":"image","id":"b2","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"url":"https://...","alt":"Alt text","caption":"Caption"}}
 
 3) code-block
-{"type":"code-block","id":"b3","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"language":"python","code":"print(1)"}}
+{"type":"code-block","id":"b3","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"language":"python","code":"x = 1\\nprint(x)"}}
 
 4) code-playground
-{"type":"code-playground","id":"b4","position":{"order":3},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"language":"python","initialCode":"print(1)","expectedOutput":"1","hints":["hint"],"runnable":true}}
+{"type":"code-playground","id":"b4","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"language":"python","initialCode":"# complete the function\\ndef greet(name):\\n    return ___","expectedOutput":"Hello Alice","hints":["Use string concatenation"],"runnable":true}}
 
 5) code-execution
-{"type":"code-execution","id":"b5","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"title":"Trace demo","language":"python","sourceCode":"a = 1\\nb = a + 2\\nprint(b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":3}},{"line":3,"stdoutDelta":"3","variables":{"a":1,"b":3}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}
+{"type":"code-execution","id":"b5","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"title":"Trace: swap variables","language":"python","sourceCode":"a = 1\\nb = 2\\na, b = b, a\\nprint(a, b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":2}},{"line":3,"variables":{"a":2,"b":1}},{"line":4,"stdoutDelta":"2 1","variables":{"a":2,"b":1}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}
 
-6) multiple-choice
-{"type":"multiple-choice","id":"b6","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Question","options":[{"id":"a","text":"A"},{"id":"b","text":"B"},{"id":"c","text":"C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation"}}
+6) function-flow
+{"type":"function-flow","id":"b6","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"entryNodeId":"main","nodes":[{"id":"main","label":"main()","x":60,"y":120,"kind":"entry","description":"Entry point"},{"id":"helper","label":"helper()","x":220,"y":120,"kind":"function","description":"Helper function"}],"edges":[{"from":"main","to":"helper","label":"calls"}],"steps":[]}}
 
-7) fill-blank
-{"type":"fill-blank","id":"b7","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand CPU"}}
+7) multiple-choice
+{"type":"multiple-choice","id":"b7","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Question?","options":[{"id":"a","text":"Option A"},{"id":"b","text":"Option B"},{"id":"c","text":"Option C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Because A is correct."}}
 
-8) true-false
-{"type":"true-false","id":"b8","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Statement","correctAnswer":true,"explanation":"Why"}}
+8) fill-blank
+{"type":"fill-blank","id":"b8","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"The CPU stands for ____.","correctAnswer":"Central Processing Unit","hint":"Expand the acronym CPU"}}
 
-9) matching
-{"type":"matching","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Why"}}
+9) true-false
+{"type":"true-false","id":"b9","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted, not compiled."}}
 
-10) video
-{"type":"video","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+10) matching
+{"type":"matching","id":"b10","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"afterPreviousCorrect","content":{"question":"Match each term to its definition.","leftItems":[{"id":"l1","text":"Variable"},{"id":"l2","text":"Function"}],"rightItems":[{"id":"r1","text":"Stores a value"},{"id":"r2","text":"Reusable code block"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Variables hold data; functions group reusable logic."}}
 
-11) animation
-{"type":"animation","id":"b11","position":{"order":10},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
+11) video
+{"type":"video","id":"b11","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
+
+12) animation
+{"type":"animation","id":"b12","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}
 
 Course-adaptive block strategy:
-- Programming / CS: include code-block + code-playground + conceptual quizzes (multiple-choice / fill-blank / matching / true-false).
-- Math / Physics / Engineering: prioritize worked explanations (text), formula understanding checks (fill-blank, true-false), concept mapping (matching), and simple animation when it helps.
-- Language / History / Business / Humanities: prioritize text + multiple-choice + fill-blank + matching; add image/video only when it improves understanding.
+- Programming / CS: use code-block + code-execution or function-flow for concept, code-playground + quiz for practice.
+- Math / Physics / Engineering: use text for worked examples, fill-blank for formula checks, true-false for conceptual verification.
+- Language / History / Business / Humanities: use text + multiple-choice + fill-blank + matching; avoid fake image/video URLs.
 - Use at least 4 different block types when the source material supports it.
-- Keep an explain-practice rhythm: usually 1 assessment block after every 1-2 concept blocks.
+- Rhythm per page: 1-2 concept blocks → 1-2 interactive practice blocks.
 - If real image/video URLs are unavailable, use text or quiz blocks instead of fake URLs.
 
 Generate the course based on the PDF:
@@ -1290,24 +1315,101 @@ $rawContent
         firstLessonTitle = title;
       }
 
-      final blocks = lesson['blocks'];
-      if (blocks is! List) continue;
-
-      for (final rawBlock in blocks) {
-        if (rawBlock is Map) {
-          allRawBlocks.add(_mapFromDynamic(rawBlock));
+      // New format: lesson has 'pages' key
+      if (lesson.containsKey('pages') && lesson['pages'] is List) {
+        final pages = lesson['pages'] as List;
+        for (final rawPage in pages) {
+          final page = _mapFromDynamic(rawPage);
+          final blocks = page['blocks'];
+          if (blocks is! List) continue;
+          for (final rawBlock in blocks) {
+            if (rawBlock is Map) {
+              allRawBlocks.add(_mapFromDynamic(rawBlock));
+            }
+          }
+        }
+      } else {
+        // Legacy format: lesson has 'blocks' key directly
+        final blocks = lesson['blocks'];
+        if (blocks is! List) continue;
+        for (final rawBlock in blocks) {
+          if (rawBlock is Map) {
+            allRawBlocks.add(_mapFromDynamic(rawBlock));
+          }
         }
       }
     }
 
     final normalizedBlocks = _normalizeBlocks(allRawBlocks);
+    final pages = _distributeBlocksIntoPages(normalizedBlocks);
     return [
       {
-        'lessonId': 'p1',
+        'lessonId': 'lesson-1',
         'title': firstLessonTitle ?? 'Generated Content',
-        'blocks': normalizedBlocks,
+        'pages': pages,
       },
     ];
+  }
+
+  /// Distribute a flat list of normalized blocks into pages.
+  ///
+  /// Strategy: end a page when we have ≥ 2 blocks AND the current block is
+  /// interactive, or when we reach the max-blocks-per-page hard limit.
+  static List<Map<String, dynamic>> _distributeBlocksIntoPages(
+    List<Map<String, dynamic>> blocks,
+  ) {
+    if (blocks.isEmpty) {
+      return [
+        {'pageId': 'page-1', 'order': 0, 'blocks': const []},
+      ];
+    }
+
+    const maxBlocksPerPage = 5;
+    const minBlocksBeforeSplit = 2;
+    const interactiveTypes = {
+      'multiple-choice',
+      'fill-blank',
+      'true-false',
+      'matching',
+      'code-playground',
+    };
+
+    final pages = <Map<String, dynamic>>[];
+    var current = <Map<String, dynamic>>[];
+
+    void flushPage() {
+      if (current.isEmpty) return;
+      final pageIndex = pages.length;
+      // Re-number position.order within this page; fix visibilityRule.
+      final reordered = current.asMap().entries.map((e) {
+        final b = Map<String, dynamic>.from(e.value);
+        b['position'] = {'order': e.key};
+        b['visibilityRule'] = e.key == 0 ? 'always' : 'afterPreviousCorrect';
+        return b;
+      }).toList();
+      pages.add({
+        'pageId': 'page-${pageIndex + 1}',
+        'order': pageIndex,
+        'blocks': reordered,
+      });
+      current = [];
+    }
+
+    for (int i = 0; i < blocks.length; i++) {
+      current.add(blocks[i]);
+      final type = _asString(blocks[i]['type']) ?? 'text';
+      final isInteractive = interactiveTypes.contains(type);
+      final isLast = i == blocks.length - 1;
+      final reachedMax = current.length >= maxBlocksPerPage;
+      final canSplit = current.length >= minBlocksBeforeSplit;
+
+      if (reachedMax || (canSplit && isInteractive && !isLast)) {
+        flushPage();
+      }
+    }
+    flushPage(); // remaining blocks
+
+    return pages;
   }
 
   static List<Map<String, dynamic>> _normalizeBlocks(
@@ -1350,8 +1452,8 @@ $rawContent
         'style': const {'spacing': 'md', 'alignment': 'left'},
         'visibilityRule': 'always',
         'content': const {
-          'format': 'markdown',
-          'value': 'No valid content was extracted from the PDF.',
+          'format': 'richtext',
+          'value': 'No valid content was extracted from the source.',
         },
       });
     }
@@ -1385,6 +1487,9 @@ $rawContent
       'truefalse': 'true-false',
       'true_false': 'true-false',
       'matching': 'matching',
+      'function-flow': 'function-flow',
+      'functionflow': 'function-flow',
+      'function_flow': 'function-flow',
       'animation': 'animation',
       'animationblock': 'animation',
       'animation-block': 'animation',
@@ -1531,12 +1636,13 @@ $rawContent
           'url': videoUrl,
           if (videoTitle != null && videoTitle.isNotEmpty) 'title': videoTitle,
         };
+      case 'function-flow':
+        return _normalizeFunctionFlowContent(content);
       case 'text':
       default:
+        final fmt = _asString(content['format'])?.toLowerCase();
         return {
-          'format': _asString(content['format']) == 'plain'
-              ? 'plain'
-              : 'markdown',
+          'format': fmt == 'plain' ? 'plain' : 'richtext',
           'value':
               _asString(content['value']) ?? _asString(content['text']) ?? '',
         };
@@ -1689,6 +1795,68 @@ $rawContent
       'correctPairs': pairs,
       if (explanation != null && explanation.isNotEmpty)
         'explanation': explanation,
+    };
+  }
+
+  static Map<String, dynamic> _normalizeFunctionFlowContent(
+    Map<String, dynamic> content,
+  ) {
+    final entryNodeId = _asString(content['entryNodeId'])?.trim() ?? '';
+
+    List<Map<String, dynamic>> normalizeNodes(dynamic raw) {
+      if (raw is! List) return [];
+      return raw.whereType<Map>().map((n) {
+        final m = _mapFromDynamic(n);
+        return {
+          'id': _asString(m['id'])?.trim() ?? '',
+          'label': _asString(m['label'])?.trim() ?? '',
+          'x': (m['x'] is num) ? (m['x'] as num).toDouble() : 0.0,
+          'y': (m['y'] is num) ? (m['y'] as num).toDouble() : 0.0,
+          'kind': _asString(m['kind'])?.trim() ?? 'function',
+          if (_asString(m['description'])?.trim().isNotEmpty == true)
+            'description': _asString(m['description'])!.trim(),
+        };
+      }).where((n) => (n['id'] as String).isNotEmpty).toList();
+    }
+
+    List<Map<String, dynamic>> normalizeEdges(dynamic raw) {
+      if (raw is! List) return [];
+      return raw.whereType<Map>().map((e) {
+        final m = _mapFromDynamic(e);
+        return {
+          'from': _asString(m['from'])?.trim() ?? '',
+          'to': _asString(m['to'])?.trim() ?? '',
+          if (_asString(m['label'])?.trim().isNotEmpty == true)
+            'label': _asString(m['label'])!.trim(),
+        };
+      }).where((e) =>
+          (e['from'] as String).isNotEmpty &&
+          (e['to'] as String).isNotEmpty).toList();
+    }
+
+    final nodes = normalizeNodes(content['nodes']);
+    final edges = normalizeEdges(content['edges']);
+
+    if (nodes.isEmpty) {
+      return {
+        'entryNodeId': 'main',
+        'nodes': [
+          {'id': 'main', 'label': 'main()', 'x': 60.0, 'y': 120.0, 'kind': 'entry'},
+        ],
+        'edges': [],
+        'steps': [],
+      };
+    }
+
+    final resolvedEntry = entryNodeId.isNotEmpty
+        ? entryNodeId
+        : (nodes.first['id'] as String);
+
+    return {
+      'entryNodeId': resolvedEntry,
+      'nodes': nodes,
+      'edges': edges,
+      'steps': [],
     };
   }
 
@@ -1877,23 +2045,27 @@ $rawContent
   static const String _blockTypeReference =
       'Allowed block types and exact JSON format:\n\n'
       '1) text\n'
-      '{"type":"text","id":"b0","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"format":"markdown","value":"## Heading\\n\\nParagraph text."}}\n\n'
+      '{"type":"text","id":"b0","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"format":"richtext","value":"## Heading\\n\\nParagraph text."}}\n\n'
       '2) image\n'
       '{"type":"image","id":"b1","position":{"order":1},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/img.png","alt":"Alt text","caption":"Caption"}}\n\n'
       '3) code-block  (read-only display)\n'
-      '{"type":"code-block","id":"b2","position":{"order":2},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","code":"x = 1\\nprint(x)"}}\n\n'
+      '{"type":"code-block","id":"b2","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","code":"x = 1\\nprint(x)"}}\n\n'
       '4) code-playground  (editable + runnable)\n'
-      '{"type":"code-playground","id":"b3","position":{"order":3},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","initialCode":"# fill in the blank\\nresult = ___\\nprint(result)","expectedOutput":"2","hints":["Use the + operator"],"runnable":true}}\n\n'
-      '5) multiple-choice\n'
-      '{"type":"multiple-choice","id":"b4","position":{"order":4},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Question text?","options":[{"id":"a","text":"Option A"},{"id":"b","text":"Option B"},{"id":"c","text":"Option C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation."}}\n\n'
-      '6) fill-blank\n'
-      '{"type":"fill-blank","id":"b5","position":{"order":5},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python uses ___ to print output.","correctAnswer":"print","hint":"It is a built-in function"}}\n\n'
-      '7) true-false\n'
-      '{"type":"true-false","id":"b6","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted."}}\n\n'
-      '8) matching\n'
-      '{"type":"matching","id":"b7","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Match each term to its meaning.","leftItems":[{"id":"l1","text":"variable"},{"id":"l2","text":"function"}],"rightItems":[{"id":"r1","text":"stores a value"},{"id":"r2","text":"reusable block of code"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Explanation."}}\n\n'
-      '9) video\n'
-      '{"type":"video","id":"b8","position":{"order":8},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}';
+      '{"type":"code-playground","id":"b3","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"language":"python","initialCode":"# complete the function\\ndef double(n):\\n    return ___","expectedOutput":"4","hints":["Multiply n by 2"],"runnable":true}}\n\n'
+      '5) code-execution  (step-by-step trace)\n'
+      '{"type":"code-execution","id":"b4","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"title":"Trace: swap","language":"python","sourceCode":"a=1\\nb=2\\na,b=b,a","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":2}},{"line":3,"variables":{"a":2,"b":1}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":false}}}\n\n'
+      '6) function-flow  (caller-callee diagram)\n'
+      '{"type":"function-flow","id":"b5","position":{"order":0},"style":{"spacing":"md","alignment":"left"},"content":{"entryNodeId":"main","nodes":[{"id":"main","label":"main()","x":60,"y":120,"kind":"entry","description":"Entry point"},{"id":"helper","label":"helper()","x":220,"y":120,"kind":"function","description":"Called by main"}],"edges":[{"from":"main","to":"helper","label":"calls"}],"steps":[]}}\n\n'
+      '7) multiple-choice\n'
+      '{"type":"multiple-choice","id":"b6","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Question text?","options":[{"id":"a","text":"Option A"},{"id":"b","text":"Option B"},{"id":"c","text":"Option C"}],"correctAnswer":"a","correctAnswers":["a"],"multiSelect":false,"explanation":"Explanation."}}\n\n'
+      '8) fill-blank\n'
+      '{"type":"fill-blank","id":"b7","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python uses ___ to print output.","correctAnswer":"print","hint":"It is a built-in function"}}\n\n'
+      '9) true-false\n'
+      '{"type":"true-false","id":"b8","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted."}}\n\n'
+      '10) matching\n'
+      '{"type":"matching","id":"b9","position":{"order":1},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Match each term to its meaning.","leftItems":[{"id":"l1","text":"variable"},{"id":"l2","text":"function"}],"rightItems":[{"id":"r1","text":"stores a value"},{"id":"r2","text":"reusable block of code"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Explanation."}}\n\n'
+      '11) video\n'
+      '{"type":"video","id":"b10","position":{"order":0},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}';
 
   static String _buildPlanPrompt(
     String description,
@@ -1945,7 +2117,8 @@ $rawContent
         subject == 'Engineering' ||
         subject == 'Data Science & AI') {
       subjectHint =
-          '- Include at least 1 code-block (display) and 1 code-playground (practice) if the key concepts involve code.';
+          '- Include at least 1 code-block (display) and 1 code-playground (practice) if the key concepts involve code.\n'
+          '- Use code-execution or function-flow to visualize algorithms or call graphs when it helps understanding.';
     } else if (subject == 'Mathematics' || subject == 'Physics') {
       subjectHint =
           '- Use text for worked examples, fill-blank for formula checks, and true-false for conceptual verification.';
