@@ -75,7 +75,7 @@ Course _buildCourse() {
 
   final lesson = CourseLesson.create(
     title: 'Lesson 1',
-  ).copyWith(blocks: [questionBlock, gatedBlock, trailingBlock]);
+  ).addBlock(questionBlock).addBlock(gatedBlock).addBlock(trailingBlock);
 
   return Course.create(title: 'Viewer Visibility Test').copyWith(lessons: [lesson]);
 }

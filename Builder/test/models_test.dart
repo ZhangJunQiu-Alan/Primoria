@@ -122,9 +122,9 @@ void main() {
       expect(content.value, 'Test text');
     });
 
-    test('TextContent defaults to markdown format', () {
+    test('TextContent defaults to richtext format', () {
       const content = TextContent(value: 'some text');
-      expect(content.format, 'markdown');
+      expect(content.format, 'richtext');
     });
 
     test('TextContent copyWith switches format', () {
@@ -144,11 +144,11 @@ void main() {
       expect(restored.value, 'plain text');
     });
 
-    test('TextContent fromJson defaults format to markdown when missing', () {
+    test('TextContent fromJson defaults format to richtext when missing', () {
       final json = {'value': 'no format field'};
       final content = TextContent.fromJson(json);
 
-      expect(content.format, 'markdown');
+      expect(content.format, 'richtext');
       expect(content.value, 'no format field');
     });
 
@@ -885,7 +885,7 @@ void main() {
         content: matchingContent,
       );
       final course = Course.create(title: 'Test Course');
-      final lesson = course.lessons.first.copyWith(blocks: [block]);
+      final lesson = course.lessons.first.addBlock(block);
       return course.updateLesson(lesson);
     }
 
