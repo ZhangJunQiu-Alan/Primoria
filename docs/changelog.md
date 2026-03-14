@@ -1,5 +1,33 @@
 # Changelog
 
+## [Unreleased] - 2026-03-14 (Builder AI Generation — Pages + richtext + function-flow)
+
+### Summary
+- Updated AI course generation system to be page-aware: prompts now ask Gemini to output `pages[]` within lessons, and the normalization layer distributes flat blocks into pages intelligently when the AI uses the old format.
+- Text blocks in AI output now use `format: "richtext"` (was `"markdown"`).
+- Added `function-flow` block type support to prompts, type alias map, and normalization.
+- Bumped prompt version to `2026-03-14.ai-course-v2`.
+
+### Changed
+- `Builder/lib/services/ai_course_generator.dart`:
+  - `_courseGenerationPrompt` — updated schema to show `pages[]` structure per lesson, added page distribution rules (2-5 blocks/page, end page on interactive block), changed text format to `richtext`, added function-flow example.
+  - `_normalizeLessons` — now handles both new `pages` key and legacy `blocks` key from AI output; distributes flat blocks into pages via `_distributeBlocksIntoPages`.
+  - New `_distributeBlocksIntoPages` — splits block list into pages, closing a page when ≥ 2 blocks and current block is interactive (or max 5 reached), and re-normalizes `position.order` + `visibilityRule` per page.
+  - New `_normalizeFunctionFlowContent` — normalizes nodes/edges from AI output with fallback.
+  - `_normalizeBlockContent` text case — changed default format from `"markdown"` to `"richtext"`.
+  - `_normalizeBlockType` — added `function-flow`, `functionflow`, `function_flow` aliases.
+  - `_normalizeBlocks` fallback — changed format to `"richtext"`, updated message.
+  - `_blockTypeReference` — updated all examples to `richtext`, added code-execution and function-flow entries.
+  - `_buildLessonBlocksPrompt` — added hint to use code-execution/function-flow for CS lessons.
+  - `_promptVersion` bumped to `'2026-03-14.ai-course-v2'`.
+- `docs/prompt.txt` — updated to pages structure, richtext format, function-flow mention.
+
+### Validation
+- `cd Builder && flutter analyze` — 0 errors.
+- `cd Builder && flutter test` — 112 passed, 1 pre-existing failure.
+
+---
+
 ## [Unreleased] - 2026-03-14 (Builder Rich Text Editor + Page Concept)
 
 ### Summary

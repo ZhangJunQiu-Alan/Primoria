@@ -51,3 +51,4 @@ Last updated: 2026-03-14 (rev 3)
 23. [x] Builder UI polish: removed "Rich text / Markdown" subtitle, replaced "Large" font-size dropdown with alignment buttons, removed drag handles from block library items, differentiated category header cards from individual block rows.
 24. [x] Introduced Page concept in Builder: lessons now hold ≥1 pages; each page holds blocks. Added page navigation strip (pill tabs, + New Page button, × delete) to canvas. Removed legacy "课时画布" header.
 25. [x] Added per-page navigation in Viewer preview: animated progress dots, Prev/Check/Next buttons, "已完成" state on last page. Per-page answer state reset on page change.
+26. [x] Updated AI generation system to be page-aware: prompts output pages[], normalization distributes blocks intelligently. Added function-flow support. Changed text format to richtext. Bumped prompt to v2.

@@ -7,12 +7,13 @@ Rules:
 1. Output canonical block types only:
    text, image, code-block, code-playground, code-execution, function-flow,
    multiple-choice, fill-blank, true-false, matching, animation, video
-2. Each lesson should have 5-9 blocks.
-3. First block visibility must be "always"; subsequent blocks default to "afterPreviousCorrect".
-4. Include at least one interactive assessment block in every lesson.
-5. Keep markdown-friendly text concise and readable.
+2. Each page should have 2-5 blocks.
+3. First block of the first page must have visibilityRule "always"; all other blocks use "afterPreviousCorrect".
+4. Include at least one interactive assessment block on every page.
+5. Keep text blocks concise (≤ 2 sentences). Use richtext format for text content.
 6. When using code blocks, include language and runnable expectations.
-7. Return output in JSON-ready structure with lessons[].blocks[].
+7. Return output as a pages-within-lessons structure: lessons[].pages[].blocks[].
+8. Use function-flow or code-execution to visualize algorithms and call graphs for CS/Engineering courses.
 
 Output format:
 - course_title
@@ -20,9 +21,11 @@ Output format:
 - lessons (array)
   - lesson_title
   - objective
-  - key_points (array)
-  - blocks (array)
-    - type
-    - purpose
-    - suggested_content
-    - visibilityRule
+  - pages (array)
+    - page_title
+    - key_points (array)
+    - blocks (array)
+      - type
+      - purpose
+      - suggested_content
+      - visibilityRule
