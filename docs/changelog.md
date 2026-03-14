@@ -1,5 +1,44 @@
 # Changelog
 
+## [Unreleased] - 2026-03-14 (Builder Rich Text Editor + Page Concept)
+
+### Summary
+- Replaced the Markdown toggle in text blocks with a full WYSIWYG rich-text toolbar powered by `flutter_quill`.
+- Fixed persistent focus-loss bug in the text editor.
+- Polished Block Library UI: removed subtitle, replaced font-size dropdown with alignment buttons, removed drag handles from items, and visually differentiated category headers from block rows.
+- Introduced the **Page** concept inside lessons: a lesson now contains one or more pages, each holding an ordered list of blocks. The Builder canvas gained a page navigation strip; the Viewer preview gained per-page navigation with progress dots, Prev/Next/Complete buttons, and per-page answer state.
+- Removed the legacy "课时画布 / Lesson Canvas" header from the builder canvas.
+
+### Added
+- `Builder/lib/models/lesson_page.dart` — new `LessonPage { pageId, order, List<Block> blocks }` model with full `fromJson/toJson/copyWith/addBlock/removeBlock/updateBlock/reorderBlocks`.
+- Page navigation strip (`_PageNavigationStrip`, `_PageTab`) embedded in `BuilderCanvas`: pill tabs, "+ 新建页 / New page" button (disabled until current page has ≥1 block), per-tab × delete button.
+- `setCurrentPage(int)` on `BuilderStateNotifier`.
+- `addPage(lessonIndex, currentPageIndex)` / `removePage(lessonIndex, pageIndex)` on `CourseNotifier`.
+- `sortedPageBlocksProvider((lessonIndex, pageIndex))` family provider for block reads.
+- Per-page viewer navigation in `_InteractiveLessonView`: animated progress dots, Prev / Check / Next / Complete bottom bar.
+- `IdGenerator.pageId()`.
+
+### Changed
+- `Builder/lib/models/lesson.dart` — `CourseLesson` migrated from `List<Block> blocks` to `List<LessonPage> pages`. `fromJson` auto-wraps legacy `blocks` array into a single page (backward compatible). `toJson` emits `pages` key.
+- `Builder/lib/models/models.dart` — exports `LessonPage`.
+- `Builder/lib/providers/builder_state.dart` — added `currentPageIndex` field; `setCurrentLesson` resets page to 0.
+- `Builder/lib/providers/course_provider.dart` — all block ops (`addBlock`, `removeBlock`, `updateBlock`, `reorderBlocks`) accept `pageIndex:` named param; `duplicateLesson` correctly clones all pages.
+- `Builder/lib/widgets/builder_canvas.dart` — removed `_buildCanvasHeader()`; all block ops forward `currentPageIndex`; `DragTarget.onAcceptWithDetails` drops onto active page.
+- `Builder/lib/widgets/block_widgets/block_wrapper.dart` — replaced Markdown editor with `flutter_quill` WYSIWYG editor; persistent `FocusNode` + `ScrollController` fix focus-loss bug; toolbar: Bold/Italic/Underline/Strikethrough/Color/Highlight/Alignment(L/C/R)/Heading dropdown/Bullet/OrderedList.
+- `Builder/lib/widgets/module_panel.dart` — removed "Rich text / Markdown" subtitle; removed drag handle from `_ModuleItem`; reduced item height.
+- `Builder/lib/services/block_registry.dart` — text block description changed from `'Rich text / Markdown'` to `'Rich text'`.
+- `Builder/lib/services/course_schema_validator.dart` — `_validateLessons` updated to traverse `pages[].blocks[]` (new format) with fallback to legacy `blocks[]` at lesson level.
+- `Builder/lib/models/block.dart` — `TextContent` default format changed from `'markdown'` to `'richtext'`.
+- `Builder/lib/main.dart` — added `flutter_localizations` delegates (required for `flutter_quill`).
+- `Builder/pubspec.yaml` — added `flutter_quill: ^11.5.0`, `flutter_localizations: sdk: flutter`.
+- `docs/course-json-guide.md` — lesson shape updated to reflect new `pages` structure.
+
+### Validation
+- `cd Builder && flutter analyze` — 0 errors.
+- `cd Builder && flutter test` — 112 passed, 1 pre-existing failure (`widget_test.dart` requires Supabase init).
+
+---
+
 ## [Unreleased] - 2026-03-08 (Viewer Auth & Landing Redesign + GitHub Pages Migration)
 
 ### Summary

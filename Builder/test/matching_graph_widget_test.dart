@@ -42,7 +42,7 @@ void main() {
 
     final lesson = CourseLesson.create(
       title: 'Lesson 1',
-    ).copyWith(blocks: [block]);
+    ).addBlock(block);
     final course = Course.create(
       title: 'Matching Graph',
     ).copyWith(lessons: [lesson]);
