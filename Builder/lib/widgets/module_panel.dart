@@ -359,26 +359,6 @@ class _ModulePanelState extends State<ModulePanel> {
                             color: AppColors.neutral900,
                           ),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          _categoryDescription(category.key),
-                          style: const TextStyle(
-                            fontSize: AppFontSize.xs,
-                            color: AppColors.neutral500,
-                            height: 1.35,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        Text(
-                          t.isZh
-                              ? '${blocks.length} 个模块'
-                              : '${blocks.length} block${blocks.length == 1 ? '' : 's'}',
-                          style: TextStyle(
-                            fontSize: AppFontSize.xs,
-                            color: category.accentColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
                       ],
                     ),
                   ),

@@ -27,15 +27,19 @@ class PropertyPanel extends ConsumerWidget {
     final course = ref.watch(courseProvider);
     final selectedBlockId = builderState.selectedBlockId;
 
-    // Find selected block
+    // Find selected block — search the current page first, then all pages as
+    // fallback so the inspector works on every page, not just page 0.
     Block? selectedBlock;
     if (selectedBlockId != null) {
       final lesson = course.getLesson(builderState.currentLessonIndex);
       if (lesson != null) {
-        for (final block in lesson.blocks) {
-          if (block.id == selectedBlockId) {
-            selectedBlock = block;
-            break;
+        outer:
+        for (final page in lesson.pages) {
+          for (final block in page.blocks) {
+            if (block.id == selectedBlockId) {
+              selectedBlock = block;
+              break outer;
+            }
           }
         }
       }
@@ -95,6 +99,7 @@ class PropertyPanel extends ConsumerWidget {
                   key: ValueKey(selectedBlock.id),
                   block: selectedBlock,
                   lessonIndex: builderState.currentLessonIndex,
+                  pageIndex: builderState.currentPageIndex,
                   t: t,
                 ),
         ),
@@ -154,12 +159,14 @@ class PropertyPanel extends ConsumerWidget {
 class _BlockPropertyEditor extends ConsumerStatefulWidget {
   final Block block;
   final int lessonIndex;
+  final int pageIndex;
   final BuilderLocalizations t;
 
   const _BlockPropertyEditor({
     super.key,
     required this.block,
     required this.lessonIndex,
+    required this.pageIndex,
     required this.t,
   });
 
@@ -188,7 +195,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
   void _updateBlock(Block updatedBlock) {
     ref
         .read(courseProvider.notifier)
-        .updateBlock(widget.lessonIndex, updatedBlock);
+        .updateBlock(widget.lessonIndex, updatedBlock, pageIndex: widget.pageIndex);
     ref.read(builderStateProvider.notifier).markAsUnsaved();
   }
 

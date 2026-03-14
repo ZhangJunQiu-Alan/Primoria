@@ -7,13 +7,19 @@ Rules:
 1. Output canonical block types only:
    text, image, code-block, code-playground, code-execution, function-flow,
    multiple-choice, fill-blank, true-false, matching, animation, video
-2. Each page should have 2-5 blocks.
+2. Each page should have 3-5 blocks.
 3. First block of the first page must have visibilityRule "always"; all other blocks use "afterPreviousCorrect".
 4. Include at least one interactive assessment block on every page.
 5. Keep text blocks concise (≤ 2 sentences). Use richtext format for text content.
 6. When using code blocks, include language and runnable expectations.
 7. Return output as a pages-within-lessons structure: lessons[].pages[].blocks[].
 8. Use function-flow or code-execution to visualize algorithms and call graphs for CS/Engineering courses.
+9. VISUAL FIRST: Every page must start with an animation or image block at position 0.
+   - Use animation with aiPrompt when no real image URL is available.
+   - Valid animation presets: "bouncing-dot" (motion/loops/intro) or "pulse-bars" (data/rhythm/flow).
+   - Always include aiPrompt describing what the animation represents.
+10. Do NOT place two text blocks back-to-back on the same page.
+11. Page rhythm: [animation/image] → [text or code-block] → [quiz block(s)]
 
 Output format:
 - course_title
@@ -29,3 +35,4 @@ Output format:
       - purpose
       - suggested_content
       - visibilityRule
+      - aiPrompt (for animation blocks only)

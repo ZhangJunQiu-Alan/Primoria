@@ -1,5 +1,34 @@
 # Changelog
 
+## [Unreleased] - 2026-03-14 (Builder AI + Canvas UX Polish)
+
+### Summary
+- Fixed critical bug: AI generation from PDF produced an empty canvas (course title populated but no blocks visible).
+- Redesigned AI prompt to v3/v4: visual-first page strategy (animation opener on every page), stricter text rules, markdown-to-Delta conversion in normalizer.
+- Rebuilt page navigation strip: compact numbered chips with scroll arrows.
+- Fixed property inspector blank on pages 2+ (block lookup and `updateBlock` were hardcoded to page 0).
+- Block library UI: removed category description subtitles and "N 个模块" count labels.
+
+### Fixed
+- `Builder/lib/services/ai_course_generator.dart` — `_normalizeGeneratedCourseJson` now sets `$schema` and `schemaVersion` on the normalized JSON so `CourseSchemaMigrator` treats it as current schema (v1.0.0) instead of `legacy-unversioned`, preventing the migrator from stripping inner `pages` arrays and producing empty lessons.
+- `Builder/lib/widgets/property_panel.dart` — block lookup in `PropertyPanel.build` now iterates `lesson.pages[*].blocks` (all pages) instead of `lesson.blocks` (page 0 only); `_BlockPropertyEditor._updateBlock` passes `pageIndex:` to `courseProvider.updateBlock`; `_BlockPropertyEditor` constructor gains `pageIndex` parameter.
+
+### Changed
+- `Builder/lib/services/ai_course_generator.dart`:
+  - Prompt bumped to `v3` then `v4`: mandatory animation opener on every page; text blocks limited to 1 sentence / 20 words; all markdown syntax banned in text values; image blocks banned (use animation + aiPrompt instead).
+  - `animation` normalizer now preserves `aiPrompt` field (was silently dropped).
+  - Text normalizer now calls `_ensureQuillDelta` — if value is already valid Delta JSON keep it, otherwise convert markdown to Quill Delta via `_markdownToQuillDelta` / `_stripInlineMarkdown`.
+  - Empty-URL image blocks are auto-converted to `animation` blocks (with alt/caption as `aiPrompt`) so the canvas always shows something meaningful.
+- `Builder/lib/widgets/builder_canvas.dart` — `_PageNavigationStrip` redesigned: compact numbered chips (`_PageChip`, 28 px, rounded-rect border) replace verbose "第 N 页" pills; `_ArrowBtn` scroll arrows fade in/out on overflow; active chip auto-scrolls into view; "+ 新建页" always anchored to the right.
+- `Builder/lib/widgets/module_panel.dart` — removed category description subtitles ("叙事、媒体与测验模块" etc.) and "N 个模块" count labels from category headers.
+- `docs/prompt.txt` — updated to v4 rules (animation openers, 1-sentence text, no markdown).
+
+### Validation
+- `cd Builder && flutter analyze` — 0 errors.
+- `cd Builder && flutter test` — 112 passed, 1 pre-existing failure (`widget_test.dart`).
+
+---
+
 ## [Unreleased] - 2026-03-14 (Builder AI Generation — Pages + richtext + function-flow)
 
 ### Summary
