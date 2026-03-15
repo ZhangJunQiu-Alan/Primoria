@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../l10n/app_localizations.dart';
@@ -569,49 +569,66 @@ class _InteractiveLessonView extends StatefulWidget {
 }
 
 class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
-  /// Tracks which block indices have been answered correctly.
-  final Map<int, bool> _correctState = {};
+  int _currentPageIndex = 0;
 
-  /// Incremented each time the user taps the Check button.
-  final ValueNotifier<int> _checkTrigger = ValueNotifier<int>(0);
-
-  /// Whether the user has pressed Check at least once.
-  bool _checked = false;
+  /// Per-page state: correctState, checkTrigger, checked flag.
+  final Map<int, Map<int, bool>> _pageCorrectState = {};
+  final Map<int, ValueNotifier<int>> _pageCheckTriggers = {};
+  final Map<int, bool> _pageChecked = {};
 
   @override
   void initState() {
     super.initState();
-    // Auto-mark non-interactive blocks as correct.
-    final blocks = widget.lesson.blocks;
+    _initPageState(0);
+  }
+
+  void _initPageState(int pageIndex) {
+    if (_pageCheckTriggers.containsKey(pageIndex)) return;
+    _pageCheckTriggers[pageIndex] = ValueNotifier<int>(0);
+    _pageChecked[pageIndex] = false;
+    _pageCorrectState[pageIndex] = {};
+
+    final pages = widget.lesson.pages;
+    if (pageIndex >= pages.length) return;
+    final blocks = pages[pageIndex].blocks;
     for (int i = 0; i < blocks.length; i++) {
       if (!_isQuestionType(blocks[i].type)) {
-        _correctState[i] = true;
+        _pageCorrectState[pageIndex]![i] = true;
       }
     }
   }
 
   @override
   void dispose() {
-    _checkTrigger.dispose();
+    for (final trigger in _pageCheckTriggers.values) {
+      trigger.dispose();
+    }
     super.dispose();
   }
 
-  void _onBlockAnswered(int index, bool isCorrect) {
+  void _onBlockAnswered(int pageIndex, int blockIndex, bool isCorrect) {
     setState(() {
-      _correctState[index] = isCorrect;
+      _pageCorrectState[pageIndex]![blockIndex] = isCorrect;
     });
   }
 
   void _onCheck() {
     setState(() {
-      _checked = true;
-      _checkTrigger.value++;
+      _pageChecked[_currentPageIndex] = true;
+      _pageCheckTriggers[_currentPageIndex]!.value++;
     });
   }
 
-  /// Computes visibility sequentially so hidden gated blocks also gate
-  /// subsequent blocks until they are unlocked.
-  List<bool> _computeBlockVisibility(List<Block> blocks) {
+  void _goToPage(int pageIndex) {
+    _initPageState(pageIndex);
+    setState(() {
+      _currentPageIndex = pageIndex;
+    });
+  }
+
+  List<bool> _computeBlockVisibility(List<Block> blocks, int pageIndex) {
+    final correctState = _pageCorrectState[pageIndex] ?? {};
+    final checked = _pageChecked[pageIndex] ?? false;
     final visibility = List<bool>.filled(blocks.length, true);
 
     for (int index = 0; index < blocks.length; index++) {
@@ -627,16 +644,14 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
         continue;
       }
 
-      if (!_checked) {
+      if (!checked) {
         visibility[index] = false;
         continue;
       }
 
-      // Check if the immediately preceding block is correct.
       if (index > 0) {
-        visibility[index] = _correctState[index - 1] == true;
+        visibility[index] = correctState[index - 1] == true;
       } else {
-        // No previous block found → show by default.
         visibility[index] = true;
       }
     }
@@ -651,15 +666,59 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
         type == BlockType.matching;
   }
 
+  bool get _hasQuestionBlocks {
+    final pages = widget.lesson.pages;
+    if (_currentPageIndex >= pages.length) return false;
+    return pages[_currentPageIndex].blocks.any(
+      (b) => _isQuestionType(b.type),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final blocks = widget.lesson.blocks;
-    final blockVisibility = _computeBlockVisibility(blocks);
+    final pages = widget.lesson.pages;
+    final pageCount = pages.length;
+    final maxPage = pageCount > 0 ? pageCount - 1 : 0;
+    final safePageIndex = _currentPageIndex.clamp(0, maxPage).toInt();
+    final blocks = pageCount > 0 ? pages[safePageIndex].blocks : <Block>[];
+    final blockVisibility = _computeBlockVisibility(blocks, safePageIndex);
+    final checkTrigger =
+        _pageCheckTriggers[safePageIndex] ?? ValueNotifier<int>(0);
+    final isLastPage = safePageIndex == pageCount - 1;
 
     return Column(
       children: [
+        // Page progress dots
+        if (pageCount > 1)
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: AppSpacing.sm,
+              horizontal: AppSpacing.md,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (int i = 0; i < pageCount; i++) ...[
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: i == safePageIndex ? 20 : 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: i == safePageIndex
+                          ? AppColors.primary500
+                          : AppColors.neutral300,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  if (i < pageCount - 1) const SizedBox(width: 4),
+                ],
+              ],
+            ),
+          ),
+        // Block list
         Expanded(
           child: ListView(
+            key: ValueKey('page_$safePageIndex'),
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [
               if (blocks.isEmpty)
@@ -683,18 +742,19 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
                   return AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     child: _InteractiveBlockPreview(
-                      key: ValueKey('block_$idx'),
+                      key: ValueKey('page${safePageIndex}_block_$idx'),
                       block: block,
                       t: widget.t,
-                      checkTrigger: _checkTrigger,
-                      onAnswered: (correct) => _onBlockAnswered(idx, correct),
+                      checkTrigger: checkTrigger,
+                      onAnswered: (correct) =>
+                          _onBlockAnswered(safePageIndex, idx, correct),
                     ),
                   );
                 }),
             ],
           ),
         ),
-        // Check button bar
+        // Bottom navigation bar
         if (blocks.isNotEmpty)
           Container(
             padding: const EdgeInsets.symmetric(
@@ -707,24 +767,107 @@ class _InteractiveLessonViewState extends State<_InteractiveLessonView> {
             ),
             child: SafeArea(
               top: false,
-              child: SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: _onCheck,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary500,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+              child: Row(
+                children: [
+                  // Previous page button
+                  if (safePageIndex > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(right: AppSpacing.sm),
+                      child: SizedBox(
+                        height: 48,
+                        child: OutlinedButton.icon(
+                          onPressed: () => _goToPage(safePageIndex - 1),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.neutral700,
+                            side: const BorderSide(color: AppColors.neutral300),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                AppBorderRadius.md,
+                              ),
+                            ),
+                          ),
+                          icon: const Icon(Icons.chevron_left, size: 20),
+                          label: Text(
+                            _viewerTr(widget.t, '上一页', 'Prev'),
+                            style: const TextStyle(fontSize: AppFontSize.sm),
+                          ),
+                        ),
+                      ),
                     ),
-                    textStyle: const TextStyle(
-                      fontSize: AppFontSize.md,
-                      fontWeight: FontWeight.w600,
+                  // Check button (only for pages with quiz blocks)
+                  if (_hasQuestionBlocks)
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: isLastPage ? 0 : AppSpacing.sm,
+                        ),
+                        child: SizedBox(
+                          height: 48,
+                          child: ElevatedButton(
+                            onPressed: _onCheck,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.secondary500,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppBorderRadius.md,
+                                ),
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: AppFontSize.md,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            child: Text(
+                              _viewerTr(widget.t, '检查', 'Check'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  // Next / Complete button
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: isLastPage
+                            ? null
+                            : () => _goToPage(safePageIndex + 1),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isLastPage
+                              ? AppColors.neutral200
+                              : AppColors.primary500,
+                          foregroundColor: isLastPage
+                              ? AppColors.neutral500
+                              : Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppBorderRadius.md,
+                            ),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: AppFontSize.md,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              isLastPage
+                                  ? _viewerTr(widget.t, '已完成', 'Complete')
+                                  : _viewerTr(widget.t, '下一页', 'Next'),
+                            ),
+                            if (!isLastPage) ...[
+                              const SizedBox(width: 4),
+                              const Icon(Icons.chevron_right, size: 20),
+                            ],
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  child: Text(_viewerTr(widget.t, '检查', 'Check')),
-                ),
+                ],
               ),
             ),
           ),
@@ -765,19 +908,8 @@ class _InteractiveBlockPreview extends StatelessWidget {
     switch (block.type) {
       case BlockType.text:
         final content = block.content as TextContent;
-        if (content.format == 'markdown') {
-          return MarkdownBody(
-            data: content.value.isEmpty ? ' ' : content.value,
-          );
-        }
-        return Text(
-          content.value.isEmpty ? ' ' : content.value,
-          textAlign: _alignmentToTextAlign(block.style.alignment),
-          style: const TextStyle(
-            fontSize: AppFontSize.md,
-            color: AppColors.neutral700,
-          ),
-        );
+        if (content.value.isEmpty) return const SizedBox.shrink();
+        return _RichTextDisplay(content: content);
       case BlockType.image:
         final content = block.content as ImageContent;
         if (content.url.isEmpty) {
@@ -969,17 +1101,7 @@ class _InteractiveBlockPreview extends StatelessWidget {
     }
   }
 
-  TextAlign _alignmentToTextAlign(String value) {
-    switch (value) {
-      case 'center':
-        return TextAlign.center;
-      case 'right':
-        return TextAlign.right;
-      case 'left':
-      default:
-        return TextAlign.left;
-    }
-  }
+
 
   double _spacingToValue(String value) {
     switch (value) {
@@ -2435,6 +2557,90 @@ class _ExplanationBox extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Rich text read-only display — renders Quill Delta JSON (or legacy plain text)
+// ---------------------------------------------------------------------------
+class _RichTextDisplay extends StatefulWidget {
+  final TextContent content;
+  const _RichTextDisplay({required this.content});
+
+  @override
+  State<_RichTextDisplay> createState() => _RichTextDisplayState();
+}
+
+class _RichTextDisplayState extends State<_RichTextDisplay> {
+  quill.QuillController? _controller;
+  String _plainFallback = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _init(widget.content);
+  }
+
+  void _init(TextContent content) {
+    _controller?.dispose();
+    _controller = null;
+    _plainFallback = '';
+
+    if (content.format == 'richtext' && content.value.isNotEmpty) {
+      try {
+        final doc = quill.Document.fromJson(
+          jsonDecode(content.value) as List,
+        );
+        final ctrl = quill.QuillController(
+          document: doc,
+          selection: const TextSelection.collapsed(offset: 0),
+        );
+        ctrl.readOnly = true;
+        _controller = ctrl;
+        return;
+      } catch (_) {
+        // Fall through to plain text
+      }
+    }
+    // Legacy or non-JSON content → plain text
+    _plainFallback = content.value;
+  }
+
+  @override
+  void didUpdateWidget(covariant _RichTextDisplay old) {
+    super.didUpdateWidget(old);
+    if (widget.content.value != old.content.value) {
+      _init(widget.content);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ctrl = _controller;
+    if (ctrl != null) {
+      return quill.QuillEditor.basic(
+        controller: ctrl,
+        config: const quill.QuillEditorConfig(
+          scrollable: false,
+          autoFocus: false,
+          expands: false,
+          padding: EdgeInsets.zero,
+        ),
+      );
+    }
+    return Text(
+      _plainFallback,
+      style: const TextStyle(
+        fontSize: AppFontSize.md,
+        color: AppColors.neutral700,
       ),
     );
   }

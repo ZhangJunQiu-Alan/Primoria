@@ -1,91 +1,134 @@
 import 'block.dart';
+import 'lesson_page.dart';
 import '../services/id_generator.dart';
 
-/// Course lesson model
+/// Course lesson model — contains ordered pages, each holding blocks.
 class CourseLesson {
   final String lessonId;
   final String title;
-  final List<Block> blocks;
+  final List<LessonPage> pages;
 
   const CourseLesson({
     required this.lessonId,
     required this.title,
-    required this.blocks,
+    required this.pages,
   });
 
-  /// Create default empty lesson
+  /// Flat view of the first page's blocks (convenience accessor).
+  List<Block> get blocks => pages.isNotEmpty ? pages.first.blocks : [];
+
+  /// Create a lesson with one empty page.
   factory CourseLesson.create({String title = 'New Lesson'}) {
     return CourseLesson(
       lessonId: IdGenerator.lessonId(),
       title: title,
-      blocks: [],
+      pages: [LessonPage.create(order: 0)],
     );
   }
 
   factory CourseLesson.fromJson(Map<String, dynamic> json) {
+    final lessonId = (json['lessonId'] ?? json['pageId']) as String;
+    final title = json['title'] as String? ?? '';
+
+    // New format: has 'pages' key
+    if (json.containsKey('pages') && json['pages'] is List) {
+      final pages = (json['pages'] as List<dynamic>)
+          .map((e) => LessonPage.fromJson(e as Map<String, dynamic>))
+          .toList();
+      return CourseLesson(
+        lessonId: lessonId,
+        title: title,
+        pages: pages.isEmpty ? [LessonPage.create(order: 0)] : pages,
+      );
+    }
+
+    // Legacy format: has 'blocks' key → wrap into first page
+    final blocks = (json['blocks'] as List<dynamic>?)
+            ?.map((e) => Block.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        [];
     return CourseLesson(
-      // backward compat: accept legacy 'pageId' key
-      lessonId: (json['lessonId'] ?? json['pageId']) as String,
-      title: json['title'] as String? ?? '',
-      blocks: (json['blocks'] as List<dynamic>?)
-              ?.map((e) => Block.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+      lessonId: lessonId,
+      title: title,
+      pages: [
+        LessonPage(
+          pageId: IdGenerator.pageId(),
+          order: 0,
+          blocks: blocks,
+        ),
+      ],
     );
   }
 
   Map<String, dynamic> toJson() => {
         'lessonId': lessonId,
         'title': title,
-        'blocks': blocks.map((b) => b.toJson()).toList(),
+        'pages': pages.map((p) => p.toJson()).toList(),
       };
 
   CourseLesson copyWith({
     String? lessonId,
     String? title,
-    List<Block>? blocks,
+    List<LessonPage>? pages,
   }) {
     return CourseLesson(
       lessonId: lessonId ?? this.lessonId,
       title: title ?? this.title,
-      blocks: blocks ?? this.blocks,
+      pages: pages ?? this.pages,
     );
   }
 
-  /// Add block
-  CourseLesson addBlock(Block block) {
-    final updatedBlocks = [...blocks, block];
-    return copyWith(blocks: updatedBlocks);
+  // ---------------------------------------------------------------------------
+  // Page-aware block operations
+  // ---------------------------------------------------------------------------
+
+  CourseLesson addBlock(Block block, {int pageIndex = 0}) {
+    if (pageIndex < 0 || pageIndex >= pages.length) return this;
+    final updated = [...pages];
+    updated[pageIndex] = pages[pageIndex].addBlock(block);
+    return copyWith(pages: updated);
   }
 
-  /// Remove block
-  CourseLesson removeBlock(String blockId) {
-    final updatedBlocks = blocks.where((b) => b.id != blockId).toList();
-    return copyWith(blocks: updatedBlocks);
+  CourseLesson removeBlock(String blockId, {int pageIndex = 0}) {
+    if (pageIndex < 0 || pageIndex >= pages.length) return this;
+    final updated = [...pages];
+    updated[pageIndex] = pages[pageIndex].removeBlock(blockId);
+    return copyWith(pages: updated);
   }
 
-  /// Update block
-  CourseLesson updateBlock(Block updatedBlock) {
-    final updatedBlocks = blocks.map((b) {
-      if (b.id == updatedBlock.id) return updatedBlock;
-      return b;
+  CourseLesson updateBlock(Block updatedBlock, {int pageIndex = 0}) {
+    if (pageIndex < 0 || pageIndex >= pages.length) return this;
+    final updated = [...pages];
+    updated[pageIndex] = pages[pageIndex].updateBlock(updatedBlock);
+    return copyWith(pages: updated);
+  }
+
+  CourseLesson reorderBlocks(
+    int oldIndex,
+    int newIndex, {
+    int pageIndex = 0,
+  }) {
+    if (pageIndex < 0 || pageIndex >= pages.length) return this;
+    final updated = [...pages];
+    updated[pageIndex] = pages[pageIndex].reorderBlocks(oldIndex, newIndex);
+    return copyWith(pages: updated);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Page management
+  // ---------------------------------------------------------------------------
+
+  CourseLesson addPage() {
+    return copyWith(pages: [...pages, LessonPage.create(order: pages.length)]);
+  }
+
+  CourseLesson removePage(int pageIndex) {
+    if (pages.length <= 1) return this;
+    if (pageIndex < 0 || pageIndex >= pages.length) return this;
+    final updated = [...pages]..removeAt(pageIndex);
+    final reordered = updated.asMap().entries.map((e) {
+      return e.value.copyWith(order: e.key);
     }).toList();
-    return copyWith(blocks: updatedBlocks);
-  }
-
-  /// Reorder blocks
-  CourseLesson reorderBlocks(int oldIndex, int newIndex) {
-    final updatedBlocks = [...blocks];
-    final block = updatedBlocks.removeAt(oldIndex);
-    updatedBlocks.insert(newIndex, block);
-
-    // Update order for all blocks
-    final reorderedBlocks = updatedBlocks.asMap().entries.map((entry) {
-      return entry.value.copyWith(
-        position: entry.value.position.copyWith(order: entry.key),
-      );
-    }).toList();
-
-    return copyWith(blocks: reorderedBlocks);
+    return copyWith(pages: reordered);
   }
 }

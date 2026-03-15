@@ -1,6 +1,6 @@
 # TODO
 
-Last updated: 2026-03-08 (rev 2)
+Last updated: 2026-03-14 (rev 4)
 
 ## 1. High Priority
 
@@ -46,3 +46,14 @@ Last updated: 2026-03-08 (rev 2)
 18. [x] Redesigned Viewer login screen (two-panel desktop layout, social OAuth: Google/Apple/WeChat, animated inputs, dark-mode fix, brand-asset logos).
 19. [x] Redesigned Viewer register screen (mirrored layout, username field, password strength bar, animated terms checkbox, stats row in brand panel).
 20. [x] Migrated GitHub Pages from hackathon/ to Viewer app; removed hackathon/ project from repo; preserved primoria.dpdns.org via CNAME.
+21. [x] Replaced Markdown editor with WYSIWYG rich-text toolbar (flutter_quill): Bold, Italic, Underline, Strikethrough, Text Color, Highlight, Alignment (L/C/R), Heading dropdown (H1/H2/H3/Normal), Bullet list, Ordered list. Removed Markdown support entirely.
+22. [x] Fixed focus-loss-after-2-chars bug in text editor (persistent FocusNode + ScrollController).
+23. [x] Builder UI polish: removed "Rich text / Markdown" subtitle, replaced "Large" font-size dropdown with alignment buttons, removed drag handles from block library items, differentiated category header cards from individual block rows.
+24. [x] Introduced Page concept in Builder: lessons now hold ≥1 pages; each page holds blocks. Added page navigation strip (pill tabs, + New Page button, × delete) to canvas. Removed legacy "课时画布" header.
+25. [x] Added per-page navigation in Viewer preview: animated progress dots, Prev/Check/Next buttons, "已完成" state on last page. Per-page answer state reset on page change.
+26. [x] Updated AI generation system to be page-aware: prompts output pages[], normalization distributes blocks intelligently. Added function-flow support. Changed text format to richtext. Bumped prompt to v2.
+27. [x] Fixed AI generation empty canvas bug: normalized JSON now carries `schemaVersion` so the schema migrator skips legacy migration and preserves inner `pages` structure.
+28. [x] AI prompt v3/v4: visual-first strategy (animation opener mandatory), 1-sentence text limit, markdown banned, image blocks replaced by animation+aiPrompt, `aiPrompt` preserved in normalizer, markdown-to-Quill-Delta conversion (`_ensureQuillDelta`).
+29. [x] Rebuilt Builder page navigation strip: compact numbered chips with scroll arrows, active chip auto-scroll, "+ 新建页" always visible.
+30. [x] Fixed property inspector blank on pages 2+: block search now covers all pages; `updateBlock` passes correct `pageIndex`.
+31. [x] Builder block library UI: removed category description subtitles and "N 个模块" count labels.

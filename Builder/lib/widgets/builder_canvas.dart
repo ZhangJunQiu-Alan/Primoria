@@ -39,40 +39,60 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   @override
   Widget build(BuildContext context) {
     final builderState = ref.watch(builderStateProvider);
+    final lessonIndex = builderState.currentLessonIndex;
+    final pageIndex = builderState.currentPageIndex;
     final sortedBlocks = ref.watch(
-      sortedLessonBlocksProvider(builderState.currentLessonIndex),
+      sortedPageBlocksProvider((lessonIndex, pageIndex)),
     );
 
-    return DragTarget<BlockType>(
-      onAcceptWithDetails: (details) {
-        final blockType = details.data;
-        ref
-            .read(courseProvider.notifier)
-            .addBlock(builderState.currentLessonIndex, blockType);
-        ref.read(builderStateProvider.notifier).markAsUnsaved();
-      },
-      builder: (context, candidateData, rejectedData) {
-        final isDragOver = candidateData.isNotEmpty;
-        _syncItemKeyMap(sortedBlocks);
+    final lesson = ref.watch(courseProvider).getLesson(lessonIndex);
+    final pages = lesson?.pages ?? [];
 
-        final child = sortedBlocks.isEmpty
-            ? _buildEmptyState(isDragOver)
-            : _buildBlocksList(sortedBlocks, builderState);
+    return Column(
+      children: [
+        _PageNavigationStrip(
+          t: widget.t,
+          pages: pages,
+          currentPageIndex: pageIndex,
+          lessonIndex: lessonIndex,
+        ),
+        Expanded(
+          child: DragTarget<BlockType>(
+            onAcceptWithDetails: (details) {
+              final blockType = details.data;
+              ref
+                  .read(courseProvider.notifier)
+                  .addBlock(lessonIndex, blockType, pageIndex: pageIndex);
+              ref.read(builderStateProvider.notifier).markAsUnsaved();
+            },
+            builder: (context, candidateData, rejectedData) {
+              final isDragOver = candidateData.isNotEmpty;
+              _syncItemKeyMap(sortedBlocks);
 
-        if (!isDragOver) return child;
+              final child = sortedBlocks.isEmpty
+                  ? _buildEmptyState(isDragOver)
+                  : _buildBlocksList(sortedBlocks, builderState);
 
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primary500, width: 2),
-            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              if (!isDragOver) return child;
+
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.primary500, width: 2),
+                  borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                ),
+                child: child,
+              );
+            },
           ),
-          child: child,
-        );
-      },
+        ),
+      ],
     );
   }
 
   Widget _buildBlocksList(List<Block> sortedBlocks, BuilderState builderState) {
+    final lessonIndex = builderState.currentLessonIndex;
+    final pageIndex = builderState.currentPageIndex;
+
     return Listener(
       onPointerMove: (event) =>
           _handlePointerUpdate(event.position, sortedBlocks),
@@ -96,9 +116,10 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
           ref
               .read(courseProvider.notifier)
               .reorderBlocks(
-                builderState.currentLessonIndex,
+                lessonIndex,
                 oldIndex,
                 newIndex,
+                pageIndex: pageIndex,
               );
           ref.read(builderStateProvider.notifier).markAsUnsaved();
         },
@@ -133,7 +154,6 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (index == 0) _buildCanvasHeader(sortedBlocks.length),
                 if (isInsertBefore) _buildInsertionIndicator(),
                 KeyedSubtree(
                   key: _itemKeyFor(block.id),
@@ -153,8 +173,9 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                         ref
                             .read(courseProvider.notifier)
                             .removeBlock(
-                              builderState.currentLessonIndex,
+                              lessonIndex,
                               block.id,
+                              pageIndex: pageIndex,
                             );
                         ref
                             .read(builderStateProvider.notifier)
@@ -165,8 +186,9 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
                         ref
                             .read(courseProvider.notifier)
                             .updateBlock(
-                              builderState.currentLessonIndex,
+                              lessonIndex,
                               updatedBlock,
+                              pageIndex: pageIndex,
                             );
                         ref.read(builderStateProvider.notifier).markAsUnsaved();
                       },
@@ -314,82 +336,9 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
     );
   }
 
-  Widget _buildCanvasHeader(int blockCount) {
-    final t = widget.t;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF7FAFC),
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
-          border: Border.all(color: AppColors.neutral200),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: AppColors.secondary50,
-                borderRadius: BorderRadius.circular(AppBorderRadius.md),
-              ),
-              child: const Icon(
-                Icons.auto_stories_outlined,
-                color: AppColors.secondary700,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    t.isZh ? '课时画布' : 'Lesson Canvas',
-                    style: TextStyle(
-                      fontSize: AppFontSize.md,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.neutral900,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    t.isZh
-                        ? '本课共 $blockCount 个模块'
-                        : '$blockCount block${blockCount == 1 ? '' : 's'} in this lesson',
-                    style: const TextStyle(
-                      fontSize: AppFontSize.sm,
-                      color: AppColors.neutral500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.sm,
-                vertical: AppSpacing.xs,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(AppBorderRadius.pill),
-                border: Border.all(color: AppColors.neutral200),
-              ),
-              child: Text(
-                t.isZh ? '拖拽排序' : 'Drag to reorder',
-                style: TextStyle(
-                  fontSize: AppFontSize.xs,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.neutral600,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // ---------------------------------------------------------------------------
+  // Reorder / auto-scroll helpers
+  // ---------------------------------------------------------------------------
 
   void _onReorderStart(int index) {
     _draggingIndex = index;
@@ -479,11 +428,6 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
       final box = key?.currentContext?.findRenderObject() as RenderBox?;
       if (box == null || !box.attached) continue;
 
-      // During a drag, ReorderableListView moves the dragged item's GlobalKey
-      // element into an Overlay widget, so `box` is no longer a descendant of
-      // `viewportBox`. Calling localToGlobal(ancestor: viewportBox) in that
-      // case walks up the render tree past the root and throws
-      // "Unexpected null value." — skip any box not under the viewport.
       final double top;
       try {
         top = box.localToGlobal(Offset.zero, ancestor: viewportBox).dy;
@@ -505,8 +449,8 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
   }
 
   List<Block> _readSortedBlocks() {
-    final state = ref.read(builderStateProvider);
-    return ref.read(sortedLessonBlocksProvider(state.currentLessonIndex));
+    final s = ref.read(builderStateProvider);
+    return ref.read(sortedPageBlocksProvider((s.currentLessonIndex, s.currentPageIndex)));
   }
 
   void _syncItemKeyMap(List<Block> sortedBlocks) {
@@ -519,5 +463,410 @@ class _BuilderCanvasState extends ConsumerState<BuilderCanvas> {
 
   GlobalKey _itemKeyFor(String blockId) {
     return _itemKeys.putIfAbsent(blockId, GlobalKey.new);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Page Navigation Strip
+// ---------------------------------------------------------------------------
+
+/// Compact page navigation strip.
+///
+/// Layout: [‹]  [1] [2] [3] … [N]  [›]   [+ 新建页]
+///
+/// • Numbered chips (≤30 px wide) replace verbose "第 N 页" labels.
+/// • Left/right arrow buttons appear only when there is overflow.
+/// • Active chip is always scrolled into view automatically.
+/// • "新建页" button is always anchored to the right and never hidden.
+class _PageNavigationStrip extends ConsumerStatefulWidget {
+  final BuilderLocalizations t;
+  final List<LessonPage> pages;
+  final int currentPageIndex;
+  final int lessonIndex;
+
+  const _PageNavigationStrip({
+    required this.t,
+    required this.pages,
+    required this.currentPageIndex,
+    required this.lessonIndex,
+  });
+
+  @override
+  ConsumerState<_PageNavigationStrip> createState() =>
+      _PageNavigationStripState();
+}
+
+class _PageNavigationStripState extends ConsumerState<_PageNavigationStrip> {
+  final ScrollController _sc = ScrollController();
+  bool _canScrollLeft = false;
+  bool _canScrollRight = false;
+
+  // Each chip occupies this width (number + optional ×).
+  static const double _chipW = 34;
+  static const double _chipGap = 4;
+  static const double _scrollStep = 120;
+
+  @override
+  void initState() {
+    super.initState();
+    _sc.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _onScroll();
+      _scrollToActive();
+    });
+  }
+
+  @override
+  void didUpdateWidget(_PageNavigationStrip old) {
+    super.didUpdateWidget(old);
+    if (old.currentPageIndex != widget.currentPageIndex ||
+        old.pages.length != widget.pages.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _onScroll();
+        _scrollToActive();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _sc.removeListener(_onScroll);
+    _sc.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_sc.hasClients) return;
+    final pos = _sc.position;
+    final left = pos.pixels > 0;
+    final right = pos.pixels < pos.maxScrollExtent - 0.5;
+    if (left != _canScrollLeft || right != _canScrollRight) {
+      if (mounted) setState(() {
+        _canScrollLeft = left;
+        _canScrollRight = right;
+      });
+    }
+  }
+
+  void _scrollToActive() {
+    if (!_sc.hasClients) return;
+    final i = widget.currentPageIndex;
+    final target = i * (_chipW + _chipGap);
+    final viewWidth = _sc.position.viewportDimension;
+    final current = _sc.offset;
+    if (target < current) {
+      _sc.animateTo(
+        (target - _chipGap).clamp(0, _sc.position.maxScrollExtent),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+    } else if (target + _chipW > current + viewWidth) {
+      _sc.animateTo(
+        (target + _chipW - viewWidth + _chipGap)
+            .clamp(0, _sc.position.maxScrollExtent),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  void _scrollLeft() {
+    if (!_sc.hasClients) return;
+    _sc.animateTo(
+      (_sc.offset - _scrollStep).clamp(0, _sc.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _scrollRight() {
+    if (!_sc.hasClients) return;
+    _sc.animateTo(
+      (_sc.offset + _scrollStep).clamp(0, _sc.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pages = widget.pages;
+    final currentIndex = widget.currentPageIndex;
+    final lessonIndex = widget.lessonIndex;
+    final t = widget.t;
+
+    final canAddPage = pages.isNotEmpty &&
+        currentIndex < pages.length &&
+        pages[currentIndex].blocks.isNotEmpty;
+
+    return Container(
+      height: 44,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: AppColors.neutral200)),
+      ),
+      child: Row(
+        children: [
+          // ── Left arrow ──────────────────────────────────────────────────
+          _ArrowBtn(
+            icon: Icons.chevron_left,
+            visible: _canScrollLeft,
+            onTap: _scrollLeft,
+          ),
+
+          // ── Scrollable chips ─────────────────────────────────────────────
+          Expanded(
+            child: ListView.separated(
+              controller: _sc,
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.sm,
+                vertical: 8,
+              ),
+              itemCount: pages.length,
+              separatorBuilder: (_, __) =>
+                  const SizedBox(width: _chipGap),
+              itemBuilder: (context, i) => _PageChip(
+                index: i,
+                isActive: i == currentIndex,
+                canDelete: pages.length > 1,
+                onTap: () => ref
+                    .read(builderStateProvider.notifier)
+                    .setCurrentPage(i),
+                onDelete: () {
+                  final newIndex = (i == currentIndex && i > 0)
+                      ? i - 1
+                      : (i < currentIndex
+                          ? currentIndex - 1
+                          : currentIndex);
+                  ref
+                      .read(courseProvider.notifier)
+                      .removePage(lessonIndex, i);
+                  ref
+                      .read(builderStateProvider.notifier)
+                      .setCurrentPage(
+                        newIndex.clamp(0, pages.length - 2),
+                      );
+                },
+              ),
+            ),
+          ),
+
+          // ── Right arrow ──────────────────────────────────────────────────
+          _ArrowBtn(
+            icon: Icons.chevron_right,
+            visible: _canScrollRight,
+            onTap: _scrollRight,
+          ),
+
+          // ── Divider ──────────────────────────────────────────────────────
+          const SizedBox(
+            height: 24,
+            child: VerticalDivider(
+              width: 1,
+              thickness: 1,
+              color: AppColors.neutral200,
+            ),
+          ),
+
+          // ── New-page button (always visible) ─────────────────────────────
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            child: Tooltip(
+              message: canAddPage
+                  ? (t.isZh ? '新建页' : 'New page')
+                  : (t.isZh ? '请先在当前页添加模块' : 'Add a block first'),
+              child: InkWell(
+                onTap: canAddPage
+                    ? () {
+                        final added = ref
+                            .read(courseProvider.notifier)
+                            .addPage(lessonIndex, currentIndex);
+                        if (added) {
+                          ref
+                              .read(builderStateProvider.notifier)
+                              .setCurrentPage(pages.length);
+                          ref
+                              .read(builderStateProvider.notifier)
+                              .markAsUnsaved();
+                        }
+                      }
+                    : null,
+                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: canAddPage
+                        ? AppColors.primary50
+                        : AppColors.neutral100,
+                    borderRadius:
+                        BorderRadius.circular(AppBorderRadius.sm),
+                    border: Border.all(
+                      color: canAddPage
+                          ? AppColors.primary300
+                          : AppColors.neutral200,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        size: 14,
+                        color: canAddPage
+                            ? AppColors.primary500
+                            : AppColors.neutral400,
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        t.isZh ? '新建页' : 'New page',
+                        style: TextStyle(
+                          fontSize: AppFontSize.xs,
+                          fontWeight: FontWeight.w600,
+                          color: canAddPage
+                              ? AppColors.primary500
+                              : AppColors.neutral400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Arrow scroll button ───────────────────────────────────────────────────────
+
+class _ArrowBtn extends StatelessWidget {
+  final IconData icon;
+  final bool visible;
+  final VoidCallback onTap;
+
+  const _ArrowBtn({
+    required this.icon,
+    required this.visible,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 150),
+      opacity: visible ? 1.0 : 0.0,
+      child: IgnorePointer(
+        ignoring: !visible,
+        child: SizedBox(
+          width: 26,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            child: Center(
+              child: Icon(icon, size: 16, color: AppColors.neutral500),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Compact page chip ─────────────────────────────────────────────────────────
+
+class _PageChip extends StatefulWidget {
+  final int index;
+  final bool isActive;
+  final bool canDelete;
+  final VoidCallback onTap;
+  final VoidCallback onDelete;
+
+  const _PageChip({
+    required this.index,
+    required this.isActive,
+    required this.canDelete,
+    required this.onTap,
+    required this.onDelete,
+  });
+
+  @override
+  State<_PageChip> createState() => _PageChipState();
+}
+
+class _PageChipState extends State<_PageChip> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final showClose = widget.canDelete && (widget.isActive || _hovered);
+    final label = '${widget.index + 1}';
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 140),
+          height: 28,
+          constraints: BoxConstraints(minWidth: showClose ? 46 : 28),
+          padding: EdgeInsets.symmetric(
+            horizontal: showClose ? 8 : 6,
+          ),
+          decoration: BoxDecoration(
+            color: widget.isActive
+                ? AppColors.primary500
+                : _hovered
+                    ? AppColors.primary50
+                    : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: widget.isActive
+                  ? AppColors.primary500
+                  : _hovered
+                      ? AppColors.primary300
+                      : AppColors.neutral300,
+              width: 1.5,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: AppFontSize.xs,
+                  fontWeight: FontWeight.w700,
+                  color: widget.isActive
+                      ? Colors.white
+                      : AppColors.neutral700,
+                  height: 1,
+                ),
+              ),
+              if (showClose) ...[
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: widget.onDelete,
+                  child: Icon(
+                    Icons.close,
+                    size: 11,
+                    color: widget.isActive
+                        ? Colors.white.withValues(alpha: 0.85)
+                        : AppColors.neutral500,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

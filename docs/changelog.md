@@ -1,5 +1,101 @@
 # Changelog
 
+## [Unreleased] - 2026-03-14 (Builder AI + Canvas UX Polish)
+
+### Summary
+- Fixed critical bug: AI generation from PDF produced an empty canvas (course title populated but no blocks visible).
+- Redesigned AI prompt to v3/v4: visual-first page strategy (animation opener on every page), stricter text rules, markdown-to-Delta conversion in normalizer.
+- Rebuilt page navigation strip: compact numbered chips with scroll arrows.
+- Fixed property inspector blank on pages 2+ (block lookup and `updateBlock` were hardcoded to page 0).
+- Block library UI: removed category description subtitles and "N 个模块" count labels.
+
+### Fixed
+- `Builder/lib/services/ai_course_generator.dart` — `_normalizeGeneratedCourseJson` now sets `$schema` and `schemaVersion` on the normalized JSON so `CourseSchemaMigrator` treats it as current schema (v1.0.0) instead of `legacy-unversioned`, preventing the migrator from stripping inner `pages` arrays and producing empty lessons.
+- `Builder/lib/widgets/property_panel.dart` — block lookup in `PropertyPanel.build` now iterates `lesson.pages[*].blocks` (all pages) instead of `lesson.blocks` (page 0 only); `_BlockPropertyEditor._updateBlock` passes `pageIndex:` to `courseProvider.updateBlock`; `_BlockPropertyEditor` constructor gains `pageIndex` parameter.
+
+### Changed
+- `Builder/lib/services/ai_course_generator.dart`:
+  - Prompt bumped to `v3` then `v4`: mandatory animation opener on every page; text blocks limited to 1 sentence / 20 words; all markdown syntax banned in text values; image blocks banned (use animation + aiPrompt instead).
+  - `animation` normalizer now preserves `aiPrompt` field (was silently dropped).
+  - Text normalizer now calls `_ensureQuillDelta` — if value is already valid Delta JSON keep it, otherwise convert markdown to Quill Delta via `_markdownToQuillDelta` / `_stripInlineMarkdown`.
+  - Empty-URL image blocks are auto-converted to `animation` blocks (with alt/caption as `aiPrompt`) so the canvas always shows something meaningful.
+- `Builder/lib/widgets/builder_canvas.dart` — `_PageNavigationStrip` redesigned: compact numbered chips (`_PageChip`, 28 px, rounded-rect border) replace verbose "第 N 页" pills; `_ArrowBtn` scroll arrows fade in/out on overflow; active chip auto-scrolls into view; "+ 新建页" always anchored to the right.
+- `Builder/lib/widgets/module_panel.dart` — removed category description subtitles ("叙事、媒体与测验模块" etc.) and "N 个模块" count labels from category headers.
+- `docs/prompt.txt` — updated to v4 rules (animation openers, 1-sentence text, no markdown).
+
+### Validation
+- `cd Builder && flutter analyze` — 0 errors.
+- `cd Builder && flutter test` — 112 passed, 1 pre-existing failure (`widget_test.dart`).
+
+---
+
+## [Unreleased] - 2026-03-14 (Builder AI Generation — Pages + richtext + function-flow)
+
+### Summary
+- Updated AI course generation system to be page-aware: prompts now ask Gemini to output `pages[]` within lessons, and the normalization layer distributes flat blocks into pages intelligently when the AI uses the old format.
+- Text blocks in AI output now use `format: "richtext"` (was `"markdown"`).
+- Added `function-flow` block type support to prompts, type alias map, and normalization.
+- Bumped prompt version to `2026-03-14.ai-course-v2`.
+
+### Changed
+- `Builder/lib/services/ai_course_generator.dart`:
+  - `_courseGenerationPrompt` — updated schema to show `pages[]` structure per lesson, added page distribution rules (2-5 blocks/page, end page on interactive block), changed text format to `richtext`, added function-flow example.
+  - `_normalizeLessons` — now handles both new `pages` key and legacy `blocks` key from AI output; distributes flat blocks into pages via `_distributeBlocksIntoPages`.
+  - New `_distributeBlocksIntoPages` — splits block list into pages, closing a page when ≥ 2 blocks and current block is interactive (or max 5 reached), and re-normalizes `position.order` + `visibilityRule` per page.
+  - New `_normalizeFunctionFlowContent` — normalizes nodes/edges from AI output with fallback.
+  - `_normalizeBlockContent` text case — changed default format from `"markdown"` to `"richtext"`.
+  - `_normalizeBlockType` — added `function-flow`, `functionflow`, `function_flow` aliases.
+  - `_normalizeBlocks` fallback — changed format to `"richtext"`, updated message.
+  - `_blockTypeReference` — updated all examples to `richtext`, added code-execution and function-flow entries.
+  - `_buildLessonBlocksPrompt` — added hint to use code-execution/function-flow for CS lessons.
+  - `_promptVersion` bumped to `'2026-03-14.ai-course-v2'`.
+- `docs/prompt.txt` — updated to pages structure, richtext format, function-flow mention.
+
+### Validation
+- `cd Builder && flutter analyze` — 0 errors.
+- `cd Builder && flutter test` — 112 passed, 1 pre-existing failure.
+
+---
+
+## [Unreleased] - 2026-03-14 (Builder Rich Text Editor + Page Concept)
+
+### Summary
+- Replaced the Markdown toggle in text blocks with a full WYSIWYG rich-text toolbar powered by `flutter_quill`.
+- Fixed persistent focus-loss bug in the text editor.
+- Polished Block Library UI: removed subtitle, replaced font-size dropdown with alignment buttons, removed drag handles from items, and visually differentiated category headers from block rows.
+- Introduced the **Page** concept inside lessons: a lesson now contains one or more pages, each holding an ordered list of blocks. The Builder canvas gained a page navigation strip; the Viewer preview gained per-page navigation with progress dots, Prev/Next/Complete buttons, and per-page answer state.
+- Removed the legacy "课时画布 / Lesson Canvas" header from the builder canvas.
+
+### Added
+- `Builder/lib/models/lesson_page.dart` — new `LessonPage { pageId, order, List<Block> blocks }` model with full `fromJson/toJson/copyWith/addBlock/removeBlock/updateBlock/reorderBlocks`.
+- Page navigation strip (`_PageNavigationStrip`, `_PageTab`) embedded in `BuilderCanvas`: pill tabs, "+ 新建页 / New page" button (disabled until current page has ≥1 block), per-tab × delete button.
+- `setCurrentPage(int)` on `BuilderStateNotifier`.
+- `addPage(lessonIndex, currentPageIndex)` / `removePage(lessonIndex, pageIndex)` on `CourseNotifier`.
+- `sortedPageBlocksProvider((lessonIndex, pageIndex))` family provider for block reads.
+- Per-page viewer navigation in `_InteractiveLessonView`: animated progress dots, Prev / Check / Next / Complete bottom bar.
+- `IdGenerator.pageId()`.
+
+### Changed
+- `Builder/lib/models/lesson.dart` — `CourseLesson` migrated from `List<Block> blocks` to `List<LessonPage> pages`. `fromJson` auto-wraps legacy `blocks` array into a single page (backward compatible). `toJson` emits `pages` key.
+- `Builder/lib/models/models.dart` — exports `LessonPage`.
+- `Builder/lib/providers/builder_state.dart` — added `currentPageIndex` field; `setCurrentLesson` resets page to 0.
+- `Builder/lib/providers/course_provider.dart` — all block ops (`addBlock`, `removeBlock`, `updateBlock`, `reorderBlocks`) accept `pageIndex:` named param; `duplicateLesson` correctly clones all pages.
+- `Builder/lib/widgets/builder_canvas.dart` — removed `_buildCanvasHeader()`; all block ops forward `currentPageIndex`; `DragTarget.onAcceptWithDetails` drops onto active page.
+- `Builder/lib/widgets/block_widgets/block_wrapper.dart` — replaced Markdown editor with `flutter_quill` WYSIWYG editor; persistent `FocusNode` + `ScrollController` fix focus-loss bug; toolbar: Bold/Italic/Underline/Strikethrough/Color/Highlight/Alignment(L/C/R)/Heading dropdown/Bullet/OrderedList.
+- `Builder/lib/widgets/module_panel.dart` — removed "Rich text / Markdown" subtitle; removed drag handle from `_ModuleItem`; reduced item height.
+- `Builder/lib/services/block_registry.dart` — text block description changed from `'Rich text / Markdown'` to `'Rich text'`.
+- `Builder/lib/services/course_schema_validator.dart` — `_validateLessons` updated to traverse `pages[].blocks[]` (new format) with fallback to legacy `blocks[]` at lesson level.
+- `Builder/lib/models/block.dart` — `TextContent` default format changed from `'markdown'` to `'richtext'`.
+- `Builder/lib/main.dart` — added `flutter_localizations` delegates (required for `flutter_quill`).
+- `Builder/pubspec.yaml` — added `flutter_quill: ^11.5.0`, `flutter_localizations: sdk: flutter`.
+- `docs/course-json-guide.md` — lesson shape updated to reflect new `pages` structure.
+
+### Validation
+- `cd Builder && flutter analyze` — 0 errors.
+- `cd Builder && flutter test` — 112 passed, 1 pre-existing failure (`widget_test.dart` requires Supabase init).
+
+---
+
 ## [Unreleased] - 2026-03-08 (Viewer Auth & Landing Redesign + GitHub Pages Migration)
 
 ### Summary
