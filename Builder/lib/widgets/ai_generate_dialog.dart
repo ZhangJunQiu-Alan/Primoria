@@ -291,40 +291,6 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                 ),
               ),
 
-              // Error message
-              if (_errorMessage != null) ...[
-                const SizedBox(height: AppSpacing.md),
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-                    border: Border.all(
-                      color: AppColors.error.withValues(alpha: 0.3),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 20,
-                        color: AppColors.error,
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Expanded(
-                        child: Text(
-                          _errorMessage!,
-                          style: const TextStyle(
-                            fontSize: AppFontSize.sm,
-                            color: AppColors.error,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-
               // Status message
               if (_statusMessage != null && _isLoading) ...[
                 const SizedBox(height: AppSpacing.md),
@@ -415,6 +381,41 @@ class _AIGenerateDialogState extends State<AIGenerateDialog> {
                   ),
                 ],
               ),
+
+              // Error message
+              if (_errorMessage != null) ...[
+                const SizedBox(height: AppSpacing.md),
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                    border: Border.all(
+                      color: AppColors.error.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        size: 20,
+                        color: AppColors.error,
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          _errorMessage!,
+                          style: const TextStyle(
+                            fontSize: AppFontSize.sm,
+                            color: AppColors.error,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+              ],
             ],
           ),
         ),

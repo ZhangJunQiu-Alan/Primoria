@@ -121,7 +121,7 @@ Allowed block types and exact type values:
 {"type":"true-false","id":"b8","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Statement","correctAnswer":true,"explanation":"Why"}}
 
 9) matching
-{"type":"matching","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Why"}}
+{"type":"matching","id":"b9","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"question":"Match terms","leftItems":[{"id":"l1","text":"A"},{"id":"l2","text":"B"}],"rightItems":[{"id":"r1","text":"1"},{"id":"r2","text":"2"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"rules":{"allowOneToMany":false,"allowManyToMany":false,"directed":true},"explanation":"Why"}}
 
 10) video
 {"type":"video","id":"b10","position":{"order":9},"style":{"spacing":"md","alignment":"left"},"visibilityRule":"always","content":{"url":"https://...","title":"Video title"}}
@@ -136,6 +136,7 @@ Course-adaptive block strategy:
 - Use at least 4 different block types when the source material supports it.
 - Keep an explain-practice rhythm: usually 1 assessment block after every 1-2 concept blocks.
 - If real image/video URLs are unavailable, use text or quiz blocks instead of fake URLs.
+- matching blocks must include "rules":{"allowOneToMany":bool,"allowManyToMany":bool,"directed":true} inside "content". Set allowOneToMany:true if any rightId is used by more than one correctPair.
 
 Generate the course based on the PDF:
 ''';
@@ -1891,9 +1892,13 @@ $rawContent
       '7) true-false\n'
       '{"type":"true-false","id":"b6","position":{"order":6},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Python is a compiled language.","correctAnswer":false,"explanation":"Python is interpreted."}}\n\n'
       '8) matching\n'
-      '{"type":"matching","id":"b7","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Match each term to its meaning.","leftItems":[{"id":"l1","text":"variable"},{"id":"l2","text":"function"}],"rightItems":[{"id":"r1","text":"stores a value"},{"id":"r2","text":"reusable block of code"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"explanation":"Explanation."}}\n\n'
-      '9) video\n'
-      '{"type":"video","id":"b8","position":{"order":8},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}';
+      '{"type":"matching","id":"b7","position":{"order":7},"style":{"spacing":"md","alignment":"left"},"content":{"question":"Match each term to its meaning.","leftItems":[{"id":"l1","text":"variable"},{"id":"l2","text":"function"}],"rightItems":[{"id":"r1","text":"stores a value"},{"id":"r2","text":"reusable block of code"}],"correctPairs":[{"leftId":"l1","rightId":"r1"},{"leftId":"l2","rightId":"r2"}],"rules":{"allowOneToMany":false,"allowManyToMany":false,"directed":true},"explanation":"Explanation."}}\n\n'
+      '9) code-execution  (animated step-through trace — use when showing how code executes line by line)\n'
+      '{"type":"code-execution","id":"b8","position":{"order":8},"style":{"spacing":"md","alignment":"left"},"content":{"title":"Trace demo","language":"python","sourceCode":"a = 1\\nb = a + 2\\nprint(b)","traceSteps":[{"line":1,"variables":{"a":1}},{"line":2,"variables":{"a":1,"b":3}},{"line":3,"stdoutDelta":"3","variables":{"a":1,"b":3}}],"controls":{"autoplay":false,"stepDurationMs":1200,"allowScrub":true},"style":{"theme":"indigo","showLineNumbers":true,"showVariablesPanel":true,"showStdoutPanel":true}}}\n\n'
+      '10) animation  (decorative motion — preset must be one of: bouncing-dot, pulse-bars)\n'
+      '{"type":"animation","id":"b9","position":{"order":9},"style":{"spacing":"md","alignment":"center"},"content":{"preset":"bouncing-dot","durationMs":2000,"loop":true,"speed":1.0}}\n\n'
+      '11) video\n'
+      '{"type":"video","id":"b10","position":{"order":10},"style":{"spacing":"md","alignment":"center"},"content":{"url":"https://example.com/video.mp4","title":"Video title"}}';
 
   static String _buildPlanPrompt(
     String description,
@@ -1982,6 +1987,7 @@ $rawContent
         '- Write ALL text, question, answer, hint, and explanation content in the specified language.\n'
         '- Keep text blocks very concise: ≤ 2 sentences each. Prioritise quality over quantity.\n'
         '- If no real image/video URL is available, use text or quiz blocks instead of fake URLs.\n'
+        '- For matching blocks: always include a "rules" field inside "content". Set "allowOneToMany":true if any rightId appears more than once in correctPairs (many-to-one mapping); set "allowManyToMany":true only if both sides have repeated ids. Default is {"allowOneToMany":false,"allowManyToMany":false,"directed":true}.\n'
         '$subjectHint\n\n'
         '$_blockTypeReference';
   }
@@ -2608,7 +2614,9 @@ $rawContent
           )
           .toList();
 
-      final body = <String, dynamic>{};
+      final body = <String, dynamic>{
+        'model': 'gemini-2.5-pro-latest',
+      };
       if (encodedFiles.isNotEmpty) body['sources'] = encodedFiles;
       if (urls.isNotEmpty) body['urls'] = urls;
       // Legacy fallback for single PDF
