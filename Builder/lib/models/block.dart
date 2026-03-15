@@ -112,17 +112,17 @@ abstract class BlockContent {
 
 /// Text block content
 class TextContent implements BlockContent {
-  final String format; // 'markdown' | 'plain'
+  final String format; // 'richtext' | 'markdown' | 'plain' (last two for backwards compat)
   final String value;
 
-  static const Set<String> _supportedFormats = {'markdown', 'plain'};
+  static const Set<String> _supportedFormats = {'richtext', 'markdown', 'plain'};
 
-  const TextContent({this.format = 'markdown', this.value = ''});
+  const TextContent({this.format = 'richtext', this.value = ''});
 
   factory TextContent.fromJson(Map<String, dynamic> json) {
     final format = (json['format'] as String? ?? '').trim();
     return TextContent(
-      format: _supportedFormats.contains(format) ? format : 'markdown',
+      format: _supportedFormats.contains(format) ? format : 'richtext',
       value: json['value'] as String? ?? '',
     );
   }
@@ -133,7 +133,7 @@ class TextContent implements BlockContent {
   TextContent copyWith({String? format, String? value}) {
     final nextFormat = (format ?? this.format).trim();
     return TextContent(
-      format: _supportedFormats.contains(nextFormat) ? nextFormat : 'markdown',
+      format: _supportedFormats.contains(nextFormat) ? nextFormat : 'richtext',
       value: value ?? this.value,
     );
   }
@@ -1652,7 +1652,7 @@ class Block {
   static BlockContent _getDefaultContent(BlockType type) {
     switch (type) {
       case BlockType.text:
-        return const TextContent(value: 'Enter text here...');
+        return const TextContent();
       case BlockType.image:
         return const ImageContent();
       case BlockType.codeBlock:

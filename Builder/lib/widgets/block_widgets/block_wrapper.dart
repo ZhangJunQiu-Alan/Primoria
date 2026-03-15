@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import '../../models/models.dart';
@@ -692,87 +693,98 @@ class _TextBlockContent extends StatefulWidget {
 }
 
 class _TextBlockContentState extends State<_TextBlockContent> {
-  late final TextEditingController _valueController;
+  late quill.QuillController _controller;
+  StreamSubscription<quill.DocChange>? _changesSub;
+  String _lastSavedDelta = '';
+  // Persistent focus/scroll nodes — never recreated across rebuilds
+  final FocusNode _editorFocusNode = FocusNode();
+  final ScrollController _editorScrollController = ScrollController();
 
   String _tr(String zh, String en) => (widget.t?.isZh ?? false) ? zh : en;
 
   @override
   void initState() {
     super.initState();
-    _valueController = TextEditingController(text: widget.content.value);
+    _controller = _buildController(widget.content);
+    _controller.readOnly = !widget.editable;
+    _lastSavedDelta = widget.content.value;
+    if (widget.editable) _listenToChanges();
+  }
+
+  quill.QuillController _buildController(TextContent content) {
+    quill.Document doc;
+    if (content.format == 'richtext' && content.value.isNotEmpty) {
+      try {
+        doc = quill.Document.fromJson(jsonDecode(content.value) as List);
+      } catch (_) {
+        doc = quill.Document();
+        if (content.value.isNotEmpty) doc.insert(0, content.value);
+      }
+    } else if (content.value.isNotEmpty) {
+      doc = quill.Document();
+      doc.insert(0, content.value);
+    } else {
+      doc = quill.Document();
+    }
+    return quill.QuillController(
+      document: doc,
+      selection: const TextSelection.collapsed(offset: 0),
+    );
+  }
+
+  void _listenToChanges() {
+    _changesSub?.cancel();
+    _changesSub = _controller.document.changes.listen((_) {
+      if (!mounted) return;
+      final delta = jsonEncode(_controller.document.toDelta().toJson());
+      _lastSavedDelta = delta;
+      widget.onChanged?.call(
+        widget.content.copyWith(format: 'richtext', value: delta),
+      );
+    });
   }
 
   @override
-  void didUpdateWidget(covariant _TextBlockContent oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.content.value != _valueController.text) {
-      _valueController.text = widget.content.value;
+  void didUpdateWidget(covariant _TextBlockContent old) {
+    super.didUpdateWidget(old);
+    _controller.readOnly = !widget.editable;
+    if (widget.editable && _changesSub == null) {
+      _listenToChanges();
+    } else if (!widget.editable) {
+      _changesSub?.cancel();
+      _changesSub = null;
+    }
+    // Reload controller if content was changed externally (e.g. undo/redo)
+    if (widget.content.value != _lastSavedDelta &&
+        widget.content.value != old.content.value) {
+      _changesSub?.cancel();
+      _changesSub = null;
+      _controller.dispose();
+      _controller = _buildController(widget.content);
+      _controller.readOnly = !widget.editable;
+      _lastSavedDelta = widget.content.value;
+      if (widget.editable) _listenToChanges();
     }
   }
 
   @override
   void dispose() {
-    _valueController.dispose();
+    _changesSub?.cancel();
+    _controller.dispose();
+    _editorFocusNode.dispose();
+    _editorScrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final content = widget.content;
-    final textAlign = widget.textAlign;
-    if (widget.editable && widget.onChanged != null) {
-      final selectedFormat = content.format == 'plain' ? 'plain' : 'markdown';
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SegmentedButton<String>(
-            segments: [
-              ButtonSegment(
-                value: 'markdown',
-                label: Text(_tr('Markdown', 'Markdown')),
-              ),
-              ButtonSegment(value: 'plain', label: Text(_tr('纯文本', 'Plain'))),
-            ],
-            selected: {selectedFormat},
-            onSelectionChanged: (value) {
-              widget.onChanged!(content.copyWith(format: value.first));
-            },
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          TextField(
-            controller: _valueController,
-            minLines: 4,
-            maxLines: 10,
-            textAlign: textAlign,
-            style: TextStyle(
-              fontFamily: selectedFormat == 'markdown' ? 'monospace' : null,
-              fontSize: AppFontSize.md,
-              color: AppColors.neutral700,
-            ),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-              ),
-              isDense: true,
-              hintText: selectedFormat == 'markdown'
-                  ? _tr(
-                      '# 标题\n\n**加粗** 与 *斜体*\n\n- 列表项',
-                      '# Heading\n\n**Bold** and *italic*\n\n- List item',
-                    )
-                  : _tr('输入文本...', 'Enter text...'),
-            ),
-            onChanged: (value) {
-              widget.onChanged!(content.copyWith(value: value));
-            },
-          ),
-        ],
-      );
-    }
 
-    if (content.value.isEmpty) {
+    // Placeholder when empty and not editable
+    if (!widget.editable && content.value.isEmpty) {
       return Text(
         _tr('点击编辑文本...', 'Click to edit text...'),
-        textAlign: textAlign,
+        textAlign: widget.textAlign,
         style: const TextStyle(
           fontSize: AppFontSize.md,
           color: AppColors.neutral400,
@@ -781,87 +793,95 @@ class _TextBlockContentState extends State<_TextBlockContent> {
       );
     }
 
-    if (content.format == 'markdown') {
-      final markdownAlignment = _textAlignToWrapAlignment(widget.textAlign);
-      return MarkdownBody(
-        data: content.value,
-        selectable: true,
-        styleSheet: MarkdownStyleSheet(
-          textAlign: markdownAlignment,
-          h1Align: markdownAlignment,
-          h2Align: markdownAlignment,
-          h3Align: markdownAlignment,
-          h4Align: markdownAlignment,
-          h5Align: markdownAlignment,
-          h6Align: markdownAlignment,
-          unorderedListAlign: markdownAlignment,
-          orderedListAlign: markdownAlignment,
-          blockquoteAlign: markdownAlignment,
-          codeblockAlign: markdownAlignment,
-          p: const TextStyle(
-            fontSize: AppFontSize.md,
-            color: AppColors.neutral700,
-          ),
-          h1: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppColors.neutral800,
-          ),
-          h2: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.neutral800,
-          ),
-          h3: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: AppColors.neutral800,
-          ),
-          code: TextStyle(
-            fontSize: AppFontSize.sm,
-            fontFamily: 'monospace',
-            backgroundColor: AppColors.neutral100,
-            color: AppColors.neutral700,
-          ),
-          codeblockDecoration: BoxDecoration(
-            color: AppColors.neutral800,
-            borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-          ),
-          codeblockPadding: const EdgeInsets.all(AppSpacing.md),
-          listBullet: const TextStyle(
-            fontSize: AppFontSize.md,
-            color: AppColors.neutral700,
-          ),
-          a: const TextStyle(
-            color: AppColors.primary500,
-            decoration: TextDecoration.underline,
-          ),
+    // Read-only display
+    if (!widget.editable) {
+      return quill.QuillEditor.basic(
+        controller: _controller,
+        config: const quill.QuillEditorConfig(
+          scrollable: false,
+          autoFocus: false,
+          expands: false,
+          padding: EdgeInsets.zero,
         ),
       );
     }
 
-    return Text(
-      content.value,
-      textAlign: textAlign,
-      style: const TextStyle(
-        fontSize: AppFontSize.md,
-        color: AppColors.neutral700,
-      ),
+    // Editable mode: toolbar + editor
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.neutral50,
+            border: Border.all(color: AppColors.neutral200),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(AppBorderRadius.sm),
+            ),
+          ),
+          child: quill.QuillSimpleToolbar(
+            controller: _controller,
+            config: const quill.QuillSimpleToolbarConfig(
+              multiRowsDisplay: false,
+              showDividers: true,
+              showBoldButton: true,
+              showItalicButton: true,
+              showUnderLineButton: true,
+              showStrikeThrough: true,
+              showColorButton: true,
+              showBackgroundColorButton: true,
+              showFontSize: false,
+              showAlignmentButtons: true,
+              showLeftAlignment: true,
+              showCenterAlignment: true,
+              showRightAlignment: true,
+              showJustifyAlignment: false,
+              showHeaderStyle: true,
+              showListBullets: true,
+              showListNumbers: true,
+              // Hide everything else
+              showFontFamily: false,
+              showSmallButton: false,
+              showInlineCode: false,
+              showClearFormat: false,
+              showListCheck: false,
+              showCodeBlock: false,
+              showQuote: false,
+              showIndent: false,
+              showLink: false,
+              showUndo: false,
+              showRedo: false,
+              showDirection: false,
+              showSearchButton: false,
+              showSubscript: false,
+              showSuperscript: false,
+              showLineHeightButton: false,
+            ),
+          ),
+        ),
+        Container(
+          constraints: const BoxConstraints(minHeight: 120),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.neutral200),
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(AppBorderRadius.sm),
+            ),
+          ),
+          padding: const EdgeInsets.all(AppSpacing.sm),
+          child: quill.QuillEditor(
+            focusNode: _editorFocusNode,
+            scrollController: _editorScrollController,
+            controller: _controller,
+            config: quill.QuillEditorConfig(
+              scrollable: true,
+              autoFocus: false,
+              expands: false,
+              padding: EdgeInsets.zero,
+              placeholder: _tr('输入文本...', 'Enter text...'),
+            ),
+          ),
+        ),
+      ],
     );
-  }
-
-  WrapAlignment _textAlignToWrapAlignment(TextAlign align) {
-    switch (align) {
-      case TextAlign.center:
-        return WrapAlignment.center;
-      case TextAlign.right:
-      case TextAlign.end:
-        return WrapAlignment.end;
-      case TextAlign.left:
-      case TextAlign.start:
-      case TextAlign.justify:
-        return WrapAlignment.start;
-    }
   }
 }
 

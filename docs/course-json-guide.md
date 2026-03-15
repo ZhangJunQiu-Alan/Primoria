@@ -41,11 +41,21 @@ Notes:
 {
   "lessonId": "lesson-1",
   "title": "Lesson 1",
-  "blocks": []
+  "pages": [
+    {
+      "pageId": "page-xxxx",
+      "order": 0,
+      "blocks": []
+    }
+  ]
 }
 ```
 
-Legacy `pageId` is accepted and migrated to `lessonId`.
+Notes:
+- Each lesson contains one or more **pages**; each page holds an ordered list of blocks.
+- A lesson is always created with one empty page; a new page can only be added when the current page has ≥ 1 block.
+- Legacy `pageId` at lesson level is accepted and migrated to `lessonId`.
+- Legacy `blocks` array at lesson level (pre-page format) is automatically wrapped into a single page on import.
 
 ## 3) Block Shape
 
