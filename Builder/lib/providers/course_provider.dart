@@ -12,42 +12,81 @@ class CourseNotifier extends StateNotifier<Course> {
     return state.getLesson(lessonIndex);
   }
 
-  /// Add block to a lesson
-  void addBlock(int lessonIndex, BlockType type) {
+  /// Add block to a specific page within a lesson
+  void addBlock(int lessonIndex, BlockType type, {int pageIndex = 0}) {
     final lesson = state.getLesson(lessonIndex);
     if (lesson == null) return;
 
-    final newBlock =
-        BlockRegistry.createBlock(type, order: lesson.blocks.length);
-    final updatedLesson = lesson.addBlock(newBlock);
+    final page =
+        (pageIndex >= 0 && pageIndex < lesson.pages.length)
+            ? lesson.pages[pageIndex]
+            : null;
+    if (page == null) return;
+
+    final newBlock = BlockRegistry.createBlock(type, order: page.blocks.length);
+    final updatedLesson = lesson.addBlock(newBlock, pageIndex: pageIndex);
     state = state.updateLesson(updatedLesson);
   }
 
-  /// Remove block
-  void removeBlock(int lessonIndex, String blockId) {
+  /// Remove block from a specific page
+  void removeBlock(int lessonIndex, String blockId, {int pageIndex = 0}) {
     final lesson = state.getLesson(lessonIndex);
     if (lesson == null) return;
 
-    final updatedLesson = lesson.removeBlock(blockId);
+    final updatedLesson = lesson.removeBlock(blockId, pageIndex: pageIndex);
     state = state.updateLesson(updatedLesson);
   }
 
-  /// Update block
-  void updateBlock(int lessonIndex, Block updatedBlock) {
+  /// Update block in a specific page
+  void updateBlock(int lessonIndex, Block updatedBlock, {int pageIndex = 0}) {
     final lesson = state.getLesson(lessonIndex);
     if (lesson == null) return;
 
-    final updatedLesson = lesson.updateBlock(updatedBlock);
+    final updatedLesson = lesson.updateBlock(updatedBlock, pageIndex: pageIndex);
     state = state.updateLesson(updatedLesson);
   }
 
-  /// Reorder blocks
-  void reorderBlocks(int lessonIndex, int oldIndex, int newIndex) {
+  /// Reorder blocks in a specific page
+  void reorderBlocks(
+    int lessonIndex,
+    int oldIndex,
+    int newIndex, {
+    int pageIndex = 0,
+  }) {
     final lesson = state.getLesson(lessonIndex);
     if (lesson == null) return;
 
-    final updatedLesson = lesson.reorderBlocks(oldIndex, newIndex);
+    final updatedLesson = lesson.reorderBlocks(
+      oldIndex,
+      newIndex,
+      pageIndex: pageIndex,
+    );
     state = state.updateLesson(updatedLesson);
+  }
+
+  /// Add a new page to a lesson (only if current page has ≥1 block)
+  /// Returns true if page was added, false if validation failed.
+  bool addPage(int lessonIndex, int currentPageIndex) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return false;
+
+    // Require at least one block on the current page
+    final currentPage =
+        (currentPageIndex >= 0 && currentPageIndex < lesson.pages.length)
+            ? lesson.pages[currentPageIndex]
+            : null;
+    if (currentPage == null || currentPage.blocks.isEmpty) return false;
+
+    state = state.updateLesson(lesson.addPage());
+    return true;
+  }
+
+  /// Remove a page from a lesson
+  void removePage(int lessonIndex, int pageIndex) {
+    final lesson = state.getLesson(lessonIndex);
+    if (lesson == null) return;
+
+    state = state.updateLesson(lesson.removePage(pageIndex));
   }
 
   /// Update course title
@@ -63,7 +102,7 @@ class CourseNotifier extends StateNotifier<Course> {
 
   /// Remove lesson (by index)
   void removeLesson(int lessonIndex) {
-    if (state.lessons.length <= 1) return; // Keep at least one lesson
+    if (state.lessons.length <= 1) return;
     if (lessonIndex < 0 || lessonIndex >= state.lessons.length) return;
 
     final lessonId = state.lessons[lessonIndex].lessonId;
@@ -75,15 +114,22 @@ class CourseNotifier extends StateNotifier<Course> {
     final lesson = state.getLesson(lessonIndex);
     if (lesson == null) return;
 
-    // Create a duplicate and generate new IDs
-    final duplicatedLesson =
-        CourseLesson.create(title: '${lesson.title} (Copy)').copyWith(
-      blocks: lesson.blocks
-          .map((block) => block.copyWith(id: IdGenerator.generate()))
-          .toList(),
+    // Duplicate all pages with new IDs
+    final duplicatedPages = lesson.pages.map((page) {
+      return page.copyWith(
+        pageId: IdGenerator.pageId(),
+        blocks: page.blocks
+            .map((block) => block.copyWith(id: IdGenerator.generate()))
+            .toList(),
+      );
+    }).toList();
+
+    final duplicatedLesson = CourseLesson(
+      lessonId: IdGenerator.lessonId(),
+      title: '${lesson.title} (Copy)',
+      pages: duplicatedPages,
     );
 
-    // Insert after the original lesson
     final lessons = List<CourseLesson>.from(state.lessons);
     lessons.insert(lessonIndex + 1, duplicatedLesson);
     state = state.copyWith(lessons: lessons);
@@ -114,23 +160,31 @@ final courseProvider = StateNotifierProvider<CourseNotifier, Course>((ref) {
   return CourseNotifier();
 });
 
-/// Current lesson blocks provider (unordered)
-final currentLessonBlocksProvider = Provider.family<List<Block>, int>((
-  ref,
-  lessonIndex,
-) {
-  final course = ref.watch(courseProvider);
-  return course.getLesson(lessonIndex)?.blocks ?? [];
-});
+/// Blocks for a specific (lessonIndex, pageIndex) pair.
+final currentPageBlocksProvider =
+    Provider.family<List<Block>, (int, int)>((ref, args) {
+      final (lessonIndex, pageIndex) = args;
+      final course = ref.watch(courseProvider);
+      final lesson = course.getLesson(lessonIndex);
+      if (lesson == null) return [];
+      if (pageIndex < 0 || pageIndex >= lesson.pages.length) return [];
+      return lesson.pages[pageIndex].blocks;
+    });
 
-/// Sorted lesson blocks provider — blocks ordered by position.order.
-/// Sorting is only recomputed when the blocks list actually changes.
+/// Sorted blocks for a specific (lessonIndex, pageIndex) pair.
+final sortedPageBlocksProvider =
+    Provider.family<List<Block>, (int, int)>((ref, args) {
+      final blocks = ref.watch(currentPageBlocksProvider(args));
+      final sorted = List<Block>.from(blocks)
+        ..sort((a, b) => a.position.order.compareTo(b.position.order));
+      return sorted;
+    });
+
+/// Legacy: sorted blocks for lesson index (uses page 0).
+/// Kept for any code that hasn't migrated to page-aware providers yet.
 final sortedLessonBlocksProvider = Provider.family<List<Block>, int>((
   ref,
   lessonIndex,
 ) {
-  final blocks = ref.watch(currentLessonBlocksProvider(lessonIndex));
-  final sorted = List<Block>.from(blocks)
-    ..sort((a, b) => a.position.order.compareTo(b.position.order));
-  return sorted;
+  return ref.watch(sortedPageBlocksProvider((lessonIndex, 0)));
 });

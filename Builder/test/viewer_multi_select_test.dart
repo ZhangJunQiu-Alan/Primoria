@@ -74,7 +74,7 @@ Course _buildMultiSelectCourse() {
 
   final lesson = CourseLesson.create(
     title: 'Lesson 1',
-  ).copyWith(blocks: [questionBlock]);
+  ).addBlock(questionBlock);
 
   return Course.create(
     title: 'Multi Select Validation',
