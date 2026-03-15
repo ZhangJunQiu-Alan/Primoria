@@ -47,6 +47,17 @@ class _LessonScreenState extends State<LessonScreen> {
   final _inputController = TextEditingController();
   List<String> _sortingOrder = [];
 
+  // ── Matching state ────────────────────────────────────────────
+  String? _selectedLeftItem;
+  Map<String, String> _matchingState = {}; // left item → right item
+
+  // ── Hint state ────────────────────────────────────────────────
+  int _hintsUsed = 0;
+  bool _hintVisible = false;
+
+  // ── Transition key (AnimatedSwitcher) ─────────────────────────
+  int _questionAnimKey = 0;
+
   // ── Answer tracking ───────────────────────────────────────────
   int _correctCount = 0;
   int _totalCount = 0;
@@ -595,7 +606,7 @@ class _LessonScreenState extends State<LessonScreen> {
               : (language.isNotEmpty
                     ? '${language.toUpperCase()} ${_i18n(en: 'Code', zh: '代码')}'
                     : _i18n(en: 'Code', zh: '代码')),
-          content: code,
+          content: '```${language.isNotEmpty ? language : ''}\n$code\n```',
         );
 
       case 'code-playground':
@@ -641,15 +652,15 @@ class _LessonScreenState extends State<LessonScreen> {
         final caption = _firstNonEmptyString([content['caption']]);
         final alt = _firstNonEmptyString([content['alt']]);
         final url = _firstNonEmptyString([content['url']]);
-        final desc = _firstNonEmptyString([caption, alt, url]);
-        if (desc.isEmpty) return null;
+        if (url.isEmpty && caption.isEmpty && alt.isEmpty) return null;
         return _QuestionData(
           type: QuestionType.info,
           title: _firstNonEmptyString([
             pageTitle,
             _i18n(en: 'Visual', zh: '可视内容'),
           ]),
-          content: desc,
+          content: _firstNonEmptyString([caption, alt]),
+          imageUrl: url.isNotEmpty ? url : null,
         );
 
       case 'matching':
@@ -660,18 +671,48 @@ class _LessonScreenState extends State<LessonScreen> {
         ]);
         final leftItems = _extractItemTexts(content['leftItems']);
         final rightItems = _extractItemTexts(content['rightItems']);
-        final body = [
-          if (leftItems.isNotEmpty)
-            '${_i18n(en: 'Left', zh: '左侧')}: ${leftItems.join(', ')}',
-          if (rightItems.isNotEmpty)
-            '${_i18n(en: 'Right', zh: '右侧')}: ${rightItems.join(', ')}',
-        ].join('\n');
+        if (leftItems.isEmpty || rightItems.isEmpty) return null;
+        // Build correct pairs map: left text → right text
+        final Map<String, String> correctPairs = {};
+        final rawPairs = content['pairs'];
+        if (rawPairs is List) {
+          for (final pair in rawPairs) {
+            if (pair is Map) {
+              final left = _firstNonEmptyString([pair['left'], pair['leftId']]);
+              final right =
+                  _firstNonEmptyString([pair['right'], pair['rightId']]);
+              if (left.isNotEmpty && right.isNotEmpty) {
+                correctPairs[left] = right;
+              }
+            }
+          }
+        }
+        // If no explicit pairs, assume positional matching
+        if (correctPairs.isEmpty) {
+          final len = leftItems.length < rightItems.length
+              ? leftItems.length
+              : rightItems.length;
+          for (int i = 0; i < len; i++) {
+            correctPairs[leftItems[i]] = rightItems[i];
+          }
+        }
         return _QuestionData(
-          type: QuestionType.info,
+          type: QuestionType.matching,
           title: question,
-          content: body.isNotEmpty
-              ? body
-              : _i18n(en: 'Matching activity', zh: '配对活动'),
+          content: '',
+          matchingLeftItems: leftItems,
+          matchingRightItems: List.from(rightItems)..shuffle(),
+          matchingCorrectPairs: correctPairs,
+          successMsg: _i18n(en: 'All pairs matched!', zh: '所有配对都正确！'),
+          failMsg: _i18n(
+            en: 'Some pairs are incorrect. Try again!',
+            zh: '有些配对不正确，再试一次！',
+          ),
+          hints: leftItems
+              .where((l) => correctPairs.containsKey(l))
+              .take(3)
+              .map((l) => '"$l" → "${correctPairs[l]}"')
+              .toList(),
         );
 
       case 'animation':
@@ -925,6 +966,13 @@ class _LessonScreenState extends State<LessonScreen> {
         isCorrect = _listEquals(_sortingOrder, question.correctOrder!);
         feedbackMsg = question.failMsg!;
 
+      case QuestionType.matching:
+        final pairs = question.matchingCorrectPairs ?? {};
+        isCorrect = pairs.isNotEmpty &&
+            pairs.entries.every((e) => _matchingState[e.key] == e.value);
+        feedbackMsg =
+            question.failMsg ?? _i18n(en: 'Not quite right!', zh: '还有些不对！');
+
       case QuestionType.info:
         _nextQuestion();
         return;
@@ -970,6 +1018,11 @@ class _LessonScreenState extends State<LessonScreen> {
         if (nextQ.type == QuestionType.sorting && nextQ.sortingItems != null) {
           _sortingOrder = List.from(nextQ.sortingItems!);
         }
+        _selectedLeftItem = null;
+        _matchingState = {};
+        _hintsUsed = 0;
+        _hintVisible = false;
+        _questionAnimKey++;
       });
     } else {
       // Lesson complete
@@ -1047,9 +1100,31 @@ class _LessonScreenState extends State<LessonScreen> {
                 _buildHeader(isDark, t),
                 _buildProgressBar(),
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(AppSpacing.lg),
-                    child: _buildQuestionContent(question, isDark, t),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 320),
+                    transitionBuilder: (child, animation) {
+                      final slide = Tween<Offset>(
+                        begin: const Offset(0.06, 0),
+                        end: Offset.zero,
+                      ).animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOutCubic,
+                        ),
+                      );
+                      return SlideTransition(
+                        position: slide,
+                        child: FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: SingleChildScrollView(
+                      key: ValueKey(_questionAnimKey),
+                      padding: const EdgeInsets.all(AppSpacing.lg),
+                      child: _buildQuestionContent(question, isDark, t),
+                    ),
                   ),
                 ),
                 _buildBottomBar(question, isDark, t),
@@ -1132,19 +1207,27 @@ class _LessonScreenState extends State<LessonScreen> {
     final progress = (_currentIndex + 1) / _questions.length;
     return Container(
       height: 6,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: AppColors.border,
         borderRadius: AppRadius.borderRadiusFull,
       ),
-      child: FractionallySizedBox(
-        alignment: Alignment.centerLeft,
-        widthFactor: progress,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
-            borderRadius: AppRadius.borderRadiusFull,
-          ),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Stack(
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              width: constraints.maxWidth * progress,
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: AppRadius.borderRadiusFull,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -1170,7 +1253,64 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
           ),
         if (showQuestionTitle) const SizedBox(height: AppSpacing.md),
-        _buildMarkdownContent(question.content, isDark),
+        // Image block
+        if (question.imageUrl != null) ...[
+          ClipRRect(
+            borderRadius: AppRadius.borderRadiusLg,
+            child: Image.network(
+              question.imageUrl!,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                height: 160,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.cardDark : AppColors.surfaceVariant,
+                  borderRadius: AppRadius.borderRadiusLg,
+                ),
+                child: Icon(
+                  Icons.broken_image_outlined,
+                  color: AppColors.textDisabled,
+                  size: 40,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
+        if (question.content.isNotEmpty)
+          _buildMarkdownContent(question.content, isDark),
+        // Hint bubble
+        if (_hintVisible &&
+            question.hints != null &&
+            _hintsUsed > 0 &&
+            _hintsUsed <= (question.hints?.length ?? 0)) ...[
+          const SizedBox(height: AppSpacing.md),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFEF3C7),
+              borderRadius: AppRadius.borderRadiusLg,
+              border: Border.all(color: const Color(0xFFF59E0B), width: 1),
+            ),
+            child: Row(
+              children: [
+                const Text('💡', style: TextStyle(fontSize: 16)),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    question.hints![_hintsUsed - 1],
+                    style: AppTypography.body2.copyWith(
+                      color: const Color(0xFF92400E),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
         const SizedBox(height: AppSpacing.xl),
         _buildInteractionWidget(question, isDark, t),
       ],
@@ -1239,8 +1379,11 @@ class _LessonScreenState extends State<LessonScreen> {
 
       case QuestionType.choice:
         return Column(
-          children: question.options!.map((option) {
+          children: question.options!.asMap().entries.map((entry) {
+            final index = entry.key;
+            final option = entry.value;
             final isSelected = _selectedOption == option;
+            final label = String.fromCharCode(65 + index); // A, B, C, D
             return Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: GestureDetector(
@@ -1248,7 +1391,8 @@ class _LessonScreenState extends State<LessonScreen> {
                   _audioService.playClick();
                   setState(() => _selectedOption = option);
                 },
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: isSelected
@@ -1265,33 +1409,42 @@ class _LessonScreenState extends State<LessonScreen> {
                           : AppColors.border,
                       width: isSelected ? 2 : 1,
                     ),
+                    boxShadow: isSelected ? AppShadows.sm : null,
                   ),
                   child: Row(
                     children: [
                       Container(
-                        width: 24,
-                        height: 24,
+                        width: 32,
+                        height: 32,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
                           color: isSelected
                               ? AppColors.primary
-                              : Colors.transparent,
-                          border: Border.all(
-                            color: isSelected
-                                ? AppColors.primary
-                                : isDark
-                                ? AppColors.borderDark
-                                : AppColors.border,
-                            width: 2,
+                              : isDark
+                              ? AppColors.surfaceDark
+                              : AppColors.surfaceVariant,
+                          borderRadius: BorderRadius.circular(8),
+                          border: isSelected
+                              ? null
+                              : Border.all(
+                                  color: isDark
+                                      ? AppColors.borderDark
+                                      : AppColors.border,
+                                ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            label,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: isSelected
+                                  ? Colors.white
+                                  : isDark
+                                  ? AppColors.textSecondaryOnDark
+                                  : AppColors.textSecondary,
+                            ),
                           ),
                         ),
-                        child: isSelected
-                            ? const Icon(
-                                Icons.check,
-                                size: 16,
-                                color: Colors.white,
-                              )
-                            : null,
                       ),
                       const SizedBox(width: AppSpacing.md),
                       Expanded(
@@ -1392,6 +1545,35 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
         );
 
+      case QuestionType.matching:
+        return _MatchingInteractionWidget(
+          leftItems: question.matchingLeftItems!,
+          rightItems: question.matchingRightItems!,
+          matches: _matchingState,
+          selectedLeft: _selectedLeftItem,
+          isDark: isDark,
+          onLeftTap: (item) {
+            setState(() {
+              _selectedLeftItem = _selectedLeftItem == item ? null : item;
+            });
+          },
+          onRightTap: (item) {
+            if (_selectedLeftItem == null) return;
+            _audioService.playClick();
+            setState(() {
+              // Unlink right item if already matched
+              _matchingState.removeWhere((_, v) => v == item);
+              _matchingState[_selectedLeftItem!] = item;
+              _selectedLeftItem = null;
+            });
+          },
+          onClearPair: (leftItem) {
+            setState(() {
+              _matchingState.remove(leftItem);
+            });
+          },
+        );
+
       case QuestionType.info:
         if (question.isLast) {
           return Center(
@@ -1426,7 +1608,10 @@ class _LessonScreenState extends State<LessonScreen> {
         (question.type == QuestionType.input &&
             _inputController.text.isNotEmpty) ||
         question.type == QuestionType.slider ||
-        question.type == QuestionType.sorting;
+        question.type == QuestionType.sorting ||
+        (question.type == QuestionType.matching &&
+            _matchingState.length ==
+                (question.matchingLeftItems?.length ?? 0));
 
     final label = _contentUnavailable
         ? t.lessonBack
@@ -1434,8 +1619,19 @@ class _LessonScreenState extends State<LessonScreen> {
         ? (question.isLast ? t.lessonComplete : t.lessonContinue)
         : t.lessonSubmit;
 
+    final hasHints =
+        !isInfoPage &&
+        question.hints != null &&
+        question.hints!.isNotEmpty;
+    final hintsExhausted = hasHints && _hintsUsed >= (question.hints?.length ?? 0);
+
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.sm,
+        AppSpacing.md,
+        AppSpacing.md,
+      ),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         boxShadow: [
@@ -1446,16 +1642,66 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
         ],
       ),
-      child: SizedBox(
-        width: double.infinity,
-        child: _Duo3DSubmitButton(
-          onPressed: canSubmit
-              ? (_contentUnavailable
-                    ? () => Navigator.pop(context)
-                    : (isInfoPage ? _nextQuestion : _checkAnswer))
-              : null,
-          label: label,
-        ),
+      child: Row(
+        children: [
+          // Hint button
+          if (hasHints) ...[
+            Tooltip(
+              message: hintsExhausted
+                  ? (t.isZh ? '已无更多提示' : 'No more hints')
+                  : (t.isZh
+                        ? '显示提示 ($_hintsUsed/${question.hints!.length})'
+                        : 'Show hint ($_hintsUsed/${question.hints!.length})'),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  color: hintsExhausted
+                      ? (isDark ? AppColors.cardDark : AppColors.surfaceVariant)
+                      : const Color(0xFFFEF3C7),
+                  borderRadius: AppRadius.borderRadiusFull,
+                  border: Border.all(
+                    color: hintsExhausted
+                        ? AppColors.border
+                        : const Color(0xFFF59E0B),
+                  ),
+                ),
+                child: IconButton(
+                  onPressed: hintsExhausted
+                      ? null
+                      : () {
+                          setState(() {
+                            _hintsUsed++;
+                            _hintVisible = true;
+                          });
+                        },
+                  icon: Text(
+                    '💡',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: hintsExhausted ? null : null,
+                    ),
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 44,
+                    minHeight: 44,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+          ],
+          // Submit / Continue button
+          Expanded(
+            child: _Duo3DSubmitButton(
+              onPressed: canSubmit
+                  ? (_contentUnavailable
+                        ? () => Navigator.pop(context)
+                        : (isInfoPage ? _nextQuestion : _checkAnswer))
+                  : null,
+              label: label,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1547,7 +1793,7 @@ class _Duo3DSubmitButtonState extends State<_Duo3DSubmitButton> {
 
 // ── Data models ───────────────────────────────────────────────────
 
-enum QuestionType { info, slider, choice, input, sorting }
+enum QuestionType { info, slider, choice, input, sorting, matching }
 
 class _QuestionData {
   final QuestionType type;
@@ -1566,6 +1812,14 @@ class _QuestionData {
   final String? failMsgHigh;
   final String? failMsgLow;
   final bool isLast;
+  // Matching
+  final List<String>? matchingLeftItems;
+  final List<String>? matchingRightItems;
+  final Map<String, String>? matchingCorrectPairs;
+  // Hints (shown on demand, up to 3)
+  final List<String>? hints;
+  // Image
+  final String? imageUrl;
 
   _QuestionData({
     required this.type,
@@ -1584,5 +1838,253 @@ class _QuestionData {
     this.failMsgHigh,
     this.failMsgLow,
     this.isLast = false,
+    this.matchingLeftItems,
+    this.matchingRightItems,
+    this.matchingCorrectPairs,
+    this.hints,
+    this.imageUrl,
   });
+}
+
+// ── Matching interaction widget ──────────────────────────────────
+
+class _MatchingInteractionWidget extends StatelessWidget {
+  final List<String> leftItems;
+  final List<String> rightItems;
+  final Map<String, String> matches; // left → right
+  final String? selectedLeft;
+  final bool isDark;
+  final ValueChanged<String> onLeftTap;
+  final ValueChanged<String> onRightTap;
+  final ValueChanged<String> onClearPair;
+
+  static const _pairColors = [
+    Color(0xFF6366F1),
+    Color(0xFF10B981),
+    Color(0xFFF59E0B),
+    Color(0xFFEF4444),
+    Color(0xFF8B5CF6),
+    Color(0xFF06B6D4),
+  ];
+
+  const _MatchingInteractionWidget({
+    required this.leftItems,
+    required this.rightItems,
+    required this.matches,
+    required this.selectedLeft,
+    required this.isDark,
+    required this.onLeftTap,
+    required this.onRightTap,
+    required this.onClearPair,
+  });
+
+  Color? _colorForLeftItem(String item) {
+    final idx = matches.keys.toList().indexOf(item);
+    if (idx < 0) return null;
+    return _pairColors[idx % _pairColors.length];
+  }
+
+  Color? _colorForRightItem(String item) {
+    final leftKey = matches.entries
+        .where((e) => e.value == item)
+        .map((e) => e.key)
+        .firstOrNull;
+    if (leftKey == null) return null;
+    return _colorForLeftItem(leftKey);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final surfaceColor = isDark ? AppColors.cardDark : AppColors.surface;
+    final borderColor = isDark ? AppColors.borderDark : AppColors.border;
+
+    Widget itemChip({
+      required String text,
+      required bool isSelected,
+      required Color? matchColor,
+      required VoidCallback onTap,
+      bool isLeft = true,
+    }) {
+      return GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          margin: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.primary.withValues(alpha: 0.1)
+                : matchColor != null
+                ? matchColor.withValues(alpha: 0.08)
+                : surfaceColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected
+                  ? AppColors.primary
+                  : matchColor ?? borderColor,
+              width: (isSelected || matchColor != null) ? 2 : 1,
+            ),
+            boxShadow: isSelected || matchColor != null
+                ? [
+                    BoxShadow(
+                      color: (isSelected ? AppColors.primary : matchColor!)
+                          .withValues(alpha: 0.15),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            children: [
+              if (isLeft && matchColor != null) ...[
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: matchColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+              ],
+              Expanded(
+                child: Text(
+                  text,
+                  style: AppTypography.body1.copyWith(
+                    color: isDark ? AppColors.textOnDark : AppColors.textPrimary,
+                    fontWeight: isSelected || matchColor != null
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                  ),
+                ),
+              ),
+              if (!isLeft && matchColor != null) ...[
+                const SizedBox(width: 6),
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: matchColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Instruction
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Text(
+            isDark
+                ? 'Tap left item, then tap matching right item'
+                : selectedLeft != null
+                ? 'Now tap the matching right item →'
+                : 'Tap a left item to begin matching',
+            style: AppTypography.body2.copyWith(
+              color: isDark
+                  ? AppColors.textSecondaryOnDark
+                  : AppColors.textSecondary,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ),
+        // Two columns
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Left column
+            Expanded(
+              child: Column(
+                children: leftItems
+                    .map(
+                      (item) => itemChip(
+                        text: item,
+                        isSelected: selectedLeft == item,
+                        matchColor: _colorForLeftItem(item),
+                        isLeft: true,
+                        onTap: () => onLeftTap(item),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Right column
+            Expanded(
+              child: Column(
+                children: rightItems
+                    .map(
+                      (item) => itemChip(
+                        text: item,
+                        isSelected: false,
+                        matchColor: _colorForRightItem(item),
+                        isLeft: false,
+                        onTap: () => onRightTap(item),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
+        // Current matches summary
+        if (matches.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: matches.entries.map((e) {
+              final color = _colorForLeftItem(e.key) ?? AppColors.primary;
+              return GestureDetector(
+                onTap: () => onClearPair(e.key),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: color.withValues(alpha: 0.4)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${e.key} → ${e.value}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: color,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(Icons.close, size: 12, color: color),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ],
+    );
+  }
 }
