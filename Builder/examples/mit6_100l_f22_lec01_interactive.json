@@ -1,0 +1,788 @@
+{
+  "$schema": "https://primoria.com/course-schema/v1.json",
+  "schemaVersion": "1.0.0",
+  "courseId": "mit-6-100l-f22-lec01-interactive",
+  "metadata": {
+    "title": "MIT 6.100L Lecture 1 Interactive Course",
+    "description": "A multi-page interactive Builder course based on MIT 6.100L Fall 2022 Lecture 1 PDF, covering computation, algorithms, language aspects, objects, expressions, variables, rebinding, and execution order with animation-heavy blocks.",
+    "author": {
+      "userId": "mit-ocw",
+      "displayName": "Ana Bell (MIT 6.100L)"
+    },
+    "tags": [
+      "MIT",
+      "6.100L",
+      "Python",
+      "Lecture 1",
+      "Interactive",
+      "Animation",
+      "Algorithms",
+      "Variables"
+    ],
+    "difficulty": "beginner",
+    "estimatedMinutes": 75,
+    "createdAt": "2026-03-15T00:00:00.000Z",
+    "updatedAt": "2026-03-15T00:00:00.000Z",
+    "version": "1.0.0"
+  },
+  "settings": {
+    "theme": "light",
+    "primaryColor": "blue",
+    "fontFamily": "system"
+  },
+  "lessons": [
+    {
+      "lessonId": "welcome-roadmap",
+      "title": "Welcome / Roadmap",
+      "blocks": [
+        {
+          "id": "welcome-roadmap-text",
+          "type": "text",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "lg",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "format": "markdown",
+            "value": "# MIT 6.100L Lecture 1\n\n这个 course JSON 把 `mit6_100l_f22_lec01.pdf` 压缩成 8 个 page-like lessons，每页混合 animation 与互动 block。\n\n## 这讲主线\n- Welcome / Today / Topics\n- What is computation and algorithm\n- Computers execute algorithms\n- Aspects of languages and where things go wrong\n- Objects, types, casting, expressions\n- Variables, assignment, rebinding, execution order\n\n## 学习方式\n- 先看 animation，理解状态变化\n- 再做 quiz / matching / code block\n- 重点关注 `algorithm`、`expression`、`assignment`、`rebind` 这些动态概念"
+          }
+        },
+        {
+          "id": "welcome-roadmap-animation",
+          "type": "animation",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 420
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive roadmap for MIT 6.100L lecture 1. Learners can click major stages such as course info, computation, algorithms, language, objects, expressions, and variables, and also see the practice stack from lecture to skill.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0f172a;color:#e2e8f0;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;display:flex;flex-direction:column;padding:18px;gap:14px}.headline h1{margin:0;font-size:24px}.headline p{margin:6px 0 0;color:#94a3b8}.grid{flex:1;display:grid;grid-template-columns:1.15fr 1fr;gap:14px;min-height:0}.rail{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stage{background:#132238;border:1px solid #27415f;border-radius:14px;padding:14px;cursor:pointer;text-align:left;color:#dbeafe;transition:transform .18s,border-color .18s,background .18s}.stage:hover{transform:translateY(-2px);border-color:#60a5fa}.stage.active{background:#1d4ed8;border-color:#93c5fd}.stage small{display:block;color:#bfdbfe;margin-top:6px}.panel{background:rgba(15,23,42,.72);border:1px solid #334155;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}.badge{display:inline-flex;align-self:flex-start;padding:6px 10px;border-radius:999px;background:#1e293b;color:#cbd5e1;font-size:12px}.panel h2{margin:0;font-size:22px}.panel p{margin:0;line-height:1.5;color:#cbd5e1}.stack{display:flex;flex-wrap:wrap;gap:8px}.pill{padding:8px 12px;border-radius:999px;background:#12263f;border:1px solid #35506e;color:#dbeafe;font-size:13px}.tip{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(34,197,94,.12);border:1px solid rgba(74,222,128,.35);color:#dcfce7}.footer{display:flex;flex-wrap:wrap;gap:8px}.footer span{padding:6px 10px;border-radius:999px;background:#1e293b;color:#94a3b8;font-size:12px}@media (max-width:800px){.grid{grid-template-columns:1fr}.rail{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='headline'><h1>Lecture 1 Roadmap</h1><p>点击不同阶段，查看这一讲如何从 course logistics 走到 Python variables。</p></div><div class='grid'><div class='rail' id='rail'></div><div class='panel'><span class='badge' id='slide'></span><h2 id='title'></h2><p id='desc'></p><div class='stack'><span class='pill'>Lectures</span><span class='pill'>Finger Exercises</span><span class='pill'>Psets</span><span class='pill'>Practice</span><span class='pill'>Recitation</span><span class='pill'>Exams</span></div><p class='tip' id='tip'></p></div></div><div class='footer'><span>Course info</span><span>Computation</span><span>Algorithms</span><span>Language</span><span>Objects</span><span>Expressions</span><span>Variables</span></div></div><script>(()=>{const stages=[{t:'Welcome and Today',s:'Slides 1-5',d:'从课程说明、why come to class、practice stack 开始，先建立学习地图。',tip:'Lecture 提供 intuition；practice 把 concepts 变成 programming skill。'},{t:'Knowledge and Computation',s:'Slides 7-12',d:'区分 declarative knowledge 与 imperative knowledge，并引出 algorithm 的三要素。',tip:'Programming is about writing recipes that generate useful facts.'},{t:'Computers Execute Algorithms',s:'Slides 13-25',d:'机器通过 primitive operations、memory、control、ALU 来执行 stored programs。',tip:'A computer only does what you tell it to do.'},{t:'Aspects of Languages',s:'Slides 26-30',d:'理解 primitive constructs、syntax、static semantics、semantics，以及常见出错位置。',tip:'Valid form is not enough; meaning also matters.'},{t:'Objects and Types',s:'Slides 33-38',d:'程序操作 objects；type 决定 allowed operations。',tip:'Type tells Python what you can do with a value.'},{t:'Expressions and Operators',s:'Slides 40-45',d:'复杂 expression 会被系统地归约成 one value。',tip:'Work step by step and reduce subexpressions.'},{t:'Variables and Rebinding',s:'Slides 46-56',d:'assignment 先算右侧，再 bind 到左侧；line order 和 rebinding 会影响结果。',tip:'Names can point to new values, but old computed results do not auto-refresh.'}];const rail=document.getElementById('rail');const slide=document.getElementById('slide');const title=document.getElementById('title');const desc=document.getElementById('desc');const tip=document.getElementById('tip');let active=0;function render(i){active=i;slide.textContent=stages[i].s;title.textContent=stages[i].t;desc.textContent=stages[i].d;tip.textContent=stages[i].tip;[...rail.children].forEach((node,idx)=>node.classList.toggle('active',idx===i));}stages.forEach((stage,idx)=>{const btn=document.createElement('button');btn.className='stage';btn.innerHTML=`<strong>${stage.t}</strong><small>${stage.s}</small>`;btn.onclick=()=>render(idx);rail.appendChild(btn);});render(0);let ticker=0;setInterval(()=>{ticker=(ticker+1)%stages.length;render(ticker);},4800);window.addEventListener('resize',()=>render(active),{passive:true});})();</script></body></html>"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "knowledge-and-algorithm",
+      "title": "Knowledge / Algorithm",
+      "blocks": [
+        {
+          "id": "knowledge-compare-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 360
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 5000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive comparison between declarative knowledge and imperative knowledge for an intro CS lecture. Let learners toggle between fact statements and recipes, with examples and why programming is closer to imperative knowledge.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111827;color:#f8fafc;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;display:flex;flex-direction:column;padding:18px;gap:14px}.title{font-size:23px;font-weight:700}.sub{color:#9ca3af;line-height:1.45}.tabs{display:flex;gap:10px;flex-wrap:wrap}.tab{padding:10px 14px;border-radius:999px;border:1px solid #334155;background:#1f2937;color:#e5e7eb;cursor:pointer}.tab.active{background:#0f766e;border-color:#5eead4;color:#ecfeff}.cards{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{border:1px solid #334155;border-radius:18px;padding:16px;background:rgba(15,23,42,.78)}.card h2{margin:0 0 8px;font-size:20px}.card ul{margin:0;padding-left:18px;line-height:1.6;color:#cbd5e1}.quote{padding:12px 14px;border-radius:14px;background:#172554;color:#bfdbfe;border:1px solid #3b82f6}.focus{padding:14px;border-radius:16px;background:rgba(16,185,129,.14);border:1px solid rgba(45,212,191,.35);color:#d1fae5}@media (max-width:760px){.cards{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='title'>Types of Knowledge</div><div class='sub'>Programming starts with two mental models from the slides: facts you know, and procedures you can follow. Click to switch focus.</div><div class='tabs'><button class='tab active' data-mode='declarative'>Declarative</button><button class='tab' data-mode='imperative'>Imperative</button></div><div class='cards'><div class='card'><h2 id='name'></h2><div class='quote' id='quote'></div></div><div class='card'><ul id='points'></ul><div class='focus' id='focus'></div></div></div></div><script>(()=>{const modes={declarative:{name:'Declarative knowledge',quote:'Example: The square root of 16 is 4.',points:['描述 what is true。','更像 statement of fact。','适合表达结果、性质、定义。'],focus:'It tells you a fact, but not how a machine should obtain it.'},imperative:{name:'Imperative knowledge',quote:'Example: Start with a guess, test it, improve it, repeat.',points:['描述 how to do something。','更像 recipe 或 procedure。','适合交给 computer 执行。'],focus:'Programming is mostly about writing precise recipes that generate facts.'}};const tabs=[...document.querySelectorAll('.tab')];const name=document.getElementById('name');const quote=document.getElementById('quote');const points=document.getElementById('points');const focus=document.getElementById('focus');function render(mode){const item=modes[mode];name.textContent=item.name;quote.textContent=item.quote;points.innerHTML=item.points.map(p=>`<li>${p}</li>`).join('');focus.textContent=item.focus;tabs.forEach(tab=>tab.classList.toggle('active',tab.dataset.mode===mode));}tabs.forEach(tab=>tab.onclick=()=>render(tab.dataset.mode));render('declarative');let mode='declarative';setInterval(()=>{mode=mode==='declarative'?'imperative':'declarative';render(mode);},4500);window.addEventListener('resize',()=>render(mode),{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "sqrt-iteration-animation",
+          "type": "animation",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 390
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 7000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Build an interactive square root approximation animation for x=16 with initial guess 3. Show successive guesses, g*g, x/g, the averaged next guess, and a slider or play button to step through convergence.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0b1020;color:#eff6ff;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;display:flex;flex-direction:column;padding:18px;gap:12px}.head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.head h1{margin:0;font-size:22px}.head p{margin:4px 0 0;color:#93c5fd}.panel{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;flex:1;min-height:0}.table,.focus{background:rgba(15,23,42,.82);border:1px solid #2b3f63;border-radius:18px;padding:16px}.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:10px 0;border-bottom:1px solid rgba(148,163,184,.16);font-size:13px}.row.active{color:#fef08a}.row.header{font-weight:700;color:#bfdbfe}.metric{font-size:34px;font-weight:700;color:#fef08a}.bar{height:12px;border-radius:999px;background:#1e293b;overflow:hidden;margin-top:10px}.fill{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8)}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.btn{padding:10px 14px;border:none;border-radius:999px;background:#2563eb;color:white;cursor:pointer}.range{flex:1;min-width:160px}.note{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(34,197,94,.12);border:1px solid rgba(74,222,128,.35);color:#dcfce7}@media (max-width:820px){.panel{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='head'><div><h1>Numerical Example: sqrt(16)</h1><p>Algorithm: guess, test, improve, repeat until close enough.</p></div><div class='controls'><button class='btn' id='play'>Play</button><input class='range' id='range' type='range' min='0' max='3' step='1' value='0'></div></div><div class='panel'><div class='table'><div class='row header'><div>g</div><div>g*g</div><div>x/g</div><div>next g</div></div><div id='rows'></div></div><div class='focus'><div>Current guess</div><div class='metric' id='guess'></div><div style='margin-top:10px;color:#cbd5e1'>Distance from 4.0</div><div class='bar'><div class='fill' id='fill'></div></div><div style='margin-top:12px;color:#bfdbfe' id='detail'></div><div class='note' id='note'></div></div></div></div><script>(()=>{const data=[{g:'3.0000',sq:'9.0000',div:'5.3333',next:'4.1667',err:1,note:'Initial guess is rough, so the error is still large.'},{g:'4.1667',sq:'17.3611',div:'3.8400',next:'4.0033',err:0.1667,note:'Averaging g and x/g moves the estimate much closer.'},{g:'4.0033',sq:'16.0267',div:'3.9967',next:'4.0000',err:0.0033,note:'Now the guess is extremely close to the true square root.'},{g:'4.0000',sq:'16.0000',div:'4.0000',next:'4.0000',err:0,note:'Stop condition: close enough, so the algorithm can terminate.'}];const rows=document.getElementById('rows');const guess=document.getElementById('guess');const fill=document.getElementById('fill');const detail=document.getElementById('detail');const note=document.getElementById('note');const range=document.getElementById('range');const play=document.getElementById('play');let step=0;let timer=null;function render(){rows.innerHTML=data.map((item,idx)=>`<div class='row ${idx===step?'active':''}'><div>${item.g}</div><div>${item.sq}</div><div>${item.div}</div><div>${item.next}</div></div>`).join('');const item=data[step];guess.textContent=item.g;fill.style.width=`${100-Math.min(item.err,1)*100}%`;detail.textContent=`g*g = ${item.sq}, x/g = ${item.div}, next guess = ${item.next}`;note.textContent=item.note;range.value=String(step);}function toggle(){if(timer){clearInterval(timer);timer=null;play.textContent='Play';return;}play.textContent='Pause';timer=setInterval(()=>{step=(step+1)%data.length;render();if(step===data.length-1){clearInterval(timer);timer=null;play.textContent='Play';}},1600);}range.oninput=e=>{step=Number(e.target.value);render();};play.onclick=toggle;render();window.addEventListener('resize',render,{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "algorithm-flow-block",
+          "type": "function-flow",
+          "position": {
+            "order": 2
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "title": "Square Root Approximation Algorithm",
+            "entryNodeId": "start",
+            "nodes": [
+              {
+                "id": "start",
+                "label": "Start",
+                "x": 12,
+                "y": 48,
+                "kind": "start",
+                "description": "Pick the problem input x and an initial guess g."
+              },
+              {
+                "id": "guess",
+                "label": "Initialize g",
+                "x": 28,
+                "y": 48,
+                "kind": "function",
+                "description": "Choose a first guess such as g = 3 for x = 16."
+              },
+              {
+                "id": "check",
+                "label": "Is g*g close enough?",
+                "x": 50,
+                "y": 48,
+                "kind": "function",
+                "description": "This is the stop test."
+              },
+              {
+                "id": "stop",
+                "label": "Return g",
+                "x": 85,
+                "y": 28,
+                "kind": "end",
+                "description": "If yes, the current guess is the answer."
+              },
+              {
+                "id": "average",
+                "label": "Compute (g + x/g) / 2",
+                "x": 72,
+                "y": 70,
+                "kind": "function",
+                "description": "Use averaging to improve the estimate."
+              },
+              {
+                "id": "repeat",
+                "label": "Use new g and loop",
+                "x": 36,
+                "y": 78,
+                "kind": "function",
+                "description": "Repeat until the stop test passes."
+              }
+            ],
+            "edges": [
+              {
+                "from": "start",
+                "to": "guess",
+                "label": "set x and g"
+              },
+              {
+                "from": "guess",
+                "to": "check",
+                "label": "test"
+              },
+              {
+                "from": "check",
+                "to": "stop",
+                "label": "yes"
+              },
+              {
+                "from": "check",
+                "to": "average",
+                "label": "no"
+              },
+              {
+                "from": "average",
+                "to": "repeat",
+                "label": "update g"
+              },
+              {
+                "from": "repeat",
+                "to": "check",
+                "label": "loop"
+              }
+            ],
+            "steps": [
+              {
+                "edgeIndex": 0,
+                "durationMs": 1000,
+                "note": "Start with the input and an initial guess."
+              },
+              {
+                "edgeIndex": 1,
+                "durationMs": 900,
+                "note": "Check whether the current guess is already close enough."
+              },
+              {
+                "edgeIndex": 3,
+                "durationMs": 1100,
+                "note": "If not, compute a better guess."
+              },
+              {
+                "edgeIndex": 4,
+                "durationMs": 1000,
+                "note": "Store the improved guess."
+              },
+              {
+                "edgeIndex": 5,
+                "durationMs": 900,
+                "note": "Repeat the test with the new guess."
+              },
+              {
+                "edgeIndex": 2,
+                "durationMs": 900,
+                "note": "Once close enough, stop."
+              }
+            ],
+            "style": {
+              "theme": "emerald",
+              "showArrows": true,
+              "stepDurationMs": 1100,
+              "lineWidth": 2.5
+            }
+          }
+        },
+        {
+          "id": "algorithm-three-parts-quiz",
+          "type": "multiple-choice",
+          "position": {
+            "order": 3
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "question": "根据 Lecture 1，algorithm 最关键的三部分是哪一组？",
+            "options": [
+              {
+                "id": "a",
+                "text": "Fancy syntax, colorful UI, large memory"
+              },
+              {
+                "id": "b",
+                "text": "Sequence of simple steps, flow of control, a stop condition"
+              },
+              {
+                "id": "c",
+                "text": "Variables, classes, and imported libraries"
+              },
+              {
+                "id": "d",
+                "text": "Only one perfect formula with no iteration"
+              }
+            ],
+            "correctAnswer": "b",
+            "correctAnswers": [
+              "b"
+            ],
+            "explanation": "Slides 11-12 emphasize simple steps, control flow, and a way to determine when to stop.",
+            "multiSelect": false
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "computers-execute-algorithms",
+      "title": "Computers Execute Algorithms",
+      "blocks": [
+        {
+          "id": "stored-program-computer-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 390
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive stored-program computer diagram with memory, control unit, ALU, input, and output. Let learners click each component to see its role in executing instructions.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0f172a;color:#e2e8f0;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.machine{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:12px}.part{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;transition:transform .18s,border-color .18s}.part:hover{transform:translateY(-2px);border-color:#60a5fa}.part.active{background:#1d4ed8;border-color:#93c5fd}.wide{grid-column:1/3}.panel{border:1px solid #334155;border-radius:18px;background:rgba(2,6,23,.78);padding:18px;display:flex;flex-direction:column;gap:12px}.panel h1{margin:0;font-size:22px}.panel p{margin:0;line-height:1.5;color:#cbd5e1}.flow{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:8px 10px;border-radius:999px;background:#12263f;border:1px solid #35506e;color:#dbeafe;font-size:12px}.note{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(59,130,246,.14);border:1px solid rgba(96,165,250,.35);color:#dbeafe}@media (max-width:820px){.wrap{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='machine' id='machine'></div><div class='panel'><h1 id='title'></h1><p id='desc'></p><div class='flow'><span class='chip'>Instruction in memory</span><span class='chip'>Control selects step</span><span class='chip'>ALU computes</span><span class='chip'>Data moves</span><span class='chip'>Output appears</span></div><div class='note' id='note'></div></div></div><script>(()=>{const parts=[{t:'Memory',d:'Stores instructions and data. In a stored-program computer, the program itself lives here.',n:'Think of memory as the place that keeps both code and values ready for later use.',wide:true},{t:'Control Unit',d:'Reads instructions, decides what to do next, and coordinates the machine.',n:'Control is the traffic director for the rest of the computer.'},{t:'ALU',d:'Performs arithmetic and logical operations such as add, compare, or test.',n:'This is where primitive operations happen.'},{t:'Input',d:'Brings data or commands into the system.',n:'Input gives the machine something to work with.'},{t:'Output',d:'Delivers results to the outside world.',n:'Output is the visible effect of execution.'}];const machine=document.getElementById('machine');const title=document.getElementById('title');const desc=document.getElementById('desc');const note=document.getElementById('note');function render(i){title.textContent=parts[i].t;desc.textContent=parts[i].d;note.textContent=parts[i].n;[...machine.children].forEach((node,idx)=>node.classList.toggle('active',idx===i));}parts.forEach((part,idx)=>{const btn=document.createElement('button');btn.className=`part ${part.wide?'wide':''}`;btn.innerHTML=`<strong>${part.t}</strong><span style='margin-top:8px;color:#94a3b8'>Click to inspect role</span>`;btn.onclick=()=>render(idx);machine.appendChild(btn);});render(0);let idx=0;setInterval(()=>{idx=(idx+1)%parts.length;render(idx);},3600);window.addEventListener('resize',()=>render(idx),{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "instruction-cycle-animation",
+          "type": "animation",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 380
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6500,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create a step-by-step instruction cycle animation for an intro CS class. Show fetch, decode, execute, test or branch, and halt, with a simple program counter and controls to step or autoplay.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111827;color:#f9fafb;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:flex;flex-direction:column;gap:14px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.top h1{margin:0;font-size:22px}.top p{margin:4px 0 0;color:#9ca3af}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.btn{padding:10px 14px;border:none;border-radius:999px;background:#2563eb;color:#fff;cursor:pointer}.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{padding:14px;border-radius:16px;border:1px solid #334155;background:#1f2937;text-align:center;color:#cbd5e1}.step.active{background:#0f766e;border-color:#5eead4;color:#ecfeff}.panel{flex:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:14px}.box{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.pc{font-size:34px;font-weight:700;color:#fbbf24}.detail{line-height:1.6;color:#d1d5db}.log{display:flex;flex-direction:column;gap:8px}.entry{padding:10px 12px;border-radius:12px;background:#0f172a;border:1px solid rgba(148,163,184,.18)}@media (max-width:820px){.timeline{grid-template-columns:1fr}.panel{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='top'><div><h1>Instruction Cycle</h1><p>A stored-program machine executes instructions in order, unless a test changes the flow.</p></div><div class='controls'><button class='btn' id='prev'>Prev</button><button class='btn' id='next'>Next</button><button class='btn' id='play'>Play</button></div></div><div class='timeline' id='timeline'></div><div class='panel'><div class='box'><div style='color:#93c5fd'>Program Counter</div><div class='pc' id='pc'></div><div style='margin-top:16px;color:#93c5fd'>Current instruction</div><div class='detail' id='detail'></div></div><div class='box'><div style='font-size:18px;font-weight:700;margin-bottom:10px'>Execution log</div><div class='log' id='log'></div></div></div></div><script>(()=>{const steps=[{t:'Fetch',pc:'0001',d:'Read the next instruction from memory.'},{t:'Decode',pc:'0001',d:'Interpret what operation the instruction requests.'},{t:'Execute',pc:'0001',d:'Use ALU or data movement primitives to do the work.'},{t:'Test / Branch',pc:'0002',d:'If a condition is checked, decide whether to continue in order or jump.'},{t:'Halt or Continue',pc:'0002',d:'Stop if finished, otherwise fetch the next instruction.'}];const timeline=document.getElementById('timeline');const pc=document.getElementById('pc');const detail=document.getElementById('detail');const log=document.getElementById('log');let idx=0;let timer=null;function render(){timeline.innerHTML=steps.map((step,i)=>`<div class='step ${i===idx?'active':''}'>${step.t}</div>`).join('');pc.textContent=steps[idx].pc;detail.textContent=steps[idx].d;log.innerHTML=steps.slice(0,idx+1).map((step,i)=>`<div class='entry'>${i+1}. ${step.t}: ${step.d}</div>`).join('');}function move(delta){idx=(idx+delta+steps.length)%steps.length;render();}document.getElementById('prev').onclick=()=>move(-1);document.getElementById('next').onclick=()=>move(1);document.getElementById('play').onclick=()=>{if(timer){clearInterval(timer);timer=null;document.getElementById('play').textContent='Play';return;}document.getElementById('play').textContent='Pause';timer=setInterval(()=>{move(1);if(idx===steps.length-1){clearInterval(timer);timer=null;document.getElementById('play').textContent='Play';}},1500);};render();window.addEventListener('resize',render,{passive:true});})();</script></body></html>"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "language-aspects-and-errors",
+      "title": "Language Aspects / Errors",
+      "blocks": [
+        {
+          "id": "language-aspects-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 390
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6500,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive intro CS animation explaining primitive constructs, syntax, static semantics, and semantics. Include examples such as string repetition, string plus number, and code that runs but gives the wrong answer.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0f172a;color:#f8fafc;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:flex;flex-direction:column;gap:14px}.tabs{display:flex;gap:10px;flex-wrap:wrap}.tab{padding:10px 14px;border-radius:999px;border:1px solid #334155;background:#1f2937;color:#e5e7eb;cursor:pointer}.tab.active{background:#7c3aed;border-color:#c4b5fd;color:#faf5ff}.grid{flex:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:14px}.box{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.box h1{margin:0 0 10px;font-size:22px}.box p{margin:0;color:#cbd5e1;line-height:1.55}.sample{padding:12px 14px;border-radius:14px;background:#111827;border:1px solid rgba(148,163,184,.18);margin-top:10px}.sample.good{border-color:rgba(34,197,94,.4)}.sample.warn{border-color:rgba(250,204,21,.45)}.sample.bad{border-color:rgba(248,113,113,.45)}.tag{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:12px;margin-bottom:8px}.tag.good{background:rgba(34,197,94,.14);color:#bbf7d0}.tag.warn{background:rgba(250,204,21,.16);color:#fde68a}.tag.bad{background:rgba(248,113,113,.16);color:#fecaca}@media (max-width:820px){.grid{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div style='font-size:23px;font-weight:700'>Aspects of Languages</div><div style='color:#94a3b8'>点击不同层次，理解 form、meaning、and where things go wrong.</div><div class='tabs'><button class='tab active' data-mode='syntax'>Syntax</button><button class='tab' data-mode='static'>Static Semantics</button><button class='tab' data-mode='meaning'>Semantics</button></div><div class='grid'><div class='box'><h1 id='title'></h1><p id='desc'></p></div><div class='box' id='samples'></div></div></div><script>(()=>{const data={syntax:{title:'Syntax',desc:'Syntax asks whether the form is valid. The tokens may be familiar, but their arrangement still has to follow the language rules.',samples:[{state:'bad',label:'Not syntactically valid',code:'<code>&quot;hi&quot;5</code>',note:'A string literal cannot be placed directly next to a number without an operator.'},{state:'good',label:'Syntactically valid',code:'<code>&quot;hi&quot; * 5</code>',note:'This has a valid operator between the two objects.'}]},static:{title:'Static semantics',desc:'Static semantics asks whether a syntactically valid form makes sense in the language. It often catches type or meaning mismatches.',samples:[{state:'warn',label:'Type mismatch',code:'<code>&quot;hi&quot; + 5</code>',note:'The expression has valid shape, but string plus integer has no meaning here.'},{state:'good',label:'Meaningful form',code:'<code>3 + 5</code>',note:'Both objects support numeric addition.'}]},meaning:{title:'Semantics',desc:'Semantics asks what a correct form actually means. A program can run and still produce the wrong answer if the intended meaning is wrong.',samples:[{state:'warn',label:'Runs but wrong answer',code:'<code>total = price - tax</code>',note:'No syntax error, but the programmer may have meant price plus tax.'},{state:'good',label:'Correct intention',code:'<code>total = price + tax</code>',note:'The meaning matches the intended calculation.'}]}};const tabs=[...document.querySelectorAll('.tab')];const title=document.getElementById('title');const desc=document.getElementById('desc');const samples=document.getElementById('samples');function render(mode){const item=data[mode];title.textContent=item.title;desc.textContent=item.desc;samples.innerHTML=item.samples.map(sample=>`<div class='sample ${sample.state}'><div class='tag ${sample.state}'>${sample.label}</div><div style='font-size:20px;margin-bottom:8px'>${sample.code}</div><div style='color:#cbd5e1;line-height:1.5'>${sample.note}</div></div>`).join('');tabs.forEach(tab=>tab.classList.toggle('active',tab.dataset.mode===mode));}tabs.forEach(tab=>tab.onclick=()=>render(tab.dataset.mode));render('syntax');let order=['syntax','static','meaning'];let idx=0;setInterval(()=>{idx=(idx+1)%order.length;render(order[idx]);},4200);window.addEventListener('resize',()=>render(order[idx]),{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "language-errors-matching",
+          "type": "matching",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "question": "把例子和最合适的错误类型或结果匹配起来。",
+            "leftItems": [
+              {
+                "id": "l1",
+                "text": "\"hi\"5"
+              },
+              {
+                "id": "l2",
+                "text": "\"hi\"*5"
+              },
+              {
+                "id": "l3",
+                "text": "\"hi\"+5"
+              },
+              {
+                "id": "l4",
+                "text": "Program runs, but the answer is wrong"
+              }
+            ],
+            "rightItems": [
+              {
+                "id": "r1",
+                "text": "Syntax error"
+              },
+              {
+                "id": "r2",
+                "text": "Valid expression"
+              },
+              {
+                "id": "r3",
+                "text": "Static semantic / type error"
+              },
+              {
+                "id": "r4",
+                "text": "Logic / meaning error"
+              }
+            ],
+            "correctPairs": [
+              {
+                "leftId": "l1",
+                "rightId": "r1"
+              },
+              {
+                "leftId": "l2",
+                "rightId": "r2"
+              },
+              {
+                "leftId": "l3",
+                "rightId": "r3"
+              },
+              {
+                "leftId": "l4",
+                "rightId": "r4"
+              }
+            ],
+            "mode": "list",
+            "rules": {
+              "allowOneToMany": false,
+              "allowManyToMany": false,
+              "directed": true
+            },
+            "explanation": "Lecture 1 separates malformed code, meaningful form errors, and programs that run but still express the wrong intention."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "objects-and-types",
+      "title": "Objects / Types",
+      "blocks": [
+        {
+          "id": "objects-types-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 380
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an object and type explorer for beginners. Let learners click int, float, bool, and str cards to see a sample value and which operations make sense for each type.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111827;color:#f9fafb;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.left,.right{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{padding:14px;border-radius:16px;border:1px solid #334155;background:#1f2937;color:#e5e7eb;cursor:pointer;text-align:left}.card.active{background:#0f766e;border-color:#5eead4;color:#ecfeff}.sample{font-size:34px;font-weight:700;color:#fbbf24;margin:12px 0}.ops{display:flex;flex-wrap:wrap;gap:8px}.op{padding:8px 10px;border-radius:999px;font-size:12px}.ok{background:rgba(34,197,94,.16);color:#bbf7d0;border:1px solid rgba(34,197,94,.4)}.no{background:rgba(248,113,113,.16);color:#fecaca;border:1px solid rgba(248,113,113,.4)}.hint{margin-top:14px;line-height:1.55;color:#cbd5e1}@media (max-width:820px){.wrap{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='left'><div style='font-size:23px;font-weight:700;margin-bottom:10px'>Objects in Python</div><div style='color:#94a3b8;margin-bottom:14px'>每个 object 都有 type，type 决定你能做什么操作。</div><div class='cards' id='cards'></div></div><div class='right'><div style='color:#93c5fd'>Selected type</div><div style='font-size:26px;font-weight:700' id='name'></div><div class='sample' id='sample'></div><div class='ops' id='ops'></div><div class='hint' id='hint'></div></div></div><script>(()=>{const types=[{name:'int',sample:'5',hint:'Integers support arithmetic such as +, -, *, //, %, and **.',ops:[['Add numbers',true],['Divide by string',false],['Compare values',true],['Slice like text',false]]},{name:'float',sample:'3.27',hint:'Floats represent real numbers and allow numeric operations with decimal results.',ops:[['Add numbers',true],['Multiply numbers',true],['Use string repetition',false],['Pass to round()',true]]},{name:'bool',sample:'True',hint:'Boolean values support logical reasoning and tests.',ops:[['Use in tests',true],['Represent truth',true],['Store decimal precision',false],['Combine with not',true]]},{name:'str',sample:'hello',hint:'Strings are sequences of characters. They support concatenation and slicing, not numeric division.',ops:[['Concatenate text',true],['Repeat with * int',true],['Divide by number',false],['Take substring',true]]}];const cards=document.getElementById('cards');const name=document.getElementById('name');const sample=document.getElementById('sample');const ops=document.getElementById('ops');const hint=document.getElementById('hint');function render(i){const item=types[i];name.textContent=item.name;sample.textContent=item.sample;ops.innerHTML=item.ops.map(([label,ok])=>`<span class='op ${ok?'ok':'no'}'>${label}</span>`).join('');hint.textContent=item.hint;[...cards.children].forEach((node,idx)=>node.classList.toggle('active',idx===i));}types.forEach((item,idx)=>{const btn=document.createElement('button');btn.className='card';btn.innerHTML=`<strong>${item.name}</strong><div style='margin-top:8px;color:#94a3b8'>sample: ${item.sample}</div>`;btn.onclick=()=>render(idx);cards.appendChild(btn);});render(0);let idx=0;setInterval(()=>{idx=(idx+1)%types.length;render(idx);},3600);window.addEventListener('resize',()=>render(idx),{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "types-true-false",
+          "type": "true-false",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "question": "True or False: an object's type helps determine which operations are valid on it.",
+            "correctAnswer": true,
+            "explanation": "This is one of the lecture's central ideas: type constrains what a program can do with an object."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "casting-and-expressions",
+      "title": "Casting / Expressions",
+      "blocks": [
+        {
+          "id": "expression-reducer-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 400
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 7000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive expression reducer for intro Python. Let learners switch between examples such as (13-4)/(12*12) and 5/3, then step through how subexpressions collapse into one final value and note the resulting type.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0b1120;color:#f8fafc;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:flex;flex-direction:column;gap:14px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.choices{display:flex;gap:10px;flex-wrap:wrap}.choice,.btn{padding:10px 14px;border-radius:999px;border:1px solid #334155;background:#1f2937;color:#e5e7eb;cursor:pointer}.choice.active{background:#2563eb;border-color:#93c5fd}.btn{background:#0f766e;border-color:#5eead4;color:#ecfeff}.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.expr{font-size:30px;font-weight:700;color:#fbbf24;word-break:break-word}.steps{display:flex;flex-direction:column;gap:8px}.step{padding:10px 12px;border-radius:12px;background:#111827;border:1px solid rgba(148,163,184,.18)}.step.active{border-color:#38bdf8;color:#e0f2fe}.meta{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(56,189,248,.12);border:1px solid rgba(125,211,252,.35);color:#dbeafe}@media (max-width:820px){.grid{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='top'><div><div style='font-size:23px;font-weight:700'>Expression Reducer</div><div style='color:#94a3b8'>Complex expressions become one value if you evaluate subexpressions systematically.</div></div><div class='choices'><button class='choice active' data-id='a'>Example A</button><button class='choice' data-id='b'>Example B</button><button class='btn' id='next'>Next step</button><button class='btn' id='reset'>Reset</button></div></div><div class='grid'><div class='box'><div style='color:#93c5fd'>Current expression</div><div class='expr' id='expr'></div><div class='meta' id='meta'></div></div><div class='box'><div style='font-size:18px;font-weight:700;margin-bottom:10px'>Reduction steps</div><div class='steps' id='steps'></div></div></div></div><script>(()=>{const examples={a:{title:'(13 - 4) / (12 * 12)',type:'float',steps:['(13 - 4) / (12 * 12)','9 / (12 * 12)','9 / 144','0.0625']},b:{title:'5 / 3',type:'float',steps:['5 / 3','1.6666666666666667']}};const choiceEls=[...document.querySelectorAll('.choice')];const expr=document.getElementById('expr');const steps=document.getElementById('steps');const meta=document.getElementById('meta');let current='a';let idx=0;function render(){const item=examples[current];expr.textContent=item.steps[idx];steps.innerHTML=item.steps.map((step,i)=>`<div class='step ${i===idx?'active':''}'>${i+1}. ${step}</div>`).join('');meta.textContent=`Result type: ${item.type}. Slide 41 says to replace complex expressions by one value.`;choiceEls.forEach(el=>el.classList.toggle('active',el.dataset.id===current));}choiceEls.forEach(el=>el.onclick=()=>{current=el.dataset.id;idx=0;render();});document.getElementById('next').onclick=()=>{idx=Math.min(idx+1,examples[current].steps.length-1);render();};document.getElementById('reset').onclick=()=>{idx=0;render();};render();window.addEventListener('resize',render,{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "casting-code-block",
+          "type": "code-block",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "language": "python",
+            "code": "# Lecture 1 examples: types, casting, and operators\nprint(type(5))\nprint(type(3.0))\nprint(float(3))\nprint(int(3.9))\nprint(round(3.9))\nprint((13 - 4) / (12 * 12))\nprint(2 ** 4)\nprint(17 // 5)\nprint(17 % 5)"
+          }
+        },
+        {
+          "id": "casting-playground",
+          "type": "code-playground",
+          "position": {
+            "order": 2
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "language": "python",
+            "initialCode": "# 运行并观察三行输出\nprint(float(3))\nprint(int(3.9))\nprint((13 - 4) / (12 * 12))",
+            "expectedOutput": "3.0\n3\n0.0625",
+            "hints": [
+              "float(3) -> 3.0",
+              "int(3.9) truncates to 3",
+              "(13 - 4) / (12 * 12) -> 0.0625"
+            ],
+            "runnable": true
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "variables-binding-and-style",
+      "title": "Variables / Binding / Style",
+      "blocks": [
+        {
+          "id": "binding-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 390
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6500,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive animation showing Python assignment as binding. Use pi = 355/113, emphasize that the right-hand side is evaluated first, then the value is stored and the name points to it.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0f172a;color:#f8fafc;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:flex;flex-direction:column;gap:14px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.btn{padding:10px 14px;border:none;border-radius:999px;background:#2563eb;color:#fff;cursor:pointer}.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.code{font-size:28px;font-weight:700;color:#fbbf24}.slot{margin-top:16px;padding:18px;border-radius:18px;background:#111827;border:1px solid rgba(148,163,184,.18);min-height:110px;display:flex;flex-direction:column;justify-content:center}.arrow{font-size:28px;color:#38bdf8;text-align:center;opacity:.25;transition:opacity .2s}.arrow.on{opacity:1}.state{padding:10px 12px;border-radius:12px;background:#0b1120;border:1px solid rgba(148,163,184,.16);margin-top:10px}.state.active{border-color:#34d399;color:#d1fae5}.note{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(16,185,129,.14);border:1px solid rgba(45,212,191,.35);color:#d1fae5}@media (max-width:820px){.grid{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='top'><div><div style='font-size:23px;font-weight:700'>Assignment is Binding</div><div style='color:#94a3b8'>The right-hand side becomes a value first. Then the name points to that value.</div></div><button class='btn' id='next'>Next step</button></div><div class='grid'><div class='box'><div style='color:#93c5fd'>Statement</div><div class='code'>pi = 355 / 113</div><div class='state' id='s0'>Step 1: read the expression on the right.</div><div class='state' id='s1'>Step 2: evaluate 355 / 113.</div><div class='state' id='s2'>Step 3: bind the resulting value to the name pi.</div></div><div class='box'><div style='color:#93c5fd'>Memory view</div><div class='slot'><div style='font-size:14px;color:#94a3b8'>Computed value</div><div style='font-size:34px;font-weight:700;color:#fbbf24' id='value'>?</div></div><div class='arrow' id='arrow'>pi → value</div><div class='slot'><div style='font-size:14px;color:#94a3b8'>Name binding</div><div style='font-size:34px;font-weight:700;color:#e0f2fe' id='binding'>pi = ?</div></div><div class='note' id='note'></div></div></div></div><script>(()=>{const notes=['Before execution, pi has no new value yet.','The expression evaluates to approximately 3.1415929203539825.','Now the variable name pi refers to the stored value.'];let step=0;function render(){document.getElementById('value').textContent=step>0?'3.1415929203539825':'?';document.getElementById('binding').textContent=step>1?'pi = 3.1415929203539825':'pi = ?';document.getElementById('arrow').classList.toggle('on',step>1);['s0','s1','s2'].forEach((id,idx)=>document.getElementById(id).classList.toggle('active',idx===step));document.getElementById('note').textContent=notes[step];}document.getElementById('next').onclick=()=>{step=(step+1)%3;render();};render();window.addEventListener('resize',render,{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "assignment-fill-blank",
+          "type": "fill-blank",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "question": "在 Python 里，符号 ______ 通常表示 assignment，而不是数学里的 equality。",
+            "correctAnswer": "=",
+            "hint": "single equals sign"
+          }
+        },
+        {
+          "id": "valid-assignment-quiz",
+          "type": "multiple-choice",
+          "position": {
+            "order": 2
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "question": "Which assignment statement is valid Python?",
+            "options": [
+              {
+                "id": "a",
+                "text": "x = 6"
+              },
+              {
+                "id": "b",
+                "text": "6 = x"
+              },
+              {
+                "id": "c",
+                "text": "x * y = 7"
+              },
+              {
+                "id": "d",
+                "text": "3radius = 2.2"
+              }
+            ],
+            "correctAnswer": "a",
+            "correctAnswers": [
+              "a"
+            ],
+            "explanation": "The left side must be a valid assignable name, not a literal or an expression.",
+            "multiSelect": false
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "rebinding-order-and-swap",
+      "title": "Rebinding / Execution Order / Swap",
+      "blocks": [
+        {
+          "id": "meters-feet-animation",
+          "type": "animation",
+          "position": {
+            "order": 0
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 395
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 6500,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create a line-by-line rebinding animation for meters = 100, feet = 3.2808 * meters, meters = 200. Show that feet keeps the old computed value until the program explicitly recomputes it.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111827;color:#f9fafb;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:flex;flex-direction:column;gap:14px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.btn{padding:10px 14px;border:none;border-radius:999px;background:#2563eb;color:#fff;cursor:pointer}.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.line{padding:10px 12px;border-radius:12px;background:#0b1120;border:1px solid rgba(148,163,184,.18);margin-bottom:8px}.line.active{border-color:#38bdf8;color:#e0f2fe}.vars{display:grid;grid-template-columns:1fr 1fr;gap:10px}.var{padding:16px;border-radius:16px;background:#0b1120;border:1px solid rgba(148,163,184,.18)}.name{color:#93c5fd;font-size:14px}.value{font-size:32px;font-weight:700;color:#fbbf24;margin-top:10px}.note{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(250,204,21,.12);border:1px solid rgba(253,224,71,.35);color:#fef3c7}@media (max-width:820px){.grid{grid-template-columns:1fr}.vars{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='top'><div><div style='font-size:23px;font-weight:700'>Execution Order and Rebinding</div><div style='color:#9ca3af'>Lines execute one after the other. Old computed values do not refresh by magic.</div></div><button class='btn' id='next'>Next line</button></div><div class='grid'><div class='box'><div class='line' id='l0'>1. meters = 100</div><div class='line' id='l1'>2. feet = 3.2808 * meters</div><div class='line' id='l2'>3. meters = 200</div></div><div class='box'><div class='vars'><div class='var'><div class='name'>meters</div><div class='value' id='meters'>?</div></div><div class='var'><div class='name'>feet</div><div class='value' id='feet'>?</div></div></div><div class='note' id='note'></div></div></div></div><script>(()=>{const states=[{meters:'100',feet:'?',note:'After line 1, only meters has a value.'},{meters:'100',feet:'328.08',note:'Line 2 computes feet from the current value of meters.'},{meters:'200',feet:'328.08',note:'Line 3 rebinds meters, but feet keeps the old computed result until you recompute it.'}];let step=0;function render(){document.getElementById('meters').textContent=states[step].meters;document.getElementById('feet').textContent=states[step].feet;document.getElementById('note').textContent=states[step].note;['l0','l1','l2'].forEach((id,idx)=>document.getElementById(id).classList.toggle('active',idx===step));}document.getElementById('next').onclick=()=>{step=(step+1)%states.length;render();};render();window.addEventListener('resize',render,{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "swap-debug-animation",
+          "type": "animation",
+          "position": {
+            "order": 1
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "center",
+            "height": 410
+          },
+          "visibilityRule": "always",
+          "content": {
+            "preset": "custom",
+            "durationMs": 7000,
+            "loop": true,
+            "speed": 1,
+            "aiPrompt": "Create an interactive swap debugging animation that compares a broken swap with a correct temp-variable swap. Let learners toggle between broken and fixed code and step through x, y, and temp values.",
+            "customHtml": "<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0b1120;color:#f8fafc;font-family:Arial,sans-serif}*{box-sizing:border-box}.wrap{height:100%;padding:18px;display:flex;flex-direction:column;gap:14px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.modes,.controls{display:flex;gap:10px;flex-wrap:wrap}.mode,.btn{padding:10px 14px;border-radius:999px;border:1px solid #334155;background:#1f2937;color:#e5e7eb;cursor:pointer}.mode.active{background:#7c3aed;border-color:#c4b5fd;color:#faf5ff}.btn{background:#2563eb;color:#fff;border:none}.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.82);padding:16px}.line{padding:10px 12px;border-radius:12px;background:#111827;border:1px solid rgba(148,163,184,.18);margin-bottom:8px}.line.active{border-color:#38bdf8;color:#e0f2fe}.vars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.var{padding:16px;border-radius:16px;background:#0b1120;border:1px solid rgba(148,163,184,.18)}.name{color:#93c5fd;font-size:14px}.value{font-size:30px;font-weight:700;color:#fbbf24;margin-top:10px}.note{margin-top:auto;padding:12px 14px;border-radius:14px;background:rgba(34,197,94,.12);border:1px solid rgba(74,222,128,.35);color:#dcfce7}@media (max-width:860px){.grid{grid-template-columns:1fr}.vars{grid-template-columns:1fr}}</style></head><body><div class='wrap'><div class='top'><div><div style='font-size:23px;font-weight:700'>Swap Debugger</div><div style='color:#94a3b8'>Compare a broken swap with the fixed version that uses temp.</div></div><div class='modes'><button class='mode active' data-mode='broken'>Broken</button><button class='mode' data-mode='fixed'>Fixed</button></div><div class='controls'><button class='btn' id='next'>Next step</button></div></div><div class='grid'><div class='box' id='code'></div><div class='box'><div class='vars'><div class='var'><div class='name'>x</div><div class='value' id='x'></div></div><div class='var'><div class='name'>y</div><div class='value' id='y'></div></div><div class='var'><div class='name'>temp</div><div class='value' id='temp'></div></div></div><div class='note' id='note'></div></div></div></div><script>(()=>{const flows={broken:{code:['x = 1','y = 2','y = x','x = y'],states:[{x:'1',y:'2',temp:'-',note:'Initial state.'},{x:'1',y:'1',temp:'-',note:'After y = x, both names point to 1.'},{x:'1',y:'1',temp:'-',note:'x = y keeps the same duplicated value. The original 2 is lost.'}]},fixed:{code:['x = 1','y = 2','temp = x','x = y','y = temp'],states:[{x:'1',y:'2',temp:'-',note:'Initial state.'},{x:'1',y:'2',temp:'1',note:'Store the old x value in temp.'},{x:'2',y:'2',temp:'1',note:'Now x can safely take y.'},{x:'2',y:'1',temp:'1',note:'Finally y gets the saved old x value.'}]}};const code=document.getElementById('code');const modeEls=[...document.querySelectorAll('.mode')];let mode='broken';let step=0;function render(){const flow=flows[mode];const activeLine=mode==='broken'?Math.min(step+1,flow.code.length-1):Math.min(step+2,flow.code.length-1);code.innerHTML=flow.code.map((line,idx)=>`<div class='line ${idx===activeLine?'active':''}'>${idx+1}. ${line}</div>`).join('');const state=flow.states[step];document.getElementById('x').textContent=state.x;document.getElementById('y').textContent=state.y;document.getElementById('temp').textContent=state.temp;document.getElementById('note').textContent=state.note;modeEls.forEach(el=>el.classList.toggle('active',el.dataset.mode===mode));}modeEls.forEach(el=>el.onclick=()=>{mode=el.dataset.mode;step=0;render();});document.getElementById('next').onclick=()=>{step=(step+1)%flows[mode].states.length;render();};render();window.addEventListener('resize',render,{passive:true});})();</script></body></html>"
+          }
+        },
+        {
+          "id": "swap-code-execution",
+          "type": "code-execution",
+          "position": {
+            "order": 2
+          },
+          "style": {
+            "spacing": "md",
+            "alignment": "left"
+          },
+          "visibilityRule": "always",
+          "content": {
+            "title": "Trace: Correct Swap with temp",
+            "language": "python",
+            "sourceCode": "x = 1\ny = 2\ntemp = x\nx = y\ny = temp\nprint(x, y)",
+            "traceSteps": [
+              {
+                "line": 1,
+                "variables": {
+                  "x": 1
+                },
+                "note": "After line 1, x is bound to 1."
+              },
+              {
+                "line": 2,
+                "variables": {
+                  "x": 1,
+                  "y": 2
+                },
+                "note": "After line 2, y is bound to 2."
+              },
+              {
+                "line": 3,
+                "variables": {
+                  "x": 1,
+                  "y": 2,
+                  "temp": 1
+                },
+                "note": "Store the old x value before overwriting it."
+              },
+              {
+                "line": 4,
+                "variables": {
+                  "x": 2,
+                  "y": 2,
+                  "temp": 1
+                },
+                "note": "x now takes the old y value."
+              },
+              {
+                "line": 5,
+                "variables": {
+                  "x": 2,
+                  "y": 1,
+                  "temp": 1
+                },
+                "note": "y takes the saved old x value."
+              },
+              {
+                "line": 6,
+                "variables": {
+                  "x": 2,
+                  "y": 1,
+                  "temp": 1
+                },
+                "stdoutDelta": "2 1",
+                "note": "The swap is complete, so the print output is 2 1."
+              }
+            ],
+            "checkpoints": [
+              {
+                "stepIndex": 3,
+                "question": "After executing line 4, what is the value of x?",
+                "options": [
+                  "1",
+                  "2",
+                  "temp"
+                ],
+                "correctIndex": 1,
+                "explanation": "Line 4 assigns x = y, and the current value of y is 2."
+              }
+            ],
+            "controls": {
+              "autoplay": false,
+              "stepDurationMs": 1000,
+              "allowScrub": true
+            },
+            "style": {
+              "theme": "slate",
+              "showLineNumbers": true,
+              "showVariablesPanel": true,
+              "showStdoutPanel": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

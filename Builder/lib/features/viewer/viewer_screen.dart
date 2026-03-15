@@ -44,8 +44,32 @@ class ViewerScreen extends ConsumerStatefulWidget {
   ConsumerState<ViewerScreen> createState() => _ViewerScreenState();
 }
 
+/// Device preview modes
+enum _DeviceMode { desktop, tablet, mobile, fullscreen }
+
 class _ViewerScreenState extends ConsumerState<ViewerScreen> {
-  String _viewMode = 'desktop';
+  _DeviceMode _device = _DeviceMode.desktop;
+
+  void _goBack(BuildContext context) {
+    final id = widget.courseId ?? '';
+    final pagePart =
+        (widget.lessonIndex != null && widget.lessonIndex! >= 0)
+        ? '&lessonIndex=${widget.lessonIndex}'
+        : '';
+    if (id.isNotEmpty) {
+      if (widget.addLesson) {
+        final draftPart =
+            (widget.draftId != null && widget.draftId!.isNotEmpty)
+            ? '&draftId=${Uri.encodeQueryComponent(widget.draftId!)}'
+            : '';
+        context.go('/builder?courseId=$id&addLesson=1$pagePart$draftPart');
+      } else {
+        context.go('/builder?courseId=$id$pagePart');
+      }
+    } else {
+      context.go('/builder');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,65 +85,89 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
     final previewLessons = (widget.singlePage && lessons.isNotEmpty)
         ? <CourseLesson>[lessons[resolvedLessonIndex]]
         : lessons;
+    final isFullscreen = _device == _DeviceMode.fullscreen;
 
     return DefaultTabController(
       length: previewLessons.isEmpty ? 1 : previewLessons.length,
       child: Scaffold(
-        backgroundColor: AppColors.neutral100,
-        appBar: AppBar(
-          title: Text(
-            course.metadata.title.isEmpty
-                ? _viewerTr(t, '课程预览', 'Course Preview')
-                : course.metadata.title,
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              final id = widget.courseId ?? '';
-              final pagePart =
-                  (widget.lessonIndex != null && widget.lessonIndex! >= 0)
-                  ? '&lessonIndex=${widget.lessonIndex}'
-                  : '';
-              if (id.isNotEmpty) {
-                if (widget.addLesson) {
-                  final draftPart =
-                      (widget.draftId != null && widget.draftId!.isNotEmpty)
-                      ? '&draftId=${Uri.encodeQueryComponent(widget.draftId!)}'
-                      : '';
-                  context.go(
-                    '/builder?courseId=$id&addLesson=1$pagePart$draftPart',
-                  );
-                } else {
-                  context.go('/builder?courseId=$id$pagePart');
-                }
-              } else {
-                context.go('/builder');
-              }
-            },
-          ),
-          actions: [
-            _ViewportButton(
-              icon: Icons.laptop_mac,
-              active: _viewMode == 'desktop',
-              onTap: () => setState(() => _viewMode = 'desktop'),
-            ),
-            _ViewportButton(
-              icon: Icons.smartphone,
-              active: _viewMode == 'mobile',
-              onTap: () => setState(() => _viewMode = 'mobile'),
-            ),
-            const SizedBox(width: 8),
-          ],
-        ),
-        body: previewLessons.isEmpty
-            ? _buildEmptyState(t)
-            : Column(
-                children: [
-                  // Lesson tabs
-                  if (!widget.singlePage && previewLessons.length > 1)
-                    Material(
-                      color: Colors.white,
-                      child: TabBar(
+        backgroundColor: isFullscreen ? Colors.white : AppColors.neutral100,
+        appBar: isFullscreen
+            ? null
+            : AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                surfaceTintColor: Colors.transparent,
+                titleSpacing: 0,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => _goBack(context),
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      course.metadata.title.isEmpty
+                          ? _viewerTr(t, '课程预览', 'Course Preview')
+                          : course.metadata.title,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    Text(
+                      _viewerTr(t, '预览模式', 'Preview mode'),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppColors.neutral400,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  // Device switcher group
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: AppColors.neutral100,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _DeviceButton(
+                          icon: Icons.laptop_mac,
+                          tooltip: _viewerTr(t, '桌面端', 'Desktop'),
+                          active: _device == _DeviceMode.desktop,
+                          onTap: () =>
+                              setState(() => _device = _DeviceMode.desktop),
+                        ),
+                        _DeviceButton(
+                          icon: Icons.tablet_mac,
+                          tooltip: _viewerTr(t, '平板', 'Tablet'),
+                          active: _device == _DeviceMode.tablet,
+                          onTap: () =>
+                              setState(() => _device = _DeviceMode.tablet),
+                        ),
+                        _DeviceButton(
+                          icon: Icons.smartphone,
+                          tooltip: _viewerTr(t, '手机', 'Mobile'),
+                          active: _device == _DeviceMode.mobile,
+                          onTap: () =>
+                              setState(() => _device = _DeviceMode.mobile),
+                        ),
+                        _DeviceButton(
+                          icon: Icons.open_in_full,
+                          tooltip: _viewerTr(t, '全屏', 'Fullscreen'),
+                          active: _device == _DeviceMode.fullscreen,
+                          onTap: () =>
+                              setState(() => _device = _DeviceMode.fullscreen),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                bottom: (!widget.singlePage && previewLessons.length > 1)
+                    ? TabBar(
                         isScrollable: true,
                         labelColor: AppColors.primary500,
                         unselectedLabelColor: AppColors.neutral500,
@@ -135,17 +183,83 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
                               ),
                             )
                             .toList(),
+                      )
+                    : null,
+              ),
+        body: Stack(
+          children: [
+            previewLessons.isEmpty
+                ? _buildEmptyState(t)
+                : _buildBodyContent(previewLessons, t),
+            // Fullscreen close button
+            if (isFullscreen)
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 8,
+                right: 12,
+                child: Material(
+                  color: AppColors.neutral800.withValues(alpha: 0.75),
+                  borderRadius: BorderRadius.circular(20),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () => setState(() => _device = _DeviceMode.desktop),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Icon(
+                        Icons.close_fullscreen,
+                        color: Colors.white,
+                        size: 18,
                       ),
                     ),
-                  Expanded(
-                    child: _viewMode == 'desktop'
-                        ? _buildDesktopLayout(previewLessons, t)
-                        : _buildMobileLayout(previewLessons, t),
                   ),
-                ],
+                ),
               ),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildBodyContent(
+    List<CourseLesson> previewLessons,
+    BuilderLocalizations t,
+  ) {
+    // For fullscreen: move tab bar inside body
+    if (_device == _DeviceMode.fullscreen) {
+      return Column(
+        children: [
+          if (!widget.singlePage && previewLessons.length > 1)
+            Material(
+              color: Colors.white,
+              elevation: 1,
+              child: TabBar(
+                isScrollable: true,
+                labelColor: AppColors.primary500,
+                unselectedLabelColor: AppColors.neutral500,
+                indicatorColor: AppColors.primary500,
+                tabs: previewLessons
+                    .asMap()
+                    .entries
+                    .map(
+                      (entry) => Tab(
+                        text: t.isZh
+                            ? '第 ${entry.key + 1} 课'
+                            : 'Lesson ${entry.key + 1}',
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          Expanded(child: _buildDesktopLayout(previewLessons, t)),
+        ],
+      );
+    }
+
+    return switch (_device) {
+      _DeviceMode.desktop => _buildDesktopLayout(previewLessons, t),
+      _DeviceMode.tablet => _buildTabletLayout(previewLessons, t),
+      _DeviceMode.mobile => _buildMobileLayout(previewLessons, t),
+      _DeviceMode.fullscreen => _buildDesktopLayout(previewLessons, t),
+    };
   }
 
   Widget _buildDesktopLayout(
@@ -190,6 +304,98 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
               ),
             )
             .toList(),
+      ),
+    );
+  }
+
+  // Tablet mockup: 768×1024, like iPad mini
+  Widget _buildTabletLayout(
+    List<CourseLesson> previewLessons,
+    BuilderLocalizations t,
+  ) {
+    return Center(
+      child: Container(
+        width: 768,
+        height: double.infinity,
+        constraints: const BoxConstraints(maxHeight: 1024),
+        margin: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: AppColors.neutral300, width: 3),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.12),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(21),
+          child: Column(
+            children: [
+              // Tablet status bar
+              Container(
+                height: 40,
+                color: AppColors.neutral900,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: AppColors.neutral600,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      _viewerTr(t, 'Primoria 平板预览', 'Primoria Tablet Preview'),
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.battery_full,
+                      color: Colors.white70,
+                      size: 14,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: previewLessons
+                      .map(
+                        (lesson) =>
+                            _InteractiveLessonView(lesson: lesson, t: t),
+                      )
+                      .toList(),
+                ),
+              ),
+              // Tablet home bar
+              Container(
+                height: 28,
+                color: Colors.white,
+                child: Center(
+                  child: Container(
+                    width: 100,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: AppColors.neutral300,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -301,36 +507,48 @@ class _ViewerScreenState extends ConsumerState<ViewerScreen> {
 }
 
 // ---------------------------------------------------------------------------
-// Viewport toggle button
+// Device toggle button
 // ---------------------------------------------------------------------------
-class _ViewportButton extends StatelessWidget {
+class _DeviceButton extends StatelessWidget {
   final IconData icon;
+  final String tooltip;
   final bool active;
   final VoidCallback onTap;
 
-  const _ViewportButton({
+  const _DeviceButton({
     required this.icon,
+    required this.tooltip,
     required this.active,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: active
-              ? AppColors.primary500.withValues(alpha: 0.12)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Icon(
-          icon,
-          size: 20,
-          color: active ? AppColors.primary500 : AppColors.neutral400,
+    return Tooltip(
+      message: tooltip,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          decoration: BoxDecoration(
+            color: active ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(7),
+            boxShadow: active
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 4,
+                      offset: const Offset(0, 1),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Icon(
+            icon,
+            size: 18,
+            color: active ? AppColors.primary500 : AppColors.neutral400,
+          ),
         ),
       ),
     );

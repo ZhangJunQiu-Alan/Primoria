@@ -52,11 +52,7 @@ class GeminiClient {
   /// Default model priority list — ordered from fastest/cheapest to most capable.
   /// GeminiClient will try these in order when fallback is needed.
   static const List<String> defaultModels = [
-    'gemini-2.5-flash-latest',
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
     'gemini-2.5-pro-latest',
-    'gemini-2.5-pro',
   ];
 
   /// Max retries per model before falling back to the next one.
