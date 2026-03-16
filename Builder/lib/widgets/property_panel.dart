@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
@@ -8,6 +9,8 @@ import '../models/models.dart';
 import '../services/block_registry.dart';
 import '../services/ai_animation_generator.dart';
 import '../services/ai_course_generator.dart';
+import '../services/ai_visual_generator.dart';
+import '../services/storage_service.dart';
 import '../services/file_picker.dart' as file_picker;
 import 'app_dropdown.dart';
 import 'block_widgets/html_animation_widget.dart';
@@ -507,6 +510,7 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
       case BlockType.functionFlow:
         return AppColors.secondary500;
       case BlockType.animation:
+      case BlockType.interactiveVisual:
       case BlockType.video:
         return AppColors.accent500;
     }
@@ -532,12 +536,14 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
         return _buildTrueFalseEditor();
       case BlockType.matching:
         return _buildMatchingEditor();
+      case BlockType.fillBlank:
+        return const SizedBox.shrink();
       case BlockType.animation:
         return _buildAnimationEditor();
+      case BlockType.interactiveVisual:
+        return _buildInteractiveVisualEditor();
       case BlockType.video:
         return _buildVideoEditor();
-      default:
-        return const SizedBox.shrink();
     }
   }
 
@@ -965,6 +971,17 @@ class _BlockPropertyEditorState extends ConsumerState<_BlockPropertyEditor> {
     );
   }
 
+  Widget _buildInteractiveVisualEditor() {
+    final content = widget.block.content as InteractiveVisualContent;
+    return _InteractiveVisualEditor(
+      t: widget.t,
+      content: content,
+      onChanged: (updated) {
+        _updateBlock(widget.block.copyWith(content: updated));
+      },
+    );
+  }
+
   Widget _buildAnimationEditor() {
     final content = widget.block.content as AnimationContent;
     return _AnimationEditor(
@@ -1138,16 +1155,11 @@ class _AnimationEditorState extends State<_AnimationEditor> {
   final _apiKeyController = TextEditingController();
   bool _isGenerating = false;
   String? _generationError;
-  String _selectedModel = 'gemini-3.1-flash-lite-preview';
+  String _selectedModel = 'gemini-3.1-pro-preview';
   String _selectedStyle = _animationStyles.first.key;
 
   static const _modelOptions = [
-    'gemini-2.5-flash-latest',
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-2.5-pro-latest',
-    'gemini-2.5-pro',
-    'gemini-3.1-flash-lite-preview',
+    'gemini-3.1-pro-preview',
   ];
 
   static const _animationStyles = [
@@ -1598,6 +1610,451 @@ class _AnimationEditorState extends State<_AnimationEditor> {
             ],
           ),
         ],
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Interactive Visual Editor
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _InteractiveVisualEditor extends StatefulWidget {
+  final BuilderLocalizations t;
+  final InteractiveVisualContent content;
+  final ValueChanged<InteractiveVisualContent> onChanged;
+
+  const _InteractiveVisualEditor({
+    required this.t,
+    required this.content,
+    required this.onChanged,
+  });
+
+  @override
+  State<_InteractiveVisualEditor> createState() =>
+      _InteractiveVisualEditorState();
+}
+
+// Visual style definitions for Interactive Visual generation
+class _VisualStyle {
+  final String key;
+  final String nameEn;
+  final String nameZh;
+  final String emoji;
+  final String promptHint; // injected into Gemini prompt
+
+  const _VisualStyle({
+    required this.key,
+    required this.nameEn,
+    required this.nameZh,
+    required this.emoji,
+    required this.promptHint,
+  });
+}
+
+const _visualStyles = <_VisualStyle>[
+  _VisualStyle(
+    key: 'watercolor',
+    nameEn: 'Watercolor',
+    nameZh: '水彩',
+    emoji: '🎨',
+    promptHint:
+        'STYLE: Watercolor aesthetic — soft blurred edges, low contrast, pastel and muted tones, generous white space, color bleeding/wet-on-wet gradients. Avoid sharp lines.',
+  ),
+  _VisualStyle(
+    key: 'papercraft',
+    nameEn: 'Papercraft',
+    nameZh: '剪纸',
+    emoji: '✂️',
+    promptHint:
+        'STYLE: Papercraft / cut-paper aesthetic — crisp geometric flat shapes, clearly layered elements, subtle drop shadows to suggest paper depth, clean outlines.',
+  ),
+  _VisualStyle(
+    key: 'anime',
+    nameEn: 'Anime',
+    nameZh: '动漫',
+    emoji: '⚡',
+    promptHint:
+        'STYLE: Anime aesthetic — bold dark outlines, highly saturated vivid colors, dynamic motion blur, dramatic speed lines, cel-shading, energetic composition.',
+  ),
+  _VisualStyle(
+    key: 'whiteboard',
+    nameEn: 'Whiteboard',
+    nameZh: '白板',
+    emoji: '📋',
+    promptHint:
+        'STYLE: Whiteboard sketch aesthetic — white or near-white background, hand-drawn black marker strokes, arrows, boxes, labels appearing progressively as if being drawn live.',
+  ),
+  _VisualStyle(
+    key: 'retro_print',
+    nameEn: 'Retro Print',
+    nameZh: '复古印刷',
+    emoji: '🗞️',
+    promptHint:
+        'STYLE: Retro print / vintage magazine infographic aesthetic — restrained color palette (2-3 colors), halftone dot patterns, overprint misalignment, aged paper texture feel.',
+  ),
+  _VisualStyle(
+    key: 'heritage',
+    nameEn: 'Heritage',
+    nameZh: '经典学术',
+    emoji: '🏛️',
+    promptHint:
+        'STYLE: Heritage / academic textbook aesthetic — classical serif typography, muted scholarly tones (cream, navy, dark green), museum-label layout, dignified and serious.',
+  ),
+];
+
+class _InteractiveVisualEditorState extends State<_InteractiveVisualEditor> {
+  final _promptController = TextEditingController();
+  bool _isGenerating = false;
+  String? _generationError;
+  VisualGenerationStage _stage = VisualGenerationStage.idle;
+  bool _showAdvanced = false;
+  String? _selectedStyle; // null = not yet chosen (required before generate)
+
+  static const _stageMessages = {
+    VisualGenerationStage.analyzing: ('Analyzing prompt...', '正在分析提示词...'),
+    VisualGenerationStage.generatingScene: ('Generating visual...', '生成可视化中...'),
+    VisualGenerationStage.done: ('Done!', '完成！'),
+    VisualGenerationStage.error: ('Generation failed', '生成失败'),
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _promptController.text = widget.content.aiPrompt ?? '';
+  }
+
+  @override
+  void dispose() {
+    _promptController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _generate() async {
+    final prompt = _promptController.text.trim();
+    if (prompt.isEmpty) return;
+    if (_selectedStyle == null) return;
+
+    final style = _visualStyles.firstWhere((s) => s.key == _selectedStyle);
+    final fullPrompt = '${style.promptHint}\n\nCONTENT: $prompt';
+
+    setState(() {
+      _isGenerating = true;
+      _generationError = null;
+      _stage = VisualGenerationStage.analyzing;
+    });
+
+    await _advanceStage(VisualGenerationStage.generatingScene, 400);
+
+    final result = await AIVisualGenerator.generate(prompt: fullPrompt);
+
+    if (!mounted) return;
+
+    if (result.isSuccess) {
+      await _advanceStage(VisualGenerationStage.done, 200);
+
+      widget.onChanged(result.spec!);
+      setState(() {
+        _isGenerating = false;
+        _stage = VisualGenerationStage.idle;
+      });
+    } else {
+      setState(() {
+        _isGenerating = false;
+        _stage = VisualGenerationStage.error;
+        _generationError = result.error;
+      });
+    }
+  }
+
+  Future<void> _advanceStage(VisualGenerationStage stage, int delayMs) async {
+    if (!mounted) return;
+    setState(() => _stage = stage);
+    await Future.delayed(Duration(milliseconds: delayMs));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isZh = widget.t.isZh;
+    final content = widget.content;
+    final hasSaved = content.legacyCustomHtml != null;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _PropertySection(
+          title: isZh ? 'AI 生成' : 'AI Generation',
+          children: [
+            // ── Style picker ──────────────────────────────────────────
+            Text(
+              isZh ? '选择风格（必选）' : 'Pick a style (required)',
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: AppColors.neutral600,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+              childAspectRatio: 2.8,
+              children: _visualStyles.map((style) {
+                final isSelected = _selectedStyle == style.key;
+                return GestureDetector(
+                  onTap: _isGenerating
+                      ? null
+                      : () => setState(() => _selectedStyle = style.key),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primary500
+                          : AppColors.neutral100,
+                      borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                      border: Border.all(
+                        color: isSelected
+                            ? AppColors.primary500
+                            : AppColors.neutral200,
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(style.emoji,
+                            style: const TextStyle(fontSize: 13)),
+                        const SizedBox(width: 4),
+                        Flexible(
+                          child: Text(
+                            isZh ? style.nameZh : style.nameEn,
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: isSelected
+                                  ? Colors.white
+                                  : AppColors.neutral700,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+
+            // ── Prompt input ──────────────────────────────────────────
+            TextFormField(
+              controller: _promptController,
+              decoration: InputDecoration(
+                hintText:
+                    isZh
+                        ? '描述你想要的交互可视化，例如：演示理想气体定律 PV=nRT...'
+                        : 'Describe the simulation, e.g.: Show how PV=nRT works for ideal gas...',
+                hintStyle: const TextStyle(
+                  color: AppColors.neutral400,
+                  fontSize: 12,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  borderSide: const BorderSide(color: AppColors.neutral200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  borderSide: const BorderSide(color: AppColors.neutral200),
+                ),
+                contentPadding: const EdgeInsets.all(AppSpacing.sm),
+              ),
+              style: const TextStyle(fontSize: 12),
+              maxLines: 3,
+              minLines: 2,
+              enabled: !_isGenerating,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+
+            // Stage indicator (shown during generation)
+            if (_isGenerating) ...[
+              _buildStageIndicator(isZh),
+              const SizedBox(height: AppSpacing.sm),
+            ],
+
+            // Error
+            if (_generationError != null && !_isGenerating) ...[
+              Container(
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF3F0),
+                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  border: Border.all(color: const Color(0xFFFFCDD2)),
+                ),
+                child: Text(
+                  _generationError!,
+                  style: const TextStyle(
+                    color: Color(0xFFB71C1C),
+                    fontSize: 11,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
+
+            // "Select a style first" nudge
+            if (_selectedStyle == null && !_isGenerating) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm, vertical: 6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF8E1),
+                  borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  border: Border.all(color: const Color(0xFFFFE082)),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.palette_outlined,
+                        size: 13, color: Color(0xFFF57F17)),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        isZh ? '请先选择一个风格' : 'Select a style above first',
+                        style: const TextStyle(
+                            fontSize: 11, color: Color(0xFFF57F17)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
+
+            // Generate / Regenerate button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: (_isGenerating || _selectedStyle == null)
+                    ? null
+                    : _generate,
+                icon: _isGenerating
+                    ? const SizedBox(
+                        width: 14,
+                        height: 14,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(Icons.auto_awesome, size: 14),
+                label: Text(
+                  _isGenerating
+                      ? (isZh ? '生成中...' : 'Generating...')
+                      : (hasSaved
+                          ? (isZh ? '重新生成' : 'Regenerate')
+                          : (isZh ? 'AI 生成' : 'Generate')),
+                  style: const TextStyle(fontSize: 12),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary500,
+                  foregroundColor: Colors.white,
+                  disabledBackgroundColor: AppColors.neutral200,
+                  disabledForegroundColor: AppColors.neutral400,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        // Advanced: show spec JSON
+        const SizedBox(height: AppSpacing.sm),
+        GestureDetector(
+          onTap: () => setState(() => _showAdvanced = !_showAdvanced),
+          child: Row(
+            children: [
+              Icon(
+                _showAdvanced ? Icons.expand_less : Icons.expand_more,
+                size: 16,
+                color: AppColors.neutral400,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                isZh ? '高级 / 查看 Spec JSON' : 'Advanced / View Spec JSON',
+                style: const TextStyle(
+                  fontSize: AppFontSize.xs,
+                  color: AppColors.neutral500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (_showAdvanced) ...[
+          const SizedBox(height: AppSpacing.xs),
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: const Color(0xFF161B22),
+              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+            ),
+            child: SelectableText(
+              const JsonEncoder.withIndent('  ').convert(content.toJson()),
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 10,
+                color: Color(0xFF8B949E),
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildStageIndicator(bool isZh) {
+    final stages = [
+      VisualGenerationStage.analyzing,
+      VisualGenerationStage.generatingScene,
+    ];
+    final currentIdx = stages.indexOf(_stage);
+    final msg = _stageMessages[_stage];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          isZh ? (msg?.$2 ?? '') : (msg?.$1 ?? ''),
+          style: const TextStyle(fontSize: 11, color: AppColors.primary500),
+        ),
+        const SizedBox(height: 6),
+        Row(
+          children:
+              stages.asMap().entries.map((e) {
+                final done = e.key < currentIdx;
+                final active = e.key == currentIdx;
+                return Expanded(
+                  child: Container(
+                    height: 3,
+                    margin: const EdgeInsets.only(right: 3),
+                    decoration: BoxDecoration(
+                      color:
+                          done
+                              ? AppColors.primary500
+                              : active
+                              ? AppColors.primary400
+                              : AppColors.neutral200,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                );
+              }).toList(),
+        ),
       ],
     );
   }
