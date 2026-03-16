@@ -56,9 +56,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
     final pinnedIds = results[0] as List<String>;
     final xpHistory = results[1] as Map<DateTime, int>;
-    final allModels = (results[2] as List<Map<String, dynamic>>)
-        .map(AchievementModel.fromMap)
-        .toList();
+    final allModels = AchievementDisplayService.curatedAchievements(
+      (results[2] as List<Map<String, dynamic>>)
+          .map(AchievementModel.fromMap)
+          .toList(),
+    );
     final userStats = (results[3] as Map<String, dynamic>?) ?? {};
     final followCounts = (results[4] as Map<String, dynamic>?) ?? {};
 
@@ -98,7 +100,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
         final ratioCmp = pb.ratio.compareTo(pa.ratio);
         if (ratioCmp != 0) return ratioCmp;
-        return a.name.compareTo(b.name);
+        return AchievementDisplayService.sortIndex(
+          a,
+        ).compareTo(AchievementDisplayService.sortIndex(b));
       });
 
     setState(() {
@@ -343,32 +347,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             : Row(
                 children: slots.map((achievement) {
+                  final usesCuratedBadge =
+                      achievement != null &&
+                      AchievementDisplayService.usesCuratedBadge(achievement);
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: achievement == null
                         ? _buildDashedPinnedPlaceholder(slotSize)
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: SizedBox(
-                              width: slotSize,
-                              height: slotSize,
-                              child: Image.asset(
-                                AchievementDisplayService.badgeAssetPath(
-                                  achievement,
+                        : Container(
+                            width: slotSize,
+                            height: slotSize,
+                            padding: EdgeInsets.all(usesCuratedBadge ? 8 : 0),
+                            decoration: BoxDecoration(
+                              color: usesCuratedBadge
+                                  ? const Color(0xFFF8FAFF)
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: usesCuratedBadge
+                                  ? const [
+                                      BoxShadow(
+                                        color: Color(0x120F172A),
+                                        blurRadius: 12,
+                                        offset: Offset(0, 5),
+                                      ),
+                                    ]
+                                  : null,
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Image.asset(
+                              AchievementDisplayService.badgeAssetPath(
+                                achievement,
+                              ),
+                              fit: usesCuratedBadge
+                                  ? BoxFit.contain
+                                  : BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF8FAFC),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF8FAFC),
-                                    borderRadius: BorderRadius.circular(16),
+                                child: Text(
+                                  _achievementCategoryEmoji(
+                                    achievement.category,
                                   ),
-                                  child: Text(
-                                    _achievementCategoryEmoji(
-                                      achievement.category,
-                                    ),
-                                    style: TextStyle(fontSize: slotSize * 0.33),
-                                  ),
+                                  style: TextStyle(fontSize: slotSize * 0.33),
                                 ),
                               ),
                             ),
@@ -933,6 +956,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   itemBuilder: (context, index) {
                     final achievement = items[index];
+                    final usesCuratedBadge =
+                        AchievementDisplayService.usesCuratedBadge(achievement);
                     final progress = AchievementDisplayService.buildProgress(
                       achievement: achievement,
                       userStats: _userStats,
@@ -953,15 +978,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: SizedBox(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
                               width: 58,
                               height: 58,
+                              padding: EdgeInsets.all(usesCuratedBadge ? 6 : 0),
+                              decoration: BoxDecoration(
+                                color: usesCuratedBadge
+                                    ? const Color(0xFFF8FAFF)
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: usesCuratedBadge
+                                    ? const [
+                                        BoxShadow(
+                                          color: Color(0x120F172A),
+                                          blurRadius: 10,
+                                          offset: Offset(0, 4),
+                                        ),
+                                      ]
+                                    : null,
+                              ),
                               child: Image.asset(
                                 AchievementDisplayService.badgeAssetPath(
                                   achievement,
                                 ),
-                                fit: BoxFit.cover,
+                                fit: usesCuratedBadge
+                                    ? BoxFit.contain
+                                    : BoxFit.cover,
                                 errorBuilder: (_, __, ___) => Center(
                                   child: Text(
                                     _achievementCategoryEmoji(
@@ -982,7 +1025,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        achievement.name,
+                                        AchievementDisplayService.displayName(
+                                          achievement,
+                                          t: t,
+                                        ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
