@@ -46,9 +46,11 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
       ]);
       if (!mounted) return;
       setState(() {
-        _achievements = (results[0] as List<Map<String, dynamic>>)
-            .map(AchievementModel.fromMap)
-            .toList();
+        _achievements = AchievementDisplayService.curatedAchievements(
+          (results[0] as List<Map<String, dynamic>>)
+              .map(AchievementModel.fromMap)
+              .toList(),
+        );
         _pinnedIds = results[1] as List<String>;
         _userStats = (results[2] as Map<String, dynamic>?) ?? {};
         _followCounts = (results[3] as Map<String, dynamic>?) ?? {};
@@ -67,14 +69,22 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
   List<AchievementModel> _filtered(AppLocalizations t) {
     final list = _selectedCategory == 'all'
         ? [..._achievements]
-        : _achievements.where((a) => a.category == _selectedCategory).toList();
+        : _achievements
+              .where(
+                (a) =>
+                    AchievementDisplayService.displayCategory(a) ==
+                    _selectedCategory,
+              )
+              .toList();
     list.sort((a, b) {
       final aUnlocked = _isEffectivelyUnlocked(a, t);
       final bUnlocked = _isEffectivelyUnlocked(b, t);
       if (aUnlocked != bUnlocked) {
         return aUnlocked ? -1 : 1;
       }
-      return a.name.compareTo(b.name);
+      return AchievementDisplayService.sortIndex(
+        a,
+      ).compareTo(AchievementDisplayService.sortIndex(b));
     });
     return list;
   }
@@ -109,7 +119,9 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
     final refreshed = await SupabaseService.getAchievementsWithStatus();
     if (!mounted) return;
     setState(() {
-      _achievements = refreshed.map(AchievementModel.fromMap).toList();
+      _achievements = AchievementDisplayService.curatedAchievements(
+        refreshed.map(AchievementModel.fromMap).toList(),
+      );
     });
   }
 
@@ -342,8 +354,14 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
 
   Widget _achievementCard(AchievementModel achievement, AppLocalizations t) {
     final isCompact = MediaQuery.sizeOf(context).width < 430;
-    final badgeSize = isCompact ? 72.0 : 82.0;
-    final titleSize = isCompact ? 16.0 : 18.0;
+    final badgeSize = isCompact ? 88.0 : 104.0;
+    final badgeRadius = AchievementDisplayService.usesCuratedBadge(achievement)
+        ? 24.0
+        : 18.0;
+    final usesCuratedBadge = AchievementDisplayService.usesCuratedBadge(
+      achievement,
+    );
+    final titleSize = isCompact ? 17.0 : 19.0;
     final style = AchievementService.rarityStyle(achievement.rarity, t.isZh);
     final rarityColor = Color(style.color);
     final isPinned = _pinnedIds.contains(achievement.id);
@@ -354,20 +372,21 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
       followCounts: _followCounts,
       t: t,
     );
-    final displayName = achievement.name.isNotEmpty
-        ? achievement.name
-        : (t.isZh ? '未命名成就' : 'Untitled Achievement');
+    final displayName = AchievementDisplayService.displayName(
+      achievement,
+      t: t,
+    );
     final requirement = progress.requirement;
 
     return InkWell(
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(22),
       onTap: _manageMode && unlocked ? () => _togglePin(achievement) : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(22),
           border: Border.all(
             color: _manageMode && isPinned
                 ? rarityColor
@@ -377,8 +396,8 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
           boxShadow: const [
             BoxShadow(
               color: Color(0x120F172A),
-              blurRadius: 12,
-              offset: Offset(0, 4),
+              blurRadius: 18,
+              offset: Offset(0, 8),
             ),
           ],
         ),
@@ -388,14 +407,34 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: SizedBox(
+                Opacity(
+                  opacity: unlocked ? 1 : 0.62,
+                  child: Container(
                     width: badgeSize,
                     height: badgeSize,
+                    padding: EdgeInsets.all(usesCuratedBadge ? 10 : 0),
+                    decoration: BoxDecoration(
+                      color: usesCuratedBadge
+                          ? Colors.white
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(badgeRadius),
+                      border: usesCuratedBadge
+                          ? Border.all(color: const Color(0xFFE2E8F0))
+                          : null,
+                      boxShadow: usesCuratedBadge
+                          ? const [
+                              BoxShadow(
+                                color: Color(0x140F172A),
+                                blurRadius: 16,
+                                offset: Offset(0, 8),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    clipBehavior: Clip.antiAlias,
                     child: Image.asset(
                       AchievementDisplayService.badgeAssetPath(achievement),
-                      fit: BoxFit.cover,
+                      fit: usesCuratedBadge ? BoxFit.contain : BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
                         color: rarityColor.withValues(alpha: 0.16),
                         alignment: Alignment.center,
@@ -408,18 +447,28 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
                   ),
                 ),
                 if (!unlocked)
-                  Positioned.fill(
+                  Positioned(
+                    right: -2,
+                    bottom: -2,
                     child: Container(
+                      width: 30,
+                      height: 30,
                       decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.42),
-                        borderRadius: BorderRadius.circular(18),
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x140F172A),
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
                       ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.lock_rounded,
-                          color: Colors.white,
-                          size: 22,
-                        ),
+                      child: const Icon(
+                        Icons.lock_rounded,
+                        color: Color(0xFF64748B),
+                        size: 16,
                       ),
                     ),
                   ),
@@ -452,7 +501,7 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
                   ),
               ],
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 18),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -491,7 +540,7 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(999),
                     child: LinearProgressIndicator(
-                      minHeight: 10,
+                      minHeight: 12,
                       value: progress.ratio,
                       backgroundColor: const Color(0xFFE2E8F0),
                       valueColor: AlwaysStoppedAnimation<Color>(
@@ -515,7 +564,14 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
                     spacing: 6,
                     runSpacing: 6,
                     children: [
-                      _chip(_categoryLabel(achievement.category, t)),
+                      _chip(
+                        _categoryLabel(
+                          AchievementDisplayService.displayCategory(
+                            achievement,
+                          ),
+                          t,
+                        ),
+                      ),
                       _chip(
                         style.label,
                         background: unlocked
