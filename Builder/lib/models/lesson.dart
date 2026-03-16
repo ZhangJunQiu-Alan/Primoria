@@ -14,8 +14,14 @@ class CourseLesson {
     required this.pages,
   });
 
-  /// Flat view of the first page's blocks (convenience accessor).
-  List<Block> get blocks => pages.isNotEmpty ? pages.first.blocks : [];
+  /// Whether any page inside this lesson actually has blocks.
+  bool get hasContent => pages.any((page) => page.blocks.isNotEmpty);
+
+  /// Returns the first page index that contains blocks, or 0 if all are empty.
+  int get firstNonEmptyPageIndex {
+    final index = pages.indexWhere((page) => page.blocks.isNotEmpty);
+    return index >= 0 ? index : 0;
+  }
 
   /// Create a lesson with one empty page.
   factory CourseLesson.create({String title = 'New Lesson'}) {
@@ -43,7 +49,8 @@ class CourseLesson {
     }
 
     // Legacy format: has 'blocks' key → wrap into first page
-    final blocks = (json['blocks'] as List<dynamic>?)
+    final blocks =
+        (json['blocks'] as List<dynamic>?)
             ?.map((e) => Block.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];
@@ -51,20 +58,16 @@ class CourseLesson {
       lessonId: lessonId,
       title: title,
       pages: [
-        LessonPage(
-          pageId: IdGenerator.pageId(),
-          order: 0,
-          blocks: blocks,
-        ),
+        LessonPage(pageId: IdGenerator.pageId(), order: 0, blocks: blocks),
       ],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'lessonId': lessonId,
-        'title': title,
-        'pages': pages.map((p) => p.toJson()).toList(),
-      };
+    'lessonId': lessonId,
+    'title': title,
+    'pages': pages.map((p) => p.toJson()).toList(),
+  };
 
   CourseLesson copyWith({
     String? lessonId,
@@ -103,11 +106,7 @@ class CourseLesson {
     return copyWith(pages: updated);
   }
 
-  CourseLesson reorderBlocks(
-    int oldIndex,
-    int newIndex, {
-    int pageIndex = 0,
-  }) {
+  CourseLesson reorderBlocks(int oldIndex, int newIndex, {int pageIndex = 0}) {
     if (pageIndex < 0 || pageIndex >= pages.length) return this;
     final updated = [...pages];
     updated[pageIndex] = pages[pageIndex].reorderBlocks(oldIndex, newIndex);
@@ -119,7 +118,12 @@ class CourseLesson {
   // ---------------------------------------------------------------------------
 
   CourseLesson addPage() {
-    return copyWith(pages: [...pages, LessonPage.create(order: pages.length)]);
+    return copyWith(
+      pages: [
+        ...pages,
+        LessonPage.create(order: pages.length),
+      ],
+    );
   }
 
   CourseLesson removePage(int pageIndex) {

@@ -6,10 +6,7 @@ class CourseAuthor {
   final String userId;
   final String displayName;
 
-  const CourseAuthor({
-    required this.userId,
-    required this.displayName,
-  });
+  const CourseAuthor({required this.userId, required this.displayName});
 
   factory CourseAuthor.fromJson(Map<String, dynamic> json) {
     return CourseAuthor(
@@ -19,9 +16,9 @@ class CourseAuthor {
   }
 
   Map<String, dynamic> toJson() => {
-        'userId': userId,
-        'displayName': displayName,
-      };
+    'userId': userId,
+    'displayName': displayName,
+  };
 }
 
 /// Course metadata
@@ -71,10 +68,10 @@ class CourseMetadata {
       title: json['title'] as String? ?? '',
       description: json['description'] as String? ?? '',
       author: CourseAuthor.fromJson(
-          json['author'] as Map<String, dynamic>? ?? {}),
-      tags: (json['tags'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
+        json['author'] as Map<String, dynamic>? ?? {},
+      ),
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           [],
       difficulty: json['difficulty'] as String? ?? 'beginner',
       estimatedMinutes: json['estimatedMinutes'] as int? ?? 0,
@@ -89,16 +86,16 @@ class CourseMetadata {
   }
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'description': description,
-        'author': author.toJson(),
-        'tags': tags,
-        'difficulty': difficulty,
-        'estimatedMinutes': estimatedMinutes,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-        'version': version,
-      };
+    'title': title,
+    'description': description,
+    'author': author.toJson(),
+    'tags': tags,
+    'difficulty': difficulty,
+    'estimatedMinutes': estimatedMinutes,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+    'version': version,
+  };
 
   CourseMetadata copyWith({
     String? title,
@@ -146,17 +143,16 @@ class CourseSettings {
   }
 
   Map<String, dynamic> toJson() => {
-        'theme': theme,
-        'primaryColor': primaryColor,
-        'fontFamily': fontFamily,
-      };
+    'theme': theme,
+    'primaryColor': primaryColor,
+    'fontFamily': fontFamily,
+  };
 }
 
 /// Course model - matches PRD 5.1 JSON schema
 class Course {
   static const String schemaVersion = '1.0.0';
-  static const String schemaUrl =
-      'https://primoria.com/course-schema/v1.json';
+  static const String schemaUrl = 'https://primoria.com/course-schema/v1.json';
 
   final String courseId;
   final CourseMetadata metadata;
@@ -182,14 +178,15 @@ class Course {
 
   factory Course.fromJson(Map<String, dynamic> json) {
     // backward compat: accept legacy 'pages' key
-    final lessonsRaw =
-        (json['lessons'] ?? json['pages']) as List<dynamic>;
+    final lessonsRaw = (json['lessons'] ?? json['pages']) as List<dynamic>;
     return Course(
       courseId: json['courseId'] as String,
-      metadata:
-          CourseMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
-      settings:
-          CourseSettings.fromJson(json['settings'] as Map<String, dynamic>? ?? {}),
+      metadata: CourseMetadata.fromJson(
+        json['metadata'] as Map<String, dynamic>,
+      ),
+      settings: CourseSettings.fromJson(
+        json['settings'] as Map<String, dynamic>? ?? {},
+      ),
       lessons: lessonsRaw
           .map((e) => CourseLesson.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -197,13 +194,13 @@ class Course {
   }
 
   Map<String, dynamic> toJson() => {
-        '\$schema': schemaUrl,
-        'schemaVersion': schemaVersion,
-        'courseId': courseId,
-        'metadata': metadata.toJson(),
-        'settings': settings.toJson(),
-        'lessons': lessons.map((l) => l.toJson()).toList(),
-      };
+    '\$schema': schemaUrl,
+    'schemaVersion': schemaVersion,
+    'courseId': courseId,
+    'metadata': metadata.toJson(),
+    'settings': settings.toJson(),
+    'lessons': lessons.map((l) => l.toJson()).toList(),
+  };
 
   Course copyWith({
     String? courseId,
@@ -233,7 +230,8 @@ class Course {
   /// Remove lesson
   Course removeLesson(String lessonId) {
     return copyWith(
-        lessons: lessons.where((l) => l.lessonId != lessonId).toList());
+      lessons: lessons.where((l) => l.lessonId != lessonId).toList(),
+    );
   }
 
   /// Update lesson
@@ -249,5 +247,38 @@ class Course {
   CourseLesson? getLesson(int index) {
     if (index < 0 || index >= lessons.length) return null;
     return lessons[index];
+  }
+
+  /// Find the first lesson/page pair that actually contains blocks.
+  ///
+  /// If [preferredLessonIndex] is provided and valid, it is used first. When
+  /// that lesson has no content, the search falls back to the rest of the
+  /// course. Returns `(0, 0)` when the course is empty or every page is empty.
+  (int, int) firstNonEmptyPageLocation({int? preferredLessonIndex}) {
+    if (lessons.isEmpty) return (0, 0);
+
+    if (preferredLessonIndex != null &&
+        preferredLessonIndex >= 0 &&
+        preferredLessonIndex < lessons.length) {
+      final preferredLesson = lessons[preferredLessonIndex];
+      if (preferredLesson.hasContent) {
+        return (preferredLessonIndex, preferredLesson.firstNonEmptyPageIndex);
+      }
+    }
+
+    for (int lessonIndex = 0; lessonIndex < lessons.length; lessonIndex++) {
+      final lesson = lessons[lessonIndex];
+      if (lesson.hasContent) {
+        return (lessonIndex, lesson.firstNonEmptyPageIndex);
+      }
+    }
+
+    if (preferredLessonIndex != null &&
+        preferredLessonIndex >= 0 &&
+        preferredLessonIndex < lessons.length) {
+      return (preferredLessonIndex, 0);
+    }
+
+    return (0, 0);
   }
 }
