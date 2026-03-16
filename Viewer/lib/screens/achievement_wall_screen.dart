@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/common/viewer_page_shell.dart';
 import '../l10n/app_localizations.dart';
 import '../models/achievement_model.dart';
 import '../providers/language_provider.dart';
@@ -197,68 +198,66 @@ class _AchievementWallScreenState extends State<AchievementWallScreen> {
                     : viewportWidth;
                 final gridColumns = isDesktop ? 2 : 1;
 
-                return Center(
-                  child: SizedBox(
-                    width: contentWidth,
-                    child: Column(
-                      children: [
-                        // Count + manage hint
-                        Container(
-                          width: double.infinity,
-                          color: Colors.white,
-                          padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                return ViewerScrollGutterProxy(
+                  contentWidth: contentWidth,
+                  child: Column(
+                    children: [
+                      // Count + manage hint
+                      Container(
+                        width: double.infinity,
+                        color: Colors.white,
+                        padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              t.achievementWallCount(
+                                unlockedCount,
+                                _achievements.length,
+                              ),
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF94A3B8),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (_manageMode) ...[
+                              const SizedBox(height: 4),
                               Text(
-                                t.achievementWallCount(
-                                  unlockedCount,
-                                  _achievements.length,
-                                ),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Color(0xFF94A3B8),
-                                  fontWeight: FontWeight.w500,
+                                t.achievementManageHint,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.indigo500,
                                 ),
                               ),
-                              if (_manageMode) ...[
-                                const SizedBox(height: 4),
-                                Text(
-                                  t.achievementManageHint,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppColors.indigo500,
-                                  ),
-                                ),
-                              ],
                             ],
-                          ),
+                          ],
                         ),
-                        _buildCategoryFilter(t),
-                        Expanded(
-                          child: filtered.isEmpty
-                              ? _buildEmptyState(t)
-                              : GridView.builder(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    16,
-                                    16,
-                                    16,
-                                    24,
-                                  ),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: gridColumns,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                        mainAxisExtent: 196,
-                                      ),
-                                  itemCount: filtered.length,
-                                  itemBuilder: (context, i) =>
-                                      _achievementCard(filtered[i], t),
+                      ),
+                      _buildCategoryFilter(t),
+                      Expanded(
+                        child: filtered.isEmpty
+                            ? _buildEmptyState(t)
+                            : GridView.builder(
+                                padding: const EdgeInsets.fromLTRB(
+                                  16,
+                                  16,
+                                  16,
+                                  24,
                                 ),
-                        ),
-                      ],
-                    ),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: gridColumns,
+                                      crossAxisSpacing: 12,
+                                      mainAxisSpacing: 12,
+                                      mainAxisExtent: 196,
+                                    ),
+                                itemCount: filtered.length,
+                                itemBuilder: (context, i) =>
+                                    _achievementCard(filtered[i], t),
+                              ),
+                      ),
+                    ],
                   ),
                 );
               },
