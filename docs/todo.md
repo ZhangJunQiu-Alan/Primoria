@@ -57,3 +57,9 @@ Last updated: 2026-03-14 (rev 4)
 29. [x] Rebuilt Builder page navigation strip: compact numbered chips with scroll arrows, active chip auto-scroll, "+ 新建页" always visible.
 30. [x] Fixed property inspector blank on pages 2+: block search now covers all pages; `updateBlock` passes correct `pageIndex`.
 31. [x] Builder block library UI: removed category description subtitles and "N 个模块" count labels.
+32. [x] Updated Gemini model to `gemini-3.1-pro-preview`; AI text blocks now convert Markdown → Quill Delta at generation time.
+33. [x] Code Execution block UI: removed timeline/scrubbar and step-duration slider; variables + stdout now side-by-side; 4 control buttons span full row width.
+34. [x] Architecture alignment (Builder + Viewer + Supabase): per-lesson `content_json` storage in Builder; Viewer reads `pages[]` format; removed `lesson.blocks` legacy getter; schema validator hardens `blocks[]` to import-only warning.
+35. [x] Unified interactive-visual block: new `BlockType.interactiveVisual` + `InteractiveVisualContent` (VisualSimSpec), 4 templates (ideal-gas-piston, sorting-bars, variable-binding-memory, function-plot), shared Flutter runtime widget, spec-driven AI generator, staged Builder UX, Viewer real rendering, legacy animation migration.
+36. [x] Interactive Visual platform AI key: removed user API key input; added Supabase Edge Function `gemini-generate` as server-side Gemini proxy; platform `GEMINI_API_KEY` stored as Deno env secret.
+37. [x] Interactive Visual style picker: 6 mandatory styles (Watercolor/Papercraft/Anime/Whiteboard/Retro Print/Heritage) injected into Gemini prompt; Generate button gated on style selection; removed all built-in Flutter scene templates.
