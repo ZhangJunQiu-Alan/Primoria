@@ -227,20 +227,6 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
     });
   }
 
-  void _jumpToStep(double value) {
-    if (_traceSteps.isEmpty || !widget.content.controls.allowScrub) return;
-
-    final nextIndex = value.round().clamp(0, _traceSteps.length - 1);
-    _playTimer?.cancel();
-    setState(() {
-      _isPlaying = false;
-      _currentStepIndex = nextIndex;
-      _selectedLine = _traceSteps[nextIndex].line;
-      _clearCheckpointPrompt();
-      _syncCheckpointForCurrentStep();
-    });
-  }
-
   void _syncCheckpointForCurrentStep() {
     if (_currentStepIndex < 0) {
       _clearCheckpointPrompt();
@@ -469,23 +455,45 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                 _activeStep?.callStack,
               );
 
+              final hasPanels = widget.content.style.showVariablesPanel ||
+                  widget.content.style.showStdoutPanel ||
+                  (_activeStep?.callStack?.isNotEmpty ?? false);
+
+              // Variables + stdout always on the same row
+              final panelsRow = hasPanels
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (widget.content.style.showVariablesPanel ||
+                            widget.content.style.showStdoutPanel)
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (widget.content.style.showVariablesPanel)
+                                Expanded(child: variablesPanel),
+                              if (widget.content.style.showVariablesPanel &&
+                                  widget.content.style.showStdoutPanel)
+                                const SizedBox(width: AppSpacing.sm),
+                              if (widget.content.style.showStdoutPanel)
+                                Expanded(child: stdoutPanel),
+                            ],
+                          ),
+                        if ((_activeStep?.callStack?.isNotEmpty ?? false)) ...[
+                          const SizedBox(height: AppSpacing.sm),
+                          callStackPanel,
+                        ],
+                      ],
+                    )
+                  : const SizedBox.shrink();
+
               if (compact) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildCodePanel(activeLine, theme),
-                    if (widget.content.style.showVariablesPanel) ...[
+                    if (hasPanels) ...[
                       const SizedBox(height: AppSpacing.sm),
-                      variablesPanel,
-                    ],
-                    if (widget.content.style.showStdoutPanel) ...[
-                      const SizedBox(height: AppSpacing.sm),
-                      stdoutPanel,
-                    ],
-                    if (_activeStep?.callStack != null &&
-                        _activeStep!.callStack!.isNotEmpty) ...[
-                      const SizedBox(height: AppSpacing.sm),
-                      callStackPanel,
+                      panelsRow,
                     ],
                   ],
                 );
@@ -495,32 +503,10 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(flex: 3, child: _buildCodePanel(activeLine, theme)),
-                  if (widget.content.style.showVariablesPanel ||
-                      widget.content.style.showStdoutPanel ||
-                      (_activeStep?.callStack?.isNotEmpty ?? false))
+                  if (hasPanels) ...[
                     const SizedBox(width: AppSpacing.sm),
-                  if (widget.content.style.showVariablesPanel ||
-                      widget.content.style.showStdoutPanel ||
-                      (_activeStep?.callStack?.isNotEmpty ?? false))
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          if (widget.content.style.showVariablesPanel)
-                            variablesPanel,
-                          if (widget.content.style.showVariablesPanel &&
-                              widget.content.style.showStdoutPanel)
-                            const SizedBox(height: AppSpacing.sm),
-                          if (widget.content.style.showStdoutPanel) stdoutPanel,
-                          if ((_activeStep?.callStack?.isNotEmpty ??
-                              false)) ...[
-                            const SizedBox(height: AppSpacing.sm),
-                            callStackPanel,
-                          ],
-                        ],
-                      ),
-                    ),
+                    Expanded(flex: 2, child: panelsRow),
+                  ],
                 ],
               );
             },
@@ -528,10 +514,6 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
         if (widget.showControls) ...[
           const SizedBox(height: AppSpacing.sm),
           _buildControlBar(theme),
-        ],
-        if (widget.showControls && widget.content.controls.allowScrub) ...[
-          const SizedBox(height: AppSpacing.sm),
-          _buildScrubBar(),
         ],
         if (_pendingCheckpoint != null) ...[
           const SizedBox(height: AppSpacing.sm),
@@ -870,135 +852,53 @@ class _CodeExecutionBlockWidgetState extends State<CodeExecutionBlockWidget> {
   Widget _buildControlBar(_CodeExecutionTheme theme) {
     final isAtInitial = _currentStepIndex < 0;
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-        border: Border.all(color: AppColors.neutral200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.xs,
-            children: [
-              OutlinedButton.icon(
-                key: const Key('code_execution_play'),
-                onPressed: (_traceSteps.isEmpty || _hasBlockingCheckpoint)
-                    ? null
-                    : _togglePlayPause,
-                icon: Icon(
-                  _isPlaying ? Icons.pause_circle_outline : Icons.play_circle,
-                  color: theme.accent,
-                ),
-                label: Text(
-                  _isPlaying ? _tr('暂停', 'Pause') : _tr('播放', 'Play'),
-                ),
-              ),
-              OutlinedButton.icon(
-                key: const Key('code_execution_step'),
-                onPressed: _canStepForward ? _advanceOneStep : null,
-                icon: const Icon(Icons.skip_next),
-                label: Text(_tr('前进', 'Step')),
-              ),
-              OutlinedButton.icon(
-                key: const Key('code_execution_back'),
-                onPressed: _canStepBack ? _stepBack : null,
-                icon: const Icon(Icons.skip_previous),
-                label: Text(_tr('后退', 'Back')),
-              ),
-              OutlinedButton.icon(
-                key: const Key('code_execution_reset'),
-                onPressed: (isAtInitial && _completedCheckpointIndices.isEmpty)
-                    ? null
-                    : _reset,
-                icon: const Icon(Icons.restart_alt),
-                label: Text(_tr('重置', 'Reset')),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Row(
-            children: [
-              Text(
-                _tr('步进时长', 'Step Duration'),
-                style: const TextStyle(
-                  fontSize: AppFontSize.xs,
-                  color: AppColors.neutral500,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: Slider(
-                  value: _stepDurationMs.toDouble(),
-                  min: 200,
-                  max: 6000,
-                  divisions: 58,
-                  onChanged: (value) {
-                    setState(() {
-                      _stepDurationMs = _normalizeStepDuration(value.round());
-                    });
-                    if (_isPlaying) {
-                      _scheduleNextTick();
-                    }
-                  },
-                ),
-              ),
-              Text(
-                widget.t?.isZh == true
-                    ? '$_stepDurationMs 毫秒'
-                    : '$_stepDurationMs ms',
-                style: const TextStyle(
-                  fontSize: AppFontSize.xs,
-                  color: AppColors.neutral600,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildScrubBar() {
-    if (_traceSteps.isEmpty) return const SizedBox.shrink();
-
-    final sliderValue = _currentStepIndex < 0
-        ? 0.0
-        : _currentStepIndex.toDouble();
-    final max = (_traceSteps.length - 1).toDouble();
-
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
-        border: Border.all(color: AppColors.neutral200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _tr('时间线', 'Timeline'),
-            style: const TextStyle(
-              fontSize: AppFontSize.xs,
-              color: AppColors.neutral500,
-              fontWeight: FontWeight.w600,
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton.icon(
+            key: const Key('code_execution_play'),
+            onPressed: (_traceSteps.isEmpty || _hasBlockingCheckpoint)
+                ? null
+                : _togglePlayPause,
+            icon: Icon(
+              _isPlaying ? Icons.pause_circle_outline : Icons.play_circle,
+              color: theme.accent,
+            ),
+            label: Text(
+              _isPlaying ? _tr('暂停', 'Pause') : _tr('播放', 'Play'),
             ),
           ),
-          Slider(
-            key: const Key('code_execution_scrub'),
-            value: sliderValue.clamp(0.0, max),
-            min: 0,
-            max: max,
-            divisions: _traceSteps.length > 1 ? _traceSteps.length - 1 : null,
-            onChanged: (value) => _jumpToStep(value),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: OutlinedButton.icon(
+            key: const Key('code_execution_step'),
+            onPressed: _canStepForward ? _advanceOneStep : null,
+            icon: const Icon(Icons.skip_next),
+            label: Text(_tr('前进', 'Step')),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: OutlinedButton.icon(
+            key: const Key('code_execution_back'),
+            onPressed: _canStepBack ? _stepBack : null,
+            icon: const Icon(Icons.skip_previous),
+            label: Text(_tr('后退', 'Back')),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: OutlinedButton.icon(
+            key: const Key('code_execution_reset'),
+            onPressed: (isAtInitial && _completedCheckpointIndices.isEmpty)
+                ? null
+                : _reset,
+            icon: const Icon(Icons.restart_alt),
+            label: Text(_tr('重置', 'Reset')),
+          ),
+        ),
+      ],
     );
   }
 

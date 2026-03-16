@@ -497,9 +497,14 @@ class SupabaseService {
             orElse: () => normalizedCourse.metadata.title.trim(),
           );
       final title = lessonTitle.isEmpty ? 'Untitled Lesson' : lessonTitle;
+      // Store only the first lesson's own content (per-lesson format).
+      // _isAddLessonFlow always edits a single lesson; lessons.first is it.
+      final lessonContent = normalizedCourse.lessons.isNotEmpty
+          ? normalizedCourse.lessons.first.toJson()
+          : normalizedCourse.toJson();
       final lessonPayload = {
         'title': title,
-        'content_json': normalizedCourse.toJson(),
+        'content_json': lessonContent,
         'type': 'interactive',
       };
 
@@ -704,23 +709,28 @@ class SupabaseService {
         .order('sort_key', ascending: true);
 
     final lessonList = List<Map<String, dynamic>>.from(lessons as List);
-    // Only use lessons that carry the agentic {blocks:[...]} format.
+    // Accept lessons that carry either the new {pages:[...]} or legacy {blocks:[...]} format.
     final agenticLessons = lessonList.where((l) {
       final cj = l['content_json'];
       if (cj is! Map) return false;
-      return cj.containsKey('blocks');
+      return cj.containsKey('pages') || cj.containsKey('blocks');
     }).toList();
 
     if (agenticLessons.isEmpty) return null;
 
     final courseLessons = agenticLessons.map((l) {
       final cj = Map<String, dynamic>.from(l['content_json'] as Map);
-      final rawBlocks = cj['blocks'] as List<dynamic>? ?? [];
-      return CourseLesson.fromJson({
+      final lessonJson = <String, dynamic>{
         'lessonId': l['id'] as String,
         'title': l['title'] as String? ?? 'Untitled',
-        'blocks': rawBlocks,
-      });
+      };
+      // Prefer pages (new multi-page format); fall back to blocks (legacy).
+      if (cj.containsKey('pages')) {
+        lessonJson['pages'] = cj['pages'];
+      } else {
+        lessonJson['blocks'] = cj['blocks'] ?? <dynamic>[];
+      }
+      return CourseLesson.fromJson(lessonJson);
     }).toList();
 
     final rawTags = courseRow['tags'];
@@ -1175,8 +1185,8 @@ class SupabaseService {
       return;
     }
 
-    // One lesson row per lesson.  Only the first row carries content_json
-    // (the full course snapshot); remaining rows carry just the lesson title.
+    // One lesson row per lesson.  Each row carries its own content_json
+    // (the per-lesson snapshot: {lessonId, title, pages: [...]}).
     for (int i = 0; i < lessons.length; i++) {
       final lessonTitle = lessons[i].title.trim().isNotEmpty
           ? lessons[i].title.trim()
@@ -1189,7 +1199,7 @@ class SupabaseService {
         'title': lessonTitle,
         'type': 'interactive',
         'sort_key': 1000 + i * 10,
-        if (i == 0) 'content_json': fullJson,
+        'content_json': lessons[i].toJson(),
       };
 
       if (i < existingIds.length) {

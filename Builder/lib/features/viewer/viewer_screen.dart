@@ -19,6 +19,7 @@ import '../../widgets/block_widgets/code_execution_block_widget.dart';
 import '../../widgets/block_widgets/code_playground_widget.dart';
 import '../../widgets/block_widgets/function_flow_block_widget.dart';
 import '../../widgets/block_widgets/html_animation_widget.dart';
+import '../../widgets/block_widgets/interactive_visual_widget.dart';
 import '../../widgets/block_widgets/video_embed_widget.dart';
 
 String _viewerTr(BuilderLocalizations t, String zh, String en) =>
@@ -1021,6 +1022,14 @@ class _InteractiveBlockPreview extends StatelessWidget {
             : AnimationBlockWidget(content: animContent, height: height);
         if (width == null) return animation;
         return SizedBox(width: width, child: animation);
+      case BlockType.interactiveVisual:
+        return InteractiveVisualWidget(
+          content: block.content as InteractiveVisualContent,
+          forcedHeight:
+              block.style.height != null
+                  ? block.style.height!.clamp(200.0, 600.0).toDouble()
+                  : null,
+        );
       case BlockType.video:
         final video = block.content as VideoContent;
         final videoUrl = video.url.trim();

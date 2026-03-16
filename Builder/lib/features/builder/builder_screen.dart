@@ -46,6 +46,7 @@ class BuilderScreen extends ConsumerStatefulWidget {
 class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   bool _courseLoaded = false;
   bool _draftAutoSaveEnabled = false;
+  int _courseLoadRevision = 0;
   String? _courseId;
   String? _draftId;
   String? _addFlowLessonId;
@@ -122,6 +123,61 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     return target;
   }
 
+  (int, int) _resolveEntryLocation(
+    Course course, {
+    bool preferConfiguredLesson = false,
+  }) {
+    final preferredLessonIndex = preferConfiguredLesson
+        ? _resolveEntryLessonIndex(course)
+        : null;
+    return course.firstNonEmptyPageLocation(
+      preferredLessonIndex: preferredLessonIndex,
+    );
+  }
+
+  void _invalidatePendingCourseLoads() {
+    _courseLoadRevision += 1;
+  }
+
+  void _applyCourseToEditor(
+    WidgetRef ref,
+    Course course, {
+    required bool hasUnsavedChanges,
+    bool preferConfiguredLesson = false,
+  }) {
+    ref.read(courseProvider.notifier).loadCourse(course);
+    ref
+        .read(builderStateProvider.notifier)
+        .syncCourseTitle(
+          course.metadata.title,
+          hasUnsavedChanges: hasUnsavedChanges,
+        );
+
+    final (lessonIndex, pageIndex) = _resolveEntryLocation(
+      course,
+      preferConfiguredLesson: preferConfiguredLesson,
+    );
+    _entryLessonIndex = lessonIndex;
+
+    ref.read(builderStateProvider.notifier).setCurrentLesson(lessonIndex);
+    ref.read(builderStateProvider.notifier).setCurrentPage(pageIndex);
+  }
+
+  void _loadCourseIntoEditor(
+    WidgetRef ref,
+    Course course, {
+    required bool hasUnsavedChanges,
+    bool preferConfiguredLesson = false,
+  }) {
+    _invalidatePendingCourseLoads();
+    _applyCourseToEditor(
+      ref,
+      course,
+      hasUnsavedChanges: hasUnsavedChanges,
+      preferConfiguredLesson: preferConfiguredLesson,
+    );
+  }
+
   Future<void> _hydrateParentCourseTitleIfNeeded() async {
     if (!_isAddLessonFlow) return;
     final existing = _parentCourseTitle?.trim();
@@ -143,19 +199,17 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   Future<void> _loadOrInitAddLessonCourse() async {
+    final loadRevision = ++_courseLoadRevision;
     await _hydrateParentCourseTitleIfNeeded();
     if (!mounted) return;
+    if (loadRevision != _courseLoadRevision) return;
 
     if (_draftId != null && _draftId!.isNotEmpty) {
       final draft = await StorageService.loadCourseDraft(_draftId!);
       if (!mounted) return;
+      if (loadRevision != _courseLoadRevision) return;
       if (draft != null) {
-        ref.read(courseProvider.notifier).loadCourse(draft);
-        ref
-            .read(builderStateProvider.notifier)
-            .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
-        ref.read(builderStateProvider.notifier).setCurrentLesson(0);
-        ref.read(builderStateProvider.notifier).clearSelection();
+        _applyCourseToEditor(ref, draft, hasUnsavedChanges: true);
         _draftAutoSaveEnabled = true;
         return;
       }
@@ -165,6 +219,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
   }
 
   void _initializeBlankCourse({bool preserveCourseId = false}) {
+    _invalidatePendingCourseLoads();
     ref.read(courseProvider.notifier).createNewCourse();
     final created = ref.read(courseProvider);
 
@@ -188,28 +243,27 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     if (_courseLoaded) return;
     _courseLoaded = true;
     final courseId = _courseId!;
+    final loadRevision = ++_courseLoadRevision;
 
     // Restore browser draft first to prevent unsaved edits from being
     // overwritten when navigating Builder -> Preview -> Builder.
     final draftKey = _activeDraftStorageId ?? courseId;
     final draft = await StorageService.loadCourseDraft(draftKey);
     if (!mounted) return;
+    if (loadRevision != _courseLoadRevision) return;
     // Only restore draft if it actually contains content. An empty draft is a
     // stale artefact from a previously failed DB load and should be discarded
     // so the fresh DB content (e.g. agentic-generated lessons) can be shown.
     final draftHasContent =
-        draft != null && draft.lessons.any((l) => l.blocks.isNotEmpty);
+        draft != null && draft.lessons.any((lesson) => lesson.hasContent);
     if (draftHasContent) {
       final hydratedDraft = draft.copyWith(courseId: courseId);
-      ref.read(courseProvider.notifier).loadCourse(hydratedDraft);
-      ref
-          .read(builderStateProvider.notifier)
-          .syncCourseTitle(draft.metadata.title, hasUnsavedChanges: true);
-      final entryLessonIndex = _resolveEntryLessonIndex(hydratedDraft);
-      _entryLessonIndex = entryLessonIndex;
-      ref
-          .read(builderStateProvider.notifier)
-          .setCurrentLesson(entryLessonIndex);
+      _applyCourseToEditor(
+        ref,
+        hydratedDraft,
+        hasUnsavedChanges: true,
+        preferConfiguredLesson: true,
+      );
       _draftAutoSaveEnabled = true;
       _showDraftRestoredHint();
       return;
@@ -217,16 +271,14 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
 
     final course = await SupabaseService.getCourseContent(courseId);
     if (!mounted) return;
+    if (loadRevision != _courseLoadRevision) return;
     if (course != null) {
-      ref.read(courseProvider.notifier).loadCourse(course);
-      ref
-          .read(builderStateProvider.notifier)
-          .syncCourseTitle(course.metadata.title, hasUnsavedChanges: false);
-      final entryLessonIndex = _resolveEntryLessonIndex(course);
-      _entryLessonIndex = entryLessonIndex;
-      ref
-          .read(builderStateProvider.notifier)
-          .setCurrentLesson(entryLessonIndex);
+      _applyCourseToEditor(
+        ref,
+        course,
+        hasUnsavedChanges: false,
+        preferConfiguredLesson: true,
+      );
     }
     _draftAutoSaveEnabled = true;
   }
@@ -748,14 +800,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
       builder: (context) => AIGenerateDialog(
         t: t,
         onCourseGenerated: (course) {
-          // Load generated course
-          ref.read(courseProvider.notifier).loadCourse(course);
-          ref
-              .read(builderStateProvider.notifier)
-              .setCourseTitle(course.metadata.title);
-          ref.read(builderStateProvider.notifier).setCurrentLesson(0);
-          ref.read(builderStateProvider.notifier).clearSelection();
-          ref.read(builderStateProvider.notifier).markAsUnsaved();
+          _loadCourseIntoEditor(ref, course, hasUnsavedChanges: true);
 
           final t2 = BuilderLocalizations(ref.read(languageProvider));
           ScaffoldMessenger.of(context).showSnackBar(
@@ -814,14 +859,7 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
     if (!context.mounted) return;
 
     if (result.success && result.course != null) {
-      // Load course into state
-      ref.read(courseProvider.notifier).loadCourse(result.course!);
-      ref
-          .read(builderStateProvider.notifier)
-          .setCourseTitle(result.course!.metadata.title);
-      ref.read(builderStateProvider.notifier).setCurrentLesson(0);
-      ref.read(builderStateProvider.notifier).clearSelection();
-      ref.read(builderStateProvider.notifier).markAsSaved();
+      _loadCourseIntoEditor(ref, result.course!, hasUnsavedChanges: false);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

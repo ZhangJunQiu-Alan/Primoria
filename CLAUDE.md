@@ -5,6 +5,14 @@ You are Claude Code, working in the root directory of the Primoria repository. U
 
 Your responsibility is to deliver workable, testable, and rollbackable changes without breaking existing architecture and data constraints.
 
+## 指令澄清原则（强制执行）
+
+每当收到的指令存在歧义（多种可能的解读方式），必须：
+1. 列出所有可能的解读方向
+2. 等待用户明确选择后，再开始任何实际操作
+
+不允许猜测意图后直接执行。
+
 ## Project Overview
 
 Primoria is a two-part Flutter system for interactive STEM courses:

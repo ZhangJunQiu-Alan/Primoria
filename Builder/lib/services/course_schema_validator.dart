@@ -303,19 +303,28 @@ class CourseSchemaValidator {
           }
         }
       } else {
-        // Legacy format: blocks at lesson level
-        final blocksPath = '$lessonPath.blocks';
+        // Legacy format: lesson-level blocks[] — only valid at import time.
+        // In publish/export mode this is a blocking error; in save mode warn.
+        if (isStrict) {
+          _addError(
+            findings,
+            '$lessonPath.pages',
+            'Lesson must use pages[] format; lesson-level blocks[] is not '
+                'allowed in publish/export mode',
+          );
+          continue;
+        } else {
+          _addWarning(
+            findings,
+            '$lessonPath.blocks',
+            'Lesson-level blocks[] is legacy; migrate to pages[] format',
+          );
+        }
+        // Still validate block contents so import-mode errors surface
         final blocks = lesson['blocks'];
-        if (blocks == null) {
-          _addWarning(findings, blocksPath, 'Missing list; defaulting to empty');
-          continue;
-        }
-        if (blocks is! List) {
-          _addError(findings, blocksPath, 'Expected list');
-          continue;
-        }
+        if (blocks is! List) continue;
         for (int blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
-          final blockPath = '$blocksPath[$blockIndex]';
+          final blockPath = '$lessonPath.blocks[$blockIndex]';
           final blockValue = blocks[blockIndex];
           if (blockValue is! Map) {
             _addError(findings, blockPath, 'Expected object');
@@ -473,6 +482,9 @@ class CourseSchemaValidator {
           findings,
           isStrict: isStrict,
         );
+      case BlockType.interactiveVisual:
+        // interactive-visual content is free-form; only check for version field
+        break;
       case BlockType.video:
         _validateVideoContent(
           content,

@@ -131,6 +131,18 @@ class BuilderLocalizations {
   String get noCoursesYet => isZh ? '暂无课程' : 'No courses yet';
   String get createFirstCourse =>
       isZh ? '创建您的第一个课程以开始' : 'Create your first course to get started';
+  String get emptyStateTagline => isZh
+      ? '选择一种方式开始您的创作之旅'
+      : "Choose how you'd like to create your first course";
+  String get emptyStateManualTitle => isZh ? '手动创建课程' : 'Build Manually';
+  String get emptyStateManualDesc => isZh
+      ? '从空白页面开始，拖放模块自由搭建课程结构'
+      : 'Start from a blank slate and drag-drop blocks to craft your course';
+  String get emptyStateAiTitle => isZh ? 'AI Agent 生成课程' : 'Generate with AI Agent';
+  String get emptyStateAiDesc => isZh
+      ? '上传 PDF 或一句话描述，AI 自动生成完整课程'
+      : 'Upload a PDF or describe your topic — AI builds the full course for you';
+  String get emptyStateAiBadge => isZh ? '智能生成' : 'Smart';
 
   // Course card
   String get courseEdit => isZh ? '编辑' : 'Edit';

@@ -79,10 +79,10 @@ class BlockRegistry {
       priority: 9,
     ),
     BlockTypeInfo(
-      type: BlockType.animation,
-      name: 'Animation',
-      description: 'Preset animation with basic controls',
-      icon: Icons.animation,
+      type: BlockType.interactiveVisual,
+      name: 'Interactive Visual',
+      description: 'AI-generated interactive simulation',
+      icon: Icons.auto_awesome,
       priority: 10,
     ),
     BlockTypeInfo(
@@ -91,6 +91,13 @@ class BlockRegistry {
       description: 'Embedded video',
       icon: Icons.videocam,
       priority: 11,
+    ),
+    BlockTypeInfo(
+      type: BlockType.animation,
+      name: 'Animation (Legacy)',
+      description: 'Legacy animation block',
+      icon: Icons.animation,
+      priority: 99,
     ),
   ];
 
@@ -107,7 +114,7 @@ class BlockRegistry {
             t.type == BlockType.multipleChoice ||
             t.type == BlockType.trueFalse ||
             t.type == BlockType.matching ||
-            t.type == BlockType.animation ||
+            t.type == BlockType.interactiveVisual ||
             t.type == BlockType.video,
       )
       .toList();

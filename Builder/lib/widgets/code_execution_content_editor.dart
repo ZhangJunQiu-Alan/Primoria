@@ -76,43 +76,6 @@ class CodeExecutionContentEditor extends StatelessWidget {
           onChanged: (value) => onChanged(content.copyWith(sourceCode: value)),
         ),
         const SizedBox(height: AppSpacing.md),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                _tr('步骤时长', 'Step Duration'),
-                style: TextStyle(
-                  fontSize: AppFontSize.xs,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.neutral500,
-                ),
-              ),
-            ),
-            Text(
-              '${content.controls.stepDurationMs} ms',
-              style: const TextStyle(
-                fontSize: AppFontSize.xs,
-                color: AppColors.neutral600,
-              ),
-            ),
-          ],
-        ),
-        Slider(
-          value: content.controls.stepDurationMs.toDouble(),
-          min: 200,
-          max: 10000,
-          divisions: 98,
-          onChanged: (value) {
-            onChanged(
-              content.copyWith(
-                controls: content.controls.copyWith(
-                  stepDurationMs: value.round(),
-                ),
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: AppSpacing.xs),
         AppDropdown<String>(
           value: content.style.theme,
           labelText: _tr('主题', 'Theme'),
@@ -137,17 +100,6 @@ class CodeExecutionContentEditor extends StatelessWidget {
             onChanged(
               content.copyWith(
                 controls: content.controls.copyWith(autoplay: value),
-              ),
-            );
-          },
-        ),
-        _buildBoolSwitch(
-          label: _tr('允许拖动时间轴', 'Allow scrub'),
-          value: content.controls.allowScrub,
-          onChanged: (value) {
-            onChanged(
-              content.copyWith(
-                controls: content.controls.copyWith(allowScrub: value),
               ),
             );
           },

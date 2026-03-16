@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -262,6 +263,17 @@ class _LessonScreenState extends State<LessonScreen> {
       _i18n(en: 'Lesson', zh: '课程'),
     ]);
 
+    // Prefer pages[] (current Course→Lessons→Pages→Blocks format)
+    if (selected['pages'] is List &&
+        (selected['pages'] as List).isNotEmpty) {
+      final pages = (selected['pages'] as List)
+          .whereType<Map>()
+          .map((p) => Map<String, dynamic>.from(p))
+          .toList();
+      return _parseBuilderPages(pages);
+    }
+
+    // Legacy fallback: lesson-level blocks[]
     final blocks = (selected['blocks'] as List? ?? [])
         .whereType<Map>()
         .map((b) => Map<String, dynamic>.from(b))
@@ -715,6 +727,18 @@ class _LessonScreenState extends State<LessonScreen> {
               .toList(),
         );
 
+      case 'interactive-visual':
+        return _QuestionData(
+          type: QuestionType.interactiveVisual,
+          title: _firstNonEmptyString([
+            content['title'] as String?,
+            pageTitle,
+            _i18n(en: 'Interactive Visual', zh: '交互可视化'),
+          ]),
+          content: content['description'] as String? ?? '',
+          visualSpec: content,
+        );
+
       case 'animation':
       case 'video':
         return _QuestionData(
@@ -974,12 +998,14 @@ class _LessonScreenState extends State<LessonScreen> {
             question.failMsg ?? _i18n(en: 'Not quite right!', zh: '还有些不对！');
 
       case QuestionType.info:
+      case QuestionType.interactiveVisual:
         _nextQuestion();
         return;
     }
 
     // Track answer stats (skip info blocks)
-    if (question.type != QuestionType.info) {
+    if (question.type != QuestionType.info &&
+        question.type != QuestionType.interactiveVisual) {
       _totalCount++;
       if (isCorrect) _correctCount++;
     }
@@ -1574,6 +1600,15 @@ class _LessonScreenState extends State<LessonScreen> {
           },
         );
 
+      case QuestionType.interactiveVisual:
+        if (question.visualSpec != null) {
+          return _ViewerInteractiveVisualCard(
+            spec: question.visualSpec!,
+            title: question.title,
+          );
+        }
+        return const SizedBox.shrink();
+
       case QuestionType.info:
         if (question.isLast) {
           return Center(
@@ -1601,7 +1636,8 @@ class _LessonScreenState extends State<LessonScreen> {
     bool isDark,
     AppLocalizations t,
   ) {
-    final isInfoPage = question.type == QuestionType.info;
+    final isInfoPage = question.type == QuestionType.info ||
+        question.type == QuestionType.interactiveVisual;
     final canSubmit =
         isInfoPage ||
         (question.type == QuestionType.choice && _selectedOption != null) ||
@@ -1793,7 +1829,7 @@ class _Duo3DSubmitButtonState extends State<_Duo3DSubmitButton> {
 
 // ── Data models ───────────────────────────────────────────────────
 
-enum QuestionType { info, slider, choice, input, sorting, matching }
+enum QuestionType { info, slider, choice, input, sorting, matching, interactiveVisual }
 
 class _QuestionData {
   final QuestionType type;
@@ -1820,6 +1856,8 @@ class _QuestionData {
   final List<String>? hints;
   // Image
   final String? imageUrl;
+  // Interactive visual spec (JSON map)
+  final Map<String, dynamic>? visualSpec;
 
   _QuestionData({
     required this.type,
@@ -1843,6 +1881,7 @@ class _QuestionData {
     this.matchingCorrectPairs,
     this.hints,
     this.imageUrl,
+    this.visualSpec,
   });
 }
 
@@ -2087,4 +2126,569 @@ class _MatchingInteractionWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+// ── Interactive Visual Card (Viewer-side renderer) ────────────────
+
+/// Lightweight viewer-side renderer for interactive-visual blocks.
+/// Parses the VisualSimSpec JSON map and renders template scenes + controls.
+class _ViewerInteractiveVisualCard extends StatefulWidget {
+  final Map<String, dynamic> spec;
+  final String title;
+
+  const _ViewerInteractiveVisualCard({
+    required this.spec,
+    required this.title,
+  });
+
+  @override
+  State<_ViewerInteractiveVisualCard> createState() =>
+      _ViewerInteractiveVisualCardState();
+}
+
+class _ViewerInteractiveVisualCardState
+    extends State<_ViewerInteractiveVisualCard> {
+  late Map<String, dynamic> _state;
+  int _stepIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final initial = widget.spec['initialState'];
+    _state = initial is Map ? Map<String, dynamic>.from(initial) : {};
+  }
+
+  void _handleAction(String action) {
+    if (action == 'reset') {
+      final initial = widget.spec['initialState'];
+      setState(() {
+        _state = initial is Map ? Map<String, dynamic>.from(initial) : {};
+        _stepIndex = 0;
+      });
+    } else if (action == 'step') {
+      _doStep();
+    } else if (action == 'randomize') {
+      _doRandomize();
+    }
+  }
+
+  void _doStep() {
+    final template = widget.spec['template'] as String? ?? '';
+    if (template == 'sorting-bars') {
+      _stepSortingBars();
+    } else if (template == 'variable-binding-memory') {
+      _stepVariableMemory();
+    } else {
+      setState(() => _stepIndex++);
+    }
+  }
+
+  void _stepSortingBars() {
+    final vals = List<int>.from(_state['values'] as List? ?? []);
+    final n = vals.length;
+    int si = _state['stepIndex'] as int? ?? 0;
+    final stepsPerPass = n - 1;
+    final pass = si ~/ stepsPerPass;
+    final idx = si % stepsPerPass;
+    if (pass >= n - 1) {
+      setState(() {
+        _state['comparing'] = <int>[];
+        _state['swapped'] = <int>[];
+        _state['sorted'] = List.generate(n, (i) => i);
+      });
+      return;
+    }
+    final comparing = [idx, idx + 1];
+    List<int> swapped = [];
+    if (vals[idx] > vals[idx + 1]) {
+      final tmp = vals[idx];
+      vals[idx] = vals[idx + 1];
+      vals[idx + 1] = tmp;
+      swapped = [idx, idx + 1];
+    }
+    setState(() {
+      _state['values'] = vals;
+      _state['stepIndex'] = si + 1;
+      _state['comparing'] = comparing;
+      _state['swapped'] = swapped;
+      _state['sorted'] = List.generate(pass, (i) => n - 1 - i);
+    });
+  }
+
+  void _stepVariableMemory() {
+    final steps = (widget.spec['scene']?['steps'] as List?) ?? [];
+    if (_stepIndex >= steps.length) return;
+    final step = Map<String, dynamic>.from(steps[_stepIndex] as Map);
+    final vars = List<Map>.from(_state['variables'] as List? ?? []);
+    final mem = List<Map>.from(_state['memory'] as List? ?? []);
+    final varName = step['varName'] as String?;
+    final value = step['value'];
+    final address = step['address'] as String?;
+    if (varName != null) {
+      vars.removeWhere((v) => v['name'] == varName);
+      vars.add({
+        'name': varName,
+        'value': value,
+        'address': address,
+        'active': true,
+      });
+      mem.removeWhere((m) => m['address'] == address);
+      mem.add({'address': address, 'value': value, 'active': true});
+    }
+    setState(() {
+      _state['variables'] = vars;
+      _state['memory'] = mem;
+      _state['stepIndex'] = _stepIndex + 1;
+      _stepIndex++;
+    });
+  }
+
+  void _doRandomize() {
+    final rng = math.Random();
+    final n = (widget.spec['scene']?['barCount'] as int?) ?? 9;
+    setState(() {
+      final initial = widget.spec['initialState'];
+      _state = initial is Map ? Map<String, dynamic>.from(initial) : {};
+      _state['values'] = List.generate(n, (_) => rng.nextInt(n) + 1);
+      _stepIndex = 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final template = widget.spec['template'] as String? ?? 'generic';
+    final controls = (widget.spec['controls'] as List? ?? [])
+        .whereType<Map>()
+        .map((c) => Map<String, dynamic>.from(c))
+        .toList();
+    final formulas = (widget.spec['formulas'] as List? ?? [])
+        .whereType<Map>()
+        .map((f) => Map<String, dynamic>.from(f))
+        .toList();
+    final tone = widget.spec['themeTone'] as String? ?? 'light-science';
+    final isDark = tone != 'light-science';
+    final bg = isDark ? const Color(0xFF0D1117) : const Color(0xFFF7F9FC);
+    final borderColor =
+        isDark ? const Color(0xFF30363D) : const Color(0xFFD0D7DE);
+    final textColor =
+        isDark ? const Color(0xFFE6EDF3) : const Color(0xFF1F2328);
+    final labelColor =
+        isDark ? const Color(0xFF8B949E) : const Color(0xFF57606A);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: borderColor),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Formula bar
+          if (formulas.isNotEmpty) _buildFormulaBar(formulas, textColor),
+          // Scene
+          SizedBox(
+            height: 200,
+            child: _buildScene(template, isDark),
+          ),
+          // Controls
+          if (controls.isNotEmpty)
+            _buildControlBar(controls, isDark, textColor, labelColor),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFormulaBar(
+    List<Map<String, dynamic>> formulas,
+    Color textColor,
+  ) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: Wrap(
+        spacing: 16,
+        children:
+            formulas
+                .map(
+                  (f) => Text(
+                    f['expression'] as String? ?? '',
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: textColor,
+                    ),
+                  ),
+                )
+                .toList(),
+      ),
+    );
+  }
+
+  Widget _buildScene(String template, bool isDark) {
+    final bg = isDark ? const Color(0xFF0D1117) : const Color(0xFFF0F6FF);
+    switch (template) {
+      case 'sorting-bars':
+        return Container(
+          color: bg,
+          padding: const EdgeInsets.all(8),
+          child: CustomPaint(
+            painter: _ViewerSortingBarsPainter(
+              values:
+                  (_state['values'] as List?)?.cast<int>() ??
+                  [5, 3, 8, 1, 9, 2, 7, 4, 6],
+              comparing: (_state['comparing'] as List?)?.cast<int>() ?? [],
+              swapped: (_state['swapped'] as List?)?.cast<int>() ?? [],
+              sorted: (_state['sorted'] as List?)?.cast<int>() ?? [],
+              isDark: isDark,
+            ),
+          ),
+        );
+      case 'variable-binding-memory':
+        final vars = (_state['variables'] as List?)?.cast<Map>() ?? [];
+        final mem = (_state['memory'] as List?)?.cast<Map>() ?? [];
+        final stepIdx = _state['stepIndex'] as int? ?? 0;
+        final steps = (widget.spec['scene']?['steps'] as List?) ?? [];
+        return Container(
+          color: bg,
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (steps.isNotEmpty && stepIdx < steps.length)
+                Text(
+                  (steps[stepIdx] as Map?)?.values.first?.toString() ?? '',
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                    color:
+                        isDark
+                            ? const Color(0xFF58A6FF)
+                            : const Color(0xFF0969DA),
+                  ),
+                ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Variables',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color:
+                                isDark
+                                    ? const Color(0xFF8B949E)
+                                    : const Color(0xFF57606A),
+                          ),
+                        ),
+                        ...vars.map(
+                          (v) => _VarSlot(
+                            label: '${v['name']}',
+                            value: '${v['value']}',
+                            isDark: isDark,
+                            active: v['active'] as bool? ?? false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Memory',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color:
+                                isDark
+                                    ? const Color(0xFF8B949E)
+                                    : const Color(0xFF57606A),
+                          ),
+                        ),
+                        ...mem.map(
+                          (m) => _VarSlot(
+                            label: '${m['address']}',
+                            value: '${m['value']}',
+                            isDark: isDark,
+                            active: m['active'] as bool? ?? false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      default:
+        // Generic: show state key-values
+        return Container(
+          color: bg,
+          padding: const EdgeInsets.all(12),
+          child:
+              _state.isEmpty
+                  ? Center(
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color:
+                            isDark
+                                ? const Color(0xFFE6EDF3)
+                                : const Color(0xFF1F2328),
+                      ),
+                    ),
+                  )
+                  : Wrap(
+                    spacing: 16,
+                    runSpacing: 8,
+                    children:
+                        _state.entries
+                            .map(
+                              (e) => Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    e.key,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color:
+                                          isDark
+                                              ? const Color(0xFF8B949E)
+                                              : const Color(0xFF57606A),
+                                    ),
+                                  ),
+                                  Text(
+                                    e.value.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color:
+                                          isDark
+                                              ? const Color(0xFF58A6FF)
+                                              : const Color(0xFF0969DA),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                            .toList(),
+                  ),
+        );
+    }
+  }
+
+  Widget _buildControlBar(
+    List<Map<String, dynamic>> controls,
+    bool isDark,
+    Color textColor,
+    Color labelColor,
+  ) {
+    final panelBg =
+        isDark ? const Color(0xFF161B22) : const Color(0xFFEFF3F8);
+    return Container(
+      color: panelBg,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: Column(
+        children: [
+          // Sliders
+          ...controls.where((c) => c['type'] == 'slider').map((ctrl) {
+            final key = ctrl['stateKey'] as String? ?? '';
+            final rawVal = _state[key];
+            final current =
+                rawVal is num
+                    ? rawVal.toDouble()
+                    : (ctrl['defaultValue'] is num
+                        ? (ctrl['defaultValue'] as num).toDouble()
+                        : (ctrl['min'] as num? ?? 0).toDouble());
+            final min = (ctrl['min'] as num?)?.toDouble() ?? 0;
+            final max = (ctrl['max'] as num?)?.toDouble() ?? 100;
+            final unit = ctrl['unit'] as String? ?? '';
+            final label = ctrl['label'] as String? ?? '';
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(fontSize: 11, color: textColor),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${current.toStringAsFixed(1)}$unit',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: textColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Slider(
+                  value: current.clamp(min, max),
+                  min: min,
+                  max: max,
+                  onChanged: (v) => setState(() => _state[key] = v),
+                  activeColor:
+                      isDark
+                          ? const Color(0xFF58A6FF)
+                          : const Color(0xFF0969DA),
+                ),
+              ],
+            );
+          }),
+          // Buttons
+          if (controls.any((c) => c['type'] == 'button'))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:
+                  controls.where((c) => c['type'] == 'button').map((ctrl) {
+                    final action = ctrl['action'] as String? ?? '';
+                    final label = ctrl['label'] as String? ?? '';
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 6),
+                      child: OutlinedButton(
+                        onPressed: () => _handleAction(action),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
+                          ),
+                          side: BorderSide(
+                            color:
+                                isDark
+                                    ? const Color(0xFF30363D)
+                                    : const Color(0xFFCFD8DC),
+                          ),
+                          foregroundColor: textColor,
+                          textStyle: const TextStyle(fontSize: 12),
+                        ),
+                        child: Text(label),
+                      ),
+                    );
+                  }).toList(),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _VarSlot extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isDark;
+  final bool active;
+
+  const _VarSlot({
+    required this.label,
+    required this.value,
+    required this.isDark,
+    required this.active,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor =
+        active
+            ? (isDark ? const Color(0xFF58A6FF) : const Color(0xFF0969DA))
+            : (isDark ? const Color(0xFF30363D) : const Color(0xFFD0D7DE));
+    return Container(
+      margin: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF161B22) : Colors.white,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: borderColor),
+      ),
+      child: Text(
+        '$label = $value',
+        style: TextStyle(
+          fontFamily: 'monospace',
+          fontSize: 11,
+          color:
+              isDark ? const Color(0xFFE6EDF3) : const Color(0xFF1F2328),
+        ),
+      ),
+    );
+  }
+}
+
+class _ViewerSortingBarsPainter extends CustomPainter {
+  final List<int> values;
+  final List<int> comparing;
+  final List<int> swapped;
+  final List<int> sorted;
+  final bool isDark;
+
+  const _ViewerSortingBarsPainter({
+    required this.values,
+    required this.comparing,
+    required this.swapped,
+    required this.sorted,
+    required this.isDark,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (values.isEmpty) return;
+    final n = values.length;
+    final maxVal = values.reduce(math.max);
+    final barWidth = (size.width - (n + 1) * 4.0) / n;
+    final maxBarHeight = size.height - 30;
+    for (int i = 0; i < n; i++) {
+      final barH = (values[i] / maxVal) * maxBarHeight;
+      final x = 4.0 + i * (barWidth + 4);
+      final y = size.height - barH - 20;
+      Color color;
+      if (sorted.contains(i)) {
+        color = const Color(0xFF3FB950);
+      } else if (swapped.contains(i)) {
+        color = const Color(0xFFFF7B72);
+      } else if (comparing.contains(i)) {
+        color = const Color(0xFFFFA657);
+      } else {
+        color =
+            isDark ? const Color(0xFF388BFD) : const Color(0xFF0969DA);
+      }
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(x, y, barWidth, barH),
+          const Radius.circular(3),
+        ),
+        Paint()..color = color,
+      );
+      final tp =
+          TextPainter(
+            text: TextSpan(
+              text: '${values[i]}',
+              style: TextStyle(
+                color:
+                    isDark
+                        ? const Color(0xFF8B949E)
+                        : const Color(0xFF57606A),
+                fontSize: 9,
+              ),
+            ),
+            textDirection: TextDirection.ltr,
+          )..layout();
+      tp.paint(
+        canvas,
+        Offset(x + barWidth / 2 - tp.width / 2, size.height - 18),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_ViewerSortingBarsPainter old) =>
+      old.values != values || old.comparing != comparing;
 }

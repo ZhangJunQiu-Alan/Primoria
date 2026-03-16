@@ -549,8 +549,13 @@ class SupabaseService {
     if (raw is Map) {
       final map = Map<String, dynamic>.from(raw);
       if (map.isEmpty) return true;
+      // Full course snapshot: non-empty only if lessons[] is non-empty
+      final lessons = map['lessons'];
+      if (lessons is List) return lessons.isEmpty;
+      // Per-lesson format: non-empty only if pages[] is non-empty
       final pages = map['pages'];
       if (pages is List) return pages.isEmpty;
+      // Legacy flat blocks at lesson level
       final blocks = map['blocks'];
       if (blocks is List) return blocks.isEmpty;
       return false;
