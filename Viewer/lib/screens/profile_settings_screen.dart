@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 
+import '../components/common/viewer_page_shell.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/language_provider.dart';
 import '../providers/theme_provider.dart';
@@ -732,50 +733,53 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 980),
-                child: Form(
-                  key: _formKey,
-                  child: ListView(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
-                    children: [
-                      _buildOverviewCard(t),
-                      const SizedBox(height: 16),
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isWide = constraints.maxWidth >= 900;
-                          if (isWide) {
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 220,
-                                  child: _buildQuickAccess(
-                                    t,
-                                    verticalLayout: true,
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                final contentWidth = constraints.maxWidth.clamp(0.0, 980.0);
+                return ViewerScrollGutterProxy(
+                  contentWidth: contentWidth,
+                  child: Form(
+                    key: _formKey,
+                    child: ListView(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+                      children: [
+                        _buildOverviewCard(t),
+                        const SizedBox(height: 16),
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final isWide = constraints.maxWidth >= 900;
+                            if (isWide) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 220,
+                                    child: _buildQuickAccess(
+                                      t,
+                                      verticalLayout: true,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(child: _buildActiveSection(t)),
+                                  const SizedBox(width: 16),
+                                  Expanded(child: _buildActiveSection(t)),
+                                ],
+                              );
+                            }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _buildQuickAccess(t, verticalLayout: false),
+                                const SizedBox(height: 16),
+                                _buildActiveSection(t),
                               ],
                             );
-                          }
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              _buildQuickAccess(t, verticalLayout: false),
-                              const SizedBox(height: 16),
-                              _buildActiveSection(t),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
     );
   }
