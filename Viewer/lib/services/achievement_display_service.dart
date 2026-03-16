@@ -3,61 +3,237 @@ import '../models/achievement_model.dart';
 
 /// UI metadata + progress calculation for achievement presentation.
 ///
-/// Keeps display concerns (badge image, target value, progress derivation)
-/// centralized so profile and achievement wall stay consistent.
+/// Keeps display concerns (badge image, card copy, category filter, progress
+/// derivation, and curated ordering) centralized so profile and achievement
+/// wall stay consistent.
 class AchievementDisplayService {
   AchievementDisplayService._();
 
   static const String _assetRoot = 'assets/achievements';
 
-  static const Map<String, String> _slugAssetMap = {
-    'streak_3': '$_assetRoot/streak_3.png',
-    'streak_7': '$_assetRoot/streak_7.png',
-    'streak_30': '$_assetRoot/streak_30.png',
-    'streak_100': '$_assetRoot/streak_100.png',
-    'first_lesson': '$_assetRoot/first_lesson.png',
-    'first_course': '$_assetRoot/first_course.png',
-    'courses_5': '$_assetRoot/courses_5.png',
-    'multi_subject': '$_assetRoot/multi_subject.png',
-    'lessons_100': '$_assetRoot/lessons_100.png',
-    'courses_50': '$_assetRoot/courses_50.png',
-    'perfect_lesson': '$_assetRoot/perfect_lesson.png',
-    'perfect_5': '$_assetRoot/perfect_5.png',
-    'speed_lesson': '$_assetRoot/speed_lesson.png',
-    'daily_tasks_30': '$_assetRoot/daily_tasks_30.png',
-    'first_follow': '$_assetRoot/first_follow.png',
-    'followers_10': '$_assetRoot/followers_10.png',
-    // Legacy slugs (early seed data)
-    'xp_100': '$_assetRoot/xp_100.png',
-    'xp_500': '$_assetRoot/xp_500.png',
-    'social_follow': '$_assetRoot/social_follow.png',
+  static const List<_AchievementPresentation> _presentations = [
+    _AchievementPresentation(
+      slug: 'followers_10',
+      name: 'Social Butterfly',
+      assetPath: '$_assetRoot/social_butterfly.png',
+      description:
+          'Follow a specific number of fellow learners, mentors, or mutual friends to build your network.',
+      category: 'social',
+      progressMetric: _AchievementProgressMetric.following,
+      target: 10,
+    ),
+    _AchievementPresentation(
+      slug: 'xp_100',
+      name: 'XP Hunter',
+      assetPath: '$_assetRoot/xp_hunter.png',
+      description:
+          'Reach a milestone of total Experience Points (XP) earned across all your active courses.',
+      category: 'learning',
+      progressMetric: _AchievementProgressMetric.totalXp,
+      target: 100,
+    ),
+    _AchievementPresentation(
+      slug: 'courses_5',
+      name: 'Conqueror',
+      assetPath: '$_assetRoot/conqueror.png',
+      description:
+          'Successfully complete and master a set number of full courses.',
+      category: 'learning',
+      progressMetric: _AchievementProgressMetric.coursesCompleted,
+      target: 5,
+    ),
+    _AchievementPresentation(
+      slug: 'streak_7',
+      name: 'Hot Streak',
+      assetPath: '$_assetRoot/hot_streak.png',
+      description:
+          'Keep the momentum going by completing lessons for a record number of consecutive days.',
+      category: 'streak',
+      progressMetric: _AchievementProgressMetric.streak,
+      target: 7,
+    ),
+    _AchievementPresentation(
+      slug: 'lessons_100',
+      name: 'Deep Diver',
+      assetPath: '$_assetRoot/deep_diver.png',
+      description:
+          'Spend over 5 hours in a single sitting on a complex module.',
+      category: 'learning',
+      progressMetric: _AchievementProgressMetric.lessonsCompleted,
+      target: 100,
+    ),
+    _AchievementPresentation(
+      slug: 'perfect_lesson',
+      name: 'Perfect Score',
+      assetPath: '$_assetRoot/perfect_score.png',
+      description:
+          'Complete a course quiz or final assessment with 100% accuracy.',
+      category: 'challenge',
+      progressMetric: _AchievementProgressMetric.binary,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'multi_subject',
+      name: 'Polymath',
+      assetPath: '$_assetRoot/polymath.png',
+      description:
+          'Complete courses in three or more entirely different subject areas (e.g., Coding, Psychology, and Art).',
+      category: 'learning',
+      progressMetric: _AchievementProgressMetric.coursesCompleted,
+      target: 3,
+    ),
+    _AchievementPresentation(
+      slug: 'speed_lesson',
+      name: 'Night Owl',
+      assetPath: '$_assetRoot/night_owl.png',
+      description:
+          'Complete a lesson or milestone between 12:00 AM and 4:00 AM.',
+      category: 'challenge',
+      progressMetric: _AchievementProgressMetric.binary,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'social_follow',
+      name: 'Study Buddy',
+      assetPath: '$_assetRoot/study_buddy.png',
+      description:
+          'Join or create a study group with at least 4 other learners.',
+      category: 'social',
+      progressMetric: _AchievementProgressMetric.following,
+      target: 5,
+    ),
+    _AchievementPresentation(
+      slug: 'courses_50',
+      name: 'The Mentor',
+      assetPath: '$_assetRoot/the_mentor.png',
+      description:
+          'Have your answer or explanation on a forum marked as "Helpful" by another student.',
+      category: 'social',
+      progressMetric: _AchievementProgressMetric.followers,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'first_follow',
+      name: 'First Handshake',
+      assetPath: '$_assetRoot/first_handshake.png',
+      description:
+          'Connect with your first mutual friend through a shared course.',
+      category: 'social',
+      progressMetric: _AchievementProgressMetric.following,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'streak_30',
+      name: 'Collaborator',
+      assetPath: '$_assetRoot/collaborator.png',
+      description: 'Complete a group project or a "Pair Programming" session.',
+      category: 'social',
+      progressMetric: _AchievementProgressMetric.coursesCompleted,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'first_lesson',
+      name: 'Back on the Saddle',
+      assetPath: '$_assetRoot/back_on_the_saddle.png',
+      description:
+          'Return to a course after a break of more than 7 days and complete a lesson.',
+      category: 'streak',
+      progressMetric: _AchievementProgressMetric.lessonsCompleted,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'daily_tasks_30',
+      name: 'Early Bird',
+      assetPath: '$_assetRoot/early_bird.png',
+      description:
+          'Complete a learning task before 8:00 AM for 5 days in a row.',
+      category: 'streak',
+      progressMetric: _AchievementProgressMetric.streak,
+      target: 5,
+    ),
+    _AchievementPresentation(
+      slug: 'first_course',
+      name: 'Feedback Loop',
+      assetPath: '$_assetRoot/feedback_loop.png',
+      description:
+          'Leave a detailed review or constructive feedback for a course you\'ve finished.',
+      category: 'social',
+      progressMetric: _AchievementProgressMetric.coursesCompleted,
+      target: 1,
+    ),
+    _AchievementPresentation(
+      slug: 'xp_500',
+      name: 'Overachiever',
+      assetPath: '$_assetRoot/overachiever.png',
+      description: 'Earn double the daily XP goal in a single 24-hour period.',
+      category: 'challenge',
+      progressMetric: _AchievementProgressMetric.totalXp,
+      target: 500,
+    ),
+  ];
+
+  static final Map<String, _AchievementPresentation> _presentationBySlug = {
+    for (final presentation in _presentations) presentation.slug: presentation,
   };
 
-  static const Map<String, int> _slugTargetMap = {
-    'streak_3': 3,
-    'streak_7': 7,
-    'streak_30': 30,
-    'streak_100': 100,
-    'first_lesson': 1,
-    'first_course': 1,
-    'courses_5': 5,
-    'multi_subject': 3,
-    'lessons_100': 100,
-    'courses_50': 50,
-    'perfect_lesson': 1,
-    'perfect_5': 5,
-    'speed_lesson': 1,
-    'daily_tasks_30': 30,
-    'first_follow': 1,
-    'followers_10': 10,
-    'xp_100': 100,
-    'xp_500': 500,
-    'social_follow': 1,
-  };
+  static List<AchievementModel> curatedAchievements(
+    Iterable<AchievementModel> achievements,
+  ) {
+    final bySlug = {
+      for (final achievement in achievements)
+        if (_presentationBySlug.containsKey(achievement.slug))
+          achievement.slug: achievement,
+    };
+    return [
+      for (final presentation in _presentations)
+        if (bySlug[presentation.slug] != null) bySlug[presentation.slug]!,
+    ];
+  }
+
+  static bool isSupported(AchievementModel achievement) =>
+      _presentationBySlug.containsKey(achievement.slug);
+
+  static int sortIndex(AchievementModel achievement) {
+    final index = _presentations.indexWhere((p) => p.slug == achievement.slug);
+    return index == -1 ? 1 << 30 : index;
+  }
+
+  static String displayName(
+    AchievementModel achievement, {
+    AppLocalizations? t,
+  }) {
+    final presentation = _presentationBySlug[achievement.slug];
+    if (presentation != null) return presentation.name;
+    final raw = achievement.name.trim();
+    if (raw.isNotEmpty) return raw;
+    return t?.isZh == true ? '未命名成就' : 'Untitled Achievement';
+  }
+
+  static String displayDescription(
+    AchievementModel achievement, {
+    AppLocalizations? t,
+  }) {
+    final presentation = _presentationBySlug[achievement.slug];
+    if (presentation != null) return presentation.description;
+    final raw = achievement.description.trim();
+    if (raw.isNotEmpty) return raw;
+    return _fallbackRequirement(
+      achievement.slug,
+      t ?? const AppLocalizations('en'),
+    );
+  }
+
+  static String displayCategory(AchievementModel achievement) {
+    final presentation = _presentationBySlug[achievement.slug];
+    return presentation?.category ?? achievement.category;
+  }
+
+  static bool usesCuratedBadge(AchievementModel achievement) =>
+      _presentationBySlug.containsKey(achievement.slug);
 
   static String badgeAssetPath(AchievementModel achievement) {
-    final bySlug = _slugAssetMap[achievement.slug];
-    if (bySlug != null) return bySlug;
+    final presentation = _presentationBySlug[achievement.slug];
+    if (presentation != null) return presentation.assetPath;
     switch (achievement.category) {
       case 'streak':
         return '$_assetRoot/category_streak.png';
@@ -78,7 +254,7 @@ class AchievementDisplayService {
     required Map<String, dynamic> followCounts,
     required AppLocalizations t,
   }) {
-    final slug = achievement.slug;
+    final presentation = _presentationBySlug[achievement.slug];
     final streak = _safeInt(userStats['current_streak']);
     final lessonsCompleted = _safeInt(userStats['lessons_completed']);
     final coursesCompleted = _safeInt(userStats['courses_completed']);
@@ -86,68 +262,122 @@ class AchievementDisplayService {
     final following = _safeInt(followCounts['following']);
     final followers = _safeInt(followCounts['followers']);
 
-    var target = _slugTargetMap[slug] ?? 1;
-    var current = 0;
+    if (presentation != null) {
+      final target = presentation.target <= 0 ? 1 : presentation.target;
+      int current;
+      switch (presentation.progressMetric) {
+        case _AchievementProgressMetric.streak:
+          current = streak;
+          break;
+        case _AchievementProgressMetric.lessonsCompleted:
+          current = lessonsCompleted;
+          break;
+        case _AchievementProgressMetric.coursesCompleted:
+          current = coursesCompleted;
+          break;
+        case _AchievementProgressMetric.totalXp:
+          current = totalXp;
+          break;
+        case _AchievementProgressMetric.following:
+          current = following;
+          break;
+        case _AchievementProgressMetric.followers:
+          current = followers;
+          break;
+        case _AchievementProgressMetric.binary:
+          current = achievement.isUnlocked ? target : 0;
+          break;
+      }
 
-    switch (slug) {
+      if (achievement.isUnlocked && current < target) {
+        current = target;
+      }
+      if (current < 0) current = 0;
+      if (current > target) current = target;
+
+      return AchievementProgressView(
+        current: current,
+        target: target,
+        requirement: presentation.description,
+      );
+    }
+
+    var target = 1;
+    var current = achievement.isUnlocked ? 1 : 0;
+
+    switch (achievement.slug) {
       case 'streak_3':
+        target = 3;
+        current = streak;
+        break;
       case 'streak_7':
+        target = 7;
+        current = streak;
+        break;
       case 'streak_30':
+        target = 30;
+        current = streak;
+        break;
       case 'streak_100':
+        target = 100;
         current = streak;
         break;
       case 'first_lesson':
-      case 'lessons_100':
+        target = 1;
         current = lessonsCompleted;
         break;
       case 'first_course':
-      case 'courses_5':
-      case 'courses_50':
+        target = 1;
         current = coursesCompleted;
         break;
+      case 'courses_5':
+        target = 5;
+        current = coursesCompleted;
+        break;
+      case 'courses_50':
+        target = 50;
+        current = coursesCompleted;
+        break;
+      case 'lessons_100':
+        target = 100;
+        current = lessonsCompleted;
+        break;
       case 'multi_subject':
-        // TODO: replace with true subject-based completion metric once backend
-        // exposes per-subject completion stats.
+        target = 3;
         current = coursesCompleted;
         break;
       case 'first_follow':
       case 'social_follow':
+        target = 1;
         current = following;
         break;
       case 'followers_10':
+        target = 10;
         current = followers;
         break;
       case 'xp_100':
-      case 'xp_500':
+        target = 100;
         current = totalXp;
         break;
-      case 'perfect_lesson':
-      case 'speed_lesson':
-      case 'perfect_5':
-      case 'daily_tasks_30':
-        // TODO: backend currently does not expose attempt-series counters for
-        // these challenge achievements in a single user stats payload.
-        current = achievement.isUnlocked ? target : 0;
+      case 'xp_500':
+        target = 500;
+        current = totalXp;
         break;
       default:
         current = achievement.isUnlocked ? target : 0;
+        break;
     }
 
     if (achievement.isUnlocked && current < target) {
       current = target;
     }
-    if (target <= 0) target = 1;
     if (current < 0) current = 0;
     if (current > target) current = target;
-
-    final requirement = achievement.description.trim().isNotEmpty
-        ? achievement.description.trim()
-        : _fallbackRequirement(slug, t);
 
     return AchievementProgressView(
       current: current,
       target: target,
-      requirement: requirement,
+      requirement: displayDescription(achievement, t: t),
     );
   }
 
@@ -209,4 +439,34 @@ class AchievementProgressView {
   }
 
   String get counterLabel => '$current/$target';
+}
+
+class _AchievementPresentation {
+  final String slug;
+  final String name;
+  final String assetPath;
+  final String description;
+  final String category;
+  final _AchievementProgressMetric progressMetric;
+  final int target;
+
+  const _AchievementPresentation({
+    required this.slug,
+    required this.name,
+    required this.assetPath,
+    required this.description,
+    required this.category,
+    required this.progressMetric,
+    required this.target,
+  });
+}
+
+enum _AchievementProgressMetric {
+  streak,
+  lessonsCompleted,
+  coursesCompleted,
+  totalXp,
+  following,
+  followers,
+  binary,
 }
