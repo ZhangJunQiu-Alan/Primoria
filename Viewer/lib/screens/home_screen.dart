@@ -26,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const int _tabCount = 5;
+  static const int _profileTabIndex = 4;
   int _currentNavIndex = 0;
   final List<GlobalKey<NavigatorState>> _navigatorKeys =
       List<GlobalKey<NavigatorState>>.generate(
@@ -57,10 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Called after the user enrolls in a course from the Library tab.
   /// Switches to the Home tab and refreshes enrolled-course data.
   void _onEnrolled() {
-    setState(() {
-      _currentNavIndex = 0;
-      _loadedTabs.add(0);
-    });
+    _switchToTab(0);
     _loadHomeData();
   }
 
@@ -115,15 +113,28 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).maybePop();
   }
 
-  void _onNavTap(int index) {
+  void _popTabToRoot(int index) {
+    _navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
+  }
+
+  void _switchToTab(int index) {
     if (index == _currentNavIndex) {
-      _navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
+      _popTabToRoot(index);
       return;
     }
+
+    if (_currentNavIndex == _profileTabIndex) {
+      _popTabToRoot(_profileTabIndex);
+    }
+
     setState(() {
       _currentNavIndex = index;
       _loadedTabs.add(index);
     });
+  }
+
+  void _onNavTap(int index) {
+    _switchToTab(index);
   }
 
   Future<T?> _pushOnHomeTab<T>(Route<T> route) {
@@ -609,10 +620,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    _currentNavIndex = 1;
-                    _loadedTabs.add(1);
-                  });
+                  _switchToTab(1);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.indigo600,
