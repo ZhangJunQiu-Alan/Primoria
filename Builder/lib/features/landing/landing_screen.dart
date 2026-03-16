@@ -260,12 +260,10 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
         final wide = constraints.maxWidth > 900;
         final gutter = _gutter(constraints.maxWidth);
         final capabilityTags = _heroCapabilityTags(t);
-        final creatorsHint = t.isZh
-            ? '2,300+ 教师本月已发布课程'
-            : '2,300+ creators shipped courses this month';
-        final speedHint = t.isZh
-            ? '从构想到上线 < 30 分钟'
-            : 'From idea to live in < 30 min';
+        final heroPillWidth = wide
+            ? 250.0
+            : ((constraints.maxWidth - (gutter * 2) - 10) / 2);
+        const heroPillHeight = 58.0;
 
         final leftColumn = Padding(
           padding: EdgeInsets.only(left: gutter, right: wide ? 14 : gutter),
@@ -317,107 +315,50 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                 ),
               ),
               const SizedBox(height: 20),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: capabilityTags
-                    .map(
-                      (tag) => Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(999),
-                          color: Colors.white.withValues(alpha: 0.72),
-                          border: Border.all(color: const Color(0x1F4D7CFF)),
-                        ),
-                        child: Text(
-                          tag,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF30455D),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      const Color(0xFFEBF1FF),
-                      Colors.white.withValues(alpha: 0.9),
-                    ],
-                  ),
-                  border: Border.all(color: const Color(0x2D4D7CFF)),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x1A2C3D5F),
-                      blurRadius: 24,
-                      offset: Offset(0, 10),
-                    ),
-                  ],
-                ),
+              Align(
+                alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      t.landingQuote,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: _C.text,
+                    for (var i = 0; i < capabilityTags.length; i += 2) ...[
+                      if (i > 0) const SizedBox(height: 10),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: heroPillWidth,
+                            height: heroPillHeight,
+                            child: _CapabilityTagPill(label: capabilityTags[i]),
+                          ),
+                          const SizedBox(width: 10),
+                          SizedBox(
+                            width: heroPillWidth,
+                            height: heroPillHeight,
+                            child: i + 1 < capabilityTags.length
+                                ? _CapabilityTagPill(
+                                    label: capabilityTags[i + 1],
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Richard Feynman',
-                      style: TextStyle(fontSize: 13, color: _C.muted),
-                    ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        _TrustHintPill(label: creatorsHint),
-                        _TrustHintPill(label: speedHint),
-                      ],
-                    ),
+                    ],
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  _PillButton(
-                    label: t.landingApplyNow,
-                    filled: true,
-                    icon: Icons.rocket_launch_rounded,
-                    onTap: () => context.go('/login'),
-                  ),
-                  _PillButton(
-                    label: t.landingAlreadyQualified,
-                    filled: false,
-                    icon: Icons.verified_rounded,
-                    onTap: () => context.go('/login'),
-                  ),
-                  _PillButton(
-                    label: t.landingStartCreating,
-                    filled: false,
-                    icon: Icons.dashboard_customize_rounded,
-                    onTap: () => context.go('/builder'),
-                  ),
-                ],
+              const SizedBox(height: 30),
+              SizedBox(
+                width: heroPillWidth,
+                height: heroPillHeight,
+                child: _PillButton(
+                  label: t.isZh
+                      ? t.landingStartCreating
+                      : t.landingStartCreating.toUpperCase(),
+                  filled: true,
+                  icon: Icons.dashboard_customize_rounded,
+                  onTap: () => context.go('/builder'),
+                  prominent: true,
+                ),
               ),
             ],
           ),
@@ -432,7 +373,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
           return Padding(
             padding: const EdgeInsets.only(bottom: 40),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: leftColumn),
                 const SizedBox(width: 40),
@@ -1366,12 +1307,14 @@ class _PillButton extends StatelessWidget {
   final bool filled;
   final IconData? icon;
   final VoidCallback onTap;
+  final bool prominent;
 
   const _PillButton({
     required this.label,
     required this.filled,
     this.icon,
     required this.onTap,
+    this.prominent = false,
   });
 
   @override
@@ -1384,13 +1327,22 @@ class _PillButton extends StatelessWidget {
           foregroundColor: const Color(0xFF123300),
           elevation: 6,
           shadowColor: const Color(0x333A7A00),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+          padding: EdgeInsets.symmetric(
+            horizontal: prominent ? 24 : 18,
+            vertical: prominent ? 18 : 14,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(999),
           ),
-          textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+          textStyle: TextStyle(
+            fontWeight: prominent ? FontWeight.w900 : FontWeight.w800,
+            fontSize: prominent ? 17 : 15,
+          ),
         ),
-        icon: Icon(icon ?? Icons.arrow_forward_rounded, size: 18),
+        icon: Icon(
+          icon ?? Icons.arrow_forward_rounded,
+          size: prominent ? 26 : 18,
+        ),
         label: Text(label),
       );
     }
@@ -1637,25 +1589,29 @@ class _GlassTag extends StatelessWidget {
   }
 }
 
-class _TrustHintPill extends StatelessWidget {
+class _CapabilityTagPill extends StatelessWidget {
   final String label;
-  const _TrustHintPill({required this.label});
+
+  const _CapabilityTagPill({required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      width: double.infinity,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(999),
-        color: const Color(0xFFF4F8FF),
-        border: Border.all(color: const Color(0x28517CFF)),
+        color: Colors.white.withValues(alpha: 0.72),
+        border: Border.all(color: const Color(0x1F4D7CFF)),
       ),
       child: Text(
         label,
+        textAlign: TextAlign.center,
         style: const TextStyle(
-          fontSize: 11,
+          fontSize: 14,
           fontWeight: FontWeight.w700,
-          color: Color(0xFF3D5575),
+          color: Color(0xFF30455D),
         ),
       ),
     );
