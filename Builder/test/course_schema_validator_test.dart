@@ -203,7 +203,7 @@ void main() {
 
     expect(imported.success, isTrue);
     final restored = imported.course!;
-    final restoredBlock = restored.lessons.first.blocks.first;
+    final restoredBlock = restored.lessons.first.pages.first.blocks.first;
     expect(restoredBlock.type, BlockType.animation);
     final content = restoredBlock.content as AnimationContent;
     expect(content.preset, AnimationContent.presetPulseBars);

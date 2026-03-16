@@ -717,29 +717,108 @@ class _DashboardCourseManageTabState extends State<DashboardCourseManageTab> {
 
   Widget _buildEmptyCourses(BuilderLocalizations t) {
     return DashboardCard(
-      padding: const EdgeInsets.all(46),
+      padding: const EdgeInsets.all(40),
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFF8FBFF), Color(0xFFF0FDF4)],
+      ),
       child: Column(
         children: [
-          const Icon(Icons.school_outlined, size: 48, color: Color(0xFF607086)),
-          const SizedBox(height: 16),
+          // ── Hero icon ─────────────────────────────────────────────
+          Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF4D7CFF), Color(0xFF58CC02)],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF4D7CFF).withValues(alpha: 0.25),
+                  blurRadius: 16,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.school_rounded,
+              size: 36,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // ── Heading ───────────────────────────────────────────────
           Text(
             t.noCoursesYet,
             style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1C2B33),
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF1E2D3B),
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            t.createFirstCourse,
-            style: const TextStyle(fontSize: 14, color: Color(0xFF607086)),
+            t.emptyStateTagline,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF607086),
+              height: 1.4,
+            ),
           ),
-          const SizedBox(height: 20),
-          FilledButton.icon(
-            onPressed: widget.onCreateCourse,
-            icon: const Icon(Icons.add_rounded),
-            label: Text(t.createCourse),
+          const SizedBox(height: 32),
+
+          // ── Action cards ──────────────────────────────────────────
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final twoCol = constraints.maxWidth >= 540;
+              final cards = [
+                _EmptyActionCard(
+                  icon: Icons.add_circle_outline_rounded,
+                  iconColor: const Color(0xFF4D7CFF),
+                  iconBg: const Color(0xFFEAF1FF),
+                  title: t.emptyStateManualTitle,
+                  description: t.emptyStateManualDesc,
+                  buttonLabel: t.createCourse,
+                  buttonStyle: _EmptyActionCardStyle.primary,
+                  onTap: widget.onCreateCourse,
+                ),
+                _EmptyActionCard(
+                  icon: Icons.auto_awesome_rounded,
+                  iconColor: const Color(0xFFB86200),
+                  iconBg: const Color(0xFFFFF3E0),
+                  title: t.emptyStateAiTitle,
+                  description: t.emptyStateAiDesc,
+                  buttonLabel: t.aiGenerateBeta,
+                  buttonStyle: _EmptyActionCardStyle.ai,
+                  badge: t.emptyStateAiBadge,
+                  onTap: widget.onAiGenerate,
+                ),
+              ];
+
+              if (twoCol) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: cards[0]),
+                    const SizedBox(width: 16),
+                    Expanded(child: cards[1]),
+                  ],
+                );
+              }
+              return Column(
+                children: [
+                  cards[0],
+                  const SizedBox(height: 12),
+                  cards[1],
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -1152,6 +1231,185 @@ class _LessonTileState extends State<_LessonTile> {
                   ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Empty state action card ────────────────────────────────────────────────
+
+enum _EmptyActionCardStyle { primary, ai }
+
+class _EmptyActionCard extends StatefulWidget {
+  const _EmptyActionCard({
+    required this.icon,
+    required this.iconColor,
+    required this.iconBg,
+    required this.title,
+    required this.description,
+    required this.buttonLabel,
+    required this.buttonStyle,
+    required this.onTap,
+    this.badge,
+  });
+
+  final IconData icon;
+  final Color iconColor;
+  final Color iconBg;
+  final String title;
+  final String description;
+  final String buttonLabel;
+  final _EmptyActionCardStyle buttonStyle;
+  final VoidCallback onTap;
+  final String? badge;
+
+  @override
+  State<_EmptyActionCard> createState() => _EmptyActionCardState();
+}
+
+class _EmptyActionCardState extends State<_EmptyActionCard> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      cursor: SystemMouseCursors.click,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: _hovered
+                ? (widget.buttonStyle == _EmptyActionCardStyle.ai
+                    ? const Color(0x66FF9800)
+                    : const Color(0x664D7CFF))
+                : const Color(0x22000000),
+            width: _hovered ? 1.5 : 1,
+          ),
+          boxShadow: _hovered
+              ? [
+                  BoxShadow(
+                    color: (widget.buttonStyle == _EmptyActionCardStyle.ai
+                            ? const Color(0xFFFF9800)
+                            : const Color(0xFF4D7CFF))
+                        .withValues(alpha: 0.12),
+                    blurRadius: 16,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : [
+                  const BoxShadow(
+                    color: Color(0x0C000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: widget.onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: widget.iconBg,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(widget.icon, color: widget.iconColor, size: 22),
+                  ),
+                  const Spacer(),
+                  if (widget.badge != null)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF3E0),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(color: const Color(0x44FF9800)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.auto_awesome,
+                            size: 11,
+                            color: Color(0xFFB86200),
+                          ),
+                          const SizedBox(width: 3),
+                          Text(
+                            widget.badge!,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFFB86200),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1E2D3B),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                widget.description,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Color(0xFF607086),
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: widget.buttonStyle == _EmptyActionCardStyle.ai
+                    ? OutlinedButton.icon(
+                        onPressed: widget.onTap,
+                        icon: const Icon(Icons.auto_awesome, size: 16),
+                        label: Text(widget.buttonLabel),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color(0xFFB86200),
+                          side: const BorderSide(color: Color(0x66FF9800)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      )
+                    : FilledButton.icon(
+                        onPressed: widget.onTap,
+                        icon: const Icon(Icons.add_rounded, size: 16),
+                        label: Text(widget.buttonLabel),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color(0xFF4D7CFF),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+              ),
+            ],
           ),
         ),
       ),

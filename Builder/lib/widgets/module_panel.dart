@@ -39,7 +39,7 @@ class _ModulePanelState extends State<ModulePanel> {
         BlockType.text,
         BlockType.image,
         BlockType.video,
-        BlockType.animation,
+        BlockType.interactiveVisual,
         BlockType.multipleChoice,
         BlockType.trueFalse,
         BlockType.matching,
@@ -70,17 +70,6 @@ class _ModulePanelState extends State<ModulePanel> {
     }
   }
 
-  String _categoryDescription(String key) {
-    final t = widget.t;
-    switch (key) {
-      case 'general':
-        return t.isZh ? '叙事、媒体与测验模块' : 'Narrative, media, and quiz blocks';
-      case 'programming':
-        return t.isZh ? '代码与执行可视化模块' : 'Coding and execution visual blocks';
-      default:
-        return '';
-    }
-  }
 
   String _blockName(BlockType type) {
     final t = widget.t;
@@ -106,7 +95,9 @@ class _ModulePanelState extends State<ModulePanel> {
       case BlockType.matching:
         return t.isZh ? '连线题' : 'Matching';
       case BlockType.animation:
-        return t.isZh ? '动画' : 'Animation';
+        return t.isZh ? '动画 (旧)' : 'Animation (Legacy)';
+      case BlockType.interactiveVisual:
+        return t.isZh ? '交互可视化' : 'Interactive Visual';
       case BlockType.video:
         return t.isZh ? '视频' : 'Video';
     }
@@ -136,7 +127,9 @@ class _ModulePanelState extends State<ModulePanel> {
       case BlockType.matching:
         return t.isZh ? '左右匹配连线' : 'Match items between two columns';
       case BlockType.animation:
-        return t.isZh ? '预设动画与基础控制' : 'Preset animation with controls';
+        return t.isZh ? '旧版动画块' : 'Legacy animation block';
+      case BlockType.interactiveVisual:
+        return t.isZh ? 'AI 生成的交互式模拟' : 'AI-generated interactive simulation';
       case BlockType.video:
         return t.isZh ? '上传或嵌入视频内容' : 'Upload or embed video content';
     }
@@ -301,7 +294,6 @@ class _ModulePanelState extends State<ModulePanel> {
   }
 
   Widget _buildCategorySection(_BlockCategory category) {
-    final t = widget.t;
     final blocks = _getBlocksForCategory(category);
     final isExpanded = _expandedCategories.contains(category.key);
 

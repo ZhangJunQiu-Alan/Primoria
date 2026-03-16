@@ -252,23 +252,26 @@ void main() {
       expect(content.speed, 1.0);
     });
 
-    test('AnimationContent custom preset serializes customHtml and aiPrompt', () {
-      const content = AnimationContent(
-        preset: AnimationContent.presetCustom,
-        customHtml: '<html><body>test</body></html>',
-        aiPrompt: 'Show bubble sort',
-      );
-      final json = content.toJson();
+    test(
+      'AnimationContent custom preset serializes customHtml and aiPrompt',
+      () {
+        const content = AnimationContent(
+          preset: AnimationContent.presetCustom,
+          customHtml: '<html><body>test</body></html>',
+          aiPrompt: 'Show bubble sort',
+        );
+        final json = content.toJson();
 
-      expect(json['preset'], AnimationContent.presetCustom);
-      expect(json['customHtml'], '<html><body>test</body></html>');
-      expect(json['aiPrompt'], 'Show bubble sort');
+        expect(json['preset'], AnimationContent.presetCustom);
+        expect(json['customHtml'], '<html><body>test</body></html>');
+        expect(json['aiPrompt'], 'Show bubble sort');
 
-      final roundtrip = AnimationContent.fromJson(json);
-      expect(roundtrip.preset, AnimationContent.presetCustom);
-      expect(roundtrip.customHtml, '<html><body>test</body></html>');
-      expect(roundtrip.aiPrompt, 'Show bubble sort');
-    });
+        final roundtrip = AnimationContent.fromJson(json);
+        expect(roundtrip.preset, AnimationContent.presetCustom);
+        expect(roundtrip.customHtml, '<html><body>test</body></html>');
+        expect(roundtrip.aiPrompt, 'Show bubble sort');
+      },
+    );
 
     test('AnimationContent copyWith clearCustomHtml removes customHtml', () {
       const content = AnimationContent(
@@ -500,7 +503,7 @@ void main() {
 
       expect(lesson.lessonId, isNotEmpty);
       expect(lesson.title, 'Test Lesson');
-      expect(lesson.blocks, isEmpty);
+      expect(lesson.pages.first.blocks, isEmpty);
     });
 
     test('CourseLesson addBlock', () {
@@ -508,8 +511,8 @@ void main() {
       final block = Block.create(BlockType.text, order: 0);
       final updated = lesson.addBlock(block);
 
-      expect(updated.blocks.length, 1);
-      expect(updated.blocks.first.id, block.id);
+      expect(updated.pages.first.blocks.length, 1);
+      expect(updated.pages.first.blocks.first.id, block.id);
     });
 
     test('CourseLesson removeBlock', () {
@@ -518,7 +521,7 @@ void main() {
       final withBlock = lesson.addBlock(block);
       final removed = withBlock.removeBlock(block.id);
 
-      expect(removed.blocks.length, 0);
+      expect(removed.pages.first.blocks.length, 0);
     });
 
     test('CourseLesson reorderBlocks', () {
@@ -528,10 +531,10 @@ void main() {
       final withBlocks = lesson.addBlock(block1).addBlock(block2);
       final reordered = withBlocks.reorderBlocks(0, 1);
 
-      expect(reordered.blocks[0].id, block2.id);
-      expect(reordered.blocks[1].id, block1.id);
-      expect(reordered.blocks[0].position.order, 0);
-      expect(reordered.blocks[1].position.order, 1);
+      expect(reordered.pages.first.blocks[0].id, block2.id);
+      expect(reordered.pages.first.blocks[1].id, block1.id);
+      expect(reordered.pages.first.blocks[0].position.order, 0);
+      expect(reordered.pages.first.blocks[1].position.order, 1);
     });
 
     test('CourseLesson JSON roundtrip', () {
@@ -544,7 +547,7 @@ void main() {
 
       expect(restored.lessonId, withBlock.lessonId);
       expect(restored.title, withBlock.title);
-      expect(restored.blocks.length, 1);
+      expect(restored.pages.first.blocks.length, 1);
     });
 
     test('CourseLesson fromJson accepts legacy pageId key', () {
@@ -594,6 +597,69 @@ void main() {
       expect(course.getLesson(-1), isNull);
     });
 
+    test('CourseLesson reports first non-empty page correctly', () {
+      final lesson = CourseLesson.create(title: 'Paged Lesson').copyWith(
+        pages: [
+          LessonPage.create(order: 0),
+          LessonPage.create(
+            order: 1,
+          ).copyWith(blocks: [Block.create(BlockType.text, order: 0)]),
+        ],
+      );
+
+      expect(lesson.hasContent, isTrue);
+      expect(lesson.firstNonEmptyPageIndex, 1);
+    });
+
+    test('Course firstNonEmptyPageLocation finds content across lessons', () {
+      final emptyLesson = CourseLesson.create(title: 'Empty Lesson');
+      final filledLesson = CourseLesson.create(title: 'Filled Lesson').copyWith(
+        pages: [
+          LessonPage.create(order: 0),
+          LessonPage.create(
+            order: 1,
+          ).copyWith(blocks: [Block.create(BlockType.codeBlock, order: 0)]),
+        ],
+      );
+
+      final course = Course.create(
+        title: 'Test Course',
+      ).copyWith(lessons: [emptyLesson, filledLesson]);
+
+      expect(course.firstNonEmptyPageLocation(), (1, 1));
+    });
+
+    test(
+      'Course firstNonEmptyPageLocation honors preferred lesson when it has content',
+      () {
+        final preferredLesson = CourseLesson.create(title: 'Preferred')
+            .copyWith(
+              pages: [
+                LessonPage.create(order: 0),
+                LessonPage.create(order: 1).copyWith(
+                  blocks: [Block.create(BlockType.multipleChoice, order: 0)],
+                ),
+              ],
+            );
+        final laterLesson = CourseLesson.create(title: 'Later').copyWith(
+          pages: [
+            LessonPage.create(
+              order: 0,
+            ).copyWith(blocks: [Block.create(BlockType.text, order: 0)]),
+          ],
+        );
+
+        final course = Course.create(
+          title: 'Test Course',
+        ).copyWith(lessons: [preferredLesson, laterLesson]);
+
+        expect(course.firstNonEmptyPageLocation(preferredLessonIndex: 0), (
+          0,
+          1,
+        ));
+      },
+    );
+
     test('Course JSON roundtrip', () {
       final course = Course.create(title: 'Full Course');
       final lesson = course.lessons.first;
@@ -609,8 +675,11 @@ void main() {
       expect(restored.courseId, updatedCourse.courseId);
       expect(restored.metadata.title, 'Full Course');
       expect(restored.lessons.length, 1);
-      expect(restored.lessons.first.blocks.length, 1);
-      expect(restored.lessons.first.blocks.first.type, BlockType.codePlayground);
+      expect(restored.lessons.first.pages.first.blocks.length, 1);
+      expect(
+        restored.lessons.first.pages.first.blocks.first.type,
+        BlockType.codePlayground,
+      );
     });
 
     test('Course JSON schema fields', () {
@@ -641,11 +710,7 @@ void main() {
         },
         'settings': <String, dynamic>{},
         'pages': [
-          {
-            'pageId': 'page-1',
-            'title': 'Old Page',
-            'blocks': <dynamic>[],
-          },
+          {'pageId': 'page-1', 'title': 'Old Page', 'blocks': <dynamic>[]},
         ],
       };
       final course = Course.fromJson(json);

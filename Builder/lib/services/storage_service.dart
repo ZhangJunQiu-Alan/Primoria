@@ -34,6 +34,7 @@ class StorageService {
   static const String _settingsWebhookUrlKey = '${_settingsPrefix}webhook_url';
   static const String _settingsCustomDomainKey =
       '${_settingsPrefix}custom_domain';
+  static const String _animationApiKeyKey = '${_settingsPrefix}animation_api_key';
   static const String _settingsPublicProfileKey =
       '${_settingsPrefix}public_profile_enabled';
   static const String _settingsUsageTelemetryKey =
@@ -289,6 +290,19 @@ class StorageService {
 
   static bool getUsageTelemetryEnabled() {
     return _prefs?.getBool(_settingsUsageTelemetryKey) ?? true;
+  }
+
+  /// Persist Gemini API key used for animation/visual generation.
+  static Future<bool> saveAnimationApiKey(String key) async {
+    if (_prefs == null) await init();
+    return _prefs!.setString(_animationApiKeyKey, key);
+  }
+
+  /// Return the previously saved Gemini API key, or null.
+  static Future<String?> getAnimationApiKey() async {
+    if (_prefs == null) await init();
+    final val = _prefs!.getString(_animationApiKeyKey);
+    return val?.isEmpty == true ? null : val;
   }
 
   static Future<int> clearAllCourseDrafts() async {

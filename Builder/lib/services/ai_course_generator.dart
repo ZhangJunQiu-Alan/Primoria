@@ -16,6 +16,8 @@ class AICourseGenerator {
   static const int _maxOutputTokens = 16384;
   static const int _maxBlocksPerLesson = 20;
   static const String _promptVersion = '2026-02-13.ai-course-v1';
+  static const String _emptyCourseShellMessage =
+      'AI returned a course shell, but no usable blocks were generated.';
   static String? _apiKey;
 
   /// Set API key manually (optional — [generateCourseAgentLocally] will
@@ -27,6 +29,11 @@ class AICourseGenerator {
   /// Get current API key
   static String? get apiKey => _apiKey;
   static String get promptVersion => _promptVersion;
+
+  @visibleForTesting
+  static int debugCountGeneratedBlocksForTesting(dynamic rawLessons) {
+    return _countGeneratedBlocks(rawLessons);
+  }
 
   /// Fetch the Gemini API key from the `get-gemini-key` Edge Function and
   /// cache it in [_apiKey].  Requires an active Supabase session.
@@ -46,12 +53,15 @@ class AICourseGenerator {
         }
         return 'Server returned empty key';
       }
-      final serverError = (data is Map ? data['error']?.toString() : null)
-          ?? 'Unexpected response: $data';
+      final serverError =
+          (data is Map ? data['error']?.toString() : null) ??
+          'Unexpected response: $data';
       return serverError;
     } on FunctionException catch (e) {
       final detail = e.details?.toString() ?? e.toString();
-      debugPrint('[AICourseGenerator] get-gemini-key FunctionException: $detail');
+      debugPrint(
+        '[AICourseGenerator] get-gemini-key FunctionException: $detail',
+      );
       return 'get-gemini-key error: $detail';
     } catch (e) {
       debugPrint('[AICourseGenerator] get-gemini-key exception: $e');
@@ -87,13 +97,14 @@ JSON schema:
 }
 
 Hard constraints:
-- Put all generated blocks into exactly ONE lesson.
+- Put all generated blocks into exactly ONE lesson with a flat "blocks" array.
 - Total block count must be <= 20.
-- Prefer 10-20 blocks when content is sufficient; for short PDFs 6-12 is acceptable.
+- Prefer 12-20 blocks when content is sufficient; for short PDFs 8-12 is acceptable.
 - Every id must be unique.
 - position.order must be continuous from 0.
 - Use \\n for newlines in text.
 - Keep metadata concise and useful.
+- Do NOT output a "pages" key — blocks will be distributed into pages automatically.
 
 Allowed block types and exact type values:
 1) text
@@ -248,12 +259,30 @@ Generate the course based on the PDF:
         );
       }
 
+      final rawBlockCount = _countGeneratedBlocks(
+        parsedResult.json!['lessons'] ?? parsedResult.json!['pages'],
+      );
+      if (rawBlockCount == 0) {
+        return buildResult(
+          success: false,
+          message: _emptyCourseShellMessage,
+          rawJson: jsonEncode(parsedResult.json),
+        );
+      }
+
       final normalizedJson = _normalizeGeneratedCourseJson(
         parsedResult.json!,
         fileName: fileName,
       );
 
       final course = Course.fromJson(normalizedJson);
+      if (!_courseHasContent(course)) {
+        return buildResult(
+          success: false,
+          message: _emptyCourseShellMessage,
+          rawJson: jsonEncode(normalizedJson),
+        );
+      }
 
       stage = 'validate';
       final validationTimer = Stopwatch()..start();
@@ -408,7 +437,8 @@ Additional requirements:
       if (!genResponse.success || genResponse.text == null) {
         return buildResult(
           success: false,
-          message: 'Generation failed: ${genResponse.error ?? 'No available model'}',
+          message:
+              'Generation failed: ${genResponse.error ?? 'No available model'}',
         );
       }
 
@@ -661,9 +691,9 @@ Additional requirements:
       }
 
       final qr = dataMap['qualityReport'] as Map<String, dynamic>?;
-      final qualityScore  = (qr?['score'] as num?)?.toInt() ?? 100;
+      final qualityScore = (qr?['score'] as num?)?.toInt() ?? 100;
       final qualityPassed = qr?['passed'] as bool? ?? true;
-      final rawIssues     = qr?['issues'] as List<dynamic>? ?? [];
+      final rawIssues = qr?['issues'] as List<dynamic>? ?? [];
       final qualityIssues = rawIssues
           .whereType<Map<String, dynamic>>()
           .map((i) => i['message']?.toString() ?? '')
@@ -671,11 +701,11 @@ Additional requirements:
           .toList();
 
       return AgentCourseResult(
-        success:       true,
-        message:       'Course generated successfully',
-        courseId:      dataMap['courseId']?.toString(),
-        lessonCount:   (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
-        qualityScore:  qualityScore,
+        success: true,
+        message: 'Course generated successfully',
+        courseId: dataMap['courseId']?.toString(),
+        lessonCount: (dataMap['lessonCount'] as num?)?.toInt() ?? 0,
+        qualityScore: qualityScore,
         qualityPassed: qualityPassed,
         qualityIssues: qualityIssues,
       );
@@ -686,8 +716,9 @@ Additional requirements:
         message: 'Server error: $detail',
       );
     } on http.ClientException catch (e) {
-      final isFailedToFetch =
-          e.message.toLowerCase().contains('failed to fetch');
+      final isFailedToFetch = e.message.toLowerCase().contains(
+        'failed to fetch',
+      );
       final msg = isFailedToFetch
           ? 'Edge Function 不可访问（可能尚未部署）。\n'
                 '请运行：supabase functions deploy agentic-generate-course\n'
@@ -836,6 +867,25 @@ Additional requirements:
           ? rawCourseJson
           : Map<String, dynamic>.from(rawCourseJson as Map);
 
+      final rawBlockCount = _countGeneratedBlocks(
+        courseJsonMap['lessons'] ?? courseJsonMap['pages'],
+      );
+      if (rawBlockCount == 0) {
+        final fallbackResult = await _tryDirectPdfFallback(
+          pdfBytes: pdfBytes,
+          fileName: fileName,
+        );
+        if (fallbackResult != null) {
+          return fallbackResult;
+        }
+        return buildResult(
+          success: false,
+          message: _emptyCourseShellMessage,
+          rawJson: jsonEncode(courseJsonMap),
+          model: model,
+        );
+      }
+
       final normalizedJson = _normalizeGeneratedCourseJson(
         courseJsonMap,
         fileName: fileName.trim().isEmpty ? 'Uploaded PDF' : fileName,
@@ -847,6 +897,22 @@ Additional requirements:
         return buildResult(
           success: false,
           message: importResult.message,
+          rawJson: rawJsonStr,
+          model: model,
+        );
+      }
+
+      if (!_courseHasContent(importResult.course!)) {
+        final fallbackResult = await _tryDirectPdfFallback(
+          pdfBytes: pdfBytes,
+          fileName: fileName,
+        );
+        if (fallbackResult != null) {
+          return fallbackResult;
+        }
+        return buildResult(
+          success: false,
+          message: _emptyCourseShellMessage,
           rawJson: rawJsonStr,
           model: model,
         );
@@ -900,7 +966,9 @@ Additional requirements:
       contents: [
         {
           'parts': [
-            {'inlineData': {'mimeType': mimeType, 'data': inlineData}},
+            {
+              'inlineData': {'mimeType': mimeType, 'data': inlineData},
+            },
             {'text': prompt},
           ],
         },
@@ -1207,7 +1275,9 @@ $rawContent
     final normalized = Map<String, dynamic>.from(rawJson);
     final metadata = _normalizeMetadata(normalized['metadata'], fileName);
     // Accept both 'lessons' (new) and 'pages' (legacy) key from AI output
-    final lessons = _normalizeLessons(normalized['lessons'] ?? normalized['pages']);
+    final lessons = _normalizeLessons(
+      normalized['lessons'] ?? normalized['pages'],
+    );
 
     normalized['courseId'] = _normalizeCourseId(normalized['courseId']);
     normalized['metadata'] = metadata;
@@ -1291,24 +1361,183 @@ $rawContent
         firstLessonTitle = title;
       }
 
-      final blocks = lesson['blocks'];
-      if (blocks is! List) continue;
-
-      for (final rawBlock in blocks) {
-        if (rawBlock is Map) {
-          allRawBlocks.add(_mapFromDynamic(rawBlock));
-        }
-      }
+      allRawBlocks.addAll(_collectLessonBlocks(lesson));
     }
 
     final normalizedBlocks = _normalizeBlocks(allRawBlocks);
+    final pages = _splitBlocksIntoPages(normalizedBlocks);
     return [
       {
         'lessonId': 'p1',
         'title': firstLessonTitle ?? 'Generated Content',
-        'blocks': normalizedBlocks,
+        'pages': pages,
       },
     ];
+  }
+
+  static List<Map<String, dynamic>> _collectLessonBlocks(
+    Map<String, dynamic> lesson,
+  ) {
+    final collected = <Map<String, dynamic>>[];
+
+    final directBlocks = lesson['blocks'];
+    if (directBlocks is List) {
+      for (final rawBlock in directBlocks) {
+        if (rawBlock is Map) {
+          collected.add(_mapFromDynamic(rawBlock));
+        }
+      }
+    }
+
+    final rawPages = lesson['pages'];
+    if (rawPages is List) {
+      for (final rawPage in rawPages) {
+        if (rawPage is! Map) continue;
+        final page = _mapFromDynamic(rawPage);
+        final pageBlocks = page['blocks'];
+        if (pageBlocks is! List) continue;
+        for (final rawBlock in pageBlocks) {
+          if (rawBlock is Map) {
+            collected.add(_mapFromDynamic(rawBlock));
+          }
+        }
+      }
+    }
+
+    return collected;
+  }
+
+  static int _countGeneratedBlocks(dynamic rawLessons) {
+    if (rawLessons is! List) return 0;
+
+    var count = 0;
+    for (final rawLesson in rawLessons) {
+      if (rawLesson is! Map) continue;
+      count += _collectLessonBlocks(_mapFromDynamic(rawLesson)).length;
+    }
+    return count;
+  }
+
+  static bool _courseHasContent(Course course) {
+    return course.lessons.any((lesson) => lesson.hasContent);
+  }
+
+  static Future<GenerationResult?> _tryDirectPdfFallback({
+    required Uint8List pdfBytes,
+    required String fileName,
+  }) async {
+    if (pdfBytes.isEmpty) return null;
+
+    try {
+      if (_apiKey == null || _apiKey!.isEmpty) {
+        final keyError = await fetchAndCacheApiKey();
+        if (keyError != null) {
+          debugPrint(
+            '[AICourseGenerator] Direct PDF fallback unavailable: $keyError',
+          );
+          return null;
+        }
+      }
+      if (_apiKey == null || _apiKey!.isEmpty) return null;
+
+      debugPrint(
+        '[AICourseGenerator] Falling back to direct PDF generation after '
+        'empty API course response.',
+      );
+      return generateFromPdf(pdfBytes: pdfBytes, fileName: fileName);
+    } catch (e) {
+      debugPrint('[AICourseGenerator] Direct PDF fallback failed: $e');
+      return null;
+    }
+  }
+
+  static Future<GenerationResult?> _tryDirectPdfFallbackFromSources({
+    required List<SourceFilePickResult> files,
+  }) async {
+    if (files.isEmpty) return null;
+
+    SourceFilePickResult? pdfFile;
+    for (final file in files) {
+      if (file.mimeType.toLowerCase().contains('pdf')) {
+        pdfFile = file;
+        break;
+      }
+    }
+    if (pdfFile == null) return null;
+
+    return _tryDirectPdfFallback(
+      pdfBytes: pdfFile.bytes,
+      fileName: pdfFile.fileName,
+    );
+  }
+
+  /// Distributes a flat normalized block list into pages of ~[targetPerPage]
+  /// blocks each.  Inserts an animation block into every other 2-page window
+  /// that lacks one, so the "≥1 animation per 2 pages" rule is always met.
+  static List<Map<String, dynamic>> _splitBlocksIntoPages(
+    List<Map<String, dynamic>> blocks, {
+    int targetPerPage = 4,
+  }) {
+    if (blocks.isEmpty) {
+      return [
+        {'pageId': 'pg0', 'order': 0, 'blocks': <Map<String, dynamic>>[]},
+      ];
+    }
+
+    // Divide evenly: ceil(total / targetPerPage) pages
+    final pageCount = ((blocks.length - 1) ~/ targetPerPage) + 1;
+    final baseSize = blocks.length ~/ pageCount;
+    final remainder = blocks.length % pageCount;
+
+    final pages = <List<Map<String, dynamic>>>[];
+    var offset = 0;
+    for (int i = 0; i < pageCount; i++) {
+      final size = baseSize + (i < remainder ? 1 : 0);
+      pages.add(
+        List<Map<String, dynamic>>.from(blocks.sublist(offset, offset + size)),
+      );
+      offset += size;
+    }
+
+    // Ensure ≥1 animation block in each consecutive 2-page window
+    for (int i = 0; i < pages.length; i += 2) {
+      final hasAnimation =
+          pages[i].any((b) => b['type'] == 'animation') ||
+          (i + 1 < pages.length &&
+              pages[i + 1].any((b) => b['type'] == 'animation'));
+      if (!hasAnimation) {
+        // Append to the second page in the window, or the first if only one
+        final targetPage = i + 1 < pages.length ? pages[i + 1] : pages[i];
+        targetPage.add({
+          'type': 'animation',
+          'id': 'anim-pg${i ~/ 2}',
+          'position': {'order': targetPage.length},
+          'style': {'spacing': 'md', 'alignment': 'center'},
+          'visibilityRule': 'always',
+          'content': {
+            'preset': 'pulse-bars',
+            'durationMs': 1500,
+            'loop': true,
+            'speed': 1.0,
+          },
+        });
+      }
+    }
+
+    // Re-index position.order (0-based within each page) and wrap in page objects
+    return pages.asMap().entries.map((entry) {
+      final pageOrder = entry.key;
+      final pageBlocks = entry.value;
+      for (int bi = 0; bi < pageBlocks.length; bi++) {
+        pageBlocks[bi] = Map<String, dynamic>.from(pageBlocks[bi]);
+        pageBlocks[bi]['position'] = {'order': bi};
+      }
+      return {
+        'pageId': 'pg$pageOrder',
+        'order': pageOrder,
+        'blocks': pageBlocks,
+      };
+    }).toList();
   }
 
   static List<Map<String, dynamic>> _normalizeBlocks(
@@ -1534,13 +1763,36 @@ $rawContent
         };
       case 'text':
       default:
-        return {
-          'format': _asString(content['format']) == 'plain'
-              ? 'plain'
-              : 'markdown',
-          'value':
-              _asString(content['value']) ?? _asString(content['text']) ?? '',
-        };
+        final rawValue =
+            _asString(content['value']) ?? _asString(content['text']) ?? '';
+        final rawFormat = _asString(content['format']) ?? '';
+        // Already valid richtext Delta — keep as-is
+        if (rawFormat == 'richtext' && rawValue.isNotEmpty) {
+          try {
+            jsonDecode(rawValue);
+            return {'format': 'richtext', 'value': rawValue};
+          } catch (_) {}
+        }
+        // Plain text — wrap in a single Delta insert
+        if (rawFormat == 'plain') {
+          final plainOps = rawValue.isEmpty
+              ? [
+                  {'insert': '\n'},
+                ]
+              : [
+                  {'insert': rawValue},
+                  {'insert': '\n'},
+                ];
+          return {'format': 'richtext', 'value': jsonEncode(plainOps)};
+        }
+        // Markdown (or unknown format) → convert to Quill Delta
+        if (rawValue.isNotEmpty) {
+          return {
+            'format': 'richtext',
+            'value': _markdownToRichtextDelta(rawValue),
+          };
+        }
+        return {'format': 'richtext', 'value': ''};
     }
   }
 
@@ -1821,6 +2073,114 @@ $rawContent
         .toList();
   }
 
+  // ─── Markdown → Quill Delta conversion ──────────────────────────────────
+
+  /// Convert a Markdown string to a Quill Delta JSON string (format: 'richtext').
+  ///
+  /// Handles:
+  /// - ATX headings: `#` `##` `###` → header attribute
+  /// - Unordered lists: `* ` `- ` `+ ` → list: bullet
+  /// - Ordered lists: `1. ` → list: ordered
+  /// - Inline bold: `**text**`
+  /// - Inline italic: `*text*` or `_text_`
+  /// - Plain paragraphs and blank lines
+  static String _markdownToRichtextDelta(String markdown) {
+    final ops = <Map<String, dynamic>>[];
+    final lines = markdown.split('\n');
+
+    for (final line in lines) {
+      if (line.trim().isEmpty) {
+        ops.add({'insert': '\n'});
+        continue;
+      }
+
+      // ATX heading: # Heading
+      final hMatch = RegExp(r'^(#{1,6})\s+(.+)$').firstMatch(line);
+      if (hMatch != null) {
+        _appendInlineOps(ops, hMatch.group(2)!.trim());
+        ops.add({
+          'insert': '\n',
+          'attributes': {'header': hMatch.group(1)!.length},
+        });
+        continue;
+      }
+
+      // Unordered list: * / - / + item
+      final ulMatch = RegExp(r'^[*\-+]\s+(.+)$').firstMatch(line);
+      if (ulMatch != null) {
+        _appendInlineOps(ops, ulMatch.group(1)!.trim());
+        ops.add({
+          'insert': '\n',
+          'attributes': {'list': 'bullet'},
+        });
+        continue;
+      }
+
+      // Ordered list: 1. item
+      final olMatch = RegExp(r'^\d+\.\s+(.+)$').firstMatch(line);
+      if (olMatch != null) {
+        _appendInlineOps(ops, olMatch.group(1)!.trim());
+        ops.add({
+          'insert': '\n',
+          'attributes': {'list': 'ordered'},
+        });
+        continue;
+      }
+
+      // Regular paragraph
+      _appendInlineOps(ops, line);
+      ops.add({'insert': '\n'});
+    }
+
+    // Quill document must end with exactly one plain newline
+    while (ops.length > 1 &&
+        ops.last['insert'] == '\n' &&
+        !ops.last.containsKey('attributes')) {
+      ops.removeLast();
+    }
+    if (ops.isEmpty || ops.last['insert'] != '\n') {
+      ops.add({'insert': '\n'});
+    }
+
+    return jsonEncode(ops);
+  }
+
+  /// Append inline-formatted ops (bold / italic) to [ops].
+  static void _appendInlineOps(
+    List<Map<String, dynamic>> ops,
+    String text,
+  ) {
+    if (text.isEmpty) return;
+    // Match **bold**, *italic*, _italic_ — bold must be checked before italic
+    final pattern = RegExp(r'\*\*(.+?)\*\*|\*(.+?)\*|_(.+?)_');
+    int cursor = 0;
+    for (final m in pattern.allMatches(text)) {
+      if (m.start > cursor) {
+        ops.add({'insert': text.substring(cursor, m.start)});
+      }
+      if (m.group(1) != null) {
+        ops.add({
+          'insert': m.group(1),
+          'attributes': {'bold': true},
+        });
+      } else if (m.group(2) != null) {
+        ops.add({
+          'insert': m.group(2),
+          'attributes': {'italic': true},
+        });
+      } else if (m.group(3) != null) {
+        ops.add({
+          'insert': m.group(3),
+          'attributes': {'italic': true},
+        });
+      }
+      cursor = m.end;
+    }
+    if (cursor < text.length) {
+      ops.add({'insert': text.substring(cursor)});
+    }
+  }
+
   /// Extract JSON from response
   static String _extractJson(String content) {
     final candidates = _collectJsonCandidates(content);
@@ -1926,8 +2286,7 @@ $rawContent
         .map((e) => '  ${e.key + 1}. ${e.value}')
         .join('\n');
 
-    final animStyle =
-        courseContext['animation_style'] as String? ?? 'minimal';
+    final animStyle = courseContext['animation_style'] as String? ?? 'minimal';
     final String animationHint;
     if (animStyle == 'cartoon') {
       animationHint =
@@ -1979,8 +2338,8 @@ $rawContent
         'Key concepts to cover:\n'
         '$keyPointsList\n\n'
         '═══ HARD CONSTRAINTS ═══\n'
-        '- Generate 4-8 blocks. Do NOT exceed 8.\n'
-        '- Must include at least 2 interactive blocks (code-playground, multiple-choice, fill-blank, true-false, or matching).\n'
+        '- Generate 8-16 blocks. Do NOT exceed 16.\n'
+        '- Must include at least 3 interactive blocks (code-playground, multiple-choice, fill-blank, true-false, or matching).\n'
         '- Rhythm: introduce concept → show example → practice (at least one interactive block after every 1-2 concept blocks).\n'
         '- All block IDs must be unique (use simple names like b0, b1, b2 … — they will be prefixed automatically).\n'
         '- position.order is 0-based and continuous within this lesson.\n'
@@ -2055,8 +2414,8 @@ $rawContent
     }
     final blocks = lesson['blocks'];
     if (blocks is! List || blocks.isEmpty) return 'blocks array is empty';
-    if (blocks.length < 2 || blocks.length > 15) {
-      return 'blocks count must be 2-15, got ${blocks.length}';
+    if (blocks.length < 2 || blocks.length > 20) {
+      return 'blocks count must be 2-20, got ${blocks.length}';
     }
     const interactiveTypes = {
       'code-playground',
@@ -2093,8 +2452,9 @@ $rawContent
       block['id'] = '$prefix${block['id'] ?? 'b'}';
 
       if (block['type'] == 'matching') {
-        final content =
-            Map<String, dynamic>.from(_mapFromDynamic(block['content']));
+        final content = Map<String, dynamic>.from(
+          _mapFromDynamic(block['content']),
+        );
         if (content['leftItems'] is List) {
           content['leftItems'] = (content['leftItems'] as List).map((item) {
             final m = Map<String, dynamic>.from(_mapFromDynamic(item));
@@ -2110,8 +2470,9 @@ $rawContent
           }).toList();
         }
         if (content['correctPairs'] is List) {
-          content['correctPairs'] =
-              (content['correctPairs'] as List).map((pair) {
+          content['correctPairs'] = (content['correctPairs'] as List).map((
+            pair,
+          ) {
             final m = Map<String, dynamic>.from(_mapFromDynamic(pair));
             m['leftId'] = '$prefix${m['leftId']}';
             m['rightId'] = '$prefix${m['rightId']}';
@@ -2122,8 +2483,9 @@ $rawContent
       }
 
       if (block['type'] == 'multiple-choice') {
-        final content =
-            Map<String, dynamic>.from(_mapFromDynamic(block['content']));
+        final content = Map<String, dynamic>.from(
+          _mapFromDynamic(block['content']),
+        );
         if (content['options'] is List) {
           content['options'] = (content['options'] as List).map((opt) {
             final m = Map<String, dynamic>.from(_mapFromDynamic(opt));
@@ -2135,8 +2497,9 @@ $rawContent
           content['correctAnswer'] = '$prefix${content['correctAnswer']}';
         }
         if (content['correctAnswers'] is List) {
-          content['correctAnswers'] =
-              (content['correctAnswers'] as List).map((id) => '$prefix$id').toList();
+          content['correctAnswers'] = (content['correctAnswers'] as List)
+              .map((id) => '$prefix$id')
+              .toList();
         }
         block['content'] = content;
       }
@@ -2200,10 +2563,13 @@ $rawContent
     final lessonRows = List.generate(lessons.length, (i) {
       final l = _mapFromDynamic(lessons[i]);
       final lessonType = l['type'] as String? ?? 'interactive';
-      final blocks =
-          i < lessonJsons.length
-              ? (lessonJsons[i]['blocks'] as List? ?? [])
-              : [];
+      final rawBlocks = i < lessonJsons.length
+          ? (lessonJsons[i]['blocks'] as List? ?? [])
+          : [];
+      final typedBlocks = rawBlocks
+          .map((b) => Map<String, dynamic>.from(_mapFromDynamic(b)))
+          .toList();
+      final pages = _splitBlocksIntoPages(typedBlocks);
       return {
         'course_id': courseId,
         'title': l['title'] ?? 'Untitled',
@@ -2213,7 +2579,7 @@ $rawContent
         'duration_seconds':
             ((l['estimated_minutes'] as num?)?.toInt() ?? 15) * 60,
         'is_locked': ((l['order'] as num?)?.toInt() ?? (i + 1)) > 1,
-        'content_json': {'blocks': blocks},
+        'content_json': {'pages': pages},
       };
     });
 
@@ -2270,7 +2636,8 @@ $rawContent
           'style': {'spacing': 'md', 'alignment': 'left'},
           'content': {
             'format': 'markdown',
-            'value': '## $title\n\n*Content for this lesson could not be '
+            'value':
+                '## $title\n\n*Content for this lesson could not be '
                 'generated automatically. Please edit this lesson in the '
                 'Builder to add your content.*',
           },
@@ -2335,8 +2702,12 @@ $rawContent
 
       // ── Stage 1: Plan course ──────────────────────────────────────
       onProgress?.call('plan', 0.05);
-      final planPrompt =
-          _buildPlanPrompt(description, difficulty, animationStyle, language);
+      final planPrompt = _buildPlanPrompt(
+        description,
+        difficulty,
+        animationStyle,
+        language,
+      );
 
       Map<String, dynamic>? planJson;
       String? planError;
@@ -2485,8 +2856,8 @@ $rawContent
             '[AICourseGenerator] Lesson ${i + 1} failed after all retries '
             '(${lessonError ?? "unknown error"}). Using placeholder.',
           );
-          final lessonTitle =
-              (lesson['title'] as String? ?? 'Lesson ${i + 1}').trim();
+          final lessonTitle = (lesson['title'] as String? ?? 'Lesson ${i + 1}')
+              .trim();
           lessonJson = _buildFallbackLesson(lessonTitle, lessonOrder);
         }
         lessonJsons.add(lessonJson);
@@ -2615,7 +2986,7 @@ $rawContent
           .toList();
 
       final body = <String, dynamic>{
-        'model': 'gemini-2.5-pro-latest',
+        'model': GeminiClient.defaultModels.first,
       };
       if (encodedFiles.isNotEmpty) body['sources'] = encodedFiles;
       if (urls.isNotEmpty) body['urls'] = urls;
@@ -2663,6 +3034,24 @@ $rawContent
       final firstName = files.isNotEmpty
           ? files.first.fileName
           : (urls.isNotEmpty ? urls.first : 'Generated Course');
+      final rawBlockCount = _countGeneratedBlocks(
+        courseJsonMap['lessons'] ?? courseJsonMap['pages'],
+      );
+      if (rawBlockCount == 0) {
+        final fallbackResult = await _tryDirectPdfFallbackFromSources(
+          files: files,
+        );
+        if (fallbackResult != null) {
+          return fallbackResult;
+        }
+        return buildResult(
+          success: false,
+          message: _emptyCourseShellMessage,
+          rawJson: jsonEncode(courseJsonMap),
+          model: model,
+        );
+      }
+
       final normalizedJson = _normalizeGeneratedCourseJson(
         courseJsonMap,
         fileName: firstName,
@@ -2674,6 +3063,21 @@ $rawContent
         return buildResult(
           success: false,
           message: importResult.message,
+          rawJson: rawJsonStr,
+          model: model,
+        );
+      }
+
+      if (!_courseHasContent(importResult.course!)) {
+        final fallbackResult = await _tryDirectPdfFallbackFromSources(
+          files: files,
+        );
+        if (fallbackResult != null) {
+          return fallbackResult;
+        }
+        return buildResult(
+          success: false,
+          message: _emptyCourseShellMessage,
           rawJson: rawJsonStr,
           model: model,
         );
@@ -2695,11 +3099,36 @@ $rawContent
       final isFailedToFetch = e.message.toLowerCase().contains(
         'failed to fetch',
       );
-      final msg = isFailedToFetch
-          ? 'Edge Function 不可访问（可能尚未部署）。\n'
-                '请运行：supabase functions deploy ai-generate-course-json'
-          : 'Network error: ${e.message}';
-      return buildResult(success: false, message: msg);
+      if (isFailedToFetch) {
+        // Edge Function not deployed — fall back to direct Gemini call.
+        // Works as long as the get-gemini-key Edge Function is available.
+        try {
+          if (_apiKey == null || _apiKey!.isEmpty) {
+            await fetchAndCacheApiKey();
+          }
+          if (_apiKey != null && _apiKey!.isNotEmpty) {
+            // Find first PDF file to use for direct generation
+            final pdfFile = files.firstWhere(
+              (f) => f.mimeType.contains('pdf'),
+              orElse: () => files.first,
+            );
+            return generateFromPdf(
+              pdfBytes: pdfFile.bytes,
+              fileName: pdfFile.fileName,
+            );
+          }
+        } catch (_) {}
+        return buildResult(
+          success: false,
+          message:
+              'Edge Function 不可访问（可能尚未部署）。\n'
+              '请运行：supabase functions deploy ai-generate-course-json',
+        );
+      }
+      return buildResult(
+        success: false,
+        message: 'Network error: ${e.message}',
+      );
     } catch (e) {
       return buildResult(success: false, message: 'Error: $e');
     }
@@ -2762,8 +3191,10 @@ class _ContentResult {
   final String? model;
   final int? attemptCount;
   final int? latencyMs;
+
   /// True when the model hit MAX_TOKENS and output was cut mid-JSON.
   final bool truncated;
+
   /// The partial (unparseable) content from a truncated response.
   final String? partialContent;
 
@@ -2921,10 +3352,7 @@ class AgentCourseResult {
 
 /// Result returned by [AICourseGenerator.enhanceCourseViaApi].
 class EnhanceCourseResult {
-  const EnhanceCourseResult({
-    required this.success,
-    required this.message,
-  });
+  const EnhanceCourseResult({required this.success, required this.message});
 
   final bool success;
   final String message;

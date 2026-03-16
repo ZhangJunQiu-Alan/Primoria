@@ -14,6 +14,7 @@ import 'code_execution_block_widget.dart';
 import 'code_playground_widget.dart';
 import 'function_flow_block_widget.dart';
 import 'html_animation_widget.dart';
+import 'interactive_visual_widget.dart';
 import 'video_embed_widget.dart';
 import 'video_drop_zone.dart';
 
@@ -363,6 +364,15 @@ class BlockWrapper extends StatelessWidget {
           childBuilder: (height) =>
               AnimationBlockWidget(content: animContent, height: height),
         );
+      case BlockType.interactiveVisual:
+        return InteractiveVisualWidget(
+          content: block.content as InteractiveVisualContent,
+          isPreview: true,
+          forcedHeight:
+              block.style.height != null
+                  ? block.style.height!.clamp(200.0, 600.0).toDouble()
+                  : null,
+        );
       case BlockType.video:
         final content = block.content as VideoContent;
         return _VideoBlockContent(
@@ -432,6 +442,7 @@ class BlockWrapper extends StatelessWidget {
       case BlockType.functionFlow:
         return AppColors.secondary500;
       case BlockType.animation:
+      case BlockType.interactiveVisual:
       case BlockType.video:
         return AppColors.accent500;
     }

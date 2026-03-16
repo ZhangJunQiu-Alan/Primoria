@@ -14,6 +14,7 @@ enum BlockType {
   trueFalse('true-false', 'True/False', 'T/F'),
   matching('matching', 'Matching', '⟷'),
   animation('animation', 'Animation', '◌'),
+  interactiveVisual('interactive-visual', 'Interactive Visual', '◈'),
   video('video', 'Video', '🎬');
 
   final String value;

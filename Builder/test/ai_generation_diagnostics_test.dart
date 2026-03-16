@@ -40,5 +40,67 @@ void main() {
       expect(result.diagnostics!.promptSource, 'custom');
       expect(result.diagnostics!.promptFingerprint, isNotEmpty);
     });
+
+    test('counts generated blocks from nested lesson pages', () {
+      final count = AICourseGenerator.debugCountGeneratedBlocksForTesting([
+        {
+          'lessonId': 'l1',
+          'title': 'Nested',
+          'pages': [
+            {
+              'pageId': 'p1',
+              'blocks': [
+                {
+                  'id': 'b1',
+                  'type': 'text',
+                  'content': {'value': 'hello'},
+                },
+              ],
+            },
+            {
+              'pageId': 'p2',
+              'blocks': [
+                {
+                  'id': 'b2',
+                  'type': 'animation',
+                  'content': {'preset': 'pulse-bars'},
+                },
+              ],
+            },
+          ],
+        },
+      ]);
+
+      expect(count, 2);
+    });
+
+    test('counts generated blocks from legacy flat lesson blocks', () {
+      final count = AICourseGenerator.debugCountGeneratedBlocksForTesting([
+        {
+          'lessonId': 'l1',
+          'title': 'Flat',
+          'blocks': [
+            {
+              'id': 'b1',
+              'type': 'text',
+              'content': {'value': 'hello'},
+            },
+            {
+              'id': 'b2',
+              'type': 'multiple-choice',
+              'content': {
+                'question': 'Q',
+                'options': [
+                  {'id': 'a', 'text': 'A'},
+                ],
+                'correctAnswer': 'a',
+              },
+            },
+          ],
+        },
+      ]);
+
+      expect(count, 2);
+    });
   });
 }

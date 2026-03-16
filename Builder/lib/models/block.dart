@@ -1,6 +1,8 @@
 import 'block_type.dart';
 import '../services/id_generator.dart';
 
+part 'interactive_visual_content.dart';
+
 /// Block position info
 class BlockPosition {
   final int order;
@@ -104,6 +106,8 @@ abstract class BlockContent {
         return MatchingContent.fromJson(json);
       case BlockType.animation:
         return AnimationContent.fromJson(json);
+      case BlockType.interactiveVisual:
+        return InteractiveVisualContent.fromJson(json);
       case BlockType.video:
         return VideoContent.fromJson(json);
     }
@@ -1775,6 +1779,12 @@ class Block {
         );
       case BlockType.animation:
         return const AnimationContent();
+      case BlockType.interactiveVisual:
+        return const InteractiveVisualContent(
+          mode: VisualMode.interactive,
+          template: InteractiveVisualContent.templateGeneric,
+          title: 'Interactive Visual',
+        );
       case BlockType.video:
         return const VideoContent();
     }

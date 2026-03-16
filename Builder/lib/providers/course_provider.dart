@@ -180,11 +180,3 @@ final sortedPageBlocksProvider =
       return sorted;
     });
 
-/// Legacy: sorted blocks for lesson index (uses page 0).
-/// Kept for any code that hasn't migrated to page-aware providers yet.
-final sortedLessonBlocksProvider = Provider.family<List<Block>, int>((
-  ref,
-  lessonIndex,
-) {
-  return ref.watch(sortedPageBlocksProvider((lessonIndex, 0)));
-});

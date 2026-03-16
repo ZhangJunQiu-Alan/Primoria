@@ -49,10 +49,9 @@ class GeminiClient {
   static const String _baseUrl =
       'https://generativelanguage.googleapis.com/v1beta';
 
-  /// Default model priority list — ordered from fastest/cheapest to most capable.
-  /// GeminiClient will try these in order when fallback is needed.
+  /// Default model — only gemini-3.1-pro-preview is used; no fallback.
   static const List<String> defaultModels = [
-    'gemini-2.5-pro-latest',
+    'gemini-3.1-pro-preview',
   ];
 
   /// Max retries per model before falling back to the next one.

@@ -65,6 +65,9 @@ class CourseSchemaMigrator {
     'animationblock': 'animation',
     'animation-block': 'animation',
     'animation_block': 'animation',
+    'interactive-visual': 'interactive-visual',
+    'interactivevisual': 'interactive-visual',
+    'interactive_visual': 'interactive-visual',
     'video': 'video',
   };
 
@@ -119,6 +122,9 @@ class CourseSchemaMigrator {
 
     // Rename legacy 'pages'/'pageId' keys to 'lessons'/'lessonId'
     changed = _renamePagesToLessons(working, steps) || changed;
+
+    // Upgrade legacy animation blocks to interactive-visual format
+    changed = _upgradeAnimationBlocks(working, steps) || changed;
 
     if (!changed) {
       steps.add('No migration changes were required.');
@@ -1596,4 +1602,76 @@ class CourseSchemaMigrator {
     }
     return left == right;
   }
+
+  /// Walk all lessons/blocks, find type==animation, upgrade to interactive-visual.
+  static bool _upgradeAnimationBlocks(
+    Map<String, dynamic> json,
+    List<String> steps,
+  ) {
+    bool changed = false;
+
+    // After _renamePagesToLessons, the key is 'lessons'
+    final lessons = json['lessons'] ?? json['pages'];
+    if (lessons is! List) return false;
+
+    for (final lesson in lessons) {
+      if (lesson is! Map) continue;
+
+      // Current schema: lesson has 'blocks' directly (page-level)
+      final blocks = lesson['blocks'];
+      if (blocks is List) {
+        for (final block in blocks) {
+          if (block is Map && block['type'] == 'animation') {
+            _upgradeAnimationBlock(block as Map<String, dynamic>);
+            changed = true;
+          }
+        }
+      }
+    }
+
+    if (changed) {
+      steps.add('Upgraded animation blocks to interactive-visual format.');
+    }
+    return changed;
+  }
+
+  static void _upgradeAnimationBlock(Map<String, dynamic> block) {
+    final content = block['content'];
+    if (content is! Map) {
+      block['type'] = 'interactive-visual';
+      block['content'] = _defaultInteractiveVisualContent();
+      return;
+    }
+    final contentMap = Map<String, dynamic>.from(content);
+    final customHtml = contentMap['customHtml'] as String?;
+    final aiPrompt = contentMap['aiPrompt'] as String?;
+    block['type'] = 'interactive-visual';
+    block['content'] = {
+      ..._defaultInteractiveVisualContent(),
+      if (aiPrompt != null) 'aiPrompt': aiPrompt,
+      if (customHtml != null) 'legacyCustomHtml': customHtml,
+    };
+  }
+
+  static Map<String, dynamic> _defaultInteractiveVisualContent() => {
+    'version': 'sim-v1',
+    'mode': 'presentation',
+    'template': 'generic',
+    'title': '',
+    'layoutPreset': 'scene-only',
+    'themeTone': 'light-science',
+    'initialState': <String, dynamic>{},
+    'controls': <dynamic>[],
+    'formulas': <dynamic>[],
+    'checks': <dynamic>[],
+    'scene': <String, dynamic>{},
+    'bindings': <String, dynamic>{},
+    'actions': <dynamic>[],
+    'playback': {
+      'autoplay': false,
+      'allowStep': true,
+      'allowReset': true,
+      'transitionMs': 200,
+    },
+  };
 }
