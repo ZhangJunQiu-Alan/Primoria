@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/achievement_model.dart';
 import '../providers/language_provider.dart';
+import '../services/achievement_display_service.dart';
 import '../services/achievement_service.dart';
 import '../services/supabase_service.dart';
 
@@ -102,11 +103,7 @@ class _AchievementUnlockPopupState extends State<AchievementUnlockPopup>
               color: Colors.white,
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
-                BoxShadow(
-                  color: glowColor,
-                  blurRadius: 40,
-                  spreadRadius: 4,
-                ),
+                BoxShadow(color: glowColor, blurRadius: 40, spreadRadius: 4),
               ],
             ),
             child: Column(
@@ -172,7 +169,7 @@ class _AchievementUnlockPopupState extends State<AchievementUnlockPopup>
                 const SizedBox(height: 16),
                 // Achievement name
                 Text(
-                  widget.achievement.name,
+                  AchievementDisplayService.displayName(widget.achievement),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 22,
@@ -183,7 +180,9 @@ class _AchievementUnlockPopupState extends State<AchievementUnlockPopup>
                 const SizedBox(height: 8),
                 // Description
                 Text(
-                  widget.achievement.description,
+                  AchievementDisplayService.displayDescription(
+                    widget.achievement,
+                  ),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 13,
@@ -206,9 +205,7 @@ class _AchievementUnlockPopupState extends State<AchievementUnlockPopup>
                   style: OutlinedButton.styleFrom(
                     foregroundColor: rarityColor,
                     side: BorderSide(
-                      color: _isPinned
-                          ? rarityColor
-                          : const Color(0xFFE2E8F0),
+                      color: _isPinned ? rarityColor : const Color(0xFFE2E8F0),
                     ),
                     backgroundColor: _isPinned
                         ? rarityColor.withValues(alpha: 0.06)
