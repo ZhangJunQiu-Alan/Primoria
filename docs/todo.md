@@ -1,13 +1,15 @@
 # TODO
 
-Last updated: 2026-03-14 (rev 4)
+Last updated: 2026-03-17 (rev 5)
 
 ## 1. High Priority
 
-1. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
-2. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
-3. [ ] Implement real revenue/settlement data source for dashboard income cards.
-4. [ ] Add integration tests for publish -> viewer consistency path.
+1. [ ] Fix legacy course publish blocked by schema validator: `CourseSchemaMigrator` does not correctly migrate courses created before the Pages architecture — lessons retain flat `blocks[]` instead of `pages[{blocks[]}]`, `title` fields are missing, and `metadata`/`$schema`/`schemaVersion` are absent. Publish is hard-blocked for all such courses.
+2. [ ] Fix `gemini-generate` Edge Function: Gemini occasionally returns markdown code fences (`` ```html ``…`` ``` ``) despite system-prompt rule; strip fences in Edge Function before returning HTML so the iframe does not render raw fence text.
+3. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
+4. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
+5. [ ] Implement real revenue/settlement data source for dashboard income cards.
+6. [ ] Add integration tests for publish -> viewer consistency path.
 
 ## 2. Medium Priority
 
