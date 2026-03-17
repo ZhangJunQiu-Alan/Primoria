@@ -1,7 +1,9 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "10bac180b3f8",
+  "session_id": "e23c9ba3-4615-4f87-ab5d-1627bcadd6c0",
   "strategy": "manual-commit",
+  "created_at": "2026-03-17T22:00:48.209538Z",
   "branch": "feat/cinematic-art-theme",
   "checkpoints_count": 4,
   "files_touched": [
@@ -16,11 +18,8 @@
     "Builder/lib/widgets/painterly_background.dart",
     "Builder/lib/widgets/raised_button.dart",
     "Builder/pubspec.yaml",
-    "Viewer/lib/components/common/bottom_nav_bar.dart",
-    "Viewer/lib/components/common/viewer_surface_card.dart",
     "Viewer/lib/screens/achievement_wall_screen.dart",
     "Viewer/lib/screens/home_screen.dart",
-    "Viewer/lib/screens/landing_screen.dart",
     "Viewer/lib/screens/login_screen.dart",
     "Viewer/lib/theme/colors.dart",
     "Viewer/lib/theme/spacing.dart",
@@ -31,28 +30,28 @@
     "Viewer/lib/widgets/glass_card.dart",
     "Viewer/lib/widgets/painterly_background.dart",
     "Viewer/lib/widgets/raised_button.dart",
-    "docs/art-theme-todo.md",
-    "external-tests/.DS_Store"
+    "docs/art-theme-todo.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/10/bac180b3f8/0/metadata.json",
-      "transcript": "/10/bac180b3f8/0/full.jsonl",
-      "content_hash": "/10/bac180b3f8/0/content_hash.txt",
-      "prompt": "/10/bac180b3f8/0/prompt.txt"
-    },
-    {
-      "metadata": "/10/bac180b3f8/1/metadata.json",
-      "transcript": "/10/bac180b3f8/1/full.jsonl",
-      "content_hash": "/10/bac180b3f8/1/content_hash.txt",
-      "prompt": "/10/bac180b3f8/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "dd95cbe14f35",
   "token_usage": {
     "input_tokens": 779,
     "cache_creation_tokens": 1276936,
     "cache_read_tokens": 63943449,
     "output_tokens": 388382,
     "api_call_count": 697
+  },
+  "session_metrics": {
+    "turn_count": 13
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-17T22:00:35.262936Z",
+    "agent_lines": 2584,
+    "human_added": 56,
+    "human_modified": 16,
+    "human_removed": 0,
+    "total_committed": 2652,
+    "agent_percentage": 97.43589743589743
   }
 }
