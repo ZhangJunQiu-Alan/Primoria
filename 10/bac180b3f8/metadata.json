@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "10bac180b3f8",
+  "strategy": "manual-commit",
+  "branch": "feat/cinematic-art-theme",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".DS_Store",
+    "Builder/lib/features/auth/login_screen.dart",
+    "Builder/lib/features/auth/register_screen.dart",
+    "Builder/lib/theme/design_tokens.dart",
+    "Builder/lib/theme/theme.dart",
+    "Builder/lib/widgets/art_progress_bar.dart",
+    "Builder/lib/widgets/art_tag.dart",
+    "Builder/lib/widgets/glass_card.dart",
+    "Builder/lib/widgets/painterly_background.dart",
+    "Builder/lib/widgets/raised_button.dart",
+    "Builder/pubspec.yaml",
+    "Viewer/lib/components/common/bottom_nav_bar.dart",
+    "Viewer/lib/components/common/viewer_surface_card.dart",
+    "Viewer/lib/screens/achievement_wall_screen.dart",
+    "Viewer/lib/screens/home_screen.dart",
+    "Viewer/lib/screens/landing_screen.dart",
+    "Viewer/lib/screens/login_screen.dart",
+    "Viewer/lib/theme/colors.dart",
+    "Viewer/lib/theme/spacing.dart",
+    "Viewer/lib/theme/theme.dart",
+    "Viewer/lib/theme/typography.dart",
+    "Viewer/lib/widgets/art_progress_bar.dart",
+    "Viewer/lib/widgets/art_tag.dart",
+    "Viewer/lib/widgets/glass_card.dart",
+    "Viewer/lib/widgets/painterly_background.dart",
+    "Viewer/lib/widgets/raised_button.dart",
+    "docs/art-theme-todo.md",
+    "external-tests/.DS_Store"
+  ],
+  "sessions": [
+    {
+      "metadata": "/10/bac180b3f8/0/metadata.json",
+      "transcript": "/10/bac180b3f8/0/full.jsonl",
+      "content_hash": "/10/bac180b3f8/0/content_hash.txt",
+      "prompt": "/10/bac180b3f8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
