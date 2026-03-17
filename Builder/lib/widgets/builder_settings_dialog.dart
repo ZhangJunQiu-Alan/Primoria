@@ -140,7 +140,7 @@ class _BuilderSettingsDialogState extends ConsumerState<BuilderSettingsDialog> {
     setState(() => _savingProfile = true);
 
     final success = await SupabaseService.updateProfile(
-      displayName: _displayNameController.text.trim(),
+      username: _displayNameController.text.trim(),
       avatarUrl: _avatarUrlController.text.trim().isEmpty
           ? null
           : _avatarUrlController.text.trim(),

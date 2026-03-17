@@ -370,7 +370,7 @@ class _ProfileDialogState extends ConsumerState<ProfileDialog> {
     });
 
     final success = await SupabaseService.updateProfile(
-      displayName: _nameController.text.trim(),
+      username: _nameController.text.trim(),
     );
 
     if (!mounted) return;

@@ -51,13 +51,13 @@ void main() {
       ).copyWith(visibilityRule: 'afterPreviousCorrect');
       final json = block.toJson();
 
-      expect(json['visibilityRule'], 'afterPreviousCorrect');
+      expect(json['visibility_rule'], 'afterPreviousCorrect');
     });
 
     test('Block visibilityRule deserializes from JSON', () {
       final block = Block.create(BlockType.text, order: 0);
       final json = block.toJson();
-      json['visibilityRule'] = 'afterPreviousCorrect';
+      json['visibility_rule'] = 'afterPreviousCorrect';
       final restored = Block.fromJson(json);
 
       expect(restored.visibilityRule, 'afterPreviousCorrect');
@@ -66,7 +66,7 @@ void main() {
     test('Block visibilityRule defaults to always when missing from JSON', () {
       final block = Block.create(BlockType.text, order: 0);
       final json = block.toJson();
-      json.remove('visibilityRule');
+      json.remove('visibility_rule');
       final restored = Block.fromJson(json);
 
       expect(restored.visibilityRule, 'always');
@@ -77,7 +77,7 @@ void main() {
       () {
         final block = Block.create(BlockType.text, order: 2);
         final json = block.toJson();
-        json.remove('visibilityRule');
+        json.remove('visibility_rule');
         final restored = Block.fromJson(json);
 
         expect(restored.visibilityRule, 'afterPreviousCorrect');
@@ -687,8 +687,8 @@ void main() {
       final json = course.toJson();
 
       expect(json['\$schema'], isNotNull);
-      expect(json['schemaVersion'], '1.0.0');
-      expect(json['courseId'], isNotEmpty);
+      expect(json['schema_version'], '1.0.0');
+      expect(json['course_id'], isNotEmpty);
       expect(json['metadata'], isNotNull);
       expect(json['settings'], isNotNull);
       expect(json['lessons'], isA<List>());

@@ -6,15 +6,13 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:confetti/confetti.dart';
 import 'package:provider/provider.dart';
 import '../theme/theme.dart';
-import '../components/interactions/slider_interaction.dart'
-    show InteractiveSlider;
 import '../components/feedback/feedback_dialog.dart';
-import '../models/unit_model.dart';
 import '../providers/user_provider.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/audio_service.dart';
 import '../services/supabase_service.dart';
+import '../widgets/video_embed_widget.dart';
 import 'lesson_result_screen.dart';
 
 /// Lesson/Interactive learning page - Duolingo + Brilliant style
@@ -43,7 +41,6 @@ class _LessonScreenState extends State<LessonScreen> {
   // ── Question state ────────────────────────────────────────────
   List<_QuestionData> _questions = [];
   int _currentIndex = 0;
-  double _sliderValue = 50;
   String? _selectedOption;
   final _inputController = TextEditingController();
   List<String> _sortingOrder = [];
@@ -51,6 +48,9 @@ class _LessonScreenState extends State<LessonScreen> {
   // ── Matching state ────────────────────────────────────────────
   String? _selectedLeftItem;
   Map<String, String> _matchingState = {}; // left item → right item
+
+  // ── Multi-choice state ────────────────────────────────────────
+  Set<int> _multiChoiceSelection = {};
 
   // ── Hint state ────────────────────────────────────────────────
   int _hintsUsed = 0;
@@ -62,6 +62,9 @@ class _LessonScreenState extends State<LessonScreen> {
   // ── Answer tracking ───────────────────────────────────────────
   int _correctCount = 0;
   int _totalCount = 0;
+  // Tracks whether the most recent interactive question was answered correctly.
+  // Used to enforce afterPreviousCorrect visibility gates.
+  bool _lastAnsweredCorrectly = true;
 
   // ── Supporting services ───────────────────────────────────────
   late ConfettiController _confettiController;
@@ -136,12 +139,6 @@ class _LessonScreenState extends State<LessonScreen> {
       ]);
       _questions = questions;
       _loadingLesson = false;
-      // Init slider value from first question if it's a slider
-      if (questions.isNotEmpty &&
-          questions[0].type == QuestionType.slider &&
-          questions[0].sliderConfig != null) {
-        _sliderValue = questions[0].sliderConfig!.defaultValue;
-      }
       // Init sorting order from first sorting question
       for (final q in questions) {
         if (q.type == QuestionType.sorting && q.sortingItems != null) {
@@ -241,6 +238,7 @@ class _LessonScreenState extends State<LessonScreen> {
     if (normalizedCurrentId.isNotEmpty) {
       targetIndex = lessons.indexWhere((lesson) {
         final lessonId = _firstNonEmptyString([
+          lesson['lesson_id'],
           lesson['lessonId'],
           lesson['pageId'],
           lesson['id'],
@@ -298,13 +296,9 @@ class _LessonScreenState extends State<LessonScreen> {
       final type = block['type'] as String? ?? '';
       final content = _toMap(block['content']);
       final config = _toMap(block['config']);
-      final parsed = _parseBlock(
-        type: type,
-        content: content,
-        config: config,
-        pageTitle: '',
+      questions.addAll(
+        _parseBlockItems(type: type, content: content, config: config, pageTitle: ''),
       );
-      if (parsed != null) questions.add(parsed);
     }
     return questions;
   }
@@ -323,17 +317,187 @@ class _LessonScreenState extends State<LessonScreen> {
       for (final block in blocks) {
         final type = block['type'] as String? ?? '';
         final content = _toMap(block['content']);
-        final parsed = _parseBlock(
+        final rule = (block['visibility_rule'] as String? ??
+                block['visibilityRule'] as String? ??
+                'always')
+            .trim();
+        final items = _parseBlockItems(
           type: type,
           content: content,
           config: const {},
           pageTitle: pageTitle,
         );
-        if (parsed != null) questions.add(parsed);
+        questions.addAll(_withVisibilityRule(items, rule));
       }
     }
 
     return questions;
+  }
+
+  /// Applies [rule] to the first item in [items] (subsequent items from
+  /// multi-block expansions always remain 'always').
+  List<_QuestionData> _withVisibilityRule(
+    List<_QuestionData> items,
+    String rule,
+  ) {
+    if (items.isEmpty || rule == 'always') return items;
+    final first = items.first;
+    final updated = _QuestionData(
+      type: first.type,
+      title: first.title,
+      content: first.content,
+      options: first.options,
+      correctIndex: first.correctIndex,
+      correctAnswer: first.correctAnswer,
+      sortingItems: first.sortingItems,
+      correctOrder: first.correctOrder,
+      successMsg: first.successMsg,
+      failMsg: first.failMsg,
+      isLast: first.isLast,
+      matchingLeftItems: first.matchingLeftItems,
+      matchingRightItems: first.matchingRightItems,
+      matchingCorrectPairs: first.matchingCorrectPairs,
+      hints: first.hints,
+      imageUrl: first.imageUrl,
+      visualSpec: first.visualSpec,
+      visibilityRule: rule,
+      correctIndices: first.correctIndices,
+    );
+    return [updated, ...items.skip(1)];
+  }
+
+  /// Wrapper that returns 0-N questions per block.
+  /// Most types produce 1 item via [_parseBlock]; code-execution and
+  /// function-flow expand into an intro card + interactive questions.
+  List<_QuestionData> _parseBlockItems({
+    required String type,
+    required Map<String, dynamic> content,
+    required Map<String, dynamic> config,
+    required String pageTitle,
+  }) {
+    final normalizedType = type.trim().toLowerCase().replaceAll('_', '-');
+
+    if (normalizedType == 'code-execution') {
+      return _parseCodeExecution(content, pageTitle);
+    }
+    if (normalizedType == 'function-flow') {
+      return _parseFunctionFlow(content, pageTitle);
+    }
+
+    final single = _parseBlock(
+      type: type,
+      content: content,
+      config: config,
+      pageTitle: pageTitle,
+    );
+    return single == null ? const [] : [single];
+  }
+
+  /// Renders a code-execution block as:
+  ///   1. An info card showing the source code.
+  ///   2. One multiple-choice card per checkpoint question.
+  List<_QuestionData> _parseCodeExecution(
+    Map<String, dynamic> content,
+    String pageTitle,
+  ) {
+    final sourceCode =
+        content['source_code'] as String? ??
+        content['sourceCode'] as String? ??
+        content['code'] as String? ??
+        '';
+    final language = content['language'] as String? ?? 'python';
+    final title = _firstNonEmptyString([
+      content['title'],
+      pageTitle,
+      _i18n(en: 'Code Execution', zh: '代码执行'),
+    ]);
+
+    final results = <_QuestionData>[];
+
+    if (sourceCode.isNotEmpty) {
+      results.add(_QuestionData(
+        type: QuestionType.info,
+        title: title,
+        content: '```$language\n$sourceCode\n```',
+      ));
+    }
+
+    final checkpoints = (content['checkpoints'] as List? ?? []).whereType<Map>();
+    for (final cp in checkpoints) {
+      final question = (cp['question'] as String? ?? '').trim();
+      final options = (cp['options'] as List? ?? [])
+          .whereType<String>()
+          .where((s) => s.isNotEmpty)
+          .toList();
+      final correctIndex =
+          cp['correctIndex'] is num ? (cp['correctIndex'] as num).toInt() : 0;
+      if (question.isEmpty || options.length < 2) continue;
+      results.add(_QuestionData(
+        type: QuestionType.choice,
+        title: question,
+        content: '',
+        options: options,
+        correctIndex: correctIndex,
+        successMsg: _firstNonEmptyString([
+          cp['explanation'],
+          _i18n(en: 'Correct!', zh: '正确！'),
+        ]),
+        failMsg: _i18n(en: 'Not quite — try again.', zh: '不对，再试一次。'),
+      ));
+    }
+
+    return results;
+  }
+
+  /// Renders a function-flow block as:
+  ///   1. An info card listing node labels and descriptions.
+  ///   2. One info card per step that has a note.
+  List<_QuestionData> _parseFunctionFlow(
+    Map<String, dynamic> content,
+    String pageTitle,
+  ) {
+    final title = _firstNonEmptyString([
+      content['title'],
+      pageTitle,
+      _i18n(en: 'Function Flow', zh: '函数流程'),
+    ]);
+
+    final nodes = (content['nodes'] as List? ?? []).whereType<Map>();
+    final steps = (content['steps'] as List? ?? []).whereType<Map>();
+
+    final nodeLines = nodes
+        .where((n) {
+          final label = (n['label'] as String? ?? '').trim();
+          return label.isNotEmpty;
+        })
+        .map((n) {
+          final label = (n['label'] as String? ?? '').trim();
+          final desc = (n['description'] as String? ?? '').trim();
+          return desc.isNotEmpty ? '• $label: $desc' : '• $label';
+        })
+        .join('\n');
+
+    final results = <_QuestionData>[
+      _QuestionData(
+        type: QuestionType.info,
+        title: title,
+        content: nodeLines,
+      ),
+    ];
+
+    var stepNum = 1;
+    for (final step in steps) {
+      final note = (step['note'] as String? ?? '').trim();
+      if (note.isEmpty) continue;
+      results.add(_QuestionData(
+        type: QuestionType.info,
+        title: _i18n(en: 'Step $stepNum', zh: '步骤 $stepNum'),
+        content: note,
+      ));
+      stepNum++;
+    }
+
+    return results;
   }
 
   _QuestionData? _parseBlock({
@@ -409,8 +573,8 @@ class _LessonScreenState extends State<LessonScreen> {
 
         final correctIndexRaw =
             config['correct_index'] ??
-            config['correctIndex'] ??
             content['correct_index'] ??
+            config['correctIndex'] ??
             content['correctIndex'];
         int? correctIndex = _toInt(correctIndexRaw);
 
@@ -423,13 +587,13 @@ class _LessonScreenState extends State<LessonScreen> {
         if (correctIndex == null) {
           final candidateAnswers = <String>[
             _firstNonEmptyString([
-              content['correctAnswer'],
               content['correct_answer'],
-              config['correctAnswer'],
+              content['correctAnswer'],
               config['correct_answer'],
+              config['correctAnswer'],
             ]),
-            ..._toStringList(content['correctAnswers']),
-            ..._toStringList(config['correctAnswers']),
+            ..._toStringList(content['correct_answers'] ?? content['correctAnswers']),
+            ..._toStringList(config['correct_answers'] ?? config['correctAnswers']),
           ].where((e) => e.isNotEmpty).toList();
 
           for (final candidate in candidateAnswers) {
@@ -450,6 +614,64 @@ class _LessonScreenState extends State<LessonScreen> {
             }
           }
         }
+        final successMsg = _firstNonEmptyString([
+          config['success_msg'],
+          config['successMsg'],
+          content['success_msg'],
+          content['explanation'],
+          _i18n(en: 'Correct!', zh: '回答正确！'),
+        ]);
+        final failMsg = _firstNonEmptyString([
+          config['fail_msg'],
+          config['failMsg'],
+          content['fail_msg'],
+          _i18n(en: "That's not right. Try again!", zh: '不太对，再试一次！'),
+        ]);
+
+        // Multi-select path
+        final isMultiSelect =
+            content['multi_select'] == true ||
+            content['multiSelect'] == true ||
+            config['multi_select'] == true ||
+            config['multiSelect'] == true;
+
+        if (isMultiSelect) {
+          // Collect all correct answer IDs/texts
+          final allCorrectRaw = [
+            ..._toStringList(content['correct_answers'] ?? content['correctAnswers']),
+            ..._toStringList(config['correct_answers'] ?? config['correctAnswers']),
+          ].where((e) => e.isNotEmpty).toSet();
+
+          final correctIndices = <int>{};
+          for (final candidate in allCorrectRaw) {
+            final lower = candidate.toLowerCase();
+            final byId = optionIds.indexWhere(
+              (id) => id != null && id.toLowerCase() == lower,
+            );
+            if (byId >= 0) {
+              correctIndices.add(byId);
+              continue;
+            }
+            final byText = options.indexWhere(
+              (text) => text.toLowerCase() == lower,
+            );
+            if (byText >= 0) correctIndices.add(byText);
+          }
+
+          if (correctIndices.isEmpty) return null;
+
+          return _QuestionData(
+            type: QuestionType.multiChoice,
+            title: promptTitle,
+            content: promptBody,
+            options: options,
+            correctIndices: correctIndices,
+            successMsg: successMsg,
+            failMsg: failMsg,
+          );
+        }
+
+        // Single-select path
         correctIndex ??= 0;
 
         return _QuestionData(
@@ -458,86 +680,8 @@ class _LessonScreenState extends State<LessonScreen> {
           content: promptBody,
           options: options,
           correctIndex: correctIndex,
-          successMsg: _firstNonEmptyString([
-            config['success_msg'],
-            config['successMsg'],
-            content['success_msg'],
-            content['explanation'],
-            _i18n(en: 'Correct!', zh: '回答正确！'),
-          ]),
-          failMsg: _firstNonEmptyString([
-            config['fail_msg'],
-            config['failMsg'],
-            content['fail_msg'],
-            _i18n(en: "That's not right. Try again!", zh: '不太对，再试一次！'),
-          ]),
-        );
-
-      case 'slider':
-        final min = _toDouble(config['min'] ?? content['min'], 0);
-        final max = _toDouble(config['max'] ?? content['max'], 100);
-        final step = _toDouble(config['step'] ?? content['step'], 1);
-        final defaultValue = _toDouble(
-          config['default'] ??
-              config['defaultValue'] ??
-              config['default_value'] ??
-              content['default'] ??
-              content['defaultValue'] ??
-              content['default_value'],
-          50,
-        );
-        final targetValue = _toDouble(
-          config['target'] ??
-              config['targetValue'] ??
-              content['target'] ??
-              content['targetValue'],
-          defaultValue,
-        );
-        final tolerance = _toDouble(
-          config['tolerance'] ?? content['tolerance'],
-          5,
-        );
-        final unit = _firstNonEmptyString([config['unit'], content['unit']]);
-
-        return _QuestionData(
-          type: QuestionType.slider,
-          title: _firstNonEmptyString([
-            content['title'],
-            content['question'],
-            pageTitle,
-            _i18n(en: 'Adjust Value', zh: '调整数值'),
-          ]),
-          content: _firstNonEmptyString([
-            content['body'],
-            content['description'],
-            config['description'],
-          ]),
-          sliderConfig: SliderConfig(
-            min: min,
-            max: max,
-            step: step,
-            defaultValue: defaultValue,
-            unit: unit,
-            showValue: true,
-          ),
-          targetValue: targetValue,
-          tolerance: tolerance,
-          successMsg: _firstNonEmptyString([
-            config['success_msg'],
-            config['successMsg'],
-            content['success_msg'],
-            _i18n(en: 'Great!', zh: '很好！'),
-          ]),
-          failMsgHigh: _firstNonEmptyString([
-            config['fail_msg_high'],
-            content['fail_msg_high'],
-            _i18n(en: 'Too high!', zh: '太高了！'),
-          ]),
-          failMsgLow: _firstNonEmptyString([
-            config['fail_msg_low'],
-            content['fail_msg_low'],
-            _i18n(en: 'Too low!', zh: '太低了！'),
-          ]),
+          successMsg: successMsg,
+          failMsg: failMsg,
         );
 
       case 'fill-blank':
@@ -547,8 +691,10 @@ class _LessonScreenState extends State<LessonScreen> {
               .trim(),
         ]);
         final answer = _firstNonEmptyString([
+          content['correct_answer'],
           content['correctAnswer'],
           content['answer'],
+          config['correct_answer'],
           config['correctAnswer'],
           config['answer'],
         ]);
@@ -583,7 +729,7 @@ class _LessonScreenState extends State<LessonScreen> {
         ]);
         if (statement.isEmpty) return null;
         final isTrue = _toBool(
-          content['correctAnswer'] ?? content['isTrue'],
+          content['correct_answer'] ?? content['correctAnswer'] ?? content['isTrue'],
           true,
         );
         final explanation = _firstNonEmptyString([
@@ -623,10 +769,11 @@ class _LessonScreenState extends State<LessonScreen> {
 
       case 'code-playground':
         final expectedOutput = _firstNonEmptyString([
-          content['expectedOutput'],
           content['expected_output'],
+          content['expectedOutput'],
         ]);
         final starterCode = _firstNonEmptyString([
+          content['initial_code'],
           content['initialCode'],
           content['starterCode'],
         ]);
@@ -681,18 +828,71 @@ class _LessonScreenState extends State<LessonScreen> {
           pageTitle,
           _i18n(en: 'Matching', zh: '配对题'),
         ]);
-        final leftItems = _extractItemTexts(content['leftItems']);
-        final rightItems = _extractItemTexts(content['rightItems']);
+
+        // Graph mode: convert nodes + edges into left→right matching pairs.
+        final isGraphMode = (content['mode'] as String?)?.trim() == 'graph';
+        if (isGraphMode) {
+          final rawNodes = content['nodes'];
+          final rawEdges = content['edges'];
+          if (rawNodes is! List || rawEdges is! List) return null;
+
+          // Build nodeId → label map
+          final nodeLabels = <String, String>{};
+          for (final n in rawNodes) {
+            if (n is Map) {
+              final id = (n['id'] as String? ?? '').trim();
+              final label = (n['label'] as String? ?? '').trim();
+              if (id.isNotEmpty && label.isNotEmpty) nodeLabels[id] = label;
+            }
+          }
+
+          // Convert edges to from-label → to-label pairs (deduplicate by from-label)
+          final graphPairs = <String, String>{};
+          for (final e in rawEdges) {
+            if (e is Map) {
+              final fromLabel = nodeLabels[(e['from'] as String? ?? '').trim()] ?? '';
+              final toLabel = nodeLabels[(e['to'] as String? ?? '').trim()] ?? '';
+              if (fromLabel.isNotEmpty && toLabel.isNotEmpty && !graphPairs.containsKey(fromLabel)) {
+                graphPairs[fromLabel] = toLabel;
+              }
+            }
+          }
+          if (graphPairs.isEmpty) return null;
+
+          final leftItems = graphPairs.keys.toList();
+          final rightItems = graphPairs.values.toList();
+          return _QuestionData(
+            type: QuestionType.matching,
+            title: question,
+            content: '',
+            matchingLeftItems: leftItems,
+            matchingRightItems: List.from(rightItems)..shuffle(),
+            matchingCorrectPairs: Map.from(graphPairs),
+            successMsg: _i18n(en: 'All connections correct!', zh: '所有连接都正确！'),
+            failMsg: _i18n(
+              en: 'Some connections are wrong. Try again!',
+              zh: '有些连接不正确，再试一次！',
+            ),
+            hints: leftItems
+                .take(3)
+                .map((l) => '"$l" → "${graphPairs[l]}"')
+                .toList(),
+          );
+        }
+
+        // List mode (default)
+        final leftItems = _extractItemTexts(content['left_items'] ?? content['leftItems']);
+        final rightItems = _extractItemTexts(content['right_items'] ?? content['rightItems']);
         if (leftItems.isEmpty || rightItems.isEmpty) return null;
         // Build correct pairs map: left text → right text
         final Map<String, String> correctPairs = {};
-        final rawPairs = content['pairs'];
+        final rawPairs = content['correct_pairs'] ?? content['correctPairs'] ?? content['pairs'];
         if (rawPairs is List) {
           for (final pair in rawPairs) {
             if (pair is Map) {
-              final left = _firstNonEmptyString([pair['left'], pair['leftId']]);
+              final left = _firstNonEmptyString([pair['left'], pair['left_id'], pair['leftId']]);
               final right =
-                  _firstNonEmptyString([pair['right'], pair['rightId']]);
+                  _firstNonEmptyString([pair['right'], pair['right_id'], pair['rightId']]);
               if (left.isNotEmpty && right.isNotEmpty) {
                 correctPairs[left] = right;
               }
@@ -739,13 +939,31 @@ class _LessonScreenState extends State<LessonScreen> {
           visualSpec: content,
         );
 
-      case 'animation':
       case 'video':
+        final rawUrl = _firstNonEmptyString([
+          content['url'] as String?,
+          content['src'] as String?,
+        ]);
+        if (rawUrl.isEmpty) return null;
+        final embedUrl = _toEmbedUrl(rawUrl);
+        return _QuestionData(
+          type: QuestionType.video,
+          title: _firstNonEmptyString([
+            content['title'] as String?,
+            content['caption'] as String?,
+            pageTitle,
+            _i18n(en: 'Video', zh: '视频'),
+          ]),
+          content: content['description'] as String? ?? '',
+          videoUrl: embedUrl,
+        );
+
+      case 'animation':
         return _QuestionData(
           type: QuestionType.info,
           title: _firstNonEmptyString([
             pageTitle,
-            _i18n(en: 'Interactive Content', zh: '互动内容'),
+            _i18n(en: 'Animation', zh: '动画'),
           ]),
           content: _i18n(
             en: 'This block type is not interactive in Viewer yet.',
@@ -772,6 +990,28 @@ class _LessonScreenState extends State<LessonScreen> {
     return '';
   }
 
+  /// Converts a raw video URL to an embeddable URL.
+  /// YouTube watch links → /embed/; Vimeo → player.vimeo.com/video/; others unchanged.
+  String _toEmbedUrl(String url) {
+    // YouTube: https://www.youtube.com/watch?v=ID or https://youtu.be/ID
+    final ytWatch = RegExp(
+      r'(?:youtube\.com/watch\?v=|youtu\.be/)([A-Za-z0-9_-]{11})',
+    );
+    final ytMatch = ytWatch.firstMatch(url);
+    if (ytMatch != null) {
+      return 'https://www.youtube.com/embed/${ytMatch.group(1)}';
+    }
+
+    // Vimeo: https://vimeo.com/ID
+    final vimeoMatch = RegExp(r'vimeo\.com/(\d+)').firstMatch(url);
+    if (vimeoMatch != null) {
+      return 'https://player.vimeo.com/video/${vimeoMatch.group(1)}';
+    }
+
+    // Direct video URL — use as-is (VideoElement handles .mp4, .webm, etc.)
+    return url;
+  }
+
   List<String> _toStringList(dynamic value) {
     if (value is! List) return const [];
     return value
@@ -786,12 +1026,6 @@ class _LessonScreenState extends State<LessonScreen> {
     if (value is num) return value.toInt();
     if (value is String) return int.tryParse(value);
     return null;
-  }
-
-  double _toDouble(dynamic value, double fallback) {
-    if (value is num) return value.toDouble();
-    if (value is String) return double.tryParse(value) ?? fallback;
-    return fallback;
   }
 
   bool _toBool(dynamic value, bool fallback) {
@@ -848,36 +1082,6 @@ class _LessonScreenState extends State<LessonScreen> {
         content: _i18n(
           en: 'In this lesson, you will learn how to understand and master knowledge through interactive methods.\n\nAre you ready? Let\'s begin!',
           zh: '在本节课程中，你将通过互动方式理解并掌握知识。\n\n准备好了吗？让我们开始吧！',
-        ),
-      ),
-      _QuestionData(
-        type: QuestionType.slider,
-        title: _i18n(en: 'Adjust Temperature', zh: '调整温度'),
-        content: _i18n(
-          en: 'Please adjust the water temperature to the ideal temperature for brewing green tea',
-          zh: '请将水温调整到冲泡绿茶的理想温度',
-        ),
-        sliderConfig: const SliderConfig(
-          min: 0,
-          max: 100,
-          step: 1,
-          defaultValue: 50,
-          unit: '°C',
-          showValue: true,
-        ),
-        targetValue: 85,
-        tolerance: 5,
-        successMsg: _i18n(
-          en: 'Great! Around 85°C is the ideal temperature for brewing green tea.',
-          zh: '很好！约 85°C 是冲泡绿茶的理想温度。',
-        ),
-        failMsgHigh: _i18n(
-          en: 'The temperature is too high, it will damage the nutrients in the tea leaves.',
-          zh: '温度太高，会破坏茶叶中的营养成分。',
-        ),
-        failMsgLow: _i18n(
-          en: 'The temperature is too low, it cannot fully release the aroma of the tea.',
-          zh: '温度太低，无法充分释放茶香。',
         ),
       ),
       _QuestionData(
@@ -968,15 +1172,6 @@ class _LessonScreenState extends State<LessonScreen> {
     String feedbackMsg = '';
 
     switch (question.type) {
-      case QuestionType.slider:
-        final diff = (_sliderValue - question.targetValue!).abs();
-        isCorrect = diff <= question.tolerance!;
-        if (!isCorrect) {
-          feedbackMsg = _sliderValue > question.targetValue!
-              ? question.failMsgHigh!
-              : question.failMsgLow!;
-        }
-
       case QuestionType.choice:
         isCorrect =
             _selectedOption == question.options![question.correctIndex!];
@@ -990,6 +1185,13 @@ class _LessonScreenState extends State<LessonScreen> {
         isCorrect = _listEquals(_sortingOrder, question.correctOrder!);
         feedbackMsg = question.failMsg!;
 
+      case QuestionType.multiChoice:
+        final correct = question.correctIndices ?? {};
+        isCorrect = correct.isNotEmpty &&
+            _multiChoiceSelection.length == correct.length &&
+            _multiChoiceSelection.every(correct.contains);
+        feedbackMsg = question.failMsg!;
+
       case QuestionType.matching:
         final pairs = question.matchingCorrectPairs ?? {};
         isCorrect = pairs.isNotEmpty &&
@@ -998,22 +1200,25 @@ class _LessonScreenState extends State<LessonScreen> {
             question.failMsg ?? _i18n(en: 'Not quite right!', zh: '还有些不对！');
 
       case QuestionType.info:
+      case QuestionType.video:
       case QuestionType.interactiveVisual:
         _nextQuestion();
         return;
     }
 
-    // Track answer stats (skip info blocks)
+    // Track answer stats (skip info/video/visual blocks)
     if (question.type != QuestionType.info &&
+        question.type != QuestionType.video &&
         question.type != QuestionType.interactiveVisual) {
       _totalCount++;
       if (isCorrect) _correctCount++;
     }
 
+    _lastAnsweredCorrectly = isCorrect;
+
     if (isCorrect) {
       await _audioService.playCorrect();
       if (!mounted) return;
-      context.read<UserProvider>().completeQuestion();
       context.showSuccessFeedback(
         message: question.successMsg!,
         onContinue: _nextQuestion,
@@ -1035,10 +1240,18 @@ class _LessonScreenState extends State<LessonScreen> {
 
   Future<void> _nextQuestion() async {
     if (_currentIndex < _questions.length - 1) {
+      // Find next visible question, skipping gated blocks when the last
+      // interactive question was not answered correctly.
+      int nextIndex = _currentIndex + 1;
+      while (nextIndex < _questions.length - 1 &&
+          _questions[nextIndex].visibilityRule == 'afterPreviousCorrect' &&
+          !_lastAnsweredCorrectly) {
+        nextIndex++;
+      }
+
       setState(() {
-        _currentIndex++;
+        _currentIndex = nextIndex;
         final nextQ = _questions[_currentIndex];
-        _sliderValue = nextQ.sliderConfig?.defaultValue ?? 50;
         _selectedOption = null;
         _inputController.clear();
         if (nextQ.type == QuestionType.sorting && nextQ.sortingItems != null) {
@@ -1046,6 +1259,7 @@ class _LessonScreenState extends State<LessonScreen> {
         }
         _selectedLeftItem = null;
         _matchingState = {};
+        _multiChoiceSelection = {};
         _hintsUsed = 0;
         _hintVisible = false;
         _questionAnimKey++;
@@ -1395,14 +1609,6 @@ class _LessonScreenState extends State<LessonScreen> {
     AppLocalizations t,
   ) {
     switch (question.type) {
-      case QuestionType.slider:
-        return InteractiveSlider(
-          config: question.sliderConfig!,
-          description: '',
-          initialValue: _sliderValue,
-          onChanged: (value) => setState(() => _sliderValue = value),
-        );
-
       case QuestionType.choice:
         return Column(
           children: question.options!.asMap().entries.map((entry) {
@@ -1489,6 +1695,106 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
             );
           }).toList(),
+        );
+
+      case QuestionType.multiChoice:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: Text(
+                _i18n(en: 'Select all that apply', zh: '选择所有正确答案'),
+                style: AppTypography.label.copyWith(
+                  color: isDark
+                      ? AppColors.textSecondaryOnDark
+                      : AppColors.textSecondary,
+                ),
+              ),
+            ),
+            ...question.options!.asMap().entries.map((entry) {
+              final index = entry.key;
+              final option = entry.value;
+              final isSelected = _multiChoiceSelection.contains(index);
+              return Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                child: GestureDetector(
+                  onTap: () {
+                    _audioService.playClick();
+                    setState(() {
+                      if (isSelected) {
+                        _multiChoiceSelection.remove(index);
+                      } else {
+                        _multiChoiceSelection.add(index);
+                      }
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primary.withValues(alpha: 0.08)
+                          : isDark
+                          ? AppColors.cardDark
+                          : AppColors.surface,
+                      borderRadius: AppRadius.borderRadiusXl,
+                      border: Border.all(
+                        color: isSelected
+                            ? AppColors.primary
+                            : isDark
+                            ? AppColors.borderDark
+                            : AppColors.border,
+                        width: isSelected ? 2 : 1,
+                      ),
+                      boxShadow: isSelected ? AppShadows.sm : null,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? AppColors.primary
+                                : isDark
+                                ? AppColors.surfaceDark
+                                : AppColors.surfaceVariant,
+                            borderRadius: BorderRadius.circular(6),
+                            border: isSelected
+                                ? null
+                                : Border.all(
+                                    color: isDark
+                                        ? AppColors.borderDark
+                                        : AppColors.border,
+                                  ),
+                          ),
+                          child: isSelected
+                              ? const Icon(
+                                  Icons.check,
+                                  size: 18,
+                                  color: Colors.white,
+                                )
+                              : null,
+                        ),
+                        const SizedBox(width: AppSpacing.md),
+                        Expanded(
+                          child: Text(
+                            option,
+                            style: AppTypography.body1.copyWith(
+                              color: isDark
+                                  ? AppColors.textOnDark
+                                  : AppColors.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ],
         );
 
       case QuestionType.sorting:
@@ -1609,6 +1915,11 @@ class _LessonScreenState extends State<LessonScreen> {
         }
         return const SizedBox.shrink();
 
+      case QuestionType.video:
+        final url = question.videoUrl ?? '';
+        if (url.isEmpty) return const SizedBox.shrink();
+        return VideoEmbedWidget(url: url, title: question.title.isEmpty ? null : question.title);
+
       case QuestionType.info:
         if (question.isLast) {
           return Center(
@@ -1637,13 +1948,15 @@ class _LessonScreenState extends State<LessonScreen> {
     AppLocalizations t,
   ) {
     final isInfoPage = question.type == QuestionType.info ||
+        question.type == QuestionType.video ||
         question.type == QuestionType.interactiveVisual;
     final canSubmit =
         isInfoPage ||
         (question.type == QuestionType.choice && _selectedOption != null) ||
+        (question.type == QuestionType.multiChoice &&
+            _multiChoiceSelection.isNotEmpty) ||
         (question.type == QuestionType.input &&
             _inputController.text.isNotEmpty) ||
-        question.type == QuestionType.slider ||
         question.type == QuestionType.sorting ||
         (question.type == QuestionType.matching &&
             _matchingState.length ==
@@ -1829,15 +2142,12 @@ class _Duo3DSubmitButtonState extends State<_Duo3DSubmitButton> {
 
 // ── Data models ───────────────────────────────────────────────────
 
-enum QuestionType { info, slider, choice, input, sorting, matching, interactiveVisual }
+enum QuestionType { info, video, choice, multiChoice, input, sorting, matching, interactiveVisual }
 
 class _QuestionData {
   final QuestionType type;
   final String title;
   final String content;
-  final SliderConfig? sliderConfig;
-  final double? targetValue;
-  final double? tolerance;
   final List<String>? options;
   final int? correctIndex;
   final String? correctAnswer;
@@ -1845,8 +2155,6 @@ class _QuestionData {
   final List<String>? correctOrder;
   final String? successMsg;
   final String? failMsg;
-  final String? failMsgHigh;
-  final String? failMsgLow;
   final bool isLast;
   // Matching
   final List<String>? matchingLeftItems;
@@ -1858,14 +2166,17 @@ class _QuestionData {
   final String? imageUrl;
   // Interactive visual spec (JSON map)
   final Map<String, dynamic>? visualSpec;
+  // Visibility gate: 'always' | 'afterPreviousCorrect'
+  final String visibilityRule;
+  // Multi-select: set of correct option indices
+  final Set<int>? correctIndices;
+  // Video URL (already converted to embeddable form)
+  final String? videoUrl;
 
   _QuestionData({
     required this.type,
     required this.title,
     required this.content,
-    this.sliderConfig,
-    this.targetValue,
-    this.tolerance,
     this.options,
     this.correctIndex,
     this.correctAnswer,
@@ -1873,8 +2184,6 @@ class _QuestionData {
     this.correctOrder,
     this.successMsg,
     this.failMsg,
-    this.failMsgHigh,
-    this.failMsgLow,
     this.isLast = false,
     this.matchingLeftItems,
     this.matchingRightItems,
@@ -1882,6 +2191,9 @@ class _QuestionData {
     this.hints,
     this.imageUrl,
     this.visualSpec,
+    this.visibilityRule = 'always',
+    this.correctIndices,
+    this.videoUrl,
   });
 }
 

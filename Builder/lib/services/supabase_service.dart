@@ -314,7 +314,7 @@ class SupabaseService {
 
   /// Update user profile
   static Future<bool> updateProfile({
-    String? displayName,
+    String? username,
     String? avatarUrl,
   }) async {
     if (currentUser == null) return false;
@@ -323,7 +323,7 @@ class SupabaseService {
       await client
           .from('profiles')
           .update({
-            if (displayName != null) 'display_name': displayName,
+            if (username != null) 'username': username,
             if (avatarUrl != null) 'avatar_url': avatarUrl,
           })
           .eq('id', currentUser!.id);
@@ -618,14 +618,6 @@ class SupabaseService {
       }
 
       await client.rpc('publish_course', params: {'p_course_id': courseId});
-
-      // Defensive write-back:
-      // In environments with old publish_course RPC, lesson content_json may
-      // be overwritten to [] when content_blocks are empty. Restore snapshot.
-      await _writeSnapshotToFirstLesson(
-        courseId: courseId,
-        snapshot: normalized,
-      );
 
       return CourseResult(
         success: true,
@@ -1105,8 +1097,7 @@ class SupabaseService {
               .select('username, avatar_url')
               .eq('id', comment['user_id'] as String)
               .maybeSingle();
-          comment['username'] =
-              profile?['username'] ?? profile?['display_name'] ?? 'User';
+          comment['username'] = profile?['username'] ?? 'User';
           comment['avatar_url'] = profile?['avatar_url'];
         } catch (_) {
           comment['username'] = 'User';
@@ -1223,55 +1214,6 @@ class SupabaseService {
           .delete()
           .inFilter('id', existingIds.sublist(lessons.length));
     }
-  }
-
-  static Future<void> _writeSnapshotToFirstLesson({
-    required String courseId,
-    required Map<String, dynamic> snapshot,
-  }) async {
-    final lesson = await client
-        .from('lessons')
-        .select('id')
-        .eq('course_id', courseId)
-        .order('sort_key', ascending: true)
-        .limit(1)
-        .maybeSingle();
-
-    if (lesson == null) return;
-
-    String? firstLessonTitle;
-    final lessons = snapshot['lessons'];
-    if (lessons is List && lessons.isNotEmpty) {
-      final first = lessons.first;
-      if (first is Map) {
-        final raw = first['title'];
-        if (raw is String && raw.trim().isNotEmpty) {
-          firstLessonTitle = raw.trim();
-        }
-      }
-    }
-    if ((firstLessonTitle == null || firstLessonTitle.isEmpty) &&
-        snapshot['pages'] is List) {
-      final pages = snapshot['pages'] as List;
-      if (pages.isNotEmpty) {
-        final first = pages.first;
-        if (first is Map) {
-          final raw = first['title'];
-          if (raw is String && raw.trim().isNotEmpty) {
-            firstLessonTitle = raw.trim();
-          }
-        }
-      }
-    }
-
-    await client
-        .from('lessons')
-        .update({
-          if (firstLessonTitle != null && firstLessonTitle.isNotEmpty)
-            'title': firstLessonTitle,
-          'content_json': snapshot,
-        })
-        .eq('id', lesson['id'] as String);
   }
 
   static Future<Map<String, dynamic>?> _loadCourseSnapshot(

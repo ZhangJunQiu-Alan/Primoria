@@ -35,13 +35,11 @@ class CourseScreen extends StatefulWidget {
 
 class _CourseScreenState extends State<CourseScreen> {
   Map<String, dynamic>? _courseData;
-  List<Map<String, dynamic>> _chapters = [];
+  List<Map<String, dynamic>> _lessons = [];
   Set<String> _completedLessonIds = {};
   Map<String, dynamic>? _enrollment;
   bool _loading = true;
   bool _enrolling = false;
-  // Accordion: all chapters expanded by default
-  late Set<int> _expandedChapters;
 
   // ── Derived values ────────────────────────────────────────────
 
@@ -69,7 +67,6 @@ class _CourseScreenState extends State<CourseScreen> {
   @override
   void initState() {
     super.initState();
-    _expandedChapters = {};
     _loadCourseData();
   }
 
@@ -84,17 +81,13 @@ class _CourseScreenState extends State<CourseScreen> {
       _loading = false;
       if (detail != null) {
         _courseData = detail['course'] as Map<String, dynamic>?;
-        _chapters = List<Map<String, dynamic>>.from(
-          detail['chapters'] as List? ?? [],
+        _lessons = List<Map<String, dynamic>>.from(
+          detail['lessons'] as List? ?? [],
         );
         _completedLessonIds = Set<String>.from(
           (detail['completed_lesson_ids'] as List? ?? []).cast<String>(),
         );
         _enrollment = detail['enrollment'] as Map<String, dynamic>?;
-        // Expand all chapters by default
-        _expandedChapters = Set.from(
-          Iterable.generate(_chapters.length),
-        );
       }
     });
   }
@@ -175,25 +168,21 @@ class _CourseScreenState extends State<CourseScreen> {
 
   // ── Next lesson helper ────────────────────────────────────────
 
-  /// Returns the first unlocked, incomplete lesson across all chapters.
+  /// Returns the first unlocked, incomplete lesson.
   Map<String, dynamic>? get _nextLesson {
-    for (final chapter in _chapters) {
-      final lessons = (chapter['lessons'] as List? ?? [])
-          .cast<Map<String, dynamic>>();
-      for (final l in lessons) {
-        if (!_completedLessonIds.contains(l['id'] as String) &&
-            !_isLessonLocked(l)) {
-          return l;
-        }
+    for (final l in _lessons) {
+      if (!_completedLessonIds.contains(l['id'] as String) &&
+          !_isLessonLocked(l)) {
+        return l;
       }
     }
     return null;
   }
 
-  // ── Chapter accordion ─────────────────────────────────────────
+  // ── Lesson list ───────────────────────────────────────────────
 
-  Widget _buildChapterAccordion(AppLocalizations t) {
-    if (_chapters.isEmpty) {
+  Widget _buildLessonList(AppLocalizations t) {
+    if (_lessons.isEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         child: Text(
@@ -203,167 +192,23 @@ class _CourseScreenState extends State<CourseScreen> {
       );
     }
 
-    // Find next lesson id
     final nextLessonId = _nextLesson?['id'] as String?;
 
     return Column(
-      children: _chapters.asMap().entries.map((entry) {
-        final chapterIdx = entry.key;
-        final chapter = entry.value;
-        final chapterTitle = chapter['title'] as String? ?? 'Chapter';
-        final lessons = (chapter['lessons'] as List? ?? [])
-            .cast<Map<String, dynamic>>();
-        final completedCount = lessons
-            .where((l) => _completedLessonIds.contains(l['id'] as String))
-            .length;
-        final totalCount = lessons.length;
-        final isExpanded = _expandedChapters.contains(chapterIdx);
-        final progressPct = totalCount > 0 ? completedCount / totalCount : 0.0;
-        final isDone = totalCount > 0 && completedCount == totalCount;
-
-        return Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: AppRadius.borderRadiusXl,
-              border: Border.all(
-                color: isDone
-                    ? AppColors.success.withValues(alpha: 0.3)
-                    : AppColors.border,
-              ),
-              boxShadow: AppShadows.sm,
-            ),
-            child: Column(
-              children: [
-                // Chapter header (tap to expand/collapse)
-                InkWell(
-                  borderRadius: AppRadius.borderRadiusXl,
-                  onTap: () => setState(() {
-                    if (isExpanded) {
-                      _expandedChapters.remove(chapterIdx);
-                    } else {
-                      _expandedChapters.add(chapterIdx);
-                    }
-                  }),
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Row(
-                      children: [
-                        // Progress ring
-                        SizedBox(
-                          width: 44,
-                          height: 44,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              CircularProgressIndicator(
-                                value: progressPct,
-                                strokeWidth: 3,
-                                backgroundColor: AppColors.border,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  isDone ? AppColors.success : AppColors.primary,
-                                ),
-                              ),
-                              Center(
-                                child: isDone
-                                    ? const Icon(
-                                        Icons.check_rounded,
-                                        size: 18,
-                                        color: AppColors.success,
-                                      )
-                                    : Text(
-                                        '${chapterIdx + 1}',
-                                        style: AppTypography.label.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.primary,
-                                        ),
-                                      ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.md),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                chapterTitle,
-                                style: AppTypography.title.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                '$completedCount / $totalCount ${t.isZh ? '节已完成' : 'lessons completed'}',
-                                style: AppTypography.body2.copyWith(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        AnimatedRotation(
-                          turns: isExpanded ? 0.5 : 0.0,
-                          duration: const Duration(milliseconds: 200),
-                          child: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // Lesson list (animated expand)
-                AnimatedCrossFade(
-                  firstChild: const SizedBox.shrink(),
-                  secondChild: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.md,
-                      0,
-                      AppSpacing.md,
-                      AppSpacing.md,
-                    ),
-                    child: Column(
-                      children: lessons.asMap().entries.map((lessonEntry) {
-                        final lessonIdx = lessonEntry.key;
-                        final l = lessonEntry.value;
-                        final lessonId = l['id'] as String;
-                        final lessonTitle = l['title'] as String? ?? 'Lesson';
-                        final isDoneLes =
-                            _completedLessonIds.contains(lessonId);
-                        final isNextLes = lessonId == nextLessonId;
-                        final isLockedLes = _isLessonLocked(l);
-                        final lockHint =
-                            _lockHintForLesson(l, t) ?? t.courseLocked;
-                        final isLastInChapter =
-                            lessonIdx == lessons.length - 1;
-
-                        return _buildLessonNode(
-                          lessonId: lessonId,
-                          lessonTitle: lessonTitle,
-                          isDone: isDoneLes,
-                          isNext: isNextLes,
-                          isLocked: isLockedLes,
-                          lockHint: lockHint,
-                          isLast: isLastInChapter,
-                          t: t,
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  crossFadeState: isExpanded
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-                  duration: const Duration(milliseconds: 250),
-                  sizeCurve: Curves.easeInOut,
-                ),
-              ],
-            ),
-          ),
+      children: _lessons.asMap().entries.map((entry) {
+        final idx = entry.key;
+        final l = entry.value;
+        final lessonId = l['id'] as String;
+        final lessonTitle = l['title'] as String? ?? 'Lesson';
+        return _buildLessonNode(
+          lessonId: lessonId,
+          lessonTitle: lessonTitle,
+          isDone: _completedLessonIds.contains(lessonId),
+          isNext: lessonId == nextLessonId,
+          isLocked: _isLessonLocked(l),
+          lockHint: _lockHintForLesson(l, t) ?? t.courseLocked,
+          isLast: idx == _lessons.length - 1,
+          t: t,
         );
       }).toList(),
     );
@@ -628,18 +473,11 @@ class _CourseScreenState extends State<CourseScreen> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    final completedChapters = _chapters.where((ch) {
-      final lessons = (ch['lessons'] as List? ?? [])
-          .cast<Map<String, dynamic>>();
-      return lessons.isNotEmpty &&
-          lessons.every((l) => _completedLessonIds.contains(l['id'] as String));
-    }).length;
+    final completedLessons = _completedLessonIds.length;
 
     final nextLesson = _nextLesson;
     final subject = _courseData?['subjects'] as Map<String, dynamic>?;
-    final difficulty =
-        _courseData?['difficulty'] as String? ??
-        _courseData?['level'] as String?;
+    final difficulty = _courseData?['difficulty_level'] as String?;
     final tags = <String>[];
     if (subject?['name'] != null) tags.add(subject!['name'] as String);
     if (difficulty != null && difficulty.isNotEmpty) tags.add(difficulty);
@@ -679,8 +517,8 @@ class _CourseScreenState extends State<CourseScreen> {
               description: _description,
               gradient: _gradient,
               icon: _icon,
-              totalChapters: _chapters.length,
-              completedChapters: completedChapters,
+              totalChapters: _lessons.length,
+              completedChapters: completedLessons,
               onBack: () => Navigator.pop(context),
             ),
           ),
@@ -719,7 +557,7 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
 
           // Overall progress bar
-          if (_chapters.isNotEmpty)
+          if (_lessons.isNotEmpty)
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
@@ -737,7 +575,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           ),
                         ),
                         Text(
-                          '${_completedLessonIds.length} / ${_chapters.fold<int>(0, (sum, ch) => sum + ((ch['lessons'] as List?)?.length ?? 0))} ${t.isZh ? '节' : 'lessons'}',
+                          '$completedLessons / ${_lessons.length} ${t.isZh ? '节' : 'lessons'}',
                           style: AppTypography.body2.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -747,13 +585,9 @@ class _CourseScreenState extends State<CourseScreen> {
                     const SizedBox(height: 6),
                     LayoutBuilder(
                       builder: (context, constraints) {
-                        final total = _chapters.fold<int>(
-                          0,
-                          (sum, ch) =>
-                              sum + ((ch['lessons'] as List?)?.length ?? 0),
-                        );
+                        final total = _lessons.length;
                         final progress =
-                            total > 0 ? _completedLessonIds.length / total : 0.0;
+                            total > 0 ? completedLessons / total : 0.0;
                         return Container(
                           height: 6,
                           decoration: BoxDecoration(
@@ -830,11 +664,11 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
           ),
 
-          // Chapter accordion
+          // Lesson list
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             sliver: SliverToBoxAdapter(
-              child: _buildChapterAccordion(t),
+              child: _buildLessonList(t),
             ),
           ),
 

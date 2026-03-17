@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -9,6 +10,8 @@ class SupabaseService {
 
   static SupabaseClient get client => Supabase.instance.client;
   static String? _lastOperationError;
+
+  static const Duration _authTimeout = Duration(seconds: 30);
 
   /// Last detailed error captured by profile/storage operations.
   static String? get lastOperationError => _lastOperationError;
@@ -59,26 +62,42 @@ class SupabaseService {
     required String password,
     String? displayName,
   }) async {
-    try {
-      final response = await client.auth.signUp(
-        email: email,
-        password: password,
-        data: displayName != null ? {'name': displayName} : null,
-      );
+    const maxAttempts = 3;
+    for (var attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        final response = await _withAuthTimeout(
+          client.auth.signUp(
+            email: email,
+            password: password,
+            data: displayName != null ? {'name': displayName} : null,
+          ),
+          operation: 'Sign up',
+        );
 
-      if (response.user != null) {
-        return AuthResult(success: true, message: 'Sign up successful');
-      } else {
-        return const AuthResult(success: false, message: 'Sign up failed');
+        if (response.user != null) {
+          return AuthResult(success: true, message: 'Sign up successful');
+        } else {
+          return const AuthResult(success: false, message: 'Sign up failed');
+        }
+      } on AuthException catch (e) {
+        if (_isRetryableAuthTimeout(e.message) && attempt < maxAttempts - 1) {
+          await Future<void>.delayed(_retryDelayForAttempt(attempt));
+          continue;
+        }
+        return AuthResult(
+          success: false,
+          message: _translateAuthError(e.message),
+        );
+      } catch (e) {
+        final errorText = e.toString();
+        if (_isRetryableAuthTimeout(errorText) && attempt < maxAttempts - 1) {
+          await Future<void>.delayed(_retryDelayForAttempt(attempt));
+          continue;
+        }
+        return AuthResult(success: false, message: 'Sign up failed: $e');
       }
-    } on AuthException catch (e) {
-      return AuthResult(
-        success: false,
-        message: _translateAuthError(e.message),
-      );
-    } catch (e) {
-      return AuthResult(success: false, message: 'Sign up failed: $e');
     }
+    return const AuthResult(success: false, message: 'Sign up failed');
   }
 
   /// Sign in with email
@@ -86,11 +105,12 @@ class SupabaseService {
     required String email,
     required String password,
   }) async {
-    for (var attempt = 0; attempt < 2; attempt++) {
+    const maxAttempts = 3;
+    for (var attempt = 0; attempt < maxAttempts; attempt++) {
       try {
-        final response = await client.auth.signInWithPassword(
-          email: email,
-          password: password,
+        final response = await _withAuthTimeout(
+          client.auth.signInWithPassword(email: email, password: password),
+          operation: 'Sign in',
         );
 
         if (response.user != null) {
@@ -99,8 +119,8 @@ class SupabaseService {
           return const AuthResult(success: false, message: 'Sign in failed');
         }
       } on AuthException catch (e) {
-        if (_isRetryableAuthTimeout(e.message) && attempt == 0) {
-          await Future<void>.delayed(const Duration(milliseconds: 700));
+        if (_isRetryableAuthTimeout(e.message) && attempt < maxAttempts - 1) {
+          await Future<void>.delayed(_retryDelayForAttempt(attempt));
           continue;
         }
         return AuthResult(
@@ -110,8 +130,8 @@ class SupabaseService {
         );
       } catch (e) {
         final errorText = e.toString();
-        if (_isRetryableAuthTimeout(errorText) && attempt == 0) {
-          await Future<void>.delayed(const Duration(milliseconds: 700));
+        if (_isRetryableAuthTimeout(errorText) && attempt < maxAttempts - 1) {
+          await Future<void>.delayed(_retryDelayForAttempt(attempt));
           continue;
         }
         return AuthResult(success: false, message: 'Sign in failed: $e');
@@ -123,7 +143,7 @@ class SupabaseService {
 
   /// Sign out
   static Future<void> signOut() async {
-    await client.auth.signOut();
+    await _withAuthTimeout(client.auth.signOut(), operation: 'Sign out');
   }
 
   /// Reset password (send reset email)
@@ -144,9 +164,12 @@ class SupabaseService {
   /// Sign in with Google
   static Future<AuthResult> signInWithGoogle() async {
     try {
-      await client.auth.signInWithOAuth(
-        OAuthProvider.google,
-        redirectTo: _getRedirectUrl(),
+      await _withAuthTimeout(
+        client.auth.signInWithOAuth(
+          OAuthProvider.google,
+          redirectTo: _getRedirectUrl(),
+        ),
+        operation: 'Google sign in',
       );
       return const AuthResult(success: true, message: 'Redirecting...');
     } on AuthException catch (e) {
@@ -162,9 +185,12 @@ class SupabaseService {
   /// Sign in with Apple (requires Apple Developer Sign In with Apple configuration)
   static Future<AuthResult> signInWithApple() async {
     try {
-      await client.auth.signInWithOAuth(
-        OAuthProvider.apple,
-        redirectTo: _getRedirectUrl(),
+      await _withAuthTimeout(
+        client.auth.signInWithOAuth(
+          OAuthProvider.apple,
+          redirectTo: _getRedirectUrl(),
+        ),
+        operation: 'Apple sign in',
       );
       return const AuthResult(success: true, message: 'Redirecting...');
     } on AuthException catch (e) {
@@ -419,21 +445,11 @@ class SupabaseService {
               ),
             );
 
-      final chapList = <Map<String, dynamic>>[
-        {
-          'id': 'chapter-1',
-          'title': 'Chapter 1',
-          'sort_key': 1000,
-          'lessons': lessons,
-        },
-      ];
-
       // Fetch completed lesson IDs for current user
       final completedIds = <String>{};
       if (currentUser != null) {
-        final allLessonIds = chapList
-            .expand((ch) => (ch['lessons'] as List? ?? []))
-            .map((l) => (l as Map<String, dynamic>)['id'] as String)
+        final allLessonIds = lessons
+            .map((l) => l['id'] as String)
             .toList();
 
         if (allLessonIds.isNotEmpty) {
@@ -462,7 +478,7 @@ class SupabaseService {
 
       return {
         'course': course,
-        'chapters': chapList,
+        'lessons': lessons,
         'completed_lesson_ids': completedIds.toList(),
         'enrollment': enrollment,
       };
@@ -482,85 +498,10 @@ class SupabaseService {
           .eq('id', lessonId)
           .single();
 
-      final map = (lesson as Map).cast<String, dynamic>();
-
-      if (_isLessonContentEmpty(map['content_json'])) {
-        final blocks = await client
-            .from('content_blocks')
-            .select('id, type, content, config, is_interactive, sort_key')
-            .eq('lesson_id', lessonId)
-            .order('sort_key', ascending: true);
-
-        if (blocks.isNotEmpty) {
-          map['content_json'] = blocks
-              .whereType<Map>()
-              .map(
-                (b) => <String, dynamic>{
-                  'block_id': b['id'],
-                  'type': b['type'],
-                  'content': b['content'],
-                  'config': b['config'],
-                  'is_interactive': b['is_interactive'],
-                  'sort_key': b['sort_key'],
-                },
-              )
-              .toList();
-        }
-      }
-
-      // Builder stores the full course snapshot on the first lesson row.
-      // If this lesson has empty content_json and no content_blocks, fall back
-      // to the first non-empty snapshot in the same course.
-      if (_isLessonContentEmpty(map['content_json'])) {
-        final courseId = map['course_id']?.toString();
-        if (courseId != null && courseId.isNotEmpty) {
-          final lessonRows = await client
-              .from('lessons')
-              .select('content_json')
-              .eq('course_id', courseId)
-              .order('sort_key', ascending: true);
-
-          for (final row in lessonRows as List) {
-            final rowMap = row is Map
-                ? Map<String, dynamic>.from(row)
-                : const <String, dynamic>{};
-            final candidate = rowMap['content_json'];
-            if (!_isLessonContentEmpty(candidate)) {
-              map['content_json'] = candidate;
-              break;
-            }
-          }
-        }
-      }
-
-      return map;
+      return (lesson as Map).cast<String, dynamic>();
     } catch (_) {
       return null;
     }
-  }
-
-  static bool _isLessonContentEmpty(dynamic raw) {
-    if (raw == null) return true;
-    if (raw is String) {
-      final t = raw.trim();
-      return t.isEmpty || t == '{}' || t == '[]';
-    }
-    if (raw is List) return raw.isEmpty;
-    if (raw is Map) {
-      final map = Map<String, dynamic>.from(raw);
-      if (map.isEmpty) return true;
-      // Full course snapshot: non-empty only if lessons[] is non-empty
-      final lessons = map['lessons'];
-      if (lessons is List) return lessons.isEmpty;
-      // Per-lesson format: non-empty only if pages[] is non-empty
-      final pages = map['pages'];
-      if (pages is List) return pages.isEmpty;
-      // Legacy flat blocks at lesson level
-      final blocks = map['blocks'];
-      if (blocks is List) return blocks.isEmpty;
-      return false;
-    }
-    return false;
   }
 
   /// Enroll current user in a course (idempotent).
@@ -1185,6 +1126,28 @@ class SupabaseService {
   }
 
   // ==================== Helper methods ====================
+
+  static Future<T> _withAuthTimeout<T>(
+    Future<T> future, {
+    required String operation,
+  }) {
+    return future.timeout(
+      _authTimeout,
+      onTimeout: () =>
+          throw TimeoutException('$operation timed out', _authTimeout),
+    );
+  }
+
+  static Duration _retryDelayForAttempt(int attempt) {
+    switch (attempt) {
+      case 0:
+        return const Duration(milliseconds: 900);
+      case 1:
+        return const Duration(milliseconds: 1800);
+      default:
+        return const Duration(milliseconds: 2500);
+    }
+  }
 
   static bool _isRetryableAuthTimeout(String message) {
     final raw = message.toLowerCase();
