@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "bf26af8b8eca",
+  "strategy": "manual-commit",
+  "branch": "feat/cinematic-art-theme",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "Builder/lib/features/dashboard/dashboard_screen.dart",
+    "Builder/lib/features/landing/landing_screen.dart",
+    "Viewer/lib/screens/achievement_wall_screen.dart",
+    "Viewer/lib/screens/ai_tutor_screen.dart",
+    "Viewer/lib/screens/course_screen.dart",
+    "Viewer/lib/screens/courses_screen.dart",
+    "Viewer/lib/screens/home_screen.dart",
+    "Viewer/lib/screens/landing_screen.dart",
+    "Viewer/lib/screens/lesson_result_screen.dart",
+    "Viewer/lib/screens/level_map_screen.dart",
+    "Viewer/lib/screens/parent_dashboard_screen.dart",
+    "Viewer/lib/screens/profile_screen.dart",
+    "Viewer/lib/screens/profile_settings_screen.dart",
+    "Viewer/lib/screens/register_screen.dart",
+    "Viewer/lib/screens/search_screen.dart"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bf/26af8b8eca/0/metadata.json",
+      "transcript": "/bf/26af8b8eca/0/full.jsonl",
+      "content_hash": "/bf/26af8b8eca/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
