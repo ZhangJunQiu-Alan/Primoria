@@ -101,18 +101,19 @@ class CourseSchemaValidator {
       }
     }
 
-    final versionPath = '$_rootPath.schemaVersion';
-    if (!json.containsKey('schemaVersion')) {
-      _addWarning(findings, versionPath, 'Missing schemaVersion');
+    final versionPath = '$_rootPath.schema_version';
+    final hasVersion = json.containsKey('schema_version') || json.containsKey('schemaVersion');
+    if (!hasVersion) {
+      _addWarning(findings, versionPath, 'Missing schema_version');
     } else {
-      final value = json['schemaVersion'];
+      final value = json['schema_version'] ?? json['schemaVersion'];
       if (value is! String) {
         _addWarning(findings, versionPath, 'Expected a string');
       } else if (value != _schemaVersion) {
         _addWarning(
           findings,
           versionPath,
-          'Unsupported schemaVersion "$value" (expected "$_schemaVersion")',
+          'Unsupported schema_version "$value" (expected "$_schemaVersion")',
         );
       }
     }
@@ -122,13 +123,13 @@ class CourseSchemaValidator {
     Map<String, dynamic> json,
     List<CourseSchemaFinding> findings,
   ) {
-    final courseId = json['courseId'];
+    final courseId = json['course_id'] ?? json['courseId'];
     if (courseId is! String) {
-      _addError(findings, '$_rootPath.courseId', 'Missing or invalid string');
+      _addError(findings, '$_rootPath.course_id', 'Missing or invalid string');
       return;
     }
     if (courseId.trim().isEmpty) {
-      _addError(findings, '$_rootPath.courseId', 'Cannot be empty');
+      _addError(findings, '$_rootPath.course_id', 'Cannot be empty');
     }
   }
 
@@ -158,8 +159,8 @@ class CourseSchemaValidator {
       }
     }
 
-    final difficultyPath = '$metadataPath.difficulty';
-    final difficulty = metadataMap['difficulty'];
+    final difficultyPath = '$metadataPath.difficulty_level';
+    final difficulty = metadataMap['difficulty_level'] ?? metadataMap['difficulty'];
     if (difficulty != null && difficulty is! String) {
       _addError(findings, difficultyPath, 'Expected a string');
     } else if (difficulty is String &&
@@ -168,8 +169,8 @@ class CourseSchemaValidator {
       _addWarning(findings, difficultyPath, 'Unknown difficulty "$difficulty"');
     }
 
-    final minutesPath = '$metadataPath.estimatedMinutes';
-    final estimatedMinutes = metadataMap['estimatedMinutes'];
+    final minutesPath = '$metadataPath.estimated_minutes';
+    final estimatedMinutes = metadataMap['estimated_minutes'] ?? metadataMap['estimatedMinutes'];
     if (estimatedMinutes != null && estimatedMinutes is! int) {
       _addError(findings, minutesPath, 'Expected an integer');
     } else if (estimatedMinutes is int && estimatedMinutes < 0) {
@@ -246,13 +247,13 @@ class CourseSchemaValidator {
 
       final lesson = Map<String, dynamic>.from(lessonValue);
 
-      final lessonIdPath = '$lessonPath.lessonId';
-      // Accept both 'lessonId' (new) and 'pageId' (legacy)
-      final lessonId = lesson['lessonId'] ?? lesson['pageId'];
+      final lessonIdPath = '$lessonPath.lesson_id';
+      // Accept snake_case (new), camelCase and legacy 'pageId'
+      final lessonId = lesson['lesson_id'] ?? lesson['lessonId'] ?? lesson['pageId'];
       if (lessonId is! String || lessonId.trim().isEmpty) {
         _addError(findings, lessonIdPath, 'Missing or empty string');
       } else if (!lessonIds.add(lessonId)) {
-        _addError(findings, lessonIdPath, 'Duplicate lessonId "$lessonId"');
+        _addError(findings, lessonIdPath, 'Duplicate lesson_id "$lessonId"');
       }
 
       final lessonTitlePath = '$lessonPath.title';
@@ -391,8 +392,8 @@ class CourseSchemaValidator {
       _addWarning(findings, '$blockPath.style', 'Expected object');
     }
 
-    final visibilityRulePath = '$blockPath.visibilityRule';
-    final visibilityRule = block['visibilityRule'];
+    final visibilityRulePath = '$blockPath.visibility_rule';
+    final visibilityRule = block['visibility_rule'] ?? block['visibilityRule'];
     if (visibilityRule != null && visibilityRule is! String) {
       _addWarning(findings, visibilityRulePath, 'Expected string');
     } else if (visibilityRule is String &&
@@ -635,11 +636,11 @@ class CourseSchemaValidator {
       _addError(findings, '$contentPath.language', 'Expected string');
     }
 
-    final sourceCode = content['sourceCode'];
+    final sourceCode = content['source_code'] ?? content['sourceCode'];
     if (sourceCode is! String) {
       _addError(
         findings,
-        '$contentPath.sourceCode',
+        '$contentPath.source_code',
         'Missing or invalid string',
       );
     }
@@ -647,21 +648,21 @@ class CourseSchemaValidator {
         ? sourceCode.split('\n').length
         : 0;
 
-    final traceSteps = content['traceSteps'];
+    final traceSteps = content['trace_steps'] ?? content['traceSteps'];
     if (traceSteps is! List) {
-      _addError(findings, '$contentPath.traceSteps', 'Missing or invalid list');
+      _addError(findings, '$contentPath.trace_steps', 'Missing or invalid list');
       return;
     }
     if (traceSteps.isEmpty) {
       _addError(
         findings,
-        '$contentPath.traceSteps',
+        '$contentPath.trace_steps',
         'Must contain at least one execution step',
       );
     }
 
     for (int stepIndex = 0; stepIndex < traceSteps.length; stepIndex++) {
-      final stepPath = '$contentPath.traceSteps[$stepIndex]';
+      final stepPath = '$contentPath.trace_steps[$stepIndex]';
       final stepValue = traceSteps[stepIndex];
       if (stepValue is! Map) {
         _addError(findings, stepPath, 'Expected object');
@@ -746,18 +747,18 @@ class CourseSchemaValidator {
         }
 
         final checkpoint = Map<String, dynamic>.from(checkpointValue);
-        final stepIndexValue = checkpoint['stepIndex'];
+        final stepIndexValue = checkpoint['step_index'] ?? checkpoint['stepIndex'];
         if (stepIndexValue is! int) {
           _addError(
             findings,
-            '$checkpointPath.stepIndex',
+            '$checkpointPath.step_index',
             'Missing or invalid integer',
           );
         } else if (stepIndexValue < 0 || stepIndexValue >= traceSteps.length) {
           _addError(
             findings,
-            '$checkpointPath.stepIndex',
-            'Out of range for traceSteps',
+            '$checkpointPath.step_index',
+            'Out of range for trace_steps',
           );
         }
 
@@ -799,17 +800,17 @@ class CourseSchemaValidator {
           }
         }
 
-        final correctIndex = checkpoint['correctIndex'];
+        final correctIndex = checkpoint['correct_index'] ?? checkpoint['correctIndex'];
         if (correctIndex is! int) {
           _addError(
             findings,
-            '$checkpointPath.correctIndex',
+            '$checkpointPath.correct_index',
             'Missing or invalid integer',
           );
         } else if (correctIndex < 0 || correctIndex >= options.length) {
           _addError(
             findings,
-            '$checkpointPath.correctIndex',
+            '$checkpointPath.correct_index',
             'Out of range for checkpoint options',
           );
         }
@@ -1249,21 +1250,21 @@ class CourseSchemaValidator {
       }
     }
 
-    final multiSelectPath = '$contentPath.multiSelect';
-    final multiSelectRaw = content['multiSelect'];
+    final multiSelectPath = '$contentPath.multi_select';
+    final multiSelectRaw = content['multi_select'] ?? content['multiSelect'];
     if (multiSelectRaw != null && multiSelectRaw is! bool) {
       _addError(findings, multiSelectPath, 'Expected boolean');
     }
     final multiSelect = multiSelectRaw is bool ? multiSelectRaw : false;
 
-    final correctAnswerPath = '$contentPath.correctAnswer';
-    final correctAnswerRaw = content['correctAnswer'];
+    final correctAnswerPath = '$contentPath.correct_answer';
+    final correctAnswerRaw = content['correct_answer'] ?? content['correctAnswer'];
     if (correctAnswerRaw != null && correctAnswerRaw is! String) {
       _addError(findings, correctAnswerPath, 'Expected string');
     }
 
-    final correctAnswersPath = '$contentPath.correctAnswers';
-    final correctAnswersRaw = content['correctAnswers'];
+    final correctAnswersPath = '$contentPath.correct_answers';
+    final correctAnswersRaw = content['correct_answers'] ?? content['correctAnswers'];
     if (correctAnswersRaw != null && correctAnswersRaw is! List) {
       _addError(findings, correctAnswersPath, 'Expected list of strings');
     }
@@ -1354,22 +1355,22 @@ class CourseSchemaValidator {
       }
     }
 
-    final correctAnswer = content['correctAnswer'];
+    final correctAnswer = content['correct_answer'] ?? content['correctAnswer'];
     if (correctAnswer is! String) {
       _addError(
         findings,
-        '$contentPath.correctAnswer',
+        '$contentPath.correct_answer',
         'Missing or invalid string',
       );
     } else if (correctAnswer.trim().isEmpty) {
       if (isStrict) {
         _addError(
           findings,
-          '$contentPath.correctAnswer',
+          '$contentPath.correct_answer',
           'correct answer cannot be empty',
         );
       } else {
-        _addWarning(findings, '$contentPath.correctAnswer', 'Empty answer');
+        _addWarning(findings, '$contentPath.correct_answer', 'Empty answer');
       }
     }
 
@@ -1400,9 +1401,9 @@ class CourseSchemaValidator {
       }
     }
 
-    final correctAnswer = content['correctAnswer'];
+    final correctAnswer = content['correct_answer'] ?? content['correctAnswer'];
     if (correctAnswer != null && correctAnswer is! bool) {
-      _addError(findings, '$contentPath.correctAnswer', 'Expected boolean');
+      _addError(findings, '$contentPath.correct_answer', 'Expected boolean');
     }
 
     final explanation = content['explanation'];
@@ -1446,13 +1447,13 @@ class CourseSchemaValidator {
 
     final isGraphMode = mode == MatchingContent.modeGraph;
 
-    final leftItemsRaw = content['leftItems'];
-    final rightItemsRaw = content['rightItems'];
+    final leftItemsRaw = content['left_items'] ?? content['leftItems'];
+    final rightItemsRaw = content['right_items'] ?? content['rightItems'];
     if (leftItemsRaw != null && leftItemsRaw is! List) {
-      _addError(findings, '$contentPath.leftItems', 'Expected list');
+      _addError(findings, '$contentPath.left_items', 'Expected list');
     }
     if (rightItemsRaw != null && rightItemsRaw is! List) {
-      _addError(findings, '$contentPath.rightItems', 'Expected list');
+      _addError(findings, '$contentPath.right_items', 'Expected list');
     }
     final leftItems = leftItemsRaw is List ? leftItemsRaw : const <dynamic>[];
     final rightItems = rightItemsRaw is List
@@ -1463,14 +1464,14 @@ class CourseSchemaValidator {
       if (leftItemsRaw is! List) {
         _addError(
           findings,
-          '$contentPath.leftItems',
+          '$contentPath.left_items',
           'Missing or invalid list',
         );
       }
       if (rightItemsRaw is! List) {
         _addError(
           findings,
-          '$contentPath.rightItems',
+          '$contentPath.right_items',
           'Missing or invalid list',
         );
       }
@@ -1480,13 +1481,13 @@ class CourseSchemaValidator {
       if (isStrict && !isGraphMode) {
         _addError(
           findings,
-          '$contentPath.leftItems',
+          '$contentPath.left_items',
           'must contain at least 2 left items',
         );
       } else if (!isGraphMode) {
         _addWarning(
           findings,
-          '$contentPath.leftItems',
+          '$contentPath.left_items',
           'Recommended to provide at least 2 items',
         );
       }
@@ -1496,13 +1497,13 @@ class CourseSchemaValidator {
       if (isStrict && !isGraphMode) {
         _addError(
           findings,
-          '$contentPath.rightItems',
+          '$contentPath.right_items',
           'must contain at least 2 right items',
         );
       } else if (!isGraphMode) {
         _addWarning(
           findings,
-          '$contentPath.rightItems',
+          '$contentPath.right_items',
           'Recommended to provide at least 2 items',
         );
       }
@@ -1511,7 +1512,7 @@ class CourseSchemaValidator {
     final leftIds = leftItemsRaw is List
         ? _validateMatchingItems(
             leftItems,
-            '$contentPath.leftItems',
+            '$contentPath.left_items',
             findings,
             isStrict: isStrict,
           )
@@ -1519,21 +1520,21 @@ class CourseSchemaValidator {
     final rightIds = rightItemsRaw is List
         ? _validateMatchingItems(
             rightItems,
-            '$contentPath.rightItems',
+            '$contentPath.right_items',
             findings,
             isStrict: isStrict,
           )
         : <String>{};
 
-    final pairs = content['correctPairs'];
+    final pairs = content['correct_pairs'] ?? content['correctPairs'];
     if (pairs != null && pairs is! List) {
-      _addError(findings, '$contentPath.correctPairs', 'Expected list');
+      _addError(findings, '$contentPath.correct_pairs', 'Expected list');
     }
 
     final normalizedPairs = <_MatchingRuleEdgeRef>[];
     if (pairs is List) {
       for (int i = 0; i < pairs.length; i++) {
-        final pairPath = '$contentPath.correctPairs[$i]';
+        final pairPath = '$contentPath.correct_pairs[$i]';
         final pairValue = pairs[i];
         if (pairValue is! Map) {
           _addError(findings, pairPath, 'Expected object');
@@ -1541,21 +1542,21 @@ class CourseSchemaValidator {
         }
 
         final pair = Map<String, dynamic>.from(pairValue);
-        final leftId = pair['leftId'];
-        final rightId = pair['rightId'];
+        final leftId = pair['left_id'] ?? pair['leftId'];
+        final rightId = pair['right_id'] ?? pair['rightId'];
 
         if (leftId is! String || leftId.trim().isEmpty) {
-          _addError(findings, '$pairPath.leftId', 'Missing or empty string');
+          _addError(findings, '$pairPath.left_id', 'Missing or empty string');
         } else if (leftIds.isNotEmpty && !leftIds.contains(leftId)) {
-          _addError(findings, '$pairPath.leftId', 'unknown left id "$leftId"');
+          _addError(findings, '$pairPath.left_id', 'unknown left id "$leftId"');
         }
 
         if (rightId is! String || rightId.trim().isEmpty) {
-          _addError(findings, '$pairPath.rightId', 'Missing or empty string');
+          _addError(findings, '$pairPath.right_id', 'Missing or empty string');
         } else if (rightIds.isNotEmpty && !rightIds.contains(rightId)) {
           _addError(
             findings,
-            '$pairPath.rightId',
+            '$pairPath.right_id',
             'unknown right id "$rightId"',
           );
         }

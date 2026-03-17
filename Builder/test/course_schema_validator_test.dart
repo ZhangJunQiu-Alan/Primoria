@@ -28,7 +28,7 @@ void main() {
     expect(result.hasBlockingErrors, isTrue);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.lessons[0].pages[0].blocks[0].content.correctAnswers[0]'),
+        (e) => e.contains(r'$.lessons[0].pages[0].blocks[0].content.correct_answers[0]'),
       ),
       isTrue,
     );
@@ -95,7 +95,7 @@ void main() {
     expect(result.message, contains('Schema validation failed'));
     expect(
       result.validation!.errorMessages.any(
-        (e) => e.contains(r'$.lessons[0].pages[0].blocks[0].content.correctAnswers[0]'),
+        (e) => e.contains(r'$.lessons[0].pages[0].blocks[0].content.correct_answers[0]'),
       ),
       isTrue,
     );
@@ -273,7 +273,7 @@ void main() {
     expect(result.isValid, isFalse);
     expect(
       result.errorMessages.any(
-        (e) => e.contains(r'$.lessons[0].pages[0].blocks[0].content.traceSteps[1].line'),
+        (e) => e.contains(r'$.lessons[0].pages[0].blocks[0].content.trace_steps[1].line'),
       ),
       isTrue,
     );
@@ -314,7 +314,7 @@ void main() {
     expect(
       result.errorMessages.any(
         (e) => e.contains(
-          r'$.lessons[0].pages[0].blocks[0].content.checkpoints[0].stepIndex',
+          r'$.lessons[0].pages[0].blocks[0].content.checkpoints[0].step_index',
         ),
       ),
       isTrue,
@@ -322,7 +322,7 @@ void main() {
     expect(
       result.errorMessages.any(
         (e) => e.contains(
-          r'$.lessons[0].pages[0].blocks[0].content.checkpoints[0].correctIndex',
+          r'$.lessons[0].pages[0].blocks[0].content.checkpoints[0].correct_index',
         ),
       ),
       isTrue,

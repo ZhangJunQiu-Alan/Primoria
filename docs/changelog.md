@@ -1,5 +1,41 @@
 # Changelog
 
+## [Unreleased] - 2026-03-17 (Builder↔Viewer Schema Alignment + Viewer Feature Parity)
+
+### Summary
+Multi-session batch of Builder↔Viewer alignment fixes and new Viewer capabilities.
+Covers JSON key normalization (snake_case), Viewer auth resilience, graph matching, visibility gating, multi-select questions, video block playback, and a suite of smaller bug fixes across both apps and the Supabase backend.
+
+### Added
+- **Viewer: embedded video playback** — `VideoEmbedWidget` (3 files: conditional export / web HtmlElementView / non-web placeholder) in `Viewer/lib/widgets/`. `_toEmbedUrl()` converts YouTube watch links → `/embed/ID` and Vimeo links → `player.vimeo.com/video/ID`; direct URLs passed as-is. New `QuestionType.video` renders the player inside the lesson flow.
+- **Viewer: multi-select questions** — new `QuestionType.multiChoice` with checkbox UI ("Select all that apply"); `correctIndices: Set<int>` tracks correct option positions; validation requires exact full match.
+- **Viewer: graph-mode matching** — `matching` blocks with `nodes` + `edges` fields now build label→label pairs and reuse the existing list-matching drag UI instead of showing an error.
+- **Viewer: visibility gating** — `visibility_rule: 'afterPreviousCorrect'` fully implemented: `_lastAnsweredCorrectly` tracked per answer; `_nextQuestion()` skips gated blocks when the previous answer was wrong.
+- **Supabase: `publish_course` RPC v2** (`20260317000001_fix_publish_course_v2.sql`) — rewrote to only flip course status; removed join on the deleted `chapters` table and the unconditional `lessons.content_json` overwrite that was clearing Builder snapshots.
+
+### Changed
+- **Builder JSON snake_case normalization** — `Course.toJson()` now emits `schema_version`, `course_id`; `CourseMetadata.toJson()` emits `difficulty_level`, `estimated_minutes`; `CourseLesson.toJson()` emits `lesson_id`; `LessonPage.toJson()` emits `page_id`. All `fromJson()` methods accept both old camelCase and new snake_case keys for backward compatibility.
+- **Builder schema migrator** (`course_schema_migrator.dart`) — reads `schema_version`/`schemaVersion`, `course_id`/`courseId`, `lesson_id`/`lessonId`; renames `difficulty` → `difficulty_level` and `estimatedMinutes` → `estimated_minutes` during migration; finalizes output with canonical snake_case keys.
+- **Builder schema validator** (`course_schema_validator.dart`) — all field reads updated to accept dual-key form; validation paths use canonical snake_case names.
+- **Builder `Block.toJson()`** — skips `_normalizeToSnakeCase()` for `InteractiveVisualContent` to prevent double conversion (camelCase spec must be preserved for Viewer).
+- **Viewer auth resilience** (`Viewer/lib/services/supabase_service.dart`) — all auth methods (`signUp`, `signIn`, `signOut`, `signInWithGoogle`, `signInWithApple`) wrapped with `_withAuthTimeout<T>()` (30 s hard cap) and 3-attempt exponential backoff (900 ms → 1 800 ms → 2 500 ms).
+- **Viewer `_parseCodeExecution`** — reads `source_code` first, falls back to `sourceCode` then `code` for compatibility.
+- **Builder `updateProfile` calls** — `displayName:` parameter renamed to `username:` in `builder_settings_dialog.dart` and `profile_dialog.dart` to match the current `SupabaseService.updateProfile` signature.
+- **Viewer `course_screen.dart`** — replaced `_chapters` / `_expandedChapters` state with `_lessons` matching the current data model; removed accordion expand logic.
+- **Viewer `user_provider.dart`** — removed dead fields `_completedQuestions`, `_unlockedAchievements`, and the `_checkAndUpdateStreak` call.
+- **Builder `property_panel.dart`** — removed unused `StorageService` import.
+
+### Fixed
+- `Builder/test/models_test.dart` — `Course JSON schema fields` test updated to assert `schema_version` and `course_id` keys (was `schemaVersion`/`courseId`).
+
+### Validation
+- `cd Builder && flutter analyze --no-pub` — 0 errors.
+- `cd Builder && flutter test` — 130 pass, 1 pre-existing failure (`widget_test.dart` / Supabase init).
+- `cd Viewer && flutter analyze --no-pub` — 0 issues.
+- `cd Viewer && flutter test` — 10 pass, 0 failures.
+
+---
+
 ## [Unreleased] - 2026-03-16 (Interactive Visual: Platform AI Key + Style Picker)
 
 ### Summary

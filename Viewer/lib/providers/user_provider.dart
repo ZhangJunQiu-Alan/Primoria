@@ -77,9 +77,7 @@ class UserProvider extends ChangeNotifier {
   int _completedCourses = 0;
   int _lessonsCompleted = 0;
   int _totalStudyMinutes = 0;
-  int _completedQuestions = 0;
   int _totalXp = 0;
-  List<String> _unlockedAchievements = [];
 
   // Social counts (from backend)
   int _followingCount = 0;
@@ -108,9 +106,6 @@ class UserProvider extends ChangeNotifier {
     return '${_totalStudyMinutes}m';
   }
 
-  int get completedQuestions => _completedQuestions;
-  List<String> get unlockedAchievements => _unlockedAchievements;
-
   Future<void> initialize() async {
     _storage = await StorageService.getInstance();
     _bindAuthState();
@@ -119,10 +114,9 @@ class UserProvider extends ChangeNotifier {
       await _loadProfileFromBackend();
     }
     await _loadStats();
-    await _checkAndUpdateStreak();
     _isInitialized = true;
     notifyListeners();
-    // Non-blocking: refresh from backend after local init completes
+    // Non-blocking: backend is the source of truth for streak/XP
     if (_isLoggedIn) {
       unawaited(_loadStatsFromBackend());
     }
@@ -252,6 +246,7 @@ class UserProvider extends ChangeNotifier {
   Future<void> refreshStats() => _loadStatsFromBackend();
 
   /// Sync stats and social counts from Supabase backend.
+  /// Backend is the authoritative source for streak, XP, and completion counts.
   Future<void> _loadStatsFromBackend() async {
     if (!_isLoggedIn) return;
     try {
@@ -264,8 +259,6 @@ class UserProvider extends ChangeNotifier {
         _lessonsCompleted =
             (stats['lessons_completed'] as int?) ?? _lessonsCompleted;
         _totalXp = (stats['total_xp'] as int?) ?? _totalXp;
-        await _storage?.saveStreak(_streak);
-        await _storage?.saveLongestStreak(_longestStreak);
       }
       final counts = await SupabaseService.getFollowCounts();
       _followingCount = counts['following'] ?? 0;
@@ -279,24 +272,6 @@ class UserProvider extends ChangeNotifier {
     _longestStreak = _storage?.getLongestStreak() ?? 0;
     _completedCourses = _storage?.getCompletedCourses() ?? 0;
     _totalStudyMinutes = _storage?.getTotalStudyMinutes() ?? 0;
-    _completedQuestions = _storage?.getCompletedQuestions() ?? 0;
-    _unlockedAchievements = _storage?.getUnlockedAchievements() ?? [];
-    notifyListeners();
-  }
-
-  Future<void> _checkAndUpdateStreak() async {
-    final lastStudyDate = _storage?.getLastStudyDate();
-    if (lastStudyDate != null) {
-      final last = DateTime.parse(lastStudyDate);
-      final now = DateTime.now();
-      final diff = now.difference(last).inDays;
-
-      if (diff > 1) {
-        // Learning streak interrupted
-        _streak = 0;
-        await _storage?.saveStreak(0);
-      }
-    }
     notifyListeners();
   }
 
@@ -370,87 +345,22 @@ class UserProvider extends ChangeNotifier {
     return SupabaseService.resetPassword(email: email);
   }
 
-  /// Record study
+  /// Record study — updates local study-time cache and plays audio.
+  /// Streak is managed exclusively by the backend (xp_transactions calendar grouping).
   Future<void> recordStudy(int minutes) async {
     await _storage?.addStudyTime(minutes);
     _totalStudyMinutes += minutes;
-
-    // Update learning streak
-    final lastStudyDate = _storage?.getLastStudyDate();
-    final now = DateTime.now();
-
-    if (lastStudyDate != null) {
-      final last = DateTime.parse(lastStudyDate);
-      final diff = now.difference(last).inDays;
-
-      if (diff >= 1) {
-        _streak++;
-        if (_streak > _longestStreak) {
-          _longestStreak = _streak;
-          await _storage?.saveLongestStreak(_longestStreak);
-        }
-      }
-    } else {
-      _streak = 1;
-    }
-
-    await _storage?.saveStreak(_streak);
     await AudioService.getInstance().playStreak();
-
-    // Check achievements
-    await _checkAchievements();
-
     notifyListeners();
-  }
-
-  /// Complete question
-  Future<void> completeQuestion() async {
-    await _storage?.incrementCompletedQuestions();
-    _completedQuestions++;
-    notifyListeners();
+    // Refresh streak/XP from backend non-blocking
+    unawaited(_loadStatsFromBackend());
   }
 
   /// Complete course
   Future<void> completeCourse(String courseId) async {
     await _storage?.incrementCompletedCourses();
     _completedCourses++;
-    await _checkAchievements();
     notifyListeners();
-  }
-
-  /// Check and unlock achievements
-  Future<void> _checkAchievements() async {
-    final newAchievements = <String>[];
-
-    // Streak achievements
-    if (_streak >= 7 && !_unlockedAchievements.contains('streak_7')) {
-      newAchievements.add('streak_7');
-    }
-    if (_streak >= 30 && !_unlockedAchievements.contains('streak_30')) {
-      newAchievements.add('streak_30');
-    }
-
-    // Course completion achievements
-    if (_completedCourses >= 1 &&
-        !_unlockedAchievements.contains('first_course')) {
-      newAchievements.add('first_course');
-    }
-    if (_completedCourses >= 10 &&
-        !_unlockedAchievements.contains('courses_10')) {
-      newAchievements.add('courses_10');
-    }
-
-    // Question completion achievements
-    if (_completedQuestions >= 100 &&
-        !_unlockedAchievements.contains('questions_100')) {
-      newAchievements.add('questions_100');
-    }
-
-    if (newAchievements.isNotEmpty) {
-      _unlockedAchievements.addAll(newAchievements);
-      await _storage?.saveUnlockedAchievements(_unlockedAchievements);
-      await AudioService.getInstance().playAchievement();
-    }
   }
 
   /// Upgrade to Pro

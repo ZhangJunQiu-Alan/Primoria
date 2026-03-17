@@ -3,6 +3,58 @@ import '../services/id_generator.dart';
 
 part 'interactive_visual_content.dart';
 
+// ── Key normalisation ─────────────────────────────────────────────────────────
+// Builder stores content JSON in the database.  We output snake_case so that
+// Viewer (and any future API consumer) can use a single, consistent key format.
+// Builder's own fromJson() methods accept BOTH camelCase (legacy DB rows) and
+// snake_case (new rows) so old course data continues to load correctly.
+
+String _camelToSnake(String key) =>
+    key.replaceAllMapped(RegExp(r'([A-Z])'), (m) => '_${m.group(0)!.toLowerCase()}');
+
+String _snakeToCamel(String key) =>
+    key.replaceAllMapped(RegExp(r'_([a-z])'), (m) => m.group(1)!.toUpperCase());
+
+Map<String, dynamic> _normalizeToCamelCase(Map<String, dynamic> map) {
+  return map.map((key, value) {
+    final camelKey = _snakeToCamel(key);
+    if (value is Map<String, dynamic>) {
+      return MapEntry(camelKey, _normalizeToCamelCase(value));
+    } else if (value is List) {
+      return MapEntry(camelKey, _normalizeListToCamelCase(value));
+    }
+    return MapEntry(camelKey, value);
+  });
+}
+
+List<dynamic> _normalizeListToCamelCase(List<dynamic> list) {
+  return list.map((item) {
+    if (item is Map<String, dynamic>) return _normalizeToCamelCase(item);
+    if (item is List) return _normalizeListToCamelCase(item);
+    return item;
+  }).toList();
+}
+
+Map<String, dynamic> _normalizeToSnakeCase(Map<String, dynamic> map) {
+  return map.map((key, value) {
+    final snakeKey = _camelToSnake(key);
+    if (value is Map<String, dynamic>) {
+      return MapEntry(snakeKey, _normalizeToSnakeCase(value));
+    } else if (value is List) {
+      return MapEntry(snakeKey, _normalizeListToSnakeCase(value));
+    }
+    return MapEntry(snakeKey, value);
+  });
+}
+
+List<dynamic> _normalizeListToSnakeCase(List<dynamic> list) {
+  return list.map((item) {
+    if (item is Map<String, dynamic>) return _normalizeToSnakeCase(item);
+    if (item is List) return _normalizeListToSnakeCase(item);
+    return item;
+  }).toList();
+}
+
 /// Block position info
 class BlockPosition {
   final int order;
@@ -107,7 +159,9 @@ abstract class BlockContent {
       case BlockType.animation:
         return AnimationContent.fromJson(json);
       case BlockType.interactiveVisual:
-        return InteractiveVisualContent.fromJson(json);
+        // InteractiveVisualContent.fromJson uses camelCase keys internally;
+        // normalise snake_case (new DB format) back to camelCase before dispatch.
+        return InteractiveVisualContent.fromJson(_normalizeToCamelCase(json));
       case BlockType.video:
         return VideoContent.fromJson(json);
     }
@@ -205,8 +259,8 @@ class CodePlaygroundContent implements BlockContent {
   factory CodePlaygroundContent.fromJson(Map<String, dynamic> json) {
     return CodePlaygroundContent(
       language: json['language'] as String? ?? 'python',
-      initialCode: json['initialCode'] as String? ?? '',
-      expectedOutput: json['expectedOutput'] as String?,
+      initialCode: (json['initial_code'] ?? json['initialCode']) as String? ?? '',
+      expectedOutput: (json['expected_output'] ?? json['expectedOutput']) as String?,
       hints:
           (json['hints'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           [],
@@ -251,7 +305,7 @@ class CodeExecutionTraceStep {
     final variables = CodeExecutionContent._normalizeJsonMap(rawVariables);
 
     List<String>? callStack;
-    final rawCallStack = json['callStack'];
+    final rawCallStack = json['call_stack'] ?? json['callStack'];
     if (rawCallStack is List) {
       final parsed = rawCallStack
           .map((value) => value.toString())
@@ -261,7 +315,7 @@ class CodeExecutionTraceStep {
       if (parsed.isNotEmpty) callStack = parsed;
     }
 
-    final stdoutDelta = json['stdoutDelta'] as String?;
+    final stdoutDelta = (json['stdout_delta'] ?? json['stdoutDelta']) as String?;
     final note = json['note'] as String?;
 
     return CodeExecutionTraceStep(
@@ -318,7 +372,7 @@ class CodeExecutionCheckpoint {
   });
 
   factory CodeExecutionCheckpoint.fromJson(Map<String, dynamic> json) {
-    final rawStepIndex = json['stepIndex'];
+    final rawStepIndex = json['step_index'] ?? json['stepIndex'];
     final stepIndex = rawStepIndex is num ? rawStepIndex.toInt() : 0;
 
     final rawOptions = json['options'];
@@ -330,7 +384,7 @@ class CodeExecutionCheckpoint {
               .toList()
         : <String>[];
 
-    final rawCorrectIndex = json['correctIndex'];
+    final rawCorrectIndex = json['correct_index'] ?? json['correctIndex'];
     final correctIndex = rawCorrectIndex is num ? rawCorrectIndex.toInt() : 0;
 
     return CodeExecutionCheckpoint(
@@ -384,12 +438,12 @@ class CodeExecutionControls {
   });
 
   factory CodeExecutionControls.fromJson(Map<String, dynamic> json) {
-    final rawDuration = json['stepDurationMs'];
+    final rawDuration = json['step_duration_ms'] ?? json['stepDurationMs'];
     final duration = rawDuration is num ? rawDuration.toInt() : 1200;
     return CodeExecutionControls(
       autoplay: json['autoplay'] as bool? ?? false,
       stepDurationMs: _normalizeDuration(duration),
-      allowScrub: json['allowScrub'] as bool? ?? true,
+      allowScrub: (json['allow_scrub'] ?? json['allowScrub']) as bool? ?? true,
     );
   }
 
@@ -496,10 +550,10 @@ class CodeExecutionContent implements BlockContent {
 
   factory CodeExecutionContent.fromJson(Map<String, dynamic> json) {
     final sourceCode =
-        (json['sourceCode'] as String? ?? json['code'] as String? ?? '');
+        ((json['source_code'] ?? json['sourceCode'] ?? json['code']) as String? ?? '');
 
     final steps =
-        (json['traceSteps'] as List<dynamic>?)
+        ((json['trace_steps'] ?? json['traceSteps']) as List<dynamic>?)
             ?.whereType<Map>()
             .map(
               (item) => CodeExecutionTraceStep.fromJson(
@@ -520,7 +574,7 @@ class CodeExecutionContent implements BlockContent {
             .toList() ??
         const <CodeExecutionCheckpoint>[];
 
-    final initialVariables = _normalizeJsonMap(json['initialVariables']);
+    final initialVariables = _normalizeJsonMap(json['initial_variables'] ?? json['initialVariables']);
 
     return CodeExecutionContent(
       title: (json['title'] as String? ?? 'Code Execution').trim(),
@@ -720,8 +774,8 @@ class FunctionFlowStep {
   const FunctionFlowStep({required this.edgeIndex, this.durationMs, this.note});
 
   factory FunctionFlowStep.fromJson(Map<String, dynamic> json) {
-    final rawIndex = json['edgeIndex'];
-    final rawDuration = json['durationMs'];
+    final rawIndex = json['edge_index'] ?? json['edgeIndex'];
+    final rawDuration = json['duration_ms'] ?? json['durationMs'];
     return FunctionFlowStep(
       edgeIndex: rawIndex is num ? rawIndex.toInt() : -1,
       durationMs: rawDuration is num ? rawDuration.toInt() : null,
@@ -769,11 +823,11 @@ class FunctionFlowStyle {
 
   factory FunctionFlowStyle.fromJson(Map<String, dynamic> json) {
     final rawTheme = (json['theme'] as String? ?? 'indigo').trim();
-    final rawDuration = json['stepDurationMs'];
-    final rawLineWidth = json['lineWidth'];
+    final rawDuration = json['step_duration_ms'] ?? json['stepDurationMs'];
+    final rawLineWidth = json['line_width'] ?? json['lineWidth'];
     return FunctionFlowStyle(
       theme: supportedThemes.contains(rawTheme) ? rawTheme : 'indigo',
-      showArrows: json['showArrows'] as bool? ?? true,
+      showArrows: (json['show_arrows'] ?? json['showArrows']) as bool? ?? true,
       stepDurationMs: _normalizeStepDuration(rawDuration),
       lineWidth: _normalizeLineWidth(rawLineWidth),
     );
@@ -866,7 +920,7 @@ class FunctionFlowContent implements BlockContent {
             .where((step) => step.edgeIndex >= 0)
             .toList() ??
         const <FunctionFlowStep>[];
-    final rawEntryNodeId = (json['entryNodeId'] as String?)?.trim();
+    final rawEntryNodeId = ((json['entry_node_id'] ?? json['entryNodeId']) as String?)?.trim();
     final availableNodeIds = parsedNodes.map((node) => node.id).toSet();
     final normalizedEntry =
         rawEntryNodeId != null &&
@@ -956,11 +1010,11 @@ class MultipleChoiceContent implements BlockContent {
 
   factory MultipleChoiceContent.fromJson(Map<String, dynamic> json) {
     final parsedCorrectAnswers =
-        (json['correctAnswers'] as List<dynamic>?)
+        ((json['correct_answers'] ?? json['correctAnswers']) as List<dynamic>?)
             ?.whereType<String>()
             .toList() ??
         [];
-    final legacyCorrectAnswer = json['correctAnswer'] as String? ?? '';
+    final legacyCorrectAnswer = (json['correct_answer'] ?? json['correctAnswer']) as String? ?? '';
     final normalizedCorrectAnswers = _normalizeAnswerIds([
       ...parsedCorrectAnswers,
       legacyCorrectAnswer,
@@ -978,7 +1032,7 @@ class MultipleChoiceContent implements BlockContent {
           : '',
       correctAnswers: normalizedCorrectAnswers,
       explanation: json['explanation'] as String?,
-      multiSelect: json['multiSelect'] as bool? ?? false,
+      multiSelect: (json['multi_select'] ?? json['multiSelect']) as bool? ?? false,
     );
   }
 
@@ -1060,7 +1114,7 @@ class FillBlankContent implements BlockContent {
   factory FillBlankContent.fromJson(Map<String, dynamic> json) {
     return FillBlankContent(
       question: json['question'] as String? ?? '',
-      correctAnswer: json['correctAnswer'] as String? ?? '',
+      correctAnswer: (json['correct_answer'] ?? json['correctAnswer']) as String? ?? '',
       hint: json['hint'] as String?,
     );
   }
@@ -1091,7 +1145,7 @@ class TrueFalseContent implements BlockContent {
   factory TrueFalseContent.fromJson(Map<String, dynamic> json) {
     return TrueFalseContent(
       question: json['question'] as String? ?? '',
-      correctAnswer: json['correctAnswer'] as bool? ?? true,
+      correctAnswer: (json['correct_answer'] ?? json['correctAnswer']) as bool? ?? true,
       explanation: json['explanation'] as String?,
     );
   }
@@ -1146,8 +1200,8 @@ class MatchingPair {
 
   factory MatchingPair.fromJson(Map<String, dynamic> json) {
     return MatchingPair(
-      leftId: json['leftId'] as String,
-      rightId: json['rightId'] as String,
+      leftId: (json['left_id'] ?? json['leftId']) as String,
+      rightId: (json['right_id'] ?? json['rightId']) as String,
     );
   }
 
@@ -1286,10 +1340,10 @@ class MatchingRules {
   });
 
   factory MatchingRules.fromJson(Map<String, dynamic> json) {
-    final allowManyToMany = json['allowManyToMany'] as bool? ?? false;
+    final allowManyToMany = (json['allow_many_to_many'] ?? json['allowManyToMany']) as bool? ?? false;
     final allowOneToMany = allowManyToMany
         ? true
-        : (json['allowOneToMany'] as bool? ?? false);
+        : ((json['allow_one_to_many'] ?? json['allowOneToMany']) as bool? ?? false);
     return MatchingRules(
       allowOneToMany: allowOneToMany,
       allowManyToMany: allowManyToMany,
@@ -1350,17 +1404,17 @@ class MatchingContent implements BlockContent {
 
   factory MatchingContent.fromJson(Map<String, dynamic> json) {
     final leftItems =
-        (json['leftItems'] as List<dynamic>?)
+        ((json['left_items'] ?? json['leftItems']) as List<dynamic>?)
             ?.map((e) => MatchingItem.fromJson(e as Map<String, dynamic>))
             .toList() ??
         const <MatchingItem>[];
     final rightItems =
-        (json['rightItems'] as List<dynamic>?)
+        ((json['right_items'] ?? json['rightItems']) as List<dynamic>?)
             ?.map((e) => MatchingItem.fromJson(e as Map<String, dynamic>))
             .toList() ??
         const <MatchingItem>[];
     final correctPairs =
-        (json['correctPairs'] as List<dynamic>?)
+        ((json['correct_pairs'] ?? json['correctPairs']) as List<dynamic>?)
             ?.map((e) => MatchingPair.fromJson(e as Map<String, dynamic>))
             .toList() ??
         const <MatchingPair>[];
@@ -1536,7 +1590,7 @@ class AnimationContent implements BlockContent {
 
   factory AnimationContent.fromJson(Map<String, dynamic> json) {
     final rawPreset = json['preset'] as String? ?? presetBouncingDot;
-    final rawDuration = json['durationMs'] ?? json['duration'];
+    final rawDuration = json['duration_ms'] ?? json['durationMs'] ?? json['duration'];
     final rawSpeed = json['speed'];
 
     return AnimationContent(
@@ -1546,8 +1600,8 @@ class AnimationContent implements BlockContent {
       durationMs: _normalizeDuration(rawDuration),
       loop: json['loop'] as bool? ?? true,
       speed: _normalizeSpeed(rawSpeed),
-      customHtml: json['customHtml'] as String?,
-      aiPrompt: json['aiPrompt'] as String?,
+      customHtml: (json['custom_html'] ?? json['customHtml']) as String?,
+      aiPrompt: (json['ai_prompt'] ?? json['aiPrompt']) as String?,
     );
   }
 
@@ -1805,7 +1859,7 @@ class Block {
         json['content'] as Map<String, dynamic>,
       ),
       visibilityRule: _normalizeVisibilityRule(
-        json['visibilityRule'],
+        json['visibility_rule'] ?? json['visibilityRule'],
         order: position.order,
       ),
     );
@@ -1816,8 +1870,12 @@ class Block {
     'id': id,
     'position': position.toJson(),
     'style': style.toJson(),
-    'content': content.toJson(),
-    'visibilityRule': visibilityRule,
+    // InteractiveVisualContent is a spec passed through as-is to Viewer;
+    // its keys must stay camelCase so Viewer can read them directly.
+    'content': content is InteractiveVisualContent
+        ? content.toJson()
+        : _normalizeToSnakeCase(content.toJson()),
+    'visibility_rule': visibilityRule,
   };
 
   Block copyWith({
