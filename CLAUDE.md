@@ -60,32 +60,33 @@ Builder (Flutter Web) --export JSON--> Supabase (PostgreSQL) <--fetch-- Viewer (
 ```
 
 ### Builder (`Builder/lib/`)
-- **State**: Riverpod (`providers/builder_state.dart`, `providers/course_provider.dart`)
-- **Routing**: GoRouter (`app/router.dart`) — routes: `/` (landing), `/dashboard`, `/builder`, `/viewer`
-- **Models**: `Course → Page → Block` hierarchy (`models/`)
-- **Block types**: text, image, codeBlock, codePlayground, multipleChoice, fillBlank, video — registered in `services/block_registry.dart`
-- **Backend**: `services/supabase_service.dart` — auth (email/Google/GitHub), course CRUD, versioned content storage
-- **AI**: `services/ai_course_generator.dart` — Gemini API for PDF-to-course generation
-- **Design tokens**: `theme/design_tokens.dart` — `AppColors`, `AppSpacing`, `AppBorderRadius`, `AppShadows`, `AppFontSize`
+- **State**: Riverpod (`providers/builder_state.dart`, `providers/course_provider.dart`, `providers/language_provider.dart`, `providers/builder_access_provider.dart`)
+- **Routing**: GoRouter (`app/router.dart`) — routes: `/` (landing), `/login`, `/register`, `/auth/callback`, `/dashboard`, `/builder`, `/viewer`
+- **Models**: `Course → Lesson → Page → Block` hierarchy (`models/`)
+- **Block types** (13 total, registered in `services/block_registry.dart`):
+  `text`, `image`, `codeBlock`, `codePlayground`, `codeExecution`, `functionFlow`, `multipleChoice`, `fillBlank`, `trueFalse`, `matching`, `animation`, `interactiveVisual`, `video`
+- **Backend**: `services/supabase_service.dart` — auth (email/Google/GitHub), course CRUD, per-lesson `content_json` snapshot storage
+- **AI**: `services/ai_course_generator.dart` (PDF-to-course, Gemini), `services/ai_visual_generator.dart` (Interactive Visual via Edge Function), `services/ai_animation_generator.dart`, `services/gemini_client.dart`
+- **Design tokens**: `theme/design_tokens.dart` — `AppColors`, `AppSpacing`, `AppBorderRadius`, `AppShadows`, `AppFontSize`, `AppDurations`
 
 ### Viewer (`Viewer/lib/`)
-- **State**: Provider (`providers/user_provider.dart`, `providers/theme_provider.dart`)
-- **Screens**: home, search, courses, course detail, lesson, profile, login, demo
-- **Services**: audio (sound effects), notifications (daily reminders), storage (SharedPreferences + SQLite)
-- **Theme**: `theme/colors.dart`, `theme/typography.dart`, `theme/spacing.dart`
+- **State**: Provider (`providers/user_provider.dart`, `providers/theme_provider.dart`, `providers/language_provider.dart`)
+- **Screens** (16 total): landing, login, register, home, search, courses, course detail, lesson, lesson result, profile, profile settings, achievement wall, level map, AI tutor, parent dashboard, demo
+- **Services**: audio (`audio_service.dart`), notifications (`notification_service.dart`), storage (`storage_service.dart` — SharedPreferences + SQLite), achievements (`achievement_display_service.dart`, `achievement_service.dart`), daily tasks (`daily_task_service.dart`), AI tutor (`gemini_service.dart`)
+- **Theme**: `theme/colors.dart`, `theme/typography.dart`, `theme/spacing.dart` (exports `AppRadius`, `AppSpacing`, `AppShadows`)
 
 ### Database (`supabase/migrations/`)
-Key tables: `profiles`, `courses`, `course_versions`, `chapters`, `lessons`, `content_blocks`, `enrollments`, `lesson_completions`, `user_stats`, `achievements`, `xp_transactions`
+Key active tables: `profiles`, `subjects`, `courses`, `lessons`, `content_blocks`, `enrollments`, `lesson_completions`, `block_interactions`, `user_stats`, `daily_activity_log`, `xp_transactions`, `achievements`, `user_achievements`, `daily_tasks`, `follows`, `course_feedback`, `parent_child_binding_codes`, `parent_child_links`, `app_versions`, `subscriptions`
 
-Courses use versioned content: `courses.current_draft_version_id` / `current_published_version_id` → `course_versions.content` (JSON).
+Content storage: `lessons.content_json` holds per-lesson course JSON snapshots written by Builder. `course_versions` exists for historical versioning but is not actively used in current flows. The `chapters` table was removed (migration 20260223000003).
 
 ## Key Patterns
 
 - Builder screens often define a private `_C` class with color constants matching CSS variables from HTML templates in `Builder_temple/`
 - Design mockups are in `Design/` — reference these when asked about visual styling
 - Supabase credentials are hardcoded in `Builder/lib/main.dart` as compile-time constants (anon key only)
-- Builder tests are in `Builder/test/` — 26 model unit tests pass; `widget_test.dart` fails due to Supabase init requirement
-- Course JSON format is documented in `Builder/docs/course-json-guide.md`
+- Builder tests are in `Builder/test/` — 130 tests pass; pre-existing failures: `widget_test.dart` (Supabase init) and one `unsupported function` timeout in `code_runner_test.dart`
+- Course JSON format is documented in `docs/course-json-guide.md`
 
 
 ### 3.3 Quality gates（必须过）
