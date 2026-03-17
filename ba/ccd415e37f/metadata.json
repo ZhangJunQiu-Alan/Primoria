@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "baccd415e37f",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".DS_Store"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ba/ccd415e37f/0/metadata.json",
+      "transcript": "/ba/ccd415e37f/0/full.jsonl",
+      "content_hash": "/ba/ccd415e37f/0/content_hash.txt",
+      "prompt": "/ba/ccd415e37f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 26958,
+    "cache_read_tokens": 195437,
+    "output_tokens": 695,
+    "api_call_count": 6
+  }
+}
