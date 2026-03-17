@@ -144,7 +144,7 @@ class CourseSchemaMigrator {
   }
 
   static String _detectSourceVersion(Map<String, dynamic> json) {
-    final version = _asString(json['schemaVersion'])?.trim();
+    final version = (_asString(json['schema_version']) ?? _asString(json['schemaVersion']))?.trim();
     if (version == null || version.isEmpty) return _legacyUnversioned;
     return version;
   }
@@ -178,18 +178,18 @@ class CourseSchemaMigrator {
       }
     }
 
-    final courseId = _asString(json['courseId'])?.trim();
+    final courseId = (_asString(json['course_id']) ?? _asString(json['courseId']))?.trim();
     if (courseId == null || courseId.isEmpty) {
       final legacyId = _asString(json['id'])?.trim();
       if (legacyId != null && legacyId.isNotEmpty) {
-        json['courseId'] = legacyId;
+        json['course_id'] = legacyId;
         changed = true;
-        steps.add('Mapped legacy "id" -> "courseId".');
+        steps.add('Mapped legacy "id" -> "course_id".');
       } else {
         final generated = 'imported-${DateTime.now().millisecondsSinceEpoch}';
-        json['courseId'] = generated;
+        json['course_id'] = generated;
         changed = true;
-        steps.add('Generated missing "courseId": $generated');
+        steps.add('Generated missing "course_id": $generated');
       }
     }
 
@@ -244,24 +244,38 @@ class CourseSchemaMigrator {
       steps.add('Created default metadata.tags list.');
     }
 
-    if (_asString(metadata['difficulty']) == null) {
-      metadata['difficulty'] = 'beginner';
+    // Migrate legacy 'difficulty' key to 'difficulty_level'
+    if (metadata.containsKey('difficulty') && !metadata.containsKey('difficulty_level')) {
+      metadata['difficulty_level'] = metadata['difficulty'];
+      metadata.remove('difficulty');
       changed = true;
-      steps.add('Backfilled metadata.difficulty to "beginner".');
+      steps.add('Renamed metadata.difficulty -> metadata.difficulty_level.');
+    }
+    if (_asString(metadata['difficulty_level']) == null) {
+      metadata['difficulty_level'] = 'beginner';
+      changed = true;
+      steps.add('Backfilled metadata.difficulty_level to "beginner".');
     }
 
-    final estimatedMinutes = metadata['estimatedMinutes'];
+    // Migrate legacy 'estimatedMinutes' key to 'estimated_minutes'
+    if (metadata.containsKey('estimatedMinutes') && !metadata.containsKey('estimated_minutes')) {
+      metadata['estimated_minutes'] = metadata['estimatedMinutes'];
+      metadata.remove('estimatedMinutes');
+      changed = true;
+      steps.add('Renamed metadata.estimatedMinutes -> metadata.estimated_minutes.');
+    }
+    final estimatedMinutes = metadata['estimated_minutes'];
     if (estimatedMinutes is num) {
       final normalizedMinutes = estimatedMinutes.toInt();
       if (normalizedMinutes != estimatedMinutes) {
-        metadata['estimatedMinutes'] = normalizedMinutes;
+        metadata['estimated_minutes'] = normalizedMinutes;
         changed = true;
-        steps.add('Normalized metadata.estimatedMinutes to integer.');
+        steps.add('Normalized metadata.estimated_minutes to integer.');
       }
     } else if (estimatedMinutes == null) {
-      metadata['estimatedMinutes'] = 30;
+      metadata['estimated_minutes'] = 30;
       changed = true;
-      steps.add('Backfilled metadata.estimatedMinutes to 30.');
+      steps.add('Backfilled metadata.estimated_minutes to 30.');
     }
 
     final nowIso = DateTime.now().toIso8601String();
@@ -1489,10 +1503,11 @@ class CourseSchemaMigrator {
     }
 
     if (normalizeVersion &&
-        _asString(json['schemaVersion']) != Course.schemaVersion) {
-      json['schemaVersion'] = Course.schemaVersion;
+        (_asString(json['schema_version']) ?? _asString(json['schemaVersion'])) != Course.schemaVersion) {
+      json['schema_version'] = Course.schemaVersion;
+      json.remove('schemaVersion'); // remove old key if present
       changed = true;
-      steps.add('Set schemaVersion to ${Course.schemaVersion}.');
+      steps.add('Set schema_version to ${Course.schemaVersion}.');
     }
 
     return changed;

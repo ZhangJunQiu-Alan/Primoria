@@ -73,8 +73,8 @@ class CourseMetadata {
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           [],
-      difficulty: json['difficulty'] as String? ?? 'beginner',
-      estimatedMinutes: json['estimatedMinutes'] as int? ?? 0,
+      difficulty: json['difficulty_level'] as String? ?? json['difficulty'] as String? ?? 'beginner',
+      estimatedMinutes: json['estimated_minutes'] as int? ?? json['estimatedMinutes'] as int? ?? 0,
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : DateTime.now(),
@@ -90,8 +90,8 @@ class CourseMetadata {
     'description': description,
     'author': author.toJson(),
     'tags': tags,
-    'difficulty': difficulty,
-    'estimatedMinutes': estimatedMinutes,
+    'difficulty_level': difficulty,
+    'estimated_minutes': estimatedMinutes,
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
     'version': version,
@@ -180,7 +180,7 @@ class Course {
     // backward compat: accept legacy 'pages' key
     final lessonsRaw = (json['lessons'] ?? json['pages']) as List<dynamic>;
     return Course(
-      courseId: json['courseId'] as String,
+      courseId: (json['course_id'] ?? json['courseId']) as String,
       metadata: CourseMetadata.fromJson(
         json['metadata'] as Map<String, dynamic>,
       ),
@@ -195,8 +195,8 @@ class Course {
 
   Map<String, dynamic> toJson() => {
     '\$schema': schemaUrl,
-    'schemaVersion': schemaVersion,
-    'courseId': courseId,
+    'schema_version': schemaVersion,
+    'course_id': courseId,
     'metadata': metadata.toJson(),
     'settings': settings.toJson(),
     'lessons': lessons.map((l) => l.toJson()).toList(),

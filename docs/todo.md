@@ -1,10 +1,10 @@
 # TODO
 
-Last updated: 2026-03-17 (rev 5)
+Last updated: 2026-03-17 (rev 6)
 
 ## 1. High Priority
 
-1. [ ] Fix legacy course publish blocked by schema validator: `CourseSchemaMigrator` does not correctly migrate courses created before the Pages architecture — lessons retain flat `blocks[]` instead of `pages[{blocks[]}]`, `title` fields are missing, and `metadata`/`$schema`/`schemaVersion` are absent. Publish is hard-blocked for all such courses.
+1. [x] ~~Fix legacy course publish blocked by schema validator~~ — resolved: migrator now handles all legacy field names (dual-key fromJson, snake_case rename steps); `publish_course` RPC v2 no longer depends on deleted `chapters` table.
 2. [ ] Fix `gemini-generate` Edge Function: Gemini occasionally returns markdown code fences (`` ```html ``…`` ``` ``) despite system-prompt rule; strip fences in Edge Function before returning HTML so the iframe does not render raw fence text.
 3. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
 4. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
@@ -65,3 +65,13 @@ Last updated: 2026-03-17 (rev 5)
 35. [x] Unified interactive-visual block: new `BlockType.interactiveVisual` + `InteractiveVisualContent` (VisualSimSpec), 4 templates (ideal-gas-piston, sorting-bars, variable-binding-memory, function-plot), shared Flutter runtime widget, spec-driven AI generator, staged Builder UX, Viewer real rendering, legacy animation migration.
 36. [x] Interactive Visual platform AI key: removed user API key input; added Supabase Edge Function `gemini-generate` as server-side Gemini proxy; platform `GEMINI_API_KEY` stored as Deno env secret.
 37. [x] Interactive Visual style picker: 6 mandatory styles (Watercolor/Papercraft/Anime/Whiteboard/Retro Print/Heritage) injected into Gemini prompt; Generate button gated on style selection; removed all built-in Flutter scene templates.
+38. [x] Builder↔Viewer JSON snake_case alignment: `schema_version`, `course_id`, `lesson_id`, `page_id`, `difficulty_level`, `estimated_minutes` unified across `toJson()`/`fromJson()`/migrator/validator; dual-key backward compat for all reads.
+39. [x] Viewer auth resilience: `_withAuthTimeout<T>()` (30 s) + 3-attempt exponential backoff (900 ms/1 800 ms/2 500 ms) on all auth methods in Viewer `SupabaseService`.
+40. [x] Viewer graph-mode matching: `matching` blocks with `nodes`+`edges` converted to label pairs, rendered via existing list-matching UI.
+41. [x] Viewer `visibility_rule: 'afterPreviousCorrect'` gating: skips blocks in `_nextQuestion()` when last answer was wrong; `_lastAnsweredCorrectly` state tracked.
+42. [x] Viewer multi-select questions: `QuestionType.multiChoice` with checkbox UI, `correctIndices: Set<int>`, exact full-set validation for `multi_select: true` blocks.
+43. [x] Viewer video block: `VideoEmbedWidget` (HtmlElementView web / placeholder non-web); `_toEmbedUrl()` handles YouTube, Vimeo, and direct URLs; `QuestionType.video` in lesson flow.
+44. [x] Fixed `Block.toJson()` double snake_case conversion for `InteractiveVisualContent`; `_parseCodeExecution` dual-key reads `source_code`/`sourceCode`/`code`.
+45. [x] Supabase `publish_course` RPC v2: removed `chapters` table join and content overwrite; RPC now only flips course status.
+46. [x] Builder `updateProfile` call sites: `displayName:` → `username:` in `builder_settings_dialog.dart` and `profile_dialog.dart`.
+47. [x] Viewer `course_screen` and `user_provider`: removed dead `chapters`/accordion and dead stat fields (`_completedQuestions`, `_unlockedAchievements`, `_checkAndUpdateStreak`).

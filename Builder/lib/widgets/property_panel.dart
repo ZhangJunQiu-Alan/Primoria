@@ -10,7 +10,6 @@ import '../services/block_registry.dart';
 import '../services/ai_animation_generator.dart';
 import '../services/ai_course_generator.dart';
 import '../services/ai_visual_generator.dart';
-import '../services/storage_service.dart';
 import '../services/file_picker.dart' as file_picker;
 import 'app_dropdown.dart';
 import 'block_widgets/html_animation_widget.dart';

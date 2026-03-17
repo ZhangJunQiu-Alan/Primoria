@@ -23,7 +23,7 @@ class LessonPage {
 
   factory LessonPage.fromJson(Map<String, dynamic> json) {
     return LessonPage(
-      pageId: json['pageId'] as String? ?? IdGenerator.pageId(),
+      pageId: (json['page_id'] ?? json['pageId']) as String? ?? IdGenerator.pageId(),
       order: json['order'] as int? ?? 0,
       blocks: (json['blocks'] as List<dynamic>?)
               ?.map((e) => Block.fromJson(e as Map<String, dynamic>))
@@ -33,7 +33,7 @@ class LessonPage {
   }
 
   Map<String, dynamic> toJson() => {
-        'pageId': pageId,
+        'page_id': pageId,
         'order': order,
         'blocks': blocks.map((b) => b.toJson()).toList(),
       };

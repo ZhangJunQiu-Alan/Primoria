@@ -33,7 +33,7 @@ class CourseLesson {
   }
 
   factory CourseLesson.fromJson(Map<String, dynamic> json) {
-    final lessonId = (json['lessonId'] ?? json['pageId']) as String;
+    final lessonId = (json['lesson_id'] ?? json['lessonId'] ?? json['pageId']) as String;
     final title = json['title'] as String? ?? '';
 
     // New format: has 'pages' key
@@ -64,7 +64,7 @@ class CourseLesson {
   }
 
   Map<String, dynamic> toJson() => {
-    'lessonId': lessonId,
+    'lesson_id': lessonId,
     'title': title,
     'pages': pages.map((p) => p.toJson()).toList(),
   };
