@@ -3,7 +3,7 @@
   "checkpoint_id": "bf26af8b8eca",
   "strategy": "manual-commit",
   "branch": "feat/cinematic-art-theme",
-  "checkpoints_count": 0,
+  "checkpoints_count": 1,
   "files_touched": [
     "Builder/lib/features/dashboard/dashboard_screen.dart",
     "Builder/lib/features/landing/landing_screen.dart",
@@ -27,13 +27,19 @@
       "transcript": "/bf/26af8b8eca/0/full.jsonl",
       "content_hash": "/bf/26af8b8eca/0/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/bf/26af8b8eca/1/metadata.json",
+      "transcript": "/bf/26af8b8eca/1/full.jsonl",
+      "content_hash": "/bf/26af8b8eca/1/content_hash.txt",
+      "prompt": "/bf/26af8b8eca/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 0,
-    "cache_creation_tokens": 0,
-    "cache_read_tokens": 0,
-    "output_tokens": 0,
-    "api_call_count": 0
+    "input_tokens": 924,
+    "cache_creation_tokens": 1374261,
+    "cache_read_tokens": 76733222,
+    "output_tokens": 421008,
+    "api_call_count": 840
   }
 }
