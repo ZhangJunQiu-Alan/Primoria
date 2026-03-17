@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primoria — Cinematic Painterly · Full Component Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ochre:    #C8813A;
+  --gold:     #E8B45A;
+  --amber:    #D4652A;
+  --cream:    #F0E0C0;
+  --cream-d:  #C8B898;
+  --teal-d:   #1A3A3C;
+  --teal:     #2A5A5E;
+  --teal-l:   #4A8A8E;
+  --char:     #1C1810;
+  --char-l:   #28221A;
+  --char-ll:  #342C22;
+  --ink:      #0C0A08;
+  --glass:    rgba(28, 24, 16, 0.72);
+  --glass-l:  rgba(40, 34, 26, 0.65);
+  --border:   rgba(240,220,180,0.1);
+  --border-g: rgba(200,160,80,0.22);
+  --shadow:   0 4px 32px rgba(0,0,0,0.55);
+  --glow-g:   0 0 24px rgba(200,160,80,0.2);
+  --glow-t:   0 0 24px rgba(74,138,142,0.25);
+  --r:        6px;
+  --r-lg:     12px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════
+   PERSISTENT PAINTED BG (parallax feel)
+═══════════════════════════════════ */
+.painted-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 60% 5%,  rgba(200,120,40,0.45) 0%, transparent 70%),
+    radial-gradient(circle 200px at 62% 18%,     rgba(232,180,80,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 60% at 5% 28%,  rgba(26,58,60,0.65)  0%, transparent 80%),
+    radial-gradient(ellipse 80% 40% at 50% 75%, rgba(26,58,60,0.4)   0%, transparent 80%),
+    linear-gradient(to bottom, #0C1018 0%, #122028 20%, #1A3028 45%, #121810 70%, #080A06 100%);
+}
+.painted-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: 0.06;
+  background-image:
+    repeating-linear-gradient(97deg, transparent 0px, transparent 3px, rgba(200,160,80,0.3) 3px, rgba(200,160,80,0.3) 4px),
+    repeating-linear-gradient(11deg, transparent 0px, transparent 8px, rgba(26,58,60,0.25) 8px, rgba(26,58,60,0.25) 9px);
+}
+
+/* ═══════════════════════════════════
+   GRAIN OVERLAY
+═══════════════════════════════════ */
+.grain {
+  position: fixed; inset: 0; z-index: 1;
+  opacity: 0.04; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: g .12s steps(1) infinite;
+}
+@keyframes g {
+  0%  { background-position: 0 0; }
+  33% { background-position: -30px 15px; }
+  66% { background-position: 20px -10px; }
+}
+
+/* ═══════════════════════════════════
+   LAYOUT
+═══════════════════════════════════ */
+.scroll-wrap {
+  position: relative; z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 48px 120px;
+}
+
+/* Section */
+.section { margin-bottom: 80px; }
+.section-label {
+  font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(200,160,80,0.5);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: 26px; line-height: 1.2;
+  color: rgba(240,220,190,0.75);
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+
+/* ─── HERO ─────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: 80px;
+}
+.hero-scene {
+  position: absolute; inset: 0;
+}
+.hero-scene svg { width: 100%; height: 100%; }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(8,10,8,0.6) 100%);
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-size: 9px; letter-spacing: 0.42em; text-transform: uppercase;
+  color: rgba(200,160,80,0.5); margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(42px, 6vw, 76px); line-height: 1.08;
+  letter-spacing: 0.04em;
+  color: rgba(240,220,190,0.9);
+  text-shadow: 0 2px 60px rgba(200,130,40,0.3);
+  margin-bottom: 12px;
+}
+.hero-title em { font-style: italic; color: rgba(232,180,90,0.95); }
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: clamp(15px, 2vw, 20px);
+  color: rgba(220,195,150,0.5);
+  margin-top: 14px; line-height: 1.7; letter-spacing: 0.1em;
+}
+
+/* ─── MOON ─────────────────────────── */
+.moon {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 38%, #F5E8C0 0%, #E8C870 35%, #C89040 70%, #8A5020 100%);
+  box-shadow: 0 0 40px 16px rgba(232,180,80,0.2), 0 0 90px 40px rgba(200,130,40,0.1),
+              inset -7px -5px 18px rgba(80,30,0,0.28);
+  animation: moonGlow 8s ease-in-out infinite alternate;
+}
+@keyframes moonGlow {
+  from { box-shadow: 0 0 40px 16px rgba(232,180,80,0.2), 0 0 90px 40px rgba(200,130,40,0.1), inset -7px -5px 18px rgba(80,30,0,0.28); }
+  to   { box-shadow: 0 0 55px 22px rgba(232,180,80,0.28), 0 0 110px 50px rgba(200,130,40,0.14), inset -7px -5px 18px rgba(80,30,0,0.28); }
+}
+
+/* ═══════════════════════════════════
+   GLASS CARD — base primitive
+═══════════════════════════════════ */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+.glass-warm {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-g);
+  border-radius: var(--r-lg);
+  box-shadow: var(--glow-g);
+}
+.glass-teal {
+  background: rgba(26,58,60,0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(74,138,142,0.22);
+  border-radius: var(--r-lg);
+  box-shadow: var(--glow-t);
+}
+
+/* ─── BUTTONS — 3D RAISED (painterly edition) ─ */
+/*
+  Side-face technique:
+    box-shadow layer 3 = solid extruded face (dark variant color)
+  Top-face gloss via ::before (diagonal oil-paint sheen)
+  :active  → translateY(+4px) + face collapses to 0
+*/
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px;
+  border-radius: var(--r);
+  font-family: 'Jost', sans-serif; font-weight: 300;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  cursor: pointer; border: none; outline: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.2s;
+  text-decoration: none; position: relative;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+/* Oil-paint gloss sheen on top face */
+.btn::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(
+    165deg,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.05) 45%,
+    transparent 65%
+  );
+  z-index: 1;
+}
+
+/* ── Primary — warm gold ─── */
+.btn-primary {
+  background: linear-gradient(155deg, #E8B45A 0%, #C8813A 55%, #A86030 100%);
+  color: #1C1208;
+  box-shadow:
+    inset 0  1px 0 rgba(255,228,150,0.5),   /* top rim highlight  */
+    inset 0 -1px 0 rgba(60,20,0,0.3),        /* bottom rim shadow  */
+    0 4px 0 0 #6A3010,                        /* extruded side face */
+    0 5px 18px rgba(180,100,30,0.45);         /* ambient lift shadow */
+  transform: translateY(0);
+}
+.btn-primary:hover {
+  filter: brightness(1.1);
+  box-shadow:
+    inset 0  1px 0 rgba(255,228,150,0.5),
+    inset 0 -1px 0 rgba(60,20,0,0.3),
+    0 5px 0 0 #6A3010,
+    0 7px 26px rgba(200,130,40,0.55);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0  1px 0 rgba(255,228,150,0.3),
+    inset 0  2px 5px rgba(60,20,0,0.4),
+    0 0 0 0 #6A3010,
+    0 1px 6px rgba(180,100,30,0.3);
+}
+
+/* ── Secondary — ghost warm ─ */
+.btn-secondary {
+  background: rgba(200,160,80,0.07);
+  border: 1px solid rgba(200,160,80,0.42);
+  color: rgba(232,180,90,0.88);
+  box-shadow:
+    inset 0  1px 0 rgba(232,180,90,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 4px 0 0 rgba(80,40,0,0.75),
+    0 5px 14px rgba(0,0,0,0.4);
+  transform: translateY(0);
+}
+.btn-secondary:hover {
+  background: rgba(200,160,80,0.12);
+  border-color: rgba(200,160,80,0.75);
+  color: rgba(232,180,90,1);
+  box-shadow:
+    inset 0  1px 0 rgba(232,180,90,0.22),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 5px 0 0 rgba(80,40,0,0.85),
+    0 7px 20px rgba(0,0,0,0.5);
+  transform: translateY(-1px);
+}
+.btn-secondary:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0  1px 0 rgba(232,180,90,0.1),
+    inset 0  2px 5px rgba(0,0,0,0.35),
+    0 0 0 0 rgba(80,40,0,0.6),
+    0 1px 5px rgba(0,0,0,0.3);
+}
+
+/* ── Ghost teal ─────────── */
+.btn-ghost-teal {
+  background: rgba(74,138,142,0.07);
+  border: 1px solid rgba(74,138,142,0.42);
+  color: rgba(74,138,142,0.88);
+  box-shadow:
+    inset 0  1px 0 rgba(100,180,185,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 4px 0 0 rgba(20,60,62,0.85),
+    0 5px 14px rgba(0,0,0,0.4);
+  transform: translateY(0);
+}
+.btn-ghost-teal:hover {
+  background: rgba(74,138,142,0.13);
+  border-color: rgba(74,138,142,0.78);
+  color: rgba(100,180,185,1);
+  box-shadow:
+    inset 0  1px 0 rgba(100,180,185,0.22),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 5px 0 0 rgba(20,60,62,0.9),
+    0 7px 20px rgba(0,0,0,0.5);
+  transform: translateY(-1px);
+}
+.btn-ghost-teal:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0  1px 0 rgba(100,180,185,0.1),
+    inset 0  2px 5px rgba(0,0,0,0.35),
+    0 0 0 0 rgba(20,60,62,0.6),
+    0 1px 5px rgba(0,0,0,0.3);
+}
+
+/* ── Danger ─────────────── */
+.btn-danger {
+  background: rgba(200,80,60,0.08);
+  border: 1px solid rgba(200,80,60,0.42);
+  color: rgba(220,120,100,0.85);
+  box-shadow:
+    inset 0  1px 0 rgba(220,120,100,0.15),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 4px 0 0 rgba(80,20,10,0.85),
+    0 5px 14px rgba(0,0,0,0.4);
+  transform: translateY(0);
+}
+.btn-danger:hover {
+  background: rgba(200,80,60,0.14);
+  border-color: rgba(200,80,60,0.78);
+  box-shadow:
+    inset 0  1px 0 rgba(220,120,100,0.2),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 5px 0 0 rgba(80,20,10,0.9),
+    0 7px 20px rgba(0,0,0,0.5);
+  transform: translateY(-1px);
+}
+.btn-danger:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0  1px 0 rgba(220,120,100,0.1),
+    inset 0  2px 5px rgba(0,0,0,0.4),
+    0 0 0 0 rgba(80,20,10,0.6),
+    0 1px 5px rgba(0,0,0,0.3);
+}
+
+/* ── Minimal text (no 3D) ── */
+.btn-text {
+  background: transparent; border: none; padding: 8px 12px;
+  color: rgba(240,220,180,0.5);
+  font-size: 10px; letter-spacing: 0.28em;
+  box-shadow: none;
+}
+.btn-text::before { display: none; }
+.btn-text:hover { color: rgba(240,220,180,0.9); }
+
+/* ── Disabled ───────────── */
+.btn-disabled {
+  background: rgba(240,220,180,0.05);
+  border: 1px solid rgba(240,220,180,0.08);
+  color: rgba(240,220,180,0.22);
+  cursor: not-allowed;
+  box-shadow: none; pointer-events: none;
+}
+.btn-disabled::before { display: none; }
+
+/* ── Icon-only ──────────── */
+.btn-icon {
+  width: 40px; height: 40px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: rgba(200,160,80,0.1);
+  border: 1px solid rgba(200,160,80,0.28);
+  color: rgba(200,160,80,0.72);
+  font-size: 16px; cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow:
+    inset 0  1px 0 rgba(232,180,90,0.2),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 3px 0 0 rgba(70,35,0,0.8),
+    0 4px 10px rgba(0,0,0,0.4);
+}
+.btn-icon::before { display: none; }
+.btn-icon:hover {
+  background: rgba(200,160,80,0.18);
+  color: rgba(232,180,90,1);
+  box-shadow:
+    inset 0  1px 0 rgba(232,180,90,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 4px 0 0 rgba(70,35,0,0.85),
+    0 5px 14px rgba(0,0,0,0.5);
+  transform: translateY(-1px);
+}
+.btn-icon:active {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0  1px 0 rgba(232,180,90,0.12),
+    inset 0  2px 4px rgba(0,0,0,0.35),
+    0 0 0 0 rgba(70,35,0,0.6),
+    0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* ── Size modifiers ─────── */
+.btn-lg { padding: 16px 40px; font-size: 12px; letter-spacing: 0.28em; border-radius: var(--r-lg); }
+.btn-sm { padding: 7px 16px; font-size: 9px; letter-spacing: 0.24em; }
+
+/* ─── INPUTS ─────────────────────── */
+.input-wrap { display: flex; flex-direction: column; gap: 6px; }
+.input-label {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(200,160,80,0.5);
+}
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(14,12,8,0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: rgba(240,220,180,0.85);
+  font-family: 'Jost', sans-serif; font-weight: 300;
+  font-size: 13px; letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  backdrop-filter: blur(10px);
+}
+.input-field::placeholder { color: rgba(240,220,180,0.22); }
+.input-field:focus {
+  border-color: rgba(200,160,80,0.5);
+  box-shadow: 0 0 0 3px rgba(200,160,80,0.08);
+}
+.input-field.teal:focus {
+  border-color: rgba(74,138,142,0.55);
+  box-shadow: 0 0 0 3px rgba(74,138,142,0.08);
+}
+.input-field.error { border-color: rgba(200,80,60,0.55); }
+.input-hint {
+  font-size: 10px; letter-spacing: 0.08em;
+  color: rgba(240,220,180,0.3);
+}
+.input-hint.err { color: rgba(220,100,80,0.8); }
+/* Textarea */
+.input-textarea {
+  resize: vertical; min-height: 90px;
+  line-height: 1.6;
+}
+/* Search bar */
+.search-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px;
+  background: rgba(14,12,8,0.7);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.25s;
+}
+.search-bar:focus-within { border-color: rgba(200,160,80,0.4); }
+.search-bar input {
+  flex: 1; background: none; border: none; outline: none;
+  color: rgba(240,220,180,0.85);
+  font-family: 'Jost', sans-serif; font-weight: 300;
+  font-size: 13px; letter-spacing: 0.06em;
+}
+.search-bar input::placeholder { color: rgba(240,220,180,0.22); }
+.search-icon { color: rgba(200,160,80,0.4); font-size: 14px; }
+
+/* ─── SELECT / DROPDOWN ─────────────── */
+.select-field {
+  appearance: none;
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  background: rgba(14,12,8,0.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8A060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: rgba(240,220,180,0.75);
+  font-family: 'Jost', sans-serif; font-weight: 300;
+  font-size: 13px; letter-spacing: 0.06em;
+  outline: none; cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+.select-field:focus { border-color: rgba(200,160,80,0.5); }
+
+/* ─── TOGGLE / SWITCH ─────────────── */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.toggle-info {}
+.toggle-name { font-size: 13px; color: rgba(240,220,180,0.8); margin-bottom: 3px; }
+.toggle-desc { font-size: 10px; color: rgba(240,220,180,0.3); letter-spacing: 0.08em; }
+.toggle {
+  width: 44px; height: 24px; border-radius: 12px;
+  background: rgba(240,220,180,0.1);
+  border: 1px solid rgba(240,220,180,0.15);
+  position: relative; cursor: pointer; flex-shrink: 0;
+  transition: all 0.3s;
+}
+.toggle.on {
+  background: rgba(200,160,80,0.3);
+  border-color: rgba(200,160,80,0.5);
+}
+.toggle::after {
+  content: '';
+  position: absolute; top: 3px; left: 3px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: rgba(240,220,180,0.4);
+  transition: transform 0.3s;
+}
+.toggle.on::after {
+  transform: translateX(20px);
+  background: #E8B45A;
+}
+/* Checkbox */
+.check-row { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.check-box {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 1px solid rgba(240,220,180,0.2);
+  background: rgba(14,12,8,0.5);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 10px;
+  transition: all 0.2s;
+}
+.check-box.checked {
+  background: rgba(200,160,80,0.2);
+  border-color: rgba(200,160,80,0.6);
+  color: #E8B45A;
+}
+.check-label { font-size: 13px; color: rgba(240,220,180,0.75); }
+/* Radio */
+.radio-row { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.radio-btn {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid rgba(240,220,180,0.2);
+  background: rgba(14,12,8,0.5);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s;
+}
+.radio-btn.selected { border-color: rgba(200,160,80,0.7); }
+.radio-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #E8B45A; opacity: 0;
+  transition: opacity 0.2s;
+}
+.radio-btn.selected .radio-dot { opacity: 1; }
+
+/* ─── SLIDERS ─────────────────────── */
+.slider-wrap { display: flex; flex-direction: column; gap: 6px; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-name { font-size: 10px; letter-spacing: 0.12em; color: rgba(240,220,180,0.45); width: 80px; }
+.slider-track {
+  flex: 1; height: 3px; border-radius: 2px;
+  background: rgba(240,220,180,0.1);
+  position: relative; cursor: pointer;
+}
+.slider-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(to right, var(--ochre), var(--gold));
+}
+.slider-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(232,180,90,0.5);
+  position: absolute; top: 50%; transform: translateY(-50%);
+  cursor: grab;
+}
+.slider-val { font-size: 11px; color: rgba(200,160,80,0.7); width: 28px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+
+/* ─── TAGS / BADGES ─────────────────── */
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+}
+.tag-warm {
+  background: rgba(200,160,80,0.12);
+  border: 1px solid rgba(200,160,80,0.3);
+  color: rgba(232,180,90,0.85);
+}
+.tag-teal {
+  background: rgba(74,138,142,0.12);
+  border: 1px solid rgba(74,138,142,0.3);
+  color: rgba(100,180,185,0.85);
+}
+.tag-dim {
+  background: rgba(240,220,180,0.05);
+  border: 1px solid rgba(240,220,180,0.12);
+  color: rgba(240,220,180,0.45);
+}
+.tag-amber {
+  background: rgba(210,100,42,0.15);
+  border: 1px solid rgba(210,100,42,0.35);
+  color: rgba(230,140,80,0.9);
+}
+.tag-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor;
+}
+/* Difficulty pips */
+.diff-pips { display: flex; gap: 4px; align-items: center; }
+.pip { width: 28px; height: 3px; border-radius: 2px; }
+.pip.lit { background: var(--gold); }
+.pip.dim { background: rgba(240,220,180,0.1); }
+
+/* ─── PROGRESS ─────────────────────── */
+.progress-bar-wrap { display: flex; flex-direction: column; gap: 5px; }
+.progress-bar-label { display: flex; justify-content: space-between; align-items: center; }
+.progress-bar-name { font-size: 10px; letter-spacing: 0.14em; color: rgba(240,220,180,0.5); }
+.progress-bar-val { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: rgba(200,160,80,0.8); }
+.progress-bar-track {
+  height: 3px; border-radius: 2px;
+  background: rgba(240,220,180,0.08);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(to right, var(--ochre), var(--gold));
+  transition: width 0.6s ease;
+}
+.progress-bar-fill.teal {
+  background: linear-gradient(to right, var(--teal), var(--teal-l));
+}
+/* Circular arc SVG */
+.arc-group { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.arc-item { text-align: center; }
+.arc-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,160,80,0.4); margin-top: 6px; }
+
+/* ─── LESSON / COURSE CARD ─────────── */
+.course-card {
+  width: 260px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.course-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.5), var(--glow-g); }
+.card-thumb {
+  height: 130px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.card-thumb-bg {
+  position: absolute; inset: 0;
+}
+.card-thumb-label {
+  position: relative; z-index: 1;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: 32px; color: rgba(240,220,180,0.35);
+  letter-spacing: 0.08em;
+}
+.card-body { padding: 16px 18px; }
+.card-tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 18px; line-height: 1.3;
+  color: rgba(240,220,190,0.85); margin-bottom: 8px;
+}
+.card-meta {
+  font-size: 10px; letter-spacing: 0.14em;
+  color: rgba(240,220,180,0.35);
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.card-progress-bar {
+  height: 2px; background: rgba(240,220,180,0.08);
+  border-radius: 1px; margin-top: 14px; overflow: hidden;
+}
+.card-progress-fill {
+  height: 100%; border-radius: 1px;
+  background: linear-gradient(to right, var(--ochre), var(--gold));
+}
+
+/* ─── ACHIEVEMENT ─────────────────── */
+.ach-card {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  transition: transform 0.25s;
+  cursor: pointer;
+}
+.ach-card:hover { transform: translateX(4px); }
+.ach-icon-wrap {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+  position: relative;
+}
+.ach-icon-wrap.gold {
+  background: rgba(200,160,80,0.15);
+  border: 1px solid rgba(200,160,80,0.35);
+  box-shadow: 0 0 20px rgba(200,160,80,0.15);
+}
+.ach-icon-wrap.teal {
+  background: rgba(74,138,142,0.15);
+  border: 1px solid rgba(74,138,142,0.35);
+  box-shadow: 0 0 20px rgba(74,138,142,0.15);
+}
+.ach-icon-wrap.amber {
+  background: rgba(212,101,42,0.15);
+  border: 1px solid rgba(212,101,42,0.35);
+  box-shadow: 0 0 20px rgba(212,101,42,0.12);
+}
+.ach-icon-wrap.dim {
+  background: rgba(240,220,180,0.05);
+  border: 1px solid rgba(240,220,180,0.1);
+  filter: grayscale(0.6) brightness(0.6);
+}
+.ach-body { flex: 1; }
+.ach-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 17px;
+  color: rgba(240,220,190,0.85);
+  margin-bottom: 3px;
+}
+.ach-desc { font-size: 10px; letter-spacing: 0.1em; color: rgba(240,220,180,0.35); line-height: 1.5; }
+.ach-rarity {
+  font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+}
+.rarity-legendary { color: rgba(200,160,80,0.7); }
+.rarity-rare      { color: rgba(74,138,142,0.7); }
+.rarity-uncommon  { color: rgba(212,101,42,0.7); }
+.rarity-common    { color: rgba(240,220,180,0.3); }
+
+/* ─── QUESTION CARD ─────────────────── */
+.q-card { padding: 28px 32px; }
+.q-number { font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(200,160,80,0.4); margin-bottom: 12px; }
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 22px; line-height: 1.4;
+  color: rgba(240,220,190,0.88); margin-bottom: 24px;
+}
+/* MCQ options */
+.q-options { display: flex; flex-direction: column; gap: 10px; }
+.q-option {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: var(--r);
+  background: rgba(14,12,8,0.5);
+  border: 1px solid rgba(240,220,180,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.q-option:hover { border-color: rgba(200,160,80,0.3); background: rgba(200,160,80,0.05); }
+.q-option.selected {
+  border-color: rgba(200,160,80,0.55);
+  background: rgba(200,160,80,0.1);
+}
+.q-option.correct {
+  border-color: rgba(74,138,142,0.6);
+  background: rgba(74,138,142,0.12);
+}
+.q-option.wrong {
+  border-color: rgba(200,80,60,0.5);
+  background: rgba(200,80,60,0.08);
+}
+.q-option-key {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 0.1em;
+  border: 1px solid rgba(240,220,180,0.2);
+  color: rgba(240,220,180,0.5);
+  transition: all 0.2s;
+}
+.q-option.selected .q-option-key {
+  border-color: rgba(200,160,80,0.6);
+  background: rgba(200,160,80,0.2);
+  color: var(--gold);
+}
+.q-option.correct .q-option-key {
+  border-color: rgba(74,138,142,0.7); background: rgba(74,138,142,0.25); color: var(--teal-l);
+}
+.q-option.wrong .q-option-key {
+  border-color: rgba(200,80,60,0.6); background: rgba(200,80,60,0.2); color: #D46040;
+}
+.q-option-text { font-size: 13px; color: rgba(240,220,180,0.75); letter-spacing: 0.06em; flex: 1; }
+/* True/False */
+.tf-options { display: flex; gap: 12px; }
+.tf-btn {
+  flex: 1; padding: 14px; border-radius: var(--r);
+  background: rgba(14,12,8,0.5);
+  border: 1px solid rgba(240,220,180,0.1);
+  text-align: center; cursor: pointer;
+  font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,220,180,0.6);
+  transition: all 0.2s;
+}
+.tf-btn.t-sel { border-color: rgba(74,138,142,0.6); background: rgba(74,138,142,0.12); color: rgba(100,180,185,0.9); }
+.tf-btn.f-sel { border-color: rgba(200,80,60,0.5); background: rgba(200,80,60,0.1); color: rgba(220,120,100,0.9); }
+/* Fill blank */
+.fill-blank-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; line-height: 2.2; }
+.fill-word { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: rgba(240,220,190,0.8); }
+.fill-input {
+  display: inline-block; min-width: 120px; padding: 4px 12px;
+  background: rgba(14,12,8,0.7);
+  border: none; border-bottom: 1px solid rgba(200,160,80,0.45);
+  color: rgba(232,180,90,0.9);
+  font-family: 'Cormorant Garamond', serif; font-size: 20px;
+  letter-spacing: 0.06em; outline: none; text-align: center;
+}
+/* Matching */
+.matching-row {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 8px;
+}
+.match-left, .match-right {
+  flex: 1; padding: 10px 16px; border-radius: var(--r);
+  font-size: 12px; letter-spacing: 0.1em;
+  background: rgba(14,12,8,0.5);
+  border: 1px solid rgba(240,220,180,0.1);
+  color: rgba(240,220,180,0.7);
+  cursor: pointer; transition: border-color 0.2s;
+}
+.match-left:hover, .match-right:hover { border-color: rgba(200,160,80,0.35); }
+.match-left.linked { border-color: rgba(200,160,80,0.5); }
+.match-right.linked { border-color: rgba(74,138,142,0.5); }
+.match-line {
+  flex: 0 0 40px; display: flex; align-items: center; justify-content: center;
+  color: rgba(200,160,80,0.3); font-size: 18px;
+}
+
+/* ─── NAVIGATION BAR ─────────────────── */
+.nav-top {
+  display: flex; align-items: center; padding: 0 24px;
+  height: 58px;
+  background: rgba(12,10,8,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 20px; letter-spacing: 0.24em;
+  color: rgba(232,180,90,0.85);
+  flex: 0 0 auto; margin-right: 32px;
+}
+.nav-items { display: flex; gap: 0; flex: 1; }
+.nav-item {
+  padding: 0 16px; height: 58px;
+  display: flex; align-items: center; gap: 7px;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,220,180,0.4);
+  border-bottom: 2px solid transparent;
+  cursor: pointer; transition: all 0.2s;
+}
+.nav-item:hover { color: rgba(240,220,180,0.75); }
+.nav-item.active {
+  color: rgba(200,160,80,0.9);
+  border-bottom-color: rgba(200,160,80,0.6);
+}
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 38%, #C89040 0%, #6A4020 100%);
+  border: 1px solid rgba(200,160,80,0.35);
+}
+/* Bottom tab bar */
+.tab-bar {
+  display: flex;
+  background: rgba(10,8,6,0.92);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 4px 0 8px;
+}
+.tab-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 4px 2px; cursor: pointer;
+  color: rgba(240,220,180,0.3);
+  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.tab-item.active { color: rgba(200,160,80,0.85); }
+.tab-icon { font-size: 18px; }
+.tab-item.active .tab-icon { filter: drop-shadow(0 0 6px rgba(200,160,80,0.5)); }
+
+/* ─── LESSON PROGRESS HEADER ─────────── */
+.lesson-header {
+  padding: 16px 24px;
+  background: rgba(12,10,8,0.8);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+}
+.lesson-header-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic; font-size: 18px;
+  color: rgba(240,220,190,0.8); flex: 1;
+}
+.lesson-step-dots { display: flex; gap: 6px; align-items: center; }
+.step-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(240,220,180,0.12);
+  transition: all 0.3s;
+}
+.step-dot.done { background: rgba(200,160,80,0.7); }
+.step-dot.current {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(232,180,90,0.6);
+  width: 18px; border-radius: 3px;
+}
+
+/* ─── LESSON RESULT ─────────────────── */
+.result-card {
+  text-align: center; padding: 40px 36px;
+}
+.result-icon { font-size: 48px; margin-bottom: 20px; }
+.result-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: 32px; color: rgba(240,220,190,0.9); margin-bottom: 8px;
+}
+.result-sub { font-size: 12px; letter-spacing: 0.15em; color: rgba(240,220,180,0.4); margin-bottom: 28px; }
+.result-stats { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; }
+.result-stat { text-align: center; }
+.result-stat-val {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: 36px; color: rgba(200,160,80,0.9); line-height: 1;
+}
+.result-stat-lbl { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(240,220,180,0.3); margin-top: 5px; }
+.result-xp-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 24px; border-radius: 24px;
+  background: rgba(200,160,80,0.12);
+  border: 1px solid rgba(200,160,80,0.3);
+  font-size: 13px; color: rgba(200,160,80,0.85);
+  margin-bottom: 24px;
+}
+
+/* ─── NOTIFICATION / TOAST ─────────── */
+.toast {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: var(--r);
+  min-width: 300px;
+}
+.toast-success {
+  background: rgba(26,58,40,0.8);
+  border: 1px solid rgba(60,140,80,0.35);
+  backdrop-filter: blur(12px);
+}
+.toast-warn {
+  background: rgba(48,32,8,0.85);
+  border: 1px solid rgba(200,140,40,0.4);
+  backdrop-filter: blur(12px);
+}
+.toast-error {
+  background: rgba(50,14,14,0.85);
+  border: 1px solid rgba(200,70,60,0.4);
+  backdrop-filter: blur(12px);
+}
+.toast-info {
+  background: rgba(14,34,44,0.85);
+  border: 1px solid rgba(74,138,142,0.4);
+  backdrop-filter: blur(12px);
+}
+.toast-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.toast-success .toast-dot { background: #4A9E5A; box-shadow: 0 0 8px rgba(74,158,90,0.6); }
+.toast-warn    .toast-dot { background: #C8A040; box-shadow: 0 0 8px rgba(200,160,64,0.6); }
+.toast-error   .toast-dot { background: #C84040; box-shadow: 0 0 8px rgba(200,64,64,0.6); }
+.toast-info    .toast-dot { background: #4A8A8E; box-shadow: 0 0 8px rgba(74,138,142,0.6); }
+.toast-msg { flex: 1; font-size: 12px; letter-spacing: 0.08em; line-height: 1.5; }
+.toast-msg strong { display: block; margin-bottom: 2px; color: rgba(240,220,180,0.85); font-weight: 400; }
+.toast-msg span { color: rgba(240,220,180,0.45); }
+.toast-close { color: rgba(240,220,180,0.3); font-size: 16px; cursor: pointer; flex-shrink: 0; }
+.toast-close:hover { color: rgba(240,220,180,0.7); }
+
+/* ─── PROFILE / USER ROW ─────────────── */
+.user-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 22px;
+}
+.user-avatar {
+  width: 54px; height: 54px; border-radius: 50%;
+  flex-shrink: 0; position: relative;
+}
+.user-avatar-img {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #D4A060 0%, #7A4020 60%, #3A1808 100%);
+  border: 2px solid rgba(200,160,80,0.35);
+}
+.user-avatar-badge {
+  position: absolute; bottom: -2px; right: -2px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--ochre); font-size: 9px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--char);
+}
+.user-info { flex: 1; }
+.user-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 18px; color: rgba(240,220,190,0.88); }
+.user-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,160,80,0.5); margin-top: 2px; }
+.user-xp-bar { margin-top: 8px; }
+.user-meta { text-align: right; }
+.user-level {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px;
+  color: rgba(200,160,80,0.8); line-height: 1;
+}
+.user-level-lbl { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(200,160,80,0.4); }
+
+/* ─── STREAK / DAILY STATS ─────────── */
+.streak-card { padding: 24px; }
+.streak-number {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: 64px; line-height: 1; color: rgba(200,160,80,0.85);
+  text-shadow: 0 0 30px rgba(200,160,80,0.25);
+}
+.streak-lbl { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(240,220,180,0.35); margin-top: 4px; }
+.streak-days { display: flex; gap: 6px; margin-top: 20px; }
+.streak-day {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+.streak-day-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(240,220,180,0.06);
+  border: 1px solid rgba(240,220,180,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+}
+.streak-day.done .streak-day-dot {
+  background: rgba(200,160,80,0.2);
+  border-color: rgba(200,160,80,0.45);
+  color: var(--gold);
+}
+.streak-day.today .streak-day-dot {
+  background: rgba(200,160,80,0.35);
+  border-color: rgba(200,160,80,0.7);
+  box-shadow: 0 0 10px rgba(200,160,80,0.3);
+  color: var(--gold);
+}
+.streak-day-name { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,220,180,0.25); }
+.streak-day.today .streak-day-name { color: rgba(200,160,80,0.6); }
+
+/* ─── MODAL / DIALOG ─────────────────── */
+.modal-overlay {
+  background: rgba(8,8,6,0.7);
+  backdrop-filter: blur(8px);
+  border-radius: var(--r-lg);
+  padding: 4px;
+}
+.modal-box {
+  padding: 32px 36px;
+}
+.modal-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: 22px; color: rgba(240,220,190,0.88);
+}
+.modal-close {
+  color: rgba(240,220,180,0.3); cursor: pointer; font-size: 20px;
+  transition: color 0.2s; line-height: 1;
+}
+.modal-close:hover { color: rgba(240,220,180,0.7); }
+.modal-body { font-size: 13px; line-height: 1.7; color: rgba(240,220,180,0.55); margin-bottom: 24px; letter-spacing: 0.05em; }
+.modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+/* ─── CODE BLOCK ─────────────────────── */
+.code-block {
+  padding: 20px 24px;
+  font-family: 'JetBrains Mono', monospace; font-weight: 300;
+  font-size: 12px; line-height: 1.8; letter-spacing: 0.02em;
+}
+.code-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.code-lang { font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(74,138,142,0.7); }
+.code-copy { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,160,80,0.4); cursor: pointer; }
+.code-copy:hover { color: rgba(200,160,80,0.8); }
+.c-kw  { color: rgba(200,130,80,0.9); }  /* keyword */
+.c-fn  { color: rgba(200,160,80,0.9); }  /* function */
+.c-str { color: rgba(74,138,142,0.9); }   /* string */
+.c-cm  { color: rgba(240,220,180,0.25); font-style: italic; } /* comment */
+.c-num { color: rgba(212,101,42,0.85); }  /* number */
+.c-def { color: rgba(240,220,180,0.7); }  /* default */
+
+/* ─── XP TRANSACTION ─────────────────── */
+.xp-list { display: flex; flex-direction: column; gap: 2px; }
+.xp-row-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; border-radius: var(--r);
+  transition: background 0.2s;
+}
+.xp-row-item:hover { background: rgba(240,220,180,0.03); }
+.xp-dot-sm { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.xp-dot-sm.earn { background: rgba(200,160,80,0.7); }
+.xp-dot-sm.spend { background: rgba(200,80,60,0.6); }
+.xp-desc { flex: 1; font-size: 12px; color: rgba(240,220,180,0.6); letter-spacing: 0.06em; }
+.xp-time { font-size: 10px; color: rgba(240,220,180,0.25); letter-spacing: 0.1em; }
+.xp-amount { font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+.xp-amount.earn { color: rgba(200,160,80,0.85); }
+.xp-amount.spend { color: rgba(200,80,60,0.75); }
+
+/* ─── LEVEL MAP NODE ─────────────────── */
+.level-map { display: flex; align-items: center; gap: 0; }
+.map-node {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  border: 2px solid;
+  transition: all 0.25s; cursor: pointer;
+}
+.map-node.done {
+  background: rgba(200,160,80,0.2); border-color: rgba(200,160,80,0.6);
+  color: var(--gold);
+}
+.map-node.current {
+  background: rgba(200,160,80,0.35); border-color: rgba(200,160,80,0.9);
+  color: var(--gold); box-shadow: 0 0 18px rgba(200,160,80,0.35);
+  animation: nodeGlow 2s ease-in-out infinite alternate;
+}
+.map-node.locked {
+  background: rgba(240,220,180,0.04); border-color: rgba(240,220,180,0.1);
+  color: rgba(240,220,180,0.2);
+}
+@keyframes nodeGlow {
+  from { box-shadow: 0 0 12px rgba(200,160,80,0.25); }
+  to   { box-shadow: 0 0 24px rgba(200,160,80,0.5); }
+}
+.map-line {
+  flex: 1; height: 2px;
+  background: linear-gradient(to right, rgba(200,160,80,0.5), rgba(200,160,80,0.15));
+}
+.map-line.locked-line {
+  background: rgba(240,220,180,0.08);
+}
+.map-node-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.map-node-lbl { font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(240,220,180,0.3); }
+.map-node.current ~ .map-node-lbl,
+.map-node-wrap:has(.current) .map-node-lbl { color: rgba(200,160,80,0.6); }
+
+/* ─── COLOR TOKENS ─────────────────── */
+.color-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+.color-swatch {
+  width: 72px; text-align: center;
+}
+.swatch-block {
+  height: 52px; border-radius: var(--r);
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 6px;
+}
+.swatch-name { font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(240,220,180,0.35); display: block; }
+.swatch-hex  { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(240,220,180,0.5); display: block; margin-top: 1px; }
+
+/* ─── TYPOGRAPHY SCALE ─────────────── */
+.type-row { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 24px; }
+.type-row:last-child { border-bottom: none; }
+.type-meta { width: 90px; flex-shrink: 0; }
+.type-meta-name { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,160,80,0.45); }
+.type-meta-size { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(240,220,180,0.3); margin-top: 2px; }
+
+/* ─── MISC UTILS ─────────────────── */
+.divider { height: 1px; background: var(--border); margin: 8px 0; }
+.space-sm { height: 8px; }
+.space-md { height: 16px; }
+.space-lg { height: 24px; }
+.w-full { width: 100%; }
+.w-half { width: calc(50% - 8px); min-width: 220px; }
+.w-third { width: calc(33.33% - 11px); min-width: 200px; }
+
+/* ─── PAGE TITLE ─────────────────────── */
+.page-title-block {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+.page-title-eyebrow {
+  font-size: 9px; letter-spacing: 0.38em; text-transform: uppercase;
+  color: rgba(200,160,80,0.45); margin-bottom: 14px;
+}
+.page-title-main {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(36px, 5vw, 58px); line-height: 1.1;
+  color: rgba(240,220,190,0.9);
+}
+.page-title-main em { font-style: italic; color: rgba(232,180,90,0.95); }
+.page-title-sub {
+  font-size: 13px; letter-spacing: 0.1em; line-height: 1.7;
+  color: rgba(240,220,180,0.38); margin-top: 14px; max-width: 520px;
+}
+
+/* ─── SCROLL FADE-IN (lightweight) ─── */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ─── FIXED HEADER ─────────────────── */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(10,8,6,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+</style>
+</head>
+<body>
+
+<!-- Persistent painterly bg -->
+<div class="painted-bg"></div>
+<div class="grain"></div>
+
+<!-- ════════════════════════════════════════════
+  STICKY TOP NAV (Component)
+════════════════════════════════════════════ -->
+<div class="sticky-nav">
+  <div class="nav-top" style="max-width:1100px; margin:0 auto;">
+    <span class="nav-logo-text">Primoria</span>
+    <div class="nav-items">
+      <div class="nav-item active">✦ &nbsp;Guide</div>
+      <div class="nav-item">Explore</div>
+      <div class="nav-item">Library</div>
+      <div class="nav-item">Progress</div>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-avatar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SCROLL CONTENT
+════════════════════════════════════════════ -->
+<div class="scroll-wrap">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-block">
+    <p class="page-title-eyebrow">Cinematic Painterly · Full Component Reference</p>
+    <h1 class="page-title-main">Every element,<br><em>under one moon</em></h1>
+    <p class="page-title-sub">All interactive controls, cards, and UI surfaces styled in the dark atmospheric language of this visual direction.</p>
+  </div>
+
+  <!-- ══ 1. COLOR TOKENS ══════════════════ -->
+  <div class="section reveal">
+    <p class="section-label">01</p>
+    <h2 class="section-title">Colour Tokens</h2>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#C8813A;"></div>
+        <span class="swatch-name">Ochre</span><span class="swatch-hex">#C8813A</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#E8B45A;"></div>
+        <span class="swatch-name">Gold</span><span class="swatch-hex">#E8B45A</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#D4652A;"></div>
+        <span class="swatch-name">Amber</span><span class="swatch-hex">#D4652A</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#F0E0C0; border-color:rgba(0,0,0,0.15);"></div>
+        <span class="swatch-name">Cream</span><span class="swatch-hex">#F0E0C0</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#4A8A8E;"></div>
+        <span class="swatch-name">Teal</span><span class="swatch-hex">#4A8A8E</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#2A5A5E;"></div>
+        <span class="swatch-name">Teal Dark</span><span class="swatch-hex">#2A5A5E</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#1A3A3C;"></div>
+        <span class="swatch-name">Teal Deep</span><span class="swatch-hex">#1A3A3C</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#28221A;"></div>
+        <span class="swatch-name">Charcoal L</span><span class="swatch-hex">#28221A</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#1C1810;"></div>
+        <span class="swatch-name">Charcoal</span><span class="swatch-hex">#1C1810</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:#0C0A08;"></div>
+        <span class="swatch-name">Ink</span><span class="swatch-hex">#0C0A08</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:rgba(28,24,16,0.72); backdrop-filter:blur(8px);"></div>
+        <span class="swatch-name">Glass</span><span class="swatch-hex">rgba+blur</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:rgba(200,80,60,0.75);"></div>
+        <span class="swatch-name">Error</span><span class="swatch-hex">rgba(200,80,60)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 2. TYPOGRAPHY ══════════════════ -->
+  <div class="section reveal">
+    <p class="section-label">02</p>
+    <h2 class="section-title">Typography Scale</h2>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">Display</span><span class="type-meta-size">62px / 300</span></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:62px;line-height:1.05;color:rgba(240,220,190,0.88);">Light & <em style="font-style:italic;color:rgba(232,180,90,0.9);">Wonder</em></div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">H1</span><span class="type-meta-size">42px / 300i</span></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:42px;line-height:1.1;color:rgba(240,220,190,0.82);">The language of stars</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">H2</span><span class="type-meta-size">28px / 300</span></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:28px;color:rgba(240,220,190,0.78);">Chapter · Perception & Form</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">Body</span><span class="type-meta-size">14px / 300</span></div>
+      <div style="font-size:14px;line-height:1.75;color:rgba(240,220,180,0.6);letter-spacing:0.05em;max-width:480px;">Light is not merely a physical phenomenon — it is the medium through which meaning travels across the void between minds. Every photon carries the potential for understanding.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">Caption</span><span class="type-meta-size">10px / 200</span></div>
+      <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,220,180,0.35);">Module 3 · Lesson 7 of 12 · 8 min read</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">Code</span><span class="type-meta-size">12px Mono</span></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(74,138,142,0.85);letter-spacing:0.04em;">const illuminate = (depth: number) =&gt; depth * π</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="type-meta-name">Label</span><span class="type-meta-size">9px / 200</span></div>
+      <div style="font-size:9px;letter-spacing:0.38em;text-transform:uppercase;color:rgba(200,160,80,0.5);">Difficulty · Intermediate · 480 XP</div>
+    </div>
+  </div>
+
+  <!-- ══ 3. BUTTONS ══════════════════ -->
+  <div class="section reveal">
+    <p class="section-label">03</p>
+    <h2 class="section-title">Buttons & Actions</h2>
+    <div class="row" style="margin-bottom:20px;">
+      <button class="btn btn-primary btn-lg">Begin Journey</button>
+      <button class="btn btn-primary">Continue</button>
+      <button class="btn btn-primary btn-sm">Start</button>
+    </div>
+    <div class="row" style="margin-bottom:20px;">
+      <button class="btn btn-secondary btn-lg">Explore Course</button>
+      <button class="btn btn-secondary">Save Progress</button>
+      <button class="btn btn-secondary btn-sm">Enroll</button>
+    </div>
+    <div class="row" style="margin-bottom:20px;">
+      <button class="btn btn-ghost-teal btn-lg">View Details</button>
+      <button class="btn btn-ghost-teal">Learn More</button>
+      <button class="btn btn-ghost-teal btn-sm">Preview</button>
+    </div>
+    <div class="row" style="margin-bottom:20px;">
+      <button class="btn btn-text">← Back</button>
+      <button class="btn btn-text">Skip lesson →</button>
+      <button class="btn btn-danger">Remove Course</button>
+      <button class="btn btn-disabled" disabled>Locked</button>
+    </div>
+    <div class="row">
+      <div class="btn-icon">✦</div>
+      <div class="btn-icon">▶</div>
+      <div class="btn-icon">♡</div>
+      <div class="btn-icon">⊕</div>
+      <div class="btn-icon" style="border-radius:var(--r);">⊞</div>
+      <div class="btn-icon" style="background:rgba(74,138,142,0.1);border-color:rgba(74,138,142,0.25);color:rgba(74,138,142,0.7);">⌂</div>
+    </div>
+  </div>
+
+  <!-- ══ 4. INPUTS ══════════════════ -->
+  <div class="section reveal">
+    <p class="section-label">04</p>
+    <h2 class="section-title">Form Inputs</h2>
+    <div class="row">
+      <div class="col w-half">
+        <div class="input-wrap">
+          <label class="input-label">Your Name</label>
+          <input class="input-field" type="text" placeholder="Enter your name…">
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Email Address</label>
+          <input class="input-field teal" type="email" placeholder="you@primoria.com" value="stargazer@primoria.com">
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Error State</label>
+          <input class="input-field error" type="text" placeholder="Invalid entry" value="wrongformat">
+          <span class="input-hint err">⚠ This field contains an invalid value</span>
+        </div>
+      </div>
+      <div class="col w-half">
+        <div class="input-wrap">
+          <label class="input-label">Search Courses</label>
+          <div class="search-bar">
+            <span class="search-icon">⌕</span>
+            <input type="text" placeholder="Search lessons, topics…">
+          </div>
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Difficulty</label>
+          <select class="select-field">
+            <option>Beginner</option>
+            <option selected>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Reflection</label>
+          <textarea class="input-field input-textarea" placeholder="Write your thoughts on today's lesson…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="space-md"></div>
+    <!-- Toggles & checkboxes -->
+    <div class="row">
+      <div class="col w-half glass" style="padding:20px 24px;">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-name">Ambient Sound</div>
+            <div class="toggle-desc">Soft background audio while learning</div>
+          </div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="divider"></div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-name">Dark Mode</div>
+            <div class="toggle-desc">Always on in this theme</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="divider"></div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-name">Notifications</div>
+            <div class="toggle-desc">Daily streak reminders</div>
+          </div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+      <div class="col w-half glass" style="padding:20px 24px; gap:16px;">
+        <div class="check-row"><div class="check-box checked">✓</div><span class="check-label">Mark as complete</span></div>
+        <div class="check-row"><div class="check-box checked">✓</div><span class="check-label">Save to reading list</span></div>
+        <div class="check-row"><div class="check-box"></div><span class="check-label">Receive certificate</span></div>
+        <div class="divider"></div>
+        <div class="radio-row"><div class="radio-btn selected"><div class="radio-dot"></div></div><span class="check-label">Visual learner</span></div>
+        <div class="radio-row"><div class="radio-btn"><div class="radio-dot"></div></div><span class="check-label">Reading learner</span></div>
+        <div class="radio-row"><div class="radio-btn"><div class="radio-dot"></div></div><span class="check-label">Hands-on learner</span></div>
+      </div>
+    </div>
+    <div class="space-md"></div>
+    <!-- Sliders -->
+    <div class="glass" style="padding:24px;">
+      <div class="slider-wrap" style="gap:18px;">
+        <div class="slider-row">
+          <span class="slider-name">Speed</span>
+          <div class="slider-track"><div class="slider-fill" style="width:65%;"></div><div class="slider-thumb" style="left:calc(65% - 7px);"></div></div>
+          <span class="slider-val">1.3×</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-name">Volume</span>
+          <div class="slider-track"><div class="slider-fill" style="width:40%;"></div><div class="slider-thumb" style="left:calc(40% - 7px);"></div></div>
+          <span class="slider-val">40</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-name">Font Size</span>
+          <div class="slider-track"><div class="slider-fill teal" style="width:55%; background:linear-gradient(to right,var(--teal),var(--teal-l));"></div><div class="slider-thumb" style="left:calc(55% - 7px); background:var(--teal-l); box-shadow:0 0 8px rgba(74,138,142,0.5);"></div></div>
+          <span class="slider-val">16</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5. TAGS & BADGES ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">05</p>
+    <h2 class="section-title">Tags, Badges & Labels</h2>
+    <div class="row" style="margin-bottom:16px;">
+      <span class="tag tag-warm"><span class="tag-dot"></span>Physics</span>
+      <span class="tag tag-warm">Beginner</span>
+      <span class="tag tag-teal"><span class="tag-dot"></span>Active</span>
+      <span class="tag tag-teal">New</span>
+      <span class="tag tag-amber"><span class="tag-dot"></span>In Progress</span>
+      <span class="tag tag-dim">Archived</span>
+      <span class="tag tag-dim">STEM</span>
+      <span class="tag" style="background:rgba(200,80,60,0.12);border:1px solid rgba(200,80,60,0.3);color:rgba(220,110,90,0.85);"><span class="tag-dot"></span>Locked</span>
+    </div>
+    <div class="space-sm"></div>
+    <div style="display:flex;gap:32px;align-items:center;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(240,220,180,0.3);margin-bottom:8px;">Difficulty</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;"><div class="diff-pips"><div class="pip lit"></div><div class="pip dim"></div><div class="pip dim"></div></div><span style="font-size:10px;letter-spacing:0.14em;color:rgba(240,220,180,0.4);">Beginner</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div class="diff-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip dim"></div></div><span style="font-size:10px;letter-spacing:0.14em;color:rgba(240,220,180,0.4);">Intermediate</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div class="diff-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div></div><span style="font-size:10px;letter-spacing:0.14em;color:rgba(240,220,180,0.4);">Advanced</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(240,220,180,0.3);margin-bottom:8px;">XP Chip</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:rgba(200,160,80,0.15);border:1px solid rgba(200,160,80,0.35);font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(200,160,80,0.85);">+240 XP</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:rgba(74,138,142,0.12);border:1px solid rgba(74,138,142,0.3);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(74,138,142,0.8);">🔥 14 Day Streak</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;background:rgba(200,130,40,0.15);border:1px solid rgba(200,130,40,0.35);font-size:10px;letter-spacing:0.16em;color:rgba(220,160,80,0.85);">✦ Level 12</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 6. PROGRESS ══════════════════ -->
+  <div class="section reveal">
+    <p class="section-label">06</p>
+    <h2 class="section-title">Progress Indicators</h2>
+    <div class="row">
+      <div class="col w-half glass" style="padding:24px;">
+        <div class="progress-bar-wrap" style="gap:10px;">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span class="progress-bar-name">Chapter 1 · Light</span>
+              <span class="progress-bar-val">100%</span>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="width:100%;"></div></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span class="progress-bar-name">Chapter 2 · Motion</span>
+              <span class="progress-bar-val">73%</span>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="width:73%;"></div></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span class="progress-bar-name">Chapter 3 · Gravity</span>
+              <span class="progress-bar-val">24%</span>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill teal" style="width:24%;"></div></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span class="progress-bar-name">Chapter 4 · Time</span>
+              <span class="progress-bar-val">0%</span>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="width:0%;"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="w-half" style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:center;">
+        <!-- Arc rings -->
+        <div class="arc-item">
+          <svg width="90" height="90" viewBox="0 0 90 90">
+            <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(240,220,180,0.07)" stroke-width="3"/>
+            <circle cx="45" cy="45" r="36" fill="none" stroke="url(#arcGrad1)" stroke-width="3" stroke-linecap="round"
+                    stroke-dasharray="226" stroke-dashoffset="61" transform="rotate(-90 45 45)"/>
+            <defs>
+              <linearGradient id="arcGrad1" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#C8813A"/>
+                <stop offset="100%" stop-color="#E8B45A"/>
+              </linearGradient>
+            </defs>
+            <text x="45" y="49" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="20" fill="rgba(200,160,80,0.85)" font-weight="300">73</text>
+            <text x="45" y="60" text-anchor="middle" font-family="Jost,sans-serif" font-size="8" fill="rgba(240,220,180,0.3)" letter-spacing="2">%</text>
+          </svg>
+          <div class="arc-label">Overall</div>
+        </div>
+        <div class="arc-item">
+          <svg width="74" height="74" viewBox="0 0 74 74">
+            <circle cx="37" cy="37" r="28" fill="none" stroke="rgba(240,220,180,0.07)" stroke-width="2.5"/>
+            <circle cx="37" cy="37" r="28" fill="none" stroke="rgba(74,138,142,0.6)" stroke-width="2.5" stroke-linecap="round"
+                    stroke-dasharray="176" stroke-dashoffset="88" transform="rotate(-90 37 37)"/>
+            <text x="37" y="42" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="18" fill="rgba(74,138,142,0.85)" font-weight="300">50</text>
+          </svg>
+          <div class="arc-label">Lessons</div>
+        </div>
+        <div class="arc-item">
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(240,220,180,0.07)" stroke-width="2"/>
+            <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(200,130,40,0.55)" stroke-width="2" stroke-linecap="round"
+                    stroke-dasharray="138" stroke-dashoffset="28" transform="rotate(-90 30 30)"/>
+            <text x="30" y="35" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="14" fill="rgba(200,130,40,0.8)" font-weight="300">80</text>
+          </svg>
+          <div class="arc-label">Score</div>
+        </div>
+      </div>
+    </div>
+    <div class="space-md"></div>
+    <!-- Lesson step dots -->
+    <div class="lesson-header glass" style="border-radius:var(--r-lg);">
+      <div class="lesson-header-title">Chapter 2 · The Physics of Motion</div>
+      <div class="lesson-step-dots">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot current"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 7. COURSE CARDS ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">07</p>
+    <h2 class="section-title">Course & Lesson Cards</h2>
+    <div class="row">
+
+      <div class="course-card glass">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,#0D1A0E 0%,#1A3A3C 50%,#2A5A3A 100%);"></div>
+          <span class="card-thumb-label">λ</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag tag-warm btn-sm">Physics</span><span class="tag tag-dim btn-sm">Intermediate</span></div>
+          <div class="card-title">The Nature of Light & Electromagnetic Waves</div>
+          <div class="card-meta"><span>⊙ 8 lessons</span><span>◷ 42 min</span><span>✦ 480 XP</span></div>
+          <div class="card-progress-bar"><div class="card-progress-fill" style="width:100%;"></div></div>
+        </div>
+      </div>
+
+      <div class="course-card glass-warm">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,#1A1008 0%,#3A2010 50%,#5A3018 100%);"></div>
+          <span class="card-thumb-label">∞</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag tag-teal btn-sm">Maths</span><span class="tag tag-amber btn-sm">In Progress</span></div>
+          <div class="card-title">Calculus & the Language of Change</div>
+          <div class="card-meta"><span>⊙ 12 lessons</span><span>◷ 68 min</span><span>✦ 720 XP</span></div>
+          <div class="card-progress-bar"><div class="card-progress-fill" style="width:45%;"></div></div>
+        </div>
+      </div>
+
+      <div class="course-card glass-teal">
+        <div class="card-thumb">
+          <div class="card-thumb-bg" style="background:linear-gradient(135deg,#080E12 0%,#102030 50%,#183840 100%);"></div>
+          <span class="card-thumb-label">⌬</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag tag-dim btn-sm">Chemistry</span><span class="tag tag-dim btn-sm">Beginner</span></div>
+          <div class="card-title">Molecular Structures & Bonds</div>
+          <div class="card-meta"><span>⊙ 6 lessons</span><span>◷ 28 min</span><span>✦ 320 XP</span></div>
+          <div class="card-progress-bar"><div class="card-progress-fill teal" style="width:0%;"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ 8. QUESTION CARDS ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">08</p>
+    <h2 class="section-title">Question Interactions</h2>
+
+    <!-- MCQ -->
+    <div class="glass q-card w-full" style="margin-bottom:20px;">
+      <div class="q-number">Question 3 of 8 · Multiple Choice</div>
+      <div class="q-text">Which of the following correctly describes the relationship between frequency and wavelength of electromagnetic waves?</div>
+      <div class="q-options">
+        <div class="q-option selected">
+          <div class="q-option-key">A</div>
+          <div class="q-option-text">They are inversely proportional — higher frequency means shorter wavelength</div>
+        </div>
+        <div class="q-option correct">
+          <div class="q-option-key">✓</div>
+          <div class="q-option-text">They are inversely proportional — higher frequency means shorter wavelength</div>
+        </div>
+        <div class="q-option wrong">
+          <div class="q-option-key">✗</div>
+          <div class="q-option-text">They are directly proportional and always equal in value</div>
+        </div>
+        <div class="q-option">
+          <div class="q-option-key">D</div>
+          <div class="q-option-text">Frequency is independent of wavelength in a vacuum</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:20px;">
+      <!-- True/False -->
+      <div class="glass q-card w-half">
+        <div class="q-number">True or False</div>
+        <div class="q-text" style="font-size:18px;">The speed of light is constant in all mediums.</div>
+        <div class="tf-options">
+          <div class="tf-btn f-sel">✗ &nbsp;False</div>
+          <div class="tf-btn">True</div>
+        </div>
+      </div>
+      <!-- Fill in blank -->
+      <div class="glass q-card w-half">
+        <div class="q-number">Fill in the Blank</div>
+        <div class="fill-blank-wrap">
+          <span class="fill-word">The speed of light in a vacuum is approximately</span>
+          <input class="fill-input" value="3 × 10⁸" style="width:100px;">
+          <span class="fill-word">metres per second.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Matching -->
+    <div class="glass q-card w-full">
+      <div class="q-number">Matching · Connect Each Term</div>
+      <div class="q-text" style="font-size:18px;margin-bottom:16px;">Match each wave property to its definition</div>
+      <div>
+        <div class="matching-row"><div class="match-left linked">Amplitude</div><div class="match-line">——</div><div class="match-right linked">Maximum displacement from rest</div></div>
+        <div class="matching-row"><div class="match-left">Frequency</div><div class="match-line">  ·  </div><div class="match-right">Number of cycles per second</div></div>
+        <div class="matching-row"><div class="match-left">Wavelength</div><div class="match-line">  ·  </div><div class="match-right">Distance between two crests</div></div>
+        <div class="matching-row"><div class="match-left">Phase</div><div class="match-line">  ·  </div><div class="match-right">Position in the wave cycle</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 9. LESSON RESULT ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">09</p>
+    <h2 class="section-title">Lesson Result</h2>
+    <div class="glass-warm result-card" style="max-width:460px;">
+      <div class="result-icon">🌙</div>
+      <div class="result-title">Lesson Complete</div>
+      <div class="result-sub">The Nature of Light · Chapter 2</div>
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="result-stat-val">87</div>
+          <div class="result-stat-lbl">Score</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-val">7/8</div>
+          <div class="result-stat-lbl">Correct</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-val">4:32</div>
+          <div class="result-stat-lbl">Time</div>
+        </div>
+      </div>
+      <div class="result-xp-badge">✦ &nbsp;+240 XP earned</div>
+      <div class="row" style="justify-content:center; gap:10px;">
+        <button class="btn btn-secondary btn-sm">Retry</button>
+        <button class="btn btn-primary">Next Lesson →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 10. ACHIEVEMENTS ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">10</p>
+    <h2 class="section-title">Achievements</h2>
+    <div class="col" style="max-width:540px; gap:8px;">
+      <div class="ach-card glass">
+        <div class="ach-icon-wrap gold">🌙</div>
+        <div class="ach-body">
+          <div class="ach-name">Moonlit Scholar</div>
+          <div class="ach-desc">Completed 5 lessons after midnight</div>
+        </div>
+        <div class="ach-rarity rarity-legendary">Legendary</div>
+      </div>
+      <div class="ach-card glass">
+        <div class="ach-icon-wrap teal">🌊</div>
+        <div class="ach-body">
+          <div class="ach-name">Ocean Depth</div>
+          <div class="ach-desc">Answered 100 questions without mistakes</div>
+        </div>
+        <div class="ach-rarity rarity-rare">Rare</div>
+      </div>
+      <div class="ach-card glass">
+        <div class="ach-icon-wrap amber">🔥</div>
+        <div class="ach-body">
+          <div class="ach-name">Eternal Flame</div>
+          <div class="ach-desc">14-day learning streak</div>
+        </div>
+        <div class="ach-rarity rarity-uncommon">Uncommon</div>
+      </div>
+      <div class="ach-card glass">
+        <div class="ach-icon-wrap dim">⭐</div>
+        <div class="ach-body">
+          <div class="ach-name">First Light</div>
+          <div class="ach-desc">Complete your first lesson · Locked</div>
+        </div>
+        <div class="ach-rarity rarity-common">Common</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 11. USER PROFILE ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">11</p>
+    <h2 class="section-title">User Profile & Streak</h2>
+    <div class="row">
+      <div class="glass w-half" style="padding:0;overflow:hidden;">
+        <div class="user-row">
+          <div class="user-avatar">
+            <div class="user-avatar-img"></div>
+            <div class="user-avatar-badge">✦</div>
+          </div>
+          <div class="user-info">
+            <div class="user-name">Zhang Junqiu</div>
+            <div class="user-title">Seeker of Patterns</div>
+            <div class="user-xp-bar">
+              <div class="progress-bar-track"><div class="progress-bar-fill" style="width:62%;"></div></div>
+            </div>
+          </div>
+          <div class="user-meta">
+            <div class="user-level">12</div>
+            <div class="user-level-lbl">Level</div>
+          </div>
+        </div>
+        <div style="padding:0 22px 18px; display:flex; gap:24px;">
+          <div style="text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(200,160,80,0.8);">2,480</div>
+            <div style="font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,220,180,0.3);">Total XP</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(200,160,80,0.8);">18</div>
+            <div style="font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,220,180,0.3);">Lessons</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(200,160,80,0.8);">7</div>
+            <div style="font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,220,180,0.3);">Badges</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="streak-card glass w-half">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+          <div>
+            <div class="streak-number">14</div>
+            <div class="streak-lbl">Day Streak</div>
+          </div>
+          <span style="font-size:32px;filter:drop-shadow(0 0 10px rgba(200,130,40,0.5));">🔥</span>
+        </div>
+        <div class="streak-days" style="margin-top:20px;">
+          <div class="streak-day done"><div class="streak-day-dot">✓</div><div class="streak-day-name">Mon</div></div>
+          <div class="streak-day done"><div class="streak-day-dot">✓</div><div class="streak-day-name">Tue</div></div>
+          <div class="streak-day done"><div class="streak-day-dot">✓</div><div class="streak-day-name">Wed</div></div>
+          <div class="streak-day done"><div class="streak-day-dot">✓</div><div class="streak-day-name">Thu</div></div>
+          <div class="streak-day today"><div class="streak-day-dot">★</div><div class="streak-day-name">Fri</div></div>
+          <div class="streak-day"><div class="streak-day-dot"></div><div class="streak-day-name">Sat</div></div>
+          <div class="streak-day"><div class="streak-day-dot"></div><div class="streak-day-name">Sun</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 12. NAVIGATION ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">12</p>
+    <h2 class="section-title">Navigation</h2>
+    <!-- Top nav already shown at top — show a variant panel here -->
+    <div class="glass" style="border-radius:var(--r-lg); overflow:hidden; margin-bottom:20px;">
+      <div class="tab-bar">
+        <div class="tab-item active"><span class="tab-icon">⌂</span>Home</div>
+        <div class="tab-item"><span class="tab-icon">⊙</span>Explore</div>
+        <div class="tab-item"><span class="tab-icon">▶</span>Learn</div>
+        <div class="tab-item"><span class="tab-icon">✦</span>Progress</div>
+        <div class="tab-item"><span class="tab-icon">◉</span>Profile</div>
+      </div>
+    </div>
+    <!-- Level map -->
+    <div class="glass" style="padding:24px; border-radius:var(--r-lg);">
+      <div style="font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(200,160,80,0.4);margin-bottom:16px;">Level Map · Chapter 2</div>
+      <div class="level-map">
+        <div class="map-node-wrap">
+          <div class="map-node done">✓</div>
+          <div class="map-node-lbl">Intro</div>
+        </div>
+        <div class="map-line"></div>
+        <div class="map-node-wrap">
+          <div class="map-node done">✓</div>
+          <div class="map-node-lbl">Wave</div>
+        </div>
+        <div class="map-line"></div>
+        <div class="map-node-wrap">
+          <div class="map-node current">★</div>
+          <div class="map-node-lbl" style="color:rgba(200,160,80,0.7);">Light</div>
+        </div>
+        <div class="map-line locked-line"></div>
+        <div class="map-node-wrap">
+          <div class="map-node locked">⊘</div>
+          <div class="map-node-lbl">Optics</div>
+        </div>
+        <div class="map-line locked-line"></div>
+        <div class="map-node-wrap">
+          <div class="map-node locked">⊘</div>
+          <div class="map-node-lbl">Quiz</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 13. NOTIFICATIONS ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">13</p>
+    <h2 class="section-title">Notifications & Toasts</h2>
+    <div class="col" style="gap:10px;">
+      <div class="toast toast-success">
+        <div class="toast-dot"></div>
+        <div class="toast-msg"><strong>Lesson Complete</strong><span>You earned 240 XP · 14-day streak maintained</span></div>
+        <div class="toast-close">×</div>
+      </div>
+      <div class="toast toast-info">
+        <div class="toast-dot"></div>
+        <div class="toast-msg"><strong>New Course Available</strong><span>Quantum Mechanics · Advanced · 12 lessons</span></div>
+        <div class="toast-close">×</div>
+      </div>
+      <div class="toast toast-warn">
+        <div class="toast-dot"></div>
+        <div class="toast-msg"><strong>Streak at Risk</strong><span>Complete a lesson in the next 3 hours to keep your streak</span></div>
+        <div class="toast-close">×</div>
+      </div>
+      <div class="toast toast-error">
+        <div class="toast-dot"></div>
+        <div class="toast-msg"><strong>Connection Lost</strong><span>Progress auto-saved. Reconnect to sync.</span></div>
+        <div class="toast-close">×</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 14. DIALOG / MODAL ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">14</p>
+    <h2 class="section-title">Dialog & Modal</h2>
+    <div class="modal-overlay" style="max-width:460px;">
+      <div class="modal-box glass">
+        <div class="modal-header">
+          <div class="modal-title">Abandon this lesson?</div>
+          <div class="modal-close">×</div>
+        </div>
+        <div class="modal-body">Your progress up to this point has been saved automatically. You can resume from where you left off at any time.</div>
+        <div class="modal-actions">
+          <button class="btn btn-text btn-sm">Cancel</button>
+          <button class="btn btn-secondary btn-sm">Save & Exit</button>
+          <button class="btn btn-danger btn-sm">Exit Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 15. CODE BLOCK ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">15</p>
+    <h2 class="section-title">Code Block</h2>
+    <div class="glass code-block">
+      <div class="code-header">
+        <span class="code-lang">Python · Wave Simulation</span>
+        <span class="code-copy">Copy</span>
+      </div>
+<pre><span class="c-cm"># Simulates electromagnetic wave propagation</span>
+<span class="c-kw">import</span> <span class="c-def">numpy</span> <span class="c-kw">as</span> <span class="c-def">np</span>
+
+<span class="c-kw">def</span> <span class="c-fn">wave</span>(<span class="c-def">x</span>, <span class="c-def">t</span>, <span class="c-def">frequency</span>=<span class="c-num">5e14</span>):
+    <span class="c-str">"""Returns E-field amplitude at position x and time t."""</span>
+    wavelength = <span class="c-num">3e8</span> / frequency  <span class="c-cm"># c = f × λ</span>
+    k = <span class="c-num">2</span> * np.pi / wavelength
+    omega = <span class="c-num">2</span> * np.pi * frequency
+    <span class="c-kw">return</span> np.<span class="c-fn">cos</span>(k * x - omega * t)
+
+x = np.<span class="c-fn">linspace</span>(<span class="c-num">0</span>, <span class="c-num">1e-6</span>, <span class="c-num">1000</span>)
+E = <span class="c-fn">wave</span>(x, t=<span class="c-num">1e-15</span>)</pre>
+    </div>
+  </div>
+
+  <!-- ══ 16. XP TRANSACTIONS ══════════════ -->
+  <div class="section reveal">
+    <p class="section-label">16</p>
+    <h2 class="section-title">XP Transaction Log</h2>
+    <div class="glass" style="border-radius:var(--r-lg);overflow:hidden;">
+      <div class="xp-list">
+        <div class="xp-row-item">
+          <div class="xp-dot-sm earn"></div>
+          <div class="xp-desc">Lesson complete · The Nature of Light</div>
+          <div class="xp-time">Today 23:14</div>
+          <div class="xp-amount earn">+240</div>
+        </div>
+        <div class="divider" style="margin:0 16px;"></div>
+        <div class="xp-row-item">
+          <div class="xp-dot-sm earn"></div>
+          <div class="xp-desc">Streak bonus · 14 days</div>
+          <div class="xp-time">Today 23:14</div>
+          <div class="xp-amount earn">+80</div>
+        </div>
+        <div class="divider" style="margin:0 16px;"></div>
+        <div class="xp-row-item">
+          <div class="xp-dot-sm earn"></div>
+          <div class="xp-desc">Perfect score · Electromagnetic Waves Quiz</div>
+          <div class="xp-time">Yesterday</div>
+          <div class="xp-amount earn">+160</div>
+        </div>
+        <div class="divider" style="margin:0 16px;"></div>
+        <div class="xp-row-item">
+          <div class="xp-dot-sm spend"></div>
+          <div class="xp-desc">Hint used · Question 4</div>
+          <div class="xp-time">Yesterday</div>
+          <div class="xp-amount spend">−20</div>
+        </div>
+        <div class="divider" style="margin:0 16px;"></div>
+        <div class="xp-row-item">
+          <div class="xp-dot-sm earn"></div>
+          <div class="xp-desc">Achievement unlocked · Moonlit Scholar</div>
+          <div class="xp-time">Mar 16</div>
+          <div class="xp-amount earn">+500</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /scroll-wrap -->
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

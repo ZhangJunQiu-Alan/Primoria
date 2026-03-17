@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Primoria · Cosmic Academy Style Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════ */
+:root {
+  --bg:           #0D0F1A;
+  --bg-card:      #161B2E;
+  --bg-elevated:  #1E2440;
+  --bg-canvas:    #1A1F35;
+  --primary:      #7B5EA7;
+  --primary-l:    #9B7EC7;
+  --primary-d:    #5A4080;
+  --cyan:         #00D4FF;
+  --cyan-dim:     rgba(0,212,255,0.12);
+  --cyan-glow:    rgba(0,212,255,0.45);
+  --gold:         #FFD166;
+  --gold-glow:    rgba(255,209,102,0.55);
+  --error:        #FF4D6D;
+  --error-dim:    rgba(255,77,109,0.15);
+  --success:      #06D6A0;
+  --text:         #E8EAF6;
+  --text-sub:     #8892B0;
+  --text-muted:   #4A5568;
+  --border:       rgba(123,94,167,0.35);
+  --border-cyan:  rgba(0,212,255,0.35);
+  --border-subtle:rgba(255,255,255,0.06);
+  --glow-purple:  rgba(123,94,167,0.5);
+  --r-sm: 8px; --r-md: 14px; --r-lg: 16px; --r-xl: 24px; --r-full: 999px;
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   STARFIELD BACKGROUND — rendered by Canvas JS
+═══════════════════════════════════════════════ */
+#starfield {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════ */
+.page { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 56px 32px 100px; }
+.section { margin-bottom: 64px; }
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 24px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title::before {
+  content: ''; display: inline-block;
+  width: 24px; height: 1px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+}
+.row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes pulse-cyan  { 0%,100% { box-shadow: 0 0 14px var(--cyan-glow); } 50% { box-shadow: 0 0 30px var(--cyan-glow), 0 0 60px rgba(0,212,255,0.2); } }
+@keyframes pulse-gold  { 0%,100% { box-shadow: 0 0 12px var(--gold-glow); } 50% { box-shadow: 0 0 28px var(--gold-glow), 0 0 50px rgba(255,209,102,0.25); } }
+@keyframes float-up   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes shimmer-dark { 0% { background-position: -600px 0; } 100% { background-position: 600px 0; } }
+@keyframes gradient-shift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+@keyframes blink-dot   { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+/* ═══════════════════════════════════════════════
+   PAGE HEADER
+═══════════════════════════════════════════════ */
+.page-header { text-align: center; margin-bottom: 80px; }
+.page-header .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--cyan); letter-spacing: 0.2em;
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.page-header .label::before, .page-header .label::after {
+  content: ''; display: block; width: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan));
+}
+.page-header .label::after { transform: scaleX(-1); }
+.page-header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 52px; font-weight: 700; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #E8EAF6 0%, var(--primary-l) 40%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 12px; line-height: 1.1;
+}
+.page-header p { color: var(--text-sub); font-size: 14px; letter-spacing: 0.03em; }
+
+/* ═══════════════════════════════════════════════
+   GLASSMORPHISM CARD BASE
+═══════════════════════════════════════════════ */
+.glass {
+  background: rgba(22,27,46,0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  position: relative; overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+}
+.glass::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+}
+.glass:hover {
+  transform: translateY(-4px);
+  border-color: rgba(123,94,167,0.7);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px var(--glow-purple);
+}
+.card { padding: 24px; }
+
+/* ═══════════════════════════════════════════════
+   COLOR PALETTE
+═══════════════════════════════════════════════ */
+.palette { display: flex; gap: 12px; flex-wrap: wrap; }
+.swatch { width: 72px; text-align: center; }
+.swatch-dot {
+  width: 72px; height: 72px; border-radius: 12px; margin-bottom: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  position: relative; overflow: hidden;
+}
+.swatch-dot::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+}
+.swatch small { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+.swatch span { font-size: 11px; font-weight: 500; color: var(--text-sub); }
+.swatch-dot.glow-purple { box-shadow: 0 4px 20px rgba(123,94,167,0.6); }
+.swatch-dot.glow-cyan   { box-shadow: 0 4px 20px rgba(0,212,255,0.6); }
+.swatch-dot.glow-gold   { box-shadow: 0 4px 20px rgba(255,209,102,0.6); }
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════ */
+.t1 { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+.t2 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; color: var(--text); }
+.t3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 500;
+      background: linear-gradient(90deg, var(--primary-l), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.t4 { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500; color: var(--text); }
+.t5 { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-sub); }
+.t6 { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); opacity: 0.8; letter-spacing: 0.06em; }
+
+/* ═══════════════════════════════════════════════
+   BUTTONS — 3D RAISED PHYSICAL STYLE
+   Technique: multi-layer box-shadow creates
+   a visible extruded "side face" beneath the
+   button surface. :active presses it flush.
+═══════════════════════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--r-full);
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none;
+  letter-spacing: 0.02em; position: relative;
+  text-decoration: none; outline: none;
+  /* Disable default transition on active for snappy press feel */
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.2s;
+  /* Prevent text blur on transform */
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* Top-surface gloss layer (shared) */
+.btn::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(
+    175deg,
+    rgba(255,255,255,0.22) 0%,
+    rgba(255,255,255,0.06) 40%,
+    transparent 65%
+  );
+  z-index: 1;
+}
+
+/* ── Cyan ──────────────────── */
+.btn-cyan {
+  background: linear-gradient(160deg, #22E4FF 0%, #00B8E0 50%, #0099CC 100%);
+  color: #041822; font-weight: 700;
+  /* layers: inner-top highlight | inner-bottom shadow | extrude face | ambient glow */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 5px 0 0 #005f77,
+    0 6px 18px rgba(0,180,220,0.5);
+  transform: translateY(0);
+}
+.btn-cyan:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 6px 0 0 #005f77,
+    0 8px 28px rgba(0,212,255,0.6);
+  transform: translateY(-1px);
+}
+.btn-cyan:active {
+  transform: translateY(5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 2px 4px rgba(0,0,0,0.35),
+    0 0 0 0 #005f77,
+    0 2px 8px rgba(0,180,220,0.35);
+}
+
+/* ── Purple ────────────────── */
+.btn-purple {
+  background: linear-gradient(160deg, #B07AE8 0%, #8F64C0 50%, #7B5EA7 100%);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.3),
+    0 5px 0 0 #3a1f5a,
+    0 6px 18px rgba(100,60,160,0.5);
+  transform: translateY(0);
+}
+.btn-purple:hover {
+  filter: brightness(1.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.3),
+    0 6px 0 0 #3a1f5a,
+    0 8px 28px rgba(123,94,167,0.65);
+  transform: translateY(-1px);
+}
+.btn-purple:active {
+  transform: translateY(5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    inset 0 2px 4px rgba(0,0,0,0.4),
+    0 0 0 0 #3a1f5a,
+    0 2px 8px rgba(100,60,160,0.35);
+}
+
+/* ── Outline (ghost cyan) ──── */
+.btn-outline {
+  background: rgba(0,212,255,0.07);
+  color: var(--cyan);
+  border: 1px solid rgba(0,212,255,0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(0,212,255,0.2),
+    inset 0 -1px 0 rgba(0,0,0,0.2),
+    0 4px 0 0 rgba(0,80,100,0.7),
+    0 5px 14px rgba(0,212,255,0.18);
+  transform: translateY(0);
+}
+.btn-outline:hover {
+  background: rgba(0,212,255,0.13);
+  box-shadow:
+    inset 0 1px 0 rgba(0,212,255,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.2),
+    0 5px 0 0 rgba(0,80,100,0.8),
+    0 6px 20px rgba(0,212,255,0.3);
+  transform: translateY(-1px);
+}
+.btn-outline:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 rgba(0,212,255,0.1),
+    inset 0 2px 4px rgba(0,0,0,0.3),
+    0 0 0 0 rgba(0,80,100,0.5),
+    0 2px 6px rgba(0,212,255,0.1);
+}
+
+/* ── Ghost ─────────────────── */
+.btn-ghost {
+  background: rgba(255,255,255,0.07);
+  color: var(--text-sub);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 4px 0 0 rgba(20,20,30,0.9),
+    0 5px 12px rgba(0,0,0,0.35);
+  transform: translateY(0);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--text);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 5px 0 0 rgba(20,20,30,0.9),
+    0 6px 16px rgba(0,0,0,0.45);
+  transform: translateY(-1px);
+}
+.btn-ghost:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 2px 4px rgba(0,0,0,0.4),
+    0 0 0 0 rgba(20,20,30,0.7),
+    0 1px 4px rgba(0,0,0,0.25);
+}
+
+/* ── AI (animated gradient) ── */
+.btn-ai {
+  background: linear-gradient(135deg, #9B7AE8, #00D4FF, #7B5EA7, #00B8E0);
+  background-size: 300% 300%;
+  color: #fff; font-weight: 700;
+  animation: gradient-shift 3s linear infinite;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.3),
+    0 5px 0 0 #2d1060,
+    0 6px 22px rgba(100,60,200,0.55),
+    0 0 30px rgba(0,212,255,0.2);
+  transform: translateY(0);
+}
+.btn-ai:hover {
+  filter: brightness(1.1) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.3),
+    0 6px 0 0 #2d1060,
+    0 8px 32px rgba(100,60,200,0.7),
+    0 0 40px rgba(0,212,255,0.3);
+  transform: translateY(-1px);
+}
+.btn-ai:active {
+  transform: translateY(5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    inset 0 2px 5px rgba(0,0,0,0.4),
+    0 0 0 0 #2d1060,
+    0 2px 10px rgba(100,60,200,0.4);
+}
+
+.btn[disabled] {
+  opacity: 0.32; cursor: not-allowed;
+  transform: none !important; filter: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   INPUTS
+═══════════════════════════════════════════════ */
+.input-group { display: flex; flex-direction: column; gap: 6px; min-width: 220px; }
+.input-label { font-size: 11px; font-weight: 600; color: var(--text-sub); letter-spacing: 0.06em; text-transform: uppercase; }
+.input-field {
+  padding: 10px 14px; border-radius: var(--r-md);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(30,36,64,0.8);
+  font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text);
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(8px);
+}
+.input-field::placeholder { color: var(--text-muted); }
+.input-field:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,212,255,0.15); }
+.input-field.error { border-color: var(--error); }
+.input-field.error:focus { box-shadow: 0 0 0 3px rgba(255,77,109,0.15); }
+.input-helper { font-size: 11px; color: var(--text-muted); }
+.input-helper.ok  { color: var(--success); }
+.input-helper.err { color: var(--error); }
+
+/* ═══════════════════════════════════════════════
+   BADGES & TAGS
+═══════════════════════════════════════════════ */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: var(--r-full);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+.badge-beginner  { background: rgba(6,214,160,0.12); color: var(--success); border-color: rgba(6,214,160,0.3); }
+.badge-inter     { background: rgba(123,94,167,0.15); color: var(--primary-l); border-color: rgba(123,94,167,0.4); }
+.badge-advanced  { background: rgba(0,212,255,0.10); color: var(--cyan); border-color: rgba(0,212,255,0.3); }
+.badge-xp        {
+  background: linear-gradient(135deg, rgba(255,209,102,0.2), rgba(255,209,102,0.08));
+  color: var(--gold); border-color: rgba(255,209,102,0.4);
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(255,209,102,0.2);
+}
+.badge-streak    { background: rgba(255,77,109,0.12); color: #FF8099; border-color: rgba(255,77,109,0.3); }
+.chip {
+  display: inline-flex; align-items: center;
+  padding: 5px 14px; border-radius: var(--r-full);
+  font-size: 12px; font-weight: 500; color: var(--text-sub);
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle);
+  cursor: pointer; transition: all 0.15s;
+}
+.chip:hover, .chip.active {
+  background: rgba(0,212,255,0.12); color: var(--cyan);
+  border-color: var(--border-cyan); box-shadow: 0 0 12px rgba(0,212,255,0.15);
+}
+
+/* ═══════════════════════════════════════════════
+   COURSE CARD (Viewer – glassmorphism)
+═══════════════════════════════════════════════ */
+.course-card {
+  width: 256px;
+  background: rgba(22,27,46,0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 18px; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.course-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0,212,255,0.5);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 24px rgba(0,212,255,0.15);
+}
+.course-thumb {
+  width: 100%; height: 148px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.course-thumb-bg {
+  position: absolute; inset: 0;
+}
+.course-thumb-icon { font-size: 44px; position: relative; z-index: 1; filter: drop-shadow(0 0 16px rgba(0,212,255,0.7)); }
+.course-body { padding: 16px; }
+.course-subject { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--cyan); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 5px; }
+.course-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+.course-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.progress-wrap {}
+.progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-sub); margin-bottom: 5px; }
+.progress-bar {
+  height: 5px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: visible; position: relative;
+}
+.progress-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--primary-l), var(--cyan));
+  position: relative;
+  box-shadow: 0 0 8px var(--cyan-glow);
+}
+.progress-fill::after {
+  content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+}
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION — Viewer bottom bar
+═══════════════════════════════════════════════ */
+.bottombar {
+  display: flex; align-items: center; justify-content: space-around;
+  padding: 10px 16px 14px;
+  background: rgba(13,15,26,0.85); backdrop-filter: blur(20px);
+  border: 1px solid rgba(123,94,167,0.25); border-radius: var(--r-xl);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.5), 0 0 30px rgba(123,94,167,0.1);
+  max-width: 380px;
+}
+.tab-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 16px; border-radius: var(--r-lg);
+  cursor: pointer; transition: all 0.2s; min-width: 60px;
+}
+.tab-icon { font-size: 20px; transition: filter 0.2s; }
+.tab-label { font-size: 10px; font-weight: 600; color: var(--text-muted); transition: color 0.2s; letter-spacing: 0.04em; }
+.tab-item.active { background: rgba(0,212,255,0.08); }
+.tab-item.active .tab-icon { filter: drop-shadow(0 0 6px var(--cyan)); }
+.tab-item.active .tab-label { color: var(--cyan); }
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION — Builder top bar / sidebar
+═══════════════════════════════════════════════ */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; height: 52px;
+  background: rgba(13,15,26,0.9); backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle); border-radius: var(--r-lg);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+.topbar-logo {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px;
+  background: linear-gradient(90deg, var(--primary-l), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.topbar-nav { display: flex; gap: 2px; }
+.topbar-nav a {
+  padding: 6px 14px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 500; color: var(--text-sub);
+  text-decoration: none; transition: all 0.15s;
+}
+.topbar-nav a:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+.topbar-nav a.active { background: rgba(0,212,255,0.1); color: var(--cyan); }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--cyan));
+  border: 2px solid rgba(0,212,255,0.4);
+  box-shadow: 0 0 12px rgba(0,212,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: #fff;
+}
+
+/* ═══════════════════════════════════════════════
+   QUESTION CARD
+═══════════════════════════════════════════════ */
+.question-card { max-width: 420px; }
+.question-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--primary-l); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.question-text { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600; color: var(--text); margin-bottom: 18px; line-height: 1.4; }
+.options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
+.option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: var(--r-md);
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.04);
+  cursor: pointer; transition: all 0.15s;
+  font-size: 13px; color: var(--text-sub);
+}
+.option:hover { border-color: rgba(123,94,167,0.5); background: rgba(123,94,167,0.08); color: var(--text); }
+.option.selected {
+  border-color: var(--cyan); background: rgba(0,212,255,0.08); color: var(--text);
+  box-shadow: inset 0 0 16px rgba(0,212,255,0.05), 0 0 10px rgba(0,212,255,0.08);
+}
+.option-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.option.selected .option-dot { border-color: var(--cyan); background: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow); }
+.option.selected .option-dot::after { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; background: #0D0F1A; }
+
+/* ═══════════════════════════════════════════════
+   PROGRESS
+═══════════════════════════════════════════════ */
+.linear-progress { height: 6px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: visible; width: 100%; position: relative; }
+.linear-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--primary), var(--cyan));
+  box-shadow: 0 0 10px var(--cyan-glow);
+  position: relative;
+}
+.step-bar { display: flex; align-items: center; gap: 7px; }
+.step-dot { height: 5px; border-radius: 99px; background: rgba(255,255,255,0.1); transition: all 0.3s; }
+.step-dot.done { background: var(--primary); width: 20px; }
+.step-dot.active { background: linear-gradient(90deg, var(--primary), var(--cyan)); width: 28px; box-shadow: 0 0 8px var(--cyan-glow); }
+.step-dot.todo { width: 14px; }
+
+/* ═══════════════════════════════════════════════
+   USER INFO ROW
+═══════════════════════════════════════════════ */
+.user-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 22px; border-radius: var(--r-lg);
+  max-width: 400px;
+}
+.avatar-lg {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--cyan));
+  flex-shrink: 0;
+  border: 2.5px solid rgba(0,212,255,0.5);
+  box-shadow: 0 0 20px rgba(0,212,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #fff;
+}
+.user-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 2px; }
+.user-level { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); letter-spacing: 0.05em; }
+.user-stats { display: flex; gap: 18px; margin-top: 8px; }
+.stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); display: block; }
+.stat-lbl { font-size: 10px; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ═══════════════════════════════════════════════
+   ACHIEVEMENT BADGES
+═══════════════════════════════════════════════ */
+.achievement-card {
+  width: 124px; padding: 20px 14px;
+  background: rgba(22,27,46,0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 18px; text-align: center;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+}
+.achievement-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.achievement-card.unlocked {
+  border-color: rgba(255,209,102,0.4);
+  box-shadow: 0 0 20px rgba(255,209,102,0.15);
+  animation: pulse-gold 3s ease-in-out infinite;
+}
+.achievement-card:hover { transform: translateY(-5px) scale(1.03); }
+.achievement-icon { font-size: 34px; margin-bottom: 10px; display: block; filter: drop-shadow(0 0 8px rgba(255,209,102,0.6)); }
+.achievement-card.locked .achievement-icon { filter: grayscale(0.8) brightness(0.5); }
+.achievement-name { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+.achievement-rarity {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase;
+  padding: 2px 8px; border-radius: var(--r-full); display: inline-block;
+}
+.rarity-common  { background: rgba(6,214,160,0.12); color: var(--success); }
+.rarity-rare    { background: rgba(123,94,167,0.2); color: var(--primary-l); }
+.rarity-epic    { background: rgba(255,209,102,0.15); color: var(--gold); }
+.achievement-lock { position: absolute; top: 8px; right: 8px; font-size: 12px; opacity: 0.6; }
+
+/* ═══════════════════════════════════════════════
+   FEEDBACK BARS
+═══════════════════════════════════════════════ */
+.feedback-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px; border-radius: var(--r-lg);
+  backdrop-filter: blur(12px); max-width: 420px;
+}
+.feedback-bar.correct {
+  background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.35);
+  box-shadow: 0 0 20px rgba(6,214,160,0.1); color: var(--success);
+}
+.feedback-bar.wrong {
+  background: var(--error-dim); border: 1px solid rgba(255,77,109,0.35);
+  box-shadow: 0 0 20px rgba(255,77,109,0.1); color: #FF8099;
+}
+.feedback-icon { font-size: 22px; flex-shrink: 0; }
+.feedback-text { font-weight: 600; font-size: 13px; }
+.feedback-sub { font-size: 11px; opacity: 0.7; margin-top: 2px; color: var(--text-sub); }
+
+/* ═══════════════════════════════════════════════
+   SKELETON
+═══════════════════════════════════════════════ */
+@keyframes shimmer-dark {
+  0% { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 600px 100%;
+  animation: shimmer-dark 1.8s ease-in-out infinite;
+  border-radius: var(--r-sm);
+}
+.skeleton-card {
+  width: 256px; padding: 16px; border-radius: 18px;
+  background: rgba(22,27,46,0.5); border: 1px solid var(--border-subtle);
+}
+.skel-thumb { height: 130px; border-radius: 12px; margin-bottom: 14px; }
+.skel-line { height: 11px; margin-bottom: 9px; }
+.skel-line.short { width: 55%; }
+.skel-line.medium { width: 80%; }
+
+/* ═══════════════════════════════════════════════
+   BUILDER DASHBOARD PREVIEW
+═══════════════════════════════════════════════ */
+.dashboard-preview {
+  display: flex; gap: 0; border-radius: var(--r-lg); overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  height: 320px;
+}
+.sidebar {
+  width: 200px; flex-shrink: 0;
+  background: rgba(13,15,26,0.95);
+  border-right: 1px solid var(--border-subtle);
+  padding: 20px 12px; display: flex; flex-direction: column; gap: 4px;
+}
+.sidebar-logo {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px;
+  background: linear-gradient(90deg, var(--primary-l), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 20px; padding-left: 8px;
+}
+.sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 500; color: var(--text-sub);
+  cursor: pointer; transition: all 0.15s;
+}
+.sidebar-item:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+.sidebar-item.active { background: rgba(0,212,255,0.1); color: var(--cyan); }
+.sidebar-item .si-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-muted); flex-shrink: 0;
+}
+.sidebar-item.active .si-dot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+.dashboard-main { flex: 1; background: rgba(22,27,46,0.6); padding: 20px; overflow: hidden; }
+.dash-tabs { display: flex; gap: 4px; margin-bottom: 18px; }
+.dash-tab {
+  padding: 6px 14px; border-radius: var(--r-md); font-size: 12px; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; transition: all 0.15s;
+}
+.dash-tab.active { background: rgba(0,212,255,0.1); color: var(--cyan); }
+.kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.kpi-card {
+  padding: 14px; border-radius: var(--r-md);
+  background: rgba(13,15,26,0.6); border: 1px solid var(--border-subtle);
+}
+.kpi-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+.kpi-value { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1; }
+.kpi-delta { font-size: 10px; margin-top: 3px; }
+.kpi-delta.up { color: var(--success); }
+.kpi-delta.down { color: var(--error); }
+.chart-area {
+  height: 80px; border-radius: var(--r-md);
+  background: rgba(13,15,26,0.6); border: 1px solid var(--border-subtle);
+  padding: 12px; display: flex; align-items: flex-end; gap: 6px;
+}
+.chart-bar {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: linear-gradient(0deg, var(--primary-d), var(--primary));
+  transition: all 0.3s;
+}
+.chart-bar.highlight { background: linear-gradient(0deg, #0099CC, var(--cyan)); box-shadow: 0 0 8px var(--cyan-glow); }
+
+/* ═══════════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════════ */
+.code-snippet {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  background: rgba(13,15,26,0.8); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md); padding: 14px 16px;
+  color: var(--text-sub); line-height: 1.7;
+  border-left: 3px solid var(--primary);
+}
+.code-snippet .kw { color: var(--primary-l); }
+.code-snippet .fn { color: var(--cyan); }
+.code-snippet .str { color: #A8D8A8; }
+.code-snippet .cmt { color: var(--text-muted); font-style: italic; }
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--success); display: inline-block;
+  animation: blink-dot 1.5s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--success);
+}
+</style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+
+<script>
+/* ═══════════════════════════════════════
+   ANIMATED STARFIELD — Canvas renderer
+   3 layers: dim / mid / bright
+   + nebula clouds + shooting stars
+═══════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+
+  let W, H;
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); buildNebula(); });
+
+  /* ── Stars ───────────────────────────── */
+  const STAR_COUNT = 320;
+  const stars = [];
+
+  const COLORS = [
+    [255, 255, 255],   // white
+    [180, 220, 255],   // cool blue-white
+    [255, 240, 200],   // warm yellow-white
+    [0,   212, 255],   // cyan (Primoria accent)
+    [180, 140, 255],   // purple (Primoria accent)
+  ];
+
+  function mkStar() {
+    const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    const layer = Math.random(); // 0=dim, 1=bright
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: layer < 0.60 ? 0.4 + Math.random() * 0.6   // dim
+        : layer < 0.88 ? 0.8 + Math.random() * 0.9   // mid
+        :                1.2 + Math.random() * 1.4,   // bright
+      col,
+      // twinkle
+      phase:  Math.random() * Math.PI * 2,
+      speed:  0.3 + Math.random() * 1.4,
+      // base opacity
+      baseA: layer < 0.60 ? 0.18 + Math.random() * 0.25
+            : layer < 0.88 ? 0.45 + Math.random() * 0.35
+            :                0.75 + Math.random() * 0.25,
+      // glow radius (only bright ones)
+      glowR: layer >= 0.88 ? 4 + Math.random() * 8 : 0,
+    };
+  }
+
+  for (let i = 0; i < STAR_COUNT; i++) stars.push(mkStar());
+
+  /* ── Nebula clouds (off-screen canvas) ─ */
+  let nebulaCanvas, nebulaCtx;
+  function buildNebula() {
+    nebulaCanvas = document.createElement('canvas');
+    nebulaCanvas.width  = W;
+    nebulaCanvas.height = H;
+    nebulaCtx = nebulaCanvas.getContext('2d');
+
+    const clouds = [
+      { cx: W * 0.15, cy: H * 0.25, rx: W * 0.38, ry: H * 0.32, r: [123,94,167], a: 0.10 },
+      { cx: W * 0.82, cy: H * 0.65, rx: W * 0.34, ry: H * 0.28, r: [0,212,255],  a: 0.07 },
+      { cx: W * 0.52, cy: H * 0.48, rx: W * 0.25, ry: H * 0.22, r: [123,94,167], a: 0.05 },
+      { cx: W * 0.70, cy: H * 0.12, rx: W * 0.22, ry: H * 0.18, r: [0,180,255],  a: 0.05 },
+      { cx: W * 0.30, cy: H * 0.80, rx: W * 0.28, ry: H * 0.18, r: [100,60,180], a: 0.06 },
+    ];
+
+    clouds.forEach(c => {
+      const g = nebulaCtx.createRadialGradient(c.cx, c.cy, 0, c.cx, c.cy, Math.max(c.rx, c.ry));
+      g.addColorStop(0,   `rgba(${c.r[0]},${c.r[1]},${c.r[2]},${c.a})`);
+      g.addColorStop(0.5, `rgba(${c.r[0]},${c.r[1]},${c.r[2]},${c.a * 0.4})`);
+      g.addColorStop(1,   `rgba(${c.r[0]},${c.r[1]},${c.r[2]},0)`);
+
+      nebulaCtx.save();
+      nebulaCtx.scale(c.rx / Math.max(c.rx, c.ry), c.ry / Math.max(c.rx, c.ry));
+      nebulaCtx.fillStyle = g;
+      nebulaCtx.beginPath();
+      const scale = Math.max(c.rx, c.ry);
+      nebulaCtx.arc(c.cx / (c.rx / scale), c.cy / (c.ry / scale), scale, 0, Math.PI * 2);
+      nebulaCtx.fill();
+      nebulaCtx.restore();
+    });
+  }
+  buildNebula();
+
+  /* ── Shooting stars ───────────────────── */
+  const shoots = [];
+  function spawnShoot() {
+    const angle = (Math.random() * 40 + 10) * Math.PI / 180; // 10–50°
+    const speed = 8 + Math.random() * 12;
+    shoots.push({
+      x: Math.random() * W * 0.7,
+      y: Math.random() * H * 0.5,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      len: 80 + Math.random() * 160,
+      life: 1.0,
+      decay: 0.012 + Math.random() * 0.018,
+      col: Math.random() < 0.4 ? [0,212,255] : [255,255,255],
+    });
+  }
+
+  /* ── Render loop ─────────────────────── */
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = '#0D0F1A';
+    ctx.fillRect(0, 0, W, H);
+
+    // Nebula layer
+    ctx.drawImage(nebulaCanvas, 0, 0);
+
+    // Stars
+    const now = t * 0.001;
+    stars.forEach(s => {
+      const twinkle = 0.5 + 0.5 * Math.sin(now * s.speed + s.phase);
+      const alpha = s.baseA * (0.65 + 0.35 * twinkle);
+      const [r, g, b] = s.col;
+
+      // Glow for bright stars
+      if (s.glowR > 0) {
+        const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.glowR * (1 + 0.3 * twinkle));
+        glow.addColorStop(0,   `rgba(${r},${g},${b},${alpha * 0.6})`);
+        glow.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.glowR * (1 + 0.3 * twinkle), 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Star core
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * (0.85 + 0.15 * twinkle), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.fill();
+    });
+
+    // Shooting stars
+    for (let i = shoots.length - 1; i >= 0; i--) {
+      const s = shoots[i];
+      const [r, g, b] = s.col;
+      const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * (s.len / 8), s.y - s.vy * (s.len / 8));
+      grad.addColorStop(0,   `rgba(${r},${g},${b},${s.life * 0.9})`);
+      grad.addColorStop(0.3, `rgba(${r},${g},${b},${s.life * 0.4})`);
+      grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(s.x - s.vx * (s.len / 8), s.y - s.vy * (s.len / 8));
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.5 * s.life;
+      ctx.stroke();
+
+      s.x += s.vx;
+      s.y += s.vy;
+      s.life -= s.decay;
+      if (s.life <= 0) shoots.splice(i, 1);
+    }
+
+    t += 16;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  // Spawn shooting star periodically
+  setInterval(() => { if (Math.random() < 0.65) spawnShoot(); }, 3200);
+  // Spawn one immediately after a short delay
+  setTimeout(spawnShoot, 800);
+})();
+</script>
+
+<div class="page">
+
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <div class="page-header">
+    <div class="label">✦ COSMIC ACADEMY · STYLE PREVIEW ✦</div>
+    <h1>Primoria</h1>
+    <p>Deep Space Immersion · Neon Vitality · Gamified Learning</p>
+  </div>
+
+  <!-- ── 01. Color Palette ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">01 · Color System</div>
+    <div class="palette">
+      <div class="swatch"><div class="swatch-dot" style="background:#0D0F1A"></div><span>Deep Space</span><small>#0D0F1A</small></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#161B2E"></div><span>Nebula Gray</span><small>#161B2E</small></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1E2440"></div><span>Elevated</span><small>#1E2440</small></div>
+      <div class="swatch"><div class="swatch-dot glow-purple" style="background:#7B5EA7"></div><span>Aurora Purple</span><small>#7B5EA7</small></div>
+      <div class="swatch"><div class="swatch-dot glow-cyan" style="background:#00D4FF"></div><span>Nebula Cyan</span><small>#00D4FF</small></div>
+      <div class="swatch"><div class="swatch-dot glow-gold" style="background:#FFD166"></div><span>Starburst Gold</span><small>#FFD166</small></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#FF4D6D;box-shadow:0 4px 20px rgba(255,77,109,0.6)"></div><span>Pulse Red</span><small>#FF4D6D</small></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#06D6A0;box-shadow:0 4px 20px rgba(6,214,160,0.5)"></div><span>Orbit Green</span><small>#06D6A0</small></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#E8EAF6"></div><span>Starlight</span><small>#E8EAF6</small></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#8892B0"></div><span>Galaxy Gray</span><small>#8892B0</small></div>
+    </div>
+  </div>
+
+  <!-- ── 02. Typography ───────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">02 · Typography</div>
+    <div class="glass card" style="max-width:560px">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="t1">Knowledge Has No Limits</div>
+        <div class="t2">Course: Quantum Mechanics</div>
+        <div class="t3">Exploring the fabric of reality</div>
+        <div class="t4">Lesson body — Inter Medium, comfortable reading density</div>
+        <div class="t5">Supporting metadata text — author name, duration, XP reward</div>
+        <div class="t6">// JetBrains Mono · code · labels · timestamps</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 03. Buttons ──────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">03 · Buttons</div>
+    <div class="row" style="align-items:center;flex-wrap:wrap">
+      <button class="btn btn-cyan">✓ Continue</button>
+      <button class="btn btn-purple">→ Enroll</button>
+      <button class="btn btn-outline">↗ Preview</button>
+      <button class="btn btn-ghost">Skip</button>
+      <button class="btn btn-ai">✦ AI Generate</button>
+      <button class="btn btn-cyan" disabled>Disabled</button>
+    </div>
+  </div>
+
+  <!-- ── 04. Inputs ───────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">04 · Input Fields</div>
+    <div class="row">
+      <div class="input-group">
+        <label class="input-label">Your Answer</label>
+        <input class="input-field" type="text" placeholder="Enter value…" />
+        <span class="input-helper">Exact match required</span>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Email</label>
+        <input class="input-field" type="email" value="explorer@primoria.app" />
+        <span class="input-helper ok">✓ Verified</span>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Username</label>
+        <input class="input-field error" type="text" value="x" />
+        <span class="input-helper err">✗ Too short (min 3 chars)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 05. Badges & Tags ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">05 · Badges & Tags</div>
+    <div class="row" style="align-items:center;flex-wrap:wrap">
+      <span class="badge badge-beginner">🌱 Beginner</span>
+      <span class="badge badge-inter">⬡ Intermediate</span>
+      <span class="badge badge-advanced">◈ Advanced</span>
+      <span class="badge badge-xp">✦ 240 XP</span>
+      <span class="badge badge-streak">🔥 7 Day Streak</span>
+      <div style="width:100%;height:1px"></div>
+      <span class="chip active">Physics</span>
+      <span class="chip">Biology</span>
+      <span class="chip">Computer Science</span>
+      <span class="chip">Mathematics</span>
+      <span class="chip">Chemistry</span>
+    </div>
+  </div>
+
+  <!-- ── 06. Course Cards ─────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">06 · Course Cards (Viewer — Glassmorphism)</div>
+    <div class="row">
+      <!-- Enrolled -->
+      <div class="course-card">
+        <div class="course-thumb">
+          <div class="course-thumb-bg" style="background:linear-gradient(135deg,#0a0e1a,#1a1040,#0d2040);"></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 30% 40%,rgba(123,94,167,0.4),transparent 60%),radial-gradient(ellipse 60% 50% at 70% 60%,rgba(0,212,255,0.25),transparent 60%)"></div>
+          <span class="course-thumb-icon">🔭</span>
+        </div>
+        <div class="course-body">
+          <div class="course-subject">Physics · 12 Lessons</div>
+          <div class="course-title">Quantum Mechanics Fundamentals</div>
+          <div class="course-meta">
+            <span class="badge badge-inter">⬡ Intermediate</span>
+            <span style="font-size:11px;color:var(--text-muted)">60 min</span>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Progress</span><span style="color:var(--cyan)">58%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:58%"></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Unenrolled -->
+      <div class="course-card">
+        <div class="course-thumb">
+          <div class="course-thumb-bg" style="background:linear-gradient(135deg,#0a1a14,#0a2818,#0f1a0a)"></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 40% 50%,rgba(6,214,160,0.3),transparent 60%)"></div>
+          <span class="course-thumb-icon">🧬</span>
+        </div>
+        <div class="course-body">
+          <div class="course-subject">Biology · 8 Lessons</div>
+          <div class="course-title">Cell Biology & Genetics</div>
+          <div class="course-meta">
+            <span class="badge badge-beginner">🌱 Beginner</span>
+            <span style="font-size:11px;color:var(--text-muted)">45 min</span>
+          </div>
+          <button class="btn btn-cyan" style="width:100%;justify-content:center;font-size:12px;padding:9px">→ Enroll Now</button>
+        </div>
+      </div>
+      <!-- Skeleton -->
+      <div class="skeleton-card">
+        <div class="skeleton skel-thumb"></div>
+        <div class="skeleton skel-line medium"></div>
+        <div class="skeleton skel-line short"></div>
+        <div class="skeleton skel-line medium"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 07. Navigation ───────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">07 · Navigation</div>
+    <div class="col">
+      <!-- Builder Top Bar -->
+      <div class="topbar">
+        <span class="topbar-logo">Primoria Builder</span>
+        <nav class="topbar-nav">
+          <a href="#">Dashboard</a>
+          <a href="#" class="active">Editor</a>
+          <a href="#">Analytics</a>
+          <a href="#">Publish</a>
+        </nav>
+        <div class="topbar-right">
+          <span style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px"><span class="live-dot"></span>Auto-saved</span>
+          <div class="topbar-avatar">A</div>
+        </div>
+      </div>
+      <!-- Viewer Bottom Tab Bar -->
+      <div class="bottombar">
+        <div class="tab-item active">
+          <span class="tab-icon">🏠</span>
+          <span class="tab-label">Home</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">🔍</span>
+          <span class="tab-label">Explore</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">📚</span>
+          <span class="tab-label">Library</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">👤</span>
+          <span class="tab-label">Profile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 08. Question Card ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">08 · Question Card (Viewer)</div>
+    <div class="glass card question-card">
+      <div class="step-bar" style="margin-bottom:16px">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+        <div class="step-dot todo"></div>
+        <div class="step-dot todo"></div>
+        <div class="step-dot todo"></div>
+      </div>
+      <div class="question-tag">Physics · Question 3 / 6</div>
+      <div class="question-text">What does the Heisenberg Uncertainty Principle state?</div>
+      <div class="options">
+        <div class="option"><div class="option-dot"></div><span>Energy is always conserved</span></div>
+        <div class="option selected"><div class="option-dot"></div><span>Position and momentum cannot both be precisely known</span></div>
+        <div class="option"><div class="option-dot"></div><span>Light travels at a constant speed</span></div>
+        <div class="option"><div class="option-dot"></div><span>Matter and energy are equivalent</span></div>
+      </div>
+      <button class="btn btn-cyan" style="width:100%;justify-content:center">Check Answer</button>
+    </div>
+  </div>
+
+  <!-- ── 09. Progress ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">09 · Progress Indicators</div>
+    <div class="glass card" style="max-width:400px">
+      <div class="col" style="gap:16px">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-sub);margin-bottom:6px">
+            <span>Lesson Progress — 4 / 12</span><span style="color:var(--cyan);font-weight:600">33%</span>
+          </div>
+          <div class="linear-progress"><div class="linear-fill" style="width:33%"></div></div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-sub);margin-bottom:8px">Page Steps</div>
+          <div class="step-bar">
+            <div class="step-dot done"></div>
+            <div class="step-dot done"></div>
+            <div class="step-dot active"></div>
+            <div class="step-dot todo"></div>
+            <div class="step-dot todo"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px">
+          <div><div class="stat-val" style="font-size:28px;background:linear-gradient(90deg,var(--gold),#FFAA00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">1,240</div><div class="stat-lbl">Total XP</div></div>
+          <div><div class="stat-val" style="font-size:28px;color:var(--error)">🔥 14</div><div class="stat-lbl">Day Streak</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 10. User Info ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">10 · User Info Row</div>
+    <div class="glass user-row">
+      <div class="avatar-lg">A</div>
+      <div style="flex:1">
+        <div class="user-name">Alice Chen</div>
+        <div class="user-level">// Level 12 · Quantum Explorer</div>
+        <div class="user-stats">
+          <div><span class="stat-val" style="font-size:18px">1,240</span><span class="stat-lbl">XP</span></div>
+          <div><span class="stat-val" style="font-size:18px">14</span><span class="stat-lbl">Streak</span></div>
+          <div><span class="stat-val" style="font-size:18px">8</span><span class="stat-lbl">Courses</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 11. Achievements ─────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">11 · Achievement Badges</div>
+    <div class="row">
+      <div class="achievement-card unlocked">
+        <span class="achievement-icon">🚀</span>
+        <div class="achievement-name">First Launch</div>
+        <span class="achievement-rarity rarity-common">Common</span>
+      </div>
+      <div class="achievement-card unlocked">
+        <span class="achievement-icon">⭐</span>
+        <div class="achievement-name">Perfect Score</div>
+        <span class="achievement-rarity rarity-rare">Rare</span>
+      </div>
+      <div class="achievement-card unlocked">
+        <span class="achievement-icon">🔥</span>
+        <div class="achievement-name">7 Day Streak</div>
+        <span class="achievement-rarity rarity-epic">Epic</span>
+      </div>
+      <div class="achievement-card locked">
+        <span class="achievement-lock">🔒</span>
+        <span class="achievement-icon">🏆</span>
+        <div class="achievement-name">Grand Scholar</div>
+        <span class="achievement-rarity rarity-epic">Epic</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 12. Feedback Bars ─────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">12 · Answer Feedback</div>
+    <div class="col">
+      <div class="feedback-bar correct">
+        <span class="feedback-icon">✅</span>
+        <div>
+          <div class="feedback-text">Correct! Outstanding.</div>
+          <div class="feedback-sub">+20 XP · Streak continues 🔥</div>
+        </div>
+      </div>
+      <div class="feedback-bar wrong">
+        <span class="feedback-icon">❌</span>
+        <div>
+          <div class="feedback-text">Not quite right — try again.</div>
+          <div class="feedback-sub">Hint: consider the wave-particle duality</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 13. Builder Dashboard Preview ────────────────────────── -->
+  <div class="section">
+    <div class="section-title">13 · Builder Dashboard (Creator View)</div>
+    <div class="dashboard-preview">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-logo">Primoria</div>
+        <div class="sidebar-item active">
+          <span class="si-dot"></span> Dashboard
+        </div>
+        <div class="sidebar-item">
+          <span class="si-dot"></span> My Courses
+        </div>
+        <div class="sidebar-item">
+          <span class="si-dot"></span> Analytics
+        </div>
+        <div class="sidebar-item">
+          <span class="si-dot"></span> Community
+        </div>
+        <div style="flex:1"></div>
+        <div class="sidebar-item">
+          <span class="si-dot"></span> Settings
+        </div>
+      </div>
+      <!-- Main area -->
+      <div class="dashboard-main">
+        <div class="dash-tabs">
+          <div class="dash-tab active">Overview</div>
+          <div class="dash-tab">Courses</div>
+          <div class="dash-tab">Data</div>
+          <div class="dash-tab">Community</div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Learners</div>
+            <div class="kpi-value">2,841</div>
+            <div class="kpi-delta up">↑ +12.4%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Completions</div>
+            <div class="kpi-value">1,203</div>
+            <div class="kpi-delta up">↑ +8.1%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Avg Score</div>
+            <div class="kpi-value">87%</div>
+            <div class="kpi-delta down">↓ -1.2%</div>
+          </div>
+        </div>
+        <div class="chart-area">
+          <div class="chart-bar" style="height:40%"></div>
+          <div class="chart-bar" style="height:55%"></div>
+          <div class="chart-bar" style="height:35%"></div>
+          <div class="chart-bar" style="height:70%"></div>
+          <div class="chart-bar" style="height:60%"></div>
+          <div class="chart-bar highlight" style="height:85%"></div>
+          <div class="chart-bar" style="height:75%"></div>
+          <div class="chart-bar highlight" style="height:90%"></div>
+          <div class="chart-bar" style="height:80%"></div>
+          <div class="chart-bar highlight" style="height:95%"></div>
+          <div class="chart-bar" style="height:88%"></div>
+          <div class="chart-bar" style="height:78%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 14. Code Block ────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">14 · Code Block (JetBrains Mono)</div>
+    <div class="code-snippet">
+      <span class="cmt">// Quantum state initializer</span><br>
+      <span class="kw">class</span> <span class="fn">QuantumState</span> {<br>
+      &nbsp;&nbsp;<span class="kw">final</span> List&lt;<span class="fn">Complex</span>&gt; amplitudes;<br>
+      &nbsp;&nbsp;<span class="fn">QuantumState</span>(<span class="kw">this</span>.amplitudes);<br>
+      &nbsp;&nbsp;<br>
+      &nbsp;&nbsp;<span class="fn">double</span> measure() =&gt; amplitudes<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;.map((a) =&gt; a.abs() * a.abs()).fold(<span class="str">0</span>, (a, b) =&gt; a + b);<br>
+      }
+    </div>
+  </div>
+
+  <div style="text-align:center;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;padding-top:32px">
+    // PRIMORIA · COSMIC ACADEMY · STYLE PREVIEW · 2026
+  </div>
+
+</div>
+</body>
+</html>
