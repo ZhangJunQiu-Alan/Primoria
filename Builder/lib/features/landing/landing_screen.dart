@@ -54,6 +54,14 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
     super.dispose();
   }
 
+  void _handleStartCreating() {
+    if (SupabaseService.isLoggedIn) {
+      context.go('/dashboard');
+    } else {
+      context.go('/login');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = BuilderLocalizations(ref.watch(languageProvider));
@@ -356,7 +364,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                       : t.landingStartCreating.toUpperCase(),
                   filled: true,
                   icon: Icons.dashboard_customize_rounded,
-                  onTap: () => context.go('/builder'),
+                  onTap: _handleStartCreating,
                   prominent: true,
                 ),
               ),
@@ -691,7 +699,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                         label: t.landingStartCreating,
                         filled: true,
                         icon: Icons.auto_awesome_motion_rounded,
-                        onTap: () => context.go('/builder'),
+                        onTap: _handleStartCreating,
                       ),
                     ],
                   )
@@ -720,7 +728,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                         label: t.landingStartCreating,
                         filled: true,
                         icon: Icons.auto_awesome_motion_rounded,
-                        onTap: () => context.go('/builder'),
+                        onTap: _handleStartCreating,
                       ),
                     ],
                   ),

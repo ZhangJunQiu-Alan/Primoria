@@ -8,7 +8,7 @@ import '../providers/course_provider.dart';
 import '../models/models.dart';
 import '../services/block_registry.dart';
 import '../services/ai_animation_generator.dart';
-import '../services/ai_course_generator.dart';
+import '../services/gemini_client.dart';
 import '../services/ai_visual_generator.dart';
 import '../services/file_picker.dart' as file_picker;
 import 'app_dropdown.dart';
@@ -1235,7 +1235,7 @@ class _AnimationEditorState extends State<_AnimationEditor> {
   void initState() {
     super.initState();
     _promptController.text = widget.content.aiPrompt ?? '';
-    _apiKeyController.text = AICourseGenerator.apiKey ?? '';
+    _apiKeyController.text = GeminiClient.apiKey ?? '';
     _codeController = TextEditingController(
       text: widget.content.customHtml ?? '',
     );
@@ -1266,9 +1266,9 @@ class _AnimationEditorState extends State<_AnimationEditor> {
     final prompt = _composePrompt(rawPrompt);
 
     final key = _apiKeyController.text.trim();
-    if (key.isNotEmpty) AICourseGenerator.setApiKey(key);
+    if (key.isNotEmpty) GeminiClient.setApiKey(key);
 
-    final apiKey = AICourseGenerator.apiKey ?? '';
+    final apiKey = GeminiClient.apiKey ?? '';
     if (apiKey.isEmpty) {
       setState(() {
         _generationError = _tr(

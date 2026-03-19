@@ -66,62 +66,6 @@ class BuilderLocalizations {
   String get courseManageStatusPublished => isZh ? '已发布' : 'Published';
   String get courseManageStatusArchived => isZh ? '已归档' : 'Archived';
 
-  // Course Manage — AI one-sentence generation (Beta)
-  String get aiGenerateBeta => isZh ? 'AI 生成 (Beta)' : 'AI Generate (Beta)';
-  String get aiGenerateDialogTitle =>
-      isZh ? '一句话生成课程' : 'Generate Course with AI';
-  String get aiGenerateDialogSubtitle => isZh
-      ? '用一句话描述课程，AI 自动生成结构化内容'
-      : 'Describe your course in one sentence — AI builds the rest';
-  String get aiGeneratePlaceholder => isZh
-      ? "用一句话描述你想要的课程，例如'教 Python 基础编程，适合初学者，带互动练习'"
-      : "e.g. 'Teach Python basics for beginners with interactive exercises'";
-  String get aiGenerateOptionsLabel => isZh ? '高级选项' : 'Options';
-  String get aiGenerateDifficulty => isZh ? '难度' : 'Difficulty';
-  String get aiGenerateDiffBeginner => isZh ? '入门' : 'Beginner';
-  String get aiGenerateDiffIntermediate => isZh ? '进阶' : 'Intermediate';
-  String get aiGenerateDiffAdvanced => isZh ? '高级' : 'Advanced';
-  String get aiGenerateStyle => isZh ? '动画风格' : 'Animation Style';
-  String get aiGenerateStyleCartoon => isZh ? '卡通' : 'Cartoon';
-  String get aiGenerateStyleMinimal => isZh ? '简约' : 'Minimal';
-  String get aiGenerateStyleRealistic => isZh ? '写实' : 'Realistic';
-  String get aiGenerateAudience => isZh ? '目标受众' : 'Target Audience';
-  String get aiGenerateAudienceBeginner => isZh ? '初学者' : 'Beginners';
-  String get aiGenerateAudienceIntermediate => isZh ? '中级用户' : 'Intermediate';
-  String get aiGenerateAudienceAdvanced => isZh ? '高级用户' : 'Advanced';
-  String get aiGenerateBtn => isZh ? '生成课程' : 'Generate Course';
-  String get aiGenerating => isZh ? '正在生成...' : 'Generating...';
-  String get aiGenerateSuccess =>
-      isZh ? '课程已生成，正在跳转…' : 'Course generated! Opening builder…';
-  String get aiGenerateFailed =>
-      isZh ? '生成失败，请重试' : 'Generation failed, please try again';
-  String get aiGenerateEmptyHint =>
-      isZh ? '请先输入课程描述' : 'Please describe your course first';
-
-  // Course Manage — AI Agentic generation progress stages
-  String get aiAgentStagePlan =>
-      isZh ? '正在规划课程结构...' : 'Planning course structure...';
-  String get aiAgentStageGenerate =>
-      isZh ? '正在生成课程内容...' : 'Generating lesson content...';
-  String get aiAgentStageValidate =>
-      isZh ? '正在校验课程结构...' : 'Validating course structure...';
-  String aiAgentSuccessN(int n) =>
-      isZh ? '课程已生成，共 $n 课' : 'Course generated with $n lessons';
-
-  // Quality report dialog
-  String get qualityDialogTitle => isZh ? 'AI 质量反馈' : 'AI Quality Report';
-  String qualityDialogBody(int score) => isZh
-      ? '课程质量评分：$score / 100。AI 检测到一些可以改进的地方。'
-      : 'Quality score: $score / 100. AI found areas to improve.';
-  String get qualityActionAddInteractive =>
-      isZh ? '自动补充互动练习' : 'Add Interactive Exercises';
-  String get qualityActionAddQuiz => isZh ? '添加期末测验页' : 'Add Final Quiz';
-  String get qualityActionIgnore => isZh ? '忽略，查看课程' : 'Skip & View Course';
-  String get qualityEnhancing => isZh ? '正在优化课程...' : 'Enhancing course...';
-  String get qualityEnhanceDone => isZh ? '课程已优化' : 'Course enhanced';
-  String get qualityEnhanceFailed =>
-      isZh ? '优化失败，请稍后重试' : 'Enhancement failed, please try again';
-
   // Course Manage — sign-in prompt
   String get signInToManage =>
       isZh ? '登录以管理您的课程' : 'Sign in to manage your courses';
@@ -138,12 +82,6 @@ class BuilderLocalizations {
   String get emptyStateManualDesc => isZh
       ? '从空白页面开始，拖放模块自由搭建课程结构'
       : 'Start from a blank slate and drag-drop blocks to craft your course';
-  String get emptyStateAiTitle => isZh ? 'AI Agent 生成课程' : 'Generate with AI Agent';
-  String get emptyStateAiDesc => isZh
-      ? '上传 PDF 或一句话描述，AI 自动生成完整课程'
-      : 'Upload a PDF or describe your topic — AI builds the full course for you';
-  String get emptyStateAiBadge => isZh ? '智能生成' : 'Smart';
-
   // Course card
   String get courseEdit => isZh ? '编辑' : 'Edit';
   String get courseDelete => isZh ? '删除' : 'Delete';
@@ -242,15 +180,6 @@ class BuilderLocalizations {
   String get exportPleasefix => isZh ? '请修复以下问题:' : 'Please fix the following:';
   String get exportSuccess => isZh ? '课程 JSON 已导出' : 'Course JSON exported';
   String exportError(String err) => isZh ? '导出失败: $err' : 'Export failed: $err';
-
-  // Builder — AI generate
-  String get confirmGeneration => isZh ? '确认生成' : 'Confirm generation';
-  String get aiUnsavedWarning => isZh
-      ? '您有未保存的更改。AI 生成的课程将替换当前内容。是否继续？'
-      : 'You have unsaved changes. The AI-generated course will replace the current content. Continue?';
-  String get continueButton => isZh ? '继续' : 'Continue';
-  String aiGeneratedCourse(String title) =>
-      isZh ? 'AI 已生成课程: $title' : 'AI generated course: $title';
 
   // Builder — Import
   String get confirmImport => isZh ? '确认导入' : 'Confirm import';

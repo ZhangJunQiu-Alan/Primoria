@@ -49,6 +49,12 @@ class GeminiClient {
   static const String _baseUrl =
       'https://generativelanguage.googleapis.com/v1beta';
 
+  /// Shared Gemini API key, set by the user via the property panel.
+  static String? apiKey;
+
+  /// Update the shared API key.
+  static void setApiKey(String key) => apiKey = key.isEmpty ? null : key;
+
   /// Default model — only gemini-3.1-pro-preview is used; no fallback.
   static const List<String> defaultModels = [
     'gemini-3.1-pro-preview',
