@@ -1,11 +1,12 @@
 # TODO
 
-Last updated: 2026-03-17 (rev 6)
+Last updated: 2026-03-19 (rev 7)
 
 ## 1. High Priority
 
 1. [x] ~~Fix legacy course publish blocked by schema validator~~ — resolved: migrator now handles all legacy field names (dual-key fromJson, snake_case rename steps); `publish_course` RPC v2 no longer depends on deleted `chapters` table.
 2. [ ] Fix `gemini-generate` Edge Function: Gemini occasionally returns markdown code fences (`` ```html ``…`` ``` ``) despite system-prompt rule; strip fences in Edge Function before returning HTML so the iframe does not render raw fence text.
+3. [ ] **React Builder visual parity with Flutter Builder** — React Builder UI uses plain Tailwind defaults; needs design alignment with Flutter version (colors, typography, block canvas appearance, sidebar styling).
 3. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
 4. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
 5. [ ] Implement real revenue/settlement data source for dashboard income cards.
@@ -75,3 +76,5 @@ Last updated: 2026-03-17 (rev 6)
 45. [x] Supabase `publish_course` RPC v2: removed `chapters` table join and content overwrite; RPC now only flips course status.
 46. [x] Builder `updateProfile` call sites: `displayName:` → `username:` in `builder_settings_dialog.dart` and `profile_dialog.dart`.
 47. [x] Viewer `course_screen` and `user_provider`: removed dead `chapters`/accordion and dead stat fields (`_completedQuestions`, `_unlockedAchievements`, `_checkAndUpdateStreak`).
+48. [x] **React Builder rewrite** (`builder-react-rewrite` branch): `@primoria/schema` (Zod schemas, migration, fixtures, 20 tests), `@primoria/db` (Supabase generated types), `@primoria/builder` (Vite 6 + React 19 + RTK; auth, dashboard, full editor with 13 block panels, dnd-kit canvas, auto-save, undo/redo, publish, preview mode, course duplication, JSON import, AI generation for Interactive Visual; 38 tests; 0 TS errors).
+49. [x] `@primoria/db` `database.generated.ts` populated from real Supabase project (`rygafvlzzkvqhhenajzi`); `pnpm db:types` script wired in both package and root workspace.
