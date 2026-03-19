@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "708a9b5a91af",
+  "session_id": "e23c9ba3-4615-4f87-ab5d-1627bcadd6c0",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-19T08:45:53.360761Z",
+  "branch": "builder-react-rewrite",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/changelog.md",
+    "docs/todo.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "16ac3e44ac46",
+  "checkpoint_transcript_start": 3873,
+  "transcript_lines_at_start": 3873,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 14
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-19T08:45:05.439325Z",
+    "agent_lines": 0,
+    "human_added": 13138,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 13138,
+    "agent_percentage": 0
+  }
+}
