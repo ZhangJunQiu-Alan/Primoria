@@ -3,7 +3,7 @@
   "checkpoint_id": "fb4d22295a57",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 12,
+  "checkpoints_count": 17,
   "files_touched": [
     "Builder/lib/features/builder/builder_screen.dart",
     "Builder/lib/features/dashboard/dashboard_screen.dart",
@@ -26,13 +26,19 @@
       "transcript": "/fb/4d22295a57/0/full.jsonl",
       "content_hash": "/fb/4d22295a57/0/content_hash.txt",
       "prompt": "/fb/4d22295a57/0/prompt.txt"
+    },
+    {
+      "metadata": "/fb/4d22295a57/1/metadata.json",
+      "transcript": "/fb/4d22295a57/1/full.jsonl",
+      "content_hash": "/fb/4d22295a57/1/content_hash.txt",
+      "prompt": "/fb/4d22295a57/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 9426,
-    "cache_creation_tokens": 689195,
-    "cache_read_tokens": 15515969,
-    "output_tokens": 137100,
-    "api_call_count": 161
+    "input_tokens": 9459,
+    "cache_creation_tokens": 798249,
+    "cache_read_tokens": 17369219,
+    "output_tokens": 153917,
+    "api_call_count": 185
   }
 }
