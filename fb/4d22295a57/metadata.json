@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "fb4d22295a57",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 12,
+  "files_touched": [
+    "Builder/lib/features/builder/builder_screen.dart",
+    "Builder/lib/features/dashboard/dashboard_screen.dart",
+    "Builder/lib/features/dashboard/tabs/course_manage_tab.dart",
+    "Builder/lib/features/landing/landing_screen.dart",
+    "Builder/lib/l10n/app_localizations.dart",
+    "Builder/lib/services/ai_course_generator.dart",
+    "Builder/lib/services/ai_global_drop_listener.dart",
+    "Builder/lib/services/ai_global_drop_listener_stub.dart",
+    "Builder/lib/services/ai_global_drop_listener_web.dart",
+    "Builder/lib/services/gemini_client.dart",
+    "Builder/lib/widgets/ai_generate_dialog.dart",
+    "Builder/lib/widgets/property_panel.dart",
+    "Builder/test/ai_generation_diagnostics_test.dart",
+    "Builder/test/dashboard_course_manage_tab_test.dart"
+  ],
+  "sessions": [
+    {
+      "metadata": "/fb/4d22295a57/0/metadata.json",
+      "transcript": "/fb/4d22295a57/0/full.jsonl",
+      "content_hash": "/fb/4d22295a57/0/content_hash.txt",
+      "prompt": "/fb/4d22295a57/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 9426,
+    "cache_creation_tokens": 689195,
+    "cache_read_tokens": 15515969,
+    "output_tokens": 137100,
+    "api_call_count": 161
+  }
+}
