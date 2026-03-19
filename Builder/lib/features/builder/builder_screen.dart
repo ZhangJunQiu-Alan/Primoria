@@ -16,7 +16,6 @@ import '../../widgets/builder_layout.dart';
 import '../../widgets/module_panel.dart';
 import '../../widgets/property_panel.dart';
 import '../../widgets/builder_canvas.dart';
-import '../../widgets/ai_generate_dialog.dart';
 import '../../widgets/auth_dialog.dart';
 import '../../widgets/user_avatar.dart';
 
@@ -496,25 +495,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ],
       ),
       actions: [
-        OutlinedButton.icon(
-          onPressed: () {
-            _showAIGenerateDialog(context, ref);
-          },
-          icon: const Icon(Icons.auto_awesome, size: 16),
-          label: Text(_tr(t, 'AI 生成', 'AI')),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.accent600,
-            side: const BorderSide(color: AppColors.accent300),
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppBorderRadius.pill),
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
-            ),
-          ),
-        ),
         const SizedBox(width: AppSpacing.sm),
         OutlinedButton(
           onPressed: () async {
@@ -762,65 +742,6 @@ class _BuilderScreenState extends ConsumerState<BuilderScreen> {
         ),
       );
     }
-  }
-
-  void _showAIGenerateDialog(BuildContext context, WidgetRef ref) async {
-    final t = BuilderLocalizations(ref.read(languageProvider));
-    // Check for unsaved changes
-    final hasUnsaved = ref.read(builderStateProvider).hasUnsavedChanges;
-
-    if (hasUnsaved) {
-      final confirmed = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(t.confirmGeneration),
-          content: Text(t.aiUnsavedWarning),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text(t.cancel),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: Text(t.continueButton),
-            ),
-          ],
-        ),
-      );
-
-      if (confirmed != true) return;
-    }
-
-    if (!context.mounted) return;
-
-    // Show AI generation dialog
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AIGenerateDialog(
-        t: t,
-        onCourseGenerated: (course) {
-          _loadCourseIntoEditor(ref, course, hasUnsavedChanges: true);
-
-          final t2 = BuilderLocalizations(ref.read(languageProvider));
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Row(
-                children: [
-                  const Icon(Icons.check_circle, color: Colors.white, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(t2.aiGeneratedCourse(course.metadata.title)),
-                  ),
-                ],
-              ),
-              backgroundColor: AppColors.success,
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        },
-      ),
-    );
   }
 
   void _importCourse(

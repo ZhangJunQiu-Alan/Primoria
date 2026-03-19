@@ -19,7 +19,6 @@ class DashboardCourseManageTab extends StatefulWidget {
     required this.onRefresh,
     required this.onSignIn,
     required this.onCreateCourse,
-    required this.onAiGenerate,
     required this.onOpenCourse,
     required this.onEditCourse,
     required this.onDeleteCourse,
@@ -42,7 +41,6 @@ class DashboardCourseManageTab extends StatefulWidget {
   final Future<void> Function() onRefresh;
   final VoidCallback onSignIn;
   final VoidCallback onCreateCourse;
-  final VoidCallback onAiGenerate;
   final void Function(String courseId, String courseTitle) onOpenCourse;
   final ValueChanged<Map<String, dynamic>> onEditCourse;
   final void Function(String courseId, String title) onDeleteCourse;
@@ -210,15 +208,6 @@ class _DashboardCourseManageTabState extends State<DashboardCourseManageTab> {
             spacing: 10,
             runSpacing: 10,
             children: [
-              OutlinedButton.icon(
-                onPressed: widget.onAiGenerate,
-                icon: const Icon(Icons.auto_awesome, size: 18),
-                label: Text(t.aiGenerateBeta),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: const Color(0xFFB86200),
-                  side: const BorderSide(color: Color(0x66FF9800)),
-                ),
-              ),
               FilledButton.icon(
                 onPressed: widget.onCreateCourse,
                 icon: const Icon(Icons.add_rounded, size: 18),
@@ -773,52 +762,16 @@ class _DashboardCourseManageTabState extends State<DashboardCourseManageTab> {
           ),
           const SizedBox(height: 32),
 
-          // ── Action cards ──────────────────────────────────────────
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final twoCol = constraints.maxWidth >= 540;
-              final cards = [
-                _EmptyActionCard(
-                  icon: Icons.add_circle_outline_rounded,
-                  iconColor: const Color(0xFF4D7CFF),
-                  iconBg: const Color(0xFFEAF1FF),
-                  title: t.emptyStateManualTitle,
-                  description: t.emptyStateManualDesc,
-                  buttonLabel: t.createCourse,
-                  buttonStyle: _EmptyActionCardStyle.primary,
-                  onTap: widget.onCreateCourse,
-                ),
-                _EmptyActionCard(
-                  icon: Icons.auto_awesome_rounded,
-                  iconColor: const Color(0xFFB86200),
-                  iconBg: const Color(0xFFFFF3E0),
-                  title: t.emptyStateAiTitle,
-                  description: t.emptyStateAiDesc,
-                  buttonLabel: t.aiGenerateBeta,
-                  buttonStyle: _EmptyActionCardStyle.ai,
-                  badge: t.emptyStateAiBadge,
-                  onTap: widget.onAiGenerate,
-                ),
-              ];
-
-              if (twoCol) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: cards[0]),
-                    const SizedBox(width: 16),
-                    Expanded(child: cards[1]),
-                  ],
-                );
-              }
-              return Column(
-                children: [
-                  cards[0],
-                  const SizedBox(height: 12),
-                  cards[1],
-                ],
-              );
-            },
+          // ── Action card ───────────────────────────────────────────
+          _EmptyActionCard(
+            icon: Icons.add_circle_outline_rounded,
+            iconColor: const Color(0xFF4D7CFF),
+            iconBg: const Color(0xFFEAF1FF),
+            title: t.emptyStateManualTitle,
+            description: t.emptyStateManualDesc,
+            buttonLabel: t.createCourse,
+            buttonStyle: _EmptyActionCardStyle.primary,
+            onTap: widget.onCreateCourse,
           ),
         ],
       ),
@@ -1240,7 +1193,7 @@ class _LessonTileState extends State<_LessonTile> {
 
 // ── Empty state action card ────────────────────────────────────────────────
 
-enum _EmptyActionCardStyle { primary, ai }
+enum _EmptyActionCardStyle { primary }
 
 class _EmptyActionCard extends StatefulWidget {
   const _EmptyActionCard({
@@ -1252,7 +1205,6 @@ class _EmptyActionCard extends StatefulWidget {
     required this.buttonLabel,
     required this.buttonStyle,
     required this.onTap,
-    this.badge,
   });
 
   final IconData icon;
@@ -1263,7 +1215,6 @@ class _EmptyActionCard extends StatefulWidget {
   final String buttonLabel;
   final _EmptyActionCardStyle buttonStyle;
   final VoidCallback onTap;
-  final String? badge;
 
   @override
   State<_EmptyActionCard> createState() => _EmptyActionCardState();
@@ -1286,19 +1237,14 @@ class _EmptyActionCardState extends State<_EmptyActionCard> {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: _hovered
-                ? (widget.buttonStyle == _EmptyActionCardStyle.ai
-                    ? const Color(0x66FF9800)
-                    : const Color(0x664D7CFF))
+                ? const Color(0x664D7CFF)
                 : const Color(0x22000000),
             width: _hovered ? 1.5 : 1,
           ),
           boxShadow: _hovered
               ? [
                   BoxShadow(
-                    color: (widget.buttonStyle == _EmptyActionCardStyle.ai
-                            ? const Color(0xFFFF9800)
-                            : const Color(0xFF4D7CFF))
-                        .withValues(alpha: 0.12),
+                    color: const Color(0xFF4D7CFF).withValues(alpha: 0.12),
                     blurRadius: 16,
                     offset: const Offset(0, 4),
                   ),
@@ -1328,38 +1274,6 @@ class _EmptyActionCardState extends State<_EmptyActionCard> {
                     ),
                     child: Icon(widget.icon, color: widget.iconColor, size: 22),
                   ),
-                  const Spacer(),
-                  if (widget.badge != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF3E0),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: const Color(0x44FF9800)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.auto_awesome,
-                            size: 11,
-                            color: Color(0xFFB86200),
-                          ),
-                          const SizedBox(width: 3),
-                          Text(
-                            widget.badge!,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFFB86200),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                 ],
               ),
               const SizedBox(height: 14),
@@ -1383,31 +1297,18 @@ class _EmptyActionCardState extends State<_EmptyActionCard> {
               const SizedBox(height: 18),
               SizedBox(
                 width: double.infinity,
-                child: widget.buttonStyle == _EmptyActionCardStyle.ai
-                    ? OutlinedButton.icon(
-                        onPressed: widget.onTap,
-                        icon: const Icon(Icons.auto_awesome, size: 16),
-                        label: Text(widget.buttonLabel),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFFB86200),
-                          side: const BorderSide(color: Color(0x66FF9800)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      )
-                    : FilledButton.icon(
-                        onPressed: widget.onTap,
-                        icon: const Icon(Icons.add_rounded, size: 16),
-                        label: Text(widget.buttonLabel),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: const Color(0xFF4D7CFF),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
+                child: FilledButton.icon(
+                  onPressed: widget.onTap,
+                  icon: const Icon(Icons.add_rounded, size: 16),
+                  label: Text(widget.buttonLabel),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFF4D7CFF),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
