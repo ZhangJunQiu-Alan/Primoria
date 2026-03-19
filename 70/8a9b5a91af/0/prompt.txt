@@ -164,3 +164,15 @@ Read the output file to retrieve the result: /private/tmp/claude-501/-Users-zhan
 ---
 
 为什么是这样的, 我的 flutter 界面都不是这样的
+
+---
+
+我该怎么回到 block 拖拽界面呢
+
+---
+
+目前我的问题是 React 做完的内容和 flutter 的内容完全对不上
+
+---
+
+将目前做完的工作分别记录在 docs文件夹中合适的 files 中, 帮我 Commit 一下,提供合适的 Summary还有 Descriptiom
