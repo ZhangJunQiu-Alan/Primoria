@@ -5,6 +5,8 @@
   "branch": "builder-react-rewrite",
   "checkpoints_count": 9,
   "files_touched": [
+    "docs/changelog.md",
+    "docs/todo.md",
     "package.json",
     "packages/builder/.gitignore",
     "packages/builder/index.html",
@@ -113,6 +115,12 @@
       "transcript": "/70/8a9b5a91af/0/full.jsonl",
       "content_hash": "/70/8a9b5a91af/0/content_hash.txt",
       "prompt": "/70/8a9b5a91af/0/prompt.txt"
+    },
+    {
+      "metadata": "/70/8a9b5a91af/1/metadata.json",
+      "transcript": "/70/8a9b5a91af/1/full.jsonl",
+      "content_hash": "/70/8a9b5a91af/1/content_hash.txt",
+      "prompt": "/70/8a9b5a91af/1/prompt.txt"
     }
   ],
   "token_usage": {
