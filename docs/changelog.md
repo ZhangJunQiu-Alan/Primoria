@@ -1,5 +1,52 @@
 # Changelog
 
+## [Unreleased] - 2026-03-19 (React Builder — Full Rewrite on `builder-react-rewrite`)
+
+### Summary
+Full rewrite of the Flutter Web Builder as a React/TypeScript pnpm monorepo under `packages/`.
+Introduces `@primoria/schema` (Zod-based single source of truth for course JSON), `@primoria/db`
+(Supabase generated types), and `@primoria/builder` (Vite 6 + React 19 + Redux Toolkit SPA).
+Feature-complete with the Flutter Builder, plus course duplication, JSON import, block-style
+editing, in-editor learner preview, and AI generation for Interactive Visual blocks.
+
+### Added
+
+#### `packages/schema` — `@primoria/schema`
+- Zod schemas for all 13 block types (`text`, `image`, `code-block`, `code-playground`, `code-execution`, `function-flow`, `multiple-choice`, `fill-blank`, `true-false`, `matching`, `animation`, `interactive-visual`, `video`) and full course hierarchy (`Block → Page → Lesson → Course`).
+- `migrateCourseJson()` — normalises all legacy key aliases (camelCase → snake_case, `pages` → `lessons`, block-type aliases, visibilityRule aliases).
+- `parseCourse()` — strict Zod parse with informative error messages.
+- Test fixtures: `FIXTURE_MINIMAL_COURSE`, `FIXTURE_ALL_BLOCKS_COURSE`, `FIXTURE_LEGACY_COURSE_RAW`.
+- 20 Vitest tests covering all migration paths and schema validation.
+
+#### `packages/db` — `@primoria/db`
+- `database.generated.ts` generated from real Supabase project `rygafvlzzkvqhhenajzi` via `supabase gen types typescript`.
+- `pnpm db:types` script added to both `packages/db/package.json` and root `package.json`.
+
+#### `packages/builder` — `@primoria/builder`
+- **Stack**: Vite 6, React 19, TypeScript strict, React Router v7, Redux Toolkit, TanStack Query v5, Tailwind CSS v3, shadcn/Radix UI, React Hook Form + Zod, @dnd-kit, TipTap, CodeMirror 6.
+- **Auth**: `LoginPage`, `RegisterPage`, `AuthCallbackPage`; GitHub/Google OAuth; `AuthProvider` bootstraps Supabase session → Redux on mount; `RequireAuth` / `RedirectIfAuth` route guards.
+- **Dashboard**: course list, inline create, delete (confirm), duplicate (deep-copy lessons), import from JSON file (`parseCourse` + `migrateCourseJson`).
+- **Editor layout**: 3-panel (224 px lesson nav | flex canvas | 288 px property panel); `EditorHeader` with undo/redo (⌘Z/⌘⇧Z), preview toggle, export JSON, Save, Publish.
+- **Lesson/page management**: `LessonNav` — dnd-kit vertical sort, inline title edit, add/delete lesson & page.
+- **Block canvas**: `BlockCanvas` — dnd-kit sort, per-block drag handle, duplicate, delete; `AddBlockMenu` grouped by category (Content / Interactive / Quiz).
+- **Auto-save** (3-tier): 500 ms → localStorage; 4 s → Supabase upsert (courses + lessons, orphan cleanup); Save button → force flush.
+- **Undo/redo**: `past[]`/`future[]` in Redux, MAX_HISTORY=50, Immer `current()` snapshot to prevent proxy aliasing.
+- **Keyboard shortcuts**: ⌘Z undo, ⌘⇧Z/⌘Y redo, ⌘S save, ⌘D duplicate, Delete/Backspace remove block.
+- **Publish**: full `CourseSchema.safeParse` validation before upsert; sets `status='published'`.
+- **All 13 block property panels**: TextPanel (TipTap rich-text), CodeBlockPanel (CodeMirror 6, 6 languages), MultipleChoicePanel, TrueFalsePanel, FillBlankPanel, MatchingPanel, ImagePanel, VideoPanel (YouTube live preview), AnimationPanel, InteractiveVisualPanel, FunctionFlowPanel, MetadataPanel, CourseSettingsPanel.
+- **Block style editor**: spacing (none/sm/md/lg), alignment (left/center/right), width/height inputs; dispatches `updateBlockStyle`.
+- **Course settings panel**: theme light/dark, primaryColor (color picker + hex input), fontFamily with live preview; dispatches `updateSettings`.
+- **Block settings**: visibilityRule select, requiredForProgress checkbox.
+- **In-editor learner preview**: eye-icon toggle in header; `PreviewMode` renders all blocks via `BlockRenderer` (read-only renderers for all 13 types) in a centred 2xl container with amber preview banner.
+- **AI generation for Interactive Visual**: "✨ Generate with AI" button in `InteractiveVisualPanel`; calls `supabase.functions.invoke('gemini-generate', { body: { prompt } })`; stores returned HTML as `generatedHtml` in block content.
+- **38 Vitest tests** across editorSlice (CRUD, undo/redo, duplicate, blockSettings), route guards.
+
+### Validation
+- `pnpm typecheck` (workspace-wide) — 0 errors.
+- `pnpm test` (workspace-wide) — 58 tests pass (20 schema + 38 builder).
+
+---
+
 ## [Unreleased] - 2026-03-17 (Builder↔Viewer Schema Alignment + Viewer Feature Parity)
 
 ### Summary
