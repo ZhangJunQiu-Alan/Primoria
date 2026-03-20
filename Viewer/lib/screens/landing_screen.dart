@@ -271,21 +271,23 @@ class _LandingScreenState extends State<LandingScreen>
           opacity: _fade,
           child: SlideTransition(
             position: _liftIn,
-            child: ListView(
+            child: SingleChildScrollView(
               controller: _scrollController,
-              children: [
-                _buildHeader(),
-                _buildHero(),
-                _buildStatsBar(),
-                _buildFeatures(),
-                _buildHowItWorks(),
-                _buildAiTutor(),
-                _buildGamification(),
-                _buildCommunity(),
-                _buildTestimonials(),
-                _buildCtaBanner(),
-                _buildFooter(),
-              ],
+              child: Column(
+                children: [
+                  _buildHeader(),
+                  _buildHero(),
+                  _buildStatsBar(),
+                  _buildFeatures(),
+                  _buildHowItWorks(),
+                  _buildAiTutor(),
+                  _buildGamification(),
+                  _buildCommunity(),
+                  _buildTestimonials(),
+                  _buildCtaBanner(),
+                  _buildFooter(),
+                ],
+              ),
             ),
           ),
         ),
@@ -1121,22 +1123,28 @@ class _LandingScreenState extends State<LandingScreen>
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _communityCard(
-                          Icons.connect_without_contact_rounded,
-                          _s('Smart Matching'),
-                          _s('Paired by skill level and topic interest'),
+                        Expanded(
+                          child: _communityCard(
+                            Icons.connect_without_contact_rounded,
+                            _s('Smart Matching'),
+                            _s('Paired by skill level and topic interest'),
+                          ),
                         ),
                         const SizedBox(width: 24),
-                        _communityCard(
-                          Icons.leaderboard_rounded,
-                          _s('Leaderboards'),
-                          _s('Weekly rankings to spark healthy competition'),
+                        Expanded(
+                          child: _communityCard(
+                            Icons.leaderboard_rounded,
+                            _s('Leaderboards'),
+                            _s('Weekly rankings to spark healthy competition'),
+                          ),
                         ),
                         const SizedBox(width: 24),
-                        _communityCard(
-                          Icons.groups_rounded,
-                          _s('Group Challenges'),
-                          _s('Tackle special missions with your squad'),
+                        Expanded(
+                          child: _communityCard(
+                            Icons.groups_rounded,
+                            _s('Group Challenges'),
+                            _s('Tackle special missions with your squad'),
+                          ),
                         ),
                       ],
                     )
@@ -1170,52 +1178,51 @@ class _LandingScreenState extends State<LandingScreen>
     );
   }
 
-  Widget _communityCard(IconData icon, String title, String sub) => Flexible(
-    child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 280),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
+  Widget _communityCard(IconData icon, String title, String sub) =>
+      ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 280),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Icon(icon, color: Colors.white, size: 24),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: GoogleFonts.sora(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 6),
+              Text(
+                sub,
+                style: GoogleFonts.manrope(
+                  fontSize: 13,
+                  color: Colors.white.withValues(alpha: 0.8),
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
-        child: Column(
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Icon(icon, color: Colors.white, size: 24),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: GoogleFonts.sora(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 6),
-            Text(
-              sub,
-              style: GoogleFonts.manrope(
-                fontSize: 13,
-                color: Colors.white.withValues(alpha: 0.8),
-                height: 1.5,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+      );
 
   // ─────────────────────────────────────────────────────────────
   // Testimonials
