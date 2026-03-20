@@ -44,5 +44,13 @@ void main() {
       expect(wide, 960);
       expect(profile, 660);
     });
+
+    test('allows full-width pages to use the full desktop viewport', () {
+      final width = ViewerLayoutMetrics.resolveMaxWidth(
+        viewportWidth: 1920,
+        preset: ViewerContentWidthPreset.fullWidth,
+      );
+      expect(width, 1920);
+    });
   });
 }

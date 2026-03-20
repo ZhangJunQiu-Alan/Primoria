@@ -70,6 +70,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   final Map<int, bool> _userOnlineById = <int, bool>{};
 
   late final AnimationController _floatController;
+  late final AnimationController _shootingStarController;
 
   _CommunityWorkspaceSection _section = _CommunityWorkspaceSection.dashboard;
   String _findQuery = '';
@@ -151,12 +152,63 @@ class _CoursesScreenState extends State<CoursesScreen>
     Color(0xFF0F172A),
   ];
 
+  static const _shootingStars = [
+    _ShootingStar(
+      startX: 0.08,
+      startY: 0.12,
+      endX: 0.50,
+      endY: 0.40,
+      launchAt: 0.06,
+      travelWindow: 0.12,
+      tailLength: 54,
+      headRadius: 2.6,
+      color: Color(0xFFF8FAFC),
+    ),
+    _ShootingStar(
+      startX: 0.20,
+      startY: 0.05,
+      endX: 0.64,
+      endY: 0.33,
+      launchAt: 0.29,
+      travelWindow: 0.10,
+      tailLength: 48,
+      headRadius: 2.4,
+      color: Color(0xFFE0F2FE),
+    ),
+    _ShootingStar(
+      startX: 0.34,
+      startY: 0.26,
+      endX: 0.82,
+      endY: 0.57,
+      launchAt: 0.55,
+      travelWindow: 0.14,
+      tailLength: 58,
+      headRadius: 2.8,
+      color: Color(0xFFFDF2F8),
+    ),
+    _ShootingStar(
+      startX: 0.10,
+      startY: 0.50,
+      endX: 0.58,
+      endY: 0.82,
+      launchAt: 0.79,
+      travelWindow: 0.11,
+      tailLength: 52,
+      headRadius: 2.5,
+      color: Color(0xFFE9D5FF),
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
     _floatController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 4200),
+    )..repeat();
+    _shootingStarController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 11800),
     )..repeat();
 
     _galaxyUsers.addAll(_seedGalaxyUsers);
@@ -196,6 +248,7 @@ class _CoursesScreenState extends State<CoursesScreen>
     _noteBodyController.dispose();
     _messageThreadController.dispose();
     _floatController.dispose();
+    _shootingStarController.dispose();
     super.dispose();
   }
 
@@ -1029,6 +1082,29 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
+  ThemeData _communityDialogTheme(BuildContext context) {
+    final base = Theme.of(context);
+    return base.copyWith(
+      colorScheme: base.colorScheme.copyWith(primary: _CommunityPalette.blue),
+      inputDecorationTheme: base.inputDecorationTheme.copyWith(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _CommunityPalette.blue, width: 2),
+        ),
+        floatingLabelStyle: const TextStyle(color: _CommunityPalette.blue),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: _CommunityPalette.blue),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: _CommunityPalette.blue,
+          foregroundColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
   Future<void> _showAddUserDialog() async {
     final t = _t;
     final inputController = TextEditingController();
@@ -1040,75 +1116,78 @@ class _CoursesScreenState extends State<CoursesScreen>
     final input = await showDialog<_AddUserInput>(
       context: context,
       builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text(t.communityAddUserTitle),
-              content: SizedBox(
-                width: 360,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(t.communityAddUserHint),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: inputController,
-                      autofocus: true,
-                      onChanged: (_) {
-                        if (errorText != null) {
-                          setDialogState(() => errorText = null);
-                        }
-                      },
-                      decoration: InputDecoration(
-                        hintText: t.communityAddUserInputHint,
-                        errorText: errorText,
-                        border: const OutlineInputBorder(),
+        return Theme(
+          data: _communityDialogTheme(dialogContext),
+          child: StatefulBuilder(
+            builder: (context, setDialogState) {
+              return AlertDialog(
+                title: Text(t.communityAddUserTitle),
+                content: SizedBox(
+                  width: 360,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(t.communityAddUserHint),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: inputController,
+                        autofocus: true,
+                        onChanged: (_) {
+                          if (errorText != null) {
+                            setDialogState(() => errorText = null);
+                          }
+                        },
+                        decoration: InputDecoration(
+                          hintText: t.communityAddUserInputHint,
+                          errorText: errorText,
+                          border: const OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      initialValue: selectedCategory,
-                      decoration: InputDecoration(
-                        labelText: t.communityCategoryLabel,
-                        border: const OutlineInputBorder(),
+                      const SizedBox(height: 12),
+                      DropdownButtonFormField<String>(
+                        initialValue: selectedCategory,
+                        decoration: InputDecoration(
+                          labelText: t.communityCategoryLabel,
+                          border: const OutlineInputBorder(),
+                        ),
+                        items: _communityCategories.map((category) {
+                          return DropdownMenuItem<String>(
+                            value: category,
+                            child: Text(_categoryLabel(category, t)),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          if (value == null) return;
+                          setDialogState(() => selectedCategory = value);
+                        },
                       ),
-                      items: _communityCategories.map((category) {
-                        return DropdownMenuItem<String>(
-                          value: category,
-                          child: Text(_categoryLabel(category, t)),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value == null) return;
-                        setDialogState(() => selectedCategory = value);
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: Text(t.cancel),
-                ),
-                FilledButton(
-                  onPressed: () {
-                    final value = inputController.text.trim();
-                    final validationError = _validateAddUserInput(value);
-                    if (validationError != null) {
-                      setDialogState(() => errorText = validationError);
-                      return;
-                    }
-                    Navigator.of(
-                      dialogContext,
-                    ).pop(_AddUserInput(value, selectedCategory));
-                  },
-                  child: Text(t.communityAddButton),
-                ),
-              ],
-            );
-          },
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: Text(t.cancel),
+                  ),
+                  FilledButton(
+                    onPressed: () {
+                      final value = inputController.text.trim();
+                      final validationError = _validateAddUserInput(value);
+                      if (validationError != null) {
+                        setDialogState(() => errorText = validationError);
+                        return;
+                      }
+                      Navigator.of(
+                        dialogContext,
+                      ).pop(_AddUserInput(value, selectedCategory));
+                    },
+                    child: Text(t.communityAddButton),
+                  ),
+                ],
+              );
+            },
+          ),
         );
       },
     );
@@ -1200,102 +1279,105 @@ class _CoursesScreenState extends State<CoursesScreen>
     await showDialog<void>(
       context: context,
       builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text(t.communityRemoveUserTitle),
-              content: SizedBox(
-                width: 420,
-                height: 360,
-                child: _galaxyUsers.isEmpty
-                    ? Center(
-                        child: Text(
-                          t.communityNoUsers,
-                          style: const TextStyle(
-                            color: _CommunityPalette.subtext,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+        return Theme(
+          data: _communityDialogTheme(dialogContext),
+          child: StatefulBuilder(
+            builder: (context, setDialogState) {
+              return AlertDialog(
+                title: Text(t.communityRemoveUserTitle),
+                content: SizedBox(
+                  width: 420,
+                  height: 360,
+                  child: _galaxyUsers.isEmpty
+                      ? Center(
+                          child: Text(
+                            t.communityNoUsers,
+                            style: const TextStyle(
+                              color: _CommunityPalette.subtext,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      )
-                    : ListView.separated(
-                        itemCount: _galaxyUsers.length,
-                        separatorBuilder: (_, __) => const Divider(height: 1),
-                        itemBuilder: (context, index) {
-                          final user = _galaxyUsers[index];
-                          return ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: CircleAvatar(
-                              backgroundColor: user.color.withValues(
-                                alpha: 0.2,
-                              ),
-                              child: Text(
-                                user.name.isNotEmpty
-                                    ? user.name[0].toUpperCase()
-                                    : '?',
-                                style: const TextStyle(
-                                  color: _CommunityPalette.text,
-                                  fontWeight: FontWeight.w700,
+                        )
+                      : ListView.separated(
+                          itemCount: _galaxyUsers.length,
+                          separatorBuilder: (_, __) => const Divider(height: 1),
+                          itemBuilder: (context, index) {
+                            final user = _galaxyUsers[index];
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: CircleAvatar(
+                                backgroundColor: user.color.withValues(
+                                  alpha: 0.2,
+                                ),
+                                child: Text(
+                                  user.name.isNotEmpty
+                                      ? user.name[0].toUpperCase()
+                                      : '?',
+                                  style: const TextStyle(
+                                    color: _CommunityPalette.text,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
-                            ),
-                            title: Text(
-                              user.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: _CommunityPalette.text,
-                              ),
-                            ),
-                            subtitle: Text(
-                              '${user.email ?? t.communityUsernameOnly}  •  ${_categoryLabel(_categoryForUser(user), t)}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: _CommunityPalette.subtext,
-                                fontSize: 12,
-                              ),
-                            ),
-                            trailing: TextButton.icon(
-                              onPressed: () {
-                                final removedName = _removeUserAt(index);
-                                if (removedName == null) return;
-
-                                if (_galaxyUsers.isEmpty) {
-                                  Navigator.of(dialogContext).pop();
-                                } else {
-                                  setDialogState(() {});
-                                }
-
-                                _showMessageSnack(
-                                  t.communityRemovedUser(removedName),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.delete_outline,
-                                size: 18,
-                                color: Color(0xFFDC2626),
-                              ),
-                              label: Text(
-                                t.communityRemoveButton,
+                              title: Text(
+                                user.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: _CommunityPalette.text,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '${user.email ?? t.communityUsernameOnly}  •  ${_categoryLabel(_categoryForUser(user), t)}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: _CommunityPalette.subtext,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              trailing: TextButton.icon(
+                                onPressed: () {
+                                  final removedName = _removeUserAt(index);
+                                  if (removedName == null) return;
+
+                                  if (_galaxyUsers.isEmpty) {
+                                    Navigator.of(dialogContext).pop();
+                                  } else {
+                                    setDialogState(() {});
+                                  }
+
+                                  _showMessageSnack(
+                                    t.communityRemovedUser(removedName),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  size: 18,
                                   color: Color(0xFFDC2626),
                                 ),
+                                label: Text(
+                                  t.communityRemoveButton,
+                                  style: const TextStyle(
+                                    color: Color(0xFFDC2626),
+                                  ),
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: Text(t.communityDoneButton),
+                            );
+                          },
+                        ),
                 ),
-              ],
-            );
-          },
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: Text(t.communityDoneButton),
+                  ),
+                ],
+              );
+            },
+          ),
         );
       },
     );
@@ -2168,30 +2250,40 @@ class _CoursesScreenState extends State<CoursesScreen>
   Widget build(BuildContext context) {
     context.watch<LanguageProvider>().t;
     return ViewerPageShell(
-      preset: ViewerContentWidthPreset.feed,
+      preset: ViewerContentWidthPreset.fullWidth,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final isWideLayout = constraints.maxWidth >= 1080;
+          final horizontalPadding = constraints.maxWidth >= 1600
+              ? 28.0
+              : constraints.maxWidth >= 1200
+              ? 20.0
+              : 0.0;
+          final isWideLayout = constraints.maxWidth >= 1180;
           return Container(
             color: _CommunityPalette.page,
-            child: isWideLayout
-                ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildWorkspaceSidebar(),
-                      const SizedBox(width: 16),
-                      Expanded(child: _buildWorkspacePanel(isWideLayout: true)),
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildMobileWorkspaceTabs(),
-                      Expanded(
-                        child: _buildWorkspacePanel(isWideLayout: false),
-                      ),
-                    ],
-                  ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: isWideLayout
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildWorkspaceSidebar(),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildWorkspacePanel(isWideLayout: true),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildMobileWorkspaceTabs(),
+                        Expanded(
+                          child: _buildWorkspacePanel(isWideLayout: false),
+                        ),
+                      ],
+                    ),
+            ),
           );
         },
       ),
@@ -2200,7 +2292,7 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   Widget _buildWorkspaceSidebar() {
     return Container(
-      width: 236,
+      width: 268,
       margin: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
         color: _CommunityPalette.surface,
@@ -2234,7 +2326,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _copy('Community Lab', '社区实验室'),
+                        _copy('Community', '社区'),
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w800,
@@ -2260,57 +2352,6 @@ class _CoursesScreenState extends State<CoursesScreen>
               const SizedBox(height: 8),
             ],
             const Spacer(),
-            _buildSurfaceCard(
-              padding: const EdgeInsets.all(16),
-              background: const Color(0xFFF5F7FF),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF22C55E),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        _copy('Online now', '当前在线'),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: _CommunityPalette.mint,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '$_onlineUsersCountIncludingSelf',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
-                      color: _CommunityPalette.text,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _copy(
-                      'Learners are active across your shared rooms.',
-                      '当前有不少学习者正在你的共享房间里活跃。',
-                    ),
-                    style: const TextStyle(
-                      fontSize: 12.5,
-                      height: 1.45,
-                      color: _CommunityPalette.subtext,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
@@ -2356,20 +2397,20 @@ class _CoursesScreenState extends State<CoursesScreen>
               ),
               if (badgeCount != null && badgeCount > 0)
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
+                  width: 22,
+                  height: 22,
                   decoration: BoxDecoration(
                     color: _CommunityPalette.red,
                     borderRadius: BorderRadius.circular(999),
                   ),
-                  child: Text(
-                    '$badgeCount',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
+                  child: Center(
+                    child: Text(
+                      '$badgeCount',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
@@ -2416,20 +2457,20 @@ class _CoursesScreenState extends State<CoursesScreen>
                   if (badgeCount != null && badgeCount > 0) ...[
                     const SizedBox(width: 6),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
-                      ),
+                      width: 18,
+                      height: 18,
                       decoration: BoxDecoration(
                         color: _CommunityPalette.red,
                         borderRadius: BorderRadius.circular(999),
                       ),
-                      child: Text(
-                        '$badgeCount',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                      child: Center(
+                        child: Text(
+                          '$badgeCount',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
@@ -2518,14 +2559,28 @@ class _CoursesScreenState extends State<CoursesScreen>
             ),
           ),
           const SizedBox(width: 16),
-          Flexible(
-            child: Wrap(
-              alignment: WrapAlignment.end,
-              spacing: 10,
-              runSpacing: 10,
-              children: _buildTopBarActions(isWideLayout),
+          if (isWideLayout)
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Wrap(
+                  alignment: WrapAlignment.end,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 14,
+                  runSpacing: 10,
+                  children: _buildTopBarActions(isWideLayout),
+                ),
+              ),
+            )
+          else
+            Flexible(
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                spacing: 10,
+                runSpacing: 10,
+                children: _buildTopBarActions(isWideLayout),
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -2535,7 +2590,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     switch (_section) {
       case _CommunityWorkspaceSection.dashboard:
         return [
-          _buildConnectionStats(),
           _buildIconAction(
             icon: Icons.person_remove_outlined,
             onTap: _showRemoveUserDialog,
@@ -2544,6 +2598,7 @@ class _CoursesScreenState extends State<CoursesScreen>
             icon: Icons.person_add_outlined,
             onTap: _showAddUserDialog,
           ),
+          _buildConnectionStats(),
         ];
       case _CommunityWorkspaceSection.ourStudy:
         return [
@@ -2675,13 +2730,14 @@ class _CoursesScreenState extends State<CoursesScreen>
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(10),
+        width: 52,
+        height: 52,
         decoration: BoxDecoration(
           color: _CommunityPalette.surfaceMuted,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(color: _CommunityPalette.border),
         ),
-        child: Icon(icon, size: 20, color: _CommunityPalette.text),
+        child: Icon(icon, size: 22, color: _CommunityPalette.text),
       ),
     );
   }
@@ -2747,19 +2803,6 @@ class _CoursesScreenState extends State<CoursesScreen>
                         buttonLabel: _copy('Go to Messages', '前往 Messages'),
                         onTap: () =>
                             _selectSection(_CommunityWorkspaceSection.messages),
-                      ),
-                      const SizedBox(height: 16),
-                      _buildDashboardSnapshotCard(
-                        title: _copy('Trending now', '当前热门'),
-                        value: '${_trendingDiscussions.length}',
-                        body: _copy(
-                          'Jump into groups that are heating up inside the community.',
-                          '直接加入社区里正在升温的共学小组。',
-                        ),
-                        color: _CommunityPalette.mint,
-                        buttonLabel: _copy('See Trending', '查看 Trending'),
-                        onTap: () =>
-                            _selectSection(_CommunityWorkspaceSection.trending),
                       ),
                     ],
                   ),
@@ -2892,62 +2935,60 @@ class _CoursesScreenState extends State<CoursesScreen>
   Widget _buildConnectionStats() {
     final t = context.watch<LanguageProvider>().t;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+      constraints: const BoxConstraints(minWidth: 176),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: _CommunityPalette.surfaceMuted,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: _CommunityPalette.border),
       ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.people_alt_outlined,
-                  size: 14,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.people_alt_outlined,
+                size: 15,
+                color: _CommunityPalette.subtext,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                t.communityConnected(_connectedUsersCount),
+                style: const TextStyle(
+                  fontSize: 13,
                   color: _CommunityPalette.subtext,
+                  fontWeight: FontWeight.w700,
                 ),
-                const SizedBox(width: 5),
-                Text(
-                  t.communityConnected(_connectedUsersCount),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: _CommunityPalette.subtext,
-                    fontWeight: FontWeight.w700,
-                  ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 9,
+                height: 9,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF22C55E),
+                  shape: BoxShape.circle,
                 ),
-              ],
-            ),
-            const SizedBox(height: 3),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF22C55E),
-                    shape: BoxShape.circle,
-                  ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                t.communityOnline(_onlineUsersCountIncludingSelf),
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Color(0xFF16A34A),
+                  fontWeight: FontWeight.w800,
                 ),
-                const SizedBox(width: 5),
-                Text(
-                  t.communityOnline(_onlineUsersCountIncludingSelf),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF16A34A),
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -3024,6 +3065,21 @@ class _CoursesScreenState extends State<CoursesScreen>
                     return Stack(
                       clipBehavior: Clip.none,
                       children: [
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            child: AnimatedBuilder(
+                              animation: _shootingStarController,
+                              builder: (context, child) {
+                                return CustomPaint(
+                                  painter: _GalaxyShootingStarsPainter(
+                                    stars: _shootingStars,
+                                    progress: _shootingStarController.value,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                         if (visibleUserIndexes.isEmpty)
                           Center(
                             child: Text(
@@ -3088,18 +3144,13 @@ class _CoursesScreenState extends State<CoursesScreen>
   ) {
     final dotSize = _planetSize(user.size);
     final isHovered = _hoveredUserId == user.id;
-    final speedFactor = 0.86 + (user.id % 5) * 0.07;
     return AnimatedBuilder(
       animation: _floatController,
       builder: (context, child) {
-        final phase =
-            _floatController.value * math.pi * 2 * speedFactor +
-            user.floatDelay;
-        final yOffset = math.sin(phase) * 8;
-        final xOffset = math.cos(phase * 0.7) * 4;
+        final motionOffset = _planetMotionOffset(user, _floatController.value);
         return Positioned(
-          left: constraints.maxWidth * user.x / 100 - 20 + xOffset,
-          top: constraints.maxHeight * user.y / 100 - 20 + yOffset,
+          left: constraints.maxWidth * user.x / 100 - 20 + motionOffset.dx,
+          top: constraints.maxHeight * user.y / 100 - 20 + motionOffset.dy,
           child: child!,
         );
       },
@@ -3204,6 +3255,33 @@ class _CoursesScreenState extends State<CoursesScreen>
         ),
       ),
     );
+  }
+
+  Offset _planetMotionOffset(_GalaxyUser user, double progress) {
+    final loopPhase = progress * math.pi * 2;
+    final basePhase = loopPhase + user.floatDelay;
+    final orbitPhase =
+        loopPhase * 2 + user.floatDelay * 1.15 + (user.id % 4) * 0.32;
+    final shimmerPhase = loopPhase * 3 + user.id * 0.21;
+
+    final verticalAmplitude = switch (user.size) {
+      'large' => 9.0,
+      'medium' => 7.2,
+      _ => 5.8,
+    };
+    final horizontalAmplitude = switch (user.size) {
+      'large' => 4.6,
+      'medium' => 3.7,
+      _ => 2.9,
+    };
+
+    final yOffset =
+        math.sin(basePhase) * verticalAmplitude + math.cos(shimmerPhase) * 1.2;
+    final xOffset =
+        math.cos(orbitPhase) * horizontalAmplitude +
+        math.sin(shimmerPhase) * 0.9;
+
+    return Offset(xOffset, yOffset);
   }
 
   double _planetSize(String size) {
@@ -5338,7 +5416,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   IconData _sectionIcon(_CommunityWorkspaceSection section) {
     switch (section) {
       case _CommunityWorkspaceSection.dashboard:
-        return Icons.dashboard_outlined;
+        return Icons.grid_view_rounded;
       case _CommunityWorkspaceSection.ourStudy:
         return Icons.local_library_outlined;
       case _CommunityWorkspaceSection.notes:
@@ -5370,6 +5448,30 @@ class _GalaxyUser {
     this.size,
     this.floatDelay, {
     this.email,
+  });
+}
+
+class _ShootingStar {
+  final double startX;
+  final double startY;
+  final double endX;
+  final double endY;
+  final double launchAt;
+  final double travelWindow;
+  final double tailLength;
+  final double headRadius;
+  final Color color;
+
+  const _ShootingStar({
+    required this.startX,
+    required this.startY,
+    required this.endX,
+    required this.endY,
+    required this.launchAt,
+    required this.travelWindow,
+    required this.tailLength,
+    required this.headRadius,
+    required this.color,
   });
 }
 
@@ -5608,5 +5710,70 @@ class _SketchPadPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _SketchPadPainter oldDelegate) {
     return oldDelegate.strokes != strokes;
+  }
+}
+
+class _GalaxyShootingStarsPainter extends CustomPainter {
+  final List<_ShootingStar> stars;
+  final double progress;
+
+  const _GalaxyShootingStarsPainter({
+    required this.stars,
+    required this.progress,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    for (final star in stars) {
+      final localProgress = (progress - star.launchAt) / star.travelWindow;
+      if (localProgress <= 0 || localProgress >= 1) continue;
+
+      final easedProgress = Curves.easeOut.transform(localProgress);
+      final opacity = math.sin(localProgress * math.pi).clamp(0.0, 1.0);
+      if (opacity <= 0.01) continue;
+
+      final start = Offset(star.startX * size.width, star.startY * size.height);
+      final end = Offset(star.endX * size.width, star.endY * size.height);
+      final head = Offset.lerp(start, end, easedProgress)!;
+      final direction = end - start;
+      final distance = direction.distance;
+      if (distance == 0) continue;
+
+      final unitDirection = direction / distance;
+      final tail = head - unitDirection * star.tailLength;
+
+      final glowPaint = Paint()
+        ..color = star.color.withValues(alpha: 0.16 * opacity)
+        ..strokeWidth = 6
+        ..strokeCap = StrokeCap.round
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 7);
+
+      final tailPaint = Paint()
+        ..shader = LinearGradient(
+          colors: [
+            star.color.withValues(alpha: 0),
+            star.color.withValues(alpha: 0.78 * opacity),
+          ],
+        ).createShader(Rect.fromPoints(tail, head))
+        ..strokeWidth = 1.8
+        ..strokeCap = StrokeCap.round;
+
+      final headGlowPaint = Paint()
+        ..color = star.color.withValues(alpha: 0.26 * opacity)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
+
+      final headPaint = Paint()
+        ..color = star.color.withValues(alpha: 0.96 * opacity);
+
+      canvas.drawLine(tail, head, glowPaint);
+      canvas.drawLine(tail, head, tailPaint);
+      canvas.drawCircle(head, star.headRadius * 2.4, headGlowPaint);
+      canvas.drawCircle(head, star.headRadius, headPaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _GalaxyShootingStarsPainter oldDelegate) {
+    return oldDelegate.progress != progress || oldDelegate.stars != stars;
   }
 }
