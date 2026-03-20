@@ -9,17 +9,28 @@
     "Builder/lib/features/dashboard/dashboard_screen.dart",
     "Builder/lib/features/landing/landing_screen.dart",
     "Builder/lib/features/viewer/viewer_screen.dart",
+    "Builder/lib/models/block.dart",
+    "Builder/lib/models/course.dart",
     "Builder/lib/models/interactive_visual_content.dart",
+    "Builder/lib/models/lesson.dart",
+    "Builder/lib/models/lesson_page.dart",
     "Builder/lib/services/ai_visual_generator.dart",
     "Builder/lib/services/course_schema_migrator.dart",
+    "Builder/lib/services/course_schema_validator.dart",
     "Builder/lib/services/gemini_client.dart",
+    "Builder/lib/services/supabase_service.dart",
     "Builder/lib/services/visual_template_registry.dart",
     "Builder/lib/widgets/block_widgets/block_wrapper.dart",
     "Builder/lib/widgets/block_widgets/html_animation_widget_stub.dart",
     "Builder/lib/widgets/block_widgets/interactive_visual_widget.dart",
+    "Builder/lib/widgets/builder_settings_dialog.dart",
+    "Builder/lib/widgets/profile_dialog.dart",
     "Builder/lib/widgets/property_panel.dart",
     "Builder/test/course_schema_migration_test.dart",
-    "Builder/test/interactive_visual_test.dart"
+    "Builder/test/course_schema_validator_test.dart",
+    "Builder/test/interactive_visual_test.dart",
+    "Builder/test/models_test.dart",
+    "CLAUDE.md"
   ],
   "sessions": [
     {
@@ -27,6 +38,12 @@
       "transcript": "/11/61ead8b633/0/full.jsonl",
       "content_hash": "/11/61ead8b633/0/content_hash.txt",
       "prompt": "/11/61ead8b633/0/prompt.txt"
+    },
+    {
+      "metadata": "/11/61ead8b633/1/metadata.json",
+      "transcript": "/11/61ead8b633/1/full.jsonl",
+      "content_hash": "/11/61ead8b633/1/content_hash.txt",
+      "prompt": "/11/61ead8b633/1/prompt.txt"
     }
   ],
   "token_usage": {
