@@ -1,0 +1,15 @@
+{
+  "name": "@primoria/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Supabase generated database types for Primoria",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "db:types": "supabase gen types typescript --project-id rygafvlzzkvqhhenajzi > src/database.generated.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
