@@ -42,4 +42,25 @@ void main() {
     );
     expect(contentSize.width, 390);
   });
+
+  testWidgets('can opt into full-width desktop layouts', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1400, 800));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: ViewerPageShell(
+            preset: ViewerContentWidthPreset.fullWidth,
+            child: SizedBox(key: ValueKey('full-width-content')),
+          ),
+        ),
+      ),
+    );
+
+    final contentSize = tester.getSize(
+      find.byKey(const ValueKey('full-width-content')),
+    );
+    expect(contentSize.width, 1400);
+  });
 }
