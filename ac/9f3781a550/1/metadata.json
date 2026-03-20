@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "ac9f3781a550",
+  "session_id": "5a367691-daba-4152-a9d5-3f87ddfb210d",
   "strategy": "manual-commit",
+  "created_at": "2026-03-20T04:30:30.126331Z",
   "branch": "main",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "node_modules/.modules.yaml",
     "node_modules/.pnpm-workspace-state-v1.json",
@@ -18025,25 +18027,26 @@
     "packages/builder/.vite/deps/_metadata.json",
     "packages/builder/.vite/deps/package.json"
   ],
-  "sessions": [
-    {
-      "metadata": "/ac/9f3781a550/0/metadata.json",
-      "transcript": "/ac/9f3781a550/0/full.jsonl",
-      "content_hash": "/ac/9f3781a550/0/content_hash.txt",
-      "prompt": "/ac/9f3781a550/0/prompt.txt"
-    },
-    {
-      "metadata": "/ac/9f3781a550/1/metadata.json",
-      "transcript": "/ac/9f3781a550/1/full.jsonl",
-      "content_hash": "/ac/9f3781a550/1/content_hash.txt",
-      "prompt": "/ac/9f3781a550/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "c9fa6792195b",
   "token_usage": {
-    "input_tokens": 9754,
-    "cache_creation_tokens": 1086001,
-    "cache_read_tokens": 40443752,
-    "output_tokens": 280920,
-    "api_call_count": 437
+    "input_tokens": 17,
+    "cache_creation_tokens": 35361,
+    "cache_read_tokens": 493004,
+    "output_tokens": 2536,
+    "api_call_count": 13
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T04:30:30.03827Z",
+    "agent_lines": 0,
+    "human_added": 1035,
+    "human_modified": 3336375,
+    "human_removed": 0,
+    "total_committed": 1035,
+    "agent_percentage": 0
   }
 }
