@@ -4,7 +4,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
 /// Width presets for top-level Viewer pages.
-enum ViewerContentWidthPreset { standard, wide, feed, profile, readable }
+enum ViewerContentWidthPreset {
+  standard,
+  wide,
+  feed,
+  profile,
+  readable,
+  fullWidth,
+}
 
 class ViewerLayoutBreakpoints {
   ViewerLayoutBreakpoints._();
@@ -23,6 +30,10 @@ class ViewerLayoutMetrics {
     required double viewportWidth,
     required ViewerContentWidthPreset preset,
   }) {
+    if (preset == ViewerContentWidthPreset.fullWidth) {
+      return viewportWidth;
+    }
+
     if (viewportWidth < ViewerLayoutBreakpoints.mobile) {
       return viewportWidth;
     }
@@ -41,6 +52,7 @@ class ViewerLayoutMetrics {
       ViewerContentWidthPreset.feed => 1280.0,
       ViewerContentWidthPreset.profile => 1160.0,
       ViewerContentWidthPreset.readable => 960.0,
+      ViewerContentWidthPreset.fullWidth => viewportWidth,
     };
 
     final ratioWidth = viewportWidth * desktopContentRatio;
