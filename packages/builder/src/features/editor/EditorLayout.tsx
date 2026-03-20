@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react';
+import { ChevronDownIcon, MagnifyingGlassIcon, PlusIcon } from '@radix-ui/react-icons';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { openDraft } from '@/store/editorSlice';
+import { openDraft, addPage, addBlock, selectBlock } from '@/store/editorSlice';
 import { EditorHeader } from './EditorHeader';
-import { LessonNav } from './sidebar/LessonNav';
 import { BlockCanvas } from './canvas/BlockCanvas';
 import { PropertyPanel } from './properties/PropertyPanel';
 import { PreviewMode } from './preview/PreviewMode';
 import { loadLocalDraft } from './hooks/useAutoSave';
+import { nanoid } from '@/lib/nanoid';
+import { BLOCK_CATEGORIES, BLOCK_META } from './blockRegistry';
+import { getDefaultVisibilityRule } from './blockVisibility';
 import type { Course } from '@primoria/schema';
+import type { BlockType } from '@primoria/schema';
+import './editor.css';
 
 interface EditorLayoutProps {
-  /** The remote course snapshot (from TanStack Query). Editor hydrates from this once. */
   remoteCourse: Course;
 }
 
@@ -19,14 +23,12 @@ export function EditorLayout({ remoteCourse }: EditorLayoutProps) {
   const draft = useAppSelector((s) => s.editor.draft);
   const previewMode = useAppSelector((s) => s.editor.previewMode);
 
-  // Hydrate the Redux editor store on first mount
   useEffect(() => {
+    if (draft?.course_id === remoteCourse.course_id) return;
     const localDraft = loadLocalDraft(remoteCourse.course_id);
-    // Prefer local draft if it exists (has unsaved local changes)
     dispatch(openDraft(localDraft ?? remoteCourse));
-  }, [remoteCourse.course_id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, draft?.course_id, remoteCourse.course_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Active lesson/page selection
   const firstLesson = draft?.lessons[0];
   const firstPage = firstLesson?.pages[0];
 
@@ -36,68 +38,299 @@ export function EditorLayout({ remoteCourse }: EditorLayoutProps) {
   const [selectedPageId, setSelectedPageId] = useState<string | null>(
     firstPage?.page_id ?? null,
   );
+  const [libraryQuery, setLibraryQuery] = useState('');
+  const [expandedSectionIds, setExpandedSectionIds] = useState<Set<(typeof BLOCK_CATEGORIES)[number]['id']>>(
+    () => new Set(BLOCK_CATEGORIES.map((category) => category.id)),
+  );
 
-  // When draft loads, set initial selection
   useEffect(() => {
-    if (draft && !selectedLessonId) {
-      const l = draft.lessons[0];
-      const p = l?.pages[0];
-      if (l && p) {
-        setSelectedLessonId(l.lesson_id);
-        setSelectedPageId(p.page_id);
-      }
+    if (!draft || draft.lessons.length === 0) {
+      if (selectedLessonId !== null) setSelectedLessonId(null);
+      if (selectedPageId !== null) setSelectedPageId(null);
+      return;
     }
-  }, [draft, selectedLessonId]);
+
+    const lesson =
+      draft.lessons.find((item) => item.lesson_id === selectedLessonId) ?? draft.lessons[0];
+    const page =
+      lesson?.pages.find((item) => item.page_id === selectedPageId) ?? lesson?.pages[0];
+
+    if (lesson && lesson.lesson_id !== selectedLessonId) {
+      setSelectedLessonId(lesson.lesson_id);
+    }
+
+    if (page && page.page_id !== selectedPageId) {
+      setSelectedPageId(page.page_id);
+    }
+  }, [draft, selectedLessonId, selectedPageId]);
+
+  const selectedLesson =
+    draft?.lessons.find((lesson) => lesson.lesson_id === selectedLessonId) ?? null;
+  const selectedPage =
+    selectedLesson?.pages.find((page) => page.page_id === selectedPageId) ?? null;
+
+  const librarySections = BLOCK_CATEGORIES.map((category) => {
+    const query = libraryQuery.trim().toLowerCase();
+    const blocks = (Object.entries(BLOCK_META) as [BlockType, (typeof BLOCK_META)[BlockType]][])
+      .filter(([, meta]) => meta.category === category.id)
+      .filter(([type, meta]) => {
+        if (!query) return true;
+        return (
+          meta.label.toLowerCase().includes(query) ||
+          category.label.toLowerCase().includes(query) ||
+          type.toLowerCase().includes(query)
+        );
+      });
+
+    return {
+      ...category,
+      blocks,
+    };
+  }).filter((section) => section.blocks.length > 0);
+
+  function setActiveLocation(lessonId: string, pageId: string) {
+    setSelectedLessonId(lessonId);
+    setSelectedPageId(pageId);
+    dispatch(selectBlock(null));
+  }
+
+  function handleAddPage() {
+    if (!selectedLessonId || !selectedLesson) return;
+    const pageId = nanoid();
+    dispatch(addPage({ lessonId: selectedLessonId, pageId }));
+    setActiveLocation(selectedLessonId, pageId);
+  }
+
+  function handleInsertBlock(type: BlockType) {
+    if (!selectedLessonId || !selectedPageId || !selectedPage) return;
+    const blockId = nanoid();
+
+    dispatch(
+        addBlock({
+          lessonId: selectedLessonId,
+          pageId: selectedPageId,
+          block: {
+            id: blockId,
+            type,
+            position: { order: selectedPage.blocks.length },
+            content: BLOCK_META[type].defaultContent,
+            visibilityRule: getDefaultVisibilityRule(selectedPage.blocks.length),
+          },
+        }),
+      );
+
+    dispatch(selectBlock(blockId));
+  }
+
+  function toggleLibrarySection(sectionId: (typeof BLOCK_CATEGORIES)[number]['id']) {
+    setExpandedSectionIds((current) => {
+      const next = new Set(current);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
+      } else {
+        next.add(sectionId);
+      }
+      return next;
+    });
+  }
 
   if (!draft) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-muted-foreground">Loading editor…</p>
+      <div className="editor-studio">
+        <div className="editor-studio__loading">
+          <p>Loading editor…</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-background">
-      <EditorHeader activeLessonId={selectedLessonId} activePageId={selectedPageId} />
+    <div className="editor-studio">
+      <div className="editor-studio__shell">
+        <EditorHeader
+          activeLessonId={selectedLessonId}
+          activePageId={selectedPageId}
+          activeLessonTitle={selectedLesson?.title ?? null}
+        />
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left: lesson nav */}
-        <div className="w-56 shrink-0">
-          <LessonNav
-            selectedLessonId={selectedLessonId}
-            selectedPageId={selectedPageId}
-            onSelectLesson={(lessonId, pageId) => {
-              setSelectedLessonId(lessonId);
-              setSelectedPageId(pageId);
-            }}
-          />
-        </div>
+        <div className="editor-studio__body">
+          <aside className="editor-panel editor-library" aria-label="Block library">
+            <div className="editor-library__header">
+              <h2>Block Library</h2>
+            </div>
 
-        {previewMode && selectedLessonId && selectedPageId ? (
-          /* Learner preview — full width, no property panel */
-          <PreviewMode lessonId={selectedLessonId} pageId={selectedPageId} />
-        ) : (
-          <>
-            {/* Center: block canvas */}
-            <div className="flex flex-1 overflow-hidden">
-              {selectedLessonId && selectedPageId ? (
-                <BlockCanvas lessonId={selectedLessonId} pageId={selectedPageId} />
+            <label className="editor-library__search">
+              <MagnifyingGlassIcon className="h-4 w-4" />
+              <input
+                type="search"
+                placeholder="Search blocks"
+                value={libraryQuery}
+                onChange={(event) => setLibraryQuery(event.target.value)}
+                aria-label="Search blocks"
+              />
+            </label>
+
+            <div className="editor-library__sections">
+              {librarySections.length > 0 ? (
+                librarySections.map((section) => (
+                  <section key={section.id} className="editor-library__section">
+                    <button
+                      type="button"
+                      className="editor-library__section-toggle"
+                      onClick={() => toggleLibrarySection(section.id)}
+                      aria-expanded={expandedSectionIds.has(section.id)}
+                      aria-controls={`editor-library-section-${section.id}`}
+                    >
+                      <div className="editor-library__section-header">
+                        <h3>{section.label}</h3>
+                      </div>
+                      <ChevronDownIcon
+                        className={`editor-library__section-chevron ${expandedSectionIds.has(section.id) ? 'is-expanded' : ''}`}
+                      />
+                    </button>
+                    {expandedSectionIds.has(section.id) ? (
+                      <div
+                        id={`editor-library-section-${section.id}`}
+                        className="editor-library__block-grid"
+                      >
+                        {section.blocks.map(([type, meta]) => (
+                          <button
+                            key={type}
+                            type="button"
+                            className="editor-library__block"
+                            onClick={() => handleInsertBlock(type)}
+                            aria-label={`Add ${meta.label}`}
+                          >
+                            <span className="editor-library__block-mark" aria-hidden>
+                              {meta.icon}
+                            </span>
+                            <span className="editor-library__block-copy">
+                              <strong>{meta.label}</strong>
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+                  </section>
+                ))
               ) : (
-                <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
-                  Select a lesson to start editing
+                <div className="editor-library__empty">
+                  <p>No blocks match “{libraryQuery.trim()}”.</p>
+                  <button
+                    type="button"
+                    className="editor-chip editor-chip--ghost"
+                    onClick={() => setLibraryQuery('')}
+                  >
+                    Clear search
+                  </button>
                 </div>
               )}
             </div>
+          </aside>
 
-            {/* Right: property panel */}
-            <div className="w-72 shrink-0 border-l">
-              {selectedLessonId && selectedPageId ? (
-                <PropertyPanel lessonId={selectedLessonId} pageId={selectedPageId} />
-              ) : null}
+          {previewMode && selectedLessonId && selectedPageId ? (
+            <div className="editor-panel editor-preview-shell">
+              <CanvasNavigator
+                draft={draft}
+                selectedLessonId={selectedLessonId}
+                selectedPageId={selectedPageId}
+                onSelectPage={(pageId) => setActiveLocation(selectedLessonId, pageId)}
+                onAddPage={handleAddPage}
+              />
+              <PreviewMode
+                lessonId={selectedLessonId}
+                pageId={selectedPageId}
+                onSelectPage={(pageId) => setActiveLocation(selectedLessonId, pageId)}
+              />
             </div>
-          </>
-        )}
+          ) : (
+            <>
+              <main className="editor-panel editor-canvas-shell">
+                <CanvasNavigator
+                  draft={draft}
+                  selectedLessonId={selectedLessonId}
+                  selectedPageId={selectedPageId}
+                  onSelectPage={(pageId) => {
+                    if (!selectedLessonId) return;
+                    setActiveLocation(selectedLessonId, pageId);
+                  }}
+                  onAddPage={handleAddPage}
+                />
+
+                {selectedLessonId && selectedPageId ? (
+                  <>
+                    <BlockCanvas
+                      lessonId={selectedLessonId}
+                      pageId={selectedPageId}
+                      showAddMenu={false}
+                    />
+                  </>
+                ) : (
+                  <div className="editor-canvas-shell__empty">
+                    <p>Select a lesson and page to start editing.</p>
+                  </div>
+                )}
+              </main>
+
+              <aside className="editor-panel editor-inspector" aria-label="Properties">
+                <div className="editor-inspector__intro">
+                  <h2>Properties</h2>
+                </div>
+                {selectedLessonId && selectedPageId ? (
+                  <PropertyPanel lessonId={selectedLessonId} pageId={selectedPageId} />
+                ) : null}
+              </aside>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface CanvasNavigatorProps {
+  draft: Course;
+  selectedLessonId: string | null;
+  selectedPageId: string | null;
+  onSelectPage: (pageId: string) => void;
+  onAddPage: () => void;
+}
+
+function CanvasNavigator({
+  draft,
+  selectedLessonId,
+  selectedPageId,
+  onSelectPage,
+  onAddPage,
+}: CanvasNavigatorProps) {
+  const selectedLesson =
+    draft.lessons.find((lesson) => lesson.lesson_id === selectedLessonId) ?? draft.lessons[0];
+
+  return (
+    <div className="editor-flowbar">
+      <div className="editor-flowbar__row">
+        <span className="editor-flowbar__label">Pages</span>
+        <div className="editor-flowbar__chips">
+          {selectedLesson?.pages.map((page, index) => (
+            <button
+              key={page.page_id}
+              type="button"
+              className={
+                page.page_id === selectedPageId
+                  ? 'editor-chip editor-chip--active'
+                  : 'editor-chip'
+              }
+              onClick={() => onSelectPage(page.page_id)}
+              aria-label={`Open page ${index + 1}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button type="button" className="editor-chip editor-chip--ghost" onClick={onAddPage}>
+            <PlusIcon className="h-3.5 w-3.5" />
+            New page
+          </button>
+        </div>
       </div>
     </div>
   );

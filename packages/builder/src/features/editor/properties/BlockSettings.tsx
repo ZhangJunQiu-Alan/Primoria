@@ -3,6 +3,7 @@ import { useAppDispatch } from '@/store';
 import { updateBlockSettings, removeBlock, duplicateBlock } from '@/store/editorSlice';
 import { nanoid } from '@/lib/nanoid';
 import type { Block } from '@primoria/schema';
+import { VISIBILITY_LABELS, getBlockVisibilityRule } from '../blockVisibility';
 
 interface BlockSettingsProps {
   block: Block;
@@ -12,6 +13,8 @@ interface BlockSettingsProps {
 
 export function BlockSettings({ block, lessonId, pageId }: BlockSettingsProps) {
   const dispatch = useAppDispatch();
+  const selectedVisibilityRule = getBlockVisibilityRule(block);
+  const isFirstBlock = block.position.order === 0;
 
   function handleVisibilityChange(e: React.ChangeEvent<HTMLSelectElement>) {
     dispatch(
@@ -46,13 +49,20 @@ export function BlockSettings({ block, lessonId, pageId }: BlockSettingsProps) {
           Visibility
         </label>
         <select
-          value={block.visibilityRule ?? 'always'}
+          value={selectedVisibilityRule}
           onChange={handleVisibilityChange}
           className="w-full rounded-md border bg-background px-3 py-1.5 text-sm outline-none ring-ring focus:ring-2"
         >
-          <option value="always">Always visible</option>
-          <option value="afterPreviousCorrect">After previous correct</option>
+          <option value="always">{VISIBILITY_LABELS.always}</option>
+          <option value="afterPreviousCorrect" disabled={isFirstBlock}>
+            {VISIBILITY_LABELS.afterPreviousCorrect}
+          </option>
         </select>
+        {isFirstBlock ? (
+          <p className="text-xs text-muted-foreground">
+            The first block stays visible so the page always has an entry point.
+          </p>
+        ) : null}
       </div>
 
       <label className="flex items-center gap-2 text-sm cursor-pointer">

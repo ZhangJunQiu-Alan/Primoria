@@ -23,7 +23,7 @@ export const FIXTURE_MINIMAL_COURSE: Course = {
   ],
 };
 
-// ─── Course with all block types ──────────────────────────────────────────────
+// ─── Course with all current block types ──────────────────────────────────────
 
 export const FIXTURE_ALL_BLOCKS_COURSE: Course = {
   $schema: 'https://primoria.com/course-schema/v1.json',
@@ -31,14 +31,14 @@ export const FIXTURE_ALL_BLOCKS_COURSE: Course = {
   course_id: 'fixture-all-blocks',
   metadata: {
     title: 'All Blocks Course',
-    description: 'One block of each type',
+    description: 'One block of each current type',
     difficulty_level: 'intermediate',
     estimated_minutes: 30,
   },
   lessons: [
     {
       lesson_id: 'lesson-1',
-      title: 'All Block Types',
+      title: 'All Current Block Types',
       pages: [
         {
           page_id: 'page-1-0',
@@ -116,21 +116,15 @@ export const FIXTURE_ALL_BLOCKS_COURSE: Course = {
               },
             },
             {
-              id: 'b-animation',
-              type: 'animation',
-              position: { order: 10 },
-              content: { preset: 'bubble-sort' },
-            },
-            {
               id: 'b-interactive-visual',
               type: 'interactive-visual',
-              position: { order: 11 },
+              position: { order: 10 },
               content: { template: 'pendulum', title: 'Simple Pendulum' },
             },
             {
               id: 'b-video',
               type: 'video',
-              position: { order: 12 },
+              position: { order: 11 },
               content: { provider: 'youtube' },
             },
           ],

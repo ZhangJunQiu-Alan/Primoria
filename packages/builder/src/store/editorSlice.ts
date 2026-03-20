@@ -1,5 +1,6 @@
 import { createSlice, current, type PayloadAction } from '@reduxjs/toolkit';
 import { type Course, type Block, type CourseMetadata, type BlockStyle } from '@primoria/schema';
+import { getDefaultVisibilityRule } from '@/features/editor/blockVisibility';
 
 const MAX_HISTORY = 50;
 
@@ -230,7 +231,11 @@ const editorSlice = createSlice({
       if (!lesson) return;
       const page = lesson.pages.find((p) => p.page_id === pageId);
       if (!page) return;
-      page.blocks.push(block);
+      page.blocks.push({
+        ...block,
+        visibilityRule:
+          block.visibilityRule ?? getDefaultVisibilityRule(block.position.order),
+      });
       state.isDirty = true;
     },
     removeBlock(

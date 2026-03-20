@@ -7,13 +7,23 @@ import { cn } from '@/lib/utils';
 
 interface SortableBlockProps {
   block: Block;
+  lessonId: string;
+  pageId: string;
   isSelected: boolean;
   onSelect: () => void;
   onDelete: () => void;
   onDuplicate: () => void;
 }
 
-export function SortableBlock({ block, isSelected, onSelect, onDelete, onDuplicate }: SortableBlockProps) {
+export function SortableBlock({
+  block,
+  lessonId,
+  pageId,
+  isSelected,
+  onSelect,
+  onDelete,
+  onDuplicate,
+}: SortableBlockProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: block.id,
   });
@@ -27,40 +37,43 @@ export function SortableBlock({ block, isSelected, onSelect, onDelete, onDuplica
     <div
       ref={setNodeRef}
       style={style}
-      className={cn('group relative flex items-start gap-2', isDragging && 'opacity-50')}
+      className={cn('editor-sortable-block group relative', isDragging && 'opacity-50')}
     >
-      {/* Drag handle */}
-      <button
-        {...attributes}
-        {...listeners}
-        className="mt-3 p-1 rounded text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-foreground hover:bg-accent transition-all cursor-grab active:cursor-grabbing"
-        tabIndex={-1}
-        aria-label="Drag to reorder"
-      >
-        <DragHandleDots2Icon className="h-4 w-4" />
-      </button>
-
-      <div className="flex-1 min-w-0">
-        <BlockPreview block={block} isSelected={isSelected} onClick={onSelect} />
+      <div className="editor-sortable-block__actions">
+        <button
+          {...attributes}
+          {...listeners}
+          className="editor-sortable-block__action cursor-grab active:cursor-grabbing"
+          tabIndex={-1}
+          aria-label="Drag to reorder"
+        >
+          <DragHandleDots2Icon className="h-4 w-4" />
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
+          className="editor-sortable-block__action"
+          aria-label="Duplicate block"
+        >
+          <CopyIcon className="h-4 w-4" />
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          className="editor-sortable-block__action editor-sortable-block__action--danger"
+          aria-label="Delete block"
+        >
+          <TrashIcon className="h-4 w-4" />
+        </button>
       </div>
 
-      {/* Duplicate */}
-      <button
-        onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
-        className="mt-3 p-1 rounded text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-foreground hover:bg-accent transition-all"
-        aria-label="Duplicate block"
-      >
-        <CopyIcon className="h-4 w-4" />
-      </button>
-
-      {/* Delete */}
-      <button
-        onClick={(e) => { e.stopPropagation(); onDelete(); }}
-        className="mt-3 p-1 rounded text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-destructive hover:bg-destructive/10 transition-all"
-        aria-label="Delete block"
-      >
-        <TrashIcon className="h-4 w-4" />
-      </button>
+      <div className="min-w-0">
+        <BlockPreview
+          block={block}
+          lessonId={lessonId}
+          pageId={pageId}
+          isSelected={isSelected}
+          onClick={onSelect}
+        />
+      </div>
     </div>
   );
 }

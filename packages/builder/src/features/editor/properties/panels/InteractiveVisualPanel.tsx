@@ -53,7 +53,7 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
   const { register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      template: c.template ?? 'pendulum',
+      template: c.template ?? 'generic',
       title: c.title ?? '',
       description: c.description ?? '',
       aiPrompt: c.aiPrompt ?? '',
@@ -62,7 +62,7 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
 
   useEffect(() => {
     reset({
-      template: c.template ?? 'pendulum',
+      template: c.template ?? 'generic',
       title: c.title ?? '',
       description: c.description ?? '',
       aiPrompt: c.aiPrompt ?? '',
