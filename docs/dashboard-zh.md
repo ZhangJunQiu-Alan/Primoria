@@ -26,7 +26,7 @@ Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/build
 - `packages/builder/src/components/account/AccountMenu.tsx`
   - 头像菜单入口，承接设置与会话动作
 - `packages/builder/src/services/StorageService.ts`
-  - 本地偏好持久化与本地草稿清理
+  - 本地偏好持久化
 
 ## Tab 说明
 
@@ -88,14 +88,14 @@ Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/build
   - 将通知与辅助功能偏好保存到 `user_settings`
   - React Builder 内语言值统一归一到英文
   - 通过 `StorageService` 持久化本地工作流/数据偏好
-  - 清除本地 `primoria_draft_*` 草稿，不影响远端课程
+  - 在设置中心明确提示 Builder 当前仅支持手动保存
 
 ## 数据策略
 
 Dashboard 当前采用混合策略：
 - 能用 Supabase 真实数据的域优先走真实数据
 - 收入/高级分析等尚未接后端的域继续使用派生占位值
-- 工作流偏好与草稿清理由本地存储负责
+- 工作流偏好由本地存储负责
 
 ## 响应式策略
 

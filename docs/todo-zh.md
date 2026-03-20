@@ -13,7 +13,7 @@
 ## 2. 中优先级
 
 1. [ ] 用真实指标完善 Course Manage 的 `student/comments` 排序。
-2. [ ] 为未来多人协作设计 block 级冲突处理策略。
+2. [ ] 若未来引入多人协作，设计明确的草稿冲突处理策略。
 3. [ ] 扩展 Viewer 离线缓存与断网播放能力。
 4. [ ] 增加 AI 生成成功率/失败类型的观测面板。
 5. [ ] 补齐挑战类成就计数后端字段（`perfect_*`、`speed_lesson`、`daily_tasks_30`），替换当前临时进度回退逻辑。
@@ -52,4 +52,5 @@
 23. [x] Builder 画布编辑体验升级：`text`、`code-block`、`code-playground` 直接在 block 上编辑，`image` 接入 Supabase 上传，冗余 properties 编辑器移除。
 24. [x] React learner preview 按 Flutter viewer 结构重做：居中 lesson stage、页进度、`Prev / Check / Next` 导航，以及 landing-style 呈现。
 25. [x] React Builder 文案统一为英文；旧的中文 dashboard/auth 选择器与无效语言值已清理。
-26. [x] Flutter `Builder/` 已从当前仓库退役；React `packages/builder` 成为唯一创作端实现，相关 docs 已同步更新。
+26. [x] React `packages/builder` 已成为唯一创作端实现，相关 docs 已同步更新。
+27. [x] Builder 稳定性加固完成：显式远端保存、保存失败时阻止发布、author/admin 角色门禁、移除本地草稿/autosave，并删除与 `visibilityRule` 冲突的 `requiredForProgress`。

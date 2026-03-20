@@ -15,15 +15,17 @@
 ## B. Builder 路由与权限
 
 - [ ] 未登录访问 `/dashboard` 会被重定向到 `/`
-- [ ] 未登录访问 `/builder` 会被重定向到 `/`
+- [ ] 未登录访问 `/editor` 会被重定向到 `/login`
 - [ ] 已登录 author/admin 访问 `/` 会跳转 `/dashboard`
 - [ ] 非 author 角色无法访问 Builder 受保护路由
 
 ## C. Builder 编辑器核心能力
 
-- [ ] 在 `/builder` 创建空白 lesson
+- [ ] 在 `/editor` 创建空白 lesson
 - [ ] 使用规范 `lessons` 键导入 JSON 成功
 - [ ] 使用历史 `pages` 键导入 JSON 并验证迁移成功
+- [ ] 显式保存流程可在无远端错误时完成
+- [ ] 如果保存失败，发布流程会中止
 - [ ] 保存与发布流程在无阻断错误时可完成
 - [ ] text block 的 richtext 内容在 learner preview 中正确渲染
 - [ ] `text`、`code-block`、`code-playground` 支持画布内联编辑
@@ -74,7 +76,6 @@
 - [ ] 账号设置可从 Supabase 正常加载
 - [ ] Workflow 设置可正常本地保存
 - [ ] Notification 设置可正常保存
-- [ ] Data 分区可清除本地草稿且不影响远端课程
 - [ ] React Builder 中语言值保持英文归一化
 
 ## E. Viewer 核心验证

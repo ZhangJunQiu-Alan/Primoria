@@ -25,7 +25,7 @@ Primoria 是“创作者到学习者”的双端平台：
 ### 3.1 Builder
 
 - 落地页与认证（邮箱密码 + OAuth 回调）
-- `/dashboard` 与 `/builder` 角色门禁
+- `/dashboard` 与 `/editor` 角色门禁
 - Dashboard 四个 Tab：
   - 首页（已重设计）
   - 课程管理（工作台已重构，核心流程保留）
@@ -34,7 +34,7 @@ Primoria 是“创作者到学习者”的双端平台：
 - 编辑器能力：
   - block 增删改排
   - `text`、`code-block`、`code-playground` 支持块内编辑
-  - 保存/发布/导入/导出
+  - 手动保存/发布/导入/导出
   - AI 生成（含 agentic 流程和质量增强）
 
 ### 3.2 Viewer

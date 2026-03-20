@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer, { setSession, clearSession } from '../src/store/authSlice';
+import authReducer, { hasBuilderAccess, setSession, clearSession } from '../src/store/authSlice';
 import editorReducer from '../src/store/editorSlice';
 
 // Minimal router guards extracted for unit testing
@@ -12,23 +12,25 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 function RootEntry() {
-  const { user, loading } = useSelector((s: RootState) => s.auth);
+  const { user, role, loading } = useSelector((s: RootState) => s.auth);
   if (loading) return <div>Loading</div>;
-  if (user) return <Navigate to="/dashboard" replace />;
+  if (user && hasBuilderAccess(role)) return <Navigate to="/dashboard" replace />;
   return <div>Landing Page</div>;
 }
 
 function RequireAuth() {
-  const { user, loading } = useSelector((s: RootState) => s.auth);
+  const { user, role, loading } = useSelector((s: RootState) => s.auth);
   if (loading) return <div>Loading</div>;
   if (!user) return <Navigate to="/login" replace />;
+  if (!hasBuilderAccess(role)) return <Navigate to="/" replace />;
   return <Outlet />;
 }
 
 function RedirectIfAuth() {
-  const { user, loading } = useSelector((s: RootState) => s.auth);
+  const { user, role, loading } = useSelector((s: RootState) => s.auth);
   if (loading) return <div>Loading</div>;
-  if (user) return <Navigate to="/dashboard" replace />;
+  if (user && hasBuilderAccess(role)) return <Navigate to="/dashboard" replace />;
+  if (user) return <Navigate to="/" replace />;
   return <Outlet />;
 }
 
@@ -37,7 +39,11 @@ function makeStore(overrides?: Partial<RootState['auth']>) {
   if (overrides) {
     if ('user' in overrides && overrides.user) {
       store.dispatch(
-        setSession({ user: overrides.user as never, session: null }),
+        setSession({
+          user: overrides.user as never,
+          session: null,
+          role: overrides.role ?? null,
+        }),
       );
     } else if (overrides.user === null) {
       store.dispatch(clearSession());
@@ -74,7 +80,13 @@ describe('RootEntry guard', () => {
 
   it('redirects authenticated user from / to /dashboard', () => {
     const store = makeStore();
-    store.dispatch(setSession({ user: { id: 'u1', email: 'a@b.com' } as never, session: null }));
+    store.dispatch(
+      setSession({
+        user: { id: 'u1', email: 'a@b.com' } as never,
+        session: null,
+        role: 'author',
+      }),
+    );
     renderWithRouter(
       store,
       '/',
@@ -84,6 +96,26 @@ describe('RootEntry guard', () => {
       </Routes>,
     );
     expect(screen.getByText('Dashboard')).toBeTruthy();
+  });
+
+  it('keeps non-author users on landing', () => {
+    const store = makeStore();
+    store.dispatch(
+      setSession({
+        user: { id: 'u1', email: 'a@b.com' } as never,
+        session: null,
+        role: 'user',
+      }),
+    );
+    renderWithRouter(
+      store,
+      '/',
+      <Routes>
+        <Route path="/" element={<RootEntry />} />
+        <Route path="/dashboard" element={<div>Dashboard</div>} />
+      </Routes>,
+    );
+    expect(screen.getByText('Landing Page')).toBeTruthy();
   });
 });
 
@@ -105,7 +137,13 @@ describe('RequireAuth guard', () => {
 
   it('renders protected page for authenticated user', () => {
     const store = makeStore();
-    store.dispatch(setSession({ user: { id: 'u1', email: 'a@b.com' } as never, session: null }));
+    store.dispatch(
+      setSession({
+        user: { id: 'u1', email: 'a@b.com' } as never,
+        session: null,
+        role: 'author',
+      }),
+    );
     renderWithRouter(
       store,
       '/dashboard',
@@ -118,12 +156,41 @@ describe('RequireAuth guard', () => {
     );
     expect(screen.getByText('Dashboard')).toBeTruthy();
   });
+
+  it('redirects authenticated non-author users back to landing', () => {
+    const store = makeStore();
+    store.dispatch(
+      setSession({
+        user: { id: 'u1', email: 'a@b.com' } as never,
+        session: null,
+        role: 'user',
+      }),
+    );
+    renderWithRouter(
+      store,
+      '/dashboard',
+      <Routes>
+        <Route element={<RequireAuth />}>
+          <Route path="/dashboard" element={<div>Dashboard</div>} />
+        </Route>
+        <Route path="/" element={<div>Landing Page</div>} />
+        <Route path="/login" element={<div>Login Page</div>} />
+      </Routes>,
+    );
+    expect(screen.getByText('Landing Page')).toBeTruthy();
+  });
 });
 
 describe('RedirectIfAuth guard', () => {
   it('redirects authenticated user away from /login', () => {
     const store = makeStore();
-    store.dispatch(setSession({ user: { id: 'u1', email: 'a@b.com' } as never, session: null }));
+    store.dispatch(
+      setSession({
+        user: { id: 'u1', email: 'a@b.com' } as never,
+        session: null,
+        role: 'author',
+      }),
+    );
     renderWithRouter(
       store,
       '/login',
@@ -135,6 +202,29 @@ describe('RedirectIfAuth guard', () => {
       </Routes>,
     );
     expect(screen.getByText('Dashboard')).toBeTruthy();
+  });
+
+  it('redirects authenticated non-author users to landing', () => {
+    const store = makeStore();
+    store.dispatch(
+      setSession({
+        user: { id: 'u1', email: 'a@b.com' } as never,
+        session: null,
+        role: 'user',
+      }),
+    );
+    renderWithRouter(
+      store,
+      '/login',
+      <Routes>
+        <Route element={<RedirectIfAuth />}>
+          <Route path="/login" element={<div>Login Page</div>} />
+        </Route>
+        <Route path="/" element={<div>Landing Page</div>} />
+        <Route path="/dashboard" element={<div>Dashboard</div>} />
+      </Routes>,
+    );
+    expect(screen.getByText('Landing Page')).toBeTruthy();
   });
 
   it('renders login page for unauthenticated user', () => {

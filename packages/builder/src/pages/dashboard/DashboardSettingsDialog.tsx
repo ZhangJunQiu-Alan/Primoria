@@ -347,14 +347,6 @@ export function DashboardSettingsDialog({
     }
   }
 
-  function handleClearDrafts() {
-    const removed = StorageService.clearAllCourseDrafts();
-    setNotice({
-      tone: 'success',
-      text: removed > 0 ? `Cleared ${removed} local drafts.` : 'No local drafts to clear.',
-    });
-  }
-
   function renderAccountSection() {
     return (
       <SettingsCard
@@ -594,52 +586,33 @@ export function DashboardSettingsDialog({
 
   function renderDataSection() {
     return (
-      <>
-        <SettingsCard
-          title="Data"
-          actions={
-            <button
-              type="button"
-              className="dashboard-settings__submit"
-              onClick={() => handleSaveLocalSettings('data', 'Data settings saved.')}
-              disabled={savingLocalSection === 'data'}
-            >
-              {savingLocalSection === 'data' ? <Loader2 className="dashboard-spin" size={16} /> : null}
-              <span>Save data</span>
-            </button>
-          }
-        >
-          <div className="dashboard-settings__stack">
-            <ToggleRow
-              checked={localSettings.usageTelemetry}
-              label="Local usage analytics"
-              onToggle={(next) =>
-                setLocalSettings((current) => ({
-                  ...current,
-                  usageTelemetry: next,
-                }))
-              }
-            />
-          </div>
-        </SettingsCard>
-
-        <SettingsCard
-          title="Cleanup"
-          actions={
-            <button
-              type="button"
-              className="dashboard-settings__submit dashboard-settings__submit--secondary"
-              onClick={handleClearDrafts}
-            >
-              Clear local drafts
-            </button>
-          }
-        >
-          <p className="dashboard-settings__hint">
-            Only removes local `primoria_draft_*` drafts. Remote courses are not affected.
-          </p>
-        </SettingsCard>
-      </>
+      <SettingsCard
+        title="Data"
+        actions={
+          <button
+            type="button"
+            className="dashboard-settings__submit"
+            onClick={() => handleSaveLocalSettings('data', 'Data settings saved.')}
+            disabled={savingLocalSection === 'data'}
+          >
+            {savingLocalSection === 'data' ? <Loader2 className="dashboard-spin" size={16} /> : null}
+            <span>Save data</span>
+          </button>
+        }
+      >
+        <div className="dashboard-settings__stack">
+          <ToggleRow
+            checked={localSettings.usageTelemetry}
+            label="Local usage analytics"
+            onToggle={(next) =>
+              setLocalSettings((current) => ({
+                ...current,
+                usageTelemetry: next,
+              }))
+            }
+          />
+        </div>
+      </SettingsCard>
     );
   }
 

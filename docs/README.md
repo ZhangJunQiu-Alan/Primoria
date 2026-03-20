@@ -7,8 +7,6 @@ Primoria currently ships as a mixed-stack product:
 - `packages/schema/`: canonical shared course schema, fixtures, and migration helpers
 - `Viewer/`: learner-facing app (Flutter + Provider + Supabase)
 
-The legacy Flutter authoring app under `Builder/` has been retired and removed from the active codebase.
-
 ## Deployment
 
 - Viewer is deployed to **[primoria.dpdns.org](https://primoria.dpdns.org)** via GitHub Pages (`.github/workflows/deploy-viewer.yml`).
@@ -16,8 +14,7 @@ The legacy Flutter authoring app under `Builder/` has been retired and removed f
 
 ## Current Product Status
 
-- React Builder is now the primary authoring surface.
-- Builder supports auth, dashboard, editor, autosave, save/publish, JSON import/export, course duplication, and schema-backed validation.
+- Builder supports auth, dashboard, editor, manual save/publish, JSON import/export, course duplication, and schema-backed validation.
 - Builder canvas supports inline editing for `text`, `code-block`, and `code-playground`, plus Supabase-backed image uploads.
 - Block visibility now supports gated reveal (`afterPreviousCorrect`) with first-block safety defaults.
 - In-editor learner preview now follows the Flutter viewer flow more closely: page progress, gated reveal, and `Prev / Check / Next` navigation inside a centered lesson stage.
@@ -32,8 +29,8 @@ The legacy Flutter authoring app under `Builder/` has been retired and removed f
 
 - `/`: landing
 - `/dashboard`: creator dashboard
-- `/builder`: editor
-- `/viewer`: builder-side learner preview
+- `/editor`: blank-course editor entry
+- `/editor/:courseId`: course editor
 - `/auth/callback`: OAuth callback
 
 ## Block Types (Canonical)
@@ -74,4 +71,3 @@ flutter test
 ## Notes
 
 - Docs are maintained against the current implementation, not historical architecture.
-- Historical Flutter Builder details remain in git history and older changelog entries.

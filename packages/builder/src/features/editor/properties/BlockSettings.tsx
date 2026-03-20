@@ -27,17 +27,6 @@ export function BlockSettings({ block, lessonId, pageId }: BlockSettingsProps) {
     );
   }
 
-  function handleRequiredChange(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch(
-      updateBlockSettings({
-        lessonId,
-        pageId,
-        blockId: block.id,
-        requiredForProgress: e.target.checked,
-      }),
-    );
-  }
-
   return (
     <div className="mt-6 pt-4 border-t space-y-3">
       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
@@ -64,16 +53,6 @@ export function BlockSettings({ block, lessonId, pageId }: BlockSettingsProps) {
           </p>
         ) : null}
       </div>
-
-      <label className="flex items-center gap-2 text-sm cursor-pointer">
-        <input
-          type="checkbox"
-          checked={block.requiredForProgress ?? false}
-          onChange={handleRequiredChange}
-          className="h-4 w-4"
-        />
-        Required for progress
-      </label>
 
       <div className="flex gap-2 pt-1">
         <button

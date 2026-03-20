@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { act, render, screen, waitFor } from '@testing-library/react';
@@ -24,6 +24,7 @@ function makeStore() {
         email: 'author@primoria.dev',
       } as never,
       session: null,
+      role: 'author',
     }),
   );
 
@@ -44,10 +45,6 @@ function renderEditor() {
 
   return { user, store };
 }
-
-beforeEach(() => {
-  window.localStorage?.removeItem?.('primoria_draft_course-1');
-});
 
 describe('EditorLayout', () => {
   it('renders the botanical studio shell with library, canvas, and inspector', async () => {
@@ -88,6 +85,30 @@ describe('EditorLayout', () => {
       expect(screen.getByLabelText(/block library/i)).toBeInTheDocument();
     });
     expect(screen.queryByText(/loading editor/i)).not.toBeInTheDocument();
+  });
+
+  it('ignores stale local draft entries and opens the remote course snapshot', async () => {
+    const staleLocalDraft: Course = {
+      ...courseFixture,
+      metadata: {
+        ...courseFixture.metadata,
+        title: 'Stale local title',
+      },
+    };
+
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      value: {
+        getItem: vi.fn(() => JSON.stringify(staleLocalDraft)),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+      },
+    });
+
+    renderEditor();
+
+    expect(await screen.findByText(courseFixture.metadata.title)).toBeInTheDocument();
+    expect(screen.queryByText('Stale local title')).not.toBeInTheDocument();
   });
 });
 

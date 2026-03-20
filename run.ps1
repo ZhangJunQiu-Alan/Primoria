@@ -1,6 +1,7 @@
 param(
   [ValidateSet('builder', 'viewer')]
-  [string]$App = 'builder'
+  [string]$App = 'builder',
+  [int]$WebPort = 3000
 )
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -24,9 +25,19 @@ if (Test-Path $envFile) {
   }
 }
 
+if ([string]::IsNullOrWhiteSpace($env:VITE_SUPABASE_URL) -and -not [string]::IsNullOrWhiteSpace($env:SUPABASE_URL)) {
+  [System.Environment]::SetEnvironmentVariable('VITE_SUPABASE_URL', $env:SUPABASE_URL, 'Process')
+}
+
+if ([string]::IsNullOrWhiteSpace($env:VITE_SUPABASE_ANON_KEY) -and -not [string]::IsNullOrWhiteSpace($env:SUPABASE_ANON_KEY)) {
+  [System.Environment]::SetEnvironmentVariable('VITE_SUPABASE_ANON_KEY', $env:SUPABASE_ANON_KEY, 'Process')
+}
+
 $flutterArgs = @(
   '-d',
   'chrome',
+  '--web-port',
+  "$WebPort",
   "--dart-define=SUPABASE_URL=$($env:SUPABASE_URL)",
   "--dart-define=SUPABASE_ANON_KEY=$($env:SUPABASE_ANON_KEY)"
 )
@@ -39,13 +50,23 @@ if (-not [string]::IsNullOrWhiteSpace($env:GEMINI_MODEL)) {
   $flutterArgs += "--dart-define=GEMINI_MODEL=$($env:GEMINI_MODEL)"
 }
 
-$appDir = if ($App -eq 'builder') { 'Builder' } else { 'Viewer' }
-$targetDir = Join-Path $root $appDir
-
-Push-Location $targetDir
-try {
-  & flutter run @flutterArgs
+if ($App -eq 'builder') {
+  Push-Location $root
+  try {
+    & pnpm --filter @primoria/builder dev -- --host 0.0.0.0 --port $WebPort
+  }
+  finally {
+    Pop-Location
+  }
 }
-finally {
-  Pop-Location
+else {
+  $targetDir = Join-Path $root 'Viewer'
+
+  Push-Location $targetDir
+  try {
+    & flutter run @flutterArgs
+  }
+  finally {
+    Pop-Location
+  }
 }

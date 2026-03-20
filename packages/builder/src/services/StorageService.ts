@@ -11,7 +11,6 @@ export interface DashboardLocalSettings {
 }
 
 const SETTINGS_KEY = 'primoria_builder_settings';
-const DRAFT_PREFIX = 'primoria_draft_';
 
 const DEFAULT_SETTINGS: DashboardLocalSettings = {
   defaultDifficulty: 'beginner',
@@ -93,23 +92,5 @@ export const StorageService = {
     } catch {
       // Ignore local storage failures and keep the session usable.
     }
-  },
-
-  clearAllCourseDrafts() {
-    const storage = getStorage();
-    if (!storage || typeof storage.key !== 'function' || typeof storage.removeItem !== 'function') {
-      return 0;
-    }
-
-    const keysToRemove: string[] = [];
-    for (let index = 0; index < storage.length; index += 1) {
-      const key = storage.key(index);
-      if (key?.startsWith(DRAFT_PREFIX)) {
-        keysToRemove.push(key);
-      }
-    }
-
-    keysToRemove.forEach((key) => storage.removeItem(key));
-    return keysToRemove.length;
   },
 };

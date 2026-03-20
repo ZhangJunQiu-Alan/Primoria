@@ -14,7 +14,7 @@ Last updated: 2026-03-20 (rev 8)
 ## 2. Medium Priority
 
 1. [ ] Improve Course Manage sort modes (`student` / `comments`) with real metrics.
-2. [ ] Add block-level autosave conflict strategy for future multi-user collaboration.
+2. [ ] If multi-user collaboration is introduced later, design explicit draft-conflict handling.
 3. [ ] Expand Viewer offline/cache support for lesson playback.
 4. [ ] Add observability dashboard for AI generation success/failure metrics.
 5. [ ] Expose backend counters for challenge achievements (`perfect_*`, `speed_lesson`, `daily_tasks_30`) to replace temporary progress fallbacks.
@@ -75,11 +75,12 @@ Last updated: 2026-03-20 (rev 8)
 45. [x] Supabase `publish_course` RPC v2: removed `chapters` table join and content overwrite; RPC now only flips course status.
 46. [x] Builder `updateProfile` call sites: `displayName:` → `username:` in `builder_settings_dialog.dart` and `profile_dialog.dart`.
 47. [x] Viewer `course_screen` and `user_provider`: removed dead `chapters`/accordion and dead stat fields (`_completedQuestions`, `_unlockedAchievements`, `_checkAndUpdateStreak`).
-48. [x] **React Builder rewrite** (`builder-react-rewrite` branch): `@primoria/schema` (Zod schemas, migration, fixtures, 20 tests), `@primoria/db` (Supabase generated types), `@primoria/builder` (Vite 6 + React 19 + RTK; auth, dashboard, full editor with 13 block panels, dnd-kit canvas, auto-save, undo/redo, publish, preview mode, course duplication, JSON import, AI generation for Interactive Visual; 38 tests; 0 TS errors).
+48. [x] React Builder foundation completed: `@primoria/schema` (Zod schemas, migration, fixtures, 20 tests), `@primoria/db` (Supabase generated types), `@primoria/builder` (Vite 6 + React 19 + RTK; auth, dashboard, full editor with 13 block panels, dnd-kit canvas, manual save, undo/redo, publish, preview mode, course duplication, JSON import, AI generation for Interactive Visual; 38 tests; 0 TS errors).
 49. [x] `@primoria/db` `database.generated.ts` populated from real Supabase project (`rygafvlzzkvqhhenajzi`); `pnpm db:types` script wired in both package and root workspace.
 50. [x] React Builder visual parity pass: botanical dashboard/auth/editor shell, landing-style surfaces, and production-grade page layout now replace the earlier plain Tailwind look.
 51. [x] Block visibility flow completed in React Builder: first block locked to `always`, later blocks default to `afterPreviousCorrect`, and learner preview reveals gated content only after a correct answer plus `Check`.
 52. [x] Builder canvas editing upgraded: `text`, `code-block`, and `code-playground` edit directly on-block; `image` uploads to Supabase; redundant property-panel editors removed.
 53. [x] React learner preview rebuilt to mirror the Flutter viewer structure more closely: centered lesson stage, page progress, `Prev / Check / Next` navigation, and landing-style presentation.
 54. [x] React Builder UI copy normalized to English-only; old Chinese dashboard/auth test selectors and stale language values were removed.
-55. [x] Flutter `Builder/` retired from the active repository; React `packages/builder` is now the sole authoring implementation and current docs reflect that architecture.
+55. [x] React `packages/builder` is the sole authoring implementation and current docs reflect that architecture.
+56. [x] Builder hardening completed: explicit remote save flow, publish aborts on save failure, role-gated author/admin access, local draft/autosave removed, and `requiredForProgress` removed in favor of `visibilityRule`.

@@ -26,7 +26,7 @@ Tabs:
 - `packages/builder/src/components/account/AccountMenu.tsx`
   - avatar menu entry point for settings and session actions
 - `packages/builder/src/services/StorageService.ts`
-  - local persistence for builder/dashboard preferences and local draft cleanup
+  - local persistence for builder/dashboard preferences
 
 ## Tab Details
 
@@ -88,14 +88,14 @@ Tabs:
   - save notification/accessibility preferences to `user_settings`
   - keep language normalized to English in the React Builder
   - persist local workflow/data preferences via `StorageService`
-  - clear local `primoria_draft_*` entries without affecting remote courses
+  - show manual-save-only workflow guidance for Builder editing
 
 ## Data Strategy
 
 The dashboard uses a mixed strategy:
 - real course/profile/settings data from Supabase where available
 - derived placeholder values for analytics/revenue domains that do not yet have backend support
-- local storage for workflow-only preferences and draft cleanup utilities
+- local storage for workflow-only preferences
 
 ## Responsive Behavior
 

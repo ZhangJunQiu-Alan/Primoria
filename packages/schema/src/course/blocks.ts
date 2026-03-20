@@ -188,7 +188,6 @@ export const BlockSchema = z.object({
   position: z.object({ order: z.number() }),
   style: BlockStyleSchema.optional(),
   visibilityRule: VisibilityRuleSchema.optional(),
-  requiredForProgress: z.boolean().optional(),
   content: z.record(z.unknown()),
 });
 

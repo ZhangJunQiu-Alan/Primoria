@@ -10,7 +10,7 @@ import { supabase } from '@/lib/supabase';
 import { useAppSelector, useAppDispatch } from '@/store';
 import { togglePreview } from '@/store/editorSlice';
 import { AccountMenu } from '@/components/account/AccountMenu';
-import { useAutoSave } from './hooks/useAutoSave';
+import { useSaveCourse } from './hooks/useSaveCourse';
 import { usePublish } from './hooks/usePublish';
 import { useEditorKeyboard } from './hooks/useEditorKeyboard';
 import { cn } from '@/lib/utils';
@@ -34,23 +34,37 @@ export function EditorHeader({
   const isSaving = useAppSelector((s) => s.editor.isSaving);
   const previewMode = useAppSelector((s) => s.editor.previewMode);
 
-  const [publishError, setPublishError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
   const [publishSuccess, setPublishSuccess] = useState(false);
 
-  const { forceSave } = useAutoSave({
-    onRemoteError: (err) => console.error('Save failed:', err),
-  });
+  const { saveCourse } = useSaveCourse();
 
-  const { publish, publishing } = usePublish(forceSave);
+  const { publish, publishing } = usePublish(saveCourse);
 
   useEditorKeyboard({
     lessonId: activeLessonId,
     pageId: activePageId,
-    onSave: () => void forceSave(),
+    onSave: () => void handleSave(),
   });
 
+  function getErrorMessage(error: unknown) {
+    if (error instanceof Error && error.message) return error.message;
+    return 'Action failed. Please try again.';
+  }
+
+  async function handleSave() {
+    setActionError(null);
+    setPublishSuccess(false);
+
+    try {
+      await saveCourse();
+    } catch (error) {
+      setActionError(getErrorMessage(error));
+    }
+  }
+
   async function handlePublish() {
-    setPublishError(null);
+    setActionError(null);
     setPublishSuccess(false);
     const result = await publish();
     if (result.success) {
@@ -61,9 +75,9 @@ export function EditorHeader({
         .slice(0, 2)
         .map((issue) => issue.message)
         .join(' · ');
-      setPublishError(`Validation failed: ${issues}`);
+      setActionError(`Validation failed: ${issues}`);
     } else {
-      setPublishError(result.serverError ?? 'Unknown error');
+      setActionError(result.serverError ?? 'Unknown error');
     }
   }
 
@@ -114,9 +128,9 @@ export function EditorHeader({
           {isSaving ? 'Saving…' : isDirty ? 'Unsaved changes' : 'Saved'}
         </span>
 
-        {publishError && (
-          <span className="editor-toolbar-feedback editor-toolbar-feedback--error" title={publishError}>
-            {publishError}
+        {actionError && (
+          <span className="editor-toolbar-feedback editor-toolbar-feedback--error" title={actionError}>
+            {actionError}
           </span>
         )}
 
@@ -152,7 +166,7 @@ export function EditorHeader({
 
         <button
           type="button"
-          onClick={() => void forceSave()}
+          onClick={() => void handleSave()}
           disabled={!isDirty || isSaving}
           title="Save (⌘S)"
           className="editor-toolbar-button editor-toolbar-button--secondary"
