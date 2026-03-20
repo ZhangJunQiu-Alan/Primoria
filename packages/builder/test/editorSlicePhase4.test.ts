@@ -170,20 +170,6 @@ describe('updateBlockSettings', () => {
     expect(block.visibilityRule).toBe('afterPreviousCorrect');
   });
 
-  it('sets requiredForProgress', () => {
-    const store = makeStore();
-    store.dispatch(addBlock({ lessonId: 'lesson-1', pageId: 'page-1-0', block: TEXT_BLOCK }));
-    store.dispatch(
-      updateBlockSettings({
-        lessonId: 'lesson-1',
-        pageId: 'page-1-0',
-        blockId: 'b1',
-        requiredForProgress: true,
-      }),
-    );
-    const block = store.getState().editor.draft!.lessons[0].pages[0].blocks[0];
-    expect(block.requiredForProgress).toBe(true);
-  });
 });
 
 // ─── removeBlock ─────────────────────────────────────────────────────────────

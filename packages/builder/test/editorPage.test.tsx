@@ -30,6 +30,7 @@ function makeStore() {
         email: 'author@primoria.dev',
       } as never,
       session: null,
+      role: 'author',
     }),
   );
 
@@ -66,6 +67,7 @@ describe('EditorPage', () => {
             email: 'author@primoria.dev',
           } as never,
           session: null,
+          role: 'author',
         }),
       );
     });

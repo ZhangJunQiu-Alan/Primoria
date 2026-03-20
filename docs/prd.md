@@ -25,7 +25,7 @@ Primary focus:
 ### 3.1 Builder
 
 - Landing + auth (email/password + OAuth callback flow)
-- Role-gated access to `/dashboard` and `/builder`
+- Role-gated access to `/dashboard` and `/editor`
 - Dashboard tabs:
   - Home (redesigned)
   - Course Manage (redesigned workspace, core flow preserved)
@@ -34,7 +34,7 @@ Primary focus:
 - Course editor:
   - block insertion/reorder/delete
   - inline editing for `text`, `code-block`, `code-playground`
-  - save/publish/import/export
+  - manual save/publish/import/export
   - AI generation (including agentic pipeline and quality improvements)
 
 ### 3.2 Viewer

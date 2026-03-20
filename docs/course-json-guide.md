@@ -68,7 +68,6 @@ Notes:
   "position": { "order": 0 },
   "style": { "spacing": "md", "alignment": "left" },
   "visibilityRule": "always",
-  "requiredForProgress": false,
   "content": {}
 }
 ```

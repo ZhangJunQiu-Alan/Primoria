@@ -7,8 +7,6 @@ Primoria 当前是混合技术栈产品：
 - `packages/schema/`：共享课程 schema、fixtures 与迁移辅助
 - `Viewer/`：学习端应用（Flutter + Provider + Supabase）
 
-历史 Flutter 创作端 `Builder/` 已退役，并从当前代码库中移除。
-
 ## 部署
 
 - Viewer 已通过 GitHub Pages 部署至 **[primoria.dpdns.org](https://primoria.dpdns.org)**（`.github/workflows/deploy-viewer.yml`）。
@@ -16,8 +14,7 @@ Primoria 当前是混合技术栈产品：
 
 ## 当前产品状态
 
-- React Builder 已成为唯一主创作端。
-- Builder 支持鉴权、Dashboard、编辑器、自动保存、保存/发布、JSON 导入导出、课程复制，以及基于 schema 的校验。
+- Builder 支持鉴权、Dashboard、编辑器、手动保存/发布、JSON 导入导出、课程复制，以及基于 schema 的校验。
 - Builder 画布支持 `text`、`code-block`、`code-playground` 直接内联编辑，并支持接入 Supabase 的图片上传。
 - Block 可见性已支持按答题正确性逐步解锁（`afterPreviousCorrect`），并带有“每页首块始终可见”的安全默认值。
 - 编辑器内 learner preview 已更接近 Flutter Viewer 的流程：页进度、按答题解锁，以及居中 lesson stage 中的 `Prev / Check / Next` 导航。
@@ -32,8 +29,8 @@ Primoria 当前是混合技术栈产品：
 
 - `/`：落地页
 - `/dashboard`：创作者工作台
-- `/builder`：编辑器
-- `/viewer`：Builder 内 learner preview
+- `/editor`：新建课程编辑入口
+- `/editor/:courseId`：课程编辑器
 - `/auth/callback`：OAuth 回调
 
 ## Block 类型（规范值）
@@ -74,4 +71,3 @@ flutter test
 ## 说明
 
 - 文档按当前实现维护，而不是按历史架构维护。
-- 旧 Flutter Builder 的细节保留在 git 历史和旧 changelog 记录中。

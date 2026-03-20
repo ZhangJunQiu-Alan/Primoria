@@ -8,6 +8,15 @@ fi
 
 APP=${1:-builder}
 WEB_PORT=${WEB_PORT:-3000}
+ROOT_DIR="$(dirname "$0")"
+
+if [[ -z "${VITE_SUPABASE_URL:-}" && -n "${SUPABASE_URL:-}" ]]; then
+  export VITE_SUPABASE_URL="$SUPABASE_URL"
+fi
+
+if [[ -z "${VITE_SUPABASE_ANON_KEY:-}" && -n "${SUPABASE_ANON_KEY:-}" ]]; then
+  export VITE_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
+fi
 
 supabase_args=()
 if [[ -n "${SUPABASE_URL:-}" ]]; then
@@ -27,14 +36,11 @@ fi
 
 case $APP in
   builder)
-    cd "$(dirname "$0")/Builder"
-    flutter run -d chrome \
-      --web-port "$WEB_PORT" \
-      "${supabase_args[@]}" \
-      "${gemini_args[@]}"
+    cd "$ROOT_DIR"
+    pnpm --filter @primoria/builder dev -- --host 0.0.0.0 --port "$WEB_PORT"
     ;;
   viewer)
-    cd "$(dirname "$0")/Viewer"
+    cd "$ROOT_DIR/Viewer"
     flutter run -d chrome \
       --web-port "$WEB_PORT" \
       "${supabase_args[@]}" \

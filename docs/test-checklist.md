@@ -15,15 +15,17 @@ Last updated: 2026-03-20
 ## B. Builder Routing & Access
 
 - [ ] logged-out user opening `/dashboard` is redirected to `/`
-- [ ] logged-out user opening `/builder` is redirected to `/`
+- [ ] logged-out user opening `/editor` is redirected to `/login`
 - [ ] logged-in author/admin landing on `/` redirects to `/dashboard`
 - [ ] non-author role cannot enter protected builder routes
 
 ## C. Builder Editor Core
 
-- [ ] create a blank lesson in `/builder`
+- [ ] create a blank lesson in `/editor`
 - [ ] import JSON using canonical `lessons` key
 - [ ] import legacy JSON using `pages` key and verify migration success
+- [ ] explicit save completes without remote persistence errors
+- [ ] publish aborts if the save step fails
 - [ ] save and publish complete without schema-blocking errors
 - [ ] text block richtext content renders correctly in learner preview
 - [ ] `text`, `code-block`, and `code-playground` support inline editing on canvas
@@ -74,7 +76,6 @@ Last updated: 2026-03-20
 - [ ] account settings load from Supabase
 - [ ] workflow settings save locally
 - [ ] notification settings save successfully
-- [ ] data section can clear local drafts without touching remote courses
 - [ ] language remains normalized to English in the React Builder
 
 ## E. Viewer Core
