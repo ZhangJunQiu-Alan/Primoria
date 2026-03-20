@@ -1,12 +1,13 @@
 # Regression Checklist (Builder + Viewer)
 
-Last updated: 2026-03-06
+Last updated: 2026-03-20
 
 ## A. Build & Static Checks
 
-- [ ] `cd Builder && flutter pub get`
-- [ ] `cd Builder && flutter analyze lib/features/dashboard`
-- [ ] `cd Builder && flutter test`
+- [ ] `pnpm install`
+- [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
+- [ ] `pnpm --filter @primoria/builder typecheck`
+- [ ] `pnpm --filter @primoria/builder test`
 - [ ] `cd Viewer && flutter pub get`
 - [ ] `cd Viewer && flutter analyze`
 - [ ] `cd Viewer && flutter test`
@@ -20,61 +21,70 @@ Last updated: 2026-03-06
 
 ## C. Builder Editor Core
 
-- [ ] create blank lesson in `/builder`
+- [ ] create a blank lesson in `/builder`
 - [ ] import JSON using canonical `lessons` key
 - [ ] import legacy JSON using `pages` key and verify migration success
 - [ ] save and publish complete without schema-blocking errors
-- [ ] text block markdown/plain mode renders correctly in preview
-- [ ] `text`, `code-block`, `code-playground` support inline editing on canvas
+- [ ] text block richtext content renders correctly in learner preview
+- [ ] `text`, `code-block`, and `code-playground` support inline editing on canvas
+- [ ] `image` block uploads to Supabase and renders back in canvas + preview
 - [ ] visibility defaults:
   - first block = `always`
   - non-first block = `afterPreviousCorrect`
+- [ ] gated blocks reveal only after a correct answer + `Check`
+- [ ] learner preview supports page progress and `Prev / Check / Next`
 
 ## D. Dashboard Tabs
 
-### D1. Home (redesigned)
+### D1. Home
 - [ ] greeting changes by time period
 - [ ] quick action buttons work (create/continue/data center)
 - [ ] overview KPIs and completion trend render
-- [ ] top 3 courses list renders with open action
-- [ ] recent activity timeline renders
+- [ ] featured courses list renders with open action
+- [ ] recent activity feed renders
 - [ ] empty state shows when there are no courses
 
-### D2. Course Manage (redesigned workspace, core flows preserved)
+### D2. Course Management
 - [ ] loading / empty / list states work
 - [ ] summary strip renders (courses/lessons/published/drafts/need-content)
-- [ ] search and status filters work together (all/draft/published)
+- [ ] search and status filters work together (`all` / `draft` / `published`)
 - [ ] no-results state appears and clear-filters action resets view
 - [ ] create/edit/delete course still work
-- [ ] open-course action routes to builder with `courseId` (and encoded `courseTitle`)
-- [ ] add lesson entry still works (routes with `addLesson=1`)
-- [ ] lesson delete flow still works with confirmation and guard
-- [ ] lesson titles lazy-load and recover after refresh
+- [ ] duplicate course creates a new draft row
+- [ ] open-course action routes to builder with the selected course context
+- [ ] add lesson and delete lesson flows still work
 
-### D3. Data Center (redesigned)
+### D3. Data Center
 - [ ] KPI row renders
-- [ ] trend chart renders and range selector works (7/30/90/all)
-- [ ] performance bar chart and sorting selector render
-- [ ] geographic pie chart renders
+- [ ] trend chart renders and range selector works
+- [ ] performance chart renders
+- [ ] geographic breakdown renders
 - [ ] heatmap renders
 - [ ] detail table renders
-- [ ] export action copies CSV text to clipboard
+- [ ] export action is reachable
 
-### D4. Fans Management (redesigned)
+### D4. Fan Management
 - [ ] fan KPI and trend render
 - [ ] search/filter/pagination work
 - [ ] engagement timeline renders
-- [ ] learner tag create/remove works in UI
-- [ ] batch actions are reachable and show reserved-action feedback
+- [ ] learner tag actions are reachable
+- [ ] reserved bulk actions show placeholder feedback
+
+### D5. Dashboard Settings
+- [ ] account settings load from Supabase
+- [ ] workflow settings save locally
+- [ ] notification settings save successfully
+- [ ] data section can clear local drafts without touching remote courses
+- [ ] language remains normalized to English in the React Builder
 
 ## E. Viewer Core
 
 - [ ] login/register flow works
 - [ ] course enrollment works
-- [ ] Home / Library / Community / Profile use shared page shell widths (standard/feed/wide/profile presets)
+- [ ] Home / Library / Community / Profile use shared page shell widths
 - [ ] desktop layout in Viewer is wider than mobile/tablet and remains centered/readable
 - [ ] lesson screen displays current lesson title (not course title)
-- [ ] lesson body supports markdown rendering for text content
+- [ ] text content still renders correctly in lesson playback
 - [ ] profile screen loads XP/streak and achievement-related data
 - [ ] logo/entry navigation paths return users to expected dashboard/home targets
 - [ ] `Viewer/test/viewer_layout_metrics_test.dart` passes
@@ -88,6 +98,6 @@ Last updated: 2026-03-06
 
 ## G. Known Non-Blocking Gaps
 
-1. Revenue metrics are fallback-derived in dashboard.
+1. Revenue metrics are still fallback-derived in dashboard.
 2. Some analytics/fans actions are UI-ready but backend endpoints are not yet implemented.
-3. Course Manage sorting by student/comments is still placeholder logic.
+3. A few sort modes still use placeholder ranking logic.

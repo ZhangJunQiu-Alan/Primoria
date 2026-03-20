@@ -11,6 +11,13 @@ import type { RootState } from '../src/store';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
+function RootEntry() {
+  const { user, loading } = useSelector((s: RootState) => s.auth);
+  if (loading) return <div>Loading</div>;
+  if (user) return <Navigate to="/dashboard" replace />;
+  return <div>Landing Page</div>;
+}
+
 function RequireAuth() {
   const { user, loading } = useSelector((s: RootState) => s.auth);
   if (loading) return <div>Loading</div>;
@@ -50,6 +57,35 @@ function renderWithRouter(
     </Provider>,
   );
 }
+
+describe('RootEntry guard', () => {
+  it('renders landing page for unauthenticated user', () => {
+    const store = makeStore({ user: null, loading: false });
+    renderWithRouter(
+      store,
+      '/',
+      <Routes>
+        <Route path="/" element={<RootEntry />} />
+        <Route path="/dashboard" element={<div>Dashboard</div>} />
+      </Routes>,
+    );
+    expect(screen.getByText('Landing Page')).toBeTruthy();
+  });
+
+  it('redirects authenticated user from / to /dashboard', () => {
+    const store = makeStore();
+    store.dispatch(setSession({ user: { id: 'u1', email: 'a@b.com' } as never, session: null }));
+    renderWithRouter(
+      store,
+      '/',
+      <Routes>
+        <Route path="/" element={<RootEntry />} />
+        <Route path="/dashboard" element={<div>Dashboard</div>} />
+      </Routes>,
+    );
+    expect(screen.getByText('Dashboard')).toBeTruthy();
+  });
+});
 
 describe('RequireAuth guard', () => {
   it('redirects unauthenticated user to /login', () => {

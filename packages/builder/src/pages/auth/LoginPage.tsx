@@ -1,149 +1,231 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { useNavigate } from 'react-router-dom';
+import { Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import { cn } from '@/lib/utils';
+import {
+  AuthActionButton,
+  AuthDivider,
+  AuthField,
+  AuthLayout,
+  AuthSocialButton,
+  AuthStatusBanner,
+  EmailToggleButton,
+  FeatureCheck,
+  FooterPrompt,
+  PasswordVisibilityButton,
+} from './AuthLayout';
+import { getFieldErrors, loginSchema, passwordResetSchema } from './authSchemas';
 
-const schema = z.object({
-  email: z.string().email('Invalid email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-type FormValues = z.infer<typeof schema>;
+type LoginField = 'email' | 'password';
+type AuthMode = 'signin' | 'forgot';
+type Provider = 'google' | 'apple' | 'email' | null;
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [mode, setMode] = useState<AuthMode>('signin');
+  const [loadingProvider, setLoadingProvider] = useState<Provider>(null);
+  const [status, setStatus] = useState<{ tone: 'error' | 'success'; message: string } | null>(
+    null,
+  );
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<LoginField, string>>>({});
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  const isForgotMode = mode === 'forgot';
+  const isSubmitting = loadingProvider === 'email';
 
-  async function onSubmit(values: FormValues) {
-    setServerError(null);
-    const { error } = await supabase.auth.signInWithPassword(values);
+  async function handleOAuth(provider: 'google' | 'apple') {
+    setLoadingProvider(provider);
+    setStatus(null);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+
+    setLoadingProvider(null);
     if (error) {
-      setServerError(error.message);
-    } else {
-      navigate('/dashboard');
+      setStatus({ tone: 'error', message: error.message });
     }
   }
 
-  async function signInWithGitHub() {
-    await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
-    });
+  function handleWeChatComingSoon() {
+    setStatus({ tone: 'error', message: 'WeChat login is coming soon.' });
   }
 
-  async function signInWithGoogle() {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
-    });
+  function handleToggleEmailForm() {
+    setShowEmailForm((current) => !current);
+    setMode('signin');
+    setStatus(null);
+    setFieldErrors({});
+  }
+
+  async function handleEmailAction() {
+    setStatus(null);
+
+    if (isForgotMode) {
+      const result = passwordResetSchema.safeParse({ email });
+      if (!result.success) {
+        setFieldErrors(getFieldErrors<LoginField>(result.error));
+        return;
+      }
+
+      setFieldErrors({});
+      setLoadingProvider('email');
+      const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
+      setLoadingProvider(null);
+
+      if (error) {
+        setStatus({ tone: 'error', message: error.message });
+        return;
+      }
+
+      setStatus({ tone: 'success', message: 'Reset link sent. Check your email inbox.' });
+      return;
+    }
+
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      setFieldErrors(getFieldErrors<LoginField>(result.error));
+      return;
+    }
+
+    setFieldErrors({});
+    setLoadingProvider('email');
+    const { error } = await supabase.auth.signInWithPassword(result.data);
+    setLoadingProvider(null);
+
+    if (error) {
+      setStatus({ tone: 'error', message: error.message });
+      return;
+    }
+
+    navigate('/dashboard');
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight">Welcome back</h1>
-          <p className="mt-2 text-muted-foreground">Sign in to your Primoria account</p>
-        </div>
+    <AuthLayout
+      pageLabel="Builder sign in"
+      title="Welcome back"
+      subtitle="Continue with social sign-in or unlock the email form to get back into your builder workspace."
+      alternateLink={
+        <FooterPrompt prompt="New here?" linkText="Create an account" to="/register" />
+      }
+    >
+      <AuthSocialButton
+        label="Continue with Google"
+        tone="light"
+        logoSrc="/primoria-google.png"
+        onClick={() => void handleOAuth('google')}
+        loading={loadingProvider === 'google'}
+        disabled={Boolean(loadingProvider && loadingProvider !== 'google')}
+      />
+      <AuthSocialButton
+        label="Continue with Apple"
+        tone="dark"
+        icon={<span aria-hidden="true"></span>}
+        onClick={() => void handleOAuth('apple')}
+        loading={loadingProvider === 'apple'}
+        disabled={Boolean(loadingProvider && loadingProvider !== 'apple')}
+      />
+      <AuthSocialButton
+        label="Continue with WeChat"
+        tone="wechat"
+        logoSrc="/primoria-wechat.png"
+        invertLogo
+        onClick={handleWeChatComingSoon}
+        badge="Soon"
+        disabled={Boolean(loadingProvider)}
+      />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-medium" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              className={cn(
-                'w-full rounded-md border bg-background px-3 py-2 text-sm outline-none ring-ring',
-                'focus:ring-2 transition-shadow',
-                errors.email && 'border-destructive',
-              )}
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>
-            )}
+      <AuthDivider />
+
+      <EmailToggleButton
+        label={showEmailForm ? 'Hide email form' : 'Continue with email'}
+        onClick={handleToggleEmailForm}
+        disabled={Boolean(loadingProvider)}
+      />
+
+      {showEmailForm ? (
+        <section className="auth-form-block" aria-label="Email sign in form">
+          <div className="auth-form-block__header">
+            <h3 className="auth-form-block__title">
+              {isForgotMode ? 'Reset your password' : 'Sign in with email'}
+            </h3>
+            <button
+              type="button"
+              className="auth-form-block__toggle"
+              onClick={() => {
+                setMode((current) => (current === 'signin' ? 'forgot' : 'signin'));
+                setStatus(null);
+                setFieldErrors({});
+              }}
+            >
+              {isForgotMode ? 'Back to sign in' : 'Forgot password?'}
+            </button>
           </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium" htmlFor="password">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              className={cn(
-                'w-full rounded-md border bg-background px-3 py-2 text-sm outline-none ring-ring',
-                'focus:ring-2 transition-shadow',
-                errors.password && 'border-destructive',
-              )}
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="mt-1 text-xs text-destructive">{errors.password.message}</p>
-            )}
-          </div>
-
-          {serverError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {serverError}
-            </p>
-          )}
-
-          <button
-            type="submit"
+          <AuthField
+            id="login-email"
+            label="Email address"
+            type="email"
+            autoComplete="email"
+            placeholder="author@primoria.dev"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            error={fieldErrors.email}
             disabled={isSubmitting}
-            className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
-          >
-            {isSubmitting ? 'Signing in…' : 'Sign in'}
-          </button>
-        </form>
+          />
 
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t" />
+          {!isForgotMode ? (
+            <AuthField
+              id="login-password"
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              error={fieldErrors.password}
+              disabled={isSubmitting}
+              suffix={
+                <PasswordVisibilityButton
+                  visible={showPassword}
+                  onClick={() => setShowPassword((current) => !current)}
+                />
+              }
+            />
+          ) : null}
+
+          <div className="auth-actions-row">
+            <AuthActionButton
+              type="button"
+              tone="primary"
+              label={isForgotMode ? 'Send reset link' : 'Sign in'}
+              onClick={() => void handleEmailAction()}
+              loading={isSubmitting}
+            />
+            <AuthActionButton
+              type="button"
+              tone="secondary"
+              label="Keep exploring"
+              icon={<Sparkles size={16} aria-hidden="true" />}
+              onClick={() => navigate('/')}
+              disabled={isSubmitting}
+            />
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={signInWithGitHub}
-            className="flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
-          >
-            GitHub
-          </button>
-          <button
-            type="button"
-            onClick={signInWithGoogle}
-            className="flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
-          >
-            Google
-          </button>
-        </div>
+          <FeatureCheck>
+            {isForgotMode
+              ? 'We send the reset email to the address above.'
+              : 'Email sign-in lands directly in your author dashboard.'}
+          </FeatureCheck>
+        </section>
+      ) : null}
 
-        <p className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{' '}
-          <Link to="/register" className="font-medium text-primary hover:underline">
-            Sign up
-          </Link>
-        </p>
-      </div>
-    </div>
+      {status ? <AuthStatusBanner tone={status.tone} message={status.message} /> : null}
+    </AuthLayout>
   );
 }
