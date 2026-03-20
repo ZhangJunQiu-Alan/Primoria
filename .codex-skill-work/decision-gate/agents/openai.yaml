@@ -1,0 +1,3 @@
+interface:
+  display_name: "Decision Gate"
+  short_description: "Surface ambiguity, frame tradeoffs, and ask for decisions only when the choice is high-impact."
