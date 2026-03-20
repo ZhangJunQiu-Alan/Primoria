@@ -1,0 +1,17 @@
+{
+  "name": "primoria",
+  "private": true,
+  "scripts": {
+    "db:types": "supabase gen types typescript --project-id rygafvlzzkvqhhenajzi --schema public > packages/db/src/database.generated.ts",
+    "db:types:check": "node scripts/check-db-types.js",
+    "dev:builder": "pnpm --filter @primoria/builder dev",
+    "build:builder": "pnpm --filter @primoria/builder build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  }
+}

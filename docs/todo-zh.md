@@ -1,13 +1,14 @@
 # 待办（TODO）
 
-最后更新：2026-03-08
+最后更新：2026-03-20
 
 ## 1. 高优先级
 
-1. [ ] 将 Dashboard 当前 fallback 分析数据替换为真实事件级数据（浏览、学员增长、完成趋势）。
-2. [ ] 补齐粉丝管理后端能力：回复、标记重点、批量通知、导出。
-3. [ ] 接入真实收入/结算数据源，替换收入预留卡片派生值。
-4. [ ] 增加发布到 Viewer 一致性链路的集成测试。
+1. [ ] 修复 `gemini-generate` Edge Function：Gemini 偶发返回带代码围栏的 HTML，需在函数侧去掉 ```html / ``` 包裹。
+2. [ ] 将 Dashboard 当前 fallback 分析数据替换为真实事件级数据（浏览、学员增长、完成趋势）。
+3. [ ] 补齐粉丝管理后端能力：回复、标记重点、批量通知、导出。
+4. [ ] 接入真实收入/结算数据源，替换收入预留卡片派生值。
+5. [ ] 增加发布到 Viewer 一致性链路的集成测试。
 
 ## 2. 中优先级
 
@@ -46,3 +47,9 @@
 18. [x] 全面重设计 Viewer 登录页（双栏桌面布局，Google/Apple/WeChat 社交登录，动态输入框，暗色模式修复，品牌资产 Logo）。
 19. [x] 全面重设计 Viewer 注册页（镜像双栏布局，用户名字段，密码强度条，动效服务条款复选框，品牌栏统计数字）。
 20. [x] GitHub Pages 部署从 hackathon/ 迁移至 Viewer；删除 hackathon/ 项目；通过 CNAME 保留 primoria.dpdns.org 域名。
+21. [x] React Builder 完成视觉一致性升级：Dashboard / Auth / Editor 全部切到 botanical 视觉语言，不再保留早期 plain Tailwind 外观。
+22. [x] React Builder 完成 block 可见性流：每页首块固定 `always`，后续 block 默认 `afterPreviousCorrect`，learner preview 在答对并点击 `Check` 后再解锁后续内容。
+23. [x] Builder 画布编辑体验升级：`text`、`code-block`、`code-playground` 直接在 block 上编辑，`image` 接入 Supabase 上传，冗余 properties 编辑器移除。
+24. [x] React learner preview 按 Flutter viewer 结构重做：居中 lesson stage、页进度、`Prev / Check / Next` 导航，以及 landing-style 呈现。
+25. [x] React Builder 文案统一为英文；旧的中文 dashboard/auth 选择器与无效语言值已清理。
+26. [x] Flutter `Builder/` 已从当前仓库退役；React `packages/builder` 成为唯一创作端实现，相关 docs 已同步更新。
