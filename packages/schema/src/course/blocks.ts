@@ -13,7 +13,6 @@ export const BLOCK_TYPES = [
   'fill-blank',
   'true-false',
   'matching',
-  'animation',
   'interactive-visual',
   'video',
 ] as const;
@@ -37,9 +36,14 @@ export type BlockStyle = z.infer<typeof BlockStyleSchema>;
 
 // ─── Content schemas per block type ──────────────────────────────────────────
 
-const RichtextValueSchema = z.object({
-  ops: z.array(z.record(z.unknown())),
-});
+const RichtextOpsSchema = z.array(z.record(z.unknown()));
+const RichtextValueSchema = z.union([
+  z.string(),
+  z.object({
+    ops: RichtextOpsSchema,
+  }),
+  RichtextOpsSchema,
+]);
 
 export const TextContentSchema = z.object({
   format: z.literal('richtext'),
@@ -48,6 +52,7 @@ export const TextContentSchema = z.object({
 
 export const ImageContentSchema = z.object({
   url: z.string().url().optional(),
+  alt: z.string().optional(),
   altText: z.string().optional(),
   caption: z.string().optional(),
   width: z.number().optional(),
@@ -63,7 +68,11 @@ export const CodeBlockContentSchema = z.object({
 
 export const CodePlaygroundContentSchema = z.object({
   language: z.string(),
-  starterCode: z.string(),
+  starterCode: z.string().optional(),
+  initialCode: z.string().optional(),
+  expectedOutput: z.string().optional(),
+  hints: z.array(z.string()).optional(),
+  runnable: z.boolean().optional(),
   solution: z.string().optional(),
   testCases: z
     .array(
@@ -73,6 +82,8 @@ export const CodePlaygroundContentSchema = z.object({
       }),
     )
     .optional(),
+}).refine((value) => typeof value.starterCode === 'string' || typeof value.initialCode === 'string', {
+  message: 'Code playground content requires starterCode or initialCode',
 });
 
 export const CodeExecutionContentSchema = z.object({
@@ -126,12 +137,6 @@ export const MatchingContentSchema = z.object({
   mode: z.enum(['list', 'graph']).optional(),
 });
 
-export const AnimationContentSchema = z.object({
-  preset: z.string().optional(),
-  customHtml: z.string().optional(),
-  aiPrompt: z.string().optional(),
-});
-
 export const InteractiveVisualContentSchema = z.object({
   version: z.string().optional(),
   engine: z.string().optional(),
@@ -145,6 +150,8 @@ export const InteractiveVisualContentSchema = z.object({
   runtime: z.record(z.unknown()).optional(),
   themeTone: z.string().optional(),
   aiPrompt: z.string().optional(),
+  generatedHtml: z.string().optional(),
+  legacyCustomHtml: z.string().optional(),
 });
 
 export const VideoContentSchema = z.object({
@@ -167,7 +174,6 @@ export const BlockContentSchema = z.union([
   FillBlankContentSchema,
   TrueFalseContentSchema,
   MatchingContentSchema,
-  AnimationContentSchema,
   InteractiveVisualContentSchema,
   VideoContentSchema,
 ]);

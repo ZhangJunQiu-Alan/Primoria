@@ -1,4 +1,5 @@
 import type { BlockType } from '@primoria/schema';
+import { createEmptyRichTextValue } from './richText';
 
 export interface BlockMeta {
   label: string;
@@ -12,13 +13,13 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     label: 'Text',
     icon: '📝',
     category: 'content',
-    defaultContent: { format: 'richtext', value: { ops: [{ insert: '\n' }] } },
+    defaultContent: { format: 'richtext', value: createEmptyRichTextValue() },
   },
   image: {
     label: 'Image',
     icon: '🖼️',
     category: 'content',
-    defaultContent: { altText: '' },
+    defaultContent: {},
   },
   'code-block': {
     label: 'Code Block',
@@ -30,7 +31,11 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     label: 'Code Playground',
     icon: '🧑‍💻',
     category: 'interactive',
-    defaultContent: { language: 'python', starterCode: '# Write your code here\n' },
+    defaultContent: {
+      language: 'python',
+      starterCode: '# Write your code here\n',
+      initialCode: '# Write your code here\n',
+    },
   },
   'code-execution': {
     label: 'Code Execution',
@@ -74,17 +79,11 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     category: 'quiz',
     defaultContent: { pairs: [] },
   },
-  animation: {
-    label: 'Animation',
-    icon: '🎬',
-    category: 'interactive',
-    defaultContent: { preset: '' },
-  },
   'interactive-visual': {
     label: 'Interactive Visual',
     icon: '🔭',
     category: 'interactive',
-    defaultContent: { template: 'pendulum', title: '' },
+    defaultContent: { template: 'generic', title: 'Interactive Visual' },
   },
   video: {
     label: 'Video',

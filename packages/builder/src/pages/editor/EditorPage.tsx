@@ -16,7 +16,6 @@ export function EditorPage() {
 
   const { data: remoteCourse, isLoading, error } = useCourseForEditor(courseId);
 
-  // New course (no courseId) — bootstrap an empty draft
   useEffect(() => {
     if (!courseId && user) {
       dispatch(
@@ -35,10 +34,13 @@ export function EditorPage() {
         }),
       );
     }
+  }, [courseId, user?.id, dispatch]);
+
+  useEffect(() => {
     return () => {
       dispatch(closeDraft());
     };
-  }, [courseId, user, dispatch]);
+  }, [dispatch]);
 
   if (isLoading) {
     return (

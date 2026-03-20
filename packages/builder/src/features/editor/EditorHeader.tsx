@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CheckIcon,
-  ChevronLeftIcon,
   DownloadIcon,
   EyeOpenIcon,
   EyeClosedIcon,
-  ResetIcon,
 } from '@radix-ui/react-icons';
+import { supabase } from '@/lib/supabase';
 import { useAppSelector, useAppDispatch } from '@/store';
-import { undo, redo, togglePreview } from '@/store/editorSlice';
+import { togglePreview } from '@/store/editorSlice';
+import { AccountMenu } from '@/components/account/AccountMenu';
 import { useAutoSave } from './hooks/useAutoSave';
 import { usePublish } from './hooks/usePublish';
 import { useEditorKeyboard } from './hooks/useEditorKeyboard';
@@ -18,28 +18,31 @@ import { cn } from '@/lib/utils';
 interface EditorHeaderProps {
   activeLessonId: string | null;
   activePageId: string | null;
+  activeLessonTitle: string | null;
 }
 
-export function EditorHeader({ activeLessonId, activePageId }: EditorHeaderProps) {
+export function EditorHeader({
+  activeLessonId,
+  activePageId,
+  activeLessonTitle,
+}: EditorHeaderProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const draft = useAppSelector((s) => s.editor.draft);
+  const user = useAppSelector((s) => s.auth.user);
   const isDirty = useAppSelector((s) => s.editor.isDirty);
   const isSaving = useAppSelector((s) => s.editor.isSaving);
-  const canUndo = useAppSelector((s) => s.editor.past.length > 0);
-  const canRedo = useAppSelector((s) => s.editor.future.length > 0);
   const previewMode = useAppSelector((s) => s.editor.previewMode);
 
   const [publishError, setPublishError] = useState<string | null>(null);
   const [publishSuccess, setPublishSuccess] = useState(false);
 
   const { forceSave } = useAutoSave({
-    onRemoteError: (err) => console.error('Auto-save failed:', err),
+    onRemoteError: (err) => console.error('Save failed:', err),
   });
 
   const { publish, publishing } = usePublish(forceSave);
 
-  // Wire keyboard shortcuts
   useEditorKeyboard({
     lessonId: activeLessonId,
     pageId: activePageId,
@@ -56,7 +59,7 @@ export function EditorHeader({ activeLessonId, activePageId }: EditorHeaderProps
     } else if (result.validationErrors) {
       const issues = result.validationErrors.issues
         .slice(0, 2)
-        .map((i) => i.message)
+        .map((issue) => issue.message)
         .join(' · ');
       setPublishError(`Validation failed: ${issues}`);
     } else {
@@ -76,111 +79,110 @@ export function EditorHeader({ activeLessonId, activePageId }: EditorHeaderProps
     URL.revokeObjectURL(url);
   }
 
+  const avatarInitial = (user?.email ?? draft?.metadata.title ?? 'P').charAt(0).toUpperCase();
+  const lessonLabel = activeLessonTitle ?? 'Untitled lesson';
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    navigate('/login');
+  }
+
   return (
-    <header className="h-14 border-b flex items-center gap-2 px-4 shrink-0">
-      {/* Back */}
+    <header className="editor-topbar">
       <button
+        type="button"
         onClick={() => navigate('/dashboard')}
-        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        className="editor-topbar__brand"
+        aria-label="Back to dashboard"
       >
-        <ChevronLeftIcon className="h-4 w-4" />
-        <span className="hidden sm:inline">Dashboard</span>
+        <span className="editor-topbar__brand-mark">
+          <img src="/primoria-logo.png" alt="" />
+        </span>
+        <span className="editor-topbar__brand-copy">
+          <strong>{draft?.metadata.title ?? 'Untitled Course'}</strong>
+          <span>{lessonLabel}</span>
+        </span>
       </button>
 
-      <div className="w-px h-5 bg-border" />
+      <div className="editor-topbar__actions">
+        <span
+          className={cn(
+            'editor-toolbar-status',
+            isSaving ? 'is-saving' : isDirty ? 'is-dirty' : 'is-clean',
+          )}
+        >
+          {isSaving ? 'Saving…' : isDirty ? 'Unsaved changes' : 'Saved'}
+        </span>
 
-      {/* Undo / Redo */}
-      <button
-        onClick={() => dispatch(undo())}
-        disabled={!canUndo}
-        title="Undo (⌘Z)"
-        className="p-1.5 rounded hover:bg-accent disabled:opacity-30 transition-colors"
-      >
-        <ResetIcon className="h-4 w-4" />
-      </button>
-      <button
-        onClick={() => dispatch(redo())}
-        disabled={!canRedo}
-        title="Redo (⌘⇧Z)"
-        className="p-1.5 rounded hover:bg-accent disabled:opacity-30 transition-colors scale-x-[-1]"
-      >
-        <ResetIcon className="h-4 w-4" />
-      </button>
-
-      <div className="w-px h-5 bg-border" />
-
-      {/* Course title */}
-      <span className="font-semibold truncate max-w-[200px] text-sm">
-        {draft?.metadata.title ?? 'Untitled'}
-      </span>
-
-      {/* Save status */}
-      <span
-        className={cn(
-          'text-xs transition-colors',
-          isSaving
-            ? 'text-muted-foreground'
-            : isDirty
-            ? 'text-amber-500'
-            : 'text-green-600',
-        )}
-      >
-        {isSaving ? 'Saving…' : isDirty ? 'Unsaved' : 'Saved'}
-      </span>
-
-      <div className="ml-auto flex items-center gap-2">
         {publishError && (
-          <span className="text-xs text-destructive max-w-[200px] truncate" title={publishError}>
+          <span className="editor-toolbar-feedback editor-toolbar-feedback--error" title={publishError}>
             {publishError}
           </span>
         )}
+
         {publishSuccess && (
-          <span className="flex items-center gap-1 text-xs text-green-600">
-            <CheckIcon className="h-3.5 w-3.5" /> Published
+          <span className="editor-toolbar-feedback editor-toolbar-feedback--success">
+            <CheckIcon className="h-3.5 w-3.5" />
+            Published
           </span>
         )}
 
-        {/* Preview toggle */}
         <button
+          type="button"
           onClick={() => dispatch(togglePreview())}
           title={previewMode ? 'Exit preview (learner view)' : 'Preview (learner view)'}
           className={cn(
-            'p-1.5 rounded border transition-colors',
-            previewMode
-              ? 'border-primary bg-primary/10 text-primary'
-              : 'hover:bg-accent',
+            'editor-toolbar-button editor-toolbar-button--ghost',
+            previewMode && 'is-active',
           )}
         >
           {previewMode ? <EyeClosedIcon className="h-4 w-4" /> : <EyeOpenIcon className="h-4 w-4" />}
+          {previewMode ? 'Exit preview' : 'Preview'}
         </button>
 
-        {/* Export JSON */}
         <button
+          type="button"
           onClick={handleExport}
           title="Export course as JSON"
-          className="p-1.5 rounded border hover:bg-accent transition-colors"
+          className="editor-toolbar-button editor-toolbar-button--secondary"
         >
           <DownloadIcon className="h-4 w-4" />
+          Export
         </button>
 
-        {/* Save */}
         <button
+          type="button"
           onClick={() => void forceSave()}
           disabled={!isDirty || isSaving}
           title="Save (⌘S)"
-          className="rounded-md border px-3 py-1.5 text-sm hover:bg-accent disabled:opacity-40 transition-colors"
+          className="editor-toolbar-button editor-toolbar-button--secondary"
         >
           Save
         </button>
 
-        {/* Publish */}
         <button
+          type="button"
           onClick={() => void handlePublish()}
           disabled={publishing || isSaving}
-          className="rounded-md bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+          className="editor-toolbar-button editor-toolbar-button--primary"
         >
           {publishing ? 'Publishing…' : 'Publish'}
         </button>
+
+        {user ? (
+          <AccountMenu
+            buttonClassName="editor-avatar-button"
+            imageClassName="editor-avatar-button__image"
+            onSignOut={handleSignOut}
+            sideOffset={8}
+            title={user.email ?? 'Author account'}
+            user={user}
+          />
+        ) : (
+          <button type="button" className="editor-avatar-button" title="Author account">
+            {avatarInitial}
+          </button>
+        )}
       </div>
     </header>
   );

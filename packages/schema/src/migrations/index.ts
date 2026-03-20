@@ -114,7 +114,8 @@ const BLOCK_TYPE_ALIASES: Record<string, string> = {
   fill_blank: 'fill-blank',
   trueFalse: 'true-false',
   true_false: 'true-false',
-  animationBlock: 'animation',
+  animation: 'interactive-visual',
+  animationBlock: 'interactive-visual',
   interactiveVisual: 'interactive-visual',
   interactive_visual: 'interactive-visual',
 };
@@ -126,10 +127,11 @@ const VISIBILITY_ALIASES: Record<string, string> = {
 
 function migrateBlock(raw: Record<string, unknown>): Record<string, unknown> {
   const block = { ...raw };
+  const rawType = typeof block['type'] === 'string' ? block['type'] : null;
 
   // type aliases
-  if (typeof block['type'] === 'string' && BLOCK_TYPE_ALIASES[block['type']]) {
-    block['type'] = BLOCK_TYPE_ALIASES[block['type']];
+  if (rawType && BLOCK_TYPE_ALIASES[rawType]) {
+    block['type'] = BLOCK_TYPE_ALIASES[rawType];
   }
 
   // visibilityRule aliases
@@ -140,7 +142,36 @@ function migrateBlock(raw: Record<string, unknown>): Record<string, unknown> {
     block['visibilityRule'] = VISIBILITY_ALIASES[block['visibilityRule']];
   }
 
+  if (rawType === 'animation' || rawType === 'animationBlock') {
+    block['content'] = migrateLegacyAnimationContent(block['content']);
+  }
+
   return block;
+}
+
+function migrateLegacyAnimationContent(raw: unknown): Record<string, unknown> {
+  const content =
+    raw && typeof raw === 'object' && !Array.isArray(raw)
+      ? (raw as Record<string, unknown>)
+      : {};
+
+  const customHtml = typeof content['customHtml'] === 'string' ? content['customHtml'] : undefined;
+  const aiPrompt = typeof content['aiPrompt'] === 'string' ? content['aiPrompt'] : undefined;
+
+  return {
+    version: 'sim-v1',
+    mode: 'presentation',
+    template: 'generic',
+    title: 'Interactive Visual',
+    layoutPreset: 'scene-only',
+    themeTone: 'light-science',
+    initialState: {},
+    controls: [],
+    formulas: [],
+    scene: {},
+    ...(aiPrompt ? { aiPrompt } : {}),
+    ...(customHtml ? { legacyCustomHtml: customHtml } : {}),
+  };
 }
 
 /**

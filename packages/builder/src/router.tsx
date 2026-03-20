@@ -7,6 +7,13 @@ import { DashboardPage } from '@/pages/dashboard/DashboardPage';
 import { EditorPage } from '@/pages/editor/EditorPage';
 import { LandingPage } from '@/pages/LandingPage';
 
+function RootEntry() {
+  const { user, loading } = useAppSelector((s) => s.auth);
+  if (loading) return <div className="flex h-screen items-center justify-center">Loading…</div>;
+  if (user) return <Navigate to="/dashboard" replace />;
+  return <LandingPage />;
+}
+
 /** Redirect to /login if the user is not authenticated. */
 function RequireAuth() {
   const { user, loading } = useAppSelector((s) => s.auth);
@@ -26,7 +33,7 @@ function RedirectIfAuth() {
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <LandingPage />,
+    element: <RootEntry />,
   },
   {
     element: <RedirectIfAuth />,

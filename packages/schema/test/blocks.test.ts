@@ -3,8 +3,8 @@ import { BlockSchema, BLOCK_TYPES } from '../src/course/blocks';
 import { FIXTURE_ALL_BLOCKS_COURSE } from '../src/fixtures/index';
 
 describe('BLOCK_TYPES', () => {
-  it('contains all 13 canonical types', () => {
-    expect(BLOCK_TYPES).toHaveLength(13);
+  it('contains all 12 current block types', () => {
+    expect(BLOCK_TYPES).toHaveLength(12);
   });
 
   it('includes interactive-visual', () => {

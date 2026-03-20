@@ -1,10 +1,13 @@
 # Primoria Documentation Index
 
-Last updated: 2026-03-08
+Last updated: 2026-03-20
 
-Primoria is a dual-app Flutter system:
-- `Builder/`: course authoring (Flutter Web + Riverpod + GoRouter + Supabase)
-- `Viewer/`: learning experience (Flutter + Provider + Supabase)
+Primoria currently ships as a mixed-stack product:
+- `packages/builder/`: creator-facing Builder (React 19 + TypeScript + Redux Toolkit + React Router + Supabase)
+- `packages/schema/`: canonical shared course schema, fixtures, and migration helpers
+- `Viewer/`: learner-facing app (Flutter + Provider + Supabase)
+
+The legacy Flutter authoring app under `Builder/` has been retired and removed from the active codebase.
 
 ## Deployment
 
@@ -13,55 +16,55 @@ Primoria is a dual-app Flutter system:
 
 ## Current Product Status
 
-- Builder auth + role-gated dashboard is live (`author` / `admin` can access Builder pages).
-- Builder supports AI-assisted course generation, save/publish, JSON import/export, and lesson-level editing.
-- Dashboard has 4 tabs:
-  - Home: redesigned
-  - Course Manage: redesigned creator workspace (core production flows preserved)
-  - Data Center: redesigned
-  - Fans Management: redesigned
-- Viewer landing page is fully redesigned — learner-focused with 11 sections (hero, features, AI tutor, gamification, community, testimonials, CTA).
-- Viewer login and register screens are fully redesigned with two-panel desktop layout, social OAuth (Google, Apple, WeChat), animated inputs, and password strength indicator.
-- Viewer supports course discovery, enrollment, lesson learning, profile settings, XP/streak/achievements, markdown lesson text rendering, and a shared responsive content-width shell across Home/Library/Community/Profile.
-- Profile and Achievement Wall now use centralized badge/progress rendering, with adaptive XP heatmap layout, pending-achievement progress cards, derived unlock sync, and improved load/empty/error states.
-- Viewer Settings is now a category-based settings center (account/appearance/learning/notifications/privacy/parent/support) with local preference persistence.
-- Both Builder and Viewer support full bilingual switching (Chinese / English), settings-driven with local persistence.
+- React Builder is now the primary authoring surface.
+- Builder supports auth, dashboard, editor, autosave, save/publish, JSON import/export, course duplication, and schema-backed validation.
+- Builder canvas supports inline editing for `text`, `code-block`, and `code-playground`, plus Supabase-backed image uploads.
+- Block visibility now supports gated reveal (`afterPreviousCorrect`) with first-block safety defaults.
+- In-editor learner preview now follows the Flutter viewer flow more closely: page progress, gated reveal, and `Prev / Check / Next` navigation inside a centered lesson stage.
+- Dashboard currently has 4 tabs:
+  - Home
+  - Course Management
+  - Data Center
+  - Fan Management
+- Viewer remains the learner-facing Flutter app with landing, auth, course discovery, lesson playback, profile, and settings flows.
 
-## Core Routes (Builder app)
+## Core Routes (React Builder)
 
 - `/`: landing
 - `/dashboard`: creator dashboard
 - `/builder`: editor
-- `/viewer`: builder-side preview viewer
+- `/viewer`: builder-side learner preview
 - `/auth/callback`: OAuth callback
 
 ## Block Types (Canonical)
 
-`text`, `image`, `code-block`, `code-playground`, `code-execution`, `function-flow`, `multiple-choice`, `fill-blank`, `true-false`, `matching`, `animation`, `video`
+`text`, `image`, `code-block`, `code-playground`, `code-execution`, `function-flow`, `multiple-choice`, `fill-blank`, `true-false`, `matching`, `interactive-visual`, `video`
 
 ## Docs in This Folder
 
-- `prd.md` / `prd-zh.md`: product requirements (current baseline)
+- `prd.md` / `prd-zh.md`: product requirements baseline
 - `database-schema.md` / `database-schema-zh.md`: effective Supabase schema and migration notes
 - `course-json-guide.md` / `course-json-guide-zh.md`: canonical course JSON guide
-- `dashboard.md` / `dashboard-zh.md`: dashboard architecture and tab behavior
-- `test-checklist.md` / `test-checklist-zh.md`: regression checklist aligned with current repo
+- `dashboard.md` / `dashboard-zh.md`: React dashboard architecture and tab behavior
+- `test-checklist.md` / `test-checklist-zh.md`: current regression checklist
 - `todo.md` / `todo-zh.md`: active backlog only
-- `changelog.md`: recent releases and architecture-impacting changes
-- `prompt.txt`: current prompt template for block planning
+- `changelog.md`: release and architecture-impacting changes
+- `prompt.txt`: current AI planning prompt
 
 ## Run & Validate
 
 ```bash
-# Builder
-cd Builder
-flutter pub get
-flutter analyze lib/features/dashboard
-flutter test test/dashboard_course_manage_tab_test.dart
-flutter test
+pnpm install
+
+# Shared schema
+pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts
+
+# React Builder
+pnpm --filter @primoria/builder typecheck
+pnpm --filter @primoria/builder test
 
 # Viewer
-cd ../Viewer
+cd Viewer
 flutter pub get
 flutter analyze
 flutter test test/viewer_layout_metrics_test.dart test/viewer_page_shell_test.dart
@@ -70,5 +73,5 @@ flutter test
 
 ## Notes
 
-- Docs are intentionally synchronized to the current implementation state, not historical drafts.
-- Historical context should be read from git history and commit logs.
+- Docs are maintained against the current implementation, not historical architecture.
+- Historical Flutter Builder details remain in git history and older changelog entries.

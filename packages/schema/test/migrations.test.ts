@@ -73,6 +73,46 @@ describe('migrateCourseJson', () => {
     expect(blocks[1]['visibilityRule']).toBe('afterPreviousCorrect');
   });
 
+  it('migrates legacy animation blocks to interactive-visual blocks', () => {
+    const result = migrateCourseJson({
+      course_id: 'legacy-animation',
+      metadata: { title: 'Legacy Animation' },
+      lessons: [
+        {
+          lesson_id: 'lesson-1',
+          title: 'Lesson 1',
+          pages: [
+            {
+              page_id: 'page-1',
+              order: 0,
+              blocks: [
+                {
+                  id: 'b-anim',
+                  type: 'animation',
+                  position: { order: 0 },
+                  content: {
+                    aiPrompt: 'Show a pendulum.',
+                    customHtml: '<canvas></canvas>',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    const lessons = result['lessons'] as Record<string, unknown>[];
+    const pages = lessons[0]['pages'] as Record<string, unknown>[];
+    const blocks = pages[0]['blocks'] as Record<string, unknown>[];
+    const content = blocks[0]['content'] as Record<string, unknown>;
+
+    expect(blocks[0]['type']).toBe('interactive-visual');
+    expect(content['template']).toBe('generic');
+    expect(content['legacyCustomHtml']).toBe('<canvas></canvas>');
+    expect(content['aiPrompt']).toBe('Show a pendulum.');
+  });
+
   it('injects schema_version if missing', () => {
     const result = migrateCourseJson({ courseId: 'x', metadata: { title: 'X' }, lessons: [] });
     expect(result['schema_version']).toBe(SCHEMA_VERSION);

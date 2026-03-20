@@ -1,12 +1,11 @@
 # TODO
 
-Last updated: 2026-03-19 (rev 7)
+Last updated: 2026-03-20 (rev 8)
 
 ## 1. High Priority
 
 1. [x] ~~Fix legacy course publish blocked by schema validator~~ — resolved: migrator now handles all legacy field names (dual-key fromJson, snake_case rename steps); `publish_course` RPC v2 no longer depends on deleted `chapters` table.
 2. [ ] Fix `gemini-generate` Edge Function: Gemini occasionally returns markdown code fences (`` ```html ``…`` ``` ``) despite system-prompt rule; strip fences in Edge Function before returning HTML so the iframe does not render raw fence text.
-3. [ ] **React Builder visual parity with Flutter Builder** — React Builder UI uses plain Tailwind defaults; needs design alignment with Flutter version (colors, typography, block canvas appearance, sidebar styling).
 3. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
 4. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
 5. [ ] Implement real revenue/settlement data source for dashboard income cards.
@@ -78,3 +77,9 @@ Last updated: 2026-03-19 (rev 7)
 47. [x] Viewer `course_screen` and `user_provider`: removed dead `chapters`/accordion and dead stat fields (`_completedQuestions`, `_unlockedAchievements`, `_checkAndUpdateStreak`).
 48. [x] **React Builder rewrite** (`builder-react-rewrite` branch): `@primoria/schema` (Zod schemas, migration, fixtures, 20 tests), `@primoria/db` (Supabase generated types), `@primoria/builder` (Vite 6 + React 19 + RTK; auth, dashboard, full editor with 13 block panels, dnd-kit canvas, auto-save, undo/redo, publish, preview mode, course duplication, JSON import, AI generation for Interactive Visual; 38 tests; 0 TS errors).
 49. [x] `@primoria/db` `database.generated.ts` populated from real Supabase project (`rygafvlzzkvqhhenajzi`); `pnpm db:types` script wired in both package and root workspace.
+50. [x] React Builder visual parity pass: botanical dashboard/auth/editor shell, landing-style surfaces, and production-grade page layout now replace the earlier plain Tailwind look.
+51. [x] Block visibility flow completed in React Builder: first block locked to `always`, later blocks default to `afterPreviousCorrect`, and learner preview reveals gated content only after a correct answer plus `Check`.
+52. [x] Builder canvas editing upgraded: `text`, `code-block`, and `code-playground` edit directly on-block; `image` uploads to Supabase; redundant property-panel editors removed.
+53. [x] React learner preview rebuilt to mirror the Flutter viewer structure more closely: centered lesson stage, page progress, `Prev / Check / Next` navigation, and landing-style presentation.
+54. [x] React Builder UI copy normalized to English-only; old Chinese dashboard/auth test selectors and stale language values were removed.
+55. [x] Flutter `Builder/` retired from the active repository; React `packages/builder` is now the sole authoring implementation and current docs reflect that architecture.

@@ -1,12 +1,14 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { markClean, setSaving } from '@/store/editorSlice';
+import { buildCourseSlug } from '@/lib/courseSlug';
+import { migrateCourseJson, parseCourse } from '@primoria/schema';
 import type { Course } from '@primoria/schema';
 
 const LS_KEY = (id: string) => `primoria_draft_${id}`;
 
-// ─── Tier 1: localStorage ─────────────────────────────────────────────────────
+// ─── Local draft persistence ──────────────────────────────────────────────────
 
 function saveToLocalStorage(draft: Course) {
   try {
@@ -19,7 +21,8 @@ function saveToLocalStorage(draft: Course) {
 export function loadLocalDraft(courseId: string): Course | null {
   try {
     const raw = localStorage.getItem(LS_KEY(courseId));
-    return raw ? (JSON.parse(raw) as Course) : null;
+    if (!raw) return null;
+    return parseCourse(migrateCourseJson(JSON.parse(raw) as Record<string, unknown>));
   } catch {
     return null;
   }
@@ -29,15 +32,22 @@ export function clearLocalDraft(courseId: string) {
   localStorage.removeItem(LS_KEY(courseId));
 }
 
-// ─── Tier 2: remote (Supabase upsert) ────────────────────────────────────────
+// ─── Remote persistence (Supabase upsert) ────────────────────────────────────
 
-async function saveToRemote(draft: Course) {
+async function saveToRemote(draft: Course, authorId: string) {
   // 1) Upsert course metadata
   const { error: courseErr } = await supabase.from('courses').upsert(
     {
       id: draft.course_id,
+      author_id: authorId,
+      slug: buildCourseSlug(draft.metadata.title, draft.course_id),
       title: draft.metadata.title,
       description: draft.metadata.description ?? null,
+      thumbnail_url: draft.metadata.thumbnail ?? null,
+      difficulty_level: draft.metadata.difficulty_level ?? 'beginner',
+      estimated_minutes: draft.metadata.estimated_minutes ?? 0,
+      tags: draft.metadata.tags ?? [],
+      status: 'draft',
       updated_at: new Date().toISOString(),
     },
     { onConflict: 'id' },
@@ -49,8 +59,14 @@ async function saveToRemote(draft: Course) {
     id: lesson.lesson_id,
     course_id: draft.course_id,
     title: lesson.title,
-    order_index: i,
-    content_json: { pages: lesson.pages },
+    sort_key: 1000 + i * 1000,
+    type: 'interactive',
+    duration_seconds: 0,
+    content_json: {
+      lesson_id: lesson.lesson_id,
+      title: lesson.title,
+      pages: lesson.pages,
+    },
   }));
 
   if (lessonRows.length > 0) {
@@ -79,9 +95,6 @@ async function saveToRemote(draft: Course) {
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
-const SHORT_DEBOUNCE_MS = 500;   // → localStorage
-const MEDIUM_DEBOUNCE_MS = 4000; // → remote
-
 interface UseAutoSaveOptions {
   onRemoteSaved?: () => void;
   onRemoteError?: (err: unknown) => void;
@@ -90,20 +103,14 @@ interface UseAutoSaveOptions {
 export function useAutoSave({ onRemoteSaved, onRemoteError }: UseAutoSaveOptions = {}) {
   const dispatch = useAppDispatch();
   const draft = useAppSelector((s) => s.editor.draft);
-  const isDirty = useAppSelector((s) => s.editor.isDirty);
-
-  const localTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const remoteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const draftRef = useRef(draft);
-  draftRef.current = draft;
+  const userId = useAppSelector((s) => s.auth.user?.id);
 
   const forceSave = useCallback(async () => {
-    const current = draftRef.current;
-    if (!current) return;
+    if (!draft || !userId) return;
     dispatch(setSaving(true));
     try {
-      await saveToRemote(current);
-      saveToLocalStorage(current);
+      await saveToRemote(draft, userId);
+      saveToLocalStorage(draft);
       dispatch(markClean());
       onRemoteSaved?.();
     } catch (err) {
@@ -111,41 +118,7 @@ export function useAutoSave({ onRemoteSaved, onRemoteError }: UseAutoSaveOptions
     } finally {
       dispatch(setSaving(false));
     }
-  }, [dispatch, onRemoteSaved, onRemoteError]);
-
-  useEffect(() => {
-    if (!isDirty || !draft) return;
-
-    // Tier 1: short debounce → localStorage
-    if (localTimerRef.current) clearTimeout(localTimerRef.current);
-    localTimerRef.current = setTimeout(() => {
-      saveToLocalStorage(draft);
-    }, SHORT_DEBOUNCE_MS);
-
-    // Tier 2: medium debounce → remote
-    if (remoteTimerRef.current) clearTimeout(remoteTimerRef.current);
-    remoteTimerRef.current = setTimeout(() => {
-      const current = draftRef.current;
-      if (!current) return;
-      dispatch(setSaving(true));
-      saveToRemote(current)
-        .then(() => {
-          dispatch(markClean());
-          onRemoteSaved?.();
-        })
-        .catch((err) => {
-          onRemoteError?.(err);
-        })
-        .finally(() => {
-          dispatch(setSaving(false));
-        });
-    }, MEDIUM_DEBOUNCE_MS);
-
-    return () => {
-      if (localTimerRef.current) clearTimeout(localTimerRef.current);
-      if (remoteTimerRef.current) clearTimeout(remoteTimerRef.current);
-    };
-  }, [isDirty, draft, dispatch, onRemoteSaved, onRemoteError]);
+  }, [dispatch, draft, onRemoteSaved, onRemoteError, userId]);
 
   return { forceSave };
 }

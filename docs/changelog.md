@@ -1,5 +1,40 @@
 # Changelog
 
+## [Unreleased] - 2026-03-20 (React Builder Parity Pass + Flutter Builder Retirement)
+
+### Summary
+The React Builder moved from rewrite status to the primary authoring implementation.
+This pass completed the missing authoring interactions, refreshed learner preview to mirror the
+Flutter viewer structure more closely, normalized the React UI to English-only, documented the
+current architecture in `docs/`, and retired the legacy Flutter `Builder/` source tree from the
+active repository.
+
+### Changed
+
+- **Editor parity in React Builder**
+  - block visibility is now fully configurable in block settings, with the first block on each page locked to `always`
+  - learner gating uses `afterPreviousCorrect` end-to-end in preview mode
+  - `text`, `code-block`, and `code-playground` moved to direct on-block editing
+  - `image` blocks now upload assets to Supabase from the canvas flow
+- **Preview redesign**
+  - React `PreviewMode` now uses a centered lesson stage with page progress and `Prev / Check / Next`
+  - redundant top hero/summary preview chrome was removed after the parity pass
+- **UI normalization**
+  - React dashboard/auth/settings copy was cleaned to English-only
+  - old Chinese-only test selectors and `zh-CN` language handling were removed from the React Builder
+- **Documentation**
+  - `docs/README*`, `docs/dashboard*`, `docs/test-checklist*`, and `docs/todo*` now describe the React Builder as the live authoring stack
+- **Repository cleanup**
+  - removed the legacy Flutter `Builder/` implementation from the active repo
+
+### Validation
+
+- `pnpm --filter @primoria/builder typecheck` — pass
+- `pnpm --filter @primoria/builder exec vitest run test/dashboardPage.test.tsx test/editorLayout.test.tsx test/previewMode.test.tsx test/editorSlicePhase4.test.ts` — pass
+- `pnpm --filter @primoria/builder exec vitest run test/editorInlineBlocks.test.tsx test/editorPage.test.tsx` — pass
+
+---
+
 ## [Unreleased] - 2026-03-19 (React Builder — Full Rewrite on `builder-react-rewrite`)
 
 ### Summary

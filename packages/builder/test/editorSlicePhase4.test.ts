@@ -130,6 +130,31 @@ describe('duplicateBlock', () => {
 // ─── Block settings ───────────────────────────────────────────────────────────
 
 describe('updateBlockSettings', () => {
+  it('defaults the first added block to always visible', () => {
+    const store = makeStore();
+    store.dispatch(addBlock({ lessonId: 'lesson-1', pageId: 'page-1-0', block: TEXT_BLOCK }));
+    const block = store.getState().editor.draft!.lessons[0].pages[0].blocks[0];
+    expect(block.visibilityRule).toBe('always');
+  });
+
+  it('defaults later blocks to afterPreviousCorrect', () => {
+    const store = makeStore();
+    store.dispatch(addBlock({ lessonId: 'lesson-1', pageId: 'page-1-0', block: TEXT_BLOCK }));
+    store.dispatch(
+      addBlock({
+        lessonId: 'lesson-1',
+        pageId: 'page-1-0',
+        block: {
+          ...TEXT_BLOCK,
+          id: 'b2',
+          position: { order: 1 },
+        },
+      }),
+    );
+    const block = store.getState().editor.draft!.lessons[0].pages[0].blocks[1];
+    expect(block.visibilityRule).toBe('afterPreviousCorrect');
+  });
+
   it('sets visibilityRule', () => {
     const store = makeStore();
     store.dispatch(addBlock({ lessonId: 'lesson-1', pageId: 'page-1-0', block: TEXT_BLOCK }));

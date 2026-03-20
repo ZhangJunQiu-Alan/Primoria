@@ -1,76 +1,93 @@
 import { type Block } from '@primoria/schema';
 import { BLOCK_META } from '../blockRegistry';
+import { VISIBILITY_LABELS, getBlockVisibilityRule } from '../blockVisibility';
+import { EditableBlockCanvasContent } from './EditableBlockCanvasContent';
 import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 interface BlockPreviewProps {
   block: Block;
+  lessonId: string;
+  pageId: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-export function BlockPreview({ block, isSelected, onClick }: BlockPreviewProps) {
+const INLINE_EDITABLE_TYPES = new Set(['text', 'code-block', 'code-playground']);
+
+export function BlockPreview({
+  block,
+  lessonId,
+  pageId,
+  isSelected,
+  onClick,
+}: BlockPreviewProps) {
   const meta = BLOCK_META[block.type];
+  const visibilityRule = getBlockVisibilityRule(block);
+  const tagTone =
+    visibilityRule === 'afterPreviousCorrect' ? 'editor-block-card__tag--gated' : 'editor-block-card__tag--always';
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (!isSelected) {
+      setIsEditing(false);
+    }
+  }, [isSelected]);
+
+  const canInlineEdit = INLINE_EDITABLE_TYPES.has(block.type);
 
   return (
-    <button
+    <div
       onClick={onClick}
+      onDoubleClick={() => {
+        onClick();
+        if (canInlineEdit) {
+          setIsEditing(true);
+        }
+      }}
+      onKeyDown={(event) => {
+        if (event.target !== event.currentTarget) {
+          return;
+        }
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onClick();
+        }
+      }}
+      role="button"
+      tabIndex={0}
       className={cn(
-        'w-full text-left rounded-lg border px-4 py-3 transition-all',
+        'editor-block-card w-full text-left transition-all',
         'hover:border-primary/50 hover:shadow-sm',
+        isEditing && 'editor-block-card--editing',
         isSelected
-          ? 'border-primary bg-primary/5 shadow-sm ring-1 ring-primary/20'
+          ? 'editor-block-card--selected border-primary bg-primary/5 shadow-sm ring-1 ring-primary/20'
           : 'border-border bg-card',
       )}
     >
-      <div className="flex items-center gap-3">
-        <span className="text-lg leading-none select-none" aria-hidden>
-          {meta.icon}
-        </span>
-        <div className="flex-1 min-w-0">
-          <div className="text-xs font-medium text-muted-foreground">{meta.label}</div>
-          <BlockSummary block={block} />
+      <div className="editor-block-card__header">
+        <div className="editor-block-card__identity">
+          <span className="editor-block-card__mark" aria-hidden>
+            {meta.icon}
+          </span>
+          <div className="editor-block-card__copy">
+            <div className="editor-block-card__label">{meta.label}</div>
+          </div>
         </div>
+        <span className={cn('editor-block-card__tag', tagTone)}>
+          {VISIBILITY_LABELS[visibilityRule]}
+        </span>
       </div>
-    </button>
+
+      <div className="editor-block-card__body">
+        <EditableBlockCanvasContent
+          block={block}
+          lessonId={lessonId}
+          pageId={pageId}
+          isSelected={isSelected}
+          isEditing={isEditing}
+        />
+      </div>
+    </div>
   );
-}
-
-function BlockSummary({ block }: { block: Block }) {
-  const c = block.content as Record<string, unknown>;
-
-  switch (block.type) {
-    case 'text': {
-      const ops = (c['value'] as { ops: Array<{ insert?: string }> } | undefined)?.ops ?? [];
-      const text = ops.map((o) => o.insert ?? '').join('').trim().slice(0, 80);
-      return <p className="text-sm truncate text-foreground">{text || '(empty)'}</p>;
-    }
-    case 'code-block':
-    case 'code-execution':
-    case 'code-playground':
-      return (
-        <p className="text-sm font-mono truncate text-foreground opacity-70">
-          {String(c['language'] ?? '')} — {String(c['code'] ?? c['starterCode'] ?? '').slice(0, 50)}
-        </p>
-      );
-    case 'multiple-choice':
-      return <p className="text-sm truncate text-foreground">{String(c['question'] ?? '(no question)')}</p>;
-    case 'true-false':
-      return <p className="text-sm truncate text-foreground">{String(c['statement'] ?? '(no statement)')}</p>;
-    case 'fill-blank':
-      return <p className="text-sm truncate text-foreground">{String(c['template'] ?? '(no template)')}</p>;
-    case 'image':
-      return (
-        <p className="text-sm truncate text-muted-foreground">
-          {String(c['url'] ?? c['altText'] ?? '(no image set)')}
-        </p>
-      );
-    case 'interactive-visual':
-      return (
-        <p className="text-sm truncate text-foreground">
-          {String(c['title'] ?? '')} <span className="text-muted-foreground">({String(c['template'] ?? '')})</span>
-        </p>
-      );
-    default:
-      return null;
-  }
 }

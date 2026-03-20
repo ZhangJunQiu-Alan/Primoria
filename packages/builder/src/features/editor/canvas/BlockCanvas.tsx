@@ -18,6 +18,7 @@ import { nanoid } from '../../../lib/nanoid';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { addBlock, removeBlock, reorderBlocks, selectBlock, duplicateBlock } from '@/store/editorSlice';
 import { BLOCK_META } from '../blockRegistry';
+import { getDefaultVisibilityRule } from '../blockVisibility';
 import { SortableBlock } from './SortableBlock';
 import { AddBlockMenu } from './AddBlockMenu';
 import type { BlockType } from '@primoria/schema';
@@ -25,9 +26,10 @@ import type { BlockType } from '@primoria/schema';
 interface BlockCanvasProps {
   lessonId: string;
   pageId: string;
+  showAddMenu?: boolean;
 }
 
-export function BlockCanvas({ lessonId, pageId }: BlockCanvasProps) {
+export function BlockCanvas({ lessonId, pageId, showAddMenu = true }: BlockCanvasProps) {
   const dispatch = useAppDispatch();
   const selectedBlockId = useAppSelector((s) => s.editor.selectedBlockId);
   const draft = useAppSelector((s) => s.editor.draft);
@@ -67,6 +69,7 @@ export function BlockCanvas({ lessonId, pageId }: BlockCanvasProps) {
             type,
             position: { order: blocks.length },
             content: meta.defaultContent,
+            visibilityRule: getDefaultVisibilityRule(blocks.length),
           },
         }),
       );
@@ -83,8 +86,8 @@ export function BlockCanvas({ lessonId, pageId }: BlockCanvasProps) {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-6">
-      <div className="mx-auto max-w-2xl space-y-2">
+    <div className="editor-block-canvas flex-1 overflow-y-auto px-6 py-6">
+      <div className="editor-block-canvas__inner mx-auto max-w-[1080px] space-y-4">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
@@ -99,6 +102,8 @@ export function BlockCanvas({ lessonId, pageId }: BlockCanvasProps) {
               <SortableBlock
                 key={block.id}
                 block={block}
+                lessonId={lessonId}
+                pageId={pageId}
                 isSelected={selectedBlockId === block.id}
                 onSelect={() => dispatch(selectBlock(block.id))}
                 onDelete={() => dispatch(removeBlock({ lessonId, pageId, blockId: block.id }))}
@@ -111,12 +116,12 @@ export function BlockCanvas({ lessonId, pageId }: BlockCanvasProps) {
         </DndContext>
 
         {blocks.length === 0 && (
-          <div className="text-center py-10 text-muted-foreground text-sm">
-            This page is empty. Add your first block below.
+          <div className="editor-block-canvas__empty text-center py-10 text-muted-foreground text-sm">
+            This page is empty. Add the first block from the library.
           </div>
         )}
 
-        <AddBlockMenu onAdd={handleAdd} />
+        {showAddMenu ? <AddBlockMenu onAdd={handleAdd} /> : null}
       </div>
     </div>
   );

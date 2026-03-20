@@ -1,6 +1,6 @@
 # Primoria External User-Story Tests (Python)
 
-This folder is a standalone Python test harness that validates Primoria user stories **without adding test files inside `Builder/`, `Viewer/`, or `supabase/` app code**.
+This folder is a standalone Python test harness that validates Primoria user stories **without adding test files inside `packages/builder/`, `Viewer/`, or `supabase/` app code**.
 
 ## What it tests
 
@@ -48,5 +48,5 @@ pytest -q tests/test_us3_enroll_and_lessons.py
 ## Notes
 
 - This suite is black-box API-level E2E against Supabase REST/Auth endpoints.
-- It does not require changes in Flutter project files.
+- It does not require changes in app source files.
 - Temporary test users are created with random emails.

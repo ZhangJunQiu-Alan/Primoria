@@ -1,5 +1,7 @@
 import { cn } from '@/lib/utils';
+import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
+import { richTextToHtml } from '../richText';
 
 interface BlockRendererProps {
   block: Block;
@@ -7,7 +9,19 @@ interface BlockRendererProps {
 
 /** Read-only learner-view renderer for a single block. */
 export function BlockRenderer({ block }: BlockRendererProps) {
-  const style = block.style;
+  const frame = getBlockStyleFrame(block.style);
+
+  return (
+    <div className={frame.className} style={frame.style}>
+      <BlockContent block={block} />
+    </div>
+  );
+}
+
+export function getBlockStyleFrame(style: Block['style'] | undefined): {
+  className: string;
+  style: CSSProperties;
+} {
   const align =
     style?.alignment === 'center'
       ? 'text-center'
@@ -23,11 +37,13 @@ export function BlockRenderer({ block }: BlockRendererProps) {
       ? 'py-0'
       : 'py-3';
 
-  return (
-    <div className={cn(spacing, align)} style={{ width: style?.width, height: style?.height }}>
-      <BlockContent block={block} />
-    </div>
-  );
+  return {
+    className: cn(spacing, align),
+    style: {
+      width: style?.width,
+      height: style?.height,
+    },
+  };
 }
 
 function BlockContent({ block }: { block: Block }) {
@@ -36,12 +52,11 @@ function BlockContent({ block }: { block: Block }) {
   switch (block.type) {
     // ── Text ──────────────────────────────────────────────────────────────────
     case 'text': {
-      const ops = ((c['value'] as { ops?: Array<{ insert?: string }> } | undefined)?.ops ?? []);
-      const text = ops.map((o) => o.insert ?? '').join('');
       return (
-        <div className="prose prose-sm max-w-none whitespace-pre-wrap text-foreground">
-          {text}
-        </div>
+        <div
+          className="prose prose-sm max-w-none text-foreground"
+          dangerouslySetInnerHTML={{ __html: richTextToHtml(c['value']) }}
+        />
       );
     }
 
@@ -51,14 +66,9 @@ function BlockContent({ block }: { block: Block }) {
         <figure>
           <img
             src={String(c['url'])}
-            alt={String(c['altText'] ?? '')}
+            alt="Block asset"
             className="rounded-md max-w-full"
           />
-          {!!c['caption'] && (
-            <figcaption className="mt-1 text-xs text-muted-foreground">
-              {String(c['caption'])}
-            </figcaption>
-          )}
         </figure>
       ) : (
         <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground text-sm">
@@ -81,7 +91,7 @@ function BlockContent({ block }: { block: Block }) {
             )}
           </div>
           <pre className="p-4 text-sm font-mono overflow-x-auto whitespace-pre-wrap">
-            <code>{String(c['code'] ?? c['starterCode'] ?? '')}</code>
+            <code>{String(c['code'] ?? c['starterCode'] ?? c['initialCode'] ?? '')}</code>
           </pre>
         </div>
       );
@@ -187,17 +197,6 @@ function BlockContent({ block }: { block: Block }) {
           </p>
           <p className="text-xs text-muted-foreground italic">
             Rendered in full player
-          </p>
-        </div>
-      );
-
-    // ── Animation ────────────────────────────────────────────────────────────
-    case 'animation':
-      return (
-        <div className="rounded-lg border bg-muted/30 p-6 text-center space-y-1">
-          <div className="text-2xl">🎬</div>
-          <p className="text-sm text-muted-foreground">
-            Animation: {String(c['preset'] || 'custom')}
           </p>
         </div>
       );
