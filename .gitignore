@@ -1,3 +1,11 @@
+# Node / pnpm
+node_modules/
+.pnpm-store/
+.vite/
+dist/
+packages/*/dist/
+packages/*/.vite/
+
 # Miscellaneous
 *.class
 *.lock
