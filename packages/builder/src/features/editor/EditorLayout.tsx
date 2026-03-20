@@ -6,7 +6,6 @@ import { EditorHeader } from './EditorHeader';
 import { BlockCanvas } from './canvas/BlockCanvas';
 import { PropertyPanel } from './properties/PropertyPanel';
 import { PreviewMode } from './preview/PreviewMode';
-import { loadLocalDraft } from './hooks/useAutoSave';
 import { nanoid } from '@/lib/nanoid';
 import { BLOCK_CATEGORIES, BLOCK_META } from './blockRegistry';
 import { getDefaultVisibilityRule } from './blockVisibility';
@@ -25,8 +24,7 @@ export function EditorLayout({ remoteCourse }: EditorLayoutProps) {
 
   useEffect(() => {
     if (draft?.course_id === remoteCourse.course_id) return;
-    const localDraft = loadLocalDraft(remoteCourse.course_id);
-    dispatch(openDraft(localDraft ?? remoteCourse));
+    dispatch(openDraft(remoteCourse));
   }, [dispatch, draft?.course_id, remoteCourse.course_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const firstLesson = draft?.lessons[0];

@@ -41,6 +41,7 @@ function makeStore(course: Course) {
         email: 'author@primoria.dev',
       } as never,
       session: null,
+      role: 'author',
     }),
   );
   store.dispatch(openDraft(course));

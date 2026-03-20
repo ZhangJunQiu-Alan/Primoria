@@ -10,7 +10,7 @@ interface PublishResult {
   serverError?: string;
 }
 
-export function usePublish(forceSave: () => Promise<void>) {
+export function usePublish(saveCourse: () => Promise<void>) {
   const draft = useAppSelector((s) => s.editor.draft);
   const [publishing, setPublishing] = useState(false);
 
@@ -25,8 +25,7 @@ export function usePublish(forceSave: () => Promise<void>) {
 
     setPublishing(true);
     try {
-      // Flush draft to remote first
-      await forceSave();
+      await saveCourse();
 
       const { error } = await supabase
         .from('courses')
@@ -40,7 +39,7 @@ export function usePublish(forceSave: () => Promise<void>) {
     } finally {
       setPublishing(false);
     }
-  }, [draft, forceSave]);
+  }, [draft, saveCourse]);
 
   return { publish, publishing };
 }

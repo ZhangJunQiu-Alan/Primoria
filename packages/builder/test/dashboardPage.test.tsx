@@ -81,6 +81,7 @@ function makeStore() {
         email: 'author@primoria.dev',
       } as never,
       session: null,
+      role: 'author',
     }),
   );
 

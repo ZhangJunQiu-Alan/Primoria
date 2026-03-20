@@ -84,7 +84,7 @@ Content storage: `lessons.content_json` holds per-lesson course JSON snapshots w
 
 ## Key Patterns
 
-- React Builder source lives under `packages/builder/src/`; do not assume the deleted Flutter `Builder/` tree still exists
+- React Builder source lives under `packages/builder/src/`
 - Shared course types and migrations come from `packages/schema`
 - Design mockups are in `Design/` — reference these when asked about visual styling
 - React Builder tests are in `packages/builder/test/`

@@ -20,7 +20,7 @@ interface EditorState {
   /** ID of the currently focused block, or null. */
   selectedBlockId: string | null;
 
-  /** True while the editor is persisting to remote (background auto-save). */
+  /** True while an explicit save/publish persistence request is in flight. */
   isSaving: boolean;
 
   /** True if the draft has unsaved local changes. */
@@ -300,11 +300,10 @@ const editorSlice = createSlice({
         pageId: string;
         blockId: string;
         visibilityRule?: 'always' | 'afterPreviousCorrect';
-        requiredForProgress?: boolean;
       }>,
     ) {
       if (!state.draft) return;
-      const { lessonId, pageId, blockId, visibilityRule, requiredForProgress } = action.payload;
+      const { lessonId, pageId, blockId, visibilityRule } = action.payload;
       const lesson = state.draft.lessons.find((l) => l.lesson_id === lessonId);
       if (!lesson) return;
       const page = lesson.pages.find((p) => p.page_id === pageId);
@@ -312,7 +311,6 @@ const editorSlice = createSlice({
       const block = page.blocks.find((b) => b.id === blockId);
       if (!block) return;
       if (visibilityRule !== undefined) block.visibilityRule = visibilityRule;
-      if (requiredForProgress !== undefined) block.requiredForProgress = requiredForProgress;
       state.isDirty = true;
     },
     reorderBlocks(
