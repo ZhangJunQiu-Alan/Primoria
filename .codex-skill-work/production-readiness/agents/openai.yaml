@@ -1,0 +1,3 @@
+interface:
+  display_name: "Production Readiness"
+  short_description: "Harden features and migrations for real-world release quality, safety, observability, and rollout readiness."
