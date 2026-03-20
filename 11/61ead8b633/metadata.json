@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1161ead8b633",
+  "strategy": "manual-commit",
+  "branch": "builder-react-rewrite",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "Builder/lib/features/builder/builder_screen.dart",
+    "Builder/lib/features/dashboard/dashboard_screen.dart",
+    "Builder/lib/features/landing/landing_screen.dart",
+    "Builder/lib/features/viewer/viewer_screen.dart",
+    "Builder/lib/models/interactive_visual_content.dart",
+    "Builder/lib/services/ai_visual_generator.dart",
+    "Builder/lib/services/course_schema_migrator.dart",
+    "Builder/lib/services/gemini_client.dart",
+    "Builder/lib/services/visual_template_registry.dart",
+    "Builder/lib/widgets/block_widgets/block_wrapper.dart",
+    "Builder/lib/widgets/block_widgets/html_animation_widget_stub.dart",
+    "Builder/lib/widgets/block_widgets/interactive_visual_widget.dart",
+    "Builder/lib/widgets/property_panel.dart",
+    "Builder/test/course_schema_migration_test.dart",
+    "Builder/test/interactive_visual_test.dart"
+  ],
+  "sessions": [
+    {
+      "metadata": "/11/61ead8b633/0/metadata.json",
+      "transcript": "/11/61ead8b633/0/full.jsonl",
+      "content_hash": "/11/61ead8b633/0/content_hash.txt",
+      "prompt": "/11/61ead8b633/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 9737,
+    "cache_creation_tokens": 1050640,
+    "cache_read_tokens": 39950748,
+    "output_tokens": 278384,
+    "api_call_count": 424
+  }
+}
