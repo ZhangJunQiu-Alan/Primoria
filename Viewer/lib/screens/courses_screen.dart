@@ -25,6 +25,8 @@ enum _CommunityWorkspaceSection {
   trending,
 }
 
+enum _MessagesActionButton { newItem, call, search, more, attach, mic }
+
 class _CommunityPalette {
   const _CommunityPalette._();
 
@@ -80,6 +82,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   int? _hoveredUserId;
   int? _selectedConversationId;
   int? _selectedNoteId;
+  _MessagesActionButton? _activeMessagesAction;
   int _nextUserId = 1;
   int _nextConversationId = 1;
   int _nextStudyRoomId = 1;
@@ -2494,8 +2497,11 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildWorkspacePanel({required bool isWideLayout}) {
+    final showWorkspaceTopBar =
+        !(isWideLayout && _section == _CommunityWorkspaceSection.messages);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 12),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: _CommunityPalette.panel,
         borderRadius: BorderRadius.circular(28),
@@ -2503,7 +2509,8 @@ class _CoursesScreenState extends State<CoursesScreen>
       ),
       child: Column(
         children: [
-          _buildWorkspaceTopBar(isWideLayout: isWideLayout),
+          if (showWorkspaceTopBar)
+            _buildWorkspaceTopBar(isWideLayout: isWideLayout),
           Expanded(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 220),
@@ -4250,13 +4257,29 @@ class _CoursesScreenState extends State<CoursesScreen>
     final visibleConversations = _visibleConversations;
     final selectedConversation = _selectedConversation;
 
+    if (isWideLayout) {
+      return Row(
+        children: [
+          SizedBox(
+            width: 320,
+            child: _buildDesktopMessagesListPanel(visibleConversations),
+          ),
+          const VerticalDivider(
+            width: 1,
+            thickness: 1,
+            color: Color(0xFFE2E8F0),
+          ),
+          Expanded(
+            child: selectedConversation == null
+                ? _buildDesktopEmptyMessagePanel()
+                : _buildDesktopConversationPanel(selectedConversation),
+          ),
+        ],
+      );
+    }
+
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        isWideLayout ? 24 : 18,
-        18,
-        isWideLayout ? 24 : 18,
-        24,
-      ),
+      padding: EdgeInsets.fromLTRB(18, 18, 18, 24),
       child: Column(
         children: [
           _buildMessageOverviewRow(),
@@ -4282,6 +4305,687 @@ class _CoursesScreenState extends State<CoursesScreen>
                 : _buildMessageListPanel(visibleConversations),
           ),
         ],
+      ),
+    );
+  }
+
+  void _setActiveMessagesAction(_MessagesActionButton? action) {
+    if (_activeMessagesAction == action) return;
+    setState(() => _activeMessagesAction = action);
+  }
+
+  void _handleMessagesListMenuSelection(String value) {
+    switch (value) {
+      case 'new_chat':
+        _showStartDirectChatDialog();
+      case 'new_group':
+        _showCreateStudyGroupDialog();
+    }
+  }
+
+  void _handleConversationMenuSelection(
+    String value,
+    _Conversation conversation,
+  ) {
+    switch (value) {
+      case 'add_members':
+        _showAddMembersDialog();
+      case 'delete_chat':
+        _deleteConversation(conversation);
+    }
+  }
+
+  void _handleConversationCall(_Conversation conversation) {
+    _setActiveMessagesAction(_MessagesActionButton.call);
+    if (conversation.isGroup) {
+      _showMessageSnack(_copy('Group calls are coming soon.', '群组通话功能即将上线。'));
+      return;
+    }
+
+    final user = _galaxyUsers.cast<_GalaxyUser?>().firstWhere(
+      (item) => item?.name == conversation.name,
+      orElse: () => null,
+    );
+    if (user == null) {
+      _showMessageSnack(
+        _copy('Calling ${conversation.name}', '正在呼叫 ${conversation.name}'),
+      );
+      return;
+    }
+    _callUser(user);
+  }
+
+  void _toggleConversationSearchState() {
+    final nextAction = _activeMessagesAction == _MessagesActionButton.search
+        ? null
+        : _MessagesActionButton.search;
+    _setActiveMessagesAction(nextAction);
+    if (nextAction != null) {
+      _showMessageSnack(
+        _copy('In-chat search tools are next.', '聊天内搜索功能接下来会继续补上。'),
+      );
+    }
+  }
+
+  void _handleMessageAttachmentAction() {
+    _setActiveMessagesAction(_MessagesActionButton.attach);
+    _showMessageSnack(
+      _copy('Message attachments are coming next.', '消息附件功能接下来会继续补上。'),
+    );
+  }
+
+  void _handleVoiceMessageAction() {
+    _setActiveMessagesAction(_MessagesActionButton.mic);
+    _showMessageSnack(_copy('Voice messages are coming soon.', '语音消息功能即将上线。'));
+  }
+
+  String _conversationPresenceLabel(_Conversation conversation) {
+    if (conversation.isGroup) {
+      return _copy(
+        '${conversation.participantNames.length} members active',
+        '${conversation.participantNames.length} 位成员在线',
+      );
+    }
+    return _copy('Last seen recently', '最近在线');
+  }
+
+  Widget _buildDesktopMessagesListPanel(List<_Conversation> conversations) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+            child: Row(
+              children: [
+                const SizedBox(width: 42),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      _copy('Chats', '聊天'),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: _CommunityPalette.text,
+                      ),
+                    ),
+                  ),
+                ),
+                PopupMenuButton<String>(
+                  tooltip: _copy('Create', '创建'),
+                  padding: EdgeInsets.zero,
+                  onOpened: () =>
+                      _setActiveMessagesAction(_MessagesActionButton.newItem),
+                  onCanceled: () => _setActiveMessagesAction(null),
+                  onSelected: (value) {
+                    _setActiveMessagesAction(null);
+                    _handleMessagesListMenuSelection(value);
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem<String>(
+                      value: 'new_chat',
+                      child: Text(_copy('New chat', '新聊天')),
+                    ),
+                    PopupMenuItem<String>(
+                      value: 'new_group',
+                      child: Text(_copy('New group', '新群组')),
+                    ),
+                  ],
+                  child: _buildMessagesActionButton(
+                    icon: Icons.add_circle_outline_rounded,
+                    action: _MessagesActionButton.newItem,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: TextField(
+              controller: _messageSearchController,
+              onChanged: (value) => setState(() => _messageQuery = value),
+              decoration: InputDecoration(
+                hintText: _copy('Search', '搜索'),
+                filled: true,
+                fillColor: const Color(0xFFF8FAFC),
+                prefixIcon: const Icon(
+                  Icons.search_rounded,
+                  color: _CommunityPalette.subtle,
+                  size: 20,
+                ),
+                suffixIcon: _messageQuery.isEmpty
+                    ? null
+                    : IconButton(
+                        onPressed: () {
+                          _messageSearchController.clear();
+                          setState(() => _messageQuery = '');
+                        },
+                        icon: const Icon(Icons.close, size: 18),
+                      ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(color: _CommunityPalette.blue),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 14),
+              ),
+            ),
+          ),
+          Expanded(
+            child: conversations.isEmpty
+                ? Center(
+                    child: Text(
+                      _copy('No chats found', '没有找到聊天'),
+                      style: const TextStyle(
+                        color: _CommunityPalette.subtext,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: conversations.length,
+                    itemBuilder: (context, index) {
+                      return _buildDesktopConversationListItem(
+                        conversations[index],
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDesktopConversationListItem(_Conversation conversation) {
+    final selected = conversation.id == _selectedConversationId;
+    final previewStatusColor = selected
+        ? Colors.white70
+        : _CommunityPalette.subtle;
+    final previewTextColor = selected
+        ? Colors.white.withValues(alpha: 0.88)
+        : _CommunityPalette.subtext;
+    return InkWell(
+      onTap: () => _selectConversation(conversation),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        decoration: BoxDecoration(
+          gradient: selected
+              ? const LinearGradient(
+                  colors: [Color(0xFF5967F6), Color(0xFF6874FF)],
+                )
+              : null,
+          color: selected ? null : Colors.white,
+          border: selected
+              ? null
+              : const Border(bottom: BorderSide(color: Color(0xFFE8EDF5))),
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: selected
+                  ? Colors.white
+                  : conversation.accent.withValues(alpha: 0.12),
+              child: Text(
+                conversation.name[0].toUpperCase(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  color: selected
+                      ? _CommunityPalette.text
+                      : conversation.accent,
+                  fontSize: 17,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    conversation.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: selected ? Colors.white : _CommunityPalette.text,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    conversation.message,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: previewTextColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  conversation.time,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: selected ? Colors.white70 : _CommunityPalette.subtle,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                if (conversation.unreadCount > 0)
+                  Container(
+                    constraints: const BoxConstraints(minWidth: 20),
+                    height: 20,
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    decoration: BoxDecoration(
+                      color: selected ? Colors.white : _CommunityPalette.red,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${conversation.unreadCount}',
+                        style: TextStyle(
+                          color: selected
+                              ? _CommunityPalette.blue
+                              : Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  Icon(
+                    conversation.isGroup
+                        ? Icons.group_rounded
+                        : Icons.done_all_rounded,
+                    size: 16,
+                    color: previewStatusColor,
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopEmptyMessagePanel() {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFD8E7B7), Color(0xFFC6D9A1)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        const IgnorePointer(
+          child: CustomPaint(painter: _MessagesWallpaperPainter()),
+        ),
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.82),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.forum_outlined,
+                  color: _CommunityPalette.blue,
+                  size: 34,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                _copy('Select a chat', '选择聊天'),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: _CommunityPalette.text,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDesktopConversationPanel(_Conversation conversation) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF5967F6), Color(0xFF6574FF)],
+            ),
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.white,
+                child: Text(
+                  conversation.name[0].toUpperCase(),
+                  style: const TextStyle(
+                    color: _CommunityPalette.text,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      conversation.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _conversationPresenceLabel(conversation),
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        color: Colors.white.withValues(alpha: 0.82),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              _buildMessagesActionButton(
+                icon: Icons.call_outlined,
+                action: _MessagesActionButton.call,
+                onTap: () => _handleConversationCall(conversation),
+                onDark: true,
+              ),
+              const SizedBox(width: 8),
+              _buildMessagesActionButton(
+                icon: Icons.search_rounded,
+                action: _MessagesActionButton.search,
+                onTap: _toggleConversationSearchState,
+                onDark: true,
+              ),
+              const SizedBox(width: 8),
+              PopupMenuButton<String>(
+                tooltip: _copy('More', '更多'),
+                padding: EdgeInsets.zero,
+                onOpened: () =>
+                    _setActiveMessagesAction(_MessagesActionButton.more),
+                onCanceled: () => _setActiveMessagesAction(null),
+                onSelected: (value) {
+                  _setActiveMessagesAction(null);
+                  _handleConversationMenuSelection(value, conversation);
+                },
+                itemBuilder: (context) => [
+                  if (conversation.isGroup)
+                    PopupMenuItem<String>(
+                      value: 'add_members',
+                      child: Text(_copy('Add members', '添加成员')),
+                    ),
+                  PopupMenuItem<String>(
+                    value: 'delete_chat',
+                    child: Text(_copy('Delete chat', '删除聊天')),
+                  ),
+                ],
+                child: _buildMessagesActionButton(
+                  icon: Icons.more_horiz_rounded,
+                  action: _MessagesActionButton.more,
+                  onDark: true,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ClipRect(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                const DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF090D27),
+                        Color(0xFF101844),
+                        Color(0xFF182868),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                ),
+                const IgnorePointer(
+                  child: CustomPaint(painter: _MessagesWallpaperPainter()),
+                ),
+                ListView.builder(
+                  controller: _messageThreadController,
+                  padding: const EdgeInsets.fromLTRB(22, 18, 22, 22),
+                  itemCount: conversation.messages.length,
+                  itemBuilder: (context, index) {
+                    return _buildDesktopChatBubble(
+                      message: conversation.messages[index],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          color: Colors.white,
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
+          child: Row(
+            children: [
+              _buildMessagesActionButton(
+                icon: Icons.attach_file_rounded,
+                action: _MessagesActionButton.attach,
+                onTap: _handleMessageAttachmentAction,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8FAFC),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                  ),
+                  child: TextField(
+                    controller: _messageComposerController,
+                    textInputAction: TextInputAction.send,
+                    onSubmitted: (_) => _sendMessageToConversation(
+                      conversation,
+                      _messageComposerController.text,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: _copy('Write a Message...', '输入消息...'),
+                      hintStyle: const TextStyle(
+                        color: _CommunityPalette.subtle,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _messageComposerController,
+                builder: (context, value, child) {
+                  final hasText = value.text.trim().isNotEmpty;
+                  if (hasText) {
+                    return FilledButton(
+                      onPressed: () => _sendMessageToConversation(
+                        conversation,
+                        _messageComposerController.text,
+                      ),
+                      style: FilledButton.styleFrom(
+                        minimumSize: const Size(52, 52),
+                        backgroundColor: _CommunityPalette.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Icon(Icons.send_rounded),
+                    );
+                  }
+                  return _buildMessagesActionButton(
+                    icon: Icons.mic_none_rounded,
+                    action: _MessagesActionButton.mic,
+                    onTap: _handleVoiceMessageAction,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDesktopChatBubble({required _ChatMessage message}) {
+    final isMine = message.isMine;
+    final bubbleColor = isMine ? const Color(0xFFE4F7C9) : Colors.white;
+    return Align(
+      alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 440),
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.fromLTRB(14, 10, 14, 8),
+        decoration: BoxDecoration(
+          color: bubbleColor,
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(18),
+            topRight: const Radius.circular(18),
+            bottomLeft: Radius.circular(isMine ? 18 : 6),
+            bottomRight: Radius.circular(isMine ? 6 : 18),
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x12000000),
+              blurRadius: 14,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: isMine
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
+          children: [
+            Text(
+              message.text,
+              style: const TextStyle(
+                color: _CommunityPalette.text,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  message.sentAtLabel,
+                  style: const TextStyle(
+                    color: _CommunityPalette.subtle,
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                if (isMine) ...[
+                  const SizedBox(width: 4),
+                  const Icon(
+                    Icons.done_all_rounded,
+                    size: 14,
+                    color: Color(0xFF38BDF8),
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMessagesActionButton({
+    required IconData icon,
+    required _MessagesActionButton action,
+    VoidCallback? onTap,
+    bool onDark = false,
+  }) {
+    final isActive = _activeMessagesAction == action;
+    final backgroundColor = onDark
+        ? isActive
+              ? Colors.white.withValues(alpha: 0.22)
+              : Colors.white.withValues(alpha: 0.10)
+        : isActive
+        ? const Color(0xFFEFF3FF)
+        : const Color(0xFFF8FAFC);
+    final foregroundColor = onDark
+        ? Colors.white
+        : isActive
+        ? _CommunityPalette.blue
+        : _CommunityPalette.subtext;
+
+    final child = AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: onDark
+              ? Colors.white.withValues(alpha: 0.08)
+              : const Color(0xFFE2E8F0),
+        ),
+      ),
+      child: Icon(icon, color: foregroundColor, size: 20),
+    );
+
+    if (onTap == null) return child;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: onTap,
+        child: child,
       ),
     );
   }
@@ -5710,6 +6414,135 @@ class _SketchPadPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _SketchPadPainter oldDelegate) {
     return oldDelegate.strokes != strokes;
+  }
+}
+
+class _MessagesWallpaperPainter extends CustomPainter {
+  const _MessagesWallpaperPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final nebulaCenters = <Offset>[
+      Offset(size.width * 0.18, size.height * 0.20),
+      Offset(size.width * 0.78, size.height * 0.28),
+      Offset(size.width * 0.56, size.height * 0.76),
+    ];
+    final nebulaColors = <Color>[
+      const Color(0xFF5EEAD4),
+      const Color(0xFF818CF8),
+      const Color(0xFF38BDF8),
+    ];
+    final nebulaRadius = math.max(size.shortestSide * 0.28, 160.0);
+
+    for (var i = 0; i < nebulaCenters.length; i++) {
+      final rect = Rect.fromCircle(
+        center: nebulaCenters[i],
+        radius: nebulaRadius,
+      );
+      final paint = Paint()
+        ..shader = RadialGradient(
+          colors: [
+            nebulaColors[i].withValues(alpha: 0.18),
+            nebulaColors[i].withValues(alpha: 0.04),
+            Colors.transparent,
+          ],
+          stops: const [0.0, 0.52, 1.0],
+        ).createShader(rect);
+      canvas.drawCircle(nebulaCenters[i], nebulaRadius, paint);
+    }
+
+    final orbitPaint = Paint()
+      ..color = const Color(0xFFAFCAFF).withValues(alpha: 0.16)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.1;
+
+    final orbitHighlightPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.12)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.8;
+
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(size.width * 0.78, size.height * 0.26),
+        width: size.width * 0.28,
+        height: size.width * 0.10,
+      ),
+      orbitPaint,
+    );
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(size.width * 0.26, size.height * 0.68),
+        width: size.width * 0.36,
+        height: size.width * 0.13,
+      ),
+      orbitHighlightPaint,
+    );
+
+    final planetPaint = Paint()
+      ..color = const Color(0xFFC7D2FE).withValues(alpha: 0.12)
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(
+      Offset(size.width * 0.79, size.height * 0.26),
+      26,
+      planetPaint,
+    );
+    canvas.drawCircle(
+      Offset(size.width * 0.24, size.height * 0.69),
+      18,
+      Paint()
+        ..color = Color(0xFF93C5FD).withValues(alpha: 0.10)
+        ..style = PaintingStyle.fill,
+    );
+
+    final starPositions = <Offset>[
+      Offset(size.width * 0.12, size.height * 0.16),
+      Offset(size.width * 0.22, size.height * 0.38),
+      Offset(size.width * 0.36, size.height * 0.12),
+      Offset(size.width * 0.48, size.height * 0.52),
+      Offset(size.width * 0.64, size.height * 0.18),
+      Offset(size.width * 0.72, size.height * 0.60),
+      Offset(size.width * 0.84, size.height * 0.42),
+      Offset(size.width * 0.90, size.height * 0.16),
+      Offset(size.width * 0.56, size.height * 0.26),
+      Offset(size.width * 0.18, size.height * 0.80),
+      Offset(size.width * 0.38, size.height * 0.72),
+      Offset(size.width * 0.80, size.height * 0.82),
+    ];
+
+    for (var i = 0; i < starPositions.length; i++) {
+      final position = starPositions[i];
+      final radius = i.isEven ? 1.8 : 1.2;
+      final starPaint = Paint()
+        ..color = Colors.white.withValues(alpha: i.isEven ? 0.62 : 0.42);
+      canvas.drawCircle(position, radius, starPaint);
+    }
+
+    final sparklePaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.26)
+      ..strokeWidth = 1.1
+      ..strokeCap = StrokeCap.round;
+    final sparkles = <Offset>[
+      Offset(size.width * 0.30, size.height * 0.28),
+      Offset(size.width * 0.68, size.height * 0.48),
+      Offset(size.width * 0.52, size.height * 0.82),
+    ];
+    for (final position in sparkles) {
+      canvas.drawLine(
+        Offset(position.dx - 5, position.dy),
+        Offset(position.dx + 5, position.dy),
+        sparklePaint,
+      );
+      canvas.drawLine(
+        Offset(position.dx, position.dy - 5),
+        Offset(position.dx, position.dy + 5),
+        sparklePaint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _MessagesWallpaperPainter oldDelegate) {
+    return false;
   }
 }
 
