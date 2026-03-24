@@ -15,7 +15,7 @@ const schema = z.object({
     z.object({
       id: z.string(),
       text: z.string(),
-      isCorrect: z.boolean(),
+      isCorrect: z.coerce.boolean(),
     }),
   ),
   explanation: z.string().optional(),
@@ -30,6 +30,26 @@ interface MultipleChoicePanelProps {
   pageId: string;
 }
 
+type MultipleChoiceContent = {
+  question?: string;
+  options?: Array<{ id: string; text: string; isCorrect: boolean }>;
+  explanation?: string;
+  allowMultiple?: boolean;
+};
+
+function toFormValues(content: MultipleChoiceContent): FormValues {
+  return {
+    question: content.question ?? '',
+    options: (content.options ?? []).map((option) => ({
+      id: option.id,
+      text: option.text ?? '',
+      isCorrect: Boolean(option.isCorrect),
+    })),
+    explanation: content.explanation ?? '',
+    allowMultiple: Boolean(content.allowMultiple),
+  };
+}
+
 export function MultipleChoicePanel({ block, lessonId, pageId }: MultipleChoicePanelProps) {
   const dispatch = useAppDispatch();
   const c = block.content as {
@@ -41,32 +61,23 @@ export function MultipleChoicePanel({ block, lessonId, pageId }: MultipleChoiceP
 
   const { register, watch, control, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      question: c.question ?? '',
-      options: c.options ?? [],
-      explanation: c.explanation ?? '',
-      allowMultiple: c.allowMultiple ?? false,
-    },
+    defaultValues: toFormValues(c),
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: 'options' });
 
   useEffect(() => {
-    reset({
-      question: c.question ?? '',
-      options: c.options ?? [],
-      explanation: c.explanation ?? '',
-      allowMultiple: c.allowMultiple ?? false,
-    });
+    reset(toFormValues(c));
   }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const sub = watch((values) => {
+      const nextContent = toFormValues(values as MultipleChoiceContent);
       dispatch(
         updateBlock({
           lessonId,
           pageId,
-          block: { ...block, content: values },
+          block: { ...block, content: nextContent },
         }),
       );
     });
