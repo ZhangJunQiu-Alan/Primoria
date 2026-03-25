@@ -418,10 +418,10 @@
 .studio-welcome-card__copy h1 {
   margin: 0.25rem 0 0;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.2rem, 4vw, 3.15rem);
+  font-size: clamp(1.1rem, 2vw, 1.58rem);
   font-weight: 600;
-  line-height: 0.96;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
 }
 
 .studio-welcome-card__copy p:last-child {
