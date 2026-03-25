@@ -287,29 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                   ),
                 ),
                 const SizedBox(height: 36),
-                _featurePill(
-                  Icons.touch_app_rounded,
-                  const Color(0xFF11D9A8),
-                  t.authFeatureInteractiveLessons,
-                ),
-                const SizedBox(height: 10),
-                _featurePill(
-                  Icons.smart_toy_rounded,
-                  const Color(0xFF8B5CF6),
-                  t.authFeatureAiTutor,
-                ),
-                const SizedBox(height: 10),
-                _featurePill(
-                  Icons.emoji_events_rounded,
-                  const Color(0xFFFFAB40),
-                  t.authFeatureXpAchievements,
-                ),
-                const SizedBox(height: 10),
-                _featurePill(
-                  Icons.group_rounded,
-                  const Color(0xFF11B4FF),
-                  t.authFeatureStudyBuddy,
-                ),
+                _buildFeatureGrid(t),
                 const Spacer(),
                 // Stats row
                 _buildStatsRow(t),
@@ -378,6 +356,43 @@ class _RegisterScreenState extends State<RegisterScreen>
       ],
     ),
   );
+
+  Widget _buildFeatureGrid(AppLocalizations t) {
+    final features = [
+      (
+        Icons.touch_app_rounded,
+        const Color(0xFF11D9A8),
+        t.authFeatureInteractiveLessons,
+      ),
+      (Icons.smart_toy_rounded, const Color(0xFF8B5CF6), t.authFeatureAiTutor),
+      (
+        Icons.emoji_events_rounded,
+        const Color(0xFFFFAB40),
+        t.authFeatureXpAchievements,
+      ),
+      (Icons.group_rounded, const Color(0xFF11B4FF), t.authFeatureStudyBuddy),
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const spacing = 12.0;
+        final itemWidth = (constraints.maxWidth - spacing) / 2;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: features
+              .map(
+                (feature) => SizedBox(
+                  width: itemWidth,
+                  child: _featurePill(feature.$1, feature.$2, feature.$3),
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
 
   Widget _buildStatsRow(AppLocalizations t) => Container(
     padding: const EdgeInsets.all(16),
