@@ -32,6 +32,7 @@ import {
   removePage,
 } from '@/store/editorSlice';
 import { nanoid } from '@/lib/nanoid';
+import { uuid } from '@/lib/uuid';
 import { cn } from '@/lib/utils';
 
 interface LessonNavProps {
@@ -67,7 +68,7 @@ export function LessonNav({ selectedLessonId, selectedPageId, onSelectLesson }: 
   }
 
   function handleAddLesson() {
-    const lessonId = nanoid();
+    const lessonId = uuid();
     const pageId = nanoid();
     dispatch(addLesson({ lessonId, pageId }));
     onSelectLesson(lessonId, pageId);
