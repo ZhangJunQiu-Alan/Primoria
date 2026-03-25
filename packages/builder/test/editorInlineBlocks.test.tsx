@@ -124,6 +124,26 @@ describe('Editor inline block workflows', () => {
     expect(frame).not.toBeNull();
   });
 
+  it('reflects multiple-choice option text from properties into canvas preview', async () => {
+    const user = userEvent.setup();
+    const store = makeStore(courseFixture);
+    store.dispatch(selectBlock('mc-1'));
+
+    render(
+      <Provider store={store}>
+        <InspectorPreviewHarness blockId="mc-1" />
+      </Provider>,
+    );
+
+    const firstOptionInput = screen.getByPlaceholderText('Option A');
+    await user.clear(firstOptionInput);
+    await user.type(firstOptionInput, 'Planning, organizing, and controlling resources');
+
+    expect(
+      await screen.findByText('Planning, organizing, and controlling resources'),
+    ).toBeInTheDocument();
+  });
+
   it('opens inline text editing on double click', async () => {
     const user = userEvent.setup();
     const store = makeStore(courseFixture);
@@ -186,6 +206,70 @@ describe('Editor inline block workflows', () => {
       'https://cdn.primoria.dev/block-image.png',
     );
     expect(storageFns.from).toHaveBeenCalledWith('course-block-images');
+  });
+
+  it('falls back to another public bucket when course-block-images is missing', async () => {
+    const uploadPrimary = vi.fn().mockResolvedValue({
+      error: { message: 'Bucket not found' },
+    });
+    const uploadFallback = vi.fn().mockResolvedValue({ error: null });
+    const getPublicUrlFallback = vi.fn().mockReturnValue({
+      data: { publicUrl: 'https://cdn.primoria.dev/fallback-image.png' },
+    });
+
+    storageFns.from.mockImplementation((bucket: string) => {
+      if (bucket === 'course-block-images') {
+        return {
+          upload: uploadPrimary,
+          getPublicUrl: vi.fn(),
+        };
+      }
+
+      if (bucket === 'course-thumbnails') {
+        return {
+          upload: uploadFallback,
+          getPublicUrl: getPublicUrlFallback,
+        };
+      }
+
+      return {
+        upload: vi.fn().mockResolvedValue({
+          error: { message: 'Bucket not found' },
+        }),
+        getPublicUrl: vi.fn(),
+      };
+    });
+
+    const store = makeStore(courseFixture);
+    const view = render(
+      <Provider store={store}>
+        <BlockPreviewHarness blockId="image-1" />
+      </Provider>,
+    );
+
+    const input = view.container.querySelector('input[type="file"]');
+    expect(input).not.toBeNull();
+
+    fireEvent.change(input!, {
+      target: {
+        files: [new File(['image-bytes'], 'diagram.jpg', { type: 'image/jpeg' })],
+      },
+    });
+
+    await waitFor(() => {
+      expect(uploadPrimary).toHaveBeenCalledTimes(1);
+      expect(uploadFallback).toHaveBeenCalledTimes(1);
+    });
+
+    const imageBlock = store
+      .getState()
+      .editor.draft?.lessons[0]?.pages[0]?.blocks.find((block) => block.id === 'image-1');
+
+    expect((imageBlock?.content as { url?: string }).url).toBe(
+      'https://cdn.primoria.dev/fallback-image.png',
+    );
+    expect(storageFns.from).toHaveBeenCalledWith('course-block-images');
+    expect(storageFns.from).toHaveBeenCalledWith('course-thumbnails');
   });
 
   it('keeps the inspector scroll position stable when the selected block changes', () => {
@@ -277,12 +361,26 @@ const courseFixture: Course = {
             {
               id: 'playground-1',
               type: 'code-playground',
-              position: { order: 2 },
+              position: { order: 3 },
               visibilityRule: 'afterPreviousCorrect',
               content: {
                 language: 'python',
                 starterCode: 'print(1 + 2)',
                 initialCode: 'print(1 + 2)',
+              },
+            },
+            {
+              id: 'mc-1',
+              type: 'multiple-choice',
+              position: { order: 2 },
+              visibilityRule: 'always',
+              content: {
+                question: 'What is business management mainly about?',
+                options: [
+                  { id: 'mc-1-a', text: '', isCorrect: false },
+                  { id: 'mc-1-b', text: '', isCorrect: false },
+                ],
+                allowMultiple: false,
               },
             },
           ],
