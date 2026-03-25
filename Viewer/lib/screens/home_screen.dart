@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/common/bottom_nav_bar.dart';
 import '../components/common/viewer_page_shell.dart';
-import '../components/common/viewer_section_header.dart';
 import '../components/common/viewer_surface_card.dart';
 import '../providers/user_provider.dart';
 import '../providers/language_provider.dart';
@@ -14,7 +13,6 @@ import 'courses_screen.dart';
 import 'profile_screen.dart';
 import 'ai_tutor_screen.dart';
 import 'lesson_screen.dart';
-import 'course_screen.dart';
 
 /// Home page — ported from Figma HomeScreen template
 class HomeScreen extends StatefulWidget {
@@ -27,6 +25,73 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   static const int _tabCount = 5;
   static const int _profileTabIndex = 4;
+  static const List<_HomeShowcaseTopic> _homeShowcaseTopics = [
+    _HomeShowcaseTopic(
+      title: 'Physics Lab',
+      meta: '12 lessons · STEM',
+      shortLabel: 'Physics',
+      icon: Icons.science_rounded,
+      startColor: Color(0xFF38BDF8),
+      endColor: Color(0xFF2563EB),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Python Foundations',
+      meta: '18 lessons · Coding',
+      shortLabel: 'Python',
+      icon: Icons.code_rounded,
+      startColor: Color(0xFF60A5FA),
+      endColor: Color(0xFF4338CA),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Circuit Design',
+      meta: '10 lessons · Engineering',
+      shortLabel: 'Circuits',
+      icon: Icons.memory_rounded,
+      startColor: Color(0xFF22D3EE),
+      endColor: Color(0xFF1D4ED8),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Data Systems',
+      meta: '14 lessons · Technology',
+      shortLabel: 'Data',
+      icon: Icons.dataset_linked_rounded,
+      startColor: Color(0xFF818CF8),
+      endColor: Color(0xFF2563EB),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Calculus Core',
+      meta: '16 lessons · Maths',
+      shortLabel: 'Calculus',
+      icon: Icons.functions_rounded,
+      startColor: Color(0xFF93C5FD),
+      endColor: Color(0xFF2563EB),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Robotics Studio',
+      meta: '11 lessons · Build',
+      shortLabel: 'Robotics',
+      icon: Icons.precision_manufacturing_rounded,
+      startColor: Color(0xFF7DD3FC),
+      endColor: Color(0xFF1E40AF),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Astronomy',
+      meta: '9 lessons · Space',
+      shortLabel: 'Space',
+      icon: Icons.travel_explore_rounded,
+      startColor: Color(0xFF38BDF8),
+      endColor: Color(0xFF1E3A8A),
+    ),
+    _HomeShowcaseTopic(
+      title: 'Web Systems',
+      meta: '15 lessons · Programming',
+      shortLabel: 'Web',
+      icon: Icons.web_rounded,
+      startColor: Color(0xFF60A5FA),
+      endColor: Color(0xFF1D4ED8),
+    ),
+  ];
+
   int _currentNavIndex = 0;
   final List<GlobalKey<NavigatorState>> _navigatorKeys =
       List<GlobalKey<NavigatorState>>.generate(
@@ -309,20 +374,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : LayoutBuilder(
                     builder: (context, constraints) => SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(24, 8, 24, 28),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                           minHeight: constraints.maxHeight,
                         ),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Column(
-                              children: [
-                                const SizedBox(height: 4),
-                                _buildCourseHero(t),
-                              ],
-                            ),
-                            _buildDrawerPanel(t),
+                            _buildCourseHero(t),
+                            if (_course != null) ...[
+                              const SizedBox(height: 22),
+                              _buildDrawerPanel(t),
+                            ],
                           ],
                         ),
                       ),
@@ -342,43 +406,79 @@ class _HomeScreenState extends State<HomeScreen> {
             ? t.homeStartLearning
             : name;
 
-        return ViewerSectionHeader(
-          title: _timeGreeting(t),
-          subtitle: subtitle,
-          padding: const EdgeInsets.fromLTRB(24, 18, 24, 8),
-          trailing: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: const Color(0xFFF1F5F9)),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x08000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 1),
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _timeGreeting(t),
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF0F172A),
+                        letterSpacing: -0.4,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF64748B),
+                        letterSpacing: -0.2,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.auto_awesome_rounded,
-                  color: Color(0xFF64748B),
-                  size: 22,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 9,
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  '${up.streak}',
-                  style: AppTypography.label.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF334155),
-                    fontSize: 14,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFEEF4FF), Color(0xFFD9E9FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(color: const Color(0xFFC7DCFF)),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x0D2563EB),
+                      blurRadius: 14,
+                      offset: Offset(0, 6),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.auto_awesome_rounded,
+                      color: Color(0xFF2563EB),
+                      size: 22,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${up.streak}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF1E3A8A),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -386,63 +486,161 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCourseHero(AppLocalizations t) {
-    final courseTitle = _readString(_course?['title']) ?? t.homeStartLearning;
-    final subjectColor = _subjectColor(_course);
-    final thumbnailUrl = _courseThumbnailUrl(_course);
+    final courseTitle = _readString(_course?['title']);
     final completedCount = _completedLessonIds.length;
     final totalLessons = _chapters
         .expand((ch) => _toRawList(ch['lessons']))
         .length;
-    final levelLabel = totalLessons == 0
-        ? t.homeExploreCourses
+    final progressLabel = courseTitle == null || totalLessons == 0
+        ? null
         : t.homeLessonProgress(completedCount, totalLessons);
 
-    return GestureDetector(
-      onTap: _course == null
-          ? null
-          : () => _pushOnHomeTab<void>(
-              MaterialPageRoute<void>(
-                builder: (_) => CourseScreen(
-                  courseId: _readString(_course?['id']),
-                  title: courseTitle,
-                  description: _readString(_course?['description']),
-                ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth >= 1180;
+        final desktopHeroHeight = courseTitle == null ? 820.0 : 772.0;
+        final heroRadius = BorderRadius.circular(40);
+        final heroPadding = EdgeInsets.all(isWide ? 28 : 20);
+
+        return ClipRRect(
+          borderRadius: heroRadius,
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF12214F),
+                  Color(0xFF1D4ED8),
+                  Color(0xFF60A5FA),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
+              borderRadius: heroRadius,
+              border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1A1D4ED8),
+                  blurRadius: 40,
+                  offset: Offset(0, 22),
+                ),
+              ],
             ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 8),
-          Text(
-            courseTitle,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: AppTypography.headline1.copyWith(
-              fontSize: 30,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFF0F172A),
-              letterSpacing: -0.5,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned(
+                  top: -120,
+                  left: -60,
+                  child: _buildHeroGlow(
+                    size: 320,
+                    color: const Color(0xFF7DD3FC).withValues(alpha: 0.20),
+                  ),
+                ),
+                Positioned(
+                  right: -110,
+                  top: 64,
+                  child: _buildHeroGlow(
+                    size: 260,
+                    color: const Color(0xFFBFDBFE).withValues(alpha: 0.16),
+                  ),
+                ),
+                Positioned(
+                  bottom: -150,
+                  left: constraints.maxWidth * 0.22,
+                  child: _buildHeroGlow(
+                    size: 420,
+                    color: const Color(0xFFDBEAFE).withValues(alpha: 0.12),
+                  ),
+                ),
+                Positioned(
+                  top: 76,
+                  right: 82,
+                  child: _buildHeroRing(
+                    width: constraints.maxWidth * (isWide ? 0.34 : 0.46),
+                    height: isWide ? 160 : 120,
+                  ),
+                ),
+                Positioned(
+                  bottom: 44,
+                  left: 48,
+                  child: _buildHeroRing(
+                    width: constraints.maxWidth * (isWide ? 0.28 : 0.38),
+                    height: isWide ? 140 : 108,
+                  ),
+                ),
+                Padding(
+                  padding: heroPadding,
+                  child: isWide
+                      ? SizedBox(
+                          height: desktopHeroHeight,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      48,
+                                      18,
+                                      48,
+                                      12,
+                                    ),
+                                    child: _buildHeroCenterContent(
+                                      t,
+                                      courseTitle: courseTitle,
+                                      progressLabel: progressLabel,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(8, 0, 8, 10),
+                                child: _buildShowcaseCardGrid(
+                                  topics: _homeShowcaseTopics,
+                                  availableWidth:
+                                      constraints.maxWidth -
+                                      heroPadding.horizontal -
+                                      16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(6, 12, 6, 6),
+                          child: Column(
+                            children: [
+                              _buildHeroCenterContent(
+                                t,
+                                courseTitle: courseTitle,
+                                progressLabel: progressLabel,
+                              ),
+                              const SizedBox(height: 28),
+                              Wrap(
+                                alignment: WrapAlignment.center,
+                                spacing: 16,
+                                runSpacing: 16,
+                                children: _homeShowcaseTopics
+                                    .map(
+                                      (topic) => SizedBox(
+                                        width: constraints.maxWidth < 720
+                                            ? constraints.maxWidth - 64
+                                            : ((constraints.maxWidth - 64) / 2)
+                                                  .clamp(180.0, 240.0),
+                                        child: _buildShowcaseCard(topic),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            levelLabel,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: AppColors.indigo500,
-              letterSpacing: 2.0,
-            ),
-          ),
-          const SizedBox(height: 32),
-          _buildCourseArtwork(
-            thumbnailUrl: thumbnailUrl,
-            title: courseTitle,
-            subjectColor: subjectColor,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -572,79 +770,568 @@ class _HomeScreenState extends State<HomeScreen> {
     final nextLessonId = _nextLessonId;
     final nextLessonTitle = _nextLessonTitle;
     final canContinue = hasCourse && nextLessonId != null;
+    final courseTitle = _readString(_course?['title']) ?? t.homeStartLearning;
+    final courseDescription =
+        _readString(_course?['description']) ?? _homeShowcaseSubtitle(t);
+    final subjectColor = _subjectColor(_course);
+    final thumbnailUrl = _courseThumbnailUrl(_course);
+    final completedCount = _completedLessonIds.length;
+    final totalLessons = _chapters
+        .expand((ch) => _toRawList(ch['lessons']))
+        .length;
+    final progressValue = totalLessons == 0
+        ? 0.0
+        : (completedCount / totalLessons).clamp(0.0, 1.0);
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 48),
-      padding: const EdgeInsets.fromLTRB(32, 32, 32, 16),
-      decoration: const BoxDecoration(
+      padding: const EdgeInsets.all(26),
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-        boxShadow: [
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(color: const Color(0xFFD9E8FF)),
+        boxShadow: const [
           BoxShadow(
-            color: Color(0x0D000000),
-            blurRadius: 40,
-            offset: Offset(0, -10),
+            color: Color(0x0A1D4ED8),
+            blurRadius: 28,
+            offset: Offset(0, 14),
+          ),
+        ],
+      ),
+      child: hasCourse
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                final isStacked = constraints.maxWidth < 1080;
+
+                final summary = Container(
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFF3F8FF), Color(0xFFEEF4FF)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: const Color(0xFFD7E7FF)),
+                  ),
+                  child: isStacked
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildCourseArtwork(
+                              thumbnailUrl: thumbnailUrl,
+                              title: courseTitle,
+                              subjectColor: subjectColor,
+                            ),
+                            const SizedBox(height: 18),
+                            _buildCourseSummaryCopy(
+                              t,
+                              courseTitle: courseTitle,
+                              courseDescription: courseDescription,
+                              completedCount: completedCount,
+                              totalLessons: totalLessons,
+                              progressValue: progressValue,
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: _buildCourseArtwork(
+                                thumbnailUrl: thumbnailUrl,
+                                title: courseTitle,
+                                subjectColor: subjectColor,
+                              ),
+                            ),
+                            const SizedBox(width: 18),
+                            Expanded(
+                              flex: 6,
+                              child: _buildCourseSummaryCopy(
+                                t,
+                                courseTitle: courseTitle,
+                                courseDescription: courseDescription,
+                                completedCount: completedCount,
+                                totalLessons: totalLessons,
+                                progressValue: progressValue,
+                              ),
+                            ),
+                          ],
+                        ),
+                );
+
+                final nextStep = _buildNextStepCard(
+                  t: t,
+                  nextLessonTitle: nextLessonTitle,
+                  continueLabel: canContinue
+                      ? t.homeContinueLearning
+                      : t.courseLocked,
+                  onContinue: canContinue
+                      ? () => _startLesson(
+                          nextLessonId,
+                          nextLessonTitle ?? t.lessonDefaultTitle,
+                        )
+                      : null,
+                );
+
+                if (isStacked) {
+                  return Column(
+                    children: [summary, const SizedBox(height: 16), nextStep],
+                  );
+                }
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 7, child: summary),
+                    const SizedBox(width: 18),
+                    Expanded(flex: 5, child: nextStep),
+                  ],
+                );
+              },
+            )
+          : const SizedBox.shrink(),
+    );
+  }
+
+  Widget _buildHeroCenterContent(
+    AppLocalizations t, {
+    required String? courseTitle,
+    required String? progressLabel,
+  }) {
+    final showEnrollAction = courseTitle == null;
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 620),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (courseTitle != null) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
+              ),
+              child: Text(
+                progressLabel == null
+                    ? courseTitle
+                    : '$courseTitle · $progressLabel',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+          Text(
+            _homeShowcaseTitle(t),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 62,
+              height: 1.02,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+              letterSpacing: -2.4,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Text(
+            _homeShowcaseSubtitle(t),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              height: 1.45,
+              fontWeight: FontWeight.w500,
+              color: Colors.white.withValues(alpha: 0.82),
+            ),
+          ),
+          const SizedBox(height: 28),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 14,
+            runSpacing: 14,
+            children: [
+              _buildHeroActionButton(
+                label: t.homeBrowseCourses,
+                icon: Icons.travel_explore_rounded,
+                foregroundColor: const Color(0xFF1D4ED8),
+                backgroundColor: Colors.white,
+                shadowColor: const Color(0x260F172A),
+                onPressed: () => _switchToTab(1),
+              ),
+              if (showEnrollAction)
+                _buildHeroActionButton(
+                  label: 'Enroll in a Course',
+                  icon: Icons.school_rounded,
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.white.withValues(alpha: 0.12),
+                  borderColor: Colors.white.withValues(alpha: 0.22),
+                  shadowColor: Colors.transparent,
+                  onPressed: () => _switchToTab(1),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeroGlow({required double size, required Color color}) {
+    return IgnorePointer(
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: RadialGradient(
+            colors: [color, color.withValues(alpha: 0)],
+            stops: const [0, 1],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeroRing({required double width, required double height}) {
+    return IgnorePointer(
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(height),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShowcaseCardGrid({
+    required List<_HomeShowcaseTopic> topics,
+    required double availableWidth,
+  }) {
+    final topRow = topics.take(4).toList();
+    final bottomRow = topics.skip(4).take(4).toList();
+
+    return Column(
+      children: [
+        _buildShowcaseCardGridRow(
+          topics: topRow,
+          availableWidth: availableWidth,
+        ),
+        const SizedBox(height: 18),
+        _buildShowcaseCardGridRow(
+          topics: bottomRow,
+          availableWidth: availableWidth,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildShowcaseCardGridRow({
+    required List<_HomeShowcaseTopic> topics,
+    required double availableWidth,
+  }) {
+    const gap = 18.0;
+    final totalGap = gap * (topics.length - 1);
+    final cardWidth = ((availableWidth - totalGap) / topics.length)
+        .clamp(150.0, 205.0)
+        .toDouble();
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List<Widget>.generate(topics.length, (index) {
+        return Padding(
+          padding: EdgeInsets.only(left: index == 0 ? 0 : gap),
+          child: SizedBox(
+            width: cardWidth,
+            child: _buildShowcaseCard(topics[index]),
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildShowcaseCard(_HomeShowcaseTopic topic) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.90),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.42)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x140F172A),
+            blurRadius: 24,
+            offset: Offset(0, 12),
           ),
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Course section ────────────────────────────────────
-          if (!hasCourse)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Text(
-                t.homeEnrollPrompt,
-                style: const TextStyle(fontSize: 14, color: Color(0xFF94A3B8)),
-                textAlign: TextAlign.center,
+          Container(
+            height: 112,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [topic.startColor, topic.endColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            )
-          else ...[
-            _buildNextStepCard(
-              t: t,
-              nextLessonTitle: nextLessonTitle,
-              continueLabel: canContinue
-                  ? t.homeContinueLearning
-                  : t.courseLocked,
-              onContinue: canContinue
-                  ? () => _startLesson(
-                      nextLessonId,
-                      nextLessonTitle ?? t.lessonDefaultTitle,
-                    )
-                  : null,
+              borderRadius: BorderRadius.circular(18),
             ),
-            const SizedBox(height: 8),
-          ],
-          if (!hasCourse) ...[
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _switchToTab(1);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.indigo600,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  elevation: 0,
-                ),
-                child: Text(
-                  t.homeBrowseCourses,
-                  style: AppTypography.button.copyWith(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 18,
-                    letterSpacing: 0.5,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: -18,
+                  right: -12,
+                  child: Container(
+                    width: 78,
+                    height: 78,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.14),
+                    ),
                   ),
                 ),
-              ),
+                Positioned(
+                  bottom: -12,
+                  left: -8,
+                  child: Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.10),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 14,
+                  left: 14,
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.22),
+                      ),
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Icon(
+                    topic.icon,
+                    size: 42,
+                    color: Colors.white.withValues(alpha: 0.96),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.24),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            topic.icon,
+                            size: 14,
+                            color: Colors.white.withValues(alpha: 0.96),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            topic.shortLabel,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            topic.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF0F172A),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            topic.meta,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF64748B),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeroActionButton({
+    required String label,
+    required IconData icon,
+    required Color foregroundColor,
+    required Color backgroundColor,
+    required Color shadowColor,
+    Color? borderColor,
+    required VoidCallback onPressed,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(228, 58),
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 18),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        side: borderColor == null ? null : BorderSide(color: borderColor),
+        shadowColor: shadowColor,
+        elevation: shadowColor == Colors.transparent ? 0 : 4,
+      ),
+      icon: Icon(icon, size: 22),
+      label: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0.2,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCourseSummaryCopy(
+    AppLocalizations t, {
+    required String courseTitle,
+    required String courseDescription,
+    required int completedCount,
+    required int totalLessons,
+    required double progressValue,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Active track',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF2563EB),
+            letterSpacing: 0.8,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          courseTitle,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: 24,
+            height: 1.1,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF0F172A),
+            letterSpacing: -0.6,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          courseDescription,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: 14,
+            height: 1.45,
+            color: Color(0xFF64748B),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            _buildCourseChip(
+              icon: Icons.play_circle_outline_rounded,
+              label: totalLessons == 0
+                  ? t.homeExploreCourses
+                  : '$completedCount / $totalLessons lessons',
+            ),
+            _buildCourseChip(
+              icon: Icons.bolt_rounded,
+              label: totalLessons == 0
+                  ? 'Ready to begin'
+                  : '${(progressValue * 100).round()}% complete',
+            ),
           ],
+        ),
+        const SizedBox(height: 18),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(999),
+          child: LinearProgressIndicator(
+            minHeight: 10,
+            value: progressValue,
+            backgroundColor: const Color(0xFFDCE8FF),
+            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF2563EB)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCourseChip({required IconData icon, required String label}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: const Color(0xFFD7E7FF)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: const Color(0xFF2563EB)),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF1E3A8A),
+            ),
+          ),
         ],
       ),
     );
@@ -862,4 +1549,32 @@ class _HomeScreenState extends State<HomeScreen> {
     final upperBound = trimmed.length >= 2 ? 2 : 1;
     return trimmed.substring(0, upperBound).toUpperCase();
   }
+
+  String _homeShowcaseTitle(AppLocalizations t) {
+    return t.isZh ? '今天开始学习' : 'Start Learning Today';
+  }
+
+  String _homeShowcaseSubtitle(AppLocalizations t) {
+    return t.isZh
+        ? '探索 STEM、编程与工程课程，在蓝色主题的互动学习路径中持续前进。'
+        : 'Explore STEM, coding, and engineering tracks in a cleaner blue learning space built for momentum.';
+  }
+}
+
+class _HomeShowcaseTopic {
+  final String title;
+  final String meta;
+  final String shortLabel;
+  final IconData icon;
+  final Color startColor;
+  final Color endColor;
+
+  const _HomeShowcaseTopic({
+    required this.title,
+    required this.meta,
+    required this.shortLabel,
+    required this.icon,
+    required this.startColor,
+    required this.endColor,
+  });
 }
