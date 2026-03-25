@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { type User, type Session } from '@supabase/supabase-js';
 
-export type BuilderRole = 'author' | 'admin';
+export type BuilderRole = 'user' | 'subscriber' | 'author' | 'admin';
 
 interface AuthState {
   user: User | null;
@@ -18,7 +18,7 @@ const initialState: AuthState = {
 };
 
 export function hasBuilderAccess(role: string | null | undefined): role is BuilderRole {
-  return role === 'author' || role === 'admin';
+  return role === 'user' || role === 'subscriber' || role === 'author' || role === 'admin';
 }
 
 const authSlice = createSlice({

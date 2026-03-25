@@ -29,7 +29,6 @@ function RedirectIfAuth() {
   const { user, role, loading } = useAppSelector((s) => s.auth);
   if (loading) return <div className="flex h-screen items-center justify-center">Loading…</div>;
   if (user && hasBuilderAccess(role)) return <Navigate to="/dashboard" replace />;
-  if (user) return <Navigate to="/" replace />;
   return <Outlet />;
 }
 

@@ -6,6 +6,7 @@ import { useCourseForEditor } from '@/queries/editor';
 import { EditorLayout } from '@/features/editor/EditorLayout';
 import { SCHEMA_VERSION, SCHEMA_URL } from '@primoria/schema';
 import { nanoid } from '@/lib/nanoid';
+import { uuid } from '@/lib/uuid';
 
 export function EditorPage() {
   const { courseId } = useParams<{ courseId?: string }>();
@@ -22,11 +23,11 @@ export function EditorPage() {
         openDraft({
           $schema: SCHEMA_URL,
           schema_version: SCHEMA_VERSION,
-          course_id: nanoid(),
+          course_id: uuid(),
           metadata: { title: 'Untitled Course' },
           lessons: [
             {
-              lesson_id: nanoid(),
+              lesson_id: uuid(),
               title: 'Lesson 1',
               pages: [{ page_id: nanoid(), order: 0, blocks: [] }],
             },

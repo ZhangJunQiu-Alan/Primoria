@@ -215,6 +215,29 @@ function parseCourseForm(form: CourseFormState) {
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) return error.message;
+
+  if (error && typeof error === 'object') {
+    const maybe = error as {
+      message?: unknown;
+      details?: unknown;
+      code?: unknown;
+    };
+    const message = typeof maybe.message === 'string' ? maybe.message.trim() : '';
+    const details = typeof maybe.details === 'string' ? maybe.details.trim() : '';
+
+    if (message.includes('invalid input syntax for type uuid')) {
+      return 'Internal ID format mismatch while saving. Please refresh and try again.';
+    }
+
+    if (message.includes('courses_author_id_fkey')) {
+      return 'Your profile is not initialized yet. Please sign out, sign in again, and retry.';
+    }
+
+    if (message) {
+      return details ? `${message} (${details})` : message;
+    }
+  }
+
   return 'Something went wrong. Please try again.';
 }
 
@@ -383,41 +406,43 @@ function DonutChart({ items }: { items: DonutItem[] }) {
 
   return (
     <div className="studio-donut">
-      <svg viewBox={`0 0 ${size} ${size}`} className="studio-donut__graphic" aria-hidden="true">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="rgba(141, 124, 105, 0.12)"
-          strokeWidth={strokeWidth}
-        />
-        {items.map((item) => {
-          const length = total > 0 ? (item.value / total) * circumference : 0;
-          const currentOffset = offset;
-          offset += length;
+      <div className="studio-donut__chart">
+        <svg viewBox={`0 0 ${size} ${size}`} className="studio-donut__graphic" aria-hidden="true">
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="rgba(141, 124, 105, 0.12)"
+            strokeWidth={strokeWidth}
+          />
+          {items.map((item) => {
+            const length = total > 0 ? (item.value / total) * circumference : 0;
+            const currentOffset = offset;
+            offset += length;
 
-          return (
-            <circle
-              key={item.label}
-              cx={size / 2}
-              cy={size / 2}
-              r={radius}
-              fill="none"
-              stroke={item.color}
-              strokeWidth={strokeWidth}
-              strokeDasharray={`${length} ${circumference - length}`}
-              strokeDashoffset={-currentOffset}
-              strokeLinecap="round"
-              transform={`rotate(-90 ${size / 2} ${size / 2})`}
-            />
-          );
-        })}
-      </svg>
+            return (
+              <circle
+                key={item.label}
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={item.color}
+                strokeWidth={strokeWidth}
+                strokeDasharray={`${length} ${circumference - length}`}
+                strokeDashoffset={-currentOffset}
+                strokeLinecap="round"
+                transform={`rotate(-90 ${size / 2} ${size / 2})`}
+              />
+            );
+          })}
+        </svg>
 
-      <div className="studio-donut__center">
-        <strong>{total > 0 ? `${Math.round((items[0]?.value ?? 0) / total * 100)}%` : '0%'}</strong>
-        <span>Share</span>
+        <div className="studio-donut__center">
+          <strong>{total > 0 ? `${Math.round((items[0]?.value ?? 0) / total * 100)}%` : '0%'}</strong>
+          <span>Share</span>
+        </div>
       </div>
 
       <div className="studio-donut__legend">

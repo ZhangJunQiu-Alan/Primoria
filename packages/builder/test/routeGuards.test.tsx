@@ -30,7 +30,6 @@ function RedirectIfAuth() {
   const { user, role, loading } = useSelector((s: RootState) => s.auth);
   if (loading) return <div>Loading</div>;
   if (user && hasBuilderAccess(role)) return <Navigate to="/dashboard" replace />;
-  if (user) return <Navigate to="/" replace />;
   return <Outlet />;
 }
 
@@ -98,7 +97,7 @@ describe('RootEntry guard', () => {
     expect(screen.getByText('Dashboard')).toBeTruthy();
   });
 
-  it('keeps non-author users on landing', () => {
+  it('redirects signed-in users to dashboard even when role is user', () => {
     const store = makeStore();
     store.dispatch(
       setSession({
@@ -115,7 +114,7 @@ describe('RootEntry guard', () => {
         <Route path="/dashboard" element={<div>Dashboard</div>} />
       </Routes>,
     );
-    expect(screen.getByText('Landing Page')).toBeTruthy();
+    expect(screen.getByText('Dashboard')).toBeTruthy();
   });
 });
 
@@ -157,7 +156,7 @@ describe('RequireAuth guard', () => {
     expect(screen.getByText('Dashboard')).toBeTruthy();
   });
 
-  it('redirects authenticated non-author users back to landing', () => {
+  it('renders protected page for authenticated user role', () => {
     const store = makeStore();
     store.dispatch(
       setSession({
@@ -173,11 +172,10 @@ describe('RequireAuth guard', () => {
         <Route element={<RequireAuth />}>
           <Route path="/dashboard" element={<div>Dashboard</div>} />
         </Route>
-        <Route path="/" element={<div>Landing Page</div>} />
         <Route path="/login" element={<div>Login Page</div>} />
       </Routes>,
     );
-    expect(screen.getByText('Landing Page')).toBeTruthy();
+    expect(screen.getByText('Dashboard')).toBeTruthy();
   });
 });
 
@@ -204,7 +202,7 @@ describe('RedirectIfAuth guard', () => {
     expect(screen.getByText('Dashboard')).toBeTruthy();
   });
 
-  it('redirects authenticated non-author users to landing', () => {
+  it('redirects authenticated user role from /login to /dashboard', () => {
     const store = makeStore();
     store.dispatch(
       setSession({
@@ -224,7 +222,7 @@ describe('RedirectIfAuth guard', () => {
         <Route path="/dashboard" element={<div>Dashboard</div>} />
       </Routes>,
     );
-    expect(screen.getByText('Landing Page')).toBeTruthy();
+    expect(screen.getByText('Dashboard')).toBeTruthy();
   });
 
   it('renders login page for unauthenticated user', () => {

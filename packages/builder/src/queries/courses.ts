@@ -3,6 +3,7 @@ import type { Course } from '@primoria/schema';
 import type { Database, Json } from '../../../db/src';
 import { parseCourse, migrateCourseJson } from '@primoria/schema';
 import { nanoid } from '@/lib/nanoid';
+import { uuid } from '@/lib/uuid';
 import { supabase } from '@/lib/supabase';
 import { buildCourseSlug } from '@/lib/courseSlug';
 import { editorKeys } from '@/queries/editor';
@@ -225,6 +226,20 @@ async function touchCourse(courseId: string) {
   if (error) throw error;
 }
 
+async function ensureProfileExists(userId: string) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', userId)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (data) return;
+
+  const { error: insertError } = await supabase.from('profiles').insert({ id: userId });
+  if (insertError && insertError.code !== '23505') throw insertError;
+}
+
 export const courseKeys = {
   all: ['courses'] as const,
   list: (userId: string) => ['courses', 'list', userId] as const,
@@ -253,7 +268,9 @@ export function useCreateCourse() {
 
   return useMutation({
     mutationFn: async (payload: CreateCourseInput) => {
-      const courseId = nanoid();
+      await ensureProfileExists(payload.userId);
+
+      const courseId = uuid();
       const normalized = normalizeCourseInput(payload);
 
       const { data, error } = await supabase
@@ -270,7 +287,30 @@ export function useCreateCourse() {
         .single();
 
       if (error) throw error;
-      return { ...(data as CourseRow), lessons: [] };
+
+      const firstLessonTitle = 'Lesson 1';
+      const firstLessonId = uuid();
+
+      const { data: lessonData, error: lessonError } = await supabase
+        .from('lessons')
+        .insert({
+          id: firstLessonId,
+          course_id: courseId,
+          title: firstLessonTitle,
+          sort_key: 1000,
+          type: 'interactive' as LessonType,
+          unlock_type: 'none' as LessonUnlockType,
+          content_json: buildLessonDraftJson(firstLessonId, firstLessonTitle),
+        })
+        .select('id, title, sort_key, duration_seconds, type, updated_at')
+        .single();
+
+      if (lessonError) {
+        await supabase.from('courses').delete().eq('id', courseId).eq('author_id', payload.userId);
+        throw lessonError;
+      }
+
+      return { ...(data as CourseRow), lessons: [lessonData as CourseLessonRow] };
     },
     onSuccess: (_, variables) => {
       void queryClient.invalidateQueries({ queryKey: courseKeys.list(variables.userId) });
@@ -339,7 +379,7 @@ export function useDuplicateCourse() {
       if (srcErr) throw srcErr;
 
       const source = src as DuplicateCourseSourceRow;
-      const newCourseId = nanoid();
+      const newCourseId = uuid();
       const copyTitle = `${source.title} (copy)`;
 
       const { data: newCourse, error: createErr } = await supabase
@@ -365,7 +405,7 @@ export function useDuplicateCourse() {
 
       const sourceLessons = [...(source.lessons ?? [])].sort((a, b) => a.sort_key - b.sort_key);
       if (sourceLessons.length > 0) {
-        const lessonIdMap = new Map(sourceLessons.map((lesson) => [lesson.id, nanoid()]));
+        const lessonIdMap = new Map(sourceLessons.map((lesson) => [lesson.id, uuid()]));
         const lessonRows = sourceLessons.map((lesson) => ({
           id: lessonIdMap.get(lesson.id)!,
           course_id: newCourseId,
@@ -401,7 +441,9 @@ export function useImportCourse() {
   return useMutation({
     mutationFn: async ({ raw, userId }: { raw: unknown; userId: string }) => {
       const course: Course = parseCourse(migrateCourseJson(raw as Record<string, unknown>));
-      const newCourseId = nanoid();
+      const newCourseId = uuid();
+
+      await ensureProfileExists(userId);
 
       const { data: newCourse, error: createErr } = await supabase
         .from('courses')
@@ -425,8 +467,9 @@ export function useImportCourse() {
       if (createErr) throw createErr;
 
       if (course.lessons.length > 0) {
+        const lessonIdMap = new Map(course.lessons.map((lesson) => [lesson.lesson_id, uuid()]));
         const lessonRows = course.lessons.map((lesson, index) => ({
-          id: lesson.lesson_id,
+          id: lessonIdMap.get(lesson.lesson_id)!,
           course_id: newCourseId,
           title: lesson.title,
           sort_key: 1000 + index * 1000,
@@ -452,7 +495,7 @@ export function useAddLesson() {
   return useMutation({
     mutationFn: async ({ courseId, userId, title }: AddLessonInput) => {
       const nextTitle = title.trim();
-      const lessonId = nanoid();
+      const lessonId = uuid();
 
       const { data: lastLesson, error: sortErr } = await supabase
         .from('lessons')
