@@ -37,7 +37,7 @@ fi
 case $APP in
   builder)
     cd "$ROOT_DIR"
-    pnpm --filter @primoria/builder dev -- --host 0.0.0.0 --port "$WEB_PORT"
+    pnpm --filter @primoria/builder exec vite --host 0.0.0.0 --port "$WEB_PORT"
     ;;
   viewer)
     cd "$ROOT_DIR/Viewer"
