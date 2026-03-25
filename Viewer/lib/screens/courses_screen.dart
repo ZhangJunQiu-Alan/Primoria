@@ -1,11 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../components/common/viewer_page_shell.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/language_provider.dart';
+import '../services/image_picker_service.dart' as image_picker_service;
 
 /// Community screen — upgraded into a shared workspace.
 /// File name stays the same for routing compatibility.
@@ -25,6 +27,8 @@ enum _CommunityWorkspaceSection {
 }
 
 enum _MessagesActionButton { newItem, call, search, more, attach, mic }
+
+enum _SketchTool { pencil, brush, eraser }
 
 class _CommunityPalette {
   const _CommunityPalette._();
@@ -86,8 +90,10 @@ class _CoursesScreenState extends State<CoursesScreen>
   int _nextStudyRoomId = 1;
   int _nextNotificationId = 1;
   int _nextNoteId = 1;
+  int? _activeSketchPointerId;
   Color _selectedInkColor = _CommunityPalette.blue;
   double _selectedInkWidth = 3.0;
+  _SketchTool _selectedSketchTool = _SketchTool.pencil;
 
   AppLocalizations get _t => context.read<LanguageProvider>().t;
   bool get _isZh => _t.isZh;
@@ -131,6 +137,15 @@ class _CoursesScreenState extends State<CoursesScreen>
     Color(0xFFF9A8D4),
     Color(0xFFF87171),
     Color(0xFF94A3B8),
+  ];
+
+  static const _studyAccentPool = [
+    Color(0xFF5B6CFF),
+    Color(0xFF6366F1),
+    Color(0xFF7C3AED),
+    Color(0xFF8B5CF6),
+    Color(0xFF3B82F6),
+    Color(0xFF2563EB),
   ];
 
   static const _communityCategories = [
@@ -329,7 +344,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           ),
         ],
         members: ['You', 'Mike Chen', 'Jessica Lee', 'David Park'],
-        accent: const Color(0xFF10B981),
+        accent: const Color(0xFF6366F1),
         progress: 0.54,
         sessionsThisWeek: 1,
         joined: true,
@@ -401,7 +416,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           ),
         ],
         members: ['rainbow', 'Souler', 'Dragon'],
-        accent: const Color(0xFF06B6D4),
+        accent: const Color(0xFF3B82F6),
         progress: 0.18,
         sessionsThisWeek: 0,
         joined: false,
@@ -478,7 +493,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           _copy('Freelancing', '自由职业'),
           _copy('BusinessCourse', '商业课程'),
         ],
-        accent: const Color(0xFF10B981),
+        accent: const Color(0xFF4F46E5),
       ),
       _TrendingDiscussion(
         author: 'Uchiha_Obito',
@@ -521,42 +536,11 @@ class _CoursesScreenState extends State<CoursesScreen>
     return [
       _CommunityNote(
         id: _nextNoteId++,
-        title: _copy('Session recap', '共学复盘'),
-        body: _copy(
-          'Capture action items, screenshots, and quick diagrams from every partner session.\n\n1. Compare quiz mistakes.\n2. Summarize one thing to reteach.\n3. Save visuals for later review.',
-          '把每次搭子共学的行动项、截图与简图都记下来。\n\n1. 对比测验错题。\n2. 总结一个需要复讲的知识点。\n3. 保存视觉笔记方便后面复习。',
-        ),
-        attachments: [
-          _NoteAttachment(
-            label: _copy('Whiteboard snap', '白板快照'),
-            caption: _copy('Force arrows and graph notes', '受力箭头和图像笔记'),
-            tint: const Color(0xFFDBEAFE),
-          ),
-        ],
-        strokes: [
-          _SketchStroke(
-            points: const [
-              Offset(26, 110),
-              Offset(88, 80),
-              Offset(136, 112),
-              Offset(196, 72),
-            ],
-            color: _CommunityPalette.blue,
-            width: 3.5,
-          ),
-        ],
-        updatedAt: DateTime.now().subtract(const Duration(minutes: 45)),
-      ),
-      _CommunityNote(
-        id: _nextNoteId++,
-        title: _copy('Friday live workshop ideas', '周五直播工坊灵感'),
-        body: _copy(
-          'Collect questions for the community workshop, sketch layouts, and add screenshots worth discussing.',
-          '整理社区直播工坊的问题、画出布局草图，并补充值得讨论的截图。',
-        ),
+        title: '',
+        body: '',
         attachments: const [],
         strokes: const [],
-        updatedAt: DateTime.now().subtract(const Duration(hours: 3)),
+        updatedAt: DateTime.now().subtract(const Duration(minutes: 3)),
       ),
     ];
   }
@@ -1345,9 +1329,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   void _syncSelectedNoteFromControllers() {
     final note = _selectedNote;
     if (note == null) return;
-    note.title = _noteTitleController.text.trim().isEmpty
-        ? _copy('Untitled Note', '未命名笔记')
-        : _noteTitleController.text.trim();
+    note.title = _noteTitleController.text.trim();
     note.body = _noteBodyController.text;
     note.updatedAt = DateTime.now();
   }
@@ -1363,19 +1345,11 @@ class _CoursesScreenState extends State<CoursesScreen>
     _noteBodyController.text = note.body;
   }
 
-  void _selectNote(int noteId) {
-    _syncSelectedNoteFromControllers();
-    setState(() {
-      _selectedNoteId = noteId;
-      _loadSelectedNoteIntoControllers();
-    });
-  }
-
   void _createNewNote() {
     _syncSelectedNoteFromControllers();
     final note = _CommunityNote(
       id: _nextNoteId++,
-      title: _copy('Fresh note', '新建笔记'),
+      title: '',
       body: '',
       attachments: <_NoteAttachment>[],
       strokes: <_SketchStroke>[],
@@ -1388,81 +1362,95 @@ class _CoursesScreenState extends State<CoursesScreen>
     });
   }
 
-  Future<void> _showAddAttachmentDialog() async {
+  void _selectNoteForEditing(int noteId) {
+    _syncSelectedNoteFromControllers();
+    setState(() {
+      _selectedNoteId = noteId;
+      _loadSelectedNoteIntoControllers();
+    });
+  }
+
+  Future<void> _copyNoteContent(_CommunityNote note) async {
+    if (note.id == _selectedNoteId) {
+      _syncSelectedNoteFromControllers();
+    }
+    final title = note.title.trim();
+    final body = note.body.trim();
+    final composed = [
+      if (title.isNotEmpty) title,
+      if (body.isNotEmpty) body,
+    ].join('\n\n');
+
+    if (composed.isEmpty) {
+      _showMessageSnack(_copy('Nothing to copy yet.', '暂时没有可复制的内容。'));
+      return;
+    }
+
+    await Clipboard.setData(ClipboardData(text: composed));
+    if (!mounted) return;
+    _showMessageSnack(_copy('Note copied.', '笔记已复制。'));
+  }
+
+  void _deleteNote(_CommunityNote note) {
+    final selectedId = _selectedNoteId;
+    _syncSelectedNoteFromControllers();
+
+    final remainingNotes = _notes.where((item) => item.id != note.id).toList();
+    final replacementNote = remainingNotes.isNotEmpty
+        ? remainingNotes.first
+        : _CommunityNote(
+            id: _nextNoteId++,
+            title: '',
+            body: '',
+            attachments: <_NoteAttachment>[],
+            strokes: <_SketchStroke>[],
+            updatedAt: DateTime.now(),
+          );
+
+    setState(() {
+      _notes
+        ..clear()
+        ..addAll(
+          remainingNotes.isNotEmpty ? remainingNotes : [replacementNote],
+        );
+      if (selectedId == note.id || _selectedNoteId == null) {
+        _selectedNoteId = replacementNote.id;
+        _loadSelectedNoteIntoControllers();
+      }
+    });
+
+    _showMessageSnack(_copy('Note deleted.', '笔记已删除。'));
+  }
+
+  Future<void> _pickNoteAttachmentImage() async {
     final note = _selectedNote;
     if (note == null) return;
+    final picked = await image_picker_service.pickImageFileBytes();
+    if (!mounted || picked.cancelled) return;
+    if (!picked.success || picked.bytes == null) {
+      _showMessageSnack(
+        _copy('Could not upload that image right now.', '现在暂时无法上传这张图片。'),
+      );
+      return;
+    }
 
-    final titleController = TextEditingController();
-    final captionController = TextEditingController();
-    final draft = await showDialog<_AttachmentDraft>(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: Text(_copy('Add image card', '添加图片卡片')),
-          content: SizedBox(
-            width: 360,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    labelText: _copy('Label', '标题'),
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: captionController,
-                  decoration: InputDecoration(
-                    labelText: _copy('Caption', '说明'),
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(_t.cancel),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop(
-                  _AttachmentDraft(
-                    titleController.text.trim(),
-                    captionController.text.trim(),
-                  ),
-                );
-              },
-              child: Text(_copy('Add', '添加')),
-            ),
-          ],
-        );
-      },
-    );
-
-    titleController.dispose();
-    captionController.dispose();
-
-    if (!mounted || draft == null) return;
+    final label = (picked.fileName ?? '').trim().isEmpty
+        ? _copy('Uploaded image', '已上传图片')
+        : picked.fileName!.trim();
     setState(() {
       note.attachments.add(
         _NoteAttachment(
-          label: draft.title.isEmpty
-              ? _copy('Reference image', '参考图片')
-              : draft.title,
-          caption: draft.caption.isEmpty
-              ? _copy('Dropped into the shared notes board.', '已添加到共享笔记板。')
-              : draft.caption,
+          label: label,
+          caption: _copy('Uploaded to your shared assets board.', '已上传到共享素材区。'),
           tint: _newUserColors[_rng.nextInt(_newUserColors.length)].withValues(
             alpha: 0.14,
           ),
+          bytes: picked.bytes,
         ),
       );
       note.updatedAt = DateTime.now();
     });
+    _showMessageSnack(_copy('Image added to assets.', '图片已加入素材区。'));
   }
 
   void _clearSelectedSketch() {
@@ -1474,6 +1462,25 @@ class _CoursesScreenState extends State<CoursesScreen>
     });
   }
 
+  void _undoSelectedSketch() {
+    final note = _selectedNote;
+    if (note == null || note.strokes.isEmpty) return;
+    setState(() {
+      note.strokes.removeLast();
+      note.updatedAt = DateTime.now();
+    });
+  }
+
+  void _deleteSelectedSketch() {
+    final note = _selectedNote;
+    if (note == null) return;
+    setState(() {
+      note.strokes.clear();
+      note.updatedAt = DateTime.now();
+    });
+    _showMessageSnack(_copy('Sketch deleted.', '草图已删除。'));
+  }
+
   void _startStroke(Offset point) {
     final note = _selectedNote;
     if (note == null) return;
@@ -1483,10 +1490,15 @@ class _CoursesScreenState extends State<CoursesScreen>
           points: [point],
           color: _selectedInkColor,
           width: _selectedInkWidth,
+          tool: _selectedSketchTool,
         ),
       );
       note.updatedAt = DateTime.now();
     });
+  }
+
+  void _endStroke() {
+    _activeSketchPointerId = null;
   }
 
   void _appendStroke(Offset point) {
@@ -1712,7 +1724,7 @@ class _CoursesScreenState extends State<CoursesScreen>
         ),
       ],
       members: ['You'],
-      accent: _newUserColors[_rng.nextInt(_newUserColors.length)],
+      accent: _studyAccentPool[_rng.nextInt(_studyAccentPool.length)],
       progress: 0.08,
       sessionsThisWeek: 0,
       joined: true,
@@ -1943,14 +1955,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     final hour = now.hour.toString().padLeft(2, '0');
     final minute = now.minute.toString().padLeft(2, '0');
     return '$hour:$minute';
-  }
-
-  String _formatNoteTimestamp(DateTime value) {
-    final month = value.month.toString().padLeft(2, '0');
-    final day = value.day.toString().padLeft(2, '0');
-    final hour = value.hour.toString().padLeft(2, '0');
-    final minute = value.minute.toString().padLeft(2, '0');
-    return '$month/$day · $hour:$minute';
   }
 
   Future<void> _openConversationChat(_Conversation conversation) async {
@@ -2472,6 +2476,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildWorkspaceTopBar({required bool isWideLayout}) {
+    final actions = _buildTopBarActions(isWideLayout);
     return Container(
       padding: EdgeInsets.fromLTRB(
         isWideLayout ? 24 : 18,
@@ -2511,29 +2516,31 @@ class _CoursesScreenState extends State<CoursesScreen>
               ],
             ),
           ),
-          const SizedBox(width: 16),
-          if (isWideLayout)
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
+          if (actions.isNotEmpty) ...[
+            const SizedBox(width: 16),
+            if (isWideLayout)
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Wrap(
+                    alignment: WrapAlignment.end,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 14,
+                    runSpacing: 10,
+                    children: actions,
+                  ),
+                ),
+              )
+            else
+              Flexible(
                 child: Wrap(
                   alignment: WrapAlignment.end,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 14,
+                  spacing: 10,
                   runSpacing: 10,
-                  children: _buildTopBarActions(isWideLayout),
+                  children: actions,
                 ),
               ),
-            )
-          else
-            Flexible(
-              child: Wrap(
-                alignment: WrapAlignment.end,
-                spacing: 10,
-                runSpacing: 10,
-                children: _buildTopBarActions(isWideLayout),
-              ),
-            ),
+          ],
         ],
       ),
     );
@@ -2583,28 +2590,16 @@ class _CoursesScreenState extends State<CoursesScreen>
           ),
           FilledButton.icon(
             onPressed: _showCreateStudyGroupDialog,
+            style: FilledButton.styleFrom(
+              backgroundColor: _CommunityPalette.blue,
+              foregroundColor: Colors.white,
+            ),
             icon: const Icon(Icons.group_add_rounded, size: 18),
             label: Text(_copy('New group', '新建群组')),
           ),
         ];
       case _CommunityWorkspaceSection.notes:
-        return [
-          FilledButton.icon(
-            onPressed: _createNewNote,
-            icon: const Icon(Icons.note_add_rounded, size: 18),
-            label: Text(_copy('New note', '新建笔记')),
-          ),
-          OutlinedButton.icon(
-            onPressed: _showAddAttachmentDialog,
-            icon: const Icon(Icons.image_outlined, size: 18),
-            label: Text(_copy('Add image', '添加图片')),
-          ),
-          OutlinedButton.icon(
-            onPressed: _clearSelectedSketch,
-            icon: const Icon(Icons.layers_clear_rounded, size: 18),
-            label: Text(_copy('Clear sketch', '清除草图')),
-          ),
-        ];
+        return const [];
       case _CommunityWorkspaceSection.messages:
         return [
           _buildNotificationPill(),
@@ -2630,6 +2625,10 @@ class _CoursesScreenState extends State<CoursesScreen>
           FilledButton.icon(
             onPressed: () =>
                 _selectSection(_CommunityWorkspaceSection.messages),
+            style: FilledButton.styleFrom(
+              backgroundColor: _CommunityPalette.blue,
+              foregroundColor: Colors.white,
+            ),
             icon: const Icon(Icons.mark_chat_unread_rounded, size: 18),
             label: Text(_copy('Open messages', '打开消息')),
           ),
@@ -3097,152 +3096,17 @@ class _CoursesScreenState extends State<CoursesScreen>
         isWideLayout ? 24 : 18,
         24,
       ),
-      child: isWideLayout
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Column(
-                    children: [
-                      _buildStudyHero(),
-                      const SizedBox(height: 16),
-                      if (rooms.isEmpty)
-                        _buildEmptyStudyCard()
-                      else
-                        ...rooms.map(
-                          (room) => Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: _buildStudyRoomCard(room),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 16),
-                SizedBox(
-                  width: 300,
-                  child: Column(
-                    children: [
-                      _buildStudySummaryRailCard(),
-                      const SizedBox(height: 16),
-                      _buildStudyGoalsRailCard(rooms),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          : Column(
-              children: [
-                _buildStudyHero(),
-                const SizedBox(height: 16),
-                if (rooms.isEmpty)
-                  _buildEmptyStudyCard()
-                else
-                  ...rooms.map(
-                    (room) => Padding(
-                      padding: const EdgeInsets.only(bottom: 14),
-                      child: _buildStudyRoomCard(room),
-                    ),
-                  ),
-                const SizedBox(height: 12),
-                _buildStudySummaryRailCard(),
-              ],
-            ),
-    );
-  }
-
-  Widget _buildStudyHero() {
-    final joinedRooms = _joinedStudyRooms.length;
-    final totalMaterials = _joinedStudyRooms.fold<int>(
-      0,
-      (sum, room) => sum + room.materials.length,
-    );
-    return _buildSurfaceCard(
-      padding: const EdgeInsets.all(22),
-      background: const Color(0xFFEEF2FF),
-      borderSide: const BorderSide(color: Color(0xFFC7D2FE)),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _copy(
-                    'Shared learning that actually stays aligned',
-                    '真正保持同步的共享学习空间',
-                  ),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                    color: _CommunityPalette.text,
-                    height: 1.12,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  _copy(
-                    'Everything your partner or group agreed to study together lives here: rooms, materials, schedules, and the fast path back into chat.',
-                    '你和搭子或小组约好一起学习的内容都会集中在这里：房间、资料、日程，以及快速返回聊天的入口。',
-                  ),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    height: 1.5,
-                    color: _CommunityPalette.subtext,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 18),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              _buildMetricChip(
-                label: _copy('Rooms', '房间'),
-                value: '$joinedRooms',
-              ),
-              _buildMetricChip(
-                label: _copy('Materials', '资料'),
-                value: '$totalMaterials',
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMetricChip({required String label, required String value}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFC7D2FE)),
-      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: _CommunityPalette.subtext,
+          if (rooms.isEmpty)
+            _buildEmptyStudyCard()
+          else
+            ...rooms.map(
+              (room) => Padding(
+                padding: EdgeInsets.only(bottom: isWideLayout ? 16 : 14),
+                child: _buildStudyRoomCard(room),
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
         ],
       ),
     );
@@ -3282,6 +3146,10 @@ class _CoursesScreenState extends State<CoursesScreen>
           FilledButton(
             onPressed: () =>
                 _selectSection(_CommunityWorkspaceSection.trending),
+            style: FilledButton.styleFrom(
+              backgroundColor: _CommunityPalette.blue,
+              foregroundColor: Colors.white,
+            ),
             child: Text(_copy('Go to Trending', '前往 Trending')),
           ),
         ],
@@ -3340,7 +3208,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  FilledButton.tonal(
+                  FilledButton(
                     onPressed: room.linkedConversationId == null
                         ? null
                         : () {
@@ -3350,10 +3218,27 @@ class _CoursesScreenState extends State<CoursesScreen>
                                   room.linkedConversationId;
                             });
                           },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: room.accent,
+                      foregroundColor: Colors.white,
+                      disabledBackgroundColor: room.accent.withValues(
+                        alpha: 0.24,
+                      ),
+                      disabledForegroundColor: Colors.white.withValues(
+                        alpha: 0.78,
+                      ),
+                    ),
                     child: Text(_copy('Open chat', '打开聊天')),
                   ),
                   OutlinedButton(
                     onPressed: () => _leaveStudyRoom(room),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: room.accent,
+                      side: BorderSide(
+                        color: room.accent.withValues(alpha: 0.56),
+                        width: 1.5,
+                      ),
+                    ),
                     child: Text(_copy('Leave', '退出')),
                   ),
                 ],
@@ -3560,142 +3445,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildStudySummaryRailCard() {
-    final joinedRooms = _joinedStudyRooms;
-    final averageProgress = joinedRooms.isEmpty
-        ? 0.0
-        : joinedRooms.map((room) => room.progress).reduce((a, b) => a + b) /
-              joinedRooms.length;
-
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _copy('This week', '本周总览'),
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
-          const SizedBox(height: 14),
-          _buildMiniStat(
-            title: _copy('Active rooms', '活跃房间'),
-            value: '${joinedRooms.length}',
-            color: _CommunityPalette.blue,
-          ),
-          const SizedBox(height: 12),
-          _buildMiniStat(
-            title: _copy('Avg. progress', '平均进度'),
-            value: '${(averageProgress * 100).round()}%',
-            color: _CommunityPalette.mint,
-          ),
-          const SizedBox(height: 12),
-          _buildMiniStat(
-            title: _copy('Messages waiting', '待处理消息'),
-            value: '$_messageBadgeCount',
-            color: _CommunityPalette.rose,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStudyGoalsRailCard(List<_StudyRoom> rooms) {
-    final goals = rooms.expand((room) => room.goals.take(1)).take(4).toList();
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _copy('Keep these aligned', '优先保持同步'),
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
-          const SizedBox(height: 14),
-          if (goals.isEmpty)
-            Text(
-              _copy(
-                'Join a room to start sharing milestones here.',
-                '加入一个房间后，这里会展示你们共同的里程碑。',
-              ),
-              style: const TextStyle(
-                fontSize: 13,
-                color: _CommunityPalette.subtext,
-              ),
-            )
-          else
-            ...goals.map(
-              (goal) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.flag_rounded,
-                      size: 16,
-                      color: _CommunityPalette.amber,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        goal,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          height: 1.45,
-                          color: _CommunityPalette.subtext,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMiniStat({
-    required String title,
-    required String value,
-    required Color color,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.w700,
-                color: _CommunityPalette.subtext,
-              ),
-            ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildNotesPage({required bool isWideLayout}) {
     final selectedNote = _selectedNote;
     if (selectedNote == null) {
@@ -3710,64 +3459,10 @@ class _CoursesScreenState extends State<CoursesScreen>
     final editor = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: _noteTitleController,
-                onChanged: (_) => _syncSelectedNoteFromControllers(),
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  color: _CommunityPalette.text,
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: _copy('Untitled note', '未命名笔记'),
-                ),
-              ),
-              Text(
-                _copy(
-                  'Updated ${_formatNoteTimestamp(selectedNote.updatedAt)}',
-                  '更新于 ${_formatNoteTimestamp(selectedNote.updatedAt)}',
-                ),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: _CommunityPalette.subtext,
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _noteBodyController,
-                onChanged: (_) => _syncSelectedNoteFromControllers(),
-                maxLines: 10,
-                decoration: InputDecoration(
-                  hintText: _copy(
-                    'Capture decisions, action items, and quick summaries from your partner sessions…',
-                    '记录你和搭子共学中的决策、行动项与快速总结…',
-                  ),
-                  filled: true,
-                  fillColor: _CommunityPalette.surfaceMuted,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: const BorderSide(
-                      color: _CommunityPalette.border,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: const BorderSide(
-                      color: _CommunityPalette.border,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: const BorderSide(color: _CommunityPalette.blue),
-                  ),
-                ),
-              ),
-            ],
+        ..._notes.map(
+          (note) => Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: _buildNoteSection(note),
           ),
         ),
         const SizedBox(height: 16),
@@ -3786,29 +3481,67 @@ class _CoursesScreenState extends State<CoursesScreen>
                     ),
                   ),
                   const Spacer(),
-                  TextButton.icon(
-                    onPressed: _showAddAttachmentDialog,
-                    icon: const Icon(
-                      Icons.add_photo_alternate_outlined,
-                      size: 18,
-                    ),
-                    label: Text(_copy('Add image', '添加图片')),
-                  ),
                 ],
               ),
               const SizedBox(height: 12),
-              if (selectedNote.attachments.isEmpty)
-                Text(
-                  _copy(
-                    'Drop screenshots, whiteboard captures, or reference images here.',
-                    '把截图、白板内容或参考图片都集中放在这里。',
+              InkWell(
+                onTap: _pickNoteAttachmentImage,
+                borderRadius: BorderRadius.circular(18),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8FBFF),
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: _CommunityPalette.blue.withValues(alpha: 0.20),
+                    ),
                   ),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: _CommunityPalette.subtext,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: _CommunityPalette.blue.withValues(alpha: 0.10),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.upload_rounded,
+                          color: _CommunityPalette.blue,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        _copy(
+                          'Drag images here or click to upload',
+                          '把图片拖到这里，或点击上传',
+                        ),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: _CommunityPalette.text,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        _copy(
+                          'Add screenshots, whiteboard captures, or references directly into Assets.',
+                          '把截图、白板内容或参考图直接添加到素材区。',
+                        ),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          color: _CommunityPalette.subtext,
+                        ),
+                      ),
+                    ],
                   ),
-                )
-              else
+                ),
+              ),
+              if (selectedNote.attachments.isNotEmpty) ...[
+                const SizedBox(height: 14),
                 Wrap(
                   spacing: 12,
                   runSpacing: 12,
@@ -3827,17 +3560,25 @@ class _CoursesScreenState extends State<CoursesScreen>
                           Container(
                             width: double.infinity,
                             height: 90,
+                            clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14),
-                              gradient: LinearGradient(
-                                colors: [attachment.tint, Colors.white],
-                              ),
+                              gradient: attachment.bytes == null
+                                  ? LinearGradient(
+                                      colors: [attachment.tint, Colors.white],
+                                    )
+                                  : null,
                             ),
-                            child: const Icon(
-                              Icons.image_outlined,
-                              size: 34,
-                              color: _CommunityPalette.subtext,
-                            ),
+                            child: attachment.bytes == null
+                                ? const Icon(
+                                    Icons.image_outlined,
+                                    size: 34,
+                                    color: _CommunityPalette.subtext,
+                                  )
+                                : Image.memory(
+                                    attachment.bytes!,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                           const SizedBox(height: 10),
                           Text(
@@ -3860,6 +3601,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                     );
                   }).toList(),
                 ),
+              ],
             ],
           ),
         ),
@@ -3875,99 +3617,272 @@ class _CoursesScreenState extends State<CoursesScreen>
         isWideLayout ? 24 : 18,
         24,
       ),
-      child: isWideLayout
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(width: 260, child: _buildNotesSidebar()),
-                const SizedBox(width: 16),
-                Expanded(child: SingleChildScrollView(child: editor)),
-              ],
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildNotesSidebar(),
-                  const SizedBox(height: 16),
-                  editor,
-                ],
-              ),
-            ),
+      child: SingleChildScrollView(child: editor),
     );
   }
 
-  Widget _buildNotesSidebar() {
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  Widget _buildNoteSection(_CommunityNote note) {
+    final selected = note.id == _selectedNoteId;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
+          child: Row(
             children: [
-              Text(
-                _copy('Notes board', '笔记板'),
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  color: _CommunityPalette.text,
+              if (selected)
+                _buildTag(
+                  _copy('Active note', '当前笔记'),
+                  tint: const Color(0xFFEFF4FF),
+                  color: _CommunityPalette.blue,
                 ),
-              ),
               const Spacer(),
-              IconButton(
-                onPressed: _createNewNote,
-                icon: const Icon(Icons.add_circle_outline_rounded),
+              _buildNoteActionIcon(
+                icon: Icons.add_rounded,
+                tooltip: _copy('New note', '新建笔记'),
+                onTap: _createNewNote,
+                color: _CommunityPalette.blue,
+              ),
+              const SizedBox(width: 8),
+              _buildNoteActionIcon(
+                icon: Icons.edit_outlined,
+                tooltip: _copy('Edit note', '编辑笔记'),
+                onTap: () => _selectNoteForEditing(note.id),
+                color: _CommunityPalette.blue,
+                isActive: selected,
+              ),
+              const SizedBox(width: 8),
+              _buildNoteActionIcon(
+                icon: Icons.content_copy_rounded,
+                tooltip: _copy('Copy note', '复制笔记'),
+                onTap: () => _copyNoteContent(note),
+                color: _CommunityPalette.subtext,
+              ),
+              const SizedBox(width: 8),
+              _buildNoteActionIcon(
+                icon: Icons.delete_outline_rounded,
+                tooltip: _copy('Delete note', '删除笔记'),
+                onTap: () => _deleteNote(note),
+                color: _CommunityPalette.red,
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          ..._notes.map((note) {
-            final selected = note.id == _selectedNoteId;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: selected
-                    ? const Color(0xFFEFF3FF)
-                    : _CommunityPalette.surfaceMuted,
-                borderRadius: BorderRadius.circular(16),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
-                  onTap: () => _selectNote(note.id),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          note.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: selected
-                                ? _CommunityPalette.blue
-                                : _CommunityPalette.text,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          _formatNoteTimestamp(note.updatedAt),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: _CommunityPalette.subtext,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+        ),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            if (!selected) {
+              _selectNoteForEditing(note.id);
+            }
+          },
+          child: _buildSurfaceCard(
+            padding: const EdgeInsets.fromLTRB(24, 22, 24, 22),
+            background: const Color(0xFFF8FBFF),
+            borderSide: BorderSide(
+              color: selected
+                  ? const Color(0xFFD7E7FF)
+                  : _CommunityPalette.blue.withValues(alpha: 0.14),
+            ),
+            child: selected
+                ? _buildEditableNoteCard()
+                : _buildRenderedNoteCard(note),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEditableNoteCard() {
+    final note = _selectedNote;
+    final isBlank = note == null || _isNoteBlank(note);
+    const fieldFill = Color(0xFFF5FAFF);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: _noteTitleController,
+          onChanged: (_) => setState(_syncSelectedNoteFromControllers),
+          keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.sentences,
+          style: TextStyle(
+            fontSize: isBlank ? 17 : 24,
+            height: 1.2,
+            fontWeight: FontWeight.w800,
+            color: _CommunityPalette.text,
+          ),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: fieldFill,
+            contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+            hintText: _copy("What's on your mind...", '你在想些什么…'),
+            hintStyle: const TextStyle(
+              fontSize: 17,
+              height: 1.2,
+              fontWeight: FontWeight.w700,
+              color: _CommunityPalette.subtle,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(
+                color: _CommunityPalette.blue.withValues(alpha: 0.12),
               ),
-            );
-          }),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(
+                color: _CommunityPalette.blue.withValues(alpha: 0.12),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(
+                color: _CommunityPalette.blue.withValues(alpha: 0.24),
+                width: 1.5,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _noteBodyController,
+          onChanged: (_) => setState(_syncSelectedNoteFromControllers),
+          keyboardType: TextInputType.multiline,
+          textCapitalization: TextCapitalization.sentences,
+          maxLines: null,
+          minLines: isBlank ? 4 : 7,
+          style: const TextStyle(
+            fontSize: 15.5,
+            height: 1.65,
+            fontWeight: FontWeight.w500,
+            color: _CommunityPalette.text,
+          ),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: fieldFill,
+            alignLabelWithHint: true,
+            contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+            hintText: _copy('Type Here... ✅🔥🙂', '在这里输入... ✅🔥🙂'),
+            hintStyle: const TextStyle(
+              fontSize: 13.5,
+              height: 1.6,
+              fontWeight: FontWeight.w500,
+              color: _CommunityPalette.subtle,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(
+                color: _CommunityPalette.blue.withValues(alpha: 0.12),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(
+                color: _CommunityPalette.blue.withValues(alpha: 0.12),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(
+                color: _CommunityPalette.blue.withValues(alpha: 0.24),
+                width: 1.5,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRenderedNoteCard(_CommunityNote note) {
+    final title = note.title.trim();
+    final body = note.body.trim();
+    final isBlank = _isNoteBlank(note);
+
+    if (isBlank) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _copy("What's on your mind...", '你在想些什么…'),
+            style: const TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w700,
+              color: _CommunityPalette.subtle,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            _copy('Type Here...', '在这里输入...'),
+            style: const TextStyle(
+              fontSize: 13.5,
+              color: _CommunityPalette.subtle,
+            ),
+          ),
         ],
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title.isEmpty ? _copy('Untitled note', '未命名笔记') : title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            color: _CommunityPalette.text,
+          ),
+        ),
+        const SizedBox(height: 12),
+        SelectableText(
+          body,
+          style: const TextStyle(
+            fontSize: 15,
+            height: 1.65,
+            fontWeight: FontWeight.w500,
+            color: _CommunityPalette.text,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNoteActionIcon({
+    required IconData icon,
+    required String tooltip,
+    required VoidCallback onTap,
+    required Color color,
+    bool isActive = false,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(999),
+        child: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: isActive ? color.withValues(alpha: 0.10) : Colors.white,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: isActive
+                  ? color.withValues(alpha: 0.28)
+                  : _CommunityPalette.border,
+            ),
+          ),
+          child: Icon(icon, size: 18, color: color),
+        ),
       ),
     );
   }
 
+  bool _isNoteBlank(_CommunityNote note) {
+    return note.title.trim().isEmpty && note.body.trim().isEmpty;
+  }
+
   Widget _buildSketchPadCard(_CommunityNote note) {
+    final pixelLabel = '${_selectedInkWidth.round()}px';
     return _buildSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -3983,58 +3898,212 @@ class _CoursesScreenState extends State<CoursesScreen>
                 ),
               ),
               const Spacer(),
-              Wrap(
+              _buildNoteActionIcon(
+                icon: Icons.undo_rounded,
+                tooltip: _copy('Undo stroke', '撤销笔画'),
+                onTap: _undoSelectedSketch,
+                color: _CommunityPalette.blue,
+              ),
+              const SizedBox(width: 8),
+              _buildNoteActionIcon(
+                icon: Icons.layers_clear_rounded,
+                tooltip: _copy('Clear sketch', '清除草图'),
+                onTap: _clearSelectedSketch,
+                color: _CommunityPalette.blue,
+              ),
+              const SizedBox(width: 8),
+              _buildNoteActionIcon(
+                icon: Icons.delete_outline_rounded,
+                tooltip: _copy('Delete sketch', '删除草图'),
+                onTap: _deleteSelectedSketch,
+                color: _CommunityPalette.red,
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final compact = constraints.maxWidth < 860;
+              final palette = Wrap(
                 spacing: 8,
+                runSpacing: 8,
                 children: _inkPalette.map((color) {
                   final selected = color == _selectedInkColor;
                   return GestureDetector(
                     onTap: () => setState(() => _selectedInkColor = color),
-                    child: Container(
-                      width: 22,
-                      height: 22,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 160),
+                      width: selected ? 28 : 22,
+                      height: selected ? 28 : 22,
                       decoration: BoxDecoration(
                         color: color,
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: selected ? Colors.black : Colors.white,
-                          width: selected ? 2 : 1,
+                          width: selected ? 2.5 : 1,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: color.withValues(alpha: 0.18),
+                            blurRadius: selected ? 10 : 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                       ),
                     ),
                   );
                 }).toList(),
-              ),
-              const SizedBox(width: 12),
-              DropdownButton<double>(
-                value: _selectedInkWidth,
-                underline: const SizedBox.shrink(),
-                items: const [
-                  DropdownMenuItem(value: 2.0, child: Text('2px')),
-                  DropdownMenuItem(value: 3.0, child: Text('3px')),
-                  DropdownMenuItem(value: 5.0, child: Text('5px')),
+              );
+
+              final toolsAndSize = Row(
+                children: [
+                  _buildSketchToolButton(
+                    tool: _SketchTool.pencil,
+                    icon: Icons.edit_rounded,
+                    tooltip: _copy('Pencil', '铅笔'),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildSketchToolButton(
+                    tool: _SketchTool.brush,
+                    icon: Icons.brush_rounded,
+                    tooltip: _copy('Brush', '画笔'),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildSketchToolButton(
+                    tool: _SketchTool.eraser,
+                    icon: Icons.auto_fix_off_rounded,
+                    tooltip: _copy('Eraser', '橡皮擦'),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 8,
+                        activeTrackColor: _CommunityPalette.blue,
+                        inactiveTrackColor: _CommunityPalette.blue.withValues(
+                          alpha: 0.12,
+                        ),
+                        thumbColor: Colors.white,
+                        overlayColor: _CommunityPalette.blue.withValues(
+                          alpha: 0.12,
+                        ),
+                        thumbShape: const RoundSliderThumbShape(
+                          enabledThumbRadius: 11,
+                        ),
+                        overlayShape: const RoundSliderOverlayShape(
+                          overlayRadius: 20,
+                        ),
+                      ),
+                      child: Slider(
+                        value: _selectedInkWidth.clamp(1.0, 100.0),
+                        min: 1,
+                        max: 100,
+                        divisions: 99,
+                        label: pixelLabel,
+                        onChanged: (value) {
+                          setState(() => _selectedInkWidth = value);
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  SizedBox(
+                    width: 52,
+                    child: Text(
+                      pixelLabel,
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: _CommunityPalette.text,
+                      ),
+                    ),
+                  ),
                 ],
-                onChanged: (value) {
-                  if (value == null) return;
-                  setState(() => _selectedInkWidth = value);
-                },
-              ),
-            ],
+              );
+
+              if (compact) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [palette, const SizedBox(height: 14), toolsAndSize],
+                );
+              }
+
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: palette),
+                  const SizedBox(width: 18),
+                  SizedBox(width: 420, child: toolsAndSize),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 14),
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: GestureDetector(
-              onPanStart: (details) => _startStroke(details.localPosition),
-              onPanUpdate: (details) => _appendStroke(details.localPosition),
-              child: Container(
-                height: 240,
-                width: double.infinity,
-                color: const Color(0xFFFCFCFD),
-                child: CustomPaint(painter: _SketchPadPainter(note.strokes)),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.precise,
+              child: Listener(
+                behavior: HitTestBehavior.opaque,
+                onPointerDown: (event) {
+                  _activeSketchPointerId = event.pointer;
+                  _startStroke(event.localPosition);
+                },
+                onPointerMove: (event) {
+                  if (_activeSketchPointerId != event.pointer) return;
+                  _appendStroke(event.localPosition);
+                },
+                onPointerUp: (_) => _endStroke(),
+                onPointerCancel: (_) => _endStroke(),
+                child: Container(
+                  height: 300,
+                  width: double.infinity,
+                  color: const Color(0xFFF8FBFF),
+                  child: CustomPaint(painter: _SketchPadPainter(note.strokes)),
+                ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSketchToolButton({
+    required _SketchTool tool,
+    required IconData icon,
+    required String tooltip,
+  }) {
+    final selected = _selectedSketchTool == tool;
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: () => setState(() => _selectedSketchTool = tool),
+        borderRadius: BorderRadius.circular(14),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          width: 42,
+          height: 42,
+          decoration: BoxDecoration(
+            color: selected
+                ? _CommunityPalette.blue.withValues(alpha: 0.10)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: selected
+                  ? _CommunityPalette.blue.withValues(alpha: 0.28)
+                  : _CommunityPalette.border,
+            ),
+          ),
+          child: Icon(
+            icon,
+            size: 19,
+            color: selected
+                ? _CommunityPalette.blue
+                : _CommunityPalette.subtext,
+          ),
+        ),
       ),
     );
   }
@@ -4665,7 +4734,7 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   Widget _buildDesktopChatBubble({required _ChatMessage message}) {
     final isMine = message.isMine;
-    final bubbleColor = isMine ? const Color(0xFFE4F7C9) : Colors.white;
+    final bubbleColor = isMine ? const Color(0xFFDCEBFF) : Colors.white;
     return Align(
       alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -5382,15 +5451,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                 const SizedBox(width: 16),
                 SizedBox(
                   width: 300,
-                  child: Column(
-                    children: [
-                      _buildLiveSessionCard(),
-                      const SizedBox(height: 16),
-                      _buildTrendingHashtagsCard(),
-                      const SizedBox(height: 16),
-                      _buildPeopleToFollowCard(),
-                    ],
-                  ),
+                  child: Column(children: [_buildPeopleToFollowCard()]),
                 ),
               ],
             )
@@ -5399,10 +5460,6 @@ class _CoursesScreenState extends State<CoursesScreen>
                 _buildTrendingDiscussionsPanel(isWideLayout: false),
                 const SizedBox(height: 16),
                 _buildTrendingGroupsPanel(),
-                const SizedBox(height: 16),
-                _buildLiveSessionCard(),
-                const SizedBox(height: 16),
-                _buildTrendingHashtagsCard(),
                 const SizedBox(height: 16),
                 _buildPeopleToFollowCard(),
               ],
@@ -5428,6 +5485,9 @@ class _CoursesScreenState extends State<CoursesScreen>
               const Spacer(),
               TextButton(
                 onPressed: () {},
+                style: TextButton.styleFrom(
+                  foregroundColor: _CommunityPalette.blue,
+                ),
                 child: Text(_copy('See More', '查看更多')),
               ),
             ],
@@ -5569,6 +5629,9 @@ class _CoursesScreenState extends State<CoursesScreen>
               const Spacer(),
               TextButton(
                 onPressed: () {},
+                style: TextButton.styleFrom(
+                  foregroundColor: _CommunityPalette.blue,
+                ),
                 child: Text(_copy('See More', '查看更多')),
               ),
             ],
@@ -5674,103 +5737,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildLiveSessionCard() {
-    return _buildSurfaceCard(
-      background: const Color(0xFF5B5CEB),
-      borderSide: const BorderSide(color: Color(0xFF7777FF)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _copy(
-              'Live Session This Friday:\n“Designing for Impact”',
-              '本周五直播：\n“Designing for Impact”',
-            ),
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
-              height: 1.2,
-            ),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            _copy(
-              'May 24 · 6 PM (GMT)\nJoin our expert-led workshop on creating meaningful user experiences.',
-              '5 月 24 日 · 晚上 6 点 (GMT)\n加入由专家主讲的工坊，一起讨论如何设计更有影响力的用户体验。',
-            ),
-            style: const TextStyle(
-              fontSize: 13.5,
-              height: 1.5,
-              color: Colors.white70,
-            ),
-          ),
-          const SizedBox(height: 18),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              onPressed: () {},
-              style: FilledButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: _CommunityPalette.blue,
-              ),
-              child: Text(_copy('Save Your Seat', '预留席位')),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTrendingHashtagsCard() {
-    final tags = [
-      _copy('LearningStreak', '学习连击'),
-      _copy('BuiltWithCode', '代码搭建'),
-      _copy('DesignInspo', '设计灵感'),
-      _copy('AskTheCommunity', '问问社区'),
-      _copy('ChallengeAccepted', '挑战接受'),
-      _copy('CareerSwitch', '职业转换'),
-      _copy('StudySetup', '学习配置'),
-      _copy('MyFirstCourse', '我的第一门课'),
-      _copy('DailyWin', '今日小胜利'),
-      _copy('1D1Course', '一日一课'),
-    ];
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _copy('Trending Hashtags', '热门话题标签'),
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: tags
-                .map(
-                  (tag) => _buildTag(
-                    tag,
-                    tint:
-                        _newUserColors[tags.indexOf(tag) %
-                                _newUserColors.length]
-                            .withValues(alpha: 0.12),
-                    color:
-                        _newUserColors[tags.indexOf(tag) %
-                            _newUserColors.length],
-                  ),
-                )
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildPeopleToFollowCard() {
     return _buildSurfaceCard(
       child: Column(
@@ -5825,6 +5791,9 @@ class _CoursesScreenState extends State<CoursesScreen>
                   ),
                   TextButton(
                     onPressed: () => _toggleFollowPerson(person),
+                    style: TextButton.styleFrom(
+                      foregroundColor: _CommunityPalette.blue,
+                    ),
                     child: Text(
                       person.following
                           ? _copy('Following', '已关注')
@@ -6119,11 +6088,13 @@ class _NoteAttachment {
   final String label;
   final String caption;
   final Color tint;
+  final Uint8List? bytes;
 
   const _NoteAttachment({
     required this.label,
     required this.caption,
     required this.tint,
+    this.bytes,
   });
 }
 
@@ -6131,11 +6102,13 @@ class _SketchStroke {
   final List<Offset> points;
   final Color color;
   final double width;
+  final _SketchTool tool;
 
   const _SketchStroke({
     required this.points,
     required this.color,
     required this.width,
+    required this.tool,
   });
 }
 
@@ -6160,13 +6133,6 @@ class _NewStudyGroupDraft {
   );
 }
 
-class _AttachmentDraft {
-  final String title;
-  final String caption;
-
-  const _AttachmentDraft(this.title, this.caption);
-}
-
 class _SketchPadPainter extends CustomPainter {
   final List<_SketchStroke> strokes;
 
@@ -6174,17 +6140,37 @@ class _SketchPadPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.saveLayer(Offset.zero & size, Paint());
     for (final stroke in strokes) {
       if (stroke.points.isEmpty) continue;
+
+      final strokeWidth = switch (stroke.tool) {
+        _SketchTool.pencil => stroke.width,
+        _SketchTool.brush => stroke.width * 1.35,
+        _SketchTool.eraser => stroke.width * 1.2,
+      };
       final paint = Paint()
-        ..color = stroke.color
-        ..strokeWidth = stroke.width
+        ..color = stroke.tool == _SketchTool.brush
+            ? stroke.color.withValues(alpha: 0.55)
+            : stroke.color
+        ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round;
+        ..strokeJoin = StrokeJoin.round
+        ..blendMode = stroke.tool == _SketchTool.eraser
+            ? BlendMode.clear
+            : BlendMode.srcOver
+        ..isAntiAlias = true;
+
+      if (stroke.tool == _SketchTool.brush) {
+        paint.maskFilter = MaskFilter.blur(
+          BlurStyle.normal,
+          stroke.width * 0.22,
+        );
+      }
 
       if (stroke.points.length == 1) {
-        canvas.drawCircle(stroke.points.first, stroke.width / 2, paint);
+        canvas.drawCircle(stroke.points.first, strokeWidth / 2, paint);
         continue;
       }
 
@@ -6195,11 +6181,12 @@ class _SketchPadPainter extends CustomPainter {
       }
       canvas.drawPath(path, paint);
     }
+    canvas.restore();
   }
 
   @override
   bool shouldRepaint(covariant _SketchPadPainter oldDelegate) {
-    return oldDelegate.strokes != strokes;
+    return true;
   }
 }
 
