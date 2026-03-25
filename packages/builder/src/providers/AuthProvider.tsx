@@ -15,7 +15,7 @@ async function fetchUserRole(userId: string): Promise<string | null> {
     return null;
   }
 
-  return typeof data?.role === 'string' ? data.role : null;
+  return typeof data?.role === 'string' ? data.role : 'user';
 }
 
 /**
@@ -37,6 +37,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           dispatch(clearSession());
         }
         return;
+      }
+
+      if (active && currentRequestId === requestId) {
+        // Set auth state immediately so route guards don't bounce during profile-role fetch.
+        dispatch(setSession({ user: session.user, session, role: 'user' }));
       }
 
       const role = await fetchUserRole(session.user.id);

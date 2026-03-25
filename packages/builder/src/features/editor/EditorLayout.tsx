@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { ChevronDownIcon, MagnifyingGlassIcon, PlusIcon } from '@radix-ui/react-icons';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { openDraft, addPage, addBlock, selectBlock } from '@/store/editorSlice';
+import { openDraft, addLesson, addPage, addBlock, selectBlock } from '@/store/editorSlice';
 import { EditorHeader } from './EditorHeader';
 import { BlockCanvas } from './canvas/BlockCanvas';
 import { PropertyPanel } from './properties/PropertyPanel';
 import { PreviewMode } from './preview/PreviewMode';
 import { nanoid } from '@/lib/nanoid';
+import { uuid } from '@/lib/uuid';
 import { BLOCK_CATEGORIES, BLOCK_META } from './blockRegistry';
 import { getDefaultVisibilityRule } from './blockVisibility';
 import type { Course } from '@primoria/schema';
@@ -61,6 +62,16 @@ export function EditorLayout({ remoteCourse }: EditorLayoutProps) {
       setSelectedPageId(page.page_id);
     }
   }, [draft, selectedLessonId, selectedPageId]);
+
+  useEffect(() => {
+    if (!draft || draft.lessons.length > 0) return;
+
+    const lessonId = uuid();
+    const pageId = nanoid();
+    dispatch(addLesson({ lessonId, pageId, title: 'Lesson 1' }));
+    setSelectedLessonId(lessonId);
+    setSelectedPageId(pageId);
+  }, [dispatch, draft]);
 
   const selectedLesson =
     draft?.lessons.find((lesson) => lesson.lesson_id === selectedLessonId) ?? null;
