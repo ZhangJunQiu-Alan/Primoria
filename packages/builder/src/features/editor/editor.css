@@ -84,7 +84,7 @@
 
 .editor-studio__body {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr) 340px;
+  grid-template-columns: 220px minmax(0, 1fr) 250px;
   gap: 1rem;
   flex: 1;
   min-height: 0;
@@ -718,7 +718,7 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding-right: 6rem;
+  padding-right: 8.5rem;
   margin-bottom: 1rem;
 }
 
@@ -1382,7 +1382,7 @@
 
 @media (max-width: 1480px) {
   .editor-studio__body {
-    grid-template-columns: 260px minmax(0, 1fr) 320px;
+    grid-template-columns: 208px minmax(0, 1fr) 232px;
   }
 }
 
@@ -1392,7 +1392,7 @@
   }
 
   .editor-studio__body {
-    grid-template-columns: 260px minmax(0, 1fr);
+    grid-template-columns: 208px minmax(0, 1fr);
     overflow: visible;
   }
 

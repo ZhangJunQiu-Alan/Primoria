@@ -403,6 +403,10 @@
   justify-content: flex-end;
 }
 
+.studio-page-header__actions {
+  align-self: center;
+}
+
 .studio-welcome-card {
   display: flex;
   align-items: center;
@@ -1275,10 +1279,16 @@
   margin-top: 1rem;
 }
 
-.studio-donut__graphic {
+.studio-donut__chart {
+  position: relative;
   width: 100%;
   max-width: 12rem;
   justify-self: center;
+}
+
+.studio-donut__graphic {
+  width: 100%;
+  display: block;
 }
 
 .studio-donut__center {
@@ -1290,10 +1300,6 @@
   align-items: center;
   gap: 0.15rem;
   pointer-events: none;
-}
-
-.studio-donut {
-  position: relative;
 }
 
 .studio-donut__center strong {
@@ -2172,6 +2178,10 @@
 
   .studio-main__topbar {
     gap: 0.9rem;
+  }
+
+  .studio-page-header__actions {
+    align-self: stretch;
   }
 
   .studio-main__topbar-actions {
