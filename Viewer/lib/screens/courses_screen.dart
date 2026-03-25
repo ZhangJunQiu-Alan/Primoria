@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../components/common/viewer_page_shell.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/language_provider.dart';
-import '../theme/theme.dart';
 
 /// Community screen — upgraded into a shared workspace.
 /// File name stays the same for routing compatibility.
@@ -48,7 +47,6 @@ class _CommunityPalette {
 
 class _CoursesScreenState extends State<CoursesScreen>
     with TickerProviderStateMixin {
-  final TextEditingController _findSearchController = TextEditingController();
   final TextEditingController _messageSearchController =
       TextEditingController();
   final TextEditingController _messageComposerController =
@@ -72,10 +70,10 @@ class _CoursesScreenState extends State<CoursesScreen>
   final Map<int, bool> _userOnlineById = <int, bool>{};
 
   late final AnimationController _floatController;
+  late final AnimationController _planetSpinController;
   late final AnimationController _shootingStarController;
 
   _CommunityWorkspaceSection _section = _CommunityWorkspaceSection.dashboard;
-  String _findQuery = '';
   String _messageQuery = '';
   String _studyQuery = '';
   String _selectedCategory = 'All';
@@ -144,8 +142,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     'Multilingual',
   ];
 
-  static const _categoryTabs = ['All', ..._communityCategories];
-
   static const _inkPalette = [
     _CommunityPalette.blue,
     _CommunityPalette.rose,
@@ -209,6 +205,10 @@ class _CoursesScreenState extends State<CoursesScreen>
       vsync: this,
       duration: const Duration(milliseconds: 4200),
     )..repeat();
+    _planetSpinController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 22000),
+    )..repeat();
     _shootingStarController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 11800),
@@ -243,7 +243,6 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   @override
   void dispose() {
-    _findSearchController.dispose();
     _messageSearchController.dispose();
     _messageComposerController.dispose();
     _studySearchController.dispose();
@@ -251,6 +250,7 @@ class _CoursesScreenState extends State<CoursesScreen>
     _noteBodyController.dispose();
     _messageThreadController.dispose();
     _floatController.dispose();
+    _planetSpinController.dispose();
     _shootingStarController.dispose();
     super.dispose();
   }
@@ -725,25 +725,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     }
   }
 
-  IconData _iconForCategory(String category) {
-    switch (category) {
-      case 'Finance':
-        return Icons.attach_money_rounded;
-      case 'Technology':
-        return Icons.memory_rounded;
-      case 'Mathematics':
-        return Icons.functions_rounded;
-      case 'Engineering':
-        return Icons.precision_manufacturing_rounded;
-      case 'Science':
-        return Icons.science_outlined;
-      case 'Multilingual':
-        return Icons.translate_rounded;
-      default:
-        return Icons.groups_rounded;
-    }
-  }
-
   String _usernameForUser(_GalaxyUser user) {
     final cleaned = user.name
         .toLowerCase()
@@ -828,30 +809,7 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   List<int> get _visibleGalaxyUserIndexes {
-    final normalizedQuery = _findQuery.trim().toLowerCase();
-    final hasQuery = normalizedQuery.isNotEmpty;
-    final matchingIndexes = <int>[];
-    for (var i = 0; i < _galaxyUsers.length; i++) {
-      final user = _galaxyUsers[i];
-      final categoryMatches = _selectedCategory == 'All'
-          ? true
-          : _categoryForUser(user) == _selectedCategory;
-      if (!categoryMatches) continue;
-
-      if (!hasQuery) {
-        matchingIndexes.add(i);
-        continue;
-      }
-
-      final nameMatches = user.name.toLowerCase().contains(normalizedQuery);
-      final emailMatches = (user.email ?? '').toLowerCase().contains(
-        normalizedQuery,
-      );
-      if (nameMatches || emailMatches) {
-        matchingIndexes.add(i);
-      }
-    }
-    return matchingIndexes;
+    return List<int>.generate(_galaxyUsers.length, (index) => index);
   }
 
   void _selectSection(_CommunityWorkspaceSection section) {
@@ -1254,8 +1212,6 @@ class _CoursesScreenState extends State<CoursesScreen>
       _galaxyUsers.add(newUser);
       _userCategoryById[newUser.id] = category;
       _userOnlineById[newUser.id] = true;
-      _findQuery = input;
-      _findSearchController.text = input;
       _selectedCategory = category;
     });
     return newUser;
@@ -1540,16 +1496,6 @@ class _CoursesScreenState extends State<CoursesScreen>
       note.strokes.last.points.add(point);
       note.updatedAt = DateTime.now();
     });
-  }
-
-  void _handleFindAction() {
-    final indexes = _visibleGalaxyUserIndexes;
-    if (indexes.isEmpty) {
-      _showMessageSnack(_t.communityNoUserFound);
-      return;
-    }
-
-    _showUserProfileDialog(_galaxyUsers[indexes.first]);
   }
 
   _Conversation _createStudyConversation(_StudyRoom room) {
@@ -2773,168 +2719,8 @@ class _CoursesScreenState extends State<CoursesScreen>
         24,
       ),
       child: Column(
-        children: [
-          _buildInlineCategoryTabs(),
-          const SizedBox(height: 14),
-          if (isWideLayout)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(flex: 7, child: _buildGalaxyExplorer(height: 560)),
-                const SizedBox(width: 16),
-                SizedBox(
-                  width: 300,
-                  child: Column(
-                    children: [
-                      _buildDashboardSnapshotCard(
-                        title: _copy('Study rooms live', '活跃学习房间'),
-                        value: '${_joinedStudyRooms.length}',
-                        body: _copy(
-                          'Your joined rooms update in real time with materials and chat.',
-                          '你加入的房间会实时同步资料与聊天内容。',
-                        ),
-                        color: _CommunityPalette.blue,
-                        buttonLabel: _copy('Open Our Study', '打开 Our Study'),
-                        onTap: () =>
-                            _selectSection(_CommunityWorkspaceSection.ourStudy),
-                      ),
-                      const SizedBox(height: 16),
-                      _buildDashboardSnapshotCard(
-                        title: _copy('Unread messages', '未读消息'),
-                        value: '$_messageBadgeCount',
-                        body: _copy(
-                          'Telegram-style badges show what needs your attention first.',
-                          '像 Telegram 一样的角标会先告诉你最需要处理的内容。',
-                        ),
-                        color: _CommunityPalette.rose,
-                        buttonLabel: _copy('Go to Messages', '前往 Messages'),
-                        onTap: () =>
-                            _selectSection(_CommunityWorkspaceSection.messages),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          else ...[
-            _buildGalaxyExplorer(height: 500),
-            const SizedBox(height: 16),
-            _buildDashboardSnapshotCard(
-              title: _copy('Study rooms live', '活跃学习房间'),
-              value: '${_joinedStudyRooms.length}',
-              body: _copy(
-                'Your joined rooms update in real time with materials and chat.',
-                '你加入的房间会实时同步资料与聊天内容。',
-              ),
-              color: _CommunityPalette.blue,
-              buttonLabel: _copy('Open Our Study', '打开 Our Study'),
-              onTap: () => _selectSection(_CommunityWorkspaceSection.ourStudy),
-            ),
-            const SizedBox(height: 12),
-            _buildDashboardSnapshotCard(
-              title: _copy('Unread messages', '未读消息'),
-              value: '$_messageBadgeCount',
-              body: _copy(
-                'All notifications and chats stay together in the Messages tab.',
-                '所有通知和聊天都会集中在 Messages 页面。',
-              ),
-              color: _CommunityPalette.rose,
-              buttonLabel: _copy('Go to Messages', '前往 Messages'),
-              onTap: () => _selectSection(_CommunityWorkspaceSection.messages),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDashboardSnapshotCard({
-    required String title,
-    required String value,
-    required String body,
-    required Color color,
-    required String buttonLabel,
-    required VoidCallback onTap,
-  }) {
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: _CommunityPalette.subtext,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
-              color: color,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            body,
-            style: const TextStyle(
-              fontSize: 13,
-              height: 1.45,
-              color: _CommunityPalette.subtext,
-            ),
-          ),
-          const SizedBox(height: 14),
-          OutlinedButton(
-            onPressed: onTap,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: color,
-              side: BorderSide(color: color.withValues(alpha: 0.4)),
-            ),
-            child: Text(buttonLabel),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInlineCategoryTabs() {
-    final t = context.watch<LanguageProvider>().t;
-    return SizedBox(
-      height: 54,
-      child: ListView.separated(
-        padding: EdgeInsets.zero,
-        scrollDirection: Axis.horizontal,
-        itemCount: _categoryTabs.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
-        itemBuilder: (context, index) {
-          final category = _categoryTabs[index];
-          final isSelected = _selectedCategory == category;
-          return ChoiceChip(
-            selected: isSelected,
-            onSelected: (_) => setState(() => _selectedCategory = category),
-            avatar: Icon(
-              _iconForCategory(category),
-              size: 16,
-              color: isSelected
-                  ? _CommunityPalette.blue
-                  : _CommunityPalette.subtext,
-            ),
-            label: Text(_categoryLabel(category, t)),
-            labelStyle: TextStyle(
-              color: isSelected
-                  ? _CommunityPalette.blue
-                  : _CommunityPalette.text,
-              fontSize: 12,
-              fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-            ),
-            selectedColor: const Color(0xFFEFF3FF),
-            backgroundColor: Colors.white,
-            side: const BorderSide(color: _CommunityPalette.border),
-          );
-        },
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [_buildGalaxyExplorer(height: isWideLayout ? 700 : 560)],
       ),
     );
   }
@@ -3008,132 +2794,82 @@ class _CoursesScreenState extends State<CoursesScreen>
       child: SizedBox(
         height: height,
         child: Container(
-          decoration: const BoxDecoration(gradient: AppColors.galaxyGradient),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFE6FBFF), Color(0xFFF6ECFF), Color(0xFFF8FAFF)],
+            ),
+          ),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: const Color(0xFFCBD5E1)),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x22000000),
-                        blurRadius: 18,
-                        offset: Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: _findSearchController,
-                    textInputAction: TextInputAction.search,
-                    onChanged: (value) => setState(() => _findQuery = value),
-                    style: const TextStyle(
-                      color: _CommunityPalette.text,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: t.communitySearchUserHint,
-                      hintStyle: const TextStyle(
-                        color: _CommunityPalette.subtle,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.search_rounded,
-                        color: _CommunityPalette.subtle,
-                        size: 20,
-                      ),
-                      suffixIcon: _findQuery.isEmpty
-                          ? null
-                          : IconButton(
-                              onPressed: () {
-                                _findSearchController.clear();
-                                setState(() => _findQuery = '');
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                color: _CommunityPalette.subtle,
-                                size: 18,
-                              ),
-                            ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 18),
-                    ),
-                  ),
-                ),
-              ),
               Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Positioned.fill(
-                          child: IgnorePointer(
-                            child: AnimatedBuilder(
-                              animation: _shootingStarController,
-                              builder: (context, child) {
-                                return CustomPaint(
-                                  painter: _GalaxyShootingStarsPainter(
-                                    stars: _shootingStars,
-                                    progress: _shootingStarController.value,
-                                  ),
-                                );
-                              },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 14),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final planetRadius = math
+                          .min(
+                            constraints.maxWidth * 0.22,
+                            constraints.maxHeight * 0.34,
+                          )
+                          .clamp(140.0, 230.0)
+                          .toDouble();
+                      final planetCenter = Offset(
+                        constraints.maxWidth * 0.5,
+                        constraints.maxHeight * 0.54,
+                      );
+                      return Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned.fill(
+                            child: IgnorePointer(
+                              child: AnimatedBuilder(
+                                animation: Listenable.merge([
+                                  _planetSpinController,
+                                  _shootingStarController,
+                                ]),
+                                builder: (context, child) {
+                                  return CustomPaint(
+                                    painter: _GalaxyPlanetScenePainter(
+                                      planetCenter: planetCenter,
+                                      planetRadius: planetRadius,
+                                      spinProgress: _planetSpinController.value,
+                                      twinkleProgress:
+                                          _shootingStarController.value,
+                                      sparkleSeeds: _shootingStars,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        if (visibleUserIndexes.isEmpty)
-                          Center(
-                            child: Text(
-                              t.communityNoUserFound,
-                              style: const TextStyle(
-                                color: Color(0xFFCBD5E1),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                          if (visibleUserIndexes.isEmpty)
+                            Center(
+                              child: Text(
+                                t.communityNoUserFound,
+                                style: const TextStyle(
+                                  color: Color(0xFF64748B),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                          )
-                        else
-                          for (final i in visibleUserIndexes)
-                            _buildPlanet(_galaxyUsers[i], constraints, t),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(24, 18, 24, 24),
-                decoration: const BoxDecoration(
-                  gradient: AppColors.galaxyGradient,
-                  border: Border(top: BorderSide(color: Color(0xFF1E293B))),
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: _handleFindAction,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(0xFFE2E8F0),
-                      side: const BorderSide(
-                        color: Color(0xFFE2E8F0),
-                        width: 2,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                    ),
-                    child: Text(
-                      t.communityFindButton,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ),
+                            )
+                          else
+                            for (final entry
+                                in visibleUserIndexes.asMap().entries)
+                              _buildPlanet(
+                                _galaxyUsers[entry.value],
+                                constraints,
+                                t,
+                                slotIndex: entry.key,
+                                totalUsers: visibleUserIndexes.length,
+                                planetCenter: planetCenter,
+                                planetRadius: planetRadius,
+                              ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),
@@ -3147,17 +2883,29 @@ class _CoursesScreenState extends State<CoursesScreen>
   Widget _buildPlanet(
     _GalaxyUser user,
     BoxConstraints constraints,
-    AppLocalizations t,
-  ) {
+    AppLocalizations t, {
+    required int slotIndex,
+    required int totalUsers,
+    required Offset planetCenter,
+    required double planetRadius,
+  }) {
     final dotSize = _planetSize(user.size);
     final isHovered = _hoveredUserId == user.id;
     return AnimatedBuilder(
       animation: _floatController,
       builder: (context, child) {
         final motionOffset = _planetMotionOffset(user, _floatController.value);
+        final anchor = _planetOrbitAnchor(
+          user,
+          constraints,
+          slotIndex: slotIndex,
+          totalUsers: totalUsers,
+          planetCenter: planetCenter,
+          planetRadius: planetRadius,
+        );
         return Positioned(
-          left: constraints.maxWidth * user.x / 100 - 20 + motionOffset.dx,
-          top: constraints.maxHeight * user.y / 100 - 20 + motionOffset.dy,
+          left: anchor.dx - 20 + motionOffset.dx,
+          top: anchor.dy - 20 + motionOffset.dy,
           child: child!,
         );
       },
@@ -3252,15 +3000,53 @@ class _CoursesScreenState extends State<CoursesScreen>
               Text(
                 user.name,
                 style: const TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFFCBD5E1),
+                  fontSize: 9.5,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF475569),
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Offset _planetOrbitAnchor(
+    _GalaxyUser user,
+    BoxConstraints constraints, {
+    required int slotIndex,
+    required int totalUsers,
+    required Offset planetCenter,
+    required double planetRadius,
+  }) {
+    final total = math.max(totalUsers, 1);
+    final layer = slotIndex % 3;
+    final angle =
+        (-math.pi / 2) +
+        (slotIndex / total) * math.pi * 2 +
+        user.floatDelay * 0.14 +
+        layer * 0.18;
+
+    final radiusX = switch (layer) {
+      0 => planetRadius * 1.24,
+      1 => planetRadius * 1.52,
+      _ => planetRadius * 1.78,
+    };
+    final radiusY = switch (layer) {
+      0 => planetRadius * 0.90,
+      1 => planetRadius * 1.10,
+      _ => planetRadius * 1.26,
+    };
+
+    final xJitter = ((user.x - 50) / 50) * 10;
+    final yJitter = ((user.y - 50) / 50) * 12;
+    final x = planetCenter.dx + math.cos(angle) * radiusX + xJitter;
+    final y = planetCenter.dy + math.sin(angle) * radiusY + yJitter;
+
+    return Offset(
+      x.clamp(22.0, constraints.maxWidth - 22.0),
+      y.clamp(22.0, constraints.maxHeight - 22.0),
     );
   }
 
@@ -6546,67 +6332,255 @@ class _MessagesWallpaperPainter extends CustomPainter {
   }
 }
 
-class _GalaxyShootingStarsPainter extends CustomPainter {
-  final List<_ShootingStar> stars;
-  final double progress;
+class _GalaxyPlanetScenePainter extends CustomPainter {
+  final Offset planetCenter;
+  final double planetRadius;
+  final double spinProgress;
+  final double twinkleProgress;
+  final List<_ShootingStar> sparkleSeeds;
 
-  const _GalaxyShootingStarsPainter({
-    required this.stars,
-    required this.progress,
+  const _GalaxyPlanetScenePainter({
+    required this.planetCenter,
+    required this.planetRadius,
+    required this.spinProgress,
+    required this.twinkleProgress,
+    required this.sparkleSeeds,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (final star in stars) {
-      final localProgress = (progress - star.launchAt) / star.travelWindow;
-      if (localProgress <= 0 || localProgress >= 1) continue;
+    final backgroundGlows = <({Offset center, double radius, Color color})>[
+      (
+        center: Offset(size.width * 0.16, size.height * 0.14),
+        radius: planetRadius * 1.05,
+        color: const Color(0xFFA7F3FF),
+      ),
+      (
+        center: Offset(size.width * 0.82, size.height * 0.18),
+        radius: planetRadius * 0.92,
+        color: const Color(0xFFFFD7F6),
+      ),
+      (
+        center: Offset(size.width * 0.56, size.height * 0.74),
+        radius: planetRadius * 1.08,
+        color: const Color(0xFFE4D5FF),
+      ),
+    ];
 
-      final easedProgress = Curves.easeOut.transform(localProgress);
-      final opacity = math.sin(localProgress * math.pi).clamp(0.0, 1.0);
-      if (opacity <= 0.01) continue;
-
-      final start = Offset(star.startX * size.width, star.startY * size.height);
-      final end = Offset(star.endX * size.width, star.endY * size.height);
-      final head = Offset.lerp(start, end, easedProgress)!;
-      final direction = end - start;
-      final distance = direction.distance;
-      if (distance == 0) continue;
-
-      final unitDirection = direction / distance;
-      final tail = head - unitDirection * star.tailLength;
-
-      final glowPaint = Paint()
-        ..color = star.color.withValues(alpha: 0.16 * opacity)
-        ..strokeWidth = 6
-        ..strokeCap = StrokeCap.round
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 7);
-
-      final tailPaint = Paint()
-        ..shader = LinearGradient(
+    for (final glow in backgroundGlows) {
+      final rect = Rect.fromCircle(center: glow.center, radius: glow.radius);
+      final paint = Paint()
+        ..shader = RadialGradient(
           colors: [
-            star.color.withValues(alpha: 0),
-            star.color.withValues(alpha: 0.78 * opacity),
+            glow.color.withValues(alpha: 0.22),
+            glow.color.withValues(alpha: 0.06),
+            Colors.transparent,
           ],
-        ).createShader(Rect.fromPoints(tail, head))
-        ..strokeWidth = 1.8
-        ..strokeCap = StrokeCap.round;
-
-      final headGlowPaint = Paint()
-        ..color = star.color.withValues(alpha: 0.26 * opacity)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
-
-      final headPaint = Paint()
-        ..color = star.color.withValues(alpha: 0.96 * opacity);
-
-      canvas.drawLine(tail, head, glowPaint);
-      canvas.drawLine(tail, head, tailPaint);
-      canvas.drawCircle(head, star.headRadius * 2.4, headGlowPaint);
-      canvas.drawCircle(head, star.headRadius, headPaint);
+          stops: const [0.0, 0.54, 1.0],
+        ).createShader(rect);
+      canvas.drawCircle(glow.center, glow.radius, paint);
     }
+
+    final twinkleBase = twinkleProgress * math.pi * 2;
+    for (var i = 0; i < sparkleSeeds.length; i++) {
+      final seed = sparkleSeeds[i];
+      final position = Offset(
+        seed.startX * size.width,
+        seed.startY * size.height,
+      );
+      final twinkle = 0.38 + 0.32 * math.sin(twinkleBase + seed.launchAt * 9);
+      final glowPaint = Paint()
+        ..color = Colors.white.withValues(alpha: twinkle * 0.18)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+      final starPaint = Paint()
+        ..color = Colors.white.withValues(alpha: 0.42 + twinkle * 0.28);
+      canvas.drawCircle(position, 3.2 + twinkle * 0.8, glowPaint);
+      canvas.drawCircle(position, 1.2 + twinkle * 0.5, starPaint);
+      if (i.isEven) {
+        final sparklePaint = Paint()
+          ..color = Colors.white.withValues(alpha: 0.22 + twinkle * 0.18)
+          ..strokeWidth = 1
+          ..strokeCap = StrokeCap.round;
+        canvas.drawLine(
+          Offset(position.dx - 5, position.dy),
+          Offset(position.dx + 5, position.dy),
+          sparklePaint,
+        );
+        canvas.drawLine(
+          Offset(position.dx, position.dy - 5),
+          Offset(position.dx, position.dy + 5),
+          sparklePaint,
+        );
+      }
+    }
+
+    final ringRect = Rect.fromCenter(
+      center: planetCenter.translate(0, planetRadius * 0.10),
+      width: planetRadius * 2.62,
+      height: planetRadius * 0.84,
+    );
+
+    final ringGlowPaint = Paint()
+      ..color = const Color(0xFFA78BFA).withValues(alpha: 0.18)
+      ..strokeWidth = planetRadius * 0.18
+      ..style = PaintingStyle.stroke
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
+    canvas.drawOval(ringRect, ringGlowPaint);
+
+    final ringBackPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [
+          const Color(0xFFB38CFF).withValues(alpha: 0.42),
+          const Color(0xFFE8D8FF).withValues(alpha: 0.65),
+          const Color(0xFF8C8EFF).withValues(alpha: 0.46),
+        ],
+      ).createShader(ringRect)
+      ..strokeWidth = planetRadius * 0.13
+      ..style = PaintingStyle.stroke;
+    canvas.drawOval(ringRect, ringBackPaint);
+
+    final sphereRect = Rect.fromCircle(
+      center: planetCenter,
+      radius: planetRadius,
+    );
+    final spherePaint = Paint()
+      ..shader = RadialGradient(
+        center: const Alignment(-0.24, -0.28),
+        radius: 1.06,
+        colors: [
+          Colors.white.withValues(alpha: 0.96),
+          const Color(0xFFF3D8FF),
+          const Color(0xFFC7A4FF),
+          const Color(0xFF8D79FF),
+        ],
+        stops: const [0.0, 0.26, 0.68, 1.0],
+      ).createShader(sphereRect);
+    canvas.drawCircle(planetCenter, planetRadius, spherePaint);
+
+    final sphereOutlinePaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2
+      ..color = Colors.white.withValues(alpha: 0.48);
+    canvas.drawCircle(planetCenter, planetRadius, sphereOutlinePaint);
+
+    canvas.save();
+    canvas.clipPath(
+      Path()
+        ..addOval(Rect.fromCircle(center: planetCenter, radius: planetRadius)),
+    );
+    canvas.translate(planetCenter.dx, planetCenter.dy);
+    canvas.rotate(spinProgress * math.pi * 2);
+
+    final shardPaint = Paint();
+    final shardRects = [
+      Rect.fromCenter(
+        center: Offset(-planetRadius * 0.18, -planetRadius * 0.10),
+        width: planetRadius * 0.42,
+        height: planetRadius * 2.2,
+      ),
+      Rect.fromCenter(
+        center: Offset(planetRadius * 0.08, 0),
+        width: planetRadius * 0.34,
+        height: planetRadius * 2.1,
+      ),
+      Rect.fromCenter(
+        center: Offset(planetRadius * 0.32, planetRadius * 0.06),
+        width: planetRadius * 0.28,
+        height: planetRadius * 2.0,
+      ),
+    ];
+    final shardColors = [
+      [Colors.white.withValues(alpha: 0.22), Colors.transparent],
+      [const Color(0xFFD7C3FF).withValues(alpha: 0.18), Colors.transparent],
+      [Colors.white.withValues(alpha: 0.16), Colors.transparent],
+    ];
+    for (var i = 0; i < shardRects.length; i++) {
+      shardPaint.shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: shardColors[i],
+      ).createShader(shardRects[i]);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          shardRects[i],
+          Radius.circular(planetRadius * 0.14),
+        ),
+        shardPaint,
+      );
+    }
+
+    final surfaceStarPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.48);
+    final surfaceStars = [
+      Offset(-planetRadius * 0.30, -planetRadius * 0.16),
+      Offset(planetRadius * 0.18, -planetRadius * 0.22),
+      Offset(planetRadius * 0.06, planetRadius * 0.05),
+      Offset(-planetRadius * 0.12, planetRadius * 0.22),
+      Offset(planetRadius * 0.26, planetRadius * 0.18),
+    ];
+    for (final star in surfaceStars) {
+      canvas.drawCircle(star, 1.6, surfaceStarPaint);
+    }
+    canvas.restore();
+
+    final highlightPaint = Paint()
+      ..shader =
+          RadialGradient(
+            colors: [
+              Colors.white.withValues(alpha: 0.52),
+              Colors.white.withValues(alpha: 0.08),
+              Colors.transparent,
+            ],
+          ).createShader(
+            Rect.fromCircle(
+              center: planetCenter.translate(
+                -planetRadius * 0.22,
+                -planetRadius * 0.34,
+              ),
+              radius: planetRadius * 0.54,
+            ),
+          );
+    canvas.drawCircle(
+      planetCenter.translate(-planetRadius * 0.22, -planetRadius * 0.34),
+      planetRadius * 0.54,
+      highlightPaint,
+    );
+
+    canvas.save();
+    canvas.clipRect(
+      Rect.fromLTWH(
+        0,
+        planetCenter.dy - planetRadius * 0.02,
+        size.width,
+        size.height,
+      ),
+    );
+    final ringFrontPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [
+          const Color(0xFFB58EFF).withValues(alpha: 0.78),
+          Colors.white.withValues(alpha: 0.92),
+          const Color(0xFF8FA6FF).withValues(alpha: 0.80),
+        ],
+      ).createShader(ringRect)
+      ..strokeWidth = planetRadius * 0.11
+      ..style = PaintingStyle.stroke;
+    canvas.drawOval(ringRect, ringFrontPaint);
+
+    final ringHighlightPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.48)
+      ..strokeWidth = 1.4
+      ..style = PaintingStyle.stroke;
+    canvas.drawOval(ringRect.deflate(planetRadius * 0.03), ringHighlightPaint);
+    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(covariant _GalaxyShootingStarsPainter oldDelegate) {
-    return oldDelegate.progress != progress || oldDelegate.stars != stars;
+  bool shouldRepaint(covariant _GalaxyPlanetScenePainter oldDelegate) {
+    return oldDelegate.planetCenter != planetCenter ||
+        oldDelegate.planetRadius != planetRadius ||
+        oldDelegate.spinProgress != spinProgress ||
+        oldDelegate.twinkleProgress != twinkleProgress ||
+        oldDelegate.sparkleSeeds != sparkleSeeds;
   }
 }

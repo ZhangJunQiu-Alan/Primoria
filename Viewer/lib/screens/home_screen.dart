@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHomeContent() {
     final t = context.watch<LanguageProvider>().t;
     return ViewerPageShell(
-      preset: ViewerContentWidthPreset.standard,
+      preset: ViewerContentWidthPreset.fullWidth,
       child: Column(
         children: [
           _buildHeader(t),
@@ -459,7 +459,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 520),
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.sizeOf(context).width >= 1200 ? 680 : 520,
+      ),
       child: AspectRatio(
         aspectRatio: 16 / 10,
         child: ClipRRect(

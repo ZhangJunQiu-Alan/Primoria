@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -1765,170 +1767,73 @@ class _BrandMark extends StatelessWidget {
 }
 
 /// Floating UI mockup cards in the Hero section
-class _HeroMockup extends StatelessWidget {
+class _HeroMockup extends StatefulWidget {
   final bool isWide;
   const _HeroMockup({required this.isWide});
 
   @override
-  Widget build(BuildContext context) {
-    final isZh = context.watch<LanguageProvider>().t.isZh;
-    String s(String en) => isZh ? (_LandingScreenState._zhTexts[en] ?? en) : en;
-    final w = isWide ? 360.0 : 300.0;
-    final h = isWide ? 380.0 : 320.0;
+  State<_HeroMockup> createState() => _HeroMockupState();
+}
 
-    return SizedBox(
-      width: w,
-      height: h,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Course progress card
-          Positioned(
-            left: 0,
-            top: isWide ? 40 : 30,
-            child: Transform.rotate(
-              angle: -0.04,
-              child: _MockCard(
-                width: isWide ? 220 : 180,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: _C.feat2A.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.science_rounded,
-                            size: 16,
-                            color: _C.feat2A,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          s('Physics 101'),
-                          style: GoogleFonts.sora(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: _C.ink,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: LinearProgressIndicator(
-                        value: 0.65,
-                        minHeight: 6,
-                        backgroundColor: _C.accent.withValues(alpha: 0.15),
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          _C.accent,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      s('65% \u00b7 Lesson 7 of 11'),
-                      style: GoogleFonts.manrope(
-                        fontSize: 11,
-                        color: _C.bodyMuted,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+class _HeroMockupState extends State<_HeroMockup>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _motionCtrl;
 
-          // Streak card
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Transform.rotate(
-              angle: 0.05,
-              child: _MockCard(
-                width: 130,
-                bgColor: const Color(0xFFFFF3E0),
-                child: Row(
-                  children: [
-                    const Text('\uD83D\uDD25', style: TextStyle(fontSize: 26)),
-                    const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '12',
-                          style: GoogleFonts.sora(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
-                            color: _C.streakFire,
-                          ),
-                        ),
-                        Text(
-                          s('Day Streak'),
-                          style: GoogleFonts.manrope(
-                            fontSize: 11,
-                            color: _C.body,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+  static const List<double> _xpPhases = [0.0, 0.18, 0.38, 0.58];
+  static const List<double> _xpHorizontalDrift = [0.0, 10.0, -7.0, 8.0];
 
-          // AI chat bubble card
-          Positioned(
-            right: 16,
-            bottom: isWide ? 40 : 30,
-            child: _MockCard(
-              width: isWide ? 200 : 170,
-              bgColor: _C.aiDark,
-              child: Row(
-                children: [
-                  Container(
-                    width: 26,
-                    height: 26,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [_C.aiPurple, Color(0xFF6D40E7)],
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Icon(
-                      Icons.smart_toy_rounded,
-                      size: 14,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      s('Why does E = mc\u00b2?'),
-                      style: GoogleFonts.manrope(
-                        fontSize: 12,
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+  @override
+  void initState() {
+    super.initState();
+    _motionCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 6200),
+    )..repeat();
+  }
 
-          // XP earned pill
-          Positioned(
-            left: 24,
-            bottom: isWide ? 80 : 65,
+  @override
+  void dispose() {
+    _motionCtrl.dispose();
+    super.dispose();
+  }
+
+  double _phase(double offset) {
+    final value = (_motionCtrl.value - offset) % 1.0;
+    return value < 0 ? value + 1.0 : value;
+  }
+
+  Widget _buildStreakFire() {
+    return const Text(
+      '🔥',
+      style: TextStyle(fontSize: 26),
+      strutStyle: StrutStyle(forceStrutHeight: true, height: 1),
+    );
+  }
+
+  Widget _buildFloatingXpPill({
+    required String label,
+    required double phase,
+    required double drift,
+  }) {
+    const visibleWindow = 0.56;
+    final local = _phase(phase);
+    if (local > visibleWindow) return const SizedBox.shrink();
+
+    final normalized = (local / visibleWindow).clamp(0.0, 1.0);
+    final rise =
+        (widget.isWide ? 92.0 : 74.0) * Curves.easeOut.transform(normalized);
+    final opacity = math.sin(normalized * math.pi).clamp(0.0, 1.0) * 0.94;
+    final scale = 0.94 + (1 - normalized) * 0.08;
+
+    return Positioned(
+      left: 24 + drift * normalized,
+      bottom: (widget.isWide ? 80.0 : 65.0) + rise,
+      child: IgnorePointer(
+        child: Opacity(
+          opacity: opacity,
+          child: Transform.scale(
+            scale: scale,
+            alignment: Alignment.bottomLeft,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -1938,7 +1843,7 @@ class _HeroMockup extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: _C.accent.withValues(alpha: 0.4),
+                    color: _C.accent.withValues(alpha: 0.28),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -1950,7 +1855,7 @@ class _HeroMockup extends StatelessWidget {
                   const Icon(Icons.star_rounded, color: Colors.white, size: 13),
                   const SizedBox(width: 4),
                   Text(
-                    s('+50 XP'),
+                    label,
                     style: GoogleFonts.sora(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -1961,8 +1866,212 @@ class _HeroMockup extends StatelessWidget {
               ),
             ),
           ),
-        ],
+        ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isZh = context.watch<LanguageProvider>().t.isZh;
+    String s(String en) => isZh ? (_LandingScreenState._zhTexts[en] ?? en) : en;
+    final isWide = widget.isWide;
+    final w = isWide ? 360.0 : 300.0;
+    final h = isWide ? 380.0 : 320.0;
+
+    return AnimatedBuilder(
+      animation: _motionCtrl,
+      builder: (context, _) {
+        final progress = _motionCtrl.value;
+        final progressPercent = (progress * 100).round().clamp(0, 100);
+        final lesson = math.min(11, 1 + (progress * 10.999).floor());
+        final progressLabel = isZh
+            ? '$progressPercent% · 第 $lesson / 11 课'
+            : '$progressPercent% · Lesson $lesson of 11';
+
+        final streakSwayX =
+            math.sin(progress * math.pi * 2 + 0.55) * (isWide ? 3.5 : 2.6);
+        final streakSwayY = math.cos(progress * math.pi * 2 + 0.2) * 3.0;
+        final streakRotation =
+            0.05 + math.sin(progress * math.pi * 2 + 0.4) * 0.018;
+
+        final swayX = math.sin(progress * math.pi * 2) * (isWide ? 5.0 : 4.0);
+        final swayY = math.cos(progress * math.pi * 2) * 4.0;
+        final swayRotation = math.sin(progress * math.pi * 2) * 0.02;
+
+        return SizedBox(
+          width: w,
+          height: h,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Course progress card
+              Positioned(
+                left: 0,
+                top: isWide ? 40 : 30,
+                child: Transform.rotate(
+                  angle: -0.04,
+                  child: _MockCard(
+                    width: isWide ? 220 : 180,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 28,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                color: _C.feat2A.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(
+                                Icons.science_rounded,
+                                size: 16,
+                                color: _C.feat2A,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              s('Physics 101'),
+                              style: GoogleFonts.sora(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: _C.ink,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: LinearProgressIndicator(
+                            value: progress,
+                            minHeight: 6,
+                            backgroundColor: _C.accent.withValues(alpha: 0.15),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              _C.accent,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          progressLabel,
+                          style: GoogleFonts.manrope(
+                            fontSize: 11,
+                            color: _C.bodyMuted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Streak card
+              Positioned(
+                right: streakSwayX,
+                top: streakSwayY,
+                child: Transform.rotate(
+                  angle: streakRotation,
+                  child: _MockCard(
+                    width: isWide ? 152 : 142,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 12,
+                    ),
+                    bgColor: const Color(0xFFFFF3E0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildStreakFire(),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '12',
+                                style: GoogleFonts.sora(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w800,
+                                  color: _C.streakFire,
+                                ),
+                              ),
+                              Text(
+                                s('Day Streak'),
+                                maxLines: 1,
+                                overflow: TextOverflow.visible,
+                                style: GoogleFonts.manrope(
+                                  fontSize: 11,
+                                  color: _C.body,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // AI chat bubble card
+              Positioned(
+                right: 16 + swayX,
+                bottom: (isWide ? 40 : 30) + swayY,
+                child: Transform.rotate(
+                  angle: swayRotation,
+                  child: _MockCard(
+                    width: isWide ? 200 : 170,
+                    bgColor: _C.aiDark,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 26,
+                          height: 26,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [_C.aiPurple, Color(0xFF6D40E7)],
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.smart_toy_rounded,
+                            size: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            s('Why does E = mc\u00b2?'),
+                            style: GoogleFonts.manrope(
+                              fontSize: 12,
+                              color: Colors.white.withValues(alpha: 0.8),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // XP floating pills
+              for (var i = 0; i < _xpPhases.length; i++)
+                _buildFloatingXpPill(
+                  label: s('+50 XP'),
+                  phase: _xpPhases[i],
+                  drift: _xpHorizontalDrift[i],
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -1971,14 +2080,20 @@ class _MockCard extends StatelessWidget {
   final double width;
   final Widget child;
   final Color? bgColor;
+  final EdgeInsetsGeometry padding;
 
-  const _MockCard({required this.width, required this.child, this.bgColor});
+  const _MockCard({
+    required this.width,
+    required this.child,
+    this.bgColor,
+    this.padding = const EdgeInsets.all(14),
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      padding: const EdgeInsets.all(14),
+      padding: padding,
       decoration: BoxDecoration(
         color: bgColor ?? _C.surface,
         borderRadius: BorderRadius.circular(16),

@@ -68,10 +68,10 @@ class AppLocalizations {
       isZh ? '重置链接已发送，请检查邮箱。' : 'Reset link sent! Check your email.';
 
   String get authBrandHeadline =>
-      isZh ? '你的学习\n旅程从这里\n开始。' : 'Your learning\njourney starts\nhere.';
+      isZh ? '你的学习旅程\n从这里开始。' : 'Your Learning Journey\nStarts Here.';
   String get authBrandSubtitle => isZh
-      ? '加入 10,000+ 学习者，使用 AI 互动课程掌握 STEM。'
-      : 'Join 10,000+ students mastering STEM\nwith AI-powered interactive lessons.';
+      ? '加入 10000+ 位学生，用 AI 驱动的互动课程\n掌握 STEM。'
+      : 'Join 10000+ students mastering STEM\nwith AI-powered interactive lessons.';
   String get authFeatureInteractiveLessons =>
       isZh ? '互动课程' : 'Interactive Lessons';
   String get authFeatureAiTutor => isZh ? 'AI 个性导师' : 'AI Personal Tutor';
