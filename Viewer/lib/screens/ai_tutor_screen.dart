@@ -575,61 +575,58 @@ $source
             );
           }
 
+          final studioWidth = (constraints.maxWidth * 0.22)
+              .clamp(300.0, 360.0)
+              .toDouble();
+
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1120),
-                child: SizedBox(
-                  height: constraints.maxHeight,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: _ConversationPanel(
-                          isZh: t.isZh,
-                          messages: _messages,
-                          isSending: _isSending,
-                          isGeminiConfigured: GeminiService.isConfigured,
-                          inputController: _inputController,
-                          conversationController: _conversationController,
-                          onSendPressed: _sendCurrentInput,
-                          onSuggestedPromptPressed: _sendSuggestedPrompt,
-                          suggestedPrompts: suggestedPrompts,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        flex: 1,
-                        child: _StudioPanel(
-                          isZh: t.isZh,
-                          isMindMapLoading: _isMindMapLoading,
-                          isQuizLoading: _isQuizLoading,
-                          isReplayLoading: _isReplayLoading,
-                          latestMindMap: _latestMindMap,
-                          latestQuiz: _latestQuiz,
-                          latestEvolution: _latestEvolution,
-                          latestMindMapAt: _latestMindMapAt,
-                          latestQuizAt: _latestQuizAt,
-                          latestEvolutionAt: _latestEvolutionAt,
-                          onMindMapTap: _handleMindMapTap,
-                          onQuizTap: _handleQuizTap,
-                          onPresentationTap: _handlePresentationTap,
-                          onOpenMindMap: _latestMindMap == null
-                              ? null
-                              : () => _showMindMapDialog(_latestMindMap!),
-                          onOpenQuiz: _latestQuiz == null
-                              ? null
-                              : () => _showQuizDialog(_latestQuiz!),
-                          onOpenEvolution: _latestEvolution == null
-                              ? null
-                              : () => _showEvolutionDialog(_latestEvolution!),
-                        ),
-                      ),
-                    ],
+            child: SizedBox(
+              height: constraints.maxHeight,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _ConversationPanel(
+                      isZh: t.isZh,
+                      messages: _messages,
+                      isSending: _isSending,
+                      isGeminiConfigured: GeminiService.isConfigured,
+                      inputController: _inputController,
+                      conversationController: _conversationController,
+                      onSendPressed: _sendCurrentInput,
+                      onSuggestedPromptPressed: _sendSuggestedPrompt,
+                      suggestedPrompts: suggestedPrompts,
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 16),
+                  SizedBox(
+                    width: studioWidth,
+                    child: _StudioPanel(
+                      isZh: t.isZh,
+                      isMindMapLoading: _isMindMapLoading,
+                      isQuizLoading: _isQuizLoading,
+                      isReplayLoading: _isReplayLoading,
+                      latestMindMap: _latestMindMap,
+                      latestQuiz: _latestQuiz,
+                      latestEvolution: _latestEvolution,
+                      latestMindMapAt: _latestMindMapAt,
+                      latestQuizAt: _latestQuizAt,
+                      latestEvolutionAt: _latestEvolutionAt,
+                      onMindMapTap: _handleMindMapTap,
+                      onQuizTap: _handleQuizTap,
+                      onPresentationTap: _handlePresentationTap,
+                      onOpenMindMap: _latestMindMap == null
+                          ? null
+                          : () => _showMindMapDialog(_latestMindMap!),
+                      onOpenQuiz: _latestQuiz == null
+                          ? null
+                          : () => _showQuizDialog(_latestQuiz!),
+                      onOpenEvolution: _latestEvolution == null
+                          ? null
+                          : () => _showEvolutionDialog(_latestEvolution!),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
