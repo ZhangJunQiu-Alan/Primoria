@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final t = context.watch<LanguageProvider>().t;
     return ViewerPageShell(
-      preset: ViewerContentWidthPreset.profile,
+      preset: ViewerContentWidthPreset.fullWidth,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -599,16 +599,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildXpHeatmap(BuildContext context, AppLocalizations t) {
-    const cellGap = 2.0;
+    const cellGap = 3.0;
     const cols = 53;
-    const dayLabelWidth = 24.0;
+    const dayLabelWidth = 20.0;
+    const monthHeaderHeight = 18.0;
+    const maxCellSize = 16.0;
 
     final now = DateTime.now();
     final todayKey = DateTime.utc(now.year, now.month, now.day);
     final firstDay = todayKey.subtract(const Duration(days: 364));
-    // Snap to Monday of that week (Dart weekday: 1=Mon … 7=Sun).
-    final daysToMon = firstDay.weekday - 1;
-    final gridStart = firstDay.subtract(Duration(days: daysToMon));
+    // Snap to Sunday of that week (Dart weekday: 1=Mon … 7=Sun).
+    final daysToSun = firstDay.weekday % 7;
+    final gridStart = firstDay.subtract(Duration(days: daysToSun));
 
     // Year-to-date total XP.
     final yearStart = DateTime.utc(now.year, 1, 1);
@@ -627,8 +629,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final isZh = t.isZh;
     final dayLabels = isZh
-        ? ['一', '', '三', '', '五', '', '']
-        : ['M', '', 'W', '', 'F', '', ''];
+        ? ['日', '一', '二', '三', '四', '五', '六']
+        : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     final monthAbbr = isZh
         ? [
@@ -732,19 +734,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                const minCellSize = 6.0;
+                const minCellSize = 8.0;
+                const monthLabelStyle = TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF94A3B8),
+                );
+                const dayLabelStyle = TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF94A3B8),
+                );
                 final availableContentWidth = constraints.maxWidth;
                 final availableGridWidth =
                     (availableContentWidth - dayLabelWidth - 4).clamp(
                       120.0,
                       double.infinity,
                     );
+                final minGridWidth = cols * minCellSize + (cols - 1) * cellGap;
                 final stretchCellSize =
                     (availableGridWidth - (cols - 1) * cellGap) / cols;
-                final useScroll = stretchCellSize < minCellSize;
+                final useScroll = minGridWidth > availableGridWidth;
                 final dynamicCellSize = useScroll
                     ? minCellSize
-                    : stretchCellSize;
+                    : stretchCellSize.clamp(minCellSize, maxCellSize);
 
                 Widget buildCell(int col, int row) {
                   final date = gridStart.add(Duration(days: col * 7 + row));
@@ -778,32 +791,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 }
 
+                final fullGridWidth =
+                    cols * dynamicCellSize + (cols - 1) * cellGap;
+                final monthStarts = <({int col, int month})>[];
                 int? prevMonth;
-                final monthRow = <Widget>[];
                 for (int col = 0; col < cols; col++) {
                   final date = gridStart.add(Duration(days: col * 7));
                   if (date.month != prevMonth) {
                     prevMonth = date.month;
-                    monthRow.add(
-                      SizedBox(
-                        width: dynamicCellSize,
-                        child: Text(
-                          monthAbbr[date.month - 1],
-                          style: const TextStyle(
-                            fontSize: 8,
-                            color: Color(0xFF94A3B8),
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                          softWrap: false,
-                        ),
-                      ),
-                    );
-                  } else {
-                    monthRow.add(SizedBox(width: dynamicCellSize));
-                  }
-                  if (col < cols - 1) {
-                    monthRow.add(const SizedBox(width: cellGap));
+                    monthStarts.add((col: col, month: date.month));
                   }
                 }
 
@@ -822,60 +818,94 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   }
                 }
 
-                final fullGridWidth =
-                    cols * dynamicCellSize + (cols - 1) * cellGap;
+                final monthMarkers = <Widget>[];
+                for (int i = 0; i < monthStarts.length; i++) {
+                  final nextMonthCol = i < monthStarts.length - 1
+                      ? monthStarts[i + 1].col
+                      : cols;
+                  final labelWidth =
+                      (((nextMonthCol - monthStarts[i].col) *
+                                  (dynamicCellSize + cellGap)) -
+                              cellGap)
+                          .clamp(28.0, fullGridWidth)
+                          .toDouble();
+                  monthMarkers.add(
+                    Positioned(
+                      left: monthStarts[i].col * (dynamicCellSize + cellGap),
+                      width: labelWidth,
+                      child: Text(
+                        monthAbbr[monthStarts[i].month - 1],
+                        style: monthLabelStyle,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                        softWrap: false,
+                      ),
+                    ),
+                  );
+                }
+
+                final monthHeader = SizedBox(
+                  width: fullGridWidth,
+                  height: monthHeaderHeight,
+                  child: Stack(clipBehavior: Clip.none, children: monthMarkers),
+                );
+
                 final gridContent = SizedBox(
-                  width: useScroll ? fullGridWidth : availableGridWidth,
+                  width: fullGridWidth,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(children: monthRow),
-                      const SizedBox(height: 2),
+                      monthHeader,
+                      const SizedBox(height: 6),
                       ...weekRows,
                     ],
                   ),
                 );
 
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 14),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: List.generate(7, (row) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              bottom: row < 6 ? cellGap : 0,
-                            ),
-                            child: SizedBox(
-                              width: dayLabelWidth,
-                              height: dynamicCellSize,
-                              child: Text(
-                                dayLabels[row],
-                                style: const TextStyle(
-                                  fontSize: 8,
-                                  color: Color(0xFF94A3B8),
-                                ),
-                                textAlign: TextAlign.right,
+                final heatmap = SizedBox(
+                  width: dayLabelWidth + 8 + fullGridWidth,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: monthHeaderHeight + 6,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: List.generate(7, (row) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                bottom: row < 6 ? cellGap : 0,
                               ),
-                            ),
-                          );
-                        }),
+                              child: SizedBox(
+                                width: dayLabelWidth,
+                                height: dynamicCellSize,
+                                child: Text(
+                                  dayLabels[row],
+                                  style: dayLabelStyle,
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: useScroll
-                          ? SingleChildScrollView(
-                              controller: _heatmapScrollController,
-                              scrollDirection: Axis.horizontal,
-                              child: gridContent,
-                            )
-                          : gridContent,
-                    ),
-                  ],
+                      const SizedBox(width: 8),
+                      gridContent,
+                    ],
+                  ),
                 );
+
+                if (useScroll) {
+                  return SingleChildScrollView(
+                    controller: _heatmapScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: heatmap,
+                  );
+                }
+
+                return Align(alignment: Alignment.topLeft, child: heatmap);
               },
             ),
           const SizedBox(height: 10),
@@ -948,8 +978,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: items.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 320,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                     mainAxisExtent: 124,
