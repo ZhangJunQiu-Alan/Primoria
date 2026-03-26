@@ -538,8 +538,8 @@ class _CoursesScreenState extends State<CoursesScreen>
         id: _nextNoteId++,
         title: '',
         body: '',
-        attachments: const [],
-        strokes: const [],
+        attachments: <_NoteAttachment>[],
+        strokes: <_SketchStroke>[],
         updatedAt: DateTime.now().subtract(const Duration(minutes: 3)),
       ),
     ];
@@ -1451,6 +1451,20 @@ class _CoursesScreenState extends State<CoursesScreen>
       note.updatedAt = DateTime.now();
     });
     _showMessageSnack(_copy('Image added to assets.', '图片已加入素材区。'));
+  }
+
+  void _clearSelectedNoteAssets() {
+    final note = _selectedNote;
+    if (note == null || note.attachments.isEmpty) return;
+    setState(() {
+      note.attachments.clear();
+      note.updatedAt = DateTime.now();
+    });
+    _showMessageSnack(_copy('Assets cleared.', '素材已清空。'));
+  }
+
+  void _editSelectedNoteAssets() {
+    _showMessageSnack(_copy('Asset editing is coming next.', '素材编辑功能即将推出。'));
   }
 
   void _clearSelectedSketch() {
@@ -2448,6 +2462,9 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   Widget _buildWorkspacePanel({required bool isWideLayout}) {
     final showWorkspaceTopBar =
+        _section != _CommunityWorkspaceSection.dashboard &&
+        _section != _CommunityWorkspaceSection.notes &&
+        _section != _CommunityWorkspaceSection.trending &&
         !(isWideLayout && _section == _CommunityWorkspaceSection.messages);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 12),
@@ -2476,6 +2493,9 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildWorkspaceTopBar({required bool isWideLayout}) {
+    if (_section == _CommunityWorkspaceSection.ourStudy) {
+      return _buildOurStudyTopBar(isWideLayout: isWideLayout);
+    }
     final actions = _buildTopBarActions(isWideLayout);
     return Container(
       padding: EdgeInsets.fromLTRB(
@@ -2546,6 +2566,32 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
+  Widget _buildOurStudyTopBar({required bool isWideLayout}) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(
+        isWideLayout ? 24 : 18,
+        20,
+        isWideLayout ? 24 : 18,
+        18,
+      ),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        border: Border(bottom: BorderSide(color: _CommunityPalette.border)),
+      ),
+      child: Row(
+        children: [
+          if (isWideLayout)
+            SizedBox(width: 350, child: _buildStudySearchField())
+          else
+            Expanded(child: _buildStudySearchField()),
+          if (isWideLayout) const Spacer() else const SizedBox(width: 12),
+          _buildNewGroupButton(),
+        ],
+      ),
+    );
+  }
+
   List<Widget> _buildTopBarActions(bool isWideLayout) {
     switch (_section) {
       case _CommunityWorkspaceSection.dashboard:
@@ -2563,40 +2609,10 @@ class _CoursesScreenState extends State<CoursesScreen>
       case _CommunityWorkspaceSection.ourStudy:
         return [
           SizedBox(
-            width: isWideLayout ? 250 : 180,
-            child: TextField(
-              controller: _studySearchController,
-              onChanged: (value) => setState(() => _studyQuery = value),
-              decoration: InputDecoration(
-                hintText: _copy('Search a shared room…', '搜索共享房间…'),
-                prefixIcon: const Icon(Icons.search_rounded, size: 18),
-                isDense: true,
-                filled: true,
-                fillColor: _CommunityPalette.surfaceMuted,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(color: _CommunityPalette.border),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(color: _CommunityPalette.border),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(color: _CommunityPalette.blue),
-                ),
-              ),
-            ),
+            width: isWideLayout ? 350 : 280,
+            child: _buildStudySearchField(),
           ),
-          FilledButton.icon(
-            onPressed: _showCreateStudyGroupDialog,
-            style: FilledButton.styleFrom(
-              backgroundColor: _CommunityPalette.blue,
-              foregroundColor: Colors.white,
-            ),
-            icon: const Icon(Icons.group_add_rounded, size: 18),
-            label: Text(_copy('New group', '新建群组')),
-          ),
+          _buildNewGroupButton(),
         ];
       case _CommunityWorkspaceSection.notes:
         return const [];
@@ -2634,6 +2650,44 @@ class _CoursesScreenState extends State<CoursesScreen>
           ),
         ];
     }
+  }
+
+  Widget _buildStudySearchField() {
+    return TextField(
+      controller: _studySearchController,
+      onChanged: (value) => setState(() => _studyQuery = value),
+      decoration: InputDecoration(
+        hintText: _copy('Search a shared room…', '搜索共享房间…'),
+        prefixIcon: const Icon(Icons.search_rounded, size: 18),
+        isDense: true,
+        filled: true,
+        fillColor: _CommunityPalette.surfaceMuted,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _CommunityPalette.border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _CommunityPalette.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _CommunityPalette.blue),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNewGroupButton() {
+    return FilledButton.icon(
+      onPressed: _showCreateStudyGroupDialog,
+      style: FilledButton.styleFrom(
+        backgroundColor: _CommunityPalette.blue,
+        foregroundColor: Colors.white,
+      ),
+      icon: const Icon(Icons.group_add_rounded, size: 18),
+      label: Text(_copy('New group', '新建群组')),
+    );
   }
 
   Widget _buildNotificationPill() {
@@ -2710,17 +2764,21 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildDashboardPage({required bool isWideLayout}) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(
-        isWideLayout ? 24 : 18,
-        18,
-        isWideLayout ? 24 : 18,
-        24,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [_buildGalaxyExplorer(height: isWideLayout ? 700 : 560)],
-      ),
+    final minHeight = isWideLayout ? 700.0 : 560.0;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final galaxyHeight = math.max(minHeight, constraints.maxHeight);
+        return SingleChildScrollView(
+          padding: EdgeInsets.zero,
+          child: SizedBox(
+            height: galaxyHeight,
+            child: _buildGalaxyExplorer(
+              height: galaxyHeight,
+              isWideLayout: isWideLayout,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -2785,11 +2843,14 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildGalaxyExplorer({required double height}) {
+  Widget _buildGalaxyExplorer({
+    required double height,
+    required bool isWideLayout,
+  }) {
     final t = context.watch<LanguageProvider>().t;
     final visibleUserIndexes = _visibleGalaxyUserIndexes;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(28),
+      borderRadius: BorderRadius.zero,
       child: SizedBox(
         height: height,
         child: Container(
@@ -2866,6 +2927,29 @@ class _CoursesScreenState extends State<CoursesScreen>
                                 planetCenter: planetCenter,
                                 planetRadius: planetRadius,
                               ),
+                          Positioned(
+                            top: isWideLayout ? 22 : 18,
+                            left: isWideLayout ? 22 : 18,
+                            child: Wrap(
+                              spacing: 14,
+                              runSpacing: 10,
+                              children: [
+                                _buildIconAction(
+                                  icon: Icons.person_remove_outlined,
+                                  onTap: _showRemoveUserDialog,
+                                ),
+                                _buildIconAction(
+                                  icon: Icons.person_add_outlined,
+                                  onTap: _showAddUserDialog,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            top: isWideLayout ? 22 : 18,
+                            right: isWideLayout ? 22 : 18,
+                            child: _buildConnectionStats(),
+                          ),
                         ],
                       );
                     },
@@ -3481,6 +3565,26 @@ class _CoursesScreenState extends State<CoursesScreen>
                     ),
                   ),
                   const Spacer(),
+                  _buildNoteActionIcon(
+                    icon: Icons.add_rounded,
+                    tooltip: _copy('Add asset', '添加素材'),
+                    onTap: _pickNoteAttachmentImage,
+                    color: _CommunityPalette.blue,
+                  ),
+                  const SizedBox(width: 8),
+                  _buildNoteActionIcon(
+                    icon: Icons.edit_outlined,
+                    tooltip: _copy('Edit assets', '编辑素材'),
+                    onTap: _editSelectedNoteAssets,
+                    color: _CommunityPalette.blue,
+                  ),
+                  const SizedBox(width: 8),
+                  _buildNoteActionIcon(
+                    icon: Icons.delete_outline_rounded,
+                    tooltip: _copy('Delete assets', '删除素材'),
+                    onTap: _clearSelectedNoteAssets,
+                    color: _CommunityPalette.red,
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -3630,12 +3734,6 @@ class _CoursesScreenState extends State<CoursesScreen>
           padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
           child: Row(
             children: [
-              if (selected)
-                _buildTag(
-                  _copy('Active note', '当前笔记'),
-                  tint: const Color(0xFFEFF4FF),
-                  color: _CommunityPalette.blue,
-                ),
               const Spacer(),
               _buildNoteActionIcon(
                 icon: Icons.add_rounded,
@@ -3677,12 +3775,6 @@ class _CoursesScreenState extends State<CoursesScreen>
           },
           child: _buildSurfaceCard(
             padding: const EdgeInsets.fromLTRB(24, 22, 24, 22),
-            background: const Color(0xFFF8FBFF),
-            borderSide: BorderSide(
-              color: selected
-                  ? const Color(0xFFD7E7FF)
-                  : _CommunityPalette.blue.withValues(alpha: 0.14),
-            ),
             child: selected
                 ? _buildEditableNoteCard()
                 : _buildRenderedNoteCard(note),
@@ -3695,7 +3787,8 @@ class _CoursesScreenState extends State<CoursesScreen>
   Widget _buildEditableNoteCard() {
     final note = _selectedNote;
     final isBlank = note == null || _isNoteBlank(note);
-    const fieldFill = Color(0xFFF5FAFF);
+    const fieldFill = Color(0xFFF8FBFF);
+    final fieldBorder = _CommunityPalette.blue.withValues(alpha: 0.20);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -3723,22 +3816,15 @@ class _CoursesScreenState extends State<CoursesScreen>
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(
-                color: _CommunityPalette.blue.withValues(alpha: 0.12),
-              ),
+              borderSide: BorderSide(color: fieldBorder),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(
-                color: _CommunityPalette.blue.withValues(alpha: 0.12),
-              ),
+              borderSide: BorderSide(color: fieldBorder),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(
-                color: _CommunityPalette.blue.withValues(alpha: 0.24),
-                width: 1.5,
-              ),
+              borderSide: BorderSide(color: fieldBorder, width: 1.5),
             ),
           ),
         ),
@@ -3770,22 +3856,15 @@ class _CoursesScreenState extends State<CoursesScreen>
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(
-                color: _CommunityPalette.blue.withValues(alpha: 0.12),
-              ),
+              borderSide: BorderSide(color: fieldBorder),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(
-                color: _CommunityPalette.blue.withValues(alpha: 0.12),
-              ),
+              borderSide: BorderSide(color: fieldBorder),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(
-                color: _CommunityPalette.blue.withValues(alpha: 0.24),
-                width: 1.5,
-              ),
+              borderSide: BorderSide(color: fieldBorder, width: 1.5),
             ),
           ),
         ),

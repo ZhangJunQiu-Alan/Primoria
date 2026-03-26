@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/common/viewer_page_shell.dart';
@@ -89,7 +91,7 @@ class _SearchScreenState extends State<SearchScreen>
     super.build(context);
     final t = context.watch<LanguageProvider>().t;
     return ViewerPageShell(
-      preset: ViewerContentWidthPreset.feed,
+      preset: ViewerContentWidthPreset.fullWidth,
       child: Column(
         children: [
           _buildHeader(t),
@@ -362,15 +364,28 @@ class _SearchScreenState extends State<SearchScreen>
         const SizedBox(height: 14),
         LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth >= 980) {
-              final width = (constraints.maxWidth - 12) / 2;
+            const spacing = 12.0;
+            const minCardWidth = 320.0;
+            const maxCardWidth = 520.0;
+            final maxColumns = math.max(
+              1,
+              ((constraints.maxWidth + spacing) / (maxCardWidth + spacing))
+                  .floor(),
+            );
+            final cardWidth =
+                ((constraints.maxWidth - (maxColumns - 1) * spacing) /
+                        maxColumns)
+                    .clamp(minCardWidth, maxCardWidth)
+                    .toDouble();
+
+            if (constraints.maxWidth >= minCardWidth * 2 + spacing) {
               return Wrap(
-                spacing: 12,
-                runSpacing: 12,
+                spacing: spacing,
+                runSpacing: spacing,
                 children: _courses
                     .map(
                       (course) => SizedBox(
-                        width: width,
+                        width: cardWidth,
                         child: _buildCourseCard(course),
                       ),
                     )
