@@ -82,8 +82,8 @@ class _LandingScreenState extends State<LandingScreen>
     'Get Started': '立即开始',
     'Start Free': '免费开始',
     'AI-Powered Learning — Now Available': 'AI驱动学习，现已上线',
-    'Master Any\nSubject — ': '掌握任何\n学科 — ',
-    'Level Up\nEvery Day': '每天都能\n升级进步',
+    'Master Any Subject\n': '掌握任何学科\n',
+    'Level Up Every Day': '每天都能升级进步',
     'Interactive STEM lessons, real-time AI guidance, and a community of study buddies. Stop watching — start doing.':
         '互动式 STEM 课程、实时 AI 指导，以及学习伙伴社区。别再只看视频，现在就动手学习。',
     'Start Learning Free': '免费开始学习',
@@ -458,6 +458,9 @@ class _LandingScreenState extends State<LandingScreen>
 
   Widget _buildHeroCopy({required bool wide}) {
     final hs = wide ? 60.0 : 40.0;
+    final heroHeadlineStyle = _headlineStyle(hs);
+    final heroHeadlineHeight =
+        (((heroHeadlineStyle.height ?? 1) * hs) + 4) / hs;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -492,12 +495,15 @@ class _LandingScreenState extends State<LandingScreen>
         const SizedBox(height: 20),
         RichText(
           text: TextSpan(
-            style: _headlineStyle(hs),
+            style: heroHeadlineStyle.copyWith(height: heroHeadlineHeight),
             children: [
-              TextSpan(text: _s('Master Any\nSubject — ')),
+              TextSpan(text: _s('Master Any Subject\n')),
               TextSpan(
-                text: _s('Level Up\nEvery Day'),
-                style: _headlineStyle(hs).copyWith(color: _C.accent),
+                text: _s('Level Up Every Day'),
+                style: heroHeadlineStyle.copyWith(
+                  color: _C.accent,
+                  height: heroHeadlineHeight,
+                ),
               ),
             ],
           ),
@@ -1821,13 +1827,15 @@ class _HeroMockupState extends State<_HeroMockup>
 
     final normalized = (local / visibleWindow).clamp(0.0, 1.0);
     final rise =
-        (widget.isWide ? 92.0 : 74.0) * Curves.easeOut.transform(normalized);
+        (widget.isWide ? 76.0 : 60.0) * Curves.easeOut.transform(normalized);
     final opacity = math.sin(normalized * math.pi).clamp(0.0, 1.0) * 0.94;
     final scale = 0.94 + (1 - normalized) * 0.08;
+    final baseLeft = widget.isWide ? 56.0 : 44.0;
+    final baseBottom = widget.isWide ? 104.0 : 82.0;
 
     return Positioned(
-      left: 24 + drift * normalized,
-      bottom: (widget.isWide ? 80.0 : 65.0) + rise,
+      left: baseLeft + drift * normalized,
+      bottom: baseBottom + rise,
       child: IgnorePointer(
         child: Opacity(
           opacity: opacity,
@@ -1876,8 +1884,11 @@ class _HeroMockupState extends State<_HeroMockup>
     final isZh = context.watch<LanguageProvider>().t.isZh;
     String s(String en) => isZh ? (_LandingScreenState._zhTexts[en] ?? en) : en;
     final isWide = widget.isWide;
-    final w = isWide ? 360.0 : 300.0;
-    final h = isWide ? 380.0 : 320.0;
+    const mockupScale = 1.25;
+    final baseW = isWide ? 360.0 : 300.0;
+    final baseH = isWide ? 380.0 : 320.0;
+    final w = baseW * mockupScale;
+    final h = baseH * mockupScale;
 
     return AnimatedBuilder(
       animation: _motionCtrl,
@@ -1898,177 +1909,192 @@ class _HeroMockupState extends State<_HeroMockup>
         final swayX = math.sin(progress * math.pi * 2) * (isWide ? 5.0 : 4.0);
         final swayY = math.cos(progress * math.pi * 2) * 4.0;
         final swayRotation = math.sin(progress * math.pi * 2) * 0.02;
+        final courseCardLeft = isWide ? 18.0 : 12.0;
+        final streakCardRight = (isWide ? 60.0 : 44.0) + streakSwayX;
+        final streakCardTop = (isWide ? 10.0 : 8.0) + streakSwayY;
+        final chatCardRight = (isWide ? 66.0 : 52.0) + swayX;
+        final chatCardBottom = (isWide ? 70.0 : 54.0) + swayY;
 
         return SizedBox(
           width: w,
           height: h,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              // Course progress card
-              Positioned(
-                left: 0,
-                top: isWide ? 40 : 30,
-                child: Transform.rotate(
-                  angle: -0.04,
-                  child: _MockCard(
-                    width: isWide ? 220 : 180,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+          child: Transform.scale(
+            scale: mockupScale,
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: baseW,
+              height: baseH,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  // Course progress card
+                  Positioned(
+                    left: courseCardLeft,
+                    top: isWide ? 40 : 30,
+                    child: Transform.rotate(
+                      angle: -0.04,
+                      child: _MockCard(
+                        width: isWide ? 220 : 180,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                color: _C.feat2A.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Icon(
-                                Icons.science_rounded,
-                                size: 16,
-                                color: _C.feat2A,
+                            Row(
+                              children: [
+                                Container(
+                                  width: 28,
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                    color: _C.feat2A.withValues(alpha: 0.15),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Icon(
+                                    Icons.science_rounded,
+                                    size: 16,
+                                    color: _C.feat2A,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  s('Physics 101'),
+                                  style: GoogleFonts.sora(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: _C.ink,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: LinearProgressIndicator(
+                                value: progress,
+                                minHeight: 6,
+                                backgroundColor: _C.accent.withValues(
+                                  alpha: 0.15,
+                                ),
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                  _C.accent,
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(height: 6),
                             Text(
-                              s('Physics 101'),
-                              style: GoogleFonts.sora(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: _C.ink,
+                              progressLabel,
+                              style: GoogleFonts.manrope(
+                                fontSize: 11,
+                                color: _C.bodyMuted,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: progress,
-                            minHeight: 6,
-                            backgroundColor: _C.accent.withValues(alpha: 0.15),
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              _C.accent,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          progressLabel,
-                          style: GoogleFonts.manrope(
-                            fontSize: 11,
-                            color: _C.bodyMuted,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
 
-              // Streak card
-              Positioned(
-                right: streakSwayX,
-                top: streakSwayY,
-                child: Transform.rotate(
-                  angle: streakRotation,
-                  child: _MockCard(
-                    width: isWide ? 152 : 142,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 12,
-                    ),
-                    bgColor: const Color(0xFFFFF3E0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _buildStreakFire(),
-                        const SizedBox(width: 6),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '12',
-                                style: GoogleFonts.sora(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w800,
-                                  color: _C.streakFire,
-                                ),
+                  // Streak card
+                  Positioned(
+                    right: streakCardRight,
+                    top: streakCardTop,
+                    child: Transform.rotate(
+                      angle: streakRotation,
+                      child: _MockCard(
+                        width: isWide ? 152 : 142,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 12,
+                        ),
+                        bgColor: const Color(0xFFFFF3E0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildStreakFire(),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '12',
+                                    style: GoogleFonts.sora(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w800,
+                                      color: _C.streakFire,
+                                    ),
+                                  ),
+                                  Text(
+                                    s('Day Streak'),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.visible,
+                                    style: GoogleFonts.manrope(
+                                      fontSize: 11,
+                                      color: _C.body,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                s('Day Streak'),
-                                maxLines: 1,
-                                overflow: TextOverflow.visible,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // AI chat bubble card
+                  Positioned(
+                    right: chatCardRight,
+                    bottom: chatCardBottom,
+                    child: Transform.rotate(
+                      angle: swayRotation,
+                      child: _MockCard(
+                        width: isWide ? 200 : 170,
+                        bgColor: _C.aiDark,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 26,
+                              height: 26,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [_C.aiPurple, Color(0xFF6D40E7)],
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(
+                                Icons.smart_toy_rounded,
+                                size: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                s('Why does E = mc\u00b2?'),
                                 style: GoogleFonts.manrope(
-                                  fontSize: 11,
-                                  color: _C.body,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
 
-              // AI chat bubble card
-              Positioned(
-                right: 16 + swayX,
-                bottom: (isWide ? 40 : 30) + swayY,
-                child: Transform.rotate(
-                  angle: swayRotation,
-                  child: _MockCard(
-                    width: isWide ? 200 : 170,
-                    bgColor: _C.aiDark,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 26,
-                          height: 26,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [_C.aiPurple, Color(0xFF6D40E7)],
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.smart_toy_rounded,
-                            size: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            s('Why does E = mc\u00b2?'),
-                            style: GoogleFonts.manrope(
-                              fontSize: 12,
-                              color: Colors.white.withValues(alpha: 0.8),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                  // XP floating pills
+                  for (var i = 0; i < _xpPhases.length; i++)
+                    _buildFloatingXpPill(
+                      label: s('+50 XP'),
+                      phase: _xpPhases[i],
+                      drift: _xpHorizontalDrift[i],
                     ),
-                  ),
-                ),
+                ],
               ),
-
-              // XP floating pills
-              for (var i = 0; i < _xpPhases.length; i++)
-                _buildFloatingXpPill(
-                  label: s('+50 XP'),
-                  phase: _xpPhases[i],
-                  drift: _xpHorizontalDrift[i],
-                ),
-            ],
+            ),
           ),
         );
       },
