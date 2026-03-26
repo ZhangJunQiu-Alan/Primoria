@@ -15,15 +15,15 @@ class _C {
   const _C._();
 
   // Brand panel (left, dark)
-  static const panelA = Color(0xFF09122B);
-  static const panelB = Color(0xFF1E1060);
-  static const panelGlow = Color(0xFF3B2C9B);
+  static const panelA = Color(0xFF110A36);
+  static const panelB = Color(0xFF23135E);
+  static const panelGlow = Color(0xFF47309F);
 
   // Form panel (right, light)
   static const formBg = Color(0xFFFFFFFF);
-  static const formFieldBg = Color(0xFFF5F7FA);
+  static const formFieldBg = Color(0xFFFFFFFF);
   static const formFieldBorder = Color(0xFFE2E8F0);
-  static const formFocus = Color(0xFF0D7DEB);
+  static const formFocus = Color(0xFF0A84FF);
 
   // Typography
   static const formTitle = Color(0xFF0A0E1A);
@@ -33,8 +33,8 @@ class _C {
   static const formHint = Color(0xFF9CA3AF);
 
   // CTA button
-  static const btnA = Color(0xFF0D7DEB);
-  static const btnB = Color(0xFF14D7E8);
+  static const btnA = Color(0xFF3C82F6);
+  static const btnB = Color(0xFF58D3E8);
 
   // Social providers
   static const googleBg = Color(0xFFFFFFFF);
@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen>
   bool _obscurePassword = true;
   bool _rememberMe = false;
   bool _isSubmitting = false;
+  bool _isBackToHomeHovered = false;
   String _statusMsg = '';
   String _statusState = ''; // 'error' | 'success' | 'info'
 
@@ -336,25 +337,24 @@ class _LoginScreenState extends State<LoginScreen>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Logo
-                          _buildPanelLogo(),
+                          _buildPanelHeader(),
                           const SizedBox(height: 52),
                           // Headline
                           Text(
                             t.authBrandHeadline,
                             style: GoogleFonts.sora(
-                              fontSize: 42,
+                              fontSize: 48,
                               fontWeight: FontWeight.w800,
                               color: Colors.white,
-                              height: 1.04,
+                              height: 1.02,
                             ),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             t.authBrandSubtitle,
                             style: GoogleFonts.manrope(
-                              fontSize: 15,
-                              color: Colors.white.withValues(alpha: 0.65),
+                              fontSize: 15.5,
+                              color: Colors.white.withValues(alpha: 0.74),
                               height: 1.6,
                             ),
                           ),
@@ -408,6 +408,63 @@ class _LoginScreenState extends State<LoginScreen>
           color: Colors.white,
         ),
       ),
+    ],
+  );
+
+  Widget _buildBackToHomeAction({required Color color}) => MouseRegion(
+    cursor: SystemMouseCursors.click,
+    onEnter: (_) => setState(() => _isBackToHomeHovered = true),
+    onExit: (_) => setState(() => _isBackToHomeHovered = false),
+    child: GestureDetector(
+      onTap: () => Navigator.of(context).pushReplacementNamed('/'),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 160),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: _isBackToHomeHovered
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: _isBackToHomeHovered
+                ? Colors.white.withValues(alpha: 0.2)
+                : Colors.transparent,
+          ),
+          boxShadow: _isBackToHomeHovered
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.16),
+                    blurRadius: 16,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
+              : null,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.home_rounded, size: 20, color: color),
+            const SizedBox(width: 8),
+            Text(
+              _t.authBackToHome,
+              style: GoogleFonts.manrope(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: color,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  Widget _buildPanelHeader() => Row(
+    children: [
+      _buildPanelLogo(),
+      const Spacer(),
+      _buildBackToHomeAction(color: Colors.white),
     ],
   );
 
@@ -578,16 +635,7 @@ class _LoginScreenState extends State<LoginScreen>
           ),
         ),
         const Spacer(),
-        GestureDetector(
-          onTap: () => Navigator.of(context).pushReplacementNamed('/'),
-          child: Text(
-            _t.authBackShort,
-            style: GoogleFonts.manrope(
-              fontSize: 13,
-              color: Colors.white.withValues(alpha: 0.6),
-            ),
-          ),
-        ),
+        _buildBackToHomeAction(color: Colors.white),
       ],
     ),
   );
@@ -607,236 +655,212 @@ class _LoginScreenState extends State<LoginScreen>
             horizontal: isWide ? 56 : 24,
             vertical: isWide ? 48 : 32,
           ),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (isWide) ...[
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushReplacementNamed('/'),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.arrow_back_ios_rounded,
-                            size: 13,
-                            color: _C.formMuted,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            t.authBackToHome,
-                            style: GoogleFonts.manrope(
-                              fontSize: 13,
-                              color: _C.formMuted,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                  ],
-                  // Heading
-                  Text(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Heading
+              SizedBox(
+                width: double.infinity,
+                child: FittedBox(
+                  alignment: Alignment.centerLeft,
+                  fit: BoxFit.scaleDown,
+                  child: Text(
                     t.authWelcomeBackTitle,
+                    maxLines: 1,
                     style: GoogleFonts.sora(
-                      fontSize: isWide ? 32 : 28,
+                      fontSize: isWide ? 52 : 34,
                       fontWeight: FontWeight.w800,
                       color: _C.formTitle,
-                      height: 1.1,
+                      height: 0.98,
                     ),
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    t.authWelcomeBackSubtitle,
-                    style: GoogleFonts.manrope(
-                      fontSize: 14,
-                      color: _C.formSub,
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: 28),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                t.authWelcomeBackSubtitle,
+                style: GoogleFonts.manrope(
+                  fontSize: 15,
+                  color: _C.formFocus,
+                  fontWeight: FontWeight.w600,
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 28),
 
-                  // Email
-                  _buildLabel(t.authEmailLabel),
-                  const SizedBox(height: 6),
-                  _buildFieldBox(
-                    controller: _emailCtrl,
-                    focusNode: _emailFocus,
-                    hint: t.authPlaceholderEmail,
-                    icon: Icons.mail_outline_rounded,
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (_) {
-                      if (_statusState == 'error') _setStatus('', '');
-                    },
-                    onSubmitted: (_) => _passwordFocus.requestFocus(),
-                  ),
-                  const SizedBox(height: 16),
+              // Email
+              _buildLabel(t.authEmailLabel),
+              const SizedBox(height: 6),
+              _buildFieldBox(
+                controller: _emailCtrl,
+                focusNode: _emailFocus,
+                hint: t.authPlaceholderEmail,
+                icon: Icons.mail_outline_rounded,
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (_) {
+                  if (_statusState == 'error') _setStatus('', '');
+                },
+                onSubmitted: (_) => _passwordFocus.requestFocus(),
+              ),
+              const SizedBox(height: 16),
 
-                  // Password
-                  _buildLabel(t.authPasswordLabel),
-                  const SizedBox(height: 6),
-                  _buildFieldBox(
-                    controller: _passwordCtrl,
-                    focusNode: _passwordFocus,
-                    hint: t.authPlaceholderPasswordMin6,
-                    icon: Icons.lock_outline_rounded,
-                    obscure: _obscurePassword,
-                    trailing: _EyeToggle(
-                      obscure: _obscurePassword,
-                      onTap: () =>
-                          setState(() => _obscurePassword = !_obscurePassword),
-                    ),
-                    onChanged: (_) {
-                      if (_statusState == 'error') _setStatus('', '');
-                    },
-                    onSubmitted: (_) => _submit(),
-                  ),
-                  const SizedBox(height: 14),
+              // Password
+              _buildLabel(t.authPasswordLabel),
+              const SizedBox(height: 6),
+              _buildFieldBox(
+                controller: _passwordCtrl,
+                focusNode: _passwordFocus,
+                hint: t.authPlaceholderPasswordMin6,
+                icon: Icons.lock_outline_rounded,
+                obscure: _obscurePassword,
+                trailing: _EyeToggle(
+                  obscure: _obscurePassword,
+                  onTap: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                ),
+                onChanged: (_) {
+                  if (_statusState == 'error') _setStatus('', '');
+                },
+                onSubmitted: (_) => _submit(),
+              ),
+              const SizedBox(height: 14),
 
-                  // Remember + Forgot
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => setState(() => _rememberMe = !_rememberMe),
-                        child: Row(
-                          children: [
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 180),
-                              width: 18,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                  color: _rememberMe
-                                      ? _C.formFocus
-                                      : _C.formFieldBorder,
-                                  width: 1.5,
-                                ),
-                                color: _rememberMe
-                                    ? _C.formFocus
-                                    : Colors.transparent,
-                              ),
-                              child: _rememberMe
-                                  ? const Icon(
-                                      Icons.check_rounded,
-                                      size: 12,
-                                      color: Colors.white,
-                                    )
-                                  : null,
+              // Remember + Forgot
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => setState(() => _rememberMe = !_rememberMe),
+                    child: Row(
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 180),
+                          width: 18,
+                          height: 18,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: _rememberMe
+                                  ? _C.formFocus
+                                  : _C.formFieldBorder,
+                              width: 1.5,
                             ),
-                            const SizedBox(width: 7),
-                            Text(
-                              t.authRememberMe,
-                              style: GoogleFonts.manrope(
-                                fontSize: 13,
-                                color: _C.formSub,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                            color: _rememberMe
+                                ? _C.formFocus
+                                : Colors.transparent,
+                          ),
+                          child: _rememberMe
+                              ? const Icon(
+                                  Icons.check_rounded,
+                                  size: 12,
+                                  color: Colors.white,
+                                )
+                              : null,
                         ),
-                      ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: _showForgotPasswordDialog,
-                        child: Text(
-                          t.authForgotPassword,
+                        const SizedBox(width: 7),
+                        Text(
+                          t.authRememberMe,
                           style: GoogleFonts.manrope(
                             fontSize: 13,
-                            color: _C.btnA,
-                            fontWeight: FontWeight.w600,
+                            color: _C.formSub,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: _showForgotPasswordDialog,
+                    child: Text(
+                      t.authForgotPassword,
+                      style: GoogleFonts.manrope(
+                        fontSize: 13,
+                        color: _C.btnA,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 22),
+
+              // Status message
+              if (_statusMsg.isNotEmpty) ...[
+                _buildStatusBanner(),
+                const SizedBox(height: 14),
+              ],
+
+              // Sign In button
+              _buildPrimaryButton(
+                label: t.authSignInButton,
+                loading: _isSubmitting,
+                onTap: _submit,
+              ),
+              const SizedBox(height: 24),
+
+              // Divider
+              _buildDivider(t.authOrContinueWith),
+              const SizedBox(height: 20),
+
+              // Social buttons
+              _buildSocialButton(
+                onTap: () => _onSocialTap('google'),
+                logo: const _GoogleLogo(size: 20),
+                label: t.authContinueWithGoogle,
+                bg: _C.googleBg,
+                border: _C.googleBorder,
+                textColor: _C.googleText,
+              ),
+              const SizedBox(height: 10),
+              _buildSocialButton(
+                onTap: () => _onSocialTap('apple'),
+                logo: const _AppleLogo(size: 20),
+                label: t.authContinueWithApple,
+                bg: _C.appleBg,
+                border: _C.appleBg,
+                textColor: Colors.white,
+              ),
+              const SizedBox(height: 10),
+              _buildSocialButton(
+                onTap: () => _onSocialTap('wechat'),
+                logo: const _WeChatLogo(size: 22),
+                label: t.authContinueWithWeChat,
+                bg: _C.wechatBg,
+                border: _C.wechatBg,
+                textColor: Colors.white,
+              ),
+              const SizedBox(height: 28),
+
+              // Switch to register
+              Center(
+                child: Text.rich(
+                  TextSpan(
+                    text: t.authNoAccountPrompt,
+                    style: GoogleFonts.manrope(fontSize: 14, color: _C.formSub),
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.baseline,
+                        baseline: TextBaseline.alphabetic,
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(
+                            context,
+                          ).pushReplacementNamed('/register'),
+                          child: Text(
+                            t.authSignUpLink,
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              color: _C.btnA,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 22),
-
-                  // Status message
-                  if (_statusMsg.isNotEmpty) ...[
-                    _buildStatusBanner(),
-                    const SizedBox(height: 14),
-                  ],
-
-                  // Sign In button
-                  _buildPrimaryButton(
-                    label: t.authSignInButton,
-                    loading: _isSubmitting,
-                    onTap: _submit,
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Divider
-                  _buildDivider(t.authOrContinueWith),
-                  const SizedBox(height: 20),
-
-                  // Social buttons
-                  _buildSocialButton(
-                    onTap: () => _onSocialTap('google'),
-                    logo: const _GoogleLogo(size: 20),
-                    label: t.authContinueWithGoogle,
-                    bg: _C.googleBg,
-                    border: _C.googleBorder,
-                    textColor: _C.googleText,
-                  ),
-                  const SizedBox(height: 10),
-                  _buildSocialButton(
-                    onTap: () => _onSocialTap('apple'),
-                    logo: const _AppleLogo(size: 20),
-                    label: t.authContinueWithApple,
-                    bg: _C.appleBg,
-                    border: _C.appleBg,
-                    textColor: Colors.white,
-                  ),
-                  const SizedBox(height: 10),
-                  _buildSocialButton(
-                    onTap: () => _onSocialTap('wechat'),
-                    logo: const _WeChatLogo(size: 22),
-                    label: t.authContinueWithWeChat,
-                    bg: _C.wechatBg,
-                    border: _C.wechatBg,
-                    textColor: Colors.white,
-                  ),
-                  const SizedBox(height: 28),
-
-                  // Switch to register
-                  Center(
-                    child: Text.rich(
-                      TextSpan(
-                        text: t.authNoAccountPrompt,
-                        style: GoogleFonts.manrope(
-                          fontSize: 14,
-                          color: _C.formSub,
-                        ),
-                        children: [
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.baseline,
-                            baseline: TextBaseline.alphabetic,
-                            child: GestureDetector(
-                              onTap: () => Navigator.of(
-                                context,
-                              ).pushReplacementNamed('/register'),
-                              child: Text(
-                                t.authSignUpLink,
-                                style: GoogleFonts.manrope(
-                                  fontSize: 14,
-                                  color: _C.btnA,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -1105,7 +1129,13 @@ class _FocusableFieldState extends State<_FocusableField> {
                   offset: const Offset(0, 2),
                 ),
               ]
-            : null,
+            : const [
+                BoxShadow(
+                  color: Color(0x050F172A),
+                  blurRadius: 8,
+                  offset: Offset(0, 2),
+                ),
+              ],
       ),
       child: TextField(
         controller: widget.controller,

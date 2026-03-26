@@ -20,9 +20,9 @@ class AppLocalizations {
   String get completed => isZh ? '已完成' : 'Completed';
 
   // ── Auth Screens ────────────────────────────────────────────
-  String get authBackToHome => isZh ? '返回首页' : 'Back to home';
+  String get authBackToHome => isZh ? '返回首页' : 'Back to Home';
   String get authBackShort => isZh ? '← 返回' : '← Back';
-  String get authWelcomeBackTitle => isZh ? '欢迎回来' : 'Welcome back';
+  String get authWelcomeBackTitle => isZh ? '欢迎回来' : 'Welcome Back';
   String get authWelcomeBackSubtitle =>
       isZh ? '登录后继续你的学习旅程。' : 'Sign in to continue your learning journey.';
   String get authEmailLabel => isZh ? '邮箱' : 'Email';
