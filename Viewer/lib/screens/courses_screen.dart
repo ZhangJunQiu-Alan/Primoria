@@ -1,13 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../components/common/viewer_page_shell.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/language_provider.dart';
-import '../services/image_picker_service.dart' as image_picker_service;
+import '../services/study_call_window_service.dart'
+    as study_call_window_service;
 
 /// Community screen — upgraded into a shared workspace.
 /// File name stays the same for routing compatibility.
@@ -21,14 +21,12 @@ class CoursesScreen extends StatefulWidget {
 enum _CommunityWorkspaceSection {
   dashboard,
   ourStudy,
-  notes,
   messages,
   trending,
+  notes,
 }
 
 enum _MessagesActionButton { newItem, call, search, more, attach, mic }
-
-enum _SketchTool { pencil, brush, eraser }
 
 class _CommunityPalette {
   const _CommunityPalette._();
@@ -56,8 +54,6 @@ class _CoursesScreenState extends State<CoursesScreen>
   final TextEditingController _messageComposerController =
       TextEditingController();
   final TextEditingController _studySearchController = TextEditingController();
-  final TextEditingController _noteTitleController = TextEditingController();
-  final TextEditingController _noteBodyController = TextEditingController();
   final ScrollController _messageThreadController = ScrollController();
 
   final math.Random _rng = math.Random();
@@ -65,7 +61,6 @@ class _CoursesScreenState extends State<CoursesScreen>
   final List<_StudyRoom> _studyRooms = <_StudyRoom>[];
   final List<_TrendingDiscussion> _trendingDiscussions =
       <_TrendingDiscussion>[];
-  final List<_CommunityPerson> _peopleToFollow = <_CommunityPerson>[];
   final List<_CommunityNotification> _notifications =
       <_CommunityNotification>[];
   final List<_CommunityNote> _notes = <_CommunityNote>[];
@@ -74,7 +69,6 @@ class _CoursesScreenState extends State<CoursesScreen>
   final Map<int, bool> _userOnlineById = <int, bool>{};
 
   late final AnimationController _floatController;
-  late final AnimationController _planetSpinController;
   late final AnimationController _shootingStarController;
 
   _CommunityWorkspaceSection _section = _CommunityWorkspaceSection.dashboard;
@@ -83,17 +77,13 @@ class _CoursesScreenState extends State<CoursesScreen>
   String _selectedCategory = 'All';
   int? _hoveredUserId;
   int? _selectedConversationId;
-  int? _selectedNoteId;
+  int? _activeStudyCallRoomId;
   _MessagesActionButton? _activeMessagesAction;
   int _nextUserId = 1;
   int _nextConversationId = 1;
   int _nextStudyRoomId = 1;
   int _nextNotificationId = 1;
   int _nextNoteId = 1;
-  int? _activeSketchPointerId;
-  Color _selectedInkColor = _CommunityPalette.blue;
-  double _selectedInkWidth = 3.0;
-  _SketchTool _selectedSketchTool = _SketchTool.pencil;
 
   AppLocalizations get _t => context.read<LanguageProvider>().t;
   bool get _isZh => _t.isZh;
@@ -157,15 +147,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     'Multilingual',
   ];
 
-  static const _inkPalette = [
-    _CommunityPalette.blue,
-    _CommunityPalette.rose,
-    _CommunityPalette.amber,
-    _CommunityPalette.cyan,
-    _CommunityPalette.mint,
-    Color(0xFF0F172A),
-  ];
-
   static const _shootingStars = [
     _ShootingStar(
       startX: 0.08,
@@ -220,10 +201,6 @@ class _CoursesScreenState extends State<CoursesScreen>
       vsync: this,
       duration: const Duration(milliseconds: 4200),
     )..repeat();
-    _planetSpinController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 22000),
-    )..repeat();
     _shootingStarController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 11800),
@@ -243,16 +220,11 @@ class _CoursesScreenState extends State<CoursesScreen>
     _studyRooms.addAll(_seedStudyRooms());
     _notifications.addAll(_seedNotifications());
     _trendingDiscussions.addAll(_seedTrendingDiscussions());
-    _peopleToFollow.addAll(_seedPeopleToFollow());
     _notes.addAll(_seedNotes());
     _seedConversations();
 
     if (_conversations.isNotEmpty) {
       _selectedConversationId = _conversations.first.id;
-    }
-    if (_notes.isNotEmpty) {
-      _selectedNoteId = _notes.first.id;
-      _loadSelectedNoteIntoControllers();
     }
   }
 
@@ -261,11 +233,8 @@ class _CoursesScreenState extends State<CoursesScreen>
     _messageSearchController.dispose();
     _messageComposerController.dispose();
     _studySearchController.dispose();
-    _noteTitleController.dispose();
-    _noteBodyController.dispose();
     _messageThreadController.dispose();
     _floatController.dispose();
-    _planetSpinController.dispose();
     _shootingStarController.dispose();
     super.dispose();
   }
@@ -469,11 +438,19 @@ class _CoursesScreenState extends State<CoursesScreen>
     return [
       _TrendingDiscussion(
         author: 'BrainyOlivia',
+        handle: '@brainyolivia',
         title: _copy(
           'What is the best way to stay consistent with learning?',
           '怎样才能更稳定地坚持学习？',
         ),
-        replies: 120,
+        body: _copy(
+          'I keep starting strong and then falling off after a week. What habits, routines, or accountability systems actually helped you stay on track long term?',
+          '我每次一开始都很有冲劲，但一周后就容易松掉。你们有没有什么真正有效的习惯、节奏或互相监督的方法可以长期坚持？',
+        ),
+        comments: 120,
+        likes: 286,
+        likedByMe: false,
+        timeLabel: _copy('2h ago', '2 小时前'),
         tags: [
           _copy('LearningHabits', '学习习惯'),
           _copy('Motivation', '动力'),
@@ -483,11 +460,19 @@ class _CoursesScreenState extends State<CoursesScreen>
       ),
       _TrendingDiscussion(
         author: 'Katie02',
+        handle: '@katie02',
         title: _copy(
           'How I landed a freelance gig after finishing the business strategy course',
           '完成商业策略课程后，我是如何接到第一份自由职业项目的',
         ),
-        replies: 43,
+        body: _copy(
+          'The biggest shift was turning my coursework into a tiny case-study portfolio. Posting one breakdown a week brought in my first client faster than cold outreach ever did.',
+          '最大的转折点是把课程作业整理成一个小型案例作品集。每周发一次拆解内容，比我之前盲目投递更快带来了第一个客户。',
+        ),
+        comments: 43,
+        likes: 171,
+        likedByMe: true,
+        timeLabel: _copy('5h ago', '5 小时前'),
         tags: [
           _copy('CareerJourney', '职业之路'),
           _copy('Freelancing', '自由职业'),
@@ -497,11 +482,19 @@ class _CoursesScreenState extends State<CoursesScreen>
       ),
       _TrendingDiscussion(
         author: 'Uchiha_Obito',
+        handle: '@uchiha_obito',
         title: _copy(
           'Show me your note-taking setup for live study sessions',
           '来晒晒你们做直播共学时的笔记配置吧',
         ),
-        replies: 29,
+        body: _copy(
+          'I am experimenting with split-screen note cards, a timer, and a shared whiteboard. Curious what setups help you stay focused without overcomplicating the session.',
+          '我最近在尝试分屏笔记卡片、计时器和共享白板。很好奇大家都是怎么兼顾专注和简洁，不把共学流程弄得太复杂的。',
+        ),
+        comments: 29,
+        likes: 94,
+        likedByMe: false,
+        timeLabel: _copy('Yesterday', '昨天'),
         tags: [
           _copy('StudySetup', '学习配置'),
           _copy('Notes', '笔记'),
@@ -512,37 +505,8 @@ class _CoursesScreenState extends State<CoursesScreen>
     ];
   }
 
-  List<_CommunityPerson> _seedPeopleToFollow() {
-    return [
-      _CommunityPerson(
-        name: 'Uchiha_Obito',
-        role: _copy('UX Enthusiast', '用户体验爱好者'),
-        color: const Color(0xFFF59E0B),
-      ),
-      _CommunityPerson(
-        name: 'Karina01',
-        role: _copy('Designer', '设计师'),
-        color: const Color(0xFFF472B6),
-      ),
-      _CommunityPerson(
-        name: 'Designerzzz',
-        role: _copy('Frontend Builder', '前端创作者'),
-        color: const Color(0xFF06B6D4),
-      ),
-    ];
-  }
-
   List<_CommunityNote> _seedNotes() {
-    return [
-      _CommunityNote(
-        id: _nextNoteId++,
-        title: '',
-        body: '',
-        attachments: <_NoteAttachment>[],
-        strokes: <_SketchStroke>[],
-        updatedAt: DateTime.now().subtract(const Duration(minutes: 3)),
-      ),
-    ];
+    return [_createBlankNote()];
   }
 
   void _seedConversations() {
@@ -755,14 +719,6 @@ class _CoursesScreenState extends State<CoursesScreen>
     if (_selectedConversationId == null) return null;
     for (final conversation in _conversations) {
       if (conversation.id == _selectedConversationId) return conversation;
-    }
-    return null;
-  }
-
-  _CommunityNote? get _selectedNote {
-    if (_selectedNoteId == null) return null;
-    for (final note in _notes) {
-      if (note.id == _selectedNoteId) return note;
     }
     return null;
   }
@@ -1326,201 +1282,33 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  void _syncSelectedNoteFromControllers() {
-    final note = _selectedNote;
-    if (note == null) return;
-    note.title = _noteTitleController.text.trim();
-    note.body = _noteBodyController.text;
-    note.updatedAt = DateTime.now();
+  _CommunityNote _createBlankNote() {
+    return _CommunityNote(id: _nextNoteId++, title: '', body: '');
   }
 
-  void _loadSelectedNoteIntoControllers() {
-    final note = _selectedNote;
-    if (note == null) {
-      _noteTitleController.clear();
-      _noteBodyController.clear();
-      return;
-    }
-    _noteTitleController.text = note.title;
-    _noteBodyController.text = note.body;
-  }
-
-  void _createNewNote() {
-    _syncSelectedNoteFromControllers();
-    final note = _CommunityNote(
-      id: _nextNoteId++,
-      title: '',
-      body: '',
-      attachments: <_NoteAttachment>[],
-      strokes: <_SketchStroke>[],
-      updatedAt: DateTime.now(),
-    );
-    setState(() {
-      _notes.insert(0, note);
-      _selectedNoteId = note.id;
-      _loadSelectedNoteIntoControllers();
-    });
-  }
-
-  void _selectNoteForEditing(int noteId) {
-    _syncSelectedNoteFromControllers();
-    setState(() {
-      _selectedNoteId = noteId;
-      _loadSelectedNoteIntoControllers();
-    });
-  }
-
-  Future<void> _copyNoteContent(_CommunityNote note) async {
-    if (note.id == _selectedNoteId) {
-      _syncSelectedNoteFromControllers();
-    }
-    final title = note.title.trim();
-    final body = note.body.trim();
-    final composed = [
-      if (title.isNotEmpty) title,
-      if (body.isNotEmpty) body,
-    ].join('\n\n');
-
-    if (composed.isEmpty) {
-      _showMessageSnack(_copy('Nothing to copy yet.', '暂时没有可复制的内容。'));
-      return;
-    }
-
-    await Clipboard.setData(ClipboardData(text: composed));
-    if (!mounted) return;
-    _showMessageSnack(_copy('Note copied.', '笔记已复制。'));
-  }
-
-  void _deleteNote(_CommunityNote note) {
-    final selectedId = _selectedNoteId;
-    _syncSelectedNoteFromControllers();
-
-    final remainingNotes = _notes.where((item) => item.id != note.id).toList();
-    final replacementNote = remainingNotes.isNotEmpty
-        ? remainingNotes.first
-        : _CommunityNote(
-            id: _nextNoteId++,
-            title: '',
-            body: '',
-            attachments: <_NoteAttachment>[],
-            strokes: <_SketchStroke>[],
-            updatedAt: DateTime.now(),
-          );
-
-    setState(() {
-      _notes
-        ..clear()
-        ..addAll(
-          remainingNotes.isNotEmpty ? remainingNotes : [replacementNote],
-        );
-      if (selectedId == note.id || _selectedNoteId == null) {
-        _selectedNoteId = replacementNote.id;
-        _loadSelectedNoteIntoControllers();
+  void _ensureTrailingBlankNote() {
+    _CommunityNote? trailingBlankNote;
+    for (final note in _notes) {
+      if (_isNoteBlank(note)) {
+        trailingBlankNote = note;
       }
-    });
-
-    _showMessageSnack(_copy('Note deleted.', '笔记已删除。'));
-  }
-
-  Future<void> _pickNoteAttachmentImage() async {
-    final note = _selectedNote;
-    if (note == null) return;
-    final picked = await image_picker_service.pickImageFileBytes();
-    if (!mounted || picked.cancelled) return;
-    if (!picked.success || picked.bytes == null) {
-      _showMessageSnack(
-        _copy('Could not upload that image right now.', '现在暂时无法上传这张图片。'),
-      );
-      return;
     }
 
-    final label = (picked.fileName ?? '').trim().isEmpty
-        ? _copy('Uploaded image', '已上传图片')
-        : picked.fileName!.trim();
-    setState(() {
-      note.attachments.add(
-        _NoteAttachment(
-          label: label,
-          caption: _copy('Uploaded to your shared assets board.', '已上传到共享素材区。'),
-          tint: _newUserColors[_rng.nextInt(_newUserColors.length)].withValues(
-            alpha: 0.14,
-          ),
-          bytes: picked.bytes,
-        ),
-      );
-      note.updatedAt = DateTime.now();
-    });
-    _showMessageSnack(_copy('Image added to assets.', '图片已加入素材区。'));
+    _notes.removeWhere(_isNoteBlank);
+    _notes.add(trailingBlankNote ?? _createBlankNote());
   }
 
-  void _clearSelectedNoteAssets() {
-    final note = _selectedNote;
-    if (note == null || note.attachments.isEmpty) return;
+  void _updateNoteTitle(_CommunityNote note, String value) {
     setState(() {
-      note.attachments.clear();
-      note.updatedAt = DateTime.now();
-    });
-    _showMessageSnack(_copy('Assets cleared.', '素材已清空。'));
-  }
-
-  void _editSelectedNoteAssets() {
-    _showMessageSnack(_copy('Asset editing is coming next.', '素材编辑功能即将推出。'));
-  }
-
-  void _clearSelectedSketch() {
-    final note = _selectedNote;
-    if (note == null) return;
-    setState(() {
-      note.strokes.clear();
-      note.updatedAt = DateTime.now();
+      note.title = value;
+      _ensureTrailingBlankNote();
     });
   }
 
-  void _undoSelectedSketch() {
-    final note = _selectedNote;
-    if (note == null || note.strokes.isEmpty) return;
+  void _updateNoteBody(_CommunityNote note, String value) {
     setState(() {
-      note.strokes.removeLast();
-      note.updatedAt = DateTime.now();
-    });
-  }
-
-  void _deleteSelectedSketch() {
-    final note = _selectedNote;
-    if (note == null) return;
-    setState(() {
-      note.strokes.clear();
-      note.updatedAt = DateTime.now();
-    });
-    _showMessageSnack(_copy('Sketch deleted.', '草图已删除。'));
-  }
-
-  void _startStroke(Offset point) {
-    final note = _selectedNote;
-    if (note == null) return;
-    setState(() {
-      note.strokes.add(
-        _SketchStroke(
-          points: [point],
-          color: _selectedInkColor,
-          width: _selectedInkWidth,
-          tool: _selectedSketchTool,
-        ),
-      );
-      note.updatedAt = DateTime.now();
-    });
-  }
-
-  void _endStroke() {
-    _activeSketchPointerId = null;
-  }
-
-  void _appendStroke(Offset point) {
-    final note = _selectedNote;
-    if (note == null || note.strokes.isEmpty) return;
-    setState(() {
-      note.strokes.last.points.add(point);
-      note.updatedAt = DateTime.now();
+      note.body = value;
+      _ensureTrailingBlankNote();
     });
   }
 
@@ -1587,10 +1375,78 @@ class _CoursesScreenState extends State<CoursesScreen>
     });
   }
 
-  void _leaveStudyRoom(_StudyRoom room) {
+  List<String> _studyRoomParticipants(_StudyRoom room) {
+    final participants = <String>[];
+    if (room.joined) {
+      participants.add('You');
+    }
+    for (final member in room.members) {
+      if (!participants.contains(member)) {
+        participants.add(member);
+      }
+    }
+    return participants;
+  }
+
+  String _colorToCssHex(Color color) {
+    final value = color.toARGB32().toRadixString(16).padLeft(8, '0');
+    return '#${value.substring(2)}';
+  }
+
+  Future<void> _openStudyRoomCall(_StudyRoom room) async {
+    if (!room.joined) {
+      _joinStudyRoom(room);
+    }
+
+    if (room.linkedConversationId == null) {
+      setState(() {
+        final conversation = _createStudyConversation(room);
+        _selectedConversationId = conversation.id;
+      });
+    }
+
+    final result = await study_call_window_service.openStudyCallWindow(
+      roomTitle: room.title,
+      focus: room.focus,
+      schedule: room.schedule,
+      participants: _studyRoomParticipants(room),
+      accentHex: _colorToCssHex(room.accent),
+    );
+
+    if (!mounted) return;
+
+    if (!result.opened) {
+      _showMessageSnack(
+        result.message ??
+            _copy(
+              'Unable to open the group call window right now.',
+              '暂时无法打开群组通话窗口。',
+            ),
+      );
+      return;
+    }
+
     setState(() {
-      room.joined = false;
-      room.members.remove('You');
+      _activeStudyCallRoomId = room.id;
+      _selectedConversationId = room.linkedConversationId;
+      _section = _CommunityWorkspaceSection.ourStudy;
+      _addNotification(
+        title: _copy('Opened ${room.title} call', '已打开 ${room.title} 通话'),
+        body: _copy(
+          'The study room is now running in a pop-out call window.',
+          '这个学习房间已经在弹出的通话窗口中运行。',
+        ),
+        icon: Icons.video_call_rounded,
+        color: room.accent,
+      );
+    });
+  }
+
+  void _deleteStudyRoom(_StudyRoom room) {
+    setState(() {
+      if (_activeStudyCallRoomId == room.id) {
+        _activeStudyCallRoomId = null;
+      }
       if (room.linkedConversationId != null) {
         _conversations.removeWhere(
           (conversation) => conversation.id == room.linkedConversationId,
@@ -1601,15 +1457,15 @@ class _CoursesScreenState extends State<CoursesScreen>
               : _conversations.first.id;
         }
       }
-      room.linkedConversationId = null;
+      _studyRooms.removeWhere((candidate) => candidate.id == room.id);
       _addNotification(
-        title: _copy('Left ${room.title}', '已退出 ${room.title}'),
+        title: _copy('Deleted ${room.title}', '已删除 ${room.title}'),
         body: _copy(
-          'You can always rejoin it from Trending later.',
-          '之后仍然可以在 Trending 页面重新加入。',
+          'The group call was removed from your Our Study manager.',
+          '这个群组通话已经从你的 Our Study 管理器中移除。',
         ),
-        icon: Icons.logout_rounded,
-        color: room.accent,
+        icon: Icons.delete_outline_rounded,
+        color: _CommunityPalette.red,
       );
     });
   }
@@ -1625,80 +1481,121 @@ class _CoursesScreenState extends State<CoursesScreen>
     final draft = await showDialog<_NewStudyGroupDraft>(
       context: context,
       builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text(_copy('Create study group', '创建学习小组')),
-              content: SizedBox(
-                width: 380,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        labelText: _copy('Group name', '小组名称'),
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: focusController,
-                      decoration: InputDecoration(
-                        labelText: _copy('Focus area', '学习焦点'),
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: scheduleController,
-                      decoration: InputDecoration(
-                        labelText: _copy('Schedule', '时间安排'),
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      initialValue: category,
-                      decoration: InputDecoration(
-                        labelText: _t.communityCategoryLabel,
-                        border: const OutlineInputBorder(),
-                      ),
-                      items: _communityCategories.map((item) {
-                        return DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(_categoryLabel(item, _t)),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value == null) return;
-                        setDialogState(() => category = value);
-                      },
-                    ),
-                  ],
+        final baseDialogTheme = _communityDialogTheme(dialogContext);
+        return Theme(
+          data: baseDialogTheme.copyWith(
+            dialogTheme: const DialogThemeData(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(28)),
+              ),
+            ),
+            inputDecorationTheme: baseDialogTheme.inputDecorationTheme.copyWith(
+              filled: true,
+              fillColor: const Color(0xFFF7FAFF),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: 18,
+              ),
+              labelStyle: const TextStyle(color: _CommunityPalette.subtext),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(
+                  color: _CommunityPalette.blue.withValues(alpha: 0.18),
                 ),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: Text(_t.cancel),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(
+                  color: _CommunityPalette.blue.withValues(alpha: 0.18),
                 ),
-                FilledButton(
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop(
-                      _NewStudyGroupDraft(
-                        nameController.text.trim(),
-                        focusController.text.trim(),
-                        scheduleController.text.trim(),
-                        category,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: const BorderSide(
+                  color: _CommunityPalette.blue,
+                  width: 2,
+                ),
+              ),
+            ),
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: _CommunityPalette.blue,
+              selectionColor: Color(0x334F46E5),
+              selectionHandleColor: _CommunityPalette.blue,
+            ),
+          ),
+          child: StatefulBuilder(
+            builder: (context, setDialogState) {
+              return AlertDialog(
+                title: Text(_copy('Create study group', '创建学习小组')),
+                content: SizedBox(
+                  width: 380,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: nameController,
+                        decoration: InputDecoration(
+                          labelText: _copy('Group name', '小组名称'),
+                        ),
                       ),
-                    );
-                  },
-                  child: Text(_copy('Create', '创建')),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: focusController,
+                        decoration: InputDecoration(
+                          labelText: _copy('Focus area', '学习焦点'),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: scheduleController,
+                        decoration: InputDecoration(
+                          labelText: _copy('Schedule', '时间安排'),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      DropdownButtonFormField<String>(
+                        initialValue: category,
+                        decoration: InputDecoration(
+                          labelText: _t.communityCategoryLabel,
+                        ),
+                        items: _communityCategories.map((item) {
+                          return DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(_categoryLabel(item, _t)),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          if (value == null) return;
+                          setDialogState(() => category = value);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            );
-          },
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: Text(_t.cancel),
+                  ),
+                  FilledButton(
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(
+                        _NewStudyGroupDraft(
+                          nameController.text.trim(),
+                          focusController.text.trim(),
+                          scheduleController.text.trim(),
+                          category,
+                        ),
+                      );
+                    },
+                    child: Text(_copy('Create', '创建')),
+                  ),
+                ],
+              );
+            },
+          ),
         );
       },
     );
@@ -1923,8 +1820,64 @@ class _CoursesScreenState extends State<CoursesScreen>
     });
   }
 
-  void _toggleFollowPerson(_CommunityPerson person) {
-    setState(() => person.following = !person.following);
+  void _toggleTrendingLike(_TrendingDiscussion discussion) {
+    setState(() {
+      discussion.likedByMe = !discussion.likedByMe;
+      discussion.likes += discussion.likedByMe ? 1 : -1;
+    });
+  }
+
+  Future<void> _showTrendingCommentDialog(
+    _TrendingDiscussion discussion,
+  ) async {
+    final controller = TextEditingController();
+    final comment = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) {
+        return Theme(
+          data: _communityDialogTheme(dialogContext),
+          child: AlertDialog(
+            title: Text(_copy('Reply to post', '回复帖子')),
+            content: SizedBox(
+              width: 360,
+              child: TextField(
+                controller: controller,
+                autofocus: true,
+                maxLines: 4,
+                minLines: 3,
+                decoration: InputDecoration(
+                  hintText: _copy('Write a thoughtful reply...', '写下你的回复...'),
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: Text(_t.cancel),
+              ),
+              FilledButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop(controller.text.trim());
+                },
+                child: Text(_copy('Comment', '评论')),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    controller.dispose();
+
+    if (!mounted || comment == null || comment.isEmpty) return;
+
+    setState(() => discussion.comments += 1);
+    _showMessageSnack(
+      _copy(
+        'Reply added to ${discussion.author}.',
+        '已回复 ${discussion.author}。',
+      ),
+    );
   }
 
   void _scrollInlineThreadToBottom() {
@@ -2259,7 +2212,7 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   Widget _buildWorkspaceSidebar() {
     return Container(
-      width: 268,
+      width: 228,
       margin: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
         color: _CommunityPalette.surface,
@@ -2885,16 +2838,12 @@ class _CoursesScreenState extends State<CoursesScreen>
                           Positioned.fill(
                             child: IgnorePointer(
                               child: AnimatedBuilder(
-                                animation: Listenable.merge([
-                                  _planetSpinController,
-                                  _shootingStarController,
-                                ]),
+                                animation: _shootingStarController,
                                 builder: (context, child) {
                                   return CustomPaint(
                                     painter: _GalaxyPlanetScenePainter(
                                       planetCenter: planetCenter,
                                       planetRadius: planetRadius,
-                                      spinProgress: _planetSpinController.value,
                                       twinkleProgress:
                                           _shootingStarController.value,
                                       sparkleSeeds: _shootingStars,
@@ -3207,7 +3156,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           ),
           const SizedBox(height: 10),
           Text(
-            _copy('No joined study rooms yet', '还没有已加入的学习房间'),
+            _copy('No group calls yet', '还没有群组通话'),
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800,
@@ -3217,8 +3166,8 @@ class _CoursesScreenState extends State<CoursesScreen>
           const SizedBox(height: 6),
           Text(
             _copy(
-              'Browse Trending and join a group to sync it here automatically.',
-              '去 Trending 页面加入一个群组，它就会自动同步到这里。',
+              'Browse Trending or create a new group to manage your study calls here.',
+              '去 Trending 页面加入群组，或新建一个小组，在这里统一管理通话。',
             ),
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -3242,244 +3191,190 @@ class _CoursesScreenState extends State<CoursesScreen>
   }
 
   Widget _buildStudyRoomCard(_StudyRoom room) {
+    final participants = _studyRoomParticipants(room);
+    final isActiveCall = _activeStudyCallRoomId == room.id;
     return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      background: isActiveCall
+          ? room.accent.withValues(alpha: 0.035)
+          : _CommunityPalette.surface,
+      borderSide: BorderSide(
+        color: isActiveCall
+            ? room.accent.withValues(alpha: 0.34)
+            : _CommunityPalette.border,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final compact = constraints.maxWidth < 760;
+          final details = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: room.tags
-                          .map(
-                            (tag) => _buildTag(
-                              tag,
-                              tint: room.accent.withValues(alpha: 0.12),
-                              color: room.accent,
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
                       room.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 22,
+                        fontSize: 24,
                         fontWeight: FontWeight.w800,
                         color: _CommunityPalette.text,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      room.subtitle,
-                      style: const TextStyle(
-                        fontSize: 13.5,
-                        height: 1.5,
-                        color: _CommunityPalette.subtext,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  FilledButton(
-                    onPressed: room.linkedConversationId == null
-                        ? null
-                        : () {
-                            setState(() {
-                              _section = _CommunityWorkspaceSection.messages;
-                              _selectedConversationId =
-                                  room.linkedConversationId;
-                            });
-                          },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: room.accent,
-                      foregroundColor: Colors.white,
-                      disabledBackgroundColor: room.accent.withValues(
-                        alpha: 0.24,
-                      ),
-                      disabledForegroundColor: Colors.white.withValues(
-                        alpha: 0.78,
-                      ),
-                    ),
-                    child: Text(_copy('Open chat', '打开聊天')),
-                  ),
-                  OutlinedButton(
-                    onPressed: () => _leaveStudyRoom(room),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: room.accent,
-                      side: BorderSide(
-                        color: room.accent.withValues(alpha: 0.56),
-                        width: 1.5,
-                      ),
-                    ),
-                    child: Text(_copy('Leave', '退出')),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          Row(
-            children: [
-              Expanded(
-                child: _buildInfoPill(
-                  icon: Icons.my_location_rounded,
-                  label: room.focus,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _buildInfoPill(
-                  icon: Icons.schedule_rounded,
-                  label: room.schedule,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _buildInfoPill(
-                  icon: Icons.groups_rounded,
-                  label: _copy(
-                    '${room.members.length} members',
-                    '${room.members.length} 位成员',
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _copy('Shared progress', '共享进度'),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: _CommunityPalette.subtext,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(999),
-                      child: LinearProgressIndicator(
-                        minHeight: 10,
-                        value: room.progress,
-                        backgroundColor: const Color(0xFFE2E8F0),
-                        color: room.accent,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 14),
-              Text(
-                '${(room.progress * 100).round()}%',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                  color: room.accent,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          Text(
-            _copy('Materials and study assets', '资料与学习资产'),
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: room.materials
-                .map(
-                  (material) => _buildStudyMaterialCard(material, room.accent),
-                )
-                .toList(),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            _copy('Shared goals', '共享目标'),
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
-          const SizedBox(height: 10),
-          ...room.goals.map(
-            (goal) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: room.accent,
-                      shape: BoxShape.circle,
-                    ),
                   ),
                   const SizedBox(width: 10),
+                  _buildTag(
+                    isActiveCall
+                        ? _copy('In call', '通话中')
+                        : _copy('Ready to join', '准备加入'),
+                    tint: room.accent.withValues(alpha: 0.12),
+                    color: room.accent,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 12,
+                runSpacing: 8,
+                children: [
+                  _buildStudyRoomMetaItem(
+                    icon: Icons.schedule_rounded,
+                    label: room.schedule,
+                  ),
+                  _buildStudyRoomMetaItem(
+                    icon: Icons.groups_rounded,
+                    label: _copy(
+                      '${participants.length} members',
+                      '${participants.length} 位成员',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  _buildStudyParticipantStrip(
+                    participants: participants,
+                    accent: room.accent,
+                  ),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      goal,
+                      participants.take(3).join(_isZh ? ' · ' : ', '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 13,
-                        height: 1.45,
                         color: _CommunityPalette.subtext,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+
+          final actions = Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildStudyRoomIconAction(
+                tooltip: _copy('Join call', '加入通话'),
+                icon: Icons.video_call_rounded,
+                color: room.accent,
+                onPressed: () => _openStudyRoomCall(room),
+              ),
+              const SizedBox(width: 10),
+              _buildStudyRoomIconAction(
+                tooltip: _copy('Delete group', '删除群组'),
+                icon: Icons.delete_outline_rounded,
+                color: _CommunityPalette.red,
+                onPressed: () => _deleteStudyRoom(room),
+              ),
+            ],
+          );
+
+          if (compact) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildStudyRoomLeadingOrb(room.accent),
+                    const SizedBox(width: 14),
+                    Expanded(child: details),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                actions,
+              ],
+            );
+          }
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildStudyRoomLeadingOrb(room.accent),
+              const SizedBox(width: 18),
+              Expanded(child: details),
+              const SizedBox(width: 18),
+              actions,
+            ],
+          );
+        },
       ),
     );
   }
 
-  Widget _buildInfoPill({required IconData icon, required String label}) {
+  Widget _buildStudyRoomLeadingOrb(Color accent) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      width: 68,
+      height: 68,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            accent.withValues(alpha: 0.92),
+            accent.withValues(alpha: 0.64),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: accent.withValues(alpha: 0.24),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
+          ),
+        ],
+      ),
+      child: const Icon(Icons.videocam_rounded, color: Colors.white, size: 28),
+    );
+  }
+
+  Widget _buildStudyRoomMetaItem({
+    required IconData icon,
+    required String label,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
         color: _CommunityPalette.surfaceMuted,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(999),
         border: Border.all(color: _CommunityPalette.border),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 16, color: _CommunityPalette.subtext),
           const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.w600,
-                color: _CommunityPalette.text,
-              ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12.5,
+              fontWeight: FontWeight.w700,
+              color: _CommunityPalette.text,
             ),
           ),
         ],
@@ -3487,472 +3382,277 @@ class _CoursesScreenState extends State<CoursesScreen>
     );
   }
 
-  Widget _buildStudyMaterialCard(_StudyMaterial material, Color accent) {
-    return Container(
-      width: 180,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _CommunityPalette.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildStudyParticipantStrip({
+    required List<String> participants,
+    required Color accent,
+  }) {
+    final visibleParticipants = participants.take(3).toList(growable: false);
+    final extraCount = participants.length - visibleParticipants.length;
+
+    return SizedBox(
+      width: 34.0 * visibleParticipants.length + (extraCount > 0 ? 34 : 0),
+      height: 34,
+      child: Stack(
         children: [
-          Text(
-            material.type,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: accent,
+          for (var i = 0; i < visibleParticipants.length; i++)
+            Positioned(
+              left: i * 24,
+              child: _buildStudyParticipantAvatar(
+                name: visibleParticipants[i],
+                accent: accent,
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            material.title,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: _CommunityPalette.text,
+          if (extraCount > 0)
+            Positioned(
+              left: visibleParticipants.length * 24,
+              child: Container(
+                width: 34,
+                height: 34,
+                decoration: BoxDecoration(
+                  color: _CommunityPalette.text,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  '+$extraCount',
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            material.status,
-            style: const TextStyle(
-              fontSize: 12,
-              color: _CommunityPalette.subtext,
-            ),
-          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildStudyParticipantAvatar({
+    required String name,
+    required Color accent,
+  }) {
+    return Container(
+      width: 34,
+      height: 34,
+      decoration: BoxDecoration(
+        color: accent.withValues(alpha: 0.16),
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        _studyParticipantInitials(name),
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          color: accent,
+        ),
+      ),
+    );
+  }
+
+  String _studyParticipantInitials(String name) {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return '?';
+    final parts = trimmed
+        .split(RegExp(r'\s+'))
+        .where((part) => part.isNotEmpty)
+        .toList(growable: false);
+    if (parts.isEmpty) return '?';
+    final first = parts.first.substring(0, 1).toUpperCase();
+    if (parts.length == 1) {
+      return first;
+    }
+    final last = parts.last.substring(0, 1).toUpperCase();
+    return '$first$last';
+  }
+
+  Widget _buildStudyRoomIconAction({
+    required String tooltip,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onPressed,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(16),
+          child: Ink(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: color.withValues(alpha: 0.18)),
+            ),
+            child: Icon(icon, size: 24, color: color),
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildNotesPage({required bool isWideLayout}) {
-    final selectedNote = _selectedNote;
-    if (selectedNote == null) {
-      return Center(
-        child: FilledButton(
-          onPressed: _createNewNote,
-          child: Text(_copy('Create your first note', '创建你的第一份笔记')),
-        ),
-      );
-    }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const canvasColor = Colors.white;
+        final spacing = isWideLayout ? 22.0 : 18.0;
+        final columnCount = math.max(
+          1,
+          math.min(
+            3,
+            ((constraints.maxWidth + spacing) / (310 + spacing)).floor(),
+          ),
+        );
+        final rawCardWidth = columnCount == 1
+            ? constraints.maxWidth
+            : (constraints.maxWidth - spacing * (columnCount - 1)) /
+                  columnCount;
+        final cardWidth = math.min(rawCardWidth, 430.0);
 
-    final editor = Column(
+        return ColoredBox(
+          color: canvasColor,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(
+              isWideLayout ? 26 : 18,
+              isWideLayout ? 26 : 18,
+              isWideLayout ? 26 : 18,
+              isWideLayout ? 30 : 24,
+            ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: math.max(0, constraints.maxHeight - 56),
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: math.min(
+                      constraints.maxWidth,
+                      cardWidth * 3 + spacing * 2,
+                    ),
+                  ),
+                  child: Wrap(
+                    spacing: spacing,
+                    runSpacing: isWideLayout ? 26 : 20,
+                    children: _notes
+                        .map(
+                          (note) => SizedBox(
+                            width: cardWidth,
+                            child: _buildStickyNoteCard(note),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStickyNoteCard(_CommunityNote note) {
+    final isBlank = _isNoteBlank(note);
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ..._notes.map(
-          (note) => Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: _buildNoteSection(note),
+        Container(
+          constraints: const BoxConstraints(minHeight: 180),
+          padding: const EdgeInsets.fromLTRB(26, 24, 26, 24),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3F8FF),
+            borderRadius: BorderRadius.circular(34),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.045),
+                blurRadius: 26,
+                offset: const Offset(0, 12),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: 16),
-        _buildSurfaceCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Text(
-                    'Assets',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: _CommunityPalette.text,
-                    ),
+              TextFormField(
+                key: ValueKey('note-title-${note.id}'),
+                initialValue: note.title,
+                onChanged: (value) => _updateNoteTitle(note, value),
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.sentences,
+                cursorColor: _CommunityPalette.text,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontSize: 18,
+                  height: 1.2,
+                  fontWeight: FontWeight.w500,
+                  color: _CommunityPalette.text,
+                ),
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  hintText: _copy("What's on your mind...", '你在想些什么…'),
+                  hintStyle: const TextStyle(
+                    fontSize: 18,
+                    height: 1.2,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFFA3A3A3),
                   ),
-                  const Spacer(),
-                  _buildNoteActionIcon(
-                    icon: Icons.add_rounded,
-                    tooltip: _copy('Add asset', '添加素材'),
-                    onTap: _pickNoteAttachmentImage,
-                    color: _CommunityPalette.blue,
-                  ),
-                  const SizedBox(width: 8),
-                  _buildNoteActionIcon(
-                    icon: Icons.edit_outlined,
-                    tooltip: _copy('Edit assets', '编辑素材'),
-                    onTap: _editSelectedNoteAssets,
-                    color: _CommunityPalette.blue,
-                  ),
-                  const SizedBox(width: 8),
-                  _buildNoteActionIcon(
-                    icon: Icons.delete_outline_rounded,
-                    tooltip: _copy('Delete assets', '删除素材'),
-                    onTap: _clearSelectedNoteAssets,
-                    color: _CommunityPalette.red,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              InkWell(
-                onTap: _pickNoteAttachmentImage,
-                borderRadius: BorderRadius.circular(18),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF8FBFF),
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(
-                      color: _CommunityPalette.blue.withValues(alpha: 0.20),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: _CommunityPalette.blue.withValues(alpha: 0.10),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.upload_rounded,
-                          color: _CommunityPalette.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        _copy(
-                          'Drag images here or click to upload',
-                          '把图片拖到这里，或点击上传',
-                        ),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: _CommunityPalette.text,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        _copy(
-                          'Add screenshots, whiteboard captures, or references directly into Assets.',
-                          '把截图、白板内容或参考图直接添加到素材区。',
-                        ),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 12.5,
-                          color: _CommunityPalette.subtext,
-                        ),
-                      ),
-                    ],
-                  ),
+                  filled: true,
+                  fillColor: Colors.transparent,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
-              if (selectedNote.attachments.isNotEmpty) ...[
-                const SizedBox(height: 14),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: selectedNote.attachments.map((attachment) {
-                    return Container(
-                      width: 200,
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: attachment.tint,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: _CommunityPalette.border),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 90,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              gradient: attachment.bytes == null
-                                  ? LinearGradient(
-                                      colors: [attachment.tint, Colors.white],
-                                    )
-                                  : null,
-                            ),
-                            child: attachment.bytes == null
-                                ? const Icon(
-                                    Icons.image_outlined,
-                                    size: 34,
-                                    color: _CommunityPalette.subtext,
-                                  )
-                                : Image.memory(
-                                    attachment.bytes!,
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            attachment.label,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              color: _CommunityPalette.text,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            attachment.caption,
-                            style: const TextStyle(
-                              fontSize: 12.5,
-                              color: _CommunityPalette.subtext,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
+              const SizedBox(height: 18),
+              TextFormField(
+                key: ValueKey('note-body-${note.id}'),
+                initialValue: note.body,
+                onChanged: (value) => _updateNoteBody(note, value),
+                keyboardType: TextInputType.multiline,
+                textCapitalization: TextCapitalization.sentences,
+                cursorColor: _CommunityPalette.text,
+                maxLines: null,
+                minLines: isBlank ? 3 : 6,
+                style: const TextStyle(
+                  fontSize: 14.5,
+                  height: 1.55,
+                  fontWeight: FontWeight.w400,
+                  color: _CommunityPalette.text,
                 ),
-              ],
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        _buildSketchPadCard(selectedNote),
-      ],
-    );
-
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        isWideLayout ? 24 : 18,
-        18,
-        isWideLayout ? 24 : 18,
-        24,
-      ),
-      child: SingleChildScrollView(child: editor),
-    );
-  }
-
-  Widget _buildNoteSection(_CommunityNote note) {
-    final selected = note.id == _selectedNoteId;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
-          child: Row(
-            children: [
-              const Spacer(),
-              _buildNoteActionIcon(
-                icon: Icons.add_rounded,
-                tooltip: _copy('New note', '新建笔记'),
-                onTap: _createNewNote,
-                color: _CommunityPalette.blue,
-              ),
-              const SizedBox(width: 8),
-              _buildNoteActionIcon(
-                icon: Icons.edit_outlined,
-                tooltip: _copy('Edit note', '编辑笔记'),
-                onTap: () => _selectNoteForEditing(note.id),
-                color: _CommunityPalette.blue,
-                isActive: selected,
-              ),
-              const SizedBox(width: 8),
-              _buildNoteActionIcon(
-                icon: Icons.content_copy_rounded,
-                tooltip: _copy('Copy note', '复制笔记'),
-                onTap: () => _copyNoteContent(note),
-                color: _CommunityPalette.subtext,
-              ),
-              const SizedBox(width: 8),
-              _buildNoteActionIcon(
-                icon: Icons.delete_outline_rounded,
-                tooltip: _copy('Delete note', '删除笔记'),
-                onTap: () => _deleteNote(note),
-                color: _CommunityPalette.red,
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  hintText: _copy(
+                    'Eg. The Pros and Cons of Penetration Testing...',
+                    '例如：渗透测试的优缺点……',
+                  ),
+                  hintStyle: const TextStyle(
+                    fontSize: 14.5,
+                    height: 1.55,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF8E8E8E),
+                  ),
+                  filled: true,
+                  fillColor: Colors.transparent,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
+                ),
               ),
             ],
           ),
         ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            if (!selected) {
-              _selectNoteForEditing(note.id);
-            }
-          },
-          child: _buildSurfaceCard(
-            padding: const EdgeInsets.fromLTRB(24, 22, 24, 22),
-            child: selected
-                ? _buildEditableNoteCard()
-                : _buildRenderedNoteCard(note),
-          ),
-        ),
       ],
-    );
-  }
-
-  Widget _buildEditableNoteCard() {
-    final note = _selectedNote;
-    final isBlank = note == null || _isNoteBlank(note);
-    const fieldFill = Color(0xFFF8FBFF);
-    final fieldBorder = _CommunityPalette.blue.withValues(alpha: 0.20);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextField(
-          controller: _noteTitleController,
-          onChanged: (_) => setState(_syncSelectedNoteFromControllers),
-          keyboardType: TextInputType.text,
-          textCapitalization: TextCapitalization.sentences,
-          style: TextStyle(
-            fontSize: isBlank ? 17 : 24,
-            height: 1.2,
-            fontWeight: FontWeight.w800,
-            color: _CommunityPalette.text,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: fieldFill,
-            contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
-            hintText: _copy("What's on your mind...", '你在想些什么…'),
-            hintStyle: const TextStyle(
-              fontSize: 17,
-              height: 1.2,
-              fontWeight: FontWeight.w700,
-              color: _CommunityPalette.subtle,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: fieldBorder),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: fieldBorder),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: fieldBorder, width: 1.5),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        TextField(
-          controller: _noteBodyController,
-          onChanged: (_) => setState(_syncSelectedNoteFromControllers),
-          keyboardType: TextInputType.multiline,
-          textCapitalization: TextCapitalization.sentences,
-          maxLines: null,
-          minLines: isBlank ? 4 : 7,
-          style: const TextStyle(
-            fontSize: 15.5,
-            height: 1.65,
-            fontWeight: FontWeight.w500,
-            color: _CommunityPalette.text,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: fieldFill,
-            alignLabelWithHint: true,
-            contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
-            hintText: _copy('Type Here... ✅🔥🙂', '在这里输入... ✅🔥🙂'),
-            hintStyle: const TextStyle(
-              fontSize: 13.5,
-              height: 1.6,
-              fontWeight: FontWeight.w500,
-              color: _CommunityPalette.subtle,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: fieldBorder),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: fieldBorder),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: fieldBorder, width: 1.5),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRenderedNoteCard(_CommunityNote note) {
-    final title = note.title.trim();
-    final body = note.body.trim();
-    final isBlank = _isNoteBlank(note);
-
-    if (isBlank) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _copy("What's on your mind...", '你在想些什么…'),
-            style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-              color: _CommunityPalette.subtle,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            _copy('Type Here...', '在这里输入...'),
-            style: const TextStyle(
-              fontSize: 13.5,
-              color: _CommunityPalette.subtle,
-            ),
-          ),
-        ],
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title.isEmpty ? _copy('Untitled note', '未命名笔记') : title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
-            color: _CommunityPalette.text,
-          ),
-        ),
-        const SizedBox(height: 12),
-        SelectableText(
-          body,
-          style: const TextStyle(
-            fontSize: 15,
-            height: 1.65,
-            fontWeight: FontWeight.w500,
-            color: _CommunityPalette.text,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNoteActionIcon({
-    required IconData icon,
-    required String tooltip,
-    required VoidCallback onTap,
-    required Color color,
-    bool isActive = false,
-  }) {
-    return Tooltip(
-      message: tooltip,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(999),
-        child: Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(
-            color: isActive ? color.withValues(alpha: 0.10) : Colors.white,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: isActive
-                  ? color.withValues(alpha: 0.28)
-                  : _CommunityPalette.border,
-            ),
-          ),
-          child: Icon(icon, size: 18, color: color),
-        ),
-      ),
     );
   }
 
@@ -3960,255 +3660,31 @@ class _CoursesScreenState extends State<CoursesScreen>
     return note.title.trim().isEmpty && note.body.trim().isEmpty;
   }
 
-  Widget _buildSketchPadCard(_CommunityNote note) {
-    final pixelLabel = '${_selectedInkWidth.round()}px';
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                _copy('Sketch pad', '草图板'),
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  color: _CommunityPalette.text,
-                ),
-              ),
-              const Spacer(),
-              _buildNoteActionIcon(
-                icon: Icons.undo_rounded,
-                tooltip: _copy('Undo stroke', '撤销笔画'),
-                onTap: _undoSelectedSketch,
-                color: _CommunityPalette.blue,
-              ),
-              const SizedBox(width: 8),
-              _buildNoteActionIcon(
-                icon: Icons.layers_clear_rounded,
-                tooltip: _copy('Clear sketch', '清除草图'),
-                onTap: _clearSelectedSketch,
-                color: _CommunityPalette.blue,
-              ),
-              const SizedBox(width: 8),
-              _buildNoteActionIcon(
-                icon: Icons.delete_outline_rounded,
-                tooltip: _copy('Delete sketch', '删除草图'),
-                onTap: _deleteSelectedSketch,
-                color: _CommunityPalette.red,
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final compact = constraints.maxWidth < 860;
-              final palette = Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _inkPalette.map((color) {
-                  final selected = color == _selectedInkColor;
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedInkColor = color),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 160),
-                      width: selected ? 28 : 22,
-                      height: selected ? 28 : 22,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: selected ? Colors.black : Colors.white,
-                          width: selected ? 2.5 : 1,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: color.withValues(alpha: 0.18),
-                            blurRadius: selected ? 10 : 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              );
-
-              final toolsAndSize = Row(
-                children: [
-                  _buildSketchToolButton(
-                    tool: _SketchTool.pencil,
-                    icon: Icons.edit_rounded,
-                    tooltip: _copy('Pencil', '铅笔'),
-                  ),
-                  const SizedBox(width: 8),
-                  _buildSketchToolButton(
-                    tool: _SketchTool.brush,
-                    icon: Icons.brush_rounded,
-                    tooltip: _copy('Brush', '画笔'),
-                  ),
-                  const SizedBox(width: 8),
-                  _buildSketchToolButton(
-                    tool: _SketchTool.eraser,
-                    icon: Icons.auto_fix_off_rounded,
-                    tooltip: _copy('Eraser', '橡皮擦'),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        trackHeight: 8,
-                        activeTrackColor: _CommunityPalette.blue,
-                        inactiveTrackColor: _CommunityPalette.blue.withValues(
-                          alpha: 0.12,
-                        ),
-                        thumbColor: Colors.white,
-                        overlayColor: _CommunityPalette.blue.withValues(
-                          alpha: 0.12,
-                        ),
-                        thumbShape: const RoundSliderThumbShape(
-                          enabledThumbRadius: 11,
-                        ),
-                        overlayShape: const RoundSliderOverlayShape(
-                          overlayRadius: 20,
-                        ),
-                      ),
-                      child: Slider(
-                        value: _selectedInkWidth.clamp(1.0, 100.0),
-                        min: 1,
-                        max: 100,
-                        divisions: 99,
-                        label: pixelLabel,
-                        onChanged: (value) {
-                          setState(() => _selectedInkWidth = value);
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  SizedBox(
-                    width: 52,
-                    child: Text(
-                      pixelLabel,
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: _CommunityPalette.text,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-
-              if (compact) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [palette, const SizedBox(height: 14), toolsAndSize],
-                );
-              }
-
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(child: palette),
-                  const SizedBox(width: 18),
-                  SizedBox(width: 420, child: toolsAndSize),
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: 14),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: MouseRegion(
-              cursor: SystemMouseCursors.precise,
-              child: Listener(
-                behavior: HitTestBehavior.opaque,
-                onPointerDown: (event) {
-                  _activeSketchPointerId = event.pointer;
-                  _startStroke(event.localPosition);
-                },
-                onPointerMove: (event) {
-                  if (_activeSketchPointerId != event.pointer) return;
-                  _appendStroke(event.localPosition);
-                },
-                onPointerUp: (_) => _endStroke(),
-                onPointerCancel: (_) => _endStroke(),
-                child: Container(
-                  height: 300,
-                  width: double.infinity,
-                  color: const Color(0xFFF8FBFF),
-                  child: CustomPaint(painter: _SketchPadPainter(note.strokes)),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSketchToolButton({
-    required _SketchTool tool,
-    required IconData icon,
-    required String tooltip,
-  }) {
-    final selected = _selectedSketchTool == tool;
-    return Tooltip(
-      message: tooltip,
-      child: InkWell(
-        onTap: () => setState(() => _selectedSketchTool = tool),
-        borderRadius: BorderRadius.circular(14),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          width: 42,
-          height: 42,
-          decoration: BoxDecoration(
-            color: selected
-                ? _CommunityPalette.blue.withValues(alpha: 0.10)
-                : Colors.white,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: selected
-                  ? _CommunityPalette.blue.withValues(alpha: 0.28)
-                  : _CommunityPalette.border,
-            ),
-          ),
-          child: Icon(
-            icon,
-            size: 19,
-            color: selected
-                ? _CommunityPalette.blue
-                : _CommunityPalette.subtext,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildMessagesPage({required bool isWideLayout}) {
     final visibleConversations = _visibleConversations;
     final selectedConversation = _selectedConversation;
 
     if (isWideLayout) {
-      return Row(
-        children: [
-          SizedBox(
-            width: 320,
-            child: _buildDesktopMessagesListPanel(visibleConversations),
-          ),
-          const VerticalDivider(
-            width: 1,
-            thickness: 1,
-            color: Color(0xFFE2E8F0),
-          ),
-          Expanded(
-            child: selectedConversation == null
-                ? _buildDesktopEmptyMessagePanel()
-                : _buildDesktopConversationPanel(selectedConversation),
-          ),
-        ],
+      return Container(
+        color: Colors.white,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 320,
+              child: _buildDesktopMessagesListPanel(visibleConversations),
+            ),
+            const VerticalDivider(
+              width: 1,
+              thickness: 1,
+              color: Color(0xFFE5EAF3),
+            ),
+            Expanded(
+              child: selectedConversation == null
+                  ? _buildDesktopEmptyMessagePanel()
+                  : _buildDesktopConversationPanel(selectedConversation),
+            ),
+          ],
+        ),
       );
     }
 
@@ -4272,7 +3748,20 @@ class _CoursesScreenState extends State<CoursesScreen>
   void _handleConversationCall(_Conversation conversation) {
     _setActiveMessagesAction(_MessagesActionButton.call);
     if (conversation.isGroup) {
-      _showMessageSnack(_copy('Group calls are coming soon.', '群组通话功能即将上线。'));
+      final room = _studyRooms.cast<_StudyRoom?>().firstWhere(
+        (item) => item?.id == conversation.linkedStudyRoomId,
+        orElse: () => null,
+      );
+      if (room != null) {
+        _openStudyRoomCall(room);
+        return;
+      }
+      _showMessageSnack(
+        _copy(
+          'Group call not available for this room yet.',
+          '这个房间暂时还不能发起群组通话。',
+        ),
+      );
       return;
     }
 
@@ -4329,7 +3818,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 14),
             child: Row(
               children: [
                 const SizedBox(width: 42),
@@ -4338,7 +3827,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                     child: Text(
                       _copy('Chats', '聊天'),
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 19,
                         fontWeight: FontWeight.w800,
                         color: _CommunityPalette.text,
                       ),
@@ -4374,14 +3863,14 @@ class _CoursesScreenState extends State<CoursesScreen>
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            padding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
             child: TextField(
               controller: _messageSearchController,
               onChanged: (value) => setState(() => _messageQuery = value),
               decoration: InputDecoration(
                 hintText: _copy('Search', '搜索'),
                 filled: true,
-                fillColor: const Color(0xFFF8FAFC),
+                fillColor: const Color(0xFFF9FBFF),
                 prefixIcon: const Icon(
                   Icons.search_rounded,
                   color: _CommunityPalette.subtle,
@@ -4397,18 +3886,18 @@ class _CoursesScreenState extends State<CoursesScreen>
                         icon: const Icon(Icons.close, size: 18),
                       ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(18),
                   borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(18),
                   borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(18),
                   borderSide: const BorderSide(color: _CommunityPalette.blue),
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                contentPadding: const EdgeInsets.symmetric(vertical: 15),
               ),
             ),
           ),
@@ -4450,7 +3939,7 @@ class _CoursesScreenState extends State<CoursesScreen>
       onTap: () => _selectConversation(conversation),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
         decoration: BoxDecoration(
           gradient: selected
               ? const LinearGradient(
@@ -4465,7 +3954,7 @@ class _CoursesScreenState extends State<CoursesScreen>
         child: Row(
           children: [
             CircleAvatar(
-              radius: 24,
+              radius: 27,
               backgroundColor: selected
                   ? Colors.white
                   : conversation.accent.withValues(alpha: 0.12),
@@ -4516,17 +4005,17 @@ class _CoursesScreenState extends State<CoursesScreen>
                 Text(
                   conversation.time,
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
                     color: selected ? Colors.white70 : _CommunityPalette.subtle,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 if (conversation.unreadCount > 0)
                   Container(
-                    constraints: const BoxConstraints(minWidth: 20),
-                    height: 20,
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    constraints: const BoxConstraints(minWidth: 22),
+                    height: 22,
+                    padding: const EdgeInsets.symmetric(horizontal: 7),
                     decoration: BoxDecoration(
                       color: selected ? Colors.white : _CommunityPalette.red,
                       borderRadius: BorderRadius.circular(999),
@@ -4538,7 +4027,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                           color: selected
                               ? _CommunityPalette.blue
                               : Colors.white,
-                          fontSize: 10,
+                          fontSize: 10.5,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -4549,7 +4038,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                     conversation.isGroup
                         ? Icons.group_rounded
                         : Icons.done_all_rounded,
-                    size: 16,
+                    size: 18,
                     color: previewStatusColor,
                   ),
               ],
@@ -4613,7 +4102,7 @@ class _CoursesScreenState extends State<CoursesScreen>
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
+          padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [Color(0xFF5967F6), Color(0xFF6574FF)],
@@ -4622,7 +4111,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           child: Row(
             children: [
               CircleAvatar(
-                radius: 20,
+                radius: 22,
                 backgroundColor: Colors.white,
                 child: Text(
                   conversation.name[0].toUpperCase(),
@@ -4640,7 +4129,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                     Text(
                       conversation.name,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 17,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
@@ -4781,20 +4270,17 @@ class _CoursesScreenState extends State<CoursesScreen>
                 builder: (context, value, child) {
                   final hasText = value.text.trim().isNotEmpty;
                   if (hasText) {
-                    return FilledButton(
+                    return IconButton(
                       onPressed: () => _sendMessageToConversation(
                         conversation,
                         _messageComposerController.text,
                       ),
-                      style: FilledButton.styleFrom(
-                        minimumSize: const Size(52, 52),
-                        backgroundColor: _CommunityPalette.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                      splashRadius: 22,
+                      icon: const Icon(
+                        Icons.send_rounded,
+                        color: _CommunityPalette.blue,
+                        size: 24,
                       ),
-                      child: const Icon(Icons.send_rounded),
                     );
                   }
                   return _buildMessagesActionButton(
@@ -4813,20 +4299,20 @@ class _CoursesScreenState extends State<CoursesScreen>
 
   Widget _buildDesktopChatBubble({required _ChatMessage message}) {
     final isMine = message.isMine;
-    final bubbleColor = isMine ? const Color(0xFFDCEBFF) : Colors.white;
+    final bubbleColor = isMine ? const Color(0xFFDCE7FF) : Colors.white;
     return Align(
       alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 440),
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.fromLTRB(14, 10, 14, 8),
+        constraints: const BoxConstraints(maxWidth: 560),
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.fromLTRB(18, 14, 18, 10),
         decoration: BoxDecoration(
           color: bubbleColor,
           borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(18),
-            topRight: const Radius.circular(18),
-            bottomLeft: Radius.circular(isMine ? 18 : 6),
-            bottomRight: Radius.circular(isMine ? 6 : 18),
+            topLeft: const Radius.circular(22),
+            topRight: const Radius.circular(22),
+            bottomLeft: Radius.circular(isMine ? 22 : 8),
+            bottomRight: Radius.circular(isMine ? 8 : 22),
           ),
           boxShadow: const [
             BoxShadow(
@@ -4845,8 +4331,9 @@ class _CoursesScreenState extends State<CoursesScreen>
               message.text,
               style: const TextStyle(
                 color: _CommunityPalette.text,
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: FontWeight.w500,
+                height: 1.4,
               ),
             ),
             const SizedBox(height: 6),
@@ -4857,7 +4344,7 @@ class _CoursesScreenState extends State<CoursesScreen>
                   message.sentAtLabel,
                   style: const TextStyle(
                     color: _CommunityPalette.subtle,
-                    fontSize: 10.5,
+                    fontSize: 11,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -4884,43 +4371,22 @@ class _CoursesScreenState extends State<CoursesScreen>
     bool onDark = false,
   }) {
     final isActive = _activeMessagesAction == action;
-    final backgroundColor = onDark
-        ? isActive
-              ? Colors.white.withValues(alpha: 0.22)
-              : Colors.white.withValues(alpha: 0.10)
-        : isActive
-        ? const Color(0xFFEFF3FF)
-        : const Color(0xFFF8FAFC);
     final foregroundColor = onDark
         ? Colors.white
         : isActive
         ? _CommunityPalette.blue
-        : _CommunityPalette.subtext;
+        : _CommunityPalette.blue;
 
-    final child = AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
+    final child = SizedBox(
       width: 40,
       height: 40,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: onDark
-              ? Colors.white.withValues(alpha: 0.08)
-              : const Color(0xFFE2E8F0),
-        ),
-      ),
       child: Icon(icon, color: foregroundColor, size: 20),
     );
 
     if (onTap == null) return child;
     return Material(
       color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: onTap,
-        child: child,
-      ),
+      child: InkResponse(onTap: onTap, radius: 22, child: child),
     );
   }
 
@@ -5513,102 +4979,49 @@ class _CoursesScreenState extends State<CoursesScreen>
         isWideLayout ? 24 : 18,
         24,
       ),
-      child: isWideLayout
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Column(
-                    children: [
-                      _buildTrendingDiscussionsPanel(isWideLayout: true),
-                      const SizedBox(height: 16),
-                      _buildTrendingGroupsPanel(),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 16),
-                SizedBox(
-                  width: 300,
-                  child: Column(children: [_buildPeopleToFollowCard()]),
-                ),
-              ],
-            )
-          : Column(
-              children: [
-                _buildTrendingDiscussionsPanel(isWideLayout: false),
-                const SizedBox(height: 16),
-                _buildTrendingGroupsPanel(),
-                const SizedBox(height: 16),
-                _buildPeopleToFollowCard(),
-              ],
-            ),
+      child: _buildTrendingDiscussionsPanel(isWideLayout: isWideLayout),
     );
   }
 
   Widget _buildTrendingDiscussionsPanel({required bool isWideLayout}) {
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                _copy('Trending Discussions', '热门讨论'),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                  color: _CommunityPalette.text,
-                ),
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  foregroundColor: _CommunityPalette.blue,
-                ),
-                child: Text(_copy('See More', '查看更多')),
-              ),
-            ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(6, 0, 6, 16),
+          child: Text(
+            _copy('Trending Discussions', '热门讨论'),
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+              color: _CommunityPalette.text,
+            ),
           ),
-          const SizedBox(height: 16),
-          isWideLayout
-              ? Row(
-                  children: _trendingDiscussions.take(2).map((discussion) {
-                    return Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: discussion == _trendingDiscussions.first
-                              ? 14
-                              : 0,
-                        ),
-                        child: _buildDiscussionCard(discussion),
-                      ),
-                    );
-                  }).toList(),
-                )
-              : Column(
-                  children: _trendingDiscussions
-                      .map(
-                        (discussion) => Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: _buildDiscussionCard(discussion),
-                        ),
-                      )
-                      .toList(),
-                ),
-        ],
-      ),
+        ),
+        ..._trendingDiscussions.map(
+          (discussion) => Padding(
+            padding: const EdgeInsets.only(bottom: 18),
+            child: _buildDiscussionCard(discussion),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildDiscussionCard(_TrendingDiscussion discussion) {
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
       decoration: BoxDecoration(
-        color: _CommunityPalette.surfaceMuted,
-        borderRadius: BorderRadius.circular(22),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(28),
         border: Border.all(color: _CommunityPalette.border),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x080F172A),
+            blurRadius: 20,
+            offset: Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -5616,7 +5029,7 @@ class _CoursesScreenState extends State<CoursesScreen>
           Row(
             children: [
               CircleAvatar(
-                radius: 18,
+                radius: 22,
                 backgroundColor: discussion.accent.withValues(alpha: 0.16),
                 child: Text(
                   discussion.author[0].toUpperCase(),
@@ -5628,47 +5041,54 @@ class _CoursesScreenState extends State<CoursesScreen>
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
-                  discussion.author,
-                  style: const TextStyle(
-                    fontSize: 13.5,
-                    fontWeight: FontWeight.w700,
-                    color: _CommunityPalette.text,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      discussion.author,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: _CommunityPalette.text,
+                      ),
+                    ),
+                    Text(
+                      '${discussion.handle}  ·  ${discussion.timeLabel}',
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        color: _CommunityPalette.subtext,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.more_horiz_rounded,
+                  color: _CommunityPalette.subtle,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
           Text(
             discussion.title,
             style: const TextStyle(
-              fontSize: 17,
+              fontSize: 22,
               height: 1.35,
               fontWeight: FontWeight.w800,
               color: _CommunityPalette.text,
             ),
           ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              const Icon(
-                Icons.chat_bubble_outline_rounded,
-                size: 16,
-                color: _CommunityPalette.subtle,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                _copy(
-                  '${discussion.replies} replies',
-                  '${discussion.replies} 条回复',
-                ),
-                style: const TextStyle(
-                  fontSize: 12.5,
-                  color: _CommunityPalette.subtext,
-                ),
-              ),
-            ],
+          const SizedBox(height: 10),
+          Text(
+            discussion.body,
+            style: const TextStyle(
+              fontSize: 14.5,
+              height: 1.65,
+              color: _CommunityPalette.subtext,
+            ),
           ),
           const SizedBox(height: 14),
           Wrap(
@@ -5684,206 +5104,80 @@ class _CoursesScreenState extends State<CoursesScreen>
                 )
                 .toList(),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTrendingGroupsPanel() {
-    final groups = _studyRooms;
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          const SizedBox(height: 16),
           Row(
             children: [
               Text(
-                _copy('Peer Groups', '热门共学小组'),
+                _copy('${discussion.likes} likes', '${discussion.likes} 个赞'),
                 style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
                   color: _CommunityPalette.text,
                 ),
               ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  foregroundColor: _CommunityPalette.blue,
+              const SizedBox(width: 12),
+              Text(
+                _copy(
+                  '${discussion.comments} comments',
+                  '${discussion.comments} 条评论',
                 ),
-                child: Text(_copy('See More', '查看更多')),
+                style: const TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w600,
+                  color: _CommunityPalette.subtext,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          ...groups.map(
-            (room) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: _buildTrendingGroupCard(room),
-            ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, color: Color(0xFFE8EDF5)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              _buildTrendingFeedAction(
+                icon: discussion.likedByMe
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+                label: _copy('Like', '点赞'),
+                color: discussion.likedByMe
+                    ? const Color(0xFFEF4444)
+                    : _CommunityPalette.subtext,
+                onTap: () => _toggleTrendingLike(discussion),
+              ),
+              const SizedBox(width: 10),
+              _buildTrendingFeedAction(
+                icon: Icons.mode_comment_outlined,
+                label: _copy('Comment', '评论'),
+                color: _CommunityPalette.subtext,
+                onTap: () => _showTrendingCommentDialog(discussion),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTrendingGroupCard(_StudyRoom room) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: _CommunityPalette.surface,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: _CommunityPalette.border),
+  Widget _buildTrendingFeedAction({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return TextButton.icon(
+      onPressed: onTap,
+      style: TextButton.styleFrom(
+        foregroundColor: color,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: 140,
-            height: 108,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                colors: [
-                  room.accent.withValues(alpha: 0.45),
-                  room.accent.withValues(alpha: 0.12),
-                ],
-              ),
-            ),
-            child: Icon(Icons.groups_2_rounded, size: 42, color: room.accent),
-          ),
-          const SizedBox(width: 18),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  room.title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: _CommunityPalette.text,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  room.subtitle,
-                  style: const TextStyle(
-                    fontSize: 13.5,
-                    height: 1.5,
-                    color: _CommunityPalette.subtext,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.groups_rounded,
-                      size: 16,
-                      color: _CommunityPalette.subtle,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      _copy(
-                        '${room.members.length + (room.joined ? 0 : 2)} members',
-                        '${room.members.length + (room.joined ? 0 : 2)} 位成员',
-                      ),
-                      style: const TextStyle(
-                        fontSize: 12.5,
-                        color: _CommunityPalette.subtext,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          FilledButton(
-            onPressed: room.joined ? null : () => _joinStudyRoom(room),
-            style: FilledButton.styleFrom(
-              backgroundColor: room.joined
-                  ? const Color(0xFFCBD5E1)
-                  : room.accent,
-            ),
-            child: Text(
-              room.joined
-                  ? _copy('Joined', '已加入')
-                  : _copy('Join Group', '加入小组'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPeopleToFollowCard() {
-    return _buildSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _copy('People to Follow', '值得关注的人'),
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: _CommunityPalette.text,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ..._peopleToFollow.map(
-            (person) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: person.color.withValues(alpha: 0.18),
-                    child: Text(
-                      person.name[0].toUpperCase(),
-                      style: TextStyle(
-                        color: person.color,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          person.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: _CommunityPalette.text,
-                          ),
-                        ),
-                        Text(
-                          person.role,
-                          style: const TextStyle(
-                            fontSize: 12.5,
-                            color: _CommunityPalette.subtext,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => _toggleFollowPerson(person),
-                    style: TextButton.styleFrom(
-                      foregroundColor: _CommunityPalette.blue,
-                    ),
-                    child: Text(
-                      person.following
-                          ? _copy('Following', '已关注')
-                          : _copy('+ Follow', '+ 关注'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      icon: Icon(icon, size: 18, color: color),
+      label: Text(
+        label,
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: color,
+        ),
       ),
     );
   }
@@ -6098,30 +5392,27 @@ class _StudyMaterial {
 
 class _TrendingDiscussion {
   final String author;
+  final String handle;
   final String title;
-  final int replies;
+  final String body;
+  int comments;
+  int likes;
+  bool likedByMe;
+  final String timeLabel;
   final List<String> tags;
   final Color accent;
 
-  const _TrendingDiscussion({
+  _TrendingDiscussion({
     required this.author,
+    required this.handle,
     required this.title,
-    required this.replies,
+    required this.body,
+    required this.comments,
+    required this.likes,
+    required this.likedByMe,
+    required this.timeLabel,
     required this.tags,
     required this.accent,
-  });
-}
-
-class _CommunityPerson {
-  final String name;
-  final String role;
-  final Color color;
-  bool following = false;
-
-  _CommunityPerson({
-    required this.name,
-    required this.role,
-    required this.color,
   });
 }
 
@@ -6149,46 +5440,8 @@ class _CommunityNote {
   final int id;
   String title;
   String body;
-  final List<_NoteAttachment> attachments;
-  final List<_SketchStroke> strokes;
-  DateTime updatedAt;
 
-  _CommunityNote({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.attachments,
-    required this.strokes,
-    required this.updatedAt,
-  });
-}
-
-class _NoteAttachment {
-  final String label;
-  final String caption;
-  final Color tint;
-  final Uint8List? bytes;
-
-  const _NoteAttachment({
-    required this.label,
-    required this.caption,
-    required this.tint,
-    this.bytes,
-  });
-}
-
-class _SketchStroke {
-  final List<Offset> points;
-  final Color color;
-  final double width;
-  final _SketchTool tool;
-
-  const _SketchStroke({
-    required this.points,
-    required this.color,
-    required this.width,
-    required this.tool,
-  });
+  _CommunityNote({required this.id, required this.title, required this.body});
 }
 
 class _AddUserInput {
@@ -6210,63 +5463,6 @@ class _NewStudyGroupDraft {
     this.schedule,
     this.category,
   );
-}
-
-class _SketchPadPainter extends CustomPainter {
-  final List<_SketchStroke> strokes;
-
-  const _SketchPadPainter(this.strokes);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.saveLayer(Offset.zero & size, Paint());
-    for (final stroke in strokes) {
-      if (stroke.points.isEmpty) continue;
-
-      final strokeWidth = switch (stroke.tool) {
-        _SketchTool.pencil => stroke.width,
-        _SketchTool.brush => stroke.width * 1.35,
-        _SketchTool.eraser => stroke.width * 1.2,
-      };
-      final paint = Paint()
-        ..color = stroke.tool == _SketchTool.brush
-            ? stroke.color.withValues(alpha: 0.55)
-            : stroke.color
-        ..strokeWidth = strokeWidth
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round
-        ..blendMode = stroke.tool == _SketchTool.eraser
-            ? BlendMode.clear
-            : BlendMode.srcOver
-        ..isAntiAlias = true;
-
-      if (stroke.tool == _SketchTool.brush) {
-        paint.maskFilter = MaskFilter.blur(
-          BlurStyle.normal,
-          stroke.width * 0.22,
-        );
-      }
-
-      if (stroke.points.length == 1) {
-        canvas.drawCircle(stroke.points.first, strokeWidth / 2, paint);
-        continue;
-      }
-
-      final path = Path()
-        ..moveTo(stroke.points.first.dx, stroke.points.first.dy);
-      for (final point in stroke.points.skip(1)) {
-        path.lineTo(point.dx, point.dy);
-      }
-      canvas.drawPath(path, paint);
-    }
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant _SketchPadPainter oldDelegate) {
-    return true;
-  }
 }
 
 class _MessagesWallpaperPainter extends CustomPainter {
@@ -6401,14 +5597,12 @@ class _MessagesWallpaperPainter extends CustomPainter {
 class _GalaxyPlanetScenePainter extends CustomPainter {
   final Offset planetCenter;
   final double planetRadius;
-  final double spinProgress;
   final double twinkleProgress;
   final List<_ShootingStar> sparkleSeeds;
 
   const _GalaxyPlanetScenePainter({
     required this.planetCenter,
     required this.planetRadius,
-    required this.spinProgress,
     required this.twinkleProgress,
     required this.sparkleSeeds,
   });
@@ -6529,65 +5723,18 @@ class _GalaxyPlanetScenePainter extends CustomPainter {
       ..color = Colors.white.withValues(alpha: 0.48);
     canvas.drawCircle(planetCenter, planetRadius, sphereOutlinePaint);
 
-    canvas.save();
-    canvas.clipPath(
-      Path()
-        ..addOval(Rect.fromCircle(center: planetCenter, radius: planetRadius)),
-    );
-    canvas.translate(planetCenter.dx, planetCenter.dy);
-    canvas.rotate(spinProgress * math.pi * 2);
-
-    final shardPaint = Paint();
-    final shardRects = [
-      Rect.fromCenter(
-        center: Offset(-planetRadius * 0.18, -planetRadius * 0.10),
-        width: planetRadius * 0.42,
-        height: planetRadius * 2.2,
-      ),
-      Rect.fromCenter(
-        center: Offset(planetRadius * 0.08, 0),
-        width: planetRadius * 0.34,
-        height: planetRadius * 2.1,
-      ),
-      Rect.fromCenter(
-        center: Offset(planetRadius * 0.32, planetRadius * 0.06),
-        width: planetRadius * 0.28,
-        height: planetRadius * 2.0,
-      ),
-    ];
-    final shardColors = [
-      [Colors.white.withValues(alpha: 0.22), Colors.transparent],
-      [const Color(0xFFD7C3FF).withValues(alpha: 0.18), Colors.transparent],
-      [Colors.white.withValues(alpha: 0.16), Colors.transparent],
-    ];
-    for (var i = 0; i < shardRects.length; i++) {
-      shardPaint.shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: shardColors[i],
-      ).createShader(shardRects[i]);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          shardRects[i],
-          Radius.circular(planetRadius * 0.14),
-        ),
-        shardPaint,
-      );
-    }
-
     final surfaceStarPaint = Paint()
       ..color = Colors.white.withValues(alpha: 0.48);
     final surfaceStars = [
-      Offset(-planetRadius * 0.30, -planetRadius * 0.16),
-      Offset(planetRadius * 0.18, -planetRadius * 0.22),
-      Offset(planetRadius * 0.06, planetRadius * 0.05),
-      Offset(-planetRadius * 0.12, planetRadius * 0.22),
-      Offset(planetRadius * 0.26, planetRadius * 0.18),
+      planetCenter.translate(-planetRadius * 0.30, -planetRadius * 0.16),
+      planetCenter.translate(planetRadius * 0.18, -planetRadius * 0.22),
+      planetCenter.translate(planetRadius * 0.06, planetRadius * 0.05),
+      planetCenter.translate(-planetRadius * 0.12, planetRadius * 0.22),
+      planetCenter.translate(planetRadius * 0.26, planetRadius * 0.18),
     ];
     for (final star in surfaceStars) {
       canvas.drawCircle(star, 1.6, surfaceStarPaint);
     }
-    canvas.restore();
 
     final highlightPaint = Paint()
       ..shader =
@@ -6645,7 +5792,6 @@ class _GalaxyPlanetScenePainter extends CustomPainter {
   bool shouldRepaint(covariant _GalaxyPlanetScenePainter oldDelegate) {
     return oldDelegate.planetCenter != planetCenter ||
         oldDelegate.planetRadius != planetRadius ||
-        oldDelegate.spinProgress != spinProgress ||
         oldDelegate.twinkleProgress != twinkleProgress ||
         oldDelegate.sparkleSeeds != sparkleSeeds;
   }
