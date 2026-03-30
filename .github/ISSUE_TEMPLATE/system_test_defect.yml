@@ -1,0 +1,80 @@
+name: System test defect
+description: Defect discovered while executing docs/test-checklist.md.
+title: "[SYSTEM TEST] <failed case id> - <short summary>"
+labels:
+  - bug
+  - system-test
+  - needs-triage
+body:
+  - type: input
+    id: checklist_item
+    attributes:
+      label: Checklist item reference
+      description: Copy the exact section/item from docs/test-checklist.md.
+      placeholder: "D2 - duplicate course creates a new draft row"
+    validations:
+      required: true
+
+  - type: input
+    id: user_story_id
+    attributes:
+      label: User Story ID
+      description: Reference the related story from docs/user-stories.md.
+      placeholder: US-004
+    validations:
+      required: true
+
+  - type: dropdown
+    id: run_type
+    attributes:
+      label: Test run type
+      options:
+        - Regression
+        - Smoke
+        - Exploratory
+    validations:
+      required: true
+
+  - type: input
+    id: test_date
+    attributes:
+      label: Test date (YYYY-MM-DD)
+      placeholder: "2026-03-30"
+    validations:
+      required: true
+
+  - type: textarea
+    id: failure_details
+    attributes:
+      label: Failure details
+      description: Include exact behavior, visible error text, and any logs.
+      placeholder: "Clicking Save shows 'Something went wrong'. Console shows 400 from /rest/v1/courses."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducibility
+    attributes:
+      label: Reproducibility and impact
+      placeholder: "Reproduced 3/3 times. Blocks course creation flow for authors."
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Screenshot/video/console logs.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verification
+      options:
+        - label: I confirmed this is a product defect (not a test-data/setup mistake).
+          required: true
+        - label: I linked this defect to a user story and checklist item.
+          required: true
+

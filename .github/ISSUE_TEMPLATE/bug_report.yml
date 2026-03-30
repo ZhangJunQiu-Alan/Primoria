@@ -1,0 +1,104 @@
+name: Bug report
+description: Log a functional defect found during system/regression testing.
+title: "[BUG] <short summary>"
+labels:
+  - bug
+  - needs-triage
+body:
+  - type: input
+    id: user_story_id
+    attributes:
+      label: User Story ID
+      description: Reference the story from docs/user-stories.md (for example US-001).
+      placeholder: US-001
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How badly does this defect impact users?
+      options:
+        - Critical (blocks login, save, publish, or core learning flow)
+        - High (major feature broken, no workaround)
+        - Medium (feature partially broken, workaround exists)
+        - Low (minor visual/wording issue)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - Builder (React web)
+        - Viewer (Flutter web)
+        - Both
+    validations:
+      required: true
+
+  - type: textarea
+    id: preconditions
+    attributes:
+      label: Preconditions
+      description: Account, role, test data, browser/device, and setup required.
+      placeholder: "Logged in as author. Course exists with one lesson. Chrome 123 on macOS."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Numbered, exact steps.
+      placeholder: |
+        1. Go to /dashboard
+        2. Click "Create course"
+        3. Fill required fields
+        4. Click "Create course"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_result
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_result
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Add screenshot(s), console logs, API error payload, or recording links.
+      placeholder: "Paste screenshots/logs here."
+    validations:
+      required: true
+
+  - type: input
+    id: build_commit
+    attributes:
+      label: Build / commit tested
+      description: Branch + commit SHA or deployment URL.
+      placeholder: "main @ abc1234"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I confirmed this issue is not already open.
+          required: true
+        - label: I included enough detail for another person to reproduce the defect.
+          required: true
+
