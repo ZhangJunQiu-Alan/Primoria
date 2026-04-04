@@ -23,6 +23,7 @@ type CourseListSelectRow = Pick<
   | 'description'
   | 'thumbnail_url'
   | 'status'
+  | 'published_at'
   | 'created_at'
   | 'updated_at'
   | 'difficulty_level'
@@ -84,6 +85,7 @@ export interface CourseRow {
   description: string | null;
   thumbnail_url: string | null;
   status: CourseStatus;
+  published_at: string | null;
   created_at: string;
   updated_at: string;
   difficulty_level: DifficultyLevel;
@@ -127,6 +129,7 @@ const courseSelectFragment = `
   description,
   thumbnail_url,
   status,
+  published_at,
   created_at,
   updated_at,
   difficulty_level,

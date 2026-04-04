@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CheckIcon,
   DownloadIcon,
   EyeOpenIcon,
   EyeClosedIcon,
+  Pencil1Icon,
 } from '@radix-ui/react-icons';
 import { Home } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAppSelector, useAppDispatch } from '@/store';
-import { togglePreview } from '@/store/editorSlice';
+import { togglePreview, updateLessonTitle } from '@/store/editorSlice';
 import { AccountMenu } from '@/components/account/AccountMenu';
 import { useSaveCourse } from './hooks/useSaveCourse';
 import { usePublish } from './hooks/usePublish';
@@ -37,10 +38,17 @@ export function EditorHeader({
 
   const [actionError, setActionError] = useState<string | null>(null);
   const [publishSuccess, setPublishSuccess] = useState(false);
+  const [isEditingLessonTitle, setIsEditingLessonTitle] = useState(false);
+  const [lessonTitleDraft, setLessonTitleDraft] = useState(activeLessonTitle ?? '');
 
   const { saveCourse } = useSaveCourse();
 
   const { publish, publishing } = usePublish(saveCourse);
+
+  useEffect(() => {
+    setLessonTitleDraft(activeLessonTitle ?? '');
+    setIsEditingLessonTitle(false);
+  }, [activeLessonId, activeLessonTitle]);
 
   useEditorKeyboard({
     lessonId: activeLessonId,
@@ -97,6 +105,21 @@ export function EditorHeader({
   const avatarInitial = (user?.email ?? draft?.metadata.title ?? 'P').charAt(0).toUpperCase();
   const lessonLabel = activeLessonTitle ?? 'Untitled lesson';
 
+  function commitLessonTitleEdit() {
+    if (!activeLessonId) {
+      setIsEditingLessonTitle(false);
+      return;
+    }
+
+    const nextTitle = lessonTitleDraft.trim();
+    if (nextTitle) {
+      dispatch(updateLessonTitle({ lessonId: activeLessonId, title: nextTitle }));
+    } else {
+      setLessonTitleDraft(lessonLabel);
+    }
+    setIsEditingLessonTitle(false);
+  }
+
   async function handleSignOut() {
     await supabase.auth.signOut();
     navigate('/login');
@@ -128,7 +151,56 @@ export function EditorHeader({
         </span>
         <span className="editor-topbar__brand-copy">
           <strong>{draft?.metadata.title ?? 'Untitled Course'}</strong>
-          <span>{lessonLabel}</span>
+          {isEditingLessonTitle && activeLessonId ? (
+            <span className="flex items-center gap-2">
+              <input
+                autoFocus
+                value={lessonTitleDraft}
+                onChange={(event) => setLessonTitleDraft(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    commitLessonTitleEdit();
+                  } else if (event.key === 'Escape') {
+                    setLessonTitleDraft(lessonLabel);
+                    setIsEditingLessonTitle(false);
+                  }
+                }}
+                onClick={(event) => event.stopPropagation()}
+                aria-label={`Lesson title for ${lessonLabel}`}
+                className="rounded border border-[var(--editor-border)] bg-white/80 px-2 py-1 text-xs font-medium text-[var(--editor-text)] outline-none focus:border-[var(--editor-accent)]"
+              />
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  commitLessonTitleEdit();
+                }}
+                className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--editor-border)] bg-white/82 text-[var(--editor-accent)]"
+                aria-label={`Save lesson title for ${lessonLabel}`}
+              >
+                <CheckIcon className="h-3.5 w-3.5" />
+              </button>
+            </span>
+          ) : (
+            <span className="flex items-center gap-2">
+              <span>{lessonLabel}</span>
+              {activeLessonId ? (
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setLessonTitleDraft(lessonLabel);
+                    setIsEditingLessonTitle(true);
+                  }}
+                  className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--editor-border)] bg-white/82 text-[var(--editor-text-muted)] transition-colors hover:text-[var(--editor-text)]"
+                  aria-label={`Edit lesson ${lessonLabel}`}
+                >
+                  <Pencil1Icon className="h-3.5 w-3.5" />
+                </button>
+              ) : null}
+            </span>
+          )}
         </span>
       </button>
 
