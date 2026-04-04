@@ -1,27 +1,25 @@
-# 回归测试清单（Builder + Viewer）
+# 回归测试清单（统一 Viewer + Builder 工作台）
 
-最后更新：2026-03-20
+最后更新：2026-04-04
 
 ## A. 构建与静态检查
 
 - [ ] `pnpm install`
 - [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
-- [ ] `pnpm --filter @primoria/builder typecheck`
-- [ ] `pnpm --filter @primoria/builder test`
-- [ ] `cd Viewer && flutter pub get`
-- [ ] `cd Viewer && flutter analyze`
-- [ ] `cd Viewer && flutter test`
+- [ ] `pnpm --filter @primoria/viewer-react typecheck`
+- [ ] `pnpm --filter @primoria/viewer-react test`
+- [ ] `pnpm --filter @primoria/viewer-react build`
 
 ## B. Builder 路由与权限
 
-- [ ] 未登录访问 `/dashboard` 会被重定向到 `/`
-- [ ] 未登录访问 `/editor` 会被重定向到 `/login`
-- [ ] 已登录 author/admin 访问 `/` 会跳转 `/dashboard`
-- [ ] 非 author 角色无法访问 Builder 受保护路由
+- [ ] 未登录访问 `/builder/dashboard` 会被重定向到带 `returnTo` 的 `/login`
+- [ ] 未登录访问 `/builder/editor` 会被重定向到带 `returnTo` 的 `/login`
+- [ ] 已登录用户访问 `/dashboard` 会跳转 `/builder/dashboard`
+- [ ] 任何已登录角色都可以访问 Builder 受保护路由
 
 ## C. Builder 编辑器核心能力
 
-- [ ] 在 `/editor` 创建空白 lesson
+- [ ] 在 `/builder/editor` 创建空白 lesson
 - [ ] 使用规范 `lessons` 键导入 JSON 成功
 - [ ] 使用历史 `pages` 键导入 JSON 并验证迁移成功
 - [ ] 显式保存流程可在无远端错误时完成
@@ -72,30 +70,30 @@
 - [ ] 标签相关操作可达
 - [ ] 预留批量操作会显示占位反馈
 
-### D5. Dashboard 设置
-- [ ] 账号设置可从 Supabase 正常加载
+### D5. Dashboard 账号 / 设置集成
+- [ ] 账号摘要可从 Supabase 正常加载
 - [ ] Workflow 设置可正常本地保存
-- [ ] Notification 设置可正常保存
-- [ ] React Builder 中语言值保持英文归一化
+- [ ] 设置入口会进入统一 Viewer 设置页
+- [ ] 退出登录会走共享 Viewer 鉴权流程
 
-## E. Viewer 核心验证
+## E. Viewer React 核心验证
 
 - [ ] 登录/注册流程正常
 - [ ] 课程报名流程正常
 - [ ] Home / Library / Community / Profile 使用统一页面宽度壳层
-- [ ] Viewer 桌面布局较平板/移动更宽，且内容仍居中可读
+- [ ] Viewer React 桌面布局较平板/移动更宽，且内容仍居中可读
 - [ ] 课时页顶部标题显示当前 lesson 名（不是 course 名）
 - [ ] text 内容在学习链路中仍正确渲染
 - [ ] 个人页 XP/连续学习/成就相关数据可加载
-- [ ] logo/入口跳转可回到预期 dashboard/home
-- [ ] `Viewer/test/viewer_layout_metrics_test.dart` 通过
-- [ ] `Viewer/test/viewer_page_shell_test.dart` 通过
+- [ ] logo/入口跳转可回到预期 builder/home
+- [ ] `packages/viewer-react/test/` 中的 learner shell 导航测试通过
+- [ ] `packages/viewer-react/test/` 中的设置与个人页测试通过
 
 ## F. 数据一致性
 
-- [ ] 在 Builder 改 lesson 名并保存，回 Dashboard 能看到新名
-- [ ] lesson 改名后发布，再进 Viewer 验证标题一致
-- [ ] 对快照内容不完整的课程，Viewer fallback 仍可打开
+- [ ] 在 Builder 改 lesson 名并保存，回 `/builder/dashboard` 能看到新名
+- [ ] lesson 改名后发布，再进 Viewer React 验证标题一致
+- [ ] 对快照内容不完整的课程，React viewer fallback 仍可打开
 
 ## G. 当前非阻断缺口
 

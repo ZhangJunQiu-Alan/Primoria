@@ -1,6 +1,6 @@
 # Primoria External User-Story Tests (Python)
 
-This folder is a standalone Python test harness that validates Primoria user stories **without adding test files inside `packages/builder/`, `Viewer/`, or `supabase/` app code**.
+This folder is a standalone Python test harness that validates Primoria user stories **without adding test files inside `packages/viewer-react/`, `packages/schema/`, or `supabase/` app code**.
 
 ## What it tests
 

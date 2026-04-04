@@ -4,7 +4,7 @@ Last updated: 2026-03-20
 
 ## Scope
 
-The Builder dashboard (`/dashboard`) now lives in the React app under `packages/builder/`.
+The Builder dashboard now lives inside the unified Viewer React app at `/builder/dashboard`.
 It is the creator workspace shell with sidebar navigation, top actions, and four primary tabs.
 
 Tabs:
@@ -15,17 +15,17 @@ Tabs:
 
 ## File Map
 
-- `packages/builder/src/pages/dashboard/DashboardPage.tsx`
+- `packages/viewer-react/src/pages/dashboard/DashboardPage.tsx`
   - dashboard shell, tab switching, notices, dialogs, course cards, lesson actions
-- `packages/builder/src/pages/dashboard/DashboardSettingsDialog.tsx`
-  - global settings dialog for account, workflow, notifications, and data
-- `packages/builder/src/pages/dashboard/dashboard.css`
+- `packages/viewer-react/src/pages/dashboard/DashboardSettingsDialog.tsx`
+  - shared dashboard profile/settings helper plus retained workspace settings dialog implementation
+- `packages/viewer-react/src/pages/dashboard/dashboard.css`
   - botanical visual system, layout, cards, dialog styling, responsive behavior
-- `packages/builder/src/queries/courses.ts`
+- `packages/viewer-react/src/queries/courses.ts`
   - course list fetch plus create/update/delete/duplicate course and add/delete lesson mutations
-- `packages/builder/src/components/account/AccountMenu.tsx`
-  - avatar menu entry point for settings and session actions
-- `packages/builder/src/services/StorageService.ts`
+- `packages/viewer-react/src/components/account/AccountMenu.tsx`
+  - avatar menu entry point for unified settings, support, and session actions
+- `packages/viewer-react/src/services/StorageService.ts`
   - local persistence for builder/dashboard preferences
 
 ## Tab Details
@@ -48,7 +48,7 @@ Tabs:
   - duplicate course
   - add lesson
   - delete lesson
-  - open builder on a specific course/lesson
+- open builder workspace on a specific course/lesson
 - control bar with search, status filter, and sort mode
 - summary strip for courses / lessons / published / drafts / need-content
 - state coverage:
@@ -76,7 +76,7 @@ Tabs:
 - tag management
 - reserved bulk actions and messaging entry points
 
-### 5) Dashboard Settings Dialog
+### 5) Dashboard Settings Helper
 
 - sections:
   - Account
@@ -84,11 +84,9 @@ Tabs:
   - Notifications
   - Data
 - real actions:
-  - load/save profile summary from Supabase `profiles`
-  - save notification/accessibility preferences to `user_settings`
-  - keep language normalized to English in the React Builder
+  - load profile summary from Supabase `profiles`
   - persist local workflow/data preferences via `StorageService`
-  - show manual-save-only workflow guidance for Builder editing
+  - support the unified Viewer settings / account menu integration
 
 ## Data Strategy
 

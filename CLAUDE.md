@@ -16,9 +16,8 @@ Your responsibility is to deliver workable, testable, and rollbackable changes w
 ## Project Overview
 
 Primoria is a mixed-stack course platform:
-- **Builder** (`packages/builder/`) — React/TypeScript course authoring app (Redux Toolkit, React Router, Supabase)
 - **Schema** (`packages/schema/`) — canonical course schema, fixtures, and migration helpers
-- **Viewer** (`Viewer/`) — Flutter multi-platform learning app (Brilliant.org-inspired, Provider state management)
+- **Viewer** (`packages/viewer-react/`) — unified React/TypeScript learner + builder app (React Router, Redux Toolkit, React Query, Supabase)
 - **supabase/** — PostgreSQL backend (migrations, auth, course storage, gamification)
 
 关键文档（每次做任务先快速扫一遍相关部分再动手）：
@@ -34,20 +33,14 @@ Primoria is a mixed-stack course platform:
 ## Common Commands
 
 ```bash
-# Builder
 pnpm install
-pnpm --filter @primoria/builder dev
-pnpm --filter @primoria/builder build
-pnpm --filter @primoria/builder typecheck
-pnpm --filter @primoria/builder test
-pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts
 
-# Viewer
-cd Viewer && flutter pub get
-cd Viewer && flutter run -d chrome
-cd Viewer && flutter build web
-cd Viewer && flutter analyze
-cd Viewer && flutter test
+# Viewer (React, includes Builder workspace)
+pnpm --filter @primoria/viewer-react dev
+pnpm --filter @primoria/viewer-react build
+pnpm --filter @primoria/viewer-react typecheck
+pnpm --filter @primoria/viewer-react test
+pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts
 
 # Supabase (requires Docker for local dev)
 cd supabase && supabase start
@@ -58,24 +51,24 @@ cd supabase && supabase migration new <name>  # create migration
 ## Architecture
 
 ```
-Builder (React) --export/save JSON--> Supabase (PostgreSQL) <--fetch-- Viewer (Flutter)
+Viewer Builder Workspace --export/save JSON--> Supabase (PostgreSQL) <--fetch-- Viewer Learner Runtime
 ```
 
-### Builder (`packages/builder/src/`)
-- **State**: Redux Toolkit store plus feature-local hooks/utilities
-- **Routing**: React Router — routes: `/`, `/login`, `/register`, `/auth/callback`, `/dashboard`, `/builder`, `/viewer`
+### Builder Workspace (`packages/viewer-react/src/`)
+- **State**: shared Redux Toolkit store plus builder editor slice and feature-local hooks/utilities
+- **Routing**: React Router — builder routes live under `/builder/dashboard`, `/builder/editor`, `/builder/editor/:courseId`
 - **Models**: `Course → Lesson → Page → Block` hierarchy comes from `@primoria/schema`
 - **Block types** (12 total, registered in `features/editor/blockRegistry.ts`):
   `text`, `image`, `code-block`, `code-playground`, `code-execution`, `function-flow`, `multiple-choice`, `fill-blank`, `true-false`, `matching`, `interactive-visual`, `video`
 - **Backend**: Supabase auth + course CRUD + local/remote draft persistence
 - **Editor**: inline block editing, page navigation, visibility gating, learner preview, publish validation
-- **Design system**: botanical CSS layer centered in `features/editor/editor.css`, `pages/dashboard.css`, `pages/landing.css`, `pages/auth/auth.css`
+- **Design system**: builder workspace CSS lives in `features/editor/editor.css` and `pages/dashboard/dashboard.css`
 
-### Viewer (`Viewer/lib/`)
-- **State**: Provider (`providers/user_provider.dart`, `providers/theme_provider.dart`, `providers/language_provider.dart`)
-- **Screens** (16 total): landing, login, register, home, search, courses, course detail, lesson, lesson result, profile, profile settings, achievement wall, level map, AI tutor, parent dashboard, demo
-- **Services**: audio (`audio_service.dart`), notifications (`notification_service.dart`), storage (`storage_service.dart` — SharedPreferences + SQLite), achievements (`achievement_display_service.dart`, `achievement_service.dart`), daily tasks (`daily_task_service.dart`), AI tutor (`gemini_service.dart`)
-- **Theme**: `theme/colors.dart`, `theme/typography.dart`, `theme/spacing.dart` (exports `AppRadius`, `AppSpacing`, `AppShadows`)
+### Viewer (`packages/viewer-react/src/`)
+- **State**: Redux Toolkit + React Query (`shared/state`, `shared/api`)
+- **Routes**: landing, login, register, home, library, builder dashboard/editor, course detail, lesson, lesson result, community, AI tutor, profile, settings, achievement wall, parent dashboard
+- **Backend**: Supabase auth + viewer domain APIs + Edge Functions (`viewer-ai-tutor`, viewer push functions)
+- **Theme**: Tailwind-driven token layer with shared layout primitives in `shared/layout` and centralized copy in `shared/theme/copy.ts`
 
 ### Database (`supabase/migrations/`)
 Key active tables: `profiles`, `subjects`, `courses`, `lessons`, `content_blocks`, `enrollments`, `lesson_completions`, `block_interactions`, `user_stats`, `daily_activity_log`, `xp_transactions`, `achievements`, `user_achievements`, `daily_tasks`, `follows`, `course_feedback`, `parent_child_binding_codes`, `parent_child_links`, `app_versions`, `subscriptions`
@@ -84,19 +77,16 @@ Content storage: `lessons.content_json` holds per-lesson course JSON snapshots w
 
 ## Key Patterns
 
-- React Builder source lives under `packages/builder/src/`
 - Shared course types and migrations come from `packages/schema`
 - Design mockups are in `Design/` — reference these when asked about visual styling
-- React Builder tests are in `packages/builder/test/`
+- Unified app source lives under `packages/viewer-react/src/`
 - Course JSON format is documented in `docs/course-json-guide.md`
 
 
 ### 3.3 Quality gates（必须过）
 在提交最终结果前，至少完成：
-- 若改 React Builder：`pnpm --filter @primoria/builder typecheck`
-- 若改 React Builder：`pnpm --filter @primoria/builder test`
-- 若改 Viewer：`flutter analyze`
-- 若改 Viewer：`flutter test`
+- 若改 Viewer：`pnpm --filter @primoria/viewer-react typecheck`
+- 若改 Viewer：`pnpm --filter @primoria/viewer-react test`
 
 ### 3.4 自动测试与 Bug 修复（强制执行）
 
@@ -104,11 +94,8 @@ Content storage: `lessons.content_json` holds per-lesson course JSON snapshots w
 
 1. **运行静态检查**
    ```bash
-   # React Builder
-   pnpm --filter @primoria/builder typecheck
-
    # Viewer
-   cd Viewer && flutter analyze --no-pub
+   pnpm --filter @primoria/viewer-react typecheck
    ```
    - 若有 `error` → 立即修复，再次运行直到零 error
    - `warning` 若为新引入的（非 Pre-existing Issues 列表中的）→ 修复
@@ -116,11 +103,8 @@ Content storage: `lessons.content_json` holds per-lesson course JSON snapshots w
 
 2. **运行 test**
    ```bash
-   # React Builder
-   pnpm --filter @primoria/builder test
-
    # Viewer
-   cd Viewer && flutter test
+   pnpm --filter @primoria/viewer-react test
    ```
    - 若有新增测试失败 → 定位根因，修复代码或测试，重新运行
    - 除已明确说明的 pre-existing/flaky 失败外，所有测试必须通过
@@ -138,10 +122,9 @@ Content storage: `lessons.content_json` holds per-lesson course JSON snapshots w
    - 部署后用 `curl` 做冒烟测试验证关键路径
 
 5. **范围判定**
-   - 若改动只涉及 `packages/builder/` → 仅跑 React Builder typecheck + test
    - 若改动只涉及 `packages/schema/` → 跑相关 schema tests
-   - 若改动只涉及 `Viewer/` → 仅跑 Viewer analyze + test
-   - 若同时涉及 Builder / Viewer / Schema → 受影响部分都跑
+   - 若改动只涉及 `packages/viewer-react/` → 仅跑 Viewer typecheck + test
+   - 若同时涉及 Viewer / Schema → 受影响部分都跑
    - 若只改 `supabase/` → 仅做 deno check + 部署后冒烟测试
 
 ## 6) Task Input Template (Optional but recommended)
@@ -158,6 +141,6 @@ NOTES: <任何硬约束/偏好>
 
 ## Requirements
 
-- Flutter SDK ≥ 3.9.0, Dart ≥ 3.9.0
+- Node.js + pnpm for unified Viewer development
 - Supabase CLI + Docker for local backend development
-- Chrome for Builder web development
+- Chrome for Viewer / Builder workspace web development
