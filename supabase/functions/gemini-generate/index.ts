@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { normalizeGeminiHtml } from './normalizeHtml.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const MODEL = 'gemini-2.0-flash';
@@ -90,7 +91,7 @@ serve(async (req) => {
     }
 
     const geminiData = await geminiRes.json();
-    const html = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+    const html = normalizeGeminiHtml(geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? '');
 
     if (!html.trim()) {
       return new Response(

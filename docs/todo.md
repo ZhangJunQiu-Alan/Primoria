@@ -1,15 +1,13 @@
 # TODO
 
-Last updated: 2026-03-20 (rev 8)
+Last updated: 2026-04-04 (rev 9)
 
 ## 1. High Priority
 
 1. [x] ~~Fix legacy course publish blocked by schema validator~~ — resolved: migrator now handles all legacy field names (dual-key fromJson, snake_case rename steps); `publish_course` RPC v2 no longer depends on deleted `chapters` table.
-2. [ ] Fix `gemini-generate` Edge Function: Gemini occasionally returns markdown code fences (`` ```html ``…`` ``` ``) despite system-prompt rule; strip fences in Edge Function before returning HTML so the iframe does not render raw fence text.
-3. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
-4. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
-5. [ ] Implement real revenue/settlement data source for dashboard income cards.
-6. [ ] Add integration tests for publish -> viewer consistency path.
+2. [ ] Replace dashboard fallback analytics with real event-level facts (views, learner growth, completion timeline).
+3. [ ] Add backend APIs for Fans actions: reply, mark important, bulk notification, export.
+4. [ ] Implement real revenue/settlement data source for dashboard income cards.
 
 ## 2. Medium Priority
 
@@ -28,59 +26,61 @@ Last updated: 2026-03-20 (rev 8)
 
 ## 4. Recently Completed
 
-1. [x] Dashboard redesign completed for Home/Course Manage/Data Center/Fans Management (responsive + modular tabs/widgets/providers).
-2. [x] Builder inline editing on canvas for Text/Code Block/Code Playground.
-3. [x] Visibility default normalization (`always` for first block, `afterPreviousCorrect` for others).
-4. [x] Viewer lesson-title and markdown rendering fixes.
-5. [x] Logo navigation consistency to dashboard entry points.
-6. [x] Added widget tests for redesigned Course Manage states and core callbacks.
-7. [x] Centralized Viewer page width strategy with shared layout primitives and responsive tests.
-8. [x] Refreshed Viewer profile gamification UX (menu-first settings entry, pinned badge strip, pending-achievement progress cards).
-9. [x] Redesigned Achievement Wall with badge images, progress display, derived unlock sync, and load/empty state handling.
-10. [x] Added centralized `AchievementDisplayService` and achievement badge asset bundle for consistent profile/wall rendering.
-11. [x] Rebuilt Viewer Settings into a multi-category settings center with section-switch panel navigation, persisted preferences, and integrated parent mode/support sections.
-12. [x] Added Builder Settings Center with category-based active-panel UX, integrated dashboard/avatar entry, and local persistence for workflow/AI/notifications/publishing/privacy preferences.
-13. [x] Fixed Viewer auth/community/home regressions: login overflow, social icon correctness/contrast, right-edge scrollbar alignment, homepage daily-task removal, and library duplicate selected subject chip cleanup.
-14. [x] Completed core Viewer bilingual adaptation (ZH/EN) across authenticated user flows (login/register/home/library/community/lesson/result/AI tutor/profile settings) with settings-driven language switching.
-15. [x] Completed full Builder bilingual adaptation (ZH/EN) across auth, dashboard, builder canvas, viewer preview, and interactive block widgets with settings-driven language switching.
-16. [x] Added Viewer landing-page bilingual adaptation to keep public-entry copy fully language-consistent.
-17. [x] Redesigned Viewer landing page (learner-focused, 11 sections, floating hero mockup, responsive 980px breakpoint, removed all Builder references).
-18. [x] Redesigned Viewer login screen (two-panel desktop layout, social OAuth: Google/Apple/WeChat, animated inputs, dark-mode fix, brand-asset logos).
-19. [x] Redesigned Viewer register screen (mirrored layout, username field, password strength bar, animated terms checkbox, stats row in brand panel).
-20. [x] Migrated GitHub Pages from hackathon/ to Viewer app; removed hackathon/ project from repo; preserved primoria.dpdns.org via CNAME.
-21. [x] Replaced Markdown editor with WYSIWYG rich-text toolbar (flutter_quill): Bold, Italic, Underline, Strikethrough, Text Color, Highlight, Alignment (L/C/R), Heading dropdown (H1/H2/H3/Normal), Bullet list, Ordered list. Removed Markdown support entirely.
-22. [x] Fixed focus-loss-after-2-chars bug in text editor (persistent FocusNode + ScrollController).
-23. [x] Builder UI polish: removed "Rich text / Markdown" subtitle, replaced "Large" font-size dropdown with alignment buttons, removed drag handles from block library items, differentiated category header cards from individual block rows.
-24. [x] Introduced Page concept in Builder: lessons now hold ≥1 pages; each page holds blocks. Added page navigation strip (pill tabs, + New Page button, × delete) to canvas. Removed legacy "课时画布" header.
-25. [x] Added per-page navigation in Viewer preview: animated progress dots, Prev/Check/Next buttons, "已完成" state on last page. Per-page answer state reset on page change.
-26. [x] Updated AI generation system to be page-aware: prompts output pages[], normalization distributes blocks intelligently. Added function-flow support. Changed text format to richtext. Bumped prompt to v2.
-27. [x] Fixed AI generation empty canvas bug: normalized JSON now carries `schemaVersion` so the schema migrator skips legacy migration and preserves inner `pages` structure.
-28. [x] AI prompt v3/v4: visual-first strategy (animation opener mandatory), 1-sentence text limit, markdown banned, image blocks replaced by animation+aiPrompt, `aiPrompt` preserved in normalizer, markdown-to-Quill-Delta conversion (`_ensureQuillDelta`).
-29. [x] Rebuilt Builder page navigation strip: compact numbered chips with scroll arrows, active chip auto-scroll, "+ 新建页" always visible.
-30. [x] Fixed property inspector blank on pages 2+: block search now covers all pages; `updateBlock` passes correct `pageIndex`.
-31. [x] Builder block library UI: removed category description subtitles and "N 个模块" count labels.
-32. [x] Updated Gemini model to `gemini-3.1-pro-preview`; AI text blocks now convert Markdown → Quill Delta at generation time.
-33. [x] Code Execution block UI: removed timeline/scrubbar and step-duration slider; variables + stdout now side-by-side; 4 control buttons span full row width.
-34. [x] Architecture alignment (Builder + Viewer + Supabase): per-lesson `content_json` storage in Builder; Viewer reads `pages[]` format; removed `lesson.blocks` legacy getter; schema validator hardens `blocks[]` to import-only warning.
-35. [x] Unified interactive-visual block: new `BlockType.interactiveVisual` + `InteractiveVisualContent` (VisualSimSpec), 4 templates (ideal-gas-piston, sorting-bars, variable-binding-memory, function-plot), shared Flutter runtime widget, spec-driven AI generator, staged Builder UX, Viewer real rendering, legacy animation migration.
-36. [x] Interactive Visual platform AI key: removed user API key input; added Supabase Edge Function `gemini-generate` as server-side Gemini proxy; platform `GEMINI_API_KEY` stored as Deno env secret.
-37. [x] Interactive Visual style picker: 6 mandatory styles (Watercolor/Papercraft/Anime/Whiteboard/Retro Print/Heritage) injected into Gemini prompt; Generate button gated on style selection; removed all built-in Flutter scene templates.
-38. [x] Builder↔Viewer JSON snake_case alignment: `schema_version`, `course_id`, `lesson_id`, `page_id`, `difficulty_level`, `estimated_minutes` unified across `toJson()`/`fromJson()`/migrator/validator; dual-key backward compat for all reads.
-39. [x] Viewer auth resilience: `_withAuthTimeout<T>()` (30 s) + 3-attempt exponential backoff (900 ms/1 800 ms/2 500 ms) on all auth methods in Viewer `SupabaseService`.
-40. [x] Viewer graph-mode matching: `matching` blocks with `nodes`+`edges` converted to label pairs, rendered via existing list-matching UI.
-41. [x] Viewer `visibility_rule: 'afterPreviousCorrect'` gating: skips blocks in `_nextQuestion()` when last answer was wrong; `_lastAnsweredCorrectly` state tracked.
-42. [x] Viewer multi-select questions: `QuestionType.multiChoice` with checkbox UI, `correctIndices: Set<int>`, exact full-set validation for `multi_select: true` blocks.
-43. [x] Viewer video block: `VideoEmbedWidget` (HtmlElementView web / placeholder non-web); `_toEmbedUrl()` handles YouTube, Vimeo, and direct URLs; `QuestionType.video` in lesson flow.
-44. [x] Fixed `Block.toJson()` double snake_case conversion for `InteractiveVisualContent`; `_parseCodeExecution` dual-key reads `source_code`/`sourceCode`/`code`.
-45. [x] Supabase `publish_course` RPC v2: removed `chapters` table join and content overwrite; RPC now only flips course status.
-46. [x] Builder `updateProfile` call sites: `displayName:` → `username:` in `builder_settings_dialog.dart` and `profile_dialog.dart`.
-47. [x] Viewer `course_screen` and `user_provider`: removed dead `chapters`/accordion and dead stat fields (`_completedQuestions`, `_unlockedAchievements`, `_checkAndUpdateStreak`).
-48. [x] React Builder foundation completed: `@primoria/schema` (Zod schemas, migration, fixtures, 20 tests), `@primoria/db` (Supabase generated types), `@primoria/builder` (Vite 6 + React 19 + RTK; auth, dashboard, full editor with 13 block panels, dnd-kit canvas, manual save, undo/redo, publish, preview mode, course duplication, JSON import, AI generation for Interactive Visual; 38 tests; 0 TS errors).
-49. [x] `@primoria/db` `database.generated.ts` populated from real Supabase project (`rygafvlzzkvqhhenajzi`); `pnpm db:types` script wired in both package and root workspace.
-50. [x] React Builder visual parity pass: botanical dashboard/auth/editor shell, landing-style surfaces, and production-grade page layout now replace the earlier plain Tailwind look.
-51. [x] Block visibility flow completed in React Builder: first block locked to `always`, later blocks default to `afterPreviousCorrect`, and learner preview reveals gated content only after a correct answer plus `Check`.
-52. [x] Builder canvas editing upgraded: `text`, `code-block`, and `code-playground` edit directly on-block; `image` uploads to Supabase; redundant property-panel editors removed.
-53. [x] React learner preview rebuilt to mirror the Flutter viewer structure more closely: centered lesson stage, page progress, `Prev / Check / Next` navigation, and landing-style presentation.
-54. [x] React Builder UI copy normalized to English-only; old Chinese dashboard/auth test selectors and stale language values were removed.
-55. [x] React `packages/builder` is the sole authoring implementation and current docs reflect that architecture.
-56. [x] Builder hardening completed: explicit remote save flow, publish aborts on save failure, role-gated author/admin access, local draft/autosave removed, and `requiredForProgress` removed in favor of `visibilityRule`.
+1. [x] Fixed `gemini-generate` Edge Function so fenced HTML/code-wrapper responses are normalized before returning animation HTML.
+2. [x] Added real Supabase cloud smoke coverage for Builder publish -> Viewer lesson-title consistency, using a dedicated smoke author account and reusable smoke course.
+3. [x] Dashboard redesign completed for Home/Course Manage/Data Center/Fans Management (responsive + modular tabs/widgets/providers).
+4. [x] Builder inline editing on canvas for Text/Code Block/Code Playground.
+5. [x] Visibility default normalization (`always` for first block, `afterPreviousCorrect` for others).
+6. [x] Viewer lesson-title and markdown rendering fixes.
+7. [x] Logo navigation consistency to dashboard entry points.
+8. [x] Added widget tests for redesigned Course Manage states and core callbacks.
+9. [x] Centralized Viewer page width strategy with shared layout primitives and responsive tests.
+10. [x] Refreshed Viewer profile gamification UX (menu-first settings entry, pinned badge strip, pending-achievement progress cards).
+11. [x] Redesigned Achievement Wall with badge images, progress display, derived unlock sync, and load/empty state handling.
+12. [x] Added centralized `AchievementDisplayService` and achievement badge asset bundle for consistent profile/wall rendering.
+13. [x] Rebuilt Viewer Settings into a multi-category settings center with section-switch panel navigation, persisted preferences, and integrated parent mode/support sections.
+14. [x] Added Builder Settings Center with category-based active-panel UX, integrated dashboard/avatar entry, and local persistence for workflow/AI/notifications/publishing/privacy preferences.
+15. [x] Fixed Viewer auth/community/home regressions: login overflow, social icon correctness/contrast, right-edge scrollbar alignment, homepage daily-task removal, and library duplicate selected subject chip cleanup.
+16. [x] Completed core Viewer bilingual adaptation (ZH/EN) across authenticated user flows (login/register/home/library/community/lesson/result/AI tutor/profile settings) with settings-driven language switching.
+17. [x] Completed full Builder bilingual adaptation (ZH/EN) across auth, dashboard, builder canvas, viewer preview, and interactive block widgets with settings-driven language switching.
+18. [x] Added Viewer landing-page bilingual adaptation to keep public-entry copy fully language-consistent.
+19. [x] Redesigned Viewer landing page (learner-focused, 11 sections, floating hero mockup, responsive 980px breakpoint, removed all Builder references).
+20. [x] Redesigned Viewer login screen (two-panel desktop layout, social OAuth: Google/Apple/WeChat, animated inputs, dark-mode fix, brand-asset logos).
+21. [x] Redesigned Viewer register screen (mirrored layout, username field, password strength bar, animated terms checkbox, stats row in brand panel).
+22. [x] Migrated GitHub Pages from hackathon/ to Viewer app; removed hackathon/ project from repo; preserved primoria.dpdns.org via CNAME.
+23. [x] Replaced Markdown editor with WYSIWYG rich-text toolbar (flutter_quill): Bold, Italic, Underline, Strikethrough, Text Color, Highlight, Alignment (L/C/R), Heading dropdown (H1/H2/H3/Normal), Bullet list, Ordered list. Removed Markdown support entirely.
+24. [x] Fixed focus-loss-after-2-chars bug in text editor (persistent FocusNode + ScrollController).
+25. [x] Builder UI polish: removed "Rich text / Markdown" subtitle, replaced "Large" font-size dropdown with alignment buttons, removed drag handles from block library items, differentiated category header cards from individual block rows.
+26. [x] Introduced Page concept in Builder: lessons now hold ≥1 pages; each page holds blocks. Added page navigation strip (pill tabs, + New Page button, × delete) to canvas. Removed legacy "课时画布" header.
+27. [x] Added per-page navigation in Viewer preview: animated progress dots, Prev/Check/Next buttons, "已完成" state on last page. Per-page answer state reset on page change.
+28. [x] Updated AI generation system to be page-aware: prompts output pages[], normalization distributes blocks intelligently. Added function-flow support. Changed text format to richtext. Bumped prompt to v2.
+29. [x] Fixed AI generation empty canvas bug: normalized JSON now carries `schemaVersion` so the schema migrator skips legacy migration and preserves inner `pages` structure.
+30. [x] AI prompt v3/v4: visual-first strategy (animation opener mandatory), 1-sentence text limit, markdown banned, image blocks replaced by animation+aiPrompt, `aiPrompt` preserved in normalizer, markdown-to-Quill-Delta conversion (`_ensureQuillDelta`).
+31. [x] Rebuilt Builder page navigation strip: compact numbered chips with scroll arrows, active chip auto-scroll, "+ 新建页" always visible.
+32. [x] Fixed property inspector blank on pages 2+: block search now covers all pages; `updateBlock` passes correct `pageIndex`.
+33. [x] Builder block library UI: removed category description subtitles and "N 个模块" count labels.
+34. [x] Updated Gemini model to `gemini-3.1-pro-preview`; AI text blocks now convert Markdown → Quill Delta at generation time.
+35. [x] Code Execution block UI: removed timeline/scrubbar and step-duration slider; variables + stdout now side-by-side; 4 control buttons span full row width.
+36. [x] Architecture alignment (Builder + Viewer + Supabase): per-lesson `content_json` storage in Builder; Viewer reads `pages[]` format; removed `lesson.blocks` legacy getter; schema validator hardens `blocks[]` to import-only warning.
+37. [x] Unified interactive-visual block: new `BlockType.interactiveVisual` + `InteractiveVisualContent` (VisualSimSpec), 4 templates (ideal-gas-piston, sorting-bars, variable-binding-memory, function-plot), shared Flutter runtime widget, spec-driven AI generator, staged Builder UX, Viewer real rendering, legacy animation migration.
+38. [x] Interactive Visual platform AI key: removed user API key input; added Supabase Edge Function `gemini-generate` as server-side Gemini proxy; platform `GEMINI_API_KEY` stored as Deno env secret.
+39. [x] Interactive Visual style picker: 6 mandatory styles (Watercolor/Papercraft/Anime/Whiteboard/Retro Print/Heritage) injected into Gemini prompt; Generate button gated on style selection; removed all built-in Flutter scene templates.
+40. [x] Builder↔Viewer JSON snake_case alignment: `schema_version`, `course_id`, `lesson_id`, `page_id`, `difficulty_level`, `estimated_minutes` unified across `toJson()`/`fromJson()`/migrator/validator; dual-key backward compat for all reads.
+41. [x] Viewer auth resilience: `_withAuthTimeout<T>()` (30 s) + 3-attempt exponential backoff (900 ms/1 800 ms/2 500 ms) on all auth methods in Viewer `SupabaseService`.
+42. [x] Viewer graph-mode matching: `matching` blocks with `nodes`+`edges` converted to label pairs, rendered via existing list-matching UI.
+43. [x] Viewer `visibility_rule: 'afterPreviousCorrect'` gating: skips blocks in `_nextQuestion()` when last answer was wrong; `_lastAnsweredCorrectly` state tracked.
+44. [x] Viewer multi-select questions: `QuestionType.multiChoice` with checkbox UI, `correctIndices: Set<int>`, exact full-set validation for `multi_select: true` blocks.
+45. [x] Viewer video block: `VideoEmbedWidget` (HtmlElementView web / placeholder non-web); `_toEmbedUrl()` handles YouTube, Vimeo, and direct URLs; `QuestionType.video` in lesson flow.
+46. [x] Fixed `Block.toJson()` double snake_case conversion for `InteractiveVisualContent`; `_parseCodeExecution` dual-key reads `source_code`/`sourceCode`/`code`.
+47. [x] Supabase `publish_course` RPC v2: removed `chapters` table join and content overwrite; RPC now only flips course status.
+48. [x] Builder `updateProfile` call sites: `displayName:` → `username:` in `builder_settings_dialog.dart` and `profile_dialog.dart`.
+49. [x] Viewer `course_screen` and `user_provider`: removed dead `chapters`/accordion and dead stat fields (`_completedQuestions`, `_unlockedAchievements`, `_checkAndUpdateStreak`).
+50. [x] React Builder foundation completed: `@primoria/schema` (Zod schemas, migration, fixtures, 20 tests), `@primoria/db` (Supabase generated types), `@primoria/builder` (Vite 6 + React 19 + RTK; auth, dashboard, full editor with 13 block panels, dnd-kit canvas, manual save, undo/redo, publish, preview mode, course duplication, JSON import, AI generation for Interactive Visual; 38 tests; 0 TS errors).
+51. [x] `@primoria/db` `database.generated.ts` populated from real Supabase project (`rygafvlzzkvqhhenajzi`); `pnpm db:types` script wired in both package and root workspace.
+52. [x] React Builder visual parity pass: botanical dashboard/auth/editor shell, landing-style surfaces, and production-grade page layout now replace the earlier plain Tailwind look.
+53. [x] Block visibility flow completed in React Builder: first block locked to `always`, later blocks default to `afterPreviousCorrect`, and learner preview reveals gated content only after a correct answer plus `Check`.
+54. [x] Builder canvas editing upgraded: `text`, `code-block`, and `code-playground` edit directly on-block; `image` uploads to Supabase; redundant property-panel editors removed.
+55. [x] React learner preview rebuilt to mirror the Flutter viewer structure more closely: centered lesson stage, page progress, `Prev / Check / Next` navigation, and landing-style presentation.
+56. [x] React Builder UI copy normalized to English-only; old Chinese dashboard/auth test selectors and stale language values were removed.
+57. [x] React `packages/builder` is the sole authoring implementation and current docs reflect that architecture.
+58. [x] Builder hardening completed: explicit remote save flow, publish aborts on save failure, role-gated author/admin access, local draft/autosave removed, and `requiredForProgress` removed in favor of `visibilityRule`.
