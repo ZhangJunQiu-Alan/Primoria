@@ -1,16 +1,19 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowRight } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { enrollInCourse, fetchCourseDetail } from '@/shared/api/viewer/catalogApi';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
 import { SurfaceCard } from '@/shared/layout/SurfaceCard';
+import { trackViewerAnalyticsEventOnce } from '@/shared/api/viewer/analyticsEvents';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
 import { viewerCopy } from '@/shared/theme/copy';
 
 export function CoursePage() {
   const params = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.auth.user);
@@ -52,6 +55,16 @@ export function CoursePage() {
   const course = detail?.course;
   const isEnrolled = Boolean(detail?.enrollment);
   const lessons = detail?.lessons ?? [];
+
+  useEffect(() => {
+    if (!course?.id) {
+      return;
+    }
+
+    trackViewerAnalyticsEventOnce(`${location.key}:course:${course.id}`, 'course_view', {
+      courseId: course.id,
+    });
+  }, [course?.id, location.key]);
 
   if (detailQuery.isLoading) {
     return (

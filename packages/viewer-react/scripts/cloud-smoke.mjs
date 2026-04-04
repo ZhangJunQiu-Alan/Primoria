@@ -38,7 +38,7 @@ const tutorPrompt = `Give me one concise explanation about revenue and expenses.
 const smokeCourseTitle = 'Primoria Viewer Publish Smoke Course';
 const smokeCourseDescription = 'Reserved course for cloud smoke publish and viewer readback verification.';
 const smokeLessonTitle = `Cloud smoke lesson ${runId}`;
-const regressionCourseTitle = 'Python Basics';
+const preferredRegressionCourseTitle = 'Python Basics';
 
 const report = {
   runId,
@@ -85,6 +85,75 @@ async function login(page, email, password, expectedPath, options = {}) {
 
 async function waitForText(page, matcher, timeout = 20_000) {
   await page.getByText(matcher, { exact: false }).waitFor({ state: 'visible', timeout });
+}
+
+function parseMetricValue(rawValue) {
+  const numeric = Number(rawValue.replace(/[^0-9.-]/g, ''));
+  if (!Number.isFinite(numeric)) {
+    throw new Error(`Could not parse metric value from "${rawValue}".`);
+  }
+  return numeric;
+}
+
+async function readMetricCardValue(page, label) {
+  const card = page
+    .locator('article.studio-metric-card')
+    .filter({ has: page.getByText(label, { exact: true }) })
+    .first();
+  await card.waitFor({ state: 'visible', timeout: 15_000 });
+  const valueText = (await card.locator('strong').first().textContent())?.trim() || '';
+  return parseMetricValue(valueText);
+}
+
+async function waitForPositiveMetricCardValue(page, label) {
+  let lastValue = 0;
+
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    if (attempt > 0) {
+      await page.reload({ waitUntil: 'networkidle' });
+      await page.waitForTimeout(1_000);
+    }
+
+    try {
+      const value = await readMetricCardValue(page, label);
+      lastValue = value;
+      if (value > 0) {
+        return value;
+      }
+    } catch {
+      // Continue retry loop until analytics data becomes available or attempts are exhausted.
+    }
+  }
+
+  throw new Error(`Dashboard metric "${label}" did not become positive. Last value: ${lastValue}`);
+}
+
+async function waitForTopCourseAnalytics(page) {
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    if (attempt > 0) {
+      await page.reload({ waitUntil: 'networkidle' });
+      await page.waitForTimeout(1_000);
+    }
+
+    const topCourse = page.locator('.studio-top-course').first();
+    if (!(await topCourse.count())) {
+      continue;
+    }
+
+    await topCourse.waitFor({ state: 'visible', timeout: 15_000 });
+    const title = (await topCourse.locator('.studio-top-course__copy strong').first().textContent())?.trim() || '';
+    const stats = (await topCourse.locator('.studio-top-course__copy p').first().textContent())?.trim() || '';
+    const match = stats.match(/Views:\s*(\d+)/i);
+
+    if (title && match && Number(match[1]) > 0) {
+      return {
+        title,
+        views: Number(match[1]),
+      };
+    }
+  }
+
+  throw new Error('Top course analytics did not surface any positive view counts on the author dashboard.');
 }
 
 async function completeLesson(page) {
@@ -202,14 +271,100 @@ async function verifyPublishedCourseInViewer(page) {
   await waitForText(page, smokeLessonTitle);
 }
 
-async function openRegressionCourse(page) {
+async function verifyAuthorDashboardAnalytics(page) {
+  await login(page, accounts.author.email, accounts.author.password, '/builder/dashboard', {
+    returnTo: '/builder/dashboard',
+  });
+
+  await page.goto(`${baseUrl}/builder/dashboard`, { waitUntil: 'networkidle' });
+  await waitForText(page, /weekly learners/i);
+  const weeklyLearners = await waitForPositiveMetricCardValue(page, 'Weekly learners');
+  const topCourse = await waitForTopCourseAnalytics(page);
+  await saveScreenshot(page, 'author-dashboard-home-analytics');
+
+  await page.goto(`${baseUrl}/builder/dashboard?tab=data`, { waitUntil: 'networkidle' });
+  await waitForText(page, /published viewers/i);
+  const publishedViewers = await waitForPositiveMetricCardValue(page, 'Published viewers');
+
+  const rankingRow = page.locator('.studio-data-list__row').first();
+  await rankingRow.waitFor({ state: 'visible', timeout: 15_000 });
+  const publishedCourseTitle = (await rankingRow.locator('span').first().textContent())?.trim() || '';
+  await saveScreenshot(page, 'author-dashboard-data-analytics');
+
+  addStep(
+    'author dashboard analytics',
+    'PASS',
+    `weekly learners ${weeklyLearners}, published viewers ${publishedViewers}, top course ${topCourse.title}`,
+  );
+
+  return {
+    weeklyLearners,
+    publishedViewers,
+    topCourseTitle: topCourse.title,
+    topCourseViews: topCourse.views,
+    publishedCourseTitle,
+  };
+}
+
+async function openCompletableCourse(page) {
   await page.goto(`${baseUrl}/library`, { waitUntil: 'networkidle' });
   const searchInput = page.getByPlaceholder(/搜索课程|search/i);
   await searchInput.waitFor({ timeout: 15_000 });
-  await searchInput.fill(regressionCourseTitle);
-  await page.getByRole('link', { name: new RegExp(escapeRegExp(regressionCourseTitle), 'i') }).first().click();
-  await page.waitForURL((url) => new URL(url).pathname.startsWith('/course/'), { timeout: 15_000 });
-  await page.getByRole('heading', { name: /lesson list/i }).waitFor({ timeout: 15_000 });
+  await searchInput.fill(preferredRegressionCourseTitle);
+
+  const preferredLink = page.getByRole('link', {
+    name: new RegExp(escapeRegExp(preferredRegressionCourseTitle), 'i'),
+  }).first();
+
+  if (await preferredLink.count()) {
+    await preferredLink.click();
+    await page.waitForURL((url) => new URL(url).pathname.startsWith('/course/'), { timeout: 15_000 });
+    await page.getByRole('heading', { name: /lesson list/i }).waitFor({ timeout: 15_000 });
+    return preferredRegressionCourseTitle;
+  }
+
+  await searchInput.clear();
+  await page.waitForTimeout(750);
+
+  const candidates = await page.locator('a[href^="/course/"]').evaluateAll((nodes) =>
+    nodes
+      .map((node) => ({
+        href: node.getAttribute('href') || '',
+        text: (node.textContent || '').trim(),
+      }))
+      .filter((entry) => entry.href),
+  );
+
+  const seen = new Set();
+  for (const candidate of candidates) {
+    const title = candidate.text.replace(/\s+/g, ' ').trim();
+    if (!title || title.includes(smokeCourseTitle) || seen.has(candidate.href)) {
+      continue;
+    }
+    seen.add(candidate.href);
+
+    await page.goto(`${baseUrl}${candidate.href}`, { waitUntil: 'networkidle' });
+    const hasLessonList = await page
+      .getByRole('heading', { name: /lesson list/i })
+      .isVisible()
+      .catch(() => false);
+    const hasStartLesson = await page
+      .getByRole('button', { name: /start lesson/i })
+      .first()
+      .isVisible()
+      .catch(() => false);
+    const hasEnrollNow = await page
+      .getByRole('button', { name: /enroll now/i })
+      .first()
+      .isVisible()
+      .catch(() => false);
+
+    if (hasLessonList && (hasStartLesson || hasEnrollNow)) {
+      return title;
+    }
+  }
+
+  throw new Error('Could not find a non-smoke published course with a learner-startable lesson.');
 }
 
 async function readBindingCode(page) {
@@ -260,7 +415,16 @@ async function verifyRemoteState(admin, verificationInput) {
     throw new Error('Could not resolve smoke account ids from Supabase Auth.');
   }
 
-  const [profileResult, noteResult, completionResult, bindingResult, courseResult, lessonResult] = await Promise.all([
+  const [
+    profileResult,
+    noteResult,
+    completionResult,
+    bindingResult,
+    courseResult,
+    lessonResult,
+    courseViewEventResult,
+    lessonStartEventResult,
+  ] = await Promise.all([
     admin.from('profiles').select('bio').eq('id', ids.learner).single(),
     admin
       .from('community_notes')
@@ -292,6 +456,24 @@ async function verifyRemoteState(admin, verificationInput) {
       .order('sort_key')
       .limit(1)
       .maybeSingle(),
+    admin
+      .from('viewer_analytics_events')
+      .select('id,event_type,course_id,lesson_id,occurred_at')
+      .eq('actor_id', ids.learner)
+      .eq('course_id', verificationInput.smokeCourseId)
+      .eq('event_type', 'course_view')
+      .order('occurred_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    admin
+      .from('viewer_analytics_events')
+      .select('id,event_type,course_id,lesson_id,occurred_at')
+      .eq('actor_id', ids.learner)
+      .eq('lesson_id', verificationInput.completedLessonId)
+      .eq('event_type', 'lesson_started')
+      .order('occurred_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ]);
 
   if (profileResult.error) throw profileResult.error;
@@ -300,6 +482,8 @@ async function verifyRemoteState(admin, verificationInput) {
   if (bindingResult.error) throw bindingResult.error;
   if (courseResult.error) throw courseResult.error;
   if (lessonResult.error) throw lessonResult.error;
+  if (courseViewEventResult.error) throw courseViewEventResult.error;
+  if (lessonStartEventResult.error) throw lessonStartEventResult.error;
 
   if (profileResult.data?.bio !== learnerBio) {
     throw new Error('Remote profile verification failed: learner bio did not persist.');
@@ -319,6 +503,12 @@ async function verifyRemoteState(admin, verificationInput) {
   if (!lessonResult.data || lessonResult.data.title !== verificationInput.smokeLessonTitle) {
     throw new Error('Remote publish verification failed: smoke lesson title did not persist.');
   }
+  if (!courseViewEventResult.data) {
+    throw new Error('Remote analytics verification failed: smoke course view event was not recorded.');
+  }
+  if (!lessonStartEventResult.data) {
+    throw new Error('Remote analytics verification failed: lesson_started event was not recorded.');
+  }
 
   report.verification = {
     completedLessonId: verificationInput.completedLessonId,
@@ -331,8 +521,15 @@ async function verifyRemoteState(admin, verificationInput) {
     parentChildLink: bindingResult.data,
     smokeCourse: courseResult.data,
     smokeLesson: lessonResult.data,
+    smokeCourseViewEvent: courseViewEventResult.data,
+    completedLessonStartEvent: lessonStartEventResult.data,
+    authorDashboardAnalytics: verificationInput.authorDashboardAnalytics,
   };
-  addStep('remote Supabase verification', 'PASS', 'profile, note, lesson completion, parent-child link, and publish state persisted');
+  addStep(
+    'remote Supabase verification',
+    'PASS',
+    'profile, note, lesson completion, parent-child link, publish state, and analytics events persisted',
+  );
 }
 
 const admin = maybeAdminClient();
@@ -367,7 +564,7 @@ try {
   addStep('author publish -> viewer consistency', 'PASS', smokeLessonTitle);
   await saveScreenshot(learnerPage, 'learner-published-course');
 
-  await openRegressionCourse(learnerPage);
+  const regressionCourseTitle = await openCompletableCourse(learnerPage);
 
   const enrollButton = learnerPage.getByRole('button', { name: /enroll now/i }).first();
   if (await enrollButton.isVisible().catch(() => false)) {
@@ -433,6 +630,12 @@ try {
   addStep('learner sign out', 'PASS');
   await learnerContext.close();
 
+  const authorAnalyticsContext = await browser.newContext();
+  const authorAnalyticsPage = await authorAnalyticsContext.newPage();
+  const authorDashboardAnalytics = await verifyAuthorDashboardAnalytics(authorAnalyticsPage);
+  report.verification.authorDashboardAnalytics = authorDashboardAnalytics;
+  await authorAnalyticsContext.close();
+
   const bindLearnerContext = await browser.newContext();
   const bindLearnerPage = await bindLearnerContext.newPage();
   await login(bindLearnerPage, accounts.bindLearner.email, accounts.bindLearner.password, '/home');
@@ -467,6 +670,7 @@ try {
     completedLessonId,
     smokeCourseId,
     smokeLessonTitle,
+    authorDashboardAnalytics,
   });
   await writeReport();
   console.log(`Cloud smoke passed. Report saved to ${path.join(artifactDir, 'report.json')}`);

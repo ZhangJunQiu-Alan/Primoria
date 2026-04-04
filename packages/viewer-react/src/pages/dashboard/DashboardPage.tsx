@@ -47,12 +47,16 @@ import {
   type CourseLessonRow,
   type CourseRow,
 } from '@/queries/courses';
+import {
+  emptyDashboardAnalytics,
+  useDashboardAnalytics,
+} from '@/queries/dashboardAnalytics';
 import { AccountMenu } from '@/components/account/AccountMenu';
 import './dashboard.css';
 
 type DashboardTab = 'home' | 'course' | 'data' | 'fans';
 type StatusFilter = 'all' | 'draft' | 'published';
-type SortMode = 'updated' | 'title' | 'lessons';
+type SortMode = 'updated' | 'title' | 'lessons' | 'student' | 'comments';
 type FansFilter = 'all' | 'active' | 'need-help';
 type DifficultyLevel = CourseRow['difficulty_level'];
 type PriceTier = CourseRow['price_tier'];
@@ -313,6 +317,43 @@ function buildMonthLabels(count: number) {
   }
 
   return labels;
+}
+
+function buildRecentDayLabels(count: number) {
+  const labels: string[] = [];
+  const now = new Date();
+
+  for (let index = count - 1; index >= 0; index -= 1) {
+    const day = new Date(now);
+    day.setDate(now.getDate() - index);
+    labels.push(day.toLocaleDateString('en-US', { weekday: 'short' }));
+  }
+
+  return labels;
+}
+
+function formatShortDateLabel(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return date.toLocaleDateString('en-US', { weekday: 'short' });
+}
+
+function formatMonthLabel(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return `${date.getMonth() + 1}/${String(date.getFullYear()).slice(-2)}`;
+}
+
+function formatSignedDelta(value: number) {
+  if (value === 0) {
+    return '0.0%';
+  }
+  const prefix = value > 0 ? '+' : '';
+  return `${prefix}${value.toFixed(1)}%`;
 }
 
 function buildLinePoints(values: number[], width: number, height: number, padding: number) {
@@ -759,6 +800,7 @@ export function DashboardPage() {
 
   const activeTab = parseDashboardTab(searchParams.get('tab'));
   const { data: courses = [], isLoading, error, refetch, isRefetching } = useCourseList(user?.id);
+  const analyticsQuery = useDashboardAnalytics(user?.id);
   const createCourse = useCreateCourse();
   const updateCourse = useUpdateCourse();
   const deleteCourse = useDeleteCourse();
@@ -811,30 +853,40 @@ export function DashboardPage() {
   const draftCourses = courses.filter((course) => course.status === 'draft').length;
   const emptyCourses = courses.filter((course) => course.lessons.length === 0).length;
   const totalPremiumCourses = courses.filter((course) => course.price_tier === 'premium').length;
+  const analytics = analyticsQuery.data ?? emptyDashboardAnalytics;
+  const courseMetricsById = new Map(
+    analytics.course_metrics.map((metric) => [metric.course_id, metric]),
+  );
+  const coursesById = new Map(courses.map((course) => [course.id, course]));
   const latestCourse = [...courses].sort(
     (left, right) => new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime(),
   )[0] ?? null;
-
-  const weeklyLearners = courses.length === 0
-    ? 0
-    : Math.max(68, publishedCourses * 42 + totalLessons * 8 + courses.length * 18);
-  const totalStudyHours = courses.length === 0
-    ? 0
-    : Math.max(226, totalLessons * 26 + publishedCourses * 60 + courses.length * 40);
-  const completionRate = courses.length === 0
-    ? 0.62
-    : Math.min(0.94, 0.68 + publishedCourses * 0.05 + totalLessons * 0.012);
-  const completionDelta = courses.length === 0 ? 0 : Math.max(2.4, publishedCourses * 0.8 + 1.2);
+  const latestCourseMetric = latestCourse ? courseMetricsById.get(latestCourse.id) ?? null : null;
+  const weeklyLearners = analytics.summary.weekly_learners;
+  const totalStudyHours = analytics.summary.total_study_hours;
+  const completionRate = analytics.summary.current_completion_rate;
+  const completionDelta = analytics.summary.completion_delta_pct;
   const estimatedIncome = courses.length === 0
     ? 0
     : Math.max(18, totalPremiumCourses * 24 + publishedCourses * 12 + totalLessons * 2.5);
   const pendingIncome = estimatedIncome === 0 ? 0 : Math.max(6, Math.round(estimatedIncome * 0.3));
-  const estimatedPublishedViewers = publishedCourses === 0
-    ? 0
-    : Math.max(0, publishedCourses * 1200 + totalLessons * 140 + totalPremiumCourses * 380);
-  const averageCompletionRate = courses.length === 0
-    ? 0.62
-    : Math.min(0.93, 0.56 + publishedCourses * 0.07 + totalLessons * 0.014);
+  const publishedViewers = analytics.summary.published_viewers;
+  const averageCompletionRate = analytics.summary.average_completion_rate;
+  const rankedCourses = analytics.course_metrics
+    .map((metric) => {
+      const course = coursesById.get(metric.course_id);
+      if (!course) return null;
+
+      return {
+        ...course,
+        ...metric,
+        momentum: Math.round(metric.completion_rate * 100),
+      };
+    })
+    .filter((course): course is NonNullable<typeof course> => course !== null);
+  const publishedRankedCourses = rankedCourses.filter((course) => course.status === 'published');
+  const topCourses = publishedRankedCourses.slice(0, 3);
+  const publishedCourseRanking = publishedRankedCourses.slice(0, 5);
 
   const filteredCourses = courses.filter((course) => {
     if (statusFilter !== 'all' && course.status !== statusFilter) {
@@ -863,39 +915,34 @@ export function DashboardPage() {
       );
     }
 
+    if (sortMode === 'student') {
+      return (
+        (courseMetricsById.get(right.id)?.students ?? 0) - (courseMetricsById.get(left.id)?.students ?? 0) ||
+        new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
+      );
+    }
+
+    if (sortMode === 'comments') {
+      return (
+        (courseMetricsById.get(right.id)?.comments ?? 0) - (courseMetricsById.get(left.id)?.comments ?? 0) ||
+        new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
+      );
+    }
+
     return new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime();
   });
 
-  const scoredCourses = [...courses]
-    .map((course, index) => {
-      const score = (
-        (course.status === 'published' ? 88 : 36) +
-        course.lessons.length * 22 +
-        course.estimated_minutes * 0.45 +
-        course.tags.length * 10 +
-        (courses.length - index) * 4
-      );
-      const views = Math.round(score * 38 + course.title.length * 12);
-
-      return {
-        ...course,
-        score,
-        views,
-        momentum: Math.max(34, Math.min(100, Math.round(score * 0.55))),
-      };
-    })
-    .sort((left, right) => right.score - left.score);
-
-  const topCourses = scoredCourses.slice(0, 3);
   const recentActivities = [
     latestCourse
       ? {
           title: latestCourse.title,
           description:
             latestCourse.status === 'published'
-              ? `Published content is still growing and now reaches an estimated ${Math.max(estimatedPublishedViewers, 5036)} viewers.`
+              ? latestCourseMetric && latestCourseMetric.views > 0
+                ? `Published content has reached ${latestCourseMetric.views} real course views so far.`
+                : 'Published content is live and waiting for the first verified learner views.'
               : 'The latest edit has synced back to the workspace and is ready for the next pass.',
-          time: formatUpdatedAt(latestCourse.updated_at),
+          time: formatUpdatedAt(latestCourseMetric?.last_activity_at ?? latestCourse.updated_at),
           tone: 'amber' as const,
         }
       : {
@@ -907,24 +954,20 @@ export function DashboardPage() {
     {
       title: 'New learners',
       description:
-        publishedCourses > 0
-          ? `${Math.max(4, publishedCourses * 2)} learners entered your public content this week.`
+        weeklyLearners > 0
+          ? `${weeklyLearners} learners interacted with your published content in the last 7 days.`
           : 'After you publish a course, new learners and recent interactions will show up here.',
-      time: publishedCourses > 0 ? '1 day ago' : 'Waiting for publish',
+      time: weeklyLearners > 0 ? 'Last 7 days' : 'Waiting for publish',
       tone: 'sage' as const,
     },
   ];
 
-  const completionTrendValues = [
-    weeklyLearners * 0.82,
-    weeklyLearners * 0.86,
-    weeklyLearners * 0.89,
-    weeklyLearners * 0.9,
-    weeklyLearners * 0.88,
-    weeklyLearners * 0.85,
-    weeklyLearners * 0.83,
-  ].map((value) => Math.round(value));
-
+  const homeTrendLabels = analytics.home_daily_completion.length > 0
+    ? analytics.home_daily_completion.map((entry) => formatShortDateLabel(entry.date))
+    : buildRecentDayLabels(7);
+  const completionTrendValues = analytics.home_daily_completion.length > 0
+    ? analytics.home_daily_completion.map((entry) => Math.round(entry.completion_rate * 100))
+    : homeTrendLabels.map(() => 0);
   const incomeTrendValues = [
     estimatedIncome * 0.35,
     estimatedIncome * 0.48,
@@ -934,8 +977,9 @@ export function DashboardPage() {
     estimatedIncome * 0.89,
     estimatedIncome * 0.77,
   ].map((value) => Math.round(value));
-
-  const dataMonthLabels = buildMonthLabels(6);
+  const dataMonthLabels = analytics.monthly_activity_completion.length > 0
+    ? analytics.monthly_activity_completion.map((entry) => formatMonthLabel(entry.month_start))
+    : buildMonthLabels(6);
   const createdByMonth: number[] = dataMonthLabels.map((label) =>
     courses.filter((course) => {
       const createdAt = new Date(course.created_at);
@@ -945,7 +989,8 @@ export function DashboardPage() {
   const publishedByMonth: number[] = dataMonthLabels.map((label) =>
     courses.filter((course) => {
       if (course.status !== 'published') return false;
-      const publishedAt = new Date(course.updated_at);
+      if (!course.published_at) return false;
+      const publishedAt = new Date(course.published_at);
       return `${publishedAt.getMonth() + 1}/${String(publishedAt.getFullYear()).slice(-2)}` === label;
     }).length,
   );
@@ -955,12 +1000,12 @@ export function DashboardPage() {
       ? [...createdByMonth.slice(0, -1), courses.length]
       : createdByMonth;
 
-  const learningProgressA = dataMonthLabels.map((_, index) =>
-    Math.round(48 + index * 3 + publishedCourses * 4),
-  );
-  const learningProgressB = dataMonthLabels.map((_, index) =>
-    Math.round(46 + index * 2 + totalLessons * 2.5),
-  );
+  const learningProgressA = analytics.monthly_activity_completion.length > 0
+    ? analytics.monthly_activity_completion.map((entry) => Math.round(entry.completion_rate * 100))
+    : dataMonthLabels.map(() => 0);
+  const learningProgressB = analytics.monthly_activity_completion.length > 0
+    ? analytics.monthly_activity_completion.map((entry) => entry.active_learners)
+    : dataMonthLabels.map(() => 0);
 
   const incomeProgress = dataMonthLabels.map((_, index) => {
     if (estimatedIncome === 0) return 0;
@@ -1112,6 +1157,14 @@ export function DashboardPage() {
   const hasNoResults = courses.length > 0 && visibleCourses.length === 0;
   const hasEmptyState = !isLoading && !error && courses.length === 0;
   const hasInlineError = Boolean(error && courses.length > 0);
+  const analyticsErrorNotice = analyticsQuery.error ? (
+    <section className="studio-inline-notice studio-inline-notice--error">
+      <p>{`Learner analytics are unavailable right now. ${getErrorMessage(analyticsQuery.error)}`}</p>
+      <button type="button" aria-label="Reload analytics" onClick={() => void analyticsQuery.refetch()}>
+        <RefreshCcw size={14} />
+      </button>
+    </section>
+  ) : null;
 
   return (
     <div className="dashboard-studio">
@@ -1172,6 +1225,8 @@ export function DashboardPage() {
           <div className="studio-main__content">
             {activeTab === 'home' ? (
               <>
+                {analyticsErrorNotice}
+
                 <section className="studio-welcome-card studio-card studio-card--mist">
                   <div className="studio-welcome-card__copy">
                     <p className="studio-overline">HOME</p>
@@ -1235,11 +1290,11 @@ export function DashboardPage() {
 
                       <div className="studio-chart-card__meta">
                         <span>Completion trend: {(completionRate * 100).toFixed(1)}%</span>
-                        <strong>+{completionDelta.toFixed(1)}% vs last week</strong>
+                        <strong>{formatSignedDelta(completionDelta)} vs last week</strong>
                       </div>
 
                       <TrendChart
-                        labels={homeWeekLabels}
+                        labels={homeTrendLabels}
                         series={[
                           {
                             name: 'Completion',
@@ -1273,7 +1328,7 @@ export function DashboardPage() {
 
                               <div className="studio-top-course__copy">
                                 <strong>{course.title}</strong>
-                                <p>Views: {course.views}</p>
+                                <p>Views: {course.views} · Students: {course.students}</p>
                                 <div className="studio-progress">
                                   <span style={{ width: `${course.momentum}%` }} />
                                 </div>
@@ -1446,6 +1501,8 @@ export function DashboardPage() {
                     <select value={sortMode} onChange={(event) => setSortMode(event.target.value as SortMode)}>
                       <option value="updated">Recently updated</option>
                       <option value="lessons">Most lessons</option>
+                      <option value="student">Most students</option>
+                      <option value="comments">Most comments</option>
                       <option value="title">Course title</option>
                     </select>
                     <ChevronDown size={14} />
@@ -1460,6 +1517,8 @@ export function DashboardPage() {
                     </button>
                   </section>
                 ) : null}
+
+                {analyticsErrorNotice}
 
                 {isLoading && courses.length === 0 ? (
                   <section className="studio-card studio-empty-state">
@@ -1593,6 +1652,8 @@ export function DashboardPage() {
                               <span className="studio-meta-chip">{formatDuration(course.estimated_minutes)}</span>
                               <span className="studio-meta-chip">{formatPrice(course)}</span>
                               <span className="studio-meta-chip">{course.lessons.length} lessons</span>
+                              <span className="studio-meta-chip">{courseMetricsById.get(course.id)?.students ?? 0} students</span>
+                              <span className="studio-meta-chip">{courseMetricsById.get(course.id)?.comments ?? 0} comments</span>
                             </div>
 
                             <section className="studio-lesson-panel">
@@ -1659,6 +1720,8 @@ export function DashboardPage() {
 
             {activeTab === 'data' ? (
               <>
+                {analyticsErrorNotice}
+
                 <PageHeader
                   eyebrow="DATA CENTER"
                   title="Data center overview"
@@ -1667,7 +1730,7 @@ export function DashboardPage() {
                     <button
                       type="button"
                       className="studio-button studio-button--secondary"
-                      onClick={() => showInfo('Report export will be enabled once real analytics are connected.')}
+                      onClick={() => showInfo('Report export is not available yet.')}
                     >
                       <Download size={16} />
                       <span>Export report</span>
@@ -1678,7 +1741,7 @@ export function DashboardPage() {
                 <section className="studio-summary-strip">
                   <MetricCard icon={BookCopy} label="Total courses" value={courses.length} tone="mist" detail={`Draft ${draftCourses} · Archived ${courses.filter((course) => course.status === 'archived').length}`} />
                   <MetricCard icon={ArrowUpRight} label="Published courses" value={publishedCourses} tone="sage" detail={courses.length > 0 ? `${Math.round((publishedCourses / courses.length) * 100)}% publish rate` : '0% publish rate'} />
-                  <MetricCard icon={Activity} label="Published viewers" value={estimatedPublishedViewers} tone="amber" />
+                  <MetricCard icon={Activity} label="Published viewers" value={publishedViewers} tone="amber" />
                   <MetricCard icon={BadgeCheck} label="Average completion" value={`${(averageCompletionRate * 100).toFixed(1)}%`} tone="sky" />
                   <MetricCard icon={CircleDollarSign} label="Estimated monthly revenue" value={formatCurrency(estimatedIncome)} tone="lavender" detail="Estimated from pricing and audience scale" />
                 </section>
@@ -1784,16 +1847,16 @@ export function DashboardPage() {
                     <div className="studio-panel__header">
                       <div>
                         <h2>Published course viewers</h2>
-                        <p>Estimated viewer scale for each published course.</p>
+                        <p>Real viewer totals across published courses ranked by live learner demand.</p>
                       </div>
                     </div>
 
-                    {topCourses.length > 0 ? (
+                    {publishedCourseRanking.length > 0 ? (
                       <div className="studio-data-list">
-                        {topCourses.map((course) => (
+                        {publishedCourseRanking.map((course) => (
                           <div key={course.id} className="studio-data-list__row">
                             <span>{course.title}</span>
-                            <strong>{course.status === 'published' ? course.views : 0}</strong>
+                            <strong>{course.views}</strong>
                           </div>
                         ))}
                       </div>

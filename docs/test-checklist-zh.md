@@ -42,9 +42,10 @@
 ### D1. Home
 - [ ] 按时间段显示问候语
 - [ ] 快捷按钮可用（创建/继续编辑/查看数据）
-- [ ] 概览 KPI 与完成率趋势可渲染
-- [ ] 重点课程列表可渲染并可点击
-- [ ] 最近活动流可渲染
+- [ ] 最近 7 天学习者 / 累计学习时长卡片来自真实 analytics
+- [ ] 最近 7 天完成率趋势来自 analytics payload
+- [ ] 重点课程列表展示真实浏览量 + 学员数，并可点击进入
+- [ ] 最近活动流能显示学习者和最新课程信号
 - [ ] 无课程时显示空状态
 
 ### D2. Course Management
@@ -52,18 +53,20 @@
 - [ ] 摘要条可渲染（课程数/课时数/已发布/草稿/待补内容）
 - [ ] 搜索与状态筛选联动正常（`all` / `draft` / `published`）
 - [ ] 无结果状态正确出现，清空筛选可恢复列表
+- [ ] `student` / `comments` 排序按真实指标生效
+- [ ] 课程卡片展示可见的 `students` / `comments` 指标芯片
 - [ ] 创建/编辑/删除课程正常
 - [ ] 复制课程可生成新的草稿课程
 - [ ] 打开课程可正确带着上下文跳转到 builder
 - [ ] 添加课时与删除课时流程正常
 
 ### D3. Data Center
-- [ ] KPI 行可渲染
-- [ ] 趋势图与时间范围切换可用
-- [ ] 课程表现图可渲染
-- [ ] 地域分布可渲染
-- [ ] 热力图可渲染
-- [ ] 明细表可渲染
+- [ ] KPI 行可渲染，并显示真实已发布浏览量与平均完成率
+- [ ] 课程体量趋势图基于 `created_at` / `published_at` 渲染
+- [ ] 课程类型分布环图可渲染
+- [ ] 收入趋势图以预估语义渲染
+- [ ] 学习进度趋势图可渲染月度活跃学习者 + 完成率
+- [ ] 已发布课程浏览量排行列表可渲染
 - [ ] 导出入口可达
 
 ### D4. Fan Management
@@ -95,11 +98,11 @@
 ## F. 数据一致性
 
 - [ ] 在 Builder 改 lesson 名并保存，回 `/builder/dashboard` 能看到新名
-- [ ] `smoke:cloud` 会在 lesson 改名后发布复用 smoke 课程，再进入 Viewer React 验证标题一致
+- [ ] `smoke:cloud` 会在 lesson 改名后发布复用 smoke 课程，进入 Viewer React 验证标题一致，并回作者 Dashboard 验证 `weekly learners` / `published viewers` / 重点课程 analytics
 - [ ] 对快照内容不完整的课程，React viewer fallback 仍可打开
 
 ## G. 当前非阻断缺口
 
 1. Dashboard 收入数据仍是 fallback 派生值。
 2. 部分分析/粉丝操作只有前端入口，后端接口未接入。
-3. 少数排序方式仍使用占位排序逻辑。
+3. Cloud smoke 的 analytics 验证仍依赖已配置的真实 Supabase smoke 凭据。

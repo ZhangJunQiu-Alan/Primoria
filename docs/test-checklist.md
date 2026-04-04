@@ -42,9 +42,10 @@ Last updated: 2026-04-04
 ### D1. Home
 - [ ] greeting changes by time period
 - [ ] quick action buttons work (create/continue/data center)
-- [ ] overview KPIs and completion trend render
-- [ ] featured courses list renders with open action
-- [ ] recent activity feed renders
+- [ ] weekly learners / total study hours cards render from dashboard analytics
+- [ ] completion trend renders from the 7-day analytics payload
+- [ ] top courses list renders with real views + students copy and open action
+- [ ] recent activity feed renders learner and latest-course signals
 - [ ] empty state shows when there are no courses
 
 ### D2. Course Management
@@ -52,18 +53,20 @@ Last updated: 2026-04-04
 - [ ] summary strip renders (courses/lessons/published/drafts/need-content)
 - [ ] search and status filters work together (`all` / `draft` / `published`)
 - [ ] no-results state appears and clear-filters action resets view
+- [ ] `student` / `comments` sort modes rank courses by real metrics
+- [ ] course cards expose visible `students` / `comments` metric chips
 - [ ] create/edit/delete course still work
 - [ ] duplicate course creates a new draft row
 - [ ] open-course action routes to builder with the selected course context
 - [ ] add lesson and delete lesson flows still work
 
 ### D3. Data Center
-- [ ] KPI row renders
-- [ ] trend chart renders and range selector works
-- [ ] performance chart renders
-- [ ] geographic breakdown renders
-- [ ] heatmap renders
-- [ ] detail table renders
+- [ ] KPI row renders with published viewers and average completion from analytics RPC
+- [ ] course volume trend renders from `created_at` and `published_at`
+- [ ] course type distribution donut renders
+- [ ] revenue trend renders with estimated placeholder copy
+- [ ] learning progress tracking renders monthly activity + completion data
+- [ ] published course viewers ranking renders published-only course rows
 - [ ] export action is reachable
 
 ### D4. Fan Management
@@ -95,11 +98,11 @@ Last updated: 2026-04-04
 ## F. Data Consistency
 
 - [ ] rename lesson in Builder, save, return to `/builder/dashboard`, confirm new lesson title is visible
-- [ ] `smoke:cloud` publishes a reusable smoke course after lesson rename, then opens Viewer React and verifies lesson title consistency
+- [ ] `smoke:cloud` publishes a reusable smoke course after lesson rename, opens Viewer React, and returns to author dashboard to verify `weekly learners` / `published viewers` / top-course analytics
 - [ ] course with sparse snapshot rows still loads in the React viewer fallback path
 
 ## G. Known Non-Blocking Gaps
 
 1. Revenue metrics are still fallback-derived in dashboard.
 2. Some analytics/fans actions are UI-ready but backend endpoints are not yet implemented.
-3. A few sort modes still use placeholder ranking logic.
+3. Cloud smoke analytics validation still depends on configured real Supabase smoke credentials.

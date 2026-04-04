@@ -1,7 +1,3 @@
-// AUTO-GENERATED — do not edit manually.
-// Run `pnpm db:types` to regenerate from Supabase schema.
-// Last generated: 2026-03-19
-
 export type Json =
   | string
   | number
@@ -100,6 +96,384 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_conversation_members: {
+        Row: {
+          conversation_id: string
+          joined_at: string
+          last_read_at: string | null
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          joined_at?: string
+          last_read_at?: string | null
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          joined_at?: string
+          last_read_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_conversation_members_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "community_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_conversation_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_conversations: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          kind: Database["public"]["Enums"]["community_conversation_kind"]
+          study_room_id: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          kind?: Database["public"]["Enums"]["community_conversation_kind"]
+          study_room_id?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["community_conversation_kind"]
+          study_room_id?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_conversations_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_conversations_study_room_id_fkey"
+            columns: ["study_room_id"]
+            isOneToOne: true
+            referencedRelation: "community_study_rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_discussion_comments: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          discussion_id: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          discussion_id: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          discussion_id?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_discussion_comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_discussion_comments_discussion_id_fkey"
+            columns: ["discussion_id"]
+            isOneToOne: false
+            referencedRelation: "community_discussions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_discussion_likes: {
+        Row: {
+          created_at: string
+          discussion_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          discussion_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          discussion_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_discussion_likes_discussion_id_fkey"
+            columns: ["discussion_id"]
+            isOneToOne: false
+            referencedRelation: "community_discussions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_discussion_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_discussions: {
+        Row: {
+          author_id: string
+          body: string
+          category: string
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          category?: string
+          created_at?: string
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          category?: string
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_discussions_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_messages: {
+        Row: {
+          author_id: string
+          body: string
+          conversation_id: string
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_messages_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "community_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_notes: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          owner_id: string
+          room_id: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          owner_id: string
+          room_id?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          owner_id?: string
+          room_id?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_notes_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_notes_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "community_study_rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_study_room_members: {
+        Row: {
+          joined_at: string
+          room_id: string
+          user_id: string
+        }
+        Insert: {
+          joined_at?: string
+          room_id: string
+          user_id: string
+        }
+        Update: {
+          joined_at?: string
+          room_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_study_room_members_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "community_study_rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_study_room_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_study_rooms: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string
+          id: string
+          name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string
+          id?: string
+          name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string
+          id?: string
+          name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_study_rooms_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_analytics_baselines: {
+        Row: {
+          course_id: string
+          seeded_at: string
+          seeded_view_count: number
+        }
+        Insert: {
+          course_id: string
+          seeded_at?: string
+          seeded_view_count?: number
+        }
+        Update: {
+          course_id?: string
+          seeded_at?: string
+          seeded_view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_analytics_baselines_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: true
+            referencedRelation: "courses"
             referencedColumns: ["id"]
           },
         ]
@@ -790,6 +1164,105 @@ export type Database = {
           },
         ]
       }
+      viewer_analytics_events: {
+        Row: {
+          actor_id: string
+          course_id: string
+          event_type: Database["public"]["Enums"]["viewer_analytics_event_type"]
+          id: string
+          lesson_id: string | null
+          occurred_at: string
+        }
+        Insert: {
+          actor_id: string
+          course_id: string
+          event_type: Database["public"]["Enums"]["viewer_analytics_event_type"]
+          id?: string
+          lesson_id?: string | null
+          occurred_at?: string
+        }
+        Update: {
+          actor_id?: string
+          course_id?: string
+          event_type?: Database["public"]["Enums"]["viewer_analytics_event_type"]
+          id?: string
+          lesson_id?: string | null
+          occurred_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "viewer_analytics_events_actor_id_fkey"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "viewer_analytics_events_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "viewer_analytics_events_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      web_push_subscriptions: {
+        Row: {
+          active: boolean
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          last_sent_at: string | null
+          p256dh: string
+          permission_state: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          last_sent_at?: string | null
+          p256dh: string
+          permission_state?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          last_sent_at?: string | null
+          p256dh?: string
+          permission_state?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "web_push_subscriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       xp_transactions: {
         Row: {
           amount: number
@@ -830,6 +1303,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      award_viewer_achievements: {
+        Args: {
+          p_accuracy_pct?: number
+          p_time_spent_seconds?: number
+          p_user_id: string
+        }
+        Returns: Json
+      }
       bind_child_with_code: {
         Args: { p_code: string }
         Returns: {
@@ -853,12 +1334,20 @@ export type Database = {
             }
             Returns: Json
           }
+      create_or_get_direct_conversation: {
+        Args: { p_other_user_id: string }
+        Returns: string
+      }
       generate_child_binding_code: {
         Args: { p_ttl_minutes?: number }
         Returns: {
           code: string
           expires_at: string
         }[]
+      }
+      get_author_dashboard_analytics: {
+        Args: { p_days?: number; p_months?: number }
+        Returns: Json
       }
       get_parent_child_report: {
         Args: { p_child_id: string; p_days?: number }
@@ -878,6 +1367,7 @@ export type Database = {
         }[]
       }
       is_parent_user: { Args: { p_user_id: string }; Returns: boolean }
+      join_study_room: { Args: { p_room_id: string }; Returns: Json }
       publish_course: { Args: { p_course_id: string }; Returns: undefined }
       search_courses: {
         Args: {
@@ -917,11 +1407,27 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      toggle_discussion_like: {
+        Args: { p_discussion_id: string }
+        Returns: Json
+      }
+      track_viewer_analytics_event: {
+        Args: {
+          p_course_id: string
+          p_event_type: Database["public"]["Enums"]["viewer_analytics_event_type"]
+          p_lesson_id?: string
+        }
+        Returns: boolean
+      }
       unbind_child: { Args: { p_child_id: string }; Returns: boolean }
       update_user_streak: { Args: { p_user_id: string }; Returns: undefined }
       upsert_daily_activity: {
         Args: { p_lessons?: number; p_user_id: string; p_xp?: number }
         Returns: undefined
+      }
+      viewer_can_access_conversation: {
+        Args: { p_conversation_id: string }
+        Returns: boolean
       }
     }
     Enums: {
@@ -935,6 +1441,7 @@ export type Database = {
         | "multiple_choice"
         | "slider"
         | "info_card"
+      community_conversation_kind: "direct" | "group"
       course_status: "draft" | "published" | "archived"
       difficulty_level: "beginner" | "intermediate" | "advanced"
       enrollment_status: "in_progress" | "completed" | "dropped"
@@ -949,6 +1456,7 @@ export type Database = {
       subscription_status: "active" | "canceled" | "expired"
       theme_mode: "system" | "light" | "dark"
       user_role: "user" | "subscriber" | "author" | "admin" | "parent"
+      viewer_analytics_event_type: "course_view" | "lesson_started"
       xp_source_type: "lesson_complete" | "daily_bonus" | "admin_adjustment"
     }
     CompositeTypes: {
@@ -1088,6 +1596,7 @@ export const Constants = {
         "slider",
         "info_card",
       ],
+      community_conversation_kind: ["direct", "group"],
       course_status: ["draft", "published", "archived"],
       difficulty_level: ["beginner", "intermediate", "advanced"],
       enrollment_status: ["in_progress", "completed", "dropped"],
@@ -1103,6 +1612,7 @@ export const Constants = {
       subscription_status: ["active", "canceled", "expired"],
       theme_mode: ["system", "light", "dark"],
       user_role: ["user", "subscriber", "author", "admin", "parent"],
+      viewer_analytics_event_type: ["course_view", "lesson_started"],
       xp_source_type: ["lesson_complete", "daily_bonus", "admin_adjustment"],
     },
   },

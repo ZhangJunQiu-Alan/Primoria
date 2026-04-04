@@ -1,6 +1,6 @@
 # Dashboard Architecture
 
-Last updated: 2026-03-20
+Last updated: 2026-04-04
 
 ## Scope
 
@@ -23,8 +23,12 @@ Tabs:
   - botanical visual system, layout, cards, dialog styling, responsive behavior
 - `packages/viewer-react/src/queries/courses.ts`
   - course list fetch plus create/update/delete/duplicate course and add/delete lesson mutations
+- `packages/viewer-react/src/queries/dashboardAnalytics.ts`
+  - author dashboard analytics RPC query, payload normalization, and empty-state defaults
 - `packages/viewer-react/src/components/account/AccountMenu.tsx`
   - avatar menu entry point for unified settings, support, and session actions
+- `packages/viewer-react/src/shared/api/viewer/analyticsEvents.ts`
+  - fire-and-forget analytics event helper for course views and lesson starts
 - `packages/viewer-react/src/services/StorageService.ts`
   - local persistence for builder/dashboard preferences
 
@@ -34,9 +38,10 @@ Tabs:
 
 - greeting by local time period
 - quick actions for create / continue editing / open analytics
-- overview KPIs and trend cards
-- featured courses list with direct open actions
-- recent activity feed
+- overview KPIs for weekly learners and total study hours
+- real completion trend for the last 7 days
+- top courses ranked by views, students, and completion quality
+- recent activity feed tied to latest course updates and learner activity
 - compact system notices and status feedback
 
 ### 2) Course Management
@@ -50,6 +55,7 @@ Tabs:
   - delete lesson
 - open builder workspace on a specific course/lesson
 - control bar with search, status filter, and sort mode
+- sort modes include real learner-backed `student` / `comments` metrics
 - summary strip for courses / lessons / published / drafts / need-content
 - state coverage:
   - signed-out prompt
@@ -60,13 +66,13 @@ Tabs:
 
 ### 3) Data Center
 
-- KPI row
-- learning trend chart with range switching
-- course performance chart
-- geography breakdown
-- learning-time heatmap
-- detail table
-- export affordance
+- KPI row for course volume, published viewers, average completion, and estimated revenue
+- course volume trend using `created_at` and `published_at`
+- course type distribution donut
+- revenue trend card kept as estimated placeholder
+- learning progress tracking based on monthly active learners + completion rate
+- published course viewers ranking list
+- export affordance placeholder
 
 ### 4) Fan Management
 
@@ -92,7 +98,8 @@ Tabs:
 
 The dashboard uses a mixed strategy:
 - real course/profile/settings data from Supabase where available
-- derived placeholder values for analytics/revenue domains that do not yet have backend support
+- first-party author analytics facts from Supabase RPCs backed by `viewer_analytics_events` and seeded course baselines
+- revenue remains estimated until settlement data exists
 - local storage for workflow-only preferences
 
 ## Responsive Behavior
@@ -108,6 +115,6 @@ Course Management specifics:
 
 ## Known Gaps
 
-1. Revenue and advanced analytics still rely on fallback-derived values.
+1. Revenue cards and trends are still estimated until settlement data is connected.
 2. Fan reply/notification/export flows remain UI-ready placeholders pending backend APIs.
-3. Some sort modes still map to lightweight placeholder metrics rather than event-level facts.
+3. Advanced cohort/segmentation views are not yet implemented beyond the current author dashboard analytics surface.

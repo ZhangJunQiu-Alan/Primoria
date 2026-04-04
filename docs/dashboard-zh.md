@@ -1,6 +1,6 @@
 # Dashboard 架构说明
 
-最后更新：2026-03-20
+最后更新：2026-04-04
 
 ## 范围
 
@@ -23,8 +23,12 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
   - botanical 视觉系统、布局、卡片、弹窗与响应式样式
 - `packages/viewer-react/src/queries/courses.ts`
   - 课程列表读取，以及课程创建/更新/删除/复制、课时新增/删除等 mutation
+- `packages/viewer-react/src/queries/dashboardAnalytics.ts`
+  - 作者侧 Dashboard analytics RPC 查询、payload 归一化与空状态默认值
 - `packages/viewer-react/src/components/account/AccountMenu.tsx`
   - 头像菜单入口，承接统一设置、支持与会话动作
+- `packages/viewer-react/src/shared/api/viewer/analyticsEvents.ts`
+  - 课程浏览与课时开始事件的前端 fire-and-forget 记录辅助
 - `packages/viewer-react/src/services/StorageService.ts`
   - 本地偏好持久化
 
@@ -34,9 +38,10 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
 
 - 按时间段显示问候语
 - 快捷操作：创建、继续编辑、查看数据
-- 概览 KPI 与趋势卡片
-- 重点课程列表与直接打开入口
-- 最近活动流
+- 概览 KPI：最近 7 天学习者与累计学习时长
+- 最近 7 天真实完成率趋势
+- 按浏览量 / 学员数 / 完成质量排序的重点课程
+- 基于课程更新和学习者活动的最近活动流
 - 紧凑的系统提示与状态反馈
 
 ### 2）Course Management
@@ -50,6 +55,7 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
   - 删除课时
   - 直接打开指定课程/课时进入 Builder 工作台
 - 控制栏：搜索、状态筛选、排序方式
+- 排序方式已接入真实 `student` / `comments` 指标
 - 摘要条：课程数 / 课时数 / 已发布 / 草稿 / 待补内容
 - 覆盖状态：
   - 未登录提示
@@ -60,13 +66,13 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
 
 ### 3）Data Center
 
-- KPI 行
-- 学习趋势图与时间范围切换
-- 课程表现图
-- 地域分布
-- 学习时段热力图
-- 明细表
-- 导出入口
+- KPI 行：课程规模、已发布浏览量、平均完成率、预估收入
+- 基于 `created_at` 与 `published_at` 的课程体量趋势
+- 课程类型分布环图
+- 保留预估语义的收入趋势卡
+- 基于月度活跃学习者与完成率的学习进度趋势
+- 已发布课程浏览量排行
+- 导出入口占位
 
 ### 4）Fan Management
 
@@ -92,7 +98,8 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
 
 Dashboard 当前采用混合策略：
 - 能用 Supabase 真实数据的域优先走真实数据
-- 收入/高级分析等尚未接后端的域继续使用派生占位值
+- 作者侧 analytics 通过 `viewer_analytics_events` + baseline 表 + RPC 聚合提供真实事实
+- 收入仍保留预估值，等待真实结算数据接入
 - 工作流偏好由本地存储负责
 
 ## 响应式策略
@@ -108,6 +115,6 @@ Dashboard 当前采用混合策略：
 
 ## 已知缺口
 
-1. 收入与高级分析仍然依赖 fallback 派生值。
+1. 收入卡片与趋势仍是预估值，尚未接真实结算数据。
 2. 粉丝回复/通知/导出仍是前端预留位，后端接口未接入。
-3. 部分排序方式仍基于轻量占位指标，而不是真实事件级事实。
+3. 更高级的 cohort / 分群分析尚未补齐，目前只覆盖现有作者 Dashboard analytics 视图。
