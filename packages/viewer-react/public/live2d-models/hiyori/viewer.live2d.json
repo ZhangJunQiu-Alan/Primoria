@@ -1,0 +1,31 @@
+{
+  "id": "hiyori",
+  "name": "Hiyori",
+  "model": "Hiyori.model3.json",
+  "preview": "preview.png",
+  "defaultScale": 0.9,
+  "anchor": {
+    "x": 0.5,
+    "y": 0.98
+  },
+  "placement": {
+    "zone": "home-hero-left",
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "interactions": {
+    "idle": true,
+    "hover": true,
+    "tap": true,
+    "lookAtPointer": true
+  },
+  "motions": {
+    "idle": "Idle",
+    "tap": "TapBody"
+  },
+  "credits": {
+    "author": "Live2D Inc.",
+    "sourceUrl": "https://github.com/Live2D/CubismWebSamples",
+    "license": "Live2D Free Material License + sample model terms"
+  }
+}

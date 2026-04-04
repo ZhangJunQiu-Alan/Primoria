@@ -1,0 +1,13 @@
+Source: https://github.com/Live2D/CubismWebSamples
+Model: Samples/Resources/Hiyori
+Author: Live2D Inc.
+
+License references:
+- Live2D Free Material License
+- Live2D sample model terms
+
+Before product release, confirm current commercial-use and redistribution terms directly with:
+- https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html
+- https://www.live2d.com/eula/live2d-sample-model-terms_en.html
+
+This file records origin only. It is not a substitute for legal review.

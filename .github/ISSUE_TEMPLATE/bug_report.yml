@@ -32,8 +32,8 @@ body:
     attributes:
       label: Environment
       options:
-        - Builder (React web)
-        - Viewer (Flutter web)
+        - Viewer (unified React web)
+        - Builder workspace (inside Viewer)
         - Both
     validations:
       required: true
@@ -101,4 +101,3 @@ body:
           required: true
         - label: I included enough detail for another person to reproduce the defect.
           required: true
-

@@ -1,6 +1,6 @@
 param(
-  [ValidateSet('builder', 'viewer')]
-  [string]$App = 'builder',
+  [ValidateSet('viewer')]
+  [string]$App = 'viewer',
   [int]$WebPort = 3000
 )
 
@@ -33,40 +33,10 @@ if ([string]::IsNullOrWhiteSpace($env:VITE_SUPABASE_ANON_KEY) -and -not [string]
   [System.Environment]::SetEnvironmentVariable('VITE_SUPABASE_ANON_KEY', $env:SUPABASE_ANON_KEY, 'Process')
 }
 
-$flutterArgs = @(
-  '-d',
-  'chrome',
-  '--web-port',
-  "$WebPort",
-  "--dart-define=SUPABASE_URL=$($env:SUPABASE_URL)",
-  "--dart-define=SUPABASE_ANON_KEY=$($env:SUPABASE_ANON_KEY)"
-)
-
-if (-not [string]::IsNullOrWhiteSpace($env:GEMINI_API_KEY)) {
-  $flutterArgs += "--dart-define=GEMINI_API_KEY=$($env:GEMINI_API_KEY)"
+Push-Location $root
+try {
+  & pnpm --filter @primoria/viewer-react exec vite --host 0.0.0.0 --port $WebPort
 }
-
-if (-not [string]::IsNullOrWhiteSpace($env:GEMINI_MODEL)) {
-  $flutterArgs += "--dart-define=GEMINI_MODEL=$($env:GEMINI_MODEL)"
-}
-
-if ($App -eq 'builder') {
-  Push-Location $root
-  try {
-    & pnpm --filter @primoria/builder dev -- --host 0.0.0.0 --port $WebPort
-  }
-  finally {
-    Pop-Location
-  }
-}
-else {
-  $targetDir = Join-Path $root 'Viewer'
-
-  Push-Location $targetDir
-  try {
-    & flutter run @flutterArgs
-  }
-  finally {
-    Pop-Location
-  }
+finally {
+  Pop-Location
 }

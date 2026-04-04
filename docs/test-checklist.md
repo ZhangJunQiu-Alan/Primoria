@@ -1,27 +1,25 @@
-# Regression Checklist (Builder + Viewer)
+# Regression Checklist (Unified Viewer + Builder Workspace)
 
-Last updated: 2026-03-20
+Last updated: 2026-04-04
 
 ## A. Build & Static Checks
 
 - [ ] `pnpm install`
 - [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
-- [ ] `pnpm --filter @primoria/builder typecheck`
-- [ ] `pnpm --filter @primoria/builder test`
-- [ ] `cd Viewer && flutter pub get`
-- [ ] `cd Viewer && flutter analyze`
-- [ ] `cd Viewer && flutter test`
+- [ ] `pnpm --filter @primoria/viewer-react typecheck`
+- [ ] `pnpm --filter @primoria/viewer-react test`
+- [ ] `pnpm --filter @primoria/viewer-react build`
 
 ## B. Builder Routing & Access
 
-- [ ] logged-out user opening `/dashboard` is redirected to `/`
-- [ ] logged-out user opening `/editor` is redirected to `/login`
-- [ ] logged-in author/admin landing on `/` redirects to `/dashboard`
-- [ ] non-author role cannot enter protected builder routes
+- [ ] logged-out user opening `/builder/dashboard` is redirected to `/login` with `returnTo`
+- [ ] logged-out user opening `/builder/editor` is redirected to `/login` with `returnTo`
+- [ ] logged-in user opening `/dashboard` is redirected to `/builder/dashboard`
+- [ ] any logged-in role can enter protected builder routes
 
 ## C. Builder Editor Core
 
-- [ ] create a blank lesson in `/editor`
+- [ ] create a blank lesson in `/builder/editor`
 - [ ] import JSON using canonical `lessons` key
 - [ ] import legacy JSON using `pages` key and verify migration success
 - [ ] explicit save completes without remote persistence errors
@@ -72,30 +70,30 @@ Last updated: 2026-03-20
 - [ ] learner tag actions are reachable
 - [ ] reserved bulk actions show placeholder feedback
 
-### D5. Dashboard Settings
-- [ ] account settings load from Supabase
+### D5. Dashboard Account / Settings Integration
+- [ ] account summary loads from Supabase
 - [ ] workflow settings save locally
-- [ ] notification settings save successfully
-- [ ] language remains normalized to English in the React Builder
+- [ ] settings entry opens unified Viewer settings
+- [ ] sign-out action uses the shared Viewer auth flow
 
-## E. Viewer Core
+## E. Viewer React Core
 
 - [ ] login/register flow works
 - [ ] course enrollment works
 - [ ] Home / Library / Community / Profile use shared page shell widths
-- [ ] desktop layout in Viewer is wider than mobile/tablet and remains centered/readable
+- [ ] desktop layout in Viewer React is wider than mobile/tablet and remains centered/readable
 - [ ] lesson screen displays current lesson title (not course title)
 - [ ] text content still renders correctly in lesson playback
 - [ ] profile screen loads XP/streak and achievement-related data
-- [ ] logo/entry navigation paths return users to expected dashboard/home targets
-- [ ] `Viewer/test/viewer_layout_metrics_test.dart` passes
-- [ ] `Viewer/test/viewer_page_shell_test.dart` passes
+- [ ] logo/entry navigation paths return users to expected builder/home targets
+- [ ] learner shell navigation tests in `packages/viewer-react/test/` pass
+- [ ] settings and profile tests in `packages/viewer-react/test/` pass
 
 ## F. Data Consistency
 
-- [ ] rename lesson in Builder, save, return to dashboard, confirm new lesson title is visible
-- [ ] publish course after lesson rename, then open Viewer and verify lesson title consistency
-- [ ] course with sparse snapshot rows still loads in Viewer fallback path
+- [ ] rename lesson in Builder, save, return to `/builder/dashboard`, confirm new lesson title is visible
+- [ ] publish course after lesson rename, then open Viewer React and verify lesson title consistency
+- [ ] course with sparse snapshot rows still loads in the React viewer fallback path
 
 ## G. Known Non-Blocking Gaps
 
