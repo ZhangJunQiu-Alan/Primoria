@@ -8,7 +8,7 @@ test('landing and protected route redirect work', async ({ page }) => {
   await expect(page).toHaveURL(/\/register$/);
 
   await page.goto('/home');
-  await expect(page).toHaveURL(/\/login$/);
+  await expect(page).toHaveURL(/\/login\?returnTo=%2Fhome$/);
 });
 
 test('demo learner flow reaches lesson result', async ({ page }) => {
@@ -50,7 +50,9 @@ test('demo learner can sign out from settings', async ({ page }) => {
   });
 
   await page.goto('/settings');
-  await page.getByRole('button', { name: /sign out/i }).click();
+  await page.getByRole('button', { name: /支持与关于|support & about/i }).click();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: /退出登录|sign out/i }).click();
 
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole('heading', { name: /掌握任何学科/i })).toBeVisible();

@@ -24,12 +24,21 @@ const accounts = {
     password: process.env.VIEWER_SMOKE_PARENT_PASSWORD || 'PrimoriaSmoke!2026',
     displayName: 'Viewer Smoke Parent',
   },
+  author: {
+    email: process.env.VIEWER_SMOKE_AUTHOR_EMAIL || 'viewer-smoke-author@primoria.dev',
+    password: process.env.VIEWER_SMOKE_AUTHOR_PASSWORD || 'PrimoriaSmoke!2026',
+    displayName: process.env.VIEWER_SMOKE_AUTHOR_DISPLAY_NAME || 'Viewer Smoke Author',
+  },
 };
 
 const learnerBio = `Cloud smoke bio ${runId}`;
 const noteTitle = `Cloud smoke note ${runId}`;
 const noteBody = `Persisted via cloud smoke ${runId}`;
 const tutorPrompt = `Give me one concise explanation about revenue and expenses. Run ${runId}.`;
+const smokeCourseTitle = 'Primoria Viewer Publish Smoke Course';
+const smokeCourseDescription = 'Reserved course for cloud smoke publish and viewer readback verification.';
+const smokeLessonTitle = `Cloud smoke lesson ${runId}`;
+const regressionCourseTitle = 'Python Basics';
 
 const report = {
   runId,
@@ -57,16 +66,25 @@ async function saveScreenshot(page, name) {
   return target;
 }
 
-async function login(page, email, password, expectedPath) {
-  await page.goto(`${baseUrl}/login`, { waitUntil: 'networkidle' });
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+async function login(page, email, password, expectedPath, options = {}) {
+  const loginUrl = new URL(`${baseUrl}/login`);
+  if (options.returnTo) {
+    loginUrl.searchParams.set('returnTo', options.returnTo);
+  }
+
+  await page.goto(loginUrl.toString(), { waitUntil: 'networkidle' });
   await page.locator('input[type="email"]').fill(email);
   await page.locator('input[type="password"]').fill(password);
   await page.getByRole('button', { name: /sign in/i }).click();
   await page.waitForURL((url) => new URL(url).pathname === expectedPath, { timeout: 20_000 });
 }
 
-async function waitForText(page, text, timeout = 20_000) {
-  await page.getByText(text, { exact: false }).waitFor({ state: 'visible', timeout });
+async function waitForText(page, matcher, timeout = 20_000) {
+  await page.getByText(matcher, { exact: false }).waitFor({ state: 'visible', timeout });
 }
 
 async function completeLesson(page) {
@@ -95,6 +113,115 @@ async function completeLesson(page) {
   throw new Error('Lesson runtime did not reach the result page within 12 transitions.');
 }
 
+async function signOutFromAccountMenu(page, expectedPath = '/login') {
+  await page.getByLabel(/open account menu/i).click();
+  await page.getByRole('menuitem', { name: /sign out/i }).click();
+  await page.waitForURL((url) => new URL(url).pathname === expectedPath, { timeout: 15_000 });
+}
+
+async function signOutFromSettings(page, expectedPath = '/') {
+  await page.goto(`${baseUrl}/settings`, { waitUntil: 'networkidle' });
+  await waitForText(page, /设置中心|settings center/i);
+  await page.getByRole('button', { name: /支持与关于|support & about/i }).click();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: /退出登录|sign out/i }).click();
+  await page.waitForURL((url) => new URL(url).pathname === expectedPath, { timeout: 15_000 });
+}
+
+async function openSmokeCourseEditor(page) {
+  await page.goto(`${baseUrl}/builder/dashboard?tab=course`, { waitUntil: 'networkidle' });
+
+  const searchInput = page.getByPlaceholder(/search courses, descriptions, or lesson titles/i);
+  await searchInput.waitFor({ timeout: 15_000 });
+  await searchInput.fill(smokeCourseTitle);
+  await page.waitForTimeout(600);
+
+  const courseCard = page
+    .locator('article.studio-course-card')
+    .filter({ has: page.getByRole('heading', { name: smokeCourseTitle, exact: true }) })
+    .first();
+
+  if (await courseCard.count()) {
+    await courseCard.getByRole('button', { name: /open editor/i }).click();
+  } else {
+    await page.getByRole('button', { name: /^create course$/i }).first().click();
+    const dialog = page.locator('.dashboard-dialog').last();
+    await dialog.getByLabel(/course title/i).fill(smokeCourseTitle);
+    await dialog.getByLabel(/course description/i).fill(smokeCourseDescription);
+    await dialog.getByRole('button', { name: /^create course$/i }).click();
+  }
+
+  await page.waitForURL((url) => new URL(url).pathname.startsWith('/builder/editor/'), { timeout: 20_000 });
+  return new URL(page.url()).pathname.split('/').at(-1) || '';
+}
+
+async function renameAndPublishSmokeCourse(page) {
+  const lessonEditButton = page.getByLabel(/^Edit lesson /).first();
+  await lessonEditButton.waitFor({ timeout: 15_000 });
+  await lessonEditButton.click();
+
+  const lessonTitleInput = page.getByLabel(/^Lesson title for /).first();
+  await lessonTitleInput.fill(smokeLessonTitle);
+  await lessonTitleInput.press('Enter');
+  await page.getByText(smokeLessonTitle, { exact: true }).first().waitFor({ timeout: 15_000 });
+
+  await page.getByRole('button', { name: /^save$/i }).click();
+  await page.waitForFunction(() => {
+    const element = document.querySelector('.editor-toolbar-status');
+    return Boolean(element?.textContent?.includes('Saved'));
+  }, { timeout: 20_000 });
+
+  await page.getByRole('button', { name: /^publish$/i }).click();
+  await page.getByText(/published/i, { exact: false }).waitFor({ state: 'visible', timeout: 20_000 });
+}
+
+async function verifyPublishedCourseInViewer(page) {
+  await page.goto(`${baseUrl}/library`, { waitUntil: 'networkidle' });
+
+  const searchInput = page.getByPlaceholder(/搜索课程|search/i);
+  await searchInput.waitFor({ timeout: 15_000 });
+  await searchInput.fill(smokeCourseTitle);
+
+  const courseLink = page.getByRole('link', {
+    name: new RegExp(escapeRegExp(smokeCourseTitle), 'i'),
+  }).first();
+
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    if (await courseLink.count()) {
+      break;
+    }
+    await page.waitForTimeout(1_000);
+    await page.reload({ waitUntil: 'networkidle' });
+    await searchInput.fill(smokeCourseTitle);
+  }
+
+  await courseLink.waitFor({ timeout: 20_000 });
+  await courseLink.click();
+  await page.waitForURL((url) => new URL(url).pathname.startsWith('/course/'), { timeout: 15_000 });
+  await page.getByRole('heading', { name: smokeCourseTitle, exact: true }).waitFor({ timeout: 15_000 });
+  await waitForText(page, smokeLessonTitle);
+}
+
+async function openRegressionCourse(page) {
+  await page.goto(`${baseUrl}/library`, { waitUntil: 'networkidle' });
+  const searchInput = page.getByPlaceholder(/搜索课程|search/i);
+  await searchInput.waitFor({ timeout: 15_000 });
+  await searchInput.fill(regressionCourseTitle);
+  await page.getByRole('link', { name: new RegExp(escapeRegExp(regressionCourseTitle), 'i') }).first().click();
+  await page.waitForURL((url) => new URL(url).pathname.startsWith('/course/'), { timeout: 15_000 });
+  await page.getByRole('heading', { name: /lesson list/i }).waitFor({ timeout: 15_000 });
+}
+
+async function readBindingCode(page) {
+  const codeLocator = page.locator('.font-mono').first();
+  await codeLocator.waitFor({ timeout: 15_000 });
+  const bindingCode = (await codeLocator.textContent())?.trim() || '';
+  if (!bindingCode) {
+    throw new Error('Learner binding code was not generated.');
+  }
+  return bindingCode;
+}
+
 async function writeReport() {
   report.finishedAt = new Date().toISOString();
   await fs.mkdir(artifactDir, { recursive: true });
@@ -112,7 +239,7 @@ function maybeAdminClient() {
   });
 }
 
-async function verifyRemoteState(admin, lessonId) {
+async function verifyRemoteState(admin, verificationInput) {
   if (!admin) {
     addStep('remote verification skipped', 'SKIP', 'SUPABASE_URL or SUPABASE_SECRET_KEY is missing');
     return;
@@ -133,7 +260,7 @@ async function verifyRemoteState(admin, lessonId) {
     throw new Error('Could not resolve smoke account ids from Supabase Auth.');
   }
 
-  const [profileResult, noteResult, completionResult, bindingResult] = await Promise.all([
+  const [profileResult, noteResult, completionResult, bindingResult, courseResult, lessonResult] = await Promise.all([
     admin.from('profiles').select('bio').eq('id', ids.learner).single(),
     admin
       .from('community_notes')
@@ -145,7 +272,7 @@ async function verifyRemoteState(admin, lessonId) {
       .from('lesson_completions')
       .select('lesson_id,score,correct_count,total_count,completed_at')
       .eq('user_id', ids.learner)
-      .eq('lesson_id', lessonId)
+      .eq('lesson_id', verificationInput.completedLessonId)
       .maybeSingle(),
     admin
       .from('parent_child_links')
@@ -153,12 +280,26 @@ async function verifyRemoteState(admin, lessonId) {
       .eq('parent_id', ids.parent)
       .eq('child_id', ids.bindLearner)
       .maybeSingle(),
+    admin
+      .from('courses')
+      .select('id,status,published_at')
+      .eq('id', verificationInput.smokeCourseId)
+      .maybeSingle(),
+    admin
+      .from('lessons')
+      .select('id,title')
+      .eq('course_id', verificationInput.smokeCourseId)
+      .order('sort_key')
+      .limit(1)
+      .maybeSingle(),
   ]);
 
   if (profileResult.error) throw profileResult.error;
   if (noteResult.error) throw noteResult.error;
   if (completionResult.error) throw completionResult.error;
   if (bindingResult.error) throw bindingResult.error;
+  if (courseResult.error) throw courseResult.error;
+  if (lessonResult.error) throw lessonResult.error;
 
   if (profileResult.data?.bio !== learnerBio) {
     throw new Error('Remote profile verification failed: learner bio did not persist.');
@@ -172,16 +313,26 @@ async function verifyRemoteState(admin, lessonId) {
   if (!bindingResult.data) {
     throw new Error('Remote parent-child binding verification failed.');
   }
+  if (!courseResult.data || courseResult.data.status !== 'published') {
+    throw new Error('Remote publish verification failed: smoke course is not published.');
+  }
+  if (!lessonResult.data || lessonResult.data.title !== verificationInput.smokeLessonTitle) {
+    throw new Error('Remote publish verification failed: smoke lesson title did not persist.');
+  }
 
   report.verification = {
-    lessonId,
+    completedLessonId: verificationInput.completedLessonId,
     learnerBio,
     noteTitle,
     noteBody,
+    smokeCourseId: verificationInput.smokeCourseId,
+    smokeLessonTitle: verificationInput.smokeLessonTitle,
     lessonCompletion: completionResult.data,
     parentChildLink: bindingResult.data,
+    smokeCourse: courseResult.data,
+    smokeLesson: lessonResult.data,
   };
-  addStep('remote Supabase verification', 'PASS', 'profile, note, lesson completion, and parent-child link persisted');
+  addStep('remote Supabase verification', 'PASS', 'profile, note, lesson completion, parent-child link, and publish state persisted');
 }
 
 const admin = maybeAdminClient();
@@ -191,6 +342,20 @@ try {
   await fs.mkdir(artifactDir, { recursive: true });
   browser = await chromium.launch({ headless: true });
 
+  const authorContext = await browser.newContext();
+  const authorPage = await authorContext.newPage();
+  await login(authorPage, accounts.author.email, accounts.author.password, '/builder/dashboard', {
+    returnTo: '/builder/dashboard?tab=course',
+  });
+  addStep('author login', 'PASS', authorPage.url());
+
+  const smokeCourseId = await openSmokeCourseEditor(authorPage);
+  await renameAndPublishSmokeCourse(authorPage);
+  addStep('author publish smoke course', 'PASS', `${smokeCourseTitle} -> ${smokeLessonTitle}`);
+  await saveScreenshot(authorPage, 'author-editor-published');
+  await signOutFromAccountMenu(authorPage);
+  await authorContext.close();
+
   const learnerContext = await browser.newContext();
   const learnerPage = await learnerContext.newPage();
 
@@ -198,11 +363,11 @@ try {
   addStep('learner login', 'PASS', learnerPage.url());
   await saveScreenshot(learnerPage, 'learner-home');
 
-  await learnerPage.goto(`${baseUrl}/library`, { waitUntil: 'networkidle' });
-  await waitForText(learnerPage, 'Course library');
-  await learnerPage.getByRole('link', { name: /open course/i }).first().click();
-  await learnerPage.waitForURL((url) => new URL(url).pathname.startsWith('/course/'), { timeout: 15_000 });
-  await learnerPage.getByRole('heading', { name: /lesson list/i }).waitFor({ timeout: 15_000 });
+  await verifyPublishedCourseInViewer(learnerPage);
+  addStep('author publish -> viewer consistency', 'PASS', smokeLessonTitle);
+  await saveScreenshot(learnerPage, 'learner-published-course');
+
+  await openRegressionCourse(learnerPage);
 
   const enrollButton = learnerPage.getByRole('button', { name: /enroll now/i }).first();
   if (await enrollButton.isVisible().catch(() => false)) {
@@ -217,18 +382,18 @@ try {
   await learnerPage.getByRole('button', { name: /start lesson/i }).first().click();
   await learnerPage.waitForURL((url) => new URL(url).pathname.startsWith('/lesson/'), { timeout: 15_000 });
   const resultPath = await completeLesson(learnerPage);
-  const lessonId = resultPath.split('/')[2] || '';
+  const completedLessonId = resultPath.split('/')[2] || '';
   await learnerPage.waitForURL((url) => new URL(url).pathname.includes('/result'), { timeout: 20_000 });
-  await waitForText(learnerPage, 'XP awarded');
+  await waitForText(learnerPage, /XP awarded/i);
   addStep('learner lesson completion', 'PASS', learnerPage.url());
   await saveScreenshot(learnerPage, 'learner-result');
 
   await learnerPage.goto(`${baseUrl}/settings`, { waitUntil: 'networkidle' });
-  await waitForText(learnerPage, 'Settings center');
+  await waitForText(learnerPage, /设置中心|settings center/i);
   const bioField = learnerPage.locator('textarea').first();
   await bioField.fill(learnerBio);
-  await learnerPage.getByRole('button', { name: /save changes/i }).click();
-  await waitForText(learnerPage, 'Profile updated.');
+  await learnerPage.getByRole('button', { name: /保存资料|save profile/i }).click();
+  await waitForText(learnerPage, /资料已更新|profile updated/i);
   await learnerPage.reload({ waitUntil: 'networkidle' });
   await learnerPage.waitForFunction(
     (expected) => {
@@ -243,11 +408,11 @@ try {
 
   await learnerPage.goto(`${baseUrl}/community`, { waitUntil: 'networkidle' });
   await learnerPage.getByRole('button', { name: /^notes$/i }).click();
-  await learnerPage.getByRole('button', { name: /add note/i }).click();
-  await learnerPage.locator('input[value="Untitled note"]').first().fill(noteTitle);
+  await learnerPage.getByRole('button', { name: /添加笔记|add note/i }).click();
+  await learnerPage.locator('input[value="未命名笔记"], input[value="Untitled note"]').first().fill(noteTitle);
   await learnerPage.locator('textarea').first().fill(noteBody);
-  await learnerPage.getByRole('button', { name: /save note/i }).first().click();
-  await waitForText(learnerPage, 'Note saved.');
+  await learnerPage.getByRole('button', { name: /保存笔记|save note/i }).first().click();
+  await waitForText(learnerPage, /笔记已保存|note saved/i);
   await learnerPage.reload({ waitUntil: 'networkidle' });
   await learnerPage.getByRole('button', { name: /^notes$/i }).click();
   await learnerPage.locator(`input[value="${noteTitle}"]`).waitFor({ timeout: 15_000 });
@@ -255,18 +420,16 @@ try {
   await saveScreenshot(learnerPage, 'learner-community');
 
   await learnerPage.goto(`${baseUrl}/ai-tutor`, { waitUntil: 'networkidle' });
-  await learnerPage.getByPlaceholder(/ask the tutor something/i).fill(tutorPrompt);
-  await learnerPage.getByRole('button', { name: /^send$/i }).click();
+  await learnerPage.getByPlaceholder(/开始输入|ask the tutor/i).fill(tutorPrompt);
+  await learnerPage.getByRole('button', { name: /^发送$|^send$/i }).click();
   await learnerPage.getByText(tutorPrompt, { exact: false }).waitFor({ timeout: 15_000 });
-  await learnerPage.getByRole('button', { name: /^mind map$/i }).click();
+  await learnerPage.getByRole('button', { name: /打开思维导图|mind map/i }).click();
   await learnerPage.getByRole('button', { name: /^close$/i }).waitFor({ timeout: 30_000 });
   addStep('AI Tutor edge function', 'PASS', 'reply and mind map modal succeeded');
   await saveScreenshot(learnerPage, 'learner-ai-tutor');
   await learnerPage.getByRole('button', { name: /^close$/i }).click();
 
-  await learnerPage.goto(`${baseUrl}/settings`, { waitUntil: 'networkidle' });
-  await learnerPage.getByRole('button', { name: /sign out/i }).click();
-  await learnerPage.waitForURL((url) => new URL(url).pathname === '/login', { timeout: 15_000 });
+  await signOutFromSettings(learnerPage);
   addStep('learner sign out', 'PASS');
   await learnerContext.close();
 
@@ -274,18 +437,13 @@ try {
   const bindLearnerPage = await bindLearnerContext.newPage();
   await login(bindLearnerPage, accounts.bindLearner.email, accounts.bindLearner.password, '/home');
   await bindLearnerPage.goto(`${baseUrl}/settings`, { waitUntil: 'networkidle' });
-  await bindLearnerPage.getByRole('button', { name: /generate binding code/i }).click();
-  const bindingStatus = bindLearnerPage.getByText(/^Code:/i);
-  await bindingStatus.waitFor({ timeout: 15_000 });
-  const bindingText = (await bindingStatus.textContent())?.trim() || '';
-  const bindingCode = bindingText.replace(/^Code:\s*/i, '').trim();
-  if (!bindingCode) {
-    throw new Error('Learner binding code was not generated.');
-  }
+  await waitForText(bindLearnerPage, /设置中心|settings center/i);
+  await bindLearnerPage.getByRole('button', { name: /家长模式|parent mode/i }).click();
+  await bindLearnerPage.getByRole('button', { name: /生成绑定码|generate binding code|刷新绑定码|refresh binding code/i }).click();
+  const bindingCode = await readBindingCode(bindLearnerPage);
   addStep('learner binding code generation', 'PASS', bindingCode);
   await saveScreenshot(bindLearnerPage, 'bind-learner-settings');
-  await bindLearnerPage.getByRole('button', { name: /sign out/i }).click();
-  await bindLearnerPage.waitForURL((url) => new URL(url).pathname === '/login', { timeout: 15_000 });
+  await signOutFromSettings(bindLearnerPage);
   await bindLearnerContext.close();
 
   const parentContext = await browser.newContext();
@@ -297,15 +455,19 @@ try {
   const bindInput = parentPage.getByPlaceholder(/bind child with code/i);
   await bindInput.fill(bindingCode);
   await parentPage.getByRole('button', { name: /bind child with code/i }).click();
-  await waitForText(parentPage, 'Child bound.');
-  await parentPage.getByRole('button', { name: new RegExp(accounts.bindLearner.displayName, 'i') }).waitFor({ timeout: 15_000 });
-  await parentPage.getByRole('button', { name: new RegExp(accounts.learner.displayName, 'i') }).click();
-  await waitForText(parentPage, 'Selected child report');
+  await waitForText(parentPage, /child bound\./i);
+  await parentPage.getByRole('button', { name: new RegExp(escapeRegExp(accounts.bindLearner.displayName), 'i') }).waitFor({ timeout: 15_000 });
+  await parentPage.getByRole('button', { name: new RegExp(escapeRegExp(accounts.learner.displayName), 'i') }).click();
+  await waitForText(parentPage, /selected child report/i);
   addStep('parent bind child flow', 'PASS', accounts.bindLearner.displayName);
   await saveScreenshot(parentPage, 'parent-bound-child');
   await parentContext.close();
 
-  await verifyRemoteState(admin, lessonId);
+  await verifyRemoteState(admin, {
+    completedLessonId,
+    smokeCourseId,
+    smokeLessonTitle,
+  });
   await writeReport();
   console.log(`Cloud smoke passed. Report saved to ${path.join(artifactDir, 'report.json')}`);
 } catch (error) {
