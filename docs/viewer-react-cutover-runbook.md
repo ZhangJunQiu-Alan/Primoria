@@ -41,6 +41,22 @@ Optional frontend values:
 Supabase secrets:
 - `GEMINI_API_KEY`
 
+Cloud smoke runtime:
+- `VIEWER_BASE_URL`
+- `SUPABASE_URL`
+- `SUPABASE_SECRET_KEY`
+
+Cloud smoke accounts:
+- `VIEWER_SMOKE_LEARNER_EMAIL`
+- `VIEWER_SMOKE_LEARNER_PASSWORD`
+- `VIEWER_SMOKE_BIND_LEARNER_EMAIL`
+- `VIEWER_SMOKE_BIND_LEARNER_PASSWORD`
+- `VIEWER_SMOKE_PARENT_EMAIL`
+- `VIEWER_SMOKE_PARENT_PASSWORD`
+- `VIEWER_SMOKE_AUTHOR_EMAIL`
+- `VIEWER_SMOKE_AUTHOR_PASSWORD`
+- `VIEWER_SMOKE_AUTHOR_DISPLAY_NAME` (optional)
+
 ## Release Artifacts
 
 - `viewer-react-ci.yml`
@@ -61,12 +77,39 @@ pnpm --filter @primoria/viewer-react smoke:cloud
 ```
 
 Successful coverage included:
+- author login, reusable smoke-course publish, and Viewer lesson-title readback verification
 - learner login, library, enroll, lesson completion, and result page
 - settings persistence
 - community note persistence
 - AI Tutor reply and tool modals
 - binding-code generation
 - parent redirect and bind-by-code flow
+
+Additional validated commands on 2026-03-31:
+
+```bash
+pnpm --filter @primoria/viewer-react typecheck
+pnpm --filter @primoria/viewer-react test
+pnpm --filter @primoria/viewer-react e2e
+VITE_VIEWER_DEMO_MODE=1 pnpm --filter @primoria/viewer-react build
+VITE_SUPABASE_URL="$SUPABASE_URL" VITE_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY" pnpm --filter @primoria/viewer-react build
+pnpm --filter @primoria/viewer-react check:bundle
+supabase migration list
+pnpm --filter @primoria/viewer-react smoke:cloud
+```
+
+Validation notes:
+- route-level lazy loading is enabled for major viewer pages
+- Supabase boot fails fast without required env vars unless explicit fixture mode is enabled
+- fixture sign-out clears the local demo role and returns to the login route
+- bundle budget passed with initial route JS gzip total at `144.76 KiB`
+- largest shared chunk was `framework` at `189.73 KiB` raw
+- latest cloud smoke report was written to `packages/viewer-react/test-results/cloud-smoke-20260331055808/report.json`
+- fixed preprod blockers before the smoke snapshot:
+  - parent dashboard switched to bind-by-code instead of learner-side code generation
+  - course enrollment refreshes the course detail UI immediately after mutation success
+  - community no longer fails on recursive `community_conversation_members` RLS
+  - AI Tutor now reaches `viewer-ai-tutor` through the working function-gateway auth pattern
 
 ## Deployment Steps
 
@@ -113,6 +156,13 @@ Parent flow:
 - Confirm redirect to `/parent`
 - Select a child and verify report refresh
 - Bind or unbind a child if the environment allows it
+
+Builder publish/readback:
+- Sign in as the smoke author
+- Open `/builder/dashboard?tab=course`
+- Reuse or create the dedicated smoke course
+- Rename the first lesson, save, publish, and verify the author exits cleanly
+- Sign in as a learner, open the smoke course in Viewer, and confirm the published lesson title matches the Builder rename
 
 Community and AI Tutor:
 - Open `/community` and verify room/message/note persistence

@@ -107,6 +107,7 @@ export function LessonNav({ selectedLessonId, selectedPageId, onSelectLesson }: 
           onClick={handleAddLesson}
           className="p-1 rounded hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
           title="Add lesson"
+          aria-label="Add lesson"
         >
           <PlusIcon className="h-3.5 w-3.5" />
         </button>
@@ -237,10 +238,12 @@ function SortableLessonRow({
               }}
               className="flex-1 text-xs bg-transparent outline-none border-b border-primary min-w-0"
               onClick={(e) => e.stopPropagation()}
+              aria-label={`Lesson title for ${title}`}
             />
             <button
               onClick={(e) => { e.stopPropagation(); onCommitEdit(); }}
               className="shrink-0 text-primary p-0.5"
+              aria-label={`Save lesson title for ${title}`}
             >
               <CheckIcon className="h-3 w-3" />
             </button>
@@ -251,6 +254,7 @@ function SortableLessonRow({
             <button
               onClick={(e) => { e.stopPropagation(); onStartEdit(); }}
               className="shrink-0 opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-background transition-all"
+              aria-label={`Edit lesson ${title}`}
             >
               <Pencil1Icon className="h-3 w-3 text-muted-foreground" />
             </button>
@@ -258,6 +262,7 @@ function SortableLessonRow({
               <button
                 onClick={(e) => { e.stopPropagation(); onDelete(); }}
                 className="shrink-0 opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-destructive/10 text-destructive transition-all"
+                aria-label={`Delete lesson ${title}`}
               >
                 <TrashIcon className="h-3 w-3" />
               </button>
@@ -286,6 +291,7 @@ function SortableLessonRow({
                 <button
                   onClick={() => onRemovePage(page.page_id)}
                   className="opacity-0 group-hover/page:opacity-100 p-0.5 rounded hover:bg-destructive/10 text-destructive transition-all"
+                  aria-label={`Delete page ${pi + 1}`}
                 >
                   <TrashIcon className="h-3 w-3" />
                 </button>
@@ -295,6 +301,7 @@ function SortableLessonRow({
           <button
             onClick={onAddPage}
             className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+            aria-label="Add page"
           >
             <PlusIcon className="h-3 w-3" /> Add page
           </button>
