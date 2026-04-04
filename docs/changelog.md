@@ -1,5 +1,43 @@
 # Changelog
 
+## [Unreleased] - 2026-04-04 (Unified Viewer + Builder Workspace)
+
+### Summary
+Primoria now runs as a single React frontend package. The standalone Builder app, cross-app
+handoff flow, and legacy Flutter viewer tree were removed, while Builder dashboard/editor
+capabilities now live inside `packages/viewer-react` behind shared auth and routing.
+
+### Changed
+
+- **Single frontend app**
+  - moved Builder dashboard, editor, store slices, queries, and services into `packages/viewer-react`
+  - added unified routes: `/builder/dashboard`, `/builder/editor`, and `/builder/editor/:courseId`
+  - preserved compatibility redirects from `/dashboard` and `/editor*`
+- **Auth and navigation**
+  - Builder access now requires only an authenticated session, not author/admin role checks
+  - Viewer login, register, and auth callback flows now preserve `returnTo` for Builder routes
+  - Viewer bottom nav now includes a first-class `Builder` tab inside the same SPA
+- **Workspace UX**
+  - Builder dashboard keeps the learner shell; Builder editor uses a dedicated workspace shell
+  - editor now restores local drafts, warns on unsaved exits, and offers direct return paths to Builder dashboard and Viewer home
+  - account/settings/logout flows are unified under Viewer settings and support pages
+- **Repository cleanup**
+  - removed the standalone `packages/builder` app
+  - removed Builder handoff functions and migration
+  - removed the Flutter `Viewer/` tree and old Flutter deployment workflow
+  - run scripts now point to the unified Viewer package only
+- **Documentation**
+  - updated `docs/README*`, `docs/dashboard*`, `docs/test-checklist*`, and operations docs to reflect the single-app architecture
+
+### Validation
+
+- `pnpm install` — pass
+- `pnpm --filter @primoria/viewer-react typecheck` — pass
+- `pnpm --filter @primoria/viewer-react test` — pass (`20/20`)
+- `pnpm --filter @primoria/viewer-react build` — pass
+
+---
+
 ## [Unreleased] - 2026-03-20 (Builder Hardening)
 
 ### Summary

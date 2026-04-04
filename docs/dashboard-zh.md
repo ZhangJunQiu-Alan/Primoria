@@ -4,7 +4,7 @@
 
 ## 范围
 
-Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/builder/` 中。
+Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路由为 `/builder/dashboard`。
 它是创作者工作台主壳，包含侧边导航、顶部操作区和四个核心 Tab。
 
 当前 Tab：
@@ -15,17 +15,17 @@ Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/build
 
 ## 文件结构
 
-- `packages/builder/src/pages/dashboard/DashboardPage.tsx`
+- `packages/viewer-react/src/pages/dashboard/DashboardPage.tsx`
   - Dashboard 主壳、Tab 切换、提示条、弹窗、课程卡片与课时动作
-- `packages/builder/src/pages/dashboard/DashboardSettingsDialog.tsx`
-  - 全局设置对话框，覆盖账号、工作流、通知、数据四类
-- `packages/builder/src/pages/dashboard/dashboard.css`
+- `packages/viewer-react/src/pages/dashboard/DashboardSettingsDialog.tsx`
+  - Dashboard 账号摘要与工作台设置辅助逻辑
+- `packages/viewer-react/src/pages/dashboard/dashboard.css`
   - botanical 视觉系统、布局、卡片、弹窗与响应式样式
-- `packages/builder/src/queries/courses.ts`
+- `packages/viewer-react/src/queries/courses.ts`
   - 课程列表读取，以及课程创建/更新/删除/复制、课时新增/删除等 mutation
-- `packages/builder/src/components/account/AccountMenu.tsx`
-  - 头像菜单入口，承接设置与会话动作
-- `packages/builder/src/services/StorageService.ts`
+- `packages/viewer-react/src/components/account/AccountMenu.tsx`
+  - 头像菜单入口，承接统一设置、支持与会话动作
+- `packages/viewer-react/src/services/StorageService.ts`
   - 本地偏好持久化
 
 ## Tab 说明
@@ -48,7 +48,7 @@ Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/build
   - 复制课程
   - 添加课时
   - 删除课时
-  - 直接打开指定课程/课时进入 builder
+  - 直接打开指定课程/课时进入 Builder 工作台
 - 控制栏：搜索、状态筛选、排序方式
 - 摘要条：课程数 / 课时数 / 已发布 / 草稿 / 待补内容
 - 覆盖状态：
@@ -76,7 +76,7 @@ Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/build
 - 标签管理
 - 预留的批量操作与消息入口
 
-### 5）Dashboard 设置对话框
+### 5）Dashboard 设置辅助逻辑
 
 - 分类：
   - Account
@@ -84,11 +84,9 @@ Builder 的 Dashboard（`/dashboard`）现在位于 React 应用 `packages/build
   - Notifications
   - Data
 - 已接入真实能力：
-  - 从 Supabase `profiles` 读取/保存账号摘要
-  - 将通知与辅助功能偏好保存到 `user_settings`
-  - React Builder 内语言值统一归一到英文
+  - 从 Supabase `profiles` 读取账号摘要
   - 通过 `StorageService` 持久化本地工作流/数据偏好
-  - 在设置中心明确提示 Builder 当前仅支持手动保存
+  - 为统一 Viewer 设置与账号菜单提供辅助能力
 
 ## 数据策略
 

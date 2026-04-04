@@ -1,0 +1,111 @@
+name: Viewer React CI
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/viewer-react-ci.yml'
+      - 'doc/viewer-react-progress.md'
+      - 'docs/viewer-react-*.md'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'packages/schema/**'
+      - 'packages/viewer-react/**'
+      - 'supabase/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/viewer-react-ci.yml'
+      - 'doc/viewer-react-progress.md'
+      - 'docs/viewer-react-*.md'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'packages/schema/**'
+      - 'packages/viewer-react/**'
+      - 'supabase/**'
+  workflow_dispatch:
+
+jobs:
+  viewer-react:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local Supabase stack
+        run: supabase start
+
+      - name: Reset local Supabase DB from migrations
+        run: supabase db reset --local --no-seed
+
+      - name: Lint local database schema
+        run: supabase db lint --local --fail-on error
+
+      - name: Typecheck
+        run: pnpm --filter @primoria/viewer-react typecheck
+
+      - name: Unit tests
+        run: pnpm --filter @primoria/viewer-react test
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @primoria/viewer-react exec playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: pnpm --filter @primoria/viewer-react e2e
+
+      - name: Verify strict env guard
+        run: |
+          set +e
+          pnpm --filter @primoria/viewer-react build
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "Expected build to fail without Supabase env outside fixture mode."
+            exit 1
+          fi
+
+      - name: Production-style build in explicit fixture mode
+        env:
+          VITE_VIEWER_DEMO_MODE: '1'
+        run: pnpm --filter @primoria/viewer-react build
+
+      - name: Enforce bundle budget
+        run: pnpm --filter @primoria/viewer-react check:bundle
+
+      - name: Optional cloud smoke on main/manual
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          SUPABASE_URL: ${{ secrets.VIEWER_SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.VIEWER_SUPABASE_SECRET_KEY }}
+          VIEWER_BASE_URL: ${{ secrets.VIEWER_PREPROD_BASE_URL }}
+          VIEWER_SMOKE_LEARNER_EMAIL: ${{ secrets.VIEWER_SMOKE_LEARNER_EMAIL }}
+          VIEWER_SMOKE_LEARNER_PASSWORD: ${{ secrets.VIEWER_SMOKE_LEARNER_PASSWORD }}
+          VIEWER_SMOKE_BIND_LEARNER_EMAIL: ${{ secrets.VIEWER_SMOKE_BIND_LEARNER_EMAIL }}
+          VIEWER_SMOKE_BIND_LEARNER_PASSWORD: ${{ secrets.VIEWER_SMOKE_BIND_LEARNER_PASSWORD }}
+          VIEWER_SMOKE_PARENT_EMAIL: ${{ secrets.VIEWER_SMOKE_PARENT_EMAIL }}
+          VIEWER_SMOKE_PARENT_PASSWORD: ${{ secrets.VIEWER_SMOKE_PARENT_PASSWORD }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ] || [ -z "$VIEWER_BASE_URL" ]; then
+            echo "Cloud smoke skipped because one or more required secrets are missing."
+            exit 0
+          fi
+          pnpm --filter @primoria/viewer-react smoke:cloud

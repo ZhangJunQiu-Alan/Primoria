@@ -1,0 +1,10 @@
+/*
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://*.supabase.co https://*.functions.supabase.co https://app.posthog.com https://*.posthog.com https://*.sentry.io https://o*.ingest.sentry.io; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: https:; script-src 'self'; frame-src https://www.youtube.com https://player.vimeo.com; media-src 'self' https: data: blob:;
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

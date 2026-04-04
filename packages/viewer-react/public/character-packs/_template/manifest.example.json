@@ -1,0 +1,42 @@
+{
+  "id": "sample-guide",
+  "name": "Sample Guide",
+  "type": "layered",
+  "preview": "preview.png",
+  "defaultScale": 1,
+  "anchor": {
+    "x": 0.5,
+    "y": 0.92
+  },
+  "canvas": {
+    "width": 1000,
+    "height": 1200
+  },
+  "defaultPlacement": {
+    "zone": "home-hero-right",
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "interactions": {
+    "idleFloat": true,
+    "hoverTilt": true,
+    "blink": true,
+    "wave": true,
+    "lookAtPointer": true
+  },
+  "parts": {
+    "body": "body.png",
+    "head": "head.png",
+    "armLeft": "arm-left.png",
+    "armRight": "arm-right.png",
+    "eyeLeft": "eye-left.png",
+    "eyeRight": "eye-right.png",
+    "mouth": "mouth.png",
+    "shadow": "shadow.png"
+  },
+  "credits": {
+    "author": "Replace me",
+    "sourceUrl": "https://example.com",
+    "license": "CC0 / commercial / attribution-required etc."
+  }
+}

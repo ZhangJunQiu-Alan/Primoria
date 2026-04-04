@@ -1,0 +1,36 @@
+{
+  "id": "sample-guide",
+  "name": "Sample Guide",
+  "model": "sample-guide.model3.json",
+  "preview": "preview.png",
+  "defaultScale": 0.78,
+  "anchor": {
+    "x": 0.5,
+    "y": 0.98
+  },
+  "placement": {
+    "zone": "home-hero-right",
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "interactions": {
+    "idle": true,
+    "hover": true,
+    "tap": true,
+    "lookAtPointer": false
+  },
+  "motions": {
+    "idle": "motions/idle.motion3.json",
+    "tap": "motions/tap.motion3.json",
+    "greet": "motions/greet.motion3.json"
+  },
+  "expressions": {
+    "default": "expressions/smile.exp3.json",
+    "blink": "expressions/blink.exp3.json"
+  },
+  "credits": {
+    "author": "Replace me",
+    "sourceUrl": "https://example.com",
+    "license": "Commercial use / attribution / no-redistribution etc."
+  }
+}
