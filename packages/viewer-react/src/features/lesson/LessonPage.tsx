@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { completeLesson, fetchLessonRuntime } from '@/shared/api/viewer/lessonApi';
+import { trackViewerAnalyticsEventOnce } from '@/shared/api/viewer/analyticsEvents';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
 import { SurfaceCard } from '@/shared/layout/SurfaceCard';
@@ -11,6 +13,7 @@ import { viewerCopy } from '@/shared/theme/copy';
 
 export function LessonPage() {
   const params = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.auth.user);
   const lessonId = params.lessonId ?? '';
@@ -51,6 +54,17 @@ export function LessonPage() {
       captureViewerError(error, { area: 'lesson_complete', lessonId });
     },
   });
+
+  useEffect(() => {
+    if (!runtimeQuery.data?.courseId || !lessonId) {
+      return;
+    }
+
+    trackViewerAnalyticsEventOnce(`${location.key}:lesson:${lessonId}`, 'lesson_started', {
+      courseId: runtimeQuery.data.courseId,
+      lessonId,
+    });
+  }, [lessonId, location.key, runtimeQuery.data?.courseId]);
 
   if (runtimeQuery.isLoading) {
     return (

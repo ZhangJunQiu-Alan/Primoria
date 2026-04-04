@@ -37,6 +37,7 @@ export function createViewerQueryClient() {
   queryClient.setQueryDefaults(['viewer', 'stats'], { staleTime: 2 * 60_000 });
   queryClient.setQueryDefaults(['viewer', 'xp-history'], { staleTime: 2 * 60_000 });
   queryClient.setQueryDefaults(['viewer', 'achievements'], { staleTime: 5 * 60_000 });
+  queryClient.setQueryDefaults(['dashboard-analytics'], { staleTime: 30_000, refetchOnWindowFocus: true });
 
   return queryClient;
 }
