@@ -5,10 +5,13 @@ Last updated: 2026-04-04
 ## A. Build & Static Checks
 
 - [ ] `pnpm install`
+- [ ] `deno test supabase/functions/gemini-generate`
 - [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
 - [ ] `pnpm --filter @primoria/viewer-react typecheck`
 - [ ] `pnpm --filter @primoria/viewer-react test`
 - [ ] `pnpm --filter @primoria/viewer-react build`
+- [ ] `pnpm --filter @primoria/viewer-react e2e` covers fixture-mode browser flows only
+- [ ] `pnpm --filter @primoria/viewer-react smoke:cloud` is reserved for real Supabase/browser verification with smoke accounts
 
 ## B. Builder Routing & Access
 
@@ -92,7 +95,7 @@ Last updated: 2026-04-04
 ## F. Data Consistency
 
 - [ ] rename lesson in Builder, save, return to `/builder/dashboard`, confirm new lesson title is visible
-- [ ] publish course after lesson rename, then open Viewer React and verify lesson title consistency
+- [ ] `smoke:cloud` publishes a reusable smoke course after lesson rename, then opens Viewer React and verifies lesson title consistency
 - [ ] course with sparse snapshot rows still loads in the React viewer fallback path
 
 ## G. Known Non-Blocking Gaps

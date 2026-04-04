@@ -5,10 +5,13 @@
 ## A. 构建与静态检查
 
 - [ ] `pnpm install`
+- [ ] `deno test supabase/functions/gemini-generate`
 - [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
 - [ ] `pnpm --filter @primoria/viewer-react typecheck`
 - [ ] `pnpm --filter @primoria/viewer-react test`
 - [ ] `pnpm --filter @primoria/viewer-react build`
+- [ ] `pnpm --filter @primoria/viewer-react e2e` 仅覆盖本地 fixture-mode 浏览器链路
+- [ ] `pnpm --filter @primoria/viewer-react smoke:cloud` 只用于带 smoke 账号的真实 Supabase / 浏览器验收
 
 ## B. Builder 路由与权限
 
@@ -92,7 +95,7 @@
 ## F. 数据一致性
 
 - [ ] 在 Builder 改 lesson 名并保存，回 `/builder/dashboard` 能看到新名
-- [ ] lesson 改名后发布，再进 Viewer React 验证标题一致
+- [ ] `smoke:cloud` 会在 lesson 改名后发布复用 smoke 课程，再进入 Viewer React 验证标题一致
 - [ ] 对快照内容不完整的课程，React viewer fallback 仍可打开
 
 ## G. 当前非阻断缺口

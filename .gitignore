@@ -8,6 +8,7 @@ packages/*/.vite/
 packages/*/test-results/
 playwright-report/
 output/
+.playwright-cli/
 
 # Miscellaneous
 *.class
