@@ -1,6 +1,7 @@
 import type { ViewerCourse, ViewerEnrollment, ViewerSubject } from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
+import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import { supabase } from '@/shared/api/supabase';
 
 function normalizeSubject(row: Record<string, unknown>): ViewerSubject {
@@ -20,6 +21,7 @@ function normalizeCourse(row: Record<string, unknown>): ViewerCourse {
     slug: String(row.slug ?? ''),
     description: String(row.description ?? ''),
     thumbnail_url: typeof row.thumbnail_url === 'string' ? row.thumbnail_url : null,
+    content_language: row.content_language == null ? null : normalizeViewerLanguage(row.content_language),
     difficulty_level: String(row.difficulty_level ?? 'beginner'),
     estimated_minutes: Number(row.estimated_minutes ?? 0),
     tags: Array.isArray(row.tags) ? row.tags.map((tag) => String(tag)) : [],
@@ -62,7 +64,7 @@ export async function fetchCourses(params: { searchQuery?: string; subjectId?: s
   let query = supabase
     .from('courses')
     .select(
-      'id, title, slug, description, thumbnail_url, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex)',
+      'id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex)',
     )
     .eq('status', 'published');
 
@@ -92,7 +94,7 @@ export async function fetchEnrollments(userId: string) {
   const { data, error } = await supabase
     .from('enrollments')
     .select(
-      'id, course_id, status, progress_bp, started_at, completed_at, last_accessed_at, courses(id, title, slug, description, thumbnail_url, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex))',
+      'id, course_id, status, progress_bp, started_at, completed_at, last_accessed_at, courses(id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex))',
     )
     .eq('user_id', userId)
     .order('last_accessed_at', { ascending: false });
@@ -124,7 +126,7 @@ export async function fetchCourseDetail(courseId: string, userId?: string) {
   const { data: courseData, error: courseError } = await supabase
     .from('courses')
     .select(
-      'id, title, slug, description, thumbnail_url, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex)',
+      'id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex)',
     )
     .eq('id', courseId)
     .single();
