@@ -82,11 +82,10 @@ function NoticeBanner({ notice }: { notice: NoticeState }) {
   return (
     <div
       className={cn(
-        'rounded-[20px] border px-4 py-3 text-sm font-bold',
-        notice.tone === 'success' &&
-          'border-emerald-200 bg-emerald-50 text-emerald-700',
-        notice.tone === 'error' && 'border-rose-200 bg-rose-50 text-rose-700',
-        notice.tone === 'info' && 'border-sky-200 bg-sky-50 text-sky-700',
+        'viewer-botanical-notice',
+        notice.tone === 'success' && 'viewer-botanical-notice--success',
+        notice.tone === 'error' && 'viewer-botanical-notice--error',
+        notice.tone === 'info' && 'viewer-botanical-notice--info',
       )}
     >
       {notice.message}
@@ -108,8 +107,8 @@ function SectionCard({
   return (
     <SurfaceCard className="space-y-6 rounded-[28px] p-6 md:p-7">
       <div>
-        <div className="text-[0.7rem] font-black uppercase tracking-[0.2em] text-[var(--viewer-primary)]">{eyebrow}</div>
-        <h2 className="mt-3 text-[1.9rem] font-black tracking-[-0.04em] text-[var(--viewer-text)]">{title}</h2>
+        <div className="viewer-botanical-eyebrow">{eyebrow}</div>
+        <h2 className="mt-3 text-[2.15rem] font-semibold tracking-[-0.04em] text-[var(--viewer-text)]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{title}</h2>
         <p className="mt-3 max-w-3xl text-sm font-medium leading-7 text-[var(--viewer-text-muted)]">{description}</p>
       </div>
       {children}
@@ -118,7 +117,7 @@ function SectionCard({
 }
 
 function FieldLabel({ children }: { children: ReactNode }) {
-  return <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">{children}</div>;
+  return <div className="viewer-botanical-eyebrow text-[0.68rem]">{children}</div>;
 }
 
 function TextField({
@@ -138,14 +137,14 @@ function TextField({
       {multiline ? (
         <textarea
           aria-label={label}
-          className="min-h-28 w-full rounded-[20px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] px-4 py-3 outline-none"
+          className="viewer-botanical-input min-h-28"
           value={value}
           onChange={(event) => onChange(event.target.value)}
         />
       ) : (
         <input
           aria-label={label}
-          className="w-full rounded-[20px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] px-4 py-3 outline-none"
+          className="viewer-botanical-input"
           value={value}
           onChange={(event) => onChange(event.target.value)}
         />
@@ -166,7 +165,7 @@ function ToggleTile({
   onChange: (next: boolean) => void;
 }) {
   return (
-    <label className="flex items-start justify-between gap-4 rounded-[22px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] px-4 py-4">
+    <label className="flex items-start justify-between gap-4 rounded-[22px] border border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] px-4 py-4">
       <div>
         <div className="text-sm font-black text-[var(--viewer-text)]">{label}</div>
         <p className="mt-1 text-sm font-medium leading-6 text-[var(--viewer-text-muted)]">{hint}</p>
@@ -200,8 +199,8 @@ function ChoicePill({
       className={cn(
         'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-black transition',
         active
-          ? 'border-[var(--viewer-primary)] bg-[var(--viewer-primary)] text-white shadow-[0_12px_28px_rgba(79,70,229,0.24)]'
-          : 'border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] text-[var(--viewer-text)]',
+          ? 'border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white shadow-[0_12px_28px_rgba(122,158,126,0.24)]'
+          : 'border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] text-[var(--viewer-text)]',
       )}
     >
       {icon}
@@ -492,7 +491,7 @@ export function SettingsPage() {
       {notice ? <NoticeBanner notice={notice} /> : null}
 
       <section className="viewer-panel overflow-hidden rounded-[34px]">
-        <div className="relative min-h-[230px] overflow-hidden bg-[linear-gradient(135deg,#0f172a_0%,#2f53d8_48%,#60a5fa_100%)] px-6 py-6 md:px-8">
+        <div className="relative min-h-[230px] overflow-hidden bg-[linear-gradient(135deg,#7f5f49_0%,#c4956a_32%,#e8cfab_62%,#a8c5ac_100%)] px-6 py-6 md:px-8">
           {profileForm.cover_image_url ? (
             <img src={profileForm.cover_image_url} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
           ) : null}
@@ -500,40 +499,40 @@ export function SettingsPage() {
 
           <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="flex items-end gap-4">
-              <div className="relative h-[6.8rem] w-[6.8rem] overflow-hidden rounded-[26px] border-4 border-white/80 bg-white shadow-[0_20px_45px_rgba(7,12,38,0.18)]">
+              <div className="relative h-[6.8rem] w-[6.8rem] overflow-hidden rounded-[26px] border-4 border-white/80 bg-white shadow-[0_20px_45px_rgba(90,70,50,0.18)]">
                 {profileForm.avatar_url ? (
                   <img src={profileForm.avatar_url} alt={displayName} className="h-full w-full object-cover" />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-[2.7rem] font-black text-[#2946c8]">
-                    {displayName.slice(0, 1)}
-                  </div>
-                )}
+                    <div className="flex h-full w-full items-center justify-center text-[2.7rem] font-black text-[#7a6b5e]">
+                      {displayName.slice(0, 1)}
+                    </div>
+                  )}
               </div>
 
               <div className="pb-1 text-white">
                 <div className="text-[0.72rem] font-black uppercase tracking-[0.22em] text-white/70">{copy.overviewEyebrow}</div>
-                <h2 className="mt-2 text-[2.1rem] font-black tracking-[-0.05em]">{displayName}</h2>
+                <h2 className="mt-2 text-[2.3rem] font-semibold tracking-[-0.04em]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{displayName}</h2>
                 <div className="mt-2 text-sm font-semibold text-white/78">{auth.user?.email ?? ''}</div>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-[22px] border border-white/20 bg-white/14 px-4 py-3 text-white backdrop-blur">
+              <div className="rounded-[22px] border border-white/20 bg-[rgba(255,252,247,0.16)] px-4 py-3 text-white backdrop-blur">
                 <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewRole}</div>
                 <div className="mt-2 text-lg font-black">{isParent ? copy.parent.parent : copy.parent.learner}</div>
               </div>
-              <div className="rounded-[22px] border border-white/20 bg-white/14 px-4 py-3 text-white backdrop-blur">
+              <div className="rounded-[22px] border border-white/20 bg-[rgba(255,252,247,0.16)] px-4 py-3 text-white backdrop-blur">
                 <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewJoined}</div>
                 <div className="mt-2 text-lg font-black">{joinedAt}</div>
               </div>
-              <div className="rounded-[22px] border border-white/20 bg-white/14 px-4 py-3 text-white backdrop-blur">
+              <div className="rounded-[22px] border border-white/20 bg-[rgba(255,252,247,0.16)] px-4 py-3 text-white backdrop-blur">
                 <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewVersion}</div>
                 <div className="mt-2 text-lg font-black">{VIEWER_VERSION}</div>
               </div>
             </div>
           </div>
 
-          <div className="relative mt-6 rounded-[24px] border border-white/18 bg-white/12 px-5 py-4 text-white backdrop-blur">
+          <div className="relative mt-6 rounded-[24px] border border-white/18 bg-[rgba(255,252,247,0.16)] px-5 py-4 text-white backdrop-blur">
             <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewActiveSection}</div>
             <div className="mt-2 text-lg font-black">{copy.sections[activeSection].label}</div>
             <p className="mt-2 max-w-3xl text-sm font-medium leading-7 text-white/78">{copy.sections[activeSection].description}</p>
@@ -553,8 +552,8 @@ export function SettingsPage() {
                   className={cn(
                     'flex items-start gap-3 rounded-[22px] border px-4 py-4 text-left transition xl:w-full',
                     activeSection === section
-                      ? 'border-[#5c67ff] bg-[linear-gradient(135deg,#5c67ff,#6379ff)] text-white shadow-[0_18px_36px_rgba(84,98,255,0.22)]'
-                      : 'border-[var(--viewer-border)] bg-white text-[var(--viewer-text)] hover:bg-[var(--viewer-surface-muted)]',
+                      ? 'border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white shadow-[0_18px_36px_rgba(122,158,126,0.22)]'
+                      : 'border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] text-[var(--viewer-text)] hover:bg-[var(--viewer-surface-muted)]',
                   )}
                 >
                   <div className={cn('mt-0.5', activeSection === section ? 'text-white' : 'text-[var(--viewer-primary)]')}>
@@ -621,7 +620,7 @@ export function SettingsPage() {
                         {profileForm.avatar_url ? (
                           <img src={profileForm.avatar_url} alt={displayName} className="h-full w-full object-cover" />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center text-[2rem] font-black text-[#2f53d8]">
+                          <div className="flex h-full w-full items-center justify-center text-[2rem] font-black text-[#7a6b5e]">
                             {displayName.slice(0, 1)}
                           </div>
                         )}
@@ -640,7 +639,7 @@ export function SettingsPage() {
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  className="rounded-full bg-[var(--viewer-primary)] px-6 py-3 text-sm font-black text-white"
+                  className="viewer-botanical-button viewer-botanical-button--primary"
                   onClick={() => saveProfileMutation.mutate()}
                   disabled={saveProfileMutation.isPending}
                 >
@@ -702,7 +701,7 @@ export function SettingsPage() {
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  className="rounded-full bg-[var(--viewer-primary)] px-6 py-3 text-sm font-black text-white"
+                  className="viewer-botanical-button viewer-botanical-button--primary"
                   onClick={() => saveSystemMutation.mutate()}
                   disabled={saveSystemMutation.isPending}
                 >
@@ -829,7 +828,7 @@ export function SettingsPage() {
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  className="rounded-full bg-[var(--viewer-primary)] px-6 py-3 text-sm font-black text-white"
+                  className="viewer-botanical-button viewer-botanical-button--primary"
                   onClick={() => saveSystemMutation.mutate()}
                   disabled={saveSystemMutation.isPending}
                 >
@@ -879,7 +878,7 @@ export function SettingsPage() {
                 <p className="mt-2 text-sm font-medium leading-6 text-[var(--viewer-text-muted)]">{copy.privacy.clearCacheHint}</p>
                 <button
                   type="button"
-                  className="mt-4 rounded-full border border-[var(--viewer-border)] bg-white px-5 py-3 text-sm font-black text-[var(--viewer-text)]"
+                  className="viewer-botanical-button viewer-botanical-button--secondary mt-4"
                   onClick={() => void handleClearCache()}
                 >
                   {copy.privacy.clearCache}
@@ -922,7 +921,7 @@ export function SettingsPage() {
                   </div>
                   <button
                     type="button"
-                    className="mt-5 rounded-full bg-[var(--viewer-primary)] px-5 py-3 text-sm font-black text-white"
+                  className="viewer-botanical-button viewer-botanical-button--primary mt-5"
                     onClick={() => switchRoleMutation.mutate(isParent ? 'user' : 'parent')}
                     disabled={switchRoleMutation.isPending}
                   >
@@ -941,7 +940,7 @@ export function SettingsPage() {
                       <p className="mt-2 text-sm font-medium leading-7 text-[var(--viewer-text-muted)]">{copy.parent.descriptionParent}</p>
                       <button
                         type="button"
-                        className="mt-5 rounded-full bg-[var(--viewer-primary)] px-5 py-3 text-sm font-black text-white"
+                        className="viewer-botanical-button viewer-botanical-button--primary mt-5"
                         onClick={() => navigate('/parent')}
                       >
                         {copy.parent.openDashboard}
@@ -966,7 +965,7 @@ export function SettingsPage() {
                       <div className="mt-5 flex flex-wrap gap-3">
                         <button
                           type="button"
-                          className="rounded-full bg-[var(--viewer-primary)] px-5 py-3 text-sm font-black text-white"
+                          className="viewer-botanical-button viewer-botanical-button--primary"
                           onClick={() => bindingCodeMutation.mutate()}
                           disabled={bindingCodeMutation.isPending}
                         >
@@ -979,7 +978,7 @@ export function SettingsPage() {
                         {bindingCode ? (
                           <button
                             type="button"
-                            className="rounded-full border border-[var(--viewer-border)] bg-white px-5 py-3 text-sm font-black text-[var(--viewer-text)]"
+                            className="viewer-botanical-button viewer-botanical-button--secondary"
                             onClick={() => void handleCopyBindingCode()}
                           >
                             {copy.common.copy}
@@ -1005,7 +1004,7 @@ export function SettingsPage() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className="flex items-center justify-between rounded-[22px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] px-5 py-4 text-sm font-black text-[var(--viewer-text)]"
+                    className="flex items-center justify-between rounded-[22px] border border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] px-5 py-4 text-sm font-black text-[var(--viewer-text)]"
                   >
                     <span>{item.label}</span>
                     <ExternalLink size={16} />
@@ -1020,12 +1019,12 @@ export function SettingsPage() {
                   <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">viewer-react</p>
                 </div>
 
-                <div className="rounded-[24px] border border-rose-200 bg-rose-50 p-5">
-                  <div className="text-lg font-black text-rose-700">{copy.support.signOut}</div>
-                  <p className="mt-2 text-sm font-medium leading-7 text-rose-700/80">{copy.support.signOutHint}</p>
+                <div className="rounded-[24px] border border-[#e6c8c2] bg-[#fbefed] p-5">
+                  <div className="text-lg font-black text-[#9d554d]">{copy.support.signOut}</div>
+                  <p className="mt-2 text-sm font-medium leading-7 text-[#9d554d]/80">{copy.support.signOutHint}</p>
                   <button
                     type="button"
-                    className="mt-5 rounded-full bg-rose-600 px-5 py-3 text-sm font-black text-white"
+                    className="viewer-botanical-button viewer-botanical-button--warm mt-5"
                     onClick={() => void handleSignOut()}
                   >
                     {viewerCopy.settings.signOut}

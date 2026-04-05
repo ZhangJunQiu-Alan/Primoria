@@ -111,7 +111,7 @@ export function LessonPage() {
         />
       ) : null}
       {completionMutation.isPending ? (
-        <SurfaceCard>
+        <SurfaceCard className="bg-[rgba(255,252,247,0.88)]">
           <p className="text-sm font-semibold text-[var(--viewer-text-muted)]">Finalizing lesson completion…</p>
         </SurfaceCard>
       ) : null}

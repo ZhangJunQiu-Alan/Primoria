@@ -270,16 +270,21 @@ export function CommunityPage() {
   }
 
   return (
-    <div className="mx-auto w-[86%] px-0 py-5 md:py-6">
+    <div className="mx-auto w-[90%] max-w-[1380px] px-0 py-5 md:py-6">
       <div className="grid gap-4 xl:grid-cols-[258px_minmax(0,1fr)]">
         <aside className="viewer-panel rounded-[30px] p-4">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-[linear-gradient(135deg,#5e54f3,#25c0ee)] text-white">
+            <div className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#e4d2b6] bg-[linear-gradient(145deg,#d4b896_0%,#c4956a_100%)] text-white shadow-[0_14px_24px_rgba(196,149,106,0.18)]">
               <Users size={28} />
             </div>
             <div>
-              <h1 className="text-[1.8rem] font-black tracking-[-0.05em] text-[#1d2536]">{viewerCopy.community.title}</h1>
-              <p className="text-[0.94rem] font-bold text-[#93a0b8]">{'主导航'}</p>
+              <h1
+                className="text-[2.2rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+                style={{ fontFamily: '"Cormorant Garamond", serif' }}
+              >
+                {viewerCopy.community.title}
+              </h1>
+              <p className="viewer-botanical-eyebrow">{'主导航'}</p>
             </div>
           </div>
 
@@ -293,8 +298,10 @@ export function CommunityPage() {
                   key={item}
                   type="button"
                   className={cn(
-                    'flex w-full items-center gap-3.5 rounded-[20px] px-3.5 py-3 text-left text-[0.92rem] font-black transition',
-                    isActive ? 'bg-[#eef1ff] text-[#554cf4]' : 'text-[#687892] hover:bg-[#f7f9fd]',
+                    'flex w-full items-center gap-3.5 rounded-[20px] border px-3.5 py-3 text-left text-[0.92rem] font-bold transition',
+                    isActive
+                      ? 'border-[#b9d1bc] bg-[linear-gradient(180deg,rgba(235,243,232,0.96)_0%,rgba(223,240,224,0.88)_100%)] text-[#5c7d60]'
+                      : 'border-transparent text-[#7a6b5e] hover:bg-[#faf4ea]',
                   )}
                   onClick={() => setSection(item)}
                 >
@@ -315,10 +322,10 @@ export function CommunityPage() {
           {status ? (
             <div
               className={cn(
-                'rounded-[20px] border px-4 py-3 text-sm font-semibold',
+                'viewer-botanical-notice',
                 status.tone === 'error'
-                  ? 'border-[#ffd5d5] bg-[#fff2f2] text-[#c13d3d]'
-                  : 'border-[#dcebdd] bg-[#f1fbf4] text-[#2f8a4f]',
+                  ? 'viewer-botanical-notice--error'
+                  : 'viewer-botanical-notice--success',
               )}
             >
               {status.message}
@@ -326,29 +333,29 @@ export function CommunityPage() {
           ) : null}
 
           {section === 'Dashboard' ? (
-            <div className="relative min-h-[640px] overflow-hidden rounded-[30px] border border-[#dfe6f2] bg-[radial-gradient(circle_at_16%_18%,rgba(181,236,255,0.92),rgba(214,241,255,0.72)_24%,rgba(241,234,255,0.88)_54%,rgba(235,229,255,0.92)_74%,rgba(220,232,255,0.92)_100%)] shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
+            <div className="relative min-h-[640px] overflow-hidden rounded-[30px] border border-[#ddd3c3] bg-[radial-gradient(circle_at_18%_18%,rgba(215,234,217,0.84),rgba(242,233,216,0.76)_26%,rgba(244,234,243,0.82)_52%,rgba(239,226,212,0.92)_76%,rgba(233,227,214,0.96)_100%)] shadow-[0_20px_52px_rgba(90,70,50,0.1)]">
               <div className="absolute left-5 top-5 z-20 flex gap-3">
-                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#dce6f3] bg-white/85 text-[#1d2536] shadow-[0_10px_22px_rgba(91,117,161,0.08)]">
+                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.85)] text-[#4a4037] shadow-[0_10px_22px_rgba(90,70,50,0.08)]">
                   <Users size={25} />
                 </button>
-                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#dce6f3] bg-white/85 text-[#1d2536] shadow-[0_10px_22px_rgba(91,117,161,0.08)]">
+                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.85)] text-[#4a4037] shadow-[0_10px_22px_rgba(90,70,50,0.08)]">
                   <UserPlus size={25} />
                 </button>
               </div>
 
-              <div className="absolute right-7 top-7 z-20 rounded-[22px] border border-[#dce6f3] bg-white/88 px-5 py-4 shadow-[0_12px_26px_rgba(91,117,161,0.08)]">
-                <div className="text-[1rem] font-black text-[#627390]">{`已连接 ${people.length + 15}`}</div>
-                <div className="mt-2.5 text-[1rem] font-black text-[#1fb65c]">{`在线 ${Math.max(people.filter((person) => person.status === 'online').length, 14)}`}</div>
+              <div className="absolute right-7 top-7 z-20 rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-5 py-4 shadow-[0_12px_26px_rgba(90,70,50,0.08)]">
+                <div className="text-[1rem] font-black text-[#6e6156]">{`已连接 ${people.length + 15}`}</div>
+                <div className="mt-2.5 text-[1rem] font-black text-[#5c7d60]">{`在线 ${Math.max(people.filter((person) => person.status === 'online').length, 14)}`}</div>
               </div>
 
               <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(165,228,255,0.30),rgba(255,255,255,0)_34%,rgba(237,214,255,0.28)_72%,rgba(205,226,255,0.24)_100%)]" />
-                <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f3ddff]/50 blur-[82px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(168,197,172,0.18),rgba(255,255,255,0)_34%,rgba(196,149,106,0.16)_72%,rgba(169,154,180,0.18)_100%)]" />
+                <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(214,185,204,0.34)] blur-[82px]" />
                 <div className="absolute left-[50%] top-[54%] h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.58),rgba(255,255,255,0)_68%)]" />
                 <img
                   src="/community-start.png"
                   alt="Community planet"
-                  className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.96] drop-shadow-[0_28px_72px_rgba(193,153,248,0.18)]"
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.96] drop-shadow-[0_28px_72px_rgba(196,149,106,0.18)]"
                   style={{
                     WebkitMaskImage:
                       'radial-gradient(circle at center, black 34%, rgba(0,0,0,0.98) 56%, rgba(0,0,0,0.86) 73%, transparent 88%)',
@@ -360,11 +367,11 @@ export function CommunityPage() {
 
               {people.slice(0, dashboardPositions.length).map((person, index) => {
                 const position = dashboardPositions[index];
-                const palette = ['bg-[#28c3ef]', 'bg-[#ff8cc8]', 'bg-[#36d49d]', 'bg-[#9aa9c2]'];
+                const palette = ['bg-[#8fb996]', 'bg-[#c4807a]', 'bg-[#d4a870]', 'bg-[#a99ab4]'];
                 return (
                   <div key={person.id} className="absolute z-20" style={position}>
                     <div className={cn('mx-auto h-7 w-7 rounded-full border border-white/65 shadow-[0_0_18px_rgba(255,255,255,0.78)]', palette[index % palette.length])} />
-                    <div className="mt-2 text-center text-[0.84rem] font-semibold text-[#55617a]">{person.display_name}</div>
+                    <div className="mt-2 text-center text-[0.84rem] font-semibold text-[#65594f]">{person.display_name}</div>
                   </div>
                 );
               })}
@@ -373,24 +380,24 @@ export function CommunityPage() {
 
           {section === 'Our Study' ? (
             <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
-              <div className="rounded-[26px] border border-[#dfe6f2] bg-white p-5 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
-                <h2 className="text-[1.8rem] font-black text-[#1c2436]">{'创建学习房间'}</h2>
+              <div className="viewer-panel rounded-[26px] p-5">
+                <h2 className="viewer-botanical-heading text-[2rem]">{'创建学习房间'}</h2>
                 <div className="mt-5 space-y-4">
                   <input
-                    className="w-full rounded-[20px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium outline-none"
+                    className="viewer-botanical-input"
                     placeholder="房间名称"
                     value={roomForm.name}
                     onChange={(event) => setRoomForm((current) => ({ ...current, name: event.target.value }))}
                   />
                   <textarea
-                    className="min-h-32 w-full rounded-[20px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium outline-none"
+                    className="viewer-botanical-input min-h-32"
                     placeholder="描述这次学习目标"
                     value={roomForm.description}
                     onChange={(event) => setRoomForm((current) => ({ ...current, description: event.target.value }))}
                   />
                   <button
                     type="button"
-                    className="w-full rounded-[20px] bg-[#554cf4] px-5 py-3 text-base font-black text-white"
+                    className="viewer-botanical-button viewer-botanical-button--primary w-full"
                     onClick={() => createRoomMutation.mutate()}
                     disabled={createRoomMutation.isPending}
                   >
@@ -403,15 +410,15 @@ export function CommunityPage() {
                 {studyRooms.map((room) => {
                   const joined = room.member_ids.includes(userId);
                   return (
-                    <div key={room.id} className="rounded-[26px] border border-[#dfe6f2] bg-white p-5 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
-                      <div className="text-sm font-black uppercase tracking-[0.16em] text-[#8fa1bf]">{'Study room'}</div>
-                      <h3 className="mt-3 text-[1.5rem] font-black text-[#20293d]">{room.name}</h3>
-                      <p className="mt-3 text-[1rem] leading-7 text-[#76839c]">{room.description}</p>
-                      <p className="mt-5 text-[0.98rem] font-bold text-[#8a96ab]">{`${room.members} 人 · ${room.status}`}</p>
+                    <div key={room.id} className="viewer-panel rounded-[26px] p-5">
+                      <div className="viewer-botanical-eyebrow text-[0.72rem]">{'Study room'}</div>
+                      <h3 className="mt-3 text-[1.8rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{room.name}</h3>
+                      <p className="mt-3 text-[1rem] leading-7 text-[#6f6359]">{room.description}</p>
+                      <p className="mt-5 text-[0.98rem] font-bold text-[#8a7d72]">{`${room.members} 人 · ${room.status}`}</p>
                       <div className="mt-5 flex flex-wrap gap-3">
                         <button
                           type="button"
-                          className="rounded-[18px] bg-[#554cf4] px-4 py-3 text-sm font-black text-white"
+                          className="viewer-botanical-button viewer-botanical-button--primary"
                           onClick={() => joinRoomMutation.mutate(room.id)}
                           disabled={joined || joinRoomMutation.isPending}
                         >
@@ -420,7 +427,7 @@ export function CommunityPage() {
                         {room.created_by === userId ? (
                           <button
                             type="button"
-                            className="rounded-[18px] border border-[#ffd1d1] px-4 py-3 text-sm font-black text-[#cb4a4a]"
+                            className="viewer-botanical-button border border-[#e6c8c2] bg-[#fbefed] text-[#9d554d]"
                             onClick={() => deleteRoomMutation.mutate(room.id)}
                             disabled={deleteRoomMutation.isPending}
                           >
@@ -438,8 +445,8 @@ export function CommunityPage() {
           {section === 'Messages' ? (
             <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
               <div className="space-y-4">
-                <div className="rounded-[26px] border border-[#dfe6f2] bg-white p-5 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
-                  <h2 className="text-[1.5rem] font-black text-[#1c2436]">{'开启新对话'}</h2>
+                <div className="viewer-panel rounded-[26px] p-5">
+                  <h2 className="viewer-botanical-heading text-[2rem]">{'开启新对话'}</h2>
                   <div className="mt-4 space-y-3">
                     {people.map((person) => (
                       <button
@@ -448,8 +455,8 @@ export function CommunityPage() {
                         className={cn(
                           'flex w-full items-center justify-between rounded-[18px] border px-4 py-3 text-left text-sm font-bold transition',
                           selectedPersonId === person.id
-                            ? 'border-[#cfd6ff] bg-[#eef1ff] text-[#554cf4]'
-                            : 'border-[#dde6f2] text-[#53627c]',
+                            ? 'border-[#c8dbcb] bg-[#edf5ec] text-[#5c7d60]'
+                            : 'border-[#ddd3c3] bg-[rgba(255,252,247,0.76)] text-[#6a5f56]',
                         )}
                         onClick={() => setSelectedPersonId(person.id)}
                       >
@@ -460,7 +467,7 @@ export function CommunityPage() {
                   </div>
                   <button
                     type="button"
-                    className="mt-4 w-full rounded-[18px] bg-[#554cf4] px-4 py-3 text-sm font-black text-white"
+                    className="viewer-botanical-button viewer-botanical-button--primary mt-4 w-full"
                     onClick={() => directConversationMutation.mutate()}
                     disabled={!selectedPersonId || directConversationMutation.isPending}
                   >
@@ -468,7 +475,7 @@ export function CommunityPage() {
                   </button>
                 </div>
 
-                <div className="rounded-[26px] border border-[#dfe6f2] bg-white p-4 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
+                <div className="viewer-panel rounded-[26px] p-4">
                   <div className="space-y-3">
                     {conversations.map((conversation) => (
                       <button
@@ -476,13 +483,13 @@ export function CommunityPage() {
                         type="button"
                         className={cn(
                           'flex w-full items-start justify-between gap-3 rounded-[18px] px-4 py-4 text-left transition',
-                          activeConversation?.id === conversation.id ? 'bg-[#eef1ff]' : 'hover:bg-[#f7f9fd]',
+                          activeConversation?.id === conversation.id ? 'bg-[#edf5ec]' : 'hover:bg-[#faf4ea]',
                         )}
                         onClick={() => setConversationId(conversation.id)}
                       >
                         <div className="min-w-0">
-                          <div className="truncate text-[1rem] font-black text-[#253049]">{conversation.title}</div>
-                          <div className="mt-1 truncate text-sm font-medium text-[#7c88a0]">{conversation.preview || '开始一段新对话'}</div>
+                          <div className="truncate text-[1rem] font-black text-[#3d342a]">{conversation.title}</div>
+                          <div className="mt-1 truncate text-sm font-medium text-[#887b70]">{conversation.preview || '开始一段新对话'}</div>
                         </div>
                         {conversation.unread_count > 0 ? (
                           <span className="flex h-8 min-w-8 items-center justify-center rounded-full bg-[#f34848] px-2 text-xs font-black text-white">
@@ -495,12 +502,12 @@ export function CommunityPage() {
                 </div>
               </div>
 
-              <div className="flex min-h-[580px] flex-col rounded-[26px] border border-[#dfe6f2] bg-white shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
+              <div className="viewer-panel flex min-h-[580px] flex-col rounded-[26px]">
                 {activeConversation ? (
                   <>
-                    <div className="border-b border-[#edf1f7] px-6 py-5">
-                      <h3 className="text-[1.6rem] font-black text-[#1f293d]">{activeConversation.title}</h3>
-                      <p className="mt-1 text-sm font-medium text-[#8a97ae]">{activeConversation.kind === 'group' ? '群组对话' : '私聊'}</p>
+                    <div className="border-b border-[#eadfce] px-6 py-5">
+                      <h3 className="text-[2rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{activeConversation.title}</h3>
+                      <p className="mt-1 text-sm font-medium text-[#8a7d72]">{activeConversation.kind === 'group' ? '群组对话' : '私聊'}</p>
                     </div>
                     <div className="flex-1 space-y-4 overflow-auto px-6 py-5">
                       {activeConversation.messages.map((message) => (
@@ -509,8 +516,8 @@ export function CommunityPage() {
                           className={cn(
                             'max-w-[80%] rounded-[22px] px-4 py-3 text-sm font-medium leading-7',
                             message.author_id === userId
-                              ? 'ml-auto bg-[#554cf4] text-white'
-                              : 'bg-[#f5f8fc] text-[#354158]',
+                              ? 'ml-auto border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white'
+                              : 'border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] text-[#4d4239]',
                           )}
                         >
                           <div className="mb-1 text-xs font-black uppercase tracking-[0.14em] opacity-70">{message.author_name}</div>
@@ -518,10 +525,10 @@ export function CommunityPage() {
                         </div>
                       ))}
                     </div>
-                    <div className="border-t border-[#edf1f7] px-6 py-5">
+                    <div className="border-t border-[#eadfce] px-6 py-5">
                       <div className="flex gap-3">
                         <input
-                          className="min-w-0 flex-1 rounded-[20px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium outline-none"
+                          className="viewer-botanical-input min-w-0 flex-1"
                           placeholder="发送一条消息"
                           value={composer}
                           onChange={(event) => setComposer(event.target.value)}
@@ -533,7 +540,7 @@ export function CommunityPage() {
                         />
                         <button
                           type="button"
-                          className="rounded-[20px] bg-[#554cf4] px-5 py-3 text-sm font-black text-white"
+                          className="viewer-botanical-button viewer-botanical-button--primary"
                           onClick={() => sendMessageMutation.mutate()}
                           disabled={sendMessageMutation.isPending}
                         >
@@ -553,30 +560,30 @@ export function CommunityPage() {
 
           {section === 'Trending' ? (
             <div className="grid gap-4 xl:grid-cols-[306px_minmax(0,1fr)]">
-              <div className="rounded-[26px] border border-[#dfe6f2] bg-white p-5 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
-                <h2 className="text-[1.8rem] font-black text-[#1c2436]">{'发布讨论'}</h2>
+              <div className="viewer-panel rounded-[26px] p-5">
+                <h2 className="viewer-botanical-heading text-[2rem]">{'发布讨论'}</h2>
                 <div className="mt-5 space-y-4">
                   <input
-                    className="w-full rounded-[20px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium outline-none"
+                    className="viewer-botanical-input"
                     placeholder="标题"
                     value={discussionForm.title}
                     onChange={(event) => setDiscussionForm((current) => ({ ...current, title: event.target.value }))}
                   />
                   <input
-                    className="w-full rounded-[20px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium outline-none"
+                    className="viewer-botanical-input"
                     placeholder="分类"
                     value={discussionForm.category}
                     onChange={(event) => setDiscussionForm((current) => ({ ...current, category: event.target.value }))}
                   />
                   <textarea
-                    className="min-h-36 w-full rounded-[20px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium outline-none"
+                    className="viewer-botanical-input min-h-36"
                     placeholder="分享你的问题、发现或想法"
                     value={discussionForm.body}
                     onChange={(event) => setDiscussionForm((current) => ({ ...current, body: event.target.value }))}
                   />
                   <button
                     type="button"
-                    className="w-full rounded-[20px] bg-[#554cf4] px-5 py-3 text-base font-black text-white"
+                    className="viewer-botanical-button viewer-botanical-button--warm w-full"
                     onClick={() => createDiscussionMutation.mutate()}
                     disabled={createDiscussionMutation.isPending}
                   >
@@ -587,18 +594,18 @@ export function CommunityPage() {
 
               <div className="space-y-4">
                 {discussions.map((discussion) => (
-                  <article key={discussion.id} className="rounded-[26px] border border-[#dfe6f2] bg-white p-5 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
+                  <article key={discussion.id} className="viewer-panel rounded-[26px] p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <div className="text-xs font-black uppercase tracking-[0.16em] text-[#90a0bc]">{discussion.category}</div>
-                        <h3 className="mt-2 text-[1.5rem] font-black text-[#212a3e]">{discussion.title}</h3>
-                        <p className="mt-3 text-[1rem] leading-7 text-[#72809a]">{discussion.body}</p>
+                        <div className="viewer-botanical-eyebrow text-[0.72rem]">{discussion.category}</div>
+                        <h3 className="mt-2 text-[1.9rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{discussion.title}</h3>
+                        <p className="mt-3 text-[1rem] leading-7 text-[#6f6359]">{discussion.body}</p>
                       </div>
                       <button
                         type="button"
                         className={cn(
                           'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black',
-                          discussion.liked_by_me ? 'bg-[#fff1f1] text-[#d45454]' : 'bg-[#f3f6fb] text-[#738097]',
+                          discussion.liked_by_me ? 'bg-[#fbefed] text-[#b7655c]' : 'bg-[#f3efe8] text-[#7e7166]',
                         )}
                         onClick={() => toggleLikeMutation.mutate(discussion.id)}
                       >
@@ -607,18 +614,18 @@ export function CommunityPage() {
                       </button>
                     </div>
 
-                    <div className="mt-5 rounded-[22px] bg-[#f8fbff] p-4">
+                    <div className="mt-5 rounded-[22px] border border-[#e4d8ca] bg-[rgba(255,252,247,0.82)] p-4">
                       <div className="space-y-3">
                         {discussion.comments.map((comment) => (
-                          <div key={comment.id} className="rounded-[18px] bg-white px-4 py-3">
-                            <div className="text-sm font-black text-[#273046]">{comment.author_name}</div>
-                            <div className="mt-1 text-sm leading-6 text-[#73809a]">{comment.body}</div>
+                          <div key={comment.id} className="rounded-[18px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3">
+                            <div className="text-sm font-black text-[#3d342a]">{comment.author_name}</div>
+                            <div className="mt-1 text-sm leading-6 text-[#6f6359]">{comment.body}</div>
                           </div>
                         ))}
                       </div>
                       <div className="mt-4 flex gap-3">
                         <input
-                          className="min-w-0 flex-1 rounded-[18px] border border-[#d8e2ef] px-4 py-3 text-sm font-medium outline-none"
+                          className="viewer-botanical-input min-w-0 flex-1"
                           placeholder="写下你的评论"
                           value={commentDrafts[discussion.id] ?? ''}
                           onChange={(event) =>
@@ -627,7 +634,7 @@ export function CommunityPage() {
                         />
                         <button
                           type="button"
-                          className="rounded-[18px] bg-[#554cf4] px-4 py-3 text-sm font-black text-white"
+                          className="viewer-botanical-button viewer-botanical-button--primary"
                           onClick={() =>
                             commentMutation.mutate({
                               discussionId: discussion.id,
@@ -648,14 +655,14 @@ export function CommunityPage() {
 
           {section === 'Notes' ? (
             <div className="space-y-4">
-              <div className="flex items-center justify-between rounded-[26px] border border-[#dfe6f2] bg-white px-5 py-4 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
+              <div className="viewer-panel flex items-center justify-between rounded-[26px] px-5 py-4">
                 <div>
-                  <h2 className="text-[1.8rem] font-black text-[#1c2436]">{'笔记'}</h2>
-                  <p className="mt-1 text-sm font-medium text-[#8a97ae]">{'保存你的个人笔记，或关联到学习房间。'}</p>
+                  <h2 className="viewer-botanical-heading text-[2rem]">{'笔记'}</h2>
+                  <p className="mt-1 text-sm font-medium text-[#8a7d72]">{'保存你的个人笔记，或关联到学习房间。'}</p>
                 </div>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 rounded-[18px] bg-[#554cf4] px-5 py-3 text-sm font-black text-white"
+                  className="viewer-botanical-button viewer-botanical-button--primary"
                   onClick={addBlankNote}
                 >
                   <Plus size={18} />
@@ -665,10 +672,10 @@ export function CommunityPage() {
 
               <div className="grid gap-4 xl:grid-cols-2">
                 {notesDraft.map((note, index) => (
-                  <div key={note.id ?? `draft-${index}`} className="rounded-[26px] border border-[#dfe6f2] bg-white p-5 shadow-[0_20px_52px_rgba(83,110,162,0.08)]">
+                  <div key={note.id ?? `draft-${index}`} className="viewer-panel rounded-[26px] p-5">
                     <div className="space-y-4">
                       <input
-                        className="w-full rounded-[18px] border border-[#d8e2ef] px-4 py-3 text-[1.1rem] font-black outline-none"
+                        className="viewer-botanical-input w-full text-[1.1rem] font-black"
                         value={note.title}
                         onChange={(event) =>
                           setNotesDraft((current) =>
@@ -679,7 +686,7 @@ export function CommunityPage() {
                         }
                       />
                       <textarea
-                        className="min-h-40 w-full rounded-[18px] border border-[#d8e2ef] px-4 py-3 text-[1rem] font-medium leading-7 outline-none"
+                        className="viewer-botanical-input min-h-40 w-full text-[1rem] font-medium leading-7"
                         value={note.body}
                         onChange={(event) =>
                           setNotesDraft((current) =>
@@ -691,7 +698,7 @@ export function CommunityPage() {
                       />
                       <button
                         type="button"
-                        className="rounded-[18px] bg-[#554cf4] px-5 py-3 text-sm font-black text-white"
+                        className="viewer-botanical-button viewer-botanical-button--primary"
                         onClick={() => noteMutation.mutate(note)}
                         disabled={noteMutation.isPending}
                       >
