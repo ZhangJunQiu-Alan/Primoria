@@ -37,6 +37,8 @@ import {
   X,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { formatViewerDate, formatViewerWeekday } from '@/shared/i18n/format';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { useAppSelector } from '@/store';
 import {
   useAddLesson,
@@ -152,15 +154,6 @@ interface DonutItem {
   color: string;
 }
 
-const dashboardTabs: DashboardTabConfig[] = [
-  { value: 'home', label: 'Home', shortLabel: 'Home', icon: House },
-  { value: 'course', label: 'Course Management', shortLabel: 'Course', icon: LibraryBig },
-  { value: 'data', label: 'Data Center', shortLabel: 'Data', icon: BarChart3 },
-  { value: 'fans', label: 'Fan Management', shortLabel: 'Fans', icon: Users },
-];
-
-const homeWeekLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const fansWeekLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const chartPalette = ['#7a9e7e', '#c4956a', '#a99ab4', '#c4807a'];
 
 const emptyCourseForm: CourseFormState = {
@@ -385,45 +378,50 @@ function formatCurrency(value: number) {
   return `$${Math.round(value)}`;
 }
 
-function buildMonthLabels(count: number) {
+function buildMonthLabels(count: number, language: 'zh-CN' | 'en') {
   const labels: string[] = [];
   const now = new Date();
 
   for (let index = count - 1; index >= 0; index -= 1) {
     const monthDate = new Date(now.getFullYear(), now.getMonth() - index, 1);
-    labels.push(`${monthDate.getMonth() + 1}/${String(monthDate.getFullYear()).slice(-2)}`);
+    labels.push(
+      formatViewerDate(monthDate, language, {
+        month: 'numeric',
+        year: '2-digit',
+      }),
+    );
   }
 
   return labels;
 }
 
-function buildRecentDayLabels(count: number) {
+function buildRecentDayLabels(count: number, language: 'zh-CN' | 'en') {
   const labels: string[] = [];
   const now = new Date();
 
   for (let index = count - 1; index >= 0; index -= 1) {
     const day = new Date(now);
     day.setDate(now.getDate() - index);
-    labels.push(day.toLocaleDateString('en-US', { weekday: 'short' }));
+    labels.push(formatViewerWeekday(day, language));
   }
 
   return labels;
 }
 
-function formatShortDateLabel(value: string) {
+function formatShortDateLabel(value: string, language: 'zh-CN' | 'en') {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return date.toLocaleDateString('en-US', { weekday: 'short' });
+  return formatViewerWeekday(date, language);
 }
 
-function formatMonthLabel(value: string) {
+function formatMonthLabel(value: string, language: 'zh-CN' | 'en') {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return `${date.getMonth() + 1}/${String(date.getFullYear()).slice(-2)}`;
+  return formatViewerDate(date, language, { month: 'numeric', year: '2-digit' });
 }
 
 function formatSignedDelta(value: number) {
@@ -1035,6 +1033,16 @@ export function DashboardPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const user = useAppSelector((state) => state.auth.user);
+  const language = useAppSelector((state) => state.viewerPreferences.language);
+  const copy = useViewerCopy();
+  const dashboardTabs: DashboardTabConfig[] = [
+    { value: 'home', label: copy.dashboard.home, shortLabel: copy.dashboard.home, icon: House },
+    { value: 'course', label: copy.dashboard.course, shortLabel: copy.dashboard.course, icon: LibraryBig },
+    { value: 'data', label: copy.dashboard.data, shortLabel: copy.dashboard.data, icon: BarChart3 },
+    { value: 'fans', label: copy.dashboard.fans, shortLabel: copy.dashboard.fans, icon: Users },
+  ];
+  const homeWeekLabels = buildRecentDayLabels(7, language);
+  const fansWeekLabels = buildRecentDayLabels(7, language);
 
   useEffect(() => {
     void import('@/pages/editor/EditorPage');
@@ -1206,8 +1214,8 @@ export function DashboardPage() {
   ];
 
   const homeTrendLabels = analytics.home_daily_completion.length > 0
-    ? analytics.home_daily_completion.map((entry) => formatShortDateLabel(entry.date))
-    : buildRecentDayLabels(7);
+    ? analytics.home_daily_completion.map((entry) => formatShortDateLabel(entry.date, language))
+    : buildRecentDayLabels(7, language);
   const completionTrendValues = analytics.home_daily_completion.length > 0
     ? analytics.home_daily_completion.map((entry) => Math.round(entry.completion_rate * 100))
     : homeTrendLabels.map(() => 0);
@@ -1221,8 +1229,8 @@ export function DashboardPage() {
     estimatedIncome * 0.77,
   ].map((value) => Math.round(value));
   const dataMonthLabels = analytics.monthly_activity_completion.length > 0
-    ? analytics.monthly_activity_completion.map((entry) => formatMonthLabel(entry.month_start))
-    : buildMonthLabels(6);
+    ? analytics.monthly_activity_completion.map((entry) => formatMonthLabel(entry.month_start, language))
+    : buildMonthLabels(6, language);
   const createdByMonth: number[] = dataMonthLabels.map((label) =>
     courses.filter((course) => {
       const createdAt = new Date(course.created_at);

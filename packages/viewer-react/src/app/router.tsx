@@ -21,7 +21,7 @@ import { trackViewerRoute } from '@/shared/platform/observability';
 import { useFeatureFlag } from '@/shared/platform/FeatureFlagsProvider';
 import { learnerHomeForRole } from '@/shared/utils/routes';
 import { useAppSelector } from '@/shared/state/store';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 
 const LandingPage = lazy(async () => ({
   default: (await import('@/features/public/LandingPage')).LandingPage,
@@ -79,9 +79,11 @@ const BuilderEditorPage = lazy(async () => ({
 }));
 
 function RouteLoadingScreen() {
+  const copy = useViewerCopy();
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--viewer-page)] text-sm font-semibold text-[var(--viewer-text-muted)]">
-      {'Loading…'}
+      {copy.common.loading}
     </div>
   );
 }
@@ -102,18 +104,19 @@ function TelemetryRouteShell() {
 
 function FlaggedRoute({
   flag,
-  title,
-  message,
+  scope,
   children,
 }: {
   flag: 'viewer_ai_tutor_enabled' | 'viewer_community_enabled';
-  title: string;
-  message: string;
+  scope: 'community' | 'aiTutor';
   children: ReactNode;
 }) {
   const enabled = useFeatureFlag(flag);
+  const copy = useViewerCopy();
 
   if (!enabled) {
+    const title = scope === 'community' ? copy.community.title : copy.aiTutor.title;
+    const message = scope === 'community' ? copy.community.disabled : copy.aiTutor.disabled;
     return (
       <PageContainer title={title} subtitle={message}>
         <FeatureDisabledState title={title} message={message} />
@@ -125,9 +128,10 @@ function FlaggedRoute({
 }
 
 function RootLanding() {
+  const copy = useViewerCopy();
   const { loading, user, role } = useAppSelector((state) => state.auth);
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center">{'Loading…'}</div>;
+    return <div className="flex min-h-screen items-center justify-center">{copy.common.loading}</div>;
   }
   if (user) {
     return <Navigate to={learnerHomeForRole(role)} replace />;
@@ -217,8 +221,7 @@ export function buildViewerRoutes(): RouteObject[] {
                   element: (
                     <FlaggedRoute
                       flag="viewer_community_enabled"
-                      title={viewerCopy.community.title}
-                      message={viewerCopy.community.disabled}
+                      scope="community"
                     >
                       <WithSuspense>
                         <CommunityPage />
@@ -231,8 +234,7 @@ export function buildViewerRoutes(): RouteObject[] {
                   element: (
                     <FlaggedRoute
                       flag="viewer_ai_tutor_enabled"
-                      title={viewerCopy.aiTutor.title}
-                      message={viewerCopy.aiTutor.disabled}
+                      scope="aiTutor"
                     >
                       <WithSuspense>
                         <AiTutorPage />

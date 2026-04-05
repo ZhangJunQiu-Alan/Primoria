@@ -44,7 +44,7 @@ describe('AiTutorPage', () => {
     await user.type(await screen.findByPlaceholderText(/开始输入/i), '/apikey demo-key');
     await user.click(await screen.findByRole('button', { name: /^发送$/i }));
 
-    expect(await screen.findByText(/gemini key stored locally/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Gemini key 已保存在本地/i)).toBeInTheDocument();
 
     await user.click(await screen.findByRole('button', { name: /打开思维导图/i }));
 

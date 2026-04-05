@@ -14,6 +14,8 @@ import {
   MonitorPlay,
   Sparkles,
 } from 'lucide-react';
+import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 import './builderAuth.css';
@@ -21,12 +23,6 @@ import './builderAuth.css';
 type StatusTone = 'error' | 'success';
 type ButtonTone = 'primary' | 'secondary';
 type SocialButtonTone = 'light' | 'dark' | 'wechat' | 'muted';
-
-const authFeatures = [
-  { icon: Sparkles, label: 'Interactive STEM paths' },
-  { icon: Bot, label: 'AI tutor support' },
-  { icon: MonitorPlay, label: 'Library, lesson, and profile sync' },
-];
 
 export function BuilderAuthLayout({
   title,
@@ -41,14 +37,25 @@ export function BuilderAuthLayout({
   alternateLink: ReactNode;
   children: ReactNode;
 }) {
+  const copy = useViewerCopy();
+  const authFeatures = [
+    { icon: Sparkles, label: copy.landing.features[0] },
+    { icon: Bot, label: copy.landing.features[2] },
+    { icon: MonitorPlay, label: copy.auth.registrationSupport },
+  ];
+
   return (
     <div className="auth-page">
       <div className="auth-shell">
         <aside className="auth-brand-panel">
           <BrandLockup />
 
+          <div className="flex justify-start">
+            <LanguageSwitcher tone="dark" />
+          </div>
+
           <div className="auth-brand-panel__copy">
-            <h1 className="auth-brand-panel__title">Learn with momentum.</h1>
+            <h1 className="auth-brand-panel__title">{copy.landing.accentTitle}</h1>
           </div>
 
           <div className="auth-brand-panel__feature-list">
@@ -72,7 +79,7 @@ export function BuilderAuthLayout({
             <BrandLockup />
             <Link to="/" className="auth-mobile-header__link">
               <ArrowLeft size={15} aria-hidden="true" />
-              <span>Landing</span>
+              <span>{copy.auth.landingLabel}</span>
             </Link>
           </header>
 
@@ -81,7 +88,7 @@ export function BuilderAuthLayout({
               <div className="auth-panel__topline">
                 <Link to="/" className="auth-back-link">
                   <ArrowLeft size={15} aria-hidden="true" />
-                  <span>Back to landing</span>
+                  <span>{copy.auth.backToLanding}</span>
                 </Link>
               </div>
 
@@ -103,12 +110,14 @@ export function BuilderAuthLayout({
 }
 
 function BrandLockup() {
+  const copy = useViewerCopy();
+
   return (
-    <Link to="/" className="auth-brand-lockup" aria-label="Primoria home">
+    <Link to="/" className="auth-brand-lockup" aria-label={`${copy.brand.name} home`}>
       <span className="auth-brand-lockup__mark">
         <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
       </span>
-      <span className="auth-brand-lockup__wordmark">Primoria</span>
+      <span className="auth-brand-lockup__wordmark">{copy.brand.name}</span>
     </Link>
   );
 }
@@ -131,10 +140,12 @@ export function AuthStatusBanner({
 }
 
 export function AuthDivider({ label = 'or' }: { label?: string }) {
+  const copy = useViewerCopy();
+
   return (
     <div className="auth-divider" aria-hidden="true">
       <span className="auth-divider__line" />
-      <span className="auth-divider__label">{label}</span>
+      <span className="auth-divider__label">{label === 'or' ? copy.auth.or : label}</span>
       <span className="auth-divider__line" />
     </div>
   );
@@ -269,6 +280,7 @@ export function PasswordVisibilityButton({
   visible: boolean;
   onClick: () => void;
 }) {
+  const copy = useViewerCopy();
   const Icon = visible ? EyeOff : Eye;
 
   return (
@@ -276,7 +288,7 @@ export function PasswordVisibilityButton({
       type="button"
       className="auth-password-toggle"
       onClick={onClick}
-      aria-label={visible ? 'Hide password' : 'Show password'}
+      aria-label={visible ? copy.auth.hidePassword : copy.auth.showPassword}
     >
       <Icon size={16} aria-hidden="true" />
     </button>
