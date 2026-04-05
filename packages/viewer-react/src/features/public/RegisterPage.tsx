@@ -16,6 +16,7 @@ import {
 import { getFieldErrors, registerSchema } from '@/features/public/builderAuthSchemas';
 import { supabase } from '@/shared/api/supabase';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { buildAuthCallbackUrl, readReturnTo } from '@/shared/utils/authRedirect';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 
@@ -23,6 +24,7 @@ type RegisterField = 'name' | 'email' | 'password' | 'confirmPassword';
 type Provider = 'google' | 'apple' | 'email' | null;
 
 export function RegisterPage() {
+  const copy = useViewerCopy();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [showEmailForm, setShowEmailForm] = useState(true);
@@ -61,7 +63,7 @@ export function RegisterPage() {
   }
 
   function handleWeChatComingSoon() {
-    setStatus({ tone: 'error', message: 'WeChat registration is coming soon.' });
+    setStatus({ tone: 'error', message: copy.auth.wechatSoon });
   }
 
   async function handleRegister() {
@@ -108,38 +110,37 @@ export function RegisterPage() {
     captureViewerEvent('viewer_register_completed', { sessionCreated: false });
     setStatus({
       tone: 'success',
-      message: 'Account created. Verify your email, then sign in to continue.',
+      message: copy.auth.registerSuccess,
     });
   }
 
   if (createdAccount) {
     return (
       <BuilderAuthLayout
-        pageLabel="Learner sign up"
-        title="Check your email"
-        subtitle="Your Primoria learner account is ready. Confirm the email address you used, then come back to sign in."
-        alternateLink={<FooterPrompt prompt="Already verified?" linkText="Go to sign in" to={loginPath} />}
+        pageLabel={copy.auth.registerTitle}
+        title={copy.auth.verifyTitle}
+        subtitle={copy.auth.verifyMessage}
+        alternateLink={<FooterPrompt prompt={copy.auth.alreadyHaveAccount} linkText={copy.auth.signInLink} to={loginPath} />}
       >
         <div className="auth-success-card">
           <span className="auth-success-card__badge">
             <CheckCircle2 size={16} aria-hidden="true" />
-            <span>Account created</span>
+            <span>{copy.auth.accountCreated}</span>
           </span>
-          <h3 className="auth-success-card__title">Verify and launch.</h3>
+          <h3 className="auth-success-card__title">{copy.auth.verifyAndLaunch}</h3>
           <p className="auth-success-card__summary">
-            We sent a confirmation link to <strong>{formValues.email}</strong>. Open it, verify the
-            account, and return to the sign-in page to continue.
+            {copy.auth.verifySummaryPrefix} <strong>{formValues.email}</strong>. {copy.auth.verifySummarySuffix}
           </p>
           <div className="auth-actions-row">
             <AuthActionButton
               tone="primary"
-              label="Back to sign in"
+              label={copy.auth.backToLogin}
               type="button"
               onClick={() => navigate(loginPath)}
             />
             <AuthActionButton
               tone="secondary"
-              label="Return to landing"
+              label={copy.auth.returnToLanding}
               type="button"
               onClick={() => navigate('/')}
             />
@@ -152,13 +153,13 @@ export function RegisterPage() {
 
   return (
     <BuilderAuthLayout
-      pageLabel="Learner sign up"
-      title="Create your learner account"
-      subtitle="Use the same builder registration interface, then move directly into the React viewer."
-      alternateLink={<FooterPrompt prompt="Already have an account?" linkText="Sign in" to={loginPath} />}
+      pageLabel={copy.auth.registerTitle}
+      title={copy.auth.registerTitle}
+      subtitle={copy.auth.registerSubtitle}
+      alternateLink={<FooterPrompt prompt={copy.auth.alreadyHaveAccount} linkText={copy.auth.signInLink} to={loginPath} />}
     >
       <AuthSocialButton
-        label="Continue with Google"
+        label={copy.auth.google}
         tone="light"
         logoSrc={publicAssetPath('primoria-google.png')}
         onClick={() => void handleOAuth('google')}
@@ -166,7 +167,7 @@ export function RegisterPage() {
         disabled={Boolean(loadingProvider && loadingProvider !== 'google')}
       />
       <AuthSocialButton
-        label="Continue with Apple"
+        label={copy.auth.apple}
         tone="dark"
         icon={<span aria-hidden="true"></span>}
         onClick={() => void handleOAuth('apple')}
@@ -174,19 +175,19 @@ export function RegisterPage() {
         disabled={Boolean(loadingProvider && loadingProvider !== 'apple')}
       />
       <AuthSocialButton
-        label="Continue with WeChat"
+        label={copy.auth.wechat}
         tone="wechat"
         logoSrc={publicAssetPath('primoria-wechat.png')}
         invertLogo
         onClick={handleWeChatComingSoon}
-        badge="Soon"
+        badge={copy.auth.soon}
         disabled={Boolean(loadingProvider)}
       />
 
       <AuthDivider />
 
       <EmailToggleButton
-        label={showEmailForm ? 'Hide email form' : 'Create with email'}
+        label={showEmailForm ? copy.auth.hideEmailForm : copy.auth.createWithEmail}
         onClick={() => {
           setShowEmailForm((current) => !current);
           setStatus(null);
@@ -198,14 +199,14 @@ export function RegisterPage() {
       {showEmailForm ? (
         <section className="auth-form-block" aria-label="Email registration form">
           <div className="auth-form-block__header">
-            <h3 className="auth-form-block__title">Create with email</h3>
+            <h3 className="auth-form-block__title">{copy.auth.registerEmailSectionTitle}</h3>
           </div>
 
           <AuthField
             id="register-name"
-            label="Name"
+            label={copy.auth.displayName}
             autoComplete="name"
-            placeholder="Your display name"
+            placeholder={copy.auth.displayNamePlaceholder}
             value={formValues.name}
             onChange={(event) =>
               setFormValues((current) => ({ ...current, name: event.target.value }))
@@ -216,10 +217,10 @@ export function RegisterPage() {
 
           <AuthField
             id="register-email"
-            label="Email address"
+            label={copy.auth.email}
             type="email"
             autoComplete="email"
-            placeholder="learner@primoria.dev"
+            placeholder={copy.auth.emailPlaceholder}
             value={formValues.email}
             onChange={(event) =>
               setFormValues((current) => ({ ...current, email: event.target.value }))
@@ -230,10 +231,10 @@ export function RegisterPage() {
 
           <AuthField
             id="register-password"
-            label="Password"
+            label={copy.auth.password}
             type={showPassword ? 'text' : 'password'}
             autoComplete="new-password"
-            placeholder="Create a password"
+            placeholder={copy.auth.createPasswordPlaceholder}
             value={formValues.password}
             onChange={(event) =>
               setFormValues((current) => ({ ...current, password: event.target.value }))
@@ -250,10 +251,10 @@ export function RegisterPage() {
 
           <AuthField
             id="register-confirm-password"
-            label="Confirm password"
+            label={copy.auth.confirmPassword}
             type={showConfirmPassword ? 'text' : 'password'}
             autoComplete="new-password"
-            placeholder="Repeat your password"
+            placeholder={copy.auth.confirmPasswordPlaceholder}
             value={formValues.confirmPassword}
             onChange={(event) =>
               setFormValues((current) => ({
@@ -275,20 +276,20 @@ export function RegisterPage() {
             <AuthActionButton
               type="button"
               tone="primary"
-              label="Create account"
+              label={copy.auth.signUp}
               onClick={() => void handleRegister()}
               loading={isSubmitting}
             />
             <AuthActionButton
               type="button"
               tone="secondary"
-              label="Return to landing"
+              label={copy.auth.returnToLanding}
               onClick={() => navigate('/')}
               disabled={isSubmitting}
             />
           </div>
 
-          <FeatureCheck>Email registration can continue directly into library, lessons, and profile.</FeatureCheck>
+          <FeatureCheck>{copy.auth.registrationSupport}</FeatureCheck>
         </section>
       ) : null}
 

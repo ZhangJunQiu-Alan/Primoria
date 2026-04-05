@@ -4,6 +4,11 @@ import * as Dialog from '@radix-ui/react-dialog';
 import type { LucideIcon } from 'lucide-react';
 import { Activity, Bell, Download, LayoutGrid, Loader2, X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { saveAccountSystemSettings } from '@/shared/api/viewer/settingsApi';
+import { normalizeViewerLanguage, type ViewerLanguage } from '@/shared/i18n/locale';
+import { patchPreferences } from '@/shared/state/preferencesSlice';
+import { useAppDispatch, useAppSelector } from '@/shared/state/store';
+import { useViewerCopy } from '@/shared/theme/copy';
 import {
   StorageService,
   type DashboardDifficultyLevel,
@@ -36,7 +41,7 @@ export interface DashboardProfileSummary {
 interface BackendSettingsState {
   accessibilityMode: boolean;
   dailyReminder: boolean;
-  language: string;
+  language: ViewerLanguage;
   marketingEmails: boolean;
   reminderTime: string;
 }
@@ -47,17 +52,10 @@ interface SectionConfig {
   value: SettingsSection;
 }
 
-const sectionList: SectionConfig[] = [
-  { value: 'account', label: 'Account', icon: Activity },
-  { value: 'workflow', label: 'Workflow', icon: LayoutGrid },
-  { value: 'notifications', label: 'Notifications', icon: Bell },
-  { value: 'data', label: 'Data', icon: Download },
-];
-
 const defaultBackendSettings: BackendSettingsState = {
   accessibilityMode: false,
   dailyReminder: false,
-  language: 'en',
+  language: 'zh-CN',
   marketingEmails: false,
   reminderTime: '09:00',
 };
@@ -89,7 +87,7 @@ function normalizeTime(value: string | null | undefined) {
 }
 
 function normalizeLanguage(value: string | null | undefined) {
-  return value === 'en' ? 'en' : defaultBackendSettings.language;
+  return normalizeViewerLanguage(value);
 }
 
 function SettingsCard({
@@ -186,19 +184,31 @@ export function DashboardSettingsDialog({
   onProfileSaved,
   user,
 }: DashboardSettingsDialogProps) {
+  const dispatch = useAppDispatch();
+  const currentLanguage = useAppSelector((state) => state.viewerPreferences.language);
+  const copy = useViewerCopy();
   const [activeSection, setActiveSection] = useState<SettingsSection>('account');
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<NoticeState | null>(null);
   const [displayName, setDisplayName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [role, setRole] = useState('user');
-  const [backendSettings, setBackendSettings] = useState<BackendSettingsState>(defaultBackendSettings);
+  const [backendSettings, setBackendSettings] = useState<BackendSettingsState>({
+    ...defaultBackendSettings,
+    language: currentLanguage,
+  });
   const [localSettings, setLocalSettings] = useState<DashboardLocalSettings>(() =>
     StorageService.loadDashboardSettings(),
   );
   const [savingAccount, setSavingAccount] = useState(false);
   const [savingNotifications, setSavingNotifications] = useState(false);
   const [savingLocalSection, setSavingLocalSection] = useState<SettingsSection | null>(null);
+  const sectionList: SectionConfig[] = [
+    { value: 'account', label: copy.dashboard.account, icon: Activity },
+    { value: 'workflow', label: copy.dashboard.workflow, icon: LayoutGrid },
+    { value: 'notifications', label: copy.dashboard.notifications, icon: Bell },
+    { value: 'data', label: copy.dashboard.data, icon: Download },
+  ];
 
   useEffect(() => {
     if (!open) return;
@@ -239,7 +249,7 @@ export function DashboardSettingsDialog({
           accessibilityMode: settingsResponse.data?.accessibility_mode ?? defaultBackendSettings.accessibilityMode,
           dailyReminder:
             settingsResponse.data?.notification_daily_reminder ?? defaultBackendSettings.dailyReminder,
-          language: normalizeLanguage(settingsResponse.data?.language),
+          language: normalizeLanguage(settingsResponse.data?.language ?? currentLanguage),
           marketingEmails: settingsResponse.data?.marketing_emails ?? defaultBackendSettings.marketingEmails,
           reminderTime: normalizeTime(
             settingsResponse.data?.notification_reminder_time ?? defaultBackendSettings.reminderTime,
@@ -258,10 +268,26 @@ export function DashboardSettingsDialog({
     return () => {
       active = false;
     };
-  }, [open, user]);
+  }, [currentLanguage, open, user]);
 
   const currentDisplayName = displayName.trim() || getFallbackName(user);
   const roleLabel = role.replaceAll('_', ' ').toUpperCase();
+
+  async function handleLanguageChange(nextLanguage: ViewerLanguage) {
+    setBackendSettings((current) => ({ ...current, language: nextLanguage }));
+    dispatch(patchPreferences({ language: nextLanguage }));
+    setNotice(null);
+
+    try {
+      await saveAccountSystemSettings(user.id, { language: nextLanguage });
+      setNotice({
+        tone: 'success',
+        text: nextLanguage === 'zh-CN' ? '产品语言已同步。' : 'Product language synced.',
+      });
+    } catch (error) {
+      setNotice({ tone: 'error', text: getErrorMessage(error) });
+    }
+  }
 
   async function handleSaveAccount() {
     const trimmedName = displayName.trim();
@@ -404,16 +430,14 @@ export function DashboardSettingsDialog({
 
         <div className="dashboard-settings__field-grid">
           <label className="dashboard-field">
-            <span>App language</span>
+            <span>{copy.language.label}</span>
             <select
               value={backendSettings.language}
-              onChange={(event) =>
-                setBackendSettings((current) => ({
-                  ...current,
-                  language: normalizeLanguage(event.target.value),
-                }))
-              }
+              onChange={(event) => {
+                void handleLanguageChange(normalizeLanguage(event.target.value));
+              }}
             >
+              <option value="zh-CN">{copy.language.zh}</option>
               <option value="en">English</option>
             </select>
           </label>

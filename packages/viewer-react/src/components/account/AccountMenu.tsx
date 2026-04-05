@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { BadgeCheck, CircleHelp, Info, LogOut } from 'lucide-react';
+import { BadgeCheck, CircleHelp, Globe, Info, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { ViewerAuthUser } from '@/features/auth/authSlice';
+import { patchPreferences } from '@/shared/state/preferencesSlice';
+import { useAppDispatch, useAppSelector } from '@/shared/state/store';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { fetchDashboardProfileSummary, type DashboardProfileSummary } from '@/pages/dashboard/DashboardSettingsDialog';
 
 interface AccountMenuProps {
@@ -28,7 +31,10 @@ export function AccountMenu({
   title,
   user,
 }: AccountMenuProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const language = useAppSelector((state) => state.viewerPreferences.language);
+  const copy = useViewerCopy();
   const [profileSummary, setProfileSummary] = useState<DashboardProfileSummary | null>(null);
 
   useEffect(() => {
@@ -64,8 +70,8 @@ export function AccountMenu({
         <button
           type="button"
           className={buttonClassName}
-          aria-label="Open account menu"
-          title={title ?? user.email ?? 'Author account'}
+          aria-label={copy.accountMenu.open}
+          title={title ?? user.email ?? copy.dashboard.account}
         >
           {avatarUrl ? <img className={imageClassName} src={avatarUrl} alt="" /> : avatarInitial}
         </button>
@@ -76,19 +82,26 @@ export function AccountMenu({
           <DropdownMenu.Separator className="studio-menu__separator" />
           <DropdownMenu.Item className="studio-menu__item" onSelect={() => navigate('/settings')}>
             <BadgeCheck size={14} />
-            <span>Settings</span>
+            <span>{copy.accountMenu.settings}</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className="studio-menu__item" onSelect={() => navigate('/support/help')}>
             <CircleHelp size={14} />
-            <span>Help</span>
+            <span>{copy.accountMenu.help}</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className="studio-menu__item" onSelect={() => navigate('/support/feedback')}>
             <Info size={14} />
-            <span>About</span>
+            <span>{copy.accountMenu.about}</span>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item
+            className="studio-menu__item"
+            onSelect={() => dispatch(patchPreferences({ language: language === 'zh-CN' ? 'en' : 'zh-CN' }))}
+          >
+            <Globe size={14} />
+            <span>{copy.language.label}: {language === 'zh-CN' ? copy.language.en : copy.language.zh}</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className="studio-menu__item" onSelect={() => void onSignOut()}>
             <LogOut size={14} />
-            <span>Sign out</span>
+            <span>{copy.accountMenu.signOut}</span>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

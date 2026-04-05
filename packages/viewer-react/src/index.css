@@ -278,6 +278,42 @@ textarea {
   color: #886947;
 }
 
+@keyframes home-course-card-slide-forward {
+  from {
+    opacity: 0;
+    transform: translateX(16px) translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes home-course-card-slide-backward {
+  from {
+    opacity: 0;
+    transform: translateX(-16px) translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+.home-course-card-content {
+  will-change: transform, opacity;
+}
+
+.home-course-card-content--forward {
+  animation: home-course-card-slide-forward 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-course-card-content--backward {
+  animation: home-course-card-slide-backward 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .viewer-scrollbar-hidden {
   scrollbar-width: none;
   -ms-overflow-style: none;
