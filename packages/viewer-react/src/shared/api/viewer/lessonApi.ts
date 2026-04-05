@@ -219,10 +219,10 @@ function normalizePage(rawPage: Record<string, unknown>, index: number, fallback
           blockIndex,
         );
         const visibilityRule = toString(toObject(block).visibilityRule || toObject(block).visibility_rule);
-        if (visibilityRule === 'afterPreviousCorrect') {
-          return { ...normalized, visibilityRule: 'afterPreviousCorrect' as const };
+        if (visibilityRule === 'afterPreviousCorrect' || visibilityRule === 'always') {
+          return { ...normalized, visibilityRule: visibilityRule as 'always' | 'afterPreviousCorrect' };
         }
-        return normalized;
+        return { ...normalized, visibilityRule: 'always' as const };
       })
     : [];
 
