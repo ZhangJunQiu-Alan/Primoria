@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 import './builderAuth.css';
 
 type StatusTone = 'error' | 'success';
@@ -105,7 +106,7 @@ function BrandLockup() {
   return (
     <Link to="/" className="auth-brand-lockup" aria-label="Primoria home">
       <span className="auth-brand-lockup__mark">
-        <img src="/primoria-logo.png" alt="" aria-hidden="true" />
+        <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
       </span>
       <span className="auth-brand-lockup__wordmark">Primoria</span>
     </Link>

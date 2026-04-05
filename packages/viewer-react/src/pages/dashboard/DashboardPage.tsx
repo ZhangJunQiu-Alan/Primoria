@@ -54,6 +54,7 @@ import {
   useDashboardAnalytics,
 } from '@/queries/dashboardAnalytics';
 import { AccountMenu } from '@/components/account/AccountMenu';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 import './dashboard.css';
 
 type DashboardTab = 'home' | 'course' | 'data' | 'fans';
@@ -1422,7 +1423,7 @@ export function DashboardPage() {
         <aside className="studio-sidebar">
           <button type="button" className="studio-sidebar__brand" onClick={() => navigate('/')}>
             <span className="studio-sidebar__brand-mark">
-              <img src="/primoria-logo.png" alt="" aria-hidden="true" />
+              <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
             </span>
             <span className="studio-sidebar__brand-copy">
               <strong>Primoria</strong>

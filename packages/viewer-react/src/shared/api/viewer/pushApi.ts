@@ -2,6 +2,7 @@ import { runtimeEnv } from '@/shared/config/runtimeEnv';
 import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
+import { publicAssetPath, publicBasePath } from '@/shared/utils/publicAsset';
 
 const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
 
@@ -41,7 +42,9 @@ export async function registerViewerPushWorker() {
   }
 
   try {
-    return await navigator.serviceWorker.register('/viewer-push-sw.js', { scope: '/' });
+    return await navigator.serviceWorker.register(publicAssetPath('viewer-push-sw.js'), {
+      scope: publicBasePath(),
+    });
   } catch {
     return null;
   }

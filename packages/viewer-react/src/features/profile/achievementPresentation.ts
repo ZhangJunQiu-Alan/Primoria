@@ -1,4 +1,5 @@
 import type { ViewerAchievement, ViewerFollowCounts, ViewerStats } from '@/shared/api/viewer/types';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 
 type AchievementMetric =
   | 'streak'
@@ -28,7 +29,7 @@ type ProgressView = {
   counterLabel: string;
 };
 
-const ASSET_ROOT = '/achievements';
+const ASSET_ROOT = publicAssetPath('achievements');
 
 export const ACHIEVEMENT_CATEGORY_ORDER = ['all', 'learning', 'streak', 'challenge', 'social'] as const;
 

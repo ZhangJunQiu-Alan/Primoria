@@ -7,6 +7,7 @@ import { fetchUserStats } from '@/shared/api/viewer/profileApi';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { useAppSelector } from '@/shared/state/store';
 import { viewerCopy } from '@/shared/theme/copy';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 import { Live2DHeroModel } from './Live2DHeroModel';
 import {
   buildHomeCoachState,
@@ -293,7 +294,7 @@ export function HomePage() {
       <div className="flex items-start justify-between gap-4">
         <Link to="/home" className="inline-flex items-center gap-3">
           <div className="flex h-[4.25rem] w-[4.25rem] items-center justify-center overflow-hidden rounded-[22px] border border-[#ddd3c3] bg-[rgba(254,250,245,0.95)] shadow-[0_12px_28px_rgba(90,70,50,0.10)] md:h-[4.5rem] md:w-[4.5rem]">
-            <img src="/primoria-logo.png" alt="Primoria" className="h-full w-full object-cover" />
+            <img src={publicAssetPath('primoria-logo.png')} alt="Primoria" className="h-full w-full object-cover" />
           </div>
           <span
             className="text-[1.95rem] font-semibold tracking-[0.02em] text-[#5c7d60] md:text-[2.1rem]"

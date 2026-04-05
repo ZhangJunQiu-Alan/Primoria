@@ -17,6 +17,7 @@ import { getFieldErrors, registerSchema } from '@/features/public/builderAuthSch
 import { supabase } from '@/shared/api/supabase';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { buildAuthCallbackUrl, readReturnTo } from '@/shared/utils/authRedirect';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 
 type RegisterField = 'name' | 'email' | 'password' | 'confirmPassword';
 type Provider = 'google' | 'apple' | 'email' | null;
@@ -159,7 +160,7 @@ export function RegisterPage() {
       <AuthSocialButton
         label="Continue with Google"
         tone="light"
-        logoSrc="/primoria-google.png"
+        logoSrc={publicAssetPath('primoria-google.png')}
         onClick={() => void handleOAuth('google')}
         loading={loadingProvider === 'google'}
         disabled={Boolean(loadingProvider && loadingProvider !== 'google')}
@@ -175,7 +176,7 @@ export function RegisterPage() {
       <AuthSocialButton
         label="Continue with WeChat"
         tone="wechat"
-        logoSrc="/primoria-wechat.png"
+        logoSrc={publicAssetPath('primoria-wechat.png')}
         invertLogo
         onClick={handleWeChatComingSoon}
         badge="Soon"
