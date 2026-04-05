@@ -149,21 +149,25 @@ export function AiTutorPage() {
   const transcript = messages.slice(1);
 
   return (
-    <div className="mx-auto flex h-full min-h-0 w-[86%] flex-col overflow-hidden px-0 py-3 md:py-4">
+    <div className="mx-auto flex h-full min-h-0 w-[90%] max-w-[1380px] flex-col overflow-hidden px-0 py-4 md:py-5">
       <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1.78fr)_304px]">
-        <section className="viewer-panel flex min-h-0 flex-col overflow-hidden rounded-[28px]">
+        <section className="flex min-h-0 flex-col overflow-hidden bg-transparent">
           <div className="min-h-0 flex-1 overflow-hidden px-5 py-5 md:px-6 md:py-6">
             <div className="flex h-full min-h-0 flex-col gap-4">
-              <div className="rounded-[24px] border border-[#e7edf7] bg-[linear-gradient(180deg,#ffffff_0%,#f9fbff_100%)] px-5 py-5 shadow-[0_14px_32px_rgba(83,110,162,0.07)]">
+              <div className="rounded-[26px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.96)_0%,rgba(247,242,231,0.88)_100%)] px-5 py-5 shadow-[0_14px_32px_rgba(90,70,50,0.08)]">
                 <div className="flex items-start gap-4">
-                  <div className="flex h-[3.45rem] w-[3.45rem] shrink-0 items-center justify-center rounded-[16px] bg-[#fff1db] text-[#e28d0f]">
+                  <div className="flex h-[3.45rem] w-[3.45rem] shrink-0 items-center justify-center rounded-[18px] border border-[#e4d2b6] bg-[linear-gradient(145deg,#f4ddbc_0%,#d4b896_100%)] text-white shadow-[0_10px_24px_rgba(196,149,106,0.2)]">
                     <Bot size={28} />
                   </div>
                   <div>
-                    <h1 className="text-[1.56rem] font-black tracking-[-0.05em] text-[#2c313b]">
+                    <p className="viewer-botanical-eyebrow">{'AI study desk'}</p>
+                    <h1
+                      className="mt-2 text-[2.45rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+                      style={{ fontFamily: '"Cormorant Garamond", serif' }}
+                    >
                       {'你好，欢迎来到你的 AI 导师'}
                     </h1>
-                    <p className="mt-3 max-w-[48rem] text-[0.9rem] leading-[1.72] text-[#7b879d]">
+                    <p className="mt-3 max-w-[48rem] text-[0.92rem] leading-[1.85] text-[#6f6359]">
                       {'很高兴认识你。我可以帮你整理笔记、总结长内容，并把想法转成清晰的知识结构。你可以从一个简单问题开始，我会一步步引导你。'}
                     </p>
                   </div>
@@ -175,7 +179,7 @@ export function AiTutorPage() {
                   <button
                     key={prompt}
                     type="button"
-                    className="flex w-full items-center rounded-[18px] border border-[#d9e3ef] bg-[#fcfdff] px-4 py-3.5 text-left text-[0.86rem] font-semibold text-[#3a4458] shadow-[0_8px_18px_rgba(134,156,193,0.05)] transition hover:border-[#c3d2e7] hover:bg-white"
+                    className="flex w-full items-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-4 py-3.5 text-left text-[0.86rem] font-semibold text-[#4d4239] shadow-[0_8px_18px_rgba(90,70,50,0.05)] transition hover:border-[#d2c5b2] hover:bg-[#fffdf9]"
                     onClick={() => void handleSend(prompt)}
                   >
                     {prompt}
@@ -184,15 +188,15 @@ export function AiTutorPage() {
               </div>
 
               {transcript.length > 0 ? (
-                <div className="min-h-0 flex-1 overflow-auto pr-1">
-                  <div className="space-y-3 rounded-[20px] border border-[#eef3f8] bg-[#fbfdff] p-4">
+                <div className="viewer-scrollbar-hidden min-h-0 flex-1 overflow-auto pr-1">
+                  <div className="space-y-3 rounded-[22px] border border-[#e2d7c9] bg-[rgba(255,250,245,0.84)] p-4">
                     {transcript.map((message, index) => (
                       <div
                         key={`${message.role}-${index}`}
                         className={
                           message.role === 'user'
-                            ? 'ml-auto max-w-[82%] rounded-[18px] bg-[#4b61f0] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white'
-                            : 'max-w-[82%] rounded-[18px] bg-white px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#394256] shadow-[0_10px_24px_rgba(93,117,160,0.08)]'
+                            ? 'ml-auto max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
+                            : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
                         }
                       >
                         {message.text}
@@ -206,11 +210,11 @@ export function AiTutorPage() {
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-[#eef2f8] px-5 py-4">
-            <div className="flex items-center gap-3 rounded-[20px] border border-[#ccd7e6] bg-white px-3.5 py-2.5 shadow-[0_10px_24px_rgba(129,151,189,0.08)]">
-              <PenLine size={19} className="text-[#9aa7bd]" />
+          <div className="shrink-0 border-t border-[#eadfce] px-5 py-4">
+            <div className="flex items-center gap-3 rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-3.5 py-2.5 shadow-[0_10px_24px_rgba(90,70,50,0.08)]">
+              <PenLine size={19} className="text-[#9a8d82]" />
               <input
-                className="min-w-0 flex-1 border-0 bg-transparent text-[0.92rem] font-semibold text-[#23304a] outline-none placeholder:text-[#a7b2c6]"
+                className="min-w-0 flex-1 border-0 bg-transparent text-[0.92rem] font-semibold text-[#3d342a] outline-none placeholder:text-[#a9968a]"
                 placeholder={viewerCopy.aiTutor.placeholder}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
@@ -223,7 +227,7 @@ export function AiTutorPage() {
               <button
                 type="button"
                 aria-label="发送"
-                className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef2ff] text-[#27345c] transition hover:bg-[#e4ebff]"
+                className="flex h-10 w-10 items-center justify-center rounded-[16px] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white transition hover:brightness-[1.02]"
                 onClick={() => void handleSend(input)}
                 disabled={isSending}
               >
@@ -231,73 +235,84 @@ export function AiTutorPage() {
               </button>
             </div>
             {status ? (
-              <div className="mt-3 rounded-[14px] bg-[#fff5df] px-4 py-2.5 text-xs font-semibold text-[#a06b00]">{status}</div>
+              <div className="viewer-botanical-notice viewer-botanical-notice--info mt-3">{status}</div>
             ) : null}
           </div>
         </section>
 
         <aside className="viewer-panel flex min-h-0 flex-col overflow-hidden rounded-[28px] p-4">
           <div className="shrink-0">
-            <h2 className="text-[1.65rem] font-black tracking-[-0.05em] text-[#2a313e]">{'工作台'}</h2>
+            <p className="viewer-botanical-eyebrow">{'Workspace'}</p>
+            <h2
+              className="mt-2 text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+              style={{ fontFamily: '"Cormorant Garamond", serif' }}
+            >
+              {'工作台'}
+            </h2>
           </div>
 
           <div className="mt-3 grid shrink-0 grid-cols-2 gap-2.5">
             <button
               type="button"
               aria-label="打开思维导图"
-              className="rounded-[18px] bg-[#ddecff] p-3.5 text-left text-[#3b7ce2]"
+              className="rounded-[20px] border border-[#c8dbcb] bg-[#edf5ec] p-3.5 text-left text-[#5c7d60]"
               onClick={() => void openTool('mindmap')}
             >
               <GitBranch size={16} />
-              <div className="mt-6 text-[0.82rem] font-black">{'思维导图'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{'思维导图'}</div>
             </button>
             <button
               type="button"
               aria-label="生成报告"
-              className="rounded-[18px] bg-[#e6f7ed] p-3.5 text-left text-[#2d9e63]"
+              className="rounded-[20px] border border-[#ead2af] bg-[#fbf3e6] p-3.5 text-left text-[#9a6f3f]"
               onClick={() => void handleSend('请帮我生成一份学习报告。')}
             >
               <FileText size={16} />
-              <div className="mt-6 text-[0.82rem] font-black">{'报告'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{'报告'}</div>
             </button>
             <button
               type="button"
               aria-label="打开测验"
-              className="rounded-[18px] bg-[#fff4c8] p-3.5 text-left text-[#b38b10]"
+              className="rounded-[20px] border border-[#ead2af] bg-[#f8efdf] p-3.5 text-left text-[#9c7342]"
               onClick={() => void openTool('quiz')}
             >
               <BadgeHelp size={16} />
-              <div className="mt-6 text-[0.82rem] font-black">{'测验'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{'测验'}</div>
             </button>
             <button
               type="button"
               aria-label="打开演示"
-              className="rounded-[18px] bg-[#eee5ff] p-3.5 text-left text-[#7351df]"
+              className="rounded-[20px] border border-[#dbcde3] bg-[#f3edf7] p-3.5 text-left text-[#7f6f88]"
               onClick={() => void openTool('presentation')}
             >
               <Sparkles size={16} />
-              <div className="mt-6 text-[0.82rem] font-black">{'演示'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{'演示'}</div>
             </button>
           </div>
 
           <div className="mt-4 shrink-0">
-            <h3 className="text-[1.44rem] font-black tracking-[-0.05em] text-[#2a313e]">{'笔记本'}</h3>
+            <h3
+              className="text-[1.8rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+              style={{ fontFamily: '"Cormorant Garamond", serif' }}
+            >
+              {'笔记本'}
+            </h3>
           </div>
 
-          <div className="mt-3 min-h-0 flex-1 space-y-2.5 overflow-auto pr-1">
+          <div className="viewer-scrollbar-hidden mt-3 min-h-0 flex-1 space-y-2.5 overflow-auto pr-1">
             {notebookItems.map((item) => (
               <div
                 key={`${item.title}-${item.subtitle}`}
-                className="flex items-start gap-3 rounded-[16px] border border-[#dfe7f3] bg-white px-3.5 py-3 shadow-[0_8px_18px_rgba(134,156,193,0.05)]"
+                className="flex items-start gap-3 rounded-[18px] border border-[#e1d7c8] bg-[rgba(255,252,247,0.88)] px-3.5 py-3 shadow-[0_8px_18px_rgba(90,70,50,0.05)]"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[13px] bg-[#f3f6fb] text-[#6b7a90]">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[13px] bg-[#f3efe8] text-[#8a7764]">
                   <item.icon size={17} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-[0.84rem] font-black text-[#2c3445]">{item.title}</div>
-                  <div className="mt-1 text-[0.76rem] font-medium text-[#8b97ab]">{item.subtitle}</div>
+                  <div className="text-[0.84rem] font-bold text-[#3d342a]">{item.title}</div>
+                  <div className="mt-1 text-[0.76rem] font-medium text-[#8b7d72]">{item.subtitle}</div>
                 </div>
-                <MoreVertical size={16} className="mt-0.5 text-[#97a4b9]" />
+                <MoreVertical size={16} className="mt-0.5 text-[#aa9d93]" />
               </div>
             ))}
           </div>
