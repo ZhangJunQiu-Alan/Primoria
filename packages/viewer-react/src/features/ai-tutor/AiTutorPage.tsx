@@ -1,10 +1,10 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import {
   bootstrapGeminiKey,
   generateMindMap,
   generatePresentation,
   generateQuiz,
-  generateTutorReply,
+  generateTutorReplyStream,
   persistGeminiKey,
   type TutorMessage,
 } from '@/shared/api/geminiClient';
@@ -32,6 +32,17 @@ type ToolStatus = {
   presentation: boolean;
 };
 
+function replaceLastModelMessage(messages: TutorMessage[], text: string) {
+  const next = [...messages];
+  for (let index = next.length - 1; index >= 0; index -= 1) {
+    if (next[index]?.role === 'model') {
+      next[index] = { ...next[index], text };
+      return next;
+    }
+  }
+  return [...next, { role: 'model', text }];
+}
+
 export function AiTutorPage() {
   const [messages, setMessages] = useState<TutorMessage[]>([
     {
@@ -48,6 +59,17 @@ export function AiTutorPage() {
     quiz: false,
     presentation: false,
   });
+  const streamedReplyRef = useRef('');
+  const frameRef = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+    },
+    [],
+  );
 
   const suggestedPrompts = useMemo(
     () => [
@@ -91,9 +113,31 @@ export function AiTutorPage() {
     },
   ] as const;
 
+  function flushStreamedReply(force = false) {
+    const apply = () => {
+      frameRef.current = null;
+      const nextText = streamedReplyRef.current;
+      setMessages((current) => replaceLastModelMessage(current, nextText));
+    };
+
+    if (force) {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+      apply();
+      return;
+    }
+
+    if (frameRef.current !== null) {
+      return;
+    }
+    frameRef.current = window.requestAnimationFrame(apply);
+  }
+
   async function handleSend(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed || isSending) return;
 
     if (trimmed.startsWith('/apikey ')) {
       await persistGeminiKey(trimmed.replace('/apikey', '').trim());
@@ -103,18 +147,47 @@ export function AiTutorPage() {
       return;
     }
 
-    setMessages((current) => [...current, { role: 'user', text: trimmed }]);
+    const userMessage: TutorMessage = { role: 'user', text: trimmed };
+    const requestHistory = [...messages, userMessage];
+    streamedReplyRef.current = '';
+    setMessages((current) => [...current, userMessage, { role: 'model', text: '' }]);
     setInput('');
     setStatus('');
     setIsSending(true);
+
     try {
       captureViewerEvent('viewer_ai_tutor_message_sent', { length: trimmed.length });
-      const reply = await generateTutorReply([...messages, { role: 'user', text: trimmed }]);
-      setMessages((current) => [...current, { role: 'model', text: reply }]);
+      const result = await generateTutorReplyStream(requestHistory, {
+        onToken(token) {
+          streamedReplyRef.current += token;
+          flushStreamedReply();
+        },
+        onFinal(payload) {
+          streamedReplyRef.current = payload.reply;
+          flushStreamedReply(true);
+          captureViewerEvent('viewer_ai_tutor_stream_completed', {
+            toolCount: payload.usedTools.length,
+          });
+        },
+      });
+      if (!result.reply.trim()) {
+        throw new Error('AI Tutor returned an empty response.');
+      }
     } catch (error) {
+      setMessages((current) => {
+        const next = [...current];
+        const last = next[next.length - 1];
+        if (last?.role === 'model' && !last.text.trim()) {
+          next.pop();
+        }
+        return next;
+      });
       setStatus(error instanceof Error ? error.message : viewerCopy.aiTutor.missingKey);
       captureViewerError(error, { area: 'ai_tutor_reply' });
     } finally {
+      if (streamedReplyRef.current) {
+        flushStreamedReply(true);
+      }
       setIsSending(false);
     }
   }
@@ -179,8 +252,9 @@ export function AiTutorPage() {
                   <button
                     key={prompt}
                     type="button"
-                    className="flex w-full items-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-4 py-3.5 text-left text-[0.86rem] font-semibold text-[#4d4239] shadow-[0_8px_18px_rgba(90,70,50,0.05)] transition hover:border-[#d2c5b2] hover:bg-[#fffdf9]"
+                    className="flex w-full items-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-4 py-3.5 text-left text-[0.86rem] font-semibold text-[#4d4239] shadow-[0_8px_18px_rgba(90,70,50,0.05)] transition hover:border-[#d2c5b2] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-70"
                     onClick={() => void handleSend(prompt)}
+                    disabled={isSending}
                   >
                     {prompt}
                   </button>
@@ -190,18 +264,22 @@ export function AiTutorPage() {
               {transcript.length > 0 ? (
                 <div className="viewer-scrollbar-hidden min-h-0 flex-1 overflow-auto pr-1">
                   <div className="space-y-3 rounded-[22px] border border-[#e2d7c9] bg-[rgba(255,250,245,0.84)] p-4">
-                    {transcript.map((message, index) => (
-                      <div
-                        key={`${message.role}-${index}`}
-                        className={
-                          message.role === 'user'
-                            ? 'ml-auto max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
-                            : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
-                        }
-                      >
-                        {message.text}
-                      </div>
-                    ))}
+                    {transcript.map((message, index) => {
+                      const isPendingModel =
+                        isSending && index === transcript.length - 1 && message.role === 'model' && !message.text.trim();
+                      return (
+                        <div
+                          key={`${message.role}-${index}`}
+                          className={
+                            message.role === 'user'
+                              ? 'ml-auto max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
+                              : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
+                          }
+                        >
+                          {isPendingModel ? '正在思考…' : message.text}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               ) : (
@@ -227,7 +305,7 @@ export function AiTutorPage() {
               <button
                 type="button"
                 aria-label="发送"
-                className="flex h-10 w-10 items-center justify-center rounded-[16px] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white transition hover:brightness-[1.02]"
+                className="flex h-10 w-10 items-center justify-center rounded-[16px] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white transition hover:brightness-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
                 onClick={() => void handleSend(input)}
                 disabled={isSending}
               >
@@ -319,11 +397,7 @@ export function AiTutorPage() {
         </aside>
       </div>
 
-      {modal ? (
-        <Suspense fallback={<div className="sr-only">{'Opening tool'}</div>}>
-          <AiTutorToolDialog modal={modal} onClose={() => setModal(null)} />
-        </Suspense>
-      ) : null}
+      <Suspense fallback={null}>{modal ? <AiTutorToolDialog modal={modal} onClose={() => setModal(null)} /> : null}</Suspense>
     </div>
   );
 }
