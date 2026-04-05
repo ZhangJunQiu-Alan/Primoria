@@ -11,8 +11,8 @@ export function AuthenticatedRouteShell() {
   }
 
   return (
-    <main className="h-[100svh] overflow-hidden bg-[#f4f8ff]">
-      <div className="mx-auto flex h-full max-w-[2048px] flex-col overflow-hidden bg-[linear-gradient(180deg,#f9fbff_0%,#f6f9ff_100%)]">
+    <main className="h-[100svh] overflow-hidden bg-[var(--viewer-page)] text-[var(--viewer-text)]">
+      <div className="mx-auto flex h-full max-w-[2048px] flex-col overflow-hidden bg-transparent">
         <div className="min-h-0 flex-1 overflow-auto">
           <Outlet />
         </div>
