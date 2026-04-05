@@ -1,9 +1,11 @@
 import {
-  createDemoLessonRuntime,
   demoAchievements,
+  demoCourseSnapshot,
   demoCourses,
   demoEnrollments,
   demoFollowCounts,
+  getDemoCourseIdForLesson,
+  getDemoCourseLessons,
   demoParentChildren,
   demoParentReports,
   demoProfile,
@@ -387,11 +389,13 @@ export function getFixtureSuggestedCourse() {
 export function getFixtureCourseDetail(courseId: string) {
   const state = readFixtureState();
   const course = state.courses.find((entry) => entry.id === courseId) ?? state.courses[0] ?? demoCourses[0];
-  const runtime = createDemoLessonRuntime('lesson-demo-1');
-  const lessonIds = runtime ? runtime.pages.map((_, index) => `lesson-demo-${index + 1}`) : [];
+  const lessons = getDemoCourseLessons(courseId) ?? getDemoCourseLessons(demoCourseSnapshot.course_id) ?? [];
+  const lessonIds = new Set(lessons.map((lesson) => lesson.id));
   return {
     course,
-    lessonIds,
+    lessons,
+    completed_lesson_ids: state.completedLessonIds.filter((lessonId) => lessonIds.has(lessonId)),
+    enrollment: state.enrollments.find((entry) => entry.course_id === course.id) ?? null,
   };
 }
 
@@ -407,19 +411,25 @@ function unlockFixtureAchievement(state: ViewerFixtureState, slug: string) {
 export function completeFixtureLesson(lessonId: string, correctCount: number, totalCount: number, timeSpentSeconds: number) {
   const state = readFixtureState();
   const unlocked: ViewerAchievement[] = [];
+  const targetCourseId = getDemoCourseIdForLesson(lessonId) ?? demoCourseSnapshot.course_id;
+  const targetLessons = getDemoCourseLessons(targetCourseId) ?? getDemoCourseLessons(demoCourseSnapshot.course_id) ?? [];
+  const targetLessonIds = new Set(targetLessons.map((lesson) => lesson.id));
+
   if (!state.completedLessonIds.includes(lessonId)) {
     state.completedLessonIds.push(lessonId);
   }
 
+  const earnedXp = targetLessons.find((lesson) => lesson.id === lessonId)?.xp_reward ?? 120;
+
   state.stats.lessons_completed += 1;
-  state.stats.total_xp += 120;
+  state.stats.total_xp += earnedXp;
   state.stats.total_study_minutes += Math.round(timeSpentSeconds / 60);
 
   const xpEntry = state.xpHistory.find((entry) => entry.date === todayKey());
   if (xpEntry) {
-    xpEntry.xp += 120;
+    xpEntry.xp += earnedXp;
   } else {
-    state.xpHistory.push({ date: todayKey(), xp: 120 });
+    state.xpHistory.push({ date: todayKey(), xp: earnedXp });
   }
 
   const firstLesson = unlockFixtureAchievement(state, 'first_lesson');
@@ -427,14 +437,36 @@ export function completeFixtureLesson(lessonId: string, correctCount: number, to
     unlocked.push(firstLesson);
   }
 
-  if (state.completedLessonIds.length >= 2) {
-    state.stats.courses_completed = 1;
+  const targetCourse = state.courses.find((entry) => entry.id === targetCourseId);
+  if (targetCourse && !state.enrollments.some((entry) => entry.course_id === targetCourseId)) {
+    state.enrollments.unshift({
+      course_id: targetCourseId,
+      status: 'in_progress',
+      progress_bp: 0,
+      started_at: nowIso(),
+      last_accessed_at: nowIso(),
+      courses: targetCourse,
+    });
+  }
+
+  const wasCourseAlreadyCompleted = state.enrollments.some(
+    (entry) => entry.course_id === targetCourseId && entry.status === 'completed',
+  );
+  const completedTargetLessons = state.completedLessonIds.filter((candidate) => targetLessonIds.has(candidate)).length;
+  const nextProgressBp =
+    targetLessons.length > 0 ? Math.round((completedTargetLessons / targetLessons.length) * 10000) : 0;
+  const courseCompleted = targetLessons.length > 0 && completedTargetLessons >= targetLessons.length;
+
+  if (courseCompleted) {
+    if (!wasCourseAlreadyCompleted) {
+      state.stats.courses_completed += 1;
+    }
     state.enrollments = state.enrollments.map((entry) => ({
       ...entry,
-      status: entry.course_id === demoCourses[0].id ? 'completed' : entry.status,
-      progress_bp: entry.course_id === demoCourses[0].id ? 10000 : entry.progress_bp,
-      completed_at: entry.course_id === demoCourses[0].id ? nowIso() : entry.completed_at,
-      last_accessed_at: nowIso(),
+      status: entry.course_id === targetCourseId ? 'completed' : entry.status,
+      progress_bp: entry.course_id === targetCourseId ? 10000 : entry.progress_bp,
+      completed_at: entry.course_id === targetCourseId ? nowIso() : entry.completed_at,
+      last_accessed_at: entry.course_id === targetCourseId ? nowIso() : entry.last_accessed_at,
     }));
     const firstCourse = unlockFixtureAchievement(state, 'first_course');
     if (firstCourse) {
@@ -443,15 +475,15 @@ export function completeFixtureLesson(lessonId: string, correctCount: number, to
   } else {
     state.enrollments = state.enrollments.map((entry) => ({
       ...entry,
-      progress_bp: entry.course_id === demoCourses[0].id ? 5000 : entry.progress_bp,
-      last_accessed_at: nowIso(),
+      progress_bp: entry.course_id === targetCourseId ? nextProgressBp : entry.progress_bp,
+      last_accessed_at: entry.course_id === targetCourseId ? nowIso() : entry.last_accessed_at,
     }));
   }
 
   writeFixtureState(state);
 
   return {
-    xp_earned: 120,
+    xp_earned: earnedXp,
     total_xp: state.stats.total_xp,
     base_xp: 50,
     accuracy_xp: correctCount > 0 && correctCount === totalCount ? 35 : 20,
@@ -459,7 +491,7 @@ export function completeFixtureLesson(lessonId: string, correctCount: number, to
     first_today_xp: 5,
     accuracy_pct: totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 100,
     already_completed: false,
-    course_completed: state.stats.courses_completed > 0,
+    course_completed: courseCompleted,
     unlocked_achievements: unlocked,
   };
 }

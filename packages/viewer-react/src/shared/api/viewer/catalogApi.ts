@@ -117,17 +117,8 @@ export async function fetchEnrollments(userId: string) {
 
 export async function fetchCourseDetail(courseId: string, userId?: string) {
   if (usesViewerFixtures()) {
-    const { getFixtureSuggestedCourse, readFixtureState } = await loadFixtureStore();
-    const state = readFixtureState();
-    return {
-      course: state.courses.find((course) => course.id === courseId) ?? getFixtureSuggestedCourse(),
-      lessons: [
-        { id: 'lesson-demo-1', title: 'Foundations', sort_key: 0, xp_reward: 120, duration_seconds: 600 },
-        { id: 'lesson-demo-2', title: 'Advanced Demo Blocks', sort_key: 1, xp_reward: 160, duration_seconds: 720 },
-      ],
-      completed_lesson_ids: [...state.completedLessonIds],
-      enrollment: state.enrollments.find((entry) => entry.course_id === courseId) ?? null,
-    };
+    const { getFixtureCourseDetail } = await loadFixtureStore();
+    return getFixtureCourseDetail(courseId);
   }
 
   const { data: courseData, error: courseError } = await supabase
