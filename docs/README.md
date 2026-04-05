@@ -56,6 +56,18 @@ Viewer React:
 - `viewer-react-cutover-runbook.md`: current viewer deployment and recovery notes
 - `prompt.txt`: current AI planning prompt
 
+## Assignment Numbered Docs
+
+- `1.requirements-user-stories.md`: user stories, priorities, estimates, and acceptance baseline
+- `2.design-overview.md`: architecture/database/interface design summary with artifact links
+- `3.implementation-iterations.md`: planned vs delivered iteration evidence
+- `4.testing-strategy-and-results.md`: testing strategy and result reporting
+- `5.test-traceability-matrix.md`: requirement-to-test-to-defect linkage
+- `6.version-control-practice.md`: Git/GitHub workflow and traceability practice
+- `7.tools-and-libraries.md`: development/build tools and justification
+- `8.agile-iterations.md`: agile planning, velocity, and retrospective evidence
+- `9.assignment-report-index.md`: rubric mapping and lecturer demo checklist
+
 ## Run & Validate
 
 ```bash
