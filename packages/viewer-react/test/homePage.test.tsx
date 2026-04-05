@@ -134,11 +134,85 @@ describe('HomePage', () => {
 
     renderRoute('/home', 'user');
 
-    expect(await screen.findByRole('heading', { name: /今天开始学习/i })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /今天开始学习/i })).not.toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /还没有当前学习课程/i })).toBeInTheDocument();
     expect(await screen.findByRole('link', { name: /浏览课程/i })).toHaveAttribute('href', '/library');
     expect(screen.queryByTestId('home-course-switcher')).not.toBeInTheDocument();
     expect(await screen.findByTestId('home-live2d-stage')).toBeInTheDocument();
     expect(await screen.findByTestId('home-coach-card')).toBeInTheDocument();
     expect(await screen.findByText(/先挑一门你愿意继续的课/i)).toBeInTheDocument();
+  });
+
+  it('switches courses from the card edge controls and persists the selected course', async () => {
+    const fixture = readFixtureState();
+    const courseA = {
+      ...fixture.courses[0],
+      id: 'course-edge-a',
+      title: 'Edge Course A',
+      slug: 'edge-course-a',
+    };
+    const courseB = {
+      ...fixture.courses[0],
+      id: 'course-edge-b',
+      title: 'Edge Course B',
+      slug: 'edge-course-b',
+    };
+    const courseC = {
+      ...fixture.courses[0],
+      id: 'course-edge-c',
+      title: 'Edge Course C',
+      slug: 'edge-course-c',
+    };
+
+    writeFixtureState({
+      ...fixture,
+      courses: [courseA, courseB, courseC],
+      enrollments: [
+        {
+          course_id: courseA.id,
+          status: 'in_progress',
+          progress_bp: 1800,
+          last_accessed_at: '2026-04-05T10:00:00Z',
+          courses: courseA,
+        },
+        {
+          course_id: courseB.id,
+          status: 'in_progress',
+          progress_bp: 4200,
+          last_accessed_at: '2026-04-04T10:00:00Z',
+          courses: courseB,
+        },
+        {
+          course_id: courseC.id,
+          status: 'in_progress',
+          progress_bp: 7600,
+          last_accessed_at: '2026-04-03T10:00:00Z',
+          courses: courseC,
+        },
+      ],
+      completedLessonIds: [],
+    });
+
+    const user = userEvent.setup();
+    renderRoute('/home', 'user');
+
+    const currentCourseCard = await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 });
+    expect(within(currentCourseCard).getByText(/Edge Course A/i)).toBeInTheDocument();
+
+    await user.click(await screen.findByRole('button', { name: /下一门课程/i }));
+    expect(
+      within(await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 })).getByText(
+        /Edge Course B/i,
+      ),
+    ).toBeInTheDocument();
+    expect(window.localStorage.getItem('viewer.home.current-course:demo-user')).toBe('course-edge-b');
+
+    await user.click(await screen.findByRole('button', { name: /上一门课程/i }));
+    expect(
+      within(await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 })).getByText(
+        /Edge Course A/i,
+      ),
+    ).toBeInTheDocument();
+    expect(window.localStorage.getItem('viewer.home.current-course:demo-user')).toBe('course-edge-a');
   });
 });

@@ -54,6 +54,8 @@ function createStats(overrides: Partial<ViewerStats> = {}): ViewerStats {
 }
 
 describe('homeDashboard', () => {
+  const language = 'zh-CN' as const;
+
   it('sorts in-progress enrollments by last access, started time, then progress', () => {
     const newest = createEnrollment({
       course_id: 'course-new',
@@ -93,7 +95,7 @@ describe('homeDashboard', () => {
     });
 
     expect(
-      getHomeContinueTarget(enrollment, {
+      getHomeContinueTarget(enrollment, language, {
         course: enrollment.courses,
         lessons: [
           { id: 'lesson-1', title: 'Intro', sort_key: 0, duration_seconds: 300 },
@@ -109,7 +111,7 @@ describe('homeDashboard', () => {
     });
 
     expect(
-      getHomeContinueTarget(enrollment, {
+      getHomeContinueTarget(enrollment, language, {
         course: enrollment.courses,
         lessons: [
           { id: 'lesson-1', title: 'Intro', sort_key: 0, duration_seconds: 300 },
@@ -138,6 +140,7 @@ describe('homeDashboard', () => {
 
     const emptyState = buildHomeCoachState({
       stats: createStats({ current_streak: 4, lessons_completed: 2, total_xp: 120 }),
+      language,
       selectedCourse: null,
       continueTarget: {
         kind: 'library',
@@ -151,13 +154,14 @@ describe('homeDashboard', () => {
     expect(emptyState.title).toContain('先挑一门');
     expect(emptyState.supportingNote).toContain('连续学习 4 天');
 
-    const lowSelectedCourse = getHomeSelectedCourse(lowEnrollment, {
+    const lowSelectedCourse = getHomeSelectedCourse(lowEnrollment, language, {
       course: lowEnrollment.courses,
       lessons: [{ id: 'lesson-1', title: 'Warm intro', sort_key: 0, duration_seconds: 300 }],
       completed_lesson_ids: [],
     });
     const lowState = buildHomeCoachState({
       stats: createStats({ current_streak: 1 }),
+      language,
       selectedCourse: lowSelectedCourse,
       continueTarget: {
         kind: 'lesson',
@@ -170,7 +174,7 @@ describe('homeDashboard', () => {
     expect(lowState.accentLabel).toBe('先起步');
     expect(lowState.message).toContain('先完成一节课');
 
-    const highSelectedCourse = getHomeSelectedCourse(highEnrollment, {
+    const highSelectedCourse = getHomeSelectedCourse(highEnrollment, language, {
       course: highEnrollment.courses,
       lessons: [
         { id: 'lesson-1', title: 'Wrap up', sort_key: 0, duration_seconds: 300 },
@@ -180,6 +184,7 @@ describe('homeDashboard', () => {
     });
     const highState = buildHomeCoachState({
       stats: createStats({ current_streak: 5, lessons_completed: 8, total_xp: 800 }),
+      language,
       selectedCourse: highSelectedCourse,
       continueTarget: {
         kind: 'lesson',
