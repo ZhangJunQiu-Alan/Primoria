@@ -9,13 +9,14 @@ import { SurfaceCard } from '@/shared/layout/SurfaceCard';
 import { LessonRuntimePlayer, type LessonCompletionSummary } from '@/shared/lesson/LessonRuntimePlayer';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 
 export function LessonPage() {
   const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.auth.user);
+  const copy = useViewerCopy();
   const lessonId = params.lessonId ?? '';
 
   const runtimeQuery = useQuery({
@@ -42,7 +43,7 @@ export function LessonPage() {
       const xpAwarded = Number(payload?.xp_earned ?? 0);
       navigate(`/lesson/${lessonId}/result`, {
         state: {
-          lessonTitle: runtimeQuery.data?.title ?? viewerCopy.lesson.titleFallback,
+          lessonTitle: runtimeQuery.data?.title ?? copy.lesson.titleFallback,
           xpAwarded,
           unlockedAchievements: payload?.unlocked_achievements ?? [],
           courseCompleted: payload?.course_completed ?? false,
@@ -68,7 +69,7 @@ export function LessonPage() {
 
   if (runtimeQuery.isLoading) {
     return (
-      <PageContainer title={viewerCopy.lesson.titleFallback} subtitle="Loading learner runtime…">
+      <PageContainer title={copy.lesson.titleFallback} subtitle={copy.lesson.loadingRuntime}>
         <LoadingStateCard />
       </PageContainer>
     );
@@ -76,7 +77,7 @@ export function LessonPage() {
 
   if (runtimeQuery.error) {
     return (
-      <PageContainer title={viewerCopy.lesson.titleFallback} subtitle="Lesson content is unavailable.">
+      <PageContainer title={copy.lesson.titleFallback} subtitle={copy.lesson.unavailable}>
         <ErrorStateCard
           message={runtimeQuery.error instanceof Error ? runtimeQuery.error.message : undefined}
           onRetry={() => void runtimeQuery.refetch()}
@@ -87,16 +88,16 @@ export function LessonPage() {
 
   if (!runtimeQuery.data) {
     return (
-      <PageContainer title={viewerCopy.lesson.titleFallback} subtitle="Lesson content is unavailable.">
+      <PageContainer title={copy.lesson.titleFallback} subtitle={copy.lesson.unavailable}>
         <SurfaceCard>
-          <p className="text-sm font-semibold text-[var(--viewer-text-muted)]">No lesson snapshot could be resolved for this route.</p>
+          <p className="text-sm font-semibold text-[var(--viewer-text-muted)]">{copy.lesson.noSnapshot}</p>
         </SurfaceCard>
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer title={runtimeQuery.data.title} subtitle="Lesson runtime, gating, and completion flow">
+    <PageContainer title={runtimeQuery.data.title} subtitle={copy.lesson.runtimeSubtitle}>
       <LessonRuntimePlayer
         data={runtimeQuery.data}
         onExit={() =>
@@ -112,7 +113,7 @@ export function LessonPage() {
       ) : null}
       {completionMutation.isPending ? (
         <SurfaceCard className="bg-[rgba(255,252,247,0.88)]">
-          <p className="text-sm font-semibold text-[var(--viewer-text-muted)]">Finalizing lesson completion…</p>
+          <p className="text-sm font-semibold text-[var(--viewer-text-muted)]">{copy.lesson.finalizing}</p>
         </SurfaceCard>
       ) : null}
     </PageContainer>

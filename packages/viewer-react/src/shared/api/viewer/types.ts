@@ -1,10 +1,11 @@
+import type { ViewerLanguage } from '@/shared/i18n/locale';
+
 export type ViewerSubject = {
   id: string;
   name: string;
   color_hex: string;
 };
 
-export type ViewerLanguage = 'zh-CN' | 'en';
 export type ViewerThemeMode = 'system' | 'light' | 'dark';
 
 export type ViewerCourse = {
@@ -13,6 +14,7 @@ export type ViewerCourse = {
   slug: string;
   description: string;
   thumbnail_url: string | null;
+  content_language?: ViewerLanguage | null;
   difficulty_level: string;
   estimated_minutes: number;
   tags: string[];
@@ -163,6 +165,7 @@ export type CommunityMessage = {
   author_id: string;
   author_name: string;
   body: string;
+  content_language?: string | null;
   created_at: string;
 };
 
@@ -194,6 +197,7 @@ export type CommunityDiscussionComment = {
   author_id: string;
   author_name: string;
   body: string;
+  content_language?: string | null;
   created_at: string;
 };
 
@@ -201,6 +205,7 @@ export type CommunityDiscussion = {
   id: string;
   title: string;
   body: string;
+  content_language?: string | null;
   category: string;
   author_id: string;
   author_name: string;
@@ -214,6 +219,7 @@ export type CommunityNote = {
   id: string;
   title: string;
   body: string;
+  content_language?: string | null;
   room_id: string | null;
   updated_at: string;
 };

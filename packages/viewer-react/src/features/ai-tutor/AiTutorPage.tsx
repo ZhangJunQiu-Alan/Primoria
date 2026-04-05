@@ -18,8 +18,9 @@ import {
   SendHorizontal,
   Sparkles,
 } from 'lucide-react';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 
 const AiTutorToolDialog = lazy(async () => ({
@@ -32,8 +33,8 @@ type ToolStatus = {
   presentation: boolean;
 };
 
-function replaceLastModelMessage(messages: TutorMessage[], text: string) {
-  const next = [...messages];
+function replaceLastModelMessage(messages: TutorMessage[], text: string): TutorMessage[] {
+  const next: TutorMessage[] = [...messages];
   for (let index = next.length - 1; index >= 0; index -= 1) {
     if (next[index]?.role === 'model') {
       next[index] = { ...next[index], text };
@@ -44,10 +45,12 @@ function replaceLastModelMessage(messages: TutorMessage[], text: string) {
 }
 
 export function AiTutorPage() {
+  const language = useProductLanguage();
+  const copy = useViewerCopy();
   const [messages, setMessages] = useState<TutorMessage[]>([
     {
       role: 'model',
-      text: '你好，欢迎来到你的 AI 导师。我可以帮你整理笔记、总结内容，并把想法转成清晰的知识结构。',
+      text: copy.aiTutor.welcomeBody,
     },
   ]);
   const [input, setInput] = useState('');
@@ -72,43 +75,39 @@ export function AiTutorPage() {
   );
 
   const suggestedPrompts = useMemo(
-    () => [
-      '你好！可以帮我规划今天的学习任务吗？',
-      '我是新用户，你能怎么帮我做笔记？',
-      '可以把我的笔记总结成简单的思维导图吗？',
-    ],
-    [],
+    () => copy.aiTutor.prompts,
+    [copy.aiTutor.prompts],
   );
 
   const notebookItems = [
     {
-      title: '思维导图',
-      subtitle: toolStatus.mindmap ? '已生成' : '尚未生成',
+      title: copy.aiTutor.mindMap,
+      subtitle: toolStatus.mindmap ? copy.aiTutor.notebook.generated : copy.aiTutor.notebook.pending,
       icon: GitBranch,
     },
     {
-      title: '测验',
-      subtitle: toolStatus.quiz ? '已生成' : '尚未生成',
+      title: copy.aiTutor.quiz,
+      subtitle: toolStatus.quiz ? copy.aiTutor.notebook.generated : copy.aiTutor.notebook.pending,
       icon: BadgeHelp,
     },
     {
-      title: '演化回放',
-      subtitle: toolStatus.presentation ? '已生成' : '尚未生成',
+      title: copy.aiTutor.notebook.playback,
+      subtitle: toolStatus.presentation ? copy.aiTutor.notebook.generated : copy.aiTutor.notebook.pending,
       icon: FileText,
     },
     {
-      title: '网络基础',
-      subtitle: '4 个来源 - 今日更新',
+      title: language === 'zh-CN' ? '网络基础' : 'Network fundamentals',
+      subtitle: copy.aiTutor.notebook.refreshedToday,
       icon: GitBranch,
     },
     {
-      title: '协议闪卡',
-      subtitle: '12 张卡片 - 2 小时前复习',
+      title: language === 'zh-CN' ? '协议闪卡' : 'Protocol flashcards',
+      subtitle: copy.aiTutor.notebook.reviewedTwoHoursAgo,
       icon: PenLine,
     },
     {
-      title: 'OSI 与 TCP/IP 笔记',
-      subtitle: '摘要已同步',
+      title: language === 'zh-CN' ? 'OSI 与 TCP/IP 笔记' : 'OSI and TCP/IP notes',
+      subtitle: copy.aiTutor.notebook.syncedSummary,
       icon: FileText,
     },
   ] as const;
@@ -141,7 +140,7 @@ export function AiTutorPage() {
 
     if (trimmed.startsWith('/apikey ')) {
       await persistGeminiKey(trimmed.replace('/apikey', '').trim());
-      setStatus('Gemini key stored locally.');
+      setStatus(copy.aiTutor.apiKeyStored);
       setInput('');
       captureViewerEvent('viewer_ai_tutor_key_overridden');
       return;
@@ -182,7 +181,7 @@ export function AiTutorPage() {
         }
         return next;
       });
-      setStatus(error instanceof Error ? error.message : viewerCopy.aiTutor.missingKey);
+      setStatus(error instanceof Error ? error.message : copy.aiTutor.missingKey);
       captureViewerError(error, { area: 'ai_tutor_reply' });
     } finally {
       if (streamedReplyRef.current) {
@@ -214,7 +213,7 @@ export function AiTutorPage() {
       setToolStatus((current) => ({ ...current, presentation: true }));
       captureViewerEvent('viewer_ai_tutor_tool_opened', { kind });
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : viewerCopy.aiTutor.missingKey);
+      setStatus(error instanceof Error ? error.message : copy.aiTutor.missingKey);
       captureViewerError(error, { area: 'ai_tutor_tool', kind });
     }
   }
@@ -233,15 +232,15 @@ export function AiTutorPage() {
                     <Bot size={28} />
                   </div>
                   <div>
-                    <p className="viewer-botanical-eyebrow">{'AI study desk'}</p>
+                    <p className="viewer-botanical-eyebrow">{copy.aiTutor.deskEyebrow}</p>
                     <h1
                       className="mt-2 text-[2.45rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
                       style={{ fontFamily: '"Cormorant Garamond", serif' }}
                     >
-                      {'你好，欢迎来到你的 AI 导师'}
+                      {copy.aiTutor.welcomeTitle}
                     </h1>
                     <p className="mt-3 max-w-[48rem] text-[0.92rem] leading-[1.85] text-[#6f6359]">
-                      {'很高兴认识你。我可以帮你整理笔记、总结长内容，并把想法转成清晰的知识结构。你可以从一个简单问题开始，我会一步步引导你。'}
+                      {copy.aiTutor.welcomeBody}
                     </p>
                   </div>
                 </div>
@@ -276,7 +275,7 @@ export function AiTutorPage() {
                               : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
                           }
                         >
-                          {isPendingModel ? '正在思考…' : message.text}
+                          {isPendingModel ? (language === 'zh-CN' ? '正在思考…' : 'Thinking…') : message.text}
                         </div>
                       );
                     })}
@@ -293,7 +292,7 @@ export function AiTutorPage() {
               <PenLine size={19} className="text-[#9a8d82]" />
               <input
                 className="min-w-0 flex-1 border-0 bg-transparent text-[0.92rem] font-semibold text-[#3d342a] outline-none placeholder:text-[#a9968a]"
-                placeholder={viewerCopy.aiTutor.placeholder}
+                placeholder={copy.aiTutor.placeholder}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 onKeyDown={(event) => {
@@ -304,7 +303,7 @@ export function AiTutorPage() {
               />
               <button
                 type="button"
-                aria-label="发送"
+                aria-label={copy.aiTutor.send}
                 className="flex h-10 w-10 items-center justify-center rounded-[16px] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white transition hover:brightness-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
                 onClick={() => void handleSend(input)}
                 disabled={isSending}
@@ -320,51 +319,51 @@ export function AiTutorPage() {
 
         <aside className="viewer-panel flex min-h-0 flex-col overflow-hidden rounded-[28px] p-4">
           <div className="shrink-0">
-            <p className="viewer-botanical-eyebrow">{'Workspace'}</p>
+            <p className="viewer-botanical-eyebrow">{language === 'zh-CN' ? '工作区' : 'Workspace'}</p>
             <h2
               className="mt-2 text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
               style={{ fontFamily: '"Cormorant Garamond", serif' }}
             >
-              {'工作台'}
+              {language === 'zh-CN' ? '工作台' : 'Workspace'}
             </h2>
           </div>
 
           <div className="mt-3 grid shrink-0 grid-cols-2 gap-2.5">
             <button
               type="button"
-              aria-label="打开思维导图"
+              aria-label={language === 'zh-CN' ? '打开思维导图' : 'Open mind map'}
               className="rounded-[20px] border border-[#c8dbcb] bg-[#edf5ec] p-3.5 text-left text-[#5c7d60]"
               onClick={() => void openTool('mindmap')}
             >
               <GitBranch size={16} />
-              <div className="mt-6 text-[0.82rem] font-bold">{'思维导图'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{copy.aiTutor.mindMap}</div>
             </button>
             <button
               type="button"
-              aria-label="生成报告"
+              aria-label={language === 'zh-CN' ? '生成报告' : 'Generate report'}
               className="rounded-[20px] border border-[#ead2af] bg-[#fbf3e6] p-3.5 text-left text-[#9a6f3f]"
-              onClick={() => void handleSend('请帮我生成一份学习报告。')}
+              onClick={() => void handleSend(language === 'zh-CN' ? '请帮我生成一份学习报告。' : 'Please help me generate a study report.')}
             >
               <FileText size={16} />
-              <div className="mt-6 text-[0.82rem] font-bold">{'报告'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{language === 'zh-CN' ? '报告' : 'Report'}</div>
             </button>
             <button
               type="button"
-              aria-label="打开测验"
+              aria-label={language === 'zh-CN' ? '打开测验' : 'Open quiz'}
               className="rounded-[20px] border border-[#ead2af] bg-[#f8efdf] p-3.5 text-left text-[#9c7342]"
               onClick={() => void openTool('quiz')}
             >
               <BadgeHelp size={16} />
-              <div className="mt-6 text-[0.82rem] font-bold">{'测验'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{copy.aiTutor.quiz}</div>
             </button>
             <button
               type="button"
-              aria-label="打开演示"
+              aria-label={language === 'zh-CN' ? '打开演示' : 'Open presentation'}
               className="rounded-[20px] border border-[#dbcde3] bg-[#f3edf7] p-3.5 text-left text-[#7f6f88]"
               onClick={() => void openTool('presentation')}
             >
               <Sparkles size={16} />
-              <div className="mt-6 text-[0.82rem] font-bold">{'演示'}</div>
+              <div className="mt-6 text-[0.82rem] font-bold">{copy.aiTutor.presentation}</div>
             </button>
           </div>
 
@@ -373,7 +372,7 @@ export function AiTutorPage() {
               className="text-[1.8rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
               style={{ fontFamily: '"Cormorant Garamond", serif' }}
             >
-              {'笔记本'}
+              {language === 'zh-CN' ? '笔记本' : 'Notebook'}
             </h3>
           </div>
 
