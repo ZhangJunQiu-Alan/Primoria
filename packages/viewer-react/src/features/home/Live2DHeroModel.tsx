@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { Sparkles } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 type ViewerWindow = Window & {
   PIXI?: unknown;
@@ -57,17 +58,22 @@ function loadScriptOnce(src: string) {
 
 export function Live2DHeroModel() {
   const hostRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLDivElement | null>(null);
+  const [modelState, setModelState] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
     if (import.meta.env.MODE === 'test') {
+      setModelState('ready');
       return;
     }
 
     const host = hostRef.current;
-    if (!host) {
+    const canvasHost = canvasRef.current;
+    if (!host || !canvasHost) {
       return;
     }
     const hostElement: HTMLDivElement = host;
+    const canvasHostElement: HTMLDivElement = canvasHost;
 
     let disposed = false;
     let app: import('pixi.js-legacy').Application | undefined;
@@ -99,7 +105,7 @@ export function Live2DHeroModel() {
         backgroundAlpha: 0,
       });
 
-      hostElement.replaceChildren(app.view);
+      canvasHostElement.replaceChildren(app.view);
 
       model = await Live2DModel.from(MODEL_URL, {
         autoInteract: false,
@@ -147,6 +153,7 @@ export function Live2DHeroModel() {
 
       fitModel();
       void model.motion('Idle');
+      setModelState('ready');
 
       if (typeof ResizeObserver !== 'undefined') {
         resizeObserver = new ResizeObserver(() => {
@@ -176,7 +183,11 @@ export function Live2DHeroModel() {
       hostElement.addEventListener('pointerleave', onPointerLeave);
     }
 
-    void mountModel();
+    void mountModel().catch(() => {
+      if (!disposed) {
+        setModelState('error');
+      }
+    });
 
     return () => {
       disposed = true;
@@ -197,9 +208,28 @@ export function Live2DHeroModel() {
   return (
     <div
       ref={hostRef}
-      className="relative h-full w-full overflow-visible bg-[radial-gradient(circle_at_40%_28%,rgba(255,255,255,0.18),rgba(255,255,255,0.05)_30%,rgba(255,255,255,0)_64%)]"
+      className="relative h-full w-full overflow-visible"
     >
-      <div className="pointer-events-none absolute left-[10%] bottom-[6%] h-8 w-[56%] rounded-full bg-[radial-gradient(circle,rgba(15,24,68,0.34),rgba(15,24,68,0)_72%)] blur-xl" />
+      <div className="pointer-events-none absolute inset-x-[6%] top-[4%] h-[76%] bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.82),rgba(255,255,255,0)_58%)]" />
+      <div className="pointer-events-none absolute bottom-[6%] left-[10%] h-8 w-[56%] rounded-full bg-[radial-gradient(circle,rgba(114,93,73,0.20),rgba(114,93,73,0)_72%)] blur-xl" />
+      <div ref={canvasRef} className="absolute inset-0 z-10" />
+      {modelState !== 'ready' ? (
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6">
+          <div className="max-w-[14rem] bg-transparent px-3 py-3 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[linear-gradient(145deg,#f4ddbc_0%,#d4b896_100%)] text-white shadow-[0_10px_24px_rgba(196,149,106,0.18)]">
+              <Sparkles size={24} />
+            </div>
+            <p className="mt-3 text-[1.2rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+              {modelState === 'error' ? 'Live2D stage unavailable' : 'Live2D stage loading'}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[#74685d]">
+              {modelState === 'error'
+                ? 'The companion model could not be rendered in this session.'
+                : 'The companion is preparing its canvas.'}
+            </p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
