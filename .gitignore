@@ -13,6 +13,7 @@ output/
 # Miscellaneous
 *.class
 *.lock
+!agent-service/uv.lock
 *.log
 *.pyc
 *.swp
@@ -23,6 +24,26 @@ output/
 # Env files (secrets)
 .env
 .env.*
+!.env.example
+!**/.env.example
 
 # Coverage
 coverage/
+
+# Flutter local/generated artifacts
+Builder/
+Viewer/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/build/
+
+# Python local/generated artifacts
+**/.venv/
+**/__pycache__/
+**/*.pyo
+**/*.pyd
+
+# Agent local memory/runtime artifacts
+agent-service/data/memory/*
+!agent-service/data/memory/.gitkeep
