@@ -1,8 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import {
+  DEFAULT_VIEWER_LANGUAGE,
+  detectBrowserViewerLanguage,
+  normalizeViewerLanguage,
+  type ViewerLanguage,
+} from '@/shared/i18n/locale';
 
 export const VIEWER_PREFERENCES_STORAGE_KEY = 'primoria.viewer.preferences';
-
-export type ViewerLanguage = 'zh-CN' | 'en';
 
 export type ViewerPreferencesState = {
   themeMode: 'system' | 'light' | 'dark';
@@ -25,7 +29,7 @@ export type ViewerPreferencesState = {
 
 const defaultState: ViewerPreferencesState = {
   themeMode: 'system',
-  language: 'zh-CN',
+  language: DEFAULT_VIEWER_LANGUAGE,
   soundEnabled: true,
   hapticsEnabled: true,
   notificationsEnabled: true,
@@ -50,13 +54,23 @@ function loadState(): ViewerPreferencesState {
   try {
     const raw = window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY);
     if (!raw) {
-      return defaultState;
+      return {
+        ...defaultState,
+        language: detectBrowserViewerLanguage(),
+      };
     }
 
     const parsed = JSON.parse(raw) as Partial<ViewerPreferencesState>;
-    return { ...defaultState, ...parsed };
+    return {
+      ...defaultState,
+      ...parsed,
+      language: normalizeViewerLanguage(parsed.language),
+    };
   } catch {
-    return defaultState;
+    return {
+      ...defaultState,
+      language: detectBrowserViewerLanguage(),
+    };
   }
 }
 
@@ -70,7 +84,7 @@ export function saveViewerPreferences(state: ViewerPreferencesState) {
 
 const preferencesSlice = createSlice({
   name: 'viewerPreferences',
-  initialState: loadState(),
+  initialState: loadState,
   reducers: {
     patchPreferences(state, action: PayloadAction<Partial<ViewerPreferencesState>>) {
       Object.assign(state, action.payload);

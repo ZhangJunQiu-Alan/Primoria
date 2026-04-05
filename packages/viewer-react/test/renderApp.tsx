@@ -7,6 +7,7 @@ import { setSession, clearSession } from '@/features/auth/authSlice';
 import { ViewerRoutes } from '@/app/router';
 import { createViewerQueryClient } from '@/shared/api/queryClient';
 import { FeatureFlagsProvider } from '@/shared/platform/FeatureFlagsProvider';
+import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { createAppStore, useAppSelector } from '@/shared/state/store';
 import { DEMO_ROLE_STORAGE_KEY } from '@/shared/utils/demoMode';
 
@@ -38,6 +39,15 @@ export function renderRoute(route: string, role: string | null = null) {
     window.localStorage.setItem(DEMO_ROLE_STORAGE_KEY, role);
   } else {
     window.localStorage.removeItem(DEMO_ROLE_STORAGE_KEY);
+  }
+
+  if (!window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)) {
+    window.localStorage.setItem(
+      VIEWER_PREFERENCES_STORAGE_KEY,
+      JSON.stringify({
+        language: 'zh-CN',
+      }),
+    );
   }
 
   const store = createAppStore();
