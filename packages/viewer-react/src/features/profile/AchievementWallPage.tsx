@@ -36,27 +36,27 @@ function categoryTheme(category: string) {
   switch (category) {
     case 'streak':
       return {
-        pill: 'bg-[#fff2d7] text-[#ba7b00]',
-        glow: 'from-[#fff3c5] to-[#fffaf0]',
-        bar: 'from-[#ffcf5b] to-[#f59e0b]',
+        pill: 'bg-[#fbf3e6] text-[#9a6f3f]',
+        glow: 'from-[#f7e8cf] to-[#fff8ef]',
+        bar: 'from-[#d4b896] to-[#c4956a]',
       };
     case 'challenge':
       return {
-        pill: 'bg-[#efe6ff] text-[#7647da]',
-        glow: 'from-[#f0e6ff] to-[#faf7ff]',
-        bar: 'from-[#a78bfa] to-[#7c3aed]',
+        pill: 'bg-[#f3edf7] text-[#7f6f88]',
+        glow: 'from-[#eee5f4] to-[#faf7fc]',
+        bar: 'from-[#a99ab4] to-[#8d7a98]',
       };
     case 'social':
       return {
-        pill: 'bg-[#ffe8f3] text-[#d24a8e]',
-        glow: 'from-[#ffeaf4] to-[#fff9fc]',
-        bar: 'from-[#fb7185] to-[#ec4899]',
+        pill: 'bg-[#f7edea] text-[#b56b63]',
+        glow: 'from-[#f3d7d2] to-[#fdf6f4]',
+        bar: 'from-[#d3a399] to-[#c4807a]',
       };
     default:
       return {
-        pill: 'bg-[#e5f6ec] text-[#169b57]',
-        glow: 'from-[#e8fbef] to-[#fbfffc]',
-        bar: 'from-[#47d18a] to-[#16a34a]',
+        pill: 'bg-[#edf5ec] text-[#5c7d60]',
+        glow: 'from-[#e4efe1] to-[#fbfffc]',
+        bar: 'from-[#a8c5ac] to-[#7a9e7e]',
       };
   }
 }
@@ -82,13 +82,13 @@ function SummaryCard({
   className: string;
 }) {
   return (
-    <div className={cn('rounded-[26px] border px-5 py-5 shadow-[0_18px_42px_rgba(83,110,162,0.08)]', className)}>
+    <div className={cn('rounded-[26px] border px-5 py-5 shadow-[0_18px_42px_rgba(90,70,50,0.08)]', className)}>
       <div className="flex items-center justify-between gap-3">
-        <div className="text-[0.8rem] font-black uppercase tracking-[0.18em] text-[#7b8ba7]">{label}</div>
-        <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-white/75 text-[#29334a]">{icon}</div>
+        <div className="viewer-botanical-eyebrow text-[0.72rem]">{label}</div>
+        <div className="flex h-11 w-11 items-center justify-center rounded-[16px] border border-[#ddd3c3] bg-white/75 text-[#4a4037]">{icon}</div>
       </div>
-      <div className="mt-5 text-[2.4rem] font-black tracking-[-0.06em] text-[#1a2233]">{value}</div>
-      <div className="mt-2 text-[0.92rem] font-semibold leading-6 text-[#7e8da7]">{hint}</div>
+      <div className="mt-5 text-[2.4rem] font-semibold tracking-[-0.04em] text-[#3d342a]">{value}</div>
+      <div className="mt-2 text-[0.92rem] font-semibold leading-6 text-[#7e7166]">{hint}</div>
     </div>
   );
 }
@@ -109,9 +109,9 @@ function FeaturedAchievementCard({
       type="button"
       disabled={!manageMode}
       className={cn(
-        'group flex h-full flex-col rounded-[30px] border border-[#dfe7f3] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 text-left shadow-[0_18px_42px_rgba(83,110,162,0.08)] transition',
-        manageMode ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(83,110,162,0.12)]' : 'cursor-default',
-        entry.pinned ? 'ring-2 ring-[#5c5af5]' : '',
+        'group flex h-full flex-col rounded-[30px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.94)_0%,rgba(247,242,231,0.88)_100%)] p-5 text-left shadow-[0_18px_42px_rgba(90,70,50,0.08)] transition',
+        manageMode ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(90,70,50,0.12)]' : 'cursor-default',
+        entry.pinned ? 'ring-2 ring-[#7a9e7e]' : '',
       )}
       onClick={() => onTogglePin(entry.achievement.id)}
     >
@@ -127,34 +127,34 @@ function FeaturedAchievementCard({
           <span className={cn('rounded-full px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em]', theme.pill)}>
             {achievementCategoryLabel(entry.category)}
           </span>
-          <span className="rounded-full bg-[#eef2ff] px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em] text-[#5857f0]">
+          <span className="rounded-full bg-[#edf5ec] px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
             {achievementPinnedLabel()}
           </span>
         </div>
       </div>
 
       <div className="mt-5">
-        <h3 className="text-[1.35rem] font-black tracking-[-0.04em] text-[#1d2638]">
+        <h3 className="text-[1.5rem] font-semibold tracking-[-0.03em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
           {achievementDisplayName(entry.achievement)}
         </h3>
-        <p className="mt-3 text-[0.94rem] leading-7 text-[#73819a]">{entry.progress.requirement}</p>
+        <p className="mt-3 text-[0.94rem] leading-7 text-[#6f6359]">{entry.progress.requirement}</p>
       </div>
 
       <div className="mt-6 flex items-end justify-between gap-3">
         <div>
-          <div className="text-[2rem] font-black tracking-[-0.05em] text-[#202a3d]">{entry.progress.counterLabel}</div>
-          <div className="mt-1 text-[0.78rem] font-black uppercase tracking-[0.14em] text-[#9aa7bd]">
+          <div className="text-[2rem] font-semibold tracking-[-0.04em] text-[#3d342a]">{entry.progress.counterLabel}</div>
+          <div className="mt-1 text-[0.78rem] font-black uppercase tracking-[0.14em] text-[#9b8e85]">
             {achievementStatusLabel(entry.progress.isUnlocked)}
           </div>
         </div>
         {manageMode ? (
-          <div className="rounded-full border border-[#d6dff0] px-3 py-2 text-[0.78rem] font-bold text-[#5e6d86]">
+          <div className="rounded-full border border-[#ddd3c3] px-3 py-2 text-[0.78rem] font-bold text-[#7f7368]">
             {'点击取消精选'}
           </div>
         ) : null}
       </div>
 
-      <div className="mt-4 h-2.5 rounded-full bg-[#e8edf4]">
+      <div className="mt-4 h-2.5 rounded-full bg-[#ebe3d6]">
         <div
           className={cn('h-full rounded-full bg-gradient-to-r', theme.bar)}
           style={{ width: `${Math.max(entry.progress.ratio * 100, 6)}%` }}
@@ -166,17 +166,17 @@ function FeaturedAchievementCard({
 
 function FeaturedPlaceholder({ manageMode }: { manageMode: boolean }) {
   return (
-    <div className="flex h-full flex-col justify-between rounded-[30px] border border-dashed border-[#c9d6eb] bg-[linear-gradient(180deg,rgba(255,255,255,0.92)_0%,rgba(247,250,255,0.88)_100%)] p-5">
+    <div className="flex h-full flex-col justify-between rounded-[30px] border border-dashed border-[#cdbfaf] bg-[linear-gradient(180deg,rgba(255,252,247,0.92)_0%,rgba(247,242,231,0.88)_100%)] p-5">
       <div>
-        <div className="flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-[24px] border border-dashed border-[#bfd0ea] bg-white/70 text-[#94a7c5]">
+        <div className="flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-[24px] border border-dashed border-[#cdbfaf] bg-white/70 text-[#9b8e85]">
           <Pin size={24} />
         </div>
-        <h3 className="mt-5 text-[1.18rem] font-black tracking-[-0.04em] text-[#2a3344]">{'预留展位'}</h3>
-        <p className="mt-3 text-[0.92rem] leading-7 text-[#7c8ba6]">
+        <h3 className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'预留展位'}</h3>
+        <p className="mt-3 text-[0.92rem] leading-7 text-[#7c6f64]">
           {manageMode ? '从下方卡片中点选成就，把它加入顶部精选展示区。' : '开启“管理精选”后，可以把喜欢的成就固定到这里。'}
         </p>
       </div>
-      <div className="mt-6 rounded-full border border-dashed border-[#c9d6eb] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.14em] text-[#99abc3]">
+      <div className="mt-6 rounded-full border border-dashed border-[#cdbfaf] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.14em] text-[#9b8e85]">
         {'等待点亮'}
       </div>
     </div>
@@ -199,9 +199,9 @@ function ProgressAchievementCard({
       type="button"
       disabled={!manageMode}
       className={cn(
-        'flex h-full flex-col rounded-[24px] border border-[#e2e9f4] bg-white p-4 text-left shadow-[0_16px_34px_rgba(83,110,162,0.06)] transition',
-        manageMode ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_20px_42px_rgba(83,110,162,0.1)]' : 'cursor-default',
-        entry.pinned ? 'ring-2 ring-[#5c5af5]' : '',
+        'flex h-full flex-col rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 text-left shadow-[0_16px_34px_rgba(90,70,50,0.06)] transition',
+        manageMode ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_20px_42px_rgba(90,70,50,0.1)]' : 'cursor-default',
+        entry.pinned ? 'ring-2 ring-[#7a9e7e]' : '',
       )}
       onClick={() => onTogglePin(entry.achievement.id)}
     >
@@ -210,7 +210,7 @@ function ProgressAchievementCard({
           {achievementCategoryLabel(entry.category)}
         </span>
         {entry.pinned ? (
-          <span className="rounded-full bg-[#eef2ff] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em] text-[#5857f0]">
+          <span className="rounded-full bg-[#edf5ec] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
             {achievementPinnedLabel()}
           </span>
         ) : null}
@@ -227,21 +227,21 @@ function ProgressAchievementCard({
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="text-[1.16rem] font-black tracking-[-0.04em] text-[#20293c]">
+            <h3 className="text-[1.26rem] font-black tracking-[-0.03em] text-[#3d342a]">
               {achievementDisplayName(entry.achievement)}
             </h3>
-            <span className="text-[0.94rem] font-black text-[#8392aa]">{entry.progress.counterLabel}</span>
+            <span className="text-[0.94rem] font-black text-[#8b7d72]">{entry.progress.counterLabel}</span>
           </div>
 
-          <div className="mt-4 h-2.5 rounded-full bg-[#e8edf4]">
+          <div className="mt-4 h-2.5 rounded-full bg-[#ebe3d6]">
             <div
               className={cn('h-full rounded-full bg-gradient-to-r', theme.bar)}
               style={{ width: `${Math.max(entry.progress.ratio * 100, 2)}%` }}
             />
           </div>
 
-          <p className="mt-3 text-[0.9rem] leading-7 text-[#73819a]">{entry.progress.requirement}</p>
-          <div className="mt-3 text-[0.72rem] font-black uppercase tracking-[0.14em] text-[#98a6be]">
+          <p className="mt-3 text-[0.9rem] leading-7 text-[#6f6359]">{entry.progress.requirement}</p>
+          <div className="mt-3 text-[0.72rem] font-black uppercase tracking-[0.14em] text-[#9b8e85]">
             {achievementStatusLabel(entry.progress.isUnlocked)}
           </div>
         </div>
@@ -268,7 +268,7 @@ function UnlockedAchievementCard({
       className={cn(
         'flex h-full items-center gap-4 rounded-[22px] border border-[#dfe7f3] bg-[linear-gradient(180deg,#ffffff_0%,#f9fbff_100%)] px-4 py-4 text-left shadow-[0_14px_28px_rgba(83,110,162,0.06)] transition',
         manageMode ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(83,110,162,0.1)]' : 'cursor-default',
-        entry.pinned ? 'ring-2 ring-[#5c5af5]' : '',
+        entry.pinned ? 'ring-2 ring-[#7a9e7e]' : '',
       )}
       onClick={() => onTogglePin(entry.achievement.id)}
     >
@@ -289,20 +289,20 @@ function UnlockedAchievementCard({
             {achievementStatusLabel(true)}
           </span>
           {entry.pinned ? (
-            <span className="rounded-full bg-[#eef2ff] px-2.5 py-1 text-[0.66rem] font-black uppercase tracking-[0.14em] text-[#5857f0]">
-              {achievementPinnedLabel()}
-            </span>
+          <span className="rounded-full bg-[#edf5ec] px-2.5 py-1 text-[0.66rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
+            {achievementPinnedLabel()}
+          </span>
           ) : null}
         </div>
-        <h3 className="mt-3 text-[1.04rem] font-black tracking-[-0.03em] text-[#20293c]">
+        <h3 className="mt-3 text-[1.12rem] font-black tracking-[-0.03em] text-[#3d342a]">
           {achievementDisplayName(entry.achievement)}
         </h3>
-        <div className="mt-2 text-[0.86rem] font-semibold leading-6 text-[#7f8da6]">
+        <div className="mt-2 text-[0.86rem] font-semibold leading-6 text-[#7f7368]">
           {formatUnlockedAt(entry.achievement.earned_at)}
         </div>
       </div>
 
-      <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-[14px] bg-[#f2f7ff] text-[#5f72a0] md:flex">
+      <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-[14px] bg-[#f3efe8] text-[#7f7368] md:flex">
         <CheckCircle2 size={19} />
       </div>
     </button>
@@ -454,18 +454,18 @@ export function AchievementWallPage() {
   }
 
   return (
-    <div className="mx-auto w-[90%] px-0 py-6 md:py-7">
-      <section className="rounded-[36px] border border-[#dee8f5] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(248,251,255,0.98)_100%)] p-6 shadow-[0_24px_58px_rgba(83,110,162,0.1)] md:p-7">
+    <div className="mx-auto w-[90%] max-w-[1360px] px-0 py-6 md:py-7">
+      <section className="rounded-[36px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.96)_0%,rgba(247,242,231,0.98)_100%)] p-6 shadow-[0_24px_58px_rgba(90,70,50,0.1)] md:p-7">
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div className="max-w-[44rem]">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#dae6fb] bg-[#f4f8ff] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#5f78b4]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8b7d72]">
               <Sparkles size={14} />
               {'成就展示墙'}
             </div>
-            <h1 className="mt-5 text-[2.8rem] font-black tracking-[-0.06em] text-[#192234] md:text-[3.2rem]">
+            <h1 className="mt-5 text-[3rem] font-semibold tracking-[-0.04em] text-[#3d342a] md:text-[3.4rem]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
               {'成就馆'}
             </h1>
-            <p className="mt-4 max-w-[40rem] text-[1rem] leading-8 text-[#6f7f99]">
+            <p className="mt-4 max-w-[40rem] text-[1rem] leading-8 text-[#6f6359]">
               {'把学习里程碑、连击节奏和社交成长陈列在同一面展示墙里。先固定你最想保留的徽章，再持续点亮下面的进度。'}
             </p>
           </div>
@@ -473,10 +473,10 @@ export function AchievementWallPage() {
           <button
             type="button"
             className={cn(
-              'inline-flex items-center gap-2 rounded-[18px] px-5 py-3 text-[0.94rem] font-black shadow-[0_16px_36px_rgba(83,90,245,0.18)] transition',
+              'inline-flex items-center gap-2 rounded-[18px] px-5 py-3 text-[0.94rem] font-black shadow-[0_16px_36px_rgba(90,70,50,0.14)] transition',
               manageMode
-                ? 'bg-[#1f2a44] text-white hover:bg-[#182033]'
-                : 'bg-[linear-gradient(135deg,#5c5af5_0%,#7568ff_100%)] text-white hover:brightness-[1.02]',
+                ? 'bg-[#5e5148] text-white hover:bg-[#4f433b]'
+                : 'bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white hover:brightness-[1.02]',
             )}
             onClick={() => setManageMode((current) => !current)}
           >
@@ -491,33 +491,33 @@ export function AchievementWallPage() {
             label="已解锁"
             value={summary.unlockedCount}
             hint="已经收入展柜、随时可以回顾的成就。"
-            className="border-[#dce8f9] bg-[linear-gradient(135deg,#edf8f0_0%,#ffffff_78%)]"
+            className="border-[#d6dfcf] bg-[linear-gradient(135deg,#edf5ec_0%,#fffdf9_78%)]"
           />
           <SummaryCard
             icon={<Clock3 size={20} />}
             label="进行中"
             value={summary.activeCount}
             hint="距离点亮只差一点，再推进一小步。"
-            className="border-[#e2e5ff] bg-[linear-gradient(135deg,#f1efff_0%,#ffffff_78%)]"
+            className="border-[#ddd3e3] bg-[linear-gradient(135deg,#f3edf7_0%,#fffdf9_78%)]"
           />
           <SummaryCard
             icon={<Trophy size={20} />}
             label="已精选"
             value={summary.pinnedCount}
             hint="顶部陈列区最多保留 3 枚你最想展示的徽章。"
-            className="border-[#fde7bd] bg-[linear-gradient(135deg,#fff4d9_0%,#ffffff_78%)]"
+            className="border-[#e7d0b3] bg-[linear-gradient(135deg,#fbf3e6_0%,#fffdf9_78%)]"
           />
         </div>
 
-        <div className="mt-8 rounded-[30px] border border-[#dfe8f5] bg-white/78 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] md:p-6">
+        <div className="mt-8 rounded-[30px] border border-[#ddd3c3] bg-white/78 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] md:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-[1.8rem] font-black tracking-[-0.05em] text-[#1b2435]">{'精选展位'}</h2>
-              <p className="mt-2 text-[0.92rem] font-medium text-[#8090ab]">
+              <h2 className="text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'精选展位'}</h2>
+              <p className="mt-2 text-[0.92rem] font-medium text-[#7f7368]">
                 {manageMode ? '当前处于精选整理模式，点击卡片即可加入或移出顶部展示区。' : '把你最想保留的 3 枚徽章放在这里，作为个人学习陈列。'}
               </p>
             </div>
-            <div className="rounded-full bg-[#f4f8ff] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.16em] text-[#6d7fa4]">
+            <div className="rounded-full bg-[#f3efe8] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.16em] text-[#7f7368]">
               {selectedCategory === 'all' ? '全部类别' : `${achievementCategoryLabel(selectedCategory)}分类`}
             </div>
           </div>
@@ -546,8 +546,8 @@ export function AchievementWallPage() {
               className={cn(
                 'rounded-full px-4 py-2.5 text-[0.88rem] font-black transition',
                 selectedCategory === category
-                  ? 'bg-[#544cf5] text-white shadow-[0_12px_26px_rgba(84,76,245,0.22)]'
-                  : 'border border-[#d7e1f0] bg-white text-[#71819d] hover:border-[#c4d2e6] hover:text-[#4c5f7f]',
+                  ? 'bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white shadow-[0_12px_26px_rgba(122,158,126,0.22)]'
+                  : 'border border-[#ddd3c3] bg-white text-[#7f7368] hover:border-[#cdbfaf] hover:text-[#5f544b]',
               )}
               onClick={() => setSelectedCategory(category)}
             >

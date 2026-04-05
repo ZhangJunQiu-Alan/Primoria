@@ -76,7 +76,7 @@ function MultipleChoicePreview({
               className={cn(
                 'flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition',
                 selected
-                  ? 'border-[var(--viewer-primary)] bg-indigo-50 text-indigo-700'
+                  ? 'border-[#b9d1bc] bg-[#edf5ec] text-[#5c7d60]'
                   : 'border-[var(--viewer-border)] text-[var(--viewer-text)] hover:bg-[var(--viewer-surface-muted)]',
               )}
             >
@@ -142,7 +142,7 @@ function TrueFalsePreview({
             className={cn(
               'flex cursor-pointer items-center justify-center gap-3 rounded-2xl border px-4 py-3 text-sm font-semibold transition',
               selectedValue === option.value
-                ? 'border-[var(--viewer-primary)] bg-indigo-50 text-indigo-700'
+                ? 'border-[#b9d1bc] bg-[#edf5ec] text-[#5c7d60]'
                 : 'border-[var(--viewer-border)] text-[var(--viewer-text)]',
             )}
           >

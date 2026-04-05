@@ -101,14 +101,14 @@ export function CoursePage() {
       subtitle={course.description}
       actions={
         isEnrolled ? (
-          <span className="rounded-full bg-emerald-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700">
+          <span className="viewer-botanical-pill border-[#c8dbcb] bg-[#edf5ec] text-[#5c7d60]">
             {viewerCopy.course.enrolled}
           </span>
         ) : (
           <div className="flex flex-col items-end gap-2">
             <button
               type="button"
-              className="rounded-2xl bg-[var(--viewer-primary)] px-5 py-3 text-sm font-black text-white"
+              className="viewer-botanical-button viewer-botanical-button--primary"
               onClick={() => enrollMutation.mutate()}
               disabled={enrollMutation.isPending}
             >
@@ -121,52 +121,88 @@ export function CoursePage() {
         )
       }
     >
-      <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <SurfaceCard className="space-y-4">
-          <div className="grid gap-3 md:grid-cols-3">
-            <div className="rounded-3xl bg-indigo-50 px-4 py-4">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-600">Difficulty</p>
-              <p className="mt-2 text-xl font-black text-indigo-900">{course.difficulty_level}</p>
-            </div>
-            <div className="rounded-3xl bg-cyan-50 px-4 py-4">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-600">Estimated</p>
-              <p className="mt-2 text-xl font-black text-cyan-900">{course.estimated_minutes} min</p>
-            </div>
-            <div className="rounded-3xl bg-amber-50 px-4 py-4">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-600">Subject</p>
-              <p className="mt-2 text-xl font-black text-amber-900">{course.subjects.name}</p>
+      <div className="grid gap-4 lg:grid-cols-[1.08fr_0.92fr]">
+        <SurfaceCard className="overflow-hidden p-0">
+          <div className="relative overflow-hidden rounded-[inherit] bg-[linear-gradient(135deg,#f7f2e7_0%,#eef4ec_34%,#f4ebdf_68%,#efe6dc_100%)] p-6 md:p-7">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(255,255,255,0.7),transparent_26%),radial-gradient(circle_at_82%_24%,rgba(168,197,172,0.18),transparent_24%),radial-gradient(circle_at_76%_86%,rgba(196,149,106,0.12),transparent_24%)]" />
+            <div className="relative">
+              <p className="viewer-botanical-eyebrow">{course.subjects.name}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="viewer-botanical-pill">{course.difficulty_level}</span>
+                <span className="viewer-botanical-pill">{course.estimated_minutes} min</span>
+                {course.tags.slice(0, 3).map((tag: string) => (
+                  <span key={tag} className="viewer-botanical-pill bg-[rgba(255,255,255,0.72)]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-8 grid gap-3 md:grid-cols-3">
+                <div className="rounded-[24px] border border-[#dfd3c4] bg-[rgba(255,255,255,0.52)] px-4 py-4">
+                  <p className="viewer-botanical-eyebrow text-[0.7rem]">{'Difficulty'}</p>
+                  <p className="mt-3 text-xl font-semibold text-[#3d342a]">{course.difficulty_level}</p>
+                </div>
+                <div className="rounded-[24px] border border-[#dfd3c4] bg-[rgba(255,255,255,0.52)] px-4 py-4">
+                  <p className="viewer-botanical-eyebrow text-[0.7rem]">{'Estimated'}</p>
+                  <p className="mt-3 text-xl font-semibold text-[#3d342a]">{course.estimated_minutes} min</p>
+                </div>
+                <div className="rounded-[24px] border border-[#dfd3c4] bg-[rgba(255,255,255,0.52)] px-4 py-4">
+                  <p className="viewer-botanical-eyebrow text-[0.7rem]">{'Subject'}</p>
+                  <p className="mt-3 text-xl font-semibold text-[#3d342a]">{course.subjects.name}</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {course.tags.map((tag: string) => (
-              <span key={tag} className="rounded-full bg-[var(--viewer-surface-muted)] px-3 py-1 text-xs font-bold text-[var(--viewer-text-muted)]">
-                {tag}
-              </span>
-            ))}
+
+          <div className="space-y-5 px-6 pb-6 pt-5 md:px-7">
+            <div className="rounded-[24px] border border-[#e4d8ca] bg-[rgba(255,252,247,0.88)] p-5">
+              <p className="viewer-botanical-eyebrow text-[0.72rem]">{'Course note'}</p>
+              <p className="mt-3 text-sm font-medium leading-7 text-[#71655b]">
+                {'先完成一次课程浏览，再决定是否立即开始第一节课。已报名用户可以直接进入 lesson flow。'}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {isEnrolled ? (
+                <span className="viewer-botanical-pill border-[#c8dbcb] bg-[#edf5ec] text-[#5c7d60]">
+                  {viewerCopy.course.enrolled}
+                </span>
+              ) : (
+                <span className="viewer-botanical-pill border-[#e2d5c2] bg-[#fbf7f0] text-[#8b7153]">
+                  {viewerCopy.course.locked}
+                </span>
+              )}
+              <Link to="/library" className="viewer-botanical-button viewer-botanical-button--secondary">
+                {'Back to library'}
+              </Link>
+            </div>
           </div>
         </SurfaceCard>
 
         <SurfaceCard className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-black text-[var(--viewer-text)]">Lesson list</h2>
+            <h2 className="viewer-botanical-heading text-[2rem]">{'Lesson list'}</h2>
             {!isEnrolled ? (
-              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">{viewerCopy.course.locked}</span>
+              <span className="viewer-botanical-pill text-[0.7rem]">{viewerCopy.course.locked}</span>
             ) : null}
           </div>
           <div className="space-y-3">
             {lessons.map((lesson) => (
-              <div key={lesson.id} className="rounded-3xl border border-[var(--viewer-border)] px-4 py-4">
+              <div
+                key={lesson.id}
+                className="rounded-[26px] border border-[#dfd3c4] bg-[rgba(255,252,247,0.88)] px-4 py-4 shadow-[0_10px_24px_rgba(90,70,50,0.06)]"
+              >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">
+                    <p className="viewer-botanical-eyebrow text-[0.68rem]">
                       Lesson {(lesson.sort_key as number) + 1}
                     </p>
-                    <h3 className="mt-1 text-lg font-black text-[var(--viewer-text)]">{lesson.title}</h3>
+                    <h3 className="mt-2 text-[1.55rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+                      {lesson.title}
+                    </h3>
                   </div>
                   {isEnrolled ? (
                     <button
                       type="button"
-                      className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--viewer-primary)] px-4 py-3 text-sm font-black text-white"
+                      className="viewer-botanical-button viewer-botanical-button--primary"
                       onClick={() => navigate(`/lesson/${lesson.id}`)}
                     >
                       {viewerCopy.course.startLesson}
@@ -175,7 +211,7 @@ export function CoursePage() {
                   ) : (
                     <button
                       type="button"
-                      className="rounded-2xl border border-[var(--viewer-border)] px-4 py-3 text-sm font-black text-[var(--viewer-text-muted)]"
+                      className="viewer-botanical-button viewer-botanical-button--secondary"
                       disabled
                     >
                       {viewerCopy.course.enroll}
@@ -185,9 +221,6 @@ export function CoursePage() {
               </div>
             ))}
           </div>
-          <Link to="/library" className="text-sm font-semibold text-[var(--viewer-primary)]">
-            Back to library
-          </Link>
         </SurfaceCard>
       </div>
     </PageContainer>

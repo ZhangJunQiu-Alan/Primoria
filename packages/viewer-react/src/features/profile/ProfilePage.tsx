@@ -120,11 +120,11 @@ function buildGithubHeatmap(history: Map<string, number>) {
 }
 
 function contributionTone(value: number) {
-  if (value >= 180) return 'bg-[#216e39]';
-  if (value >= 120) return 'bg-[#30a14e]';
-  if (value >= 70) return 'bg-[#40c463]';
-  if (value > 0) return 'bg-[#9be9a8]';
-  return 'bg-[#ebedf0]';
+  if (value >= 180) return 'bg-[#5c7d60]';
+  if (value >= 120) return 'bg-[#7a9e7e]';
+  if (value >= 70) return 'bg-[#a8c5ac]';
+  if (value > 0) return 'bg-[#d8e6d6]';
+  return 'bg-[#ebe3d6]';
 }
 
 function StatBlock({
@@ -140,10 +140,10 @@ function StatBlock({
 }) {
   return (
     <div className="flex items-center gap-3.5">
-      <div className={cn('flex h-12 w-12 items-center justify-center rounded-[16px]', iconBoxClass)}>{icon}</div>
+      <div className={cn('flex h-12 w-12 items-center justify-center rounded-[18px] border border-[#ddd3c3]', iconBoxClass)}>{icon}</div>
       <div>
-        <div className="text-[2.05rem] font-black text-[#1c2436]">{value}</div>
-        <div className="text-[0.92rem] font-bold text-[#95a1b6]">{label}</div>
+        <div className="text-[2.05rem] font-semibold text-[#3d342a]">{value}</div>
+        <div className="text-[0.92rem] font-bold text-[#8d8176]">{label}</div>
       </div>
     </div>
   );
@@ -154,10 +154,10 @@ function AchievementSlot({ achievement }: { achievement: ViewerAchievement | nul
     <div
       title={achievement ? achievementDisplayName(achievement) : '空位'}
       className={cn(
-        'flex h-[5rem] w-[5rem] items-center justify-center rounded-[20px] border bg-[#f8fbff]',
+        'flex h-[5rem] w-[5rem] items-center justify-center rounded-[20px] border bg-[rgba(255,252,247,0.88)]',
         achievement
-          ? 'border-[#dbe4f2] shadow-[0_12px_28px_rgba(83,110,162,0.08)]'
-          : 'border-dashed border-[#adc1dd] bg-transparent shadow-none',
+          ? 'border-[#ddd3c3] shadow-[0_12px_28px_rgba(90,70,50,0.08)]'
+          : 'border-dashed border-[#cdbfaf] bg-transparent shadow-none',
       )}
     >
       {achievement ? (
@@ -169,7 +169,7 @@ function AchievementSlot({ achievement }: { achievement: ViewerAchievement | nul
           />
         </div>
       ) : (
-        <div className="text-center text-[0.68rem] font-black uppercase tracking-[0.16em] text-[#90a2bf]">{'待添加'}</div>
+        <div className="text-center text-[0.68rem] font-black uppercase tracking-[0.16em] text-[#9b8e85]">{'待添加'}</div>
       )}
     </div>
   );
@@ -387,9 +387,9 @@ export function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto w-[84%] px-0 py-5 md:py-6">
+    <div className="mx-auto w-[92%] max-w-[1060px] px-0 py-4 md:w-[82%] md:py-5">
       <section className="viewer-panel overflow-hidden rounded-[30px]">
-        <div className="relative h-[194px] overflow-hidden bg-[linear-gradient(120deg,#24180d_0%,#b67d16_25%,#ffd16c_52%,#ff8d21_78%,#cb431d_100%)]">
+        <div className="relative h-[156px] overflow-hidden bg-[linear-gradient(120deg,#7f5f49_0%,#c4956a_28%,#e8cfab_56%,#a8c5ac_78%,#7a9e7e_100%)]">
           {profile?.cover_image_url ? (
             <img src={profile.cover_image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
           ) : null}
@@ -399,17 +399,18 @@ export function ProfilePage() {
           <div ref={profileMenuRef} className="absolute right-5 top-5 z-20">
             <button
               type="button"
-              className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-white/18 text-white backdrop-blur transition hover:bg-white/24"
+              aria-label="打开个人菜单"
+              className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[rgba(255,252,247,0.28)] text-white backdrop-blur transition hover:bg-[rgba(255,252,247,0.36)]"
               onClick={() => setIsProfileMenuOpen((current) => !current)}
             >
               <Menu size={24} />
             </button>
 
             {isProfileMenuOpen ? (
-              <div className="absolute right-0 top-[calc(100%+0.75rem)] w-[14rem] overflow-hidden rounded-[24px] border border-[#e1e8f4] bg-white shadow-[0_22px_48px_rgba(54,78,129,0.14)]">
+              <div className="absolute right-0 top-[calc(100%+0.75rem)] w-[14rem] overflow-hidden rounded-[24px] border border-[#ddd3c3] bg-[rgba(254,250,245,0.97)] shadow-[0_22px_48px_rgba(90,70,50,0.14)]">
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between border-b border-[#edf2f7] px-5 py-4 text-left text-[1.02rem] font-semibold text-[#111827] transition hover:bg-[#f8fbff]"
+                  className="flex w-full items-center justify-between border-b border-[#efe4d7] px-5 py-4 text-left text-[1.02rem] font-semibold text-[#3d342a] transition hover:bg-[#faf4ea]"
                   onClick={() => {
                     setIsProfileMenuOpen(false);
                     navigate('/settings');
@@ -419,7 +420,7 @@ export function ProfilePage() {
                 </button>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between border-b border-[#edf2f7] px-5 py-4 text-left text-[1.02rem] font-semibold text-[#111827] transition hover:bg-[#f8fbff]"
+                  className="flex w-full items-center justify-between border-b border-[#efe4d7] px-5 py-4 text-left text-[1.02rem] font-semibold text-[#3d342a] transition hover:bg-[#faf4ea]"
                   onClick={() => {
                     setIsProfileMenuOpen(false);
                     navigate('/support/terms');
@@ -429,7 +430,7 @@ export function ProfilePage() {
                 </button>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between border-b border-[#edf2f7] px-5 py-4 text-left text-[1.02rem] font-semibold text-[#111827] transition hover:bg-[#f8fbff]"
+                  className="flex w-full items-center justify-between border-b border-[#efe4d7] px-5 py-4 text-left text-[1.02rem] font-semibold text-[#3d342a] transition hover:bg-[#faf4ea]"
                   onClick={() => {
                     setIsProfileMenuOpen(false);
                     navigate('/support/help');
@@ -439,7 +440,7 @@ export function ProfilePage() {
                 </button>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between px-5 py-4 text-left text-[1.02rem] font-semibold text-[#111827] transition hover:bg-[#fff7f7]"
+                  className="flex w-full items-center justify-between px-5 py-4 text-left text-[1.02rem] font-semibold text-[#8a5c53] transition hover:bg-[#fbefed]"
                   onClick={() => {
                     void handleSignOut();
                   }}
@@ -451,13 +452,13 @@ export function ProfilePage() {
           </div>
         </div>
 
-        <div className="px-5 pb-7 md:px-8">
-          <div className="relative -mt-10 flex flex-wrap items-end gap-3">
-            <div className="relative h-[6.4rem] w-[6.4rem] overflow-hidden rounded-[24px] border-[3px] border-white bg-[linear-gradient(135deg,#ffe16b,#ff9c1f)] shadow-[0_16px_36px_rgba(255,172,44,0.22)]">
+        <div className="px-4 pb-6 md:px-6">
+          <div className="relative -mt-8 flex flex-wrap items-end gap-3">
+            <div className="relative h-[5.2rem] w-[5.2rem] overflow-hidden rounded-[20px] border-[3px] border-white bg-[linear-gradient(135deg,#e8cfab,#c4956a)] shadow-[0_14px_30px_rgba(196,149,106,0.22)]">
               {profile?.avatar_url ? (
                 <img src={profile.avatar_url} alt={displayName} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-[2.35rem] font-black text-white">
+                <div className="flex h-full w-full items-center justify-center text-[1.95rem] font-black text-white">
                   {displayName.slice(0, 1)}
                 </div>
               )}
@@ -472,40 +473,40 @@ export function ProfilePage() {
           </div>
 
           <div className="mt-3">
-            <h1 className="text-[2.05rem] font-black tracking-[-0.05em] text-[#1a2233]">{displayName}</h1>
-            <p className="mt-2 text-[0.92rem] font-medium text-[#72809c]">
+            <h1 className="text-[1.95rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{displayName}</h1>
+            <p className="mt-1.5 text-[0.82rem] font-medium text-[#7f7368]">
               {handle}
               <span className="mx-2">{'·'}</span>
               {formatMemberSince(profile?.created_at)}
             </p>
           </div>
 
-          <div className="mt-7 rounded-[26px] border border-[#e7edf6] bg-white p-5 shadow-[0_18px_42px_rgba(83,110,162,0.08)]">
-            <div className="grid gap-5 md:grid-cols-2">
+          <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
+            <div className="grid gap-4 md:grid-cols-2">
               <StatBlock
                 icon={<BookOpenText size={28} />}
-                iconBoxClass="bg-[#dff8e9] text-[#1dbd71]"
+                iconBoxClass="bg-[#edf5ec] text-[#5c7d60]"
                 value={formatCompactStat(stats?.courses_completed ?? 0)}
                 label="课程"
               />
               <StatBlock
                 icon={<Sparkles size={28} />}
-                iconBoxClass="bg-[#eef1ff] text-[#5c65ef]"
+                iconBoxClass="bg-[#fbf3e6] text-[#9a6f3f]"
                 value={formatCompactStat(stats?.total_xp ?? 0)}
                 label="总经验值"
               />
-              <div className="border-t border-[#edf2f8] pt-5 md:border-t">
+              <div className="border-t border-[#edf2f8] pt-4 md:border-t">
                 <StatBlock
                   icon={<Flame size={28} />}
-                  iconBoxClass="bg-[#fff3d6] text-[#f1a81a]"
+                  iconBoxClass="bg-[#f7ede2] text-[#b46f53]"
                   value={formatCompactStat(stats?.current_streak ?? 0)}
                   label="天连击"
                 />
               </div>
-              <div className="border-t border-[#edf2f8] pt-5 md:border-t">
+              <div className="border-t border-[#edf2f8] pt-4 md:border-t">
                 <StatBlock
                   icon={<Users size={28} />}
-                  iconBoxClass="bg-[#ffe8f3] text-[#f06cb1]"
+                  iconBoxClass="bg-[#f3edf7] text-[#7f6f88]"
                   value={formatCompactStat(followCounts?.followers ?? 0)}
                   label="粉丝"
                 />
@@ -513,15 +514,14 @@ export function ProfilePage() {
             </div>
           </div>
 
-          <div className="mt-7 rounded-[26px] border border-[#e7edf6] bg-white p-5 shadow-[0_18px_42px_rgba(83,110,162,0.08)]">
+          <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-[1.72rem] font-black tracking-[-0.04em] text-[#1c2436]">{'学习热力图'}</h2>
-                <p className="mt-2 text-[0.88rem] font-medium text-[#93a1b9]">{'过去 12 个月的每日学习活跃度'}</p>
+                <h2 className="text-[1.76rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'学习热力图'}</h2>
               </div>
               <div className="text-right">
-                <div className="text-[1.02rem] font-black text-[#7f8ea8]">{`今年 ${totalXpThisYear} XP`}</div>
-                <div className="mt-2 inline-flex items-center gap-2 text-xs font-semibold text-[#9aa7bd]">
+                <div className="text-[0.92rem] font-black text-[#7f7368]">{`今年 ${totalXpThisYear} XP`}</div>
+                <div className="mt-1.5 inline-flex items-center gap-2 text-[0.7rem] font-semibold text-[#9b8e85]">
                   <span>{'少'}</span>
                   <div className="flex items-center gap-1">
                     {[0, 30, 80, 120, 180].map((value) => (
@@ -533,14 +533,17 @@ export function ProfilePage() {
               </div>
             </div>
 
-            <div ref={heatmapViewportRef} className="mt-7 overflow-x-auto pb-2">
+            <div ref={heatmapViewportRef} className="viewer-scrollbar-hidden mt-5 overflow-x-auto pb-1">
               <div style={{ minWidth: `${heatmapContentWidth}px` }}>
                 <div className="relative ml-8 h-5" style={{ width: `${gridWidth}px` }}>
                   {heatmapData.markers.map((marker) => (
                     <div
                       key={`${marker.label}-${marker.weekIndex}`}
-                      className="absolute top-0 text-[0.78rem] font-black text-[#97a6bf]"
-                      style={{ left: `${marker.weekIndex * (heatmapCellSize + cellGap)}px` }}
+                      className="absolute top-0 whitespace-nowrap text-[0.74rem] font-black text-[#9b8e85]"
+                      style={{
+                        left: `${marker.weekIndex * (heatmapCellSize + cellGap)}px`,
+                        transform: marker.weekIndex >= weekCount - 2 ? 'translateX(-100%)' : undefined,
+                      }}
                     >
                       {marker.label}
                     </div>
@@ -548,7 +551,7 @@ export function ProfilePage() {
                 </div>
 
                 <div className="mt-3 flex gap-3">
-                  <div className="grid grid-rows-7 gap-[4px] pt-[2px] text-[0.78rem] font-black text-[#97a6bf]">
+                  <div className="grid grid-rows-7 gap-[4px] pt-[2px] text-[0.72rem] font-black text-[#9b8e85]">
                     {['日', '一', '二', '三', '四', '五', '六'].map((label) => (
                       <div key={label} className="flex w-5 items-center" style={{ height: `${heatmapCellSize}px` }}>
                         {label}
@@ -566,7 +569,7 @@ export function ProfilePage() {
                             className={cn(
                               'rounded-[3px]',
                               cell.inRange ? contributionTone(cell.value) : 'bg-transparent',
-                              cell.isToday ? 'ring-2 ring-[#7ab97d] ring-offset-1 ring-offset-white' : '',
+                              cell.isToday ? 'ring-2 ring-[#7a9e7e] ring-offset-1 ring-offset-white' : '',
                             )}
                             style={{ height: `${heatmapCellSize}px`, width: `${heatmapCellSize}px` }}
                           />
@@ -579,12 +582,12 @@ export function ProfilePage() {
             </div>
           </div>
 
-          <div className="mt-7 rounded-[26px] border border-[#e7edf6] bg-white p-5 shadow-[0_18px_42px_rgba(83,110,162,0.08)]">
+          <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-[1.72rem] font-black tracking-[-0.04em] text-[#1c2436]">{'我的成就'}</h2>
+              <h2 className="text-[1.76rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'我的成就'}</h2>
               <Link
                 to="/achievements"
-                className="inline-flex items-center gap-2 text-[0.96rem] font-black text-[#554cf4] transition hover:text-[#4337eb]"
+                className="inline-flex items-center gap-2 text-[0.88rem] font-black text-[#5c7d60] transition hover:text-[#4a674d]"
               >
                 <span>{'查看全部'}</span>
                 <ChevronRight size={18} />
@@ -592,7 +595,7 @@ export function ProfilePage() {
             </div>
 
             {showcaseAchievements.length === 0 ? (
-              <div className="mt-6 rounded-[24px] border border-dashed border-[#d9e3ef] bg-[#fbfdff] px-6 py-8 text-center text-[0.98rem] font-semibold text-[#95a1b6]">
+              <div className="mt-6 rounded-[24px] border border-dashed border-[#cdbfaf] bg-[rgba(255,252,247,0.82)] px-6 py-8 text-center text-[0.98rem] font-semibold text-[#9b8e85]">
                 {'你已完成全部成就，继续学习会有更多内容加入。'}
               </div>
             ) : (
@@ -602,7 +605,7 @@ export function ProfilePage() {
                   return (
                     <div
                       key={achievement.id}
-                      className="rounded-[22px] border border-[#e4ebf5] bg-[linear-gradient(180deg,#ffffff_0%,#f9fbff_100%)] p-4 shadow-[0_12px_28px_rgba(83,110,162,0.06)]"
+                      className="rounded-[22px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.94)_0%,rgba(247,242,231,0.86)_100%)] p-4 shadow-[0_12px_28px_rgba(90,70,50,0.06)]"
                     >
                       <div className="flex items-start gap-4">
                         <div className="flex h-[4.2rem] w-[4.2rem] shrink-0 items-center justify-center">
@@ -616,22 +619,22 @@ export function ProfilePage() {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-start justify-between gap-3">
                             <div>
-                              <h3 className="text-[0.98rem] font-black text-[#243046]">{achievementDisplayName(achievement)}</h3>
-                              <div className="mt-2 inline-flex rounded-full bg-[#f2f6fb] px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em] text-[#7b8ba5]">
+                              <h3 className="text-[1.12rem] font-black text-[#3d342a]">{achievementDisplayName(achievement)}</h3>
+                              <div className="mt-2 inline-flex rounded-full bg-[#f3efe8] px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em] text-[#7b6d62]">
                                 {progress.isUnlocked ? '已解锁' : achievementCategoryLabel(achievementDisplayCategory(achievement))}
                               </div>
                             </div>
-                            <div className="text-[0.82rem] font-black text-[#94a3b8]">{progress.counterLabel}</div>
+                            <div className="text-[0.82rem] font-black text-[#96877a]">{progress.counterLabel}</div>
                           </div>
 
-                          <div className="mt-4 h-2.5 rounded-full bg-[#e8edf4]">
+                          <div className="mt-4 h-2.5 rounded-full bg-[#ebe3d6]">
                             <div
-                              className="h-full rounded-full bg-[linear-gradient(90deg,#fcd34d_0%,#f59e0b_100%)]"
+                              className="h-full rounded-full bg-[linear-gradient(90deg,#d4b896_0%,#c4956a_100%)]"
                               style={{ width: `${progress.ratio * 100}%` }}
                             />
                           </div>
 
-                          <p className="mt-3 text-[0.84rem] leading-6 text-[#6f7d97]">{progress.requirement}</p>
+                          <p className="mt-3 text-[0.84rem] leading-6 text-[#6f6359]">{progress.requirement}</p>
                         </div>
                       </div>
                     </div>
