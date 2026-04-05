@@ -31,19 +31,19 @@ export function ErrorStateCard({
   onRetry?: () => void;
 }) {
   return (
-    <SurfaceCard className="space-y-3 border-rose-200 bg-rose-50/80">
+    <SurfaceCard className="space-y-3 border-[#e6c8c2] bg-[#fbefed]">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-rose-600">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#a15c54]">
           {title ?? viewerCopy.common.errorTitle}
         </p>
-        <p className="mt-2 text-sm font-semibold text-rose-900">
+        <p className="mt-2 text-sm font-semibold text-[#5f403c]">
           {message ?? viewerCopy.common.errorFallback}
         </p>
       </div>
       {onRetry ? (
         <button
           type="button"
-          className="rounded-2xl bg-rose-600 px-4 py-3 text-sm font-black text-white"
+          className="viewer-botanical-button viewer-botanical-button--warm"
           onClick={onRetry}
         >
           {viewerCopy.common.retry}
@@ -76,7 +76,7 @@ export function FeatureDisabledState({
       {actionLabel && onAction ? (
         <button
           type="button"
-          className="rounded-2xl bg-[var(--viewer-primary)] px-4 py-3 text-sm font-black text-white"
+          className="viewer-botanical-button viewer-botanical-button--primary"
           onClick={onAction}
         >
           {actionLabel}

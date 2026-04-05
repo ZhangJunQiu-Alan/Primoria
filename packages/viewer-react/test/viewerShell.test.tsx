@@ -7,7 +7,7 @@ describe('viewer shell navigation', () => {
     const { renderRoute } = await import('./renderApp');
     const { locationRef } = renderRoute('/home', 'user');
 
-    expect(await screen.findByRole('heading', { name: /今天开始学习/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 })).toBeInTheDocument();
 
     await user.click(screen.getByRole('link', { name: /课程库/i }));
 
