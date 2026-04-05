@@ -13,8 +13,8 @@ self.addEventListener('push', (event) => {
   const title = payload.title || 'Primoria';
   const options = {
     body: payload.body || '你有一条新的学习提醒。',
-    icon: '/primoria-logo.png',
-    badge: '/primoria-logo.png',
+    icon: 'primoria-logo.png',
+    badge: 'primoria-logo.png',
     data: {
       url: payload.url || '/home',
     },

@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { viewerCopy } from '@/shared/theme/copy';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 
 const topNavLinks = [
   { id: 'growth', label: viewerCopy.landing.topNav[0] },
@@ -156,7 +157,7 @@ export function LandingPage() {
           <div className="landing-zoom-80 flex items-center gap-12">
             <Link to="/" className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-[16px] bg-[#091022] shadow-[0_16px_36px_rgba(6,24,59,0.20)]">
-                <img src="/primoria-logo.png" alt="Primoria" className="h-full w-full object-cover" />
+                <img src={publicAssetPath('primoria-logo.png')} alt="Primoria" className="h-full w-full object-cover" />
               </div>
               <span className="text-[1.8rem] font-black uppercase tracking-[0.08em] text-[#28a4f4] md:text-[1.95rem]">
                 {viewerCopy.brand.name}

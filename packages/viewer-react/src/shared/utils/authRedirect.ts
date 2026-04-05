@@ -1,5 +1,13 @@
 const DEFAULT_AUTH_RETURN_TO = '/home';
 
+function readAppBasePath() {
+  const baseUrl = import.meta.env.BASE_URL?.trim() || '/';
+  if (!baseUrl || baseUrl === '/') {
+    return '/';
+  }
+  return baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+}
+
 export function sanitizeReturnTo(value: string | null | undefined) {
   if (!value) {
     return null;
@@ -28,7 +36,7 @@ export function readReturnTo(search: string, fallback = DEFAULT_AUTH_RETURN_TO) 
 }
 
 export function buildAuthCallbackUrl(returnTo?: string | null) {
-  const url = new URL('/auth/callback', window.location.origin);
+  const url = new URL(`${readAppBasePath()}auth/callback`, window.location.origin);
   const next = sanitizeReturnTo(returnTo);
   if (next) {
     url.searchParams.set('returnTo', next);
