@@ -262,4 +262,26 @@ describe('DashboardPage', () => {
       'Algebra Foundations',
     ]);
   });
+
+  it('opens the AI draft dialog and saves a front-end course brief notice', async () => {
+    const user = userEvent.setup();
+    renderDashboard('/builder/dashboard?tab=course');
+
+    await user.click(screen.getByRole('button', { name: /create with ai/i }));
+
+    expect(await screen.findByRole('heading', { name: /ai course draft/i })).toBeInTheDocument();
+
+    const topicInput = screen.getByLabelText('Course topic');
+    await user.clear(topicInput);
+    await user.type(topicInput, 'Forces in Motion');
+
+    const preview = screen.getByTestId('dashboard-ai-course-preview');
+    expect(within(preview).getByRole('heading', { name: 'Forces in Motion' })).toBeInTheDocument();
+    expect(within(preview).getByText(/front-end only/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /use this brief/i }));
+
+    expect(await screen.findByText(/saved as an ai front-end brief only/i)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /ai course draft/i })).not.toBeInTheDocument();
+  });
 });

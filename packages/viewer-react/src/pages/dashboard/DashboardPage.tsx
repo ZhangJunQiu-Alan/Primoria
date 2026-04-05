@@ -9,10 +9,12 @@ import {
   BadgeCheck,
   BarChart3,
   Bell,
+  Bot,
   BookCopy,
   BookOpen,
   BookPlus,
   BookText,
+  BrainCircuit,
   ChevronDown,
   CircleDollarSign,
   Clock3,
@@ -86,6 +88,22 @@ interface CourseFormPayload {
   price?: number;
 }
 
+type AICourseDraftPace = 'quick' | 'balanced' | 'deep';
+
+interface AICourseDraftFormState {
+  topic: string;
+  audience: string;
+  outcome: string;
+  pace: AICourseDraftPace;
+}
+
+interface AICourseDraftPreview {
+  title: string;
+  summary: string;
+  lessonTitles: string[];
+  coachNote: string;
+}
+
 interface CourseFormDialogProps {
   open: boolean;
   mode: 'create' | 'edit';
@@ -154,6 +172,19 @@ const emptyCourseForm: CourseFormState = {
   price: '',
 };
 
+const emptyAICourseDraftForm: AICourseDraftFormState = {
+  topic: '',
+  audience: '',
+  outcome: '',
+  pace: 'balanced',
+};
+
+const aiCourseTopicPresets = [
+  'Physics problem-solving sprint',
+  'Prompt design for beginners',
+  'Interactive web fundamentals',
+];
+
 function parseDashboardTab(value: string | null): DashboardTab {
   switch (value) {
     case 'course':
@@ -163,6 +194,52 @@ function parseDashboardTab(value: string | null): DashboardTab {
     default:
       return 'home';
   }
+}
+
+function buildAICourseDraftPreview(form: AICourseDraftFormState): AICourseDraftPreview {
+  const topic = form.topic.trim() || 'AI-assisted course draft';
+  const audience = form.audience.trim() || 'beginner learners';
+  const outcome = form.outcome.trim() || 'build confidence through a short guided sequence';
+
+  const paceCopy: Record<
+    AICourseDraftPace,
+    {
+      label: string;
+      modules: [string, string, string];
+      note: string;
+    }
+  > = {
+    quick: {
+      label: 'quick-start',
+      modules: ['Orientation and first win', 'Guided drill', 'Checkpoint recap'],
+      note: 'Designed for a fast first version that gets learners into action quickly.',
+    },
+    balanced: {
+      label: 'balanced',
+      modules: ['Foundations and context', 'Worked example + guided practice', 'Checkpoint and reflection'],
+      note: 'Balanced for a clear explanation, one practice pass, and a compact review loop.',
+    },
+    deep: {
+      label: 'deep-dive',
+      modules: ['Mental model and core concepts', 'Scenario practice lab', 'Review, transfer, and extension'],
+      note: 'Structured for a denser learning arc with more explanation and transfer practice.',
+    },
+  };
+
+  const selectedPace = paceCopy[form.pace];
+  const title = topic;
+  const lessonTitles = selectedPace.modules.map((label, index) => {
+    if (index === 0) return `${label}: ${topic}`;
+    if (index === 1) return `${label}: ${topic.split(' ').slice(0, 3).join(' ') || topic}`;
+    return `${label}: next-step review`;
+  });
+
+  return {
+    title,
+    summary: `A ${selectedPace.label} course for ${audience} that helps them ${outcome}.`,
+    lessonTitles,
+    coachNote: selectedPace.note,
+  };
 }
 
 function courseToFormState(course?: CourseRow | null): CourseFormState {
@@ -744,6 +821,170 @@ function CourseFormDialog({
   );
 }
 
+function AICourseDraftDialog({
+  open,
+  onOpenChange,
+  onUseDraft,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onUseDraft: (preview: AICourseDraftPreview) => void;
+}) {
+  const [form, setForm] = useState<AICourseDraftFormState>(emptyAICourseDraftForm);
+
+  useEffect(() => {
+    if (!open) return;
+    setForm(emptyAICourseDraftForm);
+  }, [open]);
+
+  const preview = buildAICourseDraftPreview(form);
+
+  return (
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="dashboard-dialog__overlay" />
+        <Dialog.Content className="dashboard-dialog dashboard-dialog--ai">
+          <div className="dashboard-dialog__topline">
+            <div>
+              <Dialog.Title className="dashboard-dialog__title">AI course draft</Dialog.Title>
+              <Dialog.Description className="dashboard-dialog__subtitle">
+                Shape a course brief, preview the structure, and keep it as a front-end concept.
+                This does not create a real course yet.
+              </Dialog.Description>
+            </div>
+            <Dialog.Close asChild>
+              <button
+                type="button"
+                className="studio-icon-button studio-icon-button--plain"
+                aria-label="Close AI draft dialog"
+              >
+                <X size={16} />
+              </button>
+            </Dialog.Close>
+          </div>
+
+          <div className="dashboard-dialog__form">
+            <label className="dashboard-field">
+              <span>Course topic</span>
+              <input
+                value={form.topic}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, topic: event.target.value }))
+                }
+                placeholder="For example: Forces in Motion"
+                autoFocus
+              />
+            </label>
+
+            <div className="dashboard-ai-presets" aria-label="AI topic presets">
+              {aiCourseTopicPresets.map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  className="studio-chip"
+                  onClick={() =>
+                    setForm((current) => ({
+                      ...current,
+                      topic: preset,
+                    }))
+                  }
+                >
+                  {preset}
+                </button>
+              ))}
+            </div>
+
+            <div className="dashboard-dialog__grid">
+              <label className="dashboard-field">
+                <span>Target learner</span>
+                <input
+                  value={form.audience}
+                  onChange={(event) =>
+                    setForm((current) => ({ ...current, audience: event.target.value }))
+                  }
+                  placeholder="For example: middle school learners"
+                />
+              </label>
+
+              <label className="dashboard-field">
+                <span>Pacing</span>
+                <select
+                  value={form.pace}
+                  onChange={(event) =>
+                    setForm((current) => ({
+                      ...current,
+                      pace: event.target.value as AICourseDraftPace,
+                    }))
+                  }
+                >
+                  <option value="quick">Quick start</option>
+                  <option value="balanced">Balanced</option>
+                  <option value="deep">Deep dive</option>
+                </select>
+              </label>
+            </div>
+
+            <label className="dashboard-field">
+              <span>Learning outcome</span>
+              <textarea
+                rows={4}
+                value={form.outcome}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, outcome: event.target.value }))
+                }
+                placeholder="For example: understand the basics, complete one guided practice, and leave with a clear next step."
+              />
+            </label>
+
+            <section className="dashboard-ai-preview" data-testid="dashboard-ai-course-preview">
+              <div className="dashboard-ai-preview__header">
+                <span className="dashboard-ai-preview__badge">
+                  <BrainCircuit size={14} />
+                  AI preview
+                </span>
+                <small>Front-end only</small>
+              </div>
+
+              <h3>{preview.title}</h3>
+              <p>{preview.summary}</p>
+
+              <div className="dashboard-ai-preview__lessons">
+                {preview.lessonTitles.map((lessonTitle, index) => (
+                  <article key={`${lessonTitle}-${index}`} className="dashboard-ai-preview__lesson">
+                    <span>{`Lesson ${index + 1}`}</span>
+                    <strong>{lessonTitle}</strong>
+                  </article>
+                ))}
+              </div>
+
+              <div className="dashboard-ai-preview__note">
+                <Bot size={15} />
+                <span>{preview.coachNote}</span>
+              </div>
+            </section>
+
+            <div className="dashboard-dialog__actions">
+              <Dialog.Close asChild>
+                <button type="button" className="studio-button studio-button--ghost">
+                  Cancel
+                </button>
+              </Dialog.Close>
+              <button
+                type="button"
+                className="studio-button studio-button--ai"
+                onClick={() => onUseDraft(preview)}
+              >
+                <BrainCircuit size={16} />
+                <span>Use this brief</span>
+              </button>
+            </div>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+
 function ConfirmDialog({
   open,
   title,
@@ -814,6 +1055,7 @@ export function DashboardPage() {
   const [fansSearch, setFansSearch] = useState('');
   const [fansFilter, setFansFilter] = useState<FansFilter>('all');
   const [notice, setNotice] = useState<NoticeState | null>(null);
+  const [aiDraftOpen, setAiDraftOpen] = useState(false);
   const [formMode, setFormMode] = useState<'create' | 'edit' | null>(null);
   const [courseForForm, setCourseForForm] = useState<CourseRow | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
@@ -1051,6 +1293,14 @@ export function DashboardPage() {
 
   function showInfo(text: string) {
     setNotice({ tone: 'info', text });
+  }
+
+  function handleUseAICourseDraft(preview: AICourseDraftPreview) {
+    setAiDraftOpen(false);
+    setNotice({
+      tone: 'info',
+      text: `"${preview.title}" is saved as an AI front-end brief only for now. Connect generation later to turn it into a real course shell.`,
+    });
   }
 
   async function handleCreateCourse(payload: CourseFormPayload) {
@@ -1426,6 +1676,15 @@ export function DashboardPage() {
                     <>
                       <button
                         type="button"
+                        className="studio-button studio-button--ai"
+                        onClick={() => setAiDraftOpen(true)}
+                      >
+                        <BrainCircuit size={16} />
+                        <span>Create with AI</span>
+                      </button>
+
+                      <button
+                        type="button"
                         className="studio-button studio-button--primary"
                         onClick={() => {
                           setFormError(null);
@@ -1552,6 +1811,14 @@ export function DashboardPage() {
                     <h2>No courses yet</h2>
                     <p>Create a course shell first, then return here to manage lessons and publish status.</p>
                     <div className="studio-empty-state__actions">
+                      <button
+                        type="button"
+                        className="studio-button studio-button--ai"
+                        onClick={() => setAiDraftOpen(true)}
+                      >
+                        <BrainCircuit size={16} />
+                        <span>Create with AI</span>
+                      </button>
                       <button
                         type="button"
                         className="studio-button studio-button--primary"
@@ -1987,6 +2254,12 @@ export function DashboardPage() {
         onSubmit={(payload) =>
           formMode === 'edit' ? handleUpdateCourse(payload) : handleCreateCourse(payload)
         }
+      />
+
+      <AICourseDraftDialog
+        open={aiDraftOpen}
+        onOpenChange={setAiDraftOpen}
+        onUseDraft={handleUseAICourseDraft}
       />
 
       <ConfirmDialog
