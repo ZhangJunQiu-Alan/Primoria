@@ -5,7 +5,12 @@ import { renderRoute } from './renderApp';
 vi.mock('@/shared/api/geminiClient', () => ({
   bootstrapGeminiKey: vi.fn(async () => 'demo-key'),
   persistGeminiKey: vi.fn(async () => undefined),
-  generateTutorReply: vi.fn(async () => 'Mock tutor reply'),
+  generateTutorReplyStream: vi.fn(async (_history, handlers) => {
+    handlers?.onToken?.('Mock tutor reply');
+    const payload = { threadId: 'thread-1', reply: 'Mock tutor reply', usedTools: [] };
+    handlers?.onFinal?.(payload);
+    return payload;
+  }),
   generateMindMap: vi.fn(async () => ({
     title: 'Mind map',
     nodes: [
@@ -45,5 +50,15 @@ describe('AiTutorPage', () => {
 
     expect(await screen.findByRole('heading', { name: /mind map/i }, { timeout: 3000 })).toBeInTheDocument();
     expect(screen.getByText(/learner shell/i)).toBeInTheDocument();
+  });
+
+  it('renders streamed tutor text progressively', async () => {
+    const user = userEvent.setup();
+    renderRoute('/ai-tutor', 'user');
+
+    await user.type(await screen.findByPlaceholderText(/开始输入/i), '帮我总结一下');
+    await user.click(await screen.findByRole('button', { name: /^发送$/i }));
+
+    expect(await screen.findByText(/mock tutor reply/i)).toBeInTheDocument();
   });
 });

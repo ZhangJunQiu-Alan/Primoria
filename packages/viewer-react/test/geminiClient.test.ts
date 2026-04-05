@@ -1,8 +1,20 @@
+vi.mock('@/shared/api/supabase', () => ({
+  supabase: {
+    auth: {
+      getSession: vi.fn(async () => ({
+        data: { session: { access_token: 'demo-access-token' } },
+        error: null,
+      })),
+    },
+  },
+}));
+
 describe('geminiClient', () => {
   afterEach(() => {
     vi.unstubAllEnvs();
     vi.restoreAllMocks();
     vi.resetModules();
+    window.localStorage.clear();
   });
 
   it('calls the edge function when fixture mode is explicitly disabled in tests', async () => {
@@ -47,5 +59,59 @@ describe('geminiClient', () => {
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
 
     await expect(generateTutorReply([{ role: 'user', text: 'Hello' }])).rejects.toThrow('Tutor quota exceeded.');
+  });
+
+  it('streams tutor replies from the agent service', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+
+    const streamBody = new ReadableStream({
+      start(controller) {
+        controller.enqueue(
+          new TextEncoder().encode(
+            [
+              'event: run_started\n',
+              'data: {"thread_id":"thread-1"}\n\n',
+              'event: token\n',
+              'data: {"text":"Hello "}\n\n',
+              'event: token\n',
+              'data: {"text":"world"}\n\n',
+              'event: final\n',
+              'data: {"thread_id":"thread-1","reply":"Hello world","used_tools":["recall_user_memories"]}\n\n',
+            ].join(''),
+          ),
+        );
+        controller.close();
+      },
+    });
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(streamBody, {
+        status: 200,
+        headers: { 'Content-Type': 'text/event-stream' },
+      }),
+    );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const seenTokens: string[] = [];
+    const result = await generateTutorReplyStream([{ role: 'user', text: 'Hello' }], {
+      onToken(token) {
+        seenTokens.push(token);
+      },
+    });
+
+    expect(result.reply).toBe('Hello world');
+    expect(result.threadId).toBe('thread-1');
+    expect(result.usedTools).toEqual(['recall_user_memories']);
+    expect(seenTokens).toEqual(['Hello ', 'world']);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:8787/v1/chat/stream',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer demo-access-token',
+        }),
+      }),
+    );
   });
 });
