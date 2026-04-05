@@ -3,10 +3,11 @@ import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { fetchViewerProfile, updateProfile } from '@/shared/api/viewer/profileApi';
+import { DEFAULT_VIEWER_LANGUAGE, normalizeViewerLanguage } from '@/shared/i18n/locale';
 
 export const DEFAULT_VIEWER_USER_SETTINGS: ViewerUserSettings = {
   theme_mode: 'system',
-  language: 'zh-CN',
+  language: DEFAULT_VIEWER_LANGUAGE,
   notification_daily_reminder: false,
   notification_reminder_time: '20:00',
   marketing_emails: false,
@@ -25,7 +26,7 @@ function normalizeReminderTime(value: unknown) {
 function normalizeUserSettings(raw: Partial<ViewerUserSettings> | null | undefined): ViewerUserSettings {
   return {
     theme_mode: normalizeThemeMode(raw?.theme_mode),
-    language: raw?.language === 'en' ? 'en' : 'zh-CN',
+    language: normalizeViewerLanguage(raw?.language),
     notification_daily_reminder: raw?.notification_daily_reminder === true,
     notification_reminder_time: normalizeReminderTime(raw?.notification_reminder_time),
     marketing_emails: raw?.marketing_emails === true,
@@ -70,19 +71,34 @@ export async function saveAccountSystemSettings(
   userId: string,
   payload: Partial<ViewerUserSettings>,
 ): Promise<ViewerUserSettings> {
-  const next = normalizeUserSettings({ ...DEFAULT_VIEWER_USER_SETTINGS, ...payload });
-
   if (usesViewerFixtures()) {
     const { patchFixtureState } = await loadFixtureStore();
-    patchFixtureState((state) => ({
+    const nextState = patchFixtureState((state) => ({
       ...state,
       userSettings: {
         ...state.userSettings,
-        ...next,
+        ...payload,
       },
     }));
-    return next;
+    return normalizeUserSettings(nextState.userSettings);
   }
+
+  const { data: existingSettings, error: loadError } = await supabase
+    .from('user_settings')
+    .select(
+      'theme_mode, language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode',
+    )
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (loadError) {
+    throw loadError;
+  }
+
+  const next = normalizeUserSettings({
+    ...(existingSettings as Partial<ViewerUserSettings> | null),
+    ...payload,
+  });
 
   const { error } = await supabase.from('user_settings').upsert({
     user_id: userId,

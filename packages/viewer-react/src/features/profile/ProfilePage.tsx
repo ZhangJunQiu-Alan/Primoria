@@ -14,6 +14,8 @@ import {
 } from '@/shared/api/viewer/profileApi';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import type { ViewerAchievement } from '@/shared/api/viewer/types';
+import { formatViewerMonthYear, formatViewerNumber } from '@/shared/i18n/format';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { useAppDispatch, useAppSelector } from '@/shared/state/store';
 import { cn } from '@/shared/utils/cn';
 import { clearDemoRole } from '@/shared/utils/demoMode';
@@ -43,17 +45,19 @@ type HeatmapMonthMarker = {
   weekIndex: number;
 };
 
-function formatMemberSince(dateString?: string) {
-  if (!dateString) return '加入于 2026年2月';
+function formatMemberSince(dateString: string | undefined, language: 'zh-CN' | 'en') {
+  if (!dateString) return language === 'zh-CN' ? '加入于 2026年2月' : 'Joined Feb 2026';
   const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return '加入于 2026年2月';
-  return `加入于 ${date.getFullYear()}年${date.getMonth() + 1}月`;
+  if (Number.isNaN(date.getTime())) return language === 'zh-CN' ? '加入于 2026年2月' : 'Joined Feb 2026';
+  return language === 'zh-CN'
+    ? `加入于 ${formatViewerMonthYear(date, language)}`
+    : `Joined ${formatViewerMonthYear(date, language)}`;
 }
 
-function formatCompactStat(value: number) {
+function formatCompactStat(value: number, language: 'zh-CN' | 'en') {
   if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
   if (value >= 10000) return `${Math.round(value / 1000)}K`;
-  return value.toLocaleString();
+  return formatViewerNumber(value, language);
 }
 
 function startOfUtcDay(date: Date) {
@@ -179,6 +183,7 @@ export function ProfilePage() {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const language = useProductLanguage();
   const user = useAppSelector((state) => state.auth.user);
   const heatmapViewportRef = useRef<HTMLDivElement | null>(null);
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
@@ -477,7 +482,7 @@ export function ProfilePage() {
             <p className="mt-1.5 text-[0.82rem] font-medium text-[#7f7368]">
               {handle}
               <span className="mx-2">{'·'}</span>
-              {formatMemberSince(profile?.created_at)}
+              {formatMemberSince(profile?.created_at, language)}
             </p>
           </div>
 
@@ -486,20 +491,20 @@ export function ProfilePage() {
               <StatBlock
                 icon={<BookOpenText size={28} />}
                 iconBoxClass="bg-[#edf5ec] text-[#5c7d60]"
-                value={formatCompactStat(stats?.courses_completed ?? 0)}
+                value={formatCompactStat(stats?.courses_completed ?? 0, language)}
                 label="课程"
               />
               <StatBlock
                 icon={<Sparkles size={28} />}
                 iconBoxClass="bg-[#fbf3e6] text-[#9a6f3f]"
-                value={formatCompactStat(stats?.total_xp ?? 0)}
+                value={formatCompactStat(stats?.total_xp ?? 0, language)}
                 label="总经验值"
               />
               <div className="border-t border-[#edf2f8] pt-4 md:border-t">
                 <StatBlock
                   icon={<Flame size={28} />}
                   iconBoxClass="bg-[#f7ede2] text-[#b46f53]"
-                  value={formatCompactStat(stats?.current_streak ?? 0)}
+                  value={formatCompactStat(stats?.current_streak ?? 0, language)}
                   label="天连击"
                 />
               </div>
@@ -507,7 +512,7 @@ export function ProfilePage() {
                 <StatBlock
                   icon={<Users size={28} />}
                   iconBoxClass="bg-[#f3edf7] text-[#7f6f88]"
-                  value={formatCompactStat(followCounts?.followers ?? 0)}
+                  value={formatCompactStat(followCounts?.followers ?? 0, language)}
                   label="粉丝"
                 />
               </div>

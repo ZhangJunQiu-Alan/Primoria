@@ -5,12 +5,12 @@ describe('viewer route guards', () => {
   it('redirects unauthenticated users to login', async () => {
     renderRoute('/home');
 
-    expect(await screen.findByRole('heading', { name: /welcome back/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /欢迎回来/i }, { timeout: 3000 })).toBeInTheDocument();
   });
 
   it('redirects parent users away from learner routes', async () => {
     renderRoute('/home', 'parent');
 
-    expect(await screen.findByRole('heading', { name: /parent dashboard/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /家长看板/i }, { timeout: 3000 })).toBeInTheDocument();
   });
 });

@@ -12,12 +12,13 @@ import {
 import { Link } from 'react-router-dom';
 import { fetchCourses, fetchSubjects } from '@/shared/api/viewer/catalogApi';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
 
 function subjectVisual(name: string, index: number) {
   const normalized = name.toLowerCase();
-  if (normalized === '全部') {
+  if (normalized === '全部' || normalized === 'all') {
     return {
       icon: LayoutGrid,
       outline: 'border-[#b8d0ba]',
@@ -102,23 +103,30 @@ function subjectVisual(name: string, index: number) {
   return choices[index % choices.length];
 }
 
-function formatDuration(minutes: number) {
+function formatDuration(minutes: number, language: 'zh-CN' | 'en') {
   if (minutes >= 60) {
     const hours = Math.max(1, Math.round((minutes / 60) * 10) / 10);
-    return `${hours}h`;
+    return language === 'zh-CN' ? `${hours} 小时` : `${hours}h`;
   }
-  return `${minutes}m`;
+  return language === 'zh-CN' ? `${minutes} 分钟` : `${minutes}m`;
 }
 
-function formatDifficulty(level: string) {
+function formatDifficulty(level: string, language: 'zh-CN' | 'en') {
   const normalized = level.trim().toLowerCase();
   if (!normalized) {
-    return 'Open';
+    return language === 'zh-CN' ? '开放' : 'Open';
+  }
+  if (language === 'zh-CN') {
+    if (normalized === 'beginner') return '入门';
+    if (normalized === 'intermediate') return '进阶';
+    if (normalized === 'advanced') return '挑战';
   }
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
 export function LibraryPage() {
+  const language = useProductLanguage();
+  const copy = useViewerCopy();
   const [query, setQuery] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);
   const deferredQuery = useDeferredValue(query);
@@ -136,8 +144,8 @@ export function LibraryPage() {
   const courses = coursesQuery.data ?? [];
 
   const subjectButtons = useMemo(
-    () => [{ id: null, name: viewerCopy.library.allSubjects }, ...subjects],
-    [subjects],
+    () => [{ id: null, name: copy.library.allSubjects }, ...subjects],
+    [copy.library.allSubjects, subjects],
   );
 
   const requestError =
@@ -151,9 +159,9 @@ export function LibraryPage() {
         <label className="flex items-center gap-2.5 rounded-b-[22px] rounded-t-none border-b border-[#ddd3c3] bg-[rgba(255,252,247,0.92)] px-5 py-3.5 text-[#9b8e85] shadow-[inset_0_1px_3px_rgba(90,70,50,0.05)] md:px-6">
           <Search size={20} />
           <input
-            aria-label={viewerCopy.common.search}
+            aria-label={copy.common.search}
             className="min-w-0 flex-1 border-0 bg-transparent text-[0.92rem] font-medium text-[#3d342a] outline-none placeholder:text-[#aa9d93]"
-            placeholder="搜索课程..."
+            placeholder={copy.library.searchPlaceholder}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -203,7 +211,7 @@ export function LibraryPage() {
           className="text-[2.2rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
           style={{ fontFamily: '"Cormorant Garamond", serif' }}
         >
-          {'全部课程'}
+          {copy.library.allCourses}
         </h2>
       </div>
 
@@ -219,14 +227,14 @@ export function LibraryPage() {
       ) : null}
       {!subjectsQuery.isLoading && !coursesQuery.isLoading && !requestError && courses.length === 0 ? (
         <div className="mt-4 rounded-[26px] border border-[#ddd3c3] bg-[rgba(254,250,245,0.88)] p-6 shadow-[0_18px_44px_rgba(90,70,50,0.08)]">
-          <p className="text-[0.92rem] font-medium text-[#7a6f66]">{viewerCopy.library.noResults}</p>
+          <p className="text-[0.92rem] font-medium text-[#7a6f66]">{copy.library.noResults}</p>
         </div>
       ) : null}
 
       {!subjectsQuery.isLoading && !coursesQuery.isLoading && !requestError && courses.length > 0 ? (
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {courses.map((course, index) => {
-            const subjectName = course.subjects?.name || 'General';
+            const subjectName = course.subjects?.name || (language === 'zh-CN' ? '综合' : 'General');
             const visual = subjectVisual(subjectName, index);
             return (
               <Link
@@ -266,10 +274,10 @@ export function LibraryPage() {
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     <span className="rounded-full border border-[#ddd3c3] bg-[#faf4ea] px-3 py-1 text-[0.76rem] font-medium text-[#7a6b5e]">
-                      {formatDifficulty(course.difficulty_level)}
+                      {formatDifficulty(course.difficulty_level, language)}
                     </span>
                     <span className="rounded-full border border-[#ddd3c3] bg-[#faf4ea] px-3 py-1 text-[0.76rem] font-medium text-[#7a6b5e]">
-                      {formatDuration(course.estimated_minutes)}
+                      {formatDuration(course.estimated_minutes, language)}
                     </span>
                     {course.tags.slice(0, 2).map((tag) => (
                       <span

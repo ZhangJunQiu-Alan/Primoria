@@ -10,9 +10,12 @@ import { EmptyStateCard, ErrorStateCard, LoadingStateCard } from '@/shared/layou
 import { PageContainer } from '@/shared/layout/PageContainer';
 import { SurfaceCard } from '@/shared/layout/SurfaceCard';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { useViewerCopy } from '@/shared/theme/copy';
 
 export function ParentDashboardPage() {
+  const language = useProductLanguage();
+  const copy = useViewerCopy();
   const queryClient = useQueryClient();
   const [selectedChildId, setSelectedChildId] = useState<string>('');
   const [bindCodeInput, setBindCodeInput] = useState('');
@@ -41,11 +44,19 @@ export function ParentDashboardPage() {
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'parent-children'] });
       setSelectedChildId('');
       setBindCodeInput('');
-      setBindingStatus(payload.ok ? 'Child bound.' : 'Binding failed.');
+      setBindingStatus(
+        payload.ok
+          ? language === 'zh-CN'
+            ? '已绑定孩子。'
+            : 'Child bound.'
+          : language === 'zh-CN'
+            ? '绑定失败。'
+            : 'Binding failed.',
+      );
       captureViewerEvent('viewer_parent_bind_child', { ok: payload.ok });
     },
     onError: (error) => {
-      setBindingStatus(error instanceof Error ? error.message : 'Binding failed.');
+      setBindingStatus(error instanceof Error ? error.message : language === 'zh-CN' ? '绑定失败。' : 'Binding failed.');
       captureViewerError(error, { area: 'parent_bind_child' });
     },
   });
@@ -56,11 +67,19 @@ export function ParentDashboardPage() {
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'parent-children'] });
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'parent-report', selectedChildId] });
       setSelectedChildId('');
-      setBindingStatus(payload.ok ? 'Child unbound.' : 'Unbind failed.');
+      setBindingStatus(
+        payload.ok
+          ? language === 'zh-CN'
+            ? '已解除孩子绑定。'
+            : 'Child unbound.'
+          : language === 'zh-CN'
+            ? '解除绑定失败。'
+            : 'Unbind failed.',
+      );
       captureViewerEvent('viewer_parent_unbind_child', { ok: payload.ok });
     },
     onError: (error) => {
-      setBindingStatus(error instanceof Error ? error.message : 'Unbind failed.');
+      setBindingStatus(error instanceof Error ? error.message : language === 'zh-CN' ? '解除绑定失败。' : 'Unbind failed.');
       captureViewerError(error, { area: 'parent_unbind_child' });
     },
   });
@@ -70,7 +89,7 @@ export function ParentDashboardPage() {
 
   if (childrenQuery.isLoading) {
     return (
-      <PageContainer title={viewerCopy.parent.title} subtitle={viewerCopy.parent.subtitle}>
+      <PageContainer title={copy.parent.title} subtitle={copy.parent.subtitle}>
         <LoadingStateCard />
       </PageContainer>
     );
@@ -78,7 +97,7 @@ export function ParentDashboardPage() {
 
   if (childrenQuery.error) {
     return (
-      <PageContainer title={viewerCopy.parent.title} subtitle={viewerCopy.parent.subtitle}>
+      <PageContainer title={copy.parent.title} subtitle={copy.parent.subtitle}>
         <ErrorStateCard
           message={childrenQuery.error instanceof Error ? childrenQuery.error.message : undefined}
           onRetry={() => void childrenQuery.refetch()}
@@ -88,15 +107,15 @@ export function ParentDashboardPage() {
   }
 
   return (
-    <PageContainer title={viewerCopy.parent.title} subtitle={viewerCopy.parent.subtitle}>
+    <PageContainer title={copy.parent.title} subtitle={copy.parent.subtitle}>
       <SurfaceCard className="space-y-3">
-        <h2 className="text-xl font-black text-[var(--viewer-text)]">Bind learner</h2>
+        <h2 className="text-xl font-black text-[var(--viewer-text)]">{language === 'zh-CN' ? '绑定学习者' : 'Bind learner'}</h2>
         <div className="flex flex-col gap-3 sm:flex-row">
           <input
             className="min-w-0 flex-1 rounded-2xl border border-[var(--viewer-border)] px-4 py-3 outline-none"
             value={bindCodeInput}
             onChange={(event) => setBindCodeInput(event.target.value)}
-            placeholder="Bind child with code"
+            placeholder={language === 'zh-CN' ? '输入孩子绑定码' : 'Bind child with code'}
           />
           <button
             type="button"
@@ -104,7 +123,7 @@ export function ParentDashboardPage() {
             onClick={() => bindChildMutation.mutate()}
             disabled={!bindCodeInput.trim() || bindChildMutation.isPending}
           >
-            {bindChildMutation.isPending ? 'Binding…' : viewerCopy.parent.bind}
+            {bindChildMutation.isPending ? copy.parent.binding : copy.parent.bind}
           </button>
         </div>
       </SurfaceCard>
@@ -117,7 +136,7 @@ export function ParentDashboardPage() {
 
       <div className="grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]">
         <SurfaceCard className="space-y-3">
-          {children.length === 0 ? <EmptyStateCard message="No linked learners yet." /> : null}
+          {children.length === 0 ? <EmptyStateCard message={language === 'zh-CN' ? '还没有已绑定的学习者。' : 'No linked learners yet.'} /> : null}
           {children.map((child) => (
             <button
               key={child.child_id}
@@ -131,7 +150,9 @@ export function ParentDashboardPage() {
             >
               <p className="text-sm font-black text-[var(--viewer-text)]">{child.child_name}</p>
               <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">
-                {child.lessons_completed} lessons · {child.total_xp} XP
+                {language === 'zh-CN'
+                  ? `${child.lessons_completed} 节课 · ${child.total_xp} XP`
+                  : `${child.lessons_completed} lessons · ${child.total_xp} XP`}
               </p>
             </button>
           ))}
@@ -140,31 +161,31 @@ export function ParentDashboardPage() {
         <div className="grid gap-4">
           <SurfaceCard className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-black text-[var(--viewer-text)]">Selected child report</h2>
+              <h2 className="text-xl font-black text-[var(--viewer-text)]">{language === 'zh-CN' ? '当前孩子报告' : 'Selected child report'}</h2>
               <button
                 type="button"
                 className="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-black text-rose-700"
                 onClick={() => unbindMutation.mutate()}
                 disabled={!selectedChildId || unbindMutation.isPending}
               >
-                {viewerCopy.parent.unbind}
+                {unbindMutation.isPending ? copy.parent.unbinding : copy.parent.unbind}
               </button>
             </div>
             <div className="grid gap-3 md:grid-cols-2">
               <div className="rounded-2xl bg-[var(--viewer-surface-muted)] px-4 py-4">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">Total XP</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">{language === 'zh-CN' ? '总 XP' : 'Total XP'}</p>
                 <p className="mt-2 text-lg font-black text-[var(--viewer-text)]">{report?.summary.total_xp ?? 0}</p>
               </div>
               <div className="rounded-2xl bg-[var(--viewer-surface-muted)] px-4 py-4">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">Streak</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">{language === 'zh-CN' ? '连击' : 'Streak'}</p>
                 <p className="mt-2 text-lg font-black text-[var(--viewer-text)]">{report?.summary.streak ?? 0}</p>
               </div>
               <div className="rounded-2xl bg-[var(--viewer-surface-muted)] px-4 py-4">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">Lessons completed</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">{language === 'zh-CN' ? '完成课时' : 'Lessons completed'}</p>
                 <p className="mt-2 text-lg font-black text-[var(--viewer-text)]">{report?.summary.lessons_completed ?? 0}</p>
               </div>
               <div className="rounded-2xl bg-[var(--viewer-surface-muted)] px-4 py-4">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">Courses completed</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--viewer-text-muted)]">{language === 'zh-CN' ? '完成课程' : 'Courses completed'}</p>
                 <p className="mt-2 text-lg font-black text-[var(--viewer-text)]">{report?.summary.courses_completed ?? 0}</p>
               </div>
             </div>
@@ -176,13 +197,13 @@ export function ParentDashboardPage() {
           </SurfaceCard>
 
           <SurfaceCard className="space-y-3">
-            <h2 className="text-xl font-black text-[var(--viewer-text)]">Daily breakdown</h2>
-            {reportQuery.isLoading ? <LoadingStateCard message="Loading child report…" /> : null}
+            <h2 className="text-xl font-black text-[var(--viewer-text)]">{language === 'zh-CN' ? '每日拆解' : 'Daily breakdown'}</h2>
+            {reportQuery.isLoading ? <LoadingStateCard message={language === 'zh-CN' ? '正在加载孩子报告…' : 'Loading child report…'} /> : null}
             {((report?.daily_breakdown ?? []) as Array<Record<string, unknown>>).map((row) => (
               <div key={String(row.date)} className="flex items-center justify-between rounded-2xl bg-[var(--viewer-surface-muted)] px-4 py-3">
                 <span className="text-sm font-bold text-[var(--viewer-text)]">{String(row.date)}</span>
                 <span className="text-sm font-medium text-[var(--viewer-text-muted)]">
-                  {String(row.minutes)} min · {String(row.xp)} XP
+                  {language === 'zh-CN' ? `${String(row.minutes)} 分钟 · ${String(row.xp)} XP` : `${String(row.minutes)} min · ${String(row.xp)} XP`}
                 </span>
               </div>
             ))}

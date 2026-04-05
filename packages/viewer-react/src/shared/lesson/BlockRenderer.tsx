@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { richTextToHtml } from '@/shared/lesson/richText';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
 import { cn } from '@/shared/utils/cn';
@@ -52,6 +52,7 @@ function SortingRenderer({ block }: { block: SortingBlock }) {
 }
 
 function CanonicalBlockRenderer({ block }: { block: Block }) {
+  const copy = useViewerCopy();
   const content = block.content as Record<string, unknown>;
 
   switch (block.type) {
@@ -185,11 +186,10 @@ function CanonicalBlockRenderer({ block }: { block: Block }) {
         <div className="rounded-3xl border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-6 text-center">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">Interactive visual</p>
           <h3 className="mt-2 text-lg font-black text-[var(--viewer-text)]">{String(content.title ?? 'Interactive Visual')}</h3>
-          <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">{viewerCopy.lesson.unsupported}</p>
+          <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">{copy.lesson.unsupported}</p>
         </div>
       );
     default:
       return <div className="text-sm font-medium text-[var(--viewer-text-muted)]">[{block.type}]</div>;
   }
 }
-

@@ -23,16 +23,17 @@ import { generateChildBindingCode } from '@/shared/api/viewer/parentApi';
 import { fetchViewerSettings, saveAccountSystemSettings, saveProfileSettings } from '@/shared/api/viewer/settingsApi';
 import { supabase } from '@/shared/api/supabase';
 import { disableViewerPushNotifications, enableViewerPushNotifications, clearViewerLocalCache } from '@/shared/api/viewer/pushApi';
+import { formatViewerDateTime, formatViewerMonthYear } from '@/shared/i18n/format';
+import type { ViewerLanguage } from '@/shared/i18n/locale';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
 import { SurfaceCard } from '@/shared/layout/SurfaceCard';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
-import { patchPreferences, type ViewerLanguage, type ViewerPreferencesState } from '@/shared/state/preferencesSlice';
+import { patchPreferences, type ViewerPreferencesState } from '@/shared/state/preferencesSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/state/store';
 import { clearDemoRole, seedDemoRole } from '@/shared/utils/demoMode';
 import { cn } from '@/shared/utils/cn';
 import { isParentRole, learnerHomeForRole } from '@/shared/utils/routes';
-import { viewerCopy } from '@/shared/theme/copy';
 
 const VIEWER_VERSION = '0.1.0';
 
@@ -56,10 +57,7 @@ function formatJoinedAt(dateString: string, language: ViewerLanguage) {
   if (Number.isNaN(date.getTime())) {
     return language === 'zh-CN' ? '2026年2月' : 'Feb 2026';
   }
-  return new Intl.DateTimeFormat(language === 'zh-CN' ? 'zh-CN' : 'en-US', {
-    year: 'numeric',
-    month: 'long',
-  }).format(date);
+  return formatViewerMonthYear(date, language);
 }
 
 function formatBindingExpiry(dateString: string | null, language: ViewerLanguage) {
@@ -70,12 +68,7 @@ function formatBindingExpiry(dateString: string | null, language: ViewerLanguage
   if (Number.isNaN(date.getTime())) {
     return '';
   }
-  return new Intl.DateTimeFormat(language === 'zh-CN' ? 'zh-CN' : 'en-US', {
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(date);
+  return formatViewerDateTime(date, language);
 }
 
 function NoticeBanner({ notice }: { notice: NoticeState }) {
@@ -311,16 +304,20 @@ export function SettingsPage() {
   });
 
   const saveSystemMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (patch?: Partial<typeof systemDraft>) => {
       if (!auth.user?.id) {
         throw new Error(copy.common.sessionExpired);
       }
-      return saveAccountSystemSettings(auth.user.id, systemDraft);
+      return saveAccountSystemSettings(auth.user.id, patch ?? systemDraft);
     },
-    onSuccess: async () => {
+    onSuccess: async (_result, patch) => {
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'settings', auth.user?.id] });
       showNotice(
-        activeSection === 'notifications' ? copy.notifications.saveSuccess : copy.appearance.saveSuccess,
+        patch && ('language' in patch || 'theme_mode' in patch)
+          ? copy.appearance.saveSuccess
+          : activeSection === 'notifications'
+            ? copy.notifications.saveSuccess
+            : copy.appearance.saveSuccess,
         'success',
       );
     },
@@ -670,6 +667,7 @@ export function SettingsPage() {
                         onClick={() => {
                           setSystemDraft((current) => ({ ...current, theme_mode: option.key }));
                           patchPreference({ themeMode: option.key });
+                          saveSystemMutation.mutate({ theme_mode: option.key });
                         }}
                       />
                     ))}
@@ -691,6 +689,7 @@ export function SettingsPage() {
                         onClick={() => {
                           setSystemDraft((current) => ({ ...current, language: option.key }));
                           patchPreference({ language: option.key });
+                          saveSystemMutation.mutate({ language: option.key });
                         }}
                       />
                     ))}
@@ -699,14 +698,9 @@ export function SettingsPage() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  className="viewer-botanical-button viewer-botanical-button--primary"
-                  onClick={() => saveSystemMutation.mutate()}
-                  disabled={saveSystemMutation.isPending}
-                >
-                  {saveSystemMutation.isPending ? copy.common.saving : copy.appearance.save}
-                </button>
+                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
+                  {saveSystemMutation.isPending ? copy.common.saving : copy.appearance.saveSuccess}
+                </div>
                 <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
                   {'user_settings'}
                 </div>
@@ -829,7 +823,7 @@ export function SettingsPage() {
                 <button
                   type="button"
                   className="viewer-botanical-button viewer-botanical-button--primary"
-                  onClick={() => saveSystemMutation.mutate()}
+                  onClick={() => saveSystemMutation.mutate(undefined)}
                   disabled={saveSystemMutation.isPending}
                 >
                   {saveSystemMutation.isPending ? copy.common.saving : copy.notifications.save}
@@ -1027,7 +1021,7 @@ export function SettingsPage() {
                     className="viewer-botanical-button viewer-botanical-button--warm mt-5"
                     onClick={() => void handleSignOut()}
                   >
-                    {viewerCopy.settings.signOut}
+                    {copy.support.signOut}
                   </button>
                 </div>
               </div>

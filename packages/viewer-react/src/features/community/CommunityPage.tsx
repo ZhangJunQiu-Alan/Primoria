@@ -15,7 +15,7 @@ import {
 import { EmptyStateCard, ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 import {
@@ -29,7 +29,7 @@ import {
   Users,
 } from 'lucide-react';
 
-type Section = (typeof viewerCopy.community.sections)[number];
+type Section = 'dashboard' | 'study' | 'messages' | 'trending' | 'notes';
 type StatusState = { tone: 'success' | 'error'; message: string } | null;
 
 const sectionVisuals: Record<
@@ -39,11 +39,11 @@ const sectionVisuals: Record<
     badge?: number;
   }
 > = {
-  Dashboard: { icon: LayoutDashboard },
-  'Our Study': { icon: Users },
-  Messages: { icon: MessageSquare },
-  Trending: { icon: TrendingUp },
-  Notes: { icon: FileText },
+  dashboard: { icon: LayoutDashboard },
+  study: { icon: Users },
+  messages: { icon: MessageSquare },
+  trending: { icon: TrendingUp },
+  notes: { icon: FileText },
 };
 
 const dashboardPositions = [
@@ -62,10 +62,11 @@ const dashboardPositions = [
 ] as const;
 
 export function CommunityPage() {
+  const copy = useViewerCopy();
   const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.auth.user);
   const userId = user?.id ?? '';
-  const [section, setSection] = useState<Section>('Dashboard');
+  const [section, setSection] = useState<Section>('dashboard');
   const [conversationId, setConversationId] = useState('');
   const [composer, setComposer] = useState('');
   const [selectedPersonId, setSelectedPersonId] = useState('');
@@ -116,7 +117,7 @@ export function CommunityPage() {
         setConversationId(nextConversationId);
       }
       setSelectedPersonId('');
-      setSection('Messages');
+      setSection('messages');
       setStatus({ tone: 'success', message: '已创建新的对话。' });
       captureViewerEvent('viewer_community_direct_chat_opened');
     },
@@ -245,10 +246,17 @@ export function CommunityPage() {
     () => conversations.find((conversation) => conversation.id === conversationId) ?? conversations[0] ?? null,
     [conversationId, conversations],
   );
+  const sectionItems = [
+    { id: 'dashboard' as const, label: copy.community.sections[0] },
+    { id: 'study' as const, label: copy.community.sections[1] },
+    { id: 'messages' as const, label: copy.community.sections[2] },
+    { id: 'trending' as const, label: copy.community.sections[3] },
+    { id: 'notes' as const, label: copy.community.sections[4] },
+  ];
 
   function addBlankNote() {
     setNotesDraft((current) => [{ title: '未命名笔记', body: '', room_id: null }, ...current]);
-    setSection('Notes');
+    setSection('notes');
   }
 
   if (workspaceQuery.isLoading) {
@@ -283,20 +291,20 @@ export function CommunityPage() {
                 className="text-[2.2rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                {viewerCopy.community.title}
+                {copy.community.title}
               </h1>
               <p className="viewer-botanical-eyebrow">{'主导航'}</p>
             </div>
           </div>
 
           <nav className="mt-7 space-y-2.5">
-            {viewerCopy.community.sections.map((item) => {
-              const visual = sectionVisuals[item];
+            {sectionItems.map((item) => {
+              const visual = sectionVisuals[item.id];
               const Icon = visual.icon;
-              const isActive = section === item;
+              const isActive = section === item.id;
               return (
                 <button
-                  key={item}
+                  key={item.id}
                   type="button"
                   className={cn(
                     'flex w-full items-center gap-3.5 rounded-[20px] border px-3.5 py-3 text-left text-[0.92rem] font-bold transition',
@@ -304,11 +312,11 @@ export function CommunityPage() {
                       ? 'border-[#b9d1bc] bg-[linear-gradient(180deg,rgba(235,243,232,0.96)_0%,rgba(223,240,224,0.88)_100%)] text-[#5c7d60]'
                       : 'border-transparent text-[#7a6b5e] hover:bg-[#faf4ea]',
                   )}
-                  onClick={() => setSection(item)}
+                  onClick={() => setSection(item.id)}
                 >
                   <Icon size={25} />
-                  <span className="flex-1">{item}</span>
-                  {item === 'Messages' && unreadCount > 0 ? (
+                  <span className="flex-1">{item.label}</span>
+                  {item.id === 'messages' && unreadCount > 0 ? (
                     <span className="flex h-9 min-w-9 items-center justify-center rounded-full bg-[#f34848] px-2 text-sm text-white">
                       {unreadCount}
                     </span>
@@ -333,7 +341,7 @@ export function CommunityPage() {
             </div>
           ) : null}
 
-          {section === 'Dashboard' ? (
+          {section === 'dashboard' ? (
             <div className="relative min-h-[640px] overflow-hidden rounded-[30px] border border-[#ddd3c3] bg-[radial-gradient(circle_at_18%_18%,rgba(215,234,217,0.84),rgba(242,233,216,0.76)_26%,rgba(244,234,243,0.82)_52%,rgba(239,226,212,0.92)_76%,rgba(233,227,214,0.96)_100%)] shadow-[0_20px_52px_rgba(90,70,50,0.1)]">
               <div className="absolute left-5 top-5 z-20 flex gap-3">
                 <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.85)] text-[#4a4037] shadow-[0_10px_22px_rgba(90,70,50,0.08)]">
@@ -379,7 +387,7 @@ export function CommunityPage() {
             </div>
           ) : null}
 
-          {section === 'Our Study' ? (
+          {section === 'study' ? (
             <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
               <div className="viewer-panel rounded-[26px] p-5">
                 <h2 className="viewer-botanical-heading text-[2rem]">{'创建学习房间'}</h2>
@@ -402,7 +410,7 @@ export function CommunityPage() {
                     onClick={() => createRoomMutation.mutate()}
                     disabled={createRoomMutation.isPending}
                   >
-                    {createRoomMutation.isPending ? '创建中…' : viewerCopy.community.createRoom}
+                    {createRoomMutation.isPending ? copy.community.creatingRoom : copy.community.createRoom}
                   </button>
                 </div>
               </div>
@@ -443,7 +451,7 @@ export function CommunityPage() {
             </div>
           ) : null}
 
-          {section === 'Messages' ? (
+          {section === 'messages' ? (
             <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
               <div className="space-y-4">
                 <div className="viewer-panel rounded-[26px] p-5">
@@ -545,7 +553,7 @@ export function CommunityPage() {
                           onClick={() => sendMessageMutation.mutate()}
                           disabled={sendMessageMutation.isPending}
                         >
-                          {sendMessageMutation.isPending ? '发送中…' : viewerCopy.community.send}
+                          {sendMessageMutation.isPending ? copy.community.sending : copy.community.send}
                         </button>
                       </div>
                     </div>
@@ -559,7 +567,7 @@ export function CommunityPage() {
             </div>
           ) : null}
 
-          {section === 'Trending' ? (
+          {section === 'trending' ? (
             <div className="grid gap-4 xl:grid-cols-[306px_minmax(0,1fr)]">
               <div className="viewer-panel rounded-[26px] p-5">
                 <h2 className="viewer-botanical-heading text-[2rem]">{'发布讨论'}</h2>
@@ -654,7 +662,7 @@ export function CommunityPage() {
             </div>
           ) : null}
 
-          {section === 'Notes' ? (
+          {section === 'notes' ? (
             <div className="space-y-4">
               <div className="viewer-panel flex items-center justify-between rounded-[26px] px-5 py-4">
                 <div>
@@ -667,7 +675,7 @@ export function CommunityPage() {
                   onClick={addBlankNote}
                 >
                   <Plus size={18} />
-                  {viewerCopy.community.addNote}
+                  {copy.community.addNote}
                 </button>
               </div>
 

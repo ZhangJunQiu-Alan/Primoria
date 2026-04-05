@@ -12,7 +12,7 @@ import {
   PasswordVisibilityButton,
 } from '@/features/public/BuilderAuthLayout';
 import { getFieldErrors, loginSchema, passwordResetSchema } from '@/features/public/builderAuthSchemas';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { supabase } from '@/shared/api/supabase';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { buildAuthCallbackUrl, readReturnTo } from '@/shared/utils/authRedirect';
@@ -23,6 +23,7 @@ type AuthMode = 'signin' | 'forgot';
 type Provider = 'google' | 'apple' | 'email' | null;
 
 export function LoginPage() {
+  const copy = useViewerCopy();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [mode, setMode] = useState<AuthMode>('signin');
@@ -56,7 +57,7 @@ export function LoginPage() {
   }
 
   function handleWeChatComingSoon() {
-    setStatus({ tone: 'error', message: viewerCopy.auth.wechatSoon });
+    setStatus({ tone: 'error', message: copy.auth.wechatSoon });
   }
 
   async function handleEmailAction() {
@@ -81,7 +82,7 @@ export function LoginPage() {
       }
 
       captureViewerEvent('viewer_reset_password_requested');
-      setStatus({ tone: 'success', message: viewerCopy.auth.resetSuccess });
+      setStatus({ tone: 'success', message: copy.auth.resetSuccess });
       return;
     }
 
@@ -109,12 +110,12 @@ export function LoginPage() {
   return (
     <BuilderAuthLayout
       pageLabel=""
-      title={viewerCopy.auth.loginTitle}
-      subtitle=""
-      alternateLink={<FooterPrompt prompt="New here?" linkText="Create an account" to={registerPath} />}
+      title={copy.auth.loginTitle}
+      subtitle={copy.auth.loginSubtitle}
+      alternateLink={<FooterPrompt prompt={copy.auth.newHere} linkText={copy.auth.createAccount} to={registerPath} />}
     >
       <AuthSocialButton
-        label="Continue with Google"
+        label={copy.auth.google}
         tone="light"
         logoSrc={publicAssetPath('primoria-google.png')}
         onClick={() => void handleOAuth('google')}
@@ -122,7 +123,7 @@ export function LoginPage() {
         disabled={Boolean(loadingProvider && loadingProvider !== 'google')}
       />
       <AuthSocialButton
-        label="Continue with Apple"
+        label={copy.auth.apple}
         tone="dark"
         icon={<span aria-hidden="true"></span>}
         onClick={() => void handleOAuth('apple')}
@@ -130,12 +131,12 @@ export function LoginPage() {
         disabled={Boolean(loadingProvider && loadingProvider !== 'apple')}
       />
       <AuthSocialButton
-        label="Continue with WeChat"
+        label={copy.auth.wechat}
         tone="wechat"
         logoSrc={publicAssetPath('primoria-wechat.png')}
         invertLogo
         onClick={handleWeChatComingSoon}
-        badge="Soon"
+        badge={copy.auth.soon}
         disabled={Boolean(loadingProvider)}
       />
 
@@ -144,7 +145,7 @@ export function LoginPage() {
       <section className="auth-form-block" aria-label="Email sign in form">
         <div className="auth-form-block__header">
           <h3 className="auth-form-block__title">
-            {isForgotMode ? 'Reset your password' : 'Sign in with email'}
+            {isForgotMode ? copy.auth.forgotModeTitle : copy.auth.emailSectionTitle}
           </h3>
           <button
             type="button"
@@ -155,16 +156,16 @@ export function LoginPage() {
               setFieldErrors({});
             }}
           >
-            {isForgotMode ? 'Back to sign in' : 'Forgot password?'}
+            {isForgotMode ? copy.auth.backToLogin : copy.auth.toggleForgot}
           </button>
         </div>
 
         <AuthField
           id="login-email"
-          label="Email address"
+          label={copy.auth.email}
           type="email"
           autoComplete="email"
-          placeholder="learner@primoria.dev"
+          placeholder={copy.auth.emailPlaceholder}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           error={fieldErrors.email}
@@ -174,10 +175,10 @@ export function LoginPage() {
         {!isForgotMode ? (
           <AuthField
             id="login-password"
-            label="Password"
+            label={copy.auth.password}
             type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
-            placeholder="Enter your password"
+            placeholder={copy.auth.passwordPlaceholder}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             error={fieldErrors.password}
@@ -195,14 +196,14 @@ export function LoginPage() {
           <AuthActionButton
             type="button"
             tone="primary"
-            label={isForgotMode ? 'Send reset link' : 'Sign in'}
+            label={isForgotMode ? copy.auth.sendReset : copy.auth.signIn}
             onClick={() => void handleEmailAction()}
             loading={isSubmitting}
           />
           <AuthActionButton
             type="button"
             tone="secondary"
-            label="Keep exploring"
+            label={copy.auth.keepExploring}
             icon={<Sparkles size={16} aria-hidden="true" />}
             onClick={() => navigate('/')}
             disabled={isSubmitting}

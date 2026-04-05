@@ -1,5 +1,6 @@
 import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
+import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 
 const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
 const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
@@ -107,6 +108,14 @@ function createTimeoutSignal(timeoutMs: number) {
   };
 }
 
+function currentUiLanguage() {
+  if (typeof document === 'undefined') {
+    return normalizeViewerLanguage(null);
+  }
+
+  return normalizeViewerLanguage(document.documentElement.lang);
+}
+
 async function getAgentAccessToken() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
@@ -131,6 +140,7 @@ function buildAgentChatBody(history: TutorMessage[]) {
     history: history.slice(0, -1),
     context: {
       surface: 'ai-tutor',
+      ui_language: currentUiLanguage(),
     },
   };
 }
