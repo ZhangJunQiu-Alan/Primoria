@@ -15,7 +15,7 @@ describe('LibraryPage', () => {
     expect(await screen.findByText(/运动与力学观察/i)).toBeInTheDocument();
 
     await user.click(await screen.findByRole('button', { name: /^全部$/i }, { timeout: 10000 }));
-    const searchBox = await screen.findByRole('textbox', { name: /search/i });
+    const searchBox = await screen.findByRole('textbox', { name: /搜索/i });
 
     await user.type(searchBox, '数据与 AI');
     expect(await screen.findByText(/数据与 ai 入门/i)).toBeInTheDocument();

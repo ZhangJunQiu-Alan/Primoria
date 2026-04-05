@@ -2,12 +2,14 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { buildLoginPath, readReturnTo } from '@/shared/utils/authRedirect';
 import { learnerHomeForRole, isParentRole } from '@/shared/utils/routes';
 import { useAppSelector } from '@/shared/state/store';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useViewerCopy } from '@/shared/theme/copy';
 
 function LoadingScreen() {
+  const copy = useViewerCopy();
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--viewer-page)] text-sm font-semibold text-[var(--viewer-text-muted)]">
-      {viewerCopy.common.loading}
+      {copy.common.loading}
     </div>
   );
 }

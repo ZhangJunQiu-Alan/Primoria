@@ -16,15 +16,9 @@ import {
   WandSparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { viewerCopy } from '@/shared/theme/copy';
+import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
-
-const topNavLinks = [
-  { id: 'growth', label: viewerCopy.landing.topNav[0] },
-  { id: 'workflow', label: viewerCopy.landing.topNav[1] },
-  { id: 'tutor', label: viewerCopy.landing.topNav[2] },
-  { id: 'community', label: viewerCopy.landing.topNav[3] },
-] as const;
 
 const workflowSteps: Array<{
   number: string;
@@ -150,6 +144,14 @@ function SectionEyebrow({ children, tone = 'text-[#1fa0f4]' }: { children: React
 }
 
 export function LandingPage() {
+  const copy = useViewerCopy();
+  const topNavLinks = [
+    { id: 'growth', label: copy.landing.topNav[0] },
+    { id: 'workflow', label: copy.landing.topNav[1] },
+    { id: 'tutor', label: copy.landing.topNav[2] },
+    { id: 'community', label: copy.landing.topNav[3] },
+  ] as const;
+
   return (
     <main className="bg-white text-[#0f1324]">
       <header className="relative z-20 border-b border-[#edf2f8] bg-white/96 backdrop-blur">
@@ -160,7 +162,7 @@ export function LandingPage() {
                 <img src={publicAssetPath('primoria-logo.png')} alt="Primoria" className="h-full w-full object-cover" />
               </div>
               <span className="text-[1.8rem] font-black uppercase tracking-[0.08em] text-[#28a4f4] md:text-[1.95rem]">
-                {viewerCopy.brand.name}
+                {copy.brand.name}
               </span>
             </Link>
 
@@ -174,17 +176,18 @@ export function LandingPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            <LanguageSwitcher tone="public" />
             <Link
               to="/login"
               className="inline-flex h-11 items-center justify-center rounded-[16px] border-2 border-[#2b86ff] px-5 text-[0.98rem] font-black text-[#1675f0] transition hover:bg-[#eef6ff]"
             >
-              {viewerCopy.landing.loginCta}
+              {copy.landing.loginCta}
             </Link>
             <Link
               to="/register"
               className="inline-flex h-11 items-center justify-center rounded-[16px] bg-[linear-gradient(135deg,#1d7df4,#21d2e6)] px-6 text-[0.98rem] font-black text-white shadow-[0_18px_30px_rgba(35,165,243,0.28)] transition hover:translate-y-[-1px]"
             >
-              立即开始
+              {copy.landing.registerCta}
             </Link>
           </div>
         </div>
@@ -204,20 +207,20 @@ export function LandingPage() {
           <div className="max-w-[42rem]">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#95d9ff] bg-[#ebf8ff] px-5 py-2.5 text-[1rem] font-black text-[#1694ef] shadow-[0_10px_22px_rgba(32,148,242,0.08)]">
               <WandSparkles size={17} className="shrink-0" />
-              <span>{viewerCopy.landing.announcement}</span>
+              <span>{copy.landing.announcement}</span>
             </div>
 
             <div className="mt-7">
               <h1 className="text-[clamp(3.2rem,4.8vw,4.9rem)] font-black leading-[0.93] tracking-[-0.065em] text-[#0f1324]">
-                <span className="block">{viewerCopy.landing.title}</span>
+                <span className="block">{copy.landing.title}</span>
                 <span className="block bg-[linear-gradient(135deg,#1590f7,#33d4f2)] bg-clip-text text-transparent">
-                  {viewerCopy.landing.accentTitle}
+                  {copy.landing.accentTitle}
                 </span>
               </h1>
             </div>
 
             <p className="mt-8 max-w-[38rem] text-[1rem] leading-[1.85] text-[#67738e] md:text-[1.08rem]">
-              {viewerCopy.landing.subtitle}
+              {copy.landing.subtitle}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -225,18 +228,18 @@ export function LandingPage() {
                 to="/register"
                 className="inline-flex min-w-[14rem] items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#157df7,#24d1e7)] px-8 py-3.5 text-[1.2rem] font-black text-white shadow-[0_20px_36px_rgba(29,143,244,0.25)] transition hover:translate-y-[-1px]"
               >
-                {viewerCopy.landing.primaryCta}
+                {copy.landing.primaryCta}
               </Link>
               <a
                 href="#workflow"
                 className="inline-flex min-w-[8.5rem] items-center justify-center rounded-[18px] border-2 border-[#2587fb] px-8 py-3.5 text-[1.2rem] font-black text-[#1d7cf6] transition hover:bg-[#eef6ff]"
               >
-                {viewerCopy.landing.secondaryCta}
+                {copy.landing.secondaryCta}
               </a>
             </div>
 
             <div className="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-[0.95rem] font-bold text-[#7b859d]">
-              {viewerCopy.landing.trustSignals.map((item) => (
+              {copy.landing.trustSignals.map((item) => (
                 <div key={item} className="flex items-center gap-2.5">
                   <CheckCircle2 size={19} className="text-[#56c516]" />
                   <span>{item}</span>
@@ -253,7 +256,7 @@ export function LandingPage() {
                   <Sparkles size={22} />
                 </div>
                 <span className="text-[1.75rem] font-black tracking-[-0.04em] text-[#171a27]">
-                  {viewerCopy.landing.courseCardTitle}
+                  {copy.landing.courseCardTitle}
                 </span>
               </div>
 
@@ -262,9 +265,9 @@ export function LandingPage() {
               </div>
 
               <p className="mt-4 text-[1rem] text-[#7b88a3]">
-                {viewerCopy.landing.courseCardProgress}
+                {copy.landing.courseCardProgress}
                 <span className="mx-2">·</span>
-                {viewerCopy.landing.courseCardMeta}
+                {copy.landing.courseCardMeta}
               </p>
             </div>
 
@@ -272,11 +275,11 @@ export function LandingPage() {
               <div className="flex items-center gap-4">
                 <Flame size={36} className="text-[#ff6a00]" />
                 <span className="text-[2.6rem] font-black leading-none text-[#ff7a00]">
-                  {viewerCopy.landing.streakValue}
+                  {copy.landing.streakValue}
                 </span>
               </div>
               <p className="mt-2 pl-[3.2rem] text-[1.45rem] font-black text-[#3d4a68]">
-                {viewerCopy.landing.streakLabel}
+                {copy.landing.streakLabel}
               </p>
             </div>
 
@@ -287,7 +290,7 @@ export function LandingPage() {
                   className="inline-flex items-center gap-3 rounded-full bg-[linear-gradient(135deg,rgba(24,162,248,0.96),rgba(92,171,243,0.92))] px-6 py-3 text-[1.05rem] font-black text-white shadow-[0_16px_30px_rgba(31,151,245,0.22)]"
                 >
                   <Sparkles size={17} className="fill-current" />
-                  <span>{viewerCopy.landing.xpLabel}</span>
+                  <span>{copy.landing.xpLabel}</span>
                 </div>
               ))}
             </div>
@@ -297,7 +300,7 @@ export function LandingPage() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#7749f8]">
                   <Bot size={21} />
                 </div>
-                <p className="text-[1.25rem] font-bold tracking-[-0.03em]">{viewerCopy.landing.tutorPrompt}</p>
+                <p className="text-[1.25rem] font-bold tracking-[-0.03em]">{copy.landing.tutorPrompt}</p>
               </div>
             </div>
 

@@ -1,4 +1,4 @@
-import type { ViewerLanguage } from '@/shared/api/viewer/types';
+import type { ViewerLanguage } from '@/shared/i18n/locale';
 
 export type SettingsSectionId =
   | 'account'
