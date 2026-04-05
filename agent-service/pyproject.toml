@@ -1,0 +1,33 @@
+[project]
+name = "primoria-agent-service"
+version = "0.1.0"
+description = "LangChain Deep Agents service for Primoria learner experiences"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
+  "pydantic>=2.8.0",
+  "pydantic-settings>=2.3.0",
+  "httpx>=0.27.0",
+  "langchain>=0.3.0",
+  "langchain-core>=0.3.0",
+  "langchain-google-genai>=2.0.0",
+  "deepagents>=0.0.8"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-asyncio>=0.23.0",
+  "ruff>=0.6.0"
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
