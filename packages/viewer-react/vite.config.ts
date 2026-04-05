@@ -33,8 +33,11 @@ export default defineConfig(({ mode }) => {
   const envDir = path.resolve(__dirname, '../..');
   const env = loadEnv(mode, envDir, '');
   const fixtureMode = mode === 'test' || env.VITE_VIEWER_DEMO_MODE === '1';
+  const requestedBase = env.VITE_PUBLIC_BASE_PATH?.trim() || '/';
+  const base = requestedBase === '/' ? '/' : requestedBase.endsWith('/') ? requestedBase : `${requestedBase}/`;
 
   return {
+    base,
     envDir,
     plugins: [react()],
     resolve: {

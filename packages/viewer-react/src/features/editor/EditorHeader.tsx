@@ -16,6 +16,7 @@ import { useSaveCourse } from './hooks/useSaveCourse';
 import { usePublish } from './hooks/usePublish';
 import { useEditorKeyboard } from './hooks/useEditorKeyboard';
 import { cn } from '@/lib/utils';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 
 interface EditorHeaderProps {
   activeLessonId: string | null;
@@ -147,7 +148,7 @@ export function EditorHeader({
         aria-label="Back to dashboard"
       >
         <span className="editor-topbar__brand-mark">
-          <img src="/primoria-logo.png" alt="" />
+          <img src={publicAssetPath('primoria-logo.png')} alt="" />
         </span>
         <span className="editor-topbar__brand-copy">
           <strong>{draft?.metadata.title ?? 'Untitled Course'}</strong>

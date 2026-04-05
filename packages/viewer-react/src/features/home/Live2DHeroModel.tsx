@@ -1,5 +1,6 @@
 import { Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 
 type ViewerWindow = Window & {
   PIXI?: unknown;
@@ -7,8 +8,8 @@ type ViewerWindow = Window & {
   __viewerLive2DScriptPromise?: Promise<void>;
 };
 
-const CORE_SCRIPT_URL = '/live2d/live2dcubismcore.min.js';
-const MODEL_URL = '/live2d-models/hiyori/Hiyori.model3.json';
+const CORE_SCRIPT_URL = publicAssetPath('live2d/live2dcubismcore.min.js');
+const MODEL_URL = publicAssetPath('live2d-models/hiyori/Hiyori.model3.json');
 
 function loadScriptOnce(src: string) {
   const w = window as ViewerWindow;

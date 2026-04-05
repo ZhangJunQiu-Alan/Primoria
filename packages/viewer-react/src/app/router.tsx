@@ -406,7 +406,17 @@ export function buildViewerRoutes(): RouteObject[] {
   ];
 }
 
-const router = createBrowserRouter(buildViewerRoutes());
+function getRouterBasename() {
+  const baseUrl = import.meta.env.BASE_URL?.trim() || '/';
+  if (!baseUrl || baseUrl === '/') {
+    return undefined;
+  }
+  return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+}
+
+const router = createBrowserRouter(buildViewerRoutes(), {
+  basename: getRouterBasename(),
+});
 
 export function AppRouter() {
   return <RouterProvider router={router} />;

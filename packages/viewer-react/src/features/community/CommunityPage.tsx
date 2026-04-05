@@ -17,6 +17,7 @@ import { captureViewerError, captureViewerEvent } from '@/shared/platform/observ
 import { useAppSelector } from '@/shared/state/store';
 import { viewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
+import { publicAssetPath } from '@/shared/utils/publicAsset';
 import {
   FileText,
   Heart,
@@ -353,7 +354,7 @@ export function CommunityPage() {
                 <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(214,185,204,0.34)] blur-[82px]" />
                 <div className="absolute left-[50%] top-[54%] h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.58),rgba(255,255,255,0)_68%)]" />
                 <img
-                  src="/community-start.png"
+                  src={publicAssetPath('community-start.png')}
                   alt="Community planet"
                   className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.96] drop-shadow-[0_28px_72px_rgba(196,149,106,0.18)]"
                   style={{
