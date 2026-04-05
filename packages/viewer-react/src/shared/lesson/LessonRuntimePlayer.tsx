@@ -3,7 +3,8 @@ import { ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 import { computeBlockVisibility, isQuestionBlock, seedCorrectState } from '@/shared/lesson/blockVisibility';
 import { LearnerBlockRenderer } from '@/shared/lesson/LearnerBlockRenderer';
 import type { LessonRuntimeData } from '@/shared/lesson/types';
-import { viewerCopy } from '@/shared/theme/copy';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
 
 export type LessonCompletionSummary = {
@@ -30,6 +31,8 @@ export function LessonRuntimePlayer({
   onExit: () => void;
   onComplete: (summary: LessonCompletionSummary) => void;
 }) {
+  const language = useProductLanguage();
+  const copy = useViewerCopy();
   const pages = useMemo(() => [...data.pages].sort((a, b) => a.order - b.order), [data.pages]);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [checked, setChecked] = useState(false);
@@ -74,7 +77,7 @@ export function LessonRuntimePlayer({
             className="viewer-botanical-button viewer-botanical-button--secondary"
             onClick={onExit}
           >
-            {viewerCopy.lesson.exit}
+            {copy.lesson.exit}
           </button>
         </div>
 
@@ -94,7 +97,7 @@ export function LessonRuntimePlayer({
                   onClick={() => setCurrentPageIndex(index)}
                 >
                   <span className="h-2 w-2 rounded-full bg-current" />
-                  <span>{`Page ${index + 1}`}</span>
+                  <span>{language === 'zh-CN' ? `第 ${index + 1} 页` : `Page ${index + 1}`}</span>
                 </button>
               ))}
             </div>
@@ -102,21 +105,27 @@ export function LessonRuntimePlayer({
 
           <header className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div className="space-y-2">
-              <p className="viewer-botanical-eyebrow text-[0.72rem]">Lesson preview</p>
+              <p className="viewer-botanical-eyebrow text-[0.72rem]">{language === 'zh-CN' ? '课时预览' : 'Lesson preview'}</p>
               <h2 className="viewer-botanical-heading text-[2.65rem] leading-none">{data.title}</h2>
               <p className="text-sm font-medium text-[var(--viewer-text-muted)]">
-                {pageCount > 0 ? `Page ${pageNumber}${pageCount > 1 ? ` of ${pageCount}` : ''} inside the learner runtime.` : 'No content yet.'}
+                {pageCount > 0
+                  ? language === 'zh-CN'
+                    ? `学习运行时中的第 ${pageNumber}${pageCount > 1 ? ` / ${pageCount}` : ''} 页。`
+                    : `Page ${pageNumber}${pageCount > 1 ? ` of ${pageCount}` : ''} inside the learner runtime.`
+                  : language === 'zh-CN'
+                    ? '还没有内容。'
+                    : 'No content yet.'}
               </p>
             </div>
             <span className="viewer-botanical-pill border-[#e2d5c2] bg-[#fbf7f0] text-[#8b7153]">
               <Eye size={14} />
-              Live learner view
+              {language === 'zh-CN' ? '学习者实时视图' : 'Live learner view'}
             </span>
           </header>
 
           {blocks.length === 0 ? (
             <div className="rounded-[28px] border border-dashed border-[var(--viewer-border)] bg-[rgba(255,252,247,0.78)] p-10 text-center text-sm font-medium text-[var(--viewer-text-muted)]">
-              No blocks on this page yet.
+              {language === 'zh-CN' ? '这一页还没有内容区块。' : 'No blocks on this page yet.'}
             </div>
           ) : (
             <div className="space-y-5">
@@ -149,7 +158,7 @@ export function LessonRuntimePlayer({
               disabled={currentPageIndex === 0}
             >
               <ArrowLeft size={16} />
-              {viewerCopy.lesson.prev}
+              {copy.lesson.prev}
             </button>
 
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -162,7 +171,7 @@ export function LessonRuntimePlayer({
                     setCheckVersion((value) => value + 1);
                   }}
                 >
-                  {viewerCopy.lesson.check}
+                  {copy.lesson.check}
                 </button>
               ) : null}
 
@@ -177,7 +186,7 @@ export function LessonRuntimePlayer({
                   setCurrentPageIndex((index) => Math.min(index + 1, pageCount - 1));
                 }}
               >
-                {isLastPage ? viewerCopy.lesson.complete : viewerCopy.lesson.next}
+                {isLastPage ? copy.lesson.complete : copy.lesson.next}
                 {!isLastPage ? <ArrowRight size={16} /> : null}
               </button>
             </div>

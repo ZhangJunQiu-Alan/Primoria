@@ -47,11 +47,10 @@ describe('SettingsPage', () => {
     await user.click(await screen.findByRole('button', { name: /显示与语言/i }));
     await user.click(await screen.findByRole('button', { name: /^深色$/i }));
     expect(document.documentElement.dataset.theme).toBe('dark');
-    await user.click(await screen.findByRole('button', { name: /^English$/i }));
+    const englishButtons = await screen.findAllByRole('button', { name: /^English$/i });
+    await user.click(englishButtons.at(-1)!);
 
     expect(await screen.findByRole('heading', { name: /Settings Center/i })).toBeInTheDocument();
-    await user.click(await screen.findByRole('button', { name: /Save Display Settings/i }));
-
     expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"language":"en"');
     expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"themeMode":"dark"');
     expect(JSON.parse(window.localStorage.getItem(VIEWER_FIXTURE_STORAGE_KEY) ?? '{}')).toMatchObject({
@@ -79,7 +78,7 @@ describe('SettingsPage', () => {
 
     expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 3000 })).toBeInTheDocument();
     await user.click(await screen.findByRole('button', { name: /支持与关于/i }));
-    await user.click(await screen.findByRole('button', { name: /退出登录/i }));
+    await user.click(await screen.findByRole('button', { name: /退出当前账号/i }));
 
     expect(await screen.findByRole('heading', { name: /掌握任何学科/i }, { timeout: 3000 })).toBeInTheDocument();
     expect(locationRef.pathname).toBe('/');
