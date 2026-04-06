@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import Any, AsyncIterator
 
 from deepagents import create_deep_agent
@@ -10,8 +11,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from app.auth import AuthenticatedUser
 from app.config import get_settings
 from app.memory import (
+    build_checkpointer,
     build_thread_config,
-    get_checkpointer,
     resolve_thread_id,
     search_user_memories,
     thread_checkpoint_exists,
@@ -27,6 +28,7 @@ class PreparedChatRun:
     agent: Any
     config: dict[str, Any]
     payload: dict[str, Any]
+    user_id: str
     thread_id: str
     tools: list[Any]
     supabase_client: SupabaseUserClient
@@ -36,9 +38,11 @@ async def invoke_chat_agent(request: ChatRequest, user: AuthenticatedUser) -> Ch
     prepared = await _prepare_chat_run(request, user)
     try:
         result = await prepared.agent.ainvoke(prepared.payload, config=prepared.config)
+        reply = _extract_reply_text(result)
+        await _persist_assistant_reply(prepared, reply)
         return ChatResponse(
             thread_id=prepared.thread_id,
-            reply=_extract_reply_text(result),
+            reply=reply,
             used_tools=[getattr(tool, 'name', 'tool') for tool in prepared.tools],
         )
     finally:
@@ -78,6 +82,7 @@ async def stream_chat_agent(request: ChatRequest, user: AuthenticatedUser) -> As
                     final_output = output
 
         reply = ''.join(reply_parts).strip() or _extract_reply_text(final_output)
+        await _persist_assistant_reply(prepared, reply)
         yield _format_sse_event(
             'final',
             {
@@ -97,6 +102,9 @@ async def _prepare_chat_run(request: ChatRequest, user: AuthenticatedUser) -> Pr
     thread_id = resolve_thread_id(user.id, request.thread_id)
     supabase_client = SupabaseUserClient(user.access_token)
     tools = build_all_tools(user.id, supabase_client, request.context)
+    await _ensure_thread_record(supabase_client, user.id, thread_id, request.context)
+    await _persist_thread_message(supabase_client, user.id, thread_id, 'user', request.message)
+    checkpointer = build_checkpointer(supabase_client, user.id)
     model = ChatGoogleGenerativeAI(
         model=settings.agent_model,
         google_api_key=settings.google_api_key,
@@ -106,16 +114,17 @@ async def _prepare_chat_run(request: ChatRequest, user: AuthenticatedUser) -> Pr
         model=model,
         tools=tools,
         system_prompt=settings.agent_system_prompt,
-        checkpointer=get_checkpointer(),
+        checkpointer=checkpointer,
     )
 
     prior_memories = await search_user_memories(
         user.id,
+        supabase_client=supabase_client,
         query=request.message,
         limit=7,
         context=request.context,
     )
-    should_seed_history = bool(request.history) and not await thread_checkpoint_exists(thread_id)
+    should_seed_history = bool(request.history) and not await thread_checkpoint_exists(checkpointer, thread_id)
     seeded_history = _history_to_messages(request.history) if should_seed_history else []
     payload = {
         'messages': [
@@ -130,9 +139,89 @@ async def _prepare_chat_run(request: ChatRequest, user: AuthenticatedUser) -> Pr
         agent=agent,
         config=build_thread_config(thread_id),
         payload=payload,
+        user_id=user.id,
         thread_id=thread_id,
         tools=tools,
         supabase_client=supabase_client,
+    )
+
+
+async def _ensure_thread_record(
+    supabase_client: SupabaseUserClient,
+    user_id: str,
+    thread_id: str,
+    context,
+) -> None:
+    existing = await supabase_client.select(
+        'agent_threads',
+        select='id',
+        filters={'id': f'eq.{thread_id}'},
+        single=True,
+    )
+    payload = {
+        'user_id': user_id,
+        'surface': context.surface or 'ai-tutor',
+        'course_id': context.course_id,
+        'lesson_id': context.lesson_id,
+        'locale': context.locale,
+        'status': 'active',
+        'last_message_at': datetime.now(timezone.utc).isoformat(),
+    }
+    if existing:
+        await supabase_client.update(
+            'agent_threads',
+            payload,
+            filters={'id': f'eq.{thread_id}'},
+            returning='minimal',
+        )
+        return
+    await supabase_client.insert(
+        'agent_threads',
+        {
+            'id': thread_id,
+            **payload,
+        },
+        returning='minimal',
+    )
+
+
+async def _persist_thread_message(
+    supabase_client: SupabaseUserClient,
+    user_id: str,
+    thread_id: str,
+    role: str,
+    content: str,
+    *,
+    metadata: dict | None = None,
+) -> None:
+    if not content.strip():
+        return
+    await supabase_client.insert(
+        'agent_thread_messages',
+        {
+            'thread_id': thread_id,
+            'user_id': user_id,
+            'role': role,
+            'content': content,
+            'metadata': metadata or {},
+        },
+        returning='minimal',
+    )
+    await supabase_client.update(
+        'agent_threads',
+        {'last_message_at': datetime.now(timezone.utc).isoformat()},
+        filters={'id': f'eq.{thread_id}'},
+        returning='minimal',
+    )
+
+
+async def _persist_assistant_reply(prepared: PreparedChatRun, reply: str) -> None:
+    await _persist_thread_message(
+        prepared.supabase_client,
+        prepared.user_id,
+        prepared.thread_id,
+        'assistant',
+        reply,
     )
 
 

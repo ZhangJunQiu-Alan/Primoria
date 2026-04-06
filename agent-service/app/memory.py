@@ -1,22 +1,31 @@
 from __future__ import annotations
 
 import asyncio
+import base64
 import json
 import re
-from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from functools import lru_cache
 from hashlib import sha1
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal, Sequence
 from uuid import uuid4
 
-from langgraph.checkpoint.memory import InMemorySaver, PersistentDict
+from langgraph.checkpoint.base import (
+    WRITES_IDX_MAP,
+    BaseCheckpointSaver,
+    ChannelVersions,
+    Checkpoint,
+    CheckpointMetadata,
+    CheckpointTuple,
+    get_checkpoint_id,
+    get_checkpoint_metadata,
+)
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.config import get_settings
 from app.schemas import ChatContext
+from app.services.supabase_client import SupabaseUserClient
 
 MarkdownBucket = Literal['preferences', 'profile', 'goals', 'episodes']
 SCOPED_MARKDOWN_BUCKETS = {'daily', 'course', 'lesson'}
@@ -44,43 +53,332 @@ class RankedMemoryRecord:
     score: float
 
 
-class PersistentInMemorySaver(InMemorySaver):
-    def __init__(self, root: Path):
+class SupabaseCheckpointSaver(BaseCheckpointSaver[str]):
+    def __init__(self, supabase_client: SupabaseUserClient, user_id: str) -> None:
         super().__init__()
-        self.root = root
-        self.root.mkdir(parents=True, exist_ok=True)
-        self.storage = PersistentDict(
-            lambda: defaultdict(dict),
-            filename=str(self.root / 'storage.pkl'),
-        )
-        self.writes = PersistentDict(
-            dict,
-            filename=str(self.root / 'writes.pkl'),
-        )
-        self.blobs = PersistentDict(
-            filename=str(self.root / 'blobs.pkl'),
-        )
-        for mapping in (self.storage, self.writes, self.blobs):
-            if Path(mapping.filename).exists():
-                mapping.load()
+        self.supabase_client = supabase_client
+        self.user_id = user_id
+
+    def get_tuple(self, config) -> CheckpointTuple | None:
+        return self._run_sync(self.aget_tuple(config))
+
+    def list(self, config, *, filter=None, before=None, limit=None):
+        items = self._run_sync(self._alist_to_list(config, filter=filter, before=before, limit=limit))
+        yield from items
 
     def put(self, config, checkpoint, metadata, new_versions):
-        result = super().put(config, checkpoint, metadata, new_versions)
-        self._sync()
-        return result
+        return self._run_sync(self.aput(config, checkpoint, metadata, new_versions))
 
     def put_writes(self, config, writes, task_id, task_path: str = '') -> None:
-        super().put_writes(config, writes, task_id, task_path)
-        self._sync()
+        self._run_sync(self.aput_writes(config, writes, task_id, task_path))
 
     def delete_thread(self, thread_id: str) -> None:
-        super().delete_thread(thread_id)
-        self._sync()
+        self._run_sync(self.adelete_thread(thread_id))
 
-    def _sync(self) -> None:
-        self.storage.sync()
-        self.writes.sync()
-        self.blobs.sync()
+    def delete_for_runs(self, run_ids: Sequence[str]) -> None:
+        raise NotImplementedError
+
+    def copy_thread(self, source_thread_id: str, target_thread_id: str) -> None:
+        raise NotImplementedError
+
+    def prune(self, thread_ids: Sequence[str], *, strategy: str = 'keep_latest') -> None:
+        raise NotImplementedError
+
+    async def aget_tuple(self, config) -> CheckpointTuple | None:
+        thread_id: str = config['configurable']['thread_id']
+        checkpoint_ns: str = config['configurable'].get('checkpoint_ns', '')
+        checkpoint_id = get_checkpoint_id(config)
+        filters = {
+            'thread_id': f'eq.{thread_id}',
+            'checkpoint_ns': f'eq.{checkpoint_ns}',
+        }
+        if checkpoint_id:
+            filters['checkpoint_id'] = f'eq.{checkpoint_id}'
+
+        rows = await self.supabase_client.select(
+            'agent_thread_checkpoints',
+            select='thread_id, checkpoint_ns, checkpoint_id, parent_checkpoint_id, checkpoint, metadata, writes, created_at',
+            filters=filters,
+            order='created_at.desc',
+            limit=1 if checkpoint_id else 50,
+        )
+        if not isinstance(rows, list):
+            return None
+
+        row = next((item for item in rows if isinstance(item, dict) and item.get('checkpoint')), None)
+        if not row:
+            return None
+        return self._row_to_checkpoint_tuple(row)
+
+    async def _alist_to_list(self, config, *, filter=None, before=None, limit=None) -> list[CheckpointTuple]:
+        items: list[CheckpointTuple] = []
+        async for item in self.alist(config, filter=filter, before=before, limit=limit):
+            items.append(item)
+        return items
+
+    async def alist(
+        self,
+        config,
+        *,
+        filter: dict[str, Any] | None = None,
+        before=None,
+        limit: int | None = None,
+    ):
+        filters: dict[str, str] = {}
+        config_checkpoint_id = None
+        if config:
+            filters['thread_id'] = f'eq.{config["configurable"]["thread_id"]}'
+            checkpoint_ns = config['configurable'].get('checkpoint_ns')
+            if checkpoint_ns is not None:
+                filters['checkpoint_ns'] = f'eq.{checkpoint_ns}'
+            config_checkpoint_id = get_checkpoint_id(config)
+            if config_checkpoint_id:
+                filters['checkpoint_id'] = f'eq.{config_checkpoint_id}'
+
+        rows = await self.supabase_client.select(
+            'agent_thread_checkpoints',
+            select='thread_id, checkpoint_ns, checkpoint_id, parent_checkpoint_id, checkpoint, metadata, writes, created_at',
+            filters=filters or None,
+            order='created_at.desc',
+            limit=limit or 100,
+        )
+        if not isinstance(rows, list):
+            return
+
+        before_checkpoint_id = get_checkpoint_id(before) if before else None
+        remaining = limit
+        for row in rows:
+            if not isinstance(row, dict) or not row.get('checkpoint'):
+                continue
+            if before_checkpoint_id and str(row.get('checkpoint_id')) >= before_checkpoint_id:
+                continue
+            item = self._row_to_checkpoint_tuple(row)
+            if filter and not all(item.metadata.get(key) == value for key, value in filter.items()):
+                continue
+            if remaining is not None and remaining <= 0:
+                break
+            if remaining is not None:
+                remaining -= 1
+            yield item
+
+    async def aput(
+        self,
+        config,
+        checkpoint,
+        metadata,
+        new_versions,
+    ):
+        thread_id: str = config['configurable']['thread_id']
+        checkpoint_ns: str = config['configurable'].get('checkpoint_ns', '')
+        checkpoint_id: str = checkpoint['id']
+        parent_checkpoint_id = config['configurable'].get('checkpoint_id')
+        row_payload = {
+            'thread_id': thread_id,
+            'user_id': self.user_id,
+            'checkpoint_ns': checkpoint_ns,
+            'checkpoint_id': checkpoint_id,
+            'parent_checkpoint_id': parent_checkpoint_id,
+            'checkpoint': self._serialize_checkpoint_payload(checkpoint),
+            'metadata': self._encode_typed_json(get_checkpoint_metadata(config, metadata)),
+        }
+        existing = await self.supabase_client.select(
+            'agent_thread_checkpoints',
+            select='id, writes',
+            filters={
+                'thread_id': f'eq.{thread_id}',
+                'checkpoint_ns': f'eq.{checkpoint_ns}',
+                'checkpoint_id': f'eq.{checkpoint_id}',
+            },
+            single=True,
+        )
+        if existing:
+            await self.supabase_client.update(
+                'agent_thread_checkpoints',
+                row_payload,
+                filters={
+                    'thread_id': f'eq.{thread_id}',
+                    'checkpoint_ns': f'eq.{checkpoint_ns}',
+                    'checkpoint_id': f'eq.{checkpoint_id}',
+                },
+                returning='minimal',
+            )
+        else:
+            row_payload['writes'] = []
+            await self.supabase_client.insert('agent_thread_checkpoints', row_payload, returning='minimal')
+        return {
+            'configurable': {
+                'thread_id': thread_id,
+                'checkpoint_ns': checkpoint_ns,
+                'checkpoint_id': checkpoint_id,
+            }
+        }
+
+    async def aput_writes(
+        self,
+        config,
+        writes,
+        task_id,
+        task_path: str = '',
+    ) -> None:
+        thread_id: str = config['configurable']['thread_id']
+        checkpoint_ns: str = config['configurable'].get('checkpoint_ns', '')
+        checkpoint_id: str = config['configurable']['checkpoint_id']
+        existing = await self.supabase_client.select(
+            'agent_thread_checkpoints',
+            select='thread_id, checkpoint_ns, checkpoint_id, writes',
+            filters={
+                'thread_id': f'eq.{thread_id}',
+                'checkpoint_ns': f'eq.{checkpoint_ns}',
+                'checkpoint_id': f'eq.{checkpoint_id}',
+            },
+            single=True,
+        )
+        existing_writes = existing.get('writes', []) if isinstance(existing, dict) and isinstance(existing.get('writes'), list) else []
+        indexed = {
+            (str(item.get('task_id')), int(item.get('idx', 0))): item
+            for item in existing_writes
+            if isinstance(item, dict)
+        }
+        for idx, (channel, value) in enumerate(writes):
+            write_idx = WRITES_IDX_MAP.get(channel, idx)
+            key = (task_id, write_idx)
+            if write_idx >= 0 and key in indexed:
+                continue
+            indexed[key] = {
+                'task_id': task_id,
+                'channel': channel,
+                'value': self._encode_typed_json(value),
+                'task_path': task_path,
+                'idx': write_idx,
+            }
+        payload = {
+            'thread_id': thread_id,
+            'user_id': self.user_id,
+            'checkpoint_ns': checkpoint_ns,
+            'checkpoint_id': checkpoint_id,
+            'writes': list(indexed.values()),
+        }
+        if isinstance(existing, dict):
+            await self.supabase_client.update(
+                'agent_thread_checkpoints',
+                {'writes': list(indexed.values())},
+                filters={
+                    'thread_id': f'eq.{thread_id}',
+                    'checkpoint_ns': f'eq.{checkpoint_ns}',
+                    'checkpoint_id': f'eq.{checkpoint_id}',
+                },
+                returning='minimal',
+            )
+        else:
+            await self.supabase_client.insert('agent_thread_checkpoints', payload, returning='minimal')
+
+    async def adelete_thread(self, thread_id: str) -> None:
+        await self.supabase_client.delete(
+            'agent_thread_checkpoints',
+            filters={'thread_id': f'eq.{thread_id}'},
+            returning='minimal',
+        )
+
+    async def adelete_for_runs(self, run_ids: Sequence[str]) -> None:
+        raise NotImplementedError
+
+    async def acopy_thread(self, source_thread_id: str, target_thread_id: str) -> None:
+        raise NotImplementedError
+
+    async def aprune(self, thread_ids: Sequence[str], *, strategy: str = 'keep_latest') -> None:
+        raise NotImplementedError
+
+    def get_next_version(self, current: str | None, channel: None) -> str:
+        if current is None:
+            current_v = 0
+        elif isinstance(current, int):
+            current_v = current
+        else:
+            current_v = int(str(current).split('.')[0])
+        next_v = current_v + 1
+        return f'{next_v:032}.0000000000000000'
+
+    def _serialize_checkpoint_payload(self, checkpoint: Checkpoint) -> dict:
+        checkpoint_copy = checkpoint.copy()
+        channel_values = checkpoint_copy.pop('channel_values', {})
+        return {
+            'checkpoint': self._encode_typed_json(checkpoint_copy),
+            'channel_values': {
+                key: self._encode_typed_json(value)
+                for key, value in channel_values.items()
+            },
+        }
+
+    def _row_to_checkpoint_tuple(self, row: dict) -> CheckpointTuple:
+        checkpoint_payload = row.get('checkpoint') if isinstance(row.get('checkpoint'), dict) else {}
+        checkpoint_core = self._decode_typed_json(checkpoint_payload.get('checkpoint'))
+        channel_values_payload = checkpoint_payload.get('channel_values') if isinstance(checkpoint_payload.get('channel_values'), dict) else {}
+        checkpoint = {
+            **checkpoint_core,
+            'channel_values': {
+                key: self._decode_typed_json(value)
+                for key, value in channel_values_payload.items()
+            },
+        }
+        metadata = self._decode_typed_json(row.get('metadata')) or {}
+        writes_payload = row.get('writes') if isinstance(row.get('writes'), list) else []
+        pending_writes = [
+            (
+                str(item.get('task_id')),
+                str(item.get('channel')),
+                self._decode_typed_json(item.get('value')),
+            )
+            for item in writes_payload
+            if isinstance(item, dict)
+        ]
+        thread_id = str(row.get('thread_id') or '')
+        checkpoint_ns = str(row.get('checkpoint_ns') or '')
+        checkpoint_id = str(row.get('checkpoint_id') or '')
+        parent_checkpoint_id = row.get('parent_checkpoint_id')
+        return CheckpointTuple(
+            config={
+                'configurable': {
+                    'thread_id': thread_id,
+                    'checkpoint_ns': checkpoint_ns,
+                    'checkpoint_id': checkpoint_id,
+                }
+            },
+            checkpoint=checkpoint,
+            metadata=metadata,
+            pending_writes=pending_writes,
+            parent_config=(
+                {
+                    'configurable': {
+                        'thread_id': thread_id,
+                        'checkpoint_ns': checkpoint_ns,
+                        'checkpoint_id': str(parent_checkpoint_id),
+                    }
+                }
+                if parent_checkpoint_id
+                else None
+            ),
+        )
+
+    def _encode_typed_json(self, value: Any) -> dict:
+        data_type, data = self.serde.dumps_typed(value)
+        return {
+            'type': data_type,
+            'base64': base64.b64encode(data).decode('ascii'),
+        }
+
+    def _decode_typed_json(self, payload: Any) -> Any:
+        if not isinstance(payload, dict):
+            return None
+        data_type = str(payload.get('type') or '')
+        data_b64 = str(payload.get('base64') or '')
+        return self.serde.loads_typed((data_type, base64.b64decode(data_b64.encode('ascii'))))
+
+    def _run_sync(self, coro):
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            return asyncio.run(coro)
+        raise RuntimeError('Use asynchronous checkpoint methods inside an event loop.')
 
 
 def resolve_thread_id(user_id: str, thread_id: str | None) -> str:
@@ -89,17 +387,16 @@ def resolve_thread_id(user_id: str, thread_id: str | None) -> str:
     return f'viewer:{user_id}:{uuid4()}'
 
 
-@lru_cache(maxsize=1)
-def get_checkpointer() -> InMemorySaver:
-    return PersistentInMemorySaver(get_memory_root() / 'checkpoints')
+def build_checkpointer(supabase_client: SupabaseUserClient, user_id: str) -> SupabaseCheckpointSaver:
+    return SupabaseCheckpointSaver(supabase_client, user_id)
 
 
 def build_thread_config(thread_id: str) -> dict:
     return {'configurable': {'thread_id': thread_id}}
 
 
-async def thread_checkpoint_exists(thread_id: str) -> bool:
-    checkpoint = await get_checkpointer().aget_tuple(build_thread_config(thread_id))
+async def thread_checkpoint_exists(checkpointer: BaseCheckpointSaver, thread_id: str) -> bool:
+    checkpoint = await checkpointer.aget_tuple(build_thread_config(thread_id))
     return checkpoint is not None
 
 
@@ -154,6 +451,7 @@ async def save_user_memory(
     user_id: str,
     content: str,
     *,
+    supabase_client: SupabaseUserClient,
     kind: str = 'note',
     source: str = 'agent',
     metadata: dict | None = None,
@@ -170,31 +468,25 @@ async def save_user_memory(
         'source': source.strip() or 'agent',
         'metadata': metadata or {},
     }
-    bucket = _bucket_for_kind(normalized_kind, context)
-    if bucket == 'episodes':
-        return await asyncio.to_thread(_append_episode_memory, user_id, payload)
-    target = _resolve_markdown_target(user_id, bucket, payload, context)
-    return await asyncio.to_thread(
-        _append_markdown_memory,
+    target = _resolve_db_memory_target(normalized_kind, payload, context)
+    return await _save_db_memory(
+        supabase_client,
         user_id,
         payload,
-        bucket,
-        target['path'],
-        target['source'],
-        target['metadata'],
-        target['title'],
+        target,
     )
 
 
 async def search_user_memories(
     user_id: str,
     *,
+    supabase_client: SupabaseUserClient,
     query: str | None = None,
     kind: str | None = None,
     limit: int = 5,
     context: ChatContext | None = None,
 ) -> list[dict]:
-    rows = await asyncio.to_thread(_load_user_memories, user_id, context)
+    rows = await _load_user_memories_from_supabase(supabase_client)
     normalized_query = query.strip().lower() if query else ''
     query_tokens = _tokenize_for_similarity(normalized_query)
     normalized_kind = _normalize_kind(kind) if kind else ''
@@ -238,11 +530,429 @@ async def search_user_memories(
 async def inspect_user_memory(
     user_id: str,
     *,
+    supabase_client: SupabaseUserClient,
     context: ChatContext | None = None,
     day_key: str | None = None,
     episode_limit: int = 20,
 ) -> dict:
-    return await asyncio.to_thread(_inspect_user_memory, user_id, context, day_key, episode_limit)
+    rows = await _load_user_memories_from_supabase(supabase_client, limit=1000)
+    return _inspect_user_memory_rows(rows, context, day_key, episode_limit)
+
+
+def _resolve_db_memory_target(kind: str, payload: dict, context: ChatContext | None) -> dict:
+    bucket = _bucket_for_kind(kind, context)
+    if bucket == 'preferences':
+        return {
+            'scope_type': 'global',
+            'scope_key': 'global:preferences',
+            'source': 'preferences',
+            'metadata': {'scope_type': 'global', 'memory_group': 'preferences'},
+            'day_key': None,
+            'course_id': None,
+            'lesson_id': None,
+            'title': 'Preferences',
+        }
+    if bucket == 'goals':
+        return {
+            'scope_type': 'global',
+            'scope_key': 'global:goals',
+            'source': 'goals',
+            'metadata': {'scope_type': 'global', 'memory_group': 'goals'},
+            'day_key': None,
+            'course_id': None,
+            'lesson_id': None,
+            'title': 'Goals',
+        }
+    if bucket == 'profile':
+        return {
+            'scope_type': 'global',
+            'scope_key': 'global:profile',
+            'source': 'profile',
+            'metadata': {'scope_type': 'global', 'memory_group': 'profile'},
+            'day_key': None,
+            'course_id': None,
+            'lesson_id': None,
+            'title': 'Profile',
+        }
+    if bucket == 'lesson' and context and context.lesson_id:
+        course_id = context.course_id or 'unknown-course'
+        return {
+            'scope_type': 'lesson',
+            'scope_key': f'lesson:{course_id}:{context.lesson_id}',
+            'source': 'lesson',
+            'metadata': {
+                'scope_type': 'lesson',
+                'course_id': context.course_id,
+                'lesson_id': context.lesson_id,
+            },
+            'day_key': None,
+            'course_id': context.course_id,
+            'lesson_id': context.lesson_id,
+            'title': f'Lesson Memory: {context.lesson_id}',
+        }
+    if bucket == 'course' and context and context.course_id:
+        return {
+            'scope_type': 'course',
+            'scope_key': f'course:{context.course_id}',
+            'source': 'course',
+            'metadata': {
+                'scope_type': 'course',
+                'course_id': context.course_id,
+            },
+            'day_key': None,
+            'course_id': context.course_id,
+            'lesson_id': None,
+            'title': f'Course Memory: {context.course_id}',
+        }
+    if bucket == 'episodes':
+        return {
+            'scope_type': 'episode',
+            'scope_key': 'episode',
+            'source': 'episode',
+            'metadata': {'scope_type': 'episode'},
+            'day_key': None,
+            'course_id': context.course_id if context else None,
+            'lesson_id': context.lesson_id if context else None,
+            'title': 'Episode Memory',
+        }
+    today = _today_key()
+    return {
+        'scope_type': 'daily',
+        'scope_key': f'daily:{today}',
+        'source': 'daily',
+        'metadata': {'scope_type': 'daily', 'day': today},
+        'day_key': today,
+        'course_id': context.course_id if context else None,
+        'lesson_id': context.lesson_id if context else None,
+        'title': f'Daily Memory: {today}',
+    }
+
+
+async def _save_db_memory(
+    supabase_client: SupabaseUserClient,
+    user_id: str,
+    payload: dict,
+    target: dict,
+) -> dict:
+    existing_rows = await _load_scope_rows(supabase_client, target, include_summaries=False)
+    existing_records = [_memory_row_to_record(row) for row in existing_rows]
+    normalized_content = payload['content'].strip().lower()
+
+    for item in existing_records:
+        if item.kind == payload['kind'] and item.content.strip().lower() == normalized_content:
+            return _memory_row_to_api(next(row for row in existing_rows if str(row.get('id')) == item.key))
+
+    similar = _find_similar_record(existing_records, payload['content'], payload['kind'])
+    base_payload = _build_db_memory_payload(user_id, payload, target)
+    persisted_row: dict
+
+    if similar is not None:
+        updated_rows = await supabase_client.update(
+            'agent_memories',
+            {
+                **base_payload,
+                'version': 1,
+            },
+            filters={'id': f'eq.{similar.key}'},
+        )
+        persisted_row = (updated_rows or [None])[0]
+    else:
+        inserted_rows = await supabase_client.insert('agent_memories', {**base_payload, 'version': 1})
+        persisted_row = (inserted_rows or [None])[0]
+
+    if target['scope_type'] in {'daily', 'course', 'lesson'}:
+        await _compress_db_scope_memories(supabase_client, user_id, target)
+
+    if not isinstance(persisted_row, dict):
+        refreshed_rows = await _load_scope_rows(supabase_client, target, include_summaries=False)
+        if refreshed_rows:
+            persisted_row = refreshed_rows[-1]
+        else:
+            raise RuntimeError('Failed to persist memory row.')
+    return _memory_row_to_api(persisted_row)
+
+
+def _build_db_memory_payload(user_id: str, payload: dict, target: dict) -> dict:
+    metadata = {
+        **(payload.get('metadata') or {}),
+        **(target.get('metadata') or {}),
+        'captured_from': payload['source'],
+    }
+    return {
+        'user_id': user_id,
+        'kind': payload['kind'],
+        'scope_type': target['scope_type'],
+        'scope_key': target['scope_key'],
+        'day_key': target['day_key'],
+        'course_id': target['course_id'],
+        'lesson_id': target['lesson_id'],
+        'content': payload['content'],
+        'content_md': f'- [{payload["kind"]}] {payload["content"]}',
+        'metadata': metadata,
+        'source': target['source'],
+        'captured_from': payload['source'],
+        'is_summary': False,
+        'is_active': True,
+        'fingerprint': _memory_fingerprint(payload['kind'], payload['content'], target['scope_key']),
+    }
+
+
+async def _load_user_memories_from_supabase(
+    supabase_client: SupabaseUserClient,
+    *,
+    limit: int = 500,
+) -> list[MemoryRecord]:
+    rows = await supabase_client.select(
+        'agent_memories',
+        select='id, kind, content, source, metadata, created_at, updated_at, scope_type, scope_key, day_key, course_id, lesson_id, is_summary, is_active, captured_from',
+        filters={'is_active': 'eq.true'},
+        order='updated_at.desc',
+        limit=limit,
+    )
+    if not isinstance(rows, list):
+        return []
+    return [_memory_row_to_record(row) for row in rows if isinstance(row, dict)]
+
+
+async def _load_scope_rows(
+    supabase_client: SupabaseUserClient,
+    target: dict,
+    *,
+    include_summaries: bool | None,
+) -> list[dict]:
+    filters = {
+        'scope_key': f'eq.{target["scope_key"]}',
+        'is_active': 'eq.true',
+    }
+    if include_summaries is not None:
+        filters['is_summary'] = f'eq.{str(include_summaries).lower()}'
+    rows = await supabase_client.select(
+        'agent_memories',
+        select='id, kind, content, source, metadata, created_at, updated_at, scope_type, scope_key, day_key, course_id, lesson_id, is_summary, is_active, captured_from',
+        filters=filters,
+        order='created_at.asc',
+        limit=200,
+    )
+    return rows if isinstance(rows, list) else []
+
+
+async def _compress_db_scope_memories(
+    supabase_client: SupabaseUserClient,
+    user_id: str,
+    target: dict,
+) -> None:
+    active_rows = await _load_scope_rows(supabase_client, target, include_summaries=False)
+    if len(active_rows) <= MAX_SCOPE_ENTRIES:
+        return
+
+    archived_rows = active_rows[:-KEEP_RECENT_SCOPE_ENTRIES]
+    summary_rows = await _load_scope_rows(supabase_client, target, include_summaries=True)
+    merged_summary = _merge_summary_entries(
+        [(str(row.get('kind') or 'summary'), str(row.get('content') or '')) for row in summary_rows],
+        [(str(row.get('kind') or 'note'), str(row.get('content') or '')) for row in archived_rows],
+        title=f'{target["title"]} Summary',
+    )
+
+    deactivate_ids = [str(row['id']) for row in [*summary_rows, *archived_rows] if row.get('id')]
+    if deactivate_ids:
+        await supabase_client.update(
+            'agent_memories',
+            {'is_active': False},
+            filters={'id': f'in.({",".join(deactivate_ids)})'},
+            returning='minimal',
+        )
+
+    if not merged_summary:
+        return
+
+    summary_payloads = [
+        {
+            'user_id': user_id,
+            'kind': kind,
+            'scope_type': target['scope_type'],
+            'scope_key': target['scope_key'],
+            'day_key': target['day_key'],
+            'course_id': target['course_id'],
+            'lesson_id': target['lesson_id'],
+            'content': content,
+            'content_md': f'- [{kind}] {content}',
+            'metadata': {
+                **(target.get('metadata') or {}),
+                'is_summary': True,
+                'captured_from': 'system',
+            },
+            'source': f'{target["source"]}_summary',
+            'captured_from': 'system',
+            'is_summary': True,
+            'is_active': True,
+            'fingerprint': _memory_fingerprint(kind, content, f'{target["scope_key"]}:summary'),
+            'summarized_from_ids': [str(row['id']) for row in archived_rows if row.get('id')],
+        }
+        for kind, content in merged_summary
+    ]
+    await supabase_client.insert('agent_memories', summary_payloads, returning='minimal')
+
+
+def _memory_fingerprint(kind: str, content: str, scope_key: str) -> str:
+    return sha1(f'{scope_key}:{kind}:{content.strip().lower()}'.encode('utf-8')).hexdigest()
+
+
+def _memory_row_metadata(row: dict) -> dict:
+    metadata = row.get('metadata') if isinstance(row.get('metadata'), dict) else {}
+    merged = {
+        **metadata,
+        'scope_type': row.get('scope_type'),
+        'scope_key': row.get('scope_key'),
+        'course_id': row.get('course_id'),
+        'lesson_id': row.get('lesson_id'),
+        'captured_from': row.get('captured_from') or metadata.get('captured_from'),
+        'is_summary': bool(row.get('is_summary')),
+    }
+    day_key = row.get('day_key')
+    if day_key:
+        merged['day'] = str(day_key)
+    return {key: value for key, value in merged.items() if value is not None}
+
+
+def _memory_row_to_record(row: dict) -> MemoryRecord:
+    return MemoryRecord(
+        key=str(row.get('id') or ''),
+        content=str(row.get('content') or ''),
+        kind=_normalize_kind(str(row.get('kind') or 'note')),
+        source=str(row.get('source') or 'memory'),
+        metadata=_memory_row_metadata(row),
+        created_at=str(row.get('created_at') or ''),
+        updated_at=str(row.get('updated_at') or ''),
+    )
+
+
+def _memory_row_to_api(row: dict) -> dict:
+    record = _memory_row_to_record(row)
+    return {
+        'key': record.key,
+        'content': record.content,
+        'kind': record.kind,
+        'source': record.source,
+        'metadata': record.metadata,
+        'created_at': record.created_at,
+        'updated_at': record.updated_at,
+    }
+
+
+def _inspect_user_memory_rows(
+    rows: list[MemoryRecord],
+    context: ChatContext | None,
+    day_key: str | None,
+    episode_limit: int,
+) -> dict:
+    current_day = day_key or _today_key()
+    course_id = context.course_id if context else None
+    lesson_id = context.lesson_id if context else None
+
+    def scope_rows(scope_key: str, *, summaries: bool) -> list[MemoryRecord]:
+        return [
+            row
+            for row in rows
+            if str(row.metadata.get('scope_key', '')) == scope_key and bool(row.metadata.get('is_summary')) is summaries
+        ]
+
+    return {
+        'global': {
+            'preferences': _inspect_memory_scope_records(
+                scope_rows('global:preferences', summaries=False),
+                scope_rows('global:preferences', summaries=True),
+                'Preferences',
+                'memory://users/self/preferences',
+            ),
+            'profile': _inspect_memory_scope_records(
+                scope_rows('global:profile', summaries=False),
+                scope_rows('global:profile', summaries=True),
+                'Profile',
+                'memory://users/self/profile',
+            ),
+            'goals': _inspect_memory_scope_records(
+                scope_rows('global:goals', summaries=False),
+                scope_rows('global:goals', summaries=True),
+                'Goals',
+                'memory://users/self/goals',
+            ),
+        },
+        'daily': _inspect_memory_scope_records(
+            scope_rows(f'daily:{current_day}', summaries=False),
+            scope_rows(f'daily:{current_day}', summaries=True),
+            f'Daily Memory: {current_day}',
+            f'memory://users/self/daily/{current_day}',
+        ),
+        'course': _inspect_memory_scope_records(
+            scope_rows(f'course:{course_id}', summaries=False),
+            scope_rows(f'course:{course_id}', summaries=True),
+            f'Course Memory: {course_id}' if course_id else 'Course Memory',
+            f'memory://users/self/course/{course_id}',
+        )
+        if course_id
+        else None,
+        'lesson': _inspect_memory_scope_records(
+            scope_rows(f'lesson:{course_id or "unknown-course"}:{lesson_id}', summaries=False),
+            scope_rows(f'lesson:{course_id or "unknown-course"}:{lesson_id}', summaries=True),
+            f'Lesson Memory: {lesson_id}' if lesson_id else 'Lesson Memory',
+            f'memory://users/self/course/{course_id or "unknown-course"}/lesson/{lesson_id}',
+        )
+        if lesson_id
+        else None,
+        'episodes': [
+            {
+                'key': row.key,
+                'content': row.content,
+                'kind': row.kind,
+                'source': row.source,
+                'metadata': row.metadata,
+                'created_at': row.created_at,
+                'updated_at': row.updated_at,
+            }
+            for row in [
+                item
+                for item in rows
+                if item.metadata.get('scope_type') == 'episode' and not item.metadata.get('is_summary')
+            ][-episode_limit:]
+        ],
+    }
+
+
+def _inspect_memory_scope_records(
+    entries: list[MemoryRecord],
+    summaries: list[MemoryRecord],
+    title: str,
+    path: str,
+) -> dict:
+    return {
+        'path': path,
+        'summary_path': f'{path}/summary',
+        'title': title,
+        'summary': [
+            {
+                'key': row.key,
+                'content': row.content,
+                'kind': row.kind,
+                'source': row.source,
+                'metadata': row.metadata,
+                'created_at': row.created_at,
+                'updated_at': row.updated_at,
+            }
+            for row in summaries
+        ],
+        'entries': [
+            {
+                'key': row.key,
+                'content': row.content,
+                'kind': row.kind,
+                'source': row.source,
+                'metadata': row.metadata,
+                'created_at': row.created_at,
+                'updated_at': row.updated_at,
+            }
+            for row in entries
+        ],
+    }
 
 
 def _normalize_kind(kind: str | None) -> str:

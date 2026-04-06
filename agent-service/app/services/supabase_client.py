@@ -58,3 +58,53 @@ class SupabaseUserClient:
         )
         response.raise_for_status()
         return response.json()
+
+    async def insert(self, table: str, values: dict | list[dict], *, returning: str = 'representation'):
+        response = await self._client.post(
+            f'{self._base_url}/rest/v1/{table}',
+            json=values,
+            headers={
+                **self._headers,
+                'Prefer': f'return={returning}',
+            },
+        )
+        response.raise_for_status()
+        if returning == 'minimal' or not response.content:
+            return None
+        return response.json()
+
+    async def update(
+        self,
+        table: str,
+        values: dict,
+        *,
+        filters: dict[str, str],
+        returning: str = 'representation',
+    ):
+        response = await self._client.patch(
+            f'{self._base_url}/rest/v1/{table}',
+            params=filters,
+            json=values,
+            headers={
+                **self._headers,
+                'Prefer': f'return={returning}',
+            },
+        )
+        response.raise_for_status()
+        if returning == 'minimal' or not response.content:
+            return None
+        return response.json()
+
+    async def delete(self, table: str, *, filters: dict[str, str], returning: str = 'representation'):
+        response = await self._client.delete(
+            f'{self._base_url}/rest/v1/{table}',
+            params=filters,
+            headers={
+                **self._headers,
+                'Prefer': f'return={returning}',
+            },
+        )
+        response.raise_for_status()
+        if returning == 'minimal' or not response.content:
+            return None
+        return response.json()
