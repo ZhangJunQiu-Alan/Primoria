@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Literal, Sequence
 from uuid import uuid4
 
+import httpx
 from langgraph.checkpoint.base import (
     WRITES_IDX_MAP,
     BaseCheckpointSaver,
@@ -204,7 +205,21 @@ class SupabaseCheckpointSaver(BaseCheckpointSaver[str]):
             )
         else:
             row_payload['writes'] = []
-            await self.supabase_client.insert('agent_thread_checkpoints', row_payload, returning='minimal')
+            try:
+                await self.supabase_client.insert('agent_thread_checkpoints', row_payload, returning='minimal')
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code != 409:
+                    raise
+                await self.supabase_client.update(
+                    'agent_thread_checkpoints',
+                    row_payload,
+                    filters={
+                        'thread_id': f'eq.{thread_id}',
+                        'checkpoint_ns': f'eq.{checkpoint_ns}',
+                        'checkpoint_id': f'eq.{checkpoint_id}',
+                    },
+                    returning='minimal',
+                )
         return {
             'configurable': {
                 'thread_id': thread_id,
@@ -270,7 +285,21 @@ class SupabaseCheckpointSaver(BaseCheckpointSaver[str]):
                 returning='minimal',
             )
         else:
-            await self.supabase_client.insert('agent_thread_checkpoints', payload, returning='minimal')
+            try:
+                await self.supabase_client.insert('agent_thread_checkpoints', payload, returning='minimal')
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code != 409:
+                    raise
+                await self.supabase_client.update(
+                    'agent_thread_checkpoints',
+                    {'writes': list(indexed.values())},
+                    filters={
+                        'thread_id': f'eq.{thread_id}',
+                        'checkpoint_ns': f'eq.{checkpoint_ns}',
+                        'checkpoint_id': f'eq.{checkpoint_id}',
+                    },
+                    returning='minimal',
+                )
 
     async def adelete_thread(self, thread_id: str) -> None:
         await self.supabase_client.delete(
