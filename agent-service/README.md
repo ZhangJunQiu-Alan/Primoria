@@ -7,8 +7,8 @@
 - 基于 Supabase 用户会话的 authenticated chat
 - 读取用户 profile / stats / enrollments / course / lesson context
 - 使用 LangChain Deep Agents 组织 tool-calling
-- thread short-term memory（当前为文件持久化 checkpointer）
-- user long-term memory（`preferences.md` / `profile.md` / `goals.md` / `episodes.jsonl`）
+- thread short-term memory（Supabase `agent_thread_checkpoints`）
+- user long-term memory（已迁移为 Supabase `agent_memories`）
 
 ## 环境变量
 
@@ -43,44 +43,30 @@ uv run uvicorn app.main:app --reload --port 8787
 - `POST /v1/chat/stream`
 - `GET /v1/memory/inspect`
 
-## Memory 落盘结构
+## Memory 持久化结构
 
-默认会写到 `agent-service/data/memory`：
+长期 memory 现在持久化到 Supabase：
 
 ```txt
-data/memory/
-  checkpoints/
-    storage.pkl
-    writes.pkl
-    blobs.pkl
-  users/
-    <user_id>/
-      daily/
-        YYYY-MM-DD.md
-      courses/
-        <course_id>/
-          course.md
-          lessons/
-            <lesson_id>.md
-      preferences.md
-      profile.md
-      goals.md
-      episodes.jsonl
+public.agent_memories
+  - global preferences / profile / goals
+  - daily memory + summary
+  - course memory + summary
+  - lesson memory + summary
+  - episodes
+
+public.agent_threads
+public.agent_thread_messages
+public.agent_thread_checkpoints
 ```
 
-- `checkpoints/*.pkl`: thread short-term memory / checkpoint
-- `preferences.md`: 稳定偏好
-- `profile.md`: 背景信息 / 约束 / 用户画像
-- `goals.md`: 学习目标
-- `daily/YYYY-MM-DD.md`: 当天学习进展 / 卡点 / 临时上下文
-- `daily/YYYY-MM-DD.summary.md`: 当天较旧记忆的压缩摘要
-- `courses/<course_id>/course.md`: 课程级记忆
-- `courses/<course_id>/course.summary.md`: 课程级较旧记忆压缩摘要
-- `courses/<course_id>/lessons/<lesson_id>.md`: 课时级记忆
-- `courses/<course_id>/lessons/<lesson_id>.summary.md`: 课时级较旧记忆压缩摘要
-- `episodes.jsonl`: 零散事件型记忆
+- `agent_memories`: 结构化长期记忆主表
+- `agent_threads`: 会话线程元数据
+- `agent_thread_messages`: 会话消息
+- `agent_thread_checkpoints`: LangGraph checkpoint 持久化
 
-如果配置了 `GOOGLE_API_KEY`，上述 `*.summary.md` 会优先使用 Gemini 生成更紧凑的 AI 摘要；没有 key 时回退到规则压缩。
+summary 不再写 `*.summary.md` 文件，而是写回 `agent_memories` 里的 `is_summary=true` 记录。
+如果配置了 `GOOGLE_API_KEY`，summary 合并会优先使用 Gemini；没有 key 时回退到规则压缩。
 
 ## Memory Inspector
 
