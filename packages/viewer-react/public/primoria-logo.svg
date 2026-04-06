@@ -1,0 +1,23 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="768"
+  height="768"
+  viewBox="0 0 768 768"
+  role="img"
+  aria-labelledby="primoriaLogoTitle primoriaLogoDesc"
+>
+  <title id="primoriaLogoTitle">Primoria logo</title>
+  <desc id="primoriaLogoDesc">
+    Primoria planet-and-ring logo rendered from the current brand asset.
+  </desc>
+  <image
+    x="0"
+    y="0"
+    width="768"
+    height="768"
+    preserveAspectRatio="xMidYMid meet"
+    xlink:href="./primoria-logo.png"
+    href="./primoria-logo.png"
+  />
+</svg>
