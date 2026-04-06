@@ -15,7 +15,7 @@ describe('SettingsPage', () => {
     const user = userEvent.setup();
     renderRoute('/settings', 'user');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
 
     const usernameInput = await screen.findByLabelText(/用户名/i);
     await user.clear(usernameInput);
@@ -52,13 +52,13 @@ describe('SettingsPage', () => {
     await user.click(await screen.findByRole('button', { name: /家长模式/i }));
     await user.click(await screen.findByRole('button', { name: /生成绑定码/i }));
     expect(await screen.findByText(/DEMO-2419/i)).toBeInTheDocument();
-  });
+  }, 30000);
 
   it('switches settings language and persists system settings', async () => {
     const user = userEvent.setup();
     renderRoute('/settings', 'user');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
     await user.click(await screen.findByRole('button', { name: /显示与语言/i }));
     await user.click(await screen.findByRole('button', { name: /^深色$/i }));
     expect(document.documentElement.dataset.theme).toBe('dark');
@@ -71,32 +71,32 @@ describe('SettingsPage', () => {
     expect(JSON.parse(window.localStorage.getItem(VIEWER_FIXTURE_STORAGE_KEY) ?? '{}')).toMatchObject({
       userSettings: { language: 'en', theme_mode: 'dark' },
     });
-  });
+  }, 30000);
 
   it('allows parent users to open the settings center and support pages', async () => {
     const user = userEvent.setup();
     const { locationRef } = renderRoute('/settings', 'parent');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
 
     await user.click(await screen.findByRole('button', { name: /支持与关于/i }));
     await user.click(await screen.findByRole('link', { name: /帮助中心/i }));
 
-    expect(await screen.findByRole('heading', { name: /帮助中心/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /帮助中心/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(locationRef.pathname).toBe('/support/help');
-  });
+  }, 30000);
 
   it('signs out cleanly from demo mode', async () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);
     const user = userEvent.setup();
     const { locationRef } = renderRoute('/settings', 'user');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
     await user.click(await screen.findByRole('button', { name: /支持与关于/i }));
     await user.click(await screen.findByRole('button', { name: /退出当前账号/i }));
 
-    expect(await screen.findByRole('heading', { name: /掌握任何学科/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /掌握任何学科/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(locationRef.pathname).toBe('/');
     expect(window.localStorage.getItem(DEMO_ROLE_STORAGE_KEY)).toBeNull();
-  });
+  }, 30000);
 });

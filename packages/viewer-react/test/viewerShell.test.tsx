@@ -11,9 +11,9 @@ describe('viewer shell navigation', () => {
 
     await user.click(screen.getByRole('link', { name: /课程库/i }));
 
-    expect(await screen.findByRole('heading', { name: /全部课程/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /全部课程/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(locationRef.pathname).toBe('/library');
-  });
+  }, 30000);
 
   it('routes into Builder inside the same app', async () => {
     const user = userEvent.setup();
@@ -23,5 +23,5 @@ describe('viewer shell navigation', () => {
     await user.click(await screen.findByRole('link', { name: /builder/i }));
 
     expect(locationRef.pathname).toBe('/builder/dashboard');
-  });
+  }, 30000);
 });

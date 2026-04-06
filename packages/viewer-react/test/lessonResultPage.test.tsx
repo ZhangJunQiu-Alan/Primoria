@@ -58,7 +58,7 @@ describe('LessonResultPage', () => {
     expect(screen.getByText(/^3\/4$/i)).toBeInTheDocument();
     expect(screen.getByText(/^2$/i)).toBeInTheDocument();
     expect(screen.getByText(/Feedback Loop/i)).toBeInTheDocument();
-    expect(screen.getByText(/completed the course enrollment/i)).toBeInTheDocument();
+    expect(screen.getByText(/completed the current course enrollment/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Back home/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Return to course/i })).toBeInTheDocument();
   });
