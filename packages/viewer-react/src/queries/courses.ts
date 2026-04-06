@@ -7,6 +7,7 @@ import { uuid } from '@/lib/uuid';
 import { supabase } from '@/lib/supabase';
 import { buildCourseSlug } from '@/lib/courseSlug';
 import { editorKeys } from '@/queries/editor';
+import { resolveLocalCourseThumbnailUrl } from '@/shared/utils/localCourseCovers';
 
 type CourseTableRow = Database['public']['Tables']['courses']['Row'];
 type LessonTableRow = Database['public']['Tables']['lessons']['Row'];
@@ -179,6 +180,10 @@ const duplicateSourceSelectFragment = `
 function mapCourseRow(row: CourseListSelectRow): CourseRow {
   return {
     ...row,
+    thumbnail_url: resolveLocalCourseThumbnailUrl({
+      title: row.title,
+      thumbnailUrl: row.thumbnail_url,
+    }),
     lessons: [...(row.lessons ?? [])].sort((a, b) => a.sort_key - b.sort_key),
   };
 }

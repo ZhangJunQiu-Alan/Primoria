@@ -5,8 +5,531 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/primoria-logo.png" />
     <title>Primoria Viewer</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .viewer-boot-splash {
+        --viewer-boot-bg: #f7f3ec;
+        --viewer-boot-text: #3d342a;
+        --viewer-boot-text-sub: #6b5d52;
+        --viewer-boot-text-muted: #9b8e85;
+        --viewer-boot-primary: #7a9e7e;
+        --viewer-boot-primary-dark: #5c7d60;
+        --viewer-boot-secondary: #c4956a;
+        --viewer-boot-lavender: #a99ab4;
+        --viewer-boot-border: rgba(221, 211, 195, 0.7);
+        --viewer-boot-shadow: rgba(90, 70, 50, 0.09);
+        --viewer-boot-wash-a: rgba(168, 197, 172, 0.2);
+        --viewer-boot-wash-b: rgba(196, 149, 106, 0.14);
+        --viewer-boot-wash-c: rgba(169, 154, 180, 0.11);
+        --viewer-boot-wash-d: rgba(212, 184, 150, 0.12);
+        --viewer-boot-particle: rgba(122, 158, 126, 0.38);
+        --viewer-boot-orbit-a: rgba(90, 130, 95, 0.8);
+        --viewer-boot-orbit-b: rgba(140, 108, 75, 0.76);
+        --viewer-boot-orbit-c: rgba(120, 100, 148, 0.74);
+        --viewer-boot-orbit-label-a: rgba(122, 158, 126, 0.6);
+        --viewer-boot-orbit-label-b: rgba(196, 149, 106, 0.58);
+        --viewer-boot-orbit-label-c: rgba(169, 154, 180, 0.6);
+        --viewer-boot-ring: rgba(122, 158, 126, 0.2);
+        --viewer-boot-nucleus-1: #f3ffe6;
+        --viewer-boot-nucleus-2: #8dd9b3;
+        --viewer-boot-nucleus-3: #4e8860;
+        --viewer-boot-nucleus-4: #2a4f3a;
+        --viewer-boot-halo-1: rgba(168, 197, 172, 0.35);
+        --viewer-boot-halo-2: rgba(168, 197, 172, 0.08);
+        --viewer-boot-halo-3: rgba(168, 197, 172, 0);
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--viewer-boot-bg);
+        transition: opacity 280ms ease, visibility 280ms ease, background-color 600ms ease;
+      }
+
+      :root[data-theme='dark'] .viewer-boot-splash {
+        --viewer-boot-bg: #02060f;
+        --viewer-boot-text: #e2e8f4;
+        --viewer-boot-text-sub: #acc0dd;
+        --viewer-boot-text-muted: #6b8baa;
+        --viewer-boot-primary: #60a5fa;
+        --viewer-boot-primary-dark: #d3def4;
+        --viewer-boot-secondary: #c4b5fd;
+        --viewer-boot-lavender: #a78bfa;
+        --viewer-boot-border: rgba(148, 197, 255, 0.15);
+        --viewer-boot-shadow: rgba(0, 0, 0, 0.45);
+        --viewer-boot-wash-a: rgba(96, 165, 250, 0.13);
+        --viewer-boot-wash-b: rgba(168, 85, 247, 0.11);
+        --viewer-boot-wash-c: rgba(148, 197, 255, 0.07);
+        --viewer-boot-wash-d: rgba(96, 165, 250, 0.04);
+        --viewer-boot-particle: rgba(96, 165, 250, 0.28);
+        --viewer-boot-orbit-a: rgba(96, 165, 250, 0.3);
+        --viewer-boot-orbit-b: rgba(196, 181, 253, 0.28);
+        --viewer-boot-orbit-c: rgba(167, 139, 250, 0.26);
+        --viewer-boot-orbit-label-a: rgba(148, 197, 255, 0.5);
+        --viewer-boot-orbit-label-b: rgba(196, 181, 253, 0.5);
+        --viewer-boot-orbit-label-c: rgba(251, 191, 36, 0.45);
+        --viewer-boot-ring: rgba(148, 197, 255, 0.22);
+        --viewer-boot-nucleus-1: #c8e8ff;
+        --viewer-boot-nucleus-2: #4a78ee;
+        --viewer-boot-nucleus-3: #1a3585;
+        --viewer-boot-nucleus-4: #060e2a;
+        --viewer-boot-halo-1: rgba(96, 165, 250, 0.3);
+        --viewer-boot-halo-2: rgba(96, 165, 250, 0.06);
+        --viewer-boot-halo-3: rgba(96, 165, 250, 0);
+      }
+
+      .viewer-boot-splash[data-state='exit'] {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .viewer-boot-splash::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 62% 52% at 12% 18%, var(--viewer-boot-wash-a) 0%, transparent 70%),
+          radial-gradient(ellipse 50% 62% at 88% 78%, var(--viewer-boot-wash-b) 0%, transparent 70%),
+          radial-gradient(ellipse 58% 46% at 52% 52%, var(--viewer-boot-wash-c) 0%, transparent 70%),
+          radial-gradient(ellipse 44% 56% at 78% 16%, var(--viewer-boot-wash-d) 0%, transparent 70%);
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+      }
+
+      .viewer-boot-splash__core {
+        position: relative;
+        display: flex;
+        width: min(100%, 34rem);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        z-index: 1;
+      }
+
+      .viewer-boot-splash__particles {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .viewer-boot-splash__particle {
+        position: absolute;
+        bottom: 8%;
+        color: var(--viewer-boot-particle);
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-style: italic;
+        opacity: 0;
+        animation: viewer-boot-particle-float var(--boot-particle-duration, 5s) ease-in-out infinite;
+        animation-delay: var(--boot-particle-delay, 0s);
+      }
+
+      .viewer-boot-splash__orrery {
+        display: block;
+        width: min(19.5rem, calc(100vw - 4rem));
+        height: auto;
+        overflow: visible;
+      }
+
+      .viewer-boot-splash__orbit {
+        fill: none;
+        stroke-width: 1.5;
+        stroke-dasharray: 5.5 3.5;
+      }
+
+      .viewer-boot-splash__orbit--a {
+        stroke: var(--viewer-boot-orbit-a);
+      }
+
+      .viewer-boot-splash__orbit--b {
+        stroke: var(--viewer-boot-orbit-b);
+      }
+
+      .viewer-boot-splash__orbit--c {
+        stroke: var(--viewer-boot-orbit-c);
+      }
+
+      .viewer-boot-splash__nucleus-halo {
+        transform-origin: 180px 180px;
+        animation: viewer-boot-halo-breathe 2.8s ease-in-out infinite;
+      }
+
+      .viewer-boot-splash__nucleus-ring {
+        fill: none;
+        stroke: var(--viewer-boot-ring);
+        stroke-width: 0.8;
+      }
+
+      .viewer-boot-splash__nucleus-sphere {
+        transform-origin: 180px 180px;
+        animation: viewer-boot-sphere-pulse 3.5s ease-in-out infinite;
+      }
+
+      .viewer-boot-splash__nucleus-stop--1 {
+        stop-color: var(--viewer-boot-nucleus-1);
+      }
+
+      .viewer-boot-splash__nucleus-stop--2 {
+        stop-color: var(--viewer-boot-nucleus-2);
+      }
+
+      .viewer-boot-splash__nucleus-stop--3 {
+        stop-color: var(--viewer-boot-nucleus-3);
+      }
+
+      .viewer-boot-splash__nucleus-stop--4 {
+        stop-color: var(--viewer-boot-nucleus-4);
+      }
+
+      .viewer-boot-splash__halo-stop--1 {
+        stop-color: var(--viewer-boot-halo-1);
+      }
+
+      .viewer-boot-splash__halo-stop--2 {
+        stop-color: var(--viewer-boot-halo-2);
+      }
+
+      .viewer-boot-splash__halo-stop--3 {
+        stop-color: var(--viewer-boot-halo-3);
+      }
+
+      .viewer-boot-splash__marker--a path {
+        fill: var(--viewer-boot-primary);
+      }
+
+      .viewer-boot-splash__marker--a line {
+        stroke: rgba(255, 255, 255, 0.38);
+        stroke-width: 0.8;
+        stroke-linecap: round;
+      }
+
+      .viewer-boot-splash__marker--b polygon:first-child {
+        fill: var(--viewer-boot-secondary);
+      }
+
+      .viewer-boot-splash__marker--c path {
+        fill: var(--viewer-boot-lavender);
+      }
+
+      .viewer-boot-splash__marker-core {
+        fill: rgba(255, 255, 255, 0.32);
+      }
+
+      .viewer-boot-splash__orbit-label {
+        font-family: 'DM Sans', 'Avenir Next', sans-serif;
+        font-size: 7.5px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        opacity: 0;
+        text-transform: uppercase;
+        animation: viewer-boot-label-in 0.8s ease-out forwards;
+      }
+
+      .viewer-boot-splash__orbit-label--a {
+        fill: var(--viewer-boot-orbit-label-a);
+        animation-delay: 1.2s;
+      }
+
+      .viewer-boot-splash__orbit-label--b {
+        fill: var(--viewer-boot-orbit-label-b);
+        animation-delay: 1.6s;
+      }
+
+      .viewer-boot-splash__orbit-label--c {
+        fill: var(--viewer-boot-orbit-label-c);
+        animation-delay: 2s;
+      }
+
+      .viewer-boot-splash__brand {
+        margin: 0;
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-size: clamp(2.2rem, 4vw, 3rem);
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: var(--viewer-boot-primary-dark);
+        animation: viewer-boot-brand-in 1s ease-out 0.4s both;
+      }
+
+      .viewer-boot-splash__status-row {
+        display: flex;
+        align-items: center;
+        gap: 0.52rem;
+        border-radius: 999px;
+        border: 1px solid var(--viewer-boot-border);
+        background: rgba(255, 252, 247, 0.82);
+        padding: 0.42rem 1.1rem;
+        color: var(--viewer-boot-text-sub);
+        font-family: 'DM Sans', 'Avenir Next', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        box-shadow: 0 18px 38px var(--viewer-boot-shadow);
+        backdrop-filter: blur(14px);
+        animation: viewer-boot-brand-in 0.8s ease-out 0.7s both;
+        transition: background 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+      }
+
+      :root[data-theme='dark'] .viewer-boot-splash__status-row {
+        background: rgba(15, 27, 47, 0.84);
+      }
+
+      .viewer-boot-splash__status-copy {
+        transition: opacity 0.3s ease, color 0.5s ease;
+      }
+
+      .viewer-boot-splash__dots {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+      }
+
+      .viewer-boot-splash__dots span {
+        display: block;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--viewer-boot-primary);
+        animation: viewer-boot-dot-bounce 1.15s ease-in-out infinite;
+        transition: background 0.5s ease;
+      }
+
+      .viewer-boot-splash__dots span:nth-child(2) {
+        animation-delay: 0.16s;
+      }
+
+      .viewer-boot-splash__dots span:nth-child(3) {
+        animation-delay: 0.32s;
+      }
+
+      @keyframes viewer-boot-particle-float {
+        0% {
+          opacity: 0;
+          transform: translateY(0) rotate(calc(var(--boot-particle-rotation, 6deg) * -1));
+        }
+
+        12% {
+          opacity: 0.9;
+        }
+
+        80% {
+          opacity: 0.5;
+        }
+
+        100% {
+          opacity: 0;
+          transform: translateY(-130px) rotate(var(--boot-particle-rotation, 6deg));
+        }
+      }
+
+      @keyframes viewer-boot-halo-breathe {
+        0%,
+        100% {
+          transform: scale(0.9);
+          opacity: 0.55;
+        }
+
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes viewer-boot-sphere-pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.035);
+        }
+      }
+
+      @keyframes viewer-boot-label-in {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes viewer-boot-brand-in {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes viewer-boot-dot-bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-3.5px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .viewer-boot-splash *,
+        .viewer-boot-splash *::before,
+        .viewer-boot-splash *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <script>
+      (function() {
+        var root = document.documentElement;
+        var label = '正在准备学习空间';
+        try {
+          var raw = window.localStorage.getItem('primoria.viewer.preferences');
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (parsed && typeof parsed.themeMode === 'string') {
+              if (parsed.themeMode === 'light' || parsed.themeMode === 'dark') {
+                root.dataset.theme = parsed.themeMode;
+              }
+            }
+            if (parsed && typeof parsed.language === 'string' && parsed.language.toLowerCase().indexOf('en') === 0) {
+              root.lang = 'en';
+              label = 'Preparing your learning space';
+            }
+          }
+        } catch (_error) {}
+        window.__viewerBootSplashLabel = label;
+      })();
+    </script>
   </head>
   <body>
+    <div id="viewer-boot-splash" class="viewer-boot-splash" data-state="visible" role="status" aria-live="polite">
+      <div class="viewer-boot-splash__particles" aria-hidden="true">
+        <span class="viewer-boot-splash__particle" style="left: 9%; font-size: 20px; --boot-particle-delay: 0s; --boot-particle-duration: 5.2s; --boot-particle-rotation: 7deg;">π</span>
+        <span class="viewer-boot-splash__particle" style="left: 74%; font-size: 15px; --boot-particle-delay: 1.4s; --boot-particle-duration: 4.8s; --boot-particle-rotation: -5deg;">∑</span>
+        <span class="viewer-boot-splash__particle" style="left: 88%; font-size: 18px; --boot-particle-delay: 2.8s; --boot-particle-duration: 5.6s; --boot-particle-rotation: 9deg;">√</span>
+        <span class="viewer-boot-splash__particle" style="left: 31%; font-size: 13px; --boot-particle-delay: 0.9s; --boot-particle-duration: 4.5s; --boot-particle-rotation: -8deg;">∞</span>
+        <span class="viewer-boot-splash__particle" style="left: 54%; font-size: 16px; --boot-particle-delay: 3.6s; --boot-particle-duration: 5s; --boot-particle-rotation: 5deg;">λ</span>
+        <span class="viewer-boot-splash__particle" style="left: 18%; font-size: 12px; --boot-particle-delay: 4.8s; --boot-particle-duration: 4.6s; --boot-particle-rotation: -6deg;">Δ</span>
+        <span class="viewer-boot-splash__particle" style="left: 44%; font-size: 14px; --boot-particle-delay: 2.1s; --boot-particle-duration: 5.4s; --boot-particle-rotation: 4deg;">φ</span>
+        <span class="viewer-boot-splash__particle" style="left: 82%; font-size: 13px; --boot-particle-delay: 5.5s; --boot-particle-duration: 4.9s; --boot-particle-rotation: -7deg;">∫</span>
+        <span class="viewer-boot-splash__particle" style="left: 62%; font-size: 11px; --boot-particle-delay: 1.7s; --boot-particle-duration: 5.1s; --boot-particle-rotation: 6deg;">Ω</span>
+        <span class="viewer-boot-splash__particle" style="left: 5%; font-size: 10px; --boot-particle-delay: 3.2s; --boot-particle-duration: 5.8s; --boot-particle-rotation: -4deg;">α</span>
+      </div>
+      <div class="viewer-boot-splash__core">
+        <svg viewBox="0 0 360 360" class="viewer-boot-splash__orrery" aria-hidden="true">
+          <defs>
+            <radialGradient id="viewer-boot-nucleus-gradient" cx="38%" cy="32%" r="68%">
+              <stop class="viewer-boot-splash__nucleus-stop viewer-boot-splash__nucleus-stop--1" offset="0%"></stop>
+              <stop class="viewer-boot-splash__nucleus-stop viewer-boot-splash__nucleus-stop--2" offset="25%"></stop>
+              <stop class="viewer-boot-splash__nucleus-stop viewer-boot-splash__nucleus-stop--3" offset="62%"></stop>
+              <stop class="viewer-boot-splash__nucleus-stop viewer-boot-splash__nucleus-stop--4" offset="100%"></stop>
+            </radialGradient>
+            <radialGradient id="viewer-boot-halo-gradient" cx="50%" cy="50%" r="50%">
+              <stop class="viewer-boot-splash__halo-stop viewer-boot-splash__halo-stop--1" offset="0%"></stop>
+              <stop class="viewer-boot-splash__halo-stop viewer-boot-splash__halo-stop--2" offset="70%"></stop>
+              <stop class="viewer-boot-splash__halo-stop viewer-boot-splash__halo-stop--3" offset="100%"></stop>
+            </radialGradient>
+            <radialGradient id="viewer-boot-gleam-gradient" cx="36%" cy="30%" r="54%">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.4)"></stop>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+            </radialGradient>
+            <filter id="viewer-boot-dot-glow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="2.5" result="blur"></feGaussianBlur>
+              <feMerge>
+                <feMergeNode in="blur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter id="viewer-boot-sphere-shadow" x="-40%" y="-30%" width="180%" height="180%">
+              <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="rgba(80,60,40,0.22)" flood-opacity="1"></feDropShadow>
+            </filter>
+            <path id="viewer-boot-path-a" d="M 308,180 A 128,46 0 1 0 52,180 A 128,46 0 1 0 308,180 Z"></path>
+            <path id="viewer-boot-path-b" d="M 238,280.5 A 116,42 60 1 0 122,79.5 A 116,42 60 1 0 238,280.5 Z"></path>
+            <path id="viewer-boot-path-c" d="M 125,275.3 A 110,40 120 1 0 235,84.7 A 110,40 120 1 0 125,275.3 Z"></path>
+          </defs>
+          <ellipse class="viewer-boot-splash__orbit viewer-boot-splash__orbit--a" cx="180" cy="180" rx="128" ry="46"></ellipse>
+          <ellipse class="viewer-boot-splash__orbit viewer-boot-splash__orbit--b" cx="180" cy="180" rx="116" ry="42" transform="rotate(60 180 180)"></ellipse>
+          <ellipse class="viewer-boot-splash__orbit viewer-boot-splash__orbit--c" cx="180" cy="180" rx="110" ry="40" transform="rotate(120 180 180)"></ellipse>
+          <circle class="viewer-boot-splash__nucleus-halo" cx="180" cy="180" r="45" fill="url(#viewer-boot-halo-gradient)"></circle>
+          <circle class="viewer-boot-splash__nucleus-ring" cx="180" cy="180" r="37"></circle>
+          <circle class="viewer-boot-splash__nucleus-sphere" cx="180" cy="180" r="28" fill="url(#viewer-boot-nucleus-gradient)" filter="url(#viewer-boot-sphere-shadow)"></circle>
+          <circle cx="180" cy="180" r="28" fill="url(#viewer-boot-gleam-gradient)"></circle>
+          <g filter="url(#viewer-boot-dot-glow)">
+            <g class="viewer-boot-splash__marker viewer-boot-splash__marker--a">
+              <path d="M 0,-9.5 C 5,-5 5.8,1.5 0,9.5 C -5.8,1.5 -5,-5 0,-9.5 Z"></path>
+              <line x1="0" y1="-7.8" x2="0" y2="7.8"></line>
+              <animateMotion dur="5.7s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#viewer-boot-path-a"></mpath>
+              </animateMotion>
+            </g>
+          </g>
+          <g filter="url(#viewer-boot-dot-glow)">
+            <g class="viewer-boot-splash__marker viewer-boot-splash__marker--b">
+              <polygon points="0,-8.4 7.27,-4.2 7.27,4.2 0,8.4 -7.27,4.2 -7.27,-4.2"></polygon>
+              <polygon class="viewer-boot-splash__marker-core" points="0,-4.4 3.8,-2.2 3.8,2.2 0,4.4 -3.8,2.2 -3.8,-2.2"></polygon>
+              <animateMotion dur="8.3s" repeatCount="indefinite" rotate="none">
+                <mpath href="#viewer-boot-path-b"></mpath>
+              </animateMotion>
+            </g>
+          </g>
+          <g filter="url(#viewer-boot-dot-glow)">
+            <g class="viewer-boot-splash__marker viewer-boot-splash__marker--c">
+              <path d="M 0,-10.2 L 2.6,-2.6 L 10.2,0 L 2.6,2.6 L 0,10.2 L -2.6,2.6 L -10.2,0 L -2.6,-2.6 Z"></path>
+              <circle class="viewer-boot-splash__marker-core" r="2"></circle>
+              <animateMotion dur="6.7s" repeatCount="indefinite" rotate="none">
+                <mpath href="#viewer-boot-path-c"></mpath>
+              </animateMotion>
+            </g>
+          </g>
+          <text x="314" y="176" class="viewer-boot-splash__orbit-label viewer-boot-splash__orbit-label--a" text-anchor="start">BIOLOGY</text>
+          <text x="244" y="296" class="viewer-boot-splash__orbit-label viewer-boot-splash__orbit-label--b" text-anchor="middle">CHEMISTRY</text>
+          <text x="116" y="296" class="viewer-boot-splash__orbit-label viewer-boot-splash__orbit-label--c" text-anchor="middle">PHYSICS</text>
+        </svg>
+        <p class="viewer-boot-splash__brand">Primoria</p>
+        <div class="viewer-boot-splash__status-row">
+          <span id="viewer-boot-splash-label" class="viewer-boot-splash__status-copy">正在准备学习空间</span>
+          <span class="viewer-boot-splash__dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script>
+      var splashLabel = document.getElementById('viewer-boot-splash-label');
+      if (splashLabel && typeof window.__viewerBootSplashLabel === 'string') {
+        splashLabel.textContent = window.__viewerBootSplashLabel;
+      }
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

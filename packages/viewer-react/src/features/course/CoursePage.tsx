@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowRight } from 'lucide-react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useBootSplashGate } from '@/shared/boot/bootSplash';
 import { enrollInCourse, fetchCourseDetail } from '@/shared/api/viewer/catalogApi';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
@@ -48,6 +49,7 @@ export function CoursePage() {
       });
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'course', courseId, user?.id] });
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'enrollments', user?.id] });
+      await queryClient.invalidateQueries({ queryKey: ['viewer', 'home', user?.id] });
     },
     onError: (error) => {
       captureViewerError(error, { area: 'course_enroll', courseId });
@@ -58,6 +60,8 @@ export function CoursePage() {
   const course = detail?.course;
   const isEnrolled = Boolean(detail?.enrollment);
   const lessons = detail?.lessons ?? [];
+
+  useBootSplashGate(Boolean(detailQuery.data || detailQuery.error));
 
   useEffect(() => {
     if (!course?.id) {

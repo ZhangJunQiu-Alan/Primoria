@@ -1,3 +1,4 @@
+import { DEFAULT_AI_TUTOR_PERSONA, normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
 import type { ViewerProfile, ViewerSettingsBundle, ViewerThemeMode, ViewerUserSettings } from '@/shared/api/viewer/types';
 import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
@@ -12,6 +13,8 @@ export const DEFAULT_VIEWER_USER_SETTINGS: ViewerUserSettings = {
   notification_reminder_time: '20:00',
   marketing_emails: false,
   accessibility_mode: false,
+  ai_tutor_persona: DEFAULT_AI_TUTOR_PERSONA,
+  home_companion_enabled: true,
 };
 
 function normalizeThemeMode(value: unknown): ViewerThemeMode {
@@ -31,6 +34,8 @@ function normalizeUserSettings(raw: Partial<ViewerUserSettings> | null | undefin
     notification_reminder_time: normalizeReminderTime(raw?.notification_reminder_time),
     marketing_emails: raw?.marketing_emails === true,
     accessibility_mode: raw?.accessibility_mode === true,
+    ai_tutor_persona: normalizeAiTutorPersona(raw?.ai_tutor_persona),
+    home_companion_enabled: raw?.home_companion_enabled !== false,
   };
 }
 
@@ -86,7 +91,7 @@ export async function saveAccountSystemSettings(
   const { data: existingSettings, error: loadError } = await supabase
     .from('user_settings')
     .select(
-      'theme_mode, language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode',
+      'theme_mode, language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode, ai_tutor_persona, home_companion_enabled',
     )
     .eq('user_id', userId)
     .maybeSingle();
@@ -108,6 +113,8 @@ export async function saveAccountSystemSettings(
     notification_reminder_time: next.notification_reminder_time,
     marketing_emails: next.marketing_emails,
     accessibility_mode: next.accessibility_mode,
+    ai_tutor_persona: next.ai_tutor_persona,
+    home_companion_enabled: next.home_companion_enabled,
   });
 
   if (error) {

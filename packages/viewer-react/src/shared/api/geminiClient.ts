@@ -1,6 +1,8 @@
 import { supabase } from '@/shared/api/supabase';
+import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
+import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 
 const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
 const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
@@ -116,6 +118,23 @@ function currentUiLanguage() {
   return normalizeViewerLanguage(document.documentElement.lang);
 }
 
+function currentAiTutorPersona() {
+  if (typeof window === 'undefined') {
+    return normalizeAiTutorPersona(null);
+  }
+
+  try {
+    const raw = window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY);
+    if (!raw) {
+      return normalizeAiTutorPersona(null);
+    }
+    const parsed = JSON.parse(raw) as { aiTutorPersona?: unknown };
+    return normalizeAiTutorPersona(parsed.aiTutorPersona);
+  } catch {
+    return normalizeAiTutorPersona(null);
+  }
+}
+
 async function getAgentAccessToken() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
@@ -141,6 +160,7 @@ function buildAgentChatBody(history: TutorMessage[]) {
     context: {
       surface: 'ai-tutor',
       ui_language: currentUiLanguage(),
+      ai_tutor_persona: currentAiTutorPersona(),
     },
   };
 }
@@ -394,6 +414,7 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
       mode,
       model: activeModel(),
       history,
+      persona: currentAiTutorPersona(),
       apiKeyOverride: apiKeyOverride || undefined,
     }),
     signal: timeout.signal,

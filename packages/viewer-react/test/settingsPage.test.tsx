@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { VIEWER_FIXTURE_STORAGE_KEY } from '@/shared/api/viewer/fixtureStore';
@@ -33,6 +33,21 @@ describe('SettingsPage', () => {
     await user.click(soundToggle);
     expect(soundToggle).not.toBeChecked();
     expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"soundEnabled":false');
+
+    await user.click(await screen.findByRole('button', { name: /AI 导师/i }));
+    await user.click(await screen.findByRole('button', { name: /教练/i }));
+    const homeCompanionToggle = await screen.findByLabelText(/首页显示 AI 导师形象/i);
+    expect(homeCompanionToggle).toBeChecked();
+    await user.click(homeCompanionToggle);
+    expect(homeCompanionToggle).not.toBeChecked();
+
+    await waitFor(() => {
+      expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"aiTutorPersona":"coach"');
+      expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"homeCompanionEnabled":false');
+      expect(JSON.parse(window.localStorage.getItem(VIEWER_FIXTURE_STORAGE_KEY) ?? '{}')).toMatchObject({
+        userSettings: { ai_tutor_persona: 'coach', home_companion_enabled: false },
+      });
+    });
 
     await user.click(await screen.findByRole('button', { name: /家长模式/i }));
     await user.click(await screen.findByRole('button', { name: /生成绑定码/i }));

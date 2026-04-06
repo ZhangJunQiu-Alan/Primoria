@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { ViewerCourse, ViewerEnrollment, ViewerStats } from '@/shared/api/viewer/types';
-import {
-  buildHomeCoachState,
-  getHomeContinueTarget,
-  getHomeSelectedCourse,
-  sortHomeInProgressEnrollments,
-} from '@/features/home/homeDashboard';
+import type { ViewerCourse, ViewerEnrollment, ViewerHomeLesson } from '@/shared/api/viewer/types';
+import { getHomeContinueTarget, getHomeSelectedCourse, sortHomeInProgressEnrollments } from '@/features/home/homeDashboard';
 
 function createCourse(overrides: Partial<ViewerCourse> = {}): ViewerCourse {
   return {
@@ -41,15 +36,15 @@ function createEnrollment(overrides: Partial<ViewerEnrollment> = {}): ViewerEnro
   };
 }
 
-function createStats(overrides: Partial<ViewerStats> = {}): ViewerStats {
+function createLesson(overrides: Partial<ViewerHomeLesson> = {}): ViewerHomeLesson {
   return {
-    current_streak: overrides.current_streak ?? 0,
-    longest_streak: overrides.longest_streak ?? 0,
-    courses_completed: overrides.courses_completed ?? 0,
-    lessons_completed: overrides.lessons_completed ?? 0,
-    total_xp: overrides.total_xp ?? 0,
-    total_study_minutes: overrides.total_study_minutes ?? 0,
-    last_activity_date: overrides.last_activity_date ?? null,
+    id: overrides.id ?? 'lesson-1',
+    title: overrides.title ?? 'Lesson',
+    sort_key: overrides.sort_key ?? 0,
+    xp_reward: overrides.xp_reward ?? 120,
+    duration_seconds: overrides.duration_seconds ?? 300,
+    is_locked: overrides.is_locked ?? false,
+    unlock_type: overrides.unlock_type ?? 'none',
   };
 }
 
@@ -98,10 +93,11 @@ describe('homeDashboard', () => {
       getHomeContinueTarget(enrollment, language, {
         course: enrollment.courses,
         lessons: [
-          { id: 'lesson-1', title: 'Intro', sort_key: 0, duration_seconds: 300 },
-          { id: 'lesson-2', title: 'Review', sort_key: 1, duration_seconds: 480 },
+          createLesson({ id: 'lesson-1', title: 'Intro', sort_key: 0, duration_seconds: 300 }),
+          createLesson({ id: 'lesson-2', title: 'Review', sort_key: 1, duration_seconds: 480 }),
         ],
         completed_lesson_ids: ['lesson-1'],
+        enrollment,
       }),
     ).toMatchObject({
       kind: 'lesson',
@@ -114,10 +110,11 @@ describe('homeDashboard', () => {
       getHomeContinueTarget(enrollment, language, {
         course: enrollment.courses,
         lessons: [
-          { id: 'lesson-1', title: 'Intro', sort_key: 0, duration_seconds: 300 },
-          { id: 'lesson-2', title: 'Review', sort_key: 1, duration_seconds: 480 },
+          createLesson({ id: 'lesson-1', title: 'Intro', sort_key: 0, duration_seconds: 300 }),
+          createLesson({ id: 'lesson-2', title: 'Review', sort_key: 1, duration_seconds: 480 }),
         ],
         completed_lesson_ids: ['lesson-1', 'lesson-2'],
+        enrollment,
       }),
     ).toMatchObject({
       kind: 'course',
@@ -126,76 +123,31 @@ describe('homeDashboard', () => {
     });
   });
 
-  it('derives coach messaging for empty, early, and late progress states', () => {
-    const lowEnrollment = createEnrollment({
+  it('builds selected course progress details from the aggregated course payload', () => {
+    const enrollment = createEnrollment({
       course_id: 'course-low',
       progress_bp: 1200,
       courses: createCourse({ id: 'course-low', title: 'Biology Warmup' }),
     });
-    const highEnrollment = createEnrollment({
-      course_id: 'course-high',
-      progress_bp: 9000,
-      courses: createCourse({ id: 'course-high', title: 'Physics Finish Line' }),
-    });
 
-    const emptyState = buildHomeCoachState({
-      stats: createStats({ current_streak: 4, lessons_completed: 2, total_xp: 120 }),
-      language,
-      selectedCourse: null,
-      continueTarget: {
-        kind: 'library',
-        href: '/library',
-        label: '浏览课程',
-        supportingLabel: '先选一门课程',
-        lessonTitle: null,
-      },
-    });
-    expect(emptyState.accentLabel).toBe('先起步');
-    expect(emptyState.title).toContain('先挑一门');
-    expect(emptyState.supportingNote).toContain('连续学习 4 天');
-
-    const lowSelectedCourse = getHomeSelectedCourse(lowEnrollment, language, {
-      course: lowEnrollment.courses,
-      lessons: [{ id: 'lesson-1', title: 'Warm intro', sort_key: 0, duration_seconds: 300 }],
-      completed_lesson_ids: [],
-    });
-    const lowState = buildHomeCoachState({
-      stats: createStats({ current_streak: 1 }),
-      language,
-      selectedCourse: lowSelectedCourse,
-      continueTarget: {
-        kind: 'lesson',
-        href: '/lesson/lesson-1',
-        label: '继续下一课',
-        supportingLabel: 'Warm intro',
-        lessonTitle: 'Warm intro',
-      },
-    });
-    expect(lowState.accentLabel).toBe('先起步');
-    expect(lowState.message).toContain('先完成一节课');
-
-    const highSelectedCourse = getHomeSelectedCourse(highEnrollment, language, {
-      course: highEnrollment.courses,
+    const selectedCourse = getHomeSelectedCourse(enrollment, language, {
+      course: enrollment.courses,
       lessons: [
-        { id: 'lesson-1', title: 'Wrap up', sort_key: 0, duration_seconds: 300 },
-        { id: 'lesson-2', title: 'Final check', sort_key: 1, duration_seconds: 480 },
+        createLesson({ id: 'lesson-1', title: 'Warm intro', sort_key: 0, duration_seconds: 300 }),
+        createLesson({ id: 'lesson-2', title: 'Checkpoint', sort_key: 1, duration_seconds: 540 }),
       ],
       completed_lesson_ids: ['lesson-1'],
+      enrollment,
     });
-    const highState = buildHomeCoachState({
-      stats: createStats({ current_streak: 5, lessons_completed: 8, total_xp: 800 }),
-      language,
-      selectedCourse: highSelectedCourse,
-      continueTarget: {
-        kind: 'lesson',
-        href: '/lesson/lesson-2',
-        label: '继续下一课',
-        supportingLabel: 'Final check',
-        lessonTitle: 'Final check',
-      },
+
+    expect(selectedCourse).toMatchObject({
+      progressPct: 12,
+      completedLessons: 1,
+      totalLessons: 2,
+      nextLessonTitle: 'Checkpoint',
+      nextLessonDurationLabel: '9 分钟',
+      difficultyLabel: '入门',
+      estimatedLabel: '25 分钟',
     });
-    expect(highState.accentLabel).toBe('冲刺完成');
-    expect(highState.title).toContain('收尾');
-    expect(highState.supportingNote).toContain('连续 5 天');
   });
 });

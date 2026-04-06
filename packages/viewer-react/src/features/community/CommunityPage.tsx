@@ -12,6 +12,8 @@ import {
   sendCommunityMessage,
   toggleDiscussionLike,
 } from '@/shared/api/viewer/communityApi';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { useSearchParams } from 'react-router-dom';
 import { EmptyStateCard, ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
@@ -31,6 +33,10 @@ import {
 
 type Section = 'dashboard' | 'study' | 'messages' | 'trending' | 'notes';
 type StatusState = { tone: 'success' | 'error'; message: string } | null;
+
+function parseCommunitySection(value: string | null | undefined): Section {
+  return value === 'study' || value === 'messages' || value === 'trending' || value === 'notes' ? value : 'dashboard';
+}
 
 const sectionVisuals: Record<
   Section,
@@ -62,11 +68,15 @@ const dashboardPositions = [
 ] as const;
 
 export function CommunityPage() {
+  const language = useProductLanguage();
   const copy = useViewerCopy();
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
   const user = useAppSelector((state) => state.auth.user);
   const userId = user?.id ?? '';
-  const [section, setSection] = useState<Section>('dashboard');
+  const requestedSection = parseCommunitySection(searchParams.get('section'));
+  const companionTopic = searchParams.get('source') === 'home-companion' ? searchParams.get('topic')?.trim() ?? '' : '';
+  const [section, setSection] = useState<Section>(requestedSection);
   const [conversationId, setConversationId] = useState('');
   const [composer, setComposer] = useState('');
   const [selectedPersonId, setSelectedPersonId] = useState('');
@@ -94,6 +104,10 @@ export function CommunityPage() {
       );
     }
   }, [notesDraft.length, workspaceQuery.data]);
+
+  useEffect(() => {
+    setSection(requestedSection);
+  }, [requestedSection]);
 
   useEffect(() => {
     if (!workspaceQuery.data?.conversations.length) {
@@ -259,6 +273,12 @@ export function CommunityPage() {
     setSection('notes');
   }
 
+  function addCompanionContextNote() {
+    const defaultTitle = companionTopic ? `${companionTopic} 笔记` : '未命名笔记';
+    setNotesDraft((current) => [{ title: defaultTitle, body: '', room_id: null }, ...current]);
+    setSection('notes');
+  }
+
   if (workspaceQuery.isLoading) {
     return (
       <div className="px-5 py-6 md:px-6 md:py-7">
@@ -328,6 +348,36 @@ export function CommunityPage() {
         </aside>
 
         <section className="space-y-3.5">
+          {companionTopic ? (
+            <div
+              data-testid="community-companion-context"
+              className="viewer-panel rounded-[26px] px-5 py-4"
+            >
+              <p className="viewer-botanical-eyebrow">{language === 'zh-CN' ? '导师上下文' : 'Tutor context'}</p>
+              <div className="mt-2 text-[1rem] font-semibold leading-7 text-[#4d4239]">
+                {language === 'zh-CN'
+                  ? `正在围绕《${companionTopic}》查看你的社区笔记与讨论。这里先提供上下文入口，不代表严格的课程过滤结果。`
+                  : `Opening Community around "${companionTopic}". This is a contextual entry point, not a strict course-level filter yet.`}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  className="viewer-botanical-button viewer-botanical-button--primary"
+                  onClick={addCompanionContextNote}
+                >
+                  {language === 'zh-CN' ? `新建《${companionTopic}》笔记` : `New note for "${companionTopic}"`}
+                </button>
+                <button
+                  type="button"
+                  className="viewer-botanical-button viewer-botanical-button--secondary"
+                  onClick={() => setSection('trending')}
+                >
+                  {language === 'zh-CN' ? '查看讨论区' : 'Open discussions'}
+                </button>
+              </div>
+            </div>
+          ) : null}
+
           {status ? (
             <div
               className={cn(

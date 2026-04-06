@@ -7,6 +7,7 @@ export type ViewerSubject = {
 };
 
 export type ViewerThemeMode = 'system' | 'light' | 'dark';
+export type ViewerAiTutorPersona = 'gentle' | 'socratic' | 'coach';
 
 export type ViewerCourse = {
   id: string;
@@ -34,6 +35,30 @@ export type ViewerEnrollment = {
   courses: ViewerCourse;
 };
 
+export type ViewerHomeLesson = {
+  id: string;
+  title: string;
+  sort_key: number;
+  xp_reward: number;
+  duration_seconds: number;
+  is_locked: boolean;
+  unlock_type: string;
+};
+
+export type ViewerHomeCourseDetail = {
+  course: ViewerCourse;
+  lessons: ViewerHomeLesson[];
+  completed_lesson_ids: string[];
+  enrollment: ViewerEnrollment | null;
+};
+
+export type ViewerHomePayload = {
+  stats: ViewerStats;
+  in_progress_enrollments: ViewerEnrollment[];
+  resolved_selected_course_id: string | null;
+  selected_course_detail: ViewerHomeCourseDetail | null;
+};
+
 export type ViewerProfile = {
   id: string;
   username: string;
@@ -52,6 +77,8 @@ export type ViewerUserSettings = {
   notification_reminder_time: string;
   marketing_emails: boolean;
   accessibility_mode: boolean;
+  ai_tutor_persona: ViewerAiTutorPersona;
+  home_companion_enabled: boolean;
 };
 
 export type ViewerSettingsBundle = {

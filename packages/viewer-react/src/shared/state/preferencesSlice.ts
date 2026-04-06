@@ -1,4 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { DEFAULT_AI_TUTOR_PERSONA, normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
+import type { ViewerAiTutorPersona } from '@/shared/api/viewer/types';
 import {
   DEFAULT_VIEWER_LANGUAGE,
   detectBrowserViewerLanguage,
@@ -11,6 +13,8 @@ export const VIEWER_PREFERENCES_STORAGE_KEY = 'primoria.viewer.preferences';
 export type ViewerPreferencesState = {
   themeMode: 'system' | 'light' | 'dark';
   language: ViewerLanguage;
+  aiTutorPersona: ViewerAiTutorPersona;
+  homeCompanionEnabled: boolean;
   soundEnabled: boolean;
   hapticsEnabled: boolean;
   notificationsEnabled: boolean;
@@ -30,6 +34,8 @@ export type ViewerPreferencesState = {
 const defaultState: ViewerPreferencesState = {
   themeMode: 'system',
   language: DEFAULT_VIEWER_LANGUAGE,
+  aiTutorPersona: DEFAULT_AI_TUTOR_PERSONA,
+  homeCompanionEnabled: true,
   soundEnabled: true,
   hapticsEnabled: true,
   notificationsEnabled: true,
@@ -65,6 +71,8 @@ function loadState(): ViewerPreferencesState {
       ...defaultState,
       ...parsed,
       language: normalizeViewerLanguage(parsed.language),
+      aiTutorPersona: normalizeAiTutorPersona(parsed.aiTutorPersona),
+      homeCompanionEnabled: parsed.homeCompanionEnabled !== false,
     };
   } catch {
     return {
