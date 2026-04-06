@@ -7,7 +7,7 @@ from app.tools.user_profile import build_user_profile_tools
 
 def build_all_tools(user_id: str, supabase_client, context):
     return [
-        *build_memory_tools(user_id, context),
+        *build_memory_tools(user_id, supabase_client, context),
         *build_user_profile_tools(user_id, supabase_client),
         *build_learning_snapshot_tools(user_id, supabase_client),
         *build_course_context_tools(supabase_client),
