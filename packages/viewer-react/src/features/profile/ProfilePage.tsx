@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { BookOpenText, ChevronRight, Flame, Menu, Sparkles, Users } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { clearSession } from '@/features/auth/authSlice';
+import { useBootSplashGate } from '@/shared/boot/bootSplash';
 import { supabase } from '@/shared/api/supabase';
 import {
   fetchAchievements,
@@ -285,6 +286,15 @@ export function ProfilePage() {
       .slice(0, 4);
   }, [achievements, followCounts, stats]);
 
+  useBootSplashGate(Boolean(profileError || (
+    profileQuery.data &&
+    statsQuery.data &&
+    followQuery.data &&
+    achievementsQuery.data &&
+    pinnedQuery.data &&
+    xpHistoryQuery.data
+  )));
+
   const displayName = profile?.username || user?.displayName || '学习者';
   const handle = profile?.username ? `@${profile.username}` : `@${displayName}`;
   const weekCount = heatmapData.weeks.length || 53;
@@ -393,14 +403,16 @@ export function ProfilePage() {
 
   return (
     <div className="mx-auto w-[92%] max-w-[1060px] px-0 py-4 md:w-[82%] md:py-5">
-      <section className="viewer-panel overflow-hidden rounded-[30px]">
-        <div className="relative h-[156px] overflow-hidden bg-[linear-gradient(120deg,#7f5f49_0%,#c4956a_28%,#e8cfab_56%,#a8c5ac_78%,#7a9e7e_100%)]">
-          {profile?.cover_image_url ? (
-            <img src={profile.cover_image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
-          ) : null}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_56%_44%,rgba(255,243,173,0.95),rgba(255,243,173,0.08)_28%,rgba(255,255,255,0)_52%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,20,10,0.04),rgba(24,20,10,0.22))]" />
-          <div className="absolute -left-10 bottom-[-3rem] h-40 w-40 rounded-full bg-white/12 blur-[10px]" />
+      <section className="viewer-panel rounded-[30px]">
+        <div className="relative">
+          <div className="relative h-[156px] overflow-hidden rounded-t-[30px] bg-[linear-gradient(120deg,#7f5f49_0%,#c4956a_28%,#e8cfab_56%,#a8c5ac_78%,#7a9e7e_100%)]">
+            {profile?.cover_image_url ? (
+              <img src={profile.cover_image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            ) : null}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_56%_44%,rgba(255,243,173,0.95),rgba(255,243,173,0.08)_28%,rgba(255,255,255,0)_52%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,20,10,0.04),rgba(24,20,10,0.22))]" />
+            <div className="absolute -left-10 bottom-[-3rem] h-40 w-40 rounded-full bg-white/12 blur-[10px]" />
+          </div>
           <div ref={profileMenuRef} className="absolute right-5 top-5 z-20">
             <button
               type="button"

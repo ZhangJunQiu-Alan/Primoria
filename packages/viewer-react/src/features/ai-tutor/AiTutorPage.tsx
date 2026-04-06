@@ -18,8 +18,11 @@ import {
   SendHorizontal,
   Sparkles,
 } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { getAiTutorPersonaDefinition } from '@/shared/ai-tutor/persona';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
+import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 
@@ -44,13 +47,33 @@ function replaceLastModelMessage(messages: TutorMessage[], text: string): TutorM
   return [...next, { role: 'model', text }];
 }
 
+function buildCompanionToolPrompt(
+  language: 'zh-CN' | 'en',
+  intent: 'mindmap' | 'quiz',
+  courseTitle?: string | null,
+) {
+  if (intent === 'quiz') {
+    return language === 'zh-CN'
+      ? `请围绕当前课程《${courseTitle || '当前课程'}》生成一组练习题，优先覆盖核心概念和容易混淆的点。`
+      : `Generate a quiz for the current course "${courseTitle || 'Current course'}", focusing on core concepts and likely confusion points.`;
+  }
+
+  return language === 'zh-CN'
+    ? `请围绕当前课程《${courseTitle || '当前课程'}》生成一张思维导图，把知识结构和关键连接整理清楚。`
+    : `Generate a mind map for the current course "${courseTitle || 'Current course'}" and make the structure plus key connections clear.`;
+}
+
 export function AiTutorPage() {
   const language = useProductLanguage();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const aiTutorPersona = useAppSelector((state) => state.viewerPreferences.aiTutorPersona);
   const copy = useViewerCopy();
+  const personaCopy = getAiTutorPersonaDefinition(aiTutorPersona, language);
   const [messages, setMessages] = useState<TutorMessage[]>([
     {
       role: 'model',
-      text: copy.aiTutor.welcomeBody,
+      text: personaCopy.welcomeBody,
     },
   ]);
   const [input, setInput] = useState('');
@@ -64,6 +87,7 @@ export function AiTutorPage() {
   });
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
+  const processedCompanionIntentRef = useRef<string | null>(null);
 
   useEffect(
     () => () => {
@@ -75,9 +99,21 @@ export function AiTutorPage() {
   );
 
   const suggestedPrompts = useMemo(
-    () => copy.aiTutor.prompts,
-    [copy.aiTutor.prompts],
+    () => personaCopy.prompts,
+    [personaCopy.prompts],
   );
+
+  useEffect(() => {
+    setMessages((current) => {
+      if (current.length !== 1 || current[0]?.role !== 'model') {
+        return current;
+      }
+      if (current[0].text === personaCopy.welcomeBody) {
+        return current;
+      }
+      return [{ role: 'model', text: personaCopy.welcomeBody }];
+    });
+  }, [personaCopy.welcomeBody]);
 
   const notebookItems = [
     {
@@ -191,26 +227,30 @@ export function AiTutorPage() {
     }
   }
 
-  async function openTool(kind: 'mindmap' | 'quiz' | 'presentation') {
+  async function openTool(kind: 'mindmap' | 'quiz' | 'presentation', historyOverride?: TutorMessage[]) {
     try {
       await bootstrapGeminiKey();
+      const toolHistory = historyOverride ?? messages;
       if (kind === 'mindmap') {
-        const payload = await generateMindMap(messages);
+        const payload = await generateMindMap(toolHistory);
         setModal({ kind, payload });
         setToolStatus((current) => ({ ...current, mindmap: true }));
+        setStatus('');
         captureViewerEvent('viewer_ai_tutor_tool_opened', { kind });
         return;
       }
       if (kind === 'quiz') {
-        const payload = await generateQuiz(messages);
+        const payload = await generateQuiz(toolHistory);
         setModal({ kind, payload });
         setToolStatus((current) => ({ ...current, quiz: true }));
+        setStatus('');
         captureViewerEvent('viewer_ai_tutor_tool_opened', { kind });
         return;
       }
-      const payload = await generatePresentation(messages);
+      const payload = await generatePresentation(toolHistory);
       setModal({ kind, payload });
       setToolStatus((current) => ({ ...current, presentation: true }));
+      setStatus('');
       captureViewerEvent('viewer_ai_tutor_tool_opened', { kind });
     } catch (error) {
       setStatus(error instanceof Error ? error.message : copy.aiTutor.missingKey);
@@ -219,6 +259,42 @@ export function AiTutorPage() {
   }
 
   const transcript = messages.slice(1);
+
+  useEffect(() => {
+    const source = searchParams.get('source');
+    const intent = searchParams.get('intent');
+    const courseTitle = searchParams.get('courseTitle');
+
+    if (source !== 'home-companion' || (intent !== 'quiz' && intent !== 'mindmap')) {
+      return;
+    }
+
+    const intentKey = searchParams.toString();
+    if (processedCompanionIntentRef.current === intentKey) {
+      return;
+    }
+    processedCompanionIntentRef.current = intentKey;
+
+    const seededPrompt = buildCompanionToolPrompt(language, intent, courseTitle);
+    const seededHistory: TutorMessage[] = [
+      { role: 'model', text: personaCopy.welcomeBody },
+      { role: 'user', text: seededPrompt },
+    ];
+
+    setMessages(seededHistory);
+    setStatus(
+      intent === 'quiz'
+        ? language === 'zh-CN'
+          ? '正在为当前课程准备练习题…'
+          : 'Preparing a quiz for the current course…'
+        : language === 'zh-CN'
+          ? '正在为当前课程生成思维导图…'
+          : 'Preparing a mind map for the current course…',
+    );
+
+    void openTool(intent, seededHistory);
+    navigate('/ai-tutor', { replace: true });
+  }, [language, navigate, openTool, personaCopy.welcomeBody, searchParams]);
 
   return (
     <div className="mx-auto flex h-full min-h-0 w-[90%] max-w-[1380px] flex-col overflow-hidden px-0 py-4 md:py-5">
@@ -233,14 +309,18 @@ export function AiTutorPage() {
                   </div>
                   <div>
                     <p className="viewer-botanical-eyebrow">{copy.aiTutor.deskEyebrow}</p>
+                    <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#d8cbb9] bg-[rgba(255,252,247,0.78)] px-3 py-1.5 text-[0.75rem] font-black text-[#7c6b5c]">
+                      <Bot size={14} />
+                      <span>{personaCopy.badge}</span>
+                    </div>
                     <h1
-                      className="mt-2 text-[2.45rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+                      className="mt-3 text-[2.45rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
                       style={{ fontFamily: '"Cormorant Garamond", serif' }}
                     >
-                      {copy.aiTutor.welcomeTitle}
+                      {personaCopy.welcomeTitle}
                     </h1>
                     <p className="mt-3 max-w-[48rem] text-[0.92rem] leading-[1.85] text-[#6f6359]">
-                      {copy.aiTutor.welcomeBody}
+                      {personaCopy.welcomeBody}
                     </p>
                   </div>
                 </div>

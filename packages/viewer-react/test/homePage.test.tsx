@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { screen, within } from '@testing-library/react';
 import { readFixtureState, writeFixtureState } from '@/shared/api/viewer/fixtureStore';
+import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { renderRoute } from './renderApp';
 
 describe('HomePage', () => {
@@ -124,7 +125,7 @@ describe('HomePage', () => {
     ).toHaveAttribute('href', `/course/${course.id}`);
   });
 
-  it('shows the no-current-course state and preserves the ai coach and live2d stage', async () => {
+  it('shows the no-current-course state and preserves the live2d stage', async () => {
     const fixture = readFixtureState();
     writeFixtureState({
       ...fixture,
@@ -139,8 +140,70 @@ describe('HomePage', () => {
     expect(await screen.findByRole('link', { name: /浏览课程/i })).toHaveAttribute('href', '/library');
     expect(screen.queryByTestId('home-course-switcher')).not.toBeInTheDocument();
     expect(await screen.findByTestId('home-live2d-stage')).toBeInTheDocument();
-    expect(await screen.findByTestId('home-coach-card')).toBeInTheDocument();
-    expect(await screen.findByText(/先挑一门你愿意继续的课/i)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^中文$/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^English$/i })).not.toBeInTheDocument();
+  });
+
+  it('hides the home companion and swaps the ai tutor cta by persona', async () => {
+    const fixture = readFixtureState();
+    window.localStorage.setItem(
+      VIEWER_PREFERENCES_STORAGE_KEY,
+      JSON.stringify({
+        language: 'zh-CN',
+        aiTutorPersona: 'coach',
+        homeCompanionEnabled: false,
+      }),
+    );
+    writeFixtureState({
+      ...fixture,
+      enrollments: [],
+      completedLessonIds: [],
+    });
+
+    renderRoute('/home', 'user');
+
+    expect(await screen.findByRole('link', { name: /让导师给我下一步/i })).toHaveAttribute('href', '/ai-tutor');
+    expect(screen.queryByTestId('home-live2d-stage')).not.toBeInTheDocument();
+  });
+
+  it('applies persona-specific tutor guidance copy on the current course card', async () => {
+    const fixture = readFixtureState();
+    window.localStorage.setItem(
+      VIEWER_PREFERENCES_STORAGE_KEY,
+      JSON.stringify({
+        language: 'zh-CN',
+        aiTutorPersona: 'socratic',
+        homeCompanionEnabled: true,
+      }),
+    );
+    const course = {
+      ...fixture.courses[0],
+      id: 'course-persona',
+      title: 'Persona Course',
+      slug: 'persona-course',
+      description: '',
+    };
+
+    writeFixtureState({
+      ...fixture,
+      courses: [course],
+      enrollments: [
+        {
+          course_id: course.id,
+          status: 'in_progress',
+          progress_bp: 3600,
+          last_accessed_at: '2026-04-04T10:00:00Z',
+          courses: course,
+        },
+      ],
+      completedLessonIds: [],
+    });
+
+    renderRoute('/home', 'user');
+
+    const currentCourseCard = await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 });
+    expect(within(currentCourseCard).getByText(/用一个问题帮你把关键点想清楚/i)).toBeInTheDocument();
+    expect(within(currentCourseCard).getByText(/先用一个问题带你理清关键点/i)).toBeInTheDocument();
   });
 
   it('switches courses from the card edge controls and persists the selected course', async () => {
@@ -214,5 +277,29 @@ describe('HomePage', () => {
       ),
     ).toBeInTheDocument();
     expect(window.localStorage.getItem('viewer.home.current-course:demo-user')).toBe('course-edge-a');
+  });
+
+  it('opens the companion popover on click and closes it when clicking outside', async () => {
+    const user = userEvent.setup();
+    renderRoute('/home', 'user');
+
+    const companionStage = await screen.findByTestId('home-live2d-stage');
+    await user.click(companionStage);
+
+    expect(await screen.findByTestId('home-companion-popover')).toBeInTheDocument();
+
+    await user.click(await screen.findByTestId('home-companion-dismiss-layer'));
+    expect(screen.queryByTestId('home-companion-popover')).not.toBeInTheDocument();
+  });
+
+  it('opens the community notes context from the companion popover', async () => {
+    const user = userEvent.setup();
+    renderRoute('/home', 'user');
+
+    await user.click(await screen.findByTestId('home-live2d-stage'));
+    await user.click(await screen.findByRole('button', { name: /查看课程相关笔记/i }));
+
+    expect(await screen.findByText(/^社区$/i, {}, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByTestId('community-companion-context')).toBeInTheDocument();
   });
 });

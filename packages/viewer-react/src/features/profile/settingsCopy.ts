@@ -4,6 +4,7 @@ export type SettingsSectionId =
   | 'account'
   | 'appearance'
   | 'learning'
+  | 'aiTutor'
   | 'notifications'
   | 'privacy'
   | 'parent'
@@ -24,6 +25,7 @@ const settingsDictionary = {
       account: { label: '账号与资料', description: '管理头像、封面、用户名和个人简介。' },
       appearance: { label: '显示与语言', description: '选择主题模式与界面语言。' },
       learning: { label: '学习偏好', description: '调整学习体验开关与每日目标。' },
+      aiTutor: { label: 'AI 导师', description: '设置 AI 导师人格，以及是否在首页显示导师形象。' },
       notifications: { label: '通知与提醒', description: '控制浏览器推送权限与提醒时间。' },
       privacy: { label: '隐私与数据', description: '管理可见性、社交权限与本地数据行为。' },
       parent: { label: '家长模式', description: '切换角色并管理孩子绑定能力。' },
@@ -80,6 +82,19 @@ const settingsDictionary = {
       dailyGoal: '每日学习目标（分钟）',
       dailyGoalHint: '建议范围 10 到 180 分钟。',
       minutesPerDay: '分钟 / 天',
+    },
+    aiTutor: {
+      title: 'AI 导师',
+      description: '导师人格和首页导师形象会立即应用到当前设备，并同步到你的账号设置。',
+      personalityTitle: '导师人格',
+      personalityHint: '选择 AI 导师默认的引导风格。不同人格会影响 AI 导师页和首页相关文案。',
+      currentMode: '当前人格',
+      examplePrompt: '示例开场',
+      homeCompanion: {
+        label: '首页显示 AI 导师形象',
+        hint: '关闭后仅隐藏首页浮动导师形象，AI 导师页面和入口仍然可用。',
+      },
+      saveSuccess: 'AI 导师设置已同步。',
     },
     notifications: {
       title: '通知与提醒',
@@ -187,6 +202,7 @@ const settingsDictionary = {
       account: { label: 'Account & Profile', description: 'Manage avatar, cover image, username, and bio.' },
       appearance: { label: 'Appearance & Language', description: 'Choose theme mode and interface language.' },
       learning: { label: 'Learning Preferences', description: 'Tune learning experience switches and daily goals.' },
+      aiTutor: { label: 'AI Tutor', description: 'Set tutor persona and whether the home companion appears.' },
       notifications: { label: 'Notifications & Reminders', description: 'Control browser push access and reminder timing.' },
       privacy: { label: 'Privacy & Data', description: 'Manage visibility, social permissions, and local cache behavior.' },
       parent: { label: 'Parent Mode', description: 'Switch roles and manage child binding capabilities.' },
@@ -243,6 +259,19 @@ const settingsDictionary = {
       dailyGoal: 'Daily Goal (minutes)',
       dailyGoalHint: 'Recommended range is 10 to 180 minutes.',
       minutesPerDay: 'min / day',
+    },
+    aiTutor: {
+      title: 'AI Tutor',
+      description: 'Tutor persona and the home companion apply immediately on this device and sync to your account settings.',
+      personalityTitle: 'Tutor Persona',
+      personalityHint: 'Choose the default guidance style for AI Tutor. Persona affects the AI Tutor page and related home copy.',
+      currentMode: 'Current persona',
+      examplePrompt: 'Example opener',
+      homeCompanion: {
+        label: 'Show AI tutor on home',
+        hint: 'Turning this off only hides the floating home companion. The AI Tutor page and entry points stay available.',
+      },
+      saveSuccess: 'AI Tutor settings synced.',
     },
     notifications: {
       title: 'Notifications & Reminders',
@@ -344,6 +373,7 @@ export const settingsSectionOrder: SettingsSectionId[] = [
   'account',
   'appearance',
   'learning',
+  'aiTutor',
   'notifications',
   'privacy',
   'parent',

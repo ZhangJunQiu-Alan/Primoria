@@ -1,16 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, BookOpenText, Bot, BrainCircuit, ChevronLeft, ChevronRight, Search, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { fetchCourseDetail, fetchEnrollments } from '@/shared/api/viewer/catalogApi';
-import { fetchUserStats } from '@/shared/api/viewer/profileApi';
+import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  ArrowRight,
+  BadgeHelp,
+  BookOpenText,
+  BrainCircuit,
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  GitBranch,
+  NotebookPen,
+  Search,
+  Sparkles,
+} from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAiTutorPersonaDefinition } from '@/shared/ai-tutor/persona';
+import { useBootSplashGate } from '@/shared/boot/bootSplash';
+import { fetchViewerHomePayload } from '@/shared/api/viewer/homeApi';
+import { prefetchCourseDetail, prefetchHomePayload, prefetchLibraryCatalog } from '@/shared/api/viewer/prefetch';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 import { Live2DHeroModel } from './Live2DHeroModel';
 import {
-  buildHomeCoachState,
   clearPersistedHomeCourseId,
   getHomeContinueTarget,
   getHomeSelectedCourse,
@@ -18,6 +31,12 @@ import {
   sortHomeInProgressEnrollments,
   writePersistedHomeCourseId,
 } from './homeDashboard';
+import {
+  getHomeCompanionInsight,
+  getHomeCompanionPlacement,
+  type HomeCompanionAnchor,
+  type HomeCompanionRecommendationPace,
+} from './homeCompanion';
 
 function clampCompanionPosition(
   nextX: number,
@@ -33,40 +52,68 @@ function clampCompanionPosition(
   };
 }
 
+const COMPANION_DRAG_THRESHOLD_PX = 8;
+
 export function HomePage() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const user = useAppSelector((state) => state.auth.user);
   const language = useAppSelector((state) => state.viewerPreferences.language);
+  const aiTutorPersona = useAppSelector((state) => state.viewerPreferences.aiTutorPersona);
+  const homeCompanionEnabled = useAppSelector((state) => state.viewerPreferences.homeCompanionEnabled);
   const copy = useViewerCopy();
+  const aiTutorPersonaCopy = getAiTutorPersonaDefinition(aiTutorPersona, language);
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [cardMotionDirection, setCardMotionDirection] = useState<'forward' | 'backward' | null>(null);
   const [companionPosition, setCompanionPosition] = useState({ x: 0, y: 0 });
   const [isDraggingCompanion, setIsDraggingCompanion] = useState(false);
   const [hasInitializedCompanion, setHasInitializedCompanion] = useState(false);
+  const [isCompanionPopoverOpen, setIsCompanionPopoverOpen] = useState(false);
+  const [isRecommendationPromptOpen, setIsRecommendationPromptOpen] = useState(false);
+  const [companionPopoverPlacement, setCompanionPopoverPlacement] = useState<{
+    anchor: HomeCompanionAnchor;
+    x: number;
+    y: number;
+  }>({ anchor: 'left', x: 24, y: 24 });
   const pageRef = useRef<HTMLDivElement | null>(null);
   const companionRef = useRef<HTMLDivElement | null>(null);
+  const companionPopoverRef = useRef<HTMLDivElement | null>(null);
   const dragStateRef = useRef<{
     pointerId: number;
     offsetX: number;
     offsetY: number;
+    originClientX: number;
+    originClientY: number;
+    moved: boolean;
   } | null>(null);
-
-  const statsQuery = useQuery({
-    queryKey: ['viewer', 'stats', user?.id],
-    queryFn: () => fetchUserStats(user?.id),
-    enabled: Boolean(user),
-  });
-
-  const enrollmentsQuery = useQuery({
-    queryKey: ['viewer', 'enrollments', user?.id],
-    queryFn: () => fetchEnrollments(user?.id ?? 'demo-user'),
-    enabled: Boolean(user),
-  });
-
-  const inProgressEnrollments = sortHomeInProgressEnrollments(enrollmentsQuery.data ?? []);
 
   useEffect(() => {
     if (!user?.id) {
       setSelectedCourseId(null);
+      return;
+    }
+
+    setSelectedCourseId(readPersistedHomeCourseId(user.id));
+  }, [user?.id]);
+
+  const homeQuery = useQuery({
+    queryKey: ['viewer', 'home', user?.id, selectedCourseId ?? null],
+    queryFn: () => fetchViewerHomePayload(user?.id ?? 'demo-user', selectedCourseId ?? null),
+    enabled: Boolean(user?.id),
+    placeholderData: keepPreviousData,
+  });
+
+  const homePayload = homeQuery.data;
+  const inProgressEnrollments = sortHomeInProgressEnrollments(homePayload?.in_progress_enrollments ?? []);
+  const resolvedSelectedCourseId = homePayload?.resolved_selected_course_id ?? null;
+  const selectedCourseDetail = homePayload?.selected_course_detail ?? null;
+
+  useEffect(() => {
+    if (!user?.id) {
+      return;
+    }
+
+    if (homeQuery.isPlaceholderData) {
       return;
     }
 
@@ -78,50 +125,41 @@ export function HomePage() {
       return;
     }
 
-    const currentStillValid = Boolean(
-      selectedCourseId && inProgressEnrollments.some((entry) => entry.course_id === selectedCourseId),
-    );
-
-    if (currentStillValid && selectedCourseId) {
-      writePersistedHomeCourseId(user.id, selectedCourseId);
-      return;
+    if (resolvedSelectedCourseId) {
+      writePersistedHomeCourseId(user.id, resolvedSelectedCourseId);
     }
 
-    const persistedCourseId = readPersistedHomeCourseId(user.id);
-    const fallbackCourseId =
-      inProgressEnrollments.find((entry) => entry.course_id === persistedCourseId)?.course_id ??
-      inProgressEnrollments[0]?.course_id ??
-      null;
-
-    if (fallbackCourseId !== selectedCourseId) {
-      setSelectedCourseId(fallbackCourseId);
+    if (resolvedSelectedCourseId !== selectedCourseId) {
+      setSelectedCourseId(resolvedSelectedCourseId);
     }
+  }, [homeQuery.isPlaceholderData, inProgressEnrollments.length, resolvedSelectedCourseId, selectedCourseId, user?.id]);
 
-    if (fallbackCourseId) {
-      writePersistedHomeCourseId(user.id, fallbackCourseId);
-    }
-  }, [inProgressEnrollments, selectedCourseId, user?.id]);
+  const requestedSelectedEnrollment =
+    selectedCourseId ? inProgressEnrollments.find((entry) => entry.course_id === selectedCourseId) ?? null : null;
 
   const selectedEnrollment =
-    inProgressEnrollments.find((entry) => entry.course_id === selectedCourseId) ?? null;
+    requestedSelectedEnrollment ??
+    (resolvedSelectedCourseId
+      ? inProgressEnrollments.find((entry) => entry.course_id === resolvedSelectedCourseId) ?? null
+      : null) ??
+    inProgressEnrollments[0] ??
+    null;
 
-  const detailQuery = useQuery({
-    queryKey: ['viewer', 'course', selectedCourseId, user?.id],
-    queryFn: () => fetchCourseDetail(selectedCourseId ?? '', user?.id),
-    enabled: Boolean(selectedCourseId && user?.id),
-  });
-
-  const selectedCourse = getHomeSelectedCourse(selectedEnrollment, language, detailQuery.data ?? null);
-  const continueTarget = getHomeContinueTarget(selectedEnrollment, language, detailQuery.data ?? null);
-  const stats = statsQuery.data;
-  const coachState = buildHomeCoachState({
-    stats,
+  const activeCourseId = requestedSelectedEnrollment?.course_id ?? selectedEnrollment?.course_id ?? selectedCourseId;
+  const detailMatchesSelection = selectedCourseDetail?.course.id === selectedEnrollment?.course_id;
+  const selectedCourse = getHomeSelectedCourse(
+    selectedEnrollment,
     language,
-    selectedCourse,
-    continueTarget,
-  });
-  const pageError = statsQuery.error ?? enrollmentsQuery.error;
-  const isPathLoading = Boolean(selectedEnrollment && detailQuery.isLoading && !detailQuery.data);
+    detailMatchesSelection ? selectedCourseDetail : null,
+  );
+  const continueTarget = getHomeContinueTarget(
+    selectedEnrollment,
+    language,
+    detailMatchesSelection ? selectedCourseDetail : null,
+  );
+  const stats = homePayload?.stats;
+  const pageError = homeQuery.error;
+  const isPathLoading = Boolean(selectedEnrollment && homeQuery.isFetching && !detailMatchesSelection);
   const selectedCourseIndex = selectedEnrollment
     ? inProgressEnrollments.findIndex((entry) => entry.course_id === selectedEnrollment.course_id)
     : -1;
@@ -130,6 +168,39 @@ export function HomePage() {
     selectedCourseIndex >= 0 && selectedCourseIndex < inProgressEnrollments.length - 1
       ? inProgressEnrollments[selectedCourseIndex + 1]
       : null;
+  const companionInsight = getHomeCompanionInsight({
+    persona: aiTutorPersonaCopy,
+    selectedCourse,
+    stats,
+  });
+
+  useBootSplashGate(Boolean(homeQuery.data || homeQuery.error));
+
+  useEffect(() => {
+    if (!user?.id || !selectedEnrollment) {
+      return;
+    }
+
+    const cleanupPrev = previousEnrollment
+      ? prefetchHomePayload(queryClient, user.id, previousEnrollment.course_id, { idle: true })
+      : null;
+    const cleanupPrevDetail = previousEnrollment
+      ? prefetchCourseDetail(queryClient, previousEnrollment.course_id, user.id, { idle: true })
+      : null;
+    const cleanupNext = nextEnrollment
+      ? prefetchHomePayload(queryClient, user.id, nextEnrollment.course_id, { idle: true })
+      : null;
+    const cleanupNextDetail = nextEnrollment
+      ? prefetchCourseDetail(queryClient, nextEnrollment.course_id, user.id, { idle: true })
+      : null;
+
+    return () => {
+      cleanupPrev?.();
+      cleanupPrevDetail?.();
+      cleanupNext?.();
+      cleanupNextDetail?.();
+    };
+  }, [nextEnrollment?.course_id, previousEnrollment?.course_id, queryClient, selectedEnrollment?.course_id, user?.id]);
 
   function selectCourse(courseId: string, direction?: 'forward' | 'backward') {
     if (courseId === selectedCourseId) {
@@ -155,7 +226,7 @@ export function HomePage() {
     >
       <div className="flex min-w-max gap-2.5">
         {inProgressEnrollments.map((entry) => {
-          const isActive = entry.course_id === selectedEnrollment?.course_id;
+          const isActive = entry.course_id === activeCourseId;
           return (
             <button
               key={entry.course_id}
@@ -168,6 +239,20 @@ export function HomePage() {
               ].join(' ')}
               onClick={() => {
                 selectCourse(entry.course_id);
+              }}
+              onMouseEnter={() => {
+                if (!user?.id) {
+                  return;
+                }
+                prefetchHomePayload(queryClient, user.id, entry.course_id, { idle: true });
+                prefetchCourseDetail(queryClient, entry.course_id, user.id, { idle: true });
+              }}
+              onFocus={() => {
+                if (!user?.id) {
+                  return;
+                }
+                prefetchHomePayload(queryClient, user.id, entry.course_id, { idle: true });
+                prefetchCourseDetail(queryClient, entry.course_id, user.id, { idle: true });
               }}
             >
               <span
@@ -189,6 +274,12 @@ export function HomePage() {
   ) : null;
 
   useEffect(() => {
+    if (!homeCompanionEnabled) {
+      setIsCompanionPopoverOpen(false);
+      setIsRecommendationPromptOpen(false);
+      return;
+    }
+
     const page = pageRef.current;
     const companion = companionRef.current;
     if (!page || !companion) {
@@ -244,13 +335,74 @@ export function HomePage() {
       resizeObserver?.disconnect();
       window.removeEventListener('resize', positionCompanion);
     };
-  }, [hasInitializedCompanion]);
+  }, [hasInitializedCompanion, homeCompanionEnabled]);
 
   useEffect(() => {
     return () => {
       dragStateRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    if (!homeCompanionEnabled || !isCompanionPopoverOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') {
+        return;
+      }
+      setIsCompanionPopoverOpen(false);
+      setIsRecommendationPromptOpen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [homeCompanionEnabled, isCompanionPopoverOpen]);
+
+  useEffect(() => {
+    if (!homeCompanionEnabled || !isCompanionPopoverOpen) {
+      return;
+    }
+
+    const page = pageRef.current;
+    const companion = companionRef.current;
+    const popover = companionPopoverRef.current;
+    if (!page || !companion || !popover) {
+      return;
+    }
+
+    const updatePlacement = () => {
+      setCompanionPopoverPlacement(
+        getHomeCompanionPlacement({
+          containerWidth: page.clientWidth || page.getBoundingClientRect().width,
+          containerHeight: page.clientHeight || page.getBoundingClientRect().height,
+          anchorX: companionPosition.x,
+          anchorY: companionPosition.y,
+          anchorWidth: companion.offsetWidth || 280,
+          anchorHeight: companion.offsetHeight || 360,
+          popoverWidth: popover.offsetWidth || 320,
+          popoverHeight: popover.offsetHeight || 360,
+          viewportWidth: window.innerWidth,
+          bottomInset: 18,
+        }),
+      );
+    };
+
+    updatePlacement();
+
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => updatePlacement()) : null;
+    resizeObserver?.observe(page);
+    resizeObserver?.observe(companion);
+    resizeObserver?.observe(popover);
+    window.addEventListener('resize', updatePlacement);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', updatePlacement);
+    };
+  }, [companionPosition.x, companionPosition.y, homeCompanionEnabled, isCompanionPopoverOpen, isRecommendationPromptOpen]);
 
   useEffect(() => {
     if (!cardMotionDirection) {
@@ -280,10 +432,15 @@ export function HomePage() {
       pointerId: event.pointerId,
       offsetX: event.clientX - companionRect.left,
       offsetY: event.clientY - companionRect.top,
+      originClientX: event.clientX,
+      originClientY: event.clientY,
+      moved: false,
     };
 
-    companion.setPointerCapture(event.pointerId);
-    setIsDraggingCompanion(true);
+    if (typeof companion.setPointerCapture === 'function') {
+      companion.setPointerCapture(event.pointerId);
+    }
+    setIsDraggingCompanion(false);
     setCompanionPosition((current) =>
       clampCompanionPosition(
         current.x,
@@ -302,6 +459,22 @@ export function HomePage() {
     const companion = companionRef.current;
     if (!dragState || dragState.pointerId !== event.pointerId || !page || !companion) {
       return;
+    }
+
+    const distance = Math.hypot(
+      event.clientX - dragState.originClientX,
+      event.clientY - dragState.originClientY,
+    );
+
+    if (!dragState.moved && distance < COMPANION_DRAG_THRESHOLD_PX) {
+      return;
+    }
+
+    if (!dragState.moved) {
+      dragState.moved = true;
+      setIsDraggingCompanion(true);
+      setIsCompanionPopoverOpen(false);
+      setIsRecommendationPromptOpen(false);
     }
 
     const pageRect = page.getBoundingClientRect();
@@ -329,13 +502,73 @@ export function HomePage() {
     }
 
     dragStateRef.current = null;
-    if (companion?.hasPointerCapture(event.pointerId)) {
+    if (companion?.hasPointerCapture?.(event.pointerId)) {
+      companion.releasePointerCapture(event.pointerId);
+    }
+    const wasDrag = dragState.moved;
+    setIsDraggingCompanion(false);
+
+    if (!wasDrag) {
+      setIsCompanionPopoverOpen((current) => !current);
+      setIsRecommendationPromptOpen(false);
+    }
+  };
+
+  const handleCompanionPointerCancel = (event: React.PointerEvent<HTMLDivElement>) => {
+    const dragState = dragStateRef.current;
+    const companion = companionRef.current;
+    if (!dragState || dragState.pointerId !== event.pointerId) {
+      return;
+    }
+
+    dragStateRef.current = null;
+    if (companion?.hasPointerCapture?.(event.pointerId)) {
       companion.releasePointerCapture(event.pointerId);
     }
     setIsDraggingCompanion(false);
   };
 
-  if (statsQuery.isLoading || enrollmentsQuery.isLoading) {
+  function buildAiTutorIntentHref(intent: 'quiz' | 'mindmap') {
+    const params = new URLSearchParams({
+      source: 'home-companion',
+      intent,
+      courseId: selectedCourse?.course.id ?? '',
+      courseTitle: selectedCourse?.course.title ?? '',
+    });
+    return `/ai-tutor?${params.toString()}`;
+  }
+
+  function buildCommunityNotesHref() {
+    const params = new URLSearchParams({
+      source: 'home-companion',
+      section: 'notes',
+      topic: selectedCourse?.course.title ?? '',
+    });
+    return `/community?${params.toString()}`;
+  }
+
+  function handleCompanionNavigation(to: string) {
+    setIsCompanionPopoverOpen(false);
+    setIsRecommendationPromptOpen(false);
+    navigate(to);
+  }
+
+  function handleRecommendationNavigate(pace: HomeCompanionRecommendationPace) {
+    if (!selectedCourse) {
+      return;
+    }
+
+    const params = new URLSearchParams({
+      source: 'home-companion',
+      subjectId: selectedCourse.course.subject_id,
+      recommendFrom: selectedCourse.course.id,
+      recommendPace: pace,
+    });
+
+    handleCompanionNavigation(`/library?${params.toString()}`);
+  }
+
+  if (homeQuery.isLoading && !homeQuery.data) {
     return (
       <div className="px-5 py-6 md:px-9 md:py-8">
         <LoadingStateCard />
@@ -344,14 +577,14 @@ export function HomePage() {
   }
 
   if (pageError) {
-    const message = pageError instanceof Error ? pageError.message : undefined;
+    const errorRecord = pageError as { message?: unknown } | null;
+    const message = pageError instanceof Error ? pageError.message : typeof errorRecord?.message === 'string' ? errorRecord.message : undefined;
     return (
       <div className="px-5 py-6 md:px-9 md:py-8">
         <ErrorStateCard
           message={message}
           onRetry={() => {
-            void statsQuery.refetch();
-            void enrollmentsQuery.refetch();
+            void homeQuery.refetch();
           }}
         />
       </div>
@@ -361,7 +594,7 @@ export function HomePage() {
   return (
     <div
       ref={pageRef}
-      className="relative mx-auto flex min-h-[calc(100svh-86px)] w-full max-w-[1320px] flex-col px-5 pb-6 pt-6 md:px-8 md:pb-8 md:pt-8"
+      className="relative mx-auto flex min-h-[calc(100svh-86px)] w-full max-w-[1320px] flex-col px-5 pb-6 pt-1.5 md:px-8 md:pb-8 md:pt-2"
     >
       <div className="flex items-start justify-between gap-4">
         <Link to="/home" className="inline-flex items-center gap-3">
@@ -382,22 +615,17 @@ export function HomePage() {
         </div>
       </div>
 
-      <section className="relative mt-8">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.12fr)_minmax(320px,0.88fr)]">
-          <div className="flex flex-col gap-4">
-            <div className="max-w-[48rem]">
-              <div className="relative pr-3 pb-3 sm:pr-5 sm:pb-5">
-                <div className="pointer-events-none absolute inset-0">
-                  <div className="absolute inset-x-2 bottom-0 top-2 rounded-[30px] border border-[rgba(223,214,199,0.78)] bg-[rgba(255,250,244,0.54)] shadow-[0_18px_34px_rgba(90,70,50,0.05)] sm:inset-x-3 sm:top-3 sm:translate-x-3 sm:translate-y-3" />
-                  <div className="absolute inset-x-1 bottom-1 top-1 rounded-[30px] border border-[rgba(230,220,206,0.72)] bg-[rgba(255,253,249,0.62)] shadow-[0_12px_24px_rgba(90,70,50,0.04)] sm:inset-x-2 sm:top-2 sm:translate-x-1.5 sm:translate-y-1.5" />
-                </div>
-
+      <section className="relative mt-6">
+        <div className="grid gap-6">
+          <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-4">
+            <div className="w-full">
+              <div className="relative">
                 {selectedCourse && previousEnrollment ? (
                   <button
                     type="button"
                     data-testid="home-edge-prev"
                     aria-label={copy.home.previousCourse}
-                    className="absolute bottom-14 left-[-0.7rem] top-10 z-20 flex w-8 items-center justify-start rounded-full bg-[linear-gradient(90deg,rgba(249,243,234,0.96)_0%,rgba(249,243,234,0.08)_100%)] pl-1.5 text-[#8a7765] opacity-72 transition duration-200 hover:opacity-100 hover:translate-x-[-1px] focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#adc9b0] sm:w-10 sm:pl-2"
+                    className="viewer-button-flat absolute bottom-14 left-[-0.7rem] top-10 z-20 flex w-8 items-center justify-start rounded-full bg-[linear-gradient(90deg,rgba(249,243,234,0.96)_0%,rgba(249,243,234,0.08)_100%)] pl-1.5 text-[#8a7765] opacity-72 transition duration-200 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#adc9b0] sm:w-10 sm:pl-2"
                     onClick={() => {
                       selectCourse(previousEnrollment.course_id, 'backward');
                     }}
@@ -411,7 +639,7 @@ export function HomePage() {
                     type="button"
                     data-testid="home-edge-next"
                     aria-label={copy.home.nextCourse}
-                    className="absolute bottom-14 right-[-0.7rem] top-10 z-20 flex w-8 items-center justify-end rounded-full bg-[linear-gradient(270deg,rgba(249,243,234,0.96)_0%,rgba(249,243,234,0.08)_100%)] pr-1.5 text-[#8a7765] opacity-72 transition duration-200 hover:opacity-100 hover:translate-x-[1px] focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#adc9b0] sm:w-10 sm:pr-2"
+                    className="viewer-button-flat absolute bottom-14 right-[-0.7rem] top-10 z-20 flex w-8 items-center justify-end rounded-full bg-[linear-gradient(270deg,rgba(249,243,234,0.96)_0%,rgba(249,243,234,0.08)_100%)] pr-1.5 text-[#8a7765] opacity-72 transition duration-200 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#adc9b0] sm:w-10 sm:pr-2"
                     onClick={() => {
                       selectCourse(nextEnrollment.course_id, 'forward');
                     }}
@@ -457,9 +685,7 @@ export function HomePage() {
                             </h2>
                             <p className="mt-3 max-w-[34rem] text-sm leading-7 text-[#72665b]">
                               {selectedCourse.course.description ||
-                                (language === 'zh-CN'
-                                  ? '继续沿着当前课程推进。首页会替你定位下一步，并把今日建议收成更容易开始的动作。'
-                                  : 'Keep moving through the current course. Home will locate the next step and shrink today’s plan into something easier to start.')}
+                                aiTutorPersonaCopy.homeCourseDescriptionFallback}
                             </p>
                           </div>
 
@@ -512,16 +738,8 @@ export function HomePage() {
                             </h3>
                             <p className="mt-3 text-sm leading-7 text-[#72665b]">
                               {selectedCourse.nextLessonTitle
-                                ? language === 'zh-CN'
-                                  ? `建议先完成这一步，再进入 AI 导师整理重点。${selectedCourse.nextLessonDurationLabel ? `预计 ${selectedCourse.nextLessonDurationLabel}。` : ''}`
-                                  : `Finish this step first, then use AI Tutor to organize the key points.${selectedCourse.nextLessonDurationLabel ? ` Estimated ${selectedCourse.nextLessonDurationLabel}.` : ''}`
-                                : detailQuery.error
-                                  ? language === 'zh-CN'
-                                    ? '课程路径暂时没有同步成功，你仍然可以先打开课程页查看结构。'
-                                    : 'The course path did not sync yet, but you can still open the course page to inspect the structure.'
-                                  : language === 'zh-CN'
-                                    ? '正在为你定位第一节未完成的课时。'
-                                    : 'Locating the first unfinished lesson for you.'}
+                                ? aiTutorPersonaCopy.homeNextStepMessage(selectedCourse.nextLessonDurationLabel)
+                                : aiTutorPersonaCopy.homeSyncingMessage}
                             </p>
                           </div>
 
@@ -539,6 +757,18 @@ export function HomePage() {
                                 to={continueTarget.href}
                                 data-testid="home-continue-link"
                                 className="viewer-botanical-button viewer-botanical-button--primary"
+                                onMouseEnter={() => {
+                                  if (continueTarget.kind !== 'course' || !selectedCourse?.course.id || !user?.id) {
+                                    return;
+                                  }
+                                  prefetchCourseDetail(queryClient, selectedCourse.course.id, user.id, { idle: true });
+                                }}
+                                onFocus={() => {
+                                  if (continueTarget.kind !== 'course' || !selectedCourse?.course.id || !user?.id) {
+                                    return;
+                                  }
+                                  prefetchCourseDetail(queryClient, selectedCourse.course.id, user.id, { idle: true });
+                                }}
                               >
                                 {continueTarget.label}
                                 <ArrowRight size={16} />
@@ -547,6 +777,18 @@ export function HomePage() {
                             <Link
                               to={`/course/${selectedCourse.course.id}`}
                               className="viewer-botanical-button viewer-botanical-button--secondary"
+                              onMouseEnter={() => {
+                                if (!user?.id) {
+                                  return;
+                                }
+                                prefetchCourseDetail(queryClient, selectedCourse.course.id, user.id, { idle: true });
+                              }}
+                              onFocus={() => {
+                                if (!user?.id) {
+                                  return;
+                                }
+                                prefetchCourseDetail(queryClient, selectedCourse.course.id, user.id, { idle: true });
+                              }}
                             >
                               {language === 'zh-CN' ? '查看课程' : 'View course'}
                             </Link>
@@ -570,13 +812,22 @@ export function HomePage() {
                         </p>
                       </div>
                       <div className="flex flex-wrap gap-3">
-                        <Link to="/library" className="viewer-botanical-button viewer-botanical-button--primary">
+                        <Link
+                          to="/library"
+                          className="viewer-botanical-button viewer-botanical-button--primary"
+                          onMouseEnter={() => {
+                            prefetchLibraryCatalog(queryClient, { searchQuery: '', subjectId: null }, { idle: true });
+                          }}
+                          onFocus={() => {
+                            prefetchLibraryCatalog(queryClient, { searchQuery: '', subjectId: null }, { idle: true });
+                          }}
+                        >
                           <Search size={18} />
                           {copy.home.libraryCta}
                         </Link>
                         <Link to="/ai-tutor" className="viewer-botanical-button viewer-botanical-button--secondary">
                           <BrainCircuit size={18} />
-                          {language === 'zh-CN' ? '先看看 AI 导师' : 'Open AI Tutor'}
+                          {aiTutorPersonaCopy.homeTutorCta}
                         </Link>
                       </div>
                     </div>
@@ -588,74 +839,167 @@ export function HomePage() {
             </div>
           </div>
 
-          <div className="grid gap-4 xl:pt-[22rem]">
-            <div data-testid="home-coach-card" className="rounded-[30px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] p-5 shadow-[0_16px_34px_rgba(90,70,50,0.08)] md:p-6">
-              <div className="flex items-center justify-between gap-3">
-                <span className="viewer-botanical-pill border-[#d6c4b2] bg-[#f7efe2] text-[#8b7153]">
-                  <Bot size={15} />
-                  {language === 'zh-CN' ? 'AI 学习教练' : 'AI Study Coach'}
-                </span>
-                <span className="viewer-botanical-pill border-[#c8dbcb] bg-[#edf5ec] text-[#5c7d60]">
-                  {coachState.accentLabel}
-                </span>
-              </div>
-
-              <h2
-                className="mt-4 text-[2rem] font-semibold leading-none text-[#3d342a]"
-                style={{ fontFamily: '"Cormorant Garamond", serif' }}
-              >
-                {coachState.title}
-              </h2>
-              <p className="mt-3 text-sm leading-7 text-[#72665b]">{coachState.message}</p>
-
-              <div className="mt-5 rounded-[22px] border border-[#e4d8ca] bg-[rgba(255,255,255,0.52)] px-4 py-4">
-                <p className="text-sm leading-7 text-[#72665b]">{coachState.supportingNote}</p>
-              </div>
-            </div>
-          </div>
         </div>
-
-        {detailQuery.error && selectedEnrollment ? (
-          <div className="relative z-10 mt-4">
-            <ErrorStateCard
-              title={language === 'zh-CN' ? '课程路径暂时未同步' : 'Course path is not synced yet'}
-              message={
-                detailQuery.error instanceof Error
-                  ? detailQuery.error.message
-                  : language === 'zh-CN'
-                    ? '请重新加载当前课程路径。'
-                    : 'Try reloading the current course path.'
-              }
-              onRetry={() => {
-                void detailQuery.refetch();
-              }}
-            />
-          </div>
-        ) : null}
       </section>
 
-      <div
-        ref={companionRef}
-        data-testid="home-live2d-stage"
-        className={[
-          'absolute z-20 w-[42vw] max-w-[30rem] min-w-[15rem] touch-none select-none',
-          isDraggingCompanion ? 'cursor-grabbing' : 'cursor-grab',
-        ].join(' ')}
-        style={{
-          left: `${companionPosition.x}px`,
-          top: `${companionPosition.y}px`,
-        }}
-        onPointerDown={handleCompanionPointerDown}
-        onPointerMove={handleCompanionPointerMove}
-        onPointerUp={handleCompanionPointerUp}
-        onPointerCancel={handleCompanionPointerUp}
-      >
-        <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_22%,rgba(255,255,255,0.78),rgba(255,255,255,0)_62%)]" />
-        <div className="pointer-events-none absolute inset-x-[18%] bottom-[9%] h-10 rounded-full bg-[radial-gradient(circle,rgba(114,93,73,0.18),rgba(114,93,73,0)_72%)] blur-xl" />
-        <div className="relative h-[18rem] md:h-[24rem]">
-          <Live2DHeroModel />
-        </div>
-      </div>
+      {homeCompanionEnabled ? (
+        <>
+          {isCompanionPopoverOpen ? (
+            <button
+              type="button"
+              data-testid="home-companion-dismiss-layer"
+              aria-label={language === 'zh-CN' ? '关闭导师窗口' : 'Close tutor panel'}
+              className="absolute inset-0 z-30 cursor-default bg-transparent"
+              onClick={() => {
+                setIsCompanionPopoverOpen(false);
+                setIsRecommendationPromptOpen(false);
+              }}
+            />
+          ) : null}
+
+          <div
+            ref={companionRef}
+            data-testid="home-live2d-stage"
+            className={[
+              'absolute w-[42vw] max-w-[30rem] min-w-[15rem] touch-none select-none',
+              isCompanionPopoverOpen ? 'z-50' : 'z-20',
+              isDraggingCompanion ? 'cursor-grabbing' : 'cursor-grab',
+            ].join(' ')}
+            style={{
+              left: `${companionPosition.x}px`,
+              top: `${companionPosition.y}px`,
+            }}
+            onPointerDown={handleCompanionPointerDown}
+            onPointerMove={handleCompanionPointerMove}
+            onPointerUp={handleCompanionPointerUp}
+            onPointerCancel={handleCompanionPointerCancel}
+          >
+            <div className="pointer-events-none absolute inset-x-[18%] bottom-[9%] h-10 rounded-full bg-[radial-gradient(circle,rgba(114,93,73,0.18),rgba(114,93,73,0)_72%)] blur-xl" />
+            <div className="relative h-[18rem] md:h-[24rem]">
+              <Live2DHeroModel />
+            </div>
+          </div>
+
+          {isCompanionPopoverOpen ? (
+            <div
+              ref={companionPopoverRef}
+              data-testid="home-companion-popover"
+              data-anchor={companionPopoverPlacement.anchor}
+              className={[
+                'absolute z-[60] w-[min(22rem,calc(100%-2rem))] rounded-[28px] border border-[#dbcdbd] bg-[rgba(255,252,247,0.96)] p-4 text-left shadow-[0_22px_44px_rgba(90,70,50,0.14)] backdrop-blur-[20px]',
+                companionPopoverPlacement.anchor === 'sheet'
+                  ? 'left-4 right-4 w-auto'
+                  : '',
+              ].join(' ')}
+              style={{
+                left: companionPopoverPlacement.anchor === 'sheet' ? undefined : `${companionPopoverPlacement.x}px`,
+                top: `${companionPopoverPlacement.y}px`,
+                right: companionPopoverPlacement.anchor === 'sheet' ? '1rem' : undefined,
+              }}
+            >
+              <div className="min-w-0">
+                <p className="viewer-botanical-eyebrow text-[0.66rem]">{aiTutorPersonaCopy.homeCompanionTitle}</p>
+                <p className="mt-2 text-[0.94rem] font-semibold leading-7 text-[#4d4239]">
+                  {companionInsight.message}
+                </p>
+              </div>
+
+              <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                <button
+                  type="button"
+                  className="rounded-[20px] border border-[#d7ccb8] bg-[rgba(255,252,247,0.88)] p-3 text-left transition hover:border-[#c8dbcb] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={!selectedCourse}
+                  onClick={() => handleCompanionNavigation(buildAiTutorIntentHref('quiz'))}
+                >
+                  <BadgeHelp size={16} className="text-[#9a6f3f]" />
+                  <div className="mt-4 text-[0.86rem] font-bold text-[#3d342a]">
+                    {aiTutorPersonaCopy.homeCompanionActions.quiz.label}
+                  </div>
+                  <div className="mt-1 text-[0.76rem] font-medium leading-5 text-[#8b7d72]">
+                    {aiTutorPersonaCopy.homeCompanionActions.quiz.subtitle}
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className="rounded-[20px] border border-[#d7ccb8] bg-[rgba(255,252,247,0.88)] p-3 text-left transition hover:border-[#c8dbcb] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={!selectedCourse}
+                  onClick={() => handleCompanionNavigation(buildAiTutorIntentHref('mindmap'))}
+                >
+                  <GitBranch size={16} className="text-[#7f6f88]" />
+                  <div className="mt-4 text-[0.86rem] font-bold text-[#3d342a]">
+                    {aiTutorPersonaCopy.homeCompanionActions.mindmap.label}
+                  </div>
+                  <div className="mt-1 text-[0.76rem] font-medium leading-5 text-[#8b7d72]">
+                    {aiTutorPersonaCopy.homeCompanionActions.mindmap.subtitle}
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className="rounded-[20px] border border-[#d7ccb8] bg-[rgba(255,252,247,0.88)] p-3 text-left transition hover:border-[#c8dbcb] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={!selectedCourse}
+                  onClick={() => handleCompanionNavigation(buildCommunityNotesHref())}
+                >
+                  <NotebookPen size={16} className="text-[#5c7d60]" />
+                  <div className="mt-4 text-[0.86rem] font-bold text-[#3d342a]">
+                    {aiTutorPersonaCopy.homeCompanionActions.notes.label}
+                  </div>
+                  <div className="mt-1 text-[0.76rem] font-medium leading-5 text-[#8b7d72]">
+                    {aiTutorPersonaCopy.homeCompanionActions.notes.subtitle}
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className="rounded-[20px] border border-[#d7ccb8] bg-[rgba(255,252,247,0.88)] p-3 text-left transition hover:border-[#c8dbcb] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={!selectedCourse}
+                  onClick={() => setIsRecommendationPromptOpen((current) => !current)}
+                >
+                  <Compass size={16} className="text-[#8d6438]" />
+                  <div className="mt-4 text-[0.86rem] font-bold text-[#3d342a]">
+                    {aiTutorPersonaCopy.homeCompanionActions.recommend.label}
+                  </div>
+                  <div className="mt-1 text-[0.76rem] font-medium leading-5 text-[#8b7d72]">
+                    {aiTutorPersonaCopy.homeCompanionActions.recommend.subtitle}
+                  </div>
+                </button>
+              </div>
+
+              {isRecommendationPromptOpen ? (
+                <div className="mt-4 rounded-[22px] border border-[#ddd3c3] bg-[rgba(250,246,239,0.92)] p-3.5">
+                  <p className="text-[0.82rem] font-semibold text-[#6f6359]">
+                    {aiTutorPersonaCopy.homeCompanionRecommendPrompt}
+                  </p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                    <button
+                      type="button"
+                      className="rounded-full border border-[#ddd3c3] bg-white px-3 py-2 text-[0.78rem] font-bold text-[#6e6156] transition hover:border-[#d6c8b5] hover:bg-[#fdf9f2]"
+                      onClick={() => handleRecommendationNavigate('easier')}
+                    >
+                      {aiTutorPersonaCopy.homeCompanionRecommendChoices.easier}
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded-full border border-[#ddd3c3] bg-white px-3 py-2 text-[0.78rem] font-bold text-[#6e6156] transition hover:border-[#d6c8b5] hover:bg-[#fdf9f2]"
+                      onClick={() => handleRecommendationNavigate('same')}
+                    >
+                      {aiTutorPersonaCopy.homeCompanionRecommendChoices.same}
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded-full border border-[#ddd3c3] bg-white px-3 py-2 text-[0.78rem] font-bold text-[#6e6156] transition hover:border-[#d6c8b5] hover:bg-[#fdf9f2]"
+                      onClick={() => handleRecommendationNavigate('harder')}
+                    >
+                      {aiTutorPersonaCopy.homeCompanionRecommendChoices.harder}
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+        </>
+      ) : null}
     </div>
   );
 }

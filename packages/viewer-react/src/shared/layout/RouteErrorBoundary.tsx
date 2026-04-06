@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRouteError } from 'react-router-dom';
+import { markBootSplashRouteSettled } from '@/shared/boot/bootSplash';
 import { ErrorStateCard } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
 import { captureViewerError } from '@/shared/platform/observability';
@@ -10,6 +11,7 @@ export function RouteErrorBoundary({ scope }: { scope: string }) {
 
   useEffect(() => {
     captureViewerError(error, { scope });
+    markBootSplashRouteSettled();
   }, [error, scope]);
 
   return (

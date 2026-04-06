@@ -21,6 +21,10 @@ describe('geminiClient', () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
     vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
     vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    window.localStorage.setItem(
+      'primoria.viewer.preferences',
+      JSON.stringify({ language: 'zh-CN', aiTutorPersona: 'socratic' }),
+    );
 
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(JSON.stringify({ reply: 'Edge reply' }), {
@@ -42,6 +46,9 @@ describe('geminiClient', () => {
         }),
       }),
     );
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
+      persona: 'socratic',
+    });
   });
 
   it('surfaces API error payloads from the edge function', async () => {
@@ -64,6 +71,10 @@ describe('geminiClient', () => {
   it('streams tutor replies from the agent service', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
     vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    window.localStorage.setItem(
+      'primoria.viewer.preferences',
+      JSON.stringify({ language: 'zh-CN', aiTutorPersona: 'coach' }),
+    );
 
     const streamBody = new ReadableStream({
       start(controller) {
@@ -113,5 +124,10 @@ describe('geminiClient', () => {
         }),
       }),
     );
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
+      context: expect.objectContaining({
+        ai_tutor_persona: 'coach',
+      }),
+    });
   });
 });

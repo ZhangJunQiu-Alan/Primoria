@@ -23,6 +23,7 @@ import type {
   ViewerCourse,
   ViewerEnrollment,
   ViewerFollowCounts,
+  ViewerHomePayload,
   ViewerParentChild,
   ViewerParentReport,
   ViewerProfile,
@@ -311,6 +312,8 @@ function buildInitialState(): ViewerFixtureState {
       notification_reminder_time: '20:00',
       marketing_emails: false,
       accessibility_mode: false,
+      ai_tutor_persona: 'gentle',
+      home_companion_enabled: true,
     },
     webPushSubscription: null,
     community: {
@@ -393,9 +396,63 @@ export function getFixtureCourseDetail(courseId: string) {
   const lessonIds = new Set(lessons.map((lesson) => lesson.id));
   return {
     course,
-    lessons,
+    lessons: lessons.map((lesson) => ({
+      id: lesson.id,
+      title: lesson.title,
+      sort_key: lesson.sort_key,
+      xp_reward: lesson.xp_reward,
+      duration_seconds: lesson.duration_seconds,
+      is_locked: false,
+      unlock_type: 'none',
+    })),
     completed_lesson_ids: state.completedLessonIds.filter((lessonId) => lessonIds.has(lessonId)),
     enrollment: state.enrollments.find((entry) => entry.course_id === course.id) ?? null,
+  };
+}
+
+function parseTimestamp(value?: string | null) {
+  if (!value) {
+    return 0;
+  }
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function sortFixtureInProgressEnrollments(enrollments: ViewerEnrollment[]) {
+  return enrollments
+    .filter((entry) => entry.status === 'in_progress')
+    .slice()
+    .sort((left, right) => {
+      const accessDelta = parseTimestamp(right.last_accessed_at) - parseTimestamp(left.last_accessed_at);
+      if (accessDelta !== 0) {
+        return accessDelta;
+      }
+
+      const startedDelta = parseTimestamp(right.started_at) - parseTimestamp(left.started_at);
+      if (startedDelta !== 0) {
+        return startedDelta;
+      }
+
+      return (right.progress_bp ?? 0) - (left.progress_bp ?? 0);
+    });
+}
+
+export function getFixtureHomePayload(selectedCourseId?: string | null): ViewerHomePayload {
+  const state = readFixtureState();
+  const inProgressEnrollments = sortFixtureInProgressEnrollments(state.enrollments);
+  const preferredSelection =
+    selectedCourseId && inProgressEnrollments.some((entry) => entry.course_id === selectedCourseId)
+      ? selectedCourseId
+      : null;
+  const resolvedSelectedCourseId = preferredSelection ?? inProgressEnrollments[0]?.course_id ?? null;
+  const selectedCourseDetail = resolvedSelectedCourseId ? getFixtureCourseDetail(resolvedSelectedCourseId) : null;
+
+  return {
+    stats: { ...state.stats },
+    in_progress_enrollments: inProgressEnrollments,
+    resolved_selected_course_id: resolvedSelectedCourseId,
+    selected_course_detail: selectedCourseDetail,
   };
 }
 

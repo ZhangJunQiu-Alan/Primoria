@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Bell,
   BookAudio,
+  Bot,
   BrushCleaning,
   CircleUserRound,
   ExternalLink,
@@ -19,6 +20,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { clearSession, setSession } from '@/features/auth/authSlice';
 import { getSettingsCopy, settingsSectionOrder, type SettingsSectionId } from '@/features/profile/settingsCopy';
+import { getAiTutorPersonaDefinition, getAiTutorPersonaOptions } from '@/shared/ai-tutor/persona';
 import { generateChildBindingCode } from '@/shared/api/viewer/parentApi';
 import { fetchViewerSettings, saveAccountSystemSettings, saveProfileSettings } from '@/shared/api/viewer/settingsApi';
 import { supabase } from '@/shared/api/supabase';
@@ -46,6 +48,7 @@ const sectionIcons: Record<SettingsSectionId, ReactNode> = {
   account: <CircleUserRound size={18} />,
   appearance: <LayoutTemplate size={18} />,
   learning: <GraduationCap size={18} />,
+  aiTutor: <Bot size={18} />,
   notifications: <Bell size={18} />,
   privacy: <Shield size={18} />,
   parent: <UserRoundCog size={18} />,
@@ -202,6 +205,56 @@ function ChoicePill({
   );
 }
 
+function PersonaChoiceCard({
+  active,
+  label,
+  badge,
+  description,
+  exampleLabel,
+  examplePrompt,
+  onClick,
+}: {
+  active: boolean;
+  label: string;
+  badge: string;
+  description: string;
+  exampleLabel: string;
+  examplePrompt: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'rounded-[24px] border p-5 text-left transition',
+        active
+          ? 'border-[#b9d1bc] bg-[linear-gradient(160deg,rgba(237,245,236,0.98)_0%,rgba(223,240,224,0.9)_100%)] shadow-[0_18px_34px_rgba(122,158,126,0.16)]'
+          : 'border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] hover:border-[#d1c4b5] hover:bg-[var(--viewer-surface-muted)]',
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div className="text-lg font-black text-[var(--viewer-text)]">{label}</div>
+        <span
+          className={cn(
+            'rounded-full border px-3 py-1 text-[0.72rem] font-black tracking-[0.12em]',
+            active
+              ? 'border-[#b8d0bb] bg-white/80 text-[#5c7d60]'
+              : 'border-[var(--viewer-border)] bg-white/70 text-[var(--viewer-text-muted)]',
+          )}
+        >
+          {badge}
+        </span>
+      </div>
+      <p className="mt-3 text-sm font-medium leading-7 text-[var(--viewer-text-muted)]">{description}</p>
+      <div className="mt-4 rounded-[18px] border border-[var(--viewer-border)] bg-white/65 px-4 py-3">
+        <div className="viewer-botanical-eyebrow text-[0.64rem]">{exampleLabel}</div>
+        <p className="mt-2 text-sm font-semibold leading-6 text-[var(--viewer-text)]">{examplePrompt}</p>
+      </div>
+    </button>
+  );
+}
+
 export function SettingsPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -226,6 +279,8 @@ export function SettingsPage() {
     notification_reminder_time: '20:00',
     marketing_emails: false,
     accessibility_mode: false,
+    ai_tutor_persona: preferences.aiTutorPersona,
+    home_companion_enabled: preferences.homeCompanionEnabled,
   });
   const [bindingCode, setBindingCode] = useState<string | null>(null);
   const [bindingCodeExpiresAt, setBindingCodeExpiresAt] = useState<string | null>(null);
@@ -253,6 +308,8 @@ export function SettingsPage() {
       patchPreferences({
         themeMode: payload.userSettings.theme_mode,
         language: payload.userSettings.language,
+        aiTutorPersona: payload.userSettings.ai_tutor_persona,
+        homeCompanionEnabled: payload.userSettings.home_companion_enabled,
         dailyReminderEnabled: payload.userSettings.notification_daily_reminder,
         dailyReminderTime: payload.userSettings.notification_reminder_time,
       }),
@@ -312,8 +369,16 @@ export function SettingsPage() {
     },
     onSuccess: async (_result, patch) => {
       await queryClient.invalidateQueries({ queryKey: ['viewer', 'settings', auth.user?.id] });
+      const savedAiTutorSettings = Boolean(
+        patch && ('ai_tutor_persona' in patch || 'home_companion_enabled' in patch),
+      );
+      const savedAppearanceSettings = Boolean(
+        patch && ('language' in patch || 'theme_mode' in patch),
+      );
       showNotice(
-        patch && ('language' in patch || 'theme_mode' in patch)
+        savedAiTutorSettings
+          ? copy.aiTutor.saveSuccess
+          : savedAppearanceSettings
           ? copy.appearance.saveSuccess
           : activeSection === 'notifications'
             ? copy.notifications.saveSuccess
@@ -459,6 +524,7 @@ export function SettingsPage() {
     ],
     [copy.appearance.chinese, copy.appearance.english],
   );
+  const aiTutorPersonaOptions = useMemo(() => getAiTutorPersonaOptions(language), [language]);
 
   if (settingsQuery.isLoading) {
     return (
@@ -482,6 +548,7 @@ export function SettingsPage() {
   const profile = settingsQuery.data.profile;
   const displayName = profileForm.username.trim() || auth.user?.displayName || profile.username || 'Learner';
   const joinedAt = formatJoinedAt(profile.created_at, language);
+  const activeTutorPersona = getAiTutorPersonaDefinition(systemDraft.ai_tutor_persona, language);
 
   return (
     <PageContainer title={copy.title} subtitle={copy.subtitle} className="max-w-[1280px] pb-10">
@@ -757,6 +824,68 @@ export function SettingsPage() {
                   <div className="min-w-[92px] rounded-full bg-white px-4 py-2 text-center text-sm font-black text-[var(--viewer-text)]">
                     {preferences.dailyGoalMinutes} {copy.learning.minutesPerDay}
                   </div>
+                </div>
+              </div>
+            </SectionCard>
+          ) : null}
+
+          {activeSection === 'aiTutor' ? (
+            <SectionCard eyebrow="AI Tutor" title={copy.aiTutor.title} description={copy.aiTutor.description}>
+              <div className="rounded-[24px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2 text-sm font-black text-[var(--viewer-text)]">
+                      <Bot size={16} />
+                      <span>{copy.aiTutor.personalityTitle}</span>
+                    </div>
+                    <p className="mt-2 text-sm font-medium leading-6 text-[var(--viewer-text-muted)]">
+                      {copy.aiTutor.personalityHint}
+                    </p>
+                  </div>
+                  <div className="rounded-full border border-[var(--viewer-border)] bg-white/70 px-4 py-2 text-sm font-black text-[var(--viewer-text)]">
+                    {copy.aiTutor.currentMode}: {activeTutorPersona.label}
+                  </div>
+                </div>
+
+                <div className="mt-5 grid gap-4 xl:grid-cols-3">
+                  {aiTutorPersonaOptions.map((option) => (
+                    <PersonaChoiceCard
+                      key={option.key}
+                      active={systemDraft.ai_tutor_persona === option.key}
+                      label={option.label}
+                      badge={option.badge}
+                      description={option.description}
+                      exampleLabel={copy.aiTutor.examplePrompt}
+                      examplePrompt={option.examplePrompt}
+                      onClick={() => {
+                        setSystemDraft((current) => ({ ...current, ai_tutor_persona: option.key }));
+                        patchPreference({ aiTutorPersona: option.key });
+                        saveSystemMutation.mutate({ ai_tutor_persona: option.key });
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-4 lg:grid-cols-2">
+                <ToggleTile
+                  label={copy.aiTutor.homeCompanion.label}
+                  hint={copy.aiTutor.homeCompanion.hint}
+                  checked={preferences.homeCompanionEnabled}
+                  onChange={(checked) => {
+                    setSystemDraft((current) => ({ ...current, home_companion_enabled: checked }));
+                    patchPreference({ homeCompanionEnabled: checked });
+                    saveSystemMutation.mutate({ home_companion_enabled: checked });
+                  }}
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
+                  {saveSystemMutation.isPending ? copy.common.saving : copy.aiTutor.saveSuccess}
+                </div>
+                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
+                  {'user_settings'}
                 </div>
               </div>
             </SectionCard>

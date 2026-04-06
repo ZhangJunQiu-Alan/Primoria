@@ -16,6 +16,8 @@ import { PageContainer } from '@/shared/layout/PageContainer';
 import { RouteErrorBoundary } from '@/shared/layout/RouteErrorBoundary';
 import { AuthenticatedRouteShell } from '@/shared/layout/AuthenticatedRouteShell';
 import { BuilderWorkspaceShell } from '@/shared/layout/BuilderWorkspaceShell';
+import { trackBootSplashRoute } from '@/shared/boot/bootSplash';
+import { FullScreenLoadingScreen } from '@/shared/layout/FullScreenLoadingScreen';
 import { ViewerShell } from '@/shared/layout/ViewerShell';
 import { trackViewerRoute } from '@/shared/platform/observability';
 import { useFeatureFlag } from '@/shared/platform/FeatureFlagsProvider';
@@ -79,13 +81,7 @@ const BuilderEditorPage = lazy(async () => ({
 }));
 
 function RouteLoadingScreen() {
-  const copy = useViewerCopy();
-
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--viewer-page)] text-sm font-semibold text-[var(--viewer-text-muted)]">
-      {copy.common.loading}
-    </div>
-  );
+  return <FullScreenLoadingScreen />;
 }
 
 function WithSuspense({ children }: { children: ReactNode }) {
@@ -97,6 +93,7 @@ function TelemetryRouteShell() {
 
   useEffect(() => {
     trackViewerRoute(location.pathname);
+    trackBootSplashRoute(location.pathname);
   }, [location.pathname]);
 
   return <Outlet />;
@@ -128,10 +125,9 @@ function FlaggedRoute({
 }
 
 function RootLanding() {
-  const copy = useViewerCopy();
   const { loading, user, role } = useAppSelector((state) => state.auth);
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center">{copy.common.loading}</div>;
+    return <FullScreenLoadingScreen />;
   }
   if (user) {
     return <Navigate to={learnerHomeForRole(role)} replace />;

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { type AuthChangeEvent, type Session } from '@supabase/supabase-js';
+import { markBootSplashAuthSettled } from '@/shared/boot/bootSplash';
 import { supabase } from '@/shared/api/supabase';
 import { captureViewerError, clearViewerUserContext, setViewerUserContext } from '@/shared/platform/observability';
 import { getDemoRole } from '@/shared/utils/demoMode';
@@ -44,11 +45,13 @@ async function syncSupabaseSession(dispatch: ReturnType<typeof useAppDispatch>, 
           source: 'demo',
         }),
       );
+      markBootSplashAuthSettled();
       return;
     }
 
     clearViewerUserContext();
     dispatch(clearSession());
+    markBootSplashAuthSettled();
     return;
   }
 
@@ -71,13 +74,14 @@ async function syncSupabaseSession(dispatch: ReturnType<typeof useAppDispatch>, 
       source: 'supabase',
     }),
   );
+  markBootSplashAuthSettled();
 }
 
 async function confirmCurrentSession() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
     captureViewerError(error, { area: 'auth_confirm_session' });
-    return undefined;
+    return null;
   }
   return data.session ?? null;
 }
@@ -91,7 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     dispatch(setLoading(true));
 
     void confirmCurrentSession().then((session) => {
-      if (!active || typeof session === 'undefined') {
+      if (!active) {
         return;
       }
       void syncSupabaseSession(dispatch, session);
@@ -102,9 +106,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (!nextSession && event !== 'SIGNED_OUT') {
         const confirmedSession = await confirmCurrentSession();
-        if (typeof confirmedSession === 'undefined') {
-          return;
-        }
         nextSession = confirmedSession;
       }
 

@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { renderRoute } from './renderApp';
 
 vi.mock('@/shared/api/geminiClient', () => ({
@@ -39,7 +40,7 @@ describe('AiTutorPage', () => {
     const user = userEvent.setup();
     renderRoute('/ai-tutor', 'user');
 
-    expect(await screen.findByRole('heading', { name: /你好，欢迎来到你的 AI 导师/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /你好，我们慢慢把这件事理顺/i }, { timeout: 3000 })).toBeInTheDocument();
 
     await user.type(await screen.findByPlaceholderText(/开始输入/i), '/apikey demo-key');
     await user.click(await screen.findByRole('button', { name: /^发送$/i }));
@@ -60,5 +61,31 @@ describe('AiTutorPage', () => {
     await user.click(await screen.findByRole('button', { name: /^发送$/i }));
 
     expect(await screen.findByText(/mock tutor reply/i)).toBeInTheDocument();
+  });
+
+  it('switches visible tutor persona copy from preferences', async () => {
+    window.localStorage.setItem(
+      VIEWER_PREFERENCES_STORAGE_KEY,
+      JSON.stringify({
+        language: 'zh-CN',
+        aiTutorPersona: 'coach',
+      }),
+    );
+
+    renderRoute('/ai-tutor', 'user');
+
+    expect(await screen.findByRole('heading', { name: /你好，今天我们直接推进主线/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByText(/推进模式/i)).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /按 20 分钟给我一个可以执行的学习冲刺计划/i })).toBeInTheDocument();
+  });
+
+  it('auto-opens a companion-triggered quiz intent once on arrival', async () => {
+    renderRoute(
+      '/ai-tutor?source=home-companion&intent=quiz&courseId=course-physics&courseTitle=%E8%BF%90%E5%8A%A8%E4%B8%8E%E5%8A%9B%E5%AD%A6%E8%A7%82%E5%AF%9F',
+      'user',
+    );
+
+    expect(await screen.findByRole('heading', { name: /quiz/i }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByText(/what powers the viewer/i)).toBeInTheDocument();
   });
 });

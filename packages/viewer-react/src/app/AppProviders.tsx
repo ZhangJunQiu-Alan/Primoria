@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider, useQueryClient } from '@tanstack/react-query';
+import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { createViewerQueryClient } from '@/shared/api/queryClient';
+import { prefetchHomePayload, prefetchLibraryCatalog } from '@/shared/api/viewer/prefetch';
 import { registerViewerPushWorker } from '@/shared/api/viewer/pushApi';
 import { saveAccountSystemSettings } from '@/shared/api/viewer/settingsApi';
 import { FeatureFlagsProvider } from '@/shared/platform/FeatureFlagsProvider';
@@ -13,6 +15,10 @@ import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import { supabase } from '@/shared/api/supabase';
 
 const queryClient = createViewerQueryClient();
+
+function normalizeThemePreference(value: unknown) {
+  return value === 'light' || value === 'dark' || value === 'system' ? value : 'system';
+}
 
 function ThemeSynchronizer() {
   const themeMode = useAppSelector((state) => state.viewerPreferences.themeMode);
@@ -41,7 +47,10 @@ function ThemeSynchronizer() {
 function LanguagePreferenceSynchronizer() {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
+  const themeMode = useAppSelector((state) => state.viewerPreferences.themeMode);
   const language = useAppSelector((state) => state.viewerPreferences.language);
+  const aiTutorPersona = useAppSelector((state) => state.viewerPreferences.aiTutorPersona);
+  const homeCompanionEnabled = useAppSelector((state) => state.viewerPreferences.homeCompanionEnabled);
   const syncStateRef = useRef<{
     ready: boolean;
     userId: string | null;
@@ -74,7 +83,7 @@ function LanguagePreferenceSynchronizer() {
       try {
         const { data, error } = await supabase
           .from('user_settings')
-          .select('language')
+          .select('language, theme_mode, ai_tutor_persona, home_companion_enabled')
           .eq('user_id', auth.user?.id ?? '')
           .maybeSingle();
 
@@ -88,13 +97,28 @@ function LanguagePreferenceSynchronizer() {
         const hasExplicitLanguage = typeof data?.language === 'string' && data.language.trim().length > 0;
         if (hasExplicitLanguage) {
           const accountLanguage = normalizeViewerLanguage(data?.language);
+          const accountThemeMode = normalizeThemePreference(data?.theme_mode);
+          const accountAiTutorPersona = normalizeAiTutorPersona(data?.ai_tutor_persona);
+          const accountHomeCompanionEnabled = data?.home_companion_enabled !== false;
           syncStateRef.current = {
             ready: true,
             userId: auth.user?.id ?? null,
             persistedLanguage: accountLanguage,
           };
-          if (accountLanguage !== language) {
-            dispatch(patchPreferences({ language: accountLanguage }));
+          if (
+            accountLanguage !== language ||
+            accountThemeMode !== themeMode ||
+            accountAiTutorPersona !== aiTutorPersona ||
+            accountHomeCompanionEnabled !== homeCompanionEnabled
+          ) {
+            dispatch(
+              patchPreferences({
+                language: accountLanguage,
+                themeMode: accountThemeMode,
+                aiTutorPersona: accountAiTutorPersona,
+                homeCompanionEnabled: accountHomeCompanionEnabled,
+              }),
+            );
           }
           return;
         }
@@ -119,7 +143,7 @@ function LanguagePreferenceSynchronizer() {
     return () => {
       active = false;
     };
-  }, [auth.source, auth.user?.id, dispatch]);
+  }, [aiTutorPersona, auth.source, auth.user?.id, dispatch, homeCompanionEnabled, language, themeMode]);
 
   useEffect(() => {
     if (
@@ -153,6 +177,33 @@ function LanguagePreferenceSynchronizer() {
   return null;
 }
 
+function ViewerWarmup() {
+  const queryClient = useQueryClient();
+  const auth = useAppSelector((state) => state.auth);
+  const warmedUserRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (import.meta.env.MODE === 'test') {
+      return;
+    }
+
+    if (auth.loading || !auth.user?.id) {
+      warmedUserRef.current = null;
+      return;
+    }
+
+    if (warmedUserRef.current === auth.user.id) {
+      return;
+    }
+
+    warmedUserRef.current = auth.user.id;
+    prefetchHomePayload(queryClient, auth.user.id, null, { idle: true });
+    prefetchLibraryCatalog(queryClient, { searchQuery: '', subjectId: null }, { idle: true });
+  }, [auth.loading, auth.user?.id, queryClient]);
+
+  return null;
+}
+
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ReduxProvider store={store}>
@@ -161,6 +212,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           <AuthProvider>
             <ThemeSynchronizer />
             <LanguagePreferenceSynchronizer />
+            <ViewerWarmup />
             {children}
           </AuthProvider>
         </FeatureFlagsProvider>

@@ -1,0 +1,66 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" rx="48" fill="#F8F4EC"/>
+  <rect x="54" y="54" width="1492" height="792" rx="42" fill="url(#bg)"/>
+  <circle cx="1276" cy="218" r="192" fill="url(#purpleGlow)"/>
+  <circle cx="430" cy="712" r="208" fill="url(#mintGlow)"/>
+  <rect x="166" y="138" width="504" height="614" rx="42" fill="#FFFDF8" stroke="#D8CCBB" stroke-width="4"/>
+  <rect x="214" y="192" width="408" height="86" rx="26" fill="url(#promptCard)" stroke="#DCCFE3" stroke-width="3"/>
+  <rect x="250" y="222" width="134" height="18" rx="9" fill="#DCCDE6"/>
+  <rect x="250" y="254" width="258" height="14" rx="7" fill="#ECE2F2"/>
+  <rect x="214" y="322" width="408" height="184" rx="30" fill="url(#chartCard)"/>
+  <path d="M268 460V376" stroke="#9280A6" stroke-width="20" stroke-linecap="round"/>
+  <path d="M344 460V404" stroke="#9280A6" stroke-width="20" stroke-linecap="round"/>
+  <path d="M420 460V346" stroke="#9280A6" stroke-width="20" stroke-linecap="round"/>
+  <path d="M496 460V392" stroke="#9280A6" stroke-width="20" stroke-linecap="round"/>
+  <path d="M260 558H580" stroke="#E6DBD0" stroke-width="10" stroke-linecap="round"/>
+  <path d="M260 610H522" stroke="#EEE4DA" stroke-width="10" stroke-linecap="round"/>
+  <path d="M260 662H470" stroke="#EEE4DA" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="1008" cy="438" r="212" fill="url(#networkBg)"/>
+  <path d="M886 352L978 308L1082 344L1140 436L1094 550L982 592L870 544L826 430L886 352Z" stroke="#9A89AC" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="886" cy="352" r="26" fill="#F9F4FB" stroke="#9A89AC" stroke-width="8"/>
+  <circle cx="978" cy="308" r="26" fill="#F9F4FB" stroke="#9A89AC" stroke-width="8"/>
+  <circle cx="1082" cy="344" r="26" fill="#F9F4FB" stroke="#9A89AC" stroke-width="8"/>
+  <circle cx="1140" cy="436" r="26" fill="#F9F4FB" stroke="#9A89AC" stroke-width="8"/>
+  <circle cx="1094" cy="550" r="26" fill="#EEF6F0" stroke="#7A9E7E" stroke-width="8"/>
+  <circle cx="982" cy="592" r="26" fill="#FBF3E6" stroke="#C4956A" stroke-width="8"/>
+  <circle cx="870" cy="544" r="26" fill="#F9F4FB" stroke="#9A89AC" stroke-width="8"/>
+  <circle cx="826" cy="430" r="26" fill="#EEF6F0" stroke="#7A9E7E" stroke-width="8"/>
+  <rect x="1160" y="216" width="264" height="136" rx="30" fill="#FFFDF9" stroke="#D9CCBC" stroke-width="4"/>
+  <rect x="1200" y="260" width="82" height="18" rx="9" fill="#DCCDE6"/>
+  <rect x="1200" y="294" width="168" height="14" rx="7" fill="#ECE4DA"/>
+  <rect x="1200" y="600" width="214" height="96" rx="30" fill="url(#chip)"/>
+  <circle cx="1242" cy="648" r="18" fill="#7A9E7E"/>
+  <circle cx="1290" cy="648" r="18" fill="#C4956A"/>
+  <circle cx="1338" cy="648" r="18" fill="#9481A8"/>
+  <defs>
+    <linearGradient id="bg" x1="120" y1="102" x2="1456" y2="840" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF8F2"/>
+      <stop offset="0.45" stop-color="#F7F0E6"/>
+      <stop offset="1" stop-color="#F1EAE0"/>
+    </linearGradient>
+    <radialGradient id="purpleGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1276 218) rotate(90) scale(192)">
+      <stop stop-color="#E8E0F0"/>
+      <stop offset="1" stop-color="#E8E0F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mintGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(430 712) rotate(90) scale(208)">
+      <stop stop-color="#E2EFE3"/>
+      <stop offset="1" stop-color="#E2EFE3" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="promptCard" x1="214" y1="192" x2="622" y2="278" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7F1FA"/>
+      <stop offset="1" stop-color="#EEE7F4"/>
+    </linearGradient>
+    <linearGradient id="chartCard" x1="214" y1="322" x2="622" y2="506" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF4E8"/>
+      <stop offset="1" stop-color="#F1E8DC"/>
+    </linearGradient>
+    <radialGradient id="networkBg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1008 438) rotate(90) scale(212)">
+      <stop stop-color="#F5EEF9"/>
+      <stop offset="1" stop-color="#F5EEF9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="chip" x1="1160" y1="600" x2="1414" y2="696" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F1FA"/>
+      <stop offset="1" stop-color="#F0E7DD"/>
+    </linearGradient>
+  </defs>
+</svg>

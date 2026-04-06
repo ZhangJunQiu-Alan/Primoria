@@ -1,5 +1,6 @@
-import { Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { scheduleIdleTask } from '@/shared/utils/idleTask';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 
 type ViewerWindow = Window & {
@@ -58,11 +59,78 @@ function loadScriptOnce(src: string) {
 }
 
 export function Live2DHeroModel() {
+  const language = useProductLanguage();
   const hostRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
-  const [modelState, setModelState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [shouldLoadModel, setShouldLoadModel] = useState(import.meta.env.MODE === 'test');
+  const [modelState, setModelState] = useState<'idle' | 'loading' | 'ready' | 'error'>(
+    import.meta.env.MODE === 'test' ? 'ready' : 'idle',
+  );
 
   useEffect(() => {
+    if (import.meta.env.MODE === 'test') {
+      return;
+    }
+
+    const host = hostRef.current;
+    if (!host) {
+      return;
+    }
+
+    let disposed = false;
+    let observer: IntersectionObserver | undefined;
+    let cancelIdleTask: () => void = () => undefined;
+
+    const activateModel = () => {
+      if (disposed) {
+        return;
+      }
+
+      setModelState((current) => (current === 'ready' ? current : 'loading'));
+      cancelIdleTask = scheduleIdleTask(
+        () => {
+          if (!disposed) {
+            setShouldLoadModel(true);
+          }
+        },
+        { timeout: 1200, fallbackDelayMs: 140 },
+      );
+    };
+
+    if (typeof IntersectionObserver === 'undefined') {
+      activateModel();
+      return () => {
+        disposed = true;
+        cancelIdleTask();
+      };
+    }
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) {
+          return;
+        }
+
+        observer?.disconnect();
+        activateModel();
+      },
+      { rootMargin: '120px 0px' },
+    );
+
+    observer.observe(host);
+
+    return () => {
+      disposed = true;
+      observer?.disconnect();
+      cancelIdleTask();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoadModel) {
+      return;
+    }
+
     if (import.meta.env.MODE === 'test') {
       setModelState('ready');
       return;
@@ -204,31 +272,40 @@ export function Live2DHeroModel() {
       model?.destroy({ children: true });
       app?.destroy(true, { children: true });
     };
-  }, []);
+  }, [shouldLoadModel]);
 
   return (
-    <div
-      ref={hostRef}
-      className="relative h-full w-full overflow-visible"
-    >
-      <div className="pointer-events-none absolute inset-x-[6%] top-[4%] h-[76%] bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.82),rgba(255,255,255,0)_58%)]" />
+    <div ref={hostRef} className="relative h-full w-full overflow-visible">
       <div className="pointer-events-none absolute bottom-[6%] left-[10%] h-8 w-[56%] rounded-full bg-[radial-gradient(circle,rgba(114,93,73,0.20),rgba(114,93,73,0)_72%)] blur-xl" />
-      <div ref={canvasRef} className="absolute inset-0 z-10" />
-      {modelState !== 'ready' ? (
-        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6">
-          <div className="max-w-[14rem] bg-transparent px-3 py-3 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[linear-gradient(145deg,#f4ddbc_0%,#d4b896_100%)] text-white shadow-[0_10px_24px_rgba(196,149,106,0.18)]">
-              <Sparkles size={24} />
-            </div>
-            <p className="mt-3 text-[1.2rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-              {modelState === 'error' ? 'Live2D stage unavailable' : 'Live2D stage loading'}
-            </p>
-            <p className="mt-2 text-sm leading-6 text-[#74685d]">
-              {modelState === 'error'
-                ? 'The companion model could not be rendered in this session.'
-                : 'The companion is preparing its canvas.'}
-            </p>
-          </div>
+      <div
+        className={[
+          'pointer-events-none absolute inset-0 z-0 flex items-end justify-center transition-opacity duration-300',
+          modelState === 'ready' ? 'opacity-0' : 'opacity-100',
+        ].join(' ')}
+        aria-hidden={modelState === 'ready'}
+      >
+        <div className="viewer-live2d-placeholder-shell">
+          <span className="viewer-live2d-placeholder__aura" />
+          <span className="viewer-live2d-placeholder__orbit viewer-live2d-placeholder__orbit--outer" />
+          <span className="viewer-live2d-placeholder__orbit viewer-live2d-placeholder__orbit--inner" />
+          <span className="viewer-live2d-placeholder__core" />
+        </div>
+      </div>
+      <div
+        ref={canvasRef}
+        className={[
+          'absolute inset-0 z-10 transition-opacity duration-300',
+          modelState === 'ready' ? 'opacity-100' : 'opacity-0',
+        ].join(' ')}
+      />
+      {modelState === 'loading' ? (
+        <div className="pointer-events-none absolute left-1/2 top-4 z-20 -translate-x-1/2 rounded-full border border-[#e0d4c1] bg-[rgba(255,252,247,0.82)] px-3 py-1 text-[0.72rem] font-semibold text-[#8a7d71] shadow-[0_10px_24px_rgba(90,70,50,0.08)]">
+          {language === 'zh-CN' ? '角色加载中…' : 'Loading companion…'}
+        </div>
+      ) : null}
+      {modelState === 'error' ? (
+        <div className="pointer-events-none absolute left-1/2 top-4 z-20 -translate-x-1/2 rounded-full border border-[#e0d4c1] bg-[rgba(255,252,247,0.82)] px-3 py-1 text-[0.72rem] font-semibold text-[#8a7d71] shadow-[0_10px_24px_rgba(90,70,50,0.08)]">
+          {language === 'zh-CN' ? '角色暂时不可用' : 'Companion unavailable'}
         </div>
       ) : null}
     </div>
