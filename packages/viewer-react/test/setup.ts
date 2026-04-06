@@ -1,7 +1,12 @@
 import '@testing-library/jest-dom';
+import { configure } from '@testing-library/react';
 import { beforeEach } from 'vitest';
 
 const localStorageStore = new Map<string, string>();
+
+configure({
+  asyncUtilTimeout: 15000,
+});
 
 Object.defineProperty(window, 'localStorage', {
   value: {

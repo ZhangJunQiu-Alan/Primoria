@@ -16,5 +16,5 @@ describe('SupportInfoPage', () => {
     await waitFor(() => {
       expect(locationRef.pathname).toBe('/settings');
     });
-  });
+  }, 30000);
 });

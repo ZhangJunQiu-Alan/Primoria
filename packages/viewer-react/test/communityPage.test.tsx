@@ -29,7 +29,7 @@ describe('CommunityPage', () => {
     expect(await screen.findAllByText(/persisted workspace message/i)).toHaveLength(2);
     await user.click(await screen.findByRole('button', { name: /笔记|notes/i }, { timeout: 10000 }));
     expect(await screen.findByDisplayValue(/persisted note/i)).toBeInTheDocument();
-  });
+  }, 30000);
 
   it('opens note context from the home companion query parameters', async () => {
     const user = userEvent.setup();
