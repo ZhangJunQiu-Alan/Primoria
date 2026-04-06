@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { completeLesson, fetchLessonRuntime } from '@/shared/api/viewer/lessonApi';
 import { trackViewerAnalyticsEventOnce } from '@/shared/api/viewer/analyticsEvents';
@@ -15,6 +15,7 @@ export function LessonPage() {
   const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.auth.user);
   const copy = useViewerCopy();
   const lessonId = params.lessonId ?? '';
@@ -40,6 +41,17 @@ export function LessonPage() {
         totalCount: summary.totalCount,
         xpAwarded: Number(payload?.xp_earned ?? 0),
       });
+      const courseId = runtimeQuery.data?.courseId ?? null;
+      void Promise.all([
+        courseId
+          ? queryClient.invalidateQueries({ queryKey: ['viewer', 'course', courseId, user?.id] })
+          : Promise.resolve(),
+        queryClient.invalidateQueries({ queryKey: ['viewer', 'enrollments', user?.id] }),
+        queryClient.invalidateQueries({ queryKey: ['viewer', 'home', user?.id] }),
+        queryClient.invalidateQueries({ queryKey: ['viewer', 'stats', user?.id] }),
+        queryClient.invalidateQueries({ queryKey: ['viewer', 'xp-history', user?.id] }),
+        queryClient.invalidateQueries({ queryKey: ['viewer', 'achievements', user?.id] }),
+      ]);
       const xpAwarded = Number(payload?.xp_earned ?? 0);
       navigate(`/lesson/${lessonId}/result`, {
         state: {

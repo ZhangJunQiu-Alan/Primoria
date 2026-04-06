@@ -3,6 +3,7 @@ import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import { supabase } from '@/shared/api/supabase';
+import { resolveLocalCourseThumbnailUrl } from '@/shared/utils/localCourseCovers';
 
 function normalizeSubject(row: Record<string, unknown>): ViewerSubject {
   return {
@@ -20,7 +21,11 @@ function normalizeCourse(row: Record<string, unknown>): ViewerCourse {
     title: String(row.title ?? ''),
     slug: String(row.slug ?? ''),
     description: String(row.description ?? ''),
-    thumbnail_url: typeof row.thumbnail_url === 'string' ? row.thumbnail_url : null,
+    thumbnail_url: resolveLocalCourseThumbnailUrl({
+      slug: String(row.slug ?? ''),
+      title: String(row.title ?? ''),
+      thumbnailUrl: typeof row.thumbnail_url === 'string' ? row.thumbnail_url : null,
+    }),
     content_language: row.content_language == null ? null : normalizeViewerLanguage(row.content_language),
     difficulty_level: String(row.difficulty_level ?? 'beginner'),
     estimated_minutes: Number(row.estimated_minutes ?? 0),

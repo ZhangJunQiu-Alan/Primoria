@@ -136,6 +136,7 @@ const viewerCatalog = {
       searchPlaceholder: '搜索课程...',
       noResults: '没有匹配的课程。',
       openDifficulty: '开放',
+      updatingResults: '正在更新结果…',
     },
     course: {
       pageTitle: '课程',
@@ -401,6 +402,7 @@ const viewerCatalog = {
       searchPlaceholder: 'Search courses...',
       noResults: 'No matching courses found.',
       openDifficulty: 'Open',
+      updatingResults: 'Updating results…',
     },
     course: {
       pageTitle: 'Course',

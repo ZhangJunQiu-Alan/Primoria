@@ -3,6 +3,7 @@ import type { Course } from '@primoria/schema';
 import type { Database, Json } from '../../../db/src';
 import { parseCourse, migrateCourseJson } from '@primoria/schema';
 import { supabase } from '@/lib/supabase';
+import { resolveLocalCourseThumbnailUrl } from '@/shared/utils/localCourseCovers';
 
 type CourseWithLessons = Pick<
   Database['public']['Tables']['courses']['Row'],
@@ -39,7 +40,10 @@ function assembleCourseDraft(row: CourseWithLessons): Course {
       difficulty_level: row.difficulty_level,
       estimated_minutes: row.estimated_minutes,
       tags: row.tags,
-      thumbnail: row.thumbnail_url ?? undefined,
+      thumbnail: resolveLocalCourseThumbnailUrl({
+        title: row.title,
+        thumbnailUrl: row.thumbnail_url,
+      }) ?? undefined,
     },
     lessons: row.lessons
       .sort((a, b) => a.sort_key - b.sort_key)

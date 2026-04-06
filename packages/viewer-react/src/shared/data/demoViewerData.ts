@@ -1,5 +1,6 @@
 import { SCHEMA_VERSION, type Course } from '@primoria/schema';
 import type { LessonBlock, LessonRuntimeData } from '@/shared/lesson/types';
+import { resolveLocalCourseThumbnailUrl } from '@/shared/utils/localCourseCovers';
 
 export type DemoSubject = {
   id: string;
@@ -215,12 +216,18 @@ function buildCourseBundle(input: {
   publishedAt: string;
   lessons: DemoLessonDefinition[];
 }): DemoCourseBundle {
+  const thumbnailUrl = resolveLocalCourseThumbnailUrl({
+    slug: input.slug,
+    title: input.title,
+    thumbnailUrl: null,
+  });
+
   const course: DemoCourse = {
     id: input.courseId,
     title: input.title,
     slug: input.slug,
     description: input.description,
-    thumbnail_url: null,
+    thumbnail_url: thumbnailUrl,
     difficulty_level: input.difficulty,
     estimated_minutes: input.estimatedMinutes,
     tags: input.tags,
@@ -239,6 +246,7 @@ function buildCourseBundle(input: {
       difficulty_level: input.difficulty,
       estimated_minutes: input.estimatedMinutes,
       tags: input.tags,
+      thumbnail: thumbnailUrl ?? undefined,
     },
     lessons: input.lessons.map((lesson) => ({
       lesson_id: lesson.id,

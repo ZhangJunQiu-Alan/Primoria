@@ -14,7 +14,35 @@ type TutorHistoryMessage = {
   text: string;
 };
 
-function buildPrompt(mode: string, history: TutorHistoryMessage[]) {
+type TutorPersona = 'gentle' | 'socratic' | 'coach';
+
+function normalizePersona(value: unknown): TutorPersona {
+  return value === 'socratic' || value === 'coach' || value === 'gentle' ? value : 'gentle';
+}
+
+function personaDirective(persona: TutorPersona) {
+  switch (persona) {
+    case 'socratic':
+      return [
+        'Adopt a Socratic tutoring style.',
+        'When helpful, begin with one concise question that helps the learner think.',
+        'Then provide a short explanation and a clear next step.',
+      ].join(' ');
+    case 'coach':
+      return [
+        'Adopt a direct coaching style.',
+        'Be concise, outcome-oriented, and explicit about the next action.',
+        'Prefer momentum and clarity over long exposition.',
+      ].join(' ');
+    default:
+      return [
+        'Adopt a gentle tutoring style.',
+        'Lower pressure, break the problem into smaller steps, and keep the tone calm and supportive.',
+      ].join(' ');
+  }
+}
+
+function buildPrompt(mode: string, history: TutorHistoryMessage[], persona: TutorPersona) {
   const transcript = history
     .map((message) => `${message.role === 'user' ? 'User' : 'Tutor'}: ${message.text}`)
     .join('\n');
@@ -41,6 +69,7 @@ function buildPrompt(mode: string, history: TutorHistoryMessage[]) {
     default:
       return [
         'Respond as Primoria AI Tutor.',
+        personaDirective(persona),
         'Keep the answer concise and actionable.',
         'Return JSON only with the shape {"reply":"..."}',
         transcript,
@@ -63,8 +92,9 @@ serve(async (req) => {
   }
 
   try {
-    const { mode, model, history, apiKeyOverride } = await req.json();
+    const { mode, model, history, apiKeyOverride, persona } = await req.json();
     const normalizedMode = typeof mode === 'string' ? mode.trim().toLowerCase() : 'reply';
+    const normalizedPersona = normalizePersona(persona);
     const normalizedHistory = Array.isArray(history)
       ? history
           .map((entry) => ({
@@ -113,7 +143,7 @@ serve(async (req) => {
                 },
               ],
             },
-            contents: [{ role: 'user', parts: [{ text: buildPrompt(normalizedMode, normalizedHistory) }] }],
+            contents: [{ role: 'user', parts: [{ text: buildPrompt(normalizedMode, normalizedHistory, normalizedPersona) }] }],
             generationConfig: {
               temperature: 0.6,
               maxOutputTokens: 1024,

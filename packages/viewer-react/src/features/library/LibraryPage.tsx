@@ -1,5 +1,5 @@
-import { useDeferredValue, useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useMemo, useState } from 'react';
+import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   BookOpenText,
   Code2,
@@ -9,12 +9,19 @@ import {
   LayoutGrid,
   Search,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useBootSplashGate } from '@/shared/boot/bootSplash';
 import { fetchCourses, fetchSubjects } from '@/shared/api/viewer/catalogApi';
+import { prefetchCourseDetail } from '@/shared/api/viewer/prefetch';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
+import {
+  normalizeHomeCompanionRecommendationPace,
+  rankHomeCompanionRecommendations,
+} from '@/features/home/homeCompanion';
 
 function subjectVisual(name: string, index: number) {
   const normalized = name.toLowerCase();
@@ -125,23 +132,62 @@ function formatDifficulty(level: string, language: 'zh-CN' | 'en') {
 }
 
 export function LibraryPage() {
+  const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const user = useAppSelector((state) => state.auth.user);
   const language = useProductLanguage();
   const copy = useViewerCopy();
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);
-  const deferredQuery = useDeferredValue(query);
+  const isCompanionRecommendation = searchParams.get('source') === 'home-companion';
+  const companionSubjectId = isCompanionRecommendation ? searchParams.get('subjectId') : null;
+  const companionRecommendFrom = isCompanionRecommendation ? searchParams.get('recommendFrom') : null;
+  const companionRecommendPace = normalizeHomeCompanionRecommendationPace(
+    isCompanionRecommendation ? searchParams.get('recommendPace') : null,
+  );
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setDebouncedQuery(query.trim());
+    }, 300);
+
+    return () => window.clearTimeout(timeout);
+  }, [query]);
+
+  useEffect(() => {
+    if (!companionSubjectId) {
+      return;
+    }
+    setSelectedSubjectId(companionSubjectId);
+  }, [companionSubjectId]);
 
   const subjectsQuery = useQuery({
     queryKey: ['viewer', 'subjects'],
     queryFn: fetchSubjects,
   });
   const coursesQuery = useQuery({
-    queryKey: ['viewer', 'courses', deferredQuery, selectedSubjectId],
-    queryFn: () => fetchCourses({ searchQuery: deferredQuery, subjectId: selectedSubjectId ?? undefined }),
+    queryKey: ['viewer', 'courses', debouncedQuery, selectedSubjectId],
+    queryFn: () => fetchCourses({ searchQuery: debouncedQuery, subjectId: selectedSubjectId ?? undefined }),
+    placeholderData: keepPreviousData,
   });
 
   const subjects = subjectsQuery.data ?? [];
   const courses = coursesQuery.data ?? [];
+  const recommendationSourceCourse = courses.find((course) => course.id === companionRecommendFrom) ?? null;
+  const displayCourses = useMemo(
+    () =>
+      rankHomeCompanionRecommendations(courses, {
+        subjectId: selectedSubjectId,
+        recommendFromId: companionRecommendFrom,
+        pace: companionRecommendPace,
+      }),
+    [companionRecommendFrom, companionRecommendPace, courses, selectedSubjectId],
+  );
+  const showInitialLoading =
+    (subjectsQuery.isLoading && subjects.length === 0) ||
+    (coursesQuery.isLoading && courses.length === 0);
+  const showUpdating = !showInitialLoading && (subjectsQuery.isFetching || coursesQuery.isFetching);
 
   const subjectButtons = useMemo(
     () => [{ id: null, name: copy.library.allSubjects }, ...subjects],
@@ -153,8 +199,35 @@ export function LibraryPage() {
     (coursesQuery.error instanceof Error && coursesQuery.error.message) ||
     '';
 
+  useBootSplashGate(Boolean((subjectsQuery.data && coursesQuery.data) || requestError));
+
+  useEffect(() => {
+    const cleanupTasks = displayCourses.slice(0, 4).map((course) =>
+      prefetchCourseDetail(queryClient, course.id, user?.id, { idle: true }),
+    );
+
+    return () => {
+      cleanupTasks.forEach((cleanup) => cleanup());
+    };
+  }, [displayCourses, queryClient, user?.id]);
+
+  const recommendationMessage =
+    companionRecommendPace === 'easier'
+      ? language === 'zh-CN'
+        ? `导师判断你现在更适合先从同主题里更轻一点的课继续。${recommendationSourceCourse ? `当前参照课程是《${recommendationSourceCourse.title}》。` : ''}`
+        : `The tutor suggests stepping into a lighter course in the same subject first.${recommendationSourceCourse ? ` Current reference: "${recommendationSourceCourse.title}".` : ''}`
+      : companionRecommendPace === 'harder'
+        ? language === 'zh-CN'
+          ? `导师判断你已经可以挑战同主题里更进阶的课程了。${recommendationSourceCourse ? `当前参照课程是《${recommendationSourceCourse.title}》。` : ''}`
+          : `The tutor suggests trying a more advanced course in the same subject now.${recommendationSourceCourse ? ` Current reference: "${recommendationSourceCourse.title}".` : ''}`
+        : companionRecommendPace === 'same'
+          ? language === 'zh-CN'
+            ? `导师为你保留了同主题、同节奏的推荐。${recommendationSourceCourse ? `当前参照课程是《${recommendationSourceCourse.title}》。` : ''}`
+            : `The tutor kept recommendations at the same subject and pacing level.${recommendationSourceCourse ? ` Current reference: "${recommendationSourceCourse.title}".` : ''}`
+          : null;
+
   return (
-    <div className="mx-auto w-full max-w-[1320px] px-5 py-6 md:px-8 md:py-8">
+    <div className="mx-auto w-full max-w-[1320px] px-5 pb-6 pt-0 md:px-8 md:pb-8 md:pt-0">
       <section className="viewer-panel overflow-hidden rounded-b-[30px] rounded-t-none px-0 pb-4 pt-0 md:pb-5">
         <label className="flex items-center gap-2.5 rounded-b-[22px] rounded-t-none border-b border-[#ddd3c3] bg-[rgba(255,252,247,0.92)] px-5 py-3.5 text-[#9b8e85] shadow-[inset_0_1px_3px_rgba(90,70,50,0.05)] md:px-6">
           <Search size={20} />
@@ -166,6 +239,15 @@ export function LibraryPage() {
             onChange={(event) => setQuery(event.target.value)}
           />
         </label>
+
+        {showUpdating ? (
+          <div className="px-4 pt-3 md:px-5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#d8cdbd] bg-[rgba(255,252,247,0.78)] px-3 py-1.5 text-[0.76rem] font-semibold text-[#8a7d71]">
+              <span className="h-2 w-2 rounded-full bg-[#7a9e7e]" />
+              <span>{copy.library.updatingResults}</span>
+            </div>
+          </div>
+        ) : null}
 
         <div className="px-4 pt-4 md:px-5 md:pt-5">
           <div className="overflow-x-auto pb-1">
@@ -207,6 +289,18 @@ export function LibraryPage() {
       </section>
 
       <div className="mt-8">
+        {recommendationMessage ? (
+          <div
+            data-testid="library-companion-banner"
+            className="mb-4 rounded-[24px] border border-[#d8cbb9] bg-[rgba(255,252,247,0.9)] px-4 py-3.5 text-[0.86rem] font-semibold leading-7 text-[#6f6359] shadow-[0_12px_26px_rgba(90,70,50,0.06)]"
+          >
+            <span className="viewer-botanical-eyebrow text-[0.64rem]">
+              {language === 'zh-CN' ? '导师推荐' : 'Tutor recommendation'}
+            </span>
+            <div className="mt-1.5">{recommendationMessage}</div>
+          </div>
+        ) : null}
+
         <h2
           className="text-[2.2rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
           style={{ fontFamily: '"Cormorant Garamond", serif' }}
@@ -215,7 +309,7 @@ export function LibraryPage() {
         </h2>
       </div>
 
-      {subjectsQuery.isLoading || coursesQuery.isLoading ? <LoadingStateCard /> : null}
+      {showInitialLoading ? <LoadingStateCard /> : null}
       {requestError ? (
         <ErrorStateCard
           message={requestError}
@@ -225,15 +319,15 @@ export function LibraryPage() {
           }}
         />
       ) : null}
-      {!subjectsQuery.isLoading && !coursesQuery.isLoading && !requestError && courses.length === 0 ? (
+      {!showInitialLoading && !requestError && displayCourses.length === 0 ? (
         <div className="mt-4 rounded-[26px] border border-[#ddd3c3] bg-[rgba(254,250,245,0.88)] p-6 shadow-[0_18px_44px_rgba(90,70,50,0.08)]">
           <p className="text-[0.92rem] font-medium text-[#7a6f66]">{copy.library.noResults}</p>
         </div>
       ) : null}
 
-      {!subjectsQuery.isLoading && !coursesQuery.isLoading && !requestError && courses.length > 0 ? (
+      {!showInitialLoading && !requestError && displayCourses.length > 0 ? (
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {courses.map((course, index) => {
+          {displayCourses.map((course, index) => {
             const subjectName = course.subjects?.name || (language === 'zh-CN' ? '综合' : 'General');
             const visual = subjectVisual(subjectName, index);
             return (
@@ -241,6 +335,12 @@ export function LibraryPage() {
                 key={course.id}
                 to={`/course/${course.id}`}
                 className="group viewer-panel flex h-full flex-col overflow-hidden rounded-[30px] p-0 transition hover:-translate-y-1 hover:shadow-[0_26px_54px_rgba(90,70,50,0.13)]"
+                onMouseEnter={() => {
+                  prefetchCourseDetail(queryClient, course.id, user?.id, { idle: true });
+                }}
+                onFocus={() => {
+                  prefetchCourseDetail(queryClient, course.id, user?.id, { idle: true });
+                }}
               >
                 <div
                   className={cn(
