@@ -18,3 +18,5 @@ if ((!rawSupabaseUrl || !rawSupabaseAnonKey) && !isFixtureModeEnabled()) {
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const viewerSupabaseUrl = supabaseUrl;
+export const viewerSupabaseAnonKey = supabaseAnonKey;
