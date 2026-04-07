@@ -69,6 +69,7 @@ const dashboardPositions = [
 
 export function CommunityPage() {
   const language = useProductLanguage();
+  const isChinese = language === 'zh-CN';
   const copy = useViewerCopy();
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
@@ -85,6 +86,115 @@ export function CommunityPage() {
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [notesDraft, setNotesDraft] = useState<Array<{ id?: string; title: string; body: string; room_id?: string | null }>>([]);
   const [status, setStatus] = useState<StatusState>(null);
+  const communityText = isChinese
+    ? {
+        mainMenu: '主导航',
+        tutorContext: '导师上下文',
+        tutorContextBody: (topic: string) =>
+          `正在围绕《${topic}》查看你的社区笔记与讨论。这里先提供上下文入口，不代表严格的课程过滤结果。`,
+        companionNote: (topic: string) => `新建《${topic}》笔记`,
+        openDiscussions: '查看讨论区',
+        defaultNoteTitle: '未命名笔记',
+        companionNoteTitle: (topic: string) => `${topic} 笔记`,
+        directConversationCreated: '已创建新的对话。',
+        createConversationFailed: '无法创建对话。',
+        sendMessageFailed: '无法发送消息。',
+        roomCreated: '学习房间已创建。',
+        roomCreateFailed: '无法创建学习房间。',
+        roomJoined: '已加入学习房间。',
+        roomJoinFailed: '无法加入学习房间。',
+        roomDeleted: '学习房间已删除。',
+        roomDeleteFailed: '无法删除学习房间。',
+        discussionPublished: '讨论已发布。',
+        discussionPublishFailed: '无法发布讨论。',
+        likeToggleFailed: '无法更新喜欢状态。',
+        commentAdded: '评论已发送。',
+        commentFailed: '无法发送评论。',
+        noteSaved: '笔记已保存。',
+        noteSaveFailed: '无法保存笔记。',
+        connected: '已连接',
+        online: '在线',
+        createStudyRoom: '创建学习房间',
+        roomName: '房间名称',
+        roomGoal: '描述这次学习目标',
+        studyRoomEyebrow: '学习房间',
+        membersLabel: '人',
+        joined: '已加入',
+        joinRoom: '加入房间',
+        deleteRoom: '删除房间',
+        startConversation: '开启新对话',
+        createDirectChat: '创建私聊',
+        creating: '创建中…',
+        startNewConversation: '开始一段新对话',
+        groupConversation: '群组对话',
+        directConversation: '私聊',
+        messagePlaceholder: '发送一条消息',
+        noConversations: '暂无对话。从左侧选择一位成员，或者创建新的学习房间。',
+        publishDiscussion: '发布讨论',
+        titlePlaceholder: '标题',
+        categoryPlaceholder: '分类',
+        discussionPlaceholder: '分享你的问题、发现或想法',
+        publishing: '发布中…',
+        commentPlaceholder: '写下你的评论',
+        notesTitle: '笔记',
+        notesSubtitle: '保存你的个人笔记，或关联到学习房间。',
+        saveNote: '保存笔记',
+        savingNote: '保存中…',
+      }
+    : {
+        mainMenu: 'Main menu',
+        tutorContext: 'Tutor context',
+        tutorContextBody: (topic: string) =>
+          `Opening Community around "${topic}". This is a contextual entry point, not a strict course-level filter yet.`,
+        companionNote: (topic: string) => `New note for "${topic}"`,
+        openDiscussions: 'Open discussions',
+        defaultNoteTitle: 'Untitled note',
+        companionNoteTitle: (topic: string) => `${topic} note`,
+        directConversationCreated: 'New conversation created.',
+        createConversationFailed: 'Unable to create conversation.',
+        sendMessageFailed: 'Unable to send message.',
+        roomCreated: 'Study room created.',
+        roomCreateFailed: 'Unable to create study room.',
+        roomJoined: 'Joined study room.',
+        roomJoinFailed: 'Unable to join study room.',
+        roomDeleted: 'Study room deleted.',
+        roomDeleteFailed: 'Unable to delete study room.',
+        discussionPublished: 'Discussion published.',
+        discussionPublishFailed: 'Unable to publish discussion.',
+        likeToggleFailed: 'Unable to update like state.',
+        commentAdded: 'Comment sent.',
+        commentFailed: 'Unable to send comment.',
+        noteSaved: 'Note saved.',
+        noteSaveFailed: 'Unable to save note.',
+        connected: 'Connected',
+        online: 'Online',
+        createStudyRoom: 'Create study room',
+        roomName: 'Room name',
+        roomGoal: 'Describe the goal for this session',
+        studyRoomEyebrow: 'Study room',
+        membersLabel: 'members',
+        joined: 'Joined',
+        joinRoom: 'Join room',
+        deleteRoom: 'Delete room',
+        startConversation: 'Start new chat',
+        createDirectChat: 'Create direct chat',
+        creating: 'Creating…',
+        startNewConversation: 'Start a new conversation',
+        groupConversation: 'Group conversation',
+        directConversation: 'Direct message',
+        messagePlaceholder: 'Send a message',
+        noConversations: 'No conversations yet. Pick someone on the left or create a new study room.',
+        publishDiscussion: 'Publish discussion',
+        titlePlaceholder: 'Title',
+        categoryPlaceholder: 'Category',
+        discussionPlaceholder: 'Share your question, idea, or takeaway',
+        publishing: 'Publishing…',
+        commentPlaceholder: 'Write a comment',
+        notesTitle: 'Notes',
+        notesSubtitle: 'Save personal notes or link them to a study room.',
+        saveNote: 'Save note',
+        savingNote: 'Saving…',
+      };
 
   const workspaceQuery = useQuery({
     queryKey: ['viewer', 'community', userId],
@@ -132,11 +242,11 @@ export function CommunityPage() {
       }
       setSelectedPersonId('');
       setSection('messages');
-      setStatus({ tone: 'success', message: '已创建新的对话。' });
+      setStatus({ tone: 'success', message: communityText.directConversationCreated });
       captureViewerEvent('viewer_community_direct_chat_opened');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法创建对话。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.createConversationFailed });
       captureViewerError(error, { area: 'community_direct_chat' });
     },
   });
@@ -150,7 +260,7 @@ export function CommunityPage() {
       captureViewerEvent('viewer_community_message_sent', { conversationId });
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法发送消息。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.sendMessageFailed });
       captureViewerError(error, { area: 'community_message_send', conversationId });
     },
   });
@@ -160,11 +270,11 @@ export function CommunityPage() {
     onSuccess: async () => {
       await refreshCommunity();
       setRoomForm({ name: '', description: '' });
-      setStatus({ tone: 'success', message: '学习房间已创建。' });
+      setStatus({ tone: 'success', message: communityText.roomCreated });
       captureViewerEvent('viewer_community_room_saved');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法创建学习房间。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.roomCreateFailed });
       captureViewerError(error, { area: 'community_room_save' });
     },
   });
@@ -173,11 +283,11 @@ export function CommunityPage() {
     mutationFn: (roomId: string) => joinStudyRoom(userId, roomId),
     onSuccess: async () => {
       await refreshCommunity();
-      setStatus({ tone: 'success', message: '已加入学习房间。' });
+      setStatus({ tone: 'success', message: communityText.roomJoined });
       captureViewerEvent('viewer_community_room_joined');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法加入学习房间。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.roomJoinFailed });
       captureViewerError(error, { area: 'community_room_join' });
     },
   });
@@ -186,11 +296,11 @@ export function CommunityPage() {
     mutationFn: (roomId: string) => deleteStudyRoom(userId, roomId),
     onSuccess: async () => {
       await refreshCommunity();
-      setStatus({ tone: 'success', message: '学习房间已删除。' });
+      setStatus({ tone: 'success', message: communityText.roomDeleted });
       captureViewerEvent('viewer_community_room_deleted');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法删除学习房间。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.roomDeleteFailed });
       captureViewerError(error, { area: 'community_room_delete' });
     },
   });
@@ -200,11 +310,11 @@ export function CommunityPage() {
     onSuccess: async () => {
       await refreshCommunity();
       setDiscussionForm({ title: '', body: '', category: 'General' });
-      setStatus({ tone: 'success', message: '讨论已发布。' });
+      setStatus({ tone: 'success', message: communityText.discussionPublished });
       captureViewerEvent('viewer_community_discussion_published');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法发布讨论。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.discussionPublishFailed });
       captureViewerError(error, { area: 'community_discussion_publish' });
     },
   });
@@ -216,7 +326,7 @@ export function CommunityPage() {
       captureViewerEvent('viewer_community_discussion_like_toggled');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法更新喜欢状态。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.likeToggleFailed });
       captureViewerError(error, { area: 'community_discussion_like' });
     },
   });
@@ -227,11 +337,11 @@ export function CommunityPage() {
     onSuccess: async (_, variables) => {
       await refreshCommunity();
       setCommentDrafts((current) => ({ ...current, [variables.discussionId]: '' }));
-      setStatus({ tone: 'success', message: '评论已发送。' });
+      setStatus({ tone: 'success', message: communityText.commentAdded });
       captureViewerEvent('viewer_community_comment_added', { discussionId: variables.discussionId });
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法发送评论。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.commentFailed });
       captureViewerError(error, { area: 'community_comment_add' });
     },
   });
@@ -241,11 +351,11 @@ export function CommunityPage() {
       saveCommunityNote(userId, note),
     onSuccess: async () => {
       await refreshCommunity();
-      setStatus({ tone: 'success', message: '笔记已保存。' });
+      setStatus({ tone: 'success', message: communityText.noteSaved });
       captureViewerEvent('viewer_community_note_saved');
     },
     onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : '无法保存笔记。' });
+      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.noteSaveFailed });
       captureViewerError(error, { area: 'community_note_save' });
     },
   });
@@ -269,12 +379,12 @@ export function CommunityPage() {
   ];
 
   function addBlankNote() {
-    setNotesDraft((current) => [{ title: '未命名笔记', body: '', room_id: null }, ...current]);
+    setNotesDraft((current) => [{ title: communityText.defaultNoteTitle, body: '', room_id: null }, ...current]);
     setSection('notes');
   }
 
   function addCompanionContextNote() {
-    const defaultTitle = companionTopic ? `${companionTopic} 笔记` : '未命名笔记';
+    const defaultTitle = companionTopic ? communityText.companionNoteTitle(companionTopic) : communityText.defaultNoteTitle;
     setNotesDraft((current) => [{ title: defaultTitle, body: '', room_id: null }, ...current]);
     setSection('notes');
   }
@@ -313,7 +423,7 @@ export function CommunityPage() {
               >
                 {copy.community.title}
               </h1>
-              <p className="viewer-botanical-eyebrow">{'主导航'}</p>
+              <p className="viewer-botanical-eyebrow">{communityText.mainMenu}</p>
             </div>
           </div>
 
@@ -353,11 +463,9 @@ export function CommunityPage() {
               data-testid="community-companion-context"
               className="viewer-panel rounded-[26px] px-5 py-4"
             >
-              <p className="viewer-botanical-eyebrow">{language === 'zh-CN' ? '导师上下文' : 'Tutor context'}</p>
+              <p className="viewer-botanical-eyebrow">{communityText.tutorContext}</p>
               <div className="mt-2 text-[1rem] font-semibold leading-7 text-[#4d4239]">
-                {language === 'zh-CN'
-                  ? `正在围绕《${companionTopic}》查看你的社区笔记与讨论。这里先提供上下文入口，不代表严格的课程过滤结果。`
-                  : `Opening Community around "${companionTopic}". This is a contextual entry point, not a strict course-level filter yet.`}
+                {communityText.tutorContextBody(companionTopic)}
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
@@ -365,14 +473,14 @@ export function CommunityPage() {
                   className="viewer-botanical-button viewer-botanical-button--primary"
                   onClick={addCompanionContextNote}
                 >
-                  {language === 'zh-CN' ? `新建《${companionTopic}》笔记` : `New note for "${companionTopic}"`}
+                  {communityText.companionNote(companionTopic)}
                 </button>
                 <button
                   type="button"
                   className="viewer-botanical-button viewer-botanical-button--secondary"
                   onClick={() => setSection('trending')}
                 >
-                  {language === 'zh-CN' ? '查看讨论区' : 'Open discussions'}
+                  {communityText.openDiscussions}
                 </button>
               </div>
             </div>
@@ -403,8 +511,8 @@ export function CommunityPage() {
               </div>
 
               <div className="absolute right-7 top-7 z-20 rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-5 py-4 shadow-[0_12px_26px_rgba(90,70,50,0.08)]">
-                <div className="text-[1rem] font-black text-[#6e6156]">{`已连接 ${people.length + 15}`}</div>
-                <div className="mt-2.5 text-[1rem] font-black text-[#5c7d60]">{`在线 ${Math.max(people.filter((person) => person.status === 'online').length, 14)}`}</div>
+                <div className="text-[1rem] font-black text-[#6e6156]">{`${communityText.connected} ${people.length + 15}`}</div>
+                <div className="mt-2.5 text-[1rem] font-black text-[#5c7d60]">{`${communityText.online} ${Math.max(people.filter((person) => person.status === 'online').length, 14)}`}</div>
               </div>
 
               <div className="absolute inset-0">
@@ -440,17 +548,17 @@ export function CommunityPage() {
           {section === 'study' ? (
             <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
               <div className="viewer-panel rounded-[26px] p-5">
-                <h2 className="viewer-botanical-heading text-[2rem]">{'创建学习房间'}</h2>
+                <h2 className="viewer-botanical-heading text-[2rem]">{communityText.createStudyRoom}</h2>
                 <div className="mt-5 space-y-4">
                   <input
                     className="viewer-botanical-input"
-                    placeholder="房间名称"
+                    placeholder={communityText.roomName}
                     value={roomForm.name}
                     onChange={(event) => setRoomForm((current) => ({ ...current, name: event.target.value }))}
                   />
                   <textarea
                     className="viewer-botanical-input min-h-32"
-                    placeholder="描述这次学习目标"
+                    placeholder={communityText.roomGoal}
                     value={roomForm.description}
                     onChange={(event) => setRoomForm((current) => ({ ...current, description: event.target.value }))}
                   />
@@ -470,10 +578,10 @@ export function CommunityPage() {
                   const joined = room.member_ids.includes(userId);
                   return (
                     <div key={room.id} className="viewer-panel rounded-[26px] p-5">
-                      <div className="viewer-botanical-eyebrow text-[0.72rem]">{'Study room'}</div>
+                      <div className="viewer-botanical-eyebrow text-[0.72rem]">{communityText.studyRoomEyebrow}</div>
                       <h3 className="mt-3 text-[1.8rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{room.name}</h3>
                       <p className="mt-3 text-[1rem] leading-7 text-[#6f6359]">{room.description}</p>
-                      <p className="mt-5 text-[0.98rem] font-bold text-[#8a7d72]">{`${room.members} 人 · ${room.status}`}</p>
+                      <p className="mt-5 text-[0.98rem] font-bold text-[#8a7d72]">{`${room.members} ${communityText.membersLabel} · ${room.status}`}</p>
                       <div className="mt-5 flex flex-wrap gap-3">
                         <button
                           type="button"
@@ -481,7 +589,7 @@ export function CommunityPage() {
                           onClick={() => joinRoomMutation.mutate(room.id)}
                           disabled={joined || joinRoomMutation.isPending}
                         >
-                          {joined ? '已加入' : '加入房间'}
+                          {joined ? communityText.joined : communityText.joinRoom}
                         </button>
                         {room.created_by === userId ? (
                           <button
@@ -490,7 +598,7 @@ export function CommunityPage() {
                             onClick={() => deleteRoomMutation.mutate(room.id)}
                             disabled={deleteRoomMutation.isPending}
                           >
-                            {'删除房间'}
+                            {communityText.deleteRoom}
                           </button>
                         ) : null}
                       </div>
@@ -505,7 +613,7 @@ export function CommunityPage() {
             <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
               <div className="space-y-4">
                 <div className="viewer-panel rounded-[26px] p-5">
-                  <h2 className="viewer-botanical-heading text-[2rem]">{'开启新对话'}</h2>
+                  <h2 className="viewer-botanical-heading text-[2rem]">{communityText.startConversation}</h2>
                   <div className="mt-4 space-y-3">
                     {people.map((person) => (
                       <button
@@ -530,7 +638,7 @@ export function CommunityPage() {
                     onClick={() => directConversationMutation.mutate()}
                     disabled={!selectedPersonId || directConversationMutation.isPending}
                   >
-                    {directConversationMutation.isPending ? '创建中…' : '创建私聊'}
+                    {directConversationMutation.isPending ? communityText.creating : communityText.createDirectChat}
                   </button>
                 </div>
 
@@ -548,7 +656,7 @@ export function CommunityPage() {
                       >
                         <div className="min-w-0">
                           <div className="truncate text-[1rem] font-black text-[#3d342a]">{conversation.title}</div>
-                          <div className="mt-1 truncate text-sm font-medium text-[#887b70]">{conversation.preview || '开始一段新对话'}</div>
+                          <div className="mt-1 truncate text-sm font-medium text-[#887b70]">{conversation.preview || communityText.startNewConversation}</div>
                         </div>
                         {conversation.unread_count > 0 ? (
                           <span className="flex h-8 min-w-8 items-center justify-center rounded-full bg-[#f34848] px-2 text-xs font-black text-white">
@@ -566,7 +674,7 @@ export function CommunityPage() {
                   <>
                     <div className="border-b border-[#eadfce] px-6 py-5">
                       <h3 className="text-[2rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{activeConversation.title}</h3>
-                      <p className="mt-1 text-sm font-medium text-[#8a7d72]">{activeConversation.kind === 'group' ? '群组对话' : '私聊'}</p>
+                      <p className="mt-1 text-sm font-medium text-[#8a7d72]">{activeConversation.kind === 'group' ? communityText.groupConversation : communityText.directConversation}</p>
                     </div>
                     <div className="flex-1 space-y-4 overflow-auto px-6 py-5">
                       {activeConversation.messages.map((message) => (
@@ -588,7 +696,7 @@ export function CommunityPage() {
                       <div className="flex gap-3">
                         <input
                           className="viewer-botanical-input min-w-0 flex-1"
-                          placeholder="发送一条消息"
+                          placeholder={communityText.messagePlaceholder}
                           value={composer}
                           onChange={(event) => setComposer(event.target.value)}
                           onKeyDown={(event) => {
@@ -610,7 +718,7 @@ export function CommunityPage() {
                   </>
                 ) : (
                   <div className="p-6">
-                    <EmptyStateCard message="暂无对话。从左侧选择一位成员，或者创建新的学习房间。" />
+                    <EmptyStateCard message={communityText.noConversations} />
                   </div>
                 )}
               </div>
@@ -620,23 +728,23 @@ export function CommunityPage() {
           {section === 'trending' ? (
             <div className="grid gap-4 xl:grid-cols-[306px_minmax(0,1fr)]">
               <div className="viewer-panel rounded-[26px] p-5">
-                <h2 className="viewer-botanical-heading text-[2rem]">{'发布讨论'}</h2>
+                <h2 className="viewer-botanical-heading text-[2rem]">{communityText.publishDiscussion}</h2>
                 <div className="mt-5 space-y-4">
                   <input
                     className="viewer-botanical-input"
-                    placeholder="标题"
+                    placeholder={communityText.titlePlaceholder}
                     value={discussionForm.title}
                     onChange={(event) => setDiscussionForm((current) => ({ ...current, title: event.target.value }))}
                   />
                   <input
                     className="viewer-botanical-input"
-                    placeholder="分类"
+                    placeholder={communityText.categoryPlaceholder}
                     value={discussionForm.category}
                     onChange={(event) => setDiscussionForm((current) => ({ ...current, category: event.target.value }))}
                   />
                   <textarea
                     className="viewer-botanical-input min-h-36"
-                    placeholder="分享你的问题、发现或想法"
+                    placeholder={communityText.discussionPlaceholder}
                     value={discussionForm.body}
                     onChange={(event) => setDiscussionForm((current) => ({ ...current, body: event.target.value }))}
                   />
@@ -646,7 +754,7 @@ export function CommunityPage() {
                     onClick={() => createDiscussionMutation.mutate()}
                     disabled={createDiscussionMutation.isPending}
                   >
-                    {createDiscussionMutation.isPending ? '发布中…' : '发布讨论'}
+                    {createDiscussionMutation.isPending ? communityText.publishing : communityText.publishDiscussion}
                   </button>
                 </div>
               </div>
@@ -685,7 +793,7 @@ export function CommunityPage() {
                       <div className="mt-4 flex gap-3">
                         <input
                           className="viewer-botanical-input min-w-0 flex-1"
-                          placeholder="写下你的评论"
+                          placeholder={communityText.commentPlaceholder}
                           value={commentDrafts[discussion.id] ?? ''}
                           onChange={(event) =>
                             setCommentDrafts((current) => ({ ...current, [discussion.id]: event.target.value }))
@@ -702,7 +810,7 @@ export function CommunityPage() {
                           }
                           disabled={commentMutation.isPending}
                         >
-                          {'发送'}
+                          {copy.community.send}
                         </button>
                       </div>
                     </div>
@@ -716,8 +824,8 @@ export function CommunityPage() {
             <div className="space-y-4">
               <div className="viewer-panel flex items-center justify-between rounded-[26px] px-5 py-4">
                 <div>
-                  <h2 className="viewer-botanical-heading text-[2rem]">{'笔记'}</h2>
-                  <p className="mt-1 text-sm font-medium text-[#8a7d72]">{'保存你的个人笔记，或关联到学习房间。'}</p>
+                  <h2 className="viewer-botanical-heading text-[2rem]">{communityText.notesTitle}</h2>
+                  <p className="mt-1 text-sm font-medium text-[#8a7d72]">{communityText.notesSubtitle}</p>
                 </div>
                 <button
                   type="button"
@@ -761,7 +869,7 @@ export function CommunityPage() {
                         onClick={() => noteMutation.mutate(note)}
                         disabled={noteMutation.isPending}
                       >
-                        {noteMutation.isPending ? '保存中…' : '保存笔记'}
+                        {noteMutation.isPending ? communityText.savingNote : communityText.saveNote}
                       </button>
                     </div>
                   </div>

@@ -18,6 +18,7 @@ import { getAiTutorPersonaDefinition } from '@/shared/ai-tutor/persona';
 import { useBootSplashGate } from '@/shared/boot/bootSplash';
 import { fetchViewerHomePayload } from '@/shared/api/viewer/homeApi';
 import { prefetchCourseDetail, prefetchHomePayload, prefetchLibraryCatalog } from '@/shared/api/viewer/prefetch';
+import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
@@ -609,9 +610,12 @@ export function HomePage() {
           </span>
         </Link>
 
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-[#e5c9a8] bg-[linear-gradient(135deg,rgba(247,233,210,0.94)_0%,rgba(239,216,184,0.9)_100%)] px-4 py-2.5 text-[#8d6438] shadow-[0_14px_26px_rgba(196,149,106,0.16)]">
-          <Sparkles size={19} className="fill-current" />
-          <span className="text-[1.05rem] font-bold">{stats?.total_xp ?? 0}</span>
+        <div className="flex flex-wrap items-center justify-end gap-2.5">
+          <LanguageSwitcher tone="home" />
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-[#e5c9a8] bg-[linear-gradient(135deg,rgba(247,233,210,0.94)_0%,rgba(239,216,184,0.9)_100%)] px-4 py-2.5 text-[#8d6438] shadow-[0_14px_26px_rgba(196,149,106,0.16)]">
+            <Sparkles size={19} className="fill-current" />
+            <span className="text-[1.05rem] font-bold">{stats?.total_xp ?? 0}</span>
+          </div>
         </div>
       </div>
 
