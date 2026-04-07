@@ -235,6 +235,7 @@ function buildInitialState(): ViewerFixtureState {
       title: 'Lesson runtime notes',
       body: 'Track gating, page reset, and completion summary.',
       room_id: null,
+      lesson_id: null,
       updated_at: '2026-03-30T15:00:00Z',
     },
     {
@@ -242,6 +243,7 @@ function buildInitialState(): ViewerFixtureState {
       title: 'Parent flow',
       body: 'Child binding code remains powered by the current RPCs.',
       room_id: 'room-1',
+      lesson_id: null,
       updated_at: '2026-03-30T16:00:00Z',
     },
   ];
