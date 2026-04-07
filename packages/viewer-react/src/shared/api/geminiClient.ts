@@ -1,4 +1,4 @@
-import { supabase } from '@/shared/api/supabase';
+import { supabase, viewerSupabaseAnonKey, viewerSupabaseUrl } from '@/shared/api/supabase';
 import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
@@ -6,8 +6,6 @@ import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice'
 
 const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
 const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
-const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim() ?? '';
-const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() ?? '';
 const rawAgentServiceUrl = (import.meta.env.VITE_AGENT_SERVICE_URL as string | undefined)?.trim() ?? '';
 const TUTOR_TIMEOUT_MS = 30_000;
 
@@ -63,15 +61,15 @@ function fixtureReply(history: TutorMessage[]) {
 }
 
 function tutorFunctionUrl() {
-  if (!rawSupabaseUrl) {
+  if (!viewerSupabaseUrl) {
     throw new Error('AI Tutor requires VITE_SUPABASE_URL.');
   }
 
-  if (rawSupabaseUrl.includes('.supabase.co')) {
-    return `${rawSupabaseUrl.replace('.supabase.co', '.functions.supabase.co')}/viewer-ai-tutor`;
+  if (viewerSupabaseUrl.includes('.supabase.co')) {
+    return `${viewerSupabaseUrl.replace('.supabase.co', '.functions.supabase.co')}/viewer-ai-tutor`;
   }
 
-  return `${rawSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-tutor`;
+  return `${viewerSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-tutor`;
 }
 
 function agentServiceChatUrl() {
@@ -398,7 +396,7 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
   }
 
   const apiKeyOverride = getStoredGeminiKey();
-  if (!rawSupabaseAnonKey) {
+  if (!viewerSupabaseAnonKey) {
     throw new Error('AI Tutor requires VITE_SUPABASE_ANON_KEY.');
   }
 
@@ -407,8 +405,8 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      apikey: rawSupabaseAnonKey,
-      Authorization: `Bearer ${rawSupabaseAnonKey}`,
+      apikey: viewerSupabaseAnonKey,
+      Authorization: `Bearer ${viewerSupabaseAnonKey}`,
     },
     body: JSON.stringify({
       mode,

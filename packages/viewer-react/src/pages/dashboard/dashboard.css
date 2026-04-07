@@ -1451,6 +1451,8 @@
   width: min(92vw, 38rem);
   max-height: 88vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   padding: 1.4rem;
   transform: translate(-50%, -50%);
   z-index: 21;
@@ -1468,6 +1470,10 @@
 
 .dashboard-dialog--ai {
   width: min(92vw, 44rem);
+}
+
+.dashboard-dialog--course-form {
+  overflow: hidden;
 }
 
 .dashboard-dialog__topline {
@@ -1493,8 +1499,22 @@
 .dashboard-dialog__form {
   display: flex;
   flex-direction: column;
+  min-height: 0;
   gap: 0.9rem;
   margin-top: 1rem;
+}
+
+.dashboard-dialog--course-form .dashboard-dialog__form {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  gap: 0.75rem;
+  padding-right: 0.2rem;
+  padding-bottom: 0.35rem;
+  scrollbar-gutter: stable;
+}
+
+.dashboard-dialog--course-form .dashboard-field textarea {
+  min-height: 5.35rem;
 }
 
 .dashboard-dialog__grid {
@@ -1575,6 +1595,35 @@
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 0.35rem;
+}
+
+.dashboard-dialog--course-form .dashboard-dialog__actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-top: auto;
+  padding-top: 1.05rem;
+  padding-bottom: 0.4rem;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 238, 229, 0) 0%,
+    rgba(245, 238, 229, 0.94) 18%,
+    rgba(245, 238, 229, 1) 42%
+  );
+  box-shadow: 0 -16px 26px rgba(245, 238, 229, 0.96);
+}
+
+.dashboard-dialog__submit--create {
+  background: linear-gradient(145deg, #7ecb76 0%, #48a64f 56%, #2f7f39 100%);
+  border-color: rgba(47, 127, 57, 0.52);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 7px 0 rgba(47, 127, 57, 0.96),
+    0 16px 24px rgba(47, 127, 57, 0.24);
+}
+
+.dashboard-dialog__submit--create:hover:not(:disabled) {
+  background: linear-gradient(145deg, #8ad683 0%, #51b258 56%, #388d43 100%);
 }
 
 .dashboard-ai-presets {
@@ -2345,6 +2394,16 @@
 
   .studio-donut {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px), (max-height: 860px) {
+  .dashboard-dialog--course-form {
+    top: max(0.85rem, env(safe-area-inset-top));
+    bottom: calc(var(--viewer-dock-content-gap) + 0.75rem + env(safe-area-inset-bottom));
+    width: min(calc(100vw - 1rem), 38rem);
+    max-height: none;
+    transform: translateX(-50%);
   }
 }
 
