@@ -136,7 +136,7 @@
   border-radius: 1.6rem;
   background: rgba(254, 250, 245, 0.78);
   backdrop-filter: blur(18px);
-  box-shadow: 0 12px 28px rgba(90, 70, 50, 0.08);
+  box-shadow: none;
 }
 
 .editor-topbar__brand {

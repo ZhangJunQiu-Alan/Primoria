@@ -6,6 +6,17 @@ import { renderRoute } from './renderApp';
 
 let mockDocuments: TutorDocument[] = [];
 
+function createDeferred<T>() {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+
+  return { promise, resolve, reject };
+}
+
 const fetchTutorDocumentsMock = vi.fn(async () => [...mockDocuments]);
 const createTutorDocumentMock = vi.fn(async (payload: { filename: string; mimeType: string; extractedText: string }) => {
   const nextDocument: TutorDocument = {
@@ -175,9 +186,11 @@ describe('AiTutorPage', () => {
     expect(view.locationRef.pathname).toBe('/home');
   }, 30000);
 
-  it('creates a quiz course from the selected materials and redirects to the library', async () => {
+  it('closes the config dialog, expands the notebook, and keeps quiz progress visible until the course is ready', async () => {
     const user = userEvent.setup();
     const view = renderRoute('/ai-tutor', 'user');
+    const deferredQuiz = createDeferred<{ courseId: string; courseTitle: string }>();
+    createQuizFromDocsMock.mockImplementationOnce(() => deferredQuiz.promise);
 
     const uploadInput = await screen.findByLabelText(/上传资料/i, {}, { timeout: 15000 });
     await user.upload(uploadInput, [
@@ -211,8 +224,29 @@ describe('AiTutorPage', () => {
         questionCount: 12,
       });
     });
+
     await waitFor(() => {
-      expect(view.locationRef.pathname).toBe('/library');
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+    expect(screen.getByRole('button', { name: /折叠笔记本/i })).toBeInTheDocument();
+    expect(screen.getByText(/正在生成测验课程/i)).toBeInTheDocument();
+    expect(screen.getByText(/这可能需要一点时间/i)).toBeInTheDocument();
+    expect(view.locationRef.pathname).toBe('/ai-tutor');
+
+    deferredQuiz.resolve({
+      courseId: 'course-quiz-1',
+      courseTitle: '文档测验课程',
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /文档测验课程/i })).toBeInTheDocument();
+    });
+    expect(screen.getByText(/文档测验课程/i)).toBeInTheDocument();
+    expect(view.locationRef.pathname).toBe('/ai-tutor');
+
+    await user.click(screen.getByRole('button', { name: /文档测验课程/i }));
+    await waitFor(() => {
+      expect(view.locationRef.pathname).toBe('/course/course-quiz-1');
     });
   }, 30000);
 
@@ -235,7 +269,7 @@ describe('AiTutorPage', () => {
 
     const errorCopies = await screen.findAllByText(/测验生成服务尚未部署到当前项目/i, {}, { timeout: 15000 });
     expect(errorCopies.length).toBeGreaterThanOrEqual(2);
-    await user.click(screen.getByRole('button', { name: /展开笔记本/i }));
+    expect(screen.getByRole('button', { name: /折叠笔记本/i })).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /重试生成/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
@@ -290,10 +324,10 @@ describe('AiTutorPage', () => {
 
     const view = renderRoute('/ai-tutor', 'user');
     await user.click(await screen.findByRole('button', { name: /展开笔记本/i }, { timeout: 15000 }));
-    const openCourseButton = await screen.findByRole('button', { name: /打开课程/i }, { timeout: 15000 });
+    const openCourseCard = await screen.findByRole('button', { name: /文档测验课程/i }, { timeout: 15000 });
     expect(screen.getByText(/文档测验课程/i)).toBeInTheDocument();
 
-    await user.click(openCourseButton);
+    await user.click(openCourseCard);
     await waitFor(() => {
       expect(view.locationRef.pathname).toBe('/course/course-quiz-1');
     });

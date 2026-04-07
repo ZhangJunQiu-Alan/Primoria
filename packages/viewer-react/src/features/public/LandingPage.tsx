@@ -25,7 +25,6 @@ import {
   WandSparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 
@@ -152,7 +151,6 @@ export function LandingPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <LanguageSwitcher tone="public" />
             <Link
               to="/login"
               data-testid="landing-header-login"
@@ -201,12 +199,13 @@ export function LandingPage() {
               >
                 {landing.hero.primaryCta}
               </Link>
-              <a
-                href="#product"
+              <Link
+                to="/login"
+                data-testid="landing-hero-secondary-cta"
                 className="inline-flex min-w-[12rem] items-center justify-center rounded-[18px] border border-[#b8c6d8] bg-white/82 px-7 py-3.5 text-[1rem] font-black text-[#28415c] shadow-[0_12px_28px_rgba(39,61,91,0.08)] transition hover:border-[#8da3bb]"
               >
                 {landing.hero.secondaryCta}
-              </a>
+              </Link>
             </div>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-3">

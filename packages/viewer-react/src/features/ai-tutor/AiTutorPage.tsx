@@ -420,6 +420,7 @@ export function AiTutorPage() {
   const [isQuizConfigOpen, setIsQuizConfigOpen] = useState(false);
   const [questionCountInput, setQuestionCountInput] = useState('10');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const notebookSectionRef = useRef<HTMLElement | null>(null);
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
   const processedCompanionIntentRef = useRef<string | null>(null);
@@ -508,7 +509,7 @@ export function AiTutorPage() {
     : null;
   const selectedDocumentCount = selectedDocumentIds.length;
   const questionCount = Number.parseInt(questionCountInput, 10);
-  const isQuestionCountValid = Number.isInteger(questionCount) && questionCount >= 5 && questionCount <= 50;
+  const isQuestionCountValid = Number.isInteger(questionCount) && questionCount >= 5 && questionCount <= 30;
 
   const notebookItems = useMemo(
     () =>
@@ -516,6 +517,30 @@ export function AiTutorPage() {
         .filter((item) => item.runtime.status !== 'idle')
         .sort((left, right) => (right.runtime.updatedAt ?? 0) - (left.runtime.updatedAt ?? 0)),
     [toolDefinitions, toolRuntime],
+  );
+
+  const revealNotebookSection = useCallback(() => {
+    setExpandedSections((current) => (current.notebook ? current : { ...current, notebook: true }));
+    window.requestAnimationFrame(() => {
+      const notebookElement = notebookSectionRef.current;
+      if (notebookElement && typeof notebookElement.scrollIntoView === 'function') {
+        notebookElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }, []);
+
+  const openNotebookItem = useCallback(
+    (itemModal: TutorToolModal | null) => {
+      if (!itemModal) {
+        return;
+      }
+      if (itemModal.kind === 'quiz') {
+        navigate(`/course/${itemModal.payload.courseId}`);
+        return;
+      }
+      setModal(itemModal);
+    },
+    [navigate],
   );
 
   const toggleSection = useCallback((section: TutorSidebarSection) => {
@@ -779,9 +804,12 @@ export function AiTutorPage() {
       quiz: {
         ...current.quiz,
         status: 'loading',
+        updatedAt: Date.now(),
         errorMessage: null,
       },
     }));
+    setIsQuizConfigOpen(false);
+    revealNotebookSection();
     setNotice({ tone: 'info', text: copy.aiTutor.quizPreparing });
 
     try {
@@ -814,14 +842,12 @@ export function AiTutorPage() {
         return next;
       });
 
-      setIsQuizConfigOpen(false);
       setNotice({ tone: 'success', text: copy.aiTutor.quizCreated });
       captureViewerEvent('viewer_ai_tutor_quiz_course_created', {
         courseId: result.courseId,
         questionCount,
         sourceCount: selectedDocumentIds.length,
       });
-      navigate('/library');
     } catch (error) {
       const errorMessage = resolveQuizErrorMessage(
         error,
@@ -843,7 +869,7 @@ export function AiTutorPage() {
       setNotice({ tone: 'error', text: errorMessage });
       captureViewerError(error, { area: 'ai_tutor_quiz_course_create' });
     }
-  }, [copy.aiTutor.materialsUnavailable, copy.aiTutor.quizCreated, copy.aiTutor.quizPendingUploads, copy.aiTutor.quizPreparing, copy.aiTutor.quizRequiresMaterials, copy.aiTutor.quizRequiresUpload, copy.aiTutor.quizUnavailable, copy.common.errorFallback, createQuizMutation, documents.length, documentsErrorMessage, isQuestionCountValid, messages, navigate, pendingUploads.length, questionCount, selectedDocumentIds, sessionContext]);
+  }, [copy.aiTutor.materialsUnavailable, copy.aiTutor.quizCreated, copy.aiTutor.quizPendingUploads, copy.aiTutor.quizPreparing, copy.aiTutor.quizRequiresMaterials, copy.aiTutor.quizRequiresUpload, copy.aiTutor.quizUnavailable, copy.common.errorFallback, createQuizMutation, documents.length, documentsErrorMessage, isQuestionCountValid, messages, pendingUploads.length, questionCount, revealNotebookSection, selectedDocumentIds, sessionContext]);
 
   useEffect(
     () => () => {
@@ -1059,7 +1085,10 @@ export function AiTutorPage() {
         <aside className="flex min-h-0 flex-col overflow-hidden">
           <div className="viewer-scrollbar-hidden min-h-0 flex-1 overflow-auto pr-1">
             <div className="space-y-3">
-              <section className="rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.92)] px-4 py-4 shadow-[0_10px_24px_rgba(90,70,50,0.08)]">
+              <section
+                ref={notebookSectionRef}
+                className="rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.92)] px-4 py-4 shadow-[0_10px_24px_rgba(90,70,50,0.08)]"
+              >
                 <div className="flex items-start justify-between gap-3">
                   <h2
                     className="text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
@@ -1276,59 +1305,88 @@ export function AiTutorPage() {
                       <div className="space-y-2.5">
                         {notebookItems.map(({ kind, runtime, definition }) => {
                           const ToolIcon = definition.icon;
+                          const isPendingQuiz = kind === 'quiz' && runtime.status === 'loading';
                           const canOpen = Boolean(runtime.modal) && runtime.status !== 'loading';
                           const showRetry = runtime.status === 'error';
+                          const isClickableQuizCard = kind === 'quiz' && canOpen && !showRetry;
                           const statusText =
-                            runtime.status === 'loading'
+                            isPendingQuiz
+                              ? copy.aiTutor.quizGeneratingBody
+                              : runtime.status === 'loading'
                               ? copy.aiTutor.generating
                               : runtime.status === 'error'
                                 ? runtime.errorMessage || copy.aiTutor.failed
                                 : kind === 'quiz'
                                   ? copy.aiTutor.quizReady
                                   : copy.aiTutor.generatedReady;
+                          const titleText = isPendingQuiz
+                            ? copy.aiTutor.quizGeneratingTitle
+                            : artifactTitle(runtime.modal, definition.label);
+                          const cardClassName =
+                            isPendingQuiz
+                              ? 'rounded-[20px] border border-[#d6e2d5] bg-[linear-gradient(180deg,rgba(255,253,249,0.98)_0%,rgba(245,250,244,0.95)_100%)] px-4 py-4 text-left shadow-[0_12px_24px_rgba(90,70,50,0.06)]'
+                              : 'rounded-[18px] border border-[#e1d7c8] bg-[rgba(255,252,247,0.88)] px-3.5 py-3 text-left shadow-[0_8px_18px_rgba(90,70,50,0.05)]';
+
+                          const cardContent = (
+                            <div className="flex items-start gap-3">
+                              <div
+                                className={
+                                  isPendingQuiz
+                                    ? 'flex h-11 w-11 shrink-0 items-center justify-center rounded-[15px] bg-[#edf4ec] text-[#4f7655]'
+                                    : 'flex h-9 w-9 shrink-0 items-center justify-center rounded-[13px] bg-[#f3efe8] text-[#8a7764]'
+                                }
+                              >
+                                {isPendingQuiz ? <LoaderCircle size={21} className="animate-spin" /> : <ToolIcon size={17} />}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className={isPendingQuiz ? 'text-[0.96rem] font-bold leading-tight text-[#35523a]' : 'text-[0.84rem] font-bold text-[#3d342a]'}>
+                                  {titleText}
+                                </div>
+                                <div className={isPendingQuiz ? 'mt-1 text-[0.8rem] font-medium text-[#6f7f70]' : 'mt-1 text-[0.76rem] font-medium text-[#8b7d72]'}>
+                                  {statusText}
+                                </div>
+                              </div>
+                              {showRetry ? (
+                                <button
+                                  type="button"
+                                  className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-1.5 text-[0.72rem]"
+                                  onClick={() => void openTool(kind)}
+                                >
+                                  {copy.aiTutor.retryGeneration}
+                                </button>
+                              ) : canOpen && !isClickableQuizCard ? (
+                                <button
+                                  type="button"
+                                  className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-1.5 text-[0.72rem]"
+                                  onClick={() => openNotebookItem(runtime.modal)}
+                                >
+                                  {copy.aiTutor.openLatest}
+                                </button>
+                              ) : canOpen ? null : (
+                                <span className="text-[0.72rem] font-semibold text-[#9d8e82]">{copy.aiTutor.generating}</span>
+                              )}
+                            </div>
+                          );
+
+                          if (isClickableQuizCard) {
+                            return (
+                              <button
+                                key={`${kind}-${runtime.updatedAt ?? runtime.status}`}
+                                type="button"
+                                className={`block w-full transition hover:border-[#d1dbc9] hover:shadow-[0_14px_28px_rgba(90,70,50,0.08)] ${cardClassName}`}
+                                onClick={() => openNotebookItem(runtime.modal)}
+                              >
+                                {cardContent}
+                              </button>
+                            );
+                          }
 
                           return (
                             <div
                               key={`${kind}-${runtime.updatedAt ?? runtime.status}`}
-                              className="rounded-[18px] border border-[#e1d7c8] bg-[rgba(255,252,247,0.88)] px-3.5 py-3 shadow-[0_8px_18px_rgba(90,70,50,0.05)]"
+                              className={cardClassName}
                             >
-                              <div className="flex items-start gap-3">
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[13px] bg-[#f3efe8] text-[#8a7764]">
-                                  <ToolIcon size={17} />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <div className="text-[0.84rem] font-bold text-[#3d342a]">{artifactTitle(runtime.modal, definition.label)}</div>
-                                  <div className="mt-1 text-[0.76rem] font-medium text-[#8b7d72]">{statusText}</div>
-                                </div>
-                                {showRetry ? (
-                                  <button
-                                    type="button"
-                                    className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-1.5 text-[0.72rem]"
-                                    onClick={() => void openTool(kind)}
-                                  >
-                                    {copy.aiTutor.retryGeneration}
-                                  </button>
-                                ) : canOpen ? (
-                                  <button
-                                    type="button"
-                                    className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-1.5 text-[0.72rem]"
-                                    onClick={() => {
-                                      if (!runtime.modal) {
-                                        return;
-                                      }
-                                      if (runtime.modal.kind === 'quiz') {
-                                        navigate(`/course/${runtime.modal.payload.courseId}`);
-                                        return;
-                                      }
-                                      setModal(runtime.modal);
-                                    }}
-                                  >
-                                    {kind === 'quiz' ? copy.aiTutor.quizOpenCourse : copy.aiTutor.openLatest}
-                                  </button>
-                                ) : (
-                                  <span className="text-[0.72rem] font-semibold text-[#9d8e82]">{copy.aiTutor.generating}</span>
-                                )}
-                              </div>
+                              {cardContent}
                             </div>
                           );
                         })}
@@ -1397,7 +1455,7 @@ export function AiTutorPage() {
                 id="ai-tutor-question-count"
                 type="number"
                 min={5}
-                max={50}
+                max={30}
                 step={1}
                 inputMode="numeric"
                 className="mt-2 w-full rounded-[16px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3 text-[0.9rem] font-semibold text-[#3d342a] outline-none"

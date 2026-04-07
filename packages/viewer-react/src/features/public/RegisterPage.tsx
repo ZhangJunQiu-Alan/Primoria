@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Sparkles } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AuthActionButton,
@@ -8,8 +8,6 @@ import {
   BuilderAuthLayout,
   AuthSocialButton,
   AuthStatusBanner,
-  EmailToggleButton,
-  FeatureCheck,
   FooterPrompt,
   PasswordVisibilityButton,
 } from '@/features/public/BuilderAuthLayout';
@@ -27,7 +25,6 @@ export function RegisterPage() {
   const copy = useViewerCopy();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [showEmailForm, setShowEmailForm] = useState(true);
   const [loadingProvider, setLoadingProvider] = useState<Provider>(null);
   const [status, setStatus] = useState<{ tone: 'error' | 'success'; message: string } | null>(null);
   const [createdAccount, setCreatedAccount] = useState(false);
@@ -117,7 +114,7 @@ export function RegisterPage() {
   if (createdAccount) {
     return (
       <BuilderAuthLayout
-        pageLabel={copy.auth.registerTitle}
+        pageLabel=""
         title={copy.auth.verifyTitle}
         subtitle={copy.auth.verifyMessage}
         alternateLink={<FooterPrompt prompt={copy.auth.alreadyHaveAccount} linkText={copy.auth.signInLink} to={loginPath} />}
@@ -140,8 +137,9 @@ export function RegisterPage() {
             />
             <AuthActionButton
               tone="secondary"
-              label={copy.auth.returnToLanding}
+              label={copy.auth.keepExploring}
               type="button"
+              icon={<Sparkles size={16} aria-hidden="true" />}
               onClick={() => navigate('/')}
             />
           </div>
@@ -153,7 +151,7 @@ export function RegisterPage() {
 
   return (
     <BuilderAuthLayout
-      pageLabel={copy.auth.registerTitle}
+      pageLabel=""
       title={copy.auth.registerTitle}
       subtitle={copy.auth.registerSubtitle}
       alternateLink={<FooterPrompt prompt={copy.auth.alreadyHaveAccount} linkText={copy.auth.signInLink} to={loginPath} />}
@@ -186,112 +184,99 @@ export function RegisterPage() {
 
       <AuthDivider />
 
-      <EmailToggleButton
-        label={showEmailForm ? copy.auth.hideEmailForm : copy.auth.createWithEmail}
-        onClick={() => {
-          setShowEmailForm((current) => !current);
-          setStatus(null);
-          setFieldErrors({});
-        }}
-        disabled={Boolean(loadingProvider)}
-      />
+      <section className="auth-form-block" aria-label="Email registration form">
+        <div className="auth-form-block__header">
+          <h3 className="auth-form-block__title">{copy.auth.registerEmailSectionTitle}</h3>
+        </div>
 
-      {showEmailForm ? (
-        <section className="auth-form-block" aria-label="Email registration form">
-          <div className="auth-form-block__header">
-            <h3 className="auth-form-block__title">{copy.auth.registerEmailSectionTitle}</h3>
-          </div>
+        <AuthField
+          id="register-name"
+          label={copy.auth.displayName}
+          autoComplete="name"
+          placeholder={copy.auth.displayNamePlaceholder}
+          value={formValues.name}
+          onChange={(event) =>
+            setFormValues((current) => ({ ...current, name: event.target.value }))
+          }
+          error={fieldErrors.name}
+          disabled={isSubmitting}
+        />
 
-          <AuthField
-            id="register-name"
-            label={copy.auth.displayName}
-            autoComplete="name"
-            placeholder={copy.auth.displayNamePlaceholder}
-            value={formValues.name}
-            onChange={(event) =>
-              setFormValues((current) => ({ ...current, name: event.target.value }))
-            }
-            error={fieldErrors.name}
-            disabled={isSubmitting}
-          />
+        <AuthField
+          id="register-email"
+          label={copy.auth.email}
+          type="email"
+          autoComplete="email"
+          placeholder={copy.auth.emailPlaceholder}
+          value={formValues.email}
+          onChange={(event) =>
+            setFormValues((current) => ({ ...current, email: event.target.value }))
+          }
+          error={fieldErrors.email}
+          disabled={isSubmitting}
+        />
 
-          <AuthField
-            id="register-email"
-            label={copy.auth.email}
-            type="email"
-            autoComplete="email"
-            placeholder={copy.auth.emailPlaceholder}
-            value={formValues.email}
-            onChange={(event) =>
-              setFormValues((current) => ({ ...current, email: event.target.value }))
-            }
-            error={fieldErrors.email}
-            disabled={isSubmitting}
-          />
-
-          <AuthField
-            id="register-password"
-            label={copy.auth.password}
-            type={showPassword ? 'text' : 'password'}
-            autoComplete="new-password"
-            placeholder={copy.auth.createPasswordPlaceholder}
-            value={formValues.password}
-            onChange={(event) =>
-              setFormValues((current) => ({ ...current, password: event.target.value }))
-            }
-            error={fieldErrors.password}
-            disabled={isSubmitting}
-            suffix={
-              <PasswordVisibilityButton
-                visible={showPassword}
-                onClick={() => setShowPassword((current) => !current)}
-              />
-            }
-          />
-
-          <AuthField
-            id="register-confirm-password"
-            label={copy.auth.confirmPassword}
-            type={showConfirmPassword ? 'text' : 'password'}
-            autoComplete="new-password"
-            placeholder={copy.auth.confirmPasswordPlaceholder}
-            value={formValues.confirmPassword}
-            onChange={(event) =>
-              setFormValues((current) => ({
-                ...current,
-                confirmPassword: event.target.value,
-              }))
-            }
-            error={fieldErrors.confirmPassword}
-            disabled={isSubmitting}
-            suffix={
-              <PasswordVisibilityButton
-                visible={showConfirmPassword}
-                onClick={() => setShowConfirmPassword((current) => !current)}
-              />
-            }
-          />
-
-          <div className="auth-actions-row">
-            <AuthActionButton
-              type="button"
-              tone="primary"
-              label={copy.auth.signUp}
-              onClick={() => void handleRegister()}
-              loading={isSubmitting}
+        <AuthField
+          id="register-password"
+          label={copy.auth.password}
+          type={showPassword ? 'text' : 'password'}
+          autoComplete="new-password"
+          placeholder={copy.auth.createPasswordPlaceholder}
+          value={formValues.password}
+          onChange={(event) =>
+            setFormValues((current) => ({ ...current, password: event.target.value }))
+          }
+          error={fieldErrors.password}
+          disabled={isSubmitting}
+          suffix={
+            <PasswordVisibilityButton
+              visible={showPassword}
+              onClick={() => setShowPassword((current) => !current)}
             />
-            <AuthActionButton
-              type="button"
-              tone="secondary"
-              label={copy.auth.returnToLanding}
-              onClick={() => navigate('/')}
-              disabled={isSubmitting}
-            />
-          </div>
+          }
+        />
 
-          <FeatureCheck>{copy.auth.registrationSupport}</FeatureCheck>
-        </section>
-      ) : null}
+        <AuthField
+          id="register-confirm-password"
+          label={copy.auth.confirmPassword}
+          type={showConfirmPassword ? 'text' : 'password'}
+          autoComplete="new-password"
+          placeholder={copy.auth.confirmPasswordPlaceholder}
+          value={formValues.confirmPassword}
+          onChange={(event) =>
+            setFormValues((current) => ({
+              ...current,
+              confirmPassword: event.target.value,
+            }))
+          }
+          error={fieldErrors.confirmPassword}
+          disabled={isSubmitting}
+          suffix={
+            <PasswordVisibilityButton
+              visible={showConfirmPassword}
+              onClick={() => setShowConfirmPassword((current) => !current)}
+            />
+          }
+        />
+
+        <div className="auth-actions-row">
+          <AuthActionButton
+            type="button"
+            tone="primary"
+            label={copy.auth.signUp}
+            onClick={() => void handleRegister()}
+            loading={isSubmitting}
+          />
+          <AuthActionButton
+            type="button"
+            tone="secondary"
+            label={copy.auth.keepExploring}
+            icon={<Sparkles size={16} aria-hidden="true" />}
+            onClick={() => navigate('/')}
+            disabled={isSubmitting}
+          />
+        </div>
+      </section>
 
       {status ? <AuthStatusBanner tone={status.tone} message={status.message} /> : null}
     </BuilderAuthLayout>
