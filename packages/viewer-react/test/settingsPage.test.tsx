@@ -95,7 +95,7 @@ describe('SettingsPage', () => {
     await user.click(await screen.findByRole('button', { name: /支持与关于/i }));
     await user.click(await screen.findByRole('button', { name: /退出当前账号/i }));
 
-    expect(await screen.findByRole('heading', { name: /掌握任何学科/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /从创作到学习/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(locationRef.pathname).toBe('/');
     expect(window.localStorage.getItem(DEMO_ROLE_STORAGE_KEY)).toBeNull();
   }, 30000);

@@ -39,8 +39,8 @@ export function BuilderAuthLayout({
 }) {
   const copy = useViewerCopy();
   const authFeatures = [
-    { icon: Sparkles, label: copy.landing.features[0] },
-    { icon: Bot, label: copy.landing.features[2] },
+    { icon: Sparkles, label: copy.landing.authPanel.features[0] },
+    { icon: Bot, label: copy.landing.authPanel.features[1] },
     { icon: MonitorPlay, label: copy.auth.registrationSupport },
   ];
 
@@ -55,7 +55,8 @@ export function BuilderAuthLayout({
           </div>
 
           <div className="auth-brand-panel__copy">
-            <h1 className="auth-brand-panel__title">{copy.landing.accentTitle}</h1>
+            <div className="auth-panel__eyebrow">{copy.landing.authPanel.badge}</div>
+            <h1 className="auth-brand-panel__title">{copy.landing.authPanel.title}</h1>
           </div>
 
           <div className="auth-brand-panel__feature-list">

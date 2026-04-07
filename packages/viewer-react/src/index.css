@@ -1141,6 +1141,18 @@ button.viewer-button-flat:focus-visible {
   }
 }
 
+@keyframes landing-stage-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes viewer-live2d-float {
   0%,
   100% {
@@ -1197,4 +1209,28 @@ button.viewer-button-flat:focus-visible {
 .viewer-float-fast {
   animation: viewer-float 5.4s ease-in-out infinite;
   animation-delay: 1.2s;
+}
+
+.landing-stage-enter {
+  animation: landing-stage-enter 0.72s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.landing-stage-enter-delay-1 {
+  animation-delay: 0.12s;
+}
+
+.landing-stage-enter-delay-2 {
+  animation-delay: 0.24s;
+}
+
+.landing-panel-hover {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.landing-panel-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 32px 70px rgba(42, 52, 78, 0.12);
 }

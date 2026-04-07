@@ -29,7 +29,7 @@ export function PublicLayout({
             <div className="flex items-center gap-3">
               <LanguageSwitcher tone="dark" />
               <div className="rounded-full border border-white/15 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-200">
-                {copy.landing.learnerAppBadge}
+                {copy.landing.authPanel.badge}
               </div>
             </div>
           </div>
