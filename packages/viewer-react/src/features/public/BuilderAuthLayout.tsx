@@ -1,7 +1,6 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeft,
   ArrowRight,
   Bot,
   Check,
@@ -14,11 +13,9 @@ import {
   MonitorPlay,
   Sparkles,
 } from 'lucide-react';
-import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
-import './builderAuth.css';
 
 type StatusTone = 'error' | 'success';
 type ButtonTone = 'primary' | 'secondary';
@@ -50,10 +47,6 @@ export function BuilderAuthLayout({
         <aside className="auth-brand-panel">
           <BrandLockup />
 
-          <div className="flex justify-start">
-            <LanguageSwitcher tone="dark" />
-          </div>
-
           <div className="auth-brand-panel__copy">
             <div className="auth-panel__eyebrow">{copy.landing.authPanel.badge}</div>
             <h1 className="auth-brand-panel__title">{copy.landing.authPanel.title}</h1>
@@ -78,21 +71,10 @@ export function BuilderAuthLayout({
         <main className="auth-panel">
           <header className="auth-mobile-header">
             <BrandLockup />
-            <Link to="/" className="auth-mobile-header__link">
-              <ArrowLeft size={15} aria-hidden="true" />
-              <span>{copy.auth.landingLabel}</span>
-            </Link>
           </header>
 
           <div className="auth-panel__inner">
             <div className="auth-panel__frame">
-              <div className="auth-panel__topline">
-                <Link to="/" className="auth-back-link">
-                  <ArrowLeft size={15} aria-hidden="true" />
-                  <span>{copy.auth.backToLanding}</span>
-                </Link>
-              </div>
-
               <div className="auth-panel__heading">
                 {pageLabel ? <p className="auth-panel__eyebrow">{pageLabel}</p> : null}
                 <h2 className="auth-panel__title">{title}</h2>
