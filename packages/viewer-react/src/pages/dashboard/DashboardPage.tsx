@@ -13,7 +13,6 @@ import {
   BookCopy,
   BookOpen,
   BookPlus,
-  BookText,
   BrainCircuit,
   ChevronDown,
   CircleDollarSign,
@@ -36,7 +35,6 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
 import { formatViewerDate, formatViewerWeekday } from '@/shared/i18n/format';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { useAppSelector } from '@/store';
@@ -55,7 +53,6 @@ import {
   emptyDashboardAnalytics,
   useDashboardAnalytics,
 } from '@/queries/dashboardAnalytics';
-import { AccountMenu } from '@/components/account/AccountMenu';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 import './dashboard.css';
 
@@ -314,10 +311,6 @@ function getErrorMessage(error: unknown) {
   }
 
   return 'Something went wrong. Please try again.';
-}
-
-function getDisplayName(email?: string | null) {
-  return email?.split('@')[0] || 'author';
 }
 
 function formatUpdatedAt(updatedAt: string) {
@@ -581,7 +574,7 @@ function PageHeader({
   description,
   actions,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description: string;
   actions?: ReactNode;
@@ -589,7 +582,7 @@ function PageHeader({
   return (
     <section className="studio-page-header studio-card studio-card--mist">
       <div>
-        <p className="studio-overline">{eyebrow}</p>
+        {eyebrow ? <p className="studio-overline">{eyebrow}</p> : null}
         <h1 className="studio-page-header__title">{title}</h1>
         <p className="studio-page-header__description">{description}</p>
       </div>
@@ -1097,7 +1090,6 @@ export function DashboardPage() {
   }
 
   const userId = user.id;
-  const displayName = getDisplayName(user.email);
 
   const totalLessons = courses.reduce((sum, course) => sum + course.lessons.length, 0);
   const publishedCourses = courses.filter((course) => course.status === 'published').length;
@@ -1408,11 +1400,6 @@ export function DashboardPage() {
     }
   }
 
-  async function handleSignOut() {
-    await supabase.auth.signOut();
-    navigate('/login');
-  }
-
   const hasNoResults = courses.length > 0 && visibleCourses.length === 0;
   const hasEmptyState = !isLoading && !error && courses.length === 0;
   const hasInlineError = Boolean(error && courses.length > 0);
@@ -1429,7 +1416,7 @@ export function DashboardPage() {
     <div className="dashboard-studio">
       <div className="dashboard-studio__layout">
         <aside className="studio-sidebar">
-          <button type="button" className="studio-sidebar__brand" onClick={() => navigate('/')}>
+          <button type="button" className="studio-sidebar__brand viewer-button-flat" onClick={() => navigate('/')}>
             <span className="studio-sidebar__brand-mark">
               <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
             </span>
@@ -1461,17 +1448,6 @@ export function DashboardPage() {
         </aside>
 
         <main className="studio-main">
-          <header className="studio-main__topbar">
-            <div className="studio-main__topbar-actions">
-              <AccountMenu
-                buttonClassName="studio-avatar-button"
-                imageClassName="studio-avatar-button__image"
-                onSignOut={handleSignOut}
-                user={user}
-              />
-            </div>
-          </header>
-
           {notice ? (
             <section className={`studio-inline-notice studio-inline-notice--${notice.tone}`}>
               <p>{notice.text}</p>
@@ -1486,59 +1462,12 @@ export function DashboardPage() {
               <>
                 {analyticsErrorNotice}
 
-                <section className="studio-welcome-card studio-card studio-card--mist">
-                  <div className="studio-welcome-card__copy">
-                    <p className="studio-overline">HOME</p>
-                    <h1>Good evening, {displayName} 👋</h1>
-                    <p>Welcome back. Keep shaping your course pipeline and release cadence.</p>
-                  </div>
-
-                  <div className="studio-welcome-card__actions">
-                    <button
-                      type="button"
-                      className="studio-button studio-button--primary"
-                      onClick={() => {
-                        setFormError(null);
-                        setCourseForForm(null);
-                        setFormMode('create');
-                      }}
-                    >
-                      <Plus size={16} />
-                      <span>Create new course</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="studio-button studio-button--secondary"
-                      onClick={() => {
-                        if (latestCourse) {
-                          navigate(`/builder/editor/${latestCourse.id}`);
-                          return;
-                        }
-                        changeTab('course');
-                        showInfo('Create a course first, then continue editing.');
-                      }}
-                    >
-                      <Pencil size={16} />
-                      <span>Continue editing</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="studio-button studio-button--ghost"
-                      onClick={() => changeTab('data')}
-                    >
-                      <BarChart3 size={16} />
-                      <span>View analytics</span>
-                    </button>
-                  </div>
-                </section>
-
                 <section className="studio-home-grid">
                   <div className="studio-home-grid__main">
                     <section className="studio-card studio-panel">
                       <div className="studio-panel__header">
                         <div>
                           <h2>Learning overview</h2>
-                          <p>Track completion, learner volume, and content momentum in one view.</p>
                         </div>
                       </div>
 
@@ -1569,7 +1498,6 @@ export function DashboardPage() {
                       <div className="studio-panel__header">
                         <div>
                           <h2>Top courses</h2>
-                          <p>Ranked by engagement and overall course completion quality.</p>
                         </div>
                       </div>
 
@@ -1620,7 +1548,6 @@ export function DashboardPage() {
                       <div className="studio-panel__header">
                         <div>
                           <h2>Recent activity</h2>
-                          <p>A compact feed of important course updates and learner signals.</p>
                         </div>
                         <button
                           type="button"
@@ -1649,7 +1576,6 @@ export function DashboardPage() {
                       <div className="studio-panel__header">
                         <div>
                           <h2>Revenue overview</h2>
-                          <p>Reserved for paid courses, conversions, and pending payout tracking.</p>
                         </div>
                       </div>
 
@@ -1678,7 +1604,6 @@ export function DashboardPage() {
             {activeTab === 'course' ? (
               <>
                 <PageHeader
-                  eyebrow="COURSE MANAGEMENT"
                   title="Course management workspace"
                   description="Manage courses, lessons, and publish status from a single calm surface."
                   actions={(
@@ -1718,9 +1643,8 @@ export function DashboardPage() {
                   )}
                 />
 
-                <section className="studio-summary-strip">
+                <section className="studio-summary-strip studio-summary-strip--course">
                   <MetricCard icon={BookCopy} label="Courses" value={courses.length} tone="mist" />
-                  <MetricCard icon={BookText} label="Lessons" value={totalLessons} tone="sage" />
                   <MetricCard icon={ArrowUpRight} label="Published" value={publishedCourses} tone="amber" />
                   <MetricCard icon={LayoutGrid} label="Drafts" value={draftCourses} tone="lavender" />
                   <MetricCard icon={TriangleAlert} label="Needs content" value={emptyCourses} tone="sky" />
