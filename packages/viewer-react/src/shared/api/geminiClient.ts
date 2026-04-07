@@ -29,8 +29,25 @@ export type TutorReplyStreamHandlers = {
   onError?: (error: Error) => void;
 };
 
-function activeModel() {
-  return (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || 'gemini-2.0-flash';
+export type TutorRequestContext = {
+  surface?: string;
+  lessonTitle?: string;
+  pageIndex?: number;
+  pageCount?: number;
+  pageTitle?: string;
+  pageContent?: string;
+  learnerState?: string;
+};
+
+export type TutorRequestOptions = {
+  provider?: 'auto' | 'gemini';
+  model?: string;
+  allowModelFallback?: boolean;
+  context?: TutorRequestContext;
+};
+
+function activeModel(override?: string) {
+  return override?.trim() || (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || 'gemini-2.0-flash';
 }
 
 export function getStoredGeminiKey() {
@@ -355,7 +372,11 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
   return finalPayload;
 }
 
-async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'presentation', history: TutorMessage[]) {
+async function requestTutorTool<T>(
+  mode: 'reply' | 'mindmap' | 'quiz' | 'presentation',
+  history: TutorMessage[],
+  options: TutorRequestOptions = {},
+) {
   if (usesViewerFixtures()) {
     if (mode === 'reply') {
       return { reply: fixtureReply(history) } as T;
@@ -390,7 +411,7 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
     } as T;
   }
 
-  if (mode === 'reply') {
+  if (mode === 'reply' && options.provider !== 'gemini') {
     const agentReply = await requestAgentReply(history);
     if (agentReply) {
       return { reply: agentReply } as T;
@@ -412,9 +433,11 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
     },
     body: JSON.stringify({
       mode,
-      model: activeModel(),
+      model: activeModel(options.model),
       history,
       persona: currentAiTutorPersona(),
+      allowModelFallback: options.allowModelFallback ?? true,
+      context: options.context,
       apiKeyOverride: apiKeyOverride || undefined,
     }),
     signal: timeout.signal,
@@ -444,12 +467,16 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
   return parsed as T;
 }
 
-export async function generateTutorReply(history: TutorMessage[]) {
-  const response = await requestTutorTool<{ reply: string }>('reply', history);
+export async function generateTutorReply(history: TutorMessage[], options: TutorRequestOptions = {}) {
+  const response = await requestTutorTool<{ reply: string }>('reply', history, options);
   return response.reply;
 }
 
-export async function generateTutorReplyStream(history: TutorMessage[], handlers: TutorReplyStreamHandlers = {}) {
+export async function generateTutorReplyStream(
+  history: TutorMessage[],
+  handlers: TutorReplyStreamHandlers = {},
+  options: TutorRequestOptions = {},
+) {
   if (usesViewerFixtures()) {
     const reply = fixtureReply(history);
     const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };
@@ -459,7 +486,7 @@ export async function generateTutorReplyStream(history: TutorMessage[], handlers
   }
 
   try {
-    const streamed = await requestAgentReplyStream(history, handlers);
+    const streamed = options.provider === 'gemini' ? null : await requestAgentReplyStream(history, handlers);
     if (streamed) {
       return streamed;
     }
@@ -470,7 +497,7 @@ export async function generateTutorReplyStream(history: TutorMessage[], handlers
     throw error;
   }
 
-  const reply = await generateTutorReply(history);
+  const reply = await generateTutorReply(history, options);
   const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };
   handlers.onToken?.(reply);
   handlers.onFinal?.(payload);

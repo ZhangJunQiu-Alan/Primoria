@@ -130,4 +130,63 @@ describe('geminiClient', () => {
       }),
     });
   });
+
+  it('can force lesson ask-ai requests to bypass the agent and hit Gemini with explicit model context', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ reply: 'Grounded answer' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream(
+      [{ role: 'user', text: 'Explain this page.' }],
+      {},
+      {
+        provider: 'gemini',
+        model: 'gemini-2.5-flash',
+        allowModelFallback: false,
+        context: {
+          surface: 'lesson-runtime',
+          lessonTitle: 'Lesson A',
+          pageIndex: 1,
+          pageCount: 2,
+          pageTitle: 'Page 1',
+          pageContent: 'Visible content',
+          learnerState: 'Question 1: answered incorrectly',
+        },
+      },
+    );
+
+    expect(result.reply).toBe('Grounded answer');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://demo-project.functions.supabase.co/viewer-ai-tutor',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          apikey: 'demo-anon-key',
+        }),
+      }),
+    );
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
+      model: 'gemini-2.5-flash',
+      allowModelFallback: false,
+      context: {
+        surface: 'lesson-runtime',
+        lessonTitle: 'Lesson A',
+        pageIndex: 1,
+        pageCount: 2,
+        pageTitle: 'Page 1',
+        pageContent: 'Visible content',
+        learnerState: 'Question 1: answered incorrectly',
+      },
+    });
+  });
 });
