@@ -143,7 +143,7 @@ function LanguagePreferenceSynchronizer() {
     return () => {
       active = false;
     };
-  }, [aiTutorPersona, auth.source, auth.user?.id, dispatch, homeCompanionEnabled, language, themeMode]);
+  }, [auth.source, auth.user?.id, dispatch]);
 
   useEffect(() => {
     if (

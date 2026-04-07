@@ -197,7 +197,7 @@ export function RegisterPage() {
       />
 
       {showEmailForm ? (
-        <section className="auth-form-block" aria-label="Email registration form">
+        <section className="auth-form-block" aria-label={copy.auth.registerEmailSectionTitle}>
           <div className="auth-form-block__header">
             <h3 className="auth-form-block__title">{copy.auth.registerEmailSectionTitle}</h3>
           </div>

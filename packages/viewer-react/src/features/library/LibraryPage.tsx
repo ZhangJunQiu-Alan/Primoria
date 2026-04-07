@@ -370,7 +370,10 @@ export function LibraryPage() {
                     {course.title}
                   </h3>
                   <p className="mt-3 min-h-[4.15rem] text-[0.94rem] leading-7 text-[#6f6359]">
-                    {course.description || '从这门课开始建立你的节奏，逐步进入完整学习路径。'}
+                    {course.description ||
+                      (language === 'zh-CN'
+                        ? '从这门课开始建立你的节奏，逐步进入完整学习路径。'
+                        : 'Start here to build your learning rhythm and move into the full path step by step.')}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     <span className="rounded-full border border-[#ddd3c3] bg-[#faf4ea] px-3 py-1 text-[0.76rem] font-medium text-[#7a6b5e]">

@@ -9,6 +9,7 @@ import {
   fetchUserStats,
   savePinnedAchievementIds,
 } from '@/shared/api/viewer/profileApi';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
@@ -61,11 +62,13 @@ function categoryTheme(category: string) {
   }
 }
 
-function formatUnlockedAt(dateString?: string | null) {
-  if (!dateString) return '刚刚收入展柜';
+function formatUnlockedAt(dateString: string | null | undefined, language: 'zh-CN' | 'en') {
+  if (!dateString) return language === 'zh-CN' ? '刚刚收入展柜' : 'Just added to your wall';
   const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return '已完成解锁';
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日解锁`;
+  if (Number.isNaN(date.getTime())) return language === 'zh-CN' ? '已完成解锁' : 'Unlocked';
+  return language === 'zh-CN'
+    ? `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日解锁`
+    : `Unlocked ${new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date)}`;
 }
 
 function SummaryCard({
@@ -102,6 +105,8 @@ function FeaturedAchievementCard({
   manageMode: boolean;
   onTogglePin: (id: string) => void;
 }) {
+  const language = useProductLanguage();
+  const isChinese = language === 'zh-CN';
   const theme = categoryTheme(entry.category);
 
   return (
@@ -119,23 +124,23 @@ function FeaturedAchievementCard({
         <div className={cn('flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-[24px] bg-gradient-to-br p-3 shadow-[inset_0_0_0_1px_rgba(215,227,240,0.7)]', theme.glow)}>
           <img
             src={achievementBadgeAssetPath(entry.achievement)}
-            alt={achievementDisplayName(entry.achievement)}
+            alt={achievementDisplayName(entry.achievement, language)}
             className="h-full w-full object-contain"
           />
         </div>
         <div className="flex flex-wrap items-center justify-end gap-2">
           <span className={cn('rounded-full px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em]', theme.pill)}>
-            {achievementCategoryLabel(entry.category)}
+            {achievementCategoryLabel(entry.category, language)}
           </span>
           <span className="rounded-full bg-[#edf5ec] px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
-            {achievementPinnedLabel()}
+            {achievementPinnedLabel(language)}
           </span>
         </div>
       </div>
 
       <div className="mt-5">
         <h3 className="text-[1.5rem] font-semibold tracking-[-0.03em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-          {achievementDisplayName(entry.achievement)}
+          {achievementDisplayName(entry.achievement, language)}
         </h3>
         <p className="mt-3 text-[0.94rem] leading-7 text-[#6f6359]">{entry.progress.requirement}</p>
       </div>
@@ -144,12 +149,12 @@ function FeaturedAchievementCard({
         <div>
           <div className="text-[2rem] font-semibold tracking-[-0.04em] text-[#3d342a]">{entry.progress.counterLabel}</div>
           <div className="mt-1 text-[0.78rem] font-black uppercase tracking-[0.14em] text-[#9b8e85]">
-            {achievementStatusLabel(entry.progress.isUnlocked)}
+            {achievementStatusLabel(entry.progress.isUnlocked, language)}
           </div>
         </div>
         {manageMode ? (
           <div className="rounded-full border border-[#ddd3c3] px-3 py-2 text-[0.78rem] font-bold text-[#7f7368]">
-            {'点击取消精选'}
+            {isChinese ? '点击取消精选' : 'Tap to unpin'}
           </div>
         ) : null}
       </div>
@@ -165,19 +170,27 @@ function FeaturedAchievementCard({
 }
 
 function FeaturedPlaceholder({ manageMode }: { manageMode: boolean }) {
+  const language = useProductLanguage();
+  const isChinese = language === 'zh-CN';
   return (
     <div className="flex h-full flex-col justify-between rounded-[30px] border border-dashed border-[#cdbfaf] bg-[linear-gradient(180deg,rgba(255,252,247,0.92)_0%,rgba(247,242,231,0.88)_100%)] p-5">
       <div>
         <div className="flex h-[5.4rem] w-[5.4rem] items-center justify-center rounded-[24px] border border-dashed border-[#cdbfaf] bg-white/70 text-[#9b8e85]">
           <Pin size={24} />
         </div>
-        <h3 className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'预留展位'}</h3>
+        <h3 className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{isChinese ? '预留展位' : 'Reserved slot'}</h3>
         <p className="mt-3 text-[0.92rem] leading-7 text-[#7c6f64]">
-          {manageMode ? '从下方卡片中点选成就，把它加入顶部精选展示区。' : '开启“管理精选”后，可以把喜欢的成就固定到这里。'}
+          {manageMode
+            ? isChinese
+              ? '从下方卡片中点选成就，把它加入顶部精选展示区。'
+              : 'Pick achievements below to add them into the featured top row.'
+            : isChinese
+              ? '开启“管理精选”后，可以把喜欢的成就固定到这里。'
+              : 'Turn on manage mode to pin your favorite achievements here.'}
         </p>
       </div>
       <div className="mt-6 rounded-full border border-dashed border-[#cdbfaf] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.14em] text-[#9b8e85]">
-        {'等待点亮'}
+        {isChinese ? '等待点亮' : 'Waiting to shine'}
       </div>
     </div>
   );
@@ -192,6 +205,7 @@ function ProgressAchievementCard({
   manageMode: boolean;
   onTogglePin: (id: string) => void;
 }) {
+  const language = useProductLanguage();
   const theme = categoryTheme(entry.category);
 
   return (
@@ -207,11 +221,11 @@ function ProgressAchievementCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span className={cn('rounded-full px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em]', theme.pill)}>
-          {achievementCategoryLabel(entry.category)}
+          {achievementCategoryLabel(entry.category, language)}
         </span>
         {entry.pinned ? (
           <span className="rounded-full bg-[#edf5ec] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
-            {achievementPinnedLabel()}
+            {achievementPinnedLabel(language)}
           </span>
         ) : null}
       </div>
@@ -220,7 +234,7 @@ function ProgressAchievementCard({
         <div className={cn('flex h-[4.6rem] w-[4.6rem] shrink-0 items-center justify-center rounded-[20px] bg-gradient-to-br p-3 shadow-[inset_0_0_0_1px_rgba(217,229,243,0.72)]', theme.glow)}>
           <img
             src={achievementBadgeAssetPath(entry.achievement)}
-            alt={achievementDisplayName(entry.achievement)}
+            alt={achievementDisplayName(entry.achievement, language)}
             className="h-full w-full object-contain"
           />
         </div>
@@ -228,7 +242,7 @@ function ProgressAchievementCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
             <h3 className="text-[1.26rem] font-black tracking-[-0.03em] text-[#3d342a]">
-              {achievementDisplayName(entry.achievement)}
+              {achievementDisplayName(entry.achievement, language)}
             </h3>
             <span className="text-[0.94rem] font-black text-[#8b7d72]">{entry.progress.counterLabel}</span>
           </div>
@@ -242,7 +256,7 @@ function ProgressAchievementCard({
 
           <p className="mt-3 text-[0.9rem] leading-7 text-[#6f6359]">{entry.progress.requirement}</p>
           <div className="mt-3 text-[0.72rem] font-black uppercase tracking-[0.14em] text-[#9b8e85]">
-            {achievementStatusLabel(entry.progress.isUnlocked)}
+            {achievementStatusLabel(entry.progress.isUnlocked, language)}
           </div>
         </div>
       </div>
@@ -259,6 +273,7 @@ function UnlockedAchievementCard({
   manageMode: boolean;
   onTogglePin: (id: string) => void;
 }) {
+  const language = useProductLanguage();
   const theme = categoryTheme(entry.category);
 
   return (
@@ -275,7 +290,7 @@ function UnlockedAchievementCard({
       <div className={cn('flex h-[4.25rem] w-[4.25rem] shrink-0 items-center justify-center rounded-[18px] bg-gradient-to-br p-3 shadow-[inset_0_0_0_1px_rgba(217,229,243,0.72)]', theme.glow)}>
         <img
           src={achievementBadgeAssetPath(entry.achievement)}
-          alt={achievementDisplayName(entry.achievement)}
+          alt={achievementDisplayName(entry.achievement, language)}
           className="h-full w-full object-contain"
         />
       </div>
@@ -283,22 +298,22 @@ function UnlockedAchievementCard({
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <span className={cn('rounded-full px-2.5 py-1 text-[0.66rem] font-black uppercase tracking-[0.14em]', theme.pill)}>
-            {achievementCategoryLabel(entry.category)}
+            {achievementCategoryLabel(entry.category, language)}
           </span>
           <span className="rounded-full bg-[#eef8f1] px-2.5 py-1 text-[0.66rem] font-black uppercase tracking-[0.14em] text-[#14874b]">
-            {achievementStatusLabel(true)}
+            {achievementStatusLabel(true, language)}
           </span>
           {entry.pinned ? (
-          <span className="rounded-full bg-[#edf5ec] px-2.5 py-1 text-[0.66rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
-            {achievementPinnedLabel()}
-          </span>
+            <span className="rounded-full bg-[#edf5ec] px-2.5 py-1 text-[0.66rem] font-black uppercase tracking-[0.14em] text-[#5c7d60]">
+              {achievementPinnedLabel(language)}
+            </span>
           ) : null}
         </div>
         <h3 className="mt-3 text-[1.12rem] font-black tracking-[-0.03em] text-[#3d342a]">
-          {achievementDisplayName(entry.achievement)}
+          {achievementDisplayName(entry.achievement, language)}
         </h3>
         <div className="mt-2 text-[0.86rem] font-semibold leading-6 text-[#7f7368]">
-          {formatUnlockedAt(entry.achievement.earned_at)}
+          {formatUnlockedAt(entry.achievement.earned_at, language)}
         </div>
       </div>
 
@@ -312,9 +327,66 @@ function UnlockedAchievementCard({
 export function AchievementWallPage() {
   const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.auth.user);
+  const language = useProductLanguage();
+  const isChinese = language === 'zh-CN';
   const [manageMode, setManageMode] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [localPinnedIds, setLocalPinnedIds] = useState<string[]>([]);
+  const wallText = isChinese
+    ? {
+        eyebrow: '成就展示墙',
+        title: '成就馆',
+        intro: '把学习里程碑、连击节奏和社交成长陈列在同一面展示墙里。先固定你最想保留的徽章，再持续点亮下面的进度。',
+        done: '完成整理',
+        manage: '管理精选',
+        unlocked: '已解锁',
+        active: '进行中',
+        pinned: '已精选',
+        unlockedHint: '已经收入展柜、随时可以回顾的成就。',
+        activeHint: '距离点亮只差一点，再推进一小步。',
+        pinnedHint: '顶部陈列区最多保留 3 枚你最想展示的徽章。',
+        featuredTitle: '精选展位',
+        featuredManage: '当前处于精选整理模式，点击卡片即可加入或移出顶部展示区。',
+        featuredIdle: '把你最想保留的 3 枚徽章放在这里，作为个人学习陈列。',
+        allCategories: '全部类别',
+        categorySuffix: '分类',
+        all: '全部',
+        inProgressTitle: '进行中成就',
+        inProgressBody: '优先点亮最接近完成的目标，让展示墙更快变得丰富。',
+        inProgressCount: (count: number) => `${count} 项待完成`,
+        inProgressEmpty: '当前筛选下没有进行中的成就，试试切换分类，或继续学习去解锁新的目标。',
+        unlockedTitle: '已解锁藏品',
+        unlockedBody: '已经完成的徽章会沉淀在这里，成为你持续学习留下的纪念。',
+        unlockedCount: (count: number) => `${count} 项已收入`,
+        unlockedEmpty: '还没有已解锁成就，先从一门课程或一次连击开始。',
+      }
+    : {
+        eyebrow: 'Achievement wall',
+        title: 'Achievement Gallery',
+        intro: 'Display your learning milestones, streaks, and social growth on one curated wall. Pin the badges you want to keep in view, then keep lighting up the rest below.',
+        done: 'Done organizing',
+        manage: 'Manage featured',
+        unlocked: 'Unlocked',
+        active: 'In progress',
+        pinned: 'Pinned',
+        unlockedHint: 'Achievements already collected and ready to revisit anytime.',
+        activeHint: 'Only a little more progress is left before these light up.',
+        pinnedHint: 'You can keep up to 3 favorite badges in the featured top row.',
+        featuredTitle: 'Featured slots',
+        featuredManage: 'Manage mode is on. Click cards to add or remove them from the featured row.',
+        featuredIdle: 'Keep your 3 favorite badges here as your personal learning showcase.',
+        allCategories: 'All categories',
+        categorySuffix: 'category',
+        all: 'All',
+        inProgressTitle: 'In-progress achievements',
+        inProgressBody: 'Focus on the closest goals first so your wall fills up faster.',
+        inProgressCount: (count: number) => `${count} pending`,
+        inProgressEmpty: 'No in-progress achievements match this filter yet. Switch categories or keep learning to unlock more.',
+        unlockedTitle: 'Unlocked collection',
+        unlockedBody: 'Completed badges settle here as a record of the learning you have already done.',
+        unlockedCount: (count: number) => `${count} collected`,
+        unlockedEmpty: 'No unlocked achievements yet. Start with one course or one streak.',
+      };
 
   const achievementsQuery = useQuery({
     queryKey: ['viewer', 'achievements', user?.id],
@@ -360,7 +432,7 @@ export function AchievementWallPage() {
       .map((achievement) => ({
         achievement,
         pinned: pinnedIds.includes(achievement.id),
-        progress: achievementProgress(achievement, statsQuery.data, followQuery.data),
+        progress: achievementProgress(achievement, statsQuery.data, followQuery.data, language),
         category: achievementDisplayCategory(achievement),
       }))
       .sort((left, right) => {
@@ -375,7 +447,7 @@ export function AchievementWallPage() {
 
         return achievementSortIndex(left.achievement) - achievementSortIndex(right.achievement);
       });
-  }, [achievements, followQuery.data, pinnedIds, statsQuery.data]);
+  }, [achievements, followQuery.data, language, pinnedIds, statsQuery.data]);
 
   const filteredEntries = useMemo(() => {
     if (selectedCategory === 'all') {
@@ -460,13 +532,13 @@ export function AchievementWallPage() {
           <div className="max-w-[44rem]">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8b7d72]">
               <Sparkles size={14} />
-              {'成就展示墙'}
+              {wallText.eyebrow}
             </div>
             <h1 className="mt-5 text-[3rem] font-semibold tracking-[-0.04em] text-[#3d342a] md:text-[3.4rem]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-              {'成就馆'}
+              {wallText.title}
             </h1>
             <p className="mt-4 max-w-[40rem] text-[1rem] leading-8 text-[#6f6359]">
-              {'把学习里程碑、连击节奏和社交成长陈列在同一面展示墙里。先固定你最想保留的徽章，再持续点亮下面的进度。'}
+              {wallText.intro}
             </p>
           </div>
 
@@ -481,30 +553,30 @@ export function AchievementWallPage() {
             onClick={() => setManageMode((current) => !current)}
           >
             <Pin size={16} />
-            {manageMode ? '完成整理' : '管理精选'}
+            {manageMode ? wallText.done : wallText.manage}
           </button>
         </div>
 
         <div className="mt-7 grid gap-4 lg:grid-cols-3">
           <SummaryCard
             icon={<CheckCircle2 size={20} />}
-            label="已解锁"
+            label={wallText.unlocked}
             value={summary.unlockedCount}
-            hint="已经收入展柜、随时可以回顾的成就。"
+            hint={wallText.unlockedHint}
             className="border-[#d6dfcf] bg-[linear-gradient(135deg,#edf5ec_0%,#fffdf9_78%)]"
           />
           <SummaryCard
             icon={<Clock3 size={20} />}
-            label="进行中"
+            label={wallText.active}
             value={summary.activeCount}
-            hint="距离点亮只差一点，再推进一小步。"
+            hint={wallText.activeHint}
             className="border-[#ddd3e3] bg-[linear-gradient(135deg,#f3edf7_0%,#fffdf9_78%)]"
           />
           <SummaryCard
             icon={<Trophy size={20} />}
-            label="已精选"
+            label={wallText.pinned}
             value={summary.pinnedCount}
-            hint="顶部陈列区最多保留 3 枚你最想展示的徽章。"
+            hint={wallText.pinnedHint}
             className="border-[#e7d0b3] bg-[linear-gradient(135deg,#fbf3e6_0%,#fffdf9_78%)]"
           />
         </div>
@@ -512,13 +584,15 @@ export function AchievementWallPage() {
         <div className="mt-8 rounded-[30px] border border-[#ddd3c3] bg-white/78 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] md:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'精选展位'}</h2>
+              <h2 className="text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{wallText.featuredTitle}</h2>
               <p className="mt-2 text-[0.92rem] font-medium text-[#7f7368]">
-                {manageMode ? '当前处于精选整理模式，点击卡片即可加入或移出顶部展示区。' : '把你最想保留的 3 枚徽章放在这里，作为个人学习陈列。'}
+                {manageMode ? wallText.featuredManage : wallText.featuredIdle}
               </p>
             </div>
             <div className="rounded-full bg-[#f3efe8] px-4 py-2 text-[0.76rem] font-black uppercase tracking-[0.16em] text-[#7f7368]">
-              {selectedCategory === 'all' ? '全部类别' : `${achievementCategoryLabel(selectedCategory)}分类`}
+              {selectedCategory === 'all'
+                ? wallText.allCategories
+                : `${achievementCategoryLabel(selectedCategory, language)} ${wallText.categorySuffix}`}
             </div>
           </div>
 
@@ -551,7 +625,7 @@ export function AchievementWallPage() {
               )}
               onClick={() => setSelectedCategory(category)}
             >
-              {category === 'all' ? '全部' : achievementCategoryLabel(category)}
+              {category === 'all' ? wallText.all : achievementCategoryLabel(category, language)}
             </button>
           ))}
         </div>
@@ -559,19 +633,19 @@ export function AchievementWallPage() {
         <div className="mt-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 className="text-[1.9rem] font-black tracking-[-0.05em] text-[#1d2638]">{'进行中成就'}</h2>
+              <h2 className="text-[1.9rem] font-black tracking-[-0.05em] text-[#1d2638]">{wallText.inProgressTitle}</h2>
               <p className="mt-2 text-[0.92rem] font-medium text-[#7c8ba6]">
-                {'优先点亮最接近完成的目标，让展示墙更快变得丰富。'}
+                {wallText.inProgressBody}
               </p>
             </div>
             <div className="text-[0.82rem] font-black uppercase tracking-[0.16em] text-[#9aa7bd]">
-              {`${inProgressEntries.length} 项待完成`}
+              {wallText.inProgressCount(inProgressEntries.length)}
             </div>
           </div>
 
           {inProgressEntries.length === 0 ? (
             <div className="mt-5 rounded-[26px] border border-dashed border-[#ccd7e8] bg-[#fbfdff] px-6 py-10 text-center text-[0.98rem] font-semibold text-[#93a1b8]">
-              {'当前筛选下没有进行中的成就，试试切换分类，或继续学习去解锁新的目标。'}
+              {wallText.inProgressEmpty}
             </div>
           ) : (
             <div className="mt-5 grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
@@ -590,19 +664,19 @@ export function AchievementWallPage() {
         <div className="mt-10">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 className="text-[1.9rem] font-black tracking-[-0.05em] text-[#1d2638]">{'已解锁藏品'}</h2>
+              <h2 className="text-[1.9rem] font-black tracking-[-0.05em] text-[#1d2638]">{wallText.unlockedTitle}</h2>
               <p className="mt-2 text-[0.92rem] font-medium text-[#7c8ba6]">
-                {'已经完成的徽章会沉淀在这里，成为你持续学习留下的纪念。'}
+                {wallText.unlockedBody}
               </p>
             </div>
             <div className="text-[0.82rem] font-black uppercase tracking-[0.16em] text-[#9aa7bd]">
-              {`${unlockedEntries.length} 项已收入`}
+              {wallText.unlockedCount(unlockedEntries.length)}
             </div>
           </div>
 
           {unlockedEntries.length === 0 ? (
             <div className="mt-5 rounded-[26px] border border-dashed border-[#ccd7e8] bg-[#fbfdff] px-6 py-10 text-center text-[0.98rem] font-semibold text-[#93a1b8]">
-              {'还没有已解锁成就，先从一门课程或一次连击开始。'}
+              {wallText.unlockedEmpty}
             </div>
           ) : (
             <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">

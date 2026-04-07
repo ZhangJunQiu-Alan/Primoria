@@ -113,7 +113,7 @@ function BrandLockup() {
   const copy = useViewerCopy();
 
   return (
-    <Link to="/" className="auth-brand-lockup" aria-label={`${copy.brand.name} home`}>
+    <Link to="/" className="auth-brand-lockup" aria-label={`${copy.brand.name} ${copy.auth.landingLabel}`}>
       <span className="auth-brand-lockup__mark">
         <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
       </span>

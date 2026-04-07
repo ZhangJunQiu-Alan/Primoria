@@ -142,7 +142,7 @@ export function LoginPage() {
 
       <AuthDivider />
 
-      <section className="auth-form-block" aria-label="Email sign in form">
+      <section className="auth-form-block" aria-label={copy.auth.emailSectionTitle}>
         <div className="auth-form-block__header">
           <h3 className="auth-form-block__title">
             {isForgotMode ? copy.auth.forgotModeTitle : copy.auth.emailSectionTitle}
