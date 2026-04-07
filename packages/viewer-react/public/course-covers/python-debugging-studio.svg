@@ -1,0 +1,57 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" rx="48" fill="#F8F4EC"/>
+  <rect x="54" y="54" width="1492" height="792" rx="42" fill="url(#bg)"/>
+  <circle cx="1288" cy="184" r="184" fill="url(#sageGlow)"/>
+  <circle cx="348" cy="722" r="228" fill="url(#amberGlow)"/>
+  <rect x="146" y="132" width="864" height="564" rx="40" fill="#FFFDF8" stroke="#D9CCBC" stroke-width="4"/>
+  <rect x="186" y="176" width="784" height="72" rx="22" fill="#F1EADF"/>
+  <circle cx="232" cy="212" r="11" fill="#C4956A"/>
+  <circle cx="270" cy="212" r="11" fill="#A7C5AC"/>
+  <circle cx="308" cy="212" r="11" fill="#9481A8"/>
+  <rect x="208" y="286" width="430" height="330" rx="32" fill="url(#editorCard)"/>
+  <path d="M252 364H424" stroke="#DCE8DE" stroke-width="16" stroke-linecap="round"/>
+  <path d="M252 418H506" stroke="#DCE8DE" stroke-width="16" stroke-linecap="round"/>
+  <path d="M252 472H562" stroke="#DCE8DE" stroke-width="16" stroke-linecap="round"/>
+  <path d="M252 526H462" stroke="#DCE8DE" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="604" cy="348" r="74" fill="#FFF8EE" stroke="#C4956A" stroke-width="10"/>
+  <circle cx="604" cy="348" r="18" fill="#C4956A"/>
+  <path d="M654 400L714 460" stroke="#C4956A" stroke-width="12" stroke-linecap="round"/>
+  <rect x="700" y="302" width="236" height="180" rx="28" fill="#FFF8EF" stroke="#E0D1C0" stroke-width="4"/>
+  <path d="M752 358H884" stroke="#9481A8" stroke-width="14" stroke-linecap="round"/>
+  <path d="M752 404H842" stroke="#7A9E7E" stroke-width="14" stroke-linecap="round"/>
+  <path d="M752 450H820" stroke="#C4956A" stroke-width="14" stroke-linecap="round"/>
+  <rect x="1062" y="194" width="332" height="452" rx="36" fill="#FFFDF8" stroke="#D9CCBC" stroke-width="4"/>
+  <rect x="1110" y="248" width="236" height="94" rx="24" fill="url(#consoleCard)"/>
+  <path d="M1154 294H1300" stroke="#FFFDF8" stroke-width="14" stroke-linecap="round"/>
+  <rect x="1110" y="384" width="236" height="196" rx="28" fill="#F3ECE2"/>
+  <path d="M1150 438H1306" stroke="#D8CCBC" stroke-width="16" stroke-linecap="round"/>
+  <path d="M1150 492H1280" stroke="#E3D7C8" stroke-width="16" stroke-linecap="round"/>
+  <path d="M1150 546H1232" stroke="#E3D7C8" stroke-width="16" stroke-linecap="round"/>
+  <rect x="248" y="736" width="1148" height="84" rx="30" fill="#FFF8EE" stroke="#E1D2C2" stroke-width="3"/>
+  <rect x="288" y="766" width="212" height="22" rx="11" fill="#EFE6DA"/>
+  <rect x="526" y="766" width="154" height="22" rx="11" fill="#E4EFE5"/>
+  <rect x="706" y="766" width="186" height="22" rx="11" fill="#EFE4D8"/>
+  <defs>
+    <linearGradient id="bg" x1="100" y1="88" x2="1458" y2="840" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF8F2"/>
+      <stop offset="0.48" stop-color="#F7F0E5"/>
+      <stop offset="1" stop-color="#F1EAE0"/>
+    </linearGradient>
+    <radialGradient id="sageGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1288 184) rotate(90) scale(184)">
+      <stop stop-color="#E4EFE4"/>
+      <stop offset="1" stop-color="#E4EFE4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="amberGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(348 722) rotate(90) scale(228)">
+      <stop stop-color="#F4E2CC"/>
+      <stop offset="1" stop-color="#F4E2CC" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="editorCard" x1="208" y1="286" x2="638" y2="616" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#27463A"/>
+      <stop offset="1" stop-color="#162B24"/>
+    </linearGradient>
+    <linearGradient id="consoleCard" x1="1110" y1="248" x2="1346" y2="342" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A7C5AC"/>
+      <stop offset="1" stop-color="#7A9E7E"/>
+    </linearGradient>
+  </defs>
+</svg>

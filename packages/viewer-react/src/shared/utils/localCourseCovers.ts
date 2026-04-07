@@ -27,6 +27,21 @@ const LOCAL_COURSE_COVERS: LocalCourseCover[] = [
     slugs: ['motion-and-mechanics-observation'],
     titles: ['运动与力学观察'],
   },
+  {
+    assetPath: 'course-covers/python-debugging-studio.svg',
+    slugs: ['python-debugging-studio-70000000'],
+    titles: ['Python Debugging Studio'],
+  },
+  {
+    assetPath: 'course-covers/physics-motion-forces-lab.svg',
+    slugs: ['physics-motion-and-forces-lab-70000000'],
+    titles: ['Physics Motion and Forces Lab'],
+  },
+  {
+    assetPath: 'course-covers/data-ai-foundations-workshop.svg',
+    slugs: ['data-and-ai-foundations-workshop-70000000'],
+    titles: ['Data and AI Foundations Workshop'],
+  },
 ];
 
 function normalizeKey(value: string | null | undefined) {

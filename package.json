@@ -6,6 +6,7 @@
     "db:types:check": "node scripts/check-db-types.js",
     "dev:viewer": "pnpm --filter @primoria/viewer-react dev",
     "build:viewer": "pnpm --filter @primoria/viewer-react build",
+    "seed:author-courses": "node ./scripts/seed-author-courses.mjs",
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"

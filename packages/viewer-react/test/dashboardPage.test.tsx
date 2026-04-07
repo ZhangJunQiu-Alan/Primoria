@@ -37,10 +37,6 @@ vi.mock('@/queries/dashboardAnalytics', () => ({
   useDashboardAnalytics: (...args: unknown[]) => mockUseDashboardAnalytics(...args),
 }));
 
-vi.mock('@/components/account/AccountMenu', () => ({
-  AccountMenu: () => <div>Account menu</div>,
-}));
-
 const courseRows = [
   {
     id: 'course-1',
@@ -225,8 +221,11 @@ describe('DashboardPage', () => {
     expect(within(weeklyCard as HTMLElement).getByText('48')).toBeInTheDocument();
     expect(screen.getByText('Views: 120 · Students: 18')).toBeInTheDocument();
     expect(screen.getByText('+12.5% vs last week')).toBeInTheDocument();
+    expect(screen.queryByText('Create new course')).not.toBeInTheDocument();
+    expect(screen.queryByText('Continue editing')).not.toBeInTheDocument();
+    expect(screen.queryByText('View analytics')).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /view analytics/i }));
+    await user.click(screen.getByRole('button', { name: /数据中心|data center/i }));
 
     const publishedViewersCard = await screen.findByText('Published viewers');
     expect(within(publishedViewersCard.closest('article') as HTMLElement).getByText('204')).toBeInTheDocument();

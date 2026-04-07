@@ -1,4 +1,4 @@
-import type { ViewerCourse, ViewerEnrollment, ViewerSubject } from '@/shared/api/viewer/types';
+import type { ViewerCourse, ViewerEnrollment, ViewerOwnedCourse, ViewerSubject } from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
@@ -33,6 +33,14 @@ function normalizeCourse(row: Record<string, unknown>): ViewerCourse {
     subject_id: String(row.subject_id ?? subject.id),
     subjects: subject,
     published_at: typeof row.published_at === 'string' ? row.published_at : null,
+  };
+}
+
+function normalizeOwnedCourse(row: Record<string, unknown>): ViewerOwnedCourse {
+  return {
+    ...normalizeCourse(row),
+    status: String(row.status ?? 'draft'),
+    updated_at: typeof row.updated_at === 'string' ? row.updated_at : null,
   };
 }
 
@@ -88,6 +96,36 @@ export async function fetchCourses(params: { searchQuery?: string; subjectId?: s
   }
 
   return (data ?? []).map((row) => normalizeCourse(row as Record<string, unknown>));
+}
+
+export async function fetchOwnedCourses(params: { userId: string; searchQuery?: string; subjectId?: string }) {
+  const { userId, searchQuery, subjectId } = params;
+  if (usesViewerFixtures()) {
+    return [];
+  }
+
+  let query = supabase
+    .from('courses')
+    .select(
+      'id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, status, updated_at, subjects(id, name, color_hex)',
+    )
+    .eq('author_id', userId);
+
+  if (subjectId) {
+    query = query.eq('subject_id', subjectId);
+  }
+
+  const trimmed = searchQuery?.trim();
+  if (trimmed) {
+    query = query.or(`title.ilike.%${trimmed}%,description.ilike.%${trimmed}%`);
+  }
+
+  const { data, error } = await query.order('updated_at', { ascending: false });
+  if (error) {
+    throw error;
+  }
+
+  return (data ?? []).map((row) => normalizeOwnedCourse(row as Record<string, unknown>));
 }
 
 export async function fetchEnrollments(userId: string) {

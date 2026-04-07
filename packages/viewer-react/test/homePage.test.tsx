@@ -12,6 +12,7 @@ describe('HomePage', () => {
       id: 'course-a',
       title: 'Physics Lab Sprint',
       slug: 'physics-lab-sprint',
+      thumbnail_url: 'https://example.com/course-a-cover.png',
     };
     const courseB = {
       ...fixture.courses[0],
@@ -19,6 +20,7 @@ describe('HomePage', () => {
       title: 'Data Signals Studio',
       slug: 'data-signals-studio',
       difficulty_level: 'intermediate',
+      thumbnail_url: 'https://example.com/course-b-cover.png',
     };
 
     writeFixtureState({
@@ -48,6 +50,10 @@ describe('HomePage', () => {
 
     const currentCourseCard = await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 });
     expect(within(currentCourseCard).getByText(/Data Signals Studio/i)).toBeInTheDocument();
+    expect(within(currentCourseCard).getByTestId('home-current-course-cover')).toHaveAttribute(
+      'src',
+      'https://example.com/course-b-cover.png',
+    );
     expect(
       await within(currentCourseCard).findByTestId('home-continue-link', {}, { timeout: 10000 }),
     ).toHaveAttribute('href', '/lesson/lesson-demo-1');
@@ -60,6 +66,11 @@ describe('HomePage', () => {
         /Physics Lab Sprint/i,
       ),
     ).toBeInTheDocument();
+    expect(
+      within(await screen.findByTestId('home-current-course-card', {}, { timeout: 10000 })).getByTestId(
+        'home-current-course-cover',
+      ),
+    ).toHaveAttribute('src', 'https://example.com/course-a-cover.png');
     expect(window.localStorage.getItem('viewer.home.current-course:demo-user')).toBe('course-a');
   });
 
@@ -139,6 +150,7 @@ describe('HomePage', () => {
     expect(await screen.findByRole('heading', { name: /还没有当前学习课程/i })).toBeInTheDocument();
     expect(await screen.findByRole('link', { name: /浏览课程/i })).toHaveAttribute('href', '/library');
     expect(screen.queryByTestId('home-course-switcher')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('home-current-course-cover')).not.toBeInTheDocument();
     expect(await screen.findByTestId('home-live2d-stage')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^中文$/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^English$/i })).not.toBeInTheDocument();
