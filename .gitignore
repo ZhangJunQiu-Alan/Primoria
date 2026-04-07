@@ -33,6 +33,8 @@ coverage/
 # Flutter local/generated artifacts
 Builder/
 Viewer/
+!packages/viewer-react/src/shared/api/viewer/
+!packages/viewer-react/src/shared/api/viewer/tutorDocumentsApi.ts
 **/.dart_tool/
 **/.flutter-plugins
 **/.flutter-plugins-dependencies

@@ -24,6 +24,30 @@ export type ViewerCourse = {
   published_at: string | null;
 };
 
+export type ViewerOwnedCourse = ViewerCourse & {
+  status: string;
+  updated_at: string | null;
+};
+
+export type TutorDocument = {
+  id: string;
+  filename: string;
+  mime_type: string;
+  extracted_chars: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CreateQuizFromDocsRequest = {
+  documentIds: string[];
+  questionCount: number;
+};
+
+export type CreateQuizFromDocsResponse = {
+  courseId: string;
+  courseTitle: string;
+};
+
 export type ViewerEnrollment = {
   id?: string;
   course_id: string;
