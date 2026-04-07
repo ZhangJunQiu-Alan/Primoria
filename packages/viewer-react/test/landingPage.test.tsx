@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import { screen, within } from '@testing-library/react';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { renderRoute } from './renderApp';
@@ -34,7 +33,10 @@ describe('LandingPage', () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByTestId('landing-hero-primary-cta')).toHaveAttribute('href', '/register');
+    expect(screen.getByTestId('landing-hero-secondary-cta')).toHaveAttribute('href', '/login');
     expect(screen.getByTestId('landing-header-login')).toHaveAttribute('href', '/login');
+    expect(screen.queryByRole('button', { name: /^中文$/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^English$/i })).not.toBeInTheDocument();
   });
 
   it('renders the same platform structure in English', async () => {
@@ -51,15 +53,18 @@ describe('LandingPage', () => {
     expect(screen.getByRole('heading', { name: /Builder Dashboard keeps the operating layer/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Parent mode stays secondary in the layout/i })).toBeInTheDocument();
     expect(screen.getByTestId('landing-hero-primary-cta')).toHaveAttribute('href', '/register');
+    expect(screen.getByTestId('landing-hero-secondary-cta')).toHaveAttribute('href', '/login');
   });
 
-  it('switches landing copy between zh-CN and English', async () => {
-    const user = userEvent.setup();
+  it('renders the English landing navigation when language preference is preset', async () => {
+    window.localStorage.setItem(
+      VIEWER_PREFERENCES_STORAGE_KEY,
+      JSON.stringify({
+        language: 'en',
+      }),
+    );
+
     renderRoute('/');
-
-    expect(await screen.findByRole('heading', { name: /从创作到学习/i })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /^English$/i }));
 
     expect(await screen.findByRole('heading', { name: /From course creation to active learning/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /^Product$/i })).toHaveAttribute('href', '#product');

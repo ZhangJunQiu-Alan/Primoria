@@ -261,8 +261,8 @@ serve(async (req) => {
       });
     }
 
-    if (!Number.isInteger(questionCount) || questionCount < 5 || questionCount > 50) {
-      return new Response(JSON.stringify({ error: 'questionCount must be an integer between 5 and 50.' }), {
+    if (!Number.isInteger(questionCount) || questionCount < 5 || questionCount > 30) {
+      return new Response(JSON.stringify({ error: 'questionCount must be an integer between 5 and 30.' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
