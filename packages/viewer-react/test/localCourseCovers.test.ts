@@ -30,4 +30,34 @@ describe('resolveLocalCourseThumbnailUrl', () => {
       }),
     ).toBe('https://example.com/existing-cover.png');
   });
+
+  it('returns the local cover for the seeded python debugging course', () => {
+    expect(
+      resolveLocalCourseThumbnailUrl({
+        slug: 'python-debugging-studio-70000000',
+        title: 'Python Debugging Studio',
+        thumbnailUrl: null,
+      }),
+    ).toContain('/course-covers/python-debugging-studio.svg');
+  });
+
+  it('returns the local cover for the seeded physics lab course', () => {
+    expect(
+      resolveLocalCourseThumbnailUrl({
+        slug: 'physics-motion-and-forces-lab-70000000',
+        title: 'Physics Motion and Forces Lab',
+        thumbnailUrl: null,
+      }),
+    ).toContain('/course-covers/physics-motion-forces-lab.svg');
+  });
+
+  it('returns the local cover for the seeded data ai workshop course', () => {
+    expect(
+      resolveLocalCourseThumbnailUrl({
+        slug: 'data-and-ai-foundations-workshop-70000000',
+        title: 'Data and AI Foundations Workshop',
+        thumbnailUrl: null,
+      }),
+    ).toContain('/course-covers/data-ai-foundations-workshop.svg');
+  });
 });

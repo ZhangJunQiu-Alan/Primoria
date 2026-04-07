@@ -1,11 +1,12 @@
-import { act, screen } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ViewerCourse, ViewerSubject } from '@/shared/api/viewer/types';
 import { renderRoute } from './renderApp';
 
-const { mockFetchSubjects, mockFetchCourses } = vi.hoisted(() => ({
+const { mockFetchSubjects, mockFetchCourses, mockFetchOwnedCourses } = vi.hoisted(() => ({
   mockFetchSubjects: vi.fn(),
   mockFetchCourses: vi.fn(),
+  mockFetchOwnedCourses: vi.fn(),
 }));
 
 vi.mock('@/shared/api/viewer/catalogApi', async () => {
@@ -17,6 +18,7 @@ vi.mock('@/shared/api/viewer/catalogApi', async () => {
     ...actual,
     fetchSubjects: mockFetchSubjects,
     fetchCourses: mockFetchCourses,
+    fetchOwnedCourses: mockFetchOwnedCourses,
   };
 });
 
@@ -52,6 +54,7 @@ describe('LibraryPage', () => {
   beforeEach(() => {
     mockFetchSubjects.mockReset();
     mockFetchCourses.mockReset();
+    mockFetchOwnedCourses.mockReset();
     mockFetchSubjects.mockResolvedValue([subjectAll, { ...subjectAll, id: 'subject-data', name: 'Data Science & AI' }]);
     mockFetchCourses.mockImplementation(async ({ searchQuery }: { searchQuery?: string }) => {
       const normalized = searchQuery?.trim().toLowerCase() ?? '';
@@ -63,6 +66,7 @@ describe('LibraryPage', () => {
       }
       return [courseData];
     });
+    mockFetchOwnedCourses.mockResolvedValue([]);
   });
 
   it('filters courses by subject and search query', async () => {
@@ -163,5 +167,133 @@ describe('LibraryPage', () => {
 
     const courseHeadings = await screen.findAllByRole('heading', { level: 3 });
     expect(courseHeadings.map((heading) => heading.textContent)).toEqual(['进阶推荐', '挑战推荐', '当前课程']);
+  });
+
+  it('renders owned courses above all courses, toggles the section, and links into the course page', async () => {
+    const user = userEvent.setup();
+    const ownedCourse: ViewerCourse = {
+      ...coursePhysics,
+      id: 'owned-course',
+      title: '我的 Python 草稿',
+      slug: 'my-python-draft',
+      description: 'Owned course summary',
+      estimated_minutes: 600,
+      tags: ['owned-tag'],
+    };
+    mockFetchOwnedCourses.mockResolvedValue([ownedCourse]);
+
+    const { locationRef } = renderRoute('/library', 'user');
+
+    expect(await screen.findByRole('heading', { name: /自有课程/i }, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /全部课程/i }, { timeout: 10000 })).toBeInTheDocument();
+
+    const headings = screen.getAllByRole('heading', { level: 2 });
+    expect(headings.map((heading) => heading.textContent)).toEqual(['自有课程', '全部课程']);
+
+    const ownedLink = screen.getByRole('link', { name: /我的 python 草稿/i });
+    expect(ownedLink).toHaveAttribute('href', '/course/owned-course');
+    expect(screen.queryByText(/owned course summary/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/10 小时/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/owned-tag/i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /折叠自有课程/i }));
+    expect(screen.queryByText(/我的 python 草稿/i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /展开自有课程/i }));
+    expect(await screen.findByText(/我的 python 草稿/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('link', { name: /我的 python 草稿/i }));
+    await waitFor(() => {
+      expect(locationRef.pathname).toBe('/course/owned-course');
+    });
+  });
+
+  it('applies subject and search filters to both owned and public courses', async () => {
+    const user = userEvent.setup();
+    const subjectData: ViewerSubject = {
+      id: 'subject-data',
+      name: 'Data Science & AI',
+      color_hex: '#9481A8',
+    };
+    const publicPhysics = coursePhysics;
+    const publicData: ViewerCourse = {
+      ...courseData,
+      id: 'public-data',
+      title: '公开数据课程',
+      subject_id: subjectData.id,
+      subjects: subjectData,
+    };
+    const ownedPhysics: ViewerCourse = {
+      ...coursePhysics,
+      id: 'owned-physics',
+      title: '我的物理课程',
+      slug: 'owned-physics',
+      description: 'Owned physics',
+    };
+    const ownedData: ViewerCourse = {
+      ...courseData,
+      id: 'owned-data',
+      title: '我的数据课程',
+      slug: 'owned-data',
+      description: 'Owned data',
+      subject_id: subjectData.id,
+      subjects: subjectData,
+    };
+
+    mockFetchSubjects.mockResolvedValue([subjectAll, subjectData]);
+    mockFetchCourses.mockImplementation(
+      async ({ searchQuery, subjectId }: { searchQuery?: string; subjectId?: string }) => {
+        const normalized = searchQuery?.trim().toLowerCase() ?? '';
+        return [publicPhysics, publicData].filter((course) => {
+          const subjectMatch = !subjectId || course.subject_id === subjectId;
+          const searchMatch =
+            !normalized ||
+            course.title.toLowerCase().includes(normalized) ||
+            course.description.toLowerCase().includes(normalized);
+          return subjectMatch && searchMatch;
+        });
+      },
+    );
+    mockFetchOwnedCourses.mockImplementation(
+      async ({ searchQuery, subjectId }: { searchQuery?: string; subjectId?: string }) => {
+        const normalized = searchQuery?.trim().toLowerCase() ?? '';
+        return [ownedPhysics, ownedData].filter((course) => {
+          const subjectMatch = !subjectId || course.subject_id === subjectId;
+          const searchMatch =
+            !normalized ||
+            course.title.toLowerCase().includes(normalized) ||
+            course.description.toLowerCase().includes(normalized);
+          return subjectMatch && searchMatch;
+        });
+      },
+    );
+
+    renderRoute('/library', 'user');
+
+    expect(await screen.findByText(/我的物理课程/i)).toBeInTheDocument();
+    expect(await screen.findByText(/公开数据课程/i)).toBeInTheDocument();
+
+    await user.click(await screen.findByRole('button', { name: /data science & ai/i }, { timeout: 10000 }));
+    expect(await screen.findByText(/我的数据课程/i)).toBeInTheDocument();
+    expect(await screen.findByText(/公开数据课程/i)).toBeInTheDocument();
+    expect(screen.queryByText(/我的物理课程/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/运动与力学观察/i)).not.toBeInTheDocument();
+
+    const searchBox = await screen.findByRole('textbox', { name: /搜索/i });
+    await user.clear(searchBox);
+    await user.type(searchBox, '我的');
+    await act(async () => {
+      await new Promise((resolve) => window.setTimeout(resolve, 350));
+    });
+
+    expect(await screen.findByText(/我的数据课程/i)).toBeInTheDocument();
+    expect(screen.queryByText(/公开数据课程/i)).not.toBeInTheDocument();
+  });
+
+  it('hides the owned courses section when the user has no authored courses', async () => {
+    renderRoute('/library', 'user');
+
+    expect(await screen.findByRole('heading', { name: /全部课程/i }, { timeout: 10000 })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /自有课程/i })).not.toBeInTheDocument();
   });
 });
