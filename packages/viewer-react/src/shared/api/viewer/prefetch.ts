@@ -19,3 +19,12 @@ export function prefetchLibraryCatalog(
 ): void {
   // no-op: prefetch stub
 }
+
+
+export function prefetchCourseDetail(
+  _queryClient: QueryClient,
+  _courseSlug: string,
+  _options?: PrefetchOptions,
+): void {
+  // no-op: prefetch stub
+}
