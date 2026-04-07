@@ -75,12 +75,15 @@ function addUtcDays(date: Date, days: number) {
   return next;
 }
 
-function buildGithubHeatmap(history: Map<string, number>) {
+function buildGithubHeatmap(history: Map<string, number>, language: 'zh-CN' | 'en') {
   const today = startOfUtcDay(new Date());
   const firstDay = addUtcDays(today, -364);
   const weekAlignedStart = addUtcDays(firstDay, -firstDay.getUTCDay());
   const totalWeeks = 53;
   const weeks: HeatmapWeek[] = [];
+  const monthFormatter = new Intl.DateTimeFormat(language === 'zh-CN' ? 'zh-CN' : 'en-US', {
+    month: language === 'zh-CN' ? 'numeric' : 'short',
+  });
 
   for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex += 1) {
     const days: HeatmapCell[] = [];
@@ -116,7 +119,7 @@ function buildGithubHeatmap(history: Map<string, number>) {
     }
     seenMonths.add(monthKey);
     markers.push({
-      label: `${Number(markerDay.key.slice(5, 7))}月`,
+      label: monthFormatter.format(new Date(`${monthKey}-01T00:00:00Z`)),
       weekIndex,
     });
   });
@@ -154,10 +157,18 @@ function StatBlock({
   );
 }
 
-function AchievementSlot({ achievement }: { achievement: ViewerAchievement | null }) {
+function AchievementSlot({
+  achievement,
+  language,
+  emptyLabel,
+}: {
+  achievement: ViewerAchievement | null;
+  language: 'zh-CN' | 'en';
+  emptyLabel: string;
+}) {
   return (
     <div
-      title={achievement ? achievementDisplayName(achievement) : '空位'}
+      title={achievement ? achievementDisplayName(achievement, language) : emptyLabel}
       className={cn(
         'flex h-[5rem] w-[5rem] items-center justify-center rounded-[20px] border bg-[rgba(255,252,247,0.88)]',
         achievement
@@ -169,12 +180,12 @@ function AchievementSlot({ achievement }: { achievement: ViewerAchievement | nul
         <div className="flex h-full w-full items-center justify-center rounded-[16px] bg-white p-2.5">
           <img
             src={achievementBadgeAssetPath(achievement)}
-            alt={achievementDisplayName(achievement)}
+            alt={achievementDisplayName(achievement, language)}
             className="h-full w-full object-contain"
           />
         </div>
       ) : (
-        <div className="text-center text-[0.68rem] font-black uppercase tracking-[0.16em] text-[#9b8e85]">{'待添加'}</div>
+        <div className="text-center text-[0.68rem] font-black uppercase tracking-[0.16em] text-[#9b8e85]">{emptyLabel}</div>
       )}
     </div>
   );
@@ -185,11 +196,59 @@ export function ProfilePage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const language = useProductLanguage();
+  const isChinese = language === 'zh-CN';
   const user = useAppSelector((state) => state.auth.user);
   const heatmapViewportRef = useRef<HTMLDivElement | null>(null);
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
   const [heatmapCellSize, setHeatmapCellSize] = useState(14);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileText = isChinese
+    ? {
+        learner: '学习者',
+        emptySlot: '待添加',
+        confirmSignOut: '确定退出登录吗？',
+        openProfileMenu: '打开个人菜单',
+        settings: '设置',
+        about: '关于',
+        help: '帮助',
+        signOut: '退出登录',
+        courses: '课程',
+        totalXp: '总经验值',
+        dayStreak: '天连击',
+        fans: '粉丝',
+        learningActivity: '学习热力图',
+        thisYearXp: (xp: number) => `今年 ${xp} XP`,
+        less: '少',
+        more: '多',
+        weekdays: ['日', '一', '二', '三', '四', '五', '六'],
+        achievements: '我的成就',
+        viewAll: '查看全部',
+        allComplete: '你已完成全部成就，继续学习会有更多内容加入。',
+        unlocked: '已解锁',
+      }
+    : {
+        learner: 'Learner',
+        emptySlot: 'Open slot',
+        confirmSignOut: 'Sign out now?',
+        openProfileMenu: 'Open profile menu',
+        settings: 'Settings',
+        about: 'About',
+        help: 'Help',
+        signOut: 'Sign out',
+        courses: 'Courses',
+        totalXp: 'Total XP',
+        dayStreak: 'Day streak',
+        fans: 'Fans',
+        learningActivity: 'Learning activity',
+        thisYearXp: (xp: number) => `${xp} XP this year`,
+        less: 'Less',
+        more: 'More',
+        weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        achievements: 'My achievements',
+        viewAll: 'View all',
+        allComplete: 'You have completed every achievement. Keep learning and more will be added.',
+        unlocked: 'Unlocked',
+      };
 
   const profileQuery = useQuery({
     queryKey: ['viewer', 'profile', user?.id],
@@ -249,8 +308,8 @@ export function ProfilePage() {
   );
 
   const heatmapData = useMemo(
-    () => buildGithubHeatmap(xpHistoryQuery.data ?? new Map<string, number>()),
-    [xpHistoryQuery.data],
+    () => buildGithubHeatmap(xpHistoryQuery.data ?? new Map<string, number>(), language),
+    [language, xpHistoryQuery.data],
   );
 
   const totalXpThisYear = useMemo(() => {
@@ -262,7 +321,10 @@ export function ProfilePage() {
 
   const showcaseAchievements = useMemo(() => {
     const progressById = new Map(
-      achievements.map((achievement) => [achievement.id, achievementProgress(achievement, stats, followCounts)]),
+      achievements.map((achievement) => [
+        achievement.id,
+        achievementProgress(achievement, stats, followCounts, language),
+      ]),
     );
 
     const pending = achievements
@@ -284,7 +346,7 @@ export function ProfilePage() {
     return [...achievements]
       .sort((left, right) => achievementSortIndex(left) - achievementSortIndex(right))
       .slice(0, 4);
-  }, [achievements, followCounts, stats]);
+  }, [achievements, followCounts, language, stats]);
 
   useBootSplashGate(Boolean(profileError || (
     profileQuery.data &&
@@ -295,7 +357,7 @@ export function ProfilePage() {
     xpHistoryQuery.data
   )));
 
-  const displayName = profile?.username || user?.displayName || '学习者';
+  const displayName = profile?.username || user?.displayName || profileText.learner;
   const handle = profile?.username ? `@${profile.username}` : `@${displayName}`;
   const weekCount = heatmapData.weeks.length || 53;
   const cellGap = 4;
@@ -354,7 +416,7 @@ export function ProfilePage() {
 
   async function handleSignOut() {
     setIsProfileMenuOpen(false);
-    if (!window.confirm('确定退出登录吗？')) {
+    if (!window.confirm(profileText.confirmSignOut)) {
       return;
     }
     clearDemoRole();
@@ -416,7 +478,7 @@ export function ProfilePage() {
           <div ref={profileMenuRef} className="absolute right-5 top-5 z-20">
             <button
               type="button"
-              aria-label="打开个人菜单"
+              aria-label={profileText.openProfileMenu}
               className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[rgba(255,252,247,0.28)] text-white backdrop-blur transition hover:bg-[rgba(255,252,247,0.36)]"
               onClick={() => setIsProfileMenuOpen((current) => !current)}
             >
@@ -433,7 +495,7 @@ export function ProfilePage() {
                     navigate('/settings');
                   }}
                 >
-                  <span>{'设置'}</span>
+                  <span>{profileText.settings}</span>
                 </button>
                 <button
                   type="button"
@@ -443,7 +505,7 @@ export function ProfilePage() {
                     navigate('/support/terms');
                   }}
                 >
-                  <span>{'关于'}</span>
+                  <span>{profileText.about}</span>
                 </button>
                 <button
                   type="button"
@@ -453,7 +515,7 @@ export function ProfilePage() {
                     navigate('/support/help');
                   }}
                 >
-                  <span>{'帮助'}</span>
+                  <span>{profileText.help}</span>
                 </button>
                 <button
                   type="button"
@@ -462,7 +524,7 @@ export function ProfilePage() {
                     void handleSignOut();
                   }}
                 >
-                  <span>{'退出登录'}</span>
+                  <span>{profileText.signOut}</span>
                 </button>
               </div>
             ) : null}
@@ -484,7 +546,12 @@ export function ProfilePage() {
 
             <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3 pb-1">
               {pinnedSlots.map((achievement, index) => (
-                <AchievementSlot key={achievement?.id ?? `slot-${index}`} achievement={achievement} />
+                <AchievementSlot
+                  key={achievement?.id ?? `slot-${index}`}
+                  achievement={achievement}
+                  language={language}
+                  emptyLabel={profileText.emptySlot}
+                />
               ))}
             </div>
           </div>
@@ -504,20 +571,20 @@ export function ProfilePage() {
                 icon={<BookOpenText size={28} />}
                 iconBoxClass="bg-[#edf5ec] text-[#5c7d60]"
                 value={formatCompactStat(stats?.courses_completed ?? 0, language)}
-                label="课程"
+                label={profileText.courses}
               />
               <StatBlock
                 icon={<Sparkles size={28} />}
                 iconBoxClass="bg-[#fbf3e6] text-[#9a6f3f]"
                 value={formatCompactStat(stats?.total_xp ?? 0, language)}
-                label="总经验值"
+                label={profileText.totalXp}
               />
               <div className="border-t border-[#edf2f8] pt-4 md:border-t">
                 <StatBlock
                   icon={<Flame size={28} />}
                   iconBoxClass="bg-[#f7ede2] text-[#b46f53]"
                   value={formatCompactStat(stats?.current_streak ?? 0, language)}
-                  label="天连击"
+                  label={profileText.dayStreak}
                 />
               </div>
               <div className="border-t border-[#edf2f8] pt-4 md:border-t">
@@ -525,7 +592,7 @@ export function ProfilePage() {
                   icon={<Users size={28} />}
                   iconBoxClass="bg-[#f3edf7] text-[#7f6f88]"
                   value={formatCompactStat(followCounts?.followers ?? 0, language)}
-                  label="粉丝"
+                  label={profileText.fans}
                 />
               </div>
             </div>
@@ -534,18 +601,18 @@ export function ProfilePage() {
           <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-[1.76rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'学习热力图'}</h2>
+                <h2 className="text-[1.76rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{profileText.learningActivity}</h2>
               </div>
               <div className="text-right">
-                <div className="text-[0.92rem] font-black text-[#7f7368]">{`今年 ${totalXpThisYear} XP`}</div>
+                <div className="text-[0.92rem] font-black text-[#7f7368]">{profileText.thisYearXp(totalXpThisYear)}</div>
                 <div className="mt-1.5 inline-flex items-center gap-2 text-[0.7rem] font-semibold text-[#9b8e85]">
-                  <span>{'少'}</span>
+                  <span>{profileText.less}</span>
                   <div className="flex items-center gap-1">
                     {[0, 30, 80, 120, 180].map((value) => (
                       <span key={value} className={cn('h-3 w-3 rounded-[3px]', contributionTone(value))} />
                     ))}
                   </div>
-                  <span>{'多'}</span>
+                  <span>{profileText.more}</span>
                 </div>
               </div>
             </div>
@@ -569,7 +636,7 @@ export function ProfilePage() {
 
                 <div className="mt-3 flex gap-3">
                   <div className="grid grid-rows-7 gap-[4px] pt-[2px] text-[0.72rem] font-black text-[#9b8e85]">
-                    {['日', '一', '二', '三', '四', '五', '六'].map((label) => (
+                    {profileText.weekdays.map((label) => (
                       <div key={label} className="flex w-5 items-center" style={{ height: `${heatmapCellSize}px` }}>
                         {label}
                       </div>
@@ -601,24 +668,24 @@ export function ProfilePage() {
 
           <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-[1.76rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{'我的成就'}</h2>
+              <h2 className="text-[1.76rem] font-semibold tracking-[-0.04em] text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{profileText.achievements}</h2>
               <Link
                 to="/achievements"
                 className="inline-flex items-center gap-2 text-[0.88rem] font-black text-[#5c7d60] transition hover:text-[#4a674d]"
               >
-                <span>{'查看全部'}</span>
+                <span>{profileText.viewAll}</span>
                 <ChevronRight size={18} />
               </Link>
             </div>
 
             {showcaseAchievements.length === 0 ? (
               <div className="mt-6 rounded-[24px] border border-dashed border-[#cdbfaf] bg-[rgba(255,252,247,0.82)] px-6 py-8 text-center text-[0.98rem] font-semibold text-[#9b8e85]">
-                {'你已完成全部成就，继续学习会有更多内容加入。'}
+                {profileText.allComplete}
               </div>
             ) : (
               <div className="mt-5 grid gap-3 xl:grid-cols-2">
                 {showcaseAchievements.map((achievement) => {
-                  const progress = achievementProgress(achievement, stats, followCounts);
+                  const progress = achievementProgress(achievement, stats, followCounts, language);
                   return (
                     <div
                       key={achievement.id}
@@ -628,7 +695,7 @@ export function ProfilePage() {
                         <div className="flex h-[4.2rem] w-[4.2rem] shrink-0 items-center justify-center">
                           <img
                             src={achievementBadgeAssetPath(achievement)}
-                            alt={achievementDisplayName(achievement)}
+                            alt={achievementDisplayName(achievement, language)}
                             className="h-full w-full object-contain"
                           />
                         </div>
@@ -636,9 +703,11 @@ export function ProfilePage() {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-start justify-between gap-3">
                             <div>
-                              <h3 className="text-[1.12rem] font-black text-[#3d342a]">{achievementDisplayName(achievement)}</h3>
+                              <h3 className="text-[1.12rem] font-black text-[#3d342a]">{achievementDisplayName(achievement, language)}</h3>
                               <div className="mt-2 inline-flex rounded-full bg-[#f3efe8] px-3 py-1 text-[0.7rem] font-black uppercase tracking-[0.14em] text-[#7b6d62]">
-                                {progress.isUnlocked ? '已解锁' : achievementCategoryLabel(achievementDisplayCategory(achievement))}
+                                {progress.isUnlocked
+                                  ? profileText.unlocked
+                                  : achievementCategoryLabel(achievementDisplayCategory(achievement), language)}
                               </div>
                             </div>
                             <div className="text-[0.82rem] font-black text-[#96877a]">{progress.counterLabel}</div>
