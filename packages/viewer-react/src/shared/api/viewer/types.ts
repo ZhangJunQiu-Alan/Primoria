@@ -272,7 +272,16 @@ export type CommunityNote = {
   body: string;
   content_language?: string | null;
   room_id: string | null;
+  lesson_id: string | null;
   updated_at: string;
+};
+
+export type CommunityNoteInput = {
+  id?: string;
+  title: string;
+  body: string;
+  room_id?: string | null;
+  lesson_id?: string | null;
 };
 
 export type CommunityWorkspace = {

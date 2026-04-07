@@ -3,6 +3,7 @@ import {
   type CommunityConversation,
   type CommunityDiscussion,
   type CommunityNote,
+  type CommunityNoteInput,
   type CommunityPerson,
   type CommunityStudyRoom,
   type CommunityWorkspace,
@@ -12,6 +13,17 @@ import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 
 function fixtureMessageAuthorName(authorId: string, people: CommunityPerson[]) {
   return people.find((person) => person.id === authorId)?.display_name ?? 'Learner';
+}
+
+function mapCommunityNoteRow(note: Record<string, unknown>) {
+  return {
+    id: String(note.id),
+    title: String(note.title ?? ''),
+    body: String(note.body ?? ''),
+    room_id: typeof note.room_id === 'string' ? note.room_id : null,
+    lesson_id: typeof note.lesson_id === 'string' ? note.lesson_id : null,
+    updated_at: String(note.updated_at ?? ''),
+  } satisfies CommunityNote;
 }
 
 export async function fetchCommunityWorkspace(userId: string): Promise<CommunityWorkspace> {
@@ -53,7 +65,7 @@ export async function fetchCommunityWorkspace(userId: string): Promise<Community
       .limit(100),
     supabase
       .from('community_notes')
-      .select('id, title, body, room_id, updated_at')
+      .select('id, title, body, room_id, lesson_id, updated_at')
       .eq('owner_id', userId)
       .order('updated_at', { ascending: false })
       .limit(20),
@@ -241,13 +253,7 @@ export async function fetchCommunityWorkspace(userId: string): Promise<Community
     conversations,
     studyRooms,
     discussions,
-    notes: (notesRes.data ?? []).map((note) => ({
-      id: String(note.id),
-      title: String(note.title ?? ''),
-      body: String(note.body ?? ''),
-      room_id: typeof note.room_id === 'string' ? note.room_id : null,
-      updated_at: String(note.updated_at ?? ''),
-    })),
+    notes: (notesRes.data ?? []).map((note) => mapCommunityNoteRow(note as Record<string, unknown>)),
     people: (peopleRes.data ?? []).map((person) => ({
       id: String(person.id),
       username: String(person.username ?? ''),
@@ -256,6 +262,31 @@ export async function fetchCommunityWorkspace(userId: string): Promise<Community
       status: 'online',
     })),
   };
+}
+
+export async function fetchLessonCommunityNote(userId: string, lessonId: string): Promise<CommunityNote | null> {
+  if (!userId || !lessonId) {
+    return null;
+  }
+
+  if (usesViewerFixtures()) {
+    const { readFixtureState } = await loadFixtureStore();
+    const state = readFixtureState();
+    return state.community.notes.find((note) => note.lesson_id === lessonId) ?? null;
+  }
+
+  const { data, error } = await supabase
+    .from('community_notes')
+    .select('id, title, body, room_id, lesson_id, updated_at')
+    .eq('owner_id', userId)
+    .eq('lesson_id', lessonId)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data ? mapCommunityNoteRow(data as Record<string, unknown>) : null;
 }
 
 export async function sendCommunityMessage(userId: string, conversationId: string, body: string) {
@@ -445,19 +476,25 @@ export async function deleteStudyRoom(userId: string, roomId: string) {
   }
 }
 
-export async function saveCommunityNote(userId: string, note: { id?: string; title: string; body: string; room_id?: string | null }) {
+export async function saveCommunityNote(userId: string, note: CommunityNoteInput): Promise<CommunityNote> {
   const title = note.title.trim() || 'Untitled note';
   const body = note.body;
 
   if (usesViewerFixtures()) {
     const { patchFixtureState } = await loadFixtureStore();
-    patchFixtureState((state) => {
-      const noteId = note.id ?? `note-${Date.now()}`;
+    const nextState = patchFixtureState((state) => {
+      const existing = state.community.notes.find(
+        (entry) =>
+          entry.id === note.id ||
+          (note.lesson_id && entry.lesson_id === note.lesson_id),
+      );
+      const noteId = existing?.id ?? note.id ?? `note-${Date.now()}`;
       const nextNote: CommunityNote = {
         id: noteId,
         title,
         body,
         room_id: note.room_id ?? null,
+        lesson_id: note.lesson_id ?? existing?.lesson_id ?? null,
         updated_at: new Date().toISOString(),
       };
       const existingIndex = state.community.notes.findIndex((entry) => entry.id === noteId);
@@ -468,7 +505,9 @@ export async function saveCommunityNote(userId: string, note: { id?: string; tit
       }
       return { ...state };
     });
-    return;
+    return nextState.community.notes.find((entry) => entry.id === (note.id ?? '')) ??
+      nextState.community.notes.find((entry) => note.lesson_id && entry.lesson_id === note.lesson_id) ??
+      nextState.community.notes[0]!;
   }
 
   const payload = {
@@ -476,21 +515,33 @@ export async function saveCommunityNote(userId: string, note: { id?: string; tit
     title,
     body,
     room_id: note.room_id ?? null,
+    lesson_id: note.lesson_id ?? null,
     updated_at: new Date().toISOString(),
   };
 
   if (note.id) {
-    const { error } = await supabase.from('community_notes').update(payload).eq('id', note.id).eq('owner_id', userId);
+    const { data, error } = await supabase
+      .from('community_notes')
+      .update(payload)
+      .eq('id', note.id)
+      .eq('owner_id', userId)
+      .select('id, title, body, room_id, lesson_id, updated_at')
+      .single();
     if (error) {
       throw error;
     }
-    return;
+    return mapCommunityNoteRow(data as Record<string, unknown>);
   }
 
-  const { error } = await supabase.from('community_notes').insert(payload);
+  const { data, error } = await supabase
+    .from('community_notes')
+    .insert(payload)
+    .select('id, title, body, room_id, lesson_id, updated_at')
+    .single();
   if (error) {
     throw error;
   }
+  return mapCommunityNoteRow(data as Record<string, unknown>);
 }
 
 export async function createDiscussion(userId: string, payload: { title: string; body: string; category: string }) {
@@ -588,6 +639,26 @@ export async function toggleDiscussionLike(_userId: string, discussionId: string
   }
 
   const { error } = await supabase.rpc('toggle_discussion_like', { p_discussion_id: discussionId });
+  if (error) {
+    throw error;
+  }
+}
+
+export async function deleteCommunityNote(userId: string, noteId: string): Promise<void> {
+  if (usesViewerFixtures()) {
+    const { patchFixtureState } = await loadFixtureStore();
+    patchFixtureState((state) => {
+      state.community.notes = state.community.notes.filter((note) => note.id !== noteId);
+      return { ...state };
+    });
+    return;
+  }
+
+  const { error } = await supabase
+    .from('community_notes')
+    .delete()
+    .eq('id', noteId)
+    .eq('owner_id', userId);
   if (error) {
     throw error;
   }

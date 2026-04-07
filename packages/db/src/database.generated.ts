@@ -341,6 +341,7 @@ export type Database = {
           body: string
           created_at: string
           id: string
+          lesson_id: string | null
           owner_id: string
           room_id: string | null
           title: string
@@ -350,6 +351,7 @@ export type Database = {
           body?: string
           created_at?: string
           id?: string
+          lesson_id?: string | null
           owner_id: string
           room_id?: string | null
           title: string
@@ -359,12 +361,20 @@ export type Database = {
           body?: string
           created_at?: string
           id?: string
+          lesson_id?: string | null
           owner_id?: string
           room_id?: string | null
           title?: string
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "community_notes_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "community_notes_owner_id_fkey"
             columns: ["owner_id"]
