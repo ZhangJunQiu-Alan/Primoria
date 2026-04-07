@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f62052f98533",
+  "session_id": "3f8bf734-374f-4309-9613-3a113537b5ba",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-07T04:48:32.931227Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".gitignore",
+    "docs/viewer-react-cutover-runbook.md",
+    "packages/db/src/database.generated.ts",
+    "packages/viewer-react/package.json",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorPage.tsx",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorToolDialog.tsx",
+    "packages/viewer-react/src/features/ai-tutor/toolTypes.ts",
+    "packages/viewer-react/src/shared/api/queryClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/test/aiTutorPage.test.tsx",
+    "pnpm-lock.yaml",
+    "supabase/config.toml"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "6696807f3d3e",
+  "token_usage": {
+    "input_tokens": 93,
+    "cache_creation_tokens": 159949,
+    "cache_read_tokens": 6855559,
+    "output_tokens": 96778,
+    "api_call_count": 73
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-07T04:48:31.66587Z",
+    "agent_lines": 1975,
+    "human_added": 1143,
+    "human_modified": 19,
+    "human_removed": 0,
+    "total_committed": 3137,
+    "agent_percentage": 62.958240357029005
+  }
+}
