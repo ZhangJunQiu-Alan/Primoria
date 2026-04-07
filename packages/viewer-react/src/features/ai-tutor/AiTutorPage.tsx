@@ -24,6 +24,7 @@ import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
+import { cn } from '@/shared/utils/cn';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 
 const AiTutorToolDialog = lazy(async () => ({
@@ -85,9 +86,12 @@ export function AiTutorPage() {
     quiz: false,
     presentation: false,
   });
+  const transcriptViewportRef = useRef<HTMLDivElement | null>(null);
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
   const processedCompanionIntentRef = useRef<string | null>(null);
+  const [isPinnedToLatest, setIsPinnedToLatest] = useState(true);
+  const [hasTranscriptOverflow, setHasTranscriptOverflow] = useState(false);
 
   useEffect(
     () => () => {
@@ -103,6 +107,21 @@ export function AiTutorPage() {
     [personaCopy.prompts],
   );
 
+  const transcript = messages.slice(1);
+  const hasDraftInput = input.trim().length > 0;
+  const shouldCondenseLayout = hasDraftInput || transcript.length > 0 || isSending;
+
+  function syncTranscriptViewportState() {
+    const viewport = transcriptViewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    const distanceFromBottom = viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight;
+    setIsPinnedToLatest(distanceFromBottom <= 72);
+    setHasTranscriptOverflow(viewport.scrollHeight > viewport.clientHeight + 8);
+  }
+
   useEffect(() => {
     setMessages((current) => {
       if (current.length !== 1 || current[0]?.role !== 'model') {
@@ -114,6 +133,28 @@ export function AiTutorPage() {
       return [{ role: 'model', text: personaCopy.welcomeBody }];
     });
   }, [personaCopy.welcomeBody]);
+
+  useEffect(() => {
+    const viewport = transcriptViewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    if (isPinnedToLatest) {
+      viewport.scrollTo({
+        top: viewport.scrollHeight,
+        behavior: transcript.length > 1 ? 'smooth' : 'auto',
+      });
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      syncTranscriptViewportState();
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [isPinnedToLatest, transcript]);
 
   const notebookItems = [
     {
@@ -258,8 +299,6 @@ export function AiTutorPage() {
     }
   }
 
-  const transcript = messages.slice(1);
-
   useEffect(() => {
     const source = searchParams.get('source');
     const intent = searchParams.get('intent');
@@ -300,66 +339,113 @@ export function AiTutorPage() {
     <div className="mx-auto flex h-full min-h-0 w-[90%] max-w-[1380px] flex-col overflow-hidden px-0 py-4 md:py-5">
       <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1.78fr)_304px]">
         <section className="flex min-h-0 flex-col overflow-hidden bg-transparent">
-          <div className="min-h-0 flex-1 overflow-hidden px-5 py-5 md:px-6 md:py-6">
-            <div className="flex h-full min-h-0 flex-col gap-4">
-              <div className="rounded-[26px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.96)_0%,rgba(247,242,231,0.88)_100%)] px-5 py-5 shadow-[0_14px_32px_rgba(90,70,50,0.08)]">
-                <div className="flex items-start gap-4">
-                  <div className="flex h-[3.45rem] w-[3.45rem] shrink-0 items-center justify-center rounded-[18px] border border-[#e4d2b6] bg-[linear-gradient(145deg,#f4ddbc_0%,#d4b896_100%)] text-white shadow-[0_10px_24px_rgba(196,149,106,0.2)]">
-                    <Bot size={28} />
-                  </div>
-                  <div>
-                    <p className="viewer-botanical-eyebrow">{copy.aiTutor.deskEyebrow}</p>
-                    <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#d8cbb9] bg-[rgba(255,252,247,0.78)] px-3 py-1.5 text-[0.75rem] font-black text-[#7c6b5c]">
-                      <Bot size={14} />
-                      <span>{personaCopy.badge}</span>
+          <div
+            className={cn(
+              'min-h-0 flex-1 overflow-hidden px-5 md:px-6',
+              'transition-[padding] duration-500 ease-out',
+              shouldCondenseLayout ? 'pb-3 pt-3 md:pb-4 md:pt-4' : 'py-5 md:py-6',
+            )}
+          >
+            <div
+              className={cn(
+                'flex h-full min-h-0 flex-col transition-[gap] duration-500 ease-out',
+                shouldCondenseLayout ? 'gap-3' : 'gap-4',
+              )}
+            >
+              <div
+                className={cn(
+                  'overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                  shouldCondenseLayout
+                    ? 'pointer-events-none max-h-0 -translate-y-5 opacity-0'
+                    : 'max-h-[22rem] translate-y-0 opacity-100',
+                )}
+              >
+                <div className="rounded-[26px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.96)_0%,rgba(247,242,231,0.88)_100%)] px-5 py-5 shadow-[0_14px_32px_rgba(90,70,50,0.08)]">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-[3.45rem] w-[3.45rem] shrink-0 items-center justify-center rounded-[18px] border border-[#e4d2b6] bg-[linear-gradient(145deg,#f4ddbc_0%,#d4b896_100%)] text-white shadow-[0_10px_24px_rgba(196,149,106,0.2)]">
+                      <Bot size={28} />
                     </div>
-                    <h1
-                      className="mt-3 text-[2.45rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
-                      style={{ fontFamily: '"Cormorant Garamond", serif' }}
-                    >
-                      {personaCopy.welcomeTitle}
-                    </h1>
-                    <p className="mt-3 max-w-[48rem] text-[0.92rem] leading-[1.85] text-[#6f6359]">
-                      {personaCopy.welcomeBody}
-                    </p>
+                    <div>
+                      <p className="viewer-botanical-eyebrow">{copy.aiTutor.deskEyebrow}</p>
+                      <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#d8cbb9] bg-[rgba(255,252,247,0.78)] px-3 py-1.5 text-[0.75rem] font-black text-[#7c6b5c]">
+                        <Bot size={14} />
+                        <span>{personaCopy.badge}</span>
+                      </div>
+                      <h1
+                        className="mt-3 text-[2.45rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+                        style={{ fontFamily: '"Cormorant Garamond", serif' }}
+                      >
+                        {personaCopy.welcomeTitle}
+                      </h1>
+                      <p className="mt-3 max-w-[48rem] text-[0.92rem] leading-[1.85] text-[#6f6359]">
+                        {personaCopy.welcomeBody}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="shrink-0 space-y-2.5">
-                {suggestedPrompts.map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    className="flex w-full items-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-4 py-3.5 text-left text-[0.86rem] font-semibold text-[#4d4239] shadow-[0_8px_18px_rgba(90,70,50,0.05)] transition hover:border-[#d2c5b2] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-70"
-                    onClick={() => void handleSend(prompt)}
-                    disabled={isSending}
-                  >
-                    {prompt}
-                  </button>
-                ))}
+              <div
+                className={cn(
+                  'shrink-0 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                  shouldCondenseLayout
+                    ? 'pointer-events-none max-h-0 -translate-y-4 opacity-0'
+                    : 'max-h-[16rem] translate-y-0 opacity-100',
+                )}
+              >
+                <div className="space-y-2.5">
+                  {suggestedPrompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      className="flex w-full items-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-4 py-3.5 text-left text-[0.86rem] font-semibold text-[#4d4239] shadow-[0_8px_18px_rgba(90,70,50,0.05)] transition hover:border-[#d2c5b2] hover:bg-[#fffdf9] disabled:cursor-not-allowed disabled:opacity-70"
+                      onClick={() => void handleSend(prompt)}
+                      disabled={isSending}
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {transcript.length > 0 ? (
-                <div className="viewer-scrollbar-hidden min-h-0 flex-1 overflow-auto pr-1">
-                  <div className="space-y-3 rounded-[22px] border border-[#e2d7c9] bg-[rgba(255,250,245,0.84)] p-4">
-                    {transcript.map((message, index) => {
-                      const isPendingModel =
-                        isSending && index === transcript.length - 1 && message.role === 'model' && !message.text.trim();
-                      return (
-                        <div
-                          key={`${message.role}-${index}`}
-                          className={
-                            message.role === 'user'
-                              ? 'ml-auto max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
-                              : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
-                          }
-                        >
-                          {isPendingModel ? (language === 'zh-CN' ? '正在思考…' : 'Thinking…') : message.text}
-                        </div>
-                      );
-                    })}
+                <div className="relative min-h-0 flex-1">
+                  <div
+                    ref={transcriptViewportRef}
+                    className="viewer-scrollbar-hidden h-full min-h-0 overflow-auto pr-1"
+                    onScroll={syncTranscriptViewportState}
+                    style={{
+                      maskImage: hasTranscriptOverflow
+                        ? 'linear-gradient(to bottom, transparent 0%, black 12%, black 100%)'
+                        : undefined,
+                      WebkitMaskImage: hasTranscriptOverflow
+                        ? 'linear-gradient(to bottom, transparent 0%, black 12%, black 100%)'
+                        : undefined,
+                    }}
+                  >
+                    <div className="space-y-3 px-1 pb-4 pt-16">
+                      {transcript.map((message, index) => {
+                        const isPendingModel =
+                          isSending && index === transcript.length - 1 && message.role === 'model' && !message.text.trim();
+                        return (
+                          <div
+                            key={`${message.role}-${index}`}
+                            className={
+                              message.role === 'user'
+                                ? 'ml-auto max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
+                                : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
+                            }
+                          >
+                            {isPendingModel ? (language === 'zh-CN' ? '正在思考…' : 'Thinking…') : message.text}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[var(--viewer-page)] via-[rgba(247,243,236,0.9)] to-transparent" />
+                  {!isPinnedToLatest ? (
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[var(--viewer-page)] via-[rgba(247,243,236,0.84)] to-transparent" />
+                  ) : null}
                 </div>
               ) : (
                 <div className="min-h-0 flex-1" />
@@ -367,7 +453,12 @@ export function AiTutorPage() {
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-[#eadfce] px-5 py-4">
+          <div
+            className={cn(
+              'shrink-0 border-t border-[#eadfce] px-5 transition-[padding] duration-500 ease-out',
+              shouldCondenseLayout ? 'py-3' : 'py-4',
+            )}
+          >
             <div className="flex items-center gap-3 rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-3.5 py-2.5 shadow-[0_10px_24px_rgba(90,70,50,0.08)]">
               <PenLine size={19} className="text-[#9a8d82]" />
               <input

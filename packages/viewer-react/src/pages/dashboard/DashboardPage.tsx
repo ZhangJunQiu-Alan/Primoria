@@ -671,7 +671,7 @@ function CourseFormDialog({
     >
       <Dialog.Portal>
         <Dialog.Overlay className="dashboard-dialog__overlay" />
-        <Dialog.Content className="dashboard-dialog">
+        <Dialog.Content className="dashboard-dialog dashboard-dialog--course-form">
           <div className="dashboard-dialog__topline">
             <div>
               <Dialog.Title className="dashboard-dialog__title">{title}</Dialog.Title>
@@ -711,7 +711,7 @@ function CourseFormDialog({
                 onChange={(event) =>
                   setForm((current) => ({ ...current, description: event.target.value }))
                 }
-                rows={4}
+                rows={3}
                 placeholder="Briefly explain the course goals and learning outcomes."
               />
             </label>
@@ -808,7 +808,16 @@ function CourseFormDialog({
                   Cancel
                 </button>
               </Dialog.Close>
-              <button type="submit" className="studio-button studio-button--primary" disabled={pending}>
+              <button
+                type="submit"
+                className={[
+                  'studio-button',
+                  'studio-button--primary',
+                  'dashboard-dialog__submit',
+                  mode === 'create' ? 'dashboard-dialog__submit--create' : '',
+                ].join(' ')}
+                disabled={pending}
+              >
                 {pending ? <Loader2 className="dashboard-spin" size={16} /> : null}
                 <span>{mode === 'create' ? 'Create course' : 'Save changes'}</span>
               </button>
