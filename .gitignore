@@ -6,6 +6,8 @@ dist/
 packages/*/dist/
 packages/*/.vite/
 packages/*/test-results/
+test-results/
+.codex-runtime/
 playwright-report/
 output/
 .playwright-cli/

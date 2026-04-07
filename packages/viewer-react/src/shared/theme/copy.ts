@@ -1,6 +1,633 @@
 import { DEFAULT_VIEWER_LANGUAGE, type ViewerLanguage } from '@/shared/i18n/locale';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 
+const landingCopy = {
+  'zh-CN': {
+    eyebrow: 'Primoria',
+    header: {
+      loginCta: '登录',
+      registerCta: '创建账号',
+    },
+    authPanel: {
+      badge: '平台入口',
+      title: '把创作、学习、AI 与家长报告放进同一条产品链路',
+      features: [
+        '同一应用内覆盖课程发现、学习运行时、AI Tutor 与个人中心',
+        'Builder 负责课程管理、编辑、发布与作者工作流',
+        '家长模式、双语界面与共享 schema 构成完整平台闭环',
+      ],
+    },
+    nav: {
+      product: '产品闭环',
+      learner: '学习流程',
+      tutor: 'AI 导师',
+      community: '社区',
+      builder: 'Builder',
+      family: '家长模式',
+    },
+    hero: {
+      announcement: '平台级互动课程系统',
+      title: '从创作到学习',
+      accentTitle: '把互动课程真正跑起来',
+      subtitle:
+        'Primoria 把 Builder、学习运行时、AI Tutor、社区和家长报告放进一个连续产品闭环里。作者能发布结构化互动课程，学习者能在同一应用里学习、提问、讨论并持续升级。',
+      primaryCta: '创建账号',
+      secondaryCta: '查看产品闭环',
+      trustSignals: [
+        'Builder 与 Viewer 已经并入同一 React 应用',
+        '课程、Lesson、Result 学习链路已经打通',
+        'Schema 兼容历史 pages 键并支持发布校验',
+      ],
+      cards: [
+        {
+          eyebrow: 'Creator workflow',
+          title: 'Builder Dashboard',
+          meta: 'Home / Course Management / Data Center / Fan Management',
+        },
+        {
+          eyebrow: 'Learner runtime',
+          title: 'Lesson Runtime',
+          meta: 'Library / Course / Lesson / Result',
+        },
+        {
+          eyebrow: 'AI layer',
+          title: 'AI Tutor',
+          meta: 'Chat / Mind Map / Quiz / Presentation',
+        },
+        {
+          eyebrow: 'Family view',
+          title: 'Parent Dashboard',
+          meta: 'Binding code / child reports',
+        },
+      ],
+    },
+    platform: {
+      eyebrow: '产品闭环',
+      title: '一个产品把课程生产、学习执行与回流连接起来',
+      subtitle:
+        'Primoria 不是把功能散落在多个站点里，而是把创作者、学习者、AI 和家长模式收进一个连续路径。',
+      lanes: [
+        {
+          eyebrow: 'Builder side',
+          title: '创作者先搭课，再进入发布与分析',
+          description:
+            'Builder Dashboard 负责课程管理、数据中心与粉丝管理；编辑器负责 block 编排、保存、发布、导入导出和 AI draft。',
+        },
+        {
+          eyebrow: 'Learner side',
+          title: '学习者沿着真实课程链路前进',
+          description:
+            '学习者从课程库进入课程页、再进入 Lesson Runtime，完成答题、解锁、结果总结与 XP 回流，而不是停留在静态内容页。',
+        },
+        {
+          eyebrow: 'Family side',
+          title: '家长模式接住监督与复盘场景',
+          description:
+            '学习者生成绑定码后，家长账号可进入看板查看孩子列表、切换孩子并读取最新学习报告。',
+        },
+      ],
+      foundations: [
+        '统一 React 应用与共享认证',
+        '共享 schema 与导入迁移兼容',
+        '中英文双语切换',
+        '受保护路由、功能开关与恢复路径',
+      ],
+    },
+    learner: {
+      eyebrow: '学习流程',
+      title: 'Learner journey 不是一页介绍，而是一条完整运行时',
+      subtitle:
+        '首页需要讲清楚学习者真正会经历什么：发现课程、报名进入、完成 Lesson Runtime，再把结果回流到成长体系。',
+      steps: [
+        {
+          step: '01',
+          route: '/library',
+          title: 'Course discovery in Library',
+          description: '按主题搜索课程、切换筛选、进入课程详情页并判断是否开始当前学习路径。',
+        },
+        {
+          step: '02',
+          route: '/course/:courseId',
+          title: 'Enroll and inspect course detail',
+          description: '课程页展示难度、时长、课时列表与报名状态；报名后才能解锁进入课时。',
+        },
+        {
+          step: '03',
+          route: '/lesson/:lessonId',
+          title: 'Run the gated lesson flow',
+          description:
+            'Lesson Runtime 负责 Prev / Check / Next、题目判定、按正确性解锁 block，以及与 AI 助手的上下文问答。',
+        },
+        {
+          step: '04',
+          route: '/lesson/:lessonId/result',
+          title: 'Return XP, progress, and achievements',
+          description: 'Result 页回收正确率、完成页数、XP 奖励与新成就，把学习势能继续推回首页与个人页。',
+        },
+      ],
+      sideTitle: '真实产品表面，而不是抽象营销插画',
+      sideBody:
+        '新的 landing 会直接借用课程封面、进度条、结果卡和学习状态语言，让用户一眼看出产品已经具备完整路径。',
+      sideHighlights: ['课程封面与报名入口', 'Lesson 运行时门控', 'Result 与 XP 回流'],
+    },
+    tutor: {
+      eyebrow: 'AI 导师',
+      title: 'AI Tutor 不是一句“在线”，而是一套可操作工作台',
+      subtitle:
+        '页面需要明确展示：对话答疑、跟进解释、`/apikey` 临时覆盖、材料上传、以及导图/测验/演示等 Studio tools。',
+      capabilities: [
+        {
+          title: 'Grounded chat',
+          description: '围绕课程、页面上下文与学习问题持续对话，而不是离开学习链路单独聊天。',
+        },
+        {
+          title: '/apikey override',
+          description: '开发或个人使用时可通过命令临时覆盖服务端 key，而不需要改动正式环境配置。',
+        },
+        {
+          title: 'Tool outputs',
+          description: '在同一工作台里生成 mind map、report、quiz course 和 presentation，并保留最近结果。',
+        },
+        {
+          title: 'Materials pipeline',
+          description: '上传 PDF / DOCX 后可继续提取、选择资料并生成测验课程草稿，闭环连接到课程系统。',
+        },
+      ],
+      conversation: [
+        '帮我把这节课的关键点整理成一张简短思维导图。',
+        '可以。我会先提炼 lesson 中已经出现的概念，再补一份适合复习的导图结构。',
+        '顺手再生成 5 道小测验，并把结果存到最近输出里。',
+      ],
+      tools: ['Mind Map', 'Report', 'Quiz Course', 'Presentation', 'Materials'],
+      footer: 'Studio tools 会和对话工作流共存，而不是跳出到另一套产品。',
+    },
+    community: {
+      eyebrow: '社区',
+      title: 'Community 覆盖消息、学习房间、Trending 与 Notes',
+      subtitle:
+        '新的 landing 要把社区写得足够具体，说明它既能承接同伴协作，也能承接学习过程中的讨论与知识沉淀。',
+      pillars: [
+        {
+          title: 'Messages',
+          description: '直连会话与房间对话都可持久化，未读数和线程内容会跟随当前学习关系更新。',
+        },
+        {
+          title: 'Study Rooms',
+          description: '创建、加入、删除学习房间，围绕特定课程或主题组织一个临时学习小队。',
+        },
+        {
+          title: 'Trending',
+          description: '讨论、评论与互动信号沉淀成公开热点，让社区不只停留在私聊。',
+        },
+        {
+          title: 'Notes',
+          description: '学习者可写个人或房间笔记，让课程知识、AI 输出和同伴讨论汇到同一个空间。',
+        },
+      ],
+      noteTitle: '社区在产品里承担的角色',
+      noteBody: '它不是单独的论坛，而是学习流程中的协作层，让课程、讨论和笔记形成回流。',
+    },
+    growth: {
+      eyebrow: '成长体系',
+      title: 'XP、连击、成就、账号设置与提醒一起维持学习节奏',
+      subtitle:
+        '成长系统不只是榜单皮肤，而是把结果页、成就墙、设置中心、提醒与个人资料连接起来，持续拉回学习者。',
+      cards: [
+        {
+          title: 'XP progression',
+          description: '课时完成、测验结果与活动都会回流到 XP 进度与个人概览。',
+        },
+        {
+          title: 'Streak momentum',
+          description: '连续学习天数会直接成为首页状态语言和提醒机制的一部分。',
+        },
+        {
+          title: 'Achievement wall',
+          description: '成就墙独立存在，用户可以管理 pinned achievements，而不是只在结果页一闪而过。',
+        },
+        {
+          title: 'Profile & settings',
+          description: '头像、简介、主题、语言、AI persona、隐私和每日目标都在正式设置中心里维护。',
+        },
+      ],
+      achievementLabels: ['First Lesson', 'Hot Streak', 'Perfect Score', 'Study Buddy'],
+      accountCards: [
+        {
+          title: 'Notifications',
+          description: '浏览器推送、每日提醒和连击中断提醒会跟随设置中心与 Web Push 状态同步。',
+        },
+        {
+          title: 'Privacy & support',
+          description: 'Support、Privacy、Terms 与反馈入口保留在产品里，构成真实可访问的配套页面。',
+        },
+      ],
+    },
+    family: {
+      eyebrow: '家长模式',
+      title: '家长模式不抢首页主叙事，但必须清楚可见',
+      subtitle:
+        '它负责把学习者的绑定码、已关联孩子列表与学习报告汇总成单独视角，让监督与复盘不需要脱离产品。',
+      cards: [
+        {
+          title: 'Binding code flow',
+          description: '学习者在设置中心生成绑定码，家长账号输入后建立关系。',
+        },
+        {
+          title: 'Child switching',
+          description: '家长看板可以切换当前孩子，避免报告只覆盖单一账户。',
+        },
+        {
+          title: 'Latest report view',
+          description: '绑定后即可读取当前孩子的学习报告、概览指标与最新动态。',
+        },
+      ],
+    },
+    builderDashboard: {
+      eyebrow: 'Builder Dashboard',
+      title: 'Builder Dashboard 负责把课程经营面与作者工作流收在一起',
+      subtitle:
+        '它不是简单后台导航，而是 Home、Course Management、Data Center、Fan Management 四个核心域的统一工作台。',
+      strips: ['4 个核心 Tab', '课程动作与 analytics 聚合', '搜索 / 筛选 / 发布在同一工作台'],
+      tabs: [
+        {
+          title: 'Home',
+          description: '显示问候语、快捷操作、学习概览 KPI、趋势和最近活动，让作者先看到整个工作台状态。',
+        },
+        {
+          title: 'Course Management',
+          description: '创建课程、编辑元数据、复制、删除、添加课时、搜索筛选和直接打开编辑器都在这里完成。',
+        },
+        {
+          title: 'Data Center',
+          description: '课程规模、已发布浏览量、完成率、学习趋势和收入预估集中呈现。',
+        },
+        {
+          title: 'Fan Management',
+          description: '粉丝 KPI、增长趋势、标签、互动时间线和未来消息入口都保留在同一层级。',
+        },
+      ],
+    },
+    builderEditor: {
+      eyebrow: 'Builder Editor',
+      title: '编辑器围绕 block、schema 与 learner preview 搭建课程生产链路',
+      subtitle:
+        '这里需要把编辑能力讲具体：块级编辑、课时结构、保存发布、导入导出、AI draft、以及跟学习端一致的 preview。',
+      capabilities: [
+        'Block 增删改排与拖拽排序',
+        'text / code-block / code-playground 内联编辑',
+        '保存、发布、复制、导入、导出',
+        'AI course draft 预览与后续落地',
+        '图片上传与编辑器侧资源接入',
+        '按学习端流程运行的 learner preview',
+      ],
+      blockTypes: ['text', 'image', 'code-block', 'code-playground', 'multiple-choice', 'matching', 'video'],
+      schema: [
+        '`lessons` 为规范顶层键',
+        '历史 `pages` 导入会自动迁移',
+        '可见性规则支持 `always` 与 `afterPreviousCorrect`',
+        '发布 / 导出阶段启用更严格校验',
+      ],
+      previewTitle: '同一套 schema 进入编辑器，也进入学习运行时',
+      previewBody: '这让 landing 能自然说明：Primoria 不是拆开的 Builder 和 Viewer，而是共享数据契约的同一平台。',
+    },
+    featureAtlas: {
+      eyebrow: 'Feature Atlas',
+      title: '底部矩阵补齐次级能力，但不打断主叙事',
+      subtitle:
+        '这些功能不必都占据主视觉区块，但必须让用户知道它们已经存在于产品里，而不是未来路线图。',
+      items: [
+        '邮箱 / OAuth 认证与受保护路由',
+        '中英文产品语言切换',
+        'Settings Center',
+        'Support / Feedback / Privacy / Terms',
+        'Achievement Wall',
+        'Schema 兼容与导入迁移',
+        'Feature flags 与恢复路径',
+        'Parent binding codes',
+      ],
+    },
+    finalCta: {
+      title: '先进入 Primoria，再沿着真实产品路径继续探索',
+      subtitle:
+        '登录与注册入口保持不变，但新的首页会把平台全貌讲清楚，让学习者、创作者和家长都知道自己会进入什么系统。',
+      primaryCta: '创建账号',
+      secondaryCta: '登录',
+    },
+  },
+  en: {
+    eyebrow: 'Primoria',
+    header: {
+      loginCta: 'Log in',
+      registerCta: 'Create account',
+    },
+    authPanel: {
+      badge: 'Platform access',
+      title: 'One product loop for creation, learning, AI guidance, and parent reporting',
+      features: [
+        'A single app now covers discovery, lesson runtime, AI Tutor, and profile surfaces',
+        'Builder owns course operations, editing, publishing, and author workflows',
+        'Parent mode, bilingual UI, and shared schema complete the platform loop',
+      ],
+    },
+    nav: {
+      product: 'Product',
+      learner: 'Learner',
+      tutor: 'AI Tutor',
+      community: 'Community',
+      builder: 'Builder',
+      family: 'Family',
+    },
+    hero: {
+      announcement: 'Interactive course platform',
+      title: 'From course creation to active learning',
+      accentTitle: 'run the full loop inside one product',
+      subtitle:
+        'Primoria connects Builder, learner runtime, AI Tutor, community, and parent reports into one continuous system. Authors publish structured interactive courses, and learners move through courses, questions, discussion, and progress without leaving the app.',
+      primaryCta: 'Create account',
+      secondaryCta: 'See the product loop',
+      trustSignals: [
+        'Builder and Viewer now live in one React app',
+        'Course, lesson, and result routes are already connected',
+        'The schema keeps legacy `pages` imports compatible',
+      ],
+      cards: [
+        {
+          eyebrow: 'Creator workflow',
+          title: 'Builder Dashboard',
+          meta: 'Home / Course Management / Data Center / Fan Management',
+        },
+        {
+          eyebrow: 'Learner runtime',
+          title: 'Lesson Runtime',
+          meta: 'Library / Course / Lesson / Result',
+        },
+        {
+          eyebrow: 'AI layer',
+          title: 'AI Tutor',
+          meta: 'Chat / Mind Map / Quiz / Presentation',
+        },
+        {
+          eyebrow: 'Family view',
+          title: 'Parent Dashboard',
+          meta: 'Binding code / child reports',
+        },
+      ],
+    },
+    platform: {
+      eyebrow: 'Product Loop',
+      title: 'One platform connects course production, learner execution, and feedback loops',
+      subtitle:
+        'Primoria does not scatter capability across separate products. It turns authors, learners, AI tools, and family reporting into one continuous path.',
+      lanes: [
+        {
+          eyebrow: 'Builder side',
+          title: 'Authors create first, then publish and analyze',
+          description:
+            'Builder Dashboard covers course management, analytics, and fan operations; the editor handles block composition, save/publish, import/export, and AI draft workflows.',
+        },
+        {
+          eyebrow: 'Learner side',
+          title: 'Learners move through the real course runtime',
+          description:
+            'The path starts in Library, continues through course detail, enters Lesson Runtime, and returns into result, XP, and achievement flows instead of stopping at static content.',
+        },
+        {
+          eyebrow: 'Family side',
+          title: 'Parent mode closes the supervision and review loop',
+          description:
+            'Learners can generate binding codes, and parent accounts can enter a dedicated dashboard to inspect linked children and the latest reports.',
+        },
+      ],
+      foundations: [
+        'Unified React app and auth shell',
+        'Shared schema with migration compatibility',
+        'Bilingual product UI',
+        'Protected routes, feature flags, and recovery paths',
+      ],
+    },
+    learner: {
+      eyebrow: 'Learner Journey',
+      title: 'The learner story is a runtime, not a single marketing promise',
+      subtitle:
+        'The landing page should explain what the learner actually does: discover a course, enroll, complete the lesson runtime, and feed the result back into growth systems.',
+      steps: [
+        {
+          step: '01',
+          route: '/library',
+          title: 'Discover courses in Library',
+          description: 'Search by subject, apply filters, inspect a course detail page, and decide whether to begin that path now.',
+        },
+        {
+          step: '02',
+          route: '/course/:courseId',
+          title: 'Enroll and inspect course detail',
+          description: 'The course page exposes difficulty, pacing, lesson list, and enrollment state before the learner enters the runtime.',
+        },
+        {
+          step: '03',
+          route: '/lesson/:lessonId',
+          title: 'Run the gated lesson flow',
+          description:
+            'Lesson Runtime handles Prev / Check / Next, answer validation, gated block reveal, and page-grounded AI assistance in the same flow.',
+        },
+        {
+          step: '04',
+          route: '/lesson/:lessonId/result',
+          title: 'Return XP, progress, and achievements',
+          description: 'The result screen rolls correctness, completed pages, XP, and unlocked achievements back into home and profile surfaces.',
+        },
+      ],
+      sideTitle: 'Real product surfaces instead of generic illustrations',
+      sideBody:
+        'The redesign should reuse actual course covers, progress language, result cards, and learner state cues so the page feels grounded in the current app.',
+      sideHighlights: ['Course cover + enroll entry', 'Lesson runtime gating', 'Result + XP feedback'],
+    },
+    tutor: {
+      eyebrow: 'AI Tutor',
+      title: 'AI Tutor is a working desk, not a single “AI is online” claim',
+      subtitle:
+        'The page needs to show chat guidance, follow-up explanation, `/apikey` overrides, material uploads, and Studio tools for mind maps, quizzes, and presentations.',
+      capabilities: [
+        {
+          title: 'Grounded chat',
+          description: 'Conversations stay attached to courses, page context, and current study questions instead of drifting into a disconnected chatbot.',
+        },
+        {
+          title: '/apikey override',
+          description: 'A local command can temporarily override the server key for development or personal usage without changing production wiring.',
+        },
+        {
+          title: 'Tool outputs',
+          description: 'Mind map, report, quiz course, and presentation outputs live beside the conversation so the workflow stays coherent.',
+        },
+        {
+          title: 'Materials pipeline',
+          description: 'Upload PDF or DOCX material, select it, and generate quiz-course drafts that connect back into the course system.',
+        },
+      ],
+      conversation: [
+        'Turn this lesson into a concise revision mind map.',
+        'Sure. I will ground the map in the concepts already present in the lesson and shape it for quick review.',
+        'Then generate five quiz questions and keep the output in the recent artifacts panel.',
+      ],
+      tools: ['Mind Map', 'Report', 'Quiz Course', 'Presentation', 'Materials'],
+      footer: 'Studio tools stay inside the same tutor workflow instead of becoming a separate product.',
+    },
+    community: {
+      eyebrow: 'Community',
+      title: 'Community covers messages, study rooms, trending threads, and notes',
+      subtitle:
+        'The landing page should describe community concretely enough that users understand it as a collaboration layer inside the learning loop.',
+      pillars: [
+        {
+          title: 'Messages',
+          description: 'Direct conversations and room-linked threads persist, refresh unread state, and stay tied to active study relationships.',
+        },
+        {
+          title: 'Study Rooms',
+          description: 'Create, join, and manage focused study rooms around a shared topic or course path.',
+        },
+        {
+          title: 'Trending',
+          description: 'Discussions, comments, and social signals create a visible public layer instead of leaving everything in private threads.',
+        },
+        {
+          title: 'Notes',
+          description: 'Personal notes and room notes keep course insights, AI output, and peer discussion in the same workspace.',
+        },
+      ],
+      noteTitle: 'What community does in the product',
+      noteBody: 'It is not a detached forum. It is the collaboration layer that lets course learning, discussion, and note taking feed into each other.',
+    },
+    growth: {
+      eyebrow: 'Growth System',
+      title: 'XP, streaks, achievements, settings, and reminders all support learner momentum',
+      subtitle:
+        'Growth is not just cosmetic ranking. It connects result screens, achievement management, reminders, profile data, and settings into an ongoing return loop.',
+      cards: [
+        {
+          title: 'XP progression',
+          description: 'Lesson completion, quiz results, and activity flow back into visible XP progress and learner overview surfaces.',
+        },
+        {
+          title: 'Streak momentum',
+          description: 'Consecutive study days become homepage status language and reminder logic instead of a hidden metric.',
+        },
+        {
+          title: 'Achievement wall',
+          description: 'Achievements have a dedicated surface where learners manage pinned badges instead of only seeing them on result screens.',
+        },
+        {
+          title: 'Profile & settings',
+          description: 'Avatar, bio, theme, language, AI persona, privacy, and daily goals all live in a formal settings center.',
+        },
+      ],
+      achievementLabels: ['First Lesson', 'Hot Streak', 'Perfect Score', 'Study Buddy'],
+      accountCards: [
+        {
+          title: 'Notifications',
+          description: 'Browser push, daily reminders, and streak risk alerts stay connected to settings and Web Push state.',
+        },
+        {
+          title: 'Privacy & support',
+          description: 'Support, privacy, terms, and feedback pages already exist as product surfaces, not loose footer placeholders.',
+        },
+      ],
+    },
+    family: {
+      eyebrow: 'Parent Mode',
+      title: 'Parent mode stays secondary in the layout, but must stay explicit',
+      subtitle:
+        'It turns learner binding codes, linked-child lists, and report access into a dedicated review view without fragmenting the product.',
+      cards: [
+        {
+          title: 'Binding code flow',
+          description: 'Learners generate a binding code in settings and parent accounts use it to establish the relationship.',
+        },
+        {
+          title: 'Child switching',
+          description: 'The parent dashboard switches between children instead of collapsing reporting into one ambiguous account.',
+        },
+        {
+          title: 'Latest report view',
+          description: 'Once linked, the parent route exposes current study reports and the latest child activity summary.',
+        },
+      ],
+    },
+    builderDashboard: {
+      eyebrow: 'Builder Dashboard',
+      title: 'Builder Dashboard keeps the operating layer of the platform in one place',
+      subtitle:
+        'It is not a thin admin shell. It is a unified workspace for Home, Course Management, Data Center, and Fan Management.',
+      strips: ['4 core tabs', 'course actions + analytics', 'search / filter / publish in one workspace'],
+      tabs: [
+        {
+          title: 'Home',
+          description: 'Greeting, quick actions, KPI summaries, trends, and recent activity give authors an immediate working overview.',
+        },
+        {
+          title: 'Course Management',
+          description: 'Create courses, edit metadata, duplicate, delete, add lessons, search, filter, and jump directly into the editor.',
+        },
+        {
+          title: 'Data Center',
+          description: 'Course scale, published viewers, completion quality, trend views, and revenue placeholders sit in one analytics layer.',
+        },
+        {
+          title: 'Fan Management',
+          description: 'Fan KPIs, growth, labels, and interaction history stay grouped at the same product level.',
+        },
+      ],
+    },
+    builderEditor: {
+      eyebrow: 'Builder Editor',
+      title: 'The editor is built around blocks, schema rules, and learner preview fidelity',
+      subtitle:
+        'This section needs concrete editing detail: block-level authoring, lesson structure, save/publish, import/export, AI draft, and preview behavior that matches the learner runtime.',
+      capabilities: [
+        'Add, remove, reorder, and sort blocks',
+        'Inline editing for text, code-block, and code-playground',
+        'Save, publish, duplicate, import, and export flows',
+        'AI course draft previews',
+        'Image upload and asset wiring',
+        'Learner preview aligned with the real runtime',
+      ],
+      blockTypes: ['text', 'image', 'code-block', 'code-playground', 'multiple-choice', 'matching', 'video'],
+      schema: [
+        '`lessons` is the canonical top-level key',
+        'Legacy `pages` imports are normalized automatically',
+        'Visibility rules support `always` and `afterPreviousCorrect`',
+        'Publish and export use stricter validation',
+      ],
+      previewTitle: 'The same schema drives editing and learner playback',
+      previewBody: 'That lets the landing page explain Primoria as one platform with a shared data contract instead of separate Builder and Viewer islands.',
+    },
+    featureAtlas: {
+      eyebrow: 'Feature Atlas',
+      title: 'A compact matrix rounds out the platform without breaking the main story',
+      subtitle:
+        'These capabilities do not need a hero-sized section each, but they should still be clearly discoverable on the landing page.',
+      items: [
+        'Email / OAuth auth and protected routes',
+        'Bilingual product language switching',
+        'Settings Center',
+        'Support / Feedback / Privacy / Terms',
+        'Achievement Wall',
+        'Schema compatibility and import migration',
+        'Feature flags and recovery paths',
+        'Parent binding codes',
+      ],
+    },
+    finalCta: {
+      title: 'Enter Primoria first, then continue through the real product path',
+      subtitle:
+        'The auth entry points stay the same, but the new landing page explains the full platform so learners, creators, and parents know what system they are entering.',
+      primaryCta: 'Create account',
+      secondaryCta: 'Log in',
+    },
+  },
+} as const;
+
 const viewerCatalog = {
   'zh-CN': {
     brand: {
@@ -38,36 +665,7 @@ const viewerCatalog = {
       builder: 'Builder',
       profile: '我的',
     },
-    landing: {
-      eyebrow: 'Primoria',
-      announcement: 'AI 驱动学习，现已上线',
-      title: '掌握任何学科',
-      accentTitle: '每天都能升级进步',
-      subtitle:
-        '互动式 STEM 课程、实时 AI 指导，以及学习伙伴社区。别再只看视频，现在就动手学习。',
-      primaryCta: '免费开始学习',
-      secondaryCta: '探索课程',
-      registerCta: '立即开始',
-      loginCta: '登录',
-      learnerAppBadge: '学习应用',
-      topNav: ['功能', '学习流程', 'AI 导师', '社区'],
-      trustSignals: ['免费起步', '无需信用卡', '随时取消'],
-      courseCardTitle: '物理 101',
-      courseCardProgress: '72%',
-      courseCardMeta: '第 8 / 11 课',
-      streakValue: '12',
-      streakLabel: '天连击',
-      xpLabel: '+50 XP',
-      tutorPrompt: '为什么 E = mc²?',
-      featureTitle: '一套真正能学起来的系统',
-      featureSubtitle: '课程、反馈、AI 和同伴支持，放在同一个学习闭环里。',
-      features: [
-        '交互式课程，不再只是被动看视频',
-        '清晰的学习流程，知道下一步该做什么',
-        'AI 导师实时协助总结、答疑和延伸讲解',
-        '和同伴一起学习、讨论、保持进度',
-      ],
-    },
+    landing: landingCopy['zh-CN'],
     auth: {
       loginTitle: '欢迎回来',
       loginSubtitle: '登录后继续你的学习流程。',
@@ -359,36 +957,7 @@ const viewerCatalog = {
       builder: 'Builder',
       profile: 'Me',
     },
-    landing: {
-      eyebrow: 'Primoria',
-      announcement: 'AI-powered learning is live',
-      title: 'Master any subject',
-      accentTitle: 'with momentum every day',
-      subtitle:
-        'Interactive STEM courses, real-time AI guidance, and a learning community built into one system. Stop only watching videos and start learning by doing.',
-      primaryCta: 'Start learning free',
-      secondaryCta: 'Explore courses',
-      registerCta: 'Get started',
-      loginCta: 'Log in',
-      learnerAppBadge: 'Learner app',
-      topNav: ['Features', 'Workflow', 'AI Tutor', 'Community'],
-      trustSignals: ['Free to start', 'No credit card', 'Cancel anytime'],
-      courseCardTitle: 'Physics 101',
-      courseCardProgress: '72%',
-      courseCardMeta: 'Lesson 8 / 11',
-      streakValue: '12',
-      streakLabel: 'day streak',
-      xpLabel: '+50 XP',
-      tutorPrompt: 'Why is E = mc²?',
-      featureTitle: 'A system that actually gets you learning',
-      featureSubtitle: 'Courses, feedback, AI, and peer support in one learning loop.',
-      features: [
-        'Interactive lessons instead of passive video watching',
-        'A clear learning flow so the next step is always obvious',
-        'An AI tutor for summaries, Q&A, and follow-up explanations',
-        'Community support to keep your pace and discuss ideas',
-      ],
-    },
+    landing: landingCopy.en,
     auth: {
       loginTitle: 'Welcome back',
       loginSubtitle: 'Sign in to resume your learner flow.',

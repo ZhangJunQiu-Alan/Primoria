@@ -1,17 +1,26 @@
-import { Fragment } from 'react';
+import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
-  ArrowRight,
   BarChart3,
+  Blocks,
+  BookOpen,
   Bot,
   CheckCircle2,
   Compass,
+  FileCheck2,
   Flame,
-  Search,
+  GraduationCap,
+  Languages,
+  LayoutDashboard,
+  LockKeyhole,
+  MessageSquare,
+  NotebookPen,
+  Settings2,
+  ShieldCheck,
   Sparkles,
   Star,
-  TrendingUp,
   Trophy,
+  Upload,
   Users,
   WandSparkles,
 } from 'lucide-react';
@@ -20,155 +29,122 @@ import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 
-const workflowSteps: Array<{
-  number: string;
+function SectionEyebrow({
+  children,
+  tone = 'text-[#8a5a2f]',
+}: {
+  children: ReactNode;
+  tone?: string;
+}) {
+  return <p className={`text-[0.84rem] font-black uppercase tracking-[0.22em] ${tone}`}>{children}</p>;
+}
+
+function SectionIntro({
+  eyebrow,
+  title,
+  subtitle,
+  tone = 'text-[#5c6578]',
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  tone?: string;
+}) {
+  return (
+    <div className="max-w-[44rem]">
+      <SectionEyebrow>{eyebrow}</SectionEyebrow>
+      <h2 className="mt-4 text-[clamp(2.5rem,4vw,4.45rem)] font-black leading-[0.95] tracking-[-0.06em] text-[#152037]">
+        {title}
+      </h2>
+      <p className={`mt-6 text-[1rem] leading-8 md:text-[1.05rem] ${tone}`}>{subtitle}</p>
+    </div>
+  );
+}
+
+function SurfaceCard({
+  children,
+  className = '',
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`landing-panel-hover rounded-[30px] border border-black/5 bg-white/82 p-6 shadow-[0_24px_60px_rgba(52,64,92,0.08)] backdrop-blur ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+function IconCard({
+  icon: Icon,
+  title,
+  description,
+  eyebrow,
+  className = '',
+  iconTone = 'bg-[#edf4ff] text-[#2563eb]',
+}: {
+  icon: LucideIcon;
   title: string;
   description: string;
-  icon: LucideIcon;
-  borderClass: string;
-  iconClass: string;
-  numberClass: string;
-}> = [
-  {
-    number: '01',
-    title: '选择你的路径',
-    description: '浏览 200+ 专家打造课程，覆盖物理、数学、计算机等领域。可按主题、难度、时长筛选。',
-    icon: Compass,
-    borderClass: 'border-[#d8efff]',
-    iconClass: 'bg-[#dff2ff] text-[#27a2f4]',
-    numberClass: 'text-[#d5efff]',
-  },
-  {
-    number: '02',
-    title: '互动式学习',
-    description: '每节课都强调动手实践。解题、跑代码、拖动滑杆，不再被动看视频。遇到卡点，AI 导师会立即讲解。',
-    icon: WandSparkles,
-    borderClass: 'border-[#eadcff]',
-    iconClass: 'bg-[#f2eaff] text-[#8b5cf6]',
-    numberClass: 'text-[#efe2ff]',
-  },
-  {
-    number: '03',
-    title: '追踪进度并升级',
-    description: '赚取 XP、保持每日连击、解锁成就并冲击排行榜。看着你的学习热力图一周周点亮。',
-    icon: TrendingUp,
-    borderClass: 'border-[#dff2ce]',
-    iconClass: 'bg-[#ebf9db] text-[#76c539]',
-    numberClass: 'text-[#deefcc]',
-  },
-];
-
-const growthFeatures: Array<{
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  iconClass: string;
-}> = [
-  {
-    title: '每日连击',
-    description: '用连续学习天数建立惯性',
-    icon: Flame,
-    iconClass: 'bg-[#fff0df] text-[#ff7a00]',
-  },
-  {
-    title: '经验值（XP）',
-    description: '课程、测验、活动都能获得 XP',
-    icon: Star,
-    iconClass: 'bg-[#fff2df] text-[#ffb347]',
-  },
-  {
-    title: '成就徽章',
-    description: '达成里程碑可解锁稀有徽章',
-    icon: Trophy,
-    iconClass: 'bg-[#f3e8ff] text-[#8b5cf6]',
-  },
-  {
-    title: '每日任务',
-    description: '每天新任务，保持新鲜感',
-    icon: CheckCircle2,
-    iconClass: 'bg-[#e6faea] text-[#20c97a]',
-  },
-];
-
-const communityCards: Array<{
-  title: string;
-  description: string;
-  icon: LucideIcon;
-}> = [
-  {
-    title: '智能匹配',
-    description: '按能力水平与主题兴趣匹配',
-    icon: Search,
-  },
-  {
-    title: '排行榜',
-    description: '每周排名激发良性竞争',
-    icon: BarChart3,
-  },
-  {
-    title: '组队挑战',
-    description: '和小队一起完成特别任务',
-    icon: Users,
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      '“I used to dread physics. After two weeks on Primoria, I actually look forward to it. The interactive sliders make abstract concepts click instantly.”',
-    name: 'Aisha K.',
-    title: '高中生',
-    initials: 'AK',
-    tone: 'bg-[#efe5ff] text-[#875cf6]',
-  },
-  {
-    quote:
-      '“The AI tutor is a game-changer. I asked about quantum entanglement at midnight and got a step-by-step explanation with a quiz to test my understanding.”',
-    name: 'Marcus T.',
-    title: '大学二年级',
-    initials: 'MT',
-    tone: 'bg-[#daf8ef] text-[#1fc7a1]',
-  },
-  {
-    quote:
-      '“My streak is at 47 days and counting! The daily quests make it hard to stop. I have learned more calculus in a month than I did in a whole semester.”',
-    name: 'Lingyun W.',
-    title: '自学者',
-    initials: 'LW',
-    tone: 'bg-[#fff0df] text-[#ffa32f]',
-  },
-] as const;
-
-function SectionEyebrow({ children, tone = 'text-[#1fa0f4]' }: { children: React.ReactNode; tone?: string }) {
-  return <p className={`text-[0.95rem] font-black tracking-[0.04em] ${tone}`}>{children}</p>;
+  eyebrow?: string;
+  className?: string;
+  iconTone?: string;
+}) {
+  return (
+    <SurfaceCard className={className}>
+      <div className={`flex h-12 w-12 items-center justify-center rounded-[16px] ${iconTone}`}>
+        <Icon size={22} />
+      </div>
+      {eyebrow ? <p className="mt-5 text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8a5a2f]">{eyebrow}</p> : null}
+      <h3 className="mt-3 text-[1.35rem] font-black tracking-[-0.04em] text-[#152037]">{title}</h3>
+      <p className="mt-3 text-[0.98rem] leading-7 text-[#616b7e]">{description}</p>
+    </SurfaceCard>
+  );
 }
 
 export function LandingPage() {
   const copy = useViewerCopy();
-  const topNavLinks = [
-    { id: 'growth', label: copy.landing.topNav[0] },
-    { id: 'workflow', label: copy.landing.topNav[1] },
-    { id: 'tutor', label: copy.landing.topNav[2] },
-    { id: 'community', label: copy.landing.topNav[3] },
+  const landing = copy.landing;
+
+  const navItems = [
+    { id: 'product', label: landing.nav.product },
+    { id: 'learner', label: landing.nav.learner },
+    { id: 'tutor', label: landing.nav.tutor },
+    { id: 'community', label: landing.nav.community },
+    { id: 'builder', label: landing.nav.builder },
+    { id: 'family', label: landing.nav.family },
   ] as const;
 
+  const heroCardIcons = [LayoutDashboard, GraduationCap, Bot, ShieldCheck] as const;
+  const platformIcons = [LayoutDashboard, GraduationCap, ShieldCheck] as const;
+  const foundationIcons = [LockKeyhole, Blocks, Languages, Sparkles] as const;
+  const learnerStepIcons = [Compass, BookOpen, Blocks, Trophy] as const;
+  const tutorIcons = [MessageSquare, LockKeyhole, WandSparkles, Upload] as const;
+  const communityIcons = [MessageSquare, Users, BarChart3, NotebookPen] as const;
+  const growthIcons = [Star, Flame, Trophy, Settings2] as const;
+  const familyIcons = [ShieldCheck, Users, FileCheck2] as const;
+  const dashboardIcons = [LayoutDashboard, Compass, BarChart3, Users] as const;
+  const atlasIcons = [LockKeyhole, Languages, Settings2, ShieldCheck, Trophy, Blocks, Sparkles, FileCheck2] as const;
+
   return (
-    <main className="bg-white text-[#0f1324]">
-      <header className="relative z-20 border-b border-[#edf2f8] bg-white/96 backdrop-blur">
-        <div className="mx-auto flex max-w-[1540px] items-center justify-between gap-4 px-5 py-5 md:px-8 lg:px-14">
-          <div className="landing-zoom-80 flex items-center gap-12">
+    <main className="min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#f7f1e7_0%,#f3ecdf_22%,#f8f4ee_52%,#efe8dc_100%)] text-[#152037]">
+      <header className="sticky top-0 z-40 border-b border-black/5 bg-[rgba(247,241,231,0.82)] backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1540px] items-center justify-between gap-6 px-5 py-4 md:px-8 lg:px-14">
+          <div className="flex min-w-0 items-center gap-5">
             <Link to="/" className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-[16px] bg-[#091022] shadow-[0_16px_36px_rgba(6,24,59,0.20)]">
+              <span className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-[16px] bg-[#10253e] shadow-[0_18px_34px_rgba(17,37,62,0.18)]">
                 <img src={publicAssetPath('primoria-logo.png')} alt="Primoria" className="h-full w-full object-cover" />
-              </div>
-              <span className="text-[1.8rem] font-black uppercase tracking-[0.08em] text-[#28a4f4] md:text-[1.95rem]">
+              </span>
+              <span className="text-[1.3rem] font-black uppercase tracking-[0.14em] text-[#1e5f9c] md:text-[1.55rem]">
                 {copy.brand.name}
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-10 text-[0.98rem] font-bold text-[#44506f] lg:flex">
-              {topNavLinks.map((item) => (
-                <a key={item.id} href={`#${item.id}`} className="transition hover:text-[#1a9df0]">
+            <nav className="hidden items-center gap-7 text-[0.94rem] font-bold text-[#495466] xl:flex">
+              {navItems.map((item) => (
+                <a key={item.id} href={`#${item.id}`} className="transition hover:text-[#173f69]">
                   {item.label}
                 </a>
               ))}
@@ -179,319 +155,148 @@ export function LandingPage() {
             <LanguageSwitcher tone="public" />
             <Link
               to="/login"
-              className="inline-flex h-11 items-center justify-center rounded-[16px] border-2 border-[#2b86ff] px-5 text-[0.98rem] font-black text-[#1675f0] transition hover:bg-[#eef6ff]"
+              data-testid="landing-header-login"
+              className="hidden h-11 items-center justify-center rounded-[16px] border border-[#b8c6d8] bg-white/86 px-5 text-[0.94rem] font-black text-[#28415c] shadow-[0_10px_24px_rgba(39,61,91,0.06)] transition hover:border-[#8da3bb] md:inline-flex"
             >
-              {copy.landing.loginCta}
+              {landing.header.loginCta}
             </Link>
             <Link
               to="/register"
-              className="inline-flex h-11 items-center justify-center rounded-[16px] bg-[linear-gradient(135deg,#1d7df4,#21d2e6)] px-6 text-[0.98rem] font-black text-white shadow-[0_18px_30px_rgba(35,165,243,0.28)] transition hover:translate-y-[-1px]"
+              className="inline-flex h-11 items-center justify-center rounded-[16px] bg-[linear-gradient(135deg,#123b61,#2a7fc8)] px-5 text-[0.94rem] font-black text-white shadow-[0_18px_34px_rgba(25,71,117,0.22)] transition hover:translate-y-[-1px]"
             >
-              {copy.landing.registerCta}
+              {landing.header.registerCta}
             </Link>
           </div>
         </div>
       </header>
 
-      <section className="relative z-10 overflow-hidden bg-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-[-8%] top-[12%] h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(55,188,255,0.14),rgba(55,188,255,0))]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[8%] top-[18%] h-[24rem] w-[24rem] rounded-full bg-[radial-gradient(circle,rgba(120,183,255,0.12),rgba(120,183,255,0))]"
-        />
-
-        <div className="landing-zoom-80 mx-auto grid max-w-[1540px] items-center gap-14 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(560px,1.1fr)] lg:px-14 lg:py-20">
-          <div className="max-w-[42rem]">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#95d9ff] bg-[#ebf8ff] px-5 py-2.5 text-[1rem] font-black text-[#1694ef] shadow-[0_10px_22px_rgba(32,148,242,0.08)]">
-              <WandSparkles size={17} className="shrink-0" />
-              <span>{copy.landing.announcement}</span>
+      <section
+        data-testid="landing-section-hero"
+        className="relative isolate overflow-hidden border-b border-black/5"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(33,102,181,0.16),transparent_28%),radial-gradient(circle_at_88%_16%,rgba(180,115,65,0.17),transparent_24%),radial-gradient(circle_at_66%_84%,rgba(82,151,128,0.14),transparent_24%)]" />
+        <div className="mx-auto grid max-w-[1540px] items-center gap-14 px-5 py-14 md:px-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(540px,1.08fr)] lg:px-14 lg:py-20">
+          <div className="landing-stage-enter relative z-10 max-w-[44rem]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#cab9a0] bg-[rgba(255,248,238,0.9)] px-4 py-2 text-[0.84rem] font-black uppercase tracking-[0.18em] text-[#8a5a2f] shadow-[0_14px_32px_rgba(107,81,47,0.08)]">
+              <WandSparkles size={15} />
+              <span>{landing.hero.announcement}</span>
             </div>
 
-            <div className="mt-7">
-              <h1 className="text-[clamp(3.2rem,4.8vw,4.9rem)] font-black leading-[0.93] tracking-[-0.065em] text-[#0f1324]">
-                <span className="block">{copy.landing.title}</span>
-                <span className="block bg-[linear-gradient(135deg,#1590f7,#33d4f2)] bg-clip-text text-transparent">
-                  {copy.landing.accentTitle}
-                </span>
-              </h1>
-            </div>
+            <h1 className="mt-7 text-[clamp(3rem,5.8vw,5.85rem)] font-black leading-[0.9] tracking-[-0.075em] text-[#152037]">
+              <span className="block">{landing.hero.title}</span>
+              <span className="block bg-[linear-gradient(135deg,#8f5d34,#1b5f98)] bg-clip-text text-transparent">
+                {landing.hero.accentTitle}
+              </span>
+            </h1>
 
-            <p className="mt-8 max-w-[38rem] text-[1rem] leading-[1.85] text-[#67738e] md:text-[1.08rem]">
-              {copy.landing.subtitle}
+            <p className="mt-8 max-w-[39rem] text-[1rem] leading-8 text-[#556174] md:text-[1.08rem]">
+              {landing.hero.subtitle}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 to="/register"
-                className="inline-flex min-w-[14rem] items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#157df7,#24d1e7)] px-8 py-3.5 text-[1.2rem] font-black text-white shadow-[0_20px_36px_rgba(29,143,244,0.25)] transition hover:translate-y-[-1px]"
+                data-testid="landing-hero-primary-cta"
+                className="inline-flex min-w-[13rem] items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#123b61,#2a7fc8)] px-7 py-3.5 text-[1rem] font-black text-white shadow-[0_20px_38px_rgba(25,71,117,0.22)] transition hover:translate-y-[-1px]"
               >
-                {copy.landing.primaryCta}
+                {landing.hero.primaryCta}
               </Link>
               <a
-                href="#workflow"
-                className="inline-flex min-w-[8.5rem] items-center justify-center rounded-[18px] border-2 border-[#2587fb] px-8 py-3.5 text-[1.2rem] font-black text-[#1d7cf6] transition hover:bg-[#eef6ff]"
+                href="#product"
+                className="inline-flex min-w-[12rem] items-center justify-center rounded-[18px] border border-[#b8c6d8] bg-white/82 px-7 py-3.5 text-[1rem] font-black text-[#28415c] shadow-[0_12px_28px_rgba(39,61,91,0.08)] transition hover:border-[#8da3bb]"
               >
-                {copy.landing.secondaryCta}
+                {landing.hero.secondaryCta}
               </a>
             </div>
 
-            <div className="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-[0.95rem] font-bold text-[#7b859d]">
-              {copy.landing.trustSignals.map((item) => (
-                <div key={item} className="flex items-center gap-2.5">
-                  <CheckCircle2 size={19} className="text-[#56c516]" />
-                  <span>{item}</span>
+            <div className="mt-10 grid gap-3 sm:grid-cols-3">
+              {landing.hero.trustSignals.map((signal) => (
+                <div key={signal} className="flex items-start gap-3 rounded-[20px] border border-[#ddd1bf] bg-white/70 px-4 py-4 text-[0.94rem] font-semibold text-[#4f5b6d] shadow-[0_12px_28px_rgba(43,56,83,0.06)]">
+                  <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[#2f7b68]" />
+                  <span>{signal}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="relative min-h-[34rem]">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_48%_32%,rgba(245,251,255,0.98),rgba(246,250,255,0.82)_36%,rgba(248,251,255,0)_72%)]" />
-            <div className="pointer-events-none viewer-float-slow absolute left-[8%] top-[17%] z-10 w-[24rem] max-w-[70%] rounded-[30px] bg-white px-5 py-6 shadow-[0_28px_58px_rgba(33,92,164,0.14)]">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#efe4ff] text-[#7b4ce6]">
-                  <Sparkles size={22} />
-                </div>
-                <span className="text-[1.75rem] font-black tracking-[-0.04em] text-[#171a27]">
-                  {copy.landing.courseCardTitle}
-                </span>
-              </div>
+          <div className="landing-stage-enter landing-stage-enter-delay-1 relative z-10">
+            <div className="relative overflow-hidden rounded-[40px] border border-[rgba(20,32,55,0.08)] bg-[linear-gradient(160deg,rgba(14,35,59,0.96),rgba(28,74,114,0.92)_48%,rgba(80,122,108,0.88))] p-5 shadow-[0_36px_90px_rgba(16,37,62,0.24)] md:p-6">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.24),transparent_30%),radial-gradient(circle_at_82%_26%,rgba(246,189,96,0.24),transparent_28%),radial-gradient(circle_at_62%_82%,rgba(113,203,177,0.18),transparent_28%)]" />
 
-              <div className="mt-7 h-3 rounded-full bg-[#d9edf8]">
-                <div className="h-full w-[72%] rounded-full bg-[linear-gradient(90deg,#1b9ff4,#28b7f2)]" />
-              </div>
-
-              <p className="mt-4 text-[1rem] text-[#7b88a3]">
-                {copy.landing.courseCardProgress}
-                <span className="mx-2">·</span>
-                {copy.landing.courseCardMeta}
-              </p>
-            </div>
-
-            <div className="pointer-events-none viewer-float-fast absolute right-[4%] top-[9%] z-20 flex min-h-[7.6rem] w-[14.5rem] flex-col justify-center rounded-[28px] bg-[#fff1d5] px-6 shadow-[0_24px_55px_rgba(227,182,95,0.18)]">
-              <div className="flex items-center gap-4">
-                <Flame size={36} className="text-[#ff6a00]" />
-                <span className="text-[2.6rem] font-black leading-none text-[#ff7a00]">
-                  {copy.landing.streakValue}
-                </span>
-              </div>
-              <p className="mt-2 pl-[3.2rem] text-[1.45rem] font-black text-[#3d4a68]">
-                {copy.landing.streakLabel}
-              </p>
-            </div>
-
-            <div className="pointer-events-none viewer-float-medium absolute left-[28%] top-[67%] z-10 flex flex-col gap-3">
-              {[0, 1].map((item) => (
-                <div
-                  key={item}
-                  className="inline-flex items-center gap-3 rounded-full bg-[linear-gradient(135deg,rgba(24,162,248,0.96),rgba(92,171,243,0.92))] px-6 py-3 text-[1.05rem] font-black text-white shadow-[0_16px_30px_rgba(31,151,245,0.22)]"
-                >
-                  <Sparkles size={17} className="fill-current" />
-                  <span>{copy.landing.xpLabel}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pointer-events-none viewer-float-slow absolute bottom-[2%] right-[1%] z-20 w-[20rem] max-w-[85%] rounded-[26px] bg-[#0a1031] px-5 py-5 text-white shadow-[0_28px_58px_rgba(7,17,49,0.26)]">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#7749f8]">
-                  <Bot size={21} />
-                </div>
-                <p className="text-[1.25rem] font-bold tracking-[-0.03em]">{copy.landing.tutorPrompt}</p>
-              </div>
-            </div>
-
-            <div className="pointer-events-none absolute left-[-3%] top-[11%] h-[13rem] w-[13rem] rounded-full bg-white/8" />
-            <div className="pointer-events-none absolute right-[3%] top-[20%] h-[18rem] w-[18rem] rounded-full border border-white/30" />
-          </div>
-        </div>
-      </section>
-
-      <section id="workflow" className="bg-white">
-        <div className="landing-zoom-80 mx-auto max-w-[1540px] px-5 py-16 md:px-8 lg:px-14 lg:py-20">
-          <SectionEyebrow>学习流程</SectionEyebrow>
-          <h2 className="mt-3 max-w-[24rem] text-[clamp(3rem,4vw,4.5rem)] font-black leading-[0.94] tracking-[-0.065em] text-[#111627]">
-            从零到高手
-            <br />
-            只需 3 步
-          </h2>
-
-          <div className="mt-14 grid gap-5 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:items-center">
-            {workflowSteps.map((step, index) => {
-              const Icon = step.icon;
-              const card = (
-                <article
-                  key={step.number}
-                  className={`relative min-h-[270px] rounded-[34px] border bg-white p-8 shadow-[0_22px_50px_rgba(135,163,213,0.10)] ${step.borderClass}`}
-                >
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-[20px] ${step.iconClass}`}>
-                    <Icon size={28} />
-                  </div>
-                  <div className={`absolute right-8 top-8 text-[3rem] font-black tracking-[-0.05em] ${step.numberClass}`}>
-                    {step.number}
-                  </div>
-                  <h3 className="mt-10 text-[1.85rem] font-black tracking-[-0.04em] text-[#141a2b]">{step.title}</h3>
-                  <p className="mt-4 max-w-[26rem] text-[1rem] leading-8 text-[#62708d]">{step.description}</p>
-                </article>
-              );
-
-              if (index === workflowSteps.length - 1) {
-                return card;
-              }
-
-              return (
-                <Fragment key={step.number}>
-                  {card}
-                  <div
-                    className="hidden items-center justify-center text-[#c2cad8] lg:flex"
-                    aria-hidden="true"
-                  >
-                    <ArrowRight size={36} />
-                  </div>
-                </Fragment>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="tutor" className="overflow-hidden bg-[#0a1031] text-white">
-        <div className="landing-zoom-80 mx-auto grid max-w-[1540px] gap-10 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(560px,1.05fr)] lg:px-14 lg:py-20">
-          <div className="flex flex-col justify-center">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[#5f4bc4] bg-[#231b56] px-4 py-2 text-[0.95rem] font-black text-[#9b74ff]">
-              <Bot size={15} />
-              由 Gemini AI 提供支持
-            </div>
-            <h2 className="mt-8 text-[clamp(3rem,4.2vw,4.7rem)] font-black leading-[0.94] tracking-[-0.065em] text-white">
-              你的专属 AI
-              <br />
-              导师，始终在线
-            </h2>
-            <p className="mt-7 max-w-[40rem] text-[1.05rem] leading-8 text-white/78">
-              凌晨两点遇到难点？你的 AI 导师从不下线。随时提问，获得清晰讲解，保持学习势头。
-            </p>
-          </div>
-
-          <div className="relative rounded-[36px] border border-white/8 bg-[#141b4b] p-7 shadow-[0_30px_70px_rgba(0,0,0,0.22)]">
-            <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#6841ff,#9167ff)] text-white">
-                <Bot size={24} />
-              </div>
-              <div>
-                <h3 className="text-[1.8rem] font-black">Primoria AI 导师</h3>
-                <p className="mt-1 flex items-center gap-2 text-[0.95rem] font-semibold text-white/70">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#57d637]" />
-                  始终在线
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 space-y-5">
-              <div className="ml-auto max-w-[72%] rounded-[24px] bg-[linear-gradient(135deg,#8c63ff,#7a4ff0)] px-5 py-4 text-[1.02rem] font-medium leading-8 text-white shadow-[0_14px_32px_rgba(123,91,238,0.24)]">
-                水在结冰时为什么会膨胀？这听起来有点反直觉。
-              </div>
-              <div className="max-w-[82%] rounded-[24px] bg-white/8 px-5 py-4 text-[1rem] font-medium leading-8 text-white/82 backdrop-blur">
-                好问题！水分子在冰中会形成刚性的六边形晶格，这种结构比液态排列占据更大体积，所以结冰后反而会膨胀。这也是冰会浮在水面的原因。
-              </div>
-              <div className="max-w-[68%] rounded-[24px] border border-white/10 bg-[#1b245b] px-5 py-4 text-[1rem] font-medium leading-8 text-white/82">
-                要不要我顺手帮你画一个分子结构示意图，再出 3 道小测验？
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="growth" className="bg-[radial-gradient(circle_at_15%_35%,rgba(255,201,117,0.18),rgba(255,201,117,0)_22%),linear-gradient(180deg,#fffaf4_0%,#fff8ef_100%)]">
-        <div className="landing-zoom-80 mx-auto max-w-[1540px] px-5 py-16 md:px-8 lg:px-14 lg:py-20">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(0,0.88fr)] lg:items-center">
-            <div className="rounded-[36px] bg-white p-8 shadow-[0_26px_60px_rgba(240,167,62,0.12)]">
-              <div className="flex items-start gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-[#fff0df] text-[#ff7a00]">
-                  <Flame size={30} />
-                </div>
-                <div>
-                  <div className="text-[2.1rem] font-black tracking-[-0.04em] text-[#ff6b00]">47 天连击</div>
-                  <p className="mt-1 text-[1rem] font-medium text-[#7a849c]">状态火热！继续保持。</p>
-                </div>
-              </div>
-
-              <div className="mt-9 grid grid-cols-7 gap-4">
-                {['一', '二', '三', '四', '五', '六', '日'].map((day, index) => (
-                  <div key={day} className="text-center">
-                    <div
-                      className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full text-white ${
-                        index === 6 ? 'bg-[#eaf6ff] text-[#91a2b9]' : index === 5 ? 'bg-[#ff6b00]' : 'bg-[#ffb347]'
-                      }`}
-                    >
-                      {index === 6 ? <span className="text-[1rem] font-black">{day}</span> : <CheckCircle2 size={24} />}
+              <div className="relative grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)]">
+                <div className="rounded-[30px] border border-white/10 bg-white/8 p-5 backdrop-blur">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[0.72rem] font-black uppercase tracking-[0.2em] text-[#b9d7ff]">{landing.eyebrow}</p>
+                      <h2 className="mt-2 text-[1.35rem] font-black tracking-[-0.04em] text-white">{landing.platform.title}</h2>
                     </div>
-                    <div className="mt-3 text-[0.95rem] font-bold text-[#90a0bb]">{day}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-10 border-t border-[#eef3f8] pt-8">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3 text-[1.45rem] font-black text-[#1a2134]">
-                    <Star size={21} className="fill-[#ffb347] text-[#ffb347]" />
-                    XP 进度
-                  </div>
-                  <div className="text-[1.25rem] font-black text-[#91a0bb]">1,240 / 2,000</div>
-                </div>
-                <div className="mt-4 h-3 rounded-full bg-[#fff2df]">
-                  <div className="h-full w-[62%] rounded-full bg-[linear-gradient(90deg,#ffb347,#ff8b1f)]" />
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <div className="text-[1.55rem] font-black text-[#1a2134]">最近成就</div>
-                <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  {[
-                    { label: '第一节课', icon: Star, tone: 'bg-[#f2eaff] text-[#8b5cf6]' },
-                    { label: '7 天连击', icon: Flame, tone: 'bg-[#fff0df] text-[#ff7a00]' },
-                    { label: '测验达人', icon: Sparkles, tone: 'bg-[#e7fbf4] text-[#1cc9a2]' },
-                    { label: '前 10%', icon: Trophy, tone: 'bg-[#fff5e6] text-[#ffb347]' },
-                  ].map((item) => (
-                    <div key={item.label} className="text-center">
-                      <div className={`mx-auto flex h-16 w-16 items-center justify-center rounded-[20px] ${item.tone}`}>
-                        <item.icon size={28} />
-                      </div>
-                      <div className="mt-3 text-[0.95rem] font-bold text-[#64728d]">{item.label}</div>
+                    <div className="rounded-full bg-white/12 px-3 py-1 text-[0.72rem] font-black uppercase tracking-[0.18em] text-white/78">
+                      {landing.hero.cards[0].title}
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+                  </div>
 
-            <div>
-              <SectionEyebrow tone="text-[#ff7a00]">成长体系</SectionEyebrow>
-              <h2 className="mt-4 text-[clamp(3rem,4.4vw,4.8rem)] font-black leading-[0.94] tracking-[-0.065em] text-[#101627]">
-                让每一节课
-                <br />
-                都有价值
-              </h2>
-              <p className="mt-8 max-w-[38rem] text-[1.05rem] leading-9 text-[#67738d]">
-                科学研究表明，奖励机制能让大脑更爱学习。Primoria 基于这一点打造：每节课赚 XP，每天延续连击，每个里程碑解锁新成就。
-              </p>
+                  <div className="mt-5 overflow-hidden rounded-[22px] border border-white/10 bg-white/8">
+                    <img
+                      src={publicAssetPath('course-covers/physics-motion-forces-lab.svg')}
+                      alt="Primoria course cover"
+                      className="h-48 w-full object-cover"
+                    />
+                  </div>
 
-              <div className="mt-10 space-y-5">
-                {growthFeatures.map((feature) => {
-                  const Icon = feature.icon;
-                  return (
-                    <div key={feature.title} className="flex items-start gap-4">
-                      <div className={`flex h-14 w-14 items-center justify-center rounded-[18px] ${feature.iconClass}`}>
-                        <Icon size={24} />
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-[22px] bg-white/10 p-4 text-white/88">
+                      <div className="text-[0.72rem] font-black uppercase tracking-[0.2em] text-[#d5e6ff]">
+                        {landing.learner.steps[2].route}
                       </div>
-                      <div>
-                        <div className="text-[1.8rem] font-black tracking-[-0.04em] text-[#141a2b]">{feature.title}</div>
-                        <div className="mt-1 text-[1rem] font-medium text-[#6d7891]">{feature.description}</div>
+                      <div className="mt-2 text-[1.15rem] font-black tracking-[-0.04em]">
+                        {landing.learner.steps[2].title}
+                      </div>
+                      <div className="mt-3 h-2 rounded-full bg-white/15">
+                        <div className="h-full w-[72%] rounded-full bg-[linear-gradient(90deg,#f3d29f,#7cd6cf)]" />
                       </div>
                     </div>
-                  );
-                })}
+                    <div className="rounded-[22px] bg-white/10 p-4 text-white/88">
+                      <div className="text-[0.72rem] font-black uppercase tracking-[0.2em] text-[#d5e6ff]">
+                        {landing.learner.steps[3].route}
+                      </div>
+                      <div className="mt-2 text-[1.15rem] font-black tracking-[-0.04em]">
+                        {landing.growth.cards[0].title}
+                      </div>
+                      <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-2 text-[0.9rem] font-semibold">
+                        <Star size={15} className="text-[#ffd17b]" />
+                        <span>XP + Achievement loop</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+                  {landing.hero.cards.map((card, index) => {
+                    const Icon = heroCardIcons[index] ?? Sparkles;
+                    const tones = [
+                      'bg-[#d8eaff] text-[#205e9c]',
+                      'bg-[#fff0d9] text-[#9f5a1c]',
+                      'bg-[#efe3ff] text-[#6f45d2]',
+                      'bg-[#ddf5ea] text-[#2f7b68]',
+                    ] as const;
+
+                    return (
+                      <div
+                        key={card.title}
+                        className={`landing-panel-hover viewer-float-${index % 2 === 0 ? 'slow' : 'medium'} rounded-[26px] border border-white/10 bg-white/10 p-5 text-white shadow-[0_18px_44px_rgba(5,18,34,0.16)] backdrop-blur`}
+                      >
+                        <div className={`flex h-11 w-11 items-center justify-center rounded-[14px] ${tones[index] ?? tones[0]}`}>
+                          <Icon size={20} />
+                        </div>
+                        <p className="mt-4 text-[0.72rem] font-black uppercase tracking-[0.2em] text-[#d2e4ff]">
+                          {card.eyebrow}
+                        </p>
+                        <div className="mt-2 text-[1.18rem] font-black tracking-[-0.04em] text-white">{card.title}</div>
+                        <p className="mt-2 text-[0.92rem] leading-6 text-white/78">{card.meta}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -499,106 +304,506 @@ export function LandingPage() {
       </section>
 
       <section
-        id="community"
-        className="bg-[radial-gradient(circle_at_50%_18%,rgba(79,188,255,0.24),rgba(79,188,255,0)_25%),linear-gradient(180deg,#1e7ced_0%,#1c6bd4_45%,#228ce7_100%)] text-white"
+        id="product"
+        data-testid="landing-section-product"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,rgba(255,250,244,0.82),rgba(248,244,236,0.72))]"
       >
-        <div className="landing-zoom-80 mx-auto max-w-[1540px] px-5 py-16 text-center md:px-8 lg:px-14 lg:py-20">
-          <SectionEyebrow tone="text-white/80">社区</SectionEyebrow>
-          <h2 className="mt-4 text-[clamp(3rem,4.4vw,4.9rem)] font-black leading-[0.96] tracking-[-0.065em] text-white">
-            找到你的学习搭子
-          </h2>
-          <p className="mx-auto mt-6 max-w-[60rem] text-[1.05rem] leading-9 text-white/84">
-            一个人学习并不容易。我们的智能匹配算法会把你与同水平、同主题学习者连接起来。互相激励、排行榜竞争、一起达成目标。
-          </p>
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(480px,1.04fr)] lg:px-14 lg:py-20">
+          <SectionIntro eyebrow={landing.platform.eyebrow} title={landing.platform.title} subtitle={landing.platform.subtitle} />
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {communityCards.map((card) => {
-              const Icon = card.icon;
-              return (
-                <article
-                  key={card.title}
-                  className="rounded-[34px] border border-white/22 bg-white/12 px-8 py-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur"
-                >
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[20px] bg-white/14 text-white">
-                    <Icon size={28} />
+          <SurfaceCard className="bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(249,244,236,0.92))]">
+            <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8a5a2f]">
+              Shared foundations
+            </p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {landing.platform.foundations.map((item, index) => {
+                const Icon = foundationIcons[index] ?? Sparkles;
+                return (
+                  <div key={item} className="flex items-start gap-3 rounded-[20px] border border-[#e6dccd] bg-white/72 px-4 py-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] bg-[#f3ede3] text-[#26415e]">
+                      <Icon size={18} />
+                    </div>
+                    <p className="text-[0.95rem] font-semibold leading-7 text-[#576173]">{item}</p>
                   </div>
-                  <h3 className="mt-6 text-[2rem] font-black tracking-[-0.04em]">{card.title}</h3>
-                  <p className="mt-3 text-[1rem] font-medium text-white/80">{card.description}</p>
-                </article>
-              );
-            })}
+                );
+              })}
+            </div>
+          </SurfaceCard>
+        </div>
+
+        <div className="mx-auto grid max-w-[1540px] gap-5 px-5 pb-16 md:px-8 lg:grid-cols-3 lg:px-14 lg:pb-20">
+          {landing.platform.lanes.map((lane, index) => (
+            <IconCard
+              key={lane.title}
+              icon={platformIcons[index] ?? Sparkles}
+              eyebrow={lane.eyebrow}
+              title={lane.title}
+              description={lane.description}
+              iconTone={
+                index === 0
+                  ? 'bg-[#e2ecff] text-[#225a96]'
+                  : index === 1
+                    ? 'bg-[#fff1de] text-[#a35e1d]'
+                    : 'bg-[#ddf5ea] text-[#2f7b68]'
+              }
+            />
+          ))}
+        </div>
+      </section>
+
+      <section
+        id="learner"
+        data-testid="landing-section-learner"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,rgba(249,244,236,0.76),rgba(247,240,230,0.96))]"
+      >
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(500px,1.1fr)] lg:px-14 lg:py-20">
+          <div>
+            <SectionIntro eyebrow={landing.learner.eyebrow} title={landing.learner.title} subtitle={landing.learner.subtitle} />
+            <div className="mt-10 space-y-4">
+              {landing.learner.steps.map((step, index) => {
+                const Icon = learnerStepIcons[index] ?? Sparkles;
+                return (
+                  <div key={step.route} className="landing-panel-hover rounded-[28px] border border-[#e4d8c7] bg-white/82 p-5 shadow-[0_20px_50px_rgba(52,64,92,0.06)]">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div className="flex items-start gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#edf4ff] text-[#245e99]">
+                          <Icon size={20} />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8a5a2f]">
+                            {step.step}
+                          </div>
+                          <h3 className="mt-2 text-[1.3rem] font-black tracking-[-0.04em] text-[#152037]">{step.title}</h3>
+                        </div>
+                      </div>
+                      <div className="rounded-full border border-[#dfd3c1] bg-[#f8f1e6] px-3 py-1 text-[0.78rem] font-black text-[#6a5948]">
+                        {step.route}
+                      </div>
+                    </div>
+                    <p className="mt-4 text-[0.98rem] leading-7 text-[#616b7e]">{step.description}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="mt-12">
-            <Link
-              to="/register"
-              className="inline-flex h-14 items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#2994ff,#23d1e5)] px-10 text-[1.15rem] font-black text-white shadow-[0_18px_38px_rgba(26,93,216,0.24)]"
-            >
-              加入社区
-            </Link>
+          <div className="space-y-5">
+            <SurfaceCard className="overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(252,246,237,0.92))] p-0">
+              <img
+                src={publicAssetPath('course-covers/python-debugging-studio.svg')}
+                alt="Learner course surface"
+                className="h-56 w-full object-cover"
+              />
+              <div className="p-6">
+                <div className="rounded-full border border-[#e1d5c5] bg-[#f7efe2] px-3 py-1 text-[0.75rem] font-black uppercase tracking-[0.18em] text-[#7b5f45]">
+                  {landing.learner.sideTitle}
+                </div>
+                <p className="mt-4 text-[1rem] leading-8 text-[#596375]">{landing.learner.sideBody}</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {landing.learner.sideHighlights.map((highlight) => (
+                    <div key={highlight} className="rounded-full bg-[#153b61] px-4 py-2 text-[0.9rem] font-bold text-white shadow-[0_12px_26px_rgba(21,59,97,0.14)]">
+                      {highlight}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </SurfaceCard>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              <SurfaceCard className="bg-[linear-gradient(180deg,rgba(20,32,55,0.95),rgba(24,55,87,0.92))] text-white">
+                <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#cfe3ff]">Lesson Runtime</p>
+                <div className="mt-4 text-[1.6rem] font-black tracking-[-0.05em]">Prev · Check · Next</div>
+                <p className="mt-3 text-[0.96rem] leading-7 text-white/76">{landing.learner.steps[2].description}</p>
+              </SurfaceCard>
+
+              <SurfaceCard className="bg-[linear-gradient(180deg,rgba(255,247,232,0.95),rgba(255,240,213,0.92))]">
+                <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#9a5f1b]">Result Loop</p>
+                <div className="mt-4 text-[1.6rem] font-black tracking-[-0.05em] text-[#6b4315]">XP · Progress · Achievements</div>
+                <p className="mt-3 text-[0.96rem] leading-7 text-[#7b5f45]">{landing.learner.steps[3].description}</p>
+              </SurfaceCard>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#eef3ff]">
-        <div className="landing-zoom-80 mx-auto max-w-[1540px] px-5 py-16 md:px-8 lg:px-14 lg:py-20">
-          <div className="text-center">
-            <SectionEyebrow>用户评价</SectionEyebrow>
-            <h2 className="mt-4 text-[clamp(3rem,4.4vw,4.9rem)] font-black leading-[0.96] tracking-[-0.065em] text-[#111627]">
-              学习者喜爱 Primoria
+      <section
+        id="tutor"
+        data-testid="landing-section-tutor"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,#11253b_0%,#163555_46%,#1d4a63_100%)] text-white"
+      >
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(540px,1.08fr)] lg:px-14 lg:py-20">
+          <div>
+            <SectionEyebrow tone="text-[#b9d7ff]">{landing.tutor.eyebrow}</SectionEyebrow>
+            <h2 className="mt-4 text-[clamp(2.5rem,4vw,4.45rem)] font-black leading-[0.95] tracking-[-0.06em] text-white">
+              {landing.tutor.title}
             </h2>
+            <p className="mt-6 max-w-[42rem] text-[1rem] leading-8 text-white/76 md:text-[1.05rem]">
+              {landing.tutor.subtitle}
+            </p>
+
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {landing.tutor.capabilities.map((item, index) => {
+                const Icon = tutorIcons[index] ?? Sparkles;
+
+                return (
+                  <div key={item.title} className="landing-panel-hover rounded-[26px] border border-white/10 bg-white/7 p-5 backdrop-blur">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-white/12 text-white">
+                      <Icon size={20} />
+                    </div>
+                    <h3 className="mt-4 text-[1.2rem] font-black tracking-[-0.04em] text-white">{item.title}</h3>
+                    <p className="mt-3 text-[0.96rem] leading-7 text-white/74">{item.description}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {testimonials.map((item) => (
-              <article
-                key={item.name}
-                className="rounded-[34px] bg-white p-8 shadow-[0_22px_50px_rgba(135,163,213,0.10)]"
-              >
-                <div className="flex gap-1 text-[#ffaf45]">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star key={index} size={18} className="fill-current text-current" />
+          <div className="space-y-5">
+            <div className="landing-stage-enter landing-stage-enter-delay-2 rounded-[34px] border border-white/10 bg-[rgba(8,17,31,0.42)] p-6 shadow-[0_30px_70px_rgba(0,0,0,0.22)] backdrop-blur">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[linear-gradient(135deg,#9464ff,#6792ff)] text-white">
+                  <Bot size={21} />
+                </div>
+                <div>
+                  <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#b9d7ff]">AI Tutor Desk</p>
+                  <div className="mt-1 text-[1.4rem] font-black tracking-[-0.04em] text-white">{landing.tutor.tools.join(' · ')}</div>
+                </div>
+              </div>
+
+              <div className="mt-7 space-y-4">
+                <div className="ml-auto max-w-[78%] rounded-[24px] bg-[linear-gradient(135deg,#8f68ff,#6c8fff)] px-5 py-4 text-[0.98rem] font-semibold leading-7 text-white shadow-[0_16px_36px_rgba(110,113,255,0.2)]">
+                  {landing.tutor.conversation[0]}
+                </div>
+                <div className="max-w-[82%] rounded-[24px] bg-white/8 px-5 py-4 text-[0.96rem] leading-7 text-white/78 backdrop-blur">
+                  {landing.tutor.conversation[1]}
+                </div>
+                <div className="max-w-[72%] rounded-[24px] border border-white/10 bg-[rgba(255,255,255,0.05)] px-5 py-4 text-[0.96rem] leading-7 text-white/72">
+                  {landing.tutor.conversation[2]}
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                {landing.tutor.tools.map((tool) => (
+                  <div key={tool} className="rounded-full bg-white/10 px-4 py-2 text-[0.88rem] font-bold text-white/84">
+                    {tool}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <SurfaceCard className="bg-white/10 text-white backdrop-blur">
+              <p className="text-[0.86rem] font-semibold leading-7 text-white/78">{landing.tutor.footer}</p>
+            </SurfaceCard>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="community"
+        data-testid="landing-section-community"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,rgba(239,247,243,0.94),rgba(231,241,236,0.92))]"
+      >
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(320px,0.86fr)_minmax(0,1.14fr)] lg:px-14 lg:py-20">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(120,180,156,0.25),transparent_62%)]" />
+            <img
+              src={publicAssetPath('Community_plant..png')}
+              alt="Community visual"
+              className="viewer-float-slow relative z-10 w-full max-w-[30rem] drop-shadow-[0_26px_60px_rgba(75,110,94,0.18)]"
+            />
+          </div>
+
+          <div>
+            <SectionIntro eyebrow={landing.community.eyebrow} title={landing.community.title} subtitle={landing.community.subtitle} />
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {landing.community.pillars.map((item, index) => (
+                <IconCard
+                  key={item.title}
+                  icon={communityIcons[index] ?? Sparkles}
+                  title={item.title}
+                  description={item.description}
+                  iconTone={
+                    index === 0
+                      ? 'bg-[#e2ecff] text-[#225a96]'
+                      : index === 1
+                        ? 'bg-[#ddf5ea] text-[#2f7b68]'
+                        : index === 2
+                          ? 'bg-[#fff1de] text-[#a35e1d]'
+                          : 'bg-[#f0e5ff] text-[#6f45d2]'
+                  }
+                />
+              ))}
+            </div>
+
+            <SurfaceCard className="mt-5 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(247,253,250,0.88))]">
+              <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#5a7d69]">{landing.community.noteTitle}</p>
+              <p className="mt-4 text-[1rem] leading-8 text-[#596375]">{landing.community.noteBody}</p>
+            </SurfaceCard>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="family"
+        data-testid="landing-section-family"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,rgba(249,244,236,0.9),rgba(246,239,229,0.95))]"
+      >
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.9fr)] lg:px-14 lg:py-20">
+          <div>
+            <SectionIntro eyebrow={landing.growth.eyebrow} title={landing.growth.title} subtitle={landing.growth.subtitle} />
+
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {landing.growth.cards.map((item, index) => (
+                <IconCard
+                  key={item.title}
+                  icon={growthIcons[index] ?? Sparkles}
+                  title={item.title}
+                  description={item.description}
+                  iconTone={
+                    index === 0
+                      ? 'bg-[#fff3d8] text-[#a45c1a]'
+                      : index === 1
+                        ? 'bg-[#ffe5d3] text-[#d65a16]'
+                        : index === 2
+                          ? 'bg-[#efe3ff] text-[#6f45d2]'
+                          : 'bg-[#e2ecff] text-[#225a96]'
+                  }
+                />
+              ))}
+            </div>
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+              <SurfaceCard className="bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,248,237,0.9))]">
+                <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8a5a2f]">Achievement Wall</p>
+                <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  {landing.growth.achievementLabels.map((label, index) => (
+                    <div key={label} className="rounded-[22px] border border-[#e8ddcf] bg-white/78 p-4 text-center">
+                      <img
+                        src={publicAssetPath(
+                          index === 0
+                            ? 'achievements/first_lesson.png'
+                            : index === 1
+                              ? 'achievements/hot_streak.png'
+                              : index === 2
+                                ? 'achievements/perfect_score.png'
+                                : 'achievements/study_buddy.png',
+                        )}
+                        alt={label}
+                        className="mx-auto h-16 w-16 object-contain"
+                      />
+                      <div className="mt-3 text-[0.84rem] font-bold leading-6 text-[#5a6375]">{label}</div>
+                    </div>
                   ))}
                 </div>
-                <p className="mt-8 text-[1rem] leading-9 text-[#5d6882]">{item.quote}</p>
-                <div className="mt-10 flex items-center gap-4">
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-full text-[1.4rem] font-black ${item.tone}`}>
-                    {item.initials}
-                  </div>
-                  <div>
-                    <div className="text-[1.55rem] font-black tracking-[-0.04em] text-[#161c2d]">{item.name}</div>
-                    <div className="text-[1rem] font-medium text-[#77829a]">{item.title}</div>
-                  </div>
-                </div>
-              </article>
+              </SurfaceCard>
+
+              <div className="space-y-4">
+                {landing.growth.accountCards.map((item) => (
+                  <SurfaceCard key={item.title}>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-[#edf4ff] text-[#245e99]">
+                      <Settings2 size={20} />
+                    </div>
+                    <h3 className="mt-4 text-[1.18rem] font-black tracking-[-0.04em] text-[#152037]">{item.title}</h3>
+                    <p className="mt-3 text-[0.95rem] leading-7 text-[#616b7e]">{item.description}</p>
+                  </SurfaceCard>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            <SectionIntro eyebrow={landing.family.eyebrow} title={landing.family.title} subtitle={landing.family.subtitle} />
+            {landing.family.cards.map((item, index) => (
+              <IconCard
+                key={item.title}
+                icon={familyIcons[index] ?? ShieldCheck}
+                title={item.title}
+                description={item.description}
+                iconTone={
+                  index === 0
+                    ? 'bg-[#e2ecff] text-[#225a96]'
+                    : index === 1
+                      ? 'bg-[#ddf5ea] text-[#2f7b68]'
+                      : 'bg-[#fff1de] text-[#a35e1d]'
+                }
+              />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[linear-gradient(90deg,#1d77ef,#27d0e7)] text-white">
-        <div className="landing-zoom-80 mx-auto max-w-[1540px] px-5 py-16 text-center md:px-8 lg:px-14 lg:py-20">
-          <h2 className="text-[clamp(3rem,4.5vw,4.8rem)] font-black leading-[0.96] tracking-[-0.065em]">
-            准备开启你的
-            <br />
-            学习旅程了吗？
-          </h2>
-          <p className="mx-auto mt-6 max-w-[44rem] text-[1.1rem] leading-9 text-white/84">
-            加入 10,000+ 位学习者，选择动手学习，而不只是观看。
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/register"
-              className="inline-flex h-14 items-center justify-center rounded-[18px] bg-white px-10 text-[1.15rem] font-black text-[#227ff0]"
-            >
-              免费创建账号
-            </Link>
-            <Link
-              to="/login"
-              className="inline-flex h-14 items-center justify-center rounded-[18px] border-2 border-white px-10 text-[1.15rem] font-black text-white"
-            >
-              登录
-            </Link>
+      <section
+        id="builder"
+        data-testid="landing-section-builder-dashboard"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,rgba(244,239,232,0.96),rgba(237,230,220,0.96))]"
+      >
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.94fr)_minmax(520px,1.06fr)] lg:px-14 lg:py-20">
+          <div>
+            <SectionIntro eyebrow={landing.builderDashboard.eyebrow} title={landing.builderDashboard.title} subtitle={landing.builderDashboard.subtitle} />
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {landing.builderDashboard.strips.map((strip) => (
+                <div key={strip} className="rounded-full border border-[#d7cab6] bg-white/78 px-4 py-2 text-[0.9rem] font-bold text-[#4f5b6d] shadow-[0_10px_20px_rgba(48,58,78,0.06)]">
+                  {strip}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {landing.builderDashboard.tabs.map((item, index) => (
+              <IconCard
+                key={item.title}
+                icon={dashboardIcons[index] ?? Sparkles}
+                title={item.title}
+                description={item.description}
+                iconTone={
+                  index === 0
+                    ? 'bg-[#e2ecff] text-[#225a96]'
+                    : index === 1
+                      ? 'bg-[#fff1de] text-[#a35e1d]'
+                      : index === 2
+                        ? 'bg-[#efe3ff] text-[#6f45d2]'
+                        : 'bg-[#ddf5ea] text-[#2f7b68]'
+                }
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-testid="landing-section-builder-editor"
+        className="border-b border-black/5 bg-[linear-gradient(180deg,rgba(250,246,240,0.92),rgba(245,238,229,0.98))]"
+      >
+        <div className="mx-auto grid max-w-[1540px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,1.02fr)_minmax(420px,0.98fr)] lg:px-14 lg:py-20">
+          <div>
+            <SectionIntro eyebrow={landing.builderEditor.eyebrow} title={landing.builderEditor.title} subtitle={landing.builderEditor.subtitle} />
+
+            <div className="mt-10 overflow-hidden rounded-[34px] border border-[#ddd1bf] bg-[linear-gradient(180deg,#fffdf8,#f8f1e5)] shadow-[0_26px_64px_rgba(52,64,92,0.08)]">
+              <div className="flex items-center justify-between border-b border-[#e7dccd] px-5 py-4">
+                <div>
+                  <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8a5a2f]">Editor Surface</p>
+                  <div className="mt-1 text-[1.2rem] font-black tracking-[-0.04em] text-[#152037]">Blocks · Preview · Schema</div>
+                </div>
+                <div className="rounded-full bg-[#153b61] px-3 py-1 text-[0.78rem] font-black text-white">Learner Preview</div>
+              </div>
+
+              <div className="grid gap-5 p-5 lg:grid-cols-[minmax(260px,0.88fr)_minmax(0,1.12fr)]">
+                <div className="space-y-3">
+                  {landing.builderEditor.capabilities.slice(0, 4).map((item) => (
+                    <div key={item} className="rounded-[18px] border border-[#e7dccd] bg-white/82 px-4 py-4 text-[0.94rem] font-semibold text-[#5c6578]">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-[24px] border border-[#e7dccd] bg-white/88 p-5">
+                  <p className="text-[0.76rem] font-black uppercase tracking-[0.2em] text-[#8a5a2f]">{landing.builderEditor.previewTitle}</p>
+                  <p className="mt-4 text-[0.98rem] leading-7 text-[#616b7e]">{landing.builderEditor.previewBody}</p>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {landing.builderEditor.blockTypes.map((type) => (
+                      <div key={type} className="rounded-full bg-[#153b61] px-4 py-2 text-[0.86rem] font-bold text-white shadow-[0_12px_24px_rgba(21,59,97,0.14)]">
+                        {type}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    {landing.builderEditor.schema.map((item) => (
+                      <div key={item} className="flex items-start gap-3 rounded-[18px] bg-[#f8f1e6] px-4 py-4 text-[0.94rem] leading-7 text-[#5f687a]">
+                        <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e5d7c3] text-[#6c553b]">
+                          <CheckCircle2 size={14} />
+                        </div>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {landing.builderEditor.capabilities.map((item, index) => (
+              <IconCard
+                key={item}
+                icon={
+                  index === 0 ? Blocks
+                  : index === 1 ? WandSparkles
+                  : index === 2 ? Upload
+                  : index === 3 ? Sparkles
+                  : index === 4 ? FileCheck2
+                  : BookOpen
+                }
+                title={item}
+                description={index < landing.builderEditor.capabilities.length - 1 ? landing.builderEditor.previewBody : landing.builderEditor.subtitle}
+                iconTone={
+                  index % 3 === 0
+                    ? 'bg-[#e2ecff] text-[#225a96]'
+                    : index % 3 === 1
+                      ? 'bg-[#fff1de] text-[#a35e1d]'
+                      : 'bg-[#ddf5ea] text-[#2f7b68]'
+                }
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-testid="landing-section-feature-atlas"
+        className="bg-[linear-gradient(180deg,rgba(239,233,223,0.92),rgba(247,241,231,0.98))]"
+      >
+        <div className="mx-auto max-w-[1540px] px-5 py-16 md:px-8 lg:px-14 lg:py-20">
+          <SectionIntro eyebrow={landing.featureAtlas.eyebrow} title={landing.featureAtlas.title} subtitle={landing.featureAtlas.subtitle} />
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {landing.featureAtlas.items.map((item, index) => {
+              const Icon = atlasIcons[index] ?? Sparkles;
+
+              return (
+                <SurfaceCard key={item}>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-[#edf4ff] text-[#245e99]">
+                    <Icon size={20} />
+                  </div>
+                  <div className="mt-4 text-[1rem] font-bold leading-7 text-[#4e5a6d]">{item}</div>
+                </SurfaceCard>
+              );
+            })}
+          </div>
+
+          <div
+            data-testid="landing-section-final-cta"
+            className="mt-10 overflow-hidden rounded-[36px] border border-[#d7cab6] bg-[linear-gradient(135deg,#133b61,#275f8d_42%,#5c8662)] px-6 py-10 text-white shadow-[0_32px_70px_rgba(20,46,75,0.2)] md:px-10"
+          >
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+              <div>
+                <SectionEyebrow tone="text-white/72">{landing.eyebrow}</SectionEyebrow>
+                <h2 className="mt-4 text-[clamp(2.2rem,4vw,4rem)] font-black leading-[0.95] tracking-[-0.06em] text-white">
+                  {landing.finalCta.title}
+                </h2>
+                <p className="mt-5 max-w-[42rem] text-[1rem] leading-8 text-white/78">
+                  {landing.finalCta.subtitle}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <Link
+                  to="/register"
+                  className="inline-flex h-12 items-center justify-center rounded-[18px] bg-white px-6 text-[0.98rem] font-black text-[#1b4c77] shadow-[0_16px_30px_rgba(255,255,255,0.16)]"
+                >
+                  {landing.finalCta.primaryCta}
+                </Link>
+                <Link
+                  to="/login"
+                  className="inline-flex h-12 items-center justify-center rounded-[18px] border border-white/28 px-6 text-[0.98rem] font-black text-white"
+                >
+                  {landing.finalCta.secondaryCta}
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
