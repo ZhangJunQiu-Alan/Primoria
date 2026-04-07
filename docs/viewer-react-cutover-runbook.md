@@ -123,6 +123,7 @@ supabase db push
 
 ```bash
 supabase functions deploy viewer-ai-tutor
+supabase functions deploy viewer-ai-quiz-from-docs --no-verify-jwt
 supabase functions deploy viewer-push-subscribe
 supabase functions deploy viewer-push-unsubscribe
 supabase functions deploy viewer-push-dispatch
@@ -130,6 +131,7 @@ supabase functions deploy viewer-push-dispatch
 
 3. Confirm frontend environment variables for the target deploy.
    - There is no separate Builder frontend deploy or handoff environment anymore.
+   - Confirm `GEMINI_API_KEY` is present before invoking AI Tutor reply or quiz generation functions.
 
 4. Build and deploy Viewer React through the preview or production workflow.
    - Cloudflare Pages config is tracked in `packages/viewer-react/wrangler.toml`.
@@ -166,7 +168,7 @@ Builder publish/readback:
 
 Community and AI Tutor:
 - Open `/community` and verify room/message/note persistence
-- Open `/ai-tutor` and verify reply plus tool modals
+- Open `/ai-tutor`, verify tutor reply, upload a PDF or DOCX, generate a quiz draft, and confirm the app redirects to `/library`
 
 Builder workspace:
 - Open `/builder/dashboard`
