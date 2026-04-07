@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3674f868254e",
+  "session_id": "3f8bf734-374f-4309-9613-3a113537b5ba",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-07T04:46:17.944661Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "package.json",
+    "packages/viewer-react/src/features/home/HomePage.tsx",
+    "packages/viewer-react/src/features/library/LibraryPage.tsx",
+    "packages/viewer-react/src/features/profile/ProfilePage.tsx",
+    "packages/viewer-react/src/pages/dashboard/DashboardPage.tsx",
+    "packages/viewer-react/src/pages/dashboard/dashboard.css",
+    "packages/viewer-react/src/shared/api/viewer/catalogApi.ts",
+    "packages/viewer-react/src/shared/utils/localCourseCovers.ts",
+    "packages/viewer-react/test/dashboardPage.test.tsx",
+    "packages/viewer-react/test/homePage.test.tsx",
+    "packages/viewer-react/test/libraryPage.test.tsx",
+    "packages/viewer-react/test/localCourseCovers.test.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "6696807f3d3e",
+  "token_usage": {
+    "input_tokens": 93,
+    "cache_creation_tokens": 159949,
+    "cache_read_tokens": 6855559,
+    "output_tokens": 96778,
+    "api_call_count": 73
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-07T04:46:16.63841Z",
+    "agent_lines": 0,
+    "human_added": 1466,
+    "human_modified": 591,
+    "human_removed": 0,
+    "total_committed": 1843,
+    "agent_percentage": 0
+  }
+}
