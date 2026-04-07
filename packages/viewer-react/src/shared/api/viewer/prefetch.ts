@@ -1,5 +1,13 @@
 import type { QueryClient } from '@tanstack/react-query';
 
+export function prefetchViewerNavigationTarget(
+  _queryClient: QueryClient,
+  _target: string,
+  _options?: PrefetchOptions,
+): void {
+  // no-op: prefetch stub
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PrefetchOptions = { idle?: boolean; [key: string]: any };
 
