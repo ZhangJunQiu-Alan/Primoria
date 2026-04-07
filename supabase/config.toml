@@ -377,6 +377,12 @@ deno_version = 2
 [functions.ai-generate-course-json]
 verify_jwt = false
 
+# viewer-ai-quiz-from-docs validates the learner inside the function using the
+# forwarded Authorization header, so the gateway should not reject the request
+# before the handler runs.
+[functions.viewer-ai-quiz-from-docs]
+verify_jwt = false
+
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
