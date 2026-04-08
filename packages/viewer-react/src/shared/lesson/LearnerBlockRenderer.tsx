@@ -5,6 +5,8 @@ import type { QuestionEvaluation, QuestionResponse } from '@/shared/lesson/quest
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { cn } from '@/shared/utils/cn';
 
+type SelectableOptionState = 'default' | 'selected' | 'correct' | 'incorrect';
+
 export function LearnerBlockRenderer({
   block,
   response,
@@ -76,6 +78,43 @@ export function LearnerBlockRenderer({
   }
 }
 
+function resolveSelectableOptionState({
+  evaluation,
+  selected,
+  isCorrect,
+}: {
+  evaluation?: QuestionEvaluation;
+  selected: boolean;
+  isCorrect: boolean;
+}): SelectableOptionState {
+  if (!evaluation) {
+    return selected ? 'selected' : 'default';
+  }
+
+  if (isCorrect) {
+    return 'correct';
+  }
+
+  if (selected) {
+    return 'incorrect';
+  }
+
+  return 'default';
+}
+
+function selectableOptionClasses(state: SelectableOptionState) {
+  switch (state) {
+    case 'selected':
+      return 'border-[#b9d1bc] bg-[#edf5ec] text-[#5c7d60]';
+    case 'correct':
+      return 'border-emerald-200 bg-emerald-50 text-emerald-700';
+    case 'incorrect':
+      return 'border-rose-200 bg-rose-50 text-rose-700';
+    default:
+      return 'border-[var(--viewer-border)] text-[var(--viewer-text)] hover:bg-[var(--viewer-surface-muted)]';
+  }
+}
+
 function MultipleChoicePreview({
   block,
   response,
@@ -106,15 +145,19 @@ function MultipleChoicePreview({
       <div className="space-y-2">
         {options.map((option) => {
           const selected = selectedIds.includes(option.id);
+          const optionState = resolveSelectableOptionState({
+            evaluation,
+            selected,
+            isCorrect: Boolean(option.isCorrect),
+          });
           return (
             <label
               key={option.id}
+              data-option-state={optionState}
               className={cn(
                 'flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition',
                 locked ? 'cursor-not-allowed opacity-80' : 'cursor-pointer',
-                selected
-                  ? 'border-[#b9d1bc] bg-[#edf5ec] text-[#5c7d60]'
-                  : 'border-[var(--viewer-border)] text-[var(--viewer-text)] hover:bg-[var(--viewer-surface-muted)]',
+                selectableOptionClasses(optionState),
               )}
             >
               <input
@@ -181,27 +224,34 @@ function TrueFalsePreview({
     <div className="space-y-3">
       <p className="font-semibold text-[var(--viewer-text)]">{String(content.statement ?? '')}</p>
       <div className="grid gap-3 sm:grid-cols-2">
-        {labels.map((option) => (
-          <label
-            key={option.label}
-            className={cn(
-              'flex items-center justify-center gap-3 rounded-2xl border px-4 py-3 text-sm font-semibold transition',
-              locked ? 'cursor-not-allowed opacity-80' : 'cursor-pointer',
-              selectedValue === option.value
-                ? 'border-[#b9d1bc] bg-[#edf5ec] text-[#5c7d60]'
-                : 'border-[var(--viewer-border)] text-[var(--viewer-text)] hover:bg-[var(--viewer-surface-muted)]',
-            )}
-          >
-            <input
-              type="radio"
-              name={group}
-              checked={selectedValue === option.value}
-              disabled={locked}
-              onChange={() => onResponseChange?.(option.value)}
-            />
-            <span>{option.label}</span>
-          </label>
-        ))}
+        {labels.map((option) => {
+          const optionState = resolveSelectableOptionState({
+            evaluation,
+            selected: selectedValue === option.value,
+            isCorrect: option.value === Boolean(content.isTrue ?? true),
+          });
+
+          return (
+            <label
+              key={option.label}
+              data-option-state={optionState}
+              className={cn(
+                'flex items-center justify-center gap-3 rounded-2xl border px-4 py-3 text-sm font-semibold transition',
+                locked ? 'cursor-not-allowed opacity-80' : 'cursor-pointer',
+                selectableOptionClasses(optionState),
+              )}
+            >
+              <input
+                type="radio"
+                name={group}
+                checked={selectedValue === option.value}
+                disabled={locked}
+                onChange={() => onResponseChange?.(option.value)}
+              />
+              <span>{option.label}</span>
+            </label>
+          );
+        })}
       </div>
       <AnswerState evaluation={evaluation} />
     </div>
