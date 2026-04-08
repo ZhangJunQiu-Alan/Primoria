@@ -406,28 +406,7 @@
         }
       }
     </style>
-    <script>
-      (function() {
-        var root = document.documentElement;
-        var label = '正在准备学习空间';
-        try {
-          var raw = window.localStorage.getItem('primoria.viewer.preferences');
-          if (raw) {
-            var parsed = JSON.parse(raw);
-            if (parsed && typeof parsed.themeMode === 'string') {
-              if (parsed.themeMode === 'light' || parsed.themeMode === 'dark') {
-                root.dataset.theme = parsed.themeMode;
-              }
-            }
-            if (parsed && typeof parsed.language === 'string' && parsed.language.toLowerCase().indexOf('en') === 0) {
-              root.lang = 'en';
-              label = 'Preparing your learning space';
-            }
-          }
-        } catch (_error) {}
-        window.__viewerBootSplashLabel = label;
-      })();
-    </script>
+    <script src="%BASE_URL%boot-splash-init.js"></script>
   </head>
   <body>
     <div id="viewer-boot-splash" class="viewer-boot-splash" data-state="visible" role="status" aria-live="polite">
@@ -524,12 +503,6 @@
         </div>
       </div>
     </div>
-    <script>
-      var splashLabel = document.getElementById('viewer-boot-splash-label');
-      if (splashLabel && typeof window.__viewerBootSplashLabel === 'string') {
-        splashLabel.textContent = window.__viewerBootSplashLabel;
-      }
-    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
