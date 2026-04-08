@@ -114,6 +114,10 @@ function renderRuntime(
   );
 }
 
+function getOptionState(name: string) {
+  return screen.getByRole('radio', { name }).closest('label');
+}
+
 describe('LessonRuntimePlayer', () => {
   beforeEach(() => {
     generateTutorReplyStreamMock.mockReset();
@@ -148,6 +152,8 @@ describe('LessonRuntimePlayer', () => {
 
     expect(await screen.findByText('Question 1 explanation.')).toBeInTheDocument();
     expect(screen.getByText('Correct')).toBeInTheDocument();
+    expect(getOptionState('Correct option')).toHaveAttribute('data-option-state', 'correct');
+    expect(getOptionState('Wrong option')).toHaveAttribute('data-option-state', 'default');
     expect(screen.queryByText('Question 2')).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Next step' }));
@@ -156,6 +162,8 @@ describe('LessonRuntimePlayer', () => {
     await user.click(screen.getByRole('radio', { name: 'True' }));
     await user.click(screen.getByRole('button', { name: 'Next step' }));
     expect(await screen.findByText('Question 2 explanation.')).toBeInTheDocument();
+    expect(getOptionState('True')).toHaveAttribute('data-option-state', 'correct');
+    expect(getOptionState('False')).toHaveAttribute('data-option-state', 'default');
     expect(screen.getByRole('button', { name: 'Next step' })).toBeEnabled();
 
     await user.click(screen.getByRole('button', { name: 'Next step' }));
@@ -182,6 +190,39 @@ describe('LessonRuntimePlayer', () => {
         pageCount: 2,
       }),
     );
+  });
+
+  it('marks an incorrect multiple-choice selection red and the correct option green after evaluation', async () => {
+    const user = userEvent.setup();
+    renderRuntime();
+
+    await user.click(screen.getByRole('radio', { name: 'Wrong option' }));
+    await user.click(screen.getByRole('button', { name: 'Next step' }));
+
+    expect(await screen.findByText('Question 1 explanation.')).toBeInTheDocument();
+    expect(screen.getByText('Not correct yet')).toBeInTheDocument();
+    expect(getOptionState('Wrong option')).toHaveAttribute('data-option-state', 'incorrect');
+    expect(getOptionState('Correct option')).toHaveAttribute('data-option-state', 'correct');
+    expect(screen.queryByText('Question 2')).not.toBeInTheDocument();
+  });
+
+  it('marks an incorrect true-false selection red and the correct option green after evaluation', async () => {
+    const user = userEvent.setup();
+    renderRuntime();
+
+    await user.click(screen.getByRole('radio', { name: 'Correct option' }));
+    await user.click(screen.getByRole('button', { name: 'Next step' }));
+    await user.click(screen.getByRole('button', { name: 'Next step' }));
+
+    expect(await screen.findByText('Question 2')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('radio', { name: 'False' }));
+    await user.click(screen.getByRole('button', { name: 'Next step' }));
+
+    expect(await screen.findByText('Question 2 explanation.')).toBeInTheDocument();
+    expect(screen.getByText('Not correct yet')).toBeInTheDocument();
+    expect(getOptionState('False')).toHaveAttribute('data-option-state', 'incorrect');
+    expect(getOptionState('True')).toHaveAttribute('data-option-state', 'correct');
   });
 
   it('opens the ask-ai sheet, keeps lesson-scoped chat history, and closes the note sheet when ask-ai opens', async () => {
