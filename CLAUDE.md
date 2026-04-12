@@ -67,7 +67,7 @@ Viewer Builder Workspace --export/save JSON--> Supabase (PostgreSQL) <--fetch-- 
 ### Viewer (`packages/viewer-react/src/`)
 - **State**: Redux Toolkit + React Query (`shared/state`, `shared/api`)
 - **Routes**: landing, login, register, home, library, builder dashboard/editor, course detail, lesson, lesson result, community, AI tutor, profile, settings, achievement wall, parent dashboard
-- **Backend**: Supabase auth + viewer domain APIs + Edge Functions (`viewer-ai-tutor`, viewer push functions)
+- **Backend**: Supabase auth + viewer domain APIs + `agent-service` for AI tutor + viewer push functions
 - **Theme**: Tailwind-driven token layer with shared layout primitives in `shared/layout` and centralized copy in `shared/theme/copy.ts`
 
 ### Database (`supabase/migrations/`)

@@ -2,10 +2,9 @@
 
 ## Why this service exists
 
-The React learner app now already has a dedicated `/ai-tutor` surface and a legacy
-`viewer-ai-tutor` Supabase Edge Function. That function is good for simple single-shot
-Gemini prompts, but it is not the right place for a memory-aware, tool-using, multi-step
-learning copilot.
+The React learner app now has a dedicated `/ai-tutor` surface backed by
+`agent-service`. The old single-shot edge-function path has been retired in favor of
+a memory-aware, tool-using, multi-step learning copilot.
 
 So the architecture becomes:
 
@@ -20,23 +19,30 @@ viewer-react (/ai-tutor)
 - authenticated learner chat
 - read-only learner tools
 - learner profile / stats / enrollment / course / lesson context
-- thread id plumbing from frontend
-- backward-compatible fallback to `viewer-ai-tutor` for studio tools
+- thread + message persistence in Supabase
+- tool endpoints for mind map / quiz / presentation
+- thread list + message history endpoints
+- course detail aggregation endpoint
 
 ## Current frontend integration
 
 `packages/viewer-react/src/shared/api/geminiClient.ts`
 
 Behavior:
-- if `VITE_AGENT_SERVICE_URL` is set, normal tutor reply requests go to `POST /v1/chat`
-- if not set, the current Edge Function path is unchanged
-- mind map / quiz / presentation still use the existing `viewer-ai-tutor` function for now
+- tutor replies go to `POST /v1/chat` and `POST /v1/chat/stream`
+- tutor tools go to:
+  - `POST /v1/tools/mindmap`
+  - `POST /v1/tools/quiz`
+  - `POST /v1/tools/presentation`
+- thread bootstrap and history go to:
+  - `POST /v1/threads`
+  - `GET /v1/threads`
+  - `GET /v1/threads/:id/messages`
+- course detail can be served by `GET /v1/courses/:id/detail`
 
 ## Planned next steps
 
-1. add streaming endpoint `/v1/chat/stream`
-2. add real short-term checkpointer
-3. add user-scoped long-term memory store
-4. add richer tools (`weak_concepts`, `daily_activity`, `achievements`)
-5. migrate tutor tools (mind map / quiz / presentation) onto agent-service
-6. connect lesson and library page context directly into tutor calls
+1. connect lesson/page/block context from more viewer surfaces
+2. expose thread rename/archive endpoints
+3. add richer tutor tools (`weak_concepts`, `daily_activity`, `achievements`)
+4. add server-side summarization / artifact caching for tutor tools

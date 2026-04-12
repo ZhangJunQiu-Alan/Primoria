@@ -3,8 +3,7 @@ import type { User } from '@supabase/supabase-js';
 import * as Dialog from '@radix-ui/react-dialog';
 import type { LucideIcon } from 'lucide-react';
 import { Activity, Bell, Download, LayoutGrid, Loader2, X } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
-import { saveAccountSystemSettings } from '@/shared/api/viewer/settingsApi';
+import { fetchViewerSettings, saveAccountSystemSettings, saveProfileSettings } from '@/shared/api/viewer/settingsApi';
 import { normalizeViewerLanguage, type ViewerLanguage } from '@/shared/i18n/locale';
 import { patchPreferences } from '@/shared/state/preferencesSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/state/store';
@@ -162,15 +161,9 @@ function AvatarPreview({
 }
 
 export async function fetchDashboardProfileSummary(userId: string) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('username, avatar_url, role')
-    .eq('id', userId)
-    .maybeSingle();
-
-  if (error) throw error;
+  const bundle = await fetchViewerSettings(userId);
+  const data = bundle.profile;
   if (!data) return null;
-
   return {
     avatarUrl: data.avatar_url,
     role: data.role,
@@ -221,18 +214,13 @@ export function DashboardSettingsDialog({
       setLocalSettings(StorageService.loadDashboardSettings());
 
       try {
-        const [profile, settingsResponse] = await Promise.all([
-          fetchDashboardProfileSummary(user.id),
-          supabase
-            .from('user_settings')
-            .select(
-              'language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode',
-            )
-            .eq('user_id', user.id)
-            .maybeSingle(),
-        ]);
-
-        if (settingsResponse.error) throw settingsResponse.error;
+        const bundle = await fetchViewerSettings(user.id);
+        const profile = {
+          avatarUrl: bundle.profile.avatar_url,
+          role: bundle.profile.role,
+          username: bundle.profile.username,
+        };
+        const settingsData = bundle.userSettings;
         if (!active) return;
 
         setRole(profile?.role ?? 'user');
@@ -246,13 +234,13 @@ export function DashboardSettingsDialog({
           ).trim(),
         );
         setBackendSettings({
-          accessibilityMode: settingsResponse.data?.accessibility_mode ?? defaultBackendSettings.accessibilityMode,
+          accessibilityMode: settingsData?.accessibility_mode ?? defaultBackendSettings.accessibilityMode,
           dailyReminder:
-            settingsResponse.data?.notification_daily_reminder ?? defaultBackendSettings.dailyReminder,
-          language: normalizeLanguage(settingsResponse.data?.language ?? currentLanguage),
-          marketingEmails: settingsResponse.data?.marketing_emails ?? defaultBackendSettings.marketingEmails,
+            settingsData?.notification_daily_reminder ?? defaultBackendSettings.dailyReminder,
+          language: normalizeLanguage(settingsData?.language ?? currentLanguage),
+          marketingEmails: settingsData?.marketing_emails ?? defaultBackendSettings.marketingEmails,
           reminderTime: normalizeTime(
-            settingsResponse.data?.notification_reminder_time ?? defaultBackendSettings.reminderTime,
+            settingsData?.notification_reminder_time ?? defaultBackendSettings.reminderTime,
           ),
         });
       } catch (error) {
@@ -301,25 +289,14 @@ export function DashboardSettingsDialog({
     setNotice(null);
 
     try {
-      const { error: profileError } = await supabase.from('profiles').upsert(
-        {
-          id: user.id,
-          avatar_url: avatarUrl.trim() || null,
-          username: trimmedName,
-        },
-        { onConflict: 'id' },
-      );
-      if (profileError) throw profileError;
-
-      const { error: settingsError } = await supabase.from('user_settings').upsert(
-        {
-          accessibility_mode: backendSettings.accessibilityMode,
-          language: backendSettings.language,
-          user_id: user.id,
-        },
-        { onConflict: 'user_id' },
-      );
-      if (settingsError) throw settingsError;
+      await saveProfileSettings(user.id, {
+        avatar_url: avatarUrl.trim() || null,
+        username: trimmedName,
+      });
+      await saveAccountSystemSettings(user.id, {
+        accessibility_mode: backendSettings.accessibilityMode,
+        language: backendSettings.language,
+      });
 
       onProfileSaved?.({
         avatarUrl: avatarUrl.trim() || null,
@@ -339,16 +316,11 @@ export function DashboardSettingsDialog({
     setNotice(null);
 
     try {
-      const { error } = await supabase.from('user_settings').upsert(
-        {
-          marketing_emails: backendSettings.marketingEmails,
-          notification_daily_reminder: backendSettings.dailyReminder,
-          notification_reminder_time: backendSettings.reminderTime,
-          user_id: user.id,
-        },
-        { onConflict: 'user_id' },
-      );
-      if (error) throw error;
+      await saveAccountSystemSettings(user.id, {
+        marketing_emails: backendSettings.marketingEmails,
+        notification_daily_reminder: backendSettings.dailyReminder,
+        notification_reminder_time: backendSettings.reminderTime,
+      });
 
       StorageService.saveDashboardSettings(localSettings);
       setNotice({ tone: 'success', text: 'Notification settings saved.' });

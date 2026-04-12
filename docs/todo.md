@@ -26,7 +26,7 @@ Last updated: 2026-04-04 (rev 10)
 
 1. [x] Replaced dashboard fallback analytics with real Supabase event-level facts for views, learner growth, completion timelines, and published-course rankings.
 2. [x] Added real `student` / `comments` sort modes in Course Management, including visible metric chips on course cards.
-3. [x] Fixed `gemini-generate` Edge Function so fenced HTML/code-wrapper responses are normalized before returning animation HTML.
+3. [x] Fixed interactive visual HTML generation normalization so fenced HTML/code-wrapper responses are stripped before returning to Builder.
 4. [x] Added real Supabase cloud smoke coverage for Builder publish -> Viewer lesson-title consistency, using a dedicated smoke author account and reusable smoke course.
 5. [x] Dashboard redesign completed for Home/Course Manage/Data Center/Fans Management (responsive + modular tabs/widgets/providers).
 6. [x] Builder inline editing on canvas for Text/Code Block/Code Playground.
@@ -63,7 +63,7 @@ Last updated: 2026-04-04 (rev 10)
 37. [x] Code Execution block UI: removed timeline/scrubbar and step-duration slider; variables + stdout now side-by-side; 4 control buttons span full row width.
 38. [x] Architecture alignment (Builder + Viewer + Supabase): per-lesson `content_json` storage in Builder; Viewer reads `pages[]` format; removed `lesson.blocks` legacy getter; schema validator hardens `blocks[]` to import-only warning.
 39. [x] Unified interactive-visual block: new `BlockType.interactiveVisual` + `InteractiveVisualContent` (VisualSimSpec), 4 templates (ideal-gas-piston, sorting-bars, variable-binding-memory, function-plot), shared Flutter runtime widget, spec-driven AI generator, staged Builder UX, Viewer real rendering, legacy animation migration.
-40. [x] Interactive Visual platform AI key: removed user API key input; added Supabase Edge Function `gemini-generate` as server-side Gemini proxy; platform `GEMINI_API_KEY` stored as Deno env secret.
+40. [x] Interactive Visual platform AI key: removed user API key input and moved generation behind `agent-service`; platform `GOOGLE_API_KEY` now lives on the backend.
 41. [x] Interactive Visual style picker: 6 mandatory styles (Watercolor/Papercraft/Anime/Whiteboard/Retro Print/Heritage) injected into Gemini prompt; Generate button gated on style selection; removed all built-in Flutter scene templates.
 42. [x] Builder↔Viewer JSON snake_case alignment: `schema_version`, `course_id`, `lesson_id`, `page_id`, `difficulty_level`, `estimated_minutes` unified across `toJson()`/`fromJson()`/migrator/validator; dual-key backward compat for all reads.
 43. [x] Viewer auth resilience: `_withAuthTimeout<T>()` (30 s) + 3-attempt exponential backoff (900 ms/1 800 ms/2 500 ms) on all auth methods in Viewer `SupabaseService`.

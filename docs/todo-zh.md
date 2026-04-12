@@ -25,7 +25,7 @@
 
 1. [x] Dashboard analytics 已切换为真实 Supabase 事件级数据：课程浏览、学员活跃增长、完成率时间线、已发布课程排行均不再走 fallback。
 2. [x] Course Management 已接入真实 `student` / `comments` 排序，并在课程卡片上展示对应指标芯片。
-3. [x] 修复 `gemini-generate` Edge Function：Gemini 返回带代码围栏的 HTML 时，函数侧会先归一化并剥离围栏后再返回。
+3. [x] 修复 Interactive Visual HTML 生成归一化：模型返回带代码围栏的 HTML 时，后端会先剥离围栏再回给 Builder。
 4. [x] 新增真实 Supabase cloud smoke：覆盖 Builder 发布 -> Viewer 课时标题回读一致性，并引入专用 smoke 作者账号与复用 smoke 课程。
 5. [x] Dashboard 首页/课程管理/数据中心/粉丝管理四页重设计完成（响应式 + 模块化 tabs/widgets/providers）。
 6. [x] Builder 画布内联编辑：Text / Code Block / Code Playground。

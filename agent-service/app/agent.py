@@ -20,6 +20,7 @@ from app.memory import (
 from app.prompts import build_user_prompt
 from app.schemas import ChatHistoryMessage, ChatRequest, ChatResponse
 from app.services.supabase_client import SupabaseUserClient
+from app.thread_store import build_thread_record_payload
 from app.tools import build_all_tools
 
 
@@ -158,15 +159,8 @@ async def _ensure_thread_record(
         filters={'id': f'eq.{thread_id}'},
         single=True,
     )
-    payload = {
-        'user_id': user_id,
-        'surface': context.surface or 'ai-tutor',
-        'course_id': context.course_id,
-        'lesson_id': context.lesson_id,
-        'locale': context.locale,
-        'status': 'active',
-        'last_message_at': datetime.now(timezone.utc).isoformat(),
-    }
+    payload = build_thread_record_payload(user_id, context)
+    payload['last_message_at'] = datetime.now(timezone.utc).isoformat()
     if existing:
         await supabase_client.update(
             'agent_threads',

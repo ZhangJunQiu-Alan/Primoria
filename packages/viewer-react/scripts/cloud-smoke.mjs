@@ -622,7 +622,7 @@ try {
   await learnerPage.getByText(tutorPrompt, { exact: false }).waitFor({ timeout: 15_000 });
   await learnerPage.getByRole('button', { name: /打开思维导图|mind map/i }).click();
   await learnerPage.getByRole('button', { name: /^close$/i }).waitFor({ timeout: 30_000 });
-  addStep('AI Tutor edge function', 'PASS', 'reply and mind map modal succeeded');
+  addStep('AI Tutor backend', 'PASS', 'reply and mind map modal succeeded');
   await saveScreenshot(learnerPage, 'learner-ai-tutor');
   await learnerPage.getByRole('button', { name: /^close$/i }).click();
 

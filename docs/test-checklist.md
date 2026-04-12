@@ -5,7 +5,7 @@ Last updated: 2026-04-04
 ## A. Build & Static Checks
 
 - [ ] `pnpm install`
-- [ ] `deno test supabase/functions/gemini-generate`
+- [ ] `python -m py_compile agent-service/app/routes/interactive_visuals.py agent-service/app/services/interactive_visuals.py`
 - [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
 - [ ] `pnpm --filter @primoria/viewer-react typecheck`
 - [ ] `pnpm --filter @primoria/viewer-react test`
