@@ -1,19 +1,25 @@
-import { supabase } from '@/shared/api/supabase';
 import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
+import { fetchAgentJson, getAgentAccessToken, agentServiceUrl } from '@/shared/api/agentService';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 
-const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
 const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
-const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim() ?? '';
-const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() ?? '';
-const rawAgentServiceUrl = (import.meta.env.VITE_AGENT_SERVICE_URL as string | undefined)?.trim() ?? '';
 const TUTOR_TIMEOUT_MS = 30_000;
 
 export type TutorMessage = {
   role: 'user' | 'model';
   text: string;
+};
+
+export type TutorRequestContext = {
+  surface?: string;
+  courseId?: string | null;
+  lessonId?: string | null;
+  blockId?: string | null;
+  locale?: string | null;
+  uiLanguage?: string | null;
+  aiTutorPersona?: string | null;
 };
 
 export type TutorReplyStreamResult = {
@@ -29,76 +35,25 @@ export type TutorReplyStreamHandlers = {
   onError?: (error: Error) => void;
 };
 
-function activeModel() {
-  return (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || 'gemini-2.0-flash';
-}
+type TutorToolContextBody = {
+  surface: string;
+  course_id?: string;
+  lesson_id?: string;
+  block_id?: string;
+  locale?: string;
+  ui_language?: string;
+  ai_tutor_persona?: string;
+};
 
-export function getStoredGeminiKey() {
-  if (typeof window === 'undefined') {
-    return '';
-  }
-
-  return (
-    ((import.meta.env.VITE_GEMINI_API_KEY as string | undefined)?.trim() ??
-      window.localStorage.getItem(GEMINI_STORAGE_KEY) ??
-      '') || ''
-  );
-}
-
-export async function persistGeminiKey(key: string) {
-  const normalized = key.trim();
-  if (!normalized || typeof window === 'undefined') {
-    return;
-  }
-  window.localStorage.setItem(GEMINI_STORAGE_KEY, normalized);
-}
-
-export async function bootstrapGeminiKey() {
-  return getStoredGeminiKey();
-}
+type CreatedThreadPayload = {
+  thread: {
+    id: string;
+  };
+};
 
 function fixtureReply(history: TutorMessage[]) {
   const lastUserMessage = [...history].reverse().find((message) => message.role === 'user')?.text ?? 'your notes';
   return `Fixture tutor reply: focus the next step on ${lastUserMessage.toLowerCase()}.`;
-}
-
-function tutorFunctionUrl() {
-  if (!rawSupabaseUrl) {
-    throw new Error('AI Tutor requires VITE_SUPABASE_URL.');
-  }
-
-  if (rawSupabaseUrl.includes('.supabase.co')) {
-    return `${rawSupabaseUrl.replace('.supabase.co', '.functions.supabase.co')}/viewer-ai-tutor`;
-  }
-
-  return `${rawSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-tutor`;
-}
-
-function agentServiceChatUrl() {
-  if (!rawAgentServiceUrl) {
-    return '';
-  }
-  return `${rawAgentServiceUrl.replace(/\/$/, '')}/v1/chat`;
-}
-
-function agentServiceChatStreamUrl() {
-  if (!rawAgentServiceUrl) {
-    return '';
-  }
-  return `${rawAgentServiceUrl.replace(/\/$/, '')}/v1/chat/stream`;
-}
-
-function getTutorThreadId() {
-  if (typeof window === 'undefined') {
-    return 'viewer:server:ephemeral';
-  }
-  const existing = window.localStorage.getItem(TUTOR_THREAD_STORAGE_KEY);
-  if (existing) {
-    return existing;
-  }
-  const created = `viewer:web:${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`;
-  window.localStorage.setItem(TUTOR_THREAD_STORAGE_KEY, created);
-  return created;
 }
 
 function createTimeoutSignal(timeoutMs: number) {
@@ -135,65 +90,68 @@ function currentAiTutorPersona() {
   }
 }
 
-async function getAgentAccessToken() {
-  const { data, error } = await supabase.auth.getSession();
-  if (error) {
-    throw error;
+function getStoredTutorThreadId() {
+  if (typeof window === 'undefined') {
+    return '';
   }
-  const accessToken = data.session?.access_token;
-  if (!accessToken) {
-    throw new Error('AI Tutor agent requires a signed-in learner session.');
-  }
-  return accessToken;
+  return window.localStorage.getItem(TUTOR_THREAD_STORAGE_KEY) ?? '';
 }
 
-function buildAgentChatBody(history: TutorMessage[]) {
+function persistTutorThreadId(threadId: string) {
+  if (!threadId || typeof window === 'undefined') {
+    return;
+  }
+  window.localStorage.setItem(TUTOR_THREAD_STORAGE_KEY, threadId);
+}
+
+function buildTutorContext(context?: TutorRequestContext): TutorToolContextBody {
+  const resolvedUiLanguage = context?.uiLanguage?.trim() || currentUiLanguage();
+  const resolvedLocale = context?.locale?.trim() || resolvedUiLanguage;
+  const resolvedPersona = context?.aiTutorPersona?.trim() || currentAiTutorPersona();
+
+  return {
+    surface: context?.surface?.trim() || 'ai-tutor',
+    ...(context?.courseId?.trim() ? { course_id: context.courseId.trim() } : {}),
+    ...(context?.lessonId?.trim() ? { lesson_id: context.lessonId.trim() } : {}),
+    ...(context?.blockId?.trim() ? { block_id: context.blockId.trim() } : {}),
+    ...(resolvedLocale ? { locale: resolvedLocale } : {}),
+    ...(resolvedUiLanguage ? { ui_language: resolvedUiLanguage } : {}),
+    ...(resolvedPersona ? { ai_tutor_persona: resolvedPersona } : {}),
+  };
+}
+
+async function ensureTutorThreadId(context?: TutorRequestContext) {
+  const existing = getStoredTutorThreadId();
+  if (existing) {
+    return existing;
+  }
+
+  const payload = await fetchAgentJson<CreatedThreadPayload>('/v1/threads', {
+    method: 'POST',
+    body: JSON.stringify({
+      context: buildTutorContext(context),
+    }),
+  });
+  const threadId = payload.thread?.id?.trim();
+  if (!threadId) {
+    throw new Error('Agent service returned an empty thread id.');
+  }
+  persistTutorThreadId(threadId);
+  return threadId;
+}
+
+function buildAgentChatBody(history: TutorMessage[], context?: TutorRequestContext, threadId?: string) {
   const latestUserMessage = [...history].reverse().find((message) => message.role === 'user')?.text.trim() ?? '';
   if (!latestUserMessage) {
     throw new Error('AI Tutor requires a learner message.');
   }
 
   return {
-    thread_id: getTutorThreadId(),
+    thread_id: threadId,
     message: latestUserMessage,
     history: history.slice(0, -1),
-    context: {
-      surface: 'ai-tutor',
-      ui_language: currentUiLanguage(),
-      ai_tutor_persona: currentAiTutorPersona(),
-    },
+    context: buildTutorContext(context),
   };
-}
-
-async function requestAgentReply(history: TutorMessage[]) {
-  const chatUrl = agentServiceChatUrl();
-  if (!chatUrl) {
-    return null;
-  }
-
-  const accessToken = await getAgentAccessToken();
-  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
-  const response = await fetch(chatUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(buildAgentChatBody(history)),
-    signal: timeout.signal,
-  }).finally(() => {
-    timeout.cleanup();
-  });
-
-  const text = await response.text();
-  const payload = text ? (JSON.parse(text) as { reply?: string; detail?: string }) : {};
-  if (!response.ok) {
-    throw new Error(payload.detail || `AI Tutor agent failed with HTTP ${response.status}.`);
-  }
-  if (!payload.reply?.trim()) {
-    throw new Error('AI Tutor agent returned an empty response.');
-  }
-  return payload.reply.trim();
 }
 
 function parseSseEvent(block: string) {
@@ -224,23 +182,39 @@ function parseSseEvent(block: string) {
   };
 }
 
-async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorReplyStreamHandlers = {}) {
-  const streamUrl = agentServiceChatStreamUrl();
-  if (!streamUrl) {
-    return null;
-  }
+async function requestAgentReply(history: TutorMessage[], context?: TutorRequestContext) {
+  const threadId = await ensureTutorThreadId(context);
+  const response = await fetchAgentJson<{ thread_id?: string; reply?: string; detail?: string; used_tools?: string[] }>('/v1/chat', {
+    method: 'POST',
+    body: JSON.stringify(buildAgentChatBody(history, context, threadId)),
+  });
 
+  if (response.thread_id?.trim()) {
+    persistTutorThreadId(response.thread_id.trim());
+  }
+  if (!response.reply?.trim()) {
+    throw new Error('AI Tutor agent returned an empty response.');
+  }
+  return {
+    threadId: response.thread_id?.trim() || threadId,
+    reply: response.reply.trim(),
+    usedTools: response.used_tools ?? [],
+  };
+}
+
+async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorReplyStreamHandlers = {}, context?: TutorRequestContext) {
+  const threadId = await ensureTutorThreadId(context);
   const accessToken = await getAgentAccessToken();
   const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
   let response: Response;
   try {
-    response = await fetch(streamUrl, {
+    response = await fetch(agentServiceUrl('/v1/chat/stream'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(buildAgentChatBody(history)),
+      body: JSON.stringify(buildAgentChatBody(history, context, threadId)),
       signal: timeout.signal,
     });
   } catch (error) {
@@ -265,14 +239,7 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
 
   if (!response.body) {
     timeout.cleanup();
-    const reply = await requestAgentReply(history);
-    if (!reply) {
-      throw new Error('AI Tutor agent did not return a stream.');
-    }
-    const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };
-    handlers.onToken?.(reply);
-    handlers.onFinal?.(payload);
-    return payload;
+    return requestAgentReply(history, context);
   }
 
   const reader = response.body.getReader();
@@ -310,6 +277,7 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
         };
 
         if (parsed.event === 'run_started' && payload.thread_id) {
+          persistTutorThreadId(payload.thread_id);
           handlers.onRunStarted?.({ threadId: payload.thread_id });
           continue;
         }
@@ -321,8 +289,11 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
         }
 
         if (parsed.event === 'final') {
+          if (payload.thread_id) {
+            persistTutorThreadId(payload.thread_id);
+          }
           finalPayload = {
-            threadId: payload.thread_id || getTutorThreadId(),
+            threadId: payload.thread_id || threadId,
             reply: payload.reply?.trim() || reply.trim(),
             usedTools: payload.used_tools ?? [],
           };
@@ -342,7 +313,7 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
 
   if (!finalPayload) {
     finalPayload = {
-      threadId: getTutorThreadId(),
+      threadId,
       reply: reply.trim(),
       usedTools: [],
     };
@@ -355,12 +326,9 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
   return finalPayload;
 }
 
-async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'presentation', history: TutorMessage[]) {
+async function requestTutorTool<T>(path: '/v1/tools/mindmap' | '/v1/tools/quiz' | '/v1/tools/presentation', history: TutorMessage[], context?: TutorRequestContext) {
   if (usesViewerFixtures()) {
-    if (mode === 'reply') {
-      return { reply: fixtureReply(history) } as T;
-    }
-    if (mode === 'mindmap') {
+    if (path.endsWith('/mindmap')) {
       return {
         title: 'Fixture mind map',
         nodes: history.slice(-3).map((message, index) => ({
@@ -369,7 +337,7 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
         })),
       } as T;
     }
-    if (mode === 'quiz') {
+    if (path.endsWith('/quiz')) {
       return {
         title: 'Fixture quiz',
         questions: [
@@ -390,98 +358,52 @@ async function requestTutorTool<T>(mode: 'reply' | 'mindmap' | 'quiz' | 'present
     } as T;
   }
 
-  if (mode === 'reply') {
-    const agentReply = await requestAgentReply(history);
-    if (agentReply) {
-      return { reply: agentReply } as T;
-    }
-  }
-
-  const apiKeyOverride = getStoredGeminiKey();
-  if (!rawSupabaseAnonKey) {
-    throw new Error('AI Tutor requires VITE_SUPABASE_ANON_KEY.');
-  }
-
-  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
-  const response = await fetch(tutorFunctionUrl(), {
+  return fetchAgentJson<T>(path, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      apikey: rawSupabaseAnonKey,
-      Authorization: `Bearer ${rawSupabaseAnonKey}`,
-    },
     body: JSON.stringify({
-      mode,
-      model: activeModel(),
       history,
-      persona: currentAiTutorPersona(),
-      apiKeyOverride: apiKeyOverride || undefined,
+      context: buildTutorContext(context),
     }),
-    signal: timeout.signal,
-  }).finally(() => {
-    timeout.cleanup();
   });
-
-  const text = await response.text();
-  let parsed: T | { error?: string } | null = null;
-  if (text) {
-    try {
-      parsed = JSON.parse(text) as T | { error?: string };
-    } catch {
-      throw new Error(response.ok ? 'AI Tutor returned invalid JSON.' : text);
-    }
-  }
-  if (!response.ok) {
-    const message =
-      parsed && typeof parsed === 'object' && 'error' in parsed && typeof parsed.error === 'string'
-        ? parsed.error
-        : `AI Tutor request failed with HTTP ${response.status}.`;
-    throw new Error(message);
-  }
-  if (!parsed || typeof parsed !== 'object') {
-    throw new Error('AI Tutor returned an empty response.');
-  }
-  return parsed as T;
 }
 
-export async function generateTutorReply(history: TutorMessage[]) {
-  const response = await requestTutorTool<{ reply: string }>('reply', history);
+export async function generateTutorReply(history: TutorMessage[], context?: TutorRequestContext) {
+  if (usesViewerFixtures()) {
+    return fixtureReply(history);
+  }
+  const response = await requestAgentReply(history, context);
   return response.reply;
 }
 
-export async function generateTutorReplyStream(history: TutorMessage[], handlers: TutorReplyStreamHandlers = {}) {
+export async function generateTutorReplyStream(
+  history: TutorMessage[],
+  handlers: TutorReplyStreamHandlers = {},
+  context?: TutorRequestContext,
+) {
   if (usesViewerFixtures()) {
     const reply = fixtureReply(history);
-    const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };
+    const threadId = getStoredTutorThreadId() || 'viewer:fixture:thread';
+    const payload = { threadId, reply, usedTools: [] };
     handlers.onToken?.(reply);
     handlers.onFinal?.(payload);
     return payload;
   }
 
   try {
-    const streamed = await requestAgentReplyStream(history, handlers);
-    if (streamed) {
-      return streamed;
-    }
+    return await requestAgentReplyStream(history, handlers, context);
   } catch (error) {
     if (handlers.onError && error instanceof Error) {
       handlers.onError(error);
     }
     throw error;
   }
-
-  const reply = await generateTutorReply(history);
-  const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };
-  handlers.onToken?.(reply);
-  handlers.onFinal?.(payload);
-  return payload;
 }
 
-export async function generateMindMap(history: TutorMessage[]) {
-  return requestTutorTool<{ title: string; nodes: Array<{ id: string; label: string }> }>('mindmap', history);
+export async function generateMindMap(history: TutorMessage[], context?: TutorRequestContext) {
+  return requestTutorTool<{ title: string; nodes: Array<{ id: string; label: string }> }>('/v1/tools/mindmap', history, context);
 }
 
-export async function generateQuiz(history: TutorMessage[]) {
+export async function generateQuiz(history: TutorMessage[], context?: TutorRequestContext) {
   return requestTutorTool<{
     title: string;
     questions: Array<{
@@ -489,12 +411,12 @@ export async function generateQuiz(history: TutorMessage[]) {
       options: string[];
       answerIndex: number;
     }>;
-  }>('quiz', history);
+  }>('/v1/tools/quiz', history, context);
 }
 
-export async function generatePresentation(history: TutorMessage[]) {
+export async function generatePresentation(history: TutorMessage[], context?: TutorRequestContext) {
   return requestTutorTool<{
     title: string;
     slides: Array<{ title: string; bullet: string }>;
-  }>('presentation', history);
+  }>('/v1/tools/presentation', history, context);
 }

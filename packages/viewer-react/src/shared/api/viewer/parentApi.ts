@@ -1,5 +1,5 @@
 import type { ViewerParentChild, ViewerParentReport } from '@/shared/api/viewer/types';
-import { supabase } from '@/shared/api/supabase';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 
@@ -13,24 +13,19 @@ export async function generateChildBindingCode() {
     patchFixtureState((state) => ({ ...state, bindingCode: code }));
     return code;
   }
-
-  const { data, error } = await supabase.rpc('generate_child_binding_code');
-  if (error) {
-    throw error;
-  }
-  if (Array.isArray(data)) {
-    return (data[0] ?? null) as Record<string, string> | null;
-  }
-  return (data as Record<string, string> | null) ?? null;
+  return fetchAgentJson<Record<string, string>>('/v1/viewer/parent/binding-code', {
+    method: 'POST',
+  });
 }
 
 export async function bindChildWithCode(code: string) {
   if (usesViewerFixtures()) {
     return { ok: Boolean(code.trim()) };
   }
-
-  const { data, error } = await supabase.rpc('bind_child_with_code', { p_code: code.trim() });
-  return { ok: !error && Boolean(Array.isArray(data) ? data[0] : data) };
+  return fetchAgentJson<{ ok: boolean }>('/v1/viewer/parent/bind', {
+    method: 'POST',
+    body: JSON.stringify({ code }),
+  });
 }
 
 export async function unbindChild(childId: string) {
@@ -42,9 +37,10 @@ export async function unbindChild(childId: string) {
     }));
     return { ok: true };
   }
-
-  const { data, error } = await supabase.rpc('unbind_child', { p_child_id: childId });
-  return { ok: !error && data === true };
+  return fetchAgentJson<{ ok: boolean }>('/v1/viewer/parent/unbind', {
+    method: 'POST',
+    body: JSON.stringify({ child_id: childId }),
+  });
 }
 
 export async function fetchParentChildrenOverview(): Promise<ViewerParentChild[]> {
@@ -52,17 +48,13 @@ export async function fetchParentChildrenOverview(): Promise<ViewerParentChild[]
     const { readFixtureState } = await loadFixtureStore();
     return [...readFixtureState().parentChildren];
   }
-
-  const { data, error } = await supabase.rpc('get_parent_children_overview');
-  if (error) {
-    throw error;
-  }
-  return ((data ?? []) as Array<Record<string, unknown>>).map((child) => ({
+  const payload = await fetchAgentJson<{ children: Array<Record<string, unknown>> }>('/v1/viewer/parent/children');
+  return (payload.children ?? []).map((child) => ({
     child_id: String(child.child_id ?? ''),
-    child_name: String(child.username ?? 'Child'),
+    child_name: String(child.username ?? child.child_name ?? 'Child'),
     avatar_url: typeof child.avatar_url === 'string' ? child.avatar_url : '',
-    total_xp: Number(child.xp_points ?? 0),
-    current_streak: Number(child.streak_days ?? 0),
+    total_xp: Number(child.xp_points ?? child.total_xp ?? 0),
+    current_streak: Number(child.streak_days ?? child.current_streak ?? 0),
     lessons_completed: Number(child.lessons_completed ?? 0),
     courses_completed: Number(child.courses_completed ?? 0),
     last_active_at: typeof child.last_active_at === 'string' ? child.last_active_at : null,
@@ -74,12 +66,7 @@ export async function fetchParentChildReport(childId: string): Promise<ViewerPar
     const { readFixtureState } = await loadFixtureStore();
     return readFixtureState().parentReports[childId] ?? null;
   }
-
-  const { data, error } = await supabase.rpc('get_parent_child_report', { p_child_id: childId });
-  if (error) {
-    throw error;
-  }
-  const report = (data ?? {}) as Record<string, unknown>;
+  const report = await fetchAgentJson<Record<string, unknown>>(`/v1/viewer/parent/reports/${childId}`);
   const stats = (report.stats ?? {}) as Record<string, unknown>;
   const dailyBreakdown = Array.isArray(report.activity_trend)
     ? (report.activity_trend as Array<Record<string, unknown>>).map((entry) => ({

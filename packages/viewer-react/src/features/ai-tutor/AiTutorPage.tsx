@@ -1,12 +1,11 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  bootstrapGeminiKey,
   generateMindMap,
   generatePresentation,
   generateQuiz,
   generateTutorReplyStream,
-  persistGeminiKey,
   type TutorMessage,
+  type TutorRequestContext,
 } from '@/shared/api/geminiClient';
 import {
   BadgeHelp,
@@ -85,6 +84,11 @@ export function AiTutorPage() {
     quiz: false,
     presentation: false,
   });
+  const [sessionContext, setSessionContext] = useState<Pick<TutorRequestContext, 'courseId' | 'lessonId' | 'blockId'>>({
+    courseId: searchParams.get('courseId') || undefined,
+    lessonId: searchParams.get('lessonId') || undefined,
+    blockId: searchParams.get('blockId') || undefined,
+  });
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
   const processedCompanionIntentRef = useRef<string | null>(null);
@@ -101,6 +105,19 @@ export function AiTutorPage() {
   const suggestedPrompts = useMemo(
     () => personaCopy.prompts,
     [personaCopy.prompts],
+  );
+
+  const tutorRequestContext = useMemo<TutorRequestContext>(
+    () => ({
+      surface: 'ai-tutor',
+      courseId: sessionContext.courseId,
+      lessonId: sessionContext.lessonId,
+      blockId: sessionContext.blockId,
+      uiLanguage: language,
+      locale: language,
+      aiTutorPersona,
+    }),
+    [aiTutorPersona, language, sessionContext.blockId, sessionContext.courseId, sessionContext.lessonId],
   );
 
   useEffect(() => {
@@ -174,14 +191,6 @@ export function AiTutorPage() {
     const trimmed = text.trim();
     if (!trimmed || isSending) return;
 
-    if (trimmed.startsWith('/apikey ')) {
-      await persistGeminiKey(trimmed.replace('/apikey', '').trim());
-      setStatus(copy.aiTutor.apiKeyStored);
-      setInput('');
-      captureViewerEvent('viewer_ai_tutor_key_overridden');
-      return;
-    }
-
     const userMessage: TutorMessage = { role: 'user', text: trimmed };
     const requestHistory = [...messages, userMessage];
     streamedReplyRef.current = '';
@@ -192,19 +201,23 @@ export function AiTutorPage() {
 
     try {
       captureViewerEvent('viewer_ai_tutor_message_sent', { length: trimmed.length });
-      const result = await generateTutorReplyStream(requestHistory, {
-        onToken(token) {
-          streamedReplyRef.current += token;
-          flushStreamedReply();
+      const result = await generateTutorReplyStream(
+        requestHistory,
+        {
+          onToken(token) {
+            streamedReplyRef.current += token;
+            flushStreamedReply();
+          },
+          onFinal(payload) {
+            streamedReplyRef.current = payload.reply;
+            flushStreamedReply(true);
+            captureViewerEvent('viewer_ai_tutor_stream_completed', {
+              toolCount: payload.usedTools.length,
+            });
+          },
         },
-        onFinal(payload) {
-          streamedReplyRef.current = payload.reply;
-          flushStreamedReply(true);
-          captureViewerEvent('viewer_ai_tutor_stream_completed', {
-            toolCount: payload.usedTools.length,
-          });
-        },
-      });
+        tutorRequestContext,
+      );
       if (!result.reply.trim()) {
         throw new Error('AI Tutor returned an empty response.');
       }
@@ -227,12 +240,16 @@ export function AiTutorPage() {
     }
   }
 
-  async function openTool(kind: 'mindmap' | 'quiz' | 'presentation', historyOverride?: TutorMessage[]) {
+  async function openTool(
+    kind: 'mindmap' | 'quiz' | 'presentation',
+    historyOverride?: TutorMessage[],
+    contextOverride?: TutorRequestContext,
+  ) {
     try {
-      await bootstrapGeminiKey();
       const toolHistory = historyOverride ?? messages;
+      const resolvedContext = contextOverride ?? tutorRequestContext;
       if (kind === 'mindmap') {
-        const payload = await generateMindMap(toolHistory);
+        const payload = await generateMindMap(toolHistory, resolvedContext);
         setModal({ kind, payload });
         setToolStatus((current) => ({ ...current, mindmap: true }));
         setStatus('');
@@ -240,14 +257,14 @@ export function AiTutorPage() {
         return;
       }
       if (kind === 'quiz') {
-        const payload = await generateQuiz(toolHistory);
+        const payload = await generateQuiz(toolHistory, resolvedContext);
         setModal({ kind, payload });
         setToolStatus((current) => ({ ...current, quiz: true }));
         setStatus('');
         captureViewerEvent('viewer_ai_tutor_tool_opened', { kind });
         return;
       }
-      const payload = await generatePresentation(toolHistory);
+      const payload = await generatePresentation(toolHistory, resolvedContext);
       setModal({ kind, payload });
       setToolStatus((current) => ({ ...current, presentation: true }));
       setStatus('');
@@ -261,9 +278,23 @@ export function AiTutorPage() {
   const transcript = messages.slice(1);
 
   useEffect(() => {
+    const courseId = searchParams.get('courseId');
+    const lessonId = searchParams.get('lessonId');
+    const blockId = searchParams.get('blockId');
+    if (courseId || lessonId || blockId) {
+      setSessionContext((current) => ({
+        courseId: courseId || current.courseId,
+        lessonId: lessonId || current.lessonId,
+        blockId: blockId || current.blockId,
+      }));
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     const source = searchParams.get('source');
     const intent = searchParams.get('intent');
     const courseTitle = searchParams.get('courseTitle');
+    const courseId = searchParams.get('courseId');
 
     if (source !== 'home-companion' || (intent !== 'quiz' && intent !== 'mindmap')) {
       return;
@@ -275,11 +306,22 @@ export function AiTutorPage() {
     }
     processedCompanionIntentRef.current = intentKey;
 
+    if (courseId) {
+      setSessionContext((current) => ({
+        ...current,
+        courseId,
+      }));
+    }
+
     const seededPrompt = buildCompanionToolPrompt(language, intent, courseTitle);
     const seededHistory: TutorMessage[] = [
       { role: 'model', text: personaCopy.welcomeBody },
       { role: 'user', text: seededPrompt },
     ];
+    const seededContext: TutorRequestContext = {
+      ...tutorRequestContext,
+      courseId: courseId || tutorRequestContext.courseId,
+    };
 
     setMessages(seededHistory);
     setStatus(
@@ -292,9 +334,9 @@ export function AiTutorPage() {
           : 'Preparing a mind map for the current course…',
     );
 
-    void openTool(intent, seededHistory);
+    void openTool(intent, seededHistory, seededContext);
     navigate('/ai-tutor', { replace: true });
-  }, [language, navigate, openTool, personaCopy.welcomeBody, searchParams]);
+  }, [language, navigate, openTool, personaCopy.welcomeBody, searchParams, tutorRequestContext]);
 
   return (
     <div className="mx-auto flex h-full min-h-0 w-[90%] max-w-[1380px] flex-col overflow-hidden px-0 py-4 md:py-5">

@@ -206,9 +206,8 @@ const viewerCatalog = {
       mindMap: '思维导图',
       quiz: '测验',
       presentation: '演示',
-      apiKeyStored: 'Gemini key 已保存在本地。',
-      missingKey:
-        'AI 导师当前未完成环境配置。请配置服务端密钥，或使用 /apikey <your-key> 临时覆盖。',
+      apiKeyStored: 'AI 服务现已由后端统一管理。',
+      missingKey: 'AI 导师当前未完成环境配置，请检查后端 agent-service 与服务端模型密钥。',
       disabled: 'AI 导师当前已被发布开关暂时关闭。',
       prompts: [
         '你好！可以帮我规划今天的学习任务吗？',
@@ -472,9 +471,8 @@ const viewerCatalog = {
       mindMap: 'Mind map',
       quiz: 'Quiz',
       presentation: 'Presentation',
-      apiKeyStored: 'Gemini key stored locally.',
-      missingKey:
-        'AI Tutor is not fully configured yet. Configure the server key, or use /apikey <your-key> to override it temporarily.',
+      apiKeyStored: 'AI service is now managed on the backend.',
+      missingKey: 'AI Tutor is not fully configured yet. Check agent-service and the server-side model key.',
       disabled: 'AI Tutor is temporarily disabled by the release flag.',
       prompts: [
         'Can you help me plan today’s study tasks?',

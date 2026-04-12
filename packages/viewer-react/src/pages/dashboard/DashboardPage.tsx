@@ -37,6 +37,7 @@ import {
   X,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { formatViewerDate, formatViewerWeekday } from '@/shared/i18n/format';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { useAppSelector } from '@/store';
@@ -824,10 +825,14 @@ function AICourseDraftDialog({
   open,
   onOpenChange,
   onUseDraft,
+  pending,
+  error,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onUseDraft: (preview: AICourseDraftPreview) => void;
+  onUseDraft: (form: AICourseDraftFormState, preview: AICourseDraftPreview) => Promise<void> | void;
+  pending: boolean;
+  error: string | null;
 }) {
   const [form, setForm] = useState<AICourseDraftFormState>(emptyAICourseDraftForm);
 
@@ -971,12 +976,14 @@ function AICourseDraftDialog({
               <button
                 type="button"
                 className="studio-button studio-button--ai"
-                onClick={() => onUseDraft(preview)}
+                onClick={() => void onUseDraft(form, preview)}
+                disabled={pending}
               >
                 <BrainCircuit size={16} />
-                <span>Use this brief</span>
+                <span>{pending ? 'Generating…' : 'Use this brief'}</span>
               </button>
             </div>
+            {error ? <p className="text-sm text-[#c2410c]">{error}</p> : null}
           </div>
         </Dialog.Content>
       </Dialog.Portal>
@@ -1065,6 +1072,8 @@ export function DashboardPage() {
   const [fansFilter, setFansFilter] = useState<FansFilter>('all');
   const [notice, setNotice] = useState<NoticeState | null>(null);
   const [aiDraftOpen, setAiDraftOpen] = useState(false);
+  const [aiDraftPending, setAiDraftPending] = useState(false);
+  const [aiDraftError, setAiDraftError] = useState<string | null>(null);
   const [formMode, setFormMode] = useState<'create' | 'edit' | null>(null);
   const [courseForForm, setCourseForForm] = useState<CourseRow | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
@@ -1074,6 +1083,12 @@ export function DashboardPage() {
     lesson: CourseLessonRow;
     index: number;
   } | null>(null);
+
+  useEffect(() => {
+    if (aiDraftOpen) {
+      setAiDraftError(null);
+    }
+  }, [aiDraftOpen]);
 
   if (!user) {
     return (
@@ -1304,12 +1319,37 @@ export function DashboardPage() {
     setNotice({ tone: 'info', text });
   }
 
-  function handleUseAICourseDraft(preview: AICourseDraftPreview) {
-    setAiDraftOpen(false);
-    setNotice({
-      tone: 'info',
-      text: `"${preview.title}" is saved as an AI front-end brief only for now. Connect generation later to turn it into a real course shell.`,
-    });
+  async function handleUseAICourseDraft(form: AICourseDraftFormState, preview: AICourseDraftPreview) {
+    setAiDraftError(null);
+    setAiDraftPending(true);
+    try {
+      const payload = await fetchAgentJson<{
+        draft: {
+          course_id: string;
+        };
+        persisted: boolean;
+      }>('/v1/builder/course-drafts/generate', {
+        method: 'POST',
+        body: JSON.stringify({
+          topic: form.topic || preview.title,
+          audience: form.audience,
+          outcome: form.outcome,
+          pace: form.pace,
+          language,
+          persist: true,
+        }),
+      });
+      setAiDraftOpen(false);
+      setNotice({
+        tone: 'success',
+        text: `"${preview.title}" draft generated and saved to Builder.`,
+      });
+      navigate(`/builder/editor/${payload.draft.course_id}`);
+    } catch (error) {
+      setAiDraftError(getErrorMessage(error));
+    } finally {
+      setAiDraftPending(false);
+    }
   }
 
   async function handleCreateCourse(payload: CourseFormPayload) {
@@ -2269,6 +2309,8 @@ export function DashboardPage() {
         open={aiDraftOpen}
         onOpenChange={setAiDraftOpen}
         onUseDraft={handleUseAICourseDraft}
+        pending={aiDraftPending}
+        error={aiDraftError}
       />
 
       <ConfirmDialog

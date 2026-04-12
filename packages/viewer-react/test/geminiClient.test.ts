@@ -17,51 +17,76 @@ describe('geminiClient', () => {
     window.localStorage.clear();
   });
 
-  it('calls the edge function when fixture mode is explicitly disabled in tests', async () => {
+  it('calls the agent service for non-stream tutor replies', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
     window.localStorage.setItem(
       'primoria.viewer.preferences',
       JSON.stringify({ language: 'zh-CN', aiTutorPersona: 'socratic' }),
     );
 
-    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify({ reply: 'Edge reply' }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }),
-    );
+    const fetchMock = vi
+      .spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ thread: { id: 'thread-1' } }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ thread_id: 'thread-1', reply: 'Agent reply', used_tools: [] }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
 
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
     const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
 
-    expect(reply).toBe('Edge reply');
+    expect(reply).toBe('Agent reply');
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://demo-project.functions.supabase.co/viewer-ai-tutor',
+      'http://localhost:8787/v1/threads',
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
-          apikey: 'demo-anon-key',
+          Authorization: 'Bearer demo-access-token',
         }),
       }),
     );
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
-      persona: 'socratic',
+      context: expect.objectContaining({
+        ai_tutor_persona: 'socratic',
+      }),
+    });
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      'http://localhost:8787/v1/chat',
+      expect.objectContaining({
+        method: 'POST',
+      }),
+    );
+    expect(JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body))).toMatchObject({
+      thread_id: 'thread-1',
     });
   });
 
-  it('surfaces API error payloads from the edge function', async () => {
+  it('surfaces API error payloads from the agent service', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
 
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify({ error: 'Tutor quota exceeded.' }), {
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ thread: { id: 'thread-1' } }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ detail: 'Tutor quota exceeded.' }), {
         status: 429,
         headers: { 'Content-Type': 'application/json' },
-      }),
-    );
+        }),
+      );
 
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
 
@@ -96,12 +121,20 @@ describe('geminiClient', () => {
       },
     });
 
-    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(streamBody, {
-        status: 200,
-        headers: { 'Content-Type': 'text/event-stream' },
-      }),
-    );
+    const fetchMock = vi
+      .spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ thread: { id: 'thread-1' } }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(streamBody, {
+          status: 200,
+          headers: { 'Content-Type': 'text/event-stream' },
+        }),
+      );
 
     const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
     const seenTokens: string[] = [];
@@ -115,7 +148,15 @@ describe('geminiClient', () => {
     expect(result.threadId).toBe('thread-1');
     expect(result.usedTools).toEqual(['recall_user_memories']);
     expect(seenTokens).toEqual(['Hello ', 'world']);
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      'http://localhost:8787/v1/threads',
+      expect.objectContaining({
+        method: 'POST',
+      }),
+    );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
       'http://localhost:8787/v1/chat/stream',
       expect.objectContaining({
         method: 'POST',
@@ -124,7 +165,7 @@ describe('geminiClient', () => {
         }),
       }),
     );
-    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
+    expect(JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body))).toMatchObject({
       context: expect.objectContaining({
         ai_tutor_persona: 'coach',
       }),

@@ -1,6 +1,6 @@
 # Viewer React Interaction Inventory
 
-All interactions below describe the current React viewer behavior. Fixture data is an explicit dev/test-only path; normal app mode expects real Supabase services and the `viewer-ai-tutor` Edge Function.
+All interactions below describe the current React viewer behavior. Fixture data is an explicit dev/test-only path; normal app mode expects real Supabase services plus the dedicated `agent-service` backend for AI tutor flows.
 
 | 交互ID | 页面 | 入口 | 前置条件 | 用户动作 | UI反馈 | 数据读写 | 路由变化 | 是否占位 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -27,9 +27,9 @@ All interactions below describe the current React viewer behavior. Fixture data 
 | VR-021 | Community | Messages workspace | Authenticated learner | Select conversation, create direct chat, send message | Thread updates immediately, unread counts refresh | Read/write `community_conversations`, `community_messages`, RPC `create_or_get_direct_conversation` | None | No | Direct and room-linked conversations are persisted |
 | VR-022 | Community | Study rooms | Authenticated learner | Create/open/join/delete study room | Room roster and activity panels update | Read/write `community_study_rooms`, `community_study_room_members`, RPC `join_study_room` | None | Partial | Voice/call keeps current placeholder semantics; room membership is persisted |
 | VR-023 | Community | Trending + notes | Authenticated learner | Create discussion, like/comment, create/edit note | Counts, comment list, and notes update after mutation | Read/write `community_discussions`, comments, likes, notes | None | No | Notes persist per learner or linked room |
-| VR-024 | AI Tutor | Learner shell tab | Authenticated learner | Send prompt | Chat bubble appended, loading state, tutor reply | Invoke Edge Function `viewer-ai-tutor` | `/ai-tutor` only | No | Server secret is the default production path |
-| VR-025 | AI Tutor | Command input | Authenticated learner | Send `/apikey <key>` | Success banner, override stored locally | Browser local storage write | None | No | Explicit user override for development or personal key usage |
-| VR-026 | AI Tutor | Studio tools | Authenticated learner | Open mind map / quiz / presentation dialog | Modal opens with generated data or setup guidance | Edge Function read, optional local key override | None | No | Shared AI backend with modal tools |
+| VR-024 | AI Tutor | Learner shell tab | Authenticated learner | Send prompt | Chat bubble appended, loading state, streamed tutor reply | Invoke `agent-service` chat endpoint | `/ai-tutor` only | No | Uses server-side model config, memory, tools, and thread persistence |
+| VR-025 | AI Tutor | Thread bootstrap | Authenticated learner | Enter tutor flow for the first time | Hidden thread bootstrap and local thread-id persistence | `agent-service` thread create/read APIs | None | No | Thread creation is backend-managed; browser only stores current thread id |
+| VR-026 | AI Tutor | Studio tools | Authenticated learner | Open mind map / quiz / presentation dialog | Modal opens with generated data | `agent-service` tool endpoints | None | No | Tool generation is fully backend-managed |
 | VR-027 | Profile | Learner shell tab | Authenticated learner | Open profile | KPI cards, pinned achievements, gamification panels render | Read profile/stats/achievements/xp history | `/profile` | No | Profile is learner hub |
 | VR-028 | Profile | Header/menu CTA | Authenticated learner | Open settings | Settings center opens | None | `/profile` -> `/settings` | No | Primary settings entry |
 | VR-029 | Profile | Achievement CTA | Authenticated learner | Open achievement wall | Achievement wall renders | Read `achievements` + `user_achievements` + pinned ids | `/profile` -> `/achievements` | No | Separate management page |

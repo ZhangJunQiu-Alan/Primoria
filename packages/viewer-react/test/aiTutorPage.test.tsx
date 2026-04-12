@@ -4,8 +4,6 @@ import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice'
 import { renderRoute } from './renderApp';
 
 vi.mock('@/shared/api/geminiClient', () => ({
-  bootstrapGeminiKey: vi.fn(async () => 'demo-key'),
-  persistGeminiKey: vi.fn(async () => undefined),
   generateTutorReplyStream: vi.fn(async (_history, handlers) => {
     handlers?.onToken?.('Mock tutor reply');
     const payload = { threadId: 'thread-1', reply: 'Mock tutor reply', usedTools: [] };
@@ -36,16 +34,11 @@ vi.mock('@/shared/api/geminiClient', () => ({
 }));
 
 describe('AiTutorPage', () => {
-  it('stores runtime API keys and opens generated tools', async () => {
+  it('opens generated tools from the backend-backed tutor flow', async () => {
     const user = userEvent.setup();
     renderRoute('/ai-tutor', 'user');
 
     expect(await screen.findByRole('heading', { name: /你好，我们慢慢把这件事理顺/i }, { timeout: 15000 })).toBeInTheDocument();
-
-    await user.type(await screen.findByPlaceholderText(/开始输入/i, {}, { timeout: 15000 }), '/apikey demo-key');
-    await user.click(await screen.findByRole('button', { name: /^发送$/i }, { timeout: 15000 }));
-
-    expect(await screen.findByText(/Gemini key 已保存在本地/i, {}, { timeout: 15000 })).toBeInTheDocument();
 
     await user.click(await screen.findByRole('button', { name: /打开思维导图/i }, { timeout: 15000 }));
 
