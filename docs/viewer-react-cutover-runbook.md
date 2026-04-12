@@ -13,7 +13,7 @@ This runbook describes how to deploy, verify, and recover the current unified Re
   - `/builder/dashboard`
   - `/builder/editor`
   - `/builder/editor/:courseId`
-- Viewer backend: `supabase/functions/viewer-ai-tutor`
+- Viewer AI backend: `agent-service`
 - Viewer push backend:
   - `supabase/functions/viewer-push-subscribe`
   - `supabase/functions/viewer-push-unsubscribe`
@@ -25,11 +25,10 @@ This runbook describes how to deploy, verify, and recover the current unified Re
 Frontend runtime:
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
+- `VITE_AGENT_SERVICE_URL`
 
 Optional frontend values:
-- `VITE_GEMINI_MODEL`
 - `VITE_VIEWER_DEMO_MODE`
-- `VITE_GEMINI_API_KEY`
 - `VITE_SENTRY_DSN`
 - `VITE_POSTHOG_KEY`
 - `VITE_POSTHOG_HOST`
@@ -38,7 +37,7 @@ Optional frontend values:
 - `VITE_VIEWER_AI_TUTOR_ENABLED`
 - `VITE_VIEWER_COMMUNITY_ENABLED`
 
-Supabase secrets:
+Agent-service secrets:
 - `GEMINI_API_KEY`
 
 Cloud smoke runtime:
@@ -109,7 +108,7 @@ Validation notes:
   - parent dashboard switched to bind-by-code instead of learner-side code generation
   - course enrollment refreshes the course detail UI immediately after mutation success
   - community no longer fails on recursive `community_conversation_members` RLS
-  - AI Tutor now reaches `viewer-ai-tutor` through the working function-gateway auth pattern
+- AI Tutor now reaches `agent-service` through the authenticated backend path
 
 ## Deployment Steps
 
@@ -119,13 +118,13 @@ Validation notes:
 supabase db push
 ```
 
-2. Deploy the viewer edge functions that changed.
+2. Deploy the AI/push backends that changed.
 
 ```bash
-supabase functions deploy viewer-ai-tutor
 supabase functions deploy viewer-push-subscribe
 supabase functions deploy viewer-push-unsubscribe
 supabase functions deploy viewer-push-dispatch
+# plus deploy/restart agent-service with the latest env + code
 ```
 
 3. Confirm frontend environment variables for the target deploy.
