@@ -3,30 +3,28 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.auth import AuthenticatedUser, require_user
-from app.config import get_settings
 from app.schemas import (
     BuilderAddLessonRequest,
     BuilderCourseMutationRequest,
     BuilderImportCourseRequest,
     GenerateBuilderCourseDraftRequest,
     GenerateBuilderCourseDraftResponse,
-    GeneratedCoursePlan,
     PublishBuilderCourseRequest,
     SaveBuilderCourseDraftRequest,
     SaveBuilderCourseDraftResponse,
 )
 from app.services.builder_courses import (
     build_course_slug,
-    build_generated_course_draft,
     build_lesson_draft_json,
+    build_generated_course_draft,
+    generate_course_draft_pipeline,
     normalize_course_list_row,
     normalize_course_mutation,
+    persist_course_generation_memory,
     save_builder_course_draft,
 )
 from app.services.supabase_client import SupabaseUserClient
 from uuid import uuid4
-
-from app.schemas import BuilderCourseDraft
 
 router = APIRouter(prefix='/v1/builder', tags=['builder'])
 
@@ -135,44 +133,72 @@ async def generate_course_draft(
     request: GenerateBuilderCourseDraftRequest,
     user: AuthenticatedUser = Depends(require_user),
 ) -> GenerateBuilderCourseDraftResponse:
-    from langchain_google_genai import ChatGoogleGenerativeAI
-
-    settings = get_settings()
-    if not settings.google_api_key:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail='Course generation is not configured on the backend.',
-        )
-
-    model = ChatGoogleGenerativeAI(
-        model=settings.agent_model,
-        google_api_key=settings.google_api_key,
-        temperature=0.4,
-    ).with_structured_output(GeneratedCoursePlan)
-
-    prompt = build_course_generation_prompt(request)
-    plan = GeneratedCoursePlan.model_validate(await model.ainvoke(prompt))
-    draft = build_generated_course_draft(plan, author_id=user.id)
-
+    supabase_client = SupabaseUserClient(user.access_token)
     persisted = False
     status_value = None
-    if request.persist:
-        supabase_client = SupabaseUserClient(user.access_token)
+    try:
         try:
+            brief, outline, critique, plan, revised, generation_context = await generate_course_draft_pipeline(
+                request,
+                user_id=user.id,
+                supabase_client=supabase_client,
+            )
+        except RuntimeError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=str(exc),
+            ) from exc
+        draft = build_generated_course_draft(plan, author_id=user.id)
+        used_tools = [
+            'get_course_generation_context',
+            'generate_course_brief_stage',
+            'generate_course_outline_stage',
+            'generate_course_plan_stage',
+            'critique_course_plan_stage',
+        ]
+        if revised or critique.should_revise:
+            used_tools.append('revise_course_plan_stage')
+
+        if request.persist:
             try:
                 await save_builder_course_draft(draft, user.id, supabase_client, publish=False)
             except ValueError as exc:
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
             persisted = True
             status_value = 'draft'
-        finally:
-            await supabase_client.close()
-
-    return GenerateBuilderCourseDraftResponse(
-        draft=draft,
-        persisted=persisted,
-        status=status_value,
-    )
+        generation_memory = await persist_course_generation_memory(
+            user_id=user.id,
+            supabase_client=supabase_client,
+            request=request,
+            brief=brief,
+            outline=outline,
+            revised=revised,
+        )
+        return GenerateBuilderCourseDraftResponse(
+            draft=draft,
+            persisted=persisted,
+            status=status_value,
+            brief=brief,
+            outline=outline,
+            critique=critique,
+            plan=plan,
+            revised=revised,
+            generation_context={
+                'runtime': 'staged_tool_pipeline',
+                'topic': generation_context.get('topic'),
+                'pace': generation_context.get('pace'),
+                'language': generation_context.get('language'),
+                'difficulty_level': generation_context.get('difficulty_level') or brief.difficulty_level,
+                'target_lesson_count': generation_context.get('target_lesson_count'),
+                'author_preference_count': len(generation_context.get('author_preferences') or []),
+                'reference_course_count': len(generation_context.get('reference_courses') or []),
+                'author_recent_course_count': len(generation_context.get('author_recent_courses') or []),
+                'generation_memory_saved': bool(generation_memory),
+            },
+            used_tools=used_tools,
+        )
+    finally:
+        await supabase_client.close()
 
 
 @router.post('/courses')
@@ -426,33 +452,3 @@ async def delete_builder_lesson(
         return {'ok': True, 'lesson_id': lesson_id}
     finally:
         await supabase_client.close()
-
-
-def build_course_generation_prompt(request: GenerateBuilderCourseDraftRequest) -> str:
-    desired_language = request.language or 'English'
-    difficulty = request.difficulty_level or 'beginner'
-    audience = request.audience or 'general learners'
-    outcome = request.outcome or 'gain a clear mental model and complete one small practice loop'
-    lesson_count = {'quick': 3, 'balanced': 4, 'deep': 5}[request.pace]
-
-    return '\n\n'.join(
-        [
-            'You design compact, high-quality online courses for Primoria Builder.',
-            (
-                'Generate a course plan that can be turned into a Builder draft. '
-                'Keep the course practical, structured, and concise.'
-            ),
-            f'Topic: {request.topic}',
-            f'Target learner: {audience}',
-            f'Learning outcome: {outcome}',
-            f'Pace: {request.pace}',
-            f'Difficulty: {difficulty}',
-            f'Language: {desired_language}',
-            (
-                f'Return exactly {lesson_count} lessons. '
-                'Each lesson must include objective, explanation, key points, one multiple-choice check question, '
-                '2-4 answer options, a correct answer index, and a short reflection prompt.'
-            ),
-            'Prefer short lesson titles and realistic teaching language.',
-        ]
-    )
