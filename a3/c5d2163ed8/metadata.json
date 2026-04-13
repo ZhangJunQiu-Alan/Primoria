@@ -1,0 +1,62 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "a3c5d2163ed8",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 8,
+  "files_touched": [
+    "Design/loading-animation-test.html",
+    "packages/viewer-react/index.html",
+    "packages/viewer-react/src/app/AppProviders.tsx",
+    "packages/viewer-react/src/app/router.tsx",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorPage.tsx",
+    "packages/viewer-react/src/features/auth/AuthProvider.tsx",
+    "packages/viewer-react/src/features/auth/routeGuards.tsx",
+    "packages/viewer-react/src/features/course/CoursePage.tsx",
+    "packages/viewer-react/src/features/home/HomePage.tsx",
+    "packages/viewer-react/src/features/home/Live2DHeroModel.tsx",
+    "packages/viewer-react/src/features/home/homeDashboard.ts",
+    "packages/viewer-react/src/features/lesson/LessonPage.tsx",
+    "packages/viewer-react/src/features/library/LibraryPage.tsx",
+    "packages/viewer-react/src/features/profile/ProfilePage.tsx",
+    "packages/viewer-react/src/features/profile/SettingsPage.tsx",
+    "packages/viewer-react/src/features/profile/settingsCopy.ts",
+    "packages/viewer-react/src/index.css",
+    "packages/viewer-react/src/main.tsx",
+    "packages/viewer-react/src/shared/ai-tutor/persona.ts",
+    "packages/viewer-react/src/shared/api/geminiClient.ts",
+    "packages/viewer-react/src/shared/api/queryClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/fixtureStore.ts",
+    "packages/viewer-react/src/shared/api/viewer/settingsApi.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/src/shared/layout/FullScreenLoadingScreen.tsx",
+    "packages/viewer-react/src/shared/layout/RouteErrorBoundary.tsx",
+    "packages/viewer-react/src/shared/layout/ViewerShell.tsx",
+    "packages/viewer-react/src/shared/state/preferencesSlice.ts",
+    "packages/viewer-react/src/shared/theme/copy.ts",
+    "packages/viewer-react/test/aiTutorPage.test.tsx",
+    "packages/viewer-react/test/coursePage.test.tsx",
+    "packages/viewer-react/test/geminiClient.test.ts",
+    "packages/viewer-react/test/homeDashboard.test.ts",
+    "packages/viewer-react/test/homePage.test.tsx",
+    "packages/viewer-react/test/libraryPage.test.tsx",
+    "packages/viewer-react/test/settingsPage.test.tsx",
+    "supabase/functions/viewer-ai-tutor/index.ts",
+    "supabase/migrations/20260406050200_add_ai_tutor_settings.sql"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a3/c5d2163ed8/0/metadata.json",
+      "transcript": "/a3/c5d2163ed8/0/full.jsonl",
+      "content_hash": "/a3/c5d2163ed8/0/content_hash.txt",
+      "prompt": "/a3/c5d2163ed8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1942,
+    "cache_creation_tokens": 264756,
+    "cache_read_tokens": 2924065,
+    "output_tokens": 66990,
+    "api_call_count": 52
+  }
+}

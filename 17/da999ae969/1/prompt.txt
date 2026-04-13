@@ -1,0 +1,141 @@
+先不要写代码 扫描整个项目后来帮我设计一下我目前想要实现的功能是 AI导师支持上传多个资料(PDF,Doc,PPT) 然后界面上会显示已上传的资料,可以点击勾选或者不勾选. 点击测验,AI会基于文档生成对应的quiz也就是创建对应的course(视作为Course), 这里创建的内容完全参考Builder中的单选,多选,True/Flase/Matching block,然后quiz创建完成后,会默认状态为未发布的状态,出现在自有课程里面,用户点击改课程之后就会开始习题作答学习. 就是补充各种细节,让这个Prompt更能达到我想要的效果
+
+---
+
+先不要写代码 扫描整个项目后来帮我设计一下我目前想要实现的功能是 AI导师支持上传多个资料(PDF,Doc,PPT) 然后界面上会显示已上传的资料,可以点击勾选或者不勾选. 点击测验,AI会基于文档生成对应的quiz也就是创建对应的course(视作为Course), 这里创建的内容完全参考Builder中的单选,多选,True/Flase/Matching block,然后quiz创建完成后,会默认状态为未发布的状态,出现在自有课程里面,用户点击改课程之后就会开始习题作答学习. 就是补充各种细节,让这个Prompt更能达到我想要的效果
+
+---
+
+目前supabase支持多大的存储,假设用户每个文档4M,上传十多个文档 多少用户可以上传
+
+---
+
+那这个提取文字,怎么实现的呢
+
+---
+
+好 我认可你目前的完整流程还有别的可以让我选择吗 先不要写代码 扫描整个项目后来帮我设计一下我目前想要实现的功能是           
+AI导师支持上传多个资料(PDF,Doc,PPT)                                         
+然后界面上会显示已上传的资料,可以点击勾选或者不勾选.                        
+点击测验,AI会基于文档生成对应的quiz也就是创建对应的course(视作为Course),    
+这里创建的内容完全参考Builder中的单选,多选,True/Flase/Matching              
+block,然后quiz创建完成后,会默认状态为未发布的状态,出现在自有课程里面,用户点 
+击改课程之后就会开始习题作答学习.                                           
+就是补充各种细节,让这个Prompt更能达到我想要的效果
+
+---
+
+1. 我先不回答 2. 持久化 3. 让用户可以配置吧 设置题目数量
+
+---
+
+◇ ultraplan
+Starting Claude Code on the web…
+
+---
+
+ultraplan: cannot launch remote session —
+No cloud environment available. Set one up at https://claude.ai/code/onboarding?magic=env-setup
+
+---
+
+这个计划里面的prompt不行, 这个quiz的目的是 生成为考试复习的quiz 而且还需要生成Explanation,也就是错了告诉用户为什么这里错,对了就提一下这个知识点的上下文
+
+---
+
+输出一下目前的AI prompt
+
+---
+
+matching不需要, 语言根据文档语言自动判断,加上输出语言与学习材料语言保持一致 重新输出完整的AI Prompt
+
+---
+
+这个情况下会不会AI输出太多了 会导致错误,如果想要30个习题的话
+
+---
+
+那就选择分批生成吧 每10个题目调用一次 那这里怎么解决批次之间产出类似的quiz呢
+
+---
+
+先记录一下这个方案 跟我讨论这个方案先,我发现一个json文件里面的真正的重要的信息不多,能不能写一个类似与编译器那样子的,AI只产出关键内容,然后发给这个编译器,编译器再传出合适的json 下面是一个例子:{
+  "$schema": "https://primoria.com/course-schema/v1.json",
+  "schema_version": "1.0.0",
+  "course_id": "4a96c770-4521-4bdc-87d7-e1df766d0023",
+  "metadata": {
+    "title": "Python",
+    "description": "code",
+    "tags": [],
+    "difficulty_level": "beginner",
+    "estimated_minutes": 600
+  },
+  "lessons": [
+    {
+      "lesson_id": "d624c480-e6b6-469e-a4db-e244caadab7b",
+      "title": "Lesson 1",
+      "pages": [
+        {
+          "page_id": "DgJngzxBDqvhVEXdKNhZw",
+          "order": 0,
+          "blocks": [
+            {
+              "id": "b6MniWtiACg364xDVXaQo",
+              "type": "text",
+              "position": {
+                "order": 0
+              },
+              "visibilityRule": "always",
+              "content": {
+                "value": "[{\"insert\":\"\\n\"},{\"insert\":\"\\n\"},{\"insert\":\"\\n\"},{\"insert\":\"\\n\"}]",
+                "format": "richtext"
+              }
+            },
+            {
+              "id": "9ydNeSwB1gAJV0LnHS8vd",
+              "type": "image",
+              "position": {
+                "order": 1
+              },
+              "visibilityRule": "afterPreviousCorrect",
+              "content": {}
+            },
+            {
+              "id": "wlecnKAwSlVSHBlRhPexk",
+              "type": "multiple-choice",
+              "position": {
+                "order": 2
+              },
+              "content": {
+                "question": "",
+                "options": [
+                  {
+                    "id": "opt-a",
+                    "text": "",
+                    "isCorrect": false
+                  },
+                  {
+                    "id": "opt-b",
+                    "text": "",
+                    "isCorrect": false
+                  }
+                ],
+                "explanation": "",
+                "allowMultiple": false
+              },
+              "visibilityRule": "afterPreviousCorrect"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+---
+
+先只针对单选多选,正确错误,匹配问题完成编译器,告诉我编译器保存在哪里 AI将和他怎么交互
+
+---
+
+再给我一个合适的Prompt
