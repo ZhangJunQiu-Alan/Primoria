@@ -207,10 +207,43 @@ class GenerateBuilderCourseDraftRequest(BaseModel):
     persist: bool = False
 
 
+class GeneratedCourseBrief(BaseModel):
+    title: str
+    positioning: str
+    target_learner: str
+    learning_outcome: str
+    difficulty_level: Literal['beginner', 'intermediate', 'advanced'] = 'beginner'
+    estimated_minutes: int = 30
+    teaching_style: str | None = None
+    design_notes: list[str] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
+
+
+class GeneratedCourseOutlineLesson(BaseModel):
+    title: str
+    objective: str
+    why_it_matters: str | None = None
+    key_concepts: list[str] = Field(default_factory=list)
+
+
+class GeneratedCourseOutline(BaseModel):
+    title: str
+    summary: str
+    lesson_count: int
+    lessons: list[GeneratedCourseOutlineLesson] = Field(default_factory=list)
+
+
 class GenerateBuilderCourseDraftResponse(BaseModel):
     draft: BuilderCourseDraft
     persisted: bool = False
     status: Literal['draft', 'published'] | None = None
+    brief: GeneratedCourseBrief | None = None
+    outline: GeneratedCourseOutline | None = None
+    critique: 'GeneratedCourseCritique | None' = None
+    plan: 'GeneratedCoursePlan | None' = None
+    revised: bool = False
+    generation_context: dict[str, Any] | None = None
+    used_tools: list[str] = Field(default_factory=list)
 
 
 class GeneratedCourseLessonPlan(BaseModel):
@@ -232,6 +265,14 @@ class GeneratedCoursePlan(BaseModel):
     estimated_minutes: int = 30
     tags: list[str] = Field(default_factory=list)
     lessons: list[GeneratedCourseLessonPlan] = Field(default_factory=list)
+
+
+class GeneratedCourseCritique(BaseModel):
+    overall_assessment: str
+    strengths: list[str] = Field(default_factory=list)
+    risks: list[str] = Field(default_factory=list)
+    recommended_changes: list[str] = Field(default_factory=list)
+    should_revise: bool = False
 
 
 class BuilderCourseMutationRequest(BaseModel):
