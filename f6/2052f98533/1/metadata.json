@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f62052f98533",
+  "session_id": "b6857f89-b24b-44ff-bab4-520ea06b62ef",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-07T04:48:33.134804Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "packages/viewer-react/src/features/ai-tutor/AiTutorPage.tsx",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorToolDialog.tsx",
+    "packages/viewer-react/src/features/ai-tutor/toolTypes.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/test/aiTutorPage.test.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "b3e84e551c52",
+  "checkpoint_transcript_start": 138,
+  "transcript_lines_at_start": 138,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 13
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-07T04:48:33.011125Z",
+    "agent_lines": 1599,
+    "human_added": 1529,
+    "human_modified": 9,
+    "human_removed": 0,
+    "total_committed": 3137,
+    "agent_percentage": 50.97226649665285
+  }
+}

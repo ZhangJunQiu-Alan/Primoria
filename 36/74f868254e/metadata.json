@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3674f868254e",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 20,
+  "files_touched": [
+    "package.json",
+    "packages/viewer-react/src/features/home/HomePage.tsx",
+    "packages/viewer-react/src/features/library/LibraryPage.tsx",
+    "packages/viewer-react/src/features/profile/ProfilePage.tsx",
+    "packages/viewer-react/src/pages/dashboard/DashboardPage.tsx",
+    "packages/viewer-react/src/pages/dashboard/dashboard.css",
+    "packages/viewer-react/src/shared/api/viewer/catalogApi.ts",
+    "packages/viewer-react/src/shared/utils/localCourseCovers.ts",
+    "packages/viewer-react/test/dashboardPage.test.tsx",
+    "packages/viewer-react/test/homePage.test.tsx",
+    "packages/viewer-react/test/libraryPage.test.tsx",
+    "packages/viewer-react/test/localCourseCovers.test.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/36/74f868254e/0/metadata.json",
+      "transcript": "/36/74f868254e/0/full.jsonl",
+      "content_hash": "/36/74f868254e/0/content_hash.txt",
+      "prompt": "/36/74f868254e/0/prompt.txt"
+    },
+    {
+      "metadata": "/36/74f868254e/1/metadata.json",
+      "transcript": "/36/74f868254e/1/full.jsonl",
+      "content_hash": "/36/74f868254e/1/content_hash.txt",
+      "prompt": "/36/74f868254e/1/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 150,
+    "cache_creation_tokens": 224260,
+    "cache_read_tokens": 8100028,
+    "output_tokens": 135913,
+    "api_call_count": 102
+  }
+}

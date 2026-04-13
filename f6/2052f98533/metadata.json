@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f62052f98533",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".gitignore",
+    "docs/viewer-react-cutover-runbook.md",
+    "packages/db/src/database.generated.ts",
+    "packages/viewer-react/package.json",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorPage.tsx",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorToolDialog.tsx",
+    "packages/viewer-react/src/features/ai-tutor/toolTypes.ts",
+    "packages/viewer-react/src/shared/api/queryClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/test/aiTutorPage.test.tsx",
+    "pnpm-lock.yaml",
+    "supabase/config.toml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f6/2052f98533/0/metadata.json",
+      "transcript": "/f6/2052f98533/0/full.jsonl",
+      "content_hash": "/f6/2052f98533/0/content_hash.txt",
+      "prompt": "/f6/2052f98533/0/prompt.txt"
+    },
+    {
+      "metadata": "/f6/2052f98533/1/metadata.json",
+      "transcript": "/f6/2052f98533/1/full.jsonl",
+      "content_hash": "/f6/2052f98533/1/content_hash.txt",
+      "prompt": "/f6/2052f98533/1/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 93,
+    "cache_creation_tokens": 159949,
+    "cache_read_tokens": 6855559,
+    "output_tokens": 96778,
+    "api_call_count": 73
+  }
+}

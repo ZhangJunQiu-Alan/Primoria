@@ -1,0 +1,54 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "17da999ae969",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "packages/db/src/database.generated.ts",
+    "packages/viewer-react/src/features/community/CommunityPage.tsx",
+    "packages/viewer-react/src/features/editor/editor.css",
+    "packages/viewer-react/src/features/editor/preview/PreviewMode.tsx",
+    "packages/viewer-react/src/features/lesson/LessonPage.tsx",
+    "packages/viewer-react/src/index.css",
+    "packages/viewer-react/src/shared/api/geminiClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/communityApi.ts",
+    "packages/viewer-react/src/shared/api/viewer/fixtureStore.ts",
+    "packages/viewer-react/src/shared/api/viewer/lessonApi.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/src/shared/layout/PageContainer.tsx",
+    "packages/viewer-react/src/shared/layout/ViewerShell.tsx",
+    "packages/viewer-react/src/shared/lesson/LearnerBlockRenderer.tsx",
+    "packages/viewer-react/src/shared/lesson/LessonRuntimePlayer.tsx",
+    "packages/viewer-react/src/shared/lesson/blockVisibility.ts",
+    "packages/viewer-react/src/shared/lesson/lessonAiContext.ts",
+    "packages/viewer-react/src/shared/lesson/richText.ts",
+    "packages/viewer-react/src/shared/theme/copy.ts",
+    "packages/viewer-react/test/communityPage.test.tsx",
+    "packages/viewer-react/test/geminiClient.test.ts",
+    "packages/viewer-react/test/lessonRuntime.test.tsx",
+    "packages/viewer-react/test/viewerShell.test.tsx",
+    "supabase/functions/viewer-ai-tutor/index.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/17/da999ae969/0/metadata.json",
+      "transcript": "/17/da999ae969/0/full.jsonl",
+      "content_hash": "/17/da999ae969/0/content_hash.txt",
+      "prompt": "/17/da999ae969/0/prompt.txt"
+    },
+    {
+      "metadata": "/17/da999ae969/1/metadata.json",
+      "transcript": "/17/da999ae969/1/full.jsonl",
+      "content_hash": "/17/da999ae969/1/content_hash.txt",
+      "prompt": "/17/da999ae969/1/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 93,
+    "cache_creation_tokens": 159949,
+    "cache_read_tokens": 6855559,
+    "output_tokens": 96778,
+    "api_call_count": 73
+  }
+}
