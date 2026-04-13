@@ -108,6 +108,45 @@ interface AICourseDraftPreview {
   coachNote: string;
 }
 
+interface GeneratedAICourseResult {
+  courseId: string;
+  brief?: {
+    title?: string;
+    positioning?: string;
+    target_learner?: string;
+    learning_outcome?: string;
+    teaching_style?: string | null;
+    design_notes?: string[];
+    tags?: string[];
+  };
+  outline?: {
+    summary?: string;
+    lesson_count?: number;
+    lessons?: Array<{
+      title?: string;
+      objective?: string;
+      why_it_matters?: string | null;
+      key_concepts?: string[];
+    }>;
+  };
+  critique?: {
+    overall_assessment?: string;
+    strengths?: string[];
+    risks?: string[];
+    recommended_changes?: string[];
+    should_revise?: boolean;
+  };
+  revised?: boolean;
+  usedTools?: string[];
+  generationContext?: {
+    target_lesson_count?: number;
+    author_preference_count?: number;
+    reference_course_count?: number;
+    author_recent_course_count?: number;
+    generation_memory_saved?: boolean;
+  };
+}
+
 interface CourseFormDialogProps {
   open: boolean;
   mode: 'create' | 'edit';
@@ -827,12 +866,16 @@ function AICourseDraftDialog({
   onUseDraft,
   pending,
   error,
+  generated,
+  onOpenBuilder,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onUseDraft: (form: AICourseDraftFormState, preview: AICourseDraftPreview) => Promise<void> | void;
   pending: boolean;
   error: string | null;
+  generated: GeneratedAICourseResult | null;
+  onOpenBuilder: (courseId: string) => void;
 }) {
   const [form, setForm] = useState<AICourseDraftFormState>(emptyAICourseDraftForm);
 
@@ -852,8 +895,8 @@ function AICourseDraftDialog({
             <div>
               <Dialog.Title className="dashboard-dialog__title">AI course draft</Dialog.Title>
               <Dialog.Description className="dashboard-dialog__subtitle">
-                Shape a course brief, preview the structure, and keep it as a front-end concept.
-                This does not create a real course yet.
+                Shape a course brief and let the backend generate a Builder-ready draft through a staged
+                brief → outline → draft pipeline.
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
@@ -946,7 +989,7 @@ function AICourseDraftDialog({
                   <BrainCircuit size={14} />
                   AI preview
                 </span>
-                <small>Front-end only</small>
+                <small>Backend staged draft</small>
               </div>
 
               <h3>{preview.title}</h3>
@@ -984,6 +1027,76 @@ function AICourseDraftDialog({
               </button>
             </div>
             {error ? <p className="text-sm text-[#c2410c]">{error}</p> : null}
+
+            {generated ? (
+              <section className="mt-6 space-y-4 rounded-[20px] border border-[#d9ccb7] bg-[rgba(255,250,244,0.92)] p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <div className="viewer-botanical-eyebrow">Generated brief</div>
+                    <h3 className="mt-2 text-lg font-black text-[#4d4239]">{generated.brief?.title || preview.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#6f6359]">{generated.brief?.positioning || generated.outline?.summary}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="studio-button studio-button--primary"
+                    onClick={() => onOpenBuilder(generated.courseId)}
+                  >
+                    Open in Builder
+                  </button>
+                </div>
+
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="rounded-[18px] border border-[#e2d7c9] bg-white/70 p-3">
+                    <div className="text-sm font-black text-[#4d4239]">Brief</div>
+                    <ul className="mt-2 space-y-1 text-sm text-[#6f6359]">
+                      <li>Audience: {generated.brief?.target_learner || '—'}</li>
+                      <li>Outcome: {generated.brief?.learning_outcome || '—'}</li>
+                      <li>Teaching style: {generated.brief?.teaching_style || '—'}</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-[18px] border border-[#e2d7c9] bg-white/70 p-3">
+                    <div className="text-sm font-black text-[#4d4239]">Generation stats</div>
+                    <ul className="mt-2 space-y-1 text-sm text-[#6f6359]">
+                      <li>Lessons: {generated.outline?.lesson_count ?? generated.generationContext?.target_lesson_count ?? 0}</li>
+                      <li>Tools used: {generated.usedTools?.length ?? 0}</li>
+                      <li>Revised: {generated.revised || generated.critique?.should_revise ? 'Yes' : 'No'}</li>
+                      <li>Memory saved: {generated.generationContext?.generation_memory_saved ? 'Yes' : 'No'}</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {generated.outline?.lessons?.length ? (
+                  <div className="rounded-[18px] border border-[#e2d7c9] bg-white/70 p-3">
+                    <div className="text-sm font-black text-[#4d4239]">Outline</div>
+                    <div className="mt-2 space-y-2">
+                      {generated.outline.lessons.map((lesson, index) => (
+                        <div key={`${lesson.title}-${index}`} className="rounded-[14px] border border-[#efe5d8] bg-[rgba(255,252,247,0.85)] p-3">
+                          <div className="text-sm font-black text-[#4d4239]">{index + 1}. {lesson.title}</div>
+                          <div className="mt-1 text-sm text-[#6f6359]">{lesson.objective}</div>
+                          {lesson.key_concepts?.length ? (
+                            <div className="mt-2 text-xs text-[#8a7b6f]">Key concepts: {lesson.key_concepts.join(' · ')}</div>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {generated.critique ? (
+                  <div className="rounded-[18px] border border-[#e2d7c9] bg-white/70 p-3">
+                    <div className="text-sm font-black text-[#4d4239]">Critique</div>
+                    <p className="mt-2 text-sm text-[#6f6359]">{generated.critique.overall_assessment || 'No critique summary.'}</p>
+                    {generated.critique.recommended_changes?.length ? (
+                      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[#6f6359]">
+                        {generated.critique.recommended_changes.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
           </div>
         </Dialog.Content>
       </Dialog.Portal>
@@ -1074,6 +1187,7 @@ export function DashboardPage() {
   const [aiDraftOpen, setAiDraftOpen] = useState(false);
   const [aiDraftPending, setAiDraftPending] = useState(false);
   const [aiDraftError, setAiDraftError] = useState<string | null>(null);
+  const [aiDraftGenerated, setAiDraftGenerated] = useState<GeneratedAICourseResult | null>(null);
   const [formMode, setFormMode] = useState<'create' | 'edit' | null>(null);
   const [courseForForm, setCourseForForm] = useState<CourseRow | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
@@ -1087,6 +1201,7 @@ export function DashboardPage() {
   useEffect(() => {
     if (aiDraftOpen) {
       setAiDraftError(null);
+      setAiDraftGenerated(null);
     }
   }, [aiDraftOpen]);
 
@@ -1327,6 +1442,12 @@ export function DashboardPage() {
         draft: {
           course_id: string;
         };
+        brief?: GeneratedAICourseResult['brief'];
+        outline?: GeneratedAICourseResult['outline'];
+        critique?: GeneratedAICourseResult['critique'];
+        revised?: boolean;
+        used_tools?: string[];
+        generation_context?: GeneratedAICourseResult['generationContext'];
         persisted: boolean;
       }>('/v1/builder/course-drafts/generate', {
         method: 'POST',
@@ -1339,12 +1460,19 @@ export function DashboardPage() {
           persist: true,
         }),
       });
-      setAiDraftOpen(false);
+      setAiDraftGenerated({
+        courseId: payload.draft.course_id,
+        brief: payload.brief,
+        outline: payload.outline,
+        critique: payload.critique,
+        revised: payload.revised,
+        usedTools: payload.used_tools,
+        generationContext: payload.generation_context,
+      });
       setNotice({
         tone: 'success',
-        text: `"${preview.title}" draft generated and saved to Builder.`,
+        text: `"${payload.brief?.title || preview.title}" draft generated with ${payload.outline?.lesson_count ?? 0} planned lessons, ${payload.used_tools?.length ?? 0} agent tools, and ${payload.revised || payload.critique?.should_revise ? 'a critique/revise pass' : 'no extra revision pass'}, then saved to Builder.`,
       });
-      navigate(`/builder/editor/${payload.draft.course_id}`);
     } catch (error) {
       setAiDraftError(getErrorMessage(error));
     } finally {
@@ -2311,6 +2439,8 @@ export function DashboardPage() {
         onUseDraft={handleUseAICourseDraft}
         pending={aiDraftPending}
         error={aiDraftError}
+        generated={aiDraftGenerated}
+        onOpenBuilder={(courseId) => navigate(`/builder/editor/${courseId}`)}
       />
 
       <ConfirmDialog
