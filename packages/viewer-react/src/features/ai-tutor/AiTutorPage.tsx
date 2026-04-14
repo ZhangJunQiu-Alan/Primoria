@@ -1,9 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  bootstrapGeminiKey,
-  generatePresentation,
-  generateTutorReply,
   generateTutorReplyStream,
   persistGeminiKey,
   type TutorMessage,
@@ -14,18 +11,17 @@ import {
   createTutorDocument,
   deleteTutorDocument,
   fetchTutorDocuments,
+  listMindMaps,
 } from '@/shared/api/viewer/tutorDocumentsApi';
 import {
   BadgeHelp,
   Bot,
   ChevronDown,
   ChevronUp,
-  FileText,
   GitBranch,
   LoaderCircle,
   PenLine,
   SendHorizontal,
-  Sparkles,
   Trash2,
   Upload,
   type LucideIcon,
@@ -38,14 +34,9 @@ import { captureViewerError, captureViewerEvent } from '@/shared/platform/observ
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
-import type { MindMapNode, TutorDocument } from '@/shared/api/viewer/types';
-
-const AiTutorToolDialog = lazy(async () => ({
-  default: (await import('@/features/ai-tutor/AiTutorToolDialog')).AiTutorToolDialog,
-}));
+import type { LegacyMindMapNode, MindMapSummary, TutorDocument } from '@/shared/api/viewer/types';
 
 type TutorToolKind = TutorToolModal['kind'];
-type DocsBackedToolKind = Extract<TutorToolKind, 'mindmap' | 'quiz'>;
 type ToolExecutionStatus = 'idle' | 'loading' | 'success' | 'error';
 type TutorStatusTone = 'info' | 'success' | 'error';
 type TutorConversationContext = {
@@ -74,7 +65,7 @@ type StoredAiTutorSession = {
 };
 type ActiveToolConfig =
   | {
-      kind: DocsBackedToolKind;
+      kind: TutorToolKind;
     }
   | null;
 type PendingTutorUpload = {
@@ -87,7 +78,7 @@ type TutorSidebarSection = 'workspace' | 'materials' | 'notebook';
 const AI_TUTOR_SESSION_STORAGE_KEY = 'viewer:ai-tutor-session:v3';
 const AI_TUTOR_LEGACY_SESSION_STORAGE_KEY = 'viewer:ai-tutor-session:v2';
 const SESSION_MESSAGE_LIMIT = 16;
-const TOOL_ORDER: TutorToolKind[] = ['mindmap', 'report', 'quiz', 'presentation'];
+const TOOL_ORDER: TutorToolKind[] = ['mindmap', 'quiz'];
 const EMPTY_TUTOR_DOCUMENTS: TutorDocument[] = [];
 const TUTOR_QUIZ_SERVICE_UNAVAILABLE_CODE = 'TUTOR_QUIZ_SERVICE_UNAVAILABLE';
 const TUTOR_MINDMAP_SERVICE_UNAVAILABLE_CODE = 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE';
@@ -111,20 +102,10 @@ function interpolateCount(template: string, count: number) {
   return template.replace('{count}', String(count));
 }
 
-function buildStudyReportPrompt(language: 'zh-CN' | 'en', courseTitle?: string | null) {
-  if (language === 'zh-CN') {
-    return `请基于当前对话${courseTitle ? `和课程《${courseTitle}》` : ''}生成一份学习报告。报告需要简洁清晰，至少包含：当前主题、已经理清的重点、仍需补强的地方，以及接下来最值得做的 3 个行动。`;
-  }
-
-  return `Create a concise study report based on this conversation${courseTitle ? ` and the course "${courseTitle}"` : ''}. Include the current topic, the points that are now clearer, the parts that still need work, and the next 3 actions worth taking.`;
-}
-
 function createEmptyToolRuntime(): Record<TutorToolKind, TutorToolRuntime> {
   return {
     mindmap: { status: 'idle', modal: null, updatedAt: null, errorMessage: null },
-    report: { status: 'idle', modal: null, updatedAt: null, errorMessage: null },
     quiz: { status: 'idle', modal: null, updatedAt: null, errorMessage: null },
-    presentation: { status: 'idle', modal: null, updatedAt: null, errorMessage: null },
   };
 }
 
@@ -140,7 +121,7 @@ function isTutorMessage(value: unknown): value is TutorMessage {
   );
 }
 
-function isMindMapNode(value: unknown): value is MindMapNode {
+function isMindMapNode(value: unknown): value is LegacyMindMapNode {
   if (!value || typeof value !== 'object') {
     return false;
   }
@@ -173,10 +154,6 @@ function isTutorToolModal(value: unknown): value is TutorToolModal {
     );
   }
 
-  if (modal.kind === 'report') {
-    return typeof modal.payload?.title === 'string' && typeof modal.payload?.body === 'string';
-  }
-
   if (modal.kind === 'quiz') {
     return (
       typeof modal.payload?.courseId === 'string' &&
@@ -184,10 +161,6 @@ function isTutorToolModal(value: unknown): value is TutorToolModal {
       typeof modal.payload?.questionCount === 'number' &&
       Array.isArray(modal.payload?.sourceDocumentIds)
     );
-  }
-
-  if (modal.kind === 'presentation') {
-    return Array.isArray(modal.payload?.slides) && typeof modal.payload?.title === 'string';
   }
 
   return false;
@@ -466,7 +439,6 @@ export function AiTutorPage() {
   const [input, setInput] = useState('');
   const [notice, setNotice] = useState<TutorStatusNotice | null>(null);
   const [isSending, setIsSending] = useState(false);
-  const [modal, setModal] = useState<TutorToolModal | null>(null);
   const [toolRuntime, setToolRuntime] = useState<Record<TutorToolKind, TutorToolRuntime>>(() => initialSession.toolRuntime);
   const [sessionContext, setSessionContext] = useState<TutorConversationContext | null>(() => initialSession.context);
   const [pendingUploads, setPendingUploads] = useState<PendingTutorUpload[]>([]);
@@ -490,6 +462,13 @@ export function AiTutorPage() {
     queryKey: ['ai-tutor', 'documents', userId ?? 'anon'],
     enabled: Boolean(userId),
     queryFn: fetchTutorDocuments,
+    staleTime: 30_000,
+  });
+
+  const mindMapsQuery = useQuery({
+    queryKey: ['ai-tutor', 'mindmaps', userId ?? 'anon'],
+    enabled: Boolean(userId),
+    queryFn: listMindMaps,
     staleTime: 30_000,
   });
 
@@ -521,6 +500,9 @@ export function AiTutorPage() {
 
   const createMindMapMutation = useMutation({
     mutationFn: createMindMapFromDocs,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['ai-tutor', 'mindmaps', userId ?? 'anon'] });
+    },
   });
 
   const suggestedPrompts = useMemo(() => personaCopy.prompts, [personaCopy.prompts]);
@@ -542,32 +524,22 @@ export function AiTutorPage() {
         icon: GitBranch,
         tones: 'border-[#c8dbcb] bg-[#edf5ec] text-[#5c7d60]',
       },
-      report: {
-        label: copy.aiTutor.report,
-        ariaLabel: language === 'zh-CN' ? '生成报告' : 'Generate report',
-        icon: FileText,
-        tones: 'border-[#ead2af] bg-[#fbf3e6] text-[#9a6f3f]',
-      },
       quiz: {
         label: copy.aiTutor.quiz,
         ariaLabel: language === 'zh-CN' ? '配置并创建测验课程' : 'Configure and create quiz course',
         icon: BadgeHelp,
         tones: 'border-[#ead2af] bg-[#f8efdf] text-[#9c7342]',
       },
-      presentation: {
-        label: copy.aiTutor.presentation,
-        ariaLabel: language === 'zh-CN' ? '生成演示' : 'Generate presentation',
-        icon: Sparkles,
-        tones: 'border-[#dbcde3] bg-[#f3edf7] text-[#7f6f88]',
-      },
     }),
-    [copy.aiTutor.mindMap, copy.aiTutor.presentation, copy.aiTutor.quiz, copy.aiTutor.report, language],
+    [copy.aiTutor.mindMap, copy.aiTutor.quiz, language],
   );
 
   const transcript = messages.slice(1);
   const hasStartedConversation = transcript.length > 0;
   const hasToolInFlight = TOOL_ORDER.some((kind) => toolRuntime[kind].status === 'loading');
   const documents = documentsQuery.data ?? EMPTY_TUTOR_DOCUMENTS;
+  const mindMaps = mindMapsQuery.data ?? ([] as MindMapSummary[]);
+  const latestMindMap = mindMaps[0] ?? null;
   const documentsErrorMessage = documentsQuery.error
     ? resolveTutorErrorMessage(documentsQuery.error, copy.common.errorFallback, copy.aiTutor.materialsUnavailable)
     : null;
@@ -578,11 +550,15 @@ export function AiTutorPage() {
 
   const notebookItems = useMemo(
     () =>
-      TOOL_ORDER.map((kind) => ({ kind, runtime: toolRuntime[kind], definition: toolDefinitions[kind] }))
+      TOOL_ORDER.filter((kind) => kind !== 'mindmap')
+        .map((kind) => ({ kind, runtime: toolRuntime[kind], definition: toolDefinitions[kind] }))
         .filter((item) => item.runtime.status !== 'idle')
         .sort((left, right) => (right.runtime.updatedAt ?? 0) - (left.runtime.updatedAt ?? 0)),
     [toolDefinitions, toolRuntime],
   );
+  const mindMapRuntime = toolRuntime.mindmap;
+  const showMindMapNotebookRuntime = mindMapRuntime.status === 'loading' || mindMapRuntime.status === 'error';
+  const hasNotebookContent = showMindMapNotebookRuntime || mindMaps.length > 0 || notebookItems.length > 0;
 
   const revealNotebookSection = useCallback(() => {
     setExpandedSections((current) => (current.notebook ? current : { ...current, notebook: true }));
@@ -596,17 +572,17 @@ export function AiTutorPage() {
 
   const openNotebookItem = useCallback(
     (itemModal: TutorToolModal | null) => {
-      if (!itemModal) {
-        return;
-      }
-      if (itemModal.kind === 'quiz') {
+      if (itemModal?.kind === 'quiz') {
         navigate(`/course/${itemModal.payload.courseId}`);
-        return;
       }
-      setModal(itemModal);
     },
     [navigate],
   );
+
+  const openMindMapNotebookItem = useCallback((mindMapId: string) => {
+    const targetUrl = new URL(`/ai-tutor/mindmap/${mindMapId}`, window.location.origin).toString();
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+  }, []);
 
   const toggleSection = useCallback((section: TutorSidebarSection) => {
     setExpandedSections((current) => ({
@@ -616,7 +592,7 @@ export function AiTutorPage() {
   }, []);
 
   const openDocsToolConfig = useCallback(
-    (kind: DocsBackedToolKind) => {
+    (kind: TutorToolKind) => {
       if (!userId) {
         setNotice({ tone: 'error', text: copy.aiTutor.materialsProtected });
         return;
@@ -659,90 +635,10 @@ export function AiTutorPage() {
   }
 
   const openTool = useCallback(
-    async (kind: TutorToolKind, historyOverride?: TutorMessage[]) => {
-      if (kind === 'quiz' || kind === 'mindmap') {
-        openDocsToolConfig(kind);
-        return;
-      }
-
-      const toolLabel = toolDefinitions[kind].label;
-      const toolHistory = historyOverride ?? messages;
-      setToolRuntime((current) => ({
-        ...current,
-        [kind]: {
-          ...current[kind],
-          status: 'loading',
-          errorMessage: null,
-        },
-      }));
-      setNotice({
-        tone: 'info',
-        text: language === 'zh-CN' ? `正在生成${toolLabel}…` : `Generating ${toolLabel.toLowerCase()}…`,
-      });
-
-      try {
-        await bootstrapGeminiKey();
-
-        let nextModal: TutorToolModal;
-        if (kind === 'presentation') {
-          nextModal = { kind, payload: await generatePresentation(toolHistory) };
-        } else {
-          const reportPrompt = buildStudyReportPrompt(language, sessionContext?.courseTitle);
-          const reportBody = await generateTutorReply([...toolHistory, { role: 'user', text: reportPrompt }]);
-          nextModal = {
-            kind,
-            payload: {
-              title:
-                language === 'zh-CN'
-                  ? sessionContext?.courseTitle
-                    ? `《${sessionContext.courseTitle}》学习报告`
-                    : copy.aiTutor.report
-                  : sessionContext?.courseTitle
-                    ? `"${sessionContext.courseTitle}" ${copy.aiTutor.report}`
-                    : copy.aiTutor.report,
-              body: reportBody,
-            },
-          };
-        }
-
-        setToolRuntime((current) => ({
-          ...current,
-          [kind]: {
-            status: 'success',
-            modal: nextModal,
-            updatedAt: Date.now(),
-            errorMessage: null,
-          },
-        }));
-        setModal(nextModal);
-        setNotice({
-          tone: 'info',
-          text:
-            kind === 'report'
-              ? copy.aiTutor.reportReady
-              : language === 'zh-CN'
-                ? `${toolLabel}已更新，可在右侧继续查看。`
-                : `${toolLabel} updated. Reopen it from the workspace.`,
-        });
-        captureViewerEvent('viewer_ai_tutor_tool_opened', { kind });
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : copy.aiTutor.missingKey;
-        setToolRuntime((current) => {
-          const existing = current[kind];
-          return {
-            ...current,
-            [kind]: {
-              ...existing,
-              status: existing.modal ? 'success' : 'error',
-              errorMessage,
-            },
-          };
-        });
-        setNotice({ tone: 'error', text: errorMessage });
-        captureViewerError(error, { area: 'ai_tutor_tool', kind });
-      }
+    (kind: TutorToolKind) => {
+      openDocsToolConfig(kind);
     },
-    [copy.aiTutor.missingKey, copy.aiTutor.report, copy.aiTutor.reportReady, language, messages, openDocsToolConfig, sessionContext, toolDefinitions],
+    [openDocsToolConfig],
   );
 
   async function handleSend(text: string) {
@@ -916,7 +812,6 @@ export function AiTutorPage() {
         return next;
       });
 
-      setModal(mindMapArtifact);
       setNotice({ tone: 'success', text: copy.aiTutor.mindMapCreated });
       captureViewerEvent('viewer_ai_tutor_mindmap_created', {
         sourceCount: selectedDocumentIds.length,
@@ -1136,6 +1031,7 @@ export function AiTutorPage() {
       : notice?.tone === 'error'
         ? 'viewer-botanical-notice--error'
         : 'viewer-botanical-notice--info';
+  const visibleNotice = notice?.tone === 'info' ? null : notice;
   const workspaceToggleLabel = expandedSections.workspace ? copy.aiTutor.collapseWorkspace : copy.aiTutor.expandWorkspace;
   const materialsToggleLabel = expandedSections.materials ? copy.aiTutor.collapseMaterials : copy.aiTutor.expandMaterials;
   const notebookToggleLabel = expandedSections.notebook ? copy.aiTutor.collapseNotebook : copy.aiTutor.expandNotebook;
@@ -1263,8 +1159,8 @@ export function AiTutorPage() {
                 <SendHorizontal size={22} />
               </button>
             </div>
-            {notice ? (
-              <div className={`viewer-botanical-notice ${noticeToneClass}`}>{notice.text}</div>
+            {visibleNotice ? (
+              <div className={`viewer-botanical-notice ${noticeToneClass}`}>{visibleNotice.text}</div>
             ) : null}
           </div>
         </section>
@@ -1307,15 +1203,13 @@ export function AiTutorPage() {
                           ? copy.aiTutor.generating
                           : runtime.status === 'error'
                             ? runtime.errorMessage || copy.aiTutor.failed
+                            : kind === 'mindmap' && latestMindMap
+                              ? copy.aiTutor.generatedReady
                             : runtime.modal
-                              ? kind === 'quiz'
-                                ? copy.aiTutor.quizReady
-                                : copy.aiTutor.generatedReady
+                              ? copy.aiTutor.quizReady
                               : kind === 'quiz'
                                 ? copy.aiTutor.quizRequiresUpload
-                                : kind === 'mindmap'
-                                  ? copy.aiTutor.mindMapRequiresUpload
-                                : copy.aiTutor.notebook.pending;
+                                : copy.aiTutor.mindMapRequiresUpload;
 
                       const isDocsBackedTool = kind === 'quiz' || kind === 'mindmap';
                       const isDocsToolPending =
@@ -1494,14 +1388,64 @@ export function AiTutorPage() {
 
                 {expandedSections.notebook ? (
                   <div id="ai-tutor-notebook-panel" className="mt-3">
-                    {notebookItems.length ? (
+                    {hasNotebookContent ? (
                       <div className="space-y-2.5">
+                        {showMindMapNotebookRuntime ? (
+                          <div className="rounded-[20px] border border-[#d6e2d5] bg-[linear-gradient(180deg,rgba(255,253,249,0.98)_0%,rgba(245,250,244,0.95)_100%)] px-4 py-4 text-left shadow-[0_12px_24px_rgba(90,70,50,0.06)]">
+                            <div className="flex items-start gap-3">
+                              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[15px] bg-[#edf4ec] text-[#4f7655]">
+                                {mindMapRuntime.status === 'loading' ? <LoaderCircle size={21} className="animate-spin" /> : <GitBranch size={21} />}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-[0.96rem] font-bold leading-tight text-[#35523a]">
+                                  {copy.aiTutor.mindMap}
+                                </div>
+                                <div className="mt-1 text-[0.8rem] font-medium text-[#6f7f70]">
+                                  {mindMapRuntime.status === 'loading'
+                                    ? copy.aiTutor.quizGeneratingBody
+                                    : mindMapRuntime.errorMessage || copy.aiTutor.failed}
+                                </div>
+                              </div>
+                              {mindMapRuntime.status === 'error' ? (
+                                <button
+                                  type="button"
+                                  className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-1.5 text-[0.72rem]"
+                                  onClick={() => void openTool('mindmap')}
+                                >
+                                  {copy.aiTutor.retryGeneration}
+                                </button>
+                              ) : (
+                                <span className="text-[0.72rem] font-semibold text-[#9d8e82]">{copy.aiTutor.generating}</span>
+                              )}
+                            </div>
+                          </div>
+                        ) : null}
+
+                        {mindMaps.map((mindMap) => (
+                          <button
+                            key={mindMap.id}
+                            type="button"
+                            className="block w-full rounded-[18px] border border-[#e1d7c8] bg-[rgba(255,252,247,0.88)] px-3.5 py-3 text-left shadow-[0_8px_18px_rgba(90,70,50,0.05)] transition hover:border-[#d1dbc9] hover:shadow-[0_14px_28px_rgba(90,70,50,0.08)]"
+                            onClick={() => openMindMapNotebookItem(mindMap.id)}
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[13px] bg-[#edf4ec] text-[#4f7655]">
+                                <GitBranch size={17} />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate text-[0.84rem] font-bold text-[#3d342a]">{mindMap.title}</div>
+                                <div className="mt-1 text-[0.76rem] font-medium text-[#8b7d72]">{copy.aiTutor.generatedReady}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+
                         {notebookItems.map(({ kind, runtime, definition }) => {
                           const ToolIcon = definition.icon;
-                          const isPendingDocsTool = (kind === 'quiz' || kind === 'mindmap') && runtime.status === 'loading';
+                          const isPendingDocsTool = runtime.status === 'loading';
                           const canOpen = Boolean(runtime.modal) && runtime.status !== 'loading';
                           const showRetry = runtime.status === 'error';
-                          const isClickableQuizCard = kind === 'quiz' && canOpen && !showRetry;
+                          const isClickableNotebookCard = kind === 'quiz' && canOpen && !showRetry;
                           const statusText =
                             isPendingDocsTool
                               ? copy.aiTutor.quizGeneratingBody
@@ -1509,13 +1453,9 @@ export function AiTutorPage() {
                               ? copy.aiTutor.generating
                               : runtime.status === 'error'
                                 ? runtime.errorMessage || copy.aiTutor.failed
-                                : kind === 'quiz'
-                                  ? copy.aiTutor.quizReady
-                                  : copy.aiTutor.generatedReady;
+                                : copy.aiTutor.quizReady;
                           const titleText = isPendingDocsTool
-                            ? kind === 'quiz'
-                              ? copy.aiTutor.quizGeneratingTitle
-                              : copy.aiTutor.mindMap
+                            ? copy.aiTutor.quizGeneratingTitle
                             : artifactTitle(runtime.modal, definition.label);
                           const cardClassName =
                             isPendingDocsTool
@@ -1549,21 +1489,13 @@ export function AiTutorPage() {
                                 >
                                   {copy.aiTutor.retryGeneration}
                                 </button>
-                              ) : canOpen && !isClickableQuizCard ? (
-                                <button
-                                  type="button"
-                                  className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-1.5 text-[0.72rem]"
-                                  onClick={() => openNotebookItem(runtime.modal)}
-                                >
-                                  {copy.aiTutor.openLatest}
-                                </button>
                               ) : canOpen ? null : (
                                 <span className="text-[0.72rem] font-semibold text-[#9d8e82]">{copy.aiTutor.generating}</span>
                               )}
                             </div>
                           );
 
-                          if (isClickableQuizCard) {
+                          if (isClickableNotebookCard) {
                             return (
                               <button
                                 key={`${kind}-${runtime.updatedAt ?? runtime.status}`}
@@ -1599,17 +1531,6 @@ export function AiTutorPage() {
           </div>
         </aside>
       </div>
-
-      <Suspense fallback={null}>
-        {modal ? (
-          <AiTutorToolDialog
-            modal={modal}
-            onClose={() => setModal(null)}
-            closeLabel={copy.aiTutor.closeDialog}
-            kindLabel={toolDefinitions[modal.kind].label}
-          />
-        ) : null}
-      </Suspense>
 
       {activeDocsToolKind ? (
         <div className="fixed inset-0 z-30 grid place-items-center bg-[rgba(61,52,42,0.38)] px-4 backdrop-blur-sm">
