@@ -1,10 +1,30 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { TutorDocument } from '@/shared/api/viewer/types';
+import type { MindMapNode, TutorDocument } from '@/shared/api/viewer/types';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { renderRoute } from './renderApp';
 
 let mockDocuments: TutorDocument[] = [];
+
+const fixtureMindMapRoot: MindMapNode = {
+  id: 'root-1',
+  label: 'Physics review',
+  children: [
+    {
+      id: 'branch-1',
+      label: 'Motion',
+      children: [
+        { id: 'leaf-1', label: 'Velocity' },
+        { id: 'leaf-2', label: 'Acceleration' },
+      ],
+    },
+    {
+      id: 'branch-2',
+      label: 'Forces',
+      children: [{ id: 'leaf-3', label: 'Net force' }],
+    },
+  ],
+};
 
 function createDeferred<T>() {
   let resolve!: (value: T) => void;
@@ -36,6 +56,10 @@ const deleteTutorDocumentMock = vi.fn(async (documentId: string) => {
 const createQuizFromDocsMock = vi.fn(async () => ({
   courseId: 'course-quiz-1',
   courseTitle: '文档测验课程',
+}));
+const createMindMapFromDocsMock = vi.fn(async () => ({
+  title: 'Document mind map',
+  root: fixtureMindMapRoot,
 }));
 const extractTutorDocumentTextMock = vi.fn(async (file: File) => {
   if (file.name.endsWith('.ppt') || file.name.endsWith('.pptx')) {
@@ -93,6 +117,7 @@ vi.mock('@/shared/api/viewer/tutorDocumentsApi', () => ({
   fetchTutorDocuments: fetchTutorDocumentsMock,
   createTutorDocument: createTutorDocumentMock,
   deleteTutorDocument: deleteTutorDocumentMock,
+  createMindMapFromDocs: createMindMapFromDocsMock,
   createQuizFromDocs: createQuizFromDocsMock,
 }));
 
@@ -107,6 +132,7 @@ describe('AiTutorPage', () => {
     createTutorDocumentMock.mockClear();
     deleteTutorDocumentMock.mockClear();
     createQuizFromDocsMock.mockClear();
+    createMindMapFromDocsMock.mockClear();
     extractTutorDocumentTextMock.mockClear();
   });
 
@@ -344,16 +370,37 @@ describe('AiTutorPage', () => {
 
     expect(await screen.findByText(/Gemini key 已保存在本地/i, {}, { timeout: 15000 })).toBeInTheDocument();
 
-    await user.click(await screen.findByRole('button', { name: /生成思维导图/i }, { timeout: 15000 }));
+    const uploadInput = await screen.findByLabelText(/上传资料/i, {}, { timeout: 15000 });
+    await user.upload(uploadInput, new File(['chapter 1'], 'chapter-1.pdf', { type: 'application/pdf' }));
 
-    expect(await screen.findByRole('heading', { name: /mind map/i }, { timeout: 15000 })).toBeInTheDocument();
-    expect(screen.getByText(/learner shell/i)).toBeInTheDocument();
+    await user.click(await screen.findByRole('button', { name: /配置并生成思维导图/i }, { timeout: 15000 }));
+    const dialog = await screen.findByRole('dialog', {}, { timeout: 15000 });
+    const promptInput = within(dialog).getByLabelText(/附加 Prompt/i);
+    await user.type(promptInput, '突出力与运动的因果关系');
+    await user.click(within(dialog).getByRole('button', { name: /生成思维导图/i }));
+
+    await waitFor(() => {
+      expect(createMindMapFromDocsMock).toHaveBeenCalledWith(
+        {
+          documentIds: ['doc-1'],
+          prompt: '突出力与运动的因果关系',
+        },
+        expect.anything(),
+      );
+    });
+
+    expect(await screen.findByRole('heading', { name: /document mind map/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(screen.getByText(/physics review/i)).toBeInTheDocument();
+    expect(screen.getByText(/motion/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /关闭/i }));
-    await user.click(screen.getByRole('button', { name: /展开笔记本/i }));
+    const expandNotebookButton = screen.queryByRole('button', { name: /展开笔记本/i });
+    if (expandNotebookButton) {
+      await user.click(expandNotebookButton);
+    }
     await user.click(await screen.findByRole('button', { name: /打开最近结果/i }, { timeout: 15000 }));
 
-    expect(await screen.findByRole('heading', { name: /mind map/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /document mind map/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
   it('renders streamed tutor text progressively', async () => {
@@ -390,9 +437,10 @@ describe('AiTutorPage', () => {
       'user',
     );
 
-    expect(await screen.findByRole('heading', { name: /mind map/i }, { timeout: 15000 })).toBeInTheDocument();
-    expect(await screen.findByText(/learner shell/i, {}, { timeout: 15000 })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: /你好，我们慢慢把这件事理顺/i })).not.toBeInTheDocument();
+    const dialog = await screen.findByRole('dialog', {}, { timeout: 15000 });
+    expect(within(dialog).getByRole('heading', { name: /生成思维导图/i })).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: /生成思维导图/i })).toBeDisabled();
+    expect(within(dialog).getByText(/先上传并勾选资料后再生成思维导图/i)).toBeInTheDocument();
   }, 30000);
 
   it('does not hide the welcome state when the composer is only focused', async () => {

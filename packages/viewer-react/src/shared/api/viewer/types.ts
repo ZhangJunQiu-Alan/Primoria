@@ -38,6 +38,22 @@ export type TutorDocument = {
   updated_at: string;
 };
 
+export type MindMapNode = {
+  id: string;
+  label: string;
+  children?: MindMapNode[];
+};
+
+export type CreateMindMapFromDocsRequest = {
+  documentIds: string[];
+  prompt?: string;
+};
+
+export type CreateMindMapFromDocsResponse = {
+  title: string;
+  root: MindMapNode;
+};
+
 export type CreateQuizFromDocsRequest = {
   documentIds: string[];
   questionCount: number;
