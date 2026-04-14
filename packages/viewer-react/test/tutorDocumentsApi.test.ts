@@ -133,4 +133,58 @@ describe('tutorDocumentsApi', () => {
       }),
     ).rejects.toThrow('The selected documents are too long. Remove some and try again.');
   });
+
+  it('creates a docs-based mind map and validates the response shape', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    invokeMock.mockResolvedValueOnce({
+      data: {
+        title: 'Physics review',
+        root: {
+          id: 'root-1',
+          label: 'Physics review',
+          children: [{ id: 'child-1', label: 'Motion' }],
+        },
+      },
+      error: null,
+    });
+
+    const { createMindMapFromDocs } = await import('@/shared/api/viewer/tutorDocumentsApi');
+    const result = await createMindMapFromDocs({
+      documentIds: ['doc-1'],
+      prompt: 'Focus on cause and effect.',
+    });
+
+    expect(result.title).toBe('Physics review');
+    expect(result.root.children?.[0]?.label).toBe('Motion');
+    expect(invokeMock).toHaveBeenCalledWith(
+      'viewer-ai-mindmap-from-docs',
+      expect.objectContaining({
+        body: {
+          documentIds: ['doc-1'],
+          prompt: 'Focus on cause and effect.',
+        },
+      }),
+    );
+  });
+
+  it('maps transport failures to a mind map service unavailable error', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    invokeMock.mockResolvedValueOnce({
+      data: null,
+      error: Object.assign(new Error('Failed to send a request to the Edge Function'), {
+        name: 'FunctionsFetchError',
+      }),
+    });
+
+    const { createMindMapFromDocs } = await import('@/shared/api/viewer/tutorDocumentsApi');
+
+    await expect(
+      createMindMapFromDocs({
+        documentIds: ['doc-1'],
+      }),
+    ).rejects.toMatchObject({
+      code: 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE',
+      message: 'Failed to send a request to the Edge Function',
+    });
+  });
 });

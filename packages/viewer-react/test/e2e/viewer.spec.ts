@@ -87,7 +87,8 @@ test('demo learner uses ai tutor tools in fixture mode', async ({ page }) => {
 
   await expect(page.getByText(/fixture tutor reply/i)).toBeVisible();
   await page.getByRole('button', { name: /生成思维导图|Generate mind map/i }).click();
-  await expect(page.getByRole('heading', { name: /fixture mind map/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /生成思维导图|Generate mind map/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /生成思维导图|Generate mind map/i })).toBeDisabled();
 });
 
 test('demo learner community changes persist across refresh', async ({ page }) => {

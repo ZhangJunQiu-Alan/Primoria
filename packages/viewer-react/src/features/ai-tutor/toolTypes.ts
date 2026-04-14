@@ -1,5 +1,15 @@
+import type { MindMapNode } from '@/shared/api/viewer/types';
+
 export type TutorToolModal =
-  | { kind: 'mindmap'; payload: { title: string; nodes: Array<{ id: string; label: string }> } }
+  | {
+      kind: 'mindmap';
+      payload: {
+        title: string;
+        root: MindMapNode;
+        sourceDocumentIds: string[];
+        userPrompt: string;
+      };
+    }
   | { kind: 'report'; payload: { title: string; body: string } }
   | {
       kind: 'quiz';

@@ -1,10 +1,18 @@
 import type { Database } from '../../../../../db/src';
-import type { CreateQuizFromDocsRequest, CreateQuizFromDocsResponse, TutorDocument } from '@/shared/api/viewer/types';
+import type {
+  CreateMindMapFromDocsRequest,
+  CreateMindMapFromDocsResponse,
+  CreateQuizFromDocsRequest,
+  CreateQuizFromDocsResponse,
+  MindMapNode,
+  TutorDocument,
+} from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { supabase } from '@/shared/api/supabase';
 
 type TutorDocumentRow = Database['public']['Tables']['tutor_documents']['Row'];
 const QUIZ_SERVICE_UNAVAILABLE_CODE = 'TUTOR_QUIZ_SERVICE_UNAVAILABLE';
+const MINDMAP_SERVICE_UNAVAILABLE_CODE = 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE';
 
 function normalizeTutorDocument(row: Partial<TutorDocumentRow>): TutorDocument {
   return {
@@ -27,6 +35,38 @@ function normalizeQuizResponse(value: unknown): CreateQuizFromDocsResponse {
   }
 
   return { courseId, courseTitle };
+}
+
+function isMindMapNode(value: unknown): value is MindMapNode {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const node = value as { id?: unknown; label?: unknown; children?: unknown };
+  if (typeof node.id !== 'string' || typeof node.label !== 'string') {
+    return false;
+  }
+
+  if (node.children === undefined) {
+    return true;
+  }
+
+  return Array.isArray(node.children) && node.children.every((child) => isMindMapNode(child));
+}
+
+function normalizeMindMapResponse(value: unknown): CreateMindMapFromDocsResponse {
+  const payload = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
+  const title = typeof payload.title === 'string' ? payload.title.trim() : '';
+  const root = payload.root;
+
+  if (!title || !isMindMapNode(root)) {
+    throw new Error('AI Tutor returned an invalid mind map response.');
+  }
+
+  return {
+    title,
+    root,
+  };
 }
 
 function isResponse(value: unknown): value is Response {
@@ -56,14 +96,14 @@ async function readFunctionErrorResponse(response: Response) {
   }
 }
 
-function createQuizServiceUnavailableError(message: string, status?: number) {
+function createServiceUnavailableError(code: string, message: string, status?: number) {
   return Object.assign(new Error(message), {
-    code: QUIZ_SERVICE_UNAVAILABLE_CODE,
+    code,
     status,
   });
 }
 
-function isMissingQuizFunction(status: number, message: string) {
+function isMissingFunction(status: number, message: string) {
   const normalized = message.toLowerCase();
   return (
     status === 404 ||
@@ -72,7 +112,10 @@ function isMissingQuizFunction(status: number, message: string) {
   );
 }
 
-async function normalizeQuizInvocationError(error: unknown): Promise<never> {
+async function normalizeDocsToolInvocationError(error: unknown, options: {
+  unavailableCode: string;
+  fallbackMessage: string;
+}): Promise<never> {
   const record = error && typeof error === 'object' ? (error as Record<string, unknown>) : null;
   const name = typeof record?.name === 'string' ? record.name : '';
   const context = record?.context;
@@ -82,12 +125,19 @@ async function normalizeQuizInvocationError(error: unknown): Promise<never> {
   const message = responseMessage || rawMessage;
 
   if (name === 'FunctionsFetchError' || name === 'FunctionsRelayError') {
-    throw createQuizServiceUnavailableError(message || 'Failed to send a request to the Edge Function');
+    throw createServiceUnavailableError(
+      options.unavailableCode,
+      message || 'Failed to send a request to the Edge Function',
+    );
   }
 
   if (response) {
-    if (isMissingQuizFunction(response.status, message)) {
-      throw createQuizServiceUnavailableError(message || 'Edge Function returned a non-2xx status code', response.status);
+    if (isMissingFunction(response.status, message)) {
+      throw createServiceUnavailableError(
+        options.unavailableCode,
+        message || 'Edge Function returned a non-2xx status code',
+        response.status,
+      );
     }
 
     if (responseMessage) {
@@ -99,7 +149,7 @@ async function normalizeQuizInvocationError(error: unknown): Promise<never> {
     throw error;
   }
 
-  throw new Error('Unable to create quiz course.');
+  throw new Error(options.fallbackMessage);
 }
 
 async function requireTutorUserId() {
@@ -206,8 +256,34 @@ export async function createQuizFromDocs(payload: CreateQuizFromDocsRequest) {
   });
 
   if (error) {
-    await normalizeQuizInvocationError(error);
+    await normalizeDocsToolInvocationError(error, {
+      unavailableCode: QUIZ_SERVICE_UNAVAILABLE_CODE,
+      fallbackMessage: 'Unable to create quiz course.',
+    });
   }
 
   return normalizeQuizResponse(data);
+}
+
+export async function createMindMapFromDocs(payload: CreateMindMapFromDocsRequest) {
+  if (usesViewerFixtures()) {
+    throw new Error('演示模式暂不支持文档思维导图生成。');
+  }
+
+  const accessToken = await getTutorAccessToken();
+  const { data, error } = await supabase.functions.invoke('viewer-ai-mindmap-from-docs', {
+    body: payload,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (error) {
+    await normalizeDocsToolInvocationError(error, {
+      unavailableCode: MINDMAP_SERVICE_UNAVAILABLE_CODE,
+      fallbackMessage: 'Unable to create mind map.',
+    });
+  }
+
+  return normalizeMindMapResponse(data);
 }
