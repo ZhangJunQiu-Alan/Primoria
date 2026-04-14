@@ -139,6 +139,7 @@ describe('tutorDocumentsApi', () => {
     invokeMock.mockResolvedValueOnce({
       data: {
         title: 'Physics review',
+        mindMapId: 'mindmap-1',
         root: {
           id: 'root-1',
           label: 'Physics review',
@@ -155,6 +156,7 @@ describe('tutorDocumentsApi', () => {
     });
 
     expect(result.title).toBe('Physics review');
+    expect(result.mindMapId).toBe('mindmap-1');
     expect(result.root.children?.[0]?.label).toBe('Motion');
     expect(invokeMock).toHaveBeenCalledWith(
       'viewer-ai-mindmap-from-docs',

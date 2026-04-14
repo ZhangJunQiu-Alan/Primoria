@@ -65,6 +65,47 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_tutor_mindmaps: {
+        Row: {
+          created_at: string
+          document: Json
+          id: string
+          source_document_ids: string[]
+          title: string
+          updated_at: string
+          user_id: string
+          user_prompt: string
+        }
+        Insert: {
+          created_at?: string
+          document: Json
+          id?: string
+          source_document_ids?: string[]
+          title: string
+          updated_at?: string
+          user_id: string
+          user_prompt?: string
+        }
+        Update: {
+          created_at?: string
+          document?: Json
+          id?: string
+          source_document_ids?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+          user_prompt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_tutor_mindmaps_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       block_interactions: {
         Row: {
           block_id: string

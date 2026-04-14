@@ -29,10 +29,28 @@ type RawMindMapNode = {
   children?: RawMindMapNode[];
 };
 
-type MindMapNode = {
+type LegacyMindMapNode = {
   id: string;
   label: string;
-  children?: MindMapNode[];
+  children?: LegacyMindMapNode[];
+};
+
+type PersistedMindMapNode = {
+  id: string;
+  parentId: string | null;
+  childIds: string[];
+  label: string;
+  collapsed: boolean;
+  icon: string | null;
+  tags: string[];
+  noteHtml: string;
+  imageUrl: string | null;
+  links: Array<{
+    id: string;
+    label: string;
+    url: string;
+  }>;
+  documentRefs: string[];
 };
 
 const RawMindMapNodeSchema: z.ZodType<RawMindMapNode> = z.object({
@@ -146,7 +164,7 @@ function buildMindMapPrompt(documents: TutorDocumentRecord[], userPrompt: string
 function sanitizeMindMapTree(root: RawMindMapNode) {
   const state = { count: 0 };
 
-  function visit(node: RawMindMapNode, depth: number): MindMapNode | null {
+  function visit(node: RawMindMapNode, depth: number): LegacyMindMapNode | null {
     if (state.count >= MAX_TOTAL_NODES) {
       return null;
     }
@@ -157,7 +175,7 @@ function sanitizeMindMapTree(root: RawMindMapNode) {
     }
 
     state.count += 1;
-    const sanitized: MindMapNode = {
+    const sanitized: LegacyMindMapNode = {
       id: `node-${crypto.randomUUID()}`,
       label,
     };
@@ -166,7 +184,7 @@ function sanitizeMindMapTree(root: RawMindMapNode) {
       return sanitized;
     }
 
-    const children: MindMapNode[] = [];
+    const children: LegacyMindMapNode[] = [];
     for (const child of (node.children ?? []).slice(0, MAX_CHILDREN_PER_NODE)) {
       const nextChild = visit(child, depth + 1);
       if (nextChild) {
@@ -190,6 +208,38 @@ function sanitizeMindMapTree(root: RawMindMapNode) {
   }
 
   return sanitizedRoot;
+}
+
+function toPersistedDocument(root: LegacyMindMapNode) {
+  const nodes: Record<string, PersistedMindMapNode> = {};
+
+  function visit(node: LegacyMindMapNode, parentId: string | null) {
+    const childIds = (node.children ?? []).map((child) => child.id);
+    nodes[node.id] = {
+      id: node.id,
+      parentId,
+      childIds,
+      label: node.label,
+      collapsed: false,
+      icon: null,
+      tags: [],
+      noteHtml: '',
+      imageUrl: null,
+      links: [],
+      documentRefs: [],
+    };
+
+    for (const child of node.children ?? []) {
+      visit(child, node.id);
+    }
+  }
+
+  visit(root, null);
+
+  return {
+    rootNodeId: root.id,
+    nodes,
+  };
 }
 
 async function generateMindMap(prompt: string) {
@@ -316,7 +366,28 @@ serve(async (req) => {
     }
 
     const generated = await generateMindMap(buildMindMapPrompt(orderedDocuments, userPrompt));
-    return new Response(JSON.stringify(generated), {
+    const persistedDocument = toPersistedDocument(generated.root);
+    const { data: mindMapRow, error: insertError } = await client
+      .from('ai_tutor_mindmaps')
+      .insert({
+        user_id: authData.user.id,
+        title: generated.title,
+        source_document_ids: dedupedDocumentIds,
+        user_prompt: userPrompt,
+        document: persistedDocument,
+      })
+      .select('id')
+      .single();
+
+    if (insertError) {
+      throw insertError;
+    }
+
+    return new Response(JSON.stringify({
+      title: generated.title,
+      mindMapId: mindMapRow?.id,
+      root: generated.root,
+    }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

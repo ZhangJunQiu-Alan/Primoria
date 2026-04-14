@@ -49,6 +49,12 @@ const CommunityPage = lazy(async () => ({
 const AiTutorPage = lazy(async () => ({
   default: (await import('@/features/ai-tutor/AiTutorPage')).AiTutorPage,
 }));
+const AiTutorMindMapPage = lazy(async () => ({
+  default: (await import('@/features/ai-tutor/AiTutorMindMapPage')).AiTutorMindMapPage,
+}));
+const AiTutorMindMapEditorPage = lazy(async () => ({
+  default: (await import('@/features/ai-tutor/AiTutorMindMapEditorPage')).AiTutorMindMapEditorPage,
+}));
 const ProfilePage = lazy(async () => ({
   default: (await import('@/features/profile/ProfilePage')).ProfilePage,
 }));
@@ -221,6 +227,32 @@ export function buildViewerRoutes(): RouteObject[] {
                     >
                       <WithSuspense>
                         <CommunityPage />
+                      </WithSuspense>
+                    </FlaggedRoute>
+                  ),
+                },
+                {
+                  path: '/ai-tutor/mindmap',
+                  element: (
+                    <FlaggedRoute
+                      flag="viewer_ai_tutor_enabled"
+                      scope="aiTutor"
+                    >
+                      <WithSuspense>
+                        <AiTutorMindMapPage />
+                      </WithSuspense>
+                    </FlaggedRoute>
+                  ),
+                },
+                {
+                  path: '/ai-tutor/mindmap/:mindMapId',
+                  element: (
+                    <FlaggedRoute
+                      flag="viewer_ai_tutor_enabled"
+                      scope="aiTutor"
+                    >
+                      <WithSuspense>
+                        <AiTutorMindMapEditorPage />
                       </WithSuspense>
                     </FlaggedRoute>
                   ),

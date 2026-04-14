@@ -1,12 +1,13 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { MindMapNode, TutorDocument } from '@/shared/api/viewer/types';
+import type { LegacyMindMapNode, MindMapSummary, TutorDocument } from '@/shared/api/viewer/types';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { renderRoute } from './renderApp';
 
 let mockDocuments: TutorDocument[] = [];
+let mockMindMaps: MindMapSummary[] = [];
 
-const fixtureMindMapRoot: MindMapNode = {
+const fixtureMindMapRoot: LegacyMindMapNode = {
   id: 'root-1',
   label: 'Physics review',
   children: [
@@ -57,10 +58,24 @@ const createQuizFromDocsMock = vi.fn(async () => ({
   courseId: 'course-quiz-1',
   courseTitle: '文档测验课程',
 }));
-const createMindMapFromDocsMock = vi.fn(async () => ({
-  title: 'Document mind map',
-  root: fixtureMindMapRoot,
-}));
+const listMindMapsMock = vi.fn(async () => [...mockMindMaps]);
+const createMindMapFromDocsMock = vi.fn(async () => {
+  const nextMindMap: MindMapSummary = {
+    id: `mindmap-${mockMindMaps.length + 1}`,
+    title: 'Document mind map',
+    sourceDocumentIds: ['doc-1'],
+    nodeCount: 5,
+    createdAt: new Date(2026, 3, mockMindMaps.length + 1).toISOString(),
+    updatedAt: new Date(2026, 3, mockMindMaps.length + 1).toISOString(),
+  };
+  mockMindMaps = [nextMindMap, ...mockMindMaps];
+
+  return {
+    title: 'Document mind map',
+    mindMapId: nextMindMap.id,
+    root: fixtureMindMapRoot,
+  };
+});
 const extractTutorDocumentTextMock = vi.fn(async (file: File) => {
   if (file.name.endsWith('.ppt') || file.name.endsWith('.pptx')) {
     throw new Error('PPT/PPTX 暂不支持直接解析，请先导出为 PDF 再上传。');
@@ -107,16 +122,13 @@ vi.mock('@/shared/api/geminiClient', () => ({
       },
     ],
   })),
-  generatePresentation: vi.fn(async () => ({
-    title: 'Presentation',
-    slides: [{ title: 'Slide 1', bullet: 'Overview' }],
-  })),
 }));
 
 vi.mock('@/shared/api/viewer/tutorDocumentsApi', () => ({
   fetchTutorDocuments: fetchTutorDocumentsMock,
   createTutorDocument: createTutorDocumentMock,
   deleteTutorDocument: deleteTutorDocumentMock,
+  listMindMaps: listMindMapsMock,
   createMindMapFromDocs: createMindMapFromDocsMock,
   createQuizFromDocs: createQuizFromDocsMock,
 }));
@@ -128,12 +140,18 @@ vi.mock('@/features/ai-tutor/documentExtraction', () => ({
 describe('AiTutorPage', () => {
   beforeEach(() => {
     mockDocuments = [];
+    mockMindMaps = [];
     fetchTutorDocumentsMock.mockClear();
     createTutorDocumentMock.mockClear();
     deleteTutorDocumentMock.mockClear();
+    listMindMapsMock.mockClear();
     createQuizFromDocsMock.mockClear();
     createMindMapFromDocsMock.mockClear();
     extractTutorDocumentTextMock.mockClear();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('keeps the simplified welcome state visible before the first message', async () => {
@@ -145,6 +163,8 @@ describe('AiTutorPage', () => {
     expect(screen.queryByText(/我会先帮你把目标收小、把压力降下来/i)).not.toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /我现在有点不知道从哪开始，可以先带我起步吗/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /折叠工作台/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /生成报告/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /生成演示/i })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: /展开资料/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /展开笔记本/i })).toBeInTheDocument();
     expect(screen.queryByText(/还没有上传资料/i)).not.toBeInTheDocument();
@@ -359,8 +379,9 @@ describe('AiTutorPage', () => {
     });
   }, 30000);
 
-  it('stores runtime API keys and keeps generated tools reopenable from the workspace', async () => {
+  it('stores runtime API keys, keeps mind maps in the notebook, and opens them in a new tab', async () => {
     const user = userEvent.setup();
+    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null);
     renderRoute('/ai-tutor', 'user');
 
     expect(await screen.findByRole('heading', { name: /你好，我们慢慢把这件事理顺/i }, { timeout: 15000 })).toBeInTheDocument();
@@ -389,18 +410,51 @@ describe('AiTutorPage', () => {
       );
     });
 
-    expect(await screen.findByRole('heading', { name: /document mind map/i }, { timeout: 15000 })).toBeInTheDocument();
-    expect(screen.getByText(/physics review/i)).toBeInTheDocument();
-    expect(screen.getByText(/motion/i)).toBeInTheDocument();
+    expect(await screen.findByText(/思维导图已生成，点击笔记本卡片即可在新标签页打开/i, {}, { timeout: 15000 })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /document mind map/i })).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /关闭/i }));
     const expandNotebookButton = screen.queryByRole('button', { name: /展开笔记本/i });
     if (expandNotebookButton) {
       await user.click(expandNotebookButton);
     }
-    await user.click(await screen.findByRole('button', { name: /打开最近结果/i }, { timeout: 15000 }));
+    await user.click(await screen.findByRole('button', { name: /document mind map/i }, { timeout: 15000 }));
 
-    expect(await screen.findByRole('heading', { name: /document mind map/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(openSpy).toHaveBeenCalledWith(
+      expect.stringContaining('/ai-tutor/mindmap'),
+      '_blank',
+      'noopener,noreferrer',
+    );
+  }, 30000);
+
+  it('renders the saved mind map on the standalone route', async () => {
+    window.localStorage.setItem(
+      'viewer:ai-tutor-session:v3',
+      JSON.stringify({
+        version: 3,
+        messages: [{ role: 'model', text: '你好，我们慢慢把这件事理顺。' }],
+        artifacts: [
+          {
+            updatedAt: 1,
+            modal: {
+              kind: 'mindmap',
+              payload: {
+                title: 'Document mind map',
+                root: fixtureMindMapRoot,
+                sourceDocumentIds: ['doc-1'],
+                userPrompt: '突出力与运动的因果关系',
+              },
+            },
+          },
+        ],
+        context: null,
+      }),
+    );
+
+    renderRoute('/ai-tutor/mindmap', 'user');
+
+    expect(await screen.findByRole('link', { name: /返回 AI 导师/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(screen.getByText(/physics review/i)).toBeInTheDocument();
+    expect(screen.getByText(/motion/i)).toBeInTheDocument();
   }, 30000);
 
   it('renders streamed tutor text progressively', async () => {
@@ -454,17 +508,6 @@ describe('AiTutorPage', () => {
     expect(screen.getByRole('button', { name: /我现在有点不知道从哪开始，可以先带我起步吗/i })).toBeInTheDocument();
   }, 30000);
 
-  it('treats report as a saved tool artifact instead of a plain chat shortcut', async () => {
-    const user = userEvent.setup();
-    renderRoute('/ai-tutor', 'user');
-
-    await user.click(await screen.findByRole('button', { name: /生成报告/i }, { timeout: 15000 }));
-
-    expect(await screen.findByRole('heading', { name: /^报告$/i }, { timeout: 15000 })).toBeInTheDocument();
-    expect(screen.getByText(/学习报告第一段/i)).toBeInTheDocument();
-    expect(screen.queryByText(/^请帮我生成一份学习报告。$/i)).not.toBeInTheDocument();
-  }, 30000);
-
   it('restores the recent conversation and saved artifacts after remount', async () => {
     const user = userEvent.setup();
     window.localStorage.setItem(
@@ -480,10 +523,12 @@ describe('AiTutorPage', () => {
           {
             updatedAt: 1,
             modal: {
-              kind: 'report',
+              kind: 'quiz',
               payload: {
-                title: '报告',
-                body: '学习报告第一段。\n\n下一步建议。',
+                courseId: 'course-quiz-1',
+                courseTitle: '文档测验课程',
+                questionCount: 12,
+                sourceDocumentIds: ['doc-1'],
               },
             },
           },
@@ -496,7 +541,7 @@ describe('AiTutorPage', () => {
 
     expect(await screen.findByText(/mock tutor reply/i, {}, { timeout: 15000 })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: /展开笔记本/i }));
-    expect(await screen.findByRole('button', { name: /打开最近结果/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /文档测验课程/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
   it('keeps workspace open by default and lets sidebar sections collapse independently', async () => {
