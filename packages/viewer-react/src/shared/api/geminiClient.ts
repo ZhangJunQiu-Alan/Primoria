@@ -373,7 +373,7 @@ async function requestAgentReplyStream(history: TutorMessage[], handlers: TutorR
 }
 
 async function requestTutorTool<T>(
-  mode: 'reply' | 'mindmap' | 'quiz' | 'presentation',
+  mode: 'reply' | 'mindmap' | 'quiz',
   history: TutorMessage[],
   options: TutorRequestOptions = {},
 ) {
@@ -402,13 +402,6 @@ async function requestTutorTool<T>(
         ],
       } as T;
     }
-    return {
-      title: 'Fixture presentation',
-      slides: [
-        { title: 'Summary', bullet: 'Use the React viewer as the learner runtime.' },
-        { title: 'Next step', bullet: 'Keep testing the critical paths before cutover.' },
-      ],
-    } as T;
   }
 
   if (mode === 'reply' && options.provider !== 'gemini') {
@@ -517,11 +510,4 @@ export async function generateQuiz(history: TutorMessage[]) {
       answerIndex: number;
     }>;
   }>('quiz', history);
-}
-
-export async function generatePresentation(history: TutorMessage[]) {
-  return requestTutorTool<{
-    title: string;
-    slides: Array<{ title: string; bullet: string }>;
-  }>('presentation', history);
 }

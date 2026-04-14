@@ -1,16 +1,26 @@
-import type { Database } from '../../../../../db/src';
+import type { Database, Json } from '../../../../../db/src';
 import type {
   CreateMindMapFromDocsRequest,
   CreateMindMapFromDocsResponse,
   CreateQuizFromDocsRequest,
   CreateQuizFromDocsResponse,
+  LegacyMindMapNode,
+  MindMapDocument,
+  MindMapLink,
   MindMapNode,
+  MindMapSummary,
   TutorDocument,
 } from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { supabase } from '@/shared/api/supabase';
 
 type TutorDocumentRow = Database['public']['Tables']['tutor_documents']['Row'];
+type MindMapRow = Database['public']['Tables']['ai_tutor_mindmaps']['Row'];
+type StoredMindMapDocument = {
+  rootNodeId: string;
+  nodes: Record<string, MindMapNode>;
+};
+
 const QUIZ_SERVICE_UNAVAILABLE_CODE = 'TUTOR_QUIZ_SERVICE_UNAVAILABLE';
 const MINDMAP_SERVICE_UNAVAILABLE_CODE = 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE';
 
@@ -37,7 +47,7 @@ function normalizeQuizResponse(value: unknown): CreateQuizFromDocsResponse {
   return { courseId, courseTitle };
 }
 
-function isMindMapNode(value: unknown): value is MindMapNode {
+function isLegacyMindMapNode(value: unknown): value is LegacyMindMapNode {
   if (!value || typeof value !== 'object') {
     return false;
   }
@@ -51,20 +61,68 @@ function isMindMapNode(value: unknown): value is MindMapNode {
     return true;
   }
 
-  return Array.isArray(node.children) && node.children.every((child) => isMindMapNode(child));
+  return Array.isArray(node.children) && node.children.every((child) => isLegacyMindMapNode(child));
+}
+
+function isMindMapLink(value: unknown): value is MindMapLink {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const link = value as { id?: unknown; label?: unknown; url?: unknown };
+  return (
+    typeof link.id === 'string' &&
+    typeof link.label === 'string' &&
+    typeof link.url === 'string'
+  );
+}
+
+function isMindMapNode(value: unknown): value is MindMapNode {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const node = value as Record<string, unknown>;
+  return (
+    typeof node.id === 'string' &&
+    (typeof node.parentId === 'string' || node.parentId === null) &&
+    Array.isArray(node.childIds) &&
+    node.childIds.every((childId) => typeof childId === 'string') &&
+    typeof node.label === 'string' &&
+    typeof node.collapsed === 'boolean' &&
+    (typeof node.icon === 'string' || node.icon === null) &&
+    Array.isArray(node.tags) &&
+    node.tags.every((tag) => typeof tag === 'string') &&
+    typeof node.noteHtml === 'string' &&
+    (typeof node.imageUrl === 'string' || node.imageUrl === null) &&
+    Array.isArray(node.links) &&
+    node.links.every((link) => isMindMapLink(link)) &&
+    Array.isArray(node.documentRefs) &&
+    node.documentRefs.every((documentId) => typeof documentId === 'string')
+  );
+}
+
+function isMindMapNodeRecord(value: unknown): value is Record<string, MindMapNode> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((node) => isMindMapNode(node));
 }
 
 function normalizeMindMapResponse(value: unknown): CreateMindMapFromDocsResponse {
   const payload = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
   const title = typeof payload.title === 'string' ? payload.title.trim() : '';
+  const mindMapId = typeof payload.mindMapId === 'string' ? payload.mindMapId.trim() : '';
   const root = payload.root;
 
-  if (!title || !isMindMapNode(root)) {
+  if (!title || !mindMapId || !isLegacyMindMapNode(root)) {
     throw new Error('AI Tutor returned an invalid mind map response.');
   }
 
   return {
     title,
+    mindMapId,
     root,
   };
 }
@@ -180,6 +238,74 @@ async function getTutorAccessToken() {
   return accessToken;
 }
 
+function normalizeMindMapStorage(value: Json, rowId: string): StoredMindMapDocument {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`Mind map ${rowId} has an invalid document payload.`);
+  }
+
+  const payload = value as { rootNodeId?: unknown; nodes?: unknown };
+  if (typeof payload.rootNodeId !== 'string' || !isMindMapNodeRecord(payload.nodes)) {
+    throw new Error(`Mind map ${rowId} has an invalid document payload.`);
+  }
+
+  if (!payload.nodes[payload.rootNodeId]) {
+    throw new Error(`Mind map ${rowId} is missing its root node.`);
+  }
+
+  return {
+    rootNodeId: payload.rootNodeId,
+    nodes: payload.nodes,
+  };
+}
+
+function normalizeMindMapRow(row: Partial<MindMapRow>): MindMapDocument {
+  const id = typeof row.id === 'string' ? row.id : '';
+  const title = typeof row.title === 'string' ? row.title : '';
+  const sourceDocumentIds = Array.isArray(row.source_document_ids)
+    ? row.source_document_ids.filter((value): value is string => typeof value === 'string')
+    : [];
+  const userPrompt = typeof row.user_prompt === 'string' ? row.user_prompt : '';
+  const createdAt = typeof row.created_at === 'string' ? row.created_at : '';
+  const updatedAt = typeof row.updated_at === 'string' ? row.updated_at : '';
+
+  if (!id || !title || !createdAt || !updatedAt) {
+    throw new Error('Mind map row is missing required fields.');
+  }
+
+  const storage = normalizeMindMapStorage(row.document as Json, id);
+  return {
+    id,
+    title,
+    sourceDocumentIds,
+    userPrompt,
+    rootNodeId: storage.rootNodeId,
+    nodes: storage.nodes,
+    createdAt,
+    updatedAt,
+  };
+}
+
+function toMindMapSummary(document: MindMapDocument): MindMapSummary {
+  return {
+    id: document.id,
+    title: document.title,
+    sourceDocumentIds: document.sourceDocumentIds,
+    nodeCount: Object.keys(document.nodes).length,
+    createdAt: document.createdAt,
+    updatedAt: document.updatedAt,
+  };
+}
+
+function serializeMindMapDocument(payload: {
+  rootNodeId: string;
+  nodes: Record<string, MindMapNode>;
+}) {
+  return {
+    rootNodeId: payload.rootNodeId,
+    nodes: payload.nodes,
+  } satisfies Json;
+}
+
 export async function fetchTutorDocuments() {
   if (usesViewerFixtures()) {
     return [] as TutorDocument[];
@@ -237,6 +363,94 @@ export async function deleteTutorDocument(documentId: string) {
   }
 
   const { error } = await supabase.from('tutor_documents').delete().eq('id', documentId);
+  if (error) {
+    throw error;
+  }
+}
+
+export async function listMindMaps() {
+  if (usesViewerFixtures()) {
+    return [] as MindMapSummary[];
+  }
+
+  const { data, error } = await supabase
+    .from('ai_tutor_mindmaps')
+    .select('id, title, source_document_ids, user_prompt, document, created_at, updated_at')
+    .order('updated_at', { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return (data ?? []).map((row) => toMindMapSummary(normalizeMindMapRow(row as Partial<MindMapRow>)));
+}
+
+export async function fetchMindMap(mindMapId: string) {
+  if (usesViewerFixtures()) {
+    throw new Error('演示模式暂不支持思维导图编辑。');
+  }
+
+  const { data, error } = await supabase
+    .from('ai_tutor_mindmaps')
+    .select('id, title, source_document_ids, user_prompt, document, created_at, updated_at')
+    .eq('id', mindMapId)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return normalizeMindMapRow(data as Partial<MindMapRow>);
+}
+
+export async function updateMindMap(
+  mindMapId: string,
+  payload:
+    | MindMapDocument
+    | {
+        title?: string;
+        sourceDocumentIds?: string[];
+        userPrompt?: string;
+        rootNodeId: string;
+        nodes: Record<string, MindMapNode>;
+      },
+) {
+  if (usesViewerFixtures()) {
+    throw new Error('演示模式暂不支持思维导图保存。');
+  }
+
+  const title = typeof payload.title === 'string' ? payload.title.trim() : '';
+  const sourceDocumentIds = Array.isArray(payload.sourceDocumentIds) ? payload.sourceDocumentIds : [];
+  const userPrompt = typeof payload.userPrompt === 'string' ? payload.userPrompt : '';
+
+  const { data, error } = await supabase
+    .from('ai_tutor_mindmaps')
+    .update({
+      title,
+      source_document_ids: sourceDocumentIds,
+      user_prompt: userPrompt,
+      document: serializeMindMapDocument({
+        rootNodeId: payload.rootNodeId,
+        nodes: payload.nodes,
+      }),
+    })
+    .eq('id', mindMapId)
+    .select('id, title, source_document_ids, user_prompt, document, created_at, updated_at')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return normalizeMindMapRow(data as Partial<MindMapRow>);
+}
+
+export async function deleteMindMap(mindMapId: string) {
+  if (usesViewerFixtures()) {
+    throw new Error('演示模式暂不支持思维导图删除。');
+  }
+
+  const { error } = await supabase.from('ai_tutor_mindmaps').delete().eq('id', mindMapId);
   if (error) {
     throw error;
   }

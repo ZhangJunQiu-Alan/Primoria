@@ -38,10 +38,50 @@ export type TutorDocument = {
   updated_at: string;
 };
 
-export type MindMapNode = {
+export type LegacyMindMapNode = {
   id: string;
   label: string;
-  children?: MindMapNode[];
+  children?: LegacyMindMapNode[];
+};
+
+export type MindMapLink = {
+  id: string;
+  label: string;
+  url: string;
+};
+
+export type MindMapNode = {
+  id: string;
+  parentId: string | null;
+  childIds: string[];
+  label: string;
+  collapsed: boolean;
+  icon: string | null;
+  tags: string[];
+  noteHtml: string;
+  imageUrl: string | null;
+  links: MindMapLink[];
+  documentRefs: string[];
+};
+
+export type MindMapDocument = {
+  id: string;
+  title: string;
+  sourceDocumentIds: string[];
+  userPrompt: string;
+  rootNodeId: string;
+  nodes: Record<string, MindMapNode>;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type MindMapSummary = {
+  id: string;
+  title: string;
+  sourceDocumentIds: string[];
+  nodeCount: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type CreateMindMapFromDocsRequest = {
@@ -51,7 +91,8 @@ export type CreateMindMapFromDocsRequest = {
 
 export type CreateMindMapFromDocsResponse = {
   title: string;
-  root: MindMapNode;
+  mindMapId: string;
+  root: LegacyMindMapNode;
 };
 
 export type CreateQuizFromDocsRequest = {
