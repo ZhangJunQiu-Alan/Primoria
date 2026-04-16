@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "80c6ebebfb32",
+  "session_id": "eaee1413-d3f5-4e2d-b86e-a3267df930c8",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-16T07:34:44.488266Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "packages/viewer-react/src/features/ai-tutor/mindMapCanvasLayout.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/test/mindMapEditorPage.test.tsx",
+    "docs/README-zh.md",
+    "packages/viewer-react/src/features/ai-tutor/mindMapAppearance.ts",
+    "packages/viewer-react/src/features/ai-tutor/mindMapDocument.ts",
+    "packages/viewer-react/src/shared/api/viewer/tutorDocumentsApi.ts",
+    "docs/technical-debt-register-zh.md",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorMindMapEditorPage.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "c5331191bfeb",
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 41214,
+    "cache_read_tokens": 536032,
+    "output_tokens": 2743,
+    "api_call_count": 13
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-16T07:34:44.310594Z",
+    "agent_lines": 2264,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2264,
+    "agent_percentage": 100
+  }
+}
