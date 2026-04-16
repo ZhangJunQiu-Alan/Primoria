@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "80c6ebebfb32",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/README-zh.md",
+    "docs/technical-debt-register-zh.md",
+    "packages/viewer-react/src/features/ai-tutor/AiTutorMindMapEditorPage.tsx",
+    "packages/viewer-react/src/features/ai-tutor/mindMapAppearance.ts",
+    "packages/viewer-react/src/features/ai-tutor/mindMapCanvasLayout.ts",
+    "packages/viewer-react/src/features/ai-tutor/mindMapDocument.ts",
+    "packages/viewer-react/src/shared/api/viewer/tutorDocumentsApi.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/test/mindMapEditorPage.test.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/80/c6ebebfb32/0/metadata.json",
+      "transcript": "/80/c6ebebfb32/0/full.jsonl",
+      "content_hash": "/80/c6ebebfb32/0/content_hash.txt",
+      "prompt": "/80/c6ebebfb32/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 41214,
+    "cache_read_tokens": 536032,
+    "output_tokens": 2743,
+    "api_call_count": 13
+  }
+}

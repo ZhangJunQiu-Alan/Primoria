@@ -1,0 +1,1 @@
+阅读一下technical-debt-register-zh.md 中对于第一项,有什么好的解决方案吗
