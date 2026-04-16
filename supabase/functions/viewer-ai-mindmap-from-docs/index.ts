@@ -1,12 +1,13 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.2';
 import { z } from 'npm:zod@3.25.76';
+import { extractNormalizedGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const DEFAULT_MODEL = 'gemini-2.0-flash';
 const FALLBACK_MODELS = ['gemini-2.5-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 const MAX_OUTPUT_TOKENS = 4096;
-const MAX_COMBINED_TEXT_LENGTH = 60_000;
+const MAX_COMBINED_TEXT_LENGTH = 70_000;
 const MAX_TITLE_LENGTH = 80;
 const MAX_LABEL_LENGTH = 72;
 const MAX_TOTAL_NODES = 40;
@@ -79,21 +80,6 @@ function createUserClient(authorization: string) {
       },
     },
   });
-}
-
-function normalizeGeneratedText(text: string) {
-  const trimmed = text.trim();
-  const fenced = /```(?:json)?\s*([\s\S]*?)```/.exec(trimmed)?.[1];
-  return (fenced ?? trimmed).trim();
-}
-
-function extractGeminiText(payload: Record<string, unknown>) {
-  const candidates = Array.isArray(payload.candidates) ? payload.candidates : [];
-  const first = candidates[0] as Record<string, unknown> | undefined;
-  const content = (first?.content ?? {}) as Record<string, unknown>;
-  const parts = Array.isArray(content.parts) ? content.parts : [];
-  const firstPart = parts[0] as Record<string, unknown> | undefined;
-  return typeof firstPart?.text === 'string' ? firstPart.text : '';
 }
 
 function normalizeLabel(value: string) {
@@ -269,16 +255,25 @@ async function generateMindMap(prompt: string) {
     }
 
     const payload = (await response.json()) as Record<string, unknown>;
-    const text = normalizeGeneratedText(extractGeminiText(payload));
-    if (!text) {
+    const candidateTexts = extractNormalizedGeminiCandidateTexts(payload);
+    if (!candidateTexts.length) {
       lastError = 'Gemini returned an empty response.';
       continue;
     }
 
     let parsed: unknown;
-    try {
-      parsed = JSON.parse(text);
-    } catch {
+    let parsedSuccessfully = false;
+    for (const text of candidateTexts) {
+      try {
+        parsed = JSON.parse(text);
+        parsedSuccessfully = true;
+        break;
+      } catch {
+        continue;
+      }
+    }
+
+    if (!parsedSuccessfully) {
       lastError = 'Gemini returned invalid JSON.';
       continue;
     }
