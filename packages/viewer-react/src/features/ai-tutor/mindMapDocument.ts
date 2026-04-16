@@ -1,4 +1,13 @@
 import { nanoid } from '@/lib/nanoid';
+import {
+  createDefaultMindMapLayout,
+  createDefaultMindMapNodeStyle,
+  createDefaultMindMapTheme,
+  normalizeMindMapMarkers,
+  normalizeMindMapNodeStyle,
+  normalizeMindMapLayout,
+  normalizeMindMapTheme,
+} from '@/features/ai-tutor/mindMapAppearance';
 import type { LegacyMindMapNode, MindMapDocument, MindMapLink, MindMapNode } from '@/shared/api/viewer/types';
 
 export type MindMapDropPosition = 'before' | 'after' | 'inside';
@@ -16,6 +25,8 @@ function createDefaultNode(id: string, parentId: string | null, label = ''): Min
     collapsed: false,
     icon: null,
     tags: [],
+    markers: [],
+    style: createDefaultMindMapNodeStyle(),
     noteHtml: '',
     imageUrl: null,
     links: [],
@@ -31,6 +42,8 @@ function cloneNodes(nodes: Record<string, MindMapNode>) {
         ...node,
         childIds: [...node.childIds],
         tags: [...node.tags],
+        markers: [...node.markers],
+        style: { ...node.style },
         links: node.links.map((link) => ({ ...link })),
         documentRefs: [...node.documentRefs],
       },
@@ -70,6 +83,8 @@ export function createMindMapDocumentFromLegacy(params: {
     title: params.title,
     sourceDocumentIds: [...params.sourceDocumentIds],
     userPrompt: params.userPrompt,
+    theme: createDefaultMindMapTheme(),
+    layout: createDefaultMindMapLayout(),
     rootNodeId: params.root.id,
     nodes,
     createdAt: params.createdAt,
@@ -396,6 +411,8 @@ export function normalizeMindMapDocumentForSave(
         label: node.label.trim() || 'Untitled node',
         icon: node.icon?.trim() || null,
         tags: [...new Set(node.tags.map((tag) => tag.trim()).filter(Boolean))],
+        markers: normalizeMindMapMarkers(node.markers),
+        style: normalizeMindMapNodeStyle(node.style),
         links: node.links
           .map((link) => normalizeLink(link))
           .filter((link): link is MindMapLink => link !== null),
@@ -410,6 +427,8 @@ export function normalizeMindMapDocumentForSave(
   return {
     ...document,
     title: root?.label ?? document.title,
+    theme: normalizeMindMapTheme(document.theme),
+    layout: normalizeMindMapLayout(document.layout),
     nodes,
   };
 }
