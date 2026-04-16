@@ -4,7 +4,17 @@ import { defineConfig, loadEnv } from 'vite';
 
 function manualChunks(id: string) {
   if (id.includes('node_modules')) {
-    if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
+    if (
+      id.includes('@tiptap/') ||
+      id.includes('prosemirror') ||
+      id.includes('orderedmap') ||
+      id.includes('rope-sequence') ||
+      id.includes('w3c-keyname') ||
+      id.includes('@floating-ui/')
+    ) {
+      return 'editor-richtext';
+    }
+    if (id.includes('/react/') || id.includes('/scheduler/')) {
       return 'framework';
     }
     if (id.includes('react-router-dom')) {

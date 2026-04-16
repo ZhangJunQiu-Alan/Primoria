@@ -1,5 +1,4 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { extractNormalizedGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const DEFAULT_MODEL = 'gemini-2.0-flash';
@@ -120,6 +119,15 @@ function buildPrompt(mode: string, history: TutorHistoryMessage[], persona: Tuto
   }
 }
 
+function extractText(payload: Record<string, unknown>) {
+  const candidates = Array.isArray(payload.candidates) ? payload.candidates : [];
+  const first = candidates[0] as Record<string, unknown> | undefined;
+  const content = (first?.content ?? {}) as Record<string, unknown>;
+  const parts = Array.isArray(content.parts) ? content.parts : [];
+  const firstPart = parts[0] as Record<string, unknown> | undefined;
+  return typeof firstPart?.text === 'string' ? firstPart.text.trim() : '';
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -206,15 +214,15 @@ serve(async (req) => {
       }
 
       const payload = (await response.json()) as Record<string, unknown>;
-      const candidateTexts = extractNormalizedGeminiCandidateTexts(payload);
-      const text = candidateTexts[0] ?? '';
+      const text = extractText(payload);
       if (!text) {
         lastError = 'AI Tutor returned an empty response.';
         continue;
       }
 
+      const normalized = /```(?:json)?\s*([\s\S]*?)```/.exec(text)?.[1] ?? text;
       return new Response(
-        text,
+        normalized,
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
       );
     }
