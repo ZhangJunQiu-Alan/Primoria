@@ -50,6 +50,35 @@ export type MindMapLink = {
   url: string;
 };
 
+export type MindMapThemePreset = 'sage' | 'amber' | 'stone';
+export type MindMapLayoutMode = 'balanced';
+export type MindMapConnectionStyle = 'curve';
+export type MindMapNodeShape = 'capsule' | 'rounded' | 'underline';
+export type MindMapNodeFill = 'auto' | 'sage' | 'amber' | 'stone' | 'slate';
+export type MindMapBranchColor = 'auto' | 'sage' | 'amber' | 'stone' | 'rose' | 'slate';
+export type MindMapMarker =
+  | 'priority-high'
+  | 'priority-medium'
+  | 'status-active'
+  | 'status-done'
+  | 'star';
+
+export type MindMapTheme = {
+  preset: MindMapThemePreset;
+};
+
+export type MindMapLayout = {
+  mode: MindMapLayoutMode;
+  connectionStyle: MindMapConnectionStyle;
+};
+
+export type MindMapNodeStyle = {
+  shape: MindMapNodeShape;
+  fill: MindMapNodeFill;
+  emphasis: 'normal' | 'strong';
+  branchColor: MindMapBranchColor;
+};
+
 export type MindMapNode = {
   id: string;
   parentId: string | null;
@@ -58,6 +87,8 @@ export type MindMapNode = {
   collapsed: boolean;
   icon: string | null;
   tags: string[];
+  markers: MindMapMarker[];
+  style: MindMapNodeStyle;
   noteHtml: string;
   imageUrl: string | null;
   links: MindMapLink[];
@@ -69,6 +100,8 @@ export type MindMapDocument = {
   title: string;
   sourceDocumentIds: string[];
   userPrompt: string;
+  theme: MindMapTheme;
+  layout: MindMapLayout;
   rootNodeId: string;
   nodes: Record<string, MindMapNode>;
   createdAt: string;

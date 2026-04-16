@@ -1,4 +1,12 @@
 import type { Database, Json } from '../../../../../db/src';
+import {
+  createDefaultMindMapLayout,
+  createDefaultMindMapTheme,
+  normalizeMindMapLayout,
+  normalizeMindMapMarkers,
+  normalizeMindMapNodeStyle,
+  normalizeMindMapTheme,
+} from '@/features/ai-tutor/mindMapAppearance';
 import type {
   CreateMindMapFromDocsRequest,
   CreateMindMapFromDocsResponse,
@@ -17,6 +25,8 @@ import { supabase } from '@/shared/api/supabase';
 type TutorDocumentRow = Database['public']['Tables']['tutor_documents']['Row'];
 type MindMapRow = Database['public']['Tables']['ai_tutor_mindmaps']['Row'];
 type StoredMindMapDocument = {
+  theme: MindMapDocument['theme'];
+  layout: MindMapDocument['layout'];
   rootNodeId: string;
   nodes: Record<string, MindMapNode>;
 };
@@ -93,12 +103,31 @@ function isMindMapNode(value: unknown): value is MindMapNode {
     (typeof node.icon === 'string' || node.icon === null) &&
     Array.isArray(node.tags) &&
     node.tags.every((tag) => typeof tag === 'string') &&
+    (node.markers === undefined || (Array.isArray(node.markers) && node.markers.every((marker) => typeof marker === 'string'))) &&
+    (node.style === undefined || (typeof node.style === 'object' && node.style !== null)) &&
     typeof node.noteHtml === 'string' &&
     (typeof node.imageUrl === 'string' || node.imageUrl === null) &&
     Array.isArray(node.links) &&
     node.links.every((link) => isMindMapLink(link)) &&
     Array.isArray(node.documentRefs) &&
     node.documentRefs.every((documentId) => typeof documentId === 'string')
+  );
+}
+
+function normalizeMindMapNodeRecord(nodes: Record<string, MindMapNode>) {
+  return Object.fromEntries(
+    Object.entries(nodes).map(([nodeId, node]) => [
+      nodeId,
+      {
+        ...node,
+        childIds: [...node.childIds],
+        tags: [...node.tags],
+        markers: normalizeMindMapMarkers(node.markers),
+        style: normalizeMindMapNodeStyle(node.style),
+        links: node.links.map((link) => ({ ...link })),
+        documentRefs: [...node.documentRefs],
+      },
+    ]),
   );
 }
 
@@ -243,7 +272,7 @@ function normalizeMindMapStorage(value: Json, rowId: string): StoredMindMapDocum
     throw new Error(`Mind map ${rowId} has an invalid document payload.`);
   }
 
-  const payload = value as { rootNodeId?: unknown; nodes?: unknown };
+  const payload = value as { theme?: unknown; layout?: unknown; rootNodeId?: unknown; nodes?: unknown };
   if (typeof payload.rootNodeId !== 'string' || !isMindMapNodeRecord(payload.nodes)) {
     throw new Error(`Mind map ${rowId} has an invalid document payload.`);
   }
@@ -253,8 +282,10 @@ function normalizeMindMapStorage(value: Json, rowId: string): StoredMindMapDocum
   }
 
   return {
+    theme: normalizeMindMapTheme(payload.theme ?? createDefaultMindMapTheme()),
+    layout: normalizeMindMapLayout(payload.layout ?? createDefaultMindMapLayout()),
     rootNodeId: payload.rootNodeId,
-    nodes: payload.nodes,
+    nodes: normalizeMindMapNodeRecord(payload.nodes),
   };
 }
 
@@ -278,6 +309,8 @@ function normalizeMindMapRow(row: Partial<MindMapRow>): MindMapDocument {
     title,
     sourceDocumentIds,
     userPrompt,
+    theme: storage.theme,
+    layout: storage.layout,
     rootNodeId: storage.rootNodeId,
     nodes: storage.nodes,
     createdAt,
@@ -297,10 +330,14 @@ function toMindMapSummary(document: MindMapDocument): MindMapSummary {
 }
 
 function serializeMindMapDocument(payload: {
+  theme: MindMapDocument['theme'];
+  layout: MindMapDocument['layout'];
   rootNodeId: string;
   nodes: Record<string, MindMapNode>;
 }) {
   return {
+    theme: payload.theme,
+    layout: payload.layout,
     rootNodeId: payload.rootNodeId,
     nodes: payload.nodes,
   } satisfies Json;
@@ -408,12 +445,14 @@ export async function updateMindMap(
   payload:
     | MindMapDocument
     | {
-        title?: string;
-        sourceDocumentIds?: string[];
-        userPrompt?: string;
-        rootNodeId: string;
-        nodes: Record<string, MindMapNode>;
-      },
+      title?: string;
+      sourceDocumentIds?: string[];
+      userPrompt?: string;
+      theme?: MindMapDocument['theme'];
+      layout?: MindMapDocument['layout'];
+      rootNodeId: string;
+      nodes: Record<string, MindMapNode>;
+    },
 ) {
   if (usesViewerFixtures()) {
     throw new Error('演示模式暂不支持思维导图保存。');
@@ -430,6 +469,8 @@ export async function updateMindMap(
       source_document_ids: sourceDocumentIds,
       user_prompt: userPrompt,
       document: serializeMindMapDocument({
+        theme: normalizeMindMapTheme(payload.theme ?? createDefaultMindMapTheme()),
+        layout: normalizeMindMapLayout(payload.layout ?? createDefaultMindMapLayout()),
         rootNodeId: payload.rootNodeId,
         nodes: payload.nodes,
       }),
