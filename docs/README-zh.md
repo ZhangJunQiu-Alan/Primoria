@@ -52,6 +52,7 @@ Viewer React：
 - `dashboard.md` / `dashboard-zh.md`：统一 Viewer 内 Builder Dashboard 架构与 Tab 说明
 - `test-checklist.md` / `test-checklist-zh.md`：当前回归清单
 - `todo.md` / `todo-zh.md`：当前待办
+- `technical-debt-register-zh.md`：当前已确认的技术债清单与处理优先级
 - `changelog.md`：版本与关键架构变更
 - `viewer-react-cutover-runbook.md`：当前 viewer 部署与恢复说明
 - `prompt.txt`：当前 AI 规划提示词
