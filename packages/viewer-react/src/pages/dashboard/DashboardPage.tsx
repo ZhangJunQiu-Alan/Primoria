@@ -8,22 +8,18 @@ import {
   ArrowUpRight,
   BadgeCheck,
   BarChart3,
-  Bell,
   Bot,
   BookCopy,
   BookOpen,
   BookPlus,
   BrainCircuit,
   ChevronDown,
-  CircleDollarSign,
   Clock3,
   Copy,
-  Download,
   GraduationCap,
   House,
   Image as ImageIcon,
   LayoutGrid,
-  Leaf,
   LibraryBig,
   Loader2,
   Pencil,
@@ -56,10 +52,9 @@ import {
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 import './dashboard.css';
 
-type DashboardTab = 'home' | 'course' | 'data' | 'fans';
+type DashboardTab = 'home' | 'course' | 'data';
 type StatusFilter = 'all' | 'draft' | 'published';
 type SortMode = 'updated' | 'title' | 'lessons' | 'student' | 'comments';
-type FansFilter = 'all' | 'active' | 'need-help';
 type DifficultyLevel = CourseRow['difficulty_level'];
 type PriceTier = CourseRow['price_tier'];
 
@@ -145,14 +140,6 @@ interface TrendChartProps {
   formatLabel?: (value: number) => string;
 }
 
-interface DonutItem {
-  label: string;
-  value: number;
-  color: string;
-}
-
-const chartPalette = ['#7a9e7e', '#c4956a', '#a99ab4', '#c4807a'];
-
 const emptyCourseForm: CourseFormState = {
   title: '',
   description: '',
@@ -180,8 +167,9 @@ function parseDashboardTab(value: string | null): DashboardTab {
   switch (value) {
     case 'course':
     case 'data':
-    case 'fans':
       return value;
+    case 'fans':
+      return 'data';
     default:
       return 'home';
   }
@@ -338,24 +326,6 @@ function formatLessonDuration(seconds: number) {
   return `${Math.max(1, Math.round(seconds / 60))} min`;
 }
 
-function formatPrice(course: CourseRow) {
-  if (course.price_tier === 'premium' && course.price > 0) {
-    return `$${course.price.toFixed(2)}`;
-  }
-  return 'Free';
-}
-
-function formatDifficulty(level: DifficultyLevel) {
-  switch (level) {
-    case 'advanced':
-      return 'Advanced';
-    case 'intermediate':
-      return 'Intermediate';
-    default:
-      return 'Beginner';
-  }
-}
-
 function formatStatus(status: CourseRow['status']) {
   switch (status) {
     case 'published':
@@ -365,10 +335,6 @@ function formatStatus(status: CourseRow['status']) {
     default:
       return 'Draft';
   }
-}
-
-function formatCurrency(value: number) {
-  return `$${Math.round(value)}`;
 }
 
 function buildMonthLabels(count: number, language: 'zh-CN' | 'en') {
@@ -500,70 +466,6 @@ function TrendChart({ labels, series, height = 220, formatLabel }: TrendChartPro
       <div className="studio-chart__labels" aria-hidden="true">
         {labels.map((label, index) => (
           <span key={`${label}-${index}`}>{label}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function DonutChart({ items }: { items: DonutItem[] }) {
-  const size = 180;
-  const strokeWidth = 26;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const total = items.reduce((sum, item) => sum + item.value, 0);
-  const segments = items.reduce<Array<{ item: DonutItem; length: number; offset: number }>>(
-    (acc, item) => {
-      const prev = acc[acc.length - 1];
-      const length = total > 0 ? (item.value / total) * circumference : 0;
-      const offset = prev ? prev.offset + prev.length : 0;
-      return [...acc, { item, length, offset }];
-    },
-    [],
-  );
-
-  return (
-    <div className="studio-donut">
-      <div className="studio-donut__chart">
-        <svg viewBox={`0 0 ${size} ${size}`} className="studio-donut__graphic" aria-hidden="true">
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke="rgba(141, 124, 105, 0.12)"
-            strokeWidth={strokeWidth}
-          />
-          {segments.map(({ item, length, offset }) => (
-              <circle
-                key={item.label}
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke={item.color}
-                strokeWidth={strokeWidth}
-                strokeDasharray={`${length} ${circumference - length}`}
-                strokeDashoffset={-offset}
-                strokeLinecap="round"
-                transform={`rotate(-90 ${size / 2} ${size / 2})`}
-              />
-            ))}
-        </svg>
-
-        <div className="studio-donut__center">
-          <strong>{total > 0 ? `${Math.round((items[0]?.value ?? 0) / total * 100)}%` : '0%'}</strong>
-          <span>Share</span>
-        </div>
-      </div>
-
-      <div className="studio-donut__legend">
-        {items.map((item) => (
-          <div key={item.label} className="studio-donut__legend-item">
-            <span className="studio-donut__legend-dot" style={{ backgroundColor: item.color }} />
-            <span>{item.label}</span>
-            <strong>{item.value}</strong>
-          </div>
         ))}
       </div>
     </div>
@@ -1034,10 +936,7 @@ export function DashboardPage() {
     { value: 'home', label: copy.dashboard.home, shortLabel: copy.dashboard.home, icon: House },
     { value: 'course', label: copy.dashboard.course, shortLabel: copy.dashboard.course, icon: LibraryBig },
     { value: 'data', label: copy.dashboard.data, shortLabel: copy.dashboard.data, icon: BarChart3 },
-    { value: 'fans', label: copy.dashboard.fans, shortLabel: copy.dashboard.fans, icon: Users },
   ];
-  const homeWeekLabels = buildRecentDayLabels(7, language);
-  const fansWeekLabels = buildRecentDayLabels(7, language);
 
   useEffect(() => {
     void import('@/pages/editor/EditorPage');
@@ -1056,8 +955,6 @@ export function DashboardPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [sortMode, setSortMode] = useState<SortMode>('updated');
-  const [fansSearch, setFansSearch] = useState('');
-  const [fansFilter, setFansFilter] = useState<FansFilter>('all');
   const [notice, setNotice] = useState<NoticeState | null>(null);
   const [aiDraftOpen, setAiDraftOpen] = useState(false);
   const [formMode, setFormMode] = useState<'create' | 'edit' | null>(null);
@@ -1093,11 +990,9 @@ export function DashboardPage() {
 
   const userId = user.id;
 
-  const totalLessons = courses.reduce((sum, course) => sum + course.lessons.length, 0);
   const publishedCourses = courses.filter((course) => course.status === 'published').length;
   const draftCourses = courses.filter((course) => course.status === 'draft').length;
   const emptyCourses = courses.filter((course) => course.lessons.length === 0).length;
-  const totalPremiumCourses = courses.filter((course) => course.price_tier === 'premium').length;
   const analytics = analyticsQuery.data ?? emptyDashboardAnalytics;
   const courseMetricsById = new Map(
     analytics.course_metrics.map((metric) => [metric.course_id, metric]),
@@ -1111,10 +1006,6 @@ export function DashboardPage() {
   const totalStudyHours = analytics.summary.total_study_hours;
   const completionRate = analytics.summary.current_completion_rate;
   const completionDelta = analytics.summary.completion_delta_pct;
-  const estimatedIncome = courses.length === 0
-    ? 0
-    : Math.max(18, totalPremiumCourses * 24 + publishedCourses * 12 + totalLessons * 2.5);
-  const pendingIncome = estimatedIncome === 0 ? 0 : Math.max(6, Math.round(estimatedIncome * 0.3));
   const publishedViewers = analytics.summary.published_viewers;
   const averageCompletionRate = analytics.summary.average_completion_rate;
   const rankedCourses = analytics.course_metrics
@@ -1213,76 +1104,15 @@ export function DashboardPage() {
   const completionTrendValues = analytics.home_daily_completion.length > 0
     ? analytics.home_daily_completion.map((entry) => Math.round(entry.completion_rate * 100))
     : homeTrendLabels.map(() => 0);
-  const incomeTrendValues = [
-    estimatedIncome * 0.35,
-    estimatedIncome * 0.48,
-    estimatedIncome * 0.6,
-    estimatedIncome * 0.72,
-    estimatedIncome * 0.83,
-    estimatedIncome * 0.89,
-    estimatedIncome * 0.77,
-  ].map((value) => Math.round(value));
   const dataMonthLabels = analytics.monthly_activity_completion.length > 0
     ? analytics.monthly_activity_completion.map((entry) => formatMonthLabel(entry.month_start, language))
     : buildMonthLabels(6, language);
-  const createdByMonth: number[] = dataMonthLabels.map((label) =>
-    courses.filter((course) => {
-      const createdAt = new Date(course.created_at);
-      return `${createdAt.getMonth() + 1}/${String(createdAt.getFullYear()).slice(-2)}` === label;
-    }).length,
-  );
-  const publishedByMonth: number[] = dataMonthLabels.map((label) =>
-    courses.filter((course) => {
-      if (course.status !== 'published') return false;
-      if (!course.published_at) return false;
-      const publishedAt = new Date(course.published_at);
-      return `${publishedAt.getMonth() + 1}/${String(publishedAt.getFullYear()).slice(-2)}` === label;
-    }).length,
-  );
-
-  const courseVolumeCreatedSeries =
-    courses.length > 0 && createdByMonth.every((value) => value === 0)
-      ? [...createdByMonth.slice(0, -1), courses.length]
-      : createdByMonth;
-
-  const learningProgressA = analytics.monthly_activity_completion.length > 0
+  const completionHistory = analytics.monthly_activity_completion.length > 0
     ? analytics.monthly_activity_completion.map((entry) => Math.round(entry.completion_rate * 100))
     : dataMonthLabels.map(() => 0);
-  const learningProgressB = analytics.monthly_activity_completion.length > 0
+  const activeLearnerHistory = analytics.monthly_activity_completion.length > 0
     ? analytics.monthly_activity_completion.map((entry) => entry.active_learners)
     : dataMonthLabels.map(() => 0);
-
-  const incomeProgress = dataMonthLabels.map((_, index) => {
-    if (estimatedIncome === 0) return 0;
-    return Math.round((estimatedIncome / dataMonthLabels.length) * (index + 1) * 0.8);
-  });
-
-  const typeBreakdownMap = new Map<string, number>();
-  courses.forEach((course) => {
-    const label = course.tags[0] || formatDifficulty(course.difficulty_level);
-    typeBreakdownMap.set(label, (typeBreakdownMap.get(label) ?? 0) + 1);
-  });
-
-  const courseTypeItems = [...typeBreakdownMap.entries()]
-    .map(([label, value], index) => ({
-      label,
-      value,
-      color: chartPalette[index % chartPalette.length],
-    }))
-    .sort((left, right) => right.value - left.value)
-    .slice(0, 4);
-
-  if (courseTypeItems.length === 0) {
-    courseTypeItems.push({ label: 'Unassigned', value: 1, color: chartPalette[0] });
-  }
-
-  const fansGrowthSeries = [1, 2, 3, 1, 2, 3, 1];
-  const fansRecords: Array<{ id: string; name: string; mode: FansFilter }> = [];
-  const filteredFans = fansRecords.filter((fan) => {
-    if (fansFilter !== 'all' && fan.mode !== fansFilter) return false;
-    if (!fansSearch.trim()) return true;
-    return fan.name.toLowerCase().includes(fansSearch.trim().toLowerCase());
-  });
 
   function changeTab(tab: DashboardTab) {
     const next = new URLSearchParams(searchParams);
@@ -1292,10 +1122,6 @@ export function DashboardPage() {
       next.set('tab', tab);
     }
     setSearchParams(next, { replace: true });
-  }
-
-  function showInfo(text: string) {
-    setNotice({ tone: 'info', text });
   }
 
   function handleUseAICourseDraft(preview: AICourseDraftPreview) {
@@ -1469,18 +1295,18 @@ export function DashboardPage() {
                     <section className="studio-card studio-panel">
                       <div className="studio-panel__header">
                         <div>
-                          <h2>Learning overview</h2>
+                          <h2>{language === 'zh-CN' ? '今日概览' : 'Today overview'}</h2>
                         </div>
                       </div>
 
                       <div className="studio-split-metrics">
-                        <MetricCard icon={Users} label="Weekly learners" value={weeklyLearners} tone="mist" />
-                        <MetricCard icon={Clock3} label="Total study hours" value={`${totalStudyHours}h`} tone="sage" />
+                        <MetricCard icon={Users} label={language === 'zh-CN' ? '本周学习者' : 'Weekly learners'} value={weeklyLearners} tone="mist" />
+                        <MetricCard icon={Clock3} label={language === 'zh-CN' ? '累计学习时长' : 'Total study hours'} value={`${totalStudyHours}h`} tone="sage" />
                       </div>
 
                       <div className="studio-chart-card__meta">
-                        <span>Completion trend: {(completionRate * 100).toFixed(1)}%</span>
-                        <strong>{formatSignedDelta(completionDelta)} vs last week</strong>
+                        <span>{language === 'zh-CN' ? `完成趋势：${(completionRate * 100).toFixed(1)}%` : `Completion trend: ${(completionRate * 100).toFixed(1)}%`}</span>
+                        <strong>{language === 'zh-CN' ? `${formatSignedDelta(completionDelta)} 较上周` : `${formatSignedDelta(completionDelta)} vs last week`}</strong>
                       </div>
 
                       <TrendChart
@@ -1499,7 +1325,7 @@ export function DashboardPage() {
                     <section className="studio-card studio-panel">
                       <div className="studio-panel__header">
                         <div>
-                          <h2>Top courses</h2>
+                          <h2>{language === 'zh-CN' ? '课程表现排行' : 'Course ranking'}</h2>
                         </div>
                       </div>
 
@@ -1517,7 +1343,11 @@ export function DashboardPage() {
 
                               <div className="studio-top-course__copy">
                                 <strong>{course.title}</strong>
-                                <p>Views: {course.views} · Students: {course.students}</p>
+                                <p>
+                                  {language === 'zh-CN'
+                                    ? `浏览 ${course.views} · 学习者 ${course.students}`
+                                    : `Views: ${course.views} · Students: ${course.students}`}
+                                </p>
                                 <div className="studio-progress">
                                   <span style={{ width: `${course.momentum}%` }} />
                                 </div>
@@ -1528,7 +1358,7 @@ export function DashboardPage() {
                                 className="studio-link-button"
                                 onClick={() => navigate(`/builder/editor/${course.id}`)}
                               >
-                                View course
+                                {language === 'zh-CN' ? '查看课程' : 'View course'}
                               </button>
                             </article>
                           ))}
@@ -1537,8 +1367,8 @@ export function DashboardPage() {
                         <div className="studio-empty-card studio-empty-card--soft">
                           <BookOpen size={22} />
                           <div>
-                            <strong>No course performance data yet</strong>
-                            <p>Create content first and the workspace will start surfacing course signals.</p>
+                            <strong>{language === 'zh-CN' ? '还没有课程表现数据' : 'No course performance data yet'}</strong>
+                            <p>{language === 'zh-CN' ? '先发布课程，后续这里会开始显示学习信号。' : 'Publish content first and the workspace will start surfacing course signals.'}</p>
                           </div>
                         </div>
                       )}
@@ -1549,14 +1379,14 @@ export function DashboardPage() {
                     <section className="studio-card studio-panel">
                       <div className="studio-panel__header">
                         <div>
-                          <h2>Recent activity</h2>
+                          <h2>{language === 'zh-CN' ? '最近编辑' : 'Recent activity'}</h2>
                         </div>
                         <button
                           type="button"
                           className="studio-link-button"
                           onClick={() => changeTab('course')}
                         >
-                          View all
+                          {language === 'zh-CN' ? '查看全部' : 'View all'}
                         </button>
                       </div>
 
@@ -1577,26 +1407,39 @@ export function DashboardPage() {
                     <section className="studio-card studio-panel studio-card--sage">
                       <div className="studio-panel__header">
                         <div>
-                          <h2>Revenue overview</h2>
+                          <h2>{language === 'zh-CN' ? '待处理' : 'Needs attention'}</h2>
                         </div>
                       </div>
 
                       <div className="studio-split-metrics">
-                        <MetricCard icon={CircleDollarSign} label="Revenue this month" value={formatCurrency(Math.max(20, estimatedIncome))} tone="amber" />
-                        <MetricCard icon={BadgeCheck} label="Pending payout" value={formatCurrency(Math.max(6, pendingIncome))} tone="sage" />
+                        <MetricCard icon={LayoutGrid} label={language === 'zh-CN' ? '草稿课程' : 'Draft courses'} value={draftCourses} tone="lavender" />
+                        <MetricCard icon={TriangleAlert} label={language === 'zh-CN' ? '待补内容' : 'Needs content'} value={emptyCourses} tone="amber" />
                       </div>
 
-                      <TrendChart
-                        labels={homeWeekLabels}
-                        series={[
-                          {
-                            name: 'Income',
-                            values: incomeTrendValues,
-                            color: '#c4956a',
-                            fillColor: 'rgba(196, 149, 106, 0.14)',
-                          },
-                        ]}
-                      />
+                      <div className="studio-activity-list">
+                        <article className="studio-activity studio-activity--amber">
+                          <span className="studio-activity__dot" />
+                          <div>
+                            <strong>{language === 'zh-CN' ? '优先整理草稿' : 'Polish the drafts first'}</strong>
+                            <p>
+                              {language === 'zh-CN'
+                                ? `${draftCourses} 门课程还没发布，先把最接近完成的那一门推进出去。`
+                                : `${draftCourses} courses are still in draft. Push the one closest to publish first.`}
+                            </p>
+                          </div>
+                        </article>
+                        <article className="studio-activity studio-activity--sage">
+                          <span className="studio-activity__dot" />
+                          <div>
+                            <strong>{language === 'zh-CN' ? '补齐空课程' : 'Fill the empty courses'}</strong>
+                            <p>
+                              {language === 'zh-CN'
+                                ? `${emptyCourses} 门课程还没有课时，先补上最小可发布内容。`
+                                : `${emptyCourses} courses still have no lessons. Add the minimum viable lesson set next.`}
+                            </p>
+                          </div>
+                        </article>
+                      </div>
                     </section>
                   </div>
                 </section>
@@ -1850,12 +1693,8 @@ export function DashboardPage() {
                             </p>
 
                             <div className="studio-meta-row">
-                              <span className="studio-meta-chip">{formatDifficulty(course.difficulty_level)}</span>
                               <span className="studio-meta-chip">{formatDuration(course.estimated_minutes)}</span>
-                              <span className="studio-meta-chip">{formatPrice(course)}</span>
                               <span className="studio-meta-chip">{course.lessons.length} lessons</span>
-                              <span className="studio-meta-chip">{courseMetricsById.get(course.id)?.students ?? 0} students</span>
-                              <span className="studio-meta-chip">{courseMetricsById.get(course.id)?.comments ?? 0} comments</span>
                             </div>
 
                             <section className="studio-lesson-panel">
@@ -1925,104 +1764,25 @@ export function DashboardPage() {
                 {analyticsErrorNotice}
 
                 <PageHeader
-                  eyebrow="DATA CENTER"
-                  title="Data center overview"
-                  description="Track course creation, publishing, revenue, and learning quality."
-                  actions={(
-                    <button
-                      type="button"
-                      className="studio-button studio-button--secondary"
-                      onClick={() => showInfo('Report export is not available yet.')}
-                    >
-                      <Download size={16} />
-                      <span>Export report</span>
-                    </button>
-                  )}
+                  eyebrow={language === 'zh-CN' ? '学习表现' : 'Learning performance'}
+                  title={language === 'zh-CN' ? '学习表现总览' : 'Learning performance overview'}
+                  description={language === 'zh-CN' ? '只保留完成趋势、活跃学习者和课程排行。' : 'Keep the view focused on completion trend, active learners, and course ranking.'}
                 />
 
                 <section className="studio-summary-strip">
-                  <MetricCard icon={BookCopy} label="Total courses" value={courses.length} tone="mist" detail={`Draft ${draftCourses} · Archived ${courses.filter((course) => course.status === 'archived').length}`} />
-                  <MetricCard icon={ArrowUpRight} label="Published courses" value={publishedCourses} tone="sage" detail={courses.length > 0 ? `${Math.round((publishedCourses / courses.length) * 100)}% publish rate` : '0% publish rate'} />
-                  <MetricCard icon={Activity} label="Published viewers" value={publishedViewers} tone="amber" />
-                  <MetricCard icon={BadgeCheck} label="Average completion" value={`${(averageCompletionRate * 100).toFixed(1)}%`} tone="sky" />
-                  <MetricCard icon={CircleDollarSign} label="Estimated monthly revenue" value={formatCurrency(estimatedIncome)} tone="lavender" detail="Estimated from pricing and audience scale" />
+                  <MetricCard icon={BookCopy} label={language === 'zh-CN' ? '课程总数' : 'Total courses'} value={courses.length} tone="mist" detail={language === 'zh-CN' ? `草稿 ${draftCourses} · 已归档 ${courses.filter((course) => course.status === 'archived').length}` : `Draft ${draftCourses} · Archived ${courses.filter((course) => course.status === 'archived').length}`} />
+                  <MetricCard icon={ArrowUpRight} label={language === 'zh-CN' ? '已发布课程' : 'Published courses'} value={publishedCourses} tone="sage" detail={courses.length > 0 ? `${Math.round((publishedCourses / courses.length) * 100)}%` : '0%'} />
+                  <MetricCard icon={Activity} label={language === 'zh-CN' ? '已发布浏览' : 'Published viewers'} value={publishedViewers} tone="amber" />
+                  <MetricCard icon={BadgeCheck} label={language === 'zh-CN' ? '平均完成率' : 'Average completion'} value={`${(averageCompletionRate * 100).toFixed(1)}%`} tone="sky" />
                 </section>
 
                 <section className="studio-analytics-grid">
                   <article className="studio-card studio-panel">
                     <div className="studio-panel__header">
                       <div>
-                        <h2>Course volume trend</h2>
-                        <p>Monthly counts for newly created and published courses.</p>
+                        <h2>{language === 'zh-CN' ? '完成趋势' : 'Completion trend'}</h2>
+                        <p>{language === 'zh-CN' ? '按月查看整体完成情况。' : 'Monthly view of overall completion quality.'}</p>
                       </div>
-                    </div>
-
-                    <div className="studio-legend">
-                      <span><i style={{ backgroundColor: '#7a9e7e' }} /> Created</span>
-                      <span><i style={{ backgroundColor: '#c4956a' }} /> Published</span>
-                    </div>
-
-                    <TrendChart
-                      labels={dataMonthLabels}
-                      series={[
-                          {
-                            name: 'Created',
-                            values: courseVolumeCreatedSeries,
-                            color: '#7a9e7e',
-                            fillColor: 'rgba(122, 158, 126, 0.12)',
-                          },
-                        {
-                          name: 'Published',
-                          values: publishedByMonth,
-                          color: '#c4956a',
-                        },
-                      ]}
-                    />
-                  </article>
-
-                  <article className="studio-card studio-panel">
-                    <div className="studio-panel__header">
-                      <div>
-                        <h2>Course type distribution</h2>
-                        <p>Share of courses by topic or tag.</p>
-                      </div>
-                    </div>
-                    <DonutChart items={courseTypeItems} />
-                  </article>
-
-                  <article className="studio-card studio-panel">
-                    <div className="studio-panel__header">
-                      <div>
-                        <h2>Revenue trend</h2>
-                        <p>Estimated revenue over time based on pricing and audience scale.</p>
-                      </div>
-                    </div>
-
-                    <TrendChart
-                      labels={dataMonthLabels}
-                      series={[
-                        {
-                          name: 'Income',
-                          values: incomeProgress,
-                          color: '#c4956a',
-                          fillColor: 'rgba(196, 149, 106, 0.12)',
-                        },
-                      ]}
-                      formatLabel={(value) => `${value}`}
-                    />
-                  </article>
-
-                  <article className="studio-card studio-panel">
-                    <div className="studio-panel__header">
-                      <div>
-                        <h2>Learning progress tracking</h2>
-                        <p>Compare overall completion rate and learner activity over time.</p>
-                      </div>
-                    </div>
-
-                    <div className="studio-legend">
-                      <span><i style={{ backgroundColor: '#7a9e7e' }} /> Completion</span>
-                      <span><i style={{ backgroundColor: '#a99ab4' }} /> Activity</span>
                     </div>
 
                     <TrendChart
@@ -2030,26 +1790,40 @@ export function DashboardPage() {
                       series={[
                         {
                           name: 'Completion',
-                          values: learningProgressA,
+                          values: completionHistory,
                           color: '#7a9e7e',
                           fillColor: 'rgba(122, 158, 126, 0.12)',
-                        },
-                        {
-                          name: 'Activity',
-                          values: learningProgressB,
-                          color: '#a99ab4',
                         },
                       ]}
                     />
                   </article>
-                </section>
 
-                <section className="studio-data-bottom">
-                  <article className="studio-card studio-panel studio-panel--compact">
+                  <article className="studio-card studio-panel">
                     <div className="studio-panel__header">
                       <div>
-                        <h2>Published course viewers</h2>
-                        <p>Real viewer totals across published courses ranked by live learner demand.</p>
+                        <h2>{language === 'zh-CN' ? '活跃学习者' : 'Active learners'}</h2>
+                        <p>{language === 'zh-CN' ? '看清最近一段时间有多少人真的在学。' : 'See how many learners are actively engaging over time.'}</p>
+                      </div>
+                    </div>
+
+                    <TrendChart
+                      labels={dataMonthLabels}
+                      series={[
+                        {
+                          name: 'Active learners',
+                          values: activeLearnerHistory,
+                          color: '#a99ab4',
+                          fillColor: 'rgba(169, 154, 180, 0.12)',
+                        },
+                      ]}
+                    />
+                  </article>
+
+                  <article className="studio-card studio-panel">
+                    <div className="studio-panel__header">
+                      <div>
+                        <h2>{language === 'zh-CN' ? '课程表现排行' : 'Course ranking'}</h2>
+                        <p>{language === 'zh-CN' ? '把最能带动学习的课程排出来。' : 'See which courses are carrying the strongest learner momentum.'}</p>
                       </div>
                     </div>
 
@@ -2058,116 +1832,15 @@ export function DashboardPage() {
                         {publishedCourseRanking.map((course) => (
                           <div key={course.id} className="studio-data-list__row">
                             <span>{course.title}</span>
-                            <strong>{course.views}</strong>
+                            <strong>{language === 'zh-CN' ? `${course.views} 浏览` : `${course.views} views`}</strong>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p className="studio-panel__empty">No data yet</p>
+                      <p className="studio-panel__empty">{language === 'zh-CN' ? '还没有数据' : 'No data yet'}</p>
                     )}
                   </article>
                 </section>
-              </>
-            ) : null}
-
-            {activeTab === 'fans' ? (
-              <>
-                <PageHeader
-                  eyebrow="FANS MANAGEMENT"
-                  title="Fan management"
-                  description="Review follower growth, segment active users, and reserve space for outreach."
-                  actions={(
-                    <>
-                      <button
-                        type="button"
-                        className="studio-button studio-button--ghost"
-                        onClick={() => showInfo('Notifications will be enabled once real fan data is connected.')}
-                        disabled
-                      >
-                        <Bell size={16} />
-                        <span>Send notice (0)</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="studio-button studio-button--secondary"
-                        onClick={() => showInfo('Fan export will be enabled once real fan data is connected.')}
-                      >
-                        <Download size={16} />
-                        <span>Export data</span>
-                      </button>
-                    </>
-                  )}
-                />
-
-                <section className="studio-card studio-panel studio-card--mist">
-                  <div className="studio-split-metrics">
-                    <MetricCard icon={Users} label="Total fans" value={0} tone="mist" />
-                    <MetricCard icon={Activity} label="New fans this week" value={0} tone="sage" detail="+0.0%" />
-                  </div>
-
-                  <div className="studio-panel__subheader">
-                    <span>Fan growth trend</span>
-                  </div>
-
-                  <TrendChart
-                    labels={fansWeekLabels}
-                    series={[
-                      {
-                        name: 'Fans',
-                        values: fansGrowthSeries,
-                        color: '#7a9e7e',
-                        fillColor: 'rgba(122, 158, 126, 0.14)',
-                      },
-                    ]}
-                  />
-                </section>
-
-                <section className="studio-controls-card studio-card studio-card--soft studio-controls-card--fans">
-                  <label className="studio-search">
-                    <Search size={16} />
-                    <input
-                      aria-label="Search fans"
-                      placeholder="Search user names..."
-                      value={fansSearch}
-                      onChange={(event) => setFansSearch(event.target.value)}
-                    />
-                    {fansSearch ? (
-                      <button
-                        type="button"
-                        className="studio-search__clear"
-                        aria-label="Clear fan search"
-                        onClick={() => setFansSearch('')}
-                      >
-                        <X size={14} />
-                      </button>
-                    ) : null}
-                  </label>
-
-                  <div className="studio-chip-group" aria-label="Fan filters">
-                    {([
-                      { value: 'all', label: 'All' },
-                      { value: 'active', label: 'Highly active' },
-                      { value: 'need-help', label: 'Needs help' },
-                    ] as const).map((filter) => (
-                      <button
-                        key={filter.value}
-                        type="button"
-                        className={`studio-chip ${fansFilter === filter.value ? 'is-active' : ''}`}
-                        onClick={() => setFansFilter(filter.value)}
-                      >
-                        {filter.label}
-                      </button>
-                    ))}
-                  </div>
-                </section>
-
-                {filteredFans.length === 0 ? (
-                  <section className="studio-card studio-empty-state studio-empty-state--left">
-                    <Leaf size={28} />
-                    <h2>No fans yet? Share your courses to start attracting learners.</h2>
-                    <p>After publishing, follows, comments, and learning signals will gather here.</p>
-                  </section>
-                ) : null}
               </>
             ) : null}
           </div>

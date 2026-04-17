@@ -225,22 +225,19 @@ describe('DashboardPage', () => {
     expect(screen.queryByText('Continue editing')).not.toBeInTheDocument();
     expect(screen.queryByText('View analytics')).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /数据中心|data center/i }));
+    await user.click(screen.getByRole('button', { name: /学习表现|learning performance/i }));
 
     const publishedViewersCard = await screen.findByText('Published viewers');
     expect(within(publishedViewersCard.closest('article') as HTMLElement).getByText('204')).toBeInTheDocument();
     expect(screen.getByText('Average completion')).toBeInTheDocument();
     expect(screen.getByText('68.0%')).toBeInTheDocument();
     expect(screen.getByText('Biology Lab Notes')).toBeInTheDocument();
-    expect(screen.getByText('120')).toBeInTheDocument();
+    expect(screen.getByText('120 views')).toBeInTheDocument();
   });
 
-  it('supports student and comment sort modes with visible metric chips', async () => {
+  it('supports student and comment sort modes for the simplified course list', async () => {
     const user = userEvent.setup();
     renderDashboard('/builder/dashboard?tab=course');
-
-    expect(screen.getByText('18 students')).toBeInTheDocument();
-    expect(screen.getByText('7 comments')).toBeInTheDocument();
 
     const sortSelect = screen.getByLabelText('Sort');
     await user.selectOptions(sortSelect, 'student');

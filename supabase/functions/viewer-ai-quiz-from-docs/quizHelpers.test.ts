@@ -87,12 +87,18 @@ Deno.test('buildQuizPrompt: output is plain JSON instruction, no markdown wrappe
   assertContains(prompt, '直接从 { 开始');
 });
 
-Deno.test('buildQuizPrompt: declares 80/10/10 ratio split', () => {
+Deno.test('buildQuizPrompt: match count is hard-capped by total question count', () => {
   const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
   const prompt = buildQuizPrompt(docs, 10);
-  assertContains(prompt, '合计约 80%');
+  assertContains(prompt, '总题数 ≤ 15 → 恰好 1 道 match');
+  assertContains(prompt, '总题数 16-30 → 恰好 2 道 match');
+});
+
+Deno.test('buildQuizPrompt: keeps tf at ~10% and mc filling the rest', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10);
   assertContains(prompt, 'tf（判断）：约 10%');
-  assertContains(prompt, 'match（匹配）：约 10%');
+  assertContains(prompt, '剩余全部由单选/多选填充');
 });
 
 Deno.test('buildQuizPrompt: forbids clustering same question types', () => {

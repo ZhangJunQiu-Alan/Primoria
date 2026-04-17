@@ -23,7 +23,7 @@ import { trackViewerRoute } from '@/shared/platform/observability';
 import { useFeatureFlag } from '@/shared/platform/FeatureFlagsProvider';
 import { learnerHomeForRole } from '@/shared/utils/routes';
 import { useAppSelector } from '@/shared/state/store';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 
 const LandingPage = lazy(async () => ({
   default: (await import('@/features/public/LandingPage')).LandingPage,
@@ -115,11 +115,11 @@ function FlaggedRoute({
   children: ReactNode;
 }) {
   const enabled = useFeatureFlag(flag);
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   if (!enabled) {
-    const title = scope === 'community' ? copy.community.title : copy.aiTutor.title;
-    const message = scope === 'community' ? copy.community.disabled : copy.aiTutor.disabled;
+    const title = scope === 'community' ? copy.featureGates.community.title : copy.featureGates.aiTutor.title;
+    const message = scope === 'community' ? copy.featureGates.community.message : copy.featureGates.aiTutor.message;
     return (
       <PageContainer title={title} subtitle={message}>
         <FeatureDisabledState title={title} message={message} />

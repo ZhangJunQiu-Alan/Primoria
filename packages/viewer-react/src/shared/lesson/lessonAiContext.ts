@@ -5,6 +5,10 @@ import type { DerivedLessonPageState, LessonPageSessionState, QuestionEvaluation
 
 export type LessonAiContextPayload = {
   surface: 'lesson-runtime';
+  courseId?: string;
+  lessonId: string;
+  blockId?: string;
+  locale: string;
   lessonTitle: string;
   pageIndex: number;
   pageCount: number;
@@ -19,12 +23,16 @@ export function buildLessonAiContext({
   blocks,
   pageSession,
   pageState,
+  locale,
+  blockId,
 }: {
   data: LessonRuntimeData;
   currentPageIndex: number;
   blocks: LessonBlock[];
   pageSession: LessonPageSessionState;
   pageState: DerivedLessonPageState;
+  locale: string;
+  blockId?: string | null;
 }): LessonAiContextPayload {
   const visibleBlocks = blocks.filter((_, index) => pageState.visibleBlockIndexes.has(index));
   const page = data.pages
@@ -43,6 +51,10 @@ export function buildLessonAiContext({
 
   return {
     surface: 'lesson-runtime',
+    courseId: data.courseId,
+    lessonId: data.lessonId,
+    blockId: blockId ?? undefined,
+    locale,
     lessonTitle: data.title,
     pageIndex: currentPageIndex + 1,
     pageCount: data.pages.length,

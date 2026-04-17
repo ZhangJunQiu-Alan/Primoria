@@ -1,6 +1,39 @@
 (function () {
   var root = document.documentElement;
   var label = '正在准备学习空间';
+  var title = 'Primoria';
+
+  function detectBrowserLanguage() {
+    try {
+      var candidates = Array.isArray(navigator.languages) && navigator.languages.length
+        ? navigator.languages
+        : [navigator.language];
+
+      for (var index = 0; index < candidates.length; index += 1) {
+        var candidate = candidates[index];
+        if (typeof candidate === 'string' && candidate.toLowerCase().indexOf('en') === 0) {
+          return 'en';
+        }
+      }
+    } catch (_error) {
+      // Ignore browser language detection errors and fall back to zh-CN.
+    }
+
+    return 'zh-CN';
+  }
+
+  function applyLanguage(language) {
+    if (language === 'en') {
+      root.lang = 'en';
+      label = 'Preparing your learning space';
+      title = 'Primoria';
+      return;
+    }
+
+    root.lang = 'zh-CN';
+    label = '正在准备学习空间';
+    title = 'Primoria';
+  }
 
   try {
     var raw = window.localStorage.getItem('primoria.viewer.preferences');
@@ -13,16 +46,18 @@
         }
       }
 
-      if (parsed && typeof parsed.language === 'string' && parsed.language.toLowerCase().indexOf('en') === 0) {
-        root.lang = 'en';
-        label = 'Preparing your learning space';
+      if (parsed && typeof parsed.language === 'string') {
+        applyLanguage(parsed.language.toLowerCase().indexOf('en') === 0 ? 'en' : 'zh-CN');
       }
+    } else {
+      applyLanguage(detectBrowserLanguage());
     }
   } catch (_error) {
-    // Ignore malformed local storage and fall back to defaults.
+    applyLanguage(detectBrowserLanguage());
   }
 
   window.__viewerBootSplashLabel = label;
+  document.title = title;
 
   function syncLabel() {
     var splashLabel = document.getElementById('viewer-boot-splash-label');

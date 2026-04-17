@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from 'react';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 
 const bootSplashParticles = [
   { left: '9%', fontSize: '20px', delay: '0.0s', duration: '5.2s', rotation: '7deg', symbol: 'π' },
@@ -147,7 +147,7 @@ function BootSplashArtwork() {
 }
 
 export function FullScreenLoadingScreen({ message }: { message?: string }) {
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   return (
     <div className="viewer-full-screen-loader" role="status" aria-live="polite">

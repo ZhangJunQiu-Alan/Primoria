@@ -3,6 +3,7 @@ import { BlockRenderer } from '@/shared/lesson/BlockRenderer';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
 import type { QuestionEvaluation, QuestionResponse } from '@/shared/lesson/questionFlow';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
+import { MatchingQuestionForm } from '@/shared/lesson/MatchingQuestionForm';
 import { cn } from '@/shared/utils/cn';
 import { seededShuffle } from '@/shared/utils/seededShuffle';
 
@@ -344,67 +345,36 @@ function MatchingPreview({
       : [];
 
   return (
-    <div className="space-y-2">
-      {pairs.map((pair) => {
-        const rowReview = matchingRows.find((row) => row.id === pair.id);
-        const isRowCorrect = rowReview?.isCorrect ?? false;
-        const hasRowEvaluation = Boolean(rowReview);
-        const selectToneClasses = !hasRowEvaluation
-          ? 'border-[var(--viewer-border)] bg-white text-[var(--viewer-text)]'
-          : isRowCorrect
-            ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-            : 'border-rose-200 bg-rose-50 text-rose-700';
+    <div className="space-y-3">
+      <MatchingQuestionForm
+        pairs={pairs}
+        options={shuffledRightOptions}
+        selectedPairs={selectedPairs}
+        disabled={locked}
+        reviewRows={matchingRows}
+        copy={{
+          leftLabel: language === 'zh-CN' ? '待匹配内容' : 'Prompt',
+          choiceLabel: language === 'zh-CN' ? '匹配选项' : 'Match option',
+          placeholder: language === 'zh-CN' ? '选择匹配项' : 'Select a match',
+          menuLabel: language === 'zh-CN' ? '可选答案' : 'Available matches',
+          clearSelection: language === 'zh-CN' ? '取消选择' : 'Clear selection',
+          correctMatch: language === 'zh-CN' ? '正确匹配：' : 'Correct match: ',
+        }}
+        onSelectionChange={(pairId, nextRight) => {
+          if (!onResponseChange) {
+            return;
+          }
 
-        return (
-          <div key={pair.id} className="space-y-2">
-            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(180px,1fr)] items-center gap-3">
-              <div
-                className={cn(
-                  'rounded-2xl border px-4 py-3 text-sm font-medium',
-                  hasRowEvaluation
-                    ? isRowCorrect
-                      ? 'border-emerald-200 bg-emerald-50/70 text-emerald-700'
-                      : 'border-rose-200 bg-rose-50/80 text-rose-700'
-                    : 'border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] text-[var(--viewer-text)]',
-                )}
-              >
-                {pair.left}
-              </div>
-              <span className="text-[var(--viewer-text-muted)]">↔</span>
-              <select
-                value={selectedPairs[pair.id] ?? ''}
-                disabled={locked}
-                onChange={(event) =>
-                  onResponseChange?.({
-                    ...selectedPairs,
-                    [pair.id]: event.target.value,
-                  })
-                }
-                className={cn(
-                  'rounded-2xl border px-4 py-3 text-sm font-medium outline-none focus:border-[var(--viewer-primary)] disabled:cursor-not-allowed disabled:opacity-80',
-                  selectToneClasses,
-                )}
-              >
-                <option value="">{language === 'zh-CN' ? '选择匹配项' : 'Select a match'}</option>
-                {shuffledRightOptions.map((option) => (
-                  <option key={`${pair.id}-${option.id}`} value={option.right}>
-                    {option.right}
-                  </option>
-                ))}
-              </select>
-            </div>
+          const nextPairs = { ...selectedPairs };
+          if (nextRight) {
+            nextPairs[pairId] = nextRight;
+          } else {
+            delete nextPairs[pairId];
+          }
 
-            {hasRowEvaluation && !isRowCorrect ? (
-              <div className="rounded-2xl border border-rose-200 bg-white/60 px-4 py-3 text-sm font-medium text-rose-700">
-                <span className="font-bold">
-                  {language === 'zh-CN' ? '正确匹配：' : 'Correct match: '}
-                </span>
-                {rowReview?.correctRight}
-              </div>
-            ) : null}
-          </div>
-        );
-      })}
+          onResponseChange(nextPairs);
+        }}
+      />
       <AnswerState evaluation={evaluation} />
     </div>
   );

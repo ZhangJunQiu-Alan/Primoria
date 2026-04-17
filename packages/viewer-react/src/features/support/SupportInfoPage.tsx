@@ -37,7 +37,7 @@ export function SupportInfoPage({ page }: { page: SupportPageId }) {
         <SurfaceCard className="space-y-4">
           <div className="rounded-[22px] border border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] p-5">
             <div className="viewer-botanical-eyebrow">
-              {'Primoria Viewer'}
+              {copy.title}
             </div>
             <div className="mt-3 text-[2rem] font-semibold text-[var(--viewer-text)]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{content.title}</div>
             <p className="mt-2 text-sm font-medium leading-7 text-[var(--viewer-text-muted)]">{content.subtitle}</p>

@@ -176,8 +176,10 @@ describe('LessonRuntimePlayer', () => {
     expect(updatedDots[1]).toHaveAttribute('data-state', 'active');
 
     const selects = screen.getAllByRole('combobox');
-    await user.selectOptions(selects[0]!, 'Alpha');
-    await user.selectOptions(selects[1]!, 'Alpha');
+    await user.click(selects[0]!);
+    await user.click(await screen.findByRole('option', { name: 'Alpha' }));
+    await user.click(selects[1]!);
+    await user.click(await screen.findByRole('option', { name: 'Alpha' }));
     await user.click(screen.getByRole('button', { name: 'Next step' }));
 
     expect(screen.getByText('Not correct yet')).toBeInTheDocument();
@@ -267,14 +269,20 @@ describe('LessonRuntimePlayer', () => {
       [{ role: 'user', text: 'Explain this page' }],
       expect.any(Object),
       expect.objectContaining({
-        provider: 'gemini',
         model: 'gemini-2.5-flash',
         allowModelFallback: false,
         context: expect.objectContaining({
           surface: 'lesson-runtime',
+          courseId: 'course-runtime-fixture',
+          lessonId: 'lesson-runtime-fixture',
+          blockId: 'mc-1',
+          locale: expect.any(String),
           lessonTitle: 'Focused Runtime Lesson',
           pageIndex: 1,
           pageCount: 2,
+          pageTitle: 'Page 1',
+          pageContent: expect.stringContaining('Question 1'),
+          learnerState: expect.stringContaining('当前作答: 未作答'),
         }),
       }),
     );
@@ -287,6 +295,21 @@ describe('LessonRuntimePlayer', () => {
 
     await user.click(screen.getByRole('button', { name: /Reset Ask AI|重置问AI/i }));
     expect(screen.queryByText('Grounded answer')).not.toBeInTheDocument();
+  });
+
+  it('shows a friendly ask-ai error instead of raw transport text when both backends fail', async () => {
+    const user = userEvent.setup();
+    generateTutorReplyStreamMock.mockRejectedValueOnce(new Error('AI is temporarily unavailable. Please try again shortly.'));
+    renderRuntime();
+
+    await user.click(screen.getByRole('button', { name: 'Ask AI' }));
+    const aiDialog = await screen.findByRole('dialog', { name: 'Ask AI' });
+
+    await user.type(within(aiDialog).getByTestId('lesson-ai-input'), 'Explain this page');
+    await user.click(within(aiDialog).getByTestId('lesson-ai-send'));
+
+    expect(await within(aiDialog).findByText('AI is temporarily unavailable. Please try again shortly.')).toBeInTheDocument();
+    expect(within(aiDialog).queryByText('Failed to fetch')).not.toBeInTheDocument();
   });
 
   it('opens the note sheet, saves the lesson note on close, and reloads the saved body on reopen', async () => {

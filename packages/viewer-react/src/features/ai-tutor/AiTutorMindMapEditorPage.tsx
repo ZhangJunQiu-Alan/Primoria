@@ -102,7 +102,7 @@ const BRANCH_SWATCHES: Record<Exclude<MindMapBranchColor, 'auto'>, string> = {
 function editorCopy(language: 'zh-CN' | 'en') {
   if (language === 'zh-CN') {
     return {
-      back: '返回 AI 导师',
+      back: '返回学习助手',
       loading: '正在加载思维导图…',
       unavailable: '这张思维导图暂时不可用。',
       saved: '已保存',
@@ -205,7 +205,7 @@ function editorCopy(language: 'zh-CN' | 'en') {
   }
 
   return {
-    back: 'Back to AI Tutor',
+      back: 'Back to Study Helper',
     loading: 'Loading mind map…',
     unavailable: 'This mind map is unavailable.',
     saved: 'Saved',

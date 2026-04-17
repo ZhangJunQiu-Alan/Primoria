@@ -11,14 +11,14 @@ import { useAppSelector } from '@/shared/state/store';
 function pageCopy(language: 'zh-CN' | 'en') {
   if (language === 'zh-CN') {
     return {
-      back: '返回 AI 导师',
+      back: '返回学习助手',
       loading: '正在打开最近的思维导图…',
       empty: '还没有可打开的思维导图。',
     };
   }
 
   return {
-    back: 'Back to AI Tutor',
+    back: 'Back to Study Helper',
     loading: 'Opening your latest mind map…',
     empty: 'No saved mind maps are available yet.',
   };

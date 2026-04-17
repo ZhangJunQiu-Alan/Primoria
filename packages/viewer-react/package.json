@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5180",
-    "build": "tsc && vite build",
+    "build": "pnpm run typecheck && pnpm run check:i18n-hygiene && vite build",
     "preview": "vite preview --port 4180",
     "lint": "eslint src/ test/",
+    "check:i18n-hygiene": "node ./scripts/check-i18n-hygiene.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",

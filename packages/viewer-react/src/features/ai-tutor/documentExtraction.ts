@@ -1,4 +1,5 @@
 import pdfWorkerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url';
+import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import { countMeaningfulChars, extractMeaningfulChars } from '@/shared/utils/textStats';
 
 export type TutorUploadKind = 'pdf' | 'docx' | 'ppt' | 'doc' | 'unsupported';
@@ -30,6 +31,21 @@ const CHINESE_PAGE_NUMBER_PATTERN = /^第\s*\d+\s*页$/u;
 const ENGLISH_PAGE_NUMBER_PATTERN = /^page\s*\d+$/iu;
 const ENGLISH_PAGE_OF_NUMBER_PATTERN = /^page\s*\d+\s*of\s*\d+$/iu;
 
+const extractionCopy = {
+  'zh-CN': {
+    noUsableText: '无法从该资料中提取可用文本。',
+    unsupportedPpt: 'PPT/PPTX 暂不支持直接解析，请先导出为 PDF 再上传。',
+    unsupportedDoc: 'DOC 暂不支持直接解析，请另存为 DOCX 或 PDF 后再上传。',
+    unsupportedFile: '暂不支持这种文件类型，请上传 PDF 或 DOCX。',
+  },
+  en: {
+    noUsableText: 'No usable text could be extracted from this file.',
+    unsupportedPpt: 'PPT/PPTX is not supported directly yet. Export it to PDF first.',
+    unsupportedDoc: 'Legacy DOC is not supported yet. Save it as DOCX or PDF first.',
+    unsupportedFile: 'This file type is not supported yet. Upload a PDF or DOCX.',
+  },
+} as const;
+
 type PositionedPdfTextItem = {
   text: string;
   x: number;
@@ -43,6 +59,15 @@ type PdfMarginCandidate = {
   comparable: string;
   zone: 'top' | 'bottom';
 };
+
+function getExtractionCopy() {
+  const language =
+    typeof document === 'undefined'
+      ? 'zh-CN'
+      : normalizeViewerLanguage(document.documentElement.lang);
+
+  return extractionCopy[language];
+}
 
 function normalizeRawExtractedText(text: string) {
   return text
@@ -268,7 +293,7 @@ export function filterPdfMarginNoise(pages: string[][]) {
 
 function assertTutorTextUsable(text: string) {
   if (countMeaningfulChars(text) < MINIMUM_USABLE_TUTOR_TEXT_CHARS) {
-    throw new Error('无法从该资料中提取可用文本。');
+    throw new Error(getExtractionCopy().noUsableText);
   }
 }
 
@@ -311,17 +336,18 @@ async function extractDocxText(file: File) {
 
 export async function extractTutorDocumentText(file: File) {
   const kind = classifyTutorUpload(file);
+  const copy = getExtractionCopy();
 
   if (kind === 'ppt') {
-    throw new Error('PPT/PPTX 暂不支持直接解析，请先导出为 PDF 再上传。');
+    throw new Error(copy.unsupportedPpt);
   }
 
   if (kind === 'doc') {
-    throw new Error('DOC 暂不支持直接解析，请另存为 DOCX 或 PDF 后再上传。');
+    throw new Error(copy.unsupportedDoc);
   }
 
   if (kind === 'unsupported') {
-    throw new Error('暂不支持这种文件类型，请上传 PDF 或 DOCX。');
+    throw new Error(copy.unsupportedFile);
   }
 
   const text = kind === 'pdf' ? await extractPdfText(file) : await extractDocxText(file);

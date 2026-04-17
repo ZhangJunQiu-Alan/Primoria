@@ -106,6 +106,14 @@ export function LessonPage() {
     });
   }, [lessonId, location.key, runtimeQuery.data?.courseId]);
 
+  useEffect(() => {
+    if (!lessonId) {
+      return;
+    }
+
+    void import('@/features/lesson/LessonResultPage').catch(() => undefined);
+  }, [lessonId]);
+
   if (runtimeQuery.isLoading) {
     return (
       <PageContainer title={copy.lesson.titleFallback} subtitle={copy.lesson.loadingRuntime}>

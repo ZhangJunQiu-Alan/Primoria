@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('landing and protected route redirect work', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: /从创作到学习|From course creation to active learning/i }),
+    page.getByRole('heading', { name: /让开始学习这件事|Make it easier/i }),
   ).toBeVisible();
 
   await page.getByTestId('landing-hero-primary-cta').click();
@@ -66,13 +66,13 @@ test('demo learner can sign out from settings', async ({ page }) => {
   });
 
   await page.goto('/settings');
-  await page.getByRole('button', { name: /支持与关于|support & about/i }).click();
+  await page.getByRole('button', { name: /帮助与隐私|help & privacy/i }).click();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: /退出当前账号|sign out/i }).click();
+  await page.getByRole('button', { name: /退出账号|sign out/i }).click();
 
   await expect(page).toHaveURL(/\/$/);
   await expect(
-    page.getByRole('heading', { name: /从创作到学习|From course creation to active learning/i }),
+    page.getByRole('heading', { name: /让开始学习这件事|Make it easier/i }),
   ).toBeVisible();
 });
 
@@ -97,12 +97,12 @@ test('demo learner community changes persist across refresh', async ({ page }) =
   });
 
   await page.goto('/community');
-  await page.getByRole('button', { name: /messages/i }).click();
+  await page.getByRole('button', { name: /聊天|chat/i }).click();
   await page.getByPlaceholder(/发送一条消息/i).fill('Persistent e2e message');
   await page.getByRole('button', { name: /^发送$|^Send$/i }).click();
   await expect(page.getByText(/persistent e2e message/i)).toHaveCount(2);
 
   await page.reload();
-  await page.getByRole('button', { name: /messages/i }).click();
+  await page.getByRole('button', { name: /聊天|chat/i }).click();
   await expect(page.getByText(/persistent e2e message/i)).toHaveCount(2);
 });

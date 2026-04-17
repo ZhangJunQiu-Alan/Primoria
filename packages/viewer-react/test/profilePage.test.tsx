@@ -15,6 +15,6 @@ describe('ProfilePage', () => {
     await user.click(screen.getByRole('button', { name: /^设置$/i }));
 
     expect(locationRef.pathname).toBe('/settings');
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 10000 })).toBeInTheDocument();
   });
 });

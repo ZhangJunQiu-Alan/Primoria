@@ -8,10 +8,66 @@ type GeminiCandidate = {
   };
 };
 
+function extractBalancedJsonObject(text: string) {
+  for (let start = text.indexOf('{'); start !== -1; start = text.indexOf('{', start + 1)) {
+    let depth = 0;
+    let inString = false;
+    let isEscaped = false;
+
+    for (let index = start; index < text.length; index += 1) {
+      const char = text[index];
+
+      if (inString) {
+        if (isEscaped) {
+          isEscaped = false;
+        } else if (char === '\\') {
+          isEscaped = true;
+        } else if (char === '"') {
+          inString = false;
+        }
+        continue;
+      }
+
+      if (char === '"') {
+        inString = true;
+        continue;
+      }
+
+      if (char === '{') {
+        depth += 1;
+        continue;
+      }
+
+      if (char !== '}') {
+        continue;
+      }
+
+      depth -= 1;
+      if (depth !== 0) {
+        continue;
+      }
+
+      const candidate = text.slice(start, index + 1).trim();
+      try {
+        const parsed = JSON.parse(candidate) as unknown;
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+          return candidate;
+        }
+      } catch {
+        break;
+      }
+      break;
+    }
+  }
+
+  return null;
+}
+
 function normalizeGeneratedText(text: string) {
   const trimmed = text.trim();
   const fenced = /```(?:json)?\s*([\s\S]*?)```/i.exec(trimmed)?.[1];
-  return (fenced ?? trimmed).trim();
+  const normalized = (fenced ?? trimmed).trim();
+  return (extractBalancedJsonObject(normalized) ?? normalized).trim();
 }
 
 function extractCandidateText(candidate: GeminiCandidate) {

@@ -16,6 +16,7 @@ import {
   type LessonPageSessionState,
 } from '@/shared/lesson/questionFlow';
 import type { LessonRuntimeData } from '@/shared/lesson/types';
+import { viewerLanguageToLocale } from '@/shared/i18n/locale';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
@@ -182,6 +183,7 @@ export function LessonRuntimePlayer({
       buildWrongReviewItems(orderedPages, pageSessions),
     );
   }, [pageCount, pageEntries, pageSessions]);
+  const currentQuestionBlockId = pageState.currentQuestion?.blockId ?? null;
 
   const lessonAiContext = useMemo(
     () =>
@@ -191,11 +193,12 @@ export function LessonRuntimePlayer({
         blocks,
         pageSession,
         pageState,
+        locale: viewerLanguageToLocale(language),
+        blockId: currentQuestionBlockId,
       }),
-    [blocks, currentPageIndex, data, pageSession, pageState],
+    [blocks, currentPageIndex, currentQuestionBlockId, data, language, pageSession, pageState],
   );
 
-  const currentQuestionBlockId = pageState.currentQuestion?.blockId ?? null;
   const primaryButtonLabel = pageState.primaryAction === 'complete-lesson' ? copy.lesson.complete : copy.lesson.check;
   const primaryButtonDisabled = pageState.primaryAction === 'disabled';
 
@@ -322,7 +325,6 @@ export function LessonRuntimePlayer({
           },
         },
         {
-          provider: 'gemini',
           model: 'gemini-2.5-flash',
           allowModelFallback: false,
           context: lessonAiContext,

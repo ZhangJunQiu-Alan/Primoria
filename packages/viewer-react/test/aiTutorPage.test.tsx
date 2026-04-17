@@ -179,19 +179,19 @@ describe('AiTutorPage', () => {
     expect(screen.queryByText(/温柔引导/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/我会先帮你把目标收小、把压力降下来/i)).not.toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /我现在有点不知道从哪开始，可以先带我起步吗/i }, { timeout: 15000 })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /折叠工作台/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /折叠我可以帮你/i })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /生成报告/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /生成演示/i })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: /展开资料/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /展开笔记本/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /展开最近生成/i })).toBeInTheDocument();
     expect(screen.queryByText(/还没有上传资料/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/还没有生成内容/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/还没有最近结果/i)).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /展开资料/i }));
     expect(await screen.findByText(/还没有上传资料/i, {}, { timeout: 15000 })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /展开笔记本/i }));
-    expect(await screen.findByText(/还没有生成内容/i, {}, { timeout: 15000 })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /展开最近生成/i }));
+    expect(await screen.findByText(/还没有最近结果/i, {}, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
   it('uploads pdf and docx materials, then keeps them selected by default', async () => {
@@ -260,11 +260,11 @@ describe('AiTutorPage', () => {
     const view = renderRoute('/ai-tutor', 'user');
 
     expect(
-      await screen.findByText(/资料功能后端尚未部署到当前项目/i, {}, { timeout: 15000 }),
+      await screen.findByText(/现在还不能读取资料，请稍后再试/i, {}, { timeout: 15000 }),
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /上传资料/i })).toBeDisabled();
 
-    await user.click(screen.getByRole('link', { name: /首页/i }));
+    await user.click(screen.getByRole('link', { name: /继续学习/i }));
 
     expect(await screen.findByTestId('home-current-course-card', {}, { timeout: 15000 })).toBeInTheDocument();
     expect(view.locationRef.pathname).toBe('/home');
@@ -313,7 +313,7 @@ describe('AiTutorPage', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-    expect(screen.getByRole('button', { name: /折叠笔记本/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /折叠最近生成/i })).toBeInTheDocument();
     expect(screen.getByText(/正在生成测验课程/i)).toBeInTheDocument();
     expect(screen.getByText(/这可能需要一点时间/i)).toBeInTheDocument();
     expect(view.locationRef.pathname).toBe('/ai-tutor');
@@ -352,9 +352,9 @@ describe('AiTutorPage', () => {
     const dialog = await screen.findByRole('dialog', {}, { timeout: 15000 });
     await user.click(within(dialog).getByRole('button', { name: /创建测验课程/i }));
 
-    const errorCopies = await screen.findAllByText(/测验生成服务尚未部署到当前项目/i, {}, { timeout: 15000 });
+    const errorCopies = await screen.findAllByText(/现在还不能生成测验，请稍后再试/i, {}, { timeout: 15000 });
     expect(errorCopies.length).toBeGreaterThanOrEqual(2);
-    expect(screen.getByRole('button', { name: /折叠笔记本/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /折叠最近生成/i })).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /重试生成/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
@@ -379,7 +379,7 @@ describe('AiTutorPage', () => {
       { timeout: 15000 },
     );
     expect(errorCopies.length).toBeGreaterThanOrEqual(2);
-    expect(screen.queryByText(/测验生成服务尚未部署到当前项目/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/现在还不能生成测验，请稍后再试/i)).not.toBeInTheDocument();
   }, 30000);
 
   it('opens a saved quiz artifact from the notebook as a course route', async () => {
@@ -408,7 +408,7 @@ describe('AiTutorPage', () => {
     );
 
     const view = renderRoute('/ai-tutor', 'user');
-    await user.click(await screen.findByRole('button', { name: /展开笔记本/i }, { timeout: 15000 }));
+    await user.click(await screen.findByRole('button', { name: /展开最近生成/i }, { timeout: 15000 }));
     const openCourseCard = await screen.findByRole('button', { name: /文档测验课程/i }, { timeout: 15000 });
     expect(screen.getByText(/文档测验课程/i)).toBeInTheDocument();
 
@@ -449,10 +449,10 @@ describe('AiTutorPage', () => {
       );
     });
 
-    expect(await screen.findByText(/思维导图已生成，点击笔记本卡片即可在新标签页打开/i, {}, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByText(/思维导图已经准备好了，可以直接打开查看/i, {}, { timeout: 15000 })).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /document mind map/i })).not.toBeInTheDocument();
 
-    const expandNotebookButton = screen.queryByRole('button', { name: /展开笔记本/i });
+    const expandNotebookButton = screen.queryByRole('button', { name: /展开最近生成/i });
     if (expandNotebookButton) {
       await user.click(expandNotebookButton);
     }
@@ -491,7 +491,7 @@ describe('AiTutorPage', () => {
 
     renderRoute('/ai-tutor/mindmap', 'user');
 
-    expect(await screen.findByRole('link', { name: /返回 AI 导师/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /返回学习助手/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(screen.getByText(/physics review/i)).toBeInTheDocument();
     expect(screen.getByText(/motion/i)).toBeInTheDocument();
   }, 30000);
@@ -579,7 +579,7 @@ describe('AiTutorPage', () => {
     renderRoute('/ai-tutor', 'user');
 
     expect(await screen.findByText(/mock tutor reply/i, {}, { timeout: 15000 })).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /展开笔记本/i }));
+    await user.click(screen.getByRole('button', { name: /展开最近生成/i }));
     expect(await screen.findByRole('button', { name: /文档测验课程/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
@@ -587,22 +587,22 @@ describe('AiTutorPage', () => {
     const user = userEvent.setup();
     renderRoute('/ai-tutor', 'user');
 
-    expect(await screen.findByRole('button', { name: /折叠工作台/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /折叠我可以帮你/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /展开资料/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /展开笔记本/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /展开最近生成/i })).toBeInTheDocument();
     expect(screen.queryByText(/还没有上传资料/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/还没有生成内容/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/还没有最近结果/i)).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /展开资料/i }));
     expect(await screen.findByText(/还没有上传资料/i, {}, { timeout: 15000 })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /展开笔记本/i }));
-    expect(await screen.findByText(/还没有生成内容/i, {}, { timeout: 15000 })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /展开最近生成/i }));
+    expect(await screen.findByText(/还没有最近结果/i, {}, { timeout: 15000 })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /折叠资料/i }));
     await waitFor(() => {
       expect(screen.queryByText(/还没有上传资料/i)).not.toBeInTheDocument();
     });
-    expect(screen.getByRole('button', { name: /折叠笔记本/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /折叠最近生成/i })).toBeInTheDocument();
   }, 30000);
 });

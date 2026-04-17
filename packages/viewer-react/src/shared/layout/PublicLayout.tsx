@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import { usePublicCopy } from '@/features/public/publicCopy';
 import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 import { cn } from '@/shared/utils/cn';
 
 export function PublicLayout({
@@ -16,7 +17,8 @@ export function PublicLayout({
   aside?: React.ReactNode;
   className?: string;
 }) {
-  const copy = useViewerCopy();
+  const coreCopy = useCoreCopy();
+  const copy = usePublicCopy();
 
   return (
     <main className="min-h-screen px-4 py-6 md:px-8">
@@ -24,19 +26,19 @@ export function PublicLayout({
         <section className="rounded-[32px] border border-white/50 bg-slate-950/90 p-8 text-white shadow-2xl shadow-slate-900/20">
           <div className="flex items-center justify-between">
             <Link to="/" className="text-xl font-black tracking-[0.24em] uppercase text-white">
-              {copy.brand.name}
+              {coreCopy.brand.name}
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSwitcher tone="dark" />
               <div className="rounded-full border border-white/15 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-200">
-                {copy.landing.authPanel.badge}
+                {copy.layout.badge}
               </div>
             </div>
           </div>
 
           <div className="mt-14 max-w-xl space-y-5">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">
-              {copy.landing.eyebrow}
+              {copy.layout.eyebrow}
             </p>
             <h1 className="text-4xl font-black tracking-tight md:text-5xl">{title}</h1>
             <p className="text-base leading-7 text-slate-200">{subtitle}</p>

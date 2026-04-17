@@ -15,7 +15,7 @@ describe('SettingsPage', () => {
     const user = userEvent.setup();
     renderRoute('/settings', 'user');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 15000 })).toBeInTheDocument();
 
     const usernameInput = await screen.findByLabelText(/用户名/i);
     await user.clear(usernameInput);
@@ -27,16 +27,16 @@ describe('SettingsPage', () => {
       profile: { username: 'Refactor Learner' },
     });
 
-    await user.click(await screen.findByRole('button', { name: /学习偏好/i }));
+    await user.click(await screen.findByRole('button', { name: /学习与提醒/i }));
     const soundToggle = await screen.findByLabelText(/声音反馈/i);
     expect(soundToggle).toBeChecked();
     await user.click(soundToggle);
     expect(soundToggle).not.toBeChecked();
     expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"soundEnabled":false');
 
-    await user.click(await screen.findByRole('button', { name: /AI 导师/i }));
+    await user.click(await screen.findByRole('button', { name: /学习助手/i }));
     await user.click(await screen.findByRole('button', { name: /教练/i }));
-    const homeCompanionToggle = await screen.findByLabelText(/首页显示 AI 导师形象/i);
+    const homeCompanionToggle = await screen.findByLabelText(/首页显示学习助手形象/i);
     expect(homeCompanionToggle).toBeChecked();
     await user.click(homeCompanionToggle);
     expect(homeCompanionToggle).not.toBeChecked();
@@ -49,7 +49,7 @@ describe('SettingsPage', () => {
       });
     });
 
-    await user.click(await screen.findByRole('button', { name: /家长模式/i }));
+    await user.click(await screen.findByRole('button', { name: /家长查看/i }));
     await user.click(await screen.findByRole('button', { name: /生成绑定码/i }));
     expect(await screen.findByText(/DEMO-2419/i)).toBeInTheDocument();
   }, 30000);
@@ -58,14 +58,13 @@ describe('SettingsPage', () => {
     const user = userEvent.setup();
     renderRoute('/settings', 'user');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
-    await user.click(await screen.findByRole('button', { name: /显示与语言/i }));
+    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 15000 })).toBeInTheDocument();
     await user.click(await screen.findByRole('button', { name: /^深色$/i }));
     expect(document.documentElement.dataset.theme).toBe('dark');
     const englishButtons = await screen.findAllByRole('button', { name: /^English$/i });
     await user.click(englishButtons.at(-1)!);
 
-    expect(await screen.findByRole('heading', { name: /Settings Center/i })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /Account Settings/i })).toBeInTheDocument();
     expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"language":"en"');
     expect(window.localStorage.getItem(VIEWER_PREFERENCES_STORAGE_KEY)).toContain('"themeMode":"dark"');
     expect(JSON.parse(window.localStorage.getItem(VIEWER_FIXTURE_STORAGE_KEY) ?? '{}')).toMatchObject({
@@ -77,9 +76,9 @@ describe('SettingsPage', () => {
     const user = userEvent.setup();
     const { locationRef } = renderRoute('/settings', 'parent');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 15000 })).toBeInTheDocument();
 
-    await user.click(await screen.findByRole('button', { name: /支持与关于/i }));
+    await user.click(await screen.findByRole('button', { name: /帮助与隐私/i }));
     await user.click(await screen.findByRole('link', { name: /帮助中心/i }));
 
     expect(await screen.findByRole('heading', { name: /帮助中心/i }, { timeout: 15000 })).toBeInTheDocument();
@@ -91,11 +90,12 @@ describe('SettingsPage', () => {
     const user = userEvent.setup();
     const { locationRef } = renderRoute('/settings', 'user');
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 15000 })).toBeInTheDocument();
-    await user.click(await screen.findByRole('button', { name: /支持与关于/i }));
-    await user.click(await screen.findByRole('button', { name: /退出当前账号/i }));
+    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 15000 })).toBeInTheDocument();
+    await user.click(await screen.findByRole('button', { name: /帮助与隐私/i }));
+    const signOutButtons = await screen.findAllByRole('button', { name: /退出账号/i });
+    await user.click(signOutButtons.at(-1)!);
 
-    expect(await screen.findByRole('heading', { name: /从创作到学习/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /让开始学习这件事/i }, { timeout: 15000 })).toBeInTheDocument();
     expect(locationRef.pathname).toBe('/');
     expect(window.localStorage.getItem(DEMO_ROLE_STORAGE_KEY)).toBeNull();
   }, 30000);

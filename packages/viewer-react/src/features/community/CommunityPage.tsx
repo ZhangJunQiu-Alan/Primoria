@@ -20,62 +20,36 @@ import { captureViewerError, captureViewerEvent } from '@/shared/platform/observ
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { cn } from '@/shared/utils/cn';
-import { publicAssetPath } from '@/shared/utils/publicAsset';
 import {
   FileText,
   Heart,
-  LayoutDashboard,
   MessageSquare,
   Plus,
   Search,
   Trash2,
   TrendingUp,
-  UserPlus,
   Users,
 } from 'lucide-react';
 
-type Section = 'dashboard' | 'study' | 'messages' | 'trending' | 'notes';
+type Section = 'study' | 'messages' | 'trending' | 'notes';
 type StatusState = { tone: 'success' | 'error'; message: string } | null;
 
 function parseCommunitySection(value: string | null | undefined): Section {
-  return value === 'study' || value === 'messages' || value === 'trending' || value === 'notes' ? value : 'dashboard';
+  return value === 'messages' || value === 'trending' || value === 'notes' ? value : 'study';
 }
 
 const sectionVisuals: Record<
   Section,
   {
-    icon: typeof LayoutDashboard;
+    icon: typeof Users;
     badge?: number;
   }
 > = {
-  dashboard: { icon: LayoutDashboard },
   study: { icon: Users },
   messages: { icon: MessageSquare },
   trending: { icon: TrendingUp },
   notes: { icon: FileText },
 };
-
-const dashboardPositions = [
-  { left: '33%', top: '29%' },
-  { left: '42%', top: '21%' },
-  { left: '55%', top: '14%' },
-  { left: '67%', top: '22%' },
-  { left: '78%', top: '35%' },
-  { left: '72%', top: '58%' },
-  { left: '60%', top: '76%' },
-  { left: '48%', top: '69%' },
-  { left: '39%', top: '52%' },
-  { left: '33%', top: '66%' },
-  { left: '60%', top: '35%' },
-  { left: '71%', top: '46%' },
-] as const;
-
-const dashboardNodePalette = [
-  { dot: '#98dca5', glow: 'rgba(152, 220, 165, 0.42)' },
-  { dot: '#87c6ff', glow: 'rgba(135, 198, 255, 0.4)' },
-  { dot: '#bea2ff', glow: 'rgba(190, 162, 255, 0.42)' },
-  { dot: '#eb9cd3', glow: 'rgba(235, 156, 211, 0.4)' },
-] as const;
 
 // ── Notes module-level helpers ──────────────────────────────────────────────
 
@@ -401,11 +375,10 @@ export function CommunityPage() {
   );
 
   const sectionItems = [
-    { id: 'dashboard' as const, label: copy.community.sections[0] },
-    { id: 'study' as const, label: copy.community.sections[1] },
-    { id: 'messages' as const, label: copy.community.sections[2] },
-    { id: 'trending' as const, label: copy.community.sections[3] },
-    { id: 'notes' as const, label: copy.community.sections[4] },
+    { id: 'study' as const, label: copy.community.sections[0] },
+    { id: 'messages' as const, label: copy.community.sections[1] },
+    { id: 'trending' as const, label: copy.community.sections[2] },
+    { id: 'notes' as const, label: copy.community.sections[3] },
   ];
 
   function addBlankNote() {
@@ -584,7 +557,7 @@ export function CommunityPage() {
               >
                 {copy.community.title}
               </h1>
-              <p className="viewer-botanical-eyebrow">{'主导航'}</p>
+              <p className="viewer-botanical-eyebrow">{language === 'zh-CN' ? '选一个你现在要做的事' : 'Pick what you want to do now'}</p>
             </div>
           </div>
 
@@ -627,8 +600,8 @@ export function CommunityPage() {
               <p className="viewer-botanical-eyebrow">{language === 'zh-CN' ? '导师上下文' : 'Tutor context'}</p>
               <div className="mt-2 text-[1rem] font-semibold leading-7 text-[#4d4239]">
                 {language === 'zh-CN'
-                  ? `正在围绕《${companionTopic}》查看你的社区笔记与讨论。这里先提供上下文入口，不代表严格的课程过滤结果。`
-                  : `Opening Community around "${companionTopic}". This is a contextual entry point, not a strict course-level filter yet.`}
+                  ? `你是从《${companionTopic}》进入这里的，可以直接去看相关笔记和讨论。`
+                  : `You came in from "${companionTopic}". Jump straight into related notes and discussion.`}
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
@@ -659,70 +632,6 @@ export function CommunityPage() {
               )}
             >
               {status.message}
-            </div>
-          ) : null}
-
-          {section === 'dashboard' ? (
-            <div
-              className="relative min-h-[640px] overflow-hidden rounded-[30px] border border-[#d9e6de] shadow-[0_20px_52px_rgba(90,70,50,0.09)]"
-              style={{
-                background: `
-                  radial-gradient(circle at 16% 18%, rgba(213, 245, 220, 0.9), transparent 25%),
-                  radial-gradient(circle at 34% 32%, rgba(206, 231, 255, 0.78), transparent 28%),
-                  radial-gradient(circle at 76% 20%, rgba(234, 220, 255, 0.82), transparent 30%),
-                  radial-gradient(circle at 82% 74%, rgba(244, 214, 246, 0.72), transparent 28%),
-                  linear-gradient(135deg, rgba(245, 250, 246, 0.98) 0%, rgba(231, 246, 239, 0.95) 24%, rgba(232, 242, 255, 0.93) 50%, rgba(244, 236, 255, 0.94) 76%, rgba(249, 243, 252, 0.97) 100%)
-                `,
-              }}
-            >
-              <div className="absolute left-5 top-5 z-20 flex gap-3">
-                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#d7e6df] bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(239,248,244,0.78))] text-[#55506a] shadow-[0_10px_22px_rgba(111,124,170,0.08)] backdrop-blur-md">
-                  <Users size={25} />
-                </button>
-                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#d7e6df] bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(244,240,255,0.78))] text-[#55506a] shadow-[0_10px_22px_rgba(111,124,170,0.08)] backdrop-blur-md">
-                  <UserPlus size={25} />
-                </button>
-              </div>
-
-              <div className="absolute right-7 top-7 z-20 rounded-[22px] border border-[#d8e2ea] bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(239,246,251,0.78))] px-5 py-4 shadow-[0_12px_26px_rgba(111,124,170,0.08)] backdrop-blur-md">
-                <div className="text-[1rem] font-black text-[#615b78]">{`已连接 ${people.length + 15}`}</div>
-                <div className="mt-2.5 text-[1rem] font-black text-[#618a71]">{`在线 ${Math.max(people.filter((person) => person.status === 'online').length, 14)}`}</div>
-              </div>
-
-              <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(161,224,178,0.16),rgba(255,255,255,0)_34%,rgba(150,201,255,0.14)_66%,rgba(221,186,255,0.18)_100%)]" />
-                <div className="absolute left-[34%] top-[34%] h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(173, 243, 190, 0.22)] blur-[78px]" />
-                <div className="absolute left-[62%] top-[28%] h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(190, 164, 255, 0.2)] blur-[82px]" />
-                <div className="absolute left-1/2 top-[54%] h-[540px] w-[540px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.68),rgba(244,241,255,0.24)_52%,rgba(255,255,255,0)_76%)]" />
-                <img
-                  src={publicAssetPath('Community_plant..png')}
-                  alt="Community planet"
-                  className="pointer-events-none absolute left-1/2 top-1/2 h-[580px] w-[580px] -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.98]"
-                  style={{
-                    filter:
-                      'drop-shadow(0 26px 56px rgba(148, 118, 255, 0.18)) drop-shadow(0 0 42px rgba(146, 241, 184, 0.18))',
-                  }}
-                />
-              </div>
-
-              {people.slice(0, dashboardPositions.length).map((person, index) => {
-                const position = dashboardPositions[index];
-                const palette = dashboardNodePalette[index % dashboardNodePalette.length];
-                return (
-                  <div key={person.id} className="absolute z-20" style={position}>
-                    <div
-                      className="mx-auto h-7 w-7 rounded-full border border-white/70"
-                      style={{
-                        backgroundColor: palette.dot,
-                        boxShadow: `0 0 0 6px rgba(255,255,255,0.26), 0 0 22px ${palette.glow}`,
-                      }}
-                    />
-                    <div className="mt-2 text-center text-[0.84rem] font-semibold tracking-[-0.01em] text-[#5a5670] [text-shadow:0_1px_0_rgba(255,255,255,0.78)]">
-                      {person.display_name}
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           ) : null}
 

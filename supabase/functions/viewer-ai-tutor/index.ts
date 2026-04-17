@@ -19,6 +19,10 @@ type TutorPersona = 'gentle' | 'socratic' | 'coach';
 
 type TutorContext = {
   surface?: string;
+  courseId?: string;
+  lessonId?: string;
+  blockId?: string;
+  locale?: string;
   lessonTitle?: string;
   pageIndex?: number;
   pageCount?: number;
@@ -61,6 +65,10 @@ function buildContextPrompt(context: TutorContext | null) {
   const lines = [
     'Runtime context:',
     context.surface ? `Surface: ${context.surface}` : '',
+    context.courseId ? `Course ID: ${context.courseId}` : '',
+    context.lessonId ? `Lesson ID: ${context.lessonId}` : '',
+    context.blockId ? `Block ID: ${context.blockId}` : '',
+    context.locale ? `Locale: ${context.locale}` : '',
     context.lessonTitle ? `Lesson: ${context.lessonTitle}` : '',
     typeof context.pageIndex === 'number' && typeof context.pageCount === 'number'
       ? `Page: ${context.pageIndex} of ${context.pageCount}`
@@ -142,6 +150,10 @@ serve(async (req) => {
       context && typeof context === 'object'
         ? {
             surface: typeof context.surface === 'string' ? context.surface.trim() : undefined,
+            courseId: typeof context.courseId === 'string' ? context.courseId.trim() : undefined,
+            lessonId: typeof context.lessonId === 'string' ? context.lessonId.trim() : undefined,
+            blockId: typeof context.blockId === 'string' ? context.blockId.trim() : undefined,
+            locale: typeof context.locale === 'string' ? context.locale.trim() : undefined,
             lessonTitle: typeof context.lessonTitle === 'string' ? context.lessonTitle.trim() : undefined,
             pageIndex: typeof context.pageIndex === 'number' ? context.pageIndex : undefined,
             pageCount: typeof context.pageCount === 'number' ? context.pageCount : undefined,
@@ -195,6 +207,7 @@ serve(async (req) => {
             generationConfig: {
               temperature: 0.6,
               maxOutputTokens: 1024,
+              responseMimeType: 'application/json',
             },
           }),
         },
@@ -207,14 +220,31 @@ serve(async (req) => {
 
       const payload = (await response.json()) as Record<string, unknown>;
       const candidateTexts = extractNormalizedGeminiCandidateTexts(payload);
-      const text = candidateTexts[0] ?? '';
-      if (!text) {
+      if (!candidateTexts.length) {
         lastError = 'AI Tutor returned an empty response.';
         continue;
       }
 
+      let parsed: Record<string, unknown> | null = null;
+      for (const text of candidateTexts) {
+        try {
+          const candidate = JSON.parse(text) as unknown;
+          if (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) {
+            parsed = candidate as Record<string, unknown>;
+            break;
+          }
+        } catch {
+          continue;
+        }
+      }
+
+      if (!parsed) {
+        lastError = 'AI Tutor returned invalid JSON.';
+        continue;
+      }
+
       return new Response(
-        text,
+        JSON.stringify(parsed),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
       );
     }
