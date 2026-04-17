@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "80e59a0312a2",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "packages/viewer-react/src/features/editor/preview/LearnerBlockRenderer.tsx",
+    "packages/viewer-react/src/shared/lesson/LearnerBlockRenderer.tsx",
+    "packages/viewer-react/src/shared/utils/seededShuffle.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/quizCompiler.test.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/quizCompiler.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/quizHelpers.test.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/quizHelpers.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/80/e59a0312a2/0/metadata.json",
+      "transcript": "/80/e59a0312a2/0/full.jsonl",
+      "content_hash": "/80/e59a0312a2/0/content_hash.txt",
+      "prompt": "/80/e59a0312a2/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 64,
+    "cache_creation_tokens": 67822,
+    "cache_read_tokens": 2577787,
+    "output_tokens": 21362,
+    "api_call_count": 44
+  }
+}
