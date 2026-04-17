@@ -261,6 +261,7 @@ describe('tutorDocumentsApi', () => {
       createQuizFromDocs({
         documentIds: ['doc-1'],
         questionCount: 10,
+        language: 'en',
       }),
     ).rejects.toMatchObject({
       code: 'TUTOR_QUIZ_SERVICE_UNAVAILABLE',
@@ -295,6 +296,7 @@ describe('tutorDocumentsApi', () => {
       createQuizFromDocs({
         documentIds: ['doc-1'],
         questionCount: 10,
+        language: 'en',
       }),
     ).rejects.toThrow('The selected documents are too long. Remove some and try again.');
   });

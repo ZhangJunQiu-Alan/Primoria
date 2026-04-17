@@ -129,9 +129,12 @@ export type CreateMindMapFromDocsResponse = {
   root: LegacyMindMapNode;
 };
 
+export type QuizOutputLanguage = 'en' | 'zh-CN';
+
 export type CreateQuizFromDocsRequest = {
   documentIds: string[];
   questionCount: number;
+  language: QuizOutputLanguage;
 };
 
 export type CreateQuizFromDocsResponse = {
