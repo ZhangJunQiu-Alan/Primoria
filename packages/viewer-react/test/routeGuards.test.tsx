@@ -11,6 +11,6 @@ describe('viewer route guards', () => {
   it('redirects parent users away from learner routes', async () => {
     renderRoute('/home', 'parent');
 
-    expect(await screen.findByRole('heading', { name: /家长看板/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /家长查看/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 });

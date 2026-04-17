@@ -1,6 +1,6 @@
 # 技术债清单
 
-最后更新：2026-04-16
+最后更新：2026-04-18
 
 ## 目的
 
@@ -8,11 +8,11 @@
 
 ## 1. 高优先级
 
-### 1.1 基线测试当前不是全绿
+_当前无未解决高优先级项。_
 
-- 现状：`pnpm test` 当前会失败。已确认失败用例：`packages/viewer-react/test/settingsPage.test.tsx`
-- 影响：主干不具备"测试通过即可合并/发布"的最低可信度；后续改动很难判断是新回归还是旧问题未清。
-- 建议：修复设置中心到帮助中心的路由回归，将 `pnpm test` 恢复为稳定绿线。
+> 已解决
+>
+> - **1.1 基线测试当前不是全绿**（2026-04-18）：`7d1f5a8a` 改过的文案（家长页标题、home 库 CTA、社区导航）同步回 `routeGuards` / `parentDashboardPage` / `homePage` 测试；mindmap 编辑器 undo/redo 与 marker 断言改为 `waitFor`，避免并发下的批次更新 race。`pnpm --filter @primoria/viewer-react test` 现为 137/137 稳定绿。
 
 ## 2. 中优先级
 
