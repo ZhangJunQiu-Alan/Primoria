@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "9d749458d8ed",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 9,
+  "files_touched": [
+    ".github/workflows/viewer-react-ci.yml",
+    "eslint.config.mjs",
+    "package.json",
+    "packages/db/package.json",
+    "packages/schema/package.json",
+    "packages/viewer-react/package.json",
+    "packages/viewer-react/src/features/editor/EditorLayout.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/FillBlankPanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/FunctionFlowPanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/InteractiveVisualPanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/MatchingPanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/MetadataPanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/MultipleChoicePanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/TrueFalsePanel.tsx",
+    "packages/viewer-react/src/features/editor/properties/panels/VideoPanel.tsx",
+    "packages/viewer-react/src/features/home/Live2DHeroModel.tsx",
+    "packages/viewer-react/src/features/profile/achievementPresentation.ts",
+    "packages/viewer-react/src/pages/dashboard/DashboardPage.tsx",
+    "packages/viewer-react/src/shared/api/supabase.ts",
+    "packages/viewer-react/vite.config.ts",
+    "pnpm-lock.yaml",
+    "supabase/functions/_shared/geminiResponse.test.ts",
+    "supabase/functions/viewer-ai-mindmap-from-docs/index.ts",
+    "supabase/functions/viewer-ai-mindmap-from-docs/mindmapHelpers.test.ts",
+    "supabase/functions/viewer-ai-mindmap-from-docs/mindmapHelpers.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/index.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/quizHelpers.test.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/quizHelpers.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/9d/749458d8ed/0/metadata.json",
+      "transcript": "/9d/749458d8ed/0/full.jsonl",
+      "content_hash": "/9d/749458d8ed/0/content_hash.txt",
+      "prompt": "/9d/749458d8ed/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 184,
+    "cache_creation_tokens": 351746,
+    "cache_read_tokens": 13946373,
+    "output_tokens": 91749,
+    "api_call_count": 158
+  }
+}
