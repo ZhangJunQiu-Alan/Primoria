@@ -86,3 +86,24 @@ Deno.test('buildQuizPrompt: output is plain JSON instruction, no markdown wrappe
   assertContains(prompt, '只输出 JSON');
   assertContains(prompt, '直接从 { 开始');
 });
+
+Deno.test('buildQuizPrompt: declares 80/10/10 ratio split', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10);
+  assertContains(prompt, '合计约 80%');
+  assertContains(prompt, 'tf（判断）：约 10%');
+  assertContains(prompt, 'match（匹配）：约 10%');
+});
+
+Deno.test('buildQuizPrompt: forbids clustering same question types', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10);
+  assertContains(prompt, '穿插排列');
+  assertContains(prompt, '严禁两道及以上相同 type 连续出现');
+});
+
+Deno.test('buildQuizPrompt: enforces option length consistency for mc questions', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10);
+  assertContains(prompt, '字符长度差异必须 ≤ 10%');
+});

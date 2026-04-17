@@ -132,8 +132,43 @@ function buildBlock(question: QuizQuestion, order: number) {
   return buildMatchingBlock(question, order);
 }
 
+export function interleaveQuestionTypes(questions: QuizQuestion[]): QuizQuestion[] {
+  const buckets = new Map<QuizQuestion['type'], QuizQuestion[]>();
+  for (const question of questions) {
+    const bucket = buckets.get(question.type);
+    if (bucket) {
+      bucket.push(question);
+    } else {
+      buckets.set(question.type, [question]);
+    }
+  }
+
+  const result: QuizQuestion[] = [];
+  let lastType: QuizQuestion['type'] | null = null;
+  const total = questions.length;
+
+  while (result.length < total) {
+    const entries = Array.from(buckets.entries()).filter(([, items]) => items.length > 0);
+    if (entries.length === 0) {
+      break;
+    }
+
+    entries.sort((a, b) => b[1].length - a[1].length);
+    const preferred = entries.find(([type]) => type !== lastType) ?? entries[0];
+    const next = preferred[1].shift();
+    if (!next) {
+      break;
+    }
+    result.push(next);
+    lastType = preferred[0];
+  }
+
+  return result;
+}
+
 export function compileQuizDslToLessonContent(dsl: QuizDsl) {
-  const pages = dsl.questions.reduce<Array<{ page_id: string; order: number; blocks: unknown[] }>>(
+  const interleavedQuestions = interleaveQuestionTypes(dsl.questions);
+  const pages = interleavedQuestions.reduce<Array<{ page_id: string; order: number; blocks: unknown[] }>>(
     (accumulator, question, index) => {
       const pageIndex = Math.floor(index / 5);
       const current =
