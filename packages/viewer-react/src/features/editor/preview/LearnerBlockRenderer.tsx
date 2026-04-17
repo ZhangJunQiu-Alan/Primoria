@@ -1,6 +1,7 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { Block } from '@primoria/schema';
+import { seededShuffle } from '@/shared/utils/seededShuffle';
 import { BlockRenderer } from './BlockRenderer';
 
 interface LearnerBlockRendererProps {
@@ -241,6 +242,10 @@ function MatchingPreview({
     pairs?: Array<{ id: string; left: string; right: string }>;
   };
   const pairs = c.pairs ?? [];
+  const shuffledRightOptions = useMemo(
+    () => seededShuffle(pairs, `${block.id}:right`),
+    [block.id, pairs],
+  );
   const [selectedPairs, setSelectedPairs] = useState<Record<string, string>>({});
 
   const isCorrect =
@@ -275,7 +280,7 @@ function MatchingPreview({
             className="rounded-md border bg-background px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
           >
             <option value="">Select a match</option>
-            {pairs.map((option) => (
+            {shuffledRightOptions.map((option) => (
               <option key={`${pair.id}-${option.id}`} value={option.right}>
                 {option.right}
               </option>
