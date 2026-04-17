@@ -12,7 +12,7 @@ import {
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const DEFAULT_MODEL = 'gemini-2.0-flash';
 const FALLBACK_MODELS = ['gemini-2.5-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
-const MAX_OUTPUT_TOKENS = 8192;
+const MAX_OUTPUT_TOKENS = 16384;
 const MAX_COMBINED_TEXT_LENGTH = 70_000;
 const DOCUMENT_SELECT_FIELDS = 'id, filename, display_title, extracted_text';
 const LEGACY_DOCUMENT_SELECT_FIELDS = 'id, filename, extracted_text';
@@ -126,7 +126,54 @@ const GEMINI_OVERLOADED_MESSAGES: Record<QuizOutputLanguage, string> = {
   'zh-CN': '请稍后重试，这是 Gemini 服务端临时过载。',
 };
 
-async function generateQuizDsl(prompt: string, questionCount: number, language: QuizOutputLanguage) {
+function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescription: string): unknown {
+  if (Array.isArray(parsed)) {
+    return {
+      title: fallbackTitle,
+      description: fallbackDescription,
+      difficulty: 'intermediate',
+      questions: parsed,
+    };
+  }
+
+  if (!parsed || typeof parsed !== 'object') {
+    return parsed;
+  }
+
+  const record = parsed as Record<string, unknown>;
+  const inner =
+    (record.quiz && typeof record.quiz === 'object' ? record.quiz : null) ??
+    (record.data && typeof record.data === 'object' ? record.data : null);
+  const base = (inner ?? record) as Record<string, unknown>;
+
+  let questions = base.questions;
+  if (!Array.isArray(questions)) {
+    // if top-level object itself *is* a single question (unlikely), or questions key is named differently
+    if (Array.isArray((record as Record<string, unknown>).items)) {
+      questions = (record as Record<string, unknown>).items;
+    } else if (Array.isArray((record as Record<string, unknown>).list)) {
+      questions = (record as Record<string, unknown>).list;
+    }
+  }
+
+  return {
+    title: typeof base.title === 'string' && base.title.trim().length > 0 ? base.title : fallbackTitle,
+    description:
+      typeof base.description === 'string' && base.description.trim().length > 0
+        ? base.description
+        : fallbackDescription,
+    difficulty: typeof base.difficulty === 'string' ? base.difficulty : 'intermediate',
+    questions: Array.isArray(questions) ? questions : base.questions,
+  };
+}
+
+async function generateQuizDsl(
+  prompt: string,
+  questionCount: number,
+  language: QuizOutputLanguage,
+  fallbackTitle: string,
+  fallbackDescription: string,
+) {
   const geminiApiKey = getEnv('GEMINI_API_KEY');
   let lastError = 'AI quiz generation failed.';
   let sawOverload = false;
@@ -165,28 +212,34 @@ async function generateQuizDsl(prompt: string, questionCount: number, language: 
       continue;
     }
 
-    let parsed: unknown;
-    let parsedSuccessfully = false;
+    console.log(
+      `[viewer-ai-quiz-from-docs] model=${model} candidates=${candidateTexts.length} first_preview=${candidateTexts[0].slice(0, 240)}`,
+    );
+
+    let dsl: QuizDsl | null = null;
+    let candidateError = 'Gemini returned invalid quiz JSON.';
+
     for (const text of candidateTexts) {
+      let parsed: unknown;
       try {
         parsed = JSON.parse(text);
-        parsedSuccessfully = true;
+      } catch (error) {
+        candidateError = error instanceof Error ? error.message : 'invalid JSON';
+        continue;
+      }
+
+      const salvaged = salvageQuizShape(parsed, fallbackTitle, fallbackDescription);
+      try {
+        dsl = QuizDslSchema.parse(salvaged);
         break;
-      } catch {
+      } catch (error) {
+        candidateError = error instanceof Error ? error.message : 'schema validation failed';
         continue;
       }
     }
 
-    if (!parsedSuccessfully) {
-      lastError = 'Gemini returned invalid JSON.';
-      continue;
-    }
-
-    let dsl: QuizDsl;
-    try {
-      dsl = QuizDslSchema.parse(parsed);
-    } catch (error) {
-      lastError = error instanceof Error ? error.message : 'Quiz schema validation failed.';
+    if (!dsl) {
+      lastError = candidateError;
       continue;
     }
 
@@ -267,7 +320,20 @@ serve(async (req) => {
       });
     }
 
-    const dsl = await generateQuizDsl(buildQuizPrompt(orderedDocuments, questionCount, language), questionCount, language);
+    const fallbackSource = orderedDocuments[0]?.display_title?.trim() || orderedDocuments[0]?.filename || 'Study Materials';
+    const fallbackTitle = language === 'zh-CN' ? `${fallbackSource} · AI 复习测验` : `${fallbackSource} — AI Review Quiz`;
+    const fallbackDescription =
+      language === 'zh-CN'
+        ? '由 AI 根据上传的学习资料自动生成的复习测验。'
+        : 'An AI-generated review quiz based on your uploaded study materials.';
+
+    const dsl = await generateQuizDsl(
+      buildQuizPrompt(orderedDocuments, questionCount, language),
+      questionCount,
+      language,
+      fallbackTitle,
+      fallbackDescription,
+    );
     const compiled = compileQuizDslToLessonContent(dsl);
     const courseId = crypto.randomUUID();
 

@@ -7,6 +7,7 @@ import {
   normalizeMindMapNodeStyle,
   normalizeMindMapTheme,
 } from '@/features/ai-tutor/mindMapAppearance';
+import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import type {
   CreateMindMapFromDocsRequest,
   CreateMindMapFromDocsResponse,
@@ -40,10 +41,58 @@ const TUTOR_DOCUMENT_SELECT_FIELDS =
 const LEGACY_TUTOR_DOCUMENT_SELECT_FIELDS =
   'id, filename, mime_type, extracted_chars, created_at, updated_at';
 
+const tutorDocsCopy = {
+  'zh-CN': {
+    displayTitleUnavailable: '资料标题更新需要先应用最新的 Supabase 数据库迁移。',
+    invalidQuizResponse: 'AI 导师返回了无效的测验课程结果。',
+    invalidMindMapResponse: 'AI 导师返回了无效的思维导图结果。',
+    signInUpload: '请先登录后再上传资料。',
+    signInGenerateQuiz: '请先登录后再生成测验。',
+    demoUpload: '演示模式暂不支持资料上传。',
+    noUsableText: '无法从该资料中提取可用文本。',
+    demoRename: '演示模式暂不支持资料标题修改。',
+    demoDelete: '演示模式暂不支持资料删除。',
+    demoMindMapEdit: '演示模式暂不支持思维导图编辑。',
+    demoMindMapSave: '演示模式暂不支持思维导图保存。',
+    demoMindMapDelete: '演示模式暂不支持思维导图删除。',
+    demoQuiz: '演示模式暂不支持文档测验生成。',
+    demoMindMapCreate: '演示模式暂不支持文档思维导图生成。',
+    quizUnavailable: '暂时无法创建测验课程。',
+    mindMapUnavailable: '暂时无法创建思维导图。',
+  },
+  en: {
+    displayTitleUnavailable: 'Display title updates require the latest Supabase database migration.',
+    invalidQuizResponse: 'AI Tutor returned an invalid quiz course response.',
+    invalidMindMapResponse: 'AI Tutor returned an invalid mind map response.',
+    signInUpload: 'Please sign in before uploading materials.',
+    signInGenerateQuiz: 'Please sign in before generating a quiz.',
+    demoUpload: 'Uploading materials is not available in demo mode.',
+    noUsableText: 'No usable text could be extracted from this file.',
+    demoRename: 'Renaming material titles is not available in demo mode.',
+    demoDelete: 'Deleting materials is not available in demo mode.',
+    demoMindMapEdit: 'Mind map editing is not available in demo mode.',
+    demoMindMapSave: 'Mind map saving is not available in demo mode.',
+    demoMindMapDelete: 'Mind map deletion is not available in demo mode.',
+    demoQuiz: 'Quiz generation from documents is not available in demo mode.',
+    demoMindMapCreate: 'Mind map generation from documents is not available in demo mode.',
+    quizUnavailable: 'Unable to create quiz course right now.',
+    mindMapUnavailable: 'Unable to create mind map right now.',
+  },
+} as const;
+
 type QueryResult = {
   data: unknown;
   error: unknown;
 };
+
+function getTutorDocsCopy() {
+  const language =
+    typeof document === 'undefined'
+      ? 'zh-CN'
+      : normalizeViewerLanguage(document.documentElement.lang);
+
+  return tutorDocsCopy[language];
+}
 
 function readBackendErrorText(error: unknown) {
   if (error instanceof Error && error.message.trim()) {
@@ -98,7 +147,7 @@ async function runTutorDocumentQueryWithLegacyFallback(
 }
 
 function createDisplayTitleUnavailableError() {
-  return Object.assign(new Error('Display title updates require the latest Supabase database migration.'), {
+  return Object.assign(new Error(getTutorDocsCopy().displayTitleUnavailable), {
     code: TUTOR_DISPLAY_TITLE_UNAVAILABLE_CODE,
   });
 }
@@ -121,7 +170,7 @@ function normalizeQuizResponse(value: unknown): CreateQuizFromDocsResponse {
   const courseTitle = typeof payload.courseTitle === 'string' ? payload.courseTitle : '';
 
   if (!courseId || !courseTitle) {
-    throw new Error('AI Tutor returned an invalid quiz course response.');
+    throw new Error(getTutorDocsCopy().invalidQuizResponse);
   }
 
   return { courseId, courseTitle };
@@ -216,7 +265,7 @@ function normalizeMindMapResponse(value: unknown): CreateMindMapFromDocsResponse
   const root = payload.root;
 
   if (!title || !mindMapId || !isLegacyMindMapNode(root)) {
-    throw new Error('AI Tutor returned an invalid mind map response.');
+    throw new Error(getTutorDocsCopy().invalidMindMapResponse);
   }
 
   return {
@@ -317,7 +366,7 @@ async function requireTutorUserId() {
 
   const userId = data.user?.id?.trim();
   if (!userId) {
-    throw new Error('请先登录后再上传资料。');
+    throw new Error(getTutorDocsCopy().signInUpload);
   }
 
   return userId;
@@ -331,7 +380,7 @@ async function getTutorAccessToken() {
 
   const accessToken = data.session?.access_token?.trim();
   if (!accessToken) {
-    throw new Error('Please sign in before generating a quiz.');
+    throw new Error(getTutorDocsCopy().signInGenerateQuiz);
   }
 
   return accessToken;
@@ -436,12 +485,12 @@ export async function createTutorDocument(payload: {
   extractedText: string;
 }) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持资料上传。');
+    throw new Error(getTutorDocsCopy().demoUpload);
   }
 
   const normalizedText = payload.extractedText.trim();
   if (!normalizedText) {
-    throw new Error('无法从该资料中提取可用文本。');
+    throw new Error(getTutorDocsCopy().noUsableText);
   }
   const userId = await requireTutorUserId();
 
@@ -465,7 +514,7 @@ export async function createTutorDocument(payload: {
 
 export async function updateTutorDocumentTitle(documentId: string, displayTitle: string) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持资料标题修改。');
+    throw new Error(getTutorDocsCopy().demoRename);
   }
 
   const nextDisplayTitle = displayTitle.trim();
@@ -490,7 +539,7 @@ export async function updateTutorDocumentTitle(documentId: string, displayTitle:
 
 export async function deleteTutorDocument(documentId: string) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持资料删除。');
+    throw new Error(getTutorDocsCopy().demoDelete);
   }
 
   const { error } = await supabase.from('tutor_documents').delete().eq('id', documentId);
@@ -518,7 +567,7 @@ export async function listMindMaps() {
 
 export async function fetchMindMap(mindMapId: string) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持思维导图编辑。');
+    throw new Error(getTutorDocsCopy().demoMindMapEdit);
   }
 
   const { data, error } = await supabase
@@ -549,7 +598,7 @@ export async function updateMindMap(
     },
 ) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持思维导图保存。');
+    throw new Error(getTutorDocsCopy().demoMindMapSave);
   }
 
   const title = typeof payload.title === 'string' ? payload.title.trim() : '';
@@ -582,7 +631,7 @@ export async function updateMindMap(
 
 export async function deleteMindMap(mindMapId: string) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持思维导图删除。');
+    throw new Error(getTutorDocsCopy().demoMindMapDelete);
   }
 
   const { error } = await supabase.from('ai_tutor_mindmaps').delete().eq('id', mindMapId);
@@ -593,7 +642,7 @@ export async function deleteMindMap(mindMapId: string) {
 
 export async function createQuizFromDocs(payload: CreateQuizFromDocsRequest) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持文档测验生成。');
+    throw new Error(getTutorDocsCopy().demoQuiz);
   }
 
   const accessToken = await getTutorAccessToken();
@@ -607,7 +656,7 @@ export async function createQuizFromDocs(payload: CreateQuizFromDocsRequest) {
   if (error) {
     await normalizeDocsToolInvocationError(error, {
       unavailableCode: QUIZ_SERVICE_UNAVAILABLE_CODE,
-      fallbackMessage: 'Unable to create quiz course.',
+      fallbackMessage: getTutorDocsCopy().quizUnavailable,
     });
   }
 
@@ -616,7 +665,7 @@ export async function createQuizFromDocs(payload: CreateQuizFromDocsRequest) {
 
 export async function createMindMapFromDocs(payload: CreateMindMapFromDocsRequest) {
   if (usesViewerFixtures()) {
-    throw new Error('演示模式暂不支持文档思维导图生成。');
+    throw new Error(getTutorDocsCopy().demoMindMapCreate);
   }
 
   const accessToken = await getTutorAccessToken();
@@ -630,7 +679,7 @@ export async function createMindMapFromDocs(payload: CreateMindMapFromDocsReques
   if (error) {
     await normalizeDocsToolInvocationError(error, {
       unavailableCode: MINDMAP_SERVICE_UNAVAILABLE_CODE,
-      fallbackMessage: 'Unable to create mind map.',
+      fallbackMessage: getTutorDocsCopy().mindMapUnavailable,
     });
   }
 

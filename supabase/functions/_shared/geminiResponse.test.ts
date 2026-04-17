@@ -76,6 +76,11 @@ Deno.test('extractNormalizedGeminiCandidateTexts: strips generic code fence', ()
   assertEquals(extractNormalizedGeminiCandidateTexts(makePayload(wrapped)), ['{"key":"value"}']);
 });
 
+Deno.test('extractNormalizedGeminiCandidateTexts: extracts JSON from surrounding prose', () => {
+  const wrapped = 'Here is the answer:\n{"reply":"Focus on productivity."}\nThanks!';
+  assertEquals(extractNormalizedGeminiCandidateTexts(makePayload(wrapped)), ['{"reply":"Focus on productivity."}']);
+});
+
 Deno.test('extractNormalizedGeminiCandidateTexts: returns empty array for empty response', () => {
   assertEquals(extractNormalizedGeminiCandidateTexts({ candidates: [] }), []);
 });

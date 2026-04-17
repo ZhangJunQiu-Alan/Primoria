@@ -90,6 +90,12 @@ export function LessonResultPage() {
 
                 {item.review.kind === 'matching' ? (
                   <MatchingWrongReviewCard review={item.review} correctMatchLabel={copy.result.correctMatch} language={language} />
+                ) : item.review.kind === 'multiple-choice' ? (
+                  <MultipleChoiceWrongReviewPanels
+                    review={item.review}
+                    wrongSelectionsLabel={copy.result.wrongSelections}
+                    missedCorrectAnswersLabel={copy.result.missedCorrectAnswers}
+                  />
                 ) : (
                   <div className="grid gap-3 md:grid-cols-2">
                     <ReviewAnswerPanel
@@ -184,6 +190,61 @@ function formatReviewAnswer(
   }
 }
 
+function MultipleChoiceWrongReviewPanels({
+  review,
+  wrongSelectionsLabel,
+  missedCorrectAnswersLabel,
+}: {
+  review: Extract<QuestionReview, { kind: 'multiple-choice' }>;
+  wrongSelectionsLabel: string;
+  missedCorrectAnswersLabel: string;
+}) {
+  const wrongSelections = review.selectedOptionTexts.filter(
+    (optionText) => !review.correctOptionTexts.includes(optionText),
+  );
+  const missedCorrectAnswers = review.correctOptionTexts.filter(
+    (optionText) => !review.selectedOptionTexts.includes(optionText),
+  );
+
+  const panels: Array<{
+    key: string;
+    label: string;
+    tone: 'rose' | 'emerald';
+    value: string;
+  }> = [];
+
+  if (wrongSelections.length) {
+    panels.push({
+      key: 'wrong-selections',
+      label: wrongSelectionsLabel,
+      tone: 'rose',
+      value: wrongSelections.join(' | '),
+    });
+  }
+
+  if (missedCorrectAnswers.length) {
+    panels.push({
+      key: 'missed-correct-answers',
+      label: missedCorrectAnswersLabel,
+      tone: 'emerald',
+      value: missedCorrectAnswers.join(' | '),
+    });
+  }
+
+  return (
+    <div className="grid gap-3 md:grid-cols-2">
+      {panels.map((panel) => (
+        <ReviewAnswerPanel
+          key={panel.key}
+          label={panel.label}
+          tone={panel.tone}
+          value={panel.value}
+        />
+      ))}
+    </div>
+  );
+}
+
 function ReviewAnswerPanel({
   label,
   value,
@@ -215,16 +276,14 @@ function MatchingWrongReviewCard({
   correctMatchLabel: string;
   language: 'zh-CN' | 'en';
 }) {
+  const incorrectRows = review.rows.filter((row) => !row.isCorrect);
+
   return (
     <div className="space-y-3">
-      {review.rows.map((row) => (
+      {incorrectRows.map((row) => (
         <div
           key={row.id}
-          className={`rounded-[22px] border px-4 py-4 ${
-            row.isCorrect
-              ? 'border-emerald-200 bg-emerald-50/65 text-emerald-700'
-              : 'border-rose-200 bg-rose-50/70 text-rose-700'
-          }`}
+          className="rounded-[22px] border border-rose-200 bg-rose-50/70 px-4 py-4 text-rose-700"
         >
           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <div>

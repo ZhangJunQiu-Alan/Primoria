@@ -73,7 +73,7 @@ describe('LibraryPage', () => {
     const user = userEvent.setup();
     renderRoute('/library', 'user');
 
-    expect(await screen.findByText(/课程库/i, {}, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByText(/找课程/i, {}, { timeout: 10000 })).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /physics/i }, { timeout: 10000 })).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /data science & ai/i }, { timeout: 10000 })).toBeInTheDocument();
 

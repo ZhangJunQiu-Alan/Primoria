@@ -13,7 +13,8 @@ import {
   MonitorPlay,
   Sparkles,
 } from 'lucide-react';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { usePublicCopy } from '@/features/public/publicCopy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 import { cn } from '@/shared/utils/cn';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 
@@ -34,7 +35,7 @@ export function BuilderAuthLayout({
   alternateLink: ReactNode;
   children: ReactNode;
 }) {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
   const authFeatures = [
     { icon: Sparkles, label: copy.landing.authPanel.features[0] },
     { icon: Bot, label: copy.landing.authPanel.features[1] },
@@ -93,14 +94,15 @@ export function BuilderAuthLayout({
 }
 
 function BrandLockup() {
-  const copy = useViewerCopy();
+  const coreCopy = useCoreCopy();
+  const publicCopy = usePublicCopy();
 
   return (
-    <Link to="/" className="auth-brand-lockup" aria-label={`${copy.brand.name} home`}>
+    <Link to="/" className="auth-brand-lockup" aria-label={publicCopy.layout.homeAriaLabel}>
       <span className="auth-brand-lockup__mark">
         <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
       </span>
-      <span className="auth-brand-lockup__wordmark">{copy.brand.name}</span>
+      <span className="auth-brand-lockup__wordmark">{coreCopy.brand.name}</span>
     </Link>
   );
 }
@@ -123,7 +125,7 @@ export function AuthStatusBanner({
 }
 
 export function AuthDivider({ label = 'or' }: { label?: string }) {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
 
   return (
     <div className="auth-divider" aria-hidden="true">
@@ -263,7 +265,7 @@ export function PasswordVisibilityButton({
   visible: boolean;
   onClick: () => void;
 }) {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
   const Icon = visible ? EyeOff : Eye;
 
   return (

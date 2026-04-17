@@ -6,30 +6,26 @@ describe('LandingPage', () => {
   it('renders the platform landing sections in zh-CN by default', async () => {
     renderRoute('/');
 
-    expect(await screen.findByRole('heading', { name: /从创作到学习/i })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /让开始学习这件事/i })).toBeInTheDocument();
 
     [
       'landing-section-hero',
-      'landing-section-product',
-      'landing-section-learner',
-      'landing-section-tutor',
+      'landing-section-start',
+      'landing-section-assistant',
       'landing-section-community',
-      'landing-section-family',
-      'landing-section-builder-dashboard',
-      'landing-section-builder-editor',
-      'landing-section-feature-atlas',
+      'landing-section-support',
     ].forEach((testId) => {
       expect(screen.getByTestId(testId)).toBeInTheDocument();
     });
 
     expect(
-      within(screen.getByTestId('landing-section-builder-dashboard')).getByRole('heading', {
-        name: /Builder Dashboard 负责把课程经营面与作者工作流收在一起/i,
+      within(screen.getByTestId('landing-section-assistant')).getByRole('heading', {
+        name: /问问题、整理重点、生成练习/i,
       }),
     ).toBeInTheDocument();
     expect(
-      within(screen.getByTestId('landing-section-family')).getByRole('heading', {
-        name: /家长模式不抢首页主叙事，但必须清楚可见/i,
+      within(screen.getByTestId('landing-section-support')).getByRole('heading', {
+        name: /给家长和创作者各自留入口/i,
       }),
     ).toBeInTheDocument();
     expect(screen.getByTestId('landing-hero-primary-cta')).toHaveAttribute('href', '/register');
@@ -49,9 +45,9 @@ describe('LandingPage', () => {
 
     renderRoute('/');
 
-    expect(await screen.findByRole('heading', { name: /From course creation to active learning/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Builder Dashboard keeps the operating layer/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Parent mode stays secondary in the layout/i })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /Make it easier/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Ask questions, summarize key points/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Keep space for families and creators/i })).toBeInTheDocument();
     expect(screen.getByTestId('landing-hero-primary-cta')).toHaveAttribute('href', '/register');
     expect(screen.getByTestId('landing-hero-secondary-cta')).toHaveAttribute('href', '/login');
   });
@@ -66,8 +62,8 @@ describe('LandingPage', () => {
 
     renderRoute('/');
 
-    expect(await screen.findByRole('heading', { name: /From course creation to active learning/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /^Product$/i })).toHaveAttribute('href', '#product');
-    expect(screen.getByRole('heading', { name: /Community covers messages, study rooms, trending threads, and notes/i })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /Make it easier/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^How To Start$/i })).toHaveAttribute('href', '#start');
+    expect(screen.getByRole('heading', { name: /Discuss when you need discussion/i })).toBeInTheDocument();
   });
 });

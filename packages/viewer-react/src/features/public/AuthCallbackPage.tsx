@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BuilderAuthLayout } from '@/features/public/BuilderAuthLayout';
-import { supabase } from '@/shared/api/supabase';
 import { FooterPrompt } from '@/features/public/BuilderAuthLayout';
+import { usePublicCopy } from '@/features/public/publicCopy';
+import { supabase } from '@/shared/api/supabase';
+import { useDocumentMeta } from '@/shared/i18n/documentMeta';
 import { readReturnTo } from '@/shared/utils/authRedirect';
 
 export function AuthCallbackPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const copy = usePublicCopy();
   const loginPath = `/login?returnTo=${encodeURIComponent(readReturnTo(location.search))}`;
+  useDocumentMeta(copy.meta.callback);
 
   useEffect(() => {
     let active = true;
@@ -44,15 +48,15 @@ export function AuthCallbackPage() {
 
   return (
     <BuilderAuthLayout
-      pageLabel="Learner sign in"
-      title="Completing sign in"
-      subtitle="Finishing the secure hand-off from your sign-in provider."
-      alternateLink={<FooterPrompt prompt="Need to restart?" linkText="Go to sign in" to={loginPath} />}
+      pageLabel={copy.callback.pageLabel}
+      title={copy.callback.title}
+      subtitle={copy.callback.subtitle}
+      alternateLink={<FooterPrompt prompt={copy.callback.alternatePrompt} linkText={copy.callback.alternateLink} to={loginPath} />}
     >
       <div className="auth-success-card">
-        <h3 className="auth-success-card__title">Almost there.</h3>
+        <h3 className="auth-success-card__title">{copy.callback.cardTitle}</h3>
         <p className="auth-success-card__summary">
-          Primoria is syncing your session and will route you into the learner experience automatically.
+          {copy.callback.cardBody}
         </p>
       </div>
     </BuilderAuthLayout>

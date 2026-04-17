@@ -1,7 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
 import { captureViewerError } from '@/shared/platform/observability';
-import { getViewerCopy } from '@/shared/theme/copy';
+import { getCoreCopy } from '@/shared/theme/coreCopy';
 
 type Props = {
   children: ReactNode;
@@ -24,7 +24,7 @@ export class AppErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.error) {
-      const copy = getViewerCopy(
+      const copy = getCoreCopy(
         typeof document === 'undefined' ? undefined : normalizeViewerLanguage(document.documentElement.lang),
       );
 
