@@ -356,9 +356,8 @@ export function achievementProgress(
   const following = Number(followCounts?.following ?? 0);
   const followers = Number(followCounts?.followers ?? 0);
 
-  const presentationTarget = presentation?.target ?? 1;
-  let current = achievement.earned_at ? presentationTarget : 0;
-  let target = presentationTarget;
+  let current: number;
+  let target: number;
 
   switch (presentation?.progressMetric ?? normalizeSlug(achievement.slug)) {
     case 'streak':

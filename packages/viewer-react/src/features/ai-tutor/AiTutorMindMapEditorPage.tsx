@@ -1717,7 +1717,9 @@ export function AiTutorMindMapEditorPage() {
                           className="mt-1 h-4 w-4 rounded border-[#cdbda8] text-[#7a9e7e] focus:ring-[#7a9e7e]"
                         />
                         <div className="min-w-0">
-                          <div className="truncate text-[0.82rem] font-semibold text-[#3d342a]">{item.filename}</div>
+                          <div className="truncate text-[0.82rem] font-semibold text-[#3d342a]">
+                            {item.display_title?.trim() || item.filename}
+                          </div>
                           <div className="mt-1 text-[0.72rem] font-medium text-[#8b7d72]">{item.mime_type.toUpperCase()}</div>
                         </div>
                       </label>

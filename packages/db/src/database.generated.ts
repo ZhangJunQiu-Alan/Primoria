@@ -1106,6 +1106,7 @@ export type Database = {
       tutor_documents: {
         Row: {
           created_at: string
+          display_title: string | null
           extracted_chars: number
           extracted_text: string
           filename: string
@@ -1116,6 +1117,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          display_title?: string | null
           extracted_chars?: number
           extracted_text: string
           filename: string
@@ -1126,6 +1128,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          display_title?: string | null
           extracted_chars?: number
           extracted_text?: string
           filename?: string

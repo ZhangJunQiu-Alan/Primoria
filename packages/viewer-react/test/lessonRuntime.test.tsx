@@ -138,6 +138,8 @@ describe('LessonRuntimePlayer', () => {
     expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Ask AI' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Next step' })).toBeDisabled();
+    expect(screen.getByTestId('lesson-note-trigger')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Add note|添加笔记/i })).toHaveLength(1);
 
     const initialDots = screen.getAllByTestId('lesson-progress-dot');
     expect(initialDots).toHaveLength(2);
@@ -179,6 +181,8 @@ describe('LessonRuntimePlayer', () => {
     await user.click(screen.getByRole('button', { name: 'Next step' }));
 
     expect(screen.getByText('Not correct yet')).toBeInTheDocument();
+    expect(screen.getByText('Correct match:')).toBeInTheDocument();
+    expect(screen.getAllByText('Beta').length).toBeGreaterThan(0);
     expect(screen.getByRole('button', { name: 'Complete' })).toBeEnabled();
 
     await user.click(screen.getByRole('button', { name: 'Complete' }));
@@ -188,6 +192,22 @@ describe('LessonRuntimePlayer', () => {
         correctCount: 2,
         totalCount: 3,
         pageCount: 2,
+        wrongReviewItems: [
+          {
+            blockId: 'match-1',
+            review: {
+              kind: 'matching',
+              prompt: '',
+              explanation: undefined,
+              selectedAnswer: 'A -> Alpha | B -> Alpha',
+              correctAnswer: 'A -> Alpha | B -> Beta',
+              rows: [
+                { id: 'pair-1', left: 'A', selectedRight: 'Alpha', correctRight: 'Alpha', isCorrect: true },
+                { id: 'pair-2', left: 'B', selectedRight: 'Alpha', correctRight: 'Beta', isCorrect: false },
+              ],
+            },
+          },
+        ],
       }),
     );
   });
@@ -274,7 +294,7 @@ describe('LessonRuntimePlayer', () => {
     const onSaveNote = vi.fn<(body: string) => void>();
     renderRuntime({ onSaveNote });
 
-    await user.click(screen.getByRole('button', { name: /Add note|添加笔记/i }));
+    await user.click(screen.getByTestId('lesson-note-trigger'));
     expect(await screen.findByRole('dialog', { name: /Notes|笔记/i })).toBeInTheDocument();
 
     const textarea = screen.getByTestId('lesson-note-textarea');
@@ -283,7 +303,7 @@ describe('LessonRuntimePlayer', () => {
 
     await waitFor(() => expect(onSaveNote).toHaveBeenCalledWith('Saved lesson note'));
 
-    await user.click(screen.getByRole('button', { name: /Add note|添加笔记/i }));
+    await user.click(screen.getByTestId('lesson-note-trigger'));
     expect(await screen.findByDisplayValue('Saved lesson note')).toBeInTheDocument();
   });
 
@@ -292,7 +312,7 @@ describe('LessonRuntimePlayer', () => {
     const onSaveNote = vi.fn<(body: string) => void>();
     renderRuntime({ onSaveNote });
 
-    await user.click(screen.getByRole('button', { name: /Add note|添加笔记/i }));
+    await user.click(screen.getByTestId('lesson-note-trigger'));
     await user.click(screen.getByRole('button', { name: /Close notes|关闭笔记/i }));
 
     await waitFor(() => expect(onSaveNote).not.toHaveBeenCalled());

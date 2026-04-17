@@ -36,7 +36,7 @@ export function TrueFalsePanel({ block, lessonId, pageId }: TrueFalsePanelProps)
 
   useEffect(() => {
     reset({ statement: c.statement ?? '', isTrue: c.isTrue ?? true, explanation: c.explanation ?? '' });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps -- 仅在切换 block 时重置表单；不跟踪 reset/content，避免与用户输入冲突
 
   useEffect(() => {
     const sub = watch((values) => {
