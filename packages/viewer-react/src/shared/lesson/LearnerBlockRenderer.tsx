@@ -1,9 +1,10 @@
-import { useId } from 'react';
+import { useId, useMemo } from 'react';
 import { BlockRenderer } from '@/shared/lesson/BlockRenderer';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
 import type { QuestionEvaluation, QuestionResponse } from '@/shared/lesson/questionFlow';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { cn } from '@/shared/utils/cn';
+import { seededShuffle } from '@/shared/utils/seededShuffle';
 
 type SelectableOptionState = 'default' | 'selected' | 'correct' | 'incorrect';
 
@@ -329,6 +330,10 @@ function MatchingPreview({
   const content = block.content as { pairs?: Array<{ id: string; left: string; right: string }> };
   const language = useProductLanguage();
   const pairs = content.pairs ?? [];
+  const shuffledRightOptions = useMemo(
+    () => seededShuffle(pairs, `${block.id}:right`),
+    [block.id, pairs],
+  );
   const selectedPairs =
     response && !Array.isArray(response) && typeof response === 'object'
       ? (response as Record<string, string>)
@@ -386,7 +391,7 @@ function MatchingPreview({
                 )}
               >
                 <option value="">{language === 'zh-CN' ? '选择匹配项' : 'Select a match'}</option>
-                {pairs.map((option) => (
+                {shuffledRightOptions.map((option) => (
                   <option key={`${pair.id}-${option.id}`} value={option.right}>
                     {option.right}
                   </option>
