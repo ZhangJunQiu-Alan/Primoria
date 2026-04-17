@@ -21,6 +21,7 @@ import type {
 } from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { supabase } from '@/shared/api/supabase';
+import { countMeaningfulChars } from '@/shared/utils/textStats';
 
 type TutorDocumentRow = Database['public']['Tables']['tutor_documents']['Row'];
 type MindMapRow = Database['public']['Tables']['ai_tutor_mindmaps']['Row'];
@@ -449,7 +450,7 @@ export async function createTutorDocument(payload: {
     filename: payload.filename.trim(),
     mime_type: payload.mimeType.trim(),
     extracted_text: normalizedText,
-    extracted_chars: normalizedText.length,
+    extracted_chars: countMeaningfulChars(normalizedText),
   };
   const data = await runTutorDocumentQueryWithLegacyFallback((selectFields) =>
     supabase
