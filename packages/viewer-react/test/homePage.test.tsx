@@ -148,7 +148,7 @@ describe('HomePage', () => {
 
     expect(screen.queryByRole('heading', { name: /今天开始学习/i })).not.toBeInTheDocument();
     expect(await screen.findByRole('heading', { name: /还没有当前学习课程/i })).toBeInTheDocument();
-    expect(await screen.findByRole('link', { name: /浏览课程/i })).toHaveAttribute('href', '/library');
+    expect(await screen.findByRole('link', { name: /去找课程/i })).toHaveAttribute('href', '/library');
     expect(screen.queryByTestId('home-course-switcher')).not.toBeInTheDocument();
     expect(screen.queryByTestId('home-current-course-cover')).not.toBeInTheDocument();
     expect(await screen.findByTestId('home-live2d-stage')).toBeInTheDocument();
@@ -311,7 +311,7 @@ describe('HomePage', () => {
     await user.click(await screen.findByTestId('home-live2d-stage'));
     await user.click(await screen.findByRole('button', { name: /查看课程相关笔记/i }));
 
-    expect(await screen.findByText(/^社区$/i, {}, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByText(/^一起学$/i, {}, { timeout: 10000 })).toBeInTheDocument();
     expect(await screen.findByTestId('community-companion-context')).toBeInTheDocument();
   });
 });

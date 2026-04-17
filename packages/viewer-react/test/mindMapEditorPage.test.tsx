@@ -135,22 +135,24 @@ describe('AiTutorMindMapEditorPage', () => {
     });
 
     await user.click(screen.getByRole('button', { name: /撤销/i }));
-    expect(globalThis.document.querySelectorAll('[data-testid^="mindmap-node-"]').length).toBe(3);
+    await waitFor(() => {
+      expect(globalThis.document.querySelectorAll('[data-testid^="mindmap-node-"]').length).toBe(3);
+    });
 
     await user.click(screen.getByRole('button', { name: /重做/i }));
-    expect(globalThis.document.querySelectorAll('[data-testid^="mindmap-node-"]').length).toBe(4);
+    await waitFor(() => {
+      expect(globalThis.document.querySelectorAll('[data-testid^="mindmap-node-"]').length).toBe(4);
+    });
 
     updateMindMapMock.mockClear();
     await user.click(screen.getByRole('button', { name: /Stone/i }));
     await user.click(screen.getByRole('button', { name: /P1/i }));
 
     await waitFor(() => {
-      expect(updateMindMapMock).toHaveBeenCalled();
+      const latest = updateMindMapMock.mock.calls.at(-1) as [string, MindMapDocument] | undefined;
+      expect(latest?.[1].theme.preset).toBe('stone');
+      expect(latest?.[1].nodes.root?.markers ?? []).toContain('priority-high');
+      expect(latest?.[1].nodes.root?.style).toBeDefined();
     }, { timeout: 4000 });
-
-    const lastCall = updateMindMapMock.mock.calls.at(-1) as [string, MindMapDocument] | undefined;
-    expect(lastCall?.[1].theme.preset).toBe('stone');
-    expect(lastCall?.[1].nodes.root?.markers).toContain('priority-high');
-    expect(lastCall?.[1].nodes.root?.style).toBeDefined();
   }, 30000);
 });
