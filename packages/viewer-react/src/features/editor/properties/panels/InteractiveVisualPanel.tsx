@@ -67,7 +67,7 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
       description: c.description ?? '',
       aiPrompt: c.aiPrompt ?? '',
     });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps -- 仅在切换 block 时重置表单；不跟踪 reset/content，避免与用户输入冲突
 
   useEffect(() => {
     const sub = watch((values) => {

@@ -15,6 +15,7 @@ describe('buildLessonCompletionSummary', () => {
       correctCount: 2,
       totalCount: 3,
       pageCount: 4,
+      wrongReviewItems: [],
     });
   });
 });

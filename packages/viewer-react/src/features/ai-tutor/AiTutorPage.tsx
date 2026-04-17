@@ -12,6 +12,8 @@ import {
   deleteTutorDocument,
   fetchTutorDocuments,
   listMindMaps,
+  TUTOR_DISPLAY_TITLE_UNAVAILABLE_CODE,
+  updateTutorDocumentTitle,
 } from '@/shared/api/viewer/tutorDocumentsApi';
 import {
   BadgeHelp,
@@ -302,6 +304,10 @@ function formatDocumentType(document: Pick<TutorDocument, 'filename' | 'mime_typ
   return mimeType ? mimeType.toUpperCase() : 'FILE';
 }
 
+function resolveDocumentTitle(document: Pick<TutorDocument, 'filename' | 'display_title'>) {
+  return document.display_title?.trim() || document.filename;
+}
+
 function readTutorErrorText(error: unknown) {
   if (error instanceof Error && error.message.trim()) {
     return error.message.trim();
@@ -451,12 +457,15 @@ export function AiTutorPage() {
   const [activeToolConfig, setActiveToolConfig] = useState<ActiveToolConfig>(null);
   const [questionCountInput, setQuestionCountInput] = useState('10');
   const [mindMapPromptInput, setMindMapPromptInput] = useState('');
+  const [editingDocumentId, setEditingDocumentId] = useState<string | null>(null);
+  const [editingDocumentTitle, setEditingDocumentTitle] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const notebookSectionRef = useRef<HTMLElement | null>(null);
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
   const processedCompanionIntentRef = useRef<string | null>(null);
   const knownDocumentIdsRef = useRef<Set<string>>(new Set());
+  const cancelTitleCommitRef = useRef<string | null>(null);
 
   const documentsQuery = useQuery({
     queryKey: ['ai-tutor', 'documents', userId ?? 'anon'],
@@ -491,6 +500,17 @@ export function AiTutorPage() {
         (current ?? []).filter((document) => document.id !== documentId),
       );
       setSelectedDocumentIds((current) => current.filter((id) => id !== documentId));
+    },
+  });
+
+  const updateDocumentTitleMutation = useMutation({
+    mutationFn: ({ documentId, displayTitle }: { documentId: string; displayTitle: string }) =>
+      updateTutorDocumentTitle(documentId, displayTitle),
+    onSuccess: (updatedDocument) => {
+      queryClient.setQueryData<TutorDocument[]>(['ai-tutor', 'documents', userId ?? 'anon'], (current) =>
+        (current ?? []).map((document) => (document.id === updatedDocument.id ? updatedDocument : document)),
+      );
+      setNotice({ tone: 'success', text: copy.aiTutor.materialTitleSaved });
     },
   });
 
@@ -748,6 +768,39 @@ export function AiTutorPage() {
       }
     },
     [copy.aiTutor.materialsUnavailable, copy.common.errorFallback, deleteDocumentMutation],
+  );
+
+  const handleCommitDocumentTitle = useCallback(
+    async (document: TutorDocument, rawTitle: string) => {
+      const nextDisplayTitle = rawTitle.trim();
+      const currentDisplayTitle = document.display_title?.trim() ?? '';
+      if (nextDisplayTitle === currentDisplayTitle) {
+        setEditingDocumentId(null);
+        setEditingDocumentTitle('');
+        return;
+      }
+
+      try {
+        await updateDocumentTitleMutation.mutateAsync({
+          documentId: document.id,
+          displayTitle: rawTitle,
+        });
+        setEditingDocumentId(null);
+        setEditingDocumentTitle('');
+      } catch (error) {
+        const record = error && typeof error === 'object' ? (error as Record<string, unknown>) : null;
+        const code = typeof record?.code === 'string' ? record.code : '';
+        setNotice({
+          tone: 'error',
+          text:
+            code === TUTOR_DISPLAY_TITLE_UNAVAILABLE_CODE
+              ? copy.aiTutor.materialTitleUnavailable
+              : resolveTutorErrorMessage(error, copy.common.errorFallback, copy.aiTutor.materialsUnavailable),
+        });
+        captureViewerError(error, { area: 'ai_tutor_document_title_update', documentId: document.id });
+      }
+    },
+    [copy.aiTutor.materialTitleUnavailable, copy.aiTutor.materialsUnavailable, copy.common.errorFallback, updateDocumentTitleMutation],
   );
 
   const handleCreateMindMap = useCallback(async () => {
@@ -1315,10 +1368,11 @@ export function AiTutorPage() {
                         ))}
                         {documents.map((document) => {
                           const checked = selectedDocumentIds.includes(document.id);
+                          const isEditingTitle = editingDocumentId === document.id;
                           return (
-                            <label
+                            <div
                               key={document.id}
-                              className="flex cursor-pointer items-center gap-3 rounded-[18px] border border-[#e1d7c8] bg-[rgba(255,252,247,0.88)] px-3.5 py-3 shadow-[0_8px_18px_rgba(90,70,50,0.05)]"
+                              className="flex items-center gap-3 rounded-[18px] border border-[#e1d7c8] bg-[rgba(255,252,247,0.88)] px-3.5 py-3 shadow-[0_8px_18px_rgba(90,70,50,0.05)]"
                             >
                               <input
                                 type="checkbox"
@@ -1333,25 +1387,76 @@ export function AiTutorPage() {
                                 className="h-4 w-4 rounded border-[#cdbda8] text-[#7a9e7e] focus:ring-[#7a9e7e]"
                               />
                               <div className="min-w-0 flex-1">
-                                <div className="truncate text-[0.82rem] font-bold text-[#3d342a]">{document.filename}</div>
+                                {isEditingTitle ? (
+                                  <input
+                                    autoFocus
+                                    aria-label={`${copy.aiTutor.editMaterialTitle} ${resolveDocumentTitle(document)}`}
+                                    className="w-full rounded-[12px] border border-[#d8cab7] bg-white/90 px-3 py-2 text-[0.82rem] font-bold text-[#3d342a] outline-none focus:border-[#b9d1bc] focus:ring-2 focus:ring-[#dceadc]"
+                                    value={editingDocumentTitle}
+                                    onChange={(event) => setEditingDocumentTitle(event.target.value)}
+                                    onClick={(event) => {
+                                      event.preventDefault();
+                                      event.stopPropagation();
+                                    }}
+                                    onBlur={() => {
+                                      if (cancelTitleCommitRef.current === document.id) {
+                                        cancelTitleCommitRef.current = null;
+                                        return;
+                                      }
+                                      void handleCommitDocumentTitle(document, editingDocumentTitle);
+                                    }}
+                                    onKeyDown={(event) => {
+                                      if (event.key === 'Enter') {
+                                        event.preventDefault();
+                                        void handleCommitDocumentTitle(document, editingDocumentTitle);
+                                      }
+                                      if (event.key === 'Escape') {
+                                        event.preventDefault();
+                                        cancelTitleCommitRef.current = document.id;
+                                        setEditingDocumentId(null);
+                                        setEditingDocumentTitle('');
+                                      }
+                                    }}
+                                    placeholder={copy.aiTutor.materialTitlePlaceholder}
+                                  />
+                                ) : (
+                                  <div className="truncate text-[0.82rem] font-bold text-[#3d342a]">{resolveDocumentTitle(document)}</div>
+                                )}
                                 <div className="mt-1 text-[0.74rem] font-medium text-[#8b7d72]">
                                   {formatDocumentType(document)} · {interpolateCount(copy.aiTutor.materialChars, document.extracted_chars)}
                                 </div>
                               </div>
-                              <button
-                                type="button"
-                                className="flex h-9 w-9 items-center justify-center rounded-[12px] border border-[#e1d7c8] bg-white/70 text-[#9d8e82] transition hover:border-[#d0c0ad] hover:text-[#6e5f54] disabled:cursor-not-allowed disabled:opacity-60"
-                                aria-label={`${copy.aiTutor.deleteMaterial} ${document.filename}`}
-                                onClick={(event) => {
-                                  event.preventDefault();
-                                  event.stopPropagation();
-                                  void handleDeleteDocument(document);
-                                }}
-                                disabled={deleteDocumentMutation.isPending}
-                              >
-                                <Trash2 size={15} />
-                              </button>
-                            </label>
+                              <div className="flex items-center gap-2">
+                                <button
+                                  type="button"
+                                  className="flex h-9 w-9 items-center justify-center rounded-[12px] border border-[#e1d7c8] bg-white/70 text-[#9d8e82] transition hover:border-[#d0c0ad] hover:text-[#6e5f54] disabled:cursor-not-allowed disabled:opacity-60"
+                                  aria-label={`${copy.aiTutor.editMaterialTitle} ${resolveDocumentTitle(document)}`}
+                                  onClick={(event) => {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                    cancelTitleCommitRef.current = null;
+                                    setEditingDocumentId(document.id);
+                                    setEditingDocumentTitle(document.display_title ?? '');
+                                  }}
+                                  disabled={deleteDocumentMutation.isPending || updateDocumentTitleMutation.isPending}
+                                >
+                                  <PenLine size={15} />
+                                </button>
+                                <button
+                                  type="button"
+                                  className="flex h-9 w-9 items-center justify-center rounded-[12px] border border-[#e1d7c8] bg-white/70 text-[#9d8e82] transition hover:border-[#d0c0ad] hover:text-[#6e5f54] disabled:cursor-not-allowed disabled:opacity-60"
+                                  aria-label={`${copy.aiTutor.deleteMaterial} ${document.filename}`}
+                                  onClick={(event) => {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                    void handleDeleteDocument(document);
+                                  }}
+                                  disabled={deleteDocumentMutation.isPending || updateDocumentTitleMutation.isPending}
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+                            </div>
                           );
                         })}
                       </div>

@@ -1,19 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
 import { isFixtureModeEnabled } from '@/shared/utils/demoMode';
 
-const defaultSupabaseUrl = 'https://rygafvlzzkvqhhenajzi.supabase.co';
-const defaultSupabaseAnonKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Z2Fmdmx6emt2cWhoZW5hanppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4NDg5NzgsImV4cCI6MjA4NTQyNDk3OH0.8oRsXVtdb3DnDEusJzHao3P4w-6D_-i-z9S787D8BWo';
-
 const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim();
 const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim();
 
-const supabaseUrl = rawSupabaseUrl || defaultSupabaseUrl;
-const supabaseAnonKey = rawSupabaseAnonKey || defaultSupabaseAnonKey;
+// In fixture/demo mode (VITE_VIEWER_DEMO_MODE=1 or test), env vars are not required —
+// all API calls are intercepted by fixture handlers so the client is never actually used.
+// Outside fixture mode, the Vite plugin `require-supabase-env` ensures both vars are
+// present at build time, so the runtime fallback below is only reachable in fixture mode.
+const supabaseUrl = rawSupabaseUrl ?? 'https://placeholder.supabase.co';
+const supabaseAnonKey = rawSupabaseAnonKey ?? 'placeholder';
 
 if ((!rawSupabaseUrl || !rawSupabaseAnonKey) && !isFixtureModeEnabled()) {
-  console.warn(
-    'viewer-react is using the shared default Supabase configuration because VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is not set.',
+  console.error(
+    '[supabase] VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is not set outside fixture mode. ' +
+      'This should have been caught at build time by require-supabase-env.',
   );
 }
 

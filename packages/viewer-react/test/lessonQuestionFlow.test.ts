@@ -1,5 +1,6 @@
 import type { LessonBlock } from '@/shared/lesson/types';
 import {
+  buildWrongReviewItems,
   createLessonPageSession,
   deriveLessonPageState,
   ensureLessonPageSession,
@@ -106,9 +107,65 @@ describe('questionFlow', () => {
         'pair-1': 'Alpha',
         'pair-2': 'Beta',
       }),
-    ).toEqual({
-      isCorrect: true,
+    ).toEqual(
+      expect.objectContaining({
+        isCorrect: true,
+        review: {
+          kind: 'matching',
+          prompt: '',
+          explanation: undefined,
+          selectedAnswer: 'A -> Alpha | B -> Beta',
+          correctAnswer: 'A -> Alpha | B -> Beta',
+          rows: [
+            { id: 'pair-1', left: 'A', selectedRight: 'Alpha', correctRight: 'Alpha', isCorrect: true },
+            { id: 'pair-2', left: 'B', selectedRight: 'Beta', correctRight: 'Beta', isCorrect: true },
+          ],
+        },
+      }),
+    );
+  });
+
+  it('builds wrong-review items only for incorrect answers and includes matching row feedback', () => {
+    const matchingBlock: LessonBlock = {
+      id: 'match-1',
+      type: 'matching',
+      position: { order: 0 },
+      content: {
+        pairs: [
+          { id: 'pair-1', left: 'A', right: 'Alpha' },
+          { id: 'pair-2', left: 'B', right: 'Beta' },
+        ],
+      },
+    };
+
+    let session = createLessonPageSession([matchingBlock]);
+    session = updateQuestionResponse([matchingBlock], session, 'match-1', {
+      'pair-1': 'Alpha',
+      'pair-2': 'Alpha',
     });
+    session = stepLessonPageSession([matchingBlock], session);
+
+    expect(
+      buildWrongReviewItems(
+        [{ page_id: 'page-1', blocks: [matchingBlock] }],
+        { 'page-1': session },
+      ),
+    ).toEqual([
+      {
+        blockId: 'match-1',
+        review: {
+          kind: 'matching',
+          prompt: '',
+          explanation: undefined,
+          selectedAnswer: 'A -> Alpha | B -> Alpha',
+          correctAnswer: 'A -> Alpha | B -> Beta',
+          rows: [
+            { id: 'pair-1', left: 'A', selectedRight: 'Alpha', correctRight: 'Alpha', isCorrect: true },
+            { id: 'pair-2', left: 'B', selectedRight: 'Alpha', correctRight: 'Beta', isCorrect: false },
+          ],
+        },
+      },
+    ]);
   });
 
   it('surfaces next-page and complete-lesson as primary actions only after the page is fully completed', () => {

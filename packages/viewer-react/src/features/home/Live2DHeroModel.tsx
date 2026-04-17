@@ -78,7 +78,6 @@ export function Live2DHeroModel() {
     }
 
     let disposed = false;
-    let observer: IntersectionObserver | undefined;
     let cancelIdleTask: () => void = () => undefined;
 
     const activateModel = () => {
@@ -105,13 +104,13 @@ export function Live2DHeroModel() {
       };
     }
 
-    observer = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) {
           return;
         }
 
-        observer?.disconnect();
+        observer.disconnect();
         activateModel();
       },
       { rootMargin: '120px 0px' },
@@ -121,7 +120,7 @@ export function Live2DHeroModel() {
 
     return () => {
       disposed = true;
-      observer?.disconnect();
+      observer.disconnect();
       cancelIdleTask();
     };
   }, []);

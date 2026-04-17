@@ -32,6 +32,7 @@ export type ViewerOwnedCourse = ViewerCourse & {
 export type TutorDocument = {
   id: string;
   filename: string;
+  display_title: string | null;
   mime_type: string;
   extracted_chars: number;
   created_at: string;

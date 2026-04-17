@@ -512,7 +512,15 @@ function DonutChart({ items }: { items: DonutItem[] }) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const total = items.reduce((sum, item) => sum + item.value, 0);
-  let offset = 0;
+  const segments = items.reduce<Array<{ item: DonutItem; length: number; offset: number }>>(
+    (acc, item) => {
+      const prev = acc[acc.length - 1];
+      const length = total > 0 ? (item.value / total) * circumference : 0;
+      const offset = prev ? prev.offset + prev.length : 0;
+      return [...acc, { item, length, offset }];
+    },
+    [],
+  );
 
   return (
     <div className="studio-donut">
@@ -526,12 +534,7 @@ function DonutChart({ items }: { items: DonutItem[] }) {
             stroke="rgba(141, 124, 105, 0.12)"
             strokeWidth={strokeWidth}
           />
-          {items.map((item) => {
-            const length = total > 0 ? (item.value / total) * circumference : 0;
-            const currentOffset = offset;
-            offset += length;
-
-            return (
+          {segments.map(({ item, length, offset }) => (
               <circle
                 key={item.label}
                 cx={size / 2}
@@ -541,12 +544,11 @@ function DonutChart({ items }: { items: DonutItem[] }) {
                 stroke={item.color}
                 strokeWidth={strokeWidth}
                 strokeDasharray={`${length} ${circumference - length}`}
-                strokeDashoffset={-currentOffset}
+                strokeDashoffset={-offset}
                 strokeLinecap="round"
                 transform={`rotate(-90 ${size / 2} ${size / 2})`}
               />
-            );
-          })}
+            ))}
         </svg>
 
         <div className="studio-donut__center">

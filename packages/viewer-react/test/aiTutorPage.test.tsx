@@ -43,6 +43,7 @@ const createTutorDocumentMock = vi.fn(async (payload: { filename: string; mimeTy
   const nextDocument: TutorDocument = {
     id: `doc-${mockDocuments.length + 1}`,
     filename: payload.filename,
+    display_title: null,
     mime_type: payload.mimeType,
     extracted_chars: payload.extractedText.length,
     created_at: new Date(2026, 3, mockDocuments.length + 1).toISOString(),
@@ -53,6 +54,19 @@ const createTutorDocumentMock = vi.fn(async (payload: { filename: string; mimeTy
 });
 const deleteTutorDocumentMock = vi.fn(async (documentId: string) => {
   mockDocuments = mockDocuments.filter((document) => document.id !== documentId);
+});
+const updateTutorDocumentTitleMock = vi.fn(async (documentId: string, displayTitle: string) => {
+  const normalizedTitle = displayTitle.trim() || null;
+  mockDocuments = mockDocuments.map((document) =>
+    document.id === documentId
+      ? {
+          ...document,
+          display_title: normalizedTitle,
+          updated_at: new Date(2026, 3, 28).toISOString(),
+        }
+      : document,
+  );
+  return mockDocuments.find((document) => document.id === documentId)!;
 });
 const createQuizFromDocsMock = vi.fn(async () => ({
   courseId: 'course-quiz-1',
@@ -125,9 +139,11 @@ vi.mock('@/shared/api/geminiClient', () => ({
 }));
 
 vi.mock('@/shared/api/viewer/tutorDocumentsApi', () => ({
+  TUTOR_DISPLAY_TITLE_UNAVAILABLE_CODE: 'TUTOR_DISPLAY_TITLE_UNAVAILABLE',
   fetchTutorDocuments: fetchTutorDocumentsMock,
   createTutorDocument: createTutorDocumentMock,
   deleteTutorDocument: deleteTutorDocumentMock,
+  updateTutorDocumentTitle: updateTutorDocumentTitleMock,
   listMindMaps: listMindMapsMock,
   createMindMapFromDocs: createMindMapFromDocsMock,
   createQuizFromDocs: createQuizFromDocsMock,
@@ -144,6 +160,7 @@ describe('AiTutorPage', () => {
     fetchTutorDocumentsMock.mockClear();
     createTutorDocumentMock.mockClear();
     deleteTutorDocumentMock.mockClear();
+    updateTutorDocumentTitleMock.mockClear();
     listMindMapsMock.mockClear();
     createQuizFromDocsMock.mockClear();
     createMindMapFromDocsMock.mockClear();
@@ -196,6 +213,27 @@ describe('AiTutorPage', () => {
     expect(createTutorDocumentMock).toHaveBeenCalledTimes(2);
     expect(screen.getAllByRole('checkbox')).toHaveLength(2);
     expect(screen.getAllByRole('checkbox').every((input) => (input as HTMLInputElement).checked)).toBe(true);
+  }, 30000);
+
+  it('lets learners edit the display title of a material without renaming the file', async () => {
+    const user = userEvent.setup();
+    renderRoute('/ai-tutor', 'user');
+
+    const uploadInput = await screen.findByLabelText(/上传资料/i, {}, { timeout: 15000 });
+    await user.upload(uploadInput, new File(['physics'], 'motion.pdf', { type: 'application/pdf' }));
+
+    await user.click(screen.getByRole('button', { name: /展开资料/i }));
+    expect(await screen.findByText('motion.pdf', {}, { timeout: 15000 })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /编辑资料标题 motion\.pdf/i }));
+    const titleInput = screen.getByRole('textbox', { name: /编辑资料标题 motion\.pdf/i });
+    await user.type(titleInput, 'Week 2 summary');
+    await user.keyboard('{Enter}');
+
+    await waitFor(() => {
+      expect(updateTutorDocumentTitleMock).toHaveBeenCalledWith('doc-1', 'Week 2 summary');
+    });
+    expect(await screen.findByText('Week 2 summary', {}, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
   it('shows a clear error for ppt uploads without creating a material record', async () => {

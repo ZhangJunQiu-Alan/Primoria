@@ -7,10 +7,12 @@ import { LearnerBlockRenderer } from '@/shared/lesson/LearnerBlockRenderer';
 import { buildLessonAiContext } from '@/shared/lesson/lessonAiContext';
 import {
   buildRecordedResults,
+  buildWrongReviewItems,
   deriveLessonPageState,
   ensureLessonPageSession,
   stepLessonPageSession,
   updateQuestionResponse,
+  type LessonWrongReviewItem,
   type LessonPageSessionState,
 } from '@/shared/lesson/questionFlow';
 import type { LessonRuntimeData } from '@/shared/lesson/types';
@@ -22,14 +24,20 @@ export type LessonCompletionSummary = {
   correctCount: number;
   totalCount: number;
   pageCount: number;
+  wrongReviewItems: LessonWrongReviewItem[];
 };
 
-export function buildLessonCompletionSummary(recordedResults: Record<string, boolean>, pageCount: number) {
+export function buildLessonCompletionSummary(
+  recordedResults: Record<string, boolean>,
+  pageCount: number,
+  wrongReviewItems: LessonWrongReviewItem[] = [],
+) {
   const values = Object.values(recordedResults);
   return {
     correctCount: values.filter(Boolean).length,
     totalCount: values.length,
     pageCount,
+    wrongReviewItems,
   } satisfies LessonCompletionSummary;
 }
 
@@ -164,15 +172,14 @@ export function LessonRuntimePlayer({
     [blocks, isLastPage, pageSession],
   );
   const summary = useMemo(() => {
+    const orderedPages = pageEntries.map(({ page: lessonPage, blocks: lessonBlocks }) => ({
+      page_id: lessonPage.page_id,
+      blocks: lessonBlocks,
+    }));
     return buildLessonCompletionSummary(
-      buildRecordedResults(
-        pageEntries.map(({ page: lessonPage, blocks: lessonBlocks }) => ({
-          page_id: lessonPage.page_id,
-          blocks: lessonBlocks,
-        })),
-        pageSessions,
-      ),
+      buildRecordedResults(orderedPages, pageSessions),
       pageCount,
+      buildWrongReviewItems(orderedPages, pageSessions),
     );
   }, [pageCount, pageEntries, pageSessions]);
 
@@ -360,7 +367,7 @@ export function LessonRuntimePlayer({
   return (
     <div className="flex h-full flex-col pb-[calc(var(--viewer-dock-content-gap)+env(safe-area-inset-bottom))]">
       <section className="viewer-surface flex min-h-full flex-1 flex-col overflow-hidden">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-[var(--viewer-border)] bg-[rgba(247,242,231,0.88)] px-5 py-4">
+        <div className="grid grid-cols-[auto_1fr] items-center gap-4 border-b border-[var(--viewer-border)] bg-[rgba(247,242,231,0.88)] px-5 py-4">
           <button
             type="button"
             aria-label={copy.lesson.exit}
@@ -388,16 +395,6 @@ export function LessonRuntimePlayer({
               />
             ))}
           </div>
-
-          <button
-            type="button"
-            aria-label={copy.community.addNote}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--viewer-border)] bg-[rgba(255,252,247,0.88)] text-[var(--viewer-text)] shadow-[0_10px_20px_rgba(90,70,50,0.08)] transition hover:-translate-y-0.5 hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
-            onClick={openNotes}
-            disabled={lessonNoteLoading}
-          >
-            <NotebookPen size={21} />
-          </button>
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col px-5 pt-6">
@@ -447,34 +444,47 @@ export function LessonRuntimePlayer({
         data-testid="lesson-action-bar"
         className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[calc(var(--viewer-dock-offset)+env(safe-area-inset-bottom))] md:px-6"
       >
-        <div className="grid w-full max-w-6xl grid-cols-5 gap-3">
-          <button
-            type="button"
-            className="viewer-botanical-button viewer-botanical-button--lesson-prev col-span-1 min-w-0 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-40"
-            onClick={() => goToPage(currentPageIndex - 1)}
-            disabled={currentPageIndex === 0}
-          >
-            <ArrowLeft size={16} />
-            {copy.lesson.prev}
-          </button>
+        <div className="flex w-full max-w-6xl items-end gap-3">
+          <div className="grid flex-1 grid-cols-5 gap-3">
+            <button
+              type="button"
+              className="viewer-botanical-button viewer-botanical-button--lesson-prev col-span-1 min-w-0 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-40"
+              onClick={() => goToPage(currentPageIndex - 1)}
+              disabled={currentPageIndex === 0}
+            >
+              <ArrowLeft size={16} />
+              {copy.lesson.prev}
+            </button>
+
+            <button
+              type="button"
+              className="viewer-botanical-button viewer-botanical-button--ai col-span-2 min-w-0 whitespace-nowrap"
+              onClick={openAi}
+            >
+              <Sparkles size={16} />
+              {copy.lesson.askAi}
+            </button>
+
+            <button
+              type="button"
+              className="viewer-botanical-button viewer-botanical-button--lesson-next col-span-2 min-w-0 whitespace-nowrap disabled:cursor-not-allowed"
+              disabled={primaryButtonDisabled}
+              onClick={handlePrimaryAction}
+            >
+              {primaryButtonLabel}
+              {pageState.primaryAction !== 'complete-lesson' ? <ArrowRight size={16} /> : null}
+            </button>
+          </div>
 
           <button
+            data-testid="lesson-note-trigger"
             type="button"
-            className="viewer-botanical-button viewer-botanical-button--ai col-span-2 min-w-0 whitespace-nowrap"
-            onClick={openAi}
+            aria-label={copy.community.addNote}
+            className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.96)] text-[var(--viewer-text)] shadow-[0_14px_28px_rgba(90,70,50,0.1)] transition hover:-translate-y-0.5 hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
+            onClick={openNotes}
+            disabled={lessonNoteLoading}
           >
-            <Sparkles size={16} />
-            {copy.lesson.askAi}
-          </button>
-
-          <button
-            type="button"
-            className="viewer-botanical-button viewer-botanical-button--lesson-next col-span-2 min-w-0 whitespace-nowrap disabled:cursor-not-allowed"
-            disabled={primaryButtonDisabled}
-            onClick={handlePrimaryAction}
-          >
-            {primaryButtonLabel}
-            {pageState.primaryAction !== 'complete-lesson' ? <ArrowRight size={16} /> : null}
+            <NotebookPen size={22} />
           </button>
         </div>
       </div>

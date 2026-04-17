@@ -17,9 +17,69 @@ export type QuestionResponse =
   | SortingResponse
   | undefined;
 
+export type MatchingReviewRow = {
+  id: string;
+  left: string;
+  selectedRight: string | null;
+  correctRight: string;
+  isCorrect: boolean;
+};
+
+export type QuestionReview =
+  | {
+      kind: 'multiple-choice';
+      prompt: string;
+      explanation?: string;
+      selectedAnswer: string;
+      correctAnswer: string;
+      selectedOptionTexts: string[];
+      correctOptionTexts: string[];
+    }
+  | {
+      kind: 'true-false';
+      prompt: string;
+      explanation?: string;
+      selectedAnswer: string;
+      correctAnswer: string;
+      selectedValue: boolean | null;
+      correctValue: boolean;
+    }
+  | {
+      kind: 'fill-blank';
+      prompt: string;
+      explanation?: string;
+      selectedAnswer: string;
+      correctAnswer: string;
+      submittedAnswers: string[];
+      correctAnswers: string[];
+    }
+  | {
+      kind: 'matching';
+      prompt: string;
+      explanation?: string;
+      selectedAnswer: string;
+      correctAnswer: string;
+      rows: MatchingReviewRow[];
+    }
+  | {
+      kind: 'sorting';
+      prompt: string;
+      explanation?: string;
+      selectedAnswer: string;
+      correctAnswer: string;
+      orderedItems: string[];
+      correctOrder: string[];
+    };
+
 export type QuestionEvaluation = {
   isCorrect: boolean;
   explanation?: string;
+  review?: QuestionReview;
+};
+
+export type LessonWrongReviewItem = {
+  blockId: string;
+  review: QuestionReview;
 };
 
 export type LessonPageSessionState = {
@@ -46,16 +106,20 @@ export type DerivedLessonPageState = {
 };
 
 type MultipleChoiceContent = {
+  question?: string;
   explanation?: string;
   options?: Array<{ id: string; text: string; isCorrect?: boolean }>;
 };
 
 type TrueFalseContent = {
+  statement?: string;
   explanation?: string;
   isTrue?: boolean;
 };
 
 type FillBlankContent = {
+  template?: string;
+  explanation?: string;
   blanks?: Array<{ answer: string; alternatives?: string[] }>;
 };
 
@@ -295,6 +359,34 @@ export function buildRecordedResults(
   }, {});
 }
 
+export function buildWrongReviewItems(
+  pages: Array<{ page_id: string; blocks: LessonBlock[] }>,
+  sessions: Record<string, LessonPageSessionState>,
+): LessonWrongReviewItem[] {
+  return pages.reduce<LessonWrongReviewItem[]>((items, page) => {
+    const session = ensureLessonPageSession(page.blocks, sessions[page.page_id]);
+    for (const descriptor of getQuestionDescriptors(page.blocks)) {
+      const block = page.blocks[descriptor.blockIndex];
+      if (!block) {
+        continue;
+      }
+
+      const evaluation = session.evaluations[descriptor.blockId];
+      if (!evaluation || evaluation.isCorrect) {
+        continue;
+      }
+
+      const review =
+        evaluation.review ?? buildQuestionReview(block, session.responses[descriptor.blockId], evaluation.explanation);
+      items.push({
+        blockId: descriptor.blockId,
+        review,
+      });
+    }
+    return items;
+  }, []);
+}
+
 export function isQuestionResponseComplete(block: LessonBlock, response: QuestionResponse): boolean {
   switch (block.type) {
     case 'multiple-choice':
@@ -334,24 +426,29 @@ export function evaluateQuestionBlock(
       const content = block.content as MultipleChoiceContent;
       const selectedIds = Array.isArray(response) ? response.filter((value): value is string => typeof value === 'string') : [];
       const options = Array.isArray(content.options) ? content.options : [];
+      const explanation = normalizeFeedback(content.explanation);
       return {
         isCorrect:
           options.length > 0 &&
           options.every((option) => Boolean(option.isCorrect) === selectedIds.includes(option.id)),
-        explanation: normalizeFeedback(content.explanation),
+        explanation,
+        review: buildQuestionReview(block, response, explanation),
       };
     }
     case 'true-false': {
       const content = block.content as TrueFalseContent;
+      const explanation = normalizeFeedback(content.explanation);
       return {
         isCorrect: typeof response === 'boolean' && response === Boolean(content.isTrue ?? true),
-        explanation: normalizeFeedback(content.explanation),
+        explanation,
+        review: buildQuestionReview(block, response, explanation),
       };
     }
     case 'fill-blank': {
       const content = block.content as FillBlankContent;
       const blanks = Array.isArray(content.blanks) ? content.blanks : [];
       const answers = Array.isArray(response) ? response : [];
+      const explanation = normalizeFeedback((content as { explanation?: string }).explanation);
       return {
         isCorrect:
           blanks.length > 0 &&
@@ -362,6 +459,8 @@ export function evaluateQuestionBlock(
               .filter(Boolean);
             return accepted.includes(value);
           }),
+        explanation,
+        review: buildQuestionReview(block, response, explanation),
       };
     }
     case 'matching': {
@@ -375,6 +474,7 @@ export function evaluateQuestionBlock(
         isCorrect:
           pairs.length > 0 &&
           pairs.every((pair) => selectedPairs[pair.id] !== undefined && selectedPairs[pair.id] === pair.right),
+        review: buildQuestionReview(block, response),
       };
     }
     case 'sorting': {
@@ -382,9 +482,11 @@ export function evaluateQuestionBlock(
         ? response.filter((value): value is string => typeof value === 'string')
         : block.content.items;
       const isCorrect = JSON.stringify(items) === JSON.stringify(block.content.correctOrder);
+      const explanation = normalizeFeedback(isCorrect ? block.content.successMsg : block.content.failMsg);
       return {
         isCorrect,
-        explanation: normalizeFeedback(isCorrect ? block.content.successMsg : block.content.failMsg),
+        explanation,
+        review: buildQuestionReview(block, response, explanation),
       };
     }
     default:
@@ -401,4 +503,120 @@ function normalizeText(value: string | undefined): string {
 function normalizeFeedback(value: string | undefined): string | undefined {
   const feedback = value?.trim();
   return feedback ? feedback : undefined;
+}
+
+function buildQuestionReview(
+  block: LessonBlock,
+  response: QuestionResponse,
+  explanation?: string,
+): QuestionReview {
+  switch (block.type) {
+    case 'multiple-choice': {
+      const content = block.content as MultipleChoiceContent;
+      const selectedIds = Array.isArray(response) ? response.filter((value): value is string => typeof value === 'string') : [];
+      const options = Array.isArray(content.options) ? content.options : [];
+      const selectedOptionTexts = selectedIds
+        .map((selectedId) => options.find((option) => option.id === selectedId)?.text ?? selectedId)
+        .filter(Boolean);
+      const correctOptionTexts = options
+        .filter((option) => Boolean(option.isCorrect))
+        .map((option) => option.text)
+        .filter(Boolean);
+
+      return {
+        kind: 'multiple-choice',
+        prompt: String(content.question ?? '').trim(),
+        explanation,
+        selectedAnswer: selectedOptionTexts.join(' | '),
+        correctAnswer: correctOptionTexts.join(' | '),
+        selectedOptionTexts,
+        correctOptionTexts,
+      };
+    }
+    case 'true-false': {
+      const content = block.content as TrueFalseContent;
+      const selectedValue = typeof response === 'boolean' ? response : null;
+      const correctValue = Boolean(content.isTrue ?? true);
+      return {
+        kind: 'true-false',
+        prompt: String(content.statement ?? '').trim(),
+        explanation,
+        selectedAnswer: selectedValue === null ? '' : selectedValue ? 'true' : 'false',
+        correctAnswer: correctValue ? 'true' : 'false',
+        selectedValue,
+        correctValue,
+      };
+    }
+    case 'fill-blank': {
+      const content = block.content as FillBlankContent;
+      const blanks = Array.isArray(content.blanks) ? content.blanks : [];
+      const submittedAnswers = Array.isArray(response)
+        ? response.map((value) => String(value ?? '').trim())
+        : [];
+      const correctAnswers = blanks.map((blank) => String(blank.answer ?? '').trim());
+      return {
+        kind: 'fill-blank',
+        prompt: String(content.template ?? '').trim(),
+        explanation,
+        selectedAnswer: submittedAnswers.join(' | '),
+        correctAnswer: correctAnswers.join(' | '),
+        submittedAnswers,
+        correctAnswers,
+      };
+    }
+    case 'matching': {
+      const content = block.content as MatchingContent & { prompt?: string };
+      const pairs = Array.isArray(content.pairs) ? content.pairs : [];
+      const selectedPairs =
+        response && !Array.isArray(response) && typeof response === 'object'
+          ? (response as Record<string, string>)
+          : {};
+      const rows = pairs.map((pair) => {
+        const selectedRight = typeof selectedPairs[pair.id] === 'string' ? selectedPairs[pair.id] : null;
+        return {
+          id: pair.id,
+          left: pair.left,
+          selectedRight,
+          correctRight: pair.right,
+          isCorrect: selectedRight === pair.right,
+        } satisfies MatchingReviewRow;
+      });
+
+      return {
+        kind: 'matching',
+        prompt: String(content.prompt ?? '').trim(),
+        explanation,
+        selectedAnswer: rows.map((row) => `${row.left} -> ${row.selectedRight ?? ''}`.trim()).join(' | '),
+        correctAnswer: rows.map((row) => `${row.left} -> ${row.correctRight}`.trim()).join(' | '),
+        rows,
+      };
+    }
+    case 'sorting': {
+      const orderedItems = Array.isArray(response)
+        ? response.filter((value): value is string => typeof value === 'string')
+        : Array.isArray(block.content.items)
+          ? block.content.items
+          : [];
+      const correctOrder = Array.isArray(block.content.correctOrder) ? block.content.correctOrder : [];
+      return {
+        kind: 'sorting',
+        prompt: String(block.content.prompt ?? '').trim(),
+        explanation,
+        selectedAnswer: orderedItems.join(' -> '),
+        correctAnswer: correctOrder.join(' -> '),
+        orderedItems,
+        correctOrder,
+      };
+    }
+    default:
+      return {
+        kind: 'multiple-choice',
+        prompt: '',
+        explanation,
+        selectedAnswer: '',
+        correctAnswer: '',
+        selectedOptionTexts: [],
+        correctOptionTexts: [],
+      };
+  }
 }

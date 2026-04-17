@@ -33,11 +33,80 @@ type StoredMindMapDocument = {
 
 const QUIZ_SERVICE_UNAVAILABLE_CODE = 'TUTOR_QUIZ_SERVICE_UNAVAILABLE';
 const MINDMAP_SERVICE_UNAVAILABLE_CODE = 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE';
+export const TUTOR_DISPLAY_TITLE_UNAVAILABLE_CODE = 'TUTOR_DISPLAY_TITLE_UNAVAILABLE';
+const TUTOR_DOCUMENT_SELECT_FIELDS =
+  'id, filename, display_title, mime_type, extracted_chars, created_at, updated_at';
+const LEGACY_TUTOR_DOCUMENT_SELECT_FIELDS =
+  'id, filename, mime_type, extracted_chars, created_at, updated_at';
+
+type QueryResult = {
+  data: unknown;
+  error: unknown;
+};
+
+function readBackendErrorText(error: unknown) {
+  if (error instanceof Error && error.message.trim()) {
+    return error.message.trim();
+  }
+
+  if (!error || typeof error !== 'object') {
+    return '';
+  }
+
+  const record = error as Record<string, unknown>;
+  return ['message', 'details', 'hint', 'error_description']
+    .map((key) => record[key])
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+    .join(' ')
+    .trim();
+}
+
+function isMissingDisplayTitleColumnError(error: unknown) {
+  const message = readBackendErrorText(error).toLowerCase();
+  const record = error && typeof error === 'object' ? (error as Record<string, unknown>) : null;
+  const code = typeof record?.code === 'string' ? record.code : '';
+
+  return (
+    code === '42703' ||
+    (message.includes('display_title') &&
+      (message.includes('schema cache') ||
+        message.includes('column') ||
+        message.includes('does not exist') ||
+        message.includes('could not find')))
+  );
+}
+
+async function runTutorDocumentQueryWithLegacyFallback(
+  queryFactory: (selectFields: string) => PromiseLike<QueryResult>,
+): Promise<unknown> {
+  const primaryResult = await Promise.resolve(queryFactory(TUTOR_DOCUMENT_SELECT_FIELDS));
+  if (!primaryResult.error) {
+    return primaryResult.data;
+  }
+
+  if (!isMissingDisplayTitleColumnError(primaryResult.error)) {
+    throw primaryResult.error;
+  }
+
+  const fallbackResult = await Promise.resolve(queryFactory(LEGACY_TUTOR_DOCUMENT_SELECT_FIELDS));
+  if (fallbackResult.error) {
+    throw fallbackResult.error;
+  }
+
+  return fallbackResult.data;
+}
+
+function createDisplayTitleUnavailableError() {
+  return Object.assign(new Error('Display title updates require the latest Supabase database migration.'), {
+    code: TUTOR_DISPLAY_TITLE_UNAVAILABLE_CODE,
+  });
+}
 
 function normalizeTutorDocument(row: Partial<TutorDocumentRow>): TutorDocument {
   return {
     id: String(row.id ?? ''),
     filename: String(row.filename ?? ''),
+    display_title: typeof row.display_title === 'string' ? row.display_title : null,
     mime_type: String(row.mime_type ?? ''),
     extracted_chars: Number(row.extracted_chars ?? 0),
     created_at: typeof row.created_at === 'string' ? row.created_at : '',
@@ -348,16 +417,16 @@ export async function fetchTutorDocuments() {
     return [] as TutorDocument[];
   }
 
-  const { data, error } = await supabase
-    .from('tutor_documents')
-    .select('id, filename, mime_type, extracted_chars, created_at, updated_at')
-    .order('created_at', { ascending: false });
+  const data = await runTutorDocumentQueryWithLegacyFallback((selectFields) =>
+    supabase
+      .from('tutor_documents')
+      .select(selectFields)
+      .order('created_at', { ascending: false }),
+  );
 
-  if (error) {
-    throw error;
-  }
-
-  return (data ?? []).map((row) => normalizeTutorDocument(row as Partial<TutorDocumentRow>));
+  return ((data as Array<Partial<TutorDocumentRow>> | null | undefined) ?? []).map((row) =>
+    normalizeTutorDocument(row),
+  );
 }
 
 export async function createTutorDocument(payload: {
@@ -375,19 +444,43 @@ export async function createTutorDocument(payload: {
   }
   const userId = await requireTutorUserId();
 
+  const insertPayload = {
+    user_id: userId,
+    filename: payload.filename.trim(),
+    mime_type: payload.mimeType.trim(),
+    extracted_text: normalizedText,
+    extracted_chars: normalizedText.length,
+  };
+  const data = await runTutorDocumentQueryWithLegacyFallback((selectFields) =>
+    supabase
+      .from('tutor_documents')
+      .insert(insertPayload)
+      .select(selectFields)
+      .single(),
+  );
+
+  return normalizeTutorDocument((data as Partial<TutorDocumentRow> | null | undefined) ?? {});
+}
+
+export async function updateTutorDocumentTitle(documentId: string, displayTitle: string) {
+  if (usesViewerFixtures()) {
+    throw new Error('演示模式暂不支持资料标题修改。');
+  }
+
+  const nextDisplayTitle = displayTitle.trim();
   const { data, error } = await supabase
     .from('tutor_documents')
-    .insert({
-      user_id: userId,
-      filename: payload.filename.trim(),
-      mime_type: payload.mimeType.trim(),
-      extracted_text: normalizedText,
-      extracted_chars: normalizedText.length,
+    .update({
+      display_title: nextDisplayTitle.length ? nextDisplayTitle : null,
     })
-    .select('id, filename, mime_type, extracted_chars, created_at, updated_at')
+    .eq('id', documentId)
+    .select(TUTOR_DOCUMENT_SELECT_FIELDS)
     .single();
 
   if (error) {
+    if (isMissingDisplayTitleColumnError(error)) {
+      throw createDisplayTitleUnavailableError();
+    }
     throw error;
   }
 

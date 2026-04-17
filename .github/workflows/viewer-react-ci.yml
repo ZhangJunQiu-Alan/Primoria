@@ -46,6 +46,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Edge Function unit tests
+        run: deno test --allow-env supabase/functions/
+
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
         with:
@@ -59,6 +67,9 @@ jobs:
 
       - name: Lint local database schema
         run: supabase db lint --local --fail-on error
+
+      - name: Lint
+        run: pnpm --filter @primoria/viewer-react lint
 
       - name: Typecheck
         run: pnpm --filter @primoria/viewer-react typecheck

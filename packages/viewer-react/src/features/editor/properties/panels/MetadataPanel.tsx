@@ -39,7 +39,7 @@ export function MetadataPanel() {
       estimated_minutes: metadata?.estimated_minutes,
       tags: metadata?.tags?.join(', ') ?? '',
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- 仅在挂载时初始化表单，metadata 后续变更由编辑器 store 管理
 
   useEffect(() => {
     const sub = watch((values) => {

@@ -90,6 +90,7 @@ describe('AiTutorMindMapEditorPage', () => {
       {
         id: 'doc-1',
         filename: 'week02.pdf',
+        display_title: null,
         mime_type: 'application/pdf',
         extracted_chars: 3424,
         created_at: new Date('2026-04-15T08:00:00.000Z').toISOString(),
