@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { MatchingQuestionForm } from '@/shared/lesson/MatchingQuestionForm';
 import type { Block } from '@primoria/schema';
 import { seededShuffle } from '@/shared/utils/seededShuffle';
 import { BlockRenderer } from './BlockRenderer';
@@ -261,33 +262,31 @@ function MatchingPreview({
   }, [checkVersion, isCorrect, onAnswered]);
 
   return (
-    <div className="space-y-2">
-      {pairs.map((pair) => (
-        <div
-          key={pair.id}
-          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(180px,1fr)] items-center gap-3"
-        >
-          <div className="rounded-md border bg-muted/30 px-3 py-2 text-sm">{pair.left}</div>
-          <span className="text-muted-foreground">↔</span>
-          <select
-            value={selectedPairs[pair.id] ?? ''}
-            onChange={(event) =>
-              setSelectedPairs((current) => ({
-                ...current,
-                [pair.id]: event.target.value,
-              }))
+    <div className="space-y-3">
+      <MatchingQuestionForm
+        pairs={pairs}
+        options={shuffledRightOptions}
+        selectedPairs={selectedPairs}
+        copy={{
+          leftLabel: 'Prompt',
+          choiceLabel: 'Match option',
+          placeholder: 'Select a match',
+          menuLabel: 'Available matches',
+          clearSelection: 'Clear selection',
+          correctMatch: 'Correct match: ',
+        }}
+        onSelectionChange={(pairId, nextRight) =>
+          setSelectedPairs((current) => {
+            const next = { ...current };
+            if (nextRight) {
+              next[pairId] = nextRight;
+            } else {
+              delete next[pairId];
             }
-            className="rounded-md border bg-background px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
-          >
-            <option value="">Select a match</option>
-            {shuffledRightOptions.map((option) => (
-              <option key={`${pair.id}-${option.id}`} value={option.right}>
-                {option.right}
-              </option>
-            ))}
-          </select>
-        </div>
-      ))}
+            return next;
+          })
+        }
+      />
       <PreviewAnswerState checkVersion={checkVersion} isCorrect={isCorrect} />
     </div>
   );

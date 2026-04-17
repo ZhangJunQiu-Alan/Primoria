@@ -7,10 +7,10 @@ describe('CommunityPage', () => {
     const user = userEvent.setup();
     const firstRender = renderRoute('/community', 'user');
 
-    expect(await screen.findByText(/^社区$/i, {}, { timeout: 10000 })).toBeInTheDocument();
-    expect(await screen.findByRole('button', { name: /消息|messages/i }, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByText(/^一起学$/i, {}, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /聊天|chat/i }, { timeout: 10000 })).toBeInTheDocument();
 
-    await user.click(await screen.findByRole('button', { name: /消息|messages/i }, { timeout: 10000 }));
+    await user.click(await screen.findByRole('button', { name: /聊天|chat/i }, { timeout: 10000 }));
     await user.type(await screen.findByPlaceholderText(/发送一条消息/i), 'Persisted workspace message');
     await user.click(await screen.findByRole('button', { name: /^发送$/i }));
 
@@ -26,7 +26,7 @@ describe('CommunityPage', () => {
 
     firstRender.unmount();
     renderRoute('/community', 'user');
-    await user.click(await screen.findByRole('button', { name: /消息|messages/i }, { timeout: 10000 }));
+    await user.click(await screen.findByRole('button', { name: /聊天|chat/i }, { timeout: 10000 }));
     expect(await screen.findAllByText(/persisted workspace message/i)).toHaveLength(2);
     await user.click(await screen.findByRole('button', { name: /笔记|notes/i }, { timeout: 10000 }));
     expect(await screen.findByDisplayValue(/persisted note/i)).toBeInTheDocument();

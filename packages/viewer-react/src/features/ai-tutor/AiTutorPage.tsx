@@ -1232,7 +1232,7 @@ export function AiTutorPage() {
                     className="text-[2.1rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
                     style={{ fontFamily: '"Cormorant Garamond", serif' }}
                   >
-                    {language === 'zh-CN' ? '工作台' : 'Workspace'}
+                    {copy.aiTutor.workspaceTitle}
                   </h2>
                   <button
                     type="button"
@@ -1478,7 +1478,7 @@ export function AiTutorPage() {
                     className="text-[1.8rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
                     style={{ fontFamily: '"Cormorant Garamond", serif' }}
                   >
-                    {language === 'zh-CN' ? '笔记本' : 'Notebook'}
+                    {copy.aiTutor.notebookTitle}
                   </h3>
                   <button
                     type="button"

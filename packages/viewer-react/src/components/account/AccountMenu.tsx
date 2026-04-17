@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import type { ViewerAuthUser } from '@/features/auth/authSlice';
 import { patchPreferences } from '@/shared/state/preferencesSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/state/store';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 import { fetchDashboardProfileSummary, type DashboardProfileSummary } from '@/pages/dashboard/DashboardSettingsDialog';
 
 interface AccountMenuProps {
@@ -34,7 +34,7 @@ export function AccountMenu({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const language = useAppSelector((state) => state.viewerPreferences.language);
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
   const [profileSummary, setProfileSummary] = useState<DashboardProfileSummary | null>(null);
 
   useEffect(() => {
@@ -63,6 +63,7 @@ export function AccountMenu({
   const displayName = getDisplayName(user.email, profileSummary?.username);
   const avatarInitial = (displayName.trim()[0] ?? 'A').toUpperCase();
   const avatarUrl = profileSummary?.avatarUrl?.trim() ?? '';
+  const nextLanguage = language === 'en' ? 'zh-CN' : 'en';
 
   return (
     <DropdownMenu.Root>
@@ -71,7 +72,7 @@ export function AccountMenu({
           type="button"
           className={buttonClassName}
           aria-label={copy.accountMenu.open}
-          title={title ?? user.email ?? copy.dashboard.account}
+          title={title ?? user.email ?? copy.brand.name}
         >
           {avatarUrl ? <img className={imageClassName} src={avatarUrl} alt="" /> : avatarInitial}
         </button>
@@ -94,10 +95,10 @@ export function AccountMenu({
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className="studio-menu__item"
-            onSelect={() => dispatch(patchPreferences({ language: language === 'zh-CN' ? 'en' : 'zh-CN' }))}
+            onSelect={() => dispatch(patchPreferences({ language: nextLanguage }))}
           >
             <Globe size={14} />
-            <span>{copy.language.label}: {language === 'zh-CN' ? copy.language.en : copy.language.zh}</span>
+            <span>{copy.language.label}: {nextLanguage === 'en' ? copy.language.en : copy.language.zh}</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className="studio-menu__item" onSelect={() => void onSignOut()}>
             <LogOut size={14} />

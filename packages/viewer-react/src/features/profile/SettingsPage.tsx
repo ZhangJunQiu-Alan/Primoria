@@ -12,7 +12,6 @@ import {
   Languages,
   LayoutTemplate,
   MoonStar,
-  Shield,
   Sparkles,
   SunMedium,
   UserRoundCog,
@@ -25,7 +24,7 @@ import { generateChildBindingCode } from '@/shared/api/viewer/parentApi';
 import { fetchViewerSettings, saveAccountSystemSettings, saveProfileSettings } from '@/shared/api/viewer/settingsApi';
 import { supabase } from '@/shared/api/supabase';
 import { disableViewerPushNotifications, enableViewerPushNotifications, clearViewerLocalCache } from '@/shared/api/viewer/pushApi';
-import { formatViewerDateTime, formatViewerMonthYear } from '@/shared/i18n/format';
+import { formatViewerDateTime } from '@/shared/i18n/format';
 import type { ViewerLanguage } from '@/shared/i18n/locale';
 import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
@@ -37,31 +36,18 @@ import { clearDemoRole, seedDemoRole } from '@/shared/utils/demoMode';
 import { cn } from '@/shared/utils/cn';
 import { isParentRole, learnerHomeForRole } from '@/shared/utils/routes';
 
-const VIEWER_VERSION = '0.1.0';
-
 type NoticeState = {
   tone: 'success' | 'error' | 'info';
   message: string;
 };
 
 const sectionIcons: Record<SettingsSectionId, ReactNode> = {
-  account: <CircleUserRound size={18} />,
-  appearance: <LayoutTemplate size={18} />,
-  learning: <GraduationCap size={18} />,
-  aiTutor: <Bot size={18} />,
-  notifications: <Bell size={18} />,
-  privacy: <Shield size={18} />,
-  parent: <UserRoundCog size={18} />,
+  profile: <CircleUserRound size={18} />,
+  study: <GraduationCap size={18} />,
+  assistant: <Bot size={18} />,
+  family: <UserRoundCog size={18} />,
   support: <Sparkles size={18} />,
 };
-
-function formatJoinedAt(dateString: string, language: ViewerLanguage) {
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) {
-    return language === 'zh-CN' ? '2026年2月' : 'Feb 2026';
-  }
-  return formatViewerMonthYear(date, language);
-}
 
 function formatBindingExpiry(dateString: string | null, language: ViewerLanguage) {
   if (!dateString) {
@@ -264,7 +250,7 @@ export function SettingsPage() {
   const language = preferences.language;
   const copy = getSettingsCopy(language);
 
-  const [activeSection, setActiveSection] = useState<SettingsSectionId>('account');
+  const [activeSection, setActiveSection] = useState<SettingsSectionId>('profile');
   const [notice, setNotice] = useState<NoticeState | null>(null);
   const [profileForm, setProfileForm] = useState({
     username: '',
@@ -379,10 +365,8 @@ export function SettingsPage() {
         savedAiTutorSettings
           ? copy.aiTutor.saveSuccess
           : savedAppearanceSettings
-          ? copy.appearance.saveSuccess
-          : activeSection === 'notifications'
-            ? copy.notifications.saveSuccess
-            : copy.appearance.saveSuccess,
+            ? copy.appearance.saveSuccess
+            : copy.notifications.saveSuccess,
         'success',
       );
     },
@@ -547,62 +531,11 @@ export function SettingsPage() {
 
   const profile = settingsQuery.data.profile;
   const displayName = profileForm.username.trim() || auth.user?.displayName || profile.username || 'Learner';
-  const joinedAt = formatJoinedAt(profile.created_at, language);
   const activeTutorPersona = getAiTutorPersonaDefinition(systemDraft.ai_tutor_persona, language);
 
   return (
     <PageContainer title={copy.title} subtitle={copy.subtitle} className="max-w-[1280px] pb-10">
       {notice ? <NoticeBanner notice={notice} /> : null}
-
-      <section className="viewer-panel overflow-hidden rounded-[34px]">
-        <div className="relative min-h-[230px] overflow-hidden bg-[linear-gradient(135deg,#7f5f49_0%,#c4956a_32%,#e8cfab_62%,#a8c5ac_100%)] px-6 py-6 md:px-8">
-          {profileForm.cover_image_url ? (
-            <img src={profileForm.cover_image_url} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
-          ) : null}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(255,255,255,0.22),transparent_24%),radial-gradient(circle_at_86%_24%,rgba(255,255,255,0.16),transparent_26%)]" />
-
-          <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="flex items-end gap-4">
-              <div className="relative h-[6.8rem] w-[6.8rem] overflow-hidden rounded-[26px] border-4 border-white/80 bg-white shadow-[0_20px_45px_rgba(90,70,50,0.18)]">
-                {profileForm.avatar_url ? (
-                  <img src={profileForm.avatar_url} alt={displayName} className="h-full w-full object-cover" />
-                ) : (
-                    <div className="flex h-full w-full items-center justify-center text-[2.7rem] font-black text-[#7a6b5e]">
-                      {displayName.slice(0, 1)}
-                    </div>
-                  )}
-              </div>
-
-              <div className="pb-1 text-white">
-                <div className="text-[0.72rem] font-black uppercase tracking-[0.22em] text-white/70">{copy.overviewEyebrow}</div>
-                <h2 className="mt-2 text-[2.3rem] font-semibold tracking-[-0.04em]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{displayName}</h2>
-                <div className="mt-2 text-sm font-semibold text-white/78">{auth.user?.email ?? ''}</div>
-              </div>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-[22px] border border-white/20 bg-[rgba(255,252,247,0.16)] px-4 py-3 text-white backdrop-blur">
-                <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewRole}</div>
-                <div className="mt-2 text-lg font-black">{isParent ? copy.parent.parent : copy.parent.learner}</div>
-              </div>
-              <div className="rounded-[22px] border border-white/20 bg-[rgba(255,252,247,0.16)] px-4 py-3 text-white backdrop-blur">
-                <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewJoined}</div>
-                <div className="mt-2 text-lg font-black">{joinedAt}</div>
-              </div>
-              <div className="rounded-[22px] border border-white/20 bg-[rgba(255,252,247,0.16)] px-4 py-3 text-white backdrop-blur">
-                <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewVersion}</div>
-                <div className="mt-2 text-lg font-black">{VIEWER_VERSION}</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative mt-6 rounded-[24px] border border-white/18 bg-[rgba(255,252,247,0.16)] px-5 py-4 text-white backdrop-blur">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-white/72">{copy.overviewActiveSection}</div>
-            <div className="mt-2 text-lg font-black">{copy.sections[activeSection].label}</div>
-            <p className="mt-2 max-w-3xl text-sm font-medium leading-7 text-white/78">{copy.sections[activeSection].description}</p>
-          </div>
-        </div>
-      </section>
 
       <div className="grid gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
         <aside className="space-y-3 xl:sticky xl:top-6 xl:self-start">
@@ -641,8 +574,8 @@ export function SettingsPage() {
         </aside>
 
         <div className="space-y-6">
-          {activeSection === 'account' ? (
-            <SectionCard eyebrow="Account" title={copy.account.title} description={copy.account.description}>
+          {activeSection === 'profile' ? (
+            <SectionCard eyebrow="Profile" title={copy.account.title} description={copy.account.description}>
               <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
                 <div className="space-y-5">
                   <TextField
@@ -709,15 +642,12 @@ export function SettingsPage() {
                 >
                   {saveProfileMutation.isPending ? copy.common.saving : copy.account.save}
                 </button>
-                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
-                  {'profiles'}
-                </div>
               </div>
             </SectionCard>
           ) : null}
 
-          {activeSection === 'appearance' ? (
-            <SectionCard eyebrow="Appearance" title={copy.appearance.title} description={copy.appearance.description}>
+          {activeSection === 'profile' ? (
+            <SectionCard eyebrow="Display" title={copy.appearance.title} description={copy.appearance.description}>
               <div className="grid gap-5 lg:grid-cols-2">
                 <div className="rounded-[24px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
                   <div className="flex items-center gap-2 text-sm font-black text-[var(--viewer-text)]">
@@ -768,15 +698,12 @@ export function SettingsPage() {
                 <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
                   {saveSystemMutation.isPending ? copy.common.saving : copy.appearance.saveSuccess}
                 </div>
-                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
-                  {'user_settings'}
-                </div>
               </div>
             </SectionCard>
           ) : null}
 
-          {activeSection === 'learning' ? (
-            <SectionCard eyebrow="Learning" title={copy.learning.title} description={copy.learning.description}>
+          {activeSection === 'study' ? (
+            <SectionCard eyebrow="Study" title={copy.learning.title} description={copy.learning.description}>
               <div className="grid gap-4 lg:grid-cols-2">
                 <ToggleTile
                   label={copy.learning.sound.label}
@@ -829,8 +756,8 @@ export function SettingsPage() {
             </SectionCard>
           ) : null}
 
-          {activeSection === 'aiTutor' ? (
-            <SectionCard eyebrow="AI Tutor" title={copy.aiTutor.title} description={copy.aiTutor.description}>
+          {activeSection === 'assistant' ? (
+            <SectionCard eyebrow="Helper" title={copy.aiTutor.title} description={copy.aiTutor.description}>
               <div className="rounded-[24px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
@@ -884,15 +811,12 @@ export function SettingsPage() {
                 <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
                   {saveSystemMutation.isPending ? copy.common.saving : copy.aiTutor.saveSuccess}
                 </div>
-                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
-                  {'user_settings'}
-                </div>
               </div>
             </SectionCard>
           ) : null}
 
-          {activeSection === 'notifications' ? (
-            <SectionCard eyebrow="Notifications" title={copy.notifications.title} description={copy.notifications.description}>
+          {activeSection === 'study' ? (
+            <SectionCard eyebrow="Reminders" title={copy.notifications.title} description={copy.notifications.description}>
               <div className="grid gap-4 lg:grid-cols-2">
                 <ToggleTile
                   label={copy.notifications.master.label}
@@ -957,14 +881,11 @@ export function SettingsPage() {
                 >
                   {saveSystemMutation.isPending ? copy.common.saving : copy.notifications.save}
                 </button>
-                <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
-                  {'user_settings + web_push'}
-                </div>
               </div>
             </SectionCard>
           ) : null}
 
-          {activeSection === 'privacy' ? (
+          {activeSection === 'support' ? (
             <SectionCard eyebrow="Privacy" title={copy.privacy.title} description={copy.privacy.description}>
               <div className="grid gap-4 lg:grid-cols-2">
                 <ToggleTile
@@ -1010,9 +931,9 @@ export function SettingsPage() {
             </SectionCard>
           ) : null}
 
-          {activeSection === 'parent' ? (
+          {activeSection === 'family' ? (
             <SectionCard
-              eyebrow="Parent Mode"
+              eyebrow="Family"
               title={copy.parent.title}
               description={isParent ? copy.parent.descriptionParent : copy.parent.descriptionLearner}
             >
@@ -1044,7 +965,7 @@ export function SettingsPage() {
                   </div>
                   <button
                     type="button"
-                  className="viewer-botanical-button viewer-botanical-button--primary mt-5"
+                    className="viewer-botanical-button viewer-botanical-button--primary mt-5"
                     onClick={() => switchRoleMutation.mutate(isParent ? 'user' : 'parent')}
                     disabled={switchRoleMutation.isPending}
                   >
@@ -1116,7 +1037,7 @@ export function SettingsPage() {
           ) : null}
 
           {activeSection === 'support' ? (
-            <SectionCard eyebrow="Support" title={copy.support.title} description={copy.support.description}>
+            <SectionCard eyebrow="Help" title={copy.support.title} description={copy.support.description}>
               <div className="grid gap-4 lg:grid-cols-2">
                 {[
                   { to: '/support/help', label: copy.support.help },
@@ -1135,24 +1056,16 @@ export function SettingsPage() {
                 ))}
               </div>
 
-              <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
-                <div className="rounded-[24px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
-                  <FieldLabel>{copy.support.versionLabel}</FieldLabel>
-                  <div className="mt-3 text-2xl font-black text-[var(--viewer-text)]">{VIEWER_VERSION}</div>
-                  <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">viewer-react</p>
-                </div>
-
-                <div className="rounded-[24px] border border-[#e6c8c2] bg-[#fbefed] p-5">
-                  <div className="text-lg font-black text-[#9d554d]">{copy.support.signOut}</div>
-                  <p className="mt-2 text-sm font-medium leading-7 text-[#9d554d]/80">{copy.support.signOutHint}</p>
-                  <button
-                    type="button"
-                    className="viewer-botanical-button viewer-botanical-button--warm mt-5"
-                    onClick={() => void handleSignOut()}
-                  >
-                    {copy.support.signOut}
-                  </button>
-                </div>
+              <div className="rounded-[24px] border border-[#e6c8c2] bg-[#fbefed] p-5">
+                <div className="text-lg font-black text-[#9d554d]">{copy.support.signOut}</div>
+                <p className="mt-2 max-w-2xl text-sm font-medium leading-7 text-[#9d554d]/80">{copy.support.signOutHint}</p>
+                <button
+                  type="button"
+                  className="viewer-botanical-button viewer-botanical-button--warm mt-5"
+                  onClick={() => void handleSignOut()}
+                >
+                  {copy.support.signOut}
+                </button>
               </div>
             </SectionCard>
           ) : null}

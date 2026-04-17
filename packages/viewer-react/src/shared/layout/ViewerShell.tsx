@@ -3,14 +3,14 @@ import { BookOpen, Home, PanelsTopLeft, Sparkles, UserRound, Users } from 'lucid
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { prefetchViewerNavigationTarget } from '@/shared/api/viewer/prefetch';
 import { useAppSelector } from '@/shared/state/store';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 import { cn } from '@/shared/utils/cn';
 
 export function ViewerShell() {
   const queryClient = useQueryClient();
   const location = useLocation();
   const user = useAppSelector((state) => state.auth.user);
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
   const hideDock = /^\/lesson\/[^/]+(?:\/result)?$/.test(location.pathname);
   const routeNavItems = [
     { to: '/home', label: copy.nav.home, icon: Home },
@@ -29,7 +29,7 @@ export function ViewerShell() {
         </div>
 
         {hideDock ? null : (
-        <nav className="viewer-dock-shell" aria-label="Learner navigation" data-testid="viewer-bottom-dock">
+        <nav className="viewer-dock-shell" aria-label={copy.common.learnerNavigation} data-testid="viewer-bottom-dock">
           <div className="viewer-dock">
             {routeNavItems.map((item) => (
               <div key={item.to} className="viewer-dock__slot">

@@ -12,9 +12,10 @@ import {
   PasswordVisibilityButton,
 } from '@/features/public/BuilderAuthLayout';
 import { getFieldErrors, registerSchema } from '@/features/public/builderAuthSchemas';
+import { usePublicCopy } from '@/features/public/publicCopy';
 import { supabase } from '@/shared/api/supabase';
+import { useDocumentMeta } from '@/shared/i18n/documentMeta';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
-import { useViewerCopy } from '@/shared/theme/copy';
 import { buildAuthCallbackUrl, readReturnTo } from '@/shared/utils/authRedirect';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 
@@ -22,7 +23,7 @@ type RegisterField = 'name' | 'email' | 'password' | 'confirmPassword';
 type Provider = 'google' | 'apple' | 'email' | null;
 
 export function RegisterPage() {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [loadingProvider, setLoadingProvider] = useState<Provider>(null);
@@ -41,6 +42,7 @@ export function RegisterPage() {
   const isSubmitting = loadingProvider === 'email';
   const returnTo = readReturnTo(`?${searchParams.toString()}`);
   const loginPath = `/login?returnTo=${encodeURIComponent(returnTo)}`;
+  useDocumentMeta(copy.meta.register);
 
   async function handleOAuth(provider: 'google' | 'apple') {
     setLoadingProvider(provider);
@@ -184,7 +186,7 @@ export function RegisterPage() {
 
       <AuthDivider />
 
-      <section className="auth-form-block" aria-label="Email registration form">
+      <section className="auth-form-block" aria-label={copy.layout.emailRegisterForm}>
         <div className="auth-form-block__header">
           <h3 className="auth-form-block__title">{copy.auth.registerEmailSectionTitle}</h3>
         </div>
