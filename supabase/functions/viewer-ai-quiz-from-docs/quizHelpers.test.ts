@@ -107,3 +107,21 @@ Deno.test('buildQuizPrompt: enforces option length consistency for mc questions'
   const prompt = buildQuizPrompt(docs, 10);
   assertContains(prompt, '字符长度差异必须 ≤ 10%');
 });
+
+Deno.test('buildQuizPrompt: defaults to English output language', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10);
+  assertContains(prompt, 'MUST be written in English');
+});
+
+Deno.test('buildQuizPrompt: honors explicit English language', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10, 'en');
+  assertContains(prompt, 'MUST be written in English');
+});
+
+Deno.test('buildQuizPrompt: honors explicit simplified Chinese language', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 10, 'zh-CN');
+  assertContains(prompt, '必须使用简体中文');
+});

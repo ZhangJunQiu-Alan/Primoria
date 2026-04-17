@@ -5,6 +5,13 @@ export type TutorDocumentRecord = {
   extracted_text: string;
 };
 
+export type QuizOutputLanguage = 'en' | 'zh-CN';
+
+const LANGUAGE_INSTRUCTIONS: Record<QuizOutputLanguage, string> = {
+  'en': 'All output (titles, questions, options, explanations) MUST be written in English. Even if the study material is in another language, translate terminology into natural English. Do not mix languages.',
+  'zh-CN': '所有输出（标题、题目、选项、解析）必须使用简体中文。即使学习材料是其他语言，也必须翻译为自然的简体中文表述，不得混用语言。',
+};
+
 export function buildCourseSlug(title: string, courseId: string) {
   const normalized = title
     .toLowerCase()
@@ -17,7 +24,11 @@ export function buildCourseSlug(title: string, courseId: string) {
   return `${fallback}-${suffix}`;
 }
 
-export function buildQuizPrompt(documents: TutorDocumentRecord[], questionCount: number) {
+export function buildQuizPrompt(
+  documents: TutorDocumentRecord[],
+  questionCount: number,
+  language: QuizOutputLanguage = 'en',
+) {
   const materials = documents
     .map((document, index) => `[文件${index + 1}: ${document.display_title?.trim() || document.filename}]\n${document.extracted_text}`)
     .join('\n\n');
@@ -25,8 +36,8 @@ export function buildQuizPrompt(documents: TutorDocumentRecord[], questionCount:
   return `你是一位考试辅导老师，根据以下学习材料生成考前复习测验。
 测验目标：帮助学生识别薄弱点，通过每题的解析加深对知识点的理解。
 
-语言规则：所有输出（题目、选项、解析、标题）必须与学习材料的主要语言一致，
-不得混用。
+语言规则（最高优先级，必须严格遵守）：
+${LANGUAGE_INSTRUCTIONS[language]}
 
 ## 学习材料
 ${materials}

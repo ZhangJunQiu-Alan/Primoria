@@ -301,11 +301,12 @@ describe('AiTutorPage', () => {
 
     await waitFor(() => {
       const firstCall = createQuizFromDocsMock.mock.calls[0] as unknown as
-        | [{ documentIds: string[]; questionCount: number }, ...unknown[]]
+        | [{ documentIds: string[]; questionCount: number; language: 'en' | 'zh-CN' }, ...unknown[]]
         | undefined;
       expect(firstCall?.[0]).toEqual({
         documentIds: ['doc-1'],
         questionCount: 12,
+        language: 'en',
       });
     });
 

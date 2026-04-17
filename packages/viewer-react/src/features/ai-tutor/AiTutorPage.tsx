@@ -36,7 +36,7 @@ import { captureViewerError, captureViewerEvent } from '@/shared/platform/observ
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
-import type { LegacyMindMapNode, MindMapSummary, TutorDocument } from '@/shared/api/viewer/types';
+import type { LegacyMindMapNode, MindMapSummary, QuizOutputLanguage, TutorDocument } from '@/shared/api/viewer/types';
 
 type TutorToolKind = TutorToolModal['kind'];
 type ToolExecutionStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -456,6 +456,7 @@ export function AiTutorPage() {
   });
   const [activeToolConfig, setActiveToolConfig] = useState<ActiveToolConfig>(null);
   const [questionCountInput, setQuestionCountInput] = useState('10');
+  const [quizLanguage, setQuizLanguage] = useState<QuizOutputLanguage>('en');
   const [mindMapPromptInput, setMindMapPromptInput] = useState('');
   const [editingDocumentId, setEditingDocumentId] = useState<string | null>(null);
   const [editingDocumentTitle, setEditingDocumentTitle] = useState('');
@@ -931,6 +932,7 @@ export function AiTutorPage() {
       const result = await createQuizMutation.mutateAsync({
         documentIds: selectedDocumentIds,
         questionCount,
+        language: quizLanguage,
       });
 
       const quizArtifact: TutorToolModal = {
@@ -984,7 +986,7 @@ export function AiTutorPage() {
       setNotice({ tone: 'error', text: errorMessage });
       captureViewerError(error, { area: 'ai_tutor_quiz_course_create' });
     }
-  }, [copy.aiTutor.materialsUnavailable, copy.aiTutor.quizCreated, copy.aiTutor.quizPendingUploads, copy.aiTutor.quizPreparing, copy.aiTutor.quizRequiresMaterials, copy.aiTutor.quizRequiresUpload, copy.aiTutor.quizUnavailable, copy.common.errorFallback, createQuizMutation, documents.length, documentsErrorMessage, isQuestionCountValid, messages, pendingUploads.length, questionCount, revealNotebookSection, selectedDocumentIds, sessionContext]);
+  }, [copy.aiTutor.materialsUnavailable, copy.aiTutor.quizCreated, copy.aiTutor.quizPendingUploads, copy.aiTutor.quizPreparing, copy.aiTutor.quizRequiresMaterials, copy.aiTutor.quizRequiresUpload, copy.aiTutor.quizUnavailable, copy.common.errorFallback, createQuizMutation, documents.length, documentsErrorMessage, isQuestionCountValid, messages, pendingUploads.length, questionCount, quizLanguage, revealNotebookSection, selectedDocumentIds, sessionContext]);
 
   useEffect(
     () => () => {
@@ -1669,21 +1671,37 @@ export function AiTutorPage() {
             </p>
 
             {isQuizConfigOpen ? (
-              <div className="mt-5">
-                <label className="text-[0.82rem] font-bold text-[#4d4239]" htmlFor="ai-tutor-question-count">
-                  {copy.aiTutor.questionCount}
-                </label>
-                <input
-                  id="ai-tutor-question-count"
-                  type="number"
-                  min={5}
-                  max={30}
-                  step={1}
-                  inputMode="numeric"
-                  className="mt-2 w-full rounded-[16px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3 text-[0.9rem] font-semibold text-[#3d342a] outline-none"
-                  value={questionCountInput}
-                  onChange={(event) => setQuestionCountInput(event.target.value)}
-                />
+              <div className="mt-5 space-y-4">
+                <div>
+                  <label className="text-[0.82rem] font-bold text-[#4d4239]" htmlFor="ai-tutor-question-count">
+                    {copy.aiTutor.questionCount}
+                  </label>
+                  <input
+                    id="ai-tutor-question-count"
+                    type="number"
+                    min={5}
+                    max={30}
+                    step={1}
+                    inputMode="numeric"
+                    className="mt-2 w-full rounded-[16px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3 text-[0.9rem] font-semibold text-[#3d342a] outline-none"
+                    value={questionCountInput}
+                    onChange={(event) => setQuestionCountInput(event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="text-[0.82rem] font-bold text-[#4d4239]" htmlFor="ai-tutor-quiz-language">
+                    {copy.aiTutor.quizLanguage}
+                  </label>
+                  <select
+                    id="ai-tutor-quiz-language"
+                    className="mt-2 w-full rounded-[16px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3 text-[0.9rem] font-semibold text-[#3d342a] outline-none"
+                    value={quizLanguage}
+                    onChange={(event) => setQuizLanguage(event.target.value as QuizOutputLanguage)}
+                  >
+                    <option value="en">{copy.aiTutor.quizLanguageEnglish}</option>
+                    <option value="zh-CN">{copy.aiTutor.quizLanguageChinese}</option>
+                  </select>
+                </div>
               </div>
             ) : null}
 

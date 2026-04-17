@@ -2,7 +2,12 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.2';
 import { QuizDslSchema, compileQuizDslToLessonContent, type QuizDsl } from './quizCompiler.ts';
 import { extractNormalizedGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
-import { buildCourseSlug, buildQuizPrompt, type TutorDocumentRecord } from './quizHelpers.ts';
+import {
+  buildCourseSlug,
+  buildQuizPrompt,
+  type QuizOutputLanguage,
+  type TutorDocumentRecord,
+} from './quizHelpers.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const DEFAULT_MODEL = 'gemini-2.0-flash';
@@ -211,6 +216,8 @@ serve(async (req) => {
       : [];
     const dedupedDocumentIds: string[] = [...new Set(documentIds)];
     const questionCount = Number(payload?.questionCount ?? 10);
+    const languageInput = typeof payload?.language === 'string' ? payload.language.trim() : '';
+    const language: QuizOutputLanguage = languageInput === 'zh-CN' ? 'zh-CN' : 'en';
 
     if (!dedupedDocumentIds.length) {
       return new Response(JSON.stringify({ error: 'Please select at least one document.' }), {
@@ -246,7 +253,7 @@ serve(async (req) => {
       });
     }
 
-    const dsl = await generateQuizDsl(buildQuizPrompt(orderedDocuments, questionCount), questionCount);
+    const dsl = await generateQuizDsl(buildQuizPrompt(orderedDocuments, questionCount, language), questionCount);
     const compiled = compileQuizDslToLessonContent(dsl);
     const courseId = crypto.randomUUID();
 
