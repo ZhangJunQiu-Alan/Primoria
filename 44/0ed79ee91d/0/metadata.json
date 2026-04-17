@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "440ed79ee91d",
+  "session_id": "eaee1413-d3f5-4e2d-b86e-a3267df930c8",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-17T08:33:58.305992Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/changelog.md",
+    "docs/technical-debt-register-zh.md",
+    "docs/test-checklist-zh.md",
+    "docs/test-checklist.md",
+    "docs/todo-zh.md",
+    "docs/todo.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "c98e2e94fa97",
+  "token_usage": {
+    "input_tokens": 199,
+    "cache_creation_tokens": 392960,
+    "cache_read_tokens": 14482405,
+    "output_tokens": 94492,
+    "api_call_count": 171
+  },
+  "session_metrics": {
+    "turn_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-17T08:33:57.429281Z",
+    "agent_lines": 81,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 81,
+    "agent_percentage": 100
+  }
+}
