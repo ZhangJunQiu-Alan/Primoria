@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f637ffed9dca",
+  "session_id": "c4f8b05e-cb21-4a77-b2fc-96635102d2d8",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-17T10:08:16.657482Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "supabase/functions/viewer-ai-quiz-from-docs/index.ts",
+    "packages/viewer-react/src/shared/utils/textStats.ts",
+    "packages/viewer-react/src/shared/api/viewer/tutorDocumentsApi.ts",
+    "packages/viewer-react/test/textStats.test.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "424218904bca",
+  "checkpoint_transcript_start": 338,
+  "transcript_lines_at_start": 338,
+  "token_usage": {
+    "input_tokens": 39,
+    "cache_creation_tokens": 33667,
+    "cache_read_tokens": 4179837,
+    "output_tokens": 13533,
+    "api_call_count": 29
+  },
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-17T10:08:16.317186Z",
+    "agent_lines": 48,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 48,
+    "agent_percentage": 100
+  }
+}

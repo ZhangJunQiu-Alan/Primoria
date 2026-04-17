@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f637ffed9dca",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "packages/viewer-react/src/shared/api/viewer/tutorDocumentsApi.ts",
+    "packages/viewer-react/src/shared/utils/textStats.ts",
+    "packages/viewer-react/test/textStats.test.ts",
+    "supabase/functions/viewer-ai-quiz-from-docs/index.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f6/37ffed9dca/0/metadata.json",
+      "transcript": "/f6/37ffed9dca/0/full.jsonl",
+      "content_hash": "/f6/37ffed9dca/0/content_hash.txt",
+      "prompt": "/f6/37ffed9dca/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 39,
+    "cache_creation_tokens": 33667,
+    "cache_read_tokens": 4179837,
+    "output_tokens": 13533,
+    "api_call_count": 29
+  }
+}
