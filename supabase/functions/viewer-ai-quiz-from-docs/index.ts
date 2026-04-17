@@ -121,9 +121,15 @@ async function ensureProfileExists(client: ReturnType<typeof createUserClient>, 
   }
 }
 
-async function generateQuizDsl(prompt: string, questionCount: number) {
+const GEMINI_OVERLOADED_MESSAGES: Record<QuizOutputLanguage, string> = {
+  'en': 'Please retry later — Gemini service is temporarily overloaded.',
+  'zh-CN': '请稍后重试，这是 Gemini 服务端临时过载。',
+};
+
+async function generateQuizDsl(prompt: string, questionCount: number, language: QuizOutputLanguage) {
   const geminiApiKey = getEnv('GEMINI_API_KEY');
   let lastError = 'AI quiz generation failed.';
+  let sawOverload = false;
 
   for (const model of [DEFAULT_MODEL, ...FALLBACK_MODELS.filter((candidate) => candidate !== DEFAULT_MODEL)]) {
     const response = await fetch(`${GEMINI_BASE_URL}/models/${model}:generateContent?key=${geminiApiKey}`, {
@@ -143,7 +149,12 @@ async function generateQuizDsl(prompt: string, questionCount: number) {
     });
 
     if (!response.ok) {
-      lastError = `Gemini returned HTTP ${response.status}.`;
+      if (response.status === 503 || response.status === 429) {
+        sawOverload = true;
+        lastError = GEMINI_OVERLOADED_MESSAGES[language];
+      } else {
+        lastError = `Gemini returned HTTP ${response.status}.`;
+      }
       continue;
     }
 
@@ -191,6 +202,9 @@ async function generateQuizDsl(prompt: string, questionCount: number) {
     };
   }
 
+  if (sawOverload) {
+    throw new Error(GEMINI_OVERLOADED_MESSAGES[language]);
+  }
   throw new Error(lastError);
 }
 
@@ -253,7 +267,7 @@ serve(async (req) => {
       });
     }
 
-    const dsl = await generateQuizDsl(buildQuizPrompt(orderedDocuments, questionCount, language), questionCount);
+    const dsl = await generateQuizDsl(buildQuizPrompt(orderedDocuments, questionCount, language), questionCount, language);
     const compiled = compileQuizDslToLessonContent(dsl);
     const courseId = crypto.randomUUID();
 
