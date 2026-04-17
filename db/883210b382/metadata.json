@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "db883210b382",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/technical-debt-register-zh.md",
+    "packages/viewer-react/test/homePage.test.tsx",
+    "packages/viewer-react/test/mindMapEditorPage.test.tsx",
+    "packages/viewer-react/test/parentDashboardPage.test.tsx",
+    "packages/viewer-react/test/routeGuards.test.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/db/883210b382/0/metadata.json",
+      "transcript": "/db/883210b382/0/full.jsonl",
+      "content_hash": "/db/883210b382/0/content_hash.txt",
+      "prompt": "/db/883210b382/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 89,
+    "cache_creation_tokens": 86423,
+    "cache_read_tokens": 4978108,
+    "output_tokens": 21161,
+    "api_call_count": 74
+  }
+}

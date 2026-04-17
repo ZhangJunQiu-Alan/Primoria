@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "db883210b382",
+  "session_id": "b5fb352a-2eb2-4bb5-af14-0c37e3d53896",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-17T20:55:13.759464Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/technical-debt-register-zh.md",
+    "packages/viewer-react/test/homePage.test.tsx",
+    "packages/viewer-react/test/mindMapEditorPage.test.tsx",
+    "packages/viewer-react/test/parentDashboardPage.test.tsx",
+    "packages/viewer-react/test/routeGuards.test.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "58b972969d81",
+  "token_usage": {
+    "input_tokens": 89,
+    "cache_creation_tokens": 86423,
+    "cache_read_tokens": 4978108,
+    "output_tokens": 21161,
+    "api_call_count": 74
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-17T20:55:13.593278Z",
+    "agent_lines": 19,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 19,
+    "agent_percentage": 100
+  }
+}
