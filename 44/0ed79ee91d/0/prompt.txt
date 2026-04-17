@@ -1,0 +1,55 @@
+1.2  使用中跟详细解释
+
+---
+
+使用中文输出
+
+---
+
+使用中文,重新输出
+
+---
+
+ESLint是干嘛的
+
+---
+
+C. 严格方案                                                     
+  @typescript-eslint + eslint-plugin-react-hooks + eslint-plugin-react-refresh 完整套装，CI 加 lint 门禁，现有 eslint-disable 逐条审查补充理由。
+
+---
+
+1.3  使用中文详细解释,是什么问题,怎么解决,为什么选择这个解决方案
+
+---
+
+输出  const defaultSupabaseUrl = 'https://rygafvlzzkvqhhenajzi.supabase.co';  // ← 硬编码兜底                                                                                                                                      
+  const defaultSupabaseAnonKey = 'eyJhbGci...';  // ← 硬编码兜底   这两个默认值在终端, 然后实施方案A
+
+---
+
+那这个env怎么构建呢
+
+---
+
+这个不会影响到我的部署在cloudflare的情况吧
+
+---
+
+1.4  使用中文详细解释,是什么问题,怎么解决,为什么选择这个解决方案
+
+---
+
+开始做吧
+
+---
+
+将目前完成的工作,全部放在doc中合适的文件里面,再删除过时的信息,删除整个项目过时的文件,数据
+
+---
+
+已完成的todo啊还有什么技术债啊 这些不重要都可以删掉吧
+
+---
+
+1
