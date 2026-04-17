@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "45f371c8dd94",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".github/workflows/viewer-react-ci.yml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/45/f371c8dd94/0/metadata.json",
+      "transcript": "/45/f371c8dd94/0/full.jsonl",
+      "content_hash": "/45/f371c8dd94/0/content_hash.txt",
+      "prompt": "/45/f371c8dd94/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 21,
+    "cache_creation_tokens": 201948,
+    "cache_read_tokens": 403627,
+    "output_tokens": 1069,
+    "api_call_count": 6
+  }
+}
