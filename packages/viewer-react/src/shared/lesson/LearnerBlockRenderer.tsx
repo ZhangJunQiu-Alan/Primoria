@@ -349,11 +349,6 @@ function MatchingPreview({
         const rowReview = matchingRows.find((row) => row.id === pair.id);
         const isRowCorrect = rowReview?.isCorrect ?? false;
         const hasRowEvaluation = Boolean(rowReview);
-        const rowToneClasses = !hasRowEvaluation
-          ? 'border-[var(--viewer-border)] bg-transparent'
-          : isRowCorrect
-            ? 'border-emerald-200 bg-emerald-50/70'
-            : 'border-rose-200 bg-rose-50/75';
         const selectToneClasses = !hasRowEvaluation
           ? 'border-[var(--viewer-border)] bg-white text-[var(--viewer-text)]'
           : isRowCorrect
@@ -361,7 +356,7 @@ function MatchingPreview({
             : 'border-rose-200 bg-rose-50 text-rose-700';
 
         return (
-          <div key={pair.id} className={cn('space-y-2 rounded-[22px] border px-3 py-3 transition', rowToneClasses)}>
+          <div key={pair.id} className="space-y-2">
             <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(180px,1fr)] items-center gap-3">
               <div
                 className={cn(
