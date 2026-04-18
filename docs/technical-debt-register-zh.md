@@ -120,19 +120,24 @@
 
 - 标题：Demo / fixture 路径遮蔽真实后端
 - 优先级：高
-- 状态：待实施
-- 背景：`usesViewerFixtures()` 深入多个 API 模块，E2E 也主要覆盖本地 demo role 和 localStorage 路径。
+- 状态：已解决（2026-04-19）
+- 背景：`usesViewerFixtures()` 深入多个 API 模块，原来的 `e2e`、`smoke:preview`、`smoke:cloud` 虽然都已存在，但命名和文档边界混在一起，容易把“本地 fixture 能跑”误读成“真实后端链路可靠”。
 - 会导致什么：本地看起来一切正常，不代表真实 Supabase、RLS、Edge Function 和浏览器环境真的可靠，很容易在发布前最后一步才发现问题。
-- 解决方案：明确区分 fixture 回归、真实 Supabase smoke 和更接近生产的浏览器验收，不再把它们混成一件事。
+- 解决方案：把 fixture 浏览器回归、preview smoke、真实 cloud smoke 明确分层，并让脚本、文档、workflow 都使用同一套语义。
 - 实施步骤：
-  1. 拆清测试分类和命名。
-  2. 更新回归清单和运行说明。
-  3. 把真实链路的最低验证路径固定下来。
+  1. 为 `viewer-react` 增加显式别名脚本：`e2e:fixture`、`verify:preview`、`verify:cloud`，同时保留旧入口兼容。
+  2. 更新 `docs/test-checklist-zh.md`、`docs/README-zh.md`、`docs/viewer-react-interactions.md`、`docs/viewer-react-cutover-runbook.md`，把四类验证入口和边界写清楚。
+  3. 更新 `viewer-react-ci.yml` 和 `viewer-react-preview.yml` 的步骤命名与调用命令，让 CI 中 fixture / preview / cloud smoke 的职责更清晰。
+  4. 保持真实 cloud smoke 仍是有 secrets 才运行的可选路径，不把它变成 PR 必选门禁。
 - 验证方式：
-  - 文档与脚本说明一致
-  - 相关 smoke/e2e 命令能够区分 fixture 与真实环境
-- 相关文件/系统：`packages/viewer-react/src/shared/api/viewer/`、`packages/viewer-react/test/e2e/`、`docs/test-checklist-zh.md`
-- 提交记录：待后续提交
+  - `pnpm --filter @primoria/viewer-react lint`：通过，`0 errors / 52 warnings`
+  - `pnpm --filter @primoria/viewer-react typecheck`：通过
+  - `pnpm --filter @primoria/viewer-react test`：通过，当前工作区 `141/141`
+  - `pnpm --filter @primoria/viewer-react e2e:fixture`：通过，`6/6`
+  - 静态检查 `.github/workflows/viewer-react-ci.yml` 和 `.github/workflows/viewer-react-preview.yml`，确认 preview/cloud smoke 的边界、调用命令和跳过提示一致
+  - `verify:preview` / `verify:cloud` 仍分别依赖已部署 URL 与真实 secrets，本次本地提交不直接执行真实环境烟测
+- 相关文件/系统：`packages/viewer-react/package.json`、`.github/workflows/viewer-react-ci.yml`、`.github/workflows/viewer-react-preview.yml`、`packages/viewer-react/test/e2e/viewer.spec.ts`、`docs/test-checklist-zh.md`
+- 提交记录：本次提交 `chore: 收敛 Viewer 验证分层入口`
 
 ### TD-06 Agent Service 未纳入主线治理
 

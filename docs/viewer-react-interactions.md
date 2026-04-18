@@ -6,6 +6,9 @@
 
 - 本页只记录当前仍有价值的关键交互，不再维护过度细碎的逐按钮清单。
 - `fixture` 只用于开发和测试，不代表真实后端链路。
+- `e2e` / `e2e:fixture` 只验证本地 fixture 浏览器回归，不验证真实 Supabase、真实鉴权或真实 analytics。
+- `smoke:preview` / `verify:preview` 只验证已部署环境的壳层、静态资源和关键响应头，不验证真实业务写入。
+- `smoke:cloud` / `verify:cloud` 才是最接近真实产品链路的浏览器 smoke，依赖真实账号、真实数据和可用密钥。
 - 正常运行模式默认依赖真实 Supabase；AI Tutor 聊天在配置 `VITE_AGENT_SERVICE_URL` 时优先走 `agent-service`，否则走 `viewer-ai-tutor` Edge Function。
 
 ## 核心交互
@@ -27,7 +30,7 @@
 | 家长面板 | 查看孩子报告、绑定/解绑孩子、切换孩子 | 已登录家长 | 报告刷新、绑定结果提示 | 家长相关 RPC | `/parent` | 家长专属首页 |
 | Builder Dashboard | 查看首页、课程管理、数据中心、粉丝管理 | 已登录用户 | 仪表盘、弹窗、通知条 | 课程查询、analytics RPC、本地偏好 | `/builder/dashboard` | 当前重点是统一工作台体验 |
 | Builder 编辑器 | 打开课程、编辑 block、保存、发布、导入导出 | 已登录用户 | 保存状态、发布反馈、画布与预览同步 | 编辑器 store、课程 mutation、图片上传 | `/builder/editor`、`/builder/editor/:courseId` | 学习端预览链路已接通 |
-| Release / Ops | CI、预览、生产发布、恢复 | 发布负责人 | 工作流状态、烟测结果、恢复记录 | GitHub Actions、Cloudflare、Supabase | 无用户态路由 | 详细步骤见 `viewer-react-cutover-runbook.md` |
+| Release / Ops | CI、fixture 浏览器回归、预览 smoke、真实 cloud smoke、生产发布、恢复 | 发布负责人 | 工作流状态、烟测结果、恢复记录 | GitHub Actions、Cloudflare、Supabase | 无用户态路由 | 详细步骤见 `viewer-react-cutover-runbook.md` |
 
 ## 当前仍保留的占位语义
 

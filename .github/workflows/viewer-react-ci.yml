@@ -80,8 +80,8 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm --filter @primoria/viewer-react exec playwright install --with-deps chromium
 
-      - name: End-to-end tests
-        run: pnpm --filter @primoria/viewer-react e2e
+      - name: Fixture browser regression
+        run: pnpm --filter @primoria/viewer-react e2e:fixture
 
       - name: Verify strict env guard
         run: |
@@ -102,7 +102,7 @@ jobs:
       - name: Enforce bundle budget
         run: pnpm --filter @primoria/viewer-react check:bundle
 
-      - name: Optional cloud smoke on main/manual
+      - name: Optional real-backend cloud smoke
         if: ${{ github.event_name != 'pull_request' }}
         env:
           SUPABASE_URL: ${{ secrets.VIEWER_SUPABASE_URL }}
@@ -116,10 +116,10 @@ jobs:
           VIEWER_SMOKE_PARENT_PASSWORD: ${{ secrets.VIEWER_SMOKE_PARENT_PASSWORD }}
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ] || [ -z "$VIEWER_BASE_URL" ]; then
-            echo "Cloud smoke skipped because one or more required secrets are missing."
+            echo "Skipping real-backend cloud smoke: missing one or more required secrets (SUPABASE_URL, SUPABASE_SECRET_KEY, VIEWER_BASE_URL)."
             exit 0
           fi
-          pnpm --filter @primoria/viewer-react smoke:cloud
+          pnpm --filter @primoria/viewer-react verify:cloud
 
   deploy-supabase-functions:
     runs-on: ubuntu-latest
