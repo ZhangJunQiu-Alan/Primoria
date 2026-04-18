@@ -21,11 +21,20 @@
 ## 当前质量基线（2026-04-19）
 
 - `pnpm --filter @primoria/viewer-react typecheck`：通过
-- `pnpm --filter @primoria/viewer-react lint`：失败，当前有 `7 errors / 66 warnings`
-- `pnpm --filter @primoria/viewer-react test`：失败，当前 `137` 个测试里有 `1` 个失败
+- `pnpm --filter @primoria/viewer-react lint`：通过，当前有 `0 errors / 52 warnings`
+- `pnpm --filter @primoria/viewer-react test`：通过，当前工作区 `141/141` 通过
 - `deno test --allow-env supabase/functions/`：`62/62` 通过
 - `cd agent-service && uv run pytest -q`：`2/2` 通过
 - 详细背景、影响和解决顺序见 [technical-debt-register-zh.md](./technical-debt-register-zh.md)
+
+## 验证入口速查
+
+| 我现在要验证什么 | 推荐命令 | 说明 |
+| --- | --- | --- |
+| 本地静态检查与单测 | `pnpm --filter @primoria/viewer-react lint` / `typecheck` / `test` | 不依赖真实后端烟测账号 |
+| 本地 fixture 浏览器回归 | `pnpm --filter @primoria/viewer-react e2e:fixture` | 兼容旧入口 `e2e`；只验证 `VITE_VIEWER_DEMO_MODE=1` 的本地链路 |
+| 已部署预览环境 smoke | `VIEWER_PREVIEW_URL=... pnpm --filter @primoria/viewer-react verify:preview` | 兼容旧入口 `smoke:preview`；只验证部署壳层、静态资源和响应头 |
+| 真实 Supabase / 浏览器 smoke | `VIEWER_BASE_URL=... SUPABASE_URL=... SUPABASE_SECRET_KEY=... pnpm --filter @primoria/viewer-react verify:cloud` | 兼容旧入口 `smoke:cloud`；验证真实账号、真实数据读写和 Dashboard analytics |
 
 ## 活文档
 
@@ -50,6 +59,13 @@ pnpm --filter @primoria/viewer-react lint
 pnpm --filter @primoria/viewer-react typecheck
 pnpm --filter @primoria/viewer-react test
 pnpm --filter @primoria/viewer-react build
+pnpm --filter @primoria/viewer-react e2e:fixture
+
+# 已部署预览环境 smoke（兼容旧入口 smoke:preview）
+VIEWER_PREVIEW_URL=https://<preview-url> pnpm --filter @primoria/viewer-react verify:preview
+
+# 真实后端 cloud smoke（兼容旧入口 smoke:cloud）
+VIEWER_BASE_URL=https://<viewer-url> SUPABASE_URL=... SUPABASE_SECRET_KEY=... pnpm --filter @primoria/viewer-react verify:cloud
 
 # Edge Functions
 deno test --allow-env supabase/functions/

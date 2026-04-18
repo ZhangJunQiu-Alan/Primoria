@@ -66,11 +66,11 @@ jobs:
           fi
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
 
-      - name: Preview smoke
+      - name: Preview environment smoke
         if: ${{ steps.deploy.outputs.deployment_url != '' }}
         env:
           VIEWER_PREVIEW_URL: ${{ steps.deploy.outputs.deployment_url }}
-        run: pnpm --filter @primoria/viewer-react smoke:preview
+        run: pnpm --filter @primoria/viewer-react verify:preview
 
       - name: Upload preview artifact fallback
         if: ${{ steps.deploy.outputs.deployment_url == '' }}

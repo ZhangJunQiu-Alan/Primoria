@@ -49,7 +49,11 @@
 
 - `GEMINI_API_KEY`
 
-### Cloud smoke 所需变量
+### Preview smoke 所需变量
+
+- `VIEWER_PREVIEW_URL`
+
+### 真实 cloud smoke 所需变量
 
 - `VIEWER_BASE_URL`
 - `SUPABASE_URL`
@@ -72,13 +76,14 @@
 - 当前职责：
   - Deno 测试
   - 本地 Supabase 校验
-  - `viewer-react` 的 lint / typecheck / unit test / e2e / build / bundle budget
+  - `viewer-react` 的 lint / typecheck / unit test / fixture 浏览器回归 / build / bundle budget
+  - `main` / manual 下按 secrets 条件触发可选真实 cloud smoke
   - 主分支推送后自动执行 `deploy-supabase-functions`
 
 ### 2. 预览发布
 
 - `.github/workflows/viewer-react-preview.yml`
-- 构建预览产物，具备条件时部署到 Cloudflare Pages，并执行 preview smoke
+- 构建预览产物，具备条件时部署到 Cloudflare Pages，并执行 preview environment smoke
 
 ### 3. 生产发布
 
@@ -114,18 +119,42 @@ supabase db push
 
 ## 发布前最低验收
 
-### 自动化命令
+### 本地静态检查与 fixture 浏览器回归
 
 ```bash
 pnpm --filter @primoria/viewer-react lint
 pnpm --filter @primoria/viewer-react typecheck
 pnpm --filter @primoria/viewer-react test
-pnpm --filter @primoria/viewer-react e2e
+pnpm --filter @primoria/viewer-react e2e:fixture
 deno test --allow-env supabase/functions/
 pnpm --filter @primoria/viewer-react check:bundle
 ```
 
-### 人工 smoke 清单
+兼容旧入口：
+
+- `pnpm --filter @primoria/viewer-react e2e`
+
+### 已部署预览环境 smoke
+
+```bash
+VIEWER_PREVIEW_URL=https://<preview-url> pnpm --filter @primoria/viewer-react verify:preview
+```
+
+兼容旧入口：
+
+- `pnpm --filter @primoria/viewer-react smoke:preview`
+
+### 真实后端 cloud smoke
+
+```bash
+VIEWER_BASE_URL=https://<viewer-url> SUPABASE_URL=... SUPABASE_SECRET_KEY=... pnpm --filter @primoria/viewer-react verify:cloud
+```
+
+兼容旧入口：
+
+- `pnpm --filter @primoria/viewer-react smoke:cloud`
+
+### 人工补充 smoke 清单
 
 - 学习者：
   - 登录后进入 `/home`
@@ -145,6 +174,12 @@ pnpm --filter @primoria/viewer-react check:bundle
   - 社区里的消息/笔记/学习房间至少验证一个持久化路径
   - AI Tutor 聊天可正常返回
   - 资料上传后能生成 quiz 或 mind map
+
+注意：
+
+- fixture 浏览器回归不代表真实后端链路。
+- preview smoke 只验证部署壳层、静态资源和关键响应头。
+- 真实账号、真实数据读写和 Dashboard analytics 只在 cloud smoke 中验证。
 
 ## 恢复步骤
 

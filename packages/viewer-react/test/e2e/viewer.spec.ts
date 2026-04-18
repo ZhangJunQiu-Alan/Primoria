@@ -41,8 +41,10 @@ test('demo learner flow reaches lesson result', async ({ page }) => {
   await page.getByRole('textbox').fill('web');
   await page.getByRole('button', { name: /^next step$|^下一步$/i }).click();
   await page.getByRole('button', { name: /^next step$|^下一步$/i }).click();
-  await page.getByRole('combobox').nth(0).selectOption({ label: 'Progress' });
-  await page.getByRole('combobox').nth(1).selectOption({ label: 'Catalog' });
+  await page.getByRole('combobox').nth(0).click();
+  await page.getByRole('option', { name: 'Progress' }).click();
+  await page.getByRole('combobox').nth(1).click();
+  await page.getByRole('option', { name: 'Catalog' }).click();
   await page.getByRole('button', { name: /^next step$|^下一步$/i }).click();
   await page.getByRole('button', { name: /^complete$|^完成$/i }).click();
 
@@ -57,7 +59,7 @@ test('demo parent users normalize to the parent dashboard', async ({ page }) => 
 
   await page.goto('/home');
   await expect(page).toHaveURL(/\/parent$/);
-  await expect(page.getByText(/parent dashboard/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: /家长查看|Family View/i })).toBeVisible();
 });
 
 test('demo learner can sign out from settings', async ({ page }) => {
@@ -68,7 +70,7 @@ test('demo learner can sign out from settings', async ({ page }) => {
   await page.goto('/settings');
   await page.getByRole('button', { name: /帮助与隐私|help & privacy/i }).click();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: /退出账号|sign out/i }).click();
+  await page.getByRole('button', { name: /退出账号|sign out/i }).last().click();
 
   await expect(page).toHaveURL(/\/$/);
   await expect(
@@ -86,9 +88,10 @@ test('demo learner uses ai tutor tools in fixture mode', async ({ page }) => {
   await page.getByRole('button', { name: /^发送$|^Send$/i }).click();
 
   await expect(page.getByText(/fixture tutor reply/i)).toBeVisible();
-  await page.getByRole('button', { name: /生成思维导图|Generate mind map/i }).click();
-  await expect(page.getByRole('heading', { name: /生成思维导图|Generate mind map/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /生成思维导图|Generate mind map/i })).toBeDisabled();
+  await page.getByRole('button', { name: /配置并生成思维导图|Configure and generate mind map/i }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.getByRole('heading', { name: /生成思维导图|Generate mind map/i })).toBeVisible();
+  await expect(dialog.getByRole('button', { name: /^生成思维导图$|^Generate mind map$/i })).toBeDisabled();
 });
 
 test('demo learner community changes persist across refresh', async ({ page }) => {
