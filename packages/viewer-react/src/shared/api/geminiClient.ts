@@ -10,6 +10,8 @@ const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)
 const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() ?? '';
 const rawAgentServiceUrl = (import.meta.env.VITE_AGENT_SERVICE_URL as string | undefined)?.trim() ?? '';
 const TUTOR_TIMEOUT_MS = 30_000;
+const EDGE_REQUEST_MAX_ATTEMPTS = 2;
+const EDGE_REQUEST_RETRY_DELAY_MS = 500;
 
 export type TutorMessage = {
   role: 'user' | 'model';
@@ -209,7 +211,25 @@ function buildHttpError(status: number, text: string, fallback: string) {
 }
 
 function shouldFallbackToEdgeFunction(options: TutorRequestOptions) {
-  return options.provider !== 'gemini' && options.context?.surface === 'lesson-runtime';
+  return options.provider !== 'gemini' && Boolean(rawSupabaseUrl && rawSupabaseAnonKey);
+}
+
+function shouldRetryEdgeFunctionStatus(status: number) {
+  return isServiceUnavailableStatus(status);
+}
+
+function shouldRetryEdgeFunctionError(error: unknown) {
+  const message = readErrorText(error);
+  return (
+    (error instanceof Error && error.name === 'AbortError') ||
+    isTransportFailureMessage(message)
+  );
+}
+
+function waitForEdgeRetry() {
+  return new Promise<void>((resolve) => {
+    globalThis.setTimeout(resolve, EDGE_REQUEST_RETRY_DELAY_MS);
+  });
 }
 
 export function getStoredGeminiKey() {
@@ -597,41 +617,53 @@ async function requestTutorTool<T>(
     throw new Error('AI Tutor requires VITE_SUPABASE_ANON_KEY.');
   }
 
-  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
-  try {
-    const response = await fetch(tutorFunctionUrl(), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: rawSupabaseAnonKey,
-        Authorization: `Bearer ${rawSupabaseAnonKey}`,
-      },
-      body: JSON.stringify({
-        mode,
-        model: activeModel(options.model),
-        history,
-        persona: currentAiTutorPersona(),
-        allowModelFallback: options.allowModelFallback ?? true,
-        context: options.context,
-        apiKeyOverride: apiKeyOverride || undefined,
-      }),
-      signal: timeout.signal,
-    });
+  for (let attempt = 1; attempt <= EDGE_REQUEST_MAX_ATTEMPTS; attempt += 1) {
+    const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
+    try {
+      const response = await fetch(tutorFunctionUrl(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: rawSupabaseAnonKey,
+          Authorization: `Bearer ${rawSupabaseAnonKey}`,
+        },
+        body: JSON.stringify({
+          mode,
+          model: activeModel(options.model),
+          history,
+          persona: currentAiTutorPersona(),
+          allowModelFallback: options.allowModelFallback ?? true,
+          context: options.context,
+          apiKeyOverride: apiKeyOverride || undefined,
+        }),
+        signal: timeout.signal,
+      });
 
-    const text = await response.text();
-    const parsed = parseJsonObject(text);
-    if (!response.ok) {
-      throw buildHttpError(response.status, text, `AI Tutor request failed with HTTP ${response.status}.`);
+      const text = await response.text();
+      const parsed = parseJsonObject(text);
+      if (!response.ok) {
+        if (attempt < EDGE_REQUEST_MAX_ATTEMPTS && shouldRetryEdgeFunctionStatus(response.status)) {
+          await waitForEdgeRetry();
+          continue;
+        }
+        throw buildHttpError(response.status, text, `AI Tutor request failed with HTTP ${response.status}.`);
+      }
+      if (!parsed) {
+        throw new Error('AI Tutor returned invalid JSON.');
+      }
+      return parsed as T;
+    } catch (error) {
+      if (attempt < EDGE_REQUEST_MAX_ATTEMPTS && shouldRetryEdgeFunctionError(error)) {
+        await waitForEdgeRetry();
+        continue;
+      }
+      throw normalizeTutorError(error);
+    } finally {
+      timeout.cleanup();
     }
-    if (!parsed) {
-      throw new Error('AI Tutor returned invalid JSON.');
-    }
-    return parsed as T;
-  } catch (error) {
-    throw normalizeTutorError(error);
-  } finally {
-    timeout.cleanup();
   }
+
+  throw new Error('AI Tutor request failed after retry.');
 }
 
 export async function generateTutorReply(history: TutorMessage[], options: TutorRequestOptions = {}) {
