@@ -11,8 +11,8 @@
 ## 当前质量基线（2026-04-19）
 
 - `pnpm --filter @primoria/viewer-react typecheck`：通过
-- `pnpm --filter @primoria/viewer-react lint`：通过，当前有 `0 errors / 65 warnings`
-- `pnpm --filter @primoria/viewer-react test`：通过，当前 `137/137` 通过
+- `pnpm --filter @primoria/viewer-react lint`：通过，当前有 `0 errors / 60 warnings`
+- `pnpm --filter @primoria/viewer-react test`：通过，当前工作区 `141/141` 通过
 - `deno test --allow-env supabase/functions/`：`62/62` 通过
 - `cd agent-service && uv run pytest -q`：`2/2` 通过
 
@@ -77,20 +77,23 @@
 
 - 标题：编辑器状态同步模型脆弱
 - 优先级：高
-- 状态：待实施
-- 背景：编辑器属性面板多处靠 `eslint-disable react-hooks/exhaustive-deps` 压住依赖检查，不同 block 面板都在重复实现“外部数据变化后重置表单，再把用户输入写回 store”的逻辑。
+- 状态：已解决（2026-04-19）
+- 背景：编辑器属性面板之前多处靠 `eslint-disable react-hooks/exhaustive-deps` 压住依赖检查，不同 block 面板都在重复实现“外部数据变化后重置表单，再把用户输入写回 store”的逻辑。
 - 会导致什么：页面上看起来像“偶发没同步”或“刚改完又被覆盖”，这种问题通常不好复现，排查起来也很耗时间。
-- 解决方案：抽出共享表单同步模式，让面板只关心各自字段，不再各写一套脆弱的重置逻辑。
+- 解决方案：抽出共享表单同步 hook，让面板只关心各自字段，不再各写一套脆弱的重置逻辑；对特殊字段再补受控适配，避免旁路 dispatch。
 - 实施步骤：
-  1. 梳理现有面板的共同流程。
-  2. 抽共享 hook 或共享适配层。
-  3. 逐面板替换并移除不必要的 `eslint-disable`。
-  4. 补面板级回归测试。
+  1. 梳理属性面板共同的“外部快照 -> 表单 reset -> watch -> dispatch”流程。
+  2. 抽出 `useSyncedInspectorForm` 共享 hook。
+  3. 替换 `MetadataPanel`、`MultipleChoicePanel`、`TrueFalsePanel`、`FillBlankPanel`、`MatchingPanel`、`VideoPanel`、`InteractiveVisualPanel`、`FunctionFlowPanel`。
+  4. 把 `FillBlankPanel` 的 alternatives 输入改成受控字段，不再旁路 dispatch。
+  5. 补共享 hook 回归测试，验证本地输入不会触发 reset 回环，外部快照变化会正确回填。
 - 验证方式：
-  - 编辑器相关测试通过
-  - 面板切换、草稿切换、字段编辑场景人工回归
-- 相关文件/系统：`packages/viewer-react/src/features/editor/properties/`、`packages/viewer-react/src/features/editor/EditorLayout.tsx`
-- 提交记录：待后续提交
+  - `pnpm --filter @primoria/viewer-react lint`：通过，`0 errors / 60 warnings`
+  - `pnpm --filter @primoria/viewer-react typecheck`：通过
+  - `pnpm --filter @primoria/viewer-react test`：通过，当前工作区 `141/141`
+  - `pnpm --filter @primoria/viewer-react exec vitest run test/editorInspectorFormSync.test.tsx`：通过
+- 相关文件/系统：`packages/viewer-react/src/features/editor/properties/`、`packages/viewer-react/test/editorInspectorFormSync.test.tsx`
+- 提交记录：本次提交 `refactor: 收敛编辑器属性面板状态同步模型`
 
 ### TD-04 AI Tutor / Mind Map 状态流过度依赖 effect 中同步 setState
 

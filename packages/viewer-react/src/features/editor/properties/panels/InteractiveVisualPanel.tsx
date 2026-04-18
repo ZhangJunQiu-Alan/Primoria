@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { supabase } from '@/lib/supabase';
 import { FormField, Input, Select, Textarea } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import type { Block } from '@primoria/schema';
 
 const TEMPLATES = [
@@ -49,28 +50,24 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
     description?: string;
     aiPrompt?: string;
   };
+  const formValues: FormValues = {
+    template: c.template ?? 'generic',
+    title: c.title ?? '',
+    description: c.description ?? '',
+    aiPrompt: c.aiPrompt ?? '',
+  };
 
   const { register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      template: c.template ?? 'generic',
-      title: c.title ?? '',
-      description: c.description ?? '',
-      aiPrompt: c.aiPrompt ?? '',
-    },
+    defaultValues: formValues,
   });
 
-  useEffect(() => {
-    reset({
-      template: c.template ?? 'generic',
-      title: c.title ?? '',
-      description: c.description ?? '',
-      aiPrompt: c.aiPrompt ?? '',
-    });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps -- 仅在切换 block 时重置表单；不跟踪 reset/content，避免与用户输入冲突
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(
         updateBlock({
           lessonId,
@@ -78,9 +75,8 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
           block: { ...block, content: { ...(block.content as object), ...values } },
         }),
       );
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   async function handleGenerate() {
     const prompt = (block.content as { aiPrompt?: string }).aiPrompt ?? '';

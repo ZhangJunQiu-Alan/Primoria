@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateMetadata } from '@/store/editorSlice';
 import { FormField, Input, Select, Textarea } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -19,30 +19,25 @@ type FormValues = z.infer<typeof schema>;
 export function MetadataPanel() {
   const dispatch = useAppDispatch();
   const metadata = useAppSelector((s) => s.editor.draft?.metadata);
+  const formValues: FormValues = {
+    title: metadata?.title ?? '',
+    description: metadata?.description ?? '',
+    difficulty_level: metadata?.difficulty_level,
+    estimated_minutes: metadata?.estimated_minutes,
+    tags: metadata?.tags?.join(', ') ?? '',
+  };
 
   const { register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      title: metadata?.title ?? '',
-      description: metadata?.description ?? '',
-      difficulty_level: metadata?.difficulty_level,
-      estimated_minutes: metadata?.estimated_minutes,
-      tags: metadata?.tags?.join(', ') ?? '',
-    },
+    defaultValues: formValues,
   });
 
-  useEffect(() => {
-    reset({
-      title: metadata?.title ?? '',
-      description: metadata?.description ?? '',
-      difficulty_level: metadata?.difficulty_level,
-      estimated_minutes: metadata?.estimated_minutes,
-      tags: metadata?.tags?.join(', ') ?? '',
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- 仅在挂载时初始化表单，metadata 后续变更由编辑器 store 管理
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: 'course-metadata',
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(
         updateMetadata({
           title: values.title ?? '',
@@ -59,9 +54,8 @@ export function MetadataPanel() {
             : undefined,
         }),
       );
-    });
-    return () => sub.unsubscribe();
-  }, [watch, dispatch]);
+    },
+  });
 
   if (!metadata) return null;
 
