@@ -87,6 +87,33 @@ describe('geminiClient', () => {
     expect(reply).toBe('Edge reply');
   });
 
+  it('retries the edge function once after a transient service unavailable response', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch');
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ error: 'Temporary outage.' }), {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ reply: 'Recovered edge reply' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+    const { generateTutorReply } = await import('@/shared/api/geminiClient');
+    const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
+
+    expect(reply).toBe('Recovered edge reply');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
   it('streams tutor replies from the agent service', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
     vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
@@ -150,6 +177,36 @@ describe('geminiClient', () => {
         ai_tutor_persona: 'coach',
       }),
     });
+  });
+
+  it('falls back from the ai-tutor agent stream to the edge function when the agent is unavailable', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch');
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ detail: 'Agent unavailable.' }), {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ reply: 'Edge fallback reply' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream([{ role: 'user', text: 'Hello' }]);
+
+    expect(result.reply).toBe('Edge fallback reply');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe('http://localhost:8787/v1/chat/stream');
+    expect(fetchMock.mock.calls[1]?.[0]).toBe('https://demo-project.functions.supabase.co/viewer-ai-tutor');
   });
 
   it('falls back from the lesson agent stream to the edge function with strict page context', async () => {
