@@ -11,7 +11,7 @@
 ## 当前质量基线（2026-04-19）
 
 - `pnpm --filter @primoria/viewer-react typecheck`：通过
-- `pnpm --filter @primoria/viewer-react lint`：通过，当前有 `0 errors / 60 warnings`
+- `pnpm --filter @primoria/viewer-react lint`：通过，当前有 `0 errors / 52 warnings`
 - `pnpm --filter @primoria/viewer-react test`：通过，当前工作区 `141/141` 通过
 - `deno test --allow-env supabase/functions/`：`62/62` 通过
 - `cd agent-service && uv run pytest -q`：`2/2` 通过
@@ -99,19 +99,22 @@
 
 - 标题：AI Tutor / Mind Map 状态流过度依赖 effect 中同步 setState
 - 优先级：高
-- 状态：待实施
-- 背景：AI Tutor 会话、Mind Map 编辑器和相关 hooks 里存在大量“effect 一跑就立刻 setState”的写法，当前 lint 也已经把这类问题直接标出来了。
+- 状态：已解决（2026-04-19）
+- 背景：AI Tutor 会话页、会话 hook 和 Mind Map 编辑器里曾存在一批“effect 一跑就立刻 setState”的纠偏逻辑，典型表现是欢迎态依赖 effect 回写、页面 effect 依赖 session/tools 对象属性、导图选中态和菜单状态靠 effect 兜底修正。
 - 会导致什么：界面更容易出现连锁刷新、选中状态突然跳走、工具栏状态跟不上内容等问题，用户只会感到“不稳定”。
-- 解决方案：把能在初始化时算出的值前移，把真正需要监听外部变化的逻辑收敛到更清晰的状态边界。
+- 解决方案：把欢迎态、选中态、聚焦态、Notebook 运行态这些可以直接推导出来的值改成派生逻辑，只保留真正必要的外部同步 effect。
 - 实施步骤：
-  1. 区分初始化状态、派生状态和真正的外部同步。
-  2. 移除不必要的 effect 回写。
-  3. 补相关交互测试，特别是对话恢复、节点选中、自动保存状态。
+  1. 在 `useAiTutorSession.ts` 中把欢迎消息改成派生值，不再靠 effect 回写 `messages`。
+  2. 在 `AiTutorPage.tsx` 中拆开 `session` / `tools` 依赖，避免 effect 依赖被对象包装放大。
+  3. 在 `AiTutorMindMapEditorPage.tsx` 中把选中节点、聚焦节点、打开菜单节点改成派生回退逻辑，不再用 effect 做同步纠偏。
+  4. 回归 AI Tutor 对话、Mind Map 编辑器、Notebook 与自动保存主链路。
 - 验证方式：
-  - `pnpm --filter @primoria/viewer-react lint`
-  - `pnpm --filter @primoria/viewer-react test`
+  - `pnpm --filter @primoria/viewer-react lint`：通过，`0 errors / 52 warnings`
+  - `pnpm --filter @primoria/viewer-react typecheck`：通过
+  - `pnpm --filter @primoria/viewer-react exec vitest run test/aiTutorPage.test.tsx test/mindMapEditorPage.test.tsx`：通过
+  - `pnpm --filter @primoria/viewer-react test`：通过，当前工作区 `141/141`
 - 相关文件/系统：`packages/viewer-react/src/features/ai-tutor/`
-- 提交记录：待后续提交
+- 提交记录：本次提交 `refactor: 收敛 AI Tutor 与 Mind Map 派生状态流`
 
 ### TD-05 Demo / fixture 路径遮蔽真实后端
 

@@ -19,6 +19,16 @@ import type {
   TutorToolRuntime,
 } from '@/features/ai-tutor/aiTutorTypes';
 
+function resolveWelcomeMessages(messages: TutorMessage[], welcomeBody: string) {
+  if (messages.length !== 1 || messages[0]?.role !== 'model') {
+    return messages;
+  }
+  if (messages[0].text === welcomeBody) {
+    return messages;
+  }
+  return defaultTutorMessages(welcomeBody);
+}
+
 export function useAiTutorSession({
   welcomeBody,
   copy,
@@ -38,10 +48,11 @@ export function useAiTutorSession({
   const frameRef = useRef<number | null>(null);
   const latestMessagesRef = useRef(messages);
   const latestContextRef = useRef(sessionContext);
+  const resolvedMessages = useMemo(() => resolveWelcomeMessages(messages, welcomeBody), [messages, welcomeBody]);
 
   useEffect(() => {
-    latestMessagesRef.current = messages;
-  }, [messages]);
+    latestMessagesRef.current = resolvedMessages;
+  }, [resolvedMessages]);
 
   useEffect(() => {
     latestContextRef.current = sessionContext;
@@ -84,7 +95,7 @@ export function useAiTutorSession({
 
       const requestHistory = [...latestMessagesRef.current, { role: 'user', text: trimmed } as TutorMessage];
       streamedReplyRef.current = '';
-      setMessages((current) => [...current, { role: 'user', text: trimmed }, { role: 'model', text: '' }]);
+      setMessages([...latestMessagesRef.current, { role: 'user', text: trimmed }, { role: 'model', text: '' }]);
       setInput('');
       setNotice({ tone: 'info', text: copy.aiTutor.responsePreparing });
       setIsSending(true);
@@ -146,19 +157,7 @@ export function useAiTutorSession({
     [],
   );
 
-  useEffect(() => {
-    setMessages((current) => {
-      if (current.length !== 1 || current[0]?.role !== 'model') {
-        return current;
-      }
-      if (current[0].text === welcomeBody) {
-        return current;
-      }
-      return defaultTutorMessages(welcomeBody);
-    });
-  }, [welcomeBody]);
-
-  const transcript = useMemo(() => messages.slice(1), [messages]);
+  const transcript = useMemo(() => resolvedMessages.slice(1), [resolvedMessages]);
 
   return {
     handleSend,
@@ -166,7 +165,7 @@ export function useAiTutorSession({
     initialToolRuntime,
     input,
     isSending,
-    messages,
+    messages: resolvedMessages,
     notice,
     sessionContext,
     setInput,

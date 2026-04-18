@@ -30,31 +30,82 @@ export function AiTutorPage() {
     welcomeBody: personaCopy.welcomeBody,
     copy,
   });
+  const {
+    handleSend,
+    hasStartedConversation,
+    initialToolRuntime,
+    input,
+    isSending,
+    messages,
+    notice,
+    sessionContext,
+    setInput,
+    setNotice,
+    setSessionContext,
+    syncSession,
+    transcript,
+  } = session;
 
   const materials = useAiTutorMaterials({
     userId,
     copy,
-    setNotice: session.setNotice,
+    setNotice,
   });
 
   const tools = useAiTutorTools({
     userId,
     copy,
     language,
-    initialToolRuntime: session.initialToolRuntime,
+    initialToolRuntime,
     selectedDocumentIds: materials.selectedDocumentIds,
     pendingUploadsCount: materials.pendingUploads.length,
     documentsCount: materials.documents.length,
     documentsErrorMessage: materials.documentsErrorMessage,
-    messages: session.messages,
-    sessionContext: session.sessionContext,
-    setNotice: session.setNotice,
+    messages,
+    sessionContext,
+    setNotice,
     navigate,
   });
+  const {
+    activeDocsToolKind,
+    closeActiveToolConfig,
+    createMindMapMutation,
+    createQuizMutation,
+    docsToolConfigDescription,
+    docsToolConfigLabel,
+    docsToolConfigTitle,
+    docsToolValidationMessage,
+    expandedSections,
+    handleCreateMindMap,
+    handleCreateQuizCourse,
+    hasNotebookContent,
+    hasToolInFlight,
+    isDocsToolSubmitDisabled,
+    isQuizConfigOpen,
+    latestMindMap,
+    mindMapPromptInput,
+    mindMaps,
+    notebookItems,
+    notebookSectionRef,
+    openMindMapNotebookItem,
+    openNotebookItem,
+    openTool,
+    questionCountInput,
+    quizLanguage,
+    setActiveToolConfig,
+    setExpandedSections,
+    setMindMapPromptInput,
+    setQuestionCountInput,
+    setQuizLanguage,
+    showMindMapNotebookRuntime,
+    toggleSection,
+    toolDefinitions,
+    toolRuntime,
+  } = tools;
 
   useEffect(() => {
-    session.syncSession(tools.toolRuntime);
-  }, [session.syncSession, tools.toolRuntime]);
+    syncSession(toolRuntime);
+  }, [syncSession, toolRuntime]);
 
   useEffect(() => {
     const source = searchParams.get('source');
@@ -71,13 +122,13 @@ export function AiTutorPage() {
     }
     processedCompanionIntentRef.current = intentKey;
 
-    session.setSessionContext({
+    setSessionContext({
       source: 'home-companion',
       courseTitle: courseTitle?.trim() || null,
     });
 
     if (intent === 'quiz') {
-      session.setNotice({
+      setNotice({
         tone: 'info',
         text: copy.aiTutor.quizRequiresUpload,
       });
@@ -85,12 +136,12 @@ export function AiTutorPage() {
       return;
     }
 
-    tools.setExpandedSections((current) => ({
+    setExpandedSections((current) => ({
       ...current,
       materials: true,
     }));
-    tools.setActiveToolConfig({ kind: 'mindmap' });
-    session.setNotice({
+    setActiveToolConfig({ kind: 'mindmap' });
+    setNotice({
       tone: 'info',
       text: copy.aiTutor.mindMapRequiresUpload,
     });
@@ -100,10 +151,10 @@ export function AiTutorPage() {
     copy.aiTutor.quizRequiresUpload,
     navigate,
     searchParams,
-    session.setNotice,
-    session.setSessionContext,
-    tools.setActiveToolConfig,
-    tools.setExpandedSections,
+    setActiveToolConfig,
+    setExpandedSections,
+    setNotice,
+    setSessionContext,
   ]);
 
   useEffect(() => {
@@ -111,19 +162,19 @@ export function AiTutorPage() {
       return;
     }
 
-    tools.setExpandedSections((current) => (current.materials ? current : { ...current, materials: true }));
-  }, [materials.documentsErrorMessage, tools.setExpandedSections]);
+    setExpandedSections((current) => (current.materials ? current : { ...current, materials: true }));
+  }, [materials.documentsErrorMessage, setExpandedSections]);
 
-  const visibleNotice = session.notice?.tone === 'info' ? null : session.notice;
+  const visibleNotice = notice?.tone === 'info' ? null : notice;
   const noticeToneClass =
-    session.notice?.tone === 'success'
+    notice?.tone === 'success'
       ? 'viewer-botanical-notice--success'
-      : session.notice?.tone === 'error'
+      : notice?.tone === 'error'
         ? 'viewer-botanical-notice--error'
         : 'viewer-botanical-notice--info';
-  const workspaceToggleLabel = tools.expandedSections.workspace ? copy.aiTutor.collapseWorkspace : copy.aiTutor.expandWorkspace;
-  const materialsToggleLabel = tools.expandedSections.materials ? copy.aiTutor.collapseMaterials : copy.aiTutor.expandMaterials;
-  const notebookToggleLabel = tools.expandedSections.notebook ? copy.aiTutor.collapseNotebook : copy.aiTutor.expandNotebook;
+  const workspaceToggleLabel = expandedSections.workspace ? copy.aiTutor.collapseWorkspace : copy.aiTutor.expandWorkspace;
+  const materialsToggleLabel = expandedSections.materials ? copy.aiTutor.collapseMaterials : copy.aiTutor.expandMaterials;
+  const notebookToggleLabel = expandedSections.notebook ? copy.aiTutor.collapseNotebook : copy.aiTutor.expandNotebook;
   const sectionToggleButtonClass =
     'inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#ddd3c3] bg-[rgba(255,252,247,0.86)] text-[#6f6359] transition hover:border-[#d1c4b4] hover:bg-[#fffaf2]';
 
@@ -142,18 +193,18 @@ export function AiTutorPage() {
             language={language}
             personaCopy={personaCopy}
             suggestedPrompts={personaCopy.prompts}
-            hasStartedConversation={session.hasStartedConversation}
-            transcript={session.transcript}
-            isSending={session.isSending}
-            handleSend={session.handleSend}
+            hasStartedConversation={hasStartedConversation}
+            transcript={transcript}
+            isSending={isSending}
+            handleSend={handleSend}
           />
 
           <AiTutorComposer
             copy={copy}
-            input={session.input}
-            setInput={session.setInput}
-            isSending={session.isSending}
-            handleSend={session.handleSend}
+            input={input}
+            setInput={setInput}
+            isSending={isSending}
+            handleSend={handleSend}
             visibleNotice={visibleNotice}
             noticeToneClass={noticeToneClass}
           />
@@ -164,19 +215,19 @@ export function AiTutorPage() {
             <div className="space-y-3">
               <AiTutorWorkspaceSection
                 copy={copy}
-                expanded={tools.expandedSections.workspace}
+                expanded={expandedSections.workspace}
                 toggleLabel={workspaceToggleLabel}
                 sectionToggleButtonClass={sectionToggleButtonClass}
-                toggleSection={() => tools.toggleSection('workspace')}
-                toolDefinitions={tools.toolDefinitions}
-                toolRuntime={tools.toolRuntime}
-                latestMindMap={tools.latestMindMap}
-                createQuizPending={tools.createQuizMutation.isPending}
-                createMindMapPending={tools.createMindMapMutation.isPending}
+                toggleSection={() => toggleSection('workspace')}
+                toolDefinitions={toolDefinitions}
+                toolRuntime={toolRuntime}
+                latestMindMap={latestMindMap}
+                createQuizPending={createQuizMutation.isPending}
+                createMindMapPending={createMindMapMutation.isPending}
                 documentsErrorMessage={materials.documentsErrorMessage}
-                isSending={session.isSending}
-                hasToolInFlight={tools.hasToolInFlight}
-                openTool={tools.openTool}
+                isSending={isSending}
+                hasToolInFlight={hasToolInFlight}
+                openTool={openTool}
               />
 
               <AiTutorMaterialsSection
@@ -187,10 +238,10 @@ export function AiTutorPage() {
                 pendingUploads={materials.pendingUploads}
                 createDocumentPending={materials.createDocumentMutation.isPending}
                 documentsErrorMessage={materials.documentsErrorMessage}
-                materialsExpanded={tools.expandedSections.materials}
+                materialsExpanded={expandedSections.materials}
                 materialsToggleLabel={materialsToggleLabel}
                 sectionToggleButtonClass={sectionToggleButtonClass}
-                toggleMaterials={() => tools.toggleSection('materials')}
+                toggleMaterials={() => toggleSection('materials')}
                 handleUploadFiles={materials.handleUploadFiles}
                 documentsQueryLoading={materials.documentsQuery.isLoading}
                 documents={materials.documents}
@@ -209,19 +260,19 @@ export function AiTutorPage() {
 
               <AiTutorNotebookSection
                 copy={copy}
-                notebookSectionRef={tools.notebookSectionRef}
-                notebookExpanded={tools.expandedSections.notebook}
+                notebookSectionRef={notebookSectionRef}
+                notebookExpanded={expandedSections.notebook}
                 notebookToggleLabel={notebookToggleLabel}
                 sectionToggleButtonClass={sectionToggleButtonClass}
-                toggleNotebook={() => tools.toggleSection('notebook')}
-                hasNotebookContent={tools.hasNotebookContent}
-                showMindMapNotebookRuntime={tools.showMindMapNotebookRuntime}
-                mindMapRuntime={tools.toolRuntime.mindmap}
-                openTool={tools.openTool}
-                mindMaps={tools.mindMaps}
-                openMindMapNotebookItem={tools.openMindMapNotebookItem}
-                notebookItems={tools.notebookItems}
-                openNotebookItem={tools.openNotebookItem}
+                toggleNotebook={() => toggleSection('notebook')}
+                hasNotebookContent={hasNotebookContent}
+                showMindMapNotebookRuntime={showMindMapNotebookRuntime}
+                mindMapRuntime={toolRuntime.mindmap}
+                openTool={openTool}
+                mindMaps={mindMaps}
+                openMindMapNotebookItem={openMindMapNotebookItem}
+                notebookItems={notebookItems}
+                openNotebookItem={openNotebookItem}
               />
             </div>
           </div>
@@ -230,23 +281,23 @@ export function AiTutorPage() {
 
       <AiTutorToolConfigDialog
         copy={copy}
-        active={Boolean(tools.activeDocsToolKind)}
-        label={tools.docsToolConfigLabel}
-        title={tools.docsToolConfigTitle}
-        description={tools.docsToolConfigDescription}
-        close={tools.closeActiveToolConfig}
+        active={Boolean(activeDocsToolKind)}
+        label={docsToolConfigLabel}
+        title={docsToolConfigTitle}
+        description={docsToolConfigDescription}
+        close={closeActiveToolConfig}
         selectedDocumentCount={materials.selectedDocumentIds.length}
-        questionCountInput={tools.questionCountInput}
-        setQuestionCountInput={tools.setQuestionCountInput}
-        quizLanguage={tools.quizLanguage}
-        setQuizLanguage={tools.setQuizLanguage}
-        mindMapPromptInput={tools.mindMapPromptInput}
-        setMindMapPromptInput={tools.setMindMapPromptInput}
-        isQuizConfigOpen={tools.isQuizConfigOpen}
-        isDocsToolSubmitDisabled={tools.isDocsToolSubmitDisabled}
-        docsToolValidationMessage={tools.docsToolValidationMessage}
-        handleCreateQuizCourse={tools.handleCreateQuizCourse}
-        handleCreateMindMap={tools.handleCreateMindMap}
+        questionCountInput={questionCountInput}
+        setQuestionCountInput={setQuestionCountInput}
+        quizLanguage={quizLanguage}
+        setQuizLanguage={setQuizLanguage}
+        mindMapPromptInput={mindMapPromptInput}
+        setMindMapPromptInput={setMindMapPromptInput}
+        isQuizConfigOpen={isQuizConfigOpen}
+        isDocsToolSubmitDisabled={isDocsToolSubmitDisabled}
+        docsToolValidationMessage={docsToolValidationMessage}
+        handleCreateQuizCourse={handleCreateQuizCourse}
+        handleCreateMindMap={handleCreateMindMap}
       />
     </div>
   );

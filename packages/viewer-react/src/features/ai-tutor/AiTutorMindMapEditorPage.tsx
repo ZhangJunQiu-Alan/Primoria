@@ -159,40 +159,28 @@ export function AiTutorMindMapEditorPage() {
     }
   }, [document, documentQuery.data, resetAutosaveState, resetHistory]);
 
-  useEffect(() => {
-    if (!document || document.nodes[selectedNodeId]) {
-      return;
-    }
-
-    setSelectedNodeId(document.rootNodeId);
-  }, [document, selectedNodeId]);
-
-  useEffect(() => {
-    if (!document) {
-      return;
-    }
-
-    if (focusNodeId && !document.nodes[focusNodeId]) {
-      setFocusNodeId(null);
-    }
-  }, [document, focusNodeId]);
-
-  useEffect(() => {
-    setOpenMenuNodeId(null);
-  }, [selectedNodeId]);
-
-  const selectedNode = document ? document.nodes[selectedNodeId] ?? null : null;
+  const resolvedSelectedNodeId = document
+    ? (document.nodes[selectedNodeId] ? selectedNodeId : document.rootNodeId)
+    : '';
+  const resolvedFocusNodeId = document && focusNodeId && document.nodes[focusNodeId] ? focusNodeId : null;
   const rootNode = document ? getMindMapRootNode(document) : null;
   const themePalette = resolveMindMapThemePalette(document?.theme ?? createDefaultMindMapTheme());
   const canvasLayout = useMemo(
-    () => (document ? buildMindMapCanvasLayout(document, focusNodeId) : null),
-    [document, focusNodeId],
+    () => (document ? buildMindMapCanvasLayout(document, resolvedFocusNodeId) : null),
+    [document, resolvedFocusNodeId],
   );
+  const visibleSelectedNodeId =
+    canvasLayout?.nodeBoxes[resolvedSelectedNodeId]
+      ? resolvedSelectedNodeId
+      : canvasLayout?.visualRootId ?? resolvedSelectedNodeId;
+  const selectedNode = document ? document.nodes[visibleSelectedNodeId] ?? null : null;
   const selectedBox = selectedNode && canvasLayout ? canvasLayout.nodeBoxes[selectedNode.id] ?? null : null;
   const currentThemePreset = normalizeMindMapTheme(document?.theme ?? createDefaultMindMapTheme()).preset;
+  const activeOpenMenuNodeId = openMenuNodeId === selectedNode?.id ? openMenuNodeId : null;
 
   const selectNode = (nodeId: string) => {
     setSelectedNodeId(nodeId);
+    setOpenMenuNodeId(null);
     viewportRef.current?.focus();
   };
 
@@ -484,16 +472,6 @@ export function AiTutorMindMapEditorPage() {
     window.requestAnimationFrame(() => centerOnNode(canvasLayout.visualRootId, zoom, 'auto'));
   }, [canvasLayout?.visualRootId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (!canvasLayout || !selectedNode) {
-      return;
-    }
-
-    if (!canvasLayout.nodeBoxes[selectedNode.id]) {
-      setSelectedNodeId(canvasLayout.visualRootId);
-    }
-  }, [canvasLayout, selectedNode]);
-
   if (!mindMapId) {
     return <Navigate to="/ai-tutor" replace />;
   }
@@ -534,7 +512,7 @@ export function AiTutorMindMapEditorPage() {
         documentTitle={document.title || labels.untitledMap}
         saveStatus={saveStatus}
         zoom={zoom}
-        isSelectedNodeFocused={focusNodeId === selectedNode.id}
+        isSelectedNodeFocused={resolvedFocusNodeId === selectedNode.id}
         isFocusMode={isFocusMode}
         inspectorOpen={inspectorOpen}
         onDocumentTitleChange={(value) =>
@@ -583,8 +561,8 @@ export function AiTutorMindMapEditorPage() {
           selectedBox={selectedBox}
           contextToolbarTop={contextToolbarTop}
           selectedNode={selectedNode}
-          focusNodeId={focusNodeId}
-          openMenuNodeId={openMenuNodeId}
+          focusNodeId={resolvedFocusNodeId}
+          openMenuNodeId={activeOpenMenuNodeId}
           currentThemePreset={currentThemePreset}
           editingNodeId={editingNodeId}
           editingLabel={editingLabel}
