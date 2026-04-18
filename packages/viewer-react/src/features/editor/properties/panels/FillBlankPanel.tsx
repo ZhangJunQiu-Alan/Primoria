@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { FormField, Input, Textarea } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import { nanoid } from '@/lib/nanoid';
 import type { Block } from '@primoria/schema';
 
@@ -34,33 +34,30 @@ export function FillBlankPanel({ block, lessonId, pageId }: FillBlankPanelProps)
     template?: string;
     blanks?: Array<{ id: string; answer: string; alternatives?: string[] }>;
   };
+  const formValues: FormValues = {
+    template: c.template ?? '',
+    blanks: (c.blanks ?? []).map((b) => ({
+      ...b,
+      alternatives: b.alternatives ?? [],
+    })),
+  };
 
   const { register, watch, control, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      template: c.template ?? '',
-      blanks: (c.blanks ?? []).map((b) => ({
-        ...b,
-        alternatives: b.alternatives ?? [],
-      })),
-    },
+    defaultValues: formValues,
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: 'blanks' });
 
-  useEffect(() => {
-    reset({
-      template: c.template ?? '',
-      blanks: (c.blanks ?? []).map((b) => ({ ...b, alternatives: b.alternatives ?? [] })),
-    });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps -- 仅在切换 block 时重置表单；不跟踪 reset/content，避免与用户输入冲突
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(updateBlock({ lessonId, pageId, block: { ...block, content: values } }));
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   return (
     <div className="space-y-4">
@@ -102,34 +99,23 @@ export function FillBlankPanel({ block, lessonId, pageId }: FillBlankPanelProps)
               <Input {...register(`blanks.${i}.answer`)} placeholder="e.g. Paris" />
             </FormField>
             <FormField label="Alternatives (comma-separated)">
-              <Input
-                placeholder="e.g. paris, PARIS"
-                defaultValue={field.alternatives.join(', ')}
-                onChange={(e) => {
-                  const alts = e.target.value
-                    .split(',')
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-                  const current = watch(`blanks.${i}`);
-                  void Promise.resolve().then(() => {
-                    dispatch(
-                      updateBlock({
-                        lessonId,
-                        pageId,
-                        block: {
-                          ...block,
-                          content: {
-                            template: watch('template'),
-                            blanks: watch('blanks').map((b, j) =>
-                              j === i ? { ...b, alternatives: alts } : b,
-                            ),
-                          },
-                        },
-                      }),
-                    );
-                  });
-                  void current;
-                }}
+              <Controller
+                control={control}
+                name={`blanks.${i}.alternatives`}
+                render={({ field: alternativesField }) => (
+                  <Input
+                    placeholder="e.g. paris, PARIS"
+                    value={(alternativesField.value ?? []).join(', ')}
+                    onChange={(event) =>
+                      alternativesField.onChange(
+                        event.target.value
+                          .split(',')
+                          .map((item) => item.trim())
+                          .filter(Boolean),
+                      )
+                    }
+                  />
+                )}
               />
             </FormField>
           </div>
