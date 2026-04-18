@@ -1,5 +1,27 @@
 # Changelog
 
+> 说明：本文件只记录已经落地并提交的历史变更，不作为当前质量基线或待办清单。当前状态请查看 [technical-debt-register-zh.md](./technical-debt-register-zh.md)。
+
+## [Unreleased] - 2026-04-19 (文档收敛与技术债总账)
+
+### Summary
+
+收敛 `docs/` 为中文主档，删除英文重复文档和作业模板页，并把独立 `todo` 页合并进统一技术债总账。
+
+### Changed
+
+- `docs/README-zh.md` 改为唯一文档入口
+- `docs/technical-debt-register-zh.md` 重写为唯一技术债、半成品功能和产品待办总账
+- 删除英文重复文档与 assignment/rubric 模板页
+- `docs/todo-zh.md` 与 `docs/todo.md` 退役删除
+- `docs/viewer-react-cutover-runbook.md`、`docs/viewer-react-interactions.md` 改为中文并修正 AI Tutor 后端说明
+- `docs/course-json-guide-zh.md`、`docs/prd-zh.md`、`docs/dashboard-zh.md` 修正与当前实现不一致的描述
+
+### Validation
+
+- 文档关键字清理检查 — pass
+
+
 ## [Unreleased] - 2026-04-16 (Engineering Hardening — Lint, Env Guard, Edge Function Tests)
 
 ### Summary
