@@ -81,6 +81,7 @@ export function AiTutorMindMapEditorPage() {
     assets: false,
   });
   const viewportRef = useRef<HTMLDivElement | null>(null);
+  const hydratedMindMapIdRef = useRef<string | null>(null);
 
   const documentQuery = useQuery({
     queryKey: ['ai-tutor', 'mindmap', mindMapId ?? 'missing'],
@@ -146,13 +147,17 @@ export function AiTutorMindMapEditorPage() {
       ),
     });
 
-    setDocument(normalizedDocument);
-    setSelectedNodeId((current) => current || normalizedDocument.rootNodeId);
-    resetHistory();
-    setFocusNodeId(null);
-    setZoom(1);
-    resetAutosaveState(normalizedDocument);
-  }, [documentQuery.data, resetAutosaveState, resetHistory]);
+    const isNewMindMap = hydratedMindMapIdRef.current !== normalizedDocument.id;
+    if (!document || isNewMindMap) {
+      hydratedMindMapIdRef.current = normalizedDocument.id;
+      setDocument(normalizedDocument);
+      setSelectedNodeId(normalizedDocument.rootNodeId);
+      resetHistory();
+      setFocusNodeId(null);
+      setZoom(1);
+      resetAutosaveState(normalizedDocument);
+    }
+  }, [document, documentQuery.data, resetAutosaveState, resetHistory]);
 
   useEffect(() => {
     if (!document || document.nodes[selectedNodeId]) {

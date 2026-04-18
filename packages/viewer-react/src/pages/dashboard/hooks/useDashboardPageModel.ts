@@ -37,7 +37,7 @@ export function useDashboardPageModel({
   language,
   navigate,
 }: {
-  userId: string;
+  userId: string | undefined;
   language: 'zh-CN' | 'en';
   navigate: NavigateFunction;
 }) {
@@ -206,7 +206,7 @@ export function useDashboardPageModel({
     try {
       const course = await createCourse.mutateAsync({
         ...payload,
-        userId,
+        userId: userId!,
       });
       setFormMode(null);
       setCourseForForm(null);
@@ -224,7 +224,7 @@ export function useDashboardPageModel({
       await updateCourse.mutateAsync({
         ...payload,
         id: courseForForm.id,
-        userId,
+        userId: userId!,
       });
       setFormMode(null);
       setCourseForForm(null);
@@ -238,9 +238,9 @@ export function useDashboardPageModel({
     if (!courseToDelete) return;
 
     try {
-      await deleteCourse.mutateAsync({ id: courseToDelete.id, userId });
+      await deleteCourse.mutateAsync({ id: courseToDelete.id, userId: userId! });
       setCourseToDelete(null);
-      setNotice({ tone: 'success', text: 'Course deleted.' });
+      setNotice(null);
     } catch (submitError) {
       setNotice({ tone: 'error', text: getErrorMessage(submitError) });
     }
@@ -253,7 +253,7 @@ export function useDashboardPageModel({
       await removeLesson.mutateAsync({
         courseId: lessonToDelete.course.id,
         lessonId: lessonToDelete.lesson.id,
-        userId,
+        userId: userId!,
       });
       setLessonToDelete(null);
       setNotice({ tone: 'success', text: 'Lesson deleted.' });
@@ -266,7 +266,7 @@ export function useDashboardPageModel({
     setNotice(null);
 
     try {
-      const result = await duplicateCourse.mutateAsync({ id: course.id, userId });
+      const result = await duplicateCourse.mutateAsync({ id: course.id, userId: userId! });
       navigate(`/builder/editor/${result.course.id}`);
     } catch (submitError) {
       setNotice({ tone: 'error', text: getErrorMessage(submitError) });
@@ -279,7 +279,7 @@ export function useDashboardPageModel({
     try {
       await addLesson.mutateAsync({
         courseId: course.id,
-        userId,
+        userId: userId!,
         title: `Lesson ${course.lessons.length + 1}`,
       });
       navigate(`/builder/editor/${course.id}`);

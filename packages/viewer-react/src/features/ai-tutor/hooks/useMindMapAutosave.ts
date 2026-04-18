@@ -24,6 +24,7 @@ export function useMindMapAutosave({
   const queryClient = useQueryClient();
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('saved');
   const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
+  const [lastSavedSerialized, setLastSavedSerialized] = useState('');
   const lastSavedSerializedRef = useRef('');
   const latestDocumentRef = useRef<MindMapDocument | null>(null);
   const saveInFlightRef = useRef(false);
@@ -43,11 +44,13 @@ export function useMindMapAutosave({
   );
 
   const hasUnsavedChanges = Boolean(
-    preparedDocument && (JSON.stringify(preparedDocument) !== lastSavedSerializedRef.current || saveInFlightRef.current),
+    preparedDocument && (JSON.stringify(preparedDocument) !== lastSavedSerialized || saveStatus === 'saving'),
   );
 
   const resetAutosaveState = useCallback((snapshot: MindMapDocument) => {
-    lastSavedSerializedRef.current = JSON.stringify(snapshot);
+    const serializedSnapshot = JSON.stringify(snapshot);
+    lastSavedSerializedRef.current = serializedSnapshot;
+    setLastSavedSerialized(serializedSnapshot);
     latestDocumentRef.current = snapshot;
     setSaveStatus('saved');
     setSaveErrorMessage(null);
@@ -73,7 +76,9 @@ export function useMindMapAutosave({
 
       try {
         const savedDocument = await saveMutation.mutateAsync(prepared);
-        lastSavedSerializedRef.current = JSON.stringify(savedDocument);
+        const serializedSavedDocument = JSON.stringify(savedDocument);
+        lastSavedSerializedRef.current = serializedSavedDocument;
+        setLastSavedSerialized(serializedSavedDocument);
         queryClient.setQueryData(['ai-tutor', 'mindmap', savedDocument.id], savedDocument);
         queryClient.setQueryData(['ai-tutor', 'mindmaps', userId ?? 'anon'], (current: unknown) => {
           if (!Array.isArray(current)) {
@@ -146,7 +151,7 @@ export function useMindMapAutosave({
     }
 
     const serialized = JSON.stringify(preparedDocument);
-    if (serialized === lastSavedSerializedRef.current) {
+    if (serialized === lastSavedSerialized) {
       return undefined;
     }
 
@@ -155,7 +160,7 @@ export function useMindMapAutosave({
     }, 800);
 
     return () => window.clearTimeout(timeoutId);
-  }, [commitSave, preparedDocument]);
+  }, [commitSave, lastSavedSerialized, preparedDocument]);
 
   return {
     commitSave,
