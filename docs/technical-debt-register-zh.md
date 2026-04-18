@@ -11,8 +11,8 @@
 ## 当前质量基线（2026-04-19）
 
 - `pnpm --filter @primoria/viewer-react typecheck`：通过
-- `pnpm --filter @primoria/viewer-react lint`：失败，当前有 `7 errors / 66 warnings`
-- `pnpm --filter @primoria/viewer-react test`：失败，当前 `137` 个测试里有 `1` 个失败
+- `pnpm --filter @primoria/viewer-react lint`：通过，当前有 `0 errors / 65 warnings`
+- `pnpm --filter @primoria/viewer-react test`：通过，当前 `137/137` 通过
 - `deno test --allow-env supabase/functions/`：`62/62` 通过
 - `cd agent-service && uv run pytest -q`：`2/2` 通过
 
@@ -56,21 +56,22 @@
 
 - 标题：前端质量门禁未恢复到稳定绿
 - 优先级：高
-- 状态：进行中
-- 背景：`viewer-react` 当前 `typecheck` 虽然通过，但 `lint` 仍有 `7 errors / 66 warnings`，`test` 仍有 `1` 个失败，问题集中在 Hook 规则、render 阶段读 ref 和 Mind Map 编辑器撤销/重做链路。
+- 状态：已解决（2026-04-19）
+- 背景：`viewer-react` 一度处于“类型检查通过，但 lint 和测试仍在报错”的状态，问题集中在 Dashboard 条件调用 Hook、AI Tutor/Mind Map hooks 在 render 阶段读 ref，以及 Mind Map 编辑器撤销/重做链路不稳定。
 - 会导致什么：团队会误以为“能跑就算稳定”，但一旦合并到主线，明显问题就会跟着进入后续发布流程，人工补救成本会越来越高。
-- 解决方案：先恢复 `lint`、`typecheck`、`test` 全绿，再把残余 warning 拆回后续结构性技术债。
+- 解决方案：先恢复 `lint`、`typecheck`、`test` 的阻塞失败，再把剩余结构性 warning 归并回后续技术债继续治理。
 - 实施步骤：
   1. 修复 `DashboardPage.tsx` 条件调用 Hook。
   2. 修复 `useAiTutorSession.ts` 和 `useMindMapAutosave.ts` 在 render 阶段读 ref 的问题。
-  3. 修复 `mindMapEditorPage.test.tsx` 撤销/重做回归失败。
-  4. 重新跑前端质量门禁并把结果回填本总账。
+  3. 修复 Mind Map 查询回写会清空历史栈、导致撤销/重做失效的问题。
+  4. 加固 `useMindMapHistory.ts` 的历史 ref 同步，避免交互期间读到过期快照。
+  5. 重新跑前端质量门禁并把结果回填本总账。
 - 验证方式：
-  - `pnpm --filter @primoria/viewer-react lint`
-  - `pnpm --filter @primoria/viewer-react typecheck`
-  - `pnpm --filter @primoria/viewer-react test`
-- 相关文件/系统：`packages/viewer-react/`
-- 提交记录：待后续提交
+  - `pnpm --filter @primoria/viewer-react lint`：通过，`0 errors / 65 warnings`
+  - `pnpm --filter @primoria/viewer-react typecheck`：通过
+  - `pnpm --filter @primoria/viewer-react test`：通过，`137/137`
+- 相关文件/系统：`packages/viewer-react/src/pages/dashboard/`、`packages/viewer-react/src/features/ai-tutor/`
+- 提交记录：本次提交 `fix: 恢复 viewer-react 质量门禁`
 
 ### TD-03 编辑器状态同步模型脆弱
 

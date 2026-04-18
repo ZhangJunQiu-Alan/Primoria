@@ -41,6 +41,12 @@ export function DashboardPage() {
     setSearchParams(next, { replace: true });
   }
 
+  const model = useDashboardPageModel({
+    userId: user?.id,
+    language,
+    navigate,
+  });
+
   if (!user) {
     return (
       <div className="dashboard-studio dashboard-studio--authless">
@@ -61,12 +67,6 @@ export function DashboardPage() {
       </div>
     );
   }
-
-  const model = useDashboardPageModel({
-    userId: user.id,
-    language,
-    navigate,
-  });
 
   const analyticsErrorNotice = model.analyticsQuery.error ? (
     <section className="studio-inline-notice studio-inline-notice--error">
