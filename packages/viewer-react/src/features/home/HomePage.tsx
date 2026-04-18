@@ -23,7 +23,14 @@ import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
 import { Live2DHeroModel } from './Live2DHeroModel';
-import * as homeDashboard from './homeDashboard';
+import {
+  clearPersistedHomeCourseId,
+  getHomeContinueTarget,
+  getHomeSelectedCourse,
+  readPersistedHomeCourseId,
+  sortHomeInProgressEnrollments,
+  writePersistedHomeCourseId,
+} from './homeDashboard';
 import {
   getHomeCompanionInsight,
   getHomeCompanionPlacement,
@@ -86,7 +93,7 @@ export function HomePage() {
       return;
     }
 
-    setSelectedCourseId(homeDashboard.readPersistedHomeCourseId(user.id));
+    setSelectedCourseId(readPersistedHomeCourseId(user.id));
   }, [user?.id]);
 
   const homeQuery = useQuery({
@@ -97,7 +104,7 @@ export function HomePage() {
   });
 
   const homePayload = homeQuery.data;
-  const inProgressEnrollments = homeDashboard.sortHomeInProgressEnrollments(homePayload?.in_progress_enrollments ?? []);
+  const inProgressEnrollments = sortHomeInProgressEnrollments(homePayload?.in_progress_enrollments ?? []);
   const resolvedSelectedCourseId = homePayload?.resolved_selected_course_id ?? null;
   const selectedCourseDetail = homePayload?.selected_course_detail ?? null;
 
@@ -111,7 +118,7 @@ export function HomePage() {
     }
 
     if (!inProgressEnrollments.length) {
-      homeDashboard.clearPersistedHomeCourseId(user.id);
+      clearPersistedHomeCourseId(user.id);
       if (selectedCourseId !== null) {
         setSelectedCourseId(null);
       }
@@ -119,7 +126,7 @@ export function HomePage() {
     }
 
     if (resolvedSelectedCourseId) {
-      homeDashboard.writePersistedHomeCourseId(user.id, resolvedSelectedCourseId);
+      writePersistedHomeCourseId(user.id, resolvedSelectedCourseId);
     }
 
     if (resolvedSelectedCourseId !== selectedCourseId) {
@@ -140,13 +147,13 @@ export function HomePage() {
 
   const activeCourseId = requestedSelectedEnrollment?.course_id ?? selectedEnrollment?.course_id ?? selectedCourseId;
   const detailMatchesSelection = selectedCourseDetail?.course.id === selectedEnrollment?.course_id;
-  const selectedCourse = homeDashboard.getHomeSelectedCourse(
+  const selectedCourse = getHomeSelectedCourse(
     selectedEnrollment,
     language,
     detailMatchesSelection ? selectedCourseDetail : null,
   );
   const selectedCourseCoverUrl = selectedCourse?.course.thumbnail_url?.trim() || null;
-  const continueTarget = homeDashboard.getHomeContinueTarget(
+  const continueTarget = getHomeContinueTarget(
     selectedEnrollment,
     language,
     detailMatchesSelection ? selectedCourseDetail : null,
@@ -209,7 +216,7 @@ export function HomePage() {
     setCardMotionDirection(resolvedDirection);
     setSelectedCourseId(courseId);
     if (user?.id) {
-      homeDashboard.writePersistedHomeCourseId(user.id, courseId);
+      writePersistedHomeCourseId(user.id, courseId);
     }
   }
 
