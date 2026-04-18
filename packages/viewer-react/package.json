@@ -13,8 +13,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
+    "e2e:fixture": "playwright test",
     "smoke:cloud": "node ./scripts/cloud-smoke.mjs",
     "smoke:preview": "node ./scripts/preview-smoke.mjs",
+    "verify:cloud": "node ./scripts/cloud-smoke.mjs",
+    "verify:preview": "node ./scripts/preview-smoke.mjs",
     "check:bundle": "node ./scripts/check-bundle-budget.mjs"
   },
   "dependencies": {
