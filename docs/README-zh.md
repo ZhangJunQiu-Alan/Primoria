@@ -1,76 +1,68 @@
 # Primoria 文档索引
 
-最后更新：2026-04-04
+最后更新：2026-04-19
 
-Primoria 当前是 React + Supabase 技术栈产品：
-- `packages/schema/`：共享课程 schema、fixtures 与迁移辅助
-- `packages/viewer-react/`：统一的 Viewer 应用，覆盖学习端与 Builder 工作台（React 19 + TypeScript + React Router + React Query + Redux Toolkit + Supabase）
-- `supabase/`：后端 schema、RLS、RPC 与 Edge Functions
+## 文档原则
 
-## 部署
+- `docs/` 只保留当前仍用于开发、测试、发布和运维的活文档。
+- 中文是唯一维护主档；英文重复文档和课程作业/汇报模板页已移除。
+- 所有技术债、半成品功能和产品待办统一收敛到 [technical-debt-register-zh.md](./technical-debt-register-zh.md)。
+- [changelog.md](./changelog.md) 只记录已经落地的历史变更，不代表当前健康度。
 
-- Viewer React 预览工作流：`.github/workflows/viewer-react-preview.yml`
-- Viewer React 生产工作流：`.github/workflows/viewer-react-production.yml`
-- Viewer React CI 工作流：`.github/workflows/viewer-react-ci.yml`
+## 仓库组成
 
-## 当前产品状态
+- `packages/schema/`：课程 JSON schema、迁移兼容与 fixtures
+- `packages/db/`：Supabase 生成类型
+- `packages/viewer-react/`：统一的 Viewer + Builder React 应用
+- `supabase/`：数据库迁移、RLS、RPC 与 Edge Functions
+- `agent-service/`：可选 AI Tutor 聊天服务
+- `external-tests/`：独立的 Python API 级黑盒测试
 
-- Viewer React 已经是唯一受支持的前端应用，覆盖 landing、鉴权、首页、课程库、学习链路、社区、AI 导师、个人页、设置、成就墙、家长面板，以及 Builder Dashboard / 编辑器。
-- Builder 工作台支持 Dashboard、编辑器、手动保存/发布、JSON 导入导出、课程复制，以及基于 schema 的校验。
-- Builder 画布支持 `text`、`code-block`、`code-playground` 直接内联编辑，并支持接入 Supabase 的图片上传。
-- Block 可见性支持按答题正确性逐步解锁（`afterPreviousCorrect`），并带有“每页首块始终可见”的安全默认值。
-- 编辑器内 learner preview 现在按学习端运行时流程工作：页进度、按答题解锁，以及居中 lesson stage 中的 `Prev / Check / Next` 导航。
+## 当前质量基线（2026-04-19）
 
-## 核心路由
+- `pnpm --filter @primoria/viewer-react typecheck`：通过
+- `pnpm --filter @primoria/viewer-react lint`：失败，当前有 `7 errors / 66 warnings`
+- `pnpm --filter @primoria/viewer-react test`：失败，当前 `137` 个测试里有 `1` 个失败
+- `deno test --allow-env supabase/functions/`：`62/62` 通过
+- `cd agent-service && uv run pytest -q`：`2/2` 通过
+- 详细背景、影响和解决顺序见 [technical-debt-register-zh.md](./technical-debt-register-zh.md)
 
-Viewer React：
-- `/`
-- `/login`
-- `/register`
-- `/auth/callback`
-- `/home`
-- `/library`
-- `/community`
-- `/ai-tutor`
-- `/profile`
-- `/settings`
-- `/achievements`
-- `/parent`
-- `/builder/dashboard`
-- `/builder/editor`
-- `/builder/editor/:courseId`
+## 活文档
 
-## Block 类型（规范值）
+- [technical-debt-register-zh.md](./technical-debt-register-zh.md)：唯一技术债总账与处理顺序
+- [prd-zh.md](./prd-zh.md)：当前产品基线与范围边界
+- [database-schema-zh.md](./database-schema-zh.md)：Supabase 实际 schema 与迁移说明
+- [course-json-guide-zh.md](./course-json-guide-zh.md)：课程 JSON 当前规范
+- [dashboard-zh.md](./dashboard-zh.md)：Builder Dashboard 当前结构说明
+- [test-checklist-zh.md](./test-checklist-zh.md)：统一回归清单
+- [viewer-react-cutover-runbook.md](./viewer-react-cutover-runbook.md)：发布、验收与恢复手册
+- [viewer-react-interactions.md](./viewer-react-interactions.md)：当前关键交互清单
+- [user-survey-nonusers-zh.md](./user-survey-nonusers-zh.md)：潜在用户问卷
+- [changelog.md](./changelog.md)：历史变更记录
 
-`text`、`image`、`code-block`、`code-playground`、`code-execution`、`function-flow`、`multiple-choice`、`fill-blank`、`true-false`、`matching`、`interactive-visual`、`video`
-
-## docs 目录文件说明
-
-- `prd.md` / `prd-zh.md`：需求基线
-- `database-schema.md` / `database-schema-zh.md`：Supabase 实际 schema 与迁移说明
-- `course-json-guide.md` / `course-json-guide-zh.md`：课程 JSON 规范
-- `dashboard.md` / `dashboard-zh.md`：统一 Viewer 内 Builder Dashboard 架构与 Tab 说明
-- `test-checklist.md` / `test-checklist-zh.md`：当前回归清单
-- `todo.md` / `todo-zh.md`：当前待办
-- `technical-debt-register-zh.md`：当前已确认的技术债清单与处理优先级
-- `changelog.md`：版本与关键架构变更
-- `viewer-react-cutover-runbook.md`：当前 viewer 部署与恢复说明
-- `prompt.txt`：当前 AI 规划提示词
-
-## 运行与验证
+## 常用命令
 
 ```bash
 pnpm install
 
-# 共享 schema
-pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts
-
-# Viewer React（含 Builder 工作台）
+# 前端主应用
+pnpm --filter @primoria/viewer-react lint
 pnpm --filter @primoria/viewer-react typecheck
 pnpm --filter @primoria/viewer-react test
 pnpm --filter @primoria/viewer-react build
+
+# Edge Functions
+deno test --allow-env supabase/functions/
+
+# Agent Service
+cd agent-service && uv run pytest -q
+
+# 外部黑盒测试（需要本地 Supabase 和 external-tests/.env）
+cd external-tests && pytest -q
 ```
 
-## 说明
+## 维护约定
 
-- 文档按当前实现维护，而不是按历史架构维护。
+- 文档描述“当前真实状态”，不再重复维护第二份待办页。
+- 架构说明页只描述已经落地的结构；未完成项统一链接回技术债总账。
+- 如果代码与文档冲突，以代码和验证结果为准，并优先更新文档。
