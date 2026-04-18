@@ -1,32 +1,39 @@
-# Viewer React Operations Runbook
+# Viewer React 发布与恢复手册
 
-Updated: 2026-04-04
+最后更新：2026-04-19
 
-## Purpose
+## 目的
 
-This runbook describes how to deploy, verify, and recover the current unified React frontend. Viewer is the only supported app in the repository and now includes the Builder workspace.
+本文档描述统一 React 前端的发布、验收和恢复方式。Primoria 当前只维护一个前端应用：`packages/viewer-react`，其中同时包含学习端和 Builder 工作台。
 
-## Scope
+## 覆盖范围
 
-- React frontend package: `packages/viewer-react`
-- Builder workspace routes inside Viewer:
+- 前端：`packages/viewer-react`
+- Builder 路由：
   - `/builder/dashboard`
   - `/builder/editor`
   - `/builder/editor/:courseId`
-- Viewer backend: `supabase/functions/viewer-ai-tutor`
-- Viewer push backend:
+- AI Tutor 默认聊天后端：`supabase/functions/viewer-ai-tutor`
+- AI Tutor 可选聊天后端：`agent-service/`（仅当配置 `VITE_AGENT_SERVICE_URL` 时启用）
+- 文档转产物函数：
+  - `supabase/functions/viewer-ai-quiz-from-docs`
+  - `supabase/functions/viewer-ai-mindmap-from-docs`
+- 推送函数：
   - `supabase/functions/viewer-push-subscribe`
   - `supabase/functions/viewer-push-unsubscribe`
   - `supabase/functions/viewer-push-dispatch`
-- Viewer-related migrations in `supabase/migrations/`
+- 相关数据库迁移：`supabase/migrations/`
 
-## Required Environment
+## 运行环境
 
-Frontend runtime:
+### 前端必需环境变量
+
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
 
-Optional frontend values:
+### 前端可选环境变量
+
+- `VITE_AGENT_SERVICE_URL`
 - `VITE_GEMINI_MODEL`
 - `VITE_VIEWER_DEMO_MODE`
 - `VITE_GEMINI_API_KEY`
@@ -38,153 +45,117 @@ Optional frontend values:
 - `VITE_VIEWER_AI_TUTOR_ENABLED`
 - `VITE_VIEWER_COMMUNITY_ENABLED`
 
-Supabase secrets:
+### Supabase / 函数侧密钥
+
 - `GEMINI_API_KEY`
 
-Cloud smoke runtime:
+### Cloud smoke 所需变量
+
 - `VIEWER_BASE_URL`
 - `SUPABASE_URL`
 - `SUPABASE_SECRET_KEY`
+- 烟测账号相关变量（学习者、家长、创作者）
 
-Cloud smoke accounts:
-- `VIEWER_SMOKE_LEARNER_EMAIL`
-- `VIEWER_SMOKE_LEARNER_PASSWORD`
-- `VIEWER_SMOKE_BIND_LEARNER_EMAIL`
-- `VIEWER_SMOKE_BIND_LEARNER_PASSWORD`
-- `VIEWER_SMOKE_PARENT_EMAIL`
-- `VIEWER_SMOKE_PARENT_PASSWORD`
-- `VIEWER_SMOKE_AUTHOR_EMAIL`
-- `VIEWER_SMOKE_AUTHOR_PASSWORD`
-- `VIEWER_SMOKE_AUTHOR_DISPLAY_NAME` (optional)
+## 后端选择顺序
 
-## Release Artifacts
+- AI Tutor 聊天请求：
+  - 如果设置了 `VITE_AGENT_SERVICE_URL`，前端聊天与流式回复优先走 `agent-service`
+  - 如果未设置，聊天回退到 `viewer-ai-tutor`
+- 文档转 quiz / 文档转 mind map：
+  - 仍固定走 Supabase Edge Functions
 
-- `viewer-react-ci.yml`
-  - Runs `typecheck`, `test`, and fixture-mode `build`.
-- `viewer-react-preview.yml`
-  - Builds, enforces bundle budgets, deploys a Cloudflare Pages preview when secrets are present, and runs preview smoke checks.
-- `viewer-react-production.yml`
-  - Builds, enforces bundle budgets, deploys the Cloudflare Pages production artifact, and runs post-deploy smoke.
+## 发布链路
 
-## Latest Smoke Snapshot
+### 1. CI 主链路
 
-Cloud smoke passed on 2026-03-31 against Supabase project `rygafvlzzkvqhhenajzi`.
+- `.github/workflows/viewer-react-ci.yml`
+- 当前职责：
+  - Deno 测试
+  - 本地 Supabase 校验
+  - `viewer-react` 的 lint / typecheck / unit test / e2e / build / bundle budget
+  - 主分支推送后自动执行 `deploy-supabase-functions`
 
-Command:
+### 2. 预览发布
 
-```bash
-pnpm --filter @primoria/viewer-react smoke:cloud
-```
+- `.github/workflows/viewer-react-preview.yml`
+- 构建预览产物，具备条件时部署到 Cloudflare Pages，并执行 preview smoke
 
-Successful coverage included:
-- author login, reusable smoke-course publish, and Viewer lesson-title readback verification
-- learner login, library, enroll, lesson completion, and result page
-- settings persistence
-- community note persistence
-- AI Tutor reply and tool modals
-- binding-code generation
-- parent redirect and bind-by-code flow
+### 3. 生产发布
 
-Additional validated commands on 2026-03-31:
+- `.github/workflows/viewer-react-production.yml`
+- 构建生产产物，发布到 Cloudflare Pages，并执行发布后 smoke
 
-```bash
-pnpm --filter @primoria/viewer-react typecheck
-pnpm --filter @primoria/viewer-react test
-pnpm --filter @primoria/viewer-react e2e
-VITE_VIEWER_DEMO_MODE=1 pnpm --filter @primoria/viewer-react build
-VITE_SUPABASE_URL="$SUPABASE_URL" VITE_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY" pnpm --filter @primoria/viewer-react build
-pnpm --filter @primoria/viewer-react check:bundle
-supabase migration list
-pnpm --filter @primoria/viewer-react smoke:cloud
-```
+## 发布步骤
 
-Validation notes:
-- route-level lazy loading is enabled for major viewer pages
-- Supabase boot fails fast without required env vars unless explicit fixture mode is enabled
-- fixture sign-out clears the local demo role and returns to the login route
-- bundle budget passed with initial route JS gzip total at `144.76 KiB`
-- largest shared chunk was `framework` at `189.73 KiB` raw
-- latest cloud smoke report was written to `packages/viewer-react/test-results/cloud-smoke-20260331055808/report.json`
-- fixed preprod blockers before the smoke snapshot:
-  - parent dashboard switched to bind-by-code instead of learner-side code generation
-  - course enrollment refreshes the course detail UI immediately after mutation success
-  - community no longer fails on recursive `community_conversation_members` RLS
-  - AI Tutor now reaches `viewer-ai-tutor` through the working function-gateway auth pattern
-
-## Deployment Steps
-
-1. Apply the required database migrations.
+1. 确认数据库迁移状态
 
 ```bash
 supabase db push
 ```
 
-2. Deploy the viewer edge functions that changed.
+2. 确认本次需要变更的 Edge Functions
+
+- 如果走 `main` 分支标准发布，CI 会调用 `scripts/deploy-supabase-functions.sh`
+- 如果需要手工补发，可执行：
 
 ```bash
-supabase functions deploy viewer-ai-tutor
-supabase functions deploy viewer-ai-quiz-from-docs --no-verify-jwt
-supabase functions deploy viewer-push-subscribe
-supabase functions deploy viewer-push-unsubscribe
-supabase functions deploy viewer-push-dispatch
+./scripts/deploy-supabase-functions.sh
 ```
 
-3. Confirm frontend environment variables for the target deploy.
-   - There is no separate Builder frontend deploy or handoff environment anymore.
-   - Confirm `GEMINI_API_KEY` is present before invoking AI Tutor reply or quiz generation functions.
+3. 确认前端环境变量
 
-4. Build and deploy Viewer React through the preview or production workflow.
-   - Cloudflare Pages config is tracked in `packages/viewer-react/wrangler.toml`.
+- 生产和预览环境必须提供 `VITE_SUPABASE_URL`、`VITE_SUPABASE_ANON_KEY`
+- 如果要启用 agent service，必须同时配置 `VITE_AGENT_SERVICE_URL`
+- 如果要启用 AI 相关函数，确认 `GEMINI_API_KEY` 已就绪
 
-## Smoke Checklist
+4. 执行预览或生产工作流
 
-Learner flow:
-- Open `/`
-- Sign in or register
-- Reach `/home`
-- Open library, filter/search, open a course
-- Enroll and start a lesson
-- Complete the lesson and verify the result page renders XP and unlocked achievements
+- Cloudflare Pages 配置位于 `packages/viewer-react/wrangler.toml`
 
-Profile and settings:
-- Open `/profile`
-- Open `/settings`
-- Save profile fields
-- Change a viewer preference and refresh
-- Generate a binding code
+## 发布前最低验收
 
-Parent flow:
-- Sign in as a parent
-- Confirm redirect to `/parent`
-- Select a child and verify report refresh
-- Bind or unbind a child if the environment allows it
+### 自动化命令
 
-Builder publish/readback:
-- Sign in as the smoke author
-- Open `/builder/dashboard?tab=course`
-- Reuse or create the dedicated smoke course
-- Rename the first lesson, save, publish, and verify the author exits cleanly
-- Sign in as a learner, open the smoke course in Viewer, and confirm the published lesson title matches the Builder rename
+```bash
+pnpm --filter @primoria/viewer-react lint
+pnpm --filter @primoria/viewer-react typecheck
+pnpm --filter @primoria/viewer-react test
+pnpm --filter @primoria/viewer-react e2e
+deno test --allow-env supabase/functions/
+pnpm --filter @primoria/viewer-react check:bundle
+```
 
-Community and AI Tutor:
-- Open `/community` and verify room/message/note persistence
-- Open `/ai-tutor`, verify tutor reply, upload a PDF or DOCX, generate a quiz draft, and confirm the app redirects to `/library`
+### 人工 smoke 清单
 
-Builder workspace:
-- Open `/builder/dashboard`
-- Create or open a course
-- Enter `/builder/editor/:courseId`
-- Verify save, draft recovery, and return navigation back to `/builder/dashboard`
+- 学习者：
+  - 登录后进入 `/home`
+  - 打开课程库、报名、开始课程、完成一节课
+- 个人中心与设置：
+  - 保存个人资料
+  - 修改一个本地偏好并刷新验证
+  - 生成绑定码
+- 家长：
+  - 登录后确认跳转 `/parent`
+  - 切换已绑定孩子并检查报告刷新
+- Builder：
+  - 打开 `/builder/dashboard`
+  - 进入 `/builder/editor/:courseId`
+  - 验证保存、发布和返回导航
+- 社区与 AI Tutor：
+  - 社区里的消息/笔记/学习房间至少验证一个持久化路径
+  - AI Tutor 聊天可正常返回
+  - 资料上传后能生成 quiz 或 mind map
 
-## Recovery Steps
+## 恢复步骤
 
-1. Stop the failing production rollout or disable the affected Viewer feature flag.
-2. Record the failing flow, timestamps, and suspected scope.
-3. Preserve applied database migrations unless a separate rollback is explicitly approved.
-4. Fix forward on a new React viewer build and re-run preview smoke before another production release.
+1. 先暂停有问题的生产发布，或关闭受影响的 feature flag
+2. 记录失败时间、页面、账号、环境变量版本和最近提交
+3. 默认优先 fix forward，不在没有明确批准时回滚数据库迁移
+4. 在预览环境重跑 smoke 后再重新发版
 
-## Ownership
+## 责任边界
 
-- Frontend owner: unified Viewer package and deployment target
-- Backend owner: Supabase migrations, RLS, RPCs, and Edge Functions
-- Release owner: deployment window, smoke checklist, and recovery decision
+- 前端：`packages/viewer-react`
+- 数据库与函数：`supabase/`
+- 可选 AI 聊天服务：`agent-service/`
+- 发布窗口和验收：当前发布负责人
