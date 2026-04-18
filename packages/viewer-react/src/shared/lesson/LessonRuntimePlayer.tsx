@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, ArrowRight, NotebookPen, RotateCcw, Send, Sparkles, X } from 'lucide-react';
 import { generateTutorReplyStream, type TutorMessage } from '@/shared/api/geminiClient';
+import { TutorMarkdown } from '@/shared/ai-tutor/TutorMarkdown';
 import type { CommunityNote } from '@/shared/api/viewer/types';
 import { LearnerBlockRenderer } from '@/shared/lesson/LearnerBlockRenderer';
 import { buildLessonAiContext } from '@/shared/lesson/lessonAiContext';
@@ -610,7 +611,13 @@ export function LessonRuntimePlayer({
                           : 'border border-[var(--viewer-border)] bg-[rgba(255,252,247,0.8)] text-[var(--viewer-text)]',
                       )}
                     >
-                      {message.text || (aiSending && message.role === 'model' ? copy.lesson.aiThinking : '')}
+                      {message.text ? (
+                        <TutorMarkdown text={message.text} className="leading-7" />
+                      ) : aiSending && message.role === 'model' ? (
+                        copy.lesson.aiThinking
+                      ) : (
+                        ''
+                      )}
                     </div>
                   ))}
                     </div>

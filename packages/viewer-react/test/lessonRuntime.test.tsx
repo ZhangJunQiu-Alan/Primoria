@@ -312,6 +312,29 @@ describe('LessonRuntimePlayer', () => {
     expect(within(aiDialog).queryByText('Failed to fetch')).not.toBeInTheDocument();
   });
 
+  it('renders markdown emphasis inside ask-ai responses', async () => {
+    const user = userEvent.setup();
+    generateTutorReplyStreamMock.mockImplementationOnce(async (_history, handlers) => {
+      const reply = '1.**Singleton Pattern**：负责全局唯一实例\n2.**Strategy Pattern**：负责可替换策略';
+      handlers?.onToken?.(reply);
+      const payload = { threadId: 'lesson-ai-thread', reply, usedTools: [] };
+      handlers?.onFinal?.(payload);
+      return payload;
+    });
+    renderRuntime();
+
+    await user.click(screen.getByRole('button', { name: 'Ask AI' }));
+    const aiDialog = await screen.findByRole('dialog', { name: 'Ask AI' });
+
+    await user.type(within(aiDialog).getByTestId('lesson-ai-input'), 'Explain this page');
+    await user.click(within(aiDialog).getByTestId('lesson-ai-send'));
+
+    expect(await within(aiDialog).findByText('Singleton Pattern')).toBeInTheDocument();
+    expect(within(aiDialog).getAllByRole('listitem')).toHaveLength(2);
+    expect(within(aiDialog).getByText('Singleton Pattern').tagName).toBe('STRONG');
+    expect(within(aiDialog).queryByText(/\*\*Singleton Pattern\*\*/)).not.toBeInTheDocument();
+  });
+
   it('opens the note sheet, saves the lesson note on close, and reloads the saved body on reopen', async () => {
     const user = userEvent.setup();
     const onSaveNote = vi.fn<(body: string) => void>();

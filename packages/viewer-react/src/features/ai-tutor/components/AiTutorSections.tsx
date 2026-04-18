@@ -7,6 +7,7 @@ import type {
   TutorToolKind,
   TutorToolRuntime,
 } from '@/features/ai-tutor/aiTutorTypes';
+import { TutorMarkdown } from '@/shared/ai-tutor/TutorMarkdown';
 import type { MindMapSummary, QuizOutputLanguage, TutorDocument } from '@/shared/api/viewer/types';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 
@@ -82,7 +83,11 @@ export function AiTutorConversationPane({
                         : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
                     }
                   >
-                    {isPendingModel ? (language === 'zh-CN' ? '正在思考…' : 'Thinking…') : message.text}
+                    {isPendingModel ? (
+                      language === 'zh-CN' ? '正在思考…' : 'Thinking…'
+                    ) : (
+                      <TutorMarkdown text={message.text} className="leading-6" />
+                    )}
                   </div>
                 );
               })}
