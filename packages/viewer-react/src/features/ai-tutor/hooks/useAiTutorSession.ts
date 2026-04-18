@@ -26,17 +26,14 @@ export function useAiTutorSession({
   welcomeBody: string;
   copy: AiTutorCopyLike;
 }) {
-  const initialSessionRef = useRef<ReturnType<typeof readAiTutorSession> | null>(null);
-  if (initialSessionRef.current === null) {
-    initialSessionRef.current = readAiTutorSession(welcomeBody);
-  }
-
-  const initialSession = initialSessionRef.current;
-  const [messages, setMessages] = useState<TutorMessage[]>(() => initialSession.messages);
+  const [{ context: initialContext, messages: initialMessages, toolRuntime: initialToolRuntime }] = useState(() =>
+    readAiTutorSession(welcomeBody),
+  );
+  const [messages, setMessages] = useState<TutorMessage[]>(initialMessages);
   const [input, setInput] = useState('');
   const [notice, setNotice] = useState<TutorStatusNotice | null>(null);
   const [isSending, setIsSending] = useState(false);
-  const [sessionContext, setSessionContext] = useState<TutorConversationContext | null>(() => initialSession.context);
+  const [sessionContext, setSessionContext] = useState<TutorConversationContext | null>(initialContext);
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
   const latestMessagesRef = useRef(messages);
@@ -166,7 +163,7 @@ export function useAiTutorSession({
   return {
     handleSend,
     hasStartedConversation: transcript.length > 0,
-    initialToolRuntime: initialSession.toolRuntime,
+    initialToolRuntime,
     input,
     isSending,
     messages,
