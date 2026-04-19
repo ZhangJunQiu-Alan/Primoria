@@ -60,30 +60,32 @@ Deno.test('selectQuestionsForQuiz: keeps tf within cap when extra non-tf questio
   );
 });
 
-Deno.test('selectQuestionsForQuiz: rejects candidate pools that cannot satisfy the tf cap', () => {
-  let thrown: unknown = null;
+Deno.test('selectQuestionsForQuiz: returns shortfall when pool exceeds tf cap without filler', () => {
+  const selected = selectQuestionsForQuiz(
+    [
+      mc('mc-1'),
+      tf('tf-1'),
+      mc('mc-2'),
+      tf('tf-2'),
+      mc('mc-3'),
+      mc('mc-4'),
+      mc('mc-5'),
+      mc('mc-6'),
+      mc('mc-7'),
+      mc('mc-8'),
+    ],
+    10,
+  );
 
-  try {
-    selectQuestionsForQuiz(
-      [
-        mc('mc-1'),
-        tf('tf-1'),
-        mc('mc-2'),
-        tf('tf-2'),
-        mc('mc-3'),
-        mc('mc-4'),
-        mc('mc-5'),
-        mc('mc-6'),
-        mc('mc-7'),
-        mc('mc-8'),
-      ],
-      10,
-    );
-  } catch (error) {
-    thrown = error;
-  }
+  assertEquals(selected.length, 9, 'selected length (one tf skipped by cap)');
+  assertEquals(
+    selected.filter((question) => question.type === 'tf').length,
+    1,
+    'tf respected cap',
+  );
+});
 
-  if (!(thrown instanceof Error)) {
-    throw new Error('expected selection to throw');
-  }
+Deno.test('selectQuestionsForQuiz: returns whatever the short pool can offer', () => {
+  const selected = selectQuestionsForQuiz([mc('mc-1'), mc('mc-2'), mc('mc-3')], 10);
+  assertEquals(selected.length, 3, 'returns all available when pool is shorter than target');
 });

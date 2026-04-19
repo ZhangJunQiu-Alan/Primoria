@@ -28,12 +28,5 @@ export function selectQuestionsForQuiz<T extends QuizQuestionLike>(questions: T[
     selected.push(question);
   }
 
-  if (selected.length < questionCount) {
-    const trueFalseCount = questions.filter((question) => question.type === 'tf').length;
-    throw new Error(
-      `Quiz candidate pool violates the true/false cap: received ${trueFalseCount} tf questions for a ${questionCount}-question quiz.`,
-    );
-  }
-
   return selected;
 }
