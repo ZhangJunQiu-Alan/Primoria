@@ -317,6 +317,26 @@
 
 .studio-summary-strip--course {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.studio-summary-strip--course > .studio-metric-card {
+  align-items: center;
+  min-height: 0;
+  padding: 0.95rem 1rem;
+}
+
+.studio-summary-strip--course > .studio-metric-card > div {
+  min-width: 0;
+}
+
+.studio-summary-strip--course > .studio-metric-card strong {
+  font-size: 1.7rem;
+}
+
+.studio-summary-strip--course > .studio-metric-card p {
+  margin-top: 0.18rem;
+  line-height: 1.18;
 }
 
 .studio-metric-card {
@@ -2105,6 +2125,19 @@
 @media (max-width: 1320px) {
   .studio-summary-strip {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .studio-summary-strip--course {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .studio-summary-strip--course > .studio-metric-card {
+    padding: 0.9rem;
+  }
+
+  .studio-summary-strip--course > .studio-metric-card strong {
+    font-size: 1.55rem;
   }
 
   .studio-home-grid {

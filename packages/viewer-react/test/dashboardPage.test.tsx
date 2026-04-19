@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -9,12 +9,13 @@ import { createAppStore } from '@/shared/state/store';
 
 const mockUseCourseList = vi.fn();
 const mockUseDashboardAnalytics = vi.fn();
+const mockDeleteCourseMutateAsync = vi.fn();
 
 vi.mock('@/queries/courses', () => ({
   useCourseList: (...args: unknown[]) => mockUseCourseList(...args),
   useCreateCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
   useUpdateCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
-  useDeleteCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
+  useDeleteCourse: () => ({ isPending: false, mutateAsync: mockDeleteCourseMutateAsync }),
   useDuplicateCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
   useAddLesson: () => ({ isPending: false, mutateAsync: vi.fn() }),
   useDeleteLesson: () => ({ isPending: false, mutateAsync: vi.fn() }),
@@ -197,6 +198,7 @@ function renderDashboard(route: string) {
     isLoading: false,
     refetch: vi.fn(),
   });
+  mockDeleteCourseMutateAsync.mockResolvedValue(undefined);
 
   return render(
     <Provider store={store}>
@@ -279,5 +281,23 @@ describe('DashboardPage', () => {
 
     expect(await screen.findByText(/saved as an ai front-end brief only/i)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /ai course draft/i })).not.toBeInTheDocument();
+  });
+
+  it('does not show a success notice after deleting a course', async () => {
+    const user = userEvent.setup();
+    renderDashboard('/builder/dashboard?tab=course');
+
+    const courseCard = screen.getByRole('heading', { name: 'Writing Draft Workshop' }).closest('article');
+    expect(courseCard).not.toBeNull();
+
+    await user.click(within(courseCard as HTMLElement).getByRole('button', { name: 'Delete' }));
+    expect(await screen.findByText(/are you sure you want to delete/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Delete course' }));
+
+    await waitFor(() => {
+      expect(mockDeleteCourseMutateAsync).toHaveBeenCalledWith({ id: 'course-3', userId: 'author-1' });
+      expect(screen.queryByText('Course deleted.')).not.toBeInTheDocument();
+    });
   });
 });
