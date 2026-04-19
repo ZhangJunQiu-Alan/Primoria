@@ -128,20 +128,97 @@ const GEMINI_OVERLOADED_MESSAGES: Record<QuizOutputLanguage, string> = {
 };
 
 const QUIZ_WRAPPER_KEYS = ['quiz', 'data', 'result', 'response', 'payload', 'output'] as const;
-const QUIZ_QUESTION_TYPES = new Set(['mc', 'mc_multi', 'tf', 'match']);
+const QUIZ_TYPE_ALIASES: Record<string, 'mc' | 'mc_multi' | 'tf' | 'match'> = {
+  'mc': 'mc',
+  'mcq': 'mc',
+  'single_choice': 'mc',
+  'single-choice': 'mc',
+  'multiple_choice': 'mc',
+  'multiple-choice': 'mc',
+  'multiplechoice': 'mc',
+  'mc_multi': 'mc_multi',
+  'mcmulti': 'mc_multi',
+  'multi_select': 'mc_multi',
+  'multi-select': 'mc_multi',
+  'multiple_select': 'mc_multi',
+  'multiple-select': 'mc_multi',
+  'multi_answer': 'mc_multi',
+  'tf': 'tf',
+  'true_false': 'tf',
+  'true-false': 'tf',
+  'truefalse': 'tf',
+  'boolean': 'tf',
+  'match': 'match',
+  'matching': 'match',
+  'match_pairs': 'match',
+  'match-pairs': 'match',
+  'pairs': 'match',
+};
+
+function normalizeQuestionShape(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return value;
+  }
+  const out: Record<string, unknown> = { ...(value as Record<string, unknown>) };
+
+  const rawType = typeof out.type === 'string' ? out.type.trim().toLowerCase() : '';
+  if (rawType && QUIZ_TYPE_ALIASES[rawType]) {
+    out.type = QUIZ_TYPE_ALIASES[rawType];
+  }
+
+  if (typeof out.question === 'string' && typeof out.q !== 'string') out.q = out.question;
+  if (Array.isArray(out.options) && !Array.isArray(out.opts)) out.opts = out.options;
+  if (typeof out.explanation === 'string' && typeof out.exp !== 'string') out.exp = out.explanation;
+  if (typeof out.statement === 'string' && typeof out.stmt !== 'string') out.stmt = out.statement;
+  if (typeof out.answer === 'boolean' && typeof out.ans !== 'boolean') out.ans = out.answer;
+
+  if (typeof out.type !== 'string' || !['mc', 'mc_multi', 'tf', 'match'].includes(out.type as string)) {
+    if (typeof out.stmt === 'string' && typeof out.ans === 'boolean') {
+      out.type = 'tf';
+    } else if (Array.isArray(out.pairs)) {
+      out.type = 'match';
+    } else if (typeof out.q === 'string' && Array.isArray(out.opts)) {
+      const correctCount = (out.opts as unknown[]).filter(
+        (option) => typeof option === 'string' && /\*\s*$/.test(option.trim()),
+      ).length;
+      out.type = correctCount > 1 ? 'mc_multi' : 'mc';
+    }
+  }
+
+  return out;
+}
 
 function looksLikeQuizQuestion(value: unknown): boolean {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  const normalized = normalizeQuestionShape(value);
+  if (!normalized || typeof normalized !== 'object' || Array.isArray(normalized)) {
     return false;
   }
-  const type = (value as Record<string, unknown>).type;
-  return typeof type === 'string' && QUIZ_QUESTION_TYPES.has(type);
+  const record = normalized as Record<string, unknown>;
+  if (typeof record.type === 'string' && ['mc', 'mc_multi', 'tf', 'match'].includes(record.type)) {
+    return true;
+  }
+  // structural fallback: objects shaped like a question even without a recognizable type
+  return (
+    (typeof record.q === 'string' && Array.isArray(record.opts)) ||
+    (typeof record.stmt === 'string' && typeof record.ans === 'boolean') ||
+    Array.isArray(record.pairs)
+  );
 }
 
 function findQuestionArray(source: Record<string, unknown>): unknown[] | null {
-  for (const value of Object.values(source)) {
-    if (Array.isArray(value) && value.length > 0 && value.every(looksLikeQuizQuestion)) {
-      return value;
+  const queue: Record<string, unknown>[] = [source];
+  const seen = new Set<unknown>();
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+    if (seen.has(current)) continue;
+    seen.add(current);
+    for (const value of Object.values(current)) {
+      if (Array.isArray(value) && value.length > 0 && value.every(looksLikeQuizQuestion)) {
+        return value;
+      }
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        queue.push(value as Record<string, unknown>);
+      }
     }
   }
   return null;
@@ -163,7 +240,7 @@ function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescri
       title: fallbackTitle,
       description: fallbackDescription,
       difficulty: 'intermediate',
-      questions: parsed,
+      questions: parsed.map(normalizeQuestionShape),
     };
   }
 
@@ -174,9 +251,18 @@ function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescri
   const record = parsed as Record<string, unknown>;
   const base = unwrapQuizRecord(record);
 
-  let questions: unknown = base.questions;
-  if (!Array.isArray(questions)) {
+  let questions: unknown = Array.isArray(base.questions) ? base.questions : null;
+  if (!questions) {
     questions = findQuestionArray(base) ?? (base !== record ? findQuestionArray(record) : null);
+  }
+
+  const normalizedQuestions = Array.isArray(questions) ? questions.map(normalizeQuestionShape) : [];
+
+  if (normalizedQuestions.length === 0) {
+    console.log(
+      `[viewer-ai-quiz-from-docs] salvage_no_questions baseKeys=${Object.keys(base).join(',')} ` +
+        `recordKeys=${Object.keys(record).join(',')} preview=${JSON.stringify(base).slice(0, 600)}`,
+    );
   }
 
   return {
@@ -186,7 +272,7 @@ function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescri
         ? base.description
         : fallbackDescription,
     difficulty: typeof base.difficulty === 'string' ? base.difficulty : 'intermediate',
-    questions: Array.isArray(questions) ? questions : [],
+    questions: normalizedQuestions,
   };
 }
 
