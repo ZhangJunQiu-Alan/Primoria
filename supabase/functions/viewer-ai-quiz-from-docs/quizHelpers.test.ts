@@ -94,11 +94,18 @@ Deno.test('buildQuizPrompt: match count is hard-capped by total question count',
   assertContains(prompt, '总题数 16-30 → 恰好 2 道 match');
 });
 
-Deno.test('buildQuizPrompt: keeps tf at ~10% and mc filling the rest', () => {
+Deno.test('buildQuizPrompt: hard-caps tf to one per full ten questions', () => {
   const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
   const prompt = buildQuizPrompt(docs, 10);
-  assertContains(prompt, 'tf（判断）：约 10%');
+  assertContains(prompt, '总题数每满 10 题，最多 1 道 tf');
+  assertContains(prompt, '本次 10 题 → 最多 1 道 tf');
   assertContains(prompt, '剩余全部由单选/多选填充');
+});
+
+Deno.test('buildQuizPrompt: disallows tf entirely below ten questions', () => {
+  const docs = [{ id: '1', filename: 'a.pdf', extracted_text: 'x' }];
+  const prompt = buildQuizPrompt(docs, 5);
+  assertContains(prompt, '本次 5 题 → 最多 0 道 tf（本次不得出现 tf）');
 });
 
 Deno.test('buildQuizPrompt: forbids clustering same question types', () => {

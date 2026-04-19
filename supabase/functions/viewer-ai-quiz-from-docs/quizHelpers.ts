@@ -1,3 +1,5 @@
+import { getTrueFalseQuestionLimit } from './quizRules.ts';
+
 export type TutorDocumentRecord = {
   id: string;
   filename: string;
@@ -29,6 +31,7 @@ export function buildQuizPrompt(
   questionCount: number,
   language: QuizOutputLanguage = 'en',
 ) {
+  const trueFalseLimit = getTrueFalseQuestionLimit(questionCount);
   const materials = documents
     .map((document, index) => `[文件${index + 1}: ${document.display_title?.trim() || document.filename}]\n${document.extracted_text}`)
     .join('\n\n');
@@ -80,7 +83,9 @@ ${materials}
   - 总题数 ≤ 15 → 恰好 1 道 match
   - 总题数 16-30 → 恰好 2 道 match
   - 每道 match 题 4-6 个配对
-- tf（判断）：约 10%
+- tf（判断）：硬性上限，不是参考比例
+  - 总题数每满 10 题，最多 1 道 tf
+  - 本次 ${questionCount} 题 → 最多 ${trueFalseLimit} 道 tf${trueFalseLimit === 0 ? '（本次不得出现 tf）' : ''}
 - mc（单选）+ mc_multi（多选）：剩余全部由单选/多选填充（通常占总题数 80% 以上），由你根据知识点性质决定单选或多选
   - 单选：有且仅有一个正确答案
   - 多选：q 字段必须注明"多选"或"Select all that apply"，至少 2 个正确答案
