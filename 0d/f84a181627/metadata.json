@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "0df84a181627",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "packages/viewer-react/src/pages/dashboard/dashboard.css",
+    "packages/viewer-react/test/dashboardPage.test.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0d/f84a181627/0/metadata.json",
+      "transcript": "/0d/f84a181627/0/full.jsonl",
+      "content_hash": "/0d/f84a181627/0/content_hash.txt",
+      "prompt": "/0d/f84a181627/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 20950,
+    "cache_read_tokens": 215529,
+    "output_tokens": 1902,
+    "api_call_count": 7
+  }
+}

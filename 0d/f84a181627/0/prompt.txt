@@ -1,0 +1,1 @@
+先把目前已完成的代码提交一下。并搭配合适的description and summary。然后给我解决Error: [ { "code": "invalid_type", "expected": "array", "received": "undefined", "path": [ "questions" ], "message": "Required" } ] 学习助手,选择好资料，生成quiz,然后给我报错了。
