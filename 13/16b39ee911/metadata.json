@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1316b39ee911",
+  "strategy": "manual-commit",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "supabase/functions/viewer-ai-quiz-from-docs/index.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/13/16b39ee911/0/metadata.json",
+      "transcript": "/13/16b39ee911/0/full.jsonl",
+      "content_hash": "/13/16b39ee911/0/content_hash.txt",
+      "prompt": "/13/16b39ee911/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 7161,
+    "cache_read_tokens": 1175295,
+    "output_tokens": 5805,
+    "api_call_count": 10
+  }
+}
