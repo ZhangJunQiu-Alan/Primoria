@@ -382,21 +382,24 @@ async function generateQuizDsl(
         continue;
       }
 
-      if (dsl.questions.length < questionCount) {
-        candidateError = `Gemini returned only ${dsl.questions.length} questions.`;
+      const shortfallTolerance = Math.max(2, Math.floor(questionCount * 0.1));
+      const minAcceptable = Math.max(1, questionCount - shortfallTolerance);
+
+      if (dsl.questions.length < minAcceptable) {
+        candidateError = `Gemini returned only ${dsl.questions.length} questions (need at least ${minAcceptable}).`;
         dsl = null;
         continue;
       }
 
-      try {
-        selectedQuestions = selectQuestionsForQuiz(dsl.questions, questionCount);
-        break;
-      } catch (error) {
-        candidateError = error instanceof Error ? error.message : 'question selection failed';
+      const picked = selectQuestionsForQuiz(dsl.questions, questionCount);
+      if (picked.length < minAcceptable) {
+        candidateError = `Only ${picked.length} questions survived the tf cap (need at least ${minAcceptable}).`;
         dsl = null;
-        selectedQuestions = null;
         continue;
       }
+
+      selectedQuestions = picked;
+      break;
     }
 
     if (!dsl || !selectedQuestions) {
