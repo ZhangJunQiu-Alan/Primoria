@@ -167,10 +167,24 @@ function normalizeQuestionShape(value: unknown): unknown {
   }
 
   if (typeof out.question === 'string' && typeof out.q !== 'string') out.q = out.question;
+  if (typeof out.prompt === 'string' && typeof out.q !== 'string') out.q = out.prompt;
+  if (typeof out.text === 'string' && typeof out.q !== 'string' && typeof out.stmt !== 'string') {
+    out.q = out.text;
+  }
   if (Array.isArray(out.options) && !Array.isArray(out.opts)) out.opts = out.options;
+  if (Array.isArray(out.choices) && !Array.isArray(out.opts)) out.opts = out.choices;
+  if (Array.isArray(out.answers) && !Array.isArray(out.opts)) out.opts = out.answers;
   if (typeof out.explanation === 'string' && typeof out.exp !== 'string') out.exp = out.explanation;
+  if (typeof out.rationale === 'string' && typeof out.exp !== 'string') out.exp = out.rationale;
   if (typeof out.statement === 'string' && typeof out.stmt !== 'string') out.stmt = out.statement;
+  if (typeof out.claim === 'string' && typeof out.stmt !== 'string') out.stmt = out.claim;
   if (typeof out.answer === 'boolean' && typeof out.ans !== 'boolean') out.ans = out.answer;
+  if (typeof out.correct === 'boolean' && typeof out.ans !== 'boolean') out.ans = out.correct;
+  if (typeof out.is_true === 'boolean' && typeof out.ans !== 'boolean') out.ans = out.is_true;
+  if (Array.isArray(out.matches) && !Array.isArray(out.pairs)) out.pairs = out.matches;
+  if (Array.isArray(out.items) && !Array.isArray(out.pairs) && out.items.every((entry) => Array.isArray(entry) && entry.length === 2)) {
+    out.pairs = out.items;
+  }
 
   if (typeof out.type !== 'string' || !['mc', 'mc_multi', 'tf', 'match'].includes(out.type as string)) {
     if (typeof out.stmt === 'string' && typeof out.ans === 'boolean') {
@@ -383,7 +397,10 @@ async function generateQuizDsl(
       }
 
       if (dsl.questions.length < questionCount) {
-        candidateError = `Gemini returned only ${dsl.questions.length} questions (need exactly ${questionCount}).`;
+        const diagnostic = dsl.questions.length === 0
+          ? ` Gemini payload preview: ${JSON.stringify(parsed).slice(0, 600)}`
+          : '';
+        candidateError = `Gemini returned only ${dsl.questions.length} questions (need exactly ${questionCount}).${diagnostic}`;
         dsl = null;
         continue;
       }
