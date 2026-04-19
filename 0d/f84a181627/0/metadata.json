@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "0df84a181627",
+  "session_id": "f3807987-eb54-4404-9b50-b4a39412f939",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-19T05:36:21.380988Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "packages/viewer-react/src/pages/dashboard/dashboard.css",
+    "packages/viewer-react/test/dashboardPage.test.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7",
+  "turn_id": "ab496fbb7c42",
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 20950,
+    "cache_read_tokens": 215529,
+    "output_tokens": 1902,
+    "api_call_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-19T05:36:21.329756Z",
+    "agent_lines": 55,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 55,
+    "agent_percentage": 100
+  }
+}
