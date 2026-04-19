@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1316b39ee911",
+  "session_id": "f3807987-eb54-4404-9b50-b4a39412f939",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-19T05:58:15.21004Z",
+  "branch": "codex/viewer-workstreams-20260407",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "supabase/functions/viewer-ai-quiz-from-docs/index.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7",
+  "turn_id": "ebeb99b8def4",
+  "checkpoint_transcript_start": 203,
+  "transcript_lines_at_start": 203,
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 7161,
+    "cache_read_tokens": 1175295,
+    "output_tokens": 5805,
+    "api_call_count": 10
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-19T05:58:15.032337Z",
+    "agent_lines": 18,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 18,
+    "agent_percentage": 100
+  }
+}
