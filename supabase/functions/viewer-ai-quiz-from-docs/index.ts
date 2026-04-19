@@ -382,18 +382,15 @@ async function generateQuizDsl(
         continue;
       }
 
-      const shortfallTolerance = Math.max(2, Math.floor(questionCount * 0.1));
-      const minAcceptable = Math.max(1, questionCount - shortfallTolerance);
-
-      if (dsl.questions.length < minAcceptable) {
-        candidateError = `Gemini returned only ${dsl.questions.length} questions (need at least ${minAcceptable}).`;
+      if (dsl.questions.length < questionCount) {
+        candidateError = `Gemini returned only ${dsl.questions.length} questions (need exactly ${questionCount}).`;
         dsl = null;
         continue;
       }
 
       const picked = selectQuestionsForQuiz(dsl.questions, questionCount);
-      if (picked.length < minAcceptable) {
-        candidateError = `Only ${picked.length} questions survived the tf cap (need at least ${minAcceptable}).`;
+      if (picked.length !== questionCount) {
+        candidateError = `Question selection produced ${picked.length} items (need exactly ${questionCount}).`;
         dsl = null;
         continue;
       }

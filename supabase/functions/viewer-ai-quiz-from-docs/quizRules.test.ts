@@ -60,7 +60,7 @@ Deno.test('selectQuestionsForQuiz: keeps tf within cap when extra non-tf questio
   );
 });
 
-Deno.test('selectQuestionsForQuiz: returns shortfall when pool exceeds tf cap without filler', () => {
+Deno.test('selectQuestionsForQuiz: backfills deferred tf to preserve exact count', () => {
   const selected = selectQuestionsForQuiz(
     [
       mc('mc-1'),
@@ -77,11 +77,11 @@ Deno.test('selectQuestionsForQuiz: returns shortfall when pool exceeds tf cap wi
     10,
   );
 
-  assertEquals(selected.length, 9, 'selected length (one tf skipped by cap)');
+  assertEquals(selected.length, 10, 'exact count preserved over tf cap');
   assertEquals(
-    selected.filter((question) => question.type === 'tf').length,
-    1,
-    'tf respected cap',
+    selected.map((question) => question.label),
+    ['mc-1', 'tf-1', 'mc-2', 'mc-3', 'mc-4', 'mc-5', 'mc-6', 'mc-7', 'mc-8', 'tf-2'],
+    'tf-2 appended to keep total at 10',
   );
 });
 
