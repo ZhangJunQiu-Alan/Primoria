@@ -65,7 +65,7 @@ ${materials}
 
 ## 出题要求
 
-题目数量：${questionCount} 题
+题目数量：恰好 ${questionCount} 题（硬性要求，不得多也不得少，questions 数组 length 必须精确等于 ${questionCount}）
 难度等级：intermediate
 
 认知层次分布（参照布鲁姆分类，严格遵守）：
@@ -174,7 +174,8 @@ ${materials}
 ## 输出结构硬约束（再次强调，最高优先级）
 - 顶层必须是一个 JSON 对象，**不能是数组**
 - 顶层对象必须同时包含四个字段：\`title\`、\`description\`、\`difficulty\`、\`questions\`，缺一不可
-- \`questions\` 必须是题目数组，长度等于题目数量
+- \`questions\` 数组长度必须**恰好等于 ${questionCount}**，不能是 ${Math.max(1, questionCount - 1)}，不能是 ${questionCount + 1}，必须精确为 ${questionCount}
 - 禁止把题目数组作为顶层（禁止 \`[{...}, {...}]\`）
-- 禁止把输出包在 \`{"data": ...}\`、\`{"quiz": ...}\` 等额外外壳里`;
+- 禁止把输出包在 \`{"data": ...}\`、\`{"quiz": ...}\` 等额外外壳里
+- 输出前请自行计数核对，\`questions.length === ${questionCount}\` 才能结束输出`;
 }

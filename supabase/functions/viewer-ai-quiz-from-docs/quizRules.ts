@@ -11,6 +11,7 @@ export function getTrueFalseQuestionLimit(questionCount: number) {
 export function selectQuestionsForQuiz<T extends QuizQuestionLike>(questions: T[], questionCount: number) {
   const trueFalseLimit = getTrueFalseQuestionLimit(questionCount);
   const selected: T[] = [];
+  const deferredTrueFalse: T[] = [];
   let selectedTrueFalseCount = 0;
 
   for (const question of questions) {
@@ -18,13 +19,26 @@ export function selectQuestionsForQuiz<T extends QuizQuestionLike>(questions: T[
       break;
     }
 
+    if (question.type === 'tf' && selectedTrueFalseCount >= trueFalseLimit) {
+      deferredTrueFalse.push(question);
+      continue;
+    }
+
     if (question.type === 'tf') {
-      if (selectedTrueFalseCount >= trueFalseLimit) {
-        continue;
-      }
       selectedTrueFalseCount += 1;
     }
 
+    selected.push(question);
+  }
+
+  // Exact count is the non-negotiable guarantee. If respecting the tf cap
+  // leaves us short of questionCount, backfill from the deferred tf pool so
+  // the caller always sees exactly N questions when Gemini supplied enough
+  // raw items.
+  for (const question of deferredTrueFalse) {
+    if (selected.length >= questionCount) {
+      break;
+    }
     selected.push(question);
   }
 
