@@ -8,6 +8,7 @@ import {
   type QuizOutputLanguage,
   type TutorDocumentRecord,
 } from './quizHelpers.ts';
+import { selectQuestionsForQuiz } from './quizRules.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const DEFAULT_MODEL = 'gemini-2.0-flash';
@@ -217,6 +218,7 @@ async function generateQuizDsl(
     );
 
     let dsl: QuizDsl | null = null;
+    let selectedQuestions: QuizDsl['questions'] | null = null;
     let candidateError = 'Gemini returned invalid quiz JSON.';
 
     for (const text of candidateTexts) {
@@ -231,27 +233,37 @@ async function generateQuizDsl(
       const salvaged = salvageQuizShape(parsed, fallbackTitle, fallbackDescription);
       try {
         dsl = QuizDslSchema.parse(salvaged);
-        break;
       } catch (error) {
         candidateError = error instanceof Error ? error.message : 'schema validation failed';
         continue;
       }
+
+      if (dsl.questions.length < questionCount) {
+        candidateError = `Gemini returned only ${dsl.questions.length} questions.`;
+        dsl = null;
+        continue;
+      }
+
+      try {
+        selectedQuestions = selectQuestionsForQuiz(dsl.questions, questionCount);
+        break;
+      } catch (error) {
+        candidateError = error instanceof Error ? error.message : 'question selection failed';
+        dsl = null;
+        selectedQuestions = null;
+        continue;
+      }
     }
 
-    if (!dsl) {
+    if (!dsl || !selectedQuestions) {
       lastError = candidateError;
-      continue;
-    }
-
-    if (dsl.questions.length < questionCount) {
-      lastError = `Gemini returned only ${dsl.questions.length} questions.`;
       continue;
     }
 
     return {
       ...dsl,
       difficulty: 'intermediate' as const,
-      questions: dsl.questions.slice(0, questionCount),
+      questions: selectedQuestions,
     };
   }
 
