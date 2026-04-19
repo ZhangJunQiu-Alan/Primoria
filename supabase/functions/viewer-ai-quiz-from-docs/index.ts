@@ -127,6 +127,36 @@ const GEMINI_OVERLOADED_MESSAGES: Record<QuizOutputLanguage, string> = {
   'zh-CN': '请稍后重试，这是 Gemini 服务端临时过载。',
 };
 
+const QUIZ_WRAPPER_KEYS = ['quiz', 'data', 'result', 'response', 'payload', 'output'] as const;
+const QUIZ_QUESTION_TYPES = new Set(['mc', 'mc_multi', 'tf', 'match']);
+
+function looksLikeQuizQuestion(value: unknown): boolean {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return false;
+  }
+  const type = (value as Record<string, unknown>).type;
+  return typeof type === 'string' && QUIZ_QUESTION_TYPES.has(type);
+}
+
+function findQuestionArray(source: Record<string, unknown>): unknown[] | null {
+  for (const value of Object.values(source)) {
+    if (Array.isArray(value) && value.length > 0 && value.every(looksLikeQuizQuestion)) {
+      return value;
+    }
+  }
+  return null;
+}
+
+function unwrapQuizRecord(record: Record<string, unknown>): Record<string, unknown> {
+  for (const key of QUIZ_WRAPPER_KEYS) {
+    const candidate = record[key];
+    if (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) {
+      return candidate as Record<string, unknown>;
+    }
+  }
+  return record;
+}
+
 function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescription: string): unknown {
   if (Array.isArray(parsed)) {
     return {
@@ -142,19 +172,11 @@ function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescri
   }
 
   const record = parsed as Record<string, unknown>;
-  const inner =
-    (record.quiz && typeof record.quiz === 'object' ? record.quiz : null) ??
-    (record.data && typeof record.data === 'object' ? record.data : null);
-  const base = (inner ?? record) as Record<string, unknown>;
+  const base = unwrapQuizRecord(record);
 
-  let questions = base.questions;
+  let questions: unknown = base.questions;
   if (!Array.isArray(questions)) {
-    // if top-level object itself *is* a single question (unlikely), or questions key is named differently
-    if (Array.isArray((record as Record<string, unknown>).items)) {
-      questions = (record as Record<string, unknown>).items;
-    } else if (Array.isArray((record as Record<string, unknown>).list)) {
-      questions = (record as Record<string, unknown>).list;
-    }
+    questions = findQuestionArray(base) ?? (base !== record ? findQuestionArray(record) : null);
   }
 
   return {
@@ -164,8 +186,39 @@ function salvageQuizShape(parsed: unknown, fallbackTitle: string, fallbackDescri
         ? base.description
         : fallbackDescription,
     difficulty: typeof base.difficulty === 'string' ? base.difficulty : 'intermediate',
-    questions: Array.isArray(questions) ? questions : base.questions,
+    questions: Array.isArray(questions) ? questions : [],
   };
+}
+
+function describeShape(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `array(${value.length})`;
+  }
+  if (value && typeof value === 'object') {
+    return `object{${Object.keys(value as Record<string, unknown>).join(',')}}`;
+  }
+  return typeof value;
+}
+
+function summarizeZodError(error: unknown): string {
+  if (!(error instanceof Error) || !error.message) {
+    return 'schema validation failed';
+  }
+  try {
+    const issues = JSON.parse(error.message);
+    if (Array.isArray(issues) && issues.length > 0) {
+      return issues
+        .slice(0, 3)
+        .map((issue: { path?: unknown[]; message?: string }) => {
+          const path = Array.isArray(issue.path) && issue.path.length > 0 ? issue.path.join('.') : '(root)';
+          return `${path}: ${issue.message ?? 'invalid'}`;
+        })
+        .join('; ');
+    }
+  } catch {
+    // fall through — not a zod issues payload
+  }
+  return error.message.slice(0, 200);
 }
 
 async function generateQuizDsl(
@@ -234,7 +287,12 @@ async function generateQuizDsl(
       try {
         dsl = QuizDslSchema.parse(salvaged);
       } catch (error) {
-        candidateError = error instanceof Error ? error.message : 'schema validation failed';
+        const parsedShape = describeShape(parsed);
+        const salvagedShape = describeShape(salvaged);
+        console.log(
+          `[viewer-ai-quiz-from-docs] model=${model} schema_failed parsed=${parsedShape} salvaged=${salvagedShape} issues=${summarizeZodError(error)}`,
+        );
+        candidateError = `Quiz JSON did not match expected shape (${summarizeZodError(error)}).`;
         continue;
       }
 
