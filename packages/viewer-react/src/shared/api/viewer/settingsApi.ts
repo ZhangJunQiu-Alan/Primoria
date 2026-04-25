@@ -1,8 +1,9 @@
 import { DEFAULT_AI_TUTOR_PERSONA, normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
-import { fetchAgentJson } from '@/shared/api/agentService';
 import type { ViewerProfile, ViewerSettingsBundle, ViewerThemeMode, ViewerUserSettings } from '@/shared/api/viewer/types';
+import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
+import { fetchViewerProfile, updateProfile } from '@/shared/api/viewer/profileApi';
 import { DEFAULT_VIEWER_LANGUAGE, normalizeViewerLanguage } from '@/shared/i18n/locale';
 
 export const DEFAULT_VIEWER_USER_SETTINGS: ViewerUserSettings = {
@@ -47,21 +48,28 @@ export async function fetchViewerSettings(userId: string): Promise<ViewerSetting
       userSettings: normalizeUserSettings(state.userSettings),
     };
   }
-  const payload = await fetchAgentJson<{ profile: ViewerProfile; userSettings: Partial<ViewerUserSettings> | null }>(
-    '/v1/viewer/settings/bundle',
-  );
+
+  const [profile, userSettingsResult] = await Promise.all([
+    fetchViewerProfile(userId),
+    supabase.from('user_settings').select('*').eq('user_id', userId).maybeSingle(),
+  ]);
+
+  if (userSettingsResult.error) {
+    throw userSettingsResult.error;
+  }
 
   return {
-    profile: payload.profile,
-    userSettings: normalizeUserSettings(payload.userSettings),
+    profile,
+    userSettings: normalizeUserSettings(userSettingsResult.data as Partial<ViewerUserSettings> | null),
   };
 }
 
 export async function saveProfileSettings(userId: string, payload: Partial<ViewerProfile>) {
-  return fetchAgentJson<{ ok: boolean }>('/v1/viewer/profile', {
-    method: 'PATCH',
-    body: JSON.stringify(payload),
-  });
+  const result = await updateProfile(userId, payload);
+  if (!result.ok) {
+    throw result.error ?? new Error('Profile update failed.');
+  }
+  return result;
 }
 
 export async function saveAccountSystemSettings(
@@ -79,9 +87,39 @@ export async function saveAccountSystemSettings(
     }));
     return normalizeUserSettings(nextState.userSettings);
   }
-  const result = await fetchAgentJson<{ ok: boolean; userSettings: Partial<ViewerUserSettings> }>('/v1/viewer/settings', {
-    method: 'PATCH',
-    body: JSON.stringify(payload),
+
+  const { data: existingSettings, error: loadError } = await supabase
+    .from('user_settings')
+    .select(
+      'theme_mode, language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode, ai_tutor_persona, home_companion_enabled',
+    )
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (loadError) {
+    throw loadError;
+  }
+
+  const next = normalizeUserSettings({
+    ...(existingSettings as Partial<ViewerUserSettings> | null),
+    ...payload,
   });
-  return normalizeUserSettings(result.userSettings);
+
+  const { error } = await supabase.from('user_settings').upsert({
+    user_id: userId,
+    theme_mode: next.theme_mode,
+    language: next.language,
+    notification_daily_reminder: next.notification_daily_reminder,
+    notification_reminder_time: next.notification_reminder_time,
+    marketing_emails: next.marketing_emails,
+    accessibility_mode: next.accessibility_mode,
+    ai_tutor_persona: next.ai_tutor_persona,
+    home_companion_enabled: next.home_companion_enabled,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return next;
 }

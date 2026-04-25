@@ -1,5 +1,4 @@
 import { migrateCourseJson, parseCourse, type Block, type Course } from '@primoria/schema';
-import { fetchAgentJson } from '@/shared/api/agentService';
 import type { LessonBlock, LessonPage, LessonRuntimeData, SortingBlock } from '@/shared/lesson/types';
 import type { ViewerLessonCompletion } from '@/shared/api/viewer/types';
 import { loadDemoViewerData, loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
@@ -376,10 +375,19 @@ export async function completeLesson(_userId: string, lessonId: string, stats: R
       Number(stats.timeSpentSeconds ?? 0),
     );
   }
-  const payload = await fetchAgentJson<Record<string, unknown>>(`/v1/viewer/lessons/${lessonId}/complete`, {
-    method: 'POST',
-    body: JSON.stringify(stats),
+
+  const { data, error } = await supabase.rpc('complete_lesson_and_award_xp', {
+    p_lesson_id: lessonId,
+    p_score: stats.score ?? 0,
+    p_seconds: stats.timeSpentSeconds ?? 0,
+    p_correct_count: stats.correctCount ?? 0,
+    p_total_count: stats.totalCount ?? 0,
   });
+  if (error) {
+    throw error;
+  }
+
+  const payload = (data ?? {}) as Record<string, unknown>;
   return {
     xp_earned: Number(payload.xp_earned ?? 0),
     total_xp: Number(payload.total_xp ?? 0),
