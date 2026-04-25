@@ -4,7 +4,7 @@ import type {
   ViewerProfile,
   ViewerStats,
 } from '@/shared/api/viewer/types';
-import { fetchAgentJson } from '@/shared/api/agentService';
+import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 
@@ -13,7 +13,11 @@ export async function fetchViewerProfile(userId: string): Promise<ViewerProfile>
     const { readFixtureState } = await loadFixtureStore();
     return readFixtureState().profile;
   }
-  const data = await fetchAgentJson<Partial<ViewerProfile>>('/v1/viewer/profile');
+
+  const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
+  if (error) {
+    throw error;
+  }
   return {
     id: String(data?.id ?? userId),
     username: String(data?.username ?? ''),
@@ -44,10 +48,9 @@ export async function updateProfile(userId: string, payload: Partial<ViewerProfi
     }));
     return { ok: true };
   }
-  return fetchAgentJson<{ ok: boolean }>('/v1/viewer/profile', {
-    method: 'PATCH',
-    body: JSON.stringify(payload),
-  });
+
+  const { error } = await supabase.from('profiles').update(payload).eq('id', userId);
+  return { ok: !error, error };
 }
 
 export async function fetchAchievements(userId?: string): Promise<ViewerAchievement[]> {
@@ -55,11 +58,45 @@ export async function fetchAchievements(userId?: string): Promise<ViewerAchievem
     const { readFixtureState } = await loadFixtureStore();
     return [...readFixtureState().achievements];
   }
-  if (!userId) {
-    return [];
+
+  const { data: all, error: allError } = await supabase
+    .from('achievements')
+    .select('id, slug, name, description, category, rarity')
+    .order('rarity', { ascending: true });
+  if (allError) {
+    throw allError;
   }
-  const payload = await fetchAgentJson<{ achievements: ViewerAchievement[] }>('/v1/viewer/profile/achievements');
-  return payload.achievements ?? [];
+
+  if (!userId) {
+    return (all ?? []).map((achievement) => ({
+      id: String(achievement.id ?? ''),
+      slug: String(achievement.slug ?? ''),
+      name: String(achievement.name ?? ''),
+      description: String(achievement.description ?? ''),
+      category: String(achievement.category ?? ''),
+      rarity: String(achievement.rarity ?? 'common'),
+      earned_at: null,
+    }));
+  }
+
+  const { data: earned, error: earnedError } = await supabase
+    .from('user_achievements')
+    .select('achievement_id, earned_at')
+    .eq('user_id', userId);
+  if (earnedError) {
+    throw earnedError;
+  }
+
+  const earnedMap = new Map((earned ?? []).map((row) => [String(row.achievement_id), String(row.earned_at)]));
+  return (all ?? []).map((achievement) => ({
+    id: String(achievement.id ?? ''),
+    slug: String(achievement.slug ?? ''),
+    name: String(achievement.name ?? ''),
+    description: String(achievement.description ?? ''),
+    category: String(achievement.category ?? ''),
+    rarity: String(achievement.rarity ?? 'common'),
+    earned_at: earnedMap.get(String(achievement.id)) ?? null,
+  }));
 }
 
 export async function fetchPinnedAchievementIds(userId?: string) {
@@ -70,7 +107,15 @@ export async function fetchPinnedAchievementIds(userId?: string) {
   if (!userId) {
     return [];
   }
-  const data = await fetchAgentJson<Partial<ViewerProfile>>('/v1/viewer/profile');
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('pinned_achievement_ids')
+    .eq('id', userId)
+    .maybeSingle();
+  if (error) {
+    throw error;
+  }
   return Array.isArray(data?.pinned_achievement_ids)
     ? data.pinned_achievement_ids.map((value) => String(value))
     : [];
@@ -85,10 +130,14 @@ export async function savePinnedAchievementIds(userId: string, ids: string[]) {
     }));
     return;
   }
-  await fetchAgentJson('/v1/viewer/profile', {
-    method: 'PATCH',
-    body: JSON.stringify({ pinned_achievement_ids: ids.slice(0, 3) }),
-  });
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({ pinned_achievement_ids: ids.slice(0, 3) })
+    .eq('id', userId);
+  if (error) {
+    throw error;
+  }
 }
 
 export async function fetchUserStats(userId?: string): Promise<ViewerStats> {
@@ -107,7 +156,37 @@ export async function fetchUserStats(userId?: string): Promise<ViewerStats> {
       last_activity_date: null,
     };
   }
-  return fetchAgentJson<ViewerStats>('/v1/viewer/profile/stats');
+
+  const [{ data: statsData, error: statsError }, { data: lessonRows, error: lessonError }] = await Promise.all([
+    supabase
+      .from('user_stats')
+      .select('current_streak, longest_streak, courses_completed, lessons_completed, total_xp, last_activity_date')
+      .eq('user_id', userId)
+      .maybeSingle(),
+    supabase.from('lesson_completions').select('time_spent_seconds').eq('user_id', userId),
+  ]);
+
+  if (statsError) {
+    throw statsError;
+  }
+  if (lessonError) {
+    throw lessonError;
+  }
+
+  const totalStudyMinutes = (lessonRows ?? []).reduce(
+    (total, row) => total + Math.round(Number(row.time_spent_seconds ?? 0) / 60),
+    0,
+  );
+
+  return {
+    current_streak: Number(statsData?.current_streak ?? 0),
+    longest_streak: Number(statsData?.longest_streak ?? 0),
+    courses_completed: Number(statsData?.courses_completed ?? 0),
+    lessons_completed: Number(statsData?.lessons_completed ?? 0),
+    total_xp: Number(statsData?.total_xp ?? 0),
+    total_study_minutes: totalStudyMinutes,
+    last_activity_date: typeof statsData?.last_activity_date === 'string' ? statsData.last_activity_date : null,
+  };
 }
 
 export async function fetchFollowCounts(userId?: string): Promise<ViewerFollowCounts> {
@@ -118,7 +197,23 @@ export async function fetchFollowCounts(userId?: string): Promise<ViewerFollowCo
   if (!userId) {
     return { following: 0, followers: 0 };
   }
-  return fetchAgentJson<ViewerFollowCounts>('/v1/viewer/profile/follows');
+
+  const [{ data: following, error: followingError }, { data: followers, error: followersError }] = await Promise.all([
+    supabase.from('follows').select('following_id').eq('follower_id', userId),
+    supabase.from('follows').select('follower_id').eq('following_id', userId),
+  ]);
+
+  if (followingError) {
+    throw followingError;
+  }
+  if (followersError) {
+    throw followersError;
+  }
+
+  return {
+    following: following?.length ?? 0,
+    followers: followers?.length ?? 0,
+  };
 }
 
 export async function fetchDailyXpHistory(userId?: string) {
@@ -129,9 +224,19 @@ export async function fetchDailyXpHistory(userId?: string) {
   if (!userId) {
     return new Map<string, number>();
   }
-  const payload = await fetchAgentJson<{ entries: Array<{ amount: number; created_at: string }> }>('/v1/viewer/profile/xp-history');
+
+  const { data, error } = await supabase
+    .from('xp_transactions')
+    .select('amount, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(90);
+  if (error) {
+    throw error;
+  }
+
   const byDate = new Map<string, number>();
-  for (const row of payload.entries ?? []) {
+  for (const row of data ?? []) {
     const key = String(row.created_at).slice(0, 10);
     byDate.set(key, (byDate.get(key) ?? 0) + Number(row.amount ?? 0));
   }
