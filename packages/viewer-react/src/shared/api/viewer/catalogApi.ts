@@ -1,8 +1,8 @@
-import type { ViewerCourse, ViewerEnrollment, ViewerOwnedCourse, ViewerSubject } from '@/shared/api/viewer/types';
+import { fetchAgentJson } from '@/shared/api/agentService';
+import type { ViewerCourse, ViewerEnrollment, ViewerSubject } from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
-import { supabase } from '@/shared/api/supabase';
 import { resolveLocalCourseThumbnailUrl } from '@/shared/utils/localCourseCovers';
 
 function normalizeSubject(row: Record<string, unknown>): ViewerSubject {
@@ -36,25 +36,13 @@ function normalizeCourse(row: Record<string, unknown>): ViewerCourse {
   };
 }
 
-function normalizeOwnedCourse(row: Record<string, unknown>): ViewerOwnedCourse {
-  return {
-    ...normalizeCourse(row),
-    status: String(row.status ?? 'draft'),
-    updated_at: typeof row.updated_at === 'string' ? row.updated_at : null,
-  };
-}
-
 export async function fetchSubjects() {
   if (usesViewerFixtures()) {
     const { readFixtureState } = await loadFixtureStore();
     return [...readFixtureState().subjects];
   }
-
-  const { data, error } = await supabase.from('subjects').select('id, name, color_hex').order('name');
-  if (error) {
-    throw error;
-  }
-  return (data ?? []).map((row) => normalizeSubject(row as Record<string, unknown>));
+  const payload = await fetchAgentJson<{ subjects: Record<string, unknown>[] }>('/v1/viewer/subjects');
+  return (payload.subjects ?? []).map((row) => normalizeSubject(row as Record<string, unknown>));
 }
 
 export async function fetchCourses(params: { searchQuery?: string; subjectId?: string }) {
@@ -73,59 +61,16 @@ export async function fetchCourses(params: { searchQuery?: string; subjectId?: s
       return subjectMatch && searchMatch;
     });
   }
-
-  let query = supabase
-    .from('courses')
-    .select(
-      'id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex)',
-    )
-    .eq('status', 'published');
-
-  if (subjectId) {
-    query = query.eq('subject_id', subjectId);
+  const query = new URLSearchParams();
+  if (searchQuery?.trim()) {
+    query.set('search', searchQuery.trim());
   }
-
-  const trimmed = searchQuery?.trim();
-  if (trimmed) {
-    query = query.or(`title.ilike.%${trimmed}%,description.ilike.%${trimmed}%`);
+  if (subjectId?.trim()) {
+    query.set('subject_id', subjectId.trim());
   }
-
-  const { data, error } = await query.order('published_at', { ascending: false }).limit(30);
-  if (error) {
-    throw error;
-  }
-
-  return (data ?? []).map((row) => normalizeCourse(row as Record<string, unknown>));
-}
-
-export async function fetchOwnedCourses(params: { userId: string; searchQuery?: string; subjectId?: string }) {
-  const { userId, searchQuery, subjectId } = params;
-  if (usesViewerFixtures()) {
-    return [];
-  }
-
-  let query = supabase
-    .from('courses')
-    .select(
-      'id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, status, updated_at, subjects(id, name, color_hex)',
-    )
-    .eq('author_id', userId);
-
-  if (subjectId) {
-    query = query.eq('subject_id', subjectId);
-  }
-
-  const trimmed = searchQuery?.trim();
-  if (trimmed) {
-    query = query.or(`title.ilike.%${trimmed}%,description.ilike.%${trimmed}%`);
-  }
-
-  const { data, error } = await query.order('updated_at', { ascending: false });
-  if (error) {
-    throw error;
-  }
-
-  return (data ?? []).map((row) => normalizeOwnedCourse(row as Record<string, unknown>));
+  const suffix = query.toString() ? `?${query.toString()}` : '';
+  const payload = await fetchAgentJson<{ courses: Record<string, unknown>[] }>(`/v1/viewer/courses${suffix}`);
+  return (payload.courses ?? []).map((row) => normalizeCourse(row as Record<string, unknown>));
 }
 
 export async function fetchEnrollments(userId: string) {
@@ -133,19 +78,8 @@ export async function fetchEnrollments(userId: string) {
     const { readFixtureState } = await loadFixtureStore();
     return [...readFixtureState().enrollments];
   }
-
-  const { data, error } = await supabase
-    .from('enrollments')
-    .select(
-      'id, course_id, status, progress_bp, started_at, completed_at, last_accessed_at, courses(id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex))',
-    )
-    .eq('user_id', userId)
-    .order('last_accessed_at', { ascending: false });
-  if (error) {
-    throw error;
-  }
-
-  return (data ?? []).map((row) => {
+  const payload = await fetchAgentJson<{ enrollments: Array<Record<string, unknown>> }>('/v1/viewer/enrollments');
+  return (payload.enrollments ?? []).map((row) => {
     const record = row as Record<string, unknown>;
     return {
       id: typeof record.id === 'string' ? record.id : undefined,
@@ -165,73 +99,29 @@ export async function fetchCourseDetail(courseId: string, userId?: string) {
     const { getFixtureCourseDetail } = await loadFixtureStore();
     return getFixtureCourseDetail(courseId);
   }
-
-  const { data: courseData, error: courseError } = await supabase
-    .from('courses')
-    .select(
-      'id, title, slug, description, thumbnail_url, content_language, difficulty_level, estimated_minutes, tags, subject_id, published_at, subjects(id, name, color_hex)',
-    )
-    .eq('id', courseId)
-    .single();
-  if (courseError) {
-    throw courseError;
-  }
-
-  const { data: lessonsData, error: lessonsError } = await supabase
-    .from('lessons')
-    .select('id, title, sort_key, xp_reward, duration_seconds, is_locked, unlock_type')
-    .eq('course_id', courseId)
-    .order('sort_key');
-  if (lessonsError) {
-    throw lessonsError;
-  }
-
-  let completed_lesson_ids: string[] = [];
-  if (userId && lessonsData?.length) {
-    const lessonIds = lessonsData.map((lesson) => String(lesson.id));
-    const { data: completions, error: completionsError } = await supabase
-      .from('lesson_completions')
-      .select('lesson_id')
-      .eq('user_id', userId)
-      .in('lesson_id', lessonIds);
-    if (completionsError) {
-      throw completionsError;
-    }
-    completed_lesson_ids = (completions ?? []).map((row) => String(row.lesson_id));
-  }
-
-  let enrollment = null;
-  if (userId) {
-    const { data: enrollmentData, error: enrollmentError } = await supabase
-      .from('enrollments')
-      .select('id, course_id, status, progress_bp, started_at, completed_at, last_accessed_at')
-      .eq('user_id', userId)
-      .eq('course_id', courseId)
-      .maybeSingle();
-    if (enrollmentError) {
-      throw enrollmentError;
-    }
-    enrollment = enrollmentData
-      ? {
-          ...(enrollmentData as Record<string, unknown>),
-          courses: normalizeCourse(courseData as Record<string, unknown>),
-        }
-      : null;
-  }
-
+  const payload = await fetchAgentJson<{
+    course: ViewerCourse;
+    lessons: Array<{
+      id: string;
+      title: string;
+      sort_key: number;
+      xp_reward: number;
+      duration_seconds: number;
+      is_locked: boolean;
+      unlock_type: string;
+    }>;
+    completed_lesson_ids: string[];
+    enrollment: ViewerEnrollment | null;
+  }>(`/v1/courses/${courseId}/detail`);
   return {
-    course: normalizeCourse(courseData as Record<string, unknown>),
-    lessons: (lessonsData ?? []).map((lesson) => ({
-      id: String(lesson.id),
-      title: String(lesson.title ?? ''),
-      sort_key: Number(lesson.sort_key ?? 0),
-      xp_reward: Number(lesson.xp_reward ?? 0),
-      duration_seconds: Number(lesson.duration_seconds ?? 0),
-      is_locked: lesson.is_locked === true,
-      unlock_type: String(lesson.unlock_type ?? 'none'),
-    })),
-    completed_lesson_ids,
-    enrollment,
+    ...payload,
+    course: normalizeCourse(payload.course as unknown as Record<string, unknown>),
+    enrollment: payload.enrollment
+      ? {
+          ...payload.enrollment,
+          courses: normalizeCourse((payload.enrollment.courses ?? payload.course) as unknown as Record<string, unknown>),
+        }
+      : null,
   };
 }
 
@@ -260,15 +150,17 @@ export async function enrollInCourse(courseId: string, userId: string) {
     }
     throw new Error('Fixture course could not be resolved for enrollment.');
   }
-
-  const { data, error } = await supabase
-    .from('enrollments')
-    .upsert({ user_id: userId, course_id: courseId, status: 'in_progress' }, { onConflict: 'user_id,course_id' })
-    .select('id, course_id, status, progress_bp, started_at, completed_at, last_accessed_at')
-    .single();
-  if (error) {
-    throw error;
-  }
+  const data = await fetchAgentJson<{
+    id?: string;
+    course_id?: string;
+    status?: string;
+    progress_bp?: number;
+    started_at?: string | null;
+    completed_at?: string | null;
+    last_accessed_at?: string | null;
+  }>(`/v1/viewer/courses/${courseId}/enroll`, {
+    method: 'POST',
+  });
 
   return {
     id: typeof data.id === 'string' ? data.id : undefined,

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { type AuthChangeEvent, type Session } from '@supabase/supabase-js';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { markBootSplashAuthSettled } from '@/shared/boot/bootSplash';
 import { supabase } from '@/shared/api/supabase';
 import { captureViewerError, clearViewerUserContext, setViewerUserContext } from '@/shared/platform/observability';
@@ -8,23 +9,14 @@ import { useAppDispatch } from '@/shared/state/store';
 import { clearSession, setLoading, setSession } from '@/features/auth/authSlice';
 
 async function fetchUserRole(userId: string) {
-  const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
-  if (error) {
-    captureViewerError(error, { area: 'auth_fetch_profile', userId });
-    return {
-      role: 'user',
-      displayName: '',
-    };
+  try {
+    return await fetchAgentJson<{ role?: string; displayName?: string }>('/v1/viewer/auth-context');
+  } catch (error) {
+    captureViewerError(error, { area: 'auth_fetch_profile_backend', userId });
   }
-
   return {
-    role: typeof data?.role === 'string' ? data.role : 'user',
-    displayName:
-      typeof data?.username === 'string' && data.username.trim()
-        ? data.username
-        : typeof data?.display_name === 'string' && data.display_name.trim()
-          ? data.display_name
-          : '',
+    role: 'user',
+    displayName: '',
   };
 }
 

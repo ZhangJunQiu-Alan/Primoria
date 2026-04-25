@@ -13,6 +13,10 @@ def build_user_prompt(message: str, context: ChatContext, relevant_memories: lis
         context_lines.append(f'- block_id: {context.block_id}')
     if context.locale:
         context_lines.append(f'- locale: {context.locale}')
+    if context.ui_language:
+        context_lines.append(f'- ui_language: {context.ui_language}')
+    if context.ai_tutor_persona:
+        context_lines.append(f'- ai_tutor_persona: {context.ai_tutor_persona}')
     if context.lesson_title:
         context_lines.append(f'- lesson_title: {context.lesson_title}')
     if context.page_index is not None and context.page_count is not None:

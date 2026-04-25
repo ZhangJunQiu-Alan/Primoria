@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
-import { supabase } from '@/lib/supabase';
 import { FormField, Input, Select, Textarea } from '../FormField';
 import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import type { Block } from '@primoria/schema';
@@ -79,7 +79,13 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
   });
 
   async function handleGenerate() {
-    const prompt = (block.content as { aiPrompt?: string }).aiPrompt ?? '';
+    const content = block.content as {
+      aiPrompt?: string;
+      template?: string;
+      title?: string;
+      description?: string;
+    };
+    const prompt = content.aiPrompt ?? '';
     if (!prompt.trim()) {
       setGenError('Enter an AI prompt first.');
       return;
@@ -87,11 +93,16 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
     setGenerating(true);
     setGenError(null);
     try {
-      const { data, error } = await supabase.functions.invoke('gemini-generate', {
-        body: { prompt },
+      const data = await fetchAgentJson<{ html?: string }>('/v1/builder/interactive-visuals/generate', {
+        method: 'POST',
+        body: JSON.stringify({
+          prompt,
+          template: content.template,
+          title: content.title,
+          description: content.description,
+        }),
       });
-      if (error) throw error;
-      const html = typeof data === 'string' ? data : (data as { html?: string }).html ?? '';
+      const html = data.html ?? '';
       if (!html) throw new Error('No HTML returned from AI');
       dispatch(
         updateBlock({

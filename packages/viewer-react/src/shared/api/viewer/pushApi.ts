@@ -6,7 +6,7 @@ import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 import { publicAssetPath, publicBasePath } from '@/shared/utils/publicAsset';
 
-const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
+const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
 
 export type ViewerPushPermissionState = NotificationPermission | 'unsupported';
 
@@ -188,7 +188,7 @@ export async function clearViewerLocalCache() {
     return;
   }
 
-  window.localStorage.removeItem(GEMINI_STORAGE_KEY);
+  window.localStorage.removeItem(TUTOR_THREAD_STORAGE_KEY);
 
   if ('caches' in window) {
     const keys = await window.caches.keys();
