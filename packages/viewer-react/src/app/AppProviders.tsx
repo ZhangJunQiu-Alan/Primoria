@@ -6,12 +6,13 @@ import { AuthProvider } from '@/features/auth/AuthProvider';
 import { createViewerQueryClient } from '@/shared/api/queryClient';
 import { prefetchHomePayload, prefetchLibraryCatalog } from '@/shared/api/viewer/prefetch';
 import { registerViewerPushWorker } from '@/shared/api/viewer/pushApi';
-import { fetchViewerSettings, saveAccountSystemSettings } from '@/shared/api/viewer/settingsApi';
+import { saveAccountSystemSettings } from '@/shared/api/viewer/settingsApi';
 import { FeatureFlagsProvider } from '@/shared/platform/FeatureFlagsProvider';
 import { captureViewerError } from '@/shared/platform/observability';
 import { patchPreferences } from '@/shared/state/preferencesSlice';
 import { store, useAppDispatch, useAppSelector } from '@/shared/state/store';
 import { normalizeViewerLanguage } from '@/shared/i18n/locale';
+import { supabase } from '@/shared/api/supabase';
 
 const queryClient = createViewerQueryClient();
 
@@ -80,8 +81,15 @@ function LanguagePreferenceSynchronizer() {
 
     async function hydrateLanguagePreference() {
       try {
-        const bundle = await fetchViewerSettings(auth.user?.id ?? '');
-        const data = bundle.userSettings;
+        const { data, error } = await supabase
+          .from('user_settings')
+          .select('language, theme_mode, ai_tutor_persona, home_companion_enabled')
+          .eq('user_id', auth.user?.id ?? '')
+          .maybeSingle();
+
+        if (error) {
+          throw error;
+        }
         if (!active) {
           return;
         }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchAgentJson } from '@/shared/api/agentService';
+import { supabase } from '@/lib/supabase';
 
 export interface DashboardAnalyticsSummary {
   weekly_learners: number;
@@ -36,6 +36,11 @@ export interface DashboardAnalyticsPayload {
   monthly_activity_completion: DashboardAnalyticsMonthlyActivity[];
   course_metrics: DashboardAnalyticsCourseMetric[];
 }
+
+type RpcResponse = {
+  data: unknown;
+  error: Error | null;
+};
 
 function toNumber(value: unknown) {
   const numeric = typeof value === 'number' ? value : Number(value);
@@ -132,7 +137,18 @@ export function useDashboardAnalytics(userId: string | undefined) {
     queryKey: dashboardAnalyticsKeys.detail(userId ?? ''),
     enabled: Boolean(userId),
     queryFn: async () => {
-      const data = await fetchAgentJson<unknown>('/v1/viewer/dashboard/analytics');
+      const { data, error } = await (supabase.rpc as unknown as (
+        fn: string,
+        args?: Record<string, unknown>,
+      ) => Promise<RpcResponse>)('get_author_dashboard_analytics', {
+        p_days: 7,
+        p_months: 6,
+      });
+
+      if (error) {
+        throw error;
+      }
+
       return normalizeDashboardAnalyticsPayload(data);
     },
   });
