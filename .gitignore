@@ -51,3 +51,4 @@ Viewer/
 # Agent local memory/runtime artifacts
 agent-service/data/memory/*
 !agent-service/data/memory/.gitkeep
+.omx/

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { useAppSelector } from '@/store';
 import { CourseSchema } from '@primoria/schema';
 import type { ZodError } from 'zod';
@@ -26,13 +26,12 @@ export function usePublish(saveCourse: () => Promise<void>) {
     setPublishing(true);
     try {
       await saveCourse();
-
-      const { error } = await supabase
-        .from('courses')
-        .update({ status: 'published', updated_at: new Date().toISOString() })
-        .eq('id', draft.course_id);
-
-      if (error) return { success: false, serverError: error.message };
+      await fetchAgentJson(`/v1/builder/courses/${draft.course_id}/publish`, {
+        method: 'POST',
+        body: JSON.stringify({
+          draft,
+        }),
+      });
       return { success: true };
     } catch (err) {
       return { success: false, serverError: String(err) };
