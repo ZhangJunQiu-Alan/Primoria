@@ -8,11 +8,11 @@ describe('SupportInfoPage', () => {
     const { locationRef } = renderRoute('/support/help', 'user');
 
     expect(await screen.findByRole('heading', { name: /帮助中心/i }, { timeout: 10000 })).toBeInTheDocument();
-    expect(screen.getByText(/使用说明/i)).toBeInTheDocument();
+    expect(screen.getByText(/先检查什么/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('link', { name: /返回设置/i }));
 
-    expect(await screen.findByRole('heading', { name: /设置中心/i }, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 10000 })).toBeInTheDocument();
     await waitFor(() => {
       expect(locationRef.pathname).toBe('/settings');
     });

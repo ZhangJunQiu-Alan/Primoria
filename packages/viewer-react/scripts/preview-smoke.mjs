@@ -35,6 +35,10 @@ async function fetchText(url) {
   return { response, text };
 }
 
+function getBootstrapAssetPath(html) {
+  return html.match(/src="(\/assets\/[^"]+\.js)"/i)?.[1] ?? null;
+}
+
 function expectHeader(headers, name, matcher) {
   const value = headers.get(name) ?? '';
   if (!matcher.test(value)) {
@@ -54,22 +58,35 @@ async function main() {
   addCheck('landing route', 'PASS', 'rendered Primoria shell');
 
   const login = await fetchText(`${baseUrl}/login`);
-  if (!login.response.ok || !/sign in/i.test(login.text)) {
-    throw new Error('Login route did not render expected auth shell.');
+  if (!login.response.ok || !/Primoria/i.test(login.text)) {
+    throw new Error('Login route did not return the expected Primoria SPA shell.');
   }
-  addCheck('login route', 'PASS', 'rendered login form');
+  expectHeader(login.response.headers, 'cache-control', /no-cache/i);
+  expectHeader(login.response.headers, 'content-type', /text\/html/i);
+  const loginPathname = new URL(login.response.url).pathname;
+  if (loginPathname !== '/login') {
+    throw new Error(`Login route resolved to ${loginPathname} instead of /login.`);
+  }
 
-  const assetMatch = landing.text.match(/src="(\/assets\/[^"]+\.js)"/i);
-  if (!assetMatch) {
+  const landingAssetPath = getBootstrapAssetPath(landing.text);
+  const loginAssetPath = getBootstrapAssetPath(login.text);
+  if (!landingAssetPath) {
     throw new Error('Could not resolve a hashed JS asset from the deployed landing page.');
   }
-  const assetUrl = new URL(assetMatch[1], `${baseUrl}/`).toString();
+  if (loginAssetPath !== landingAssetPath) {
+    throw new Error(
+      `Login route referenced bootstrap asset ${loginAssetPath ?? 'missing'}, expected ${landingAssetPath}.`,
+    );
+  }
+  addCheck('login route', 'PASS', 'served the auth route SPA shell');
+
+  const assetUrl = new URL(landingAssetPath, `${baseUrl}/`).toString();
   const assetResponse = await fetch(assetUrl, { headers: { 'User-Agent': 'viewer-preview-smoke/1.0' } });
   if (!assetResponse.ok) {
     throw new Error(`Asset request failed with HTTP ${assetResponse.status}.`);
   }
   expectHeader(assetResponse.headers, 'cache-control', /immutable/i);
-  addCheck('asset caching', 'PASS', assetMatch[1]);
+  addCheck('asset caching', 'PASS', landingAssetPath);
 
   report.finishedAt = new Date().toISOString();
   await fs.writeFile(path.join(artifactDir, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);

@@ -26,7 +26,7 @@ export function EditorLayout({ remoteCourse }: EditorLayoutProps) {
   useEffect(() => {
     if (draft?.course_id === remoteCourse.course_id) return;
     dispatch(openDraft(remoteCourse));
-  }, [dispatch, draft?.course_id, remoteCourse.course_id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, draft?.course_id, remoteCourse.course_id]); // eslint-disable-line react-hooks/exhaustive-deps -- remoteCourse 对象引用被排除：只对 course_id 变化响应，避免无关 prop 更新重复打开草稿
 
   const firstLesson = draft?.lessons[0];
   const firstPage = firstLesson?.pages[0];

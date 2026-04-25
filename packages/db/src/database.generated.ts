@@ -65,6 +65,47 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_tutor_mindmaps: {
+        Row: {
+          created_at: string
+          document: Json
+          id: string
+          source_document_ids: string[]
+          title: string
+          updated_at: string
+          user_id: string
+          user_prompt: string
+        }
+        Insert: {
+          created_at?: string
+          document: Json
+          id?: string
+          source_document_ids?: string[]
+          title: string
+          updated_at?: string
+          user_id: string
+          user_prompt?: string
+        }
+        Update: {
+          created_at?: string
+          document?: Json
+          id?: string
+          source_document_ids?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+          user_prompt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_tutor_mindmaps_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       block_interactions: {
         Row: {
           block_id: string
@@ -341,6 +382,7 @@ export type Database = {
           body: string
           created_at: string
           id: string
+          lesson_id: string | null
           owner_id: string
           room_id: string | null
           title: string
@@ -350,6 +392,7 @@ export type Database = {
           body?: string
           created_at?: string
           id?: string
+          lesson_id?: string | null
           owner_id: string
           room_id?: string | null
           title: string
@@ -359,12 +402,20 @@ export type Database = {
           body?: string
           created_at?: string
           id?: string
+          lesson_id?: string | null
           owner_id?: string
           room_id?: string | null
           title?: string
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "community_notes_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "community_notes_owner_id_fkey"
             columns: ["owner_id"]
@@ -1045,6 +1096,50 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "subscriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tutor_documents: {
+        Row: {
+          created_at: string
+          display_title: string | null
+          extracted_chars: number
+          extracted_text: string
+          filename: string
+          id: string
+          mime_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_title?: string | null
+          extracted_chars?: number
+          extracted_text: string
+          filename: string
+          id?: string
+          mime_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_title?: string | null
+          extracted_chars?: number
+          extracted_text?: string
+          filename?: string
+          id?: string
+          mime_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tutor_documents_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

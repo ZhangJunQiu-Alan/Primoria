@@ -6,6 +6,8 @@ dist/
 packages/*/dist/
 packages/*/.vite/
 packages/*/test-results/
+test-results/
+.codex-runtime/
 playwright-report/
 output/
 .playwright-cli/
@@ -33,6 +35,8 @@ coverage/
 # Flutter local/generated artifacts
 Builder/
 Viewer/
+!packages/viewer-react/src/shared/api/viewer/
+!packages/viewer-react/src/shared/api/viewer/tutorDocumentsApi.ts
 **/.dart_tool/
 **/.flutter-plugins
 **/.flutter-plugins-dependencies

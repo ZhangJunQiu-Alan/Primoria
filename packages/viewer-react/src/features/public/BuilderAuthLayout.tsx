@@ -1,7 +1,6 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeft,
   ArrowRight,
   Bot,
   Check,
@@ -14,11 +13,10 @@ import {
   MonitorPlay,
   Sparkles,
 } from 'lucide-react';
-import { LanguageSwitcher } from '@/shared/i18n/LanguageSwitcher';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { usePublicCopy } from '@/features/public/publicCopy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 import { cn } from '@/shared/utils/cn';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
-import './builderAuth.css';
 
 type StatusTone = 'error' | 'success';
 type ButtonTone = 'primary' | 'secondary';
@@ -37,10 +35,10 @@ export function BuilderAuthLayout({
   alternateLink: ReactNode;
   children: ReactNode;
 }) {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
   const authFeatures = [
-    { icon: Sparkles, label: copy.landing.features[0] },
-    { icon: Bot, label: copy.landing.features[2] },
+    { icon: Sparkles, label: copy.landing.authPanel.features[0] },
+    { icon: Bot, label: copy.landing.authPanel.features[1] },
     { icon: MonitorPlay, label: copy.auth.registrationSupport },
   ];
 
@@ -50,12 +48,9 @@ export function BuilderAuthLayout({
         <aside className="auth-brand-panel">
           <BrandLockup />
 
-          <div className="flex justify-start">
-            <LanguageSwitcher tone="dark" />
-          </div>
-
           <div className="auth-brand-panel__copy">
-            <h1 className="auth-brand-panel__title">{copy.landing.accentTitle}</h1>
+            <div className="auth-panel__eyebrow">{copy.landing.authPanel.badge}</div>
+            <h1 className="auth-brand-panel__title">{copy.landing.authPanel.title}</h1>
           </div>
 
           <div className="auth-brand-panel__feature-list">
@@ -77,21 +72,10 @@ export function BuilderAuthLayout({
         <main className="auth-panel">
           <header className="auth-mobile-header">
             <BrandLockup />
-            <Link to="/" className="auth-mobile-header__link">
-              <ArrowLeft size={15} aria-hidden="true" />
-              <span>{copy.auth.landingLabel}</span>
-            </Link>
           </header>
 
           <div className="auth-panel__inner">
             <div className="auth-panel__frame">
-              <div className="auth-panel__topline">
-                <Link to="/" className="auth-back-link">
-                  <ArrowLeft size={15} aria-hidden="true" />
-                  <span>{copy.auth.backToLanding}</span>
-                </Link>
-              </div>
-
               <div className="auth-panel__heading">
                 {pageLabel ? <p className="auth-panel__eyebrow">{pageLabel}</p> : null}
                 <h2 className="auth-panel__title">{title}</h2>
@@ -110,14 +94,15 @@ export function BuilderAuthLayout({
 }
 
 function BrandLockup() {
-  const copy = useViewerCopy();
+  const coreCopy = useCoreCopy();
+  const publicCopy = usePublicCopy();
 
   return (
-    <Link to="/" className="auth-brand-lockup" aria-label={`${copy.brand.name} ${copy.auth.landingLabel}`}>
+    <Link to="/" className="auth-brand-lockup" aria-label={publicCopy.layout.homeAriaLabel}>
       <span className="auth-brand-lockup__mark">
         <img src={publicAssetPath('primoria-logo.png')} alt="" aria-hidden="true" />
       </span>
-      <span className="auth-brand-lockup__wordmark">{copy.brand.name}</span>
+      <span className="auth-brand-lockup__wordmark">{coreCopy.brand.name}</span>
     </Link>
   );
 }
@@ -140,7 +125,7 @@ export function AuthStatusBanner({
 }
 
 export function AuthDivider({ label = 'or' }: { label?: string }) {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
 
   return (
     <div className="auth-divider" aria-hidden="true">
@@ -280,7 +265,7 @@ export function PasswordVisibilityButton({
   visible: boolean;
   onClick: () => void;
 }) {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
   const Icon = visible ? EyeOff : Eye;
 
   return (

@@ -3,6 +3,7 @@ import type { LessonBlock, LessonPage, LessonRuntimeData, SortingBlock } from '@
 import type { ViewerLessonCompletion } from '@/shared/api/viewer/types';
 import { loadDemoViewerData, loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { normalizeType, toObject, toString, usesViewerFixtures } from '@/shared/api/viewer/core';
+import { getDefaultVisibilityRule } from '@/shared/lesson/blockVisibility';
 import { supabase } from '@/shared/api/supabase';
 
 function buildTextBlock(id: string, order: number, text: string): Block {
@@ -14,6 +15,21 @@ function buildTextBlock(id: string, order: number, text: string): Block {
       format: 'richtext',
       value: { ops: [{ insert: `${text}\n` }] },
     },
+  };
+}
+
+function resolveVisibilityRule(rawBlock: Record<string, unknown>, order: number) {
+  const visibilityRule = toString(rawBlock.visibilityRule || rawBlock.visibility_rule);
+  if (visibilityRule === 'afterPreviousCorrect' || visibilityRule === 'always') {
+    return visibilityRule;
+  }
+  return getDefaultVisibilityRule(order);
+}
+
+function withVisibilityRule<T extends LessonBlock>(block: T, rawBlock: Record<string, unknown>): T {
+  return {
+    ...block,
+    visibilityRule: resolveVisibilityRule(rawBlock, block.position.order),
   };
 }
 
@@ -38,9 +54,11 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         prompt: toString(content.prompt || content.question || rawBlock.title) || 'Sort the items',
         items,
         correctOrder,
+        successMsg: toString(content.successMsg || content.success_message || content.success),
+        failMsg: toString(content.failMsg || content.fail_message || content.failure),
       },
     };
-    return block;
+    return withVisibilityRule(block, rawBlock);
   }
 
   if (type === 'multiple-choice' || type === 'multiplechoice') {
@@ -64,7 +82,7 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
       return { id, text, isCorrect };
     });
 
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'multiple-choice',
       position: { order },
@@ -72,12 +90,15 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         question: toString(content.question || content.prompt || rawBlock.title),
         allowMultiple: content.multi_select === true || content.allowMultiple === true,
         options,
+        explanation: toString(
+          content.explanation || content.feedback || content.feedbackText || content.rationale,
+        ),
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'fill-blank' || type === 'input') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'fill-blank',
       position: { order },
@@ -93,7 +114,7 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
           },
         ],
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'matching') {
@@ -109,30 +130,33 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
           };
         })
       : [];
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'matching',
       position: { order },
       content: {
         pairs,
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'true-false') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'true-false',
       position: { order },
       content: {
         statement: toString(content.statement || content.prompt || rawBlock.title),
         isTrue: Boolean(content.isTrue ?? content.answer ?? true),
+        explanation: toString(
+          content.explanation || content.feedback || content.feedbackText || content.rationale,
+        ),
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'video') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'video',
       position: { order },
@@ -140,11 +164,11 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         url: toString(content.url || content.video_url),
         provider: toString(content.provider || 'youtube') as 'youtube' | 'vimeo' | 'custom',
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'interactive-visual') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'interactive-visual',
       position: { order },
@@ -152,11 +176,11 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         template: toString(content.template || 'generic'),
         title: toString(content.title || rawBlock.title || 'Interactive Visual'),
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'code-execution') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'code-execution',
       position: { order },
@@ -164,11 +188,11 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         language: toString(content.language || 'python'),
         code: toString(content.source_code || content.sourceCode || content.code),
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'code-playground') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'code-playground',
       position: { order },
@@ -177,11 +201,11 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         starterCode: toString(content.starterCode || content.initialCode || content.code),
         initialCode: toString(content.initialCode || content.starterCode || content.code),
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'image') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'image',
       position: { order },
@@ -189,11 +213,11 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         url: toString(content.url),
         altText: toString(content.altText || content.alt),
       },
-    };
+    }, rawBlock);
   }
 
   if (type === 'function-flow') {
-    return {
+    return withVisibilityRule({
       id: blockId,
       type: 'function-flow',
       position: { order },
@@ -201,29 +225,27 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
         nodes: Array.isArray(content.nodes) ? content.nodes : [],
         edges: Array.isArray(content.edges) ? content.edges : [],
       },
-    };
+    }, rawBlock);
   }
 
-  return buildTextBlock(blockId, order, toString(content.text || content.body || rawBlock.type || 'Unsupported block'));
+  return withVisibilityRule(
+    buildTextBlock(blockId, order, toString(content.text || content.body || rawBlock.type || 'Unsupported block')),
+    rawBlock,
+  );
 }
 
 function normalizePage(rawPage: Record<string, unknown>, index: number, fallbackTitle: string): LessonPage {
   const blocks = Array.isArray(rawPage.blocks)
-    ? rawPage.blocks.map((block, blockIndex) => {
-        const normalized = normalizeDbBlock(
+    ? rawPage.blocks.map((block, blockIndex) =>
+        normalizeDbBlock(
           {
             ...toObject(block),
             type: toObject(block).type,
             content: toObject(block).content,
           },
           blockIndex,
-        );
-        const visibilityRule = toString(toObject(block).visibilityRule || toObject(block).visibility_rule);
-        if (visibilityRule === 'afterPreviousCorrect' || visibilityRule === 'always') {
-          return { ...normalized, visibilityRule: visibilityRule as 'always' | 'afterPreviousCorrect' };
-        }
-        return { ...normalized, visibilityRule: 'always' as const };
-      })
+        ),
+      )
     : [];
 
   return {
@@ -294,7 +316,10 @@ function selectLessonPages(raw: unknown, lessonId: string, lessonTitle: string):
       page_id: page.page_id,
       order: page.order,
       title: lesson.title,
-      blocks: page.blocks,
+      blocks: page.blocks.map((block) => ({
+        ...block,
+        visibilityRule: block.visibilityRule ?? getDefaultVisibilityRule(block.position.order),
+      })),
     }));
   } catch {
     return [];

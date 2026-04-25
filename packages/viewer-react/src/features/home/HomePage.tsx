@@ -153,6 +153,7 @@ export function HomePage() {
     language,
     detailMatchesSelection ? selectedCourseDetail : null,
   );
+  const selectedCourseCoverUrl = selectedCourse?.course.thumbnail_url?.trim() || null;
   const continueTarget = getHomeContinueTarget(
     selectedEnrollment,
     language,
@@ -595,7 +596,7 @@ export function HomePage() {
   return (
     <div
       ref={pageRef}
-      className="relative mx-auto flex min-h-[calc(100svh-86px)] w-full max-w-[1320px] flex-col px-5 pb-6 pt-1.5 md:px-8 md:pb-8 md:pt-2"
+      className="relative mx-auto flex min-h-[calc(100svh-86px)] w-full max-w-[1320px] flex-col px-5 pb-0 pt-1.5 md:px-8 md:pt-2"
     >
       <div className="flex items-start justify-between gap-4">
         <Link to="/home" className="inline-flex items-center gap-3">
@@ -619,11 +620,11 @@ export function HomePage() {
         </div>
       </div>
 
-      <section className="relative mt-6">
-        <div className="grid gap-6">
-          <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-4">
-            <div className="w-full">
-              <div className="relative">
+      <section className="relative mt-6 flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col">
+          <div className="mx-auto flex h-full w-full max-w-[1180px] flex-1 flex-col">
+            <div className="w-full flex-1">
+              <div className="relative h-full">
                 {selectedCourse && previousEnrollment ? (
                   <button
                     type="button"
@@ -654,7 +655,7 @@ export function HomePage() {
 
                 <div
                   data-testid="home-current-course-card"
-                  className="relative flex min-h-[30rem] flex-col rounded-[32px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.96)_0%,rgba(249,243,234,0.9)_100%)] p-5 shadow-[0_22px_44px_rgba(90,70,50,0.09)] md:p-6 lg:min-h-[34rem]"
+                  className="relative flex min-h-[30rem] flex-1 flex-col rounded-[32px] border border-[#ddd3c3] bg-[linear-gradient(180deg,rgba(255,252,247,0.96)_0%,rgba(249,243,234,0.9)_100%)] p-5 shadow-[0_22px_44px_rgba(90,70,50,0.09)] md:p-6 lg:min-h-[36rem]"
                 >
                   <div className="pointer-events-none absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.52),transparent_36%),radial-gradient(circle_at_84%_22%,rgba(168,197,172,0.12),transparent_24%),radial-gradient(circle_at_82%_82%,rgba(196,149,106,0.1),transparent_28%)]" />
 
@@ -679,7 +680,7 @@ export function HomePage() {
                       </div>
 
                       <div className="grid min-h-0 flex-1 gap-5 lg:grid-cols-[minmax(0,1.22fr)_minmax(280px,0.78fr)] lg:items-stretch">
-                        <div className="flex h-full flex-col justify-between">
+                        <div className="flex h-full min-h-0 flex-col">
                           <div>
                             <h2
                               className="text-[1.95rem] font-semibold leading-[0.92] text-[#3d342a] md:text-[2.55rem]"
@@ -693,7 +694,18 @@ export function HomePage() {
                             </p>
                           </div>
 
-                          <div className="mt-6 rounded-[26px] border border-[#e4d8ca] bg-[rgba(255,255,255,0.58)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.68)]">
+                          {selectedCourseCoverUrl ? (
+                            <div className="mt-auto overflow-hidden rounded-[26px] border border-[#ddd3c3] bg-[rgba(255,255,255,0.66)] shadow-[0_18px_32px_rgba(90,70,50,0.08)]">
+                              <img
+                                data-testid="home-current-course-cover"
+                                src={selectedCourseCoverUrl}
+                                alt={selectedCourse.course.title}
+                                className="aspect-[21/9] w-full object-cover"
+                              />
+                            </div>
+                          ) : null}
+
+                          <div className={selectedCourseCoverUrl ? 'mt-4 rounded-[26px] border border-[#e4d8ca] bg-[rgba(255,255,255,0.58)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.68)]' : 'mt-auto rounded-[26px] border border-[#e4d8ca] bg-[rgba(255,255,255,0.58)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.68)]'}>
                             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                               <div>
                                 <p className="viewer-botanical-eyebrow text-[0.68rem]">{language === 'zh-CN' ? '当前进度' : 'Current progress'}</p>
@@ -839,7 +851,7 @@ export function HomePage() {
                 </div>
               </div>
 
-              {courseSwitcher ? <div className="relative z-10 pt-1">{courseSwitcher}</div> : null}
+              {courseSwitcher ? <div className="relative z-10 mt-auto pt-1.5">{courseSwitcher}</div> : null}
             </div>
           </div>
 

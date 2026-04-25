@@ -1,395 +1,47 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  addDiscussionComment,
-  createDirectConversation,
-  createDiscussion,
-  createStudyRoom,
-  deleteStudyRoom,
-  fetchCommunityWorkspace,
-  joinStudyRoom,
-  saveCommunityNote,
-  sendCommunityMessage,
-  toggleDiscussionLike,
-} from '@/shared/api/viewer/communityApi';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import { useSearchParams } from 'react-router-dom';
-import { EmptyStateCard, ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
-import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { useAppSelector } from '@/shared/state/store';
 import { useViewerCopy } from '@/shared/theme/copy';
-import { cn } from '@/shared/utils/cn';
-import { publicAssetPath } from '@/shared/utils/publicAsset';
+import { parseCommunitySection } from '@/features/community/communityTypes';
+import { useCommunityWorkspace } from '@/features/community/hooks/useCommunityWorkspace';
+import { useCommunityNotesWorkspace } from '@/features/community/hooks/useCommunityNotesWorkspace';
 import {
-  FileText,
-  Heart,
-  LayoutDashboard,
-  MessageSquare,
-  Plus,
-  TrendingUp,
-  UserPlus,
-  Users,
-} from 'lucide-react';
-
-type Section = 'dashboard' | 'study' | 'messages' | 'trending' | 'notes';
-type StatusState = { tone: 'success' | 'error'; message: string } | null;
-
-function parseCommunitySection(value: string | null | undefined): Section {
-  return value === 'study' || value === 'messages' || value === 'trending' || value === 'notes' ? value : 'dashboard';
-}
-
-const sectionVisuals: Record<
-  Section,
-  {
-    icon: typeof LayoutDashboard;
-    badge?: number;
-  }
-> = {
-  dashboard: { icon: LayoutDashboard },
-  study: { icon: Users },
-  messages: { icon: MessageSquare },
-  trending: { icon: TrendingUp },
-  notes: { icon: FileText },
-};
-
-const dashboardPositions = [
-  { left: '33%', top: '29%' },
-  { left: '42%', top: '21%' },
-  { left: '55%', top: '14%' },
-  { left: '67%', top: '22%' },
-  { left: '78%', top: '35%' },
-  { left: '72%', top: '58%' },
-  { left: '60%', top: '76%' },
-  { left: '48%', top: '69%' },
-  { left: '39%', top: '52%' },
-  { left: '33%', top: '66%' },
-  { left: '60%', top: '35%' },
-  { left: '71%', top: '46%' },
-] as const;
+  CommunitySectionNav,
+  CommunityStatusBanner,
+  CompanionContextBanner,
+  MessagesPane,
+  NotesPane,
+  StudyRoomsPane,
+  TrendingPane,
+} from '@/features/community/components/CommunitySections';
+import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 
 export function CommunityPage() {
   const language = useProductLanguage();
-  const isChinese = language === 'zh-CN';
   const copy = useViewerCopy();
-  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const user = useAppSelector((state) => state.auth.user);
   const userId = user?.id ?? '';
   const requestedSection = parseCommunitySection(searchParams.get('section'));
   const companionTopic = searchParams.get('source') === 'home-companion' ? searchParams.get('topic')?.trim() ?? '' : '';
-  const [section, setSection] = useState<Section>(requestedSection);
-  const [conversationId, setConversationId] = useState('');
-  const [composer, setComposer] = useState('');
-  const [selectedPersonId, setSelectedPersonId] = useState('');
-  const [roomForm, setRoomForm] = useState({ name: '', description: '' });
-  const [discussionForm, setDiscussionForm] = useState({ title: '', body: '', category: 'General' });
-  const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
-  const [notesDraft, setNotesDraft] = useState<Array<{ id?: string; title: string; body: string; room_id?: string | null }>>([]);
-  const [status, setStatus] = useState<StatusState>(null);
-  const communityText = isChinese
-    ? {
-        mainMenu: '主导航',
-        tutorContext: '导师上下文',
-        tutorContextBody: (topic: string) =>
-          `正在围绕《${topic}》查看你的社区笔记与讨论。这里先提供上下文入口，不代表严格的课程过滤结果。`,
-        companionNote: (topic: string) => `新建《${topic}》笔记`,
-        openDiscussions: '查看讨论区',
-        defaultNoteTitle: '未命名笔记',
-        companionNoteTitle: (topic: string) => `${topic} 笔记`,
-        directConversationCreated: '已创建新的对话。',
-        createConversationFailed: '无法创建对话。',
-        sendMessageFailed: '无法发送消息。',
-        roomCreated: '学习房间已创建。',
-        roomCreateFailed: '无法创建学习房间。',
-        roomJoined: '已加入学习房间。',
-        roomJoinFailed: '无法加入学习房间。',
-        roomDeleted: '学习房间已删除。',
-        roomDeleteFailed: '无法删除学习房间。',
-        discussionPublished: '讨论已发布。',
-        discussionPublishFailed: '无法发布讨论。',
-        likeToggleFailed: '无法更新喜欢状态。',
-        commentAdded: '评论已发送。',
-        commentFailed: '无法发送评论。',
-        noteSaved: '笔记已保存。',
-        noteSaveFailed: '无法保存笔记。',
-        connected: '已连接',
-        online: '在线',
-        createStudyRoom: '创建学习房间',
-        roomName: '房间名称',
-        roomGoal: '描述这次学习目标',
-        studyRoomEyebrow: '学习房间',
-        membersLabel: '人',
-        joined: '已加入',
-        joinRoom: '加入房间',
-        deleteRoom: '删除房间',
-        startConversation: '开启新对话',
-        createDirectChat: '创建私聊',
-        creating: '创建中…',
-        startNewConversation: '开始一段新对话',
-        groupConversation: '群组对话',
-        directConversation: '私聊',
-        messagePlaceholder: '发送一条消息',
-        noConversations: '暂无对话。从左侧选择一位成员，或者创建新的学习房间。',
-        publishDiscussion: '发布讨论',
-        titlePlaceholder: '标题',
-        categoryPlaceholder: '分类',
-        discussionPlaceholder: '分享你的问题、发现或想法',
-        publishing: '发布中…',
-        commentPlaceholder: '写下你的评论',
-        notesTitle: '笔记',
-        notesSubtitle: '保存你的个人笔记，或关联到学习房间。',
-        saveNote: '保存笔记',
-        savingNote: '保存中…',
-      }
-    : {
-        mainMenu: 'Main menu',
-        tutorContext: 'Tutor context',
-        tutorContextBody: (topic: string) =>
-          `Opening Community around "${topic}". This is a contextual entry point, not a strict course-level filter yet.`,
-        companionNote: (topic: string) => `New note for "${topic}"`,
-        openDiscussions: 'Open discussions',
-        defaultNoteTitle: 'Untitled note',
-        companionNoteTitle: (topic: string) => `${topic} note`,
-        directConversationCreated: 'New conversation created.',
-        createConversationFailed: 'Unable to create conversation.',
-        sendMessageFailed: 'Unable to send message.',
-        roomCreated: 'Study room created.',
-        roomCreateFailed: 'Unable to create study room.',
-        roomJoined: 'Joined study room.',
-        roomJoinFailed: 'Unable to join study room.',
-        roomDeleted: 'Study room deleted.',
-        roomDeleteFailed: 'Unable to delete study room.',
-        discussionPublished: 'Discussion published.',
-        discussionPublishFailed: 'Unable to publish discussion.',
-        likeToggleFailed: 'Unable to update like state.',
-        commentAdded: 'Comment sent.',
-        commentFailed: 'Unable to send comment.',
-        noteSaved: 'Note saved.',
-        noteSaveFailed: 'Unable to save note.',
-        connected: 'Connected',
-        online: 'Online',
-        createStudyRoom: 'Create study room',
-        roomName: 'Room name',
-        roomGoal: 'Describe the goal for this session',
-        studyRoomEyebrow: 'Study room',
-        membersLabel: 'members',
-        joined: 'Joined',
-        joinRoom: 'Join room',
-        deleteRoom: 'Delete room',
-        startConversation: 'Start new chat',
-        createDirectChat: 'Create direct chat',
-        creating: 'Creating…',
-        startNewConversation: 'Start a new conversation',
-        groupConversation: 'Group conversation',
-        directConversation: 'Direct message',
-        messagePlaceholder: 'Send a message',
-        noConversations: 'No conversations yet. Pick someone on the left or create a new study room.',
-        publishDiscussion: 'Publish discussion',
-        titlePlaceholder: 'Title',
-        categoryPlaceholder: 'Category',
-        discussionPlaceholder: 'Share your question, idea, or takeaway',
-        publishing: 'Publishing…',
-        commentPlaceholder: 'Write a comment',
-        notesTitle: 'Notes',
-        notesSubtitle: 'Save personal notes or link them to a study room.',
-        saveNote: 'Save note',
-        savingNote: 'Saving…',
-      };
 
-  const workspaceQuery = useQuery({
-    queryKey: ['viewer', 'community', userId],
-    queryFn: () => fetchCommunityWorkspace(userId),
-    enabled: Boolean(userId),
+  const workspace = useCommunityWorkspace({
+    userId,
+    copy,
+    requestedSection,
   });
 
-  useEffect(() => {
-    if (workspaceQuery.data && notesDraft.length === 0) {
-      setNotesDraft(
-        workspaceQuery.data.notes.map((note) => ({
-          id: note.id,
-          title: note.title,
-          body: note.body,
-          room_id: note.room_id,
-        })),
-      );
-    }
-  }, [notesDraft.length, workspaceQuery.data]);
-
-  useEffect(() => {
-    setSection(requestedSection);
-  }, [requestedSection]);
-
-  useEffect(() => {
-    if (!workspaceQuery.data?.conversations.length) {
-      setConversationId('');
-      return;
-    }
-    if (!conversationId || !workspaceQuery.data.conversations.some((conversation) => conversation.id === conversationId)) {
-      setConversationId(workspaceQuery.data.conversations[0].id);
-    }
-  }, [conversationId, workspaceQuery.data]);
-
-  async function refreshCommunity() {
-    await queryClient.invalidateQueries({ queryKey: ['viewer', 'community', userId] });
-  }
-
-  const directConversationMutation = useMutation({
-    mutationFn: async () => createDirectConversation(userId, selectedPersonId),
-    onSuccess: async (nextConversationId) => {
-      await refreshCommunity();
-      if (nextConversationId) {
-        setConversationId(nextConversationId);
-      }
-      setSelectedPersonId('');
-      setSection('messages');
-      setStatus({ tone: 'success', message: communityText.directConversationCreated });
-      captureViewerEvent('viewer_community_direct_chat_opened');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.createConversationFailed });
-      captureViewerError(error, { area: 'community_direct_chat' });
-    },
+  const notes = useCommunityNotesWorkspace({
+    initialNotes: workspace.workspace?.notes,
+    companionTopic,
+    noteMutation: workspace.noteMutation,
+    refreshCommunity: workspace.refreshCommunity,
+    setSection: workspace.setSection,
+    setStatus: workspace.setStatus,
+    userId,
   });
 
-  const sendMessageMutation = useMutation({
-    mutationFn: () => sendCommunityMessage(userId, conversationId, composer),
-    onSuccess: async () => {
-      await refreshCommunity();
-      setComposer('');
-      setStatus(null);
-      captureViewerEvent('viewer_community_message_sent', { conversationId });
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.sendMessageFailed });
-      captureViewerError(error, { area: 'community_message_send', conversationId });
-    },
-  });
-
-  const createRoomMutation = useMutation({
-    mutationFn: () => createStudyRoom(userId, roomForm),
-    onSuccess: async () => {
-      await refreshCommunity();
-      setRoomForm({ name: '', description: '' });
-      setStatus({ tone: 'success', message: communityText.roomCreated });
-      captureViewerEvent('viewer_community_room_saved');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.roomCreateFailed });
-      captureViewerError(error, { area: 'community_room_save' });
-    },
-  });
-
-  const joinRoomMutation = useMutation({
-    mutationFn: (roomId: string) => joinStudyRoom(userId, roomId),
-    onSuccess: async () => {
-      await refreshCommunity();
-      setStatus({ tone: 'success', message: communityText.roomJoined });
-      captureViewerEvent('viewer_community_room_joined');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.roomJoinFailed });
-      captureViewerError(error, { area: 'community_room_join' });
-    },
-  });
-
-  const deleteRoomMutation = useMutation({
-    mutationFn: (roomId: string) => deleteStudyRoom(userId, roomId),
-    onSuccess: async () => {
-      await refreshCommunity();
-      setStatus({ tone: 'success', message: communityText.roomDeleted });
-      captureViewerEvent('viewer_community_room_deleted');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.roomDeleteFailed });
-      captureViewerError(error, { area: 'community_room_delete' });
-    },
-  });
-
-  const createDiscussionMutation = useMutation({
-    mutationFn: () => createDiscussion(userId, discussionForm),
-    onSuccess: async () => {
-      await refreshCommunity();
-      setDiscussionForm({ title: '', body: '', category: 'General' });
-      setStatus({ tone: 'success', message: communityText.discussionPublished });
-      captureViewerEvent('viewer_community_discussion_published');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.discussionPublishFailed });
-      captureViewerError(error, { area: 'community_discussion_publish' });
-    },
-  });
-
-  const toggleLikeMutation = useMutation({
-    mutationFn: (discussionId: string) => toggleDiscussionLike(userId, discussionId),
-    onSuccess: async () => {
-      await refreshCommunity();
-      captureViewerEvent('viewer_community_discussion_like_toggled');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.likeToggleFailed });
-      captureViewerError(error, { area: 'community_discussion_like' });
-    },
-  });
-
-  const commentMutation = useMutation({
-    mutationFn: ({ discussionId, body }: { discussionId: string; body: string }) =>
-      addDiscussionComment(userId, discussionId, body),
-    onSuccess: async (_, variables) => {
-      await refreshCommunity();
-      setCommentDrafts((current) => ({ ...current, [variables.discussionId]: '' }));
-      setStatus({ tone: 'success', message: communityText.commentAdded });
-      captureViewerEvent('viewer_community_comment_added', { discussionId: variables.discussionId });
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.commentFailed });
-      captureViewerError(error, { area: 'community_comment_add' });
-    },
-  });
-
-  const noteMutation = useMutation({
-    mutationFn: (note: { id?: string; title: string; body: string; room_id?: string | null }) =>
-      saveCommunityNote(userId, note),
-    onSuccess: async () => {
-      await refreshCommunity();
-      setStatus({ tone: 'success', message: communityText.noteSaved });
-      captureViewerEvent('viewer_community_note_saved');
-    },
-    onError: (error) => {
-      setStatus({ tone: 'error', message: error instanceof Error ? error.message : communityText.noteSaveFailed });
-      captureViewerError(error, { area: 'community_note_save' });
-    },
-  });
-
-  const workspace = workspaceQuery.data;
-  const people = workspace?.people ?? [];
-  const conversations = workspace?.conversations ?? [];
-  const studyRooms = workspace?.studyRooms ?? [];
-  const discussions = workspace?.discussions ?? [];
-  const unreadCount = conversations.reduce((total, conversation) => total + conversation.unread_count, 0);
-  const activeConversation = useMemo(
-    () => conversations.find((conversation) => conversation.id === conversationId) ?? conversations[0] ?? null,
-    [conversationId, conversations],
-  );
-  const sectionItems = [
-    { id: 'dashboard' as const, label: copy.community.sections[0] },
-    { id: 'study' as const, label: copy.community.sections[1] },
-    { id: 'messages' as const, label: copy.community.sections[2] },
-    { id: 'trending' as const, label: copy.community.sections[3] },
-    { id: 'notes' as const, label: copy.community.sections[4] },
-  ];
-
-  function addBlankNote() {
-    setNotesDraft((current) => [{ title: communityText.defaultNoteTitle, body: '', room_id: null }, ...current]);
-    setSection('notes');
-  }
-
-  function addCompanionContextNote() {
-    const defaultTitle = companionTopic ? communityText.companionNoteTitle(companionTopic) : communityText.defaultNoteTitle;
-    setNotesDraft((current) => [{ title: defaultTitle, body: '', room_id: null }, ...current]);
-    setSection('notes');
-  }
-
-  if (workspaceQuery.isLoading) {
+  if (workspace.workspaceQuery.isLoading) {
     return (
       <div className="px-5 py-6 md:px-6 md:py-7">
         <LoadingStateCard />
@@ -397,12 +49,12 @@ export function CommunityPage() {
     );
   }
 
-  if (workspaceQuery.error) {
+  if (workspace.workspaceQuery.error) {
     return (
       <div className="px-5 py-6 md:px-6 md:py-7">
         <ErrorStateCard
-          message={workspaceQuery.error instanceof Error ? workspaceQuery.error.message : undefined}
-          onRetry={() => void workspaceQuery.refetch()}
+          message={workspace.workspaceQuery.error instanceof Error ? workspace.workspaceQuery.error.message : undefined}
+          onRetry={() => void workspace.workspaceQuery.refetch()}
         />
       </div>
     );
@@ -410,472 +62,111 @@ export function CommunityPage() {
 
   return (
     <div className="mx-auto w-[90%] max-w-[1380px] px-0 py-5 md:py-6">
-      <div className="grid gap-4 xl:grid-cols-[258px_minmax(0,1fr)]">
-        <aside className="viewer-panel rounded-[30px] p-4">
-          <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#e4d2b6] bg-[linear-gradient(145deg,#d4b896_0%,#c4956a_100%)] text-white shadow-[0_14px_24px_rgba(196,149,106,0.18)]">
-              <Users size={28} />
-            </div>
-            <div>
-              <h1
-                className="text-[2.2rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
-                style={{ fontFamily: '"Cormorant Garamond", serif' }}
-              >
-                {copy.community.title}
-              </h1>
-              <p className="viewer-botanical-eyebrow">{communityText.mainMenu}</p>
-            </div>
-          </div>
-
-          <nav className="mt-7 space-y-2.5">
-            {sectionItems.map((item) => {
-              const visual = sectionVisuals[item.id];
-              const Icon = visual.icon;
-              const isActive = section === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={cn(
-                    'flex w-full items-center gap-3.5 rounded-[20px] border px-3.5 py-3 text-left text-[0.92rem] font-bold transition',
-                    isActive
-                      ? 'border-[#b9d1bc] bg-[linear-gradient(180deg,rgba(235,243,232,0.96)_0%,rgba(223,240,224,0.88)_100%)] text-[#5c7d60]'
-                      : 'border-transparent text-[#7a6b5e] hover:bg-[#faf4ea]',
-                  )}
-                  onClick={() => setSection(item.id)}
-                >
-                  <Icon size={25} />
-                  <span className="flex-1">{item.label}</span>
-                  {item.id === 'messages' && unreadCount > 0 ? (
-                    <span className="flex h-9 min-w-9 items-center justify-center rounded-full bg-[#f34848] px-2 text-sm text-white">
-                      {unreadCount}
-                    </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
+      <div className="grid gap-4 xl:grid-cols-[194px_minmax(0,1fr)]">
+        <CommunitySectionNav
+          copy={copy}
+          language={language}
+          section={workspace.section}
+          setSection={workspace.setSection}
+          unreadCount={workspace.unreadCount}
+        />
 
         <section className="space-y-3.5">
-          {companionTopic ? (
-            <div
-              data-testid="community-companion-context"
-              className="viewer-panel rounded-[26px] px-5 py-4"
-            >
-              <p className="viewer-botanical-eyebrow">{communityText.tutorContext}</p>
-              <div className="mt-2 text-[1rem] font-semibold leading-7 text-[#4d4239]">
-                {communityText.tutorContextBody(companionTopic)}
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  className="viewer-botanical-button viewer-botanical-button--primary"
-                  onClick={addCompanionContextNote}
-                >
-                  {communityText.companionNote(companionTopic)}
-                </button>
-                <button
-                  type="button"
-                  className="viewer-botanical-button viewer-botanical-button--secondary"
-                  onClick={() => setSection('trending')}
-                >
-                  {communityText.openDiscussions}
-                </button>
-              </div>
-            </div>
+          <CompanionContextBanner
+            companionTopic={companionTopic}
+            language={language}
+            onCreateNote={notes.addCompanionContextNote}
+            onOpenDiscussions={() => workspace.setSection('trending')}
+          />
+
+          <CommunityStatusBanner status={workspace.status} />
+
+          {workspace.section === 'study' ? (
+            <StudyRoomsPane
+              roomForm={workspace.roomForm}
+              setRoomForm={workspace.setRoomForm}
+              createRoomMutation={workspace.createRoomMutation}
+              studyRooms={workspace.studyRooms}
+              userId={userId}
+              joinRoomMutation={workspace.joinRoomMutation}
+              deleteRoomMutation={workspace.deleteRoomMutation}
+              copy={copy}
+            />
           ) : null}
 
-          {status ? (
-            <div
-              className={cn(
-                'viewer-botanical-notice',
-                status.tone === 'error'
-                  ? 'viewer-botanical-notice--error'
-                  : 'viewer-botanical-notice--success',
-              )}
-            >
-              {status.message}
-            </div>
+          {workspace.section === 'messages' ? (
+            <MessagesPane
+              people={workspace.people}
+              selectedPersonId={workspace.selectedPersonId}
+              setSelectedPersonId={workspace.setSelectedPersonId}
+              directConversationMutation={workspace.directConversationMutation}
+              conversations={workspace.conversations}
+              activeConversation={workspace.activeConversation}
+              setConversationId={workspace.setConversationId}
+              composer={workspace.composer}
+              setComposer={workspace.setComposer}
+              sendMessageMutation={workspace.sendMessageMutation}
+              userId={userId}
+              copy={copy}
+            />
           ) : null}
 
-          {section === 'dashboard' ? (
-            <div className="relative min-h-[640px] overflow-hidden rounded-[30px] border border-[#ddd3c3] bg-[radial-gradient(circle_at_18%_18%,rgba(215,234,217,0.84),rgba(242,233,216,0.76)_26%,rgba(244,234,243,0.82)_52%,rgba(239,226,212,0.92)_76%,rgba(233,227,214,0.96)_100%)] shadow-[0_20px_52px_rgba(90,70,50,0.1)]">
-              <div className="absolute left-5 top-5 z-20 flex gap-3">
-                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.85)] text-[#4a4037] shadow-[0_10px_22px_rgba(90,70,50,0.08)]">
-                  <Users size={25} />
-                </button>
-                <button className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.85)] text-[#4a4037] shadow-[0_10px_22px_rgba(90,70,50,0.08)]">
-                  <UserPlus size={25} />
-                </button>
-              </div>
-
-              <div className="absolute right-7 top-7 z-20 rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] px-5 py-4 shadow-[0_12px_26px_rgba(90,70,50,0.08)]">
-                <div className="text-[1rem] font-black text-[#6e6156]">{`${communityText.connected} ${people.length + 15}`}</div>
-                <div className="mt-2.5 text-[1rem] font-black text-[#5c7d60]">{`${communityText.online} ${Math.max(people.filter((person) => person.status === 'online').length, 14)}`}</div>
-              </div>
-
-              <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(168,197,172,0.18),rgba(255,255,255,0)_34%,rgba(196,149,106,0.16)_72%,rgba(169,154,180,0.18)_100%)]" />
-                <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(214,185,204,0.34)] blur-[82px]" />
-                <div className="absolute left-[50%] top-[54%] h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.58),rgba(255,255,255,0)_68%)]" />
-                <img
-                  src={publicAssetPath('community-start.png')}
-                  alt="Community planet"
-                  className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.96] drop-shadow-[0_28px_72px_rgba(196,149,106,0.18)]"
-                  style={{
-                    WebkitMaskImage:
-                      'radial-gradient(circle at center, black 34%, rgba(0,0,0,0.98) 56%, rgba(0,0,0,0.86) 73%, transparent 88%)',
-                    maskImage:
-                      'radial-gradient(circle at center, black 34%, rgba(0,0,0,0.98) 56%, rgba(0,0,0,0.86) 73%, transparent 88%)',
-                  }}
-                />
-              </div>
-
-              {people.slice(0, dashboardPositions.length).map((person, index) => {
-                const position = dashboardPositions[index];
-                const palette = ['bg-[#8fb996]', 'bg-[#c4807a]', 'bg-[#d4a870]', 'bg-[#a99ab4]'];
-                return (
-                  <div key={person.id} className="absolute z-20" style={position}>
-                    <div className={cn('mx-auto h-7 w-7 rounded-full border border-white/65 shadow-[0_0_18px_rgba(255,255,255,0.78)]', palette[index % palette.length])} />
-                    <div className="mt-2 text-center text-[0.84rem] font-semibold text-[#65594f]">{person.display_name}</div>
-                  </div>
-                );
-              })}
-            </div>
+          {workspace.section === 'trending' ? (
+            <TrendingPane
+              discussionForm={workspace.discussionForm}
+              setDiscussionForm={workspace.setDiscussionForm}
+              createDiscussionMutation={workspace.createDiscussionMutation}
+              discussions={workspace.discussions}
+              toggleLikeMutation={workspace.toggleLikeMutation}
+              commentDrafts={workspace.commentDrafts}
+              setCommentDrafts={workspace.setCommentDrafts}
+              commentMutation={workspace.commentMutation}
+            />
           ) : null}
 
-          {section === 'study' ? (
-            <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
-              <div className="viewer-panel rounded-[26px] p-5">
-                <h2 className="viewer-botanical-heading text-[2rem]">{communityText.createStudyRoom}</h2>
-                <div className="mt-5 space-y-4">
-                  <input
-                    className="viewer-botanical-input"
-                    placeholder={communityText.roomName}
-                    value={roomForm.name}
-                    onChange={(event) => setRoomForm((current) => ({ ...current, name: event.target.value }))}
-                  />
-                  <textarea
-                    className="viewer-botanical-input min-h-32"
-                    placeholder={communityText.roomGoal}
-                    value={roomForm.description}
-                    onChange={(event) => setRoomForm((current) => ({ ...current, description: event.target.value }))}
-                  />
-                  <button
-                    type="button"
-                    className="viewer-botanical-button viewer-botanical-button--primary w-full"
-                    onClick={() => createRoomMutation.mutate()}
-                    disabled={createRoomMutation.isPending}
-                  >
-                    {createRoomMutation.isPending ? copy.community.creatingRoom : copy.community.createRoom}
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {studyRooms.map((room) => {
-                  const joined = room.member_ids.includes(userId);
-                  return (
-                    <div key={room.id} className="viewer-panel rounded-[26px] p-5">
-                      <div className="viewer-botanical-eyebrow text-[0.72rem]">{communityText.studyRoomEyebrow}</div>
-                      <h3 className="mt-3 text-[1.8rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{room.name}</h3>
-                      <p className="mt-3 text-[1rem] leading-7 text-[#6f6359]">{room.description}</p>
-                      <p className="mt-5 text-[0.98rem] font-bold text-[#8a7d72]">{`${room.members} ${communityText.membersLabel} · ${room.status}`}</p>
-                      <div className="mt-5 flex flex-wrap gap-3">
-                        <button
-                          type="button"
-                          className="viewer-botanical-button viewer-botanical-button--primary"
-                          onClick={() => joinRoomMutation.mutate(room.id)}
-                          disabled={joined || joinRoomMutation.isPending}
-                        >
-                          {joined ? communityText.joined : communityText.joinRoom}
-                        </button>
-                        {room.created_by === userId ? (
-                          <button
-                            type="button"
-                            className="viewer-botanical-button border border-[#e6c8c2] bg-[#fbefed] text-[#9d554d]"
-                            onClick={() => deleteRoomMutation.mutate(room.id)}
-                            disabled={deleteRoomMutation.isPending}
-                          >
-                            {communityText.deleteRoom}
-                          </button>
-                        ) : null}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
-
-          {section === 'messages' ? (
-            <div className="grid gap-4 xl:grid-cols-[290px_minmax(0,1fr)]">
-              <div className="space-y-4">
-                <div className="viewer-panel rounded-[26px] p-5">
-                  <h2 className="viewer-botanical-heading text-[2rem]">{communityText.startConversation}</h2>
-                  <div className="mt-4 space-y-3">
-                    {people.map((person) => (
-                      <button
-                        key={person.id}
-                        type="button"
-                        className={cn(
-                          'flex w-full items-center justify-between rounded-[18px] border px-4 py-3 text-left text-sm font-bold transition',
-                          selectedPersonId === person.id
-                            ? 'border-[#c8dbcb] bg-[#edf5ec] text-[#5c7d60]'
-                            : 'border-[#ddd3c3] bg-[rgba(255,252,247,0.76)] text-[#6a5f56]',
-                        )}
-                        onClick={() => setSelectedPersonId(person.id)}
-                      >
-                        <span>{person.display_name}</span>
-                        <span className={cn('h-2.5 w-2.5 rounded-full', person.status === 'online' ? 'bg-[#1fb65c]' : 'bg-[#c1c7d4]')} />
-                      </button>
-                    ))}
-                  </div>
-                  <button
-                    type="button"
-                    className="viewer-botanical-button viewer-botanical-button--primary mt-4 w-full"
-                    onClick={() => directConversationMutation.mutate()}
-                    disabled={!selectedPersonId || directConversationMutation.isPending}
-                  >
-                    {directConversationMutation.isPending ? communityText.creating : communityText.createDirectChat}
-                  </button>
-                </div>
-
-                <div className="viewer-panel rounded-[26px] p-4">
-                  <div className="space-y-3">
-                    {conversations.map((conversation) => (
-                      <button
-                        key={conversation.id}
-                        type="button"
-                        className={cn(
-                          'flex w-full items-start justify-between gap-3 rounded-[18px] px-4 py-4 text-left transition',
-                          activeConversation?.id === conversation.id ? 'bg-[#edf5ec]' : 'hover:bg-[#faf4ea]',
-                        )}
-                        onClick={() => setConversationId(conversation.id)}
-                      >
-                        <div className="min-w-0">
-                          <div className="truncate text-[1rem] font-black text-[#3d342a]">{conversation.title}</div>
-                          <div className="mt-1 truncate text-sm font-medium text-[#887b70]">{conversation.preview || communityText.startNewConversation}</div>
-                        </div>
-                        {conversation.unread_count > 0 ? (
-                          <span className="flex h-8 min-w-8 items-center justify-center rounded-full bg-[#f34848] px-2 text-xs font-black text-white">
-                            {conversation.unread_count}
-                          </span>
-                        ) : null}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="viewer-panel flex min-h-[580px] flex-col rounded-[26px]">
-                {activeConversation ? (
-                  <>
-                    <div className="border-b border-[#eadfce] px-6 py-5">
-                      <h3 className="text-[2rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{activeConversation.title}</h3>
-                      <p className="mt-1 text-sm font-medium text-[#8a7d72]">{activeConversation.kind === 'group' ? communityText.groupConversation : communityText.directConversation}</p>
-                    </div>
-                    <div className="flex-1 space-y-4 overflow-auto px-6 py-5">
-                      {activeConversation.messages.map((message) => (
-                        <div
-                          key={message.id}
-                          className={cn(
-                            'max-w-[80%] rounded-[22px] px-4 py-3 text-sm font-medium leading-7',
-                            message.author_id === userId
-                              ? 'ml-auto border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] text-white'
-                              : 'border border-[#ddd3c3] bg-[rgba(255,252,247,0.88)] text-[#4d4239]',
-                          )}
-                        >
-                          <div className="mb-1 text-xs font-black uppercase tracking-[0.14em] opacity-70">{message.author_name}</div>
-                          {message.body}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="border-t border-[#eadfce] px-6 py-5">
-                      <div className="flex gap-3">
-                        <input
-                          className="viewer-botanical-input min-w-0 flex-1"
-                          placeholder={communityText.messagePlaceholder}
-                          value={composer}
-                          onChange={(event) => setComposer(event.target.value)}
-                          onKeyDown={(event) => {
-                            if (event.key === 'Enter') {
-                              sendMessageMutation.mutate();
-                            }
-                          }}
-                        />
-                        <button
-                          type="button"
-                          className="viewer-botanical-button viewer-botanical-button--primary"
-                          onClick={() => sendMessageMutation.mutate()}
-                          disabled={sendMessageMutation.isPending}
-                        >
-                          {sendMessageMutation.isPending ? copy.community.sending : copy.community.send}
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="p-6">
-                    <EmptyStateCard message={communityText.noConversations} />
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : null}
-
-          {section === 'trending' ? (
-            <div className="grid gap-4 xl:grid-cols-[306px_minmax(0,1fr)]">
-              <div className="viewer-panel rounded-[26px] p-5">
-                <h2 className="viewer-botanical-heading text-[2rem]">{communityText.publishDiscussion}</h2>
-                <div className="mt-5 space-y-4">
-                  <input
-                    className="viewer-botanical-input"
-                    placeholder={communityText.titlePlaceholder}
-                    value={discussionForm.title}
-                    onChange={(event) => setDiscussionForm((current) => ({ ...current, title: event.target.value }))}
-                  />
-                  <input
-                    className="viewer-botanical-input"
-                    placeholder={communityText.categoryPlaceholder}
-                    value={discussionForm.category}
-                    onChange={(event) => setDiscussionForm((current) => ({ ...current, category: event.target.value }))}
-                  />
-                  <textarea
-                    className="viewer-botanical-input min-h-36"
-                    placeholder={communityText.discussionPlaceholder}
-                    value={discussionForm.body}
-                    onChange={(event) => setDiscussionForm((current) => ({ ...current, body: event.target.value }))}
-                  />
-                  <button
-                    type="button"
-                    className="viewer-botanical-button viewer-botanical-button--warm w-full"
-                    onClick={() => createDiscussionMutation.mutate()}
-                    disabled={createDiscussionMutation.isPending}
-                  >
-                    {createDiscussionMutation.isPending ? communityText.publishing : communityText.publishDiscussion}
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {discussions.map((discussion) => (
-                  <article key={discussion.id} className="viewer-panel rounded-[26px] p-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="viewer-botanical-eyebrow text-[0.72rem]">{discussion.category}</div>
-                        <h3 className="mt-2 text-[1.9rem] font-semibold text-[#3d342a]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>{discussion.title}</h3>
-                        <p className="mt-3 text-[1rem] leading-7 text-[#6f6359]">{discussion.body}</p>
-                      </div>
-                      <button
-                        type="button"
-                        className={cn(
-                          'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black',
-                          discussion.liked_by_me ? 'bg-[#fbefed] text-[#b7655c]' : 'bg-[#f3efe8] text-[#7e7166]',
-                        )}
-                        onClick={() => toggleLikeMutation.mutate(discussion.id)}
-                      >
-                        <Heart size={16} className={discussion.liked_by_me ? 'fill-current' : ''} />
-                        {discussion.likes}
-                      </button>
-                    </div>
-
-                    <div className="mt-5 rounded-[22px] border border-[#e4d8ca] bg-[rgba(255,252,247,0.82)] p-4">
-                      <div className="space-y-3">
-                        {discussion.comments.map((comment) => (
-                          <div key={comment.id} className="rounded-[18px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3">
-                            <div className="text-sm font-black text-[#3d342a]">{comment.author_name}</div>
-                            <div className="mt-1 text-sm leading-6 text-[#6f6359]">{comment.body}</div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-4 flex gap-3">
-                        <input
-                          className="viewer-botanical-input min-w-0 flex-1"
-                          placeholder={communityText.commentPlaceholder}
-                          value={commentDrafts[discussion.id] ?? ''}
-                          onChange={(event) =>
-                            setCommentDrafts((current) => ({ ...current, [discussion.id]: event.target.value }))
-                          }
-                        />
-                        <button
-                          type="button"
-                          className="viewer-botanical-button viewer-botanical-button--primary"
-                          onClick={() =>
-                            commentMutation.mutate({
-                              discussionId: discussion.id,
-                              body: commentDrafts[discussion.id] ?? '',
-                            })
-                          }
-                          disabled={commentMutation.isPending}
-                        >
-                          {copy.community.send}
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          {section === 'notes' ? (
-            <div className="space-y-4">
-              <div className="viewer-panel flex items-center justify-between rounded-[26px] px-5 py-4">
-                <div>
-                  <h2 className="viewer-botanical-heading text-[2rem]">{communityText.notesTitle}</h2>
-                  <p className="mt-1 text-sm font-medium text-[#8a7d72]">{communityText.notesSubtitle}</p>
-                </div>
-                <button
-                  type="button"
-                  className="viewer-botanical-button viewer-botanical-button--primary"
-                  onClick={addBlankNote}
-                >
-                  <Plus size={18} />
-                  {copy.community.addNote}
-                </button>
-              </div>
-
-              <div className="grid gap-4 xl:grid-cols-2">
-                {notesDraft.map((note, index) => (
-                  <div key={note.id ?? `draft-${index}`} className="viewer-panel rounded-[26px] p-5">
-                    <div className="space-y-4">
-                      <input
-                        className="viewer-botanical-input w-full text-[1.1rem] font-black"
-                        value={note.title}
-                        onChange={(event) =>
-                          setNotesDraft((current) =>
-                            current.map((entry, entryIndex) =>
-                              entryIndex === index ? { ...entry, title: event.target.value } : entry,
-                            ),
-                          )
-                        }
-                      />
-                      <textarea
-                        className="viewer-botanical-input min-h-40 w-full text-[1rem] font-medium leading-7"
-                        value={note.body}
-                        onChange={(event) =>
-                          setNotesDraft((current) =>
-                            current.map((entry, entryIndex) =>
-                              entryIndex === index ? { ...entry, body: event.target.value } : entry,
-                            ),
-                          )
-                        }
-                      />
-                      <button
-                        type="button"
-                        className="viewer-botanical-button viewer-botanical-button--primary"
-                        onClick={() => noteMutation.mutate(note)}
-                        disabled={noteMutation.isPending}
-                      >
-                        {noteMutation.isPending ? communityText.savingNote : communityText.saveNote}
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {workspace.section === 'notes' ? (
+            <NotesPane
+              copy={copy}
+              language={language}
+              notesDraft={notes.notesDraft}
+              filteredNotes={notes.filteredNotes}
+              pinnedNotes={notes.pinnedNotes}
+              unpinnedNotes={notes.unpinnedNotes}
+              activeNote={notes.activeNote}
+              activeNoteKey={notes.activeNoteKey}
+              setActiveNoteKey={notes.setActiveNoteKey}
+              addBlankNote={notes.addBlankNote}
+              noteQuery={notes.noteQuery}
+              setNoteQuery={notes.setNoteQuery}
+              noteTab={notes.noteTab}
+              setNoteTab={notes.setNoteTab}
+              noteColorPickerOpen={notes.noteColorPickerOpen}
+              setNoteColorPickerOpen={notes.setNoteColorPickerOpen}
+              updateNoteDraft={notes.updateNoteDraft}
+              noteSaveStatus={notes.noteSaveStatus}
+              noteStats={notes.noteStats}
+              deleteConfirmKey={notes.deleteConfirmKey}
+              setDeleteConfirmKey={notes.setDeleteConfirmKey}
+              deleteNote={notes.deleteNote}
+              titleInputRef={notes.titleInputRef}
+              bodyInputRef={notes.bodyInputRef}
+              colorPickerRef={notes.colorPickerRef}
+              handleNoteTitleChange={notes.handleNoteTitleChange}
+              handleNoteBodyChange={notes.handleNoteBodyChange}
+              handleBodyKeyDown={notes.handleBodyKeyDown}
+              formatText={notes.formatText}
+              insertListItem={notes.insertListItem}
+              insertQuote={notes.insertQuote}
+              insertDivider={notes.insertDivider}
+              tagInputActiveKey={notes.tagInputActiveKey}
+              setTagInputActiveKey={notes.setTagInputActiveKey}
+              tagInputValue={notes.tagInputValue}
+              setTagInputValue={notes.setTagInputValue}
+              commitTagInput={notes.commitTagInput}
+              removeNoteTag={notes.removeNoteTag}
+              noteToSaveRef={notes.noteToSaveRef}
+              noteMutation={workspace.noteMutation}
+            />
           ) : null}
         </section>
       </div>

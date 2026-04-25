@@ -1,11 +1,28 @@
 import { QueryClient } from '@tanstack/react-query';
 
+function readErrorMetadata(error: unknown) {
+  if (!error || typeof error !== 'object') {
+    return { code: '', status: Number.NaN, message: '' };
+  }
+
+  const record = error as Record<string, unknown>;
+  return {
+    code: typeof record.code === 'string' ? record.code : '',
+    status: typeof record.status === 'number' ? record.status : Number.NaN,
+    message: typeof record.message === 'string' ? record.message : '',
+  };
+}
+
 function canRetryRequest(error: unknown) {
   if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     return false;
   }
+  const { code, status, message } = readErrorMetadata(error);
+  if (status === 404 || code === 'PGRST205') {
+    return false;
+  }
   if (!(error instanceof Error)) {
-    return true;
+    return !/unauthorized|forbidden|jwt|auth/i.test(message);
   }
   return !/unauthorized|forbidden|jwt|auth/i.test(error.message);
 }

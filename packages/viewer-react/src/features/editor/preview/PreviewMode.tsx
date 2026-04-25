@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 import { useAppSelector } from '@/store';
-import { computeBlockVisibility, isQuestionBlock, seedCorrectState } from '../blockVisibility';
-import { LearnerBlockRenderer } from './LearnerBlockRenderer';
+import { isQuestionBlock } from '../blockVisibility';
+import { LearnerBlockRenderer } from '@/shared/lesson/LearnerBlockRenderer';
+import {
+  deriveLessonPageState,
+  ensureLessonPageSession,
+  stepLessonPageSession,
+  updateQuestionResponse,
+  type LessonPageSessionState,
+} from '@/shared/lesson/questionFlow';
 
 interface PreviewModeProps {
   lessonId: string;
@@ -28,28 +35,58 @@ export function PreviewMode({ lessonId, pageId, onSelectPage }: PreviewModeProps
   const page = pages[currentPageIndex];
   const blocks = page?.blocks ?? [];
   const sorted = [...blocks].sort((a, b) => a.position.order - b.position.order);
-  const [checked, setChecked] = useState(false);
-  const [checkVersion, setCheckVersion] = useState(0);
-  const [correctState, setCorrectState] = useState<Record<string, boolean>>({});
+  const [pageSessions, setPageSessions] = useState<Record<string, LessonPageSessionState>>({});
 
   useEffect(() => {
-    setChecked(false);
-    setCheckVersion(0);
-    setCorrectState(seedCorrectState(sorted));
-  }, [page?.page_id, blocks]);
+    setCurrentPageIndex((index) => Math.min(index, Math.max(pages.length - 1, 0)));
+  }, [pages.length]);
+
+  useEffect(() => {
+    setPageSessions({});
+    setCurrentPageIndex(selectedPageIndex);
+  }, [lessonId, selectedPageIndex]);
 
   const hasQuestionBlocks = sorted.some((block) => isQuestionBlock(block));
-  const blockVisibility = computeBlockVisibility(sorted, correctState, checked);
+  const pageSession = page
+    ? ensureLessonPageSession(sorted, pageSessions[page.page_id])
+    : ensureLessonPageSession([]);
+  const pageState = deriveLessonPageState(sorted, pageSession);
   const isLastPage = currentPageIndex >= Math.max(pages.length - 1, 0);
   const pageCount = pages.length;
   const pageNumber = pageCount > 0 ? currentPageIndex + 1 : 0;
   const lessonTitle = lesson?.title?.trim() || 'Untitled lesson';
+  const currentQuestionBlockId = pageState.currentQuestion?.blockId ?? null;
 
   function goToPage(index: number) {
     const nextPage = pages[index];
     if (!nextPage) return;
+    if (!pages.slice(0, index).every((candidate) => deriveLessonPageState(
+      [...candidate.blocks].sort((a, b) => a.position.order - b.position.order),
+      ensureLessonPageSession(
+        [...candidate.blocks].sort((a, b) => a.position.order - b.position.order),
+        pageSessions[candidate.page_id],
+      ),
+    ).canAdvancePage)) {
+      return;
+    }
     setCurrentPageIndex(index);
     onSelectPage?.(nextPage.page_id);
+  }
+
+  function updateCurrentPageSession(
+    updater: (session: LessonPageSessionState) => LessonPageSessionState,
+  ) {
+    if (!page) {
+      return;
+    }
+
+    setPageSessions((current) => {
+      const base = ensureLessonPageSession(sorted, current[page.page_id]);
+      return {
+        ...current,
+        [page.page_id]: updater(base),
+      };
+    });
   }
 
   return (
@@ -113,17 +150,28 @@ export function PreviewMode({ lessonId, pageId, onSelectPage }: PreviewModeProps
                 ) : (
                   <div className="editor-preview-stage__blocks">
                     {sorted.map((block, index) =>
-                      blockVisibility[index] ? (
+                      pageState.visibleBlockIndexes.has(index) ? (
                         <LearnerBlockRenderer
                           key={block.id}
                           block={block}
-                          checkVersion={checkVersion}
-                          onAnswered={(isCorrect) =>
-                            setCorrectState((current) =>
-                              current[block.id] === isCorrect
-                                ? current
-                                : { ...current, [block.id]: isCorrect },
+                          response={pageSession.responses[block.id]}
+                          evaluation={pageSession.evaluations[block.id]}
+                          locked={
+                            !(
+                              block.id === currentQuestionBlockId &&
+                              pageSession.phase === 'answering' &&
+                              !pageSession.pageCompleted
                             )
+                          }
+                          onResponseChange={
+                            block.id === currentQuestionBlockId &&
+                            pageSession.phase === 'answering' &&
+                            !pageSession.pageCompleted
+                              ? (response) =>
+                                  updateCurrentPageSession((current) =>
+                                    updateQuestionResponse(sorted, current, block.id, response),
+                                  )
+                              : undefined
                           }
                         />
                       ) : null,
@@ -149,10 +197,8 @@ export function PreviewMode({ lessonId, pageId, onSelectPage }: PreviewModeProps
                       <button
                         type="button"
                         className="editor-preview-action editor-preview-action--warm"
-                        onClick={() => {
-                          setChecked(true);
-                          setCheckVersion((current) => current + 1);
-                        }}
+                        onClick={() => updateCurrentPageSession((current) => stepLessonPageSession(sorted, current))}
+                        disabled={!pageState.canCheck}
                       >
                         Check
                       </button>
@@ -162,9 +208,9 @@ export function PreviewMode({ lessonId, pageId, onSelectPage }: PreviewModeProps
                       type="button"
                       className="editor-preview-action editor-preview-action--primary"
                       onClick={() => goToPage(currentPageIndex + 1)}
-                      disabled={isLastPage}
+                      disabled={isLastPage || !pageState.canAdvancePage}
                     >
-                      {isLastPage ? 'Complete' : 'Next'}
+                      {isLastPage ? 'Complete' : 'Next page'}
                       {!isLastPage ? <ArrowRight className="h-4 w-4" /> : null}
                     </button>
                   </div>

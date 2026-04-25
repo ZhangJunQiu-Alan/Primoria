@@ -1,5 +1,73 @@
 # Changelog
 
+> 说明：本文件只记录已经落地并提交的历史变更，不作为当前质量基线或待办清单。当前状态请查看 [technical-debt-register-zh.md](./technical-debt-register-zh.md)。
+
+## [Unreleased] - 2026-04-19 (文档收敛与技术债总账)
+
+### Summary
+
+收敛 `docs/` 为中文主档，删除英文重复文档和作业模板页，并把独立 `todo` 页合并进统一技术债总账。
+
+### Changed
+
+- `docs/README-zh.md` 改为唯一文档入口
+- `docs/technical-debt-register-zh.md` 重写为唯一技术债、半成品功能和产品待办总账
+- 删除英文重复文档与 assignment/rubric 模板页
+- `docs/todo-zh.md` 与 `docs/todo.md` 退役删除
+- `docs/viewer-react-cutover-runbook.md`、`docs/viewer-react-interactions.md` 改为中文并修正 AI Tutor 后端说明
+- `docs/course-json-guide-zh.md`、`docs/prd-zh.md`、`docs/dashboard-zh.md` 修正与当前实现不一致的描述
+
+### Validation
+
+- 文档关键字清理检查 — pass
+
+
+## [Unreleased] - 2026-04-16 (Engineering Hardening — Lint, Env Guard, Edge Function Tests)
+
+### Summary
+Three technical debt items resolved: ESLint gate added to CI, Supabase env strict guard enforced at build time, and Edge Function pure-function test suite bootstrapped.
+
+### Changed
+
+- **ESLint v10 flat config** (`eslint.config.mjs` at repo root)
+  - Stack: `@eslint/js` + `typescript-eslint` v8 + `eslint-plugin-react-hooks` v7 + `eslint-plugin-react-refresh`
+  - `packages/viewer-react`, `packages/schema`, `packages/db` all have `lint` scripts; root `pnpm lint` runs all
+  - CI (`viewer-react-ci.yml`) gains a `Lint` step before `Typecheck`
+  - Fixed 3 real code bugs found during audit:
+    - `achievementPresentation.ts`: removed useless initial assignments overridden by `switch` default
+    - `DashboardPage.tsx`: replaced render-time mutable offset accumulation with immutable `reduce`
+    - `Live2DHeroModel.tsx`: restructured `let observer` → `const observer` after early-return guard
+  - 9 existing `eslint-disable` comments annotated with reasons; 44 warnings retained as future-work signals
+
+- **Supabase env strict guard** (`packages/viewer-react/vite.config.ts`)
+  - Added `require-supabase-env` Vite plugin: `buildStart` throws if `VITE_SUPABASE_URL` or `VITE_SUPABASE_ANON_KEY` is absent outside fixture mode
+  - Removed hardcoded production Supabase URL/key fallback from `supabase.ts`; placeholder values used in fixture/test path instead
+  - CI `Verify strict env guard` step now correctly passes; production/preview workflows unaffected (secrets injected via GitHub)
+
+- **Edge Function pure-function test suite** (`supabase/functions/`)
+  - Extracted pure functions from both AI Edge Functions into separate helper files:
+    - `viewer-ai-quiz-from-docs/quizHelpers.ts`: `buildCourseSlug`, `buildQuizPrompt`
+    - `viewer-ai-mindmap-from-docs/mindmapHelpers.ts`: `normalizeLabel`, `normalizeTitle`, `sanitizeMindMapTree`, `toPersistedDocument`, `buildMindMapPrompt` + types + constants
+  - Added 3 Deno test files (35 test cases total):
+    - `quizHelpers.test.ts`, `mindmapHelpers.test.ts`, `_shared/geminiResponse.test.ts`
+  - Key coverage: node count cap, depth truncation, width truncation, empty-label throw, `toPersistedDocument` structural correctness, Gemini markdown fence unwrapping, empty/missing candidate handling
+  - CI gains `Setup Deno` + `Edge Function unit tests` (`deno test --allow-env supabase/functions/`) steps
+  - Root `package.json` gains `test:functions` script
+
+### Documentation
+
+- `docs/technical-debt-register-zh.md`: items 1.2, 1.3, 1.4 marked resolved
+- Deleted stale docs: `viewer-react-migration-checklist.md` (migration complete), `agent-service-v1.md` (superseded), `prompt.txt` (scratch)
+
+### Validation
+
+- `pnpm --filter @primoria/viewer-react typecheck` — pass
+- `pnpm --filter @primoria/viewer-react test` — 110/110 pass
+- `pnpm --filter @primoria/viewer-react lint` — 0 errors, 44 warnings
+- `pnpm --filter @primoria/viewer-react build` — pass (reads from `.env`)
+
+---
+
 ## [Unreleased] - 2026-04-04 (Unified Viewer + Builder Workspace)
 
 ### Summary
