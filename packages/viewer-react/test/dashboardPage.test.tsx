@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -9,12 +9,13 @@ import { createAppStore } from '@/shared/state/store';
 
 const mockUseCourseList = vi.fn();
 const mockUseDashboardAnalytics = vi.fn();
+const mockDeleteCourseMutateAsync = vi.fn();
 
 vi.mock('@/queries/courses', () => ({
   useCourseList: (...args: unknown[]) => mockUseCourseList(...args),
   useCreateCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
   useUpdateCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
-  useDeleteCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
+  useDeleteCourse: () => ({ isPending: false, mutateAsync: mockDeleteCourseMutateAsync }),
   useDuplicateCourse: () => ({ isPending: false, mutateAsync: vi.fn() }),
   useAddLesson: () => ({ isPending: false, mutateAsync: vi.fn() }),
   useDeleteLesson: () => ({ isPending: false, mutateAsync: vi.fn() }),
@@ -35,10 +36,6 @@ vi.mock('@/queries/dashboardAnalytics', () => ({
     course_metrics: [],
   },
   useDashboardAnalytics: (...args: unknown[]) => mockUseDashboardAnalytics(...args),
-}));
-
-vi.mock('@/components/account/AccountMenu', () => ({
-  AccountMenu: () => <div>Account menu</div>,
 }));
 
 const courseRows = [
@@ -201,6 +198,7 @@ function renderDashboard(route: string) {
     isLoading: false,
     refetch: vi.fn(),
   });
+  mockDeleteCourseMutateAsync.mockResolvedValue(undefined);
 
   return render(
     <Provider store={store}>
@@ -225,23 +223,23 @@ describe('DashboardPage', () => {
     expect(within(weeklyCard as HTMLElement).getByText('48')).toBeInTheDocument();
     expect(screen.getByText('Views: 120 · Students: 18')).toBeInTheDocument();
     expect(screen.getByText('+12.5% vs last week')).toBeInTheDocument();
+    expect(screen.queryByText('Create new course')).not.toBeInTheDocument();
+    expect(screen.queryByText('Continue editing')).not.toBeInTheDocument();
+    expect(screen.queryByText('View analytics')).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /view analytics/i }));
+    await user.click(screen.getByRole('button', { name: /学习表现|learning performance/i }));
 
     const publishedViewersCard = await screen.findByText('Published viewers');
     expect(within(publishedViewersCard.closest('article') as HTMLElement).getByText('204')).toBeInTheDocument();
     expect(screen.getByText('Average completion')).toBeInTheDocument();
     expect(screen.getByText('68.0%')).toBeInTheDocument();
     expect(screen.getByText('Biology Lab Notes')).toBeInTheDocument();
-    expect(screen.getByText('120')).toBeInTheDocument();
+    expect(screen.getByText('120 views')).toBeInTheDocument();
   });
 
-  it('supports student and comment sort modes with visible metric chips', async () => {
+  it('supports student and comment sort modes for the simplified course list', async () => {
     const user = userEvent.setup();
     renderDashboard('/builder/dashboard?tab=course');
-
-    expect(screen.getByText('18 students')).toBeInTheDocument();
-    expect(screen.getByText('7 comments')).toBeInTheDocument();
 
     const sortSelect = screen.getByLabelText('Sort');
     await user.selectOptions(sortSelect, 'student');
@@ -283,5 +281,23 @@ describe('DashboardPage', () => {
 
     expect(await screen.findByText(/saved as an ai front-end brief only/i)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /ai course draft/i })).not.toBeInTheDocument();
+  });
+
+  it('does not show a success notice after deleting a course', async () => {
+    const user = userEvent.setup();
+    renderDashboard('/builder/dashboard?tab=course');
+
+    const courseCard = screen.getByRole('heading', { name: 'Writing Draft Workshop' }).closest('article');
+    expect(courseCard).not.toBeNull();
+
+    await user.click(within(courseCard as HTMLElement).getByRole('button', { name: 'Delete' }));
+    expect(await screen.findByText(/are you sure you want to delete/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Delete course' }));
+
+    await waitFor(() => {
+      expect(mockDeleteCourseMutateAsync).toHaveBeenCalledWith({ id: 'course-3', userId: 'author-1' });
+      expect(screen.queryByText('Course deleted.')).not.toBeInTheDocument();
+    });
   });
 });

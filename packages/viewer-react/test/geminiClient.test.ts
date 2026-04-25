@@ -15,6 +15,7 @@ describe('geminiClient', () => {
     vi.restoreAllMocks();
     vi.resetModules();
     window.localStorage.clear();
+    document.documentElement.lang = '';
   });
 
   it('calls the edge function when fixture mode is explicitly disabled in tests', async () => {
@@ -66,6 +67,51 @@ describe('geminiClient', () => {
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
 
     await expect(generateTutorReply([{ role: 'user', text: 'Hello' }])).rejects.toThrow('Tutor quota exceeded.');
+  });
+
+  it('parses tutor edge responses wrapped in prose and fenced JSON', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response('Here is the JSON you asked for:\n```json\n{"reply":"Edge reply"}\n```\n', {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const { generateTutorReply } = await import('@/shared/api/geminiClient');
+    const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
+
+    expect(reply).toBe('Edge reply');
+  });
+
+  it('retries the edge function once after a transient service unavailable response', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch');
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ error: 'Temporary outage.' }), {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ reply: 'Recovered edge reply' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+    const { generateTutorReply } = await import('@/shared/api/geminiClient');
+    const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
+
+    expect(reply).toBe('Recovered edge reply');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('streams tutor replies from the agent service', async () => {
@@ -126,8 +172,193 @@ describe('geminiClient', () => {
     );
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
       context: expect.objectContaining({
+        surface: 'ai-tutor',
+        locale: 'zh-CN',
         ai_tutor_persona: 'coach',
       }),
     });
+  });
+
+  it('falls back from the ai-tutor agent stream to the edge function when the agent is unavailable', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch');
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ detail: 'Agent unavailable.' }), {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ reply: 'Edge fallback reply' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream([{ role: 'user', text: 'Hello' }]);
+
+    expect(result.reply).toBe('Edge fallback reply');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe('http://localhost:8787/v1/chat/stream');
+    expect(fetchMock.mock.calls[1]?.[0]).toBe('https://demo-project.functions.supabase.co/viewer-ai-tutor');
+  });
+
+  it('falls back from the lesson agent stream to the edge function with strict page context', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    document.documentElement.lang = 'en';
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch');
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ detail: 'Agent unavailable.' }), {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ reply: 'Grounded edge reply' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream(
+      [{ role: 'user', text: 'Explain this page.' }],
+      {},
+      {
+        model: 'gemini-2.5-flash',
+        allowModelFallback: false,
+        context: {
+          surface: 'lesson-runtime',
+          courseId: 'course-1',
+          lessonId: 'lesson-1',
+          blockId: 'mc-1',
+          locale: 'en-US',
+          lessonTitle: 'Lesson A',
+          pageIndex: 1,
+          pageCount: 2,
+          pageTitle: 'Page 1',
+          pageContent: 'Visible content',
+          learnerState: 'Question 1: answered incorrectly',
+        },
+      },
+    );
+
+    expect(result.reply).toBe('Grounded edge reply');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe('http://localhost:8787/v1/chat/stream');
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
+      context: {
+        surface: 'lesson-runtime',
+        course_id: 'course-1',
+        lesson_id: 'lesson-1',
+        block_id: 'mc-1',
+        locale: 'en-US',
+        lesson_title: 'Lesson A',
+        page_index: 1,
+        page_count: 2,
+        page_title: 'Page 1',
+        page_content: 'Visible content',
+        learner_state: 'Question 1: answered incorrectly',
+      },
+    });
+    expect(fetchMock.mock.calls[1]?.[0]).toBe('https://demo-project.functions.supabase.co/viewer-ai-tutor');
+  });
+
+  it('can force lesson ask-ai requests to bypass the agent and hit Gemini with explicit model context', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ reply: 'Grounded answer' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream(
+      [{ role: 'user', text: 'Explain this page.' }],
+      {},
+      {
+        provider: 'gemini',
+        model: 'gemini-2.5-flash',
+        allowModelFallback: false,
+        context: {
+          surface: 'lesson-runtime',
+          lessonTitle: 'Lesson A',
+          pageIndex: 1,
+          pageCount: 2,
+          pageTitle: 'Page 1',
+          pageContent: 'Visible content',
+          learnerState: 'Question 1: answered incorrectly',
+        },
+      },
+    );
+
+    expect(result.reply).toBe('Grounded answer');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://demo-project.functions.supabase.co/viewer-ai-tutor',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          apikey: 'demo-anon-key',
+        }),
+      }),
+    );
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
+      model: 'gemini-2.5-flash',
+      allowModelFallback: false,
+      context: {
+        surface: 'lesson-runtime',
+        lessonTitle: 'Lesson A',
+        pageIndex: 1,
+        pageCount: 2,
+        pageTitle: 'Page 1',
+        pageContent: 'Visible content',
+        learnerState: 'Question 1: answered incorrectly',
+      },
+    });
+  });
+
+  it('normalizes lesson transport failures into a localized unavailable message', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    document.documentElement.lang = 'zh-CN';
+
+    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('Failed to fetch'));
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+
+    await expect(
+      generateTutorReplyStream(
+        [{ role: 'user', text: 'Explain this page.' }],
+        {},
+        {
+          provider: 'gemini',
+          context: {
+            surface: 'lesson-runtime',
+            lessonId: 'lesson-1',
+            lessonTitle: 'Lesson A',
+            pageIndex: 1,
+            pageCount: 1,
+          },
+        },
+      ),
+    ).rejects.toThrow('AI 暂时不可用，请稍后再试。');
   });
 });

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,6 +5,7 @@ import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { FormField, Input, Textarea } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import { nanoid } from '@/lib/nanoid';
 import type { Block } from '@primoria/schema';
 
@@ -52,27 +52,23 @@ function toFormValues(content: MultipleChoiceContent): FormValues {
 
 export function MultipleChoicePanel({ block, lessonId, pageId }: MultipleChoicePanelProps) {
   const dispatch = useAppDispatch();
-  const c = block.content as {
-    question?: string;
-    options?: Array<{ id: string; text: string; isCorrect: boolean }>;
-    explanation?: string;
-    allowMultiple?: boolean;
-  };
+  const c = block.content as MultipleChoiceContent;
+  const formValues = toFormValues(c);
 
   const { register, watch, control, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: toFormValues(c),
+    defaultValues: formValues,
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: 'options' });
 
-  useEffect(() => {
-    reset(toFormValues(c));
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const sub = watch((values) => {
-      const nextContent = toFormValues(values as MultipleChoiceContent);
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
+      const nextContent = toFormValues(values);
       dispatch(
         updateBlock({
           lessonId,
@@ -80,9 +76,8 @@ export function MultipleChoicePanel({ block, lessonId, pageId }: MultipleChoiceP
           block: { ...block, content: nextContent },
         }),
       );
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   return (
     <div className="space-y-4">

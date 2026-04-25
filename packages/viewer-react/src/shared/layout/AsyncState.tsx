@@ -1,8 +1,8 @@
 import { SurfaceCard } from '@/shared/layout/SurfaceCard';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 
 export function LoadingStateCard({ message }: { message?: string }) {
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   return (
     <SurfaceCard>
@@ -14,7 +14,7 @@ export function LoadingStateCard({ message }: { message?: string }) {
 }
 
 export function EmptyStateCard({ message }: { message?: string }) {
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   return (
     <SurfaceCard>
@@ -34,7 +34,7 @@ export function ErrorStateCard({
   message?: string;
   onRetry?: () => void;
 }) {
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   return (
     <SurfaceCard className="space-y-3 border-[#e6c8c2] bg-[#fbefed]">
@@ -70,7 +70,7 @@ export function FeatureDisabledState({
   actionLabel?: string;
   onAction?: () => void;
 }) {
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   return (
     <SurfaceCard className="space-y-3">

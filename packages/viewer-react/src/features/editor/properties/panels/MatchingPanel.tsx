@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,6 +5,7 @@ import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { FormField, Input, Select } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import { nanoid } from '@/lib/nanoid';
 import type { Block } from '@primoria/schema';
 
@@ -34,27 +34,27 @@ export function MatchingPanel({ block, lessonId, pageId }: MatchingPanelProps) {
     mode?: 'list' | 'graph';
     pairs?: Array<{ id: string; left: string; right: string }>;
   };
+  const formValues: FormValues = {
+    mode: c.mode ?? 'list',
+    pairs: c.pairs ?? [],
+  };
 
   const { register, watch, control, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      mode: c.mode ?? 'list',
-      pairs: c.pairs ?? [],
-    },
+    defaultValues: formValues,
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: 'pairs' });
 
-  useEffect(() => {
-    reset({ mode: c.mode ?? 'list', pairs: c.pairs ?? [] });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(updateBlock({ lessonId, pageId, block: { ...block, content: values } }));
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   return (
     <div className="space-y-4">
