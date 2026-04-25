@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { captureViewerError } from '@/shared/platform/observability';
 import { runtimeEnv } from '@/shared/config/runtimeEnv';
 
@@ -11,22 +11,17 @@ interface TrackViewerAnalyticsInput {
 
 const trackedRouteEvents = new Set<string>();
 
-type RpcResponse = {
-  data: boolean | null;
-  error: Error | null;
-};
-
 async function invokeTrackViewerAnalyticsEvent(
   eventType: ViewerAnalyticsEventType,
   payload: TrackViewerAnalyticsInput,
 ) {
-  return (supabase.rpc as unknown as (
-    fn: string,
-    args?: Record<string, unknown>,
-  ) => Promise<RpcResponse>)('track_viewer_analytics_event', {
-    p_event_type: eventType,
-    p_course_id: payload.courseId,
-    p_lesson_id: payload.lessonId ?? null,
+  return fetchAgentJson<{ ok: boolean }>('/v1/viewer/analytics-events/track', {
+    method: 'POST',
+    body: JSON.stringify({
+      eventType,
+      courseId: payload.courseId,
+      lessonId: payload.lessonId ?? null,
+    }),
   });
 }
 
@@ -38,8 +33,10 @@ export async function trackViewerAnalyticsEvent(
     return false;
   }
 
-  const { error, data } = await invokeTrackViewerAnalyticsEvent(eventType, payload);
-  if (error) {
+  try {
+    const { ok } = await invokeTrackViewerAnalyticsEvent(eventType, payload);
+    return Boolean(ok);
+  } catch (error) {
     captureViewerError(error, {
       area: 'viewer_analytics_event',
       eventType,
@@ -48,8 +45,6 @@ export async function trackViewerAnalyticsEvent(
     });
     return false;
   }
-
-  return Boolean(data);
 }
 
 export function trackViewerAnalyticsEventOnce(

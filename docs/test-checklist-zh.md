@@ -1,119 +1,108 @@
-# Viewer React 回归与烟测分层清单
+# 回归测试清单（统一 Viewer + Builder 工作台）
 
-最后更新：2026-04-19
+最后更新：2026-04-04
 
-## 使用说明
-
-| 验证层 | 推荐命令 | 验证什么 | 不验证什么 | 前提 |
-| --- | --- | --- | --- | --- |
-| 本地静态检查 | `pnpm --filter @primoria/viewer-react lint` / `typecheck` / `test` | 代码质量、类型、单测与组件回归 | 浏览器端真实部署、真实 Supabase smoke | 本地依赖已安装 |
-| fixture 浏览器回归 | `pnpm --filter @primoria/viewer-react e2e:fixture` | `VITE_VIEWER_DEMO_MODE=1` 下的本地 UI 主链路 | 真实鉴权、真实数据写入、真实 analytics | 本地可启动 Playwright 与 Vite |
-| preview smoke | `VIEWER_PREVIEW_URL=... pnpm --filter @primoria/viewer-react verify:preview` | 已部署预览环境的 SPA shell、静态资源、缓存与安全响应头 | 真实业务数据、真实账号写入 | 需要已部署的预览 URL |
-| cloud smoke | `VIEWER_BASE_URL=... SUPABASE_URL=... SUPABASE_SECRET_KEY=... pnpm --filter @primoria/viewer-react verify:cloud` | 真实 Supabase、真实账号、真实浏览器读写与发布后读回 | 全量回归；这里只做核心 smoke | 需要 smoke 账号和相关 secrets |
-
-- 兼容入口保留：
-  - `pnpm --filter @primoria/viewer-react e2e`
-  - `pnpm --filter @primoria/viewer-react smoke:preview`
-  - `pnpm --filter @primoria/viewer-react smoke:cloud`
-- 默认判断原则：
-  - 想确认“本地 UI 有没有坏”，优先跑 fixture 浏览器回归。
-  - 想确认“预览部署有没有坏”，跑 preview smoke。
-  - 想确认“真实后端链路是不是还通”，跑 cloud smoke。
-
-## A. 本地静态检查
+## A. 构建与静态检查
 
 - [ ] `pnpm install`
-- [ ] `pnpm --filter @primoria/viewer-react lint`
+- [ ] `python -m py_compile agent-service/app/routes/interactive_visuals.py agent-service/app/services/interactive_visuals.py`
+- [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
 - [ ] `pnpm --filter @primoria/viewer-react typecheck`
 - [ ] `pnpm --filter @primoria/viewer-react test`
 - [ ] `pnpm --filter @primoria/viewer-react build`
-- [ ] `deno test --allow-env supabase/functions/`
-- [ ] `pnpm --filter @primoria/schema exec vitest run test/blocks.test.ts test/migrations.test.ts`
+- [ ] `pnpm --filter @primoria/viewer-react e2e` 仅覆盖本地 fixture-mode 浏览器链路
+- [ ] `pnpm --filter @primoria/viewer-react smoke:cloud` 只用于带 smoke 账号的真实 Supabase / 浏览器验收
 
-这层主要负责：
+## B. Builder 路由与权限
 
-- 代码规范、类型安全和组件/页面回归
-- Viewer + Builder 的本地单测
-- Edge Functions 的本地 Deno 测试
+- [ ] 未登录访问 `/builder/dashboard` 会被重定向到带 `returnTo` 的 `/login`
+- [ ] 未登录访问 `/builder/editor` 会被重定向到带 `returnTo` 的 `/login`
+- [ ] 已登录用户访问 `/dashboard` 会跳转 `/builder/dashboard`
+- [ ] 任何已登录角色都可以访问 Builder 受保护路由
 
-这层不负责：
+## C. Builder 编辑器核心能力
 
-- 真实浏览器部署质量
-- 真实 Supabase 鉴权、写入与 analytics
+- [ ] 在 `/builder/editor` 创建空白 lesson
+- [ ] 使用规范 `lessons` 键导入 JSON 成功
+- [ ] 使用历史 `pages` 键导入 JSON 并验证迁移成功
+- [ ] 显式保存流程可在无远端错误时完成
+- [ ] 如果保存失败，发布流程会中止
+- [ ] 保存与发布流程在无阻断错误时可完成
+- [ ] text block 的 richtext 内容在 learner preview 中正确渲染
+- [ ] `text`、`code-block`、`code-playground` 支持画布内联编辑
+- [ ] `image` block 可上传到 Supabase，并回显在画布与预览中
+- [ ] 可见性默认规则正确：
+  - 首个 block = `always`
+  - 非首个 block = `afterPreviousCorrect`
+- [ ] 被 gating 的 block 只有在答对并点击 `Check` 后才解锁
+- [ ] learner preview 支持页进度与 `Prev / Check / Next`
 
-## B. Fixture 浏览器回归
+## D. Dashboard Tab 测试
 
-推荐命令：
+### D1. Home
+- [ ] 按时间段显示问候语
+- [ ] 快捷按钮可用（创建/继续编辑/查看数据）
+- [ ] 最近 7 天学习者 / 累计学习时长卡片来自真实 analytics
+- [ ] 最近 7 天完成率趋势来自 analytics payload
+- [ ] 重点课程列表展示真实浏览量 + 学员数，并可点击进入
+- [ ] 最近活动流能显示学习者和最新课程信号
+- [ ] 无课程时显示空状态
 
-```bash
-pnpm --filter @primoria/viewer-react e2e:fixture
-```
+### D2. Course Management
+- [ ] loading / empty / list 状态正常
+- [ ] 摘要条可渲染（课程数/课时数/已发布/草稿/待补内容）
+- [ ] 搜索与状态筛选联动正常（`all` / `draft` / `published`）
+- [ ] 无结果状态正确出现，清空筛选可恢复列表
+- [ ] `student` / `comments` 排序按真实指标生效
+- [ ] 课程卡片展示可见的 `students` / `comments` 指标芯片
+- [ ] 创建/编辑/删除课程正常
+- [ ] 复制课程可生成新的草稿课程
+- [ ] 打开课程可正确带着上下文跳转到 builder
+- [ ] 添加课时与删除课时流程正常
 
-这层固定运行在本地 fixture/demo 模式，当前重点覆盖：
+### D3. Data Center
+- [ ] KPI 行可渲染，并显示真实已发布浏览量与平均完成率
+- [ ] 课程体量趋势图基于 `created_at` / `published_at` 渲染
+- [ ] 课程类型分布环图可渲染
+- [ ] 收入趋势图以预估语义渲染
+- [ ] 学习进度趋势图可渲染月度活跃学习者 + 完成率
+- [ ] 已发布课程浏览量排行列表可渲染
+- [ ] 导出入口可达
 
-- [ ] 落地页、登录页、受保护路由重定向
-- [ ] demo learner 从课程库进入课时并完成结果页
-- [ ] demo parent 归一到 `/parent`
-- [ ] demo learner 从设置中心退出登录
-- [ ] demo learner 在 AI Tutor 中走 fixture 对话与工具入口
-- [ ] demo learner 在社区中的消息持久化跨刷新仍存在
+### D4. Fan Management
+- [ ] 粉丝 KPI 与趋势可渲染
+- [ ] 搜索/筛选/分页可用
+- [ ] 互动时间线可渲染
+- [ ] 标签相关操作可达
+- [ ] 预留批量操作会显示占位反馈
 
-这层不负责：
+### D5. Dashboard 账号 / 设置集成
+- [ ] 账号摘要可从 Supabase 正常加载
+- [ ] Workflow 设置可正常本地保存
+- [ ] 设置入口会进入统一 Viewer 设置页
+- [ ] 退出登录会走共享 Viewer 鉴权流程
 
-- 真实账号登录
-- 真实 Supabase 表写入 / RPC / RLS
-- 真实 Dashboard analytics 读数
-- 真实 Edge Function / agent-service 联机表现
+## E. Viewer React 核心验证
 
-## C. Preview Smoke
+- [ ] 登录/注册流程正常
+- [ ] 课程报名流程正常
+- [ ] Home / Library / Community / Profile 使用统一页面宽度壳层
+- [ ] Viewer React 桌面布局较平板/移动更宽，且内容仍居中可读
+- [ ] 课时页顶部标题显示当前 lesson 名（不是 course 名）
+- [ ] text 内容在学习链路中仍正确渲染
+- [ ] 个人页 XP/连续学习/成就相关数据可加载
+- [ ] logo/入口跳转可回到预期 builder/home
+- [ ] `packages/viewer-react/test/` 中的 learner shell 导航测试通过
+- [ ] `packages/viewer-react/test/` 中的设置与个人页测试通过
 
-推荐命令：
+## F. 数据一致性
 
-```bash
-VIEWER_PREVIEW_URL=https://<preview-url> pnpm --filter @primoria/viewer-react verify:preview
-```
+- [ ] 在 Builder 改 lesson 名并保存，回 `/builder/dashboard` 能看到新名
+- [ ] `smoke:cloud` 会在 lesson 改名后发布复用 smoke 课程，进入 Viewer React 验证标题一致，并回作者 Dashboard 验证 `weekly learners` / `published viewers` / 重点课程 analytics
+- [ ] 对快照内容不完整的课程，React viewer fallback 仍可打开
 
-这层只验证“部署出来的前端壳层有没有坏”，当前重点覆盖：
+## G. 当前非阻断缺口
 
-- [ ] `/` 能返回 Primoria SPA shell
-- [ ] `/login` 能返回正确的 auth route shell
-- [ ] 入口 HTML 与登录页引用同一份 bootstrap asset
-- [ ] HTML 响应头满足 `cache-control: no-cache`
-- [ ] 静态资源响应头满足 `cache-control: immutable`
-- [ ] 关键安全响应头（如 `x-content-type-options: nosniff`）存在
-
-这层不负责：
-
-- 真实业务写入
-- 真实登录、报名、发布、analytics
-- smoke 账号和真实 Supabase 可用性
-
-## D. Cloud Smoke
-
-推荐命令：
-
-```bash
-VIEWER_BASE_URL=https://<viewer-url> SUPABASE_URL=... SUPABASE_SECRET_KEY=... pnpm --filter @primoria/viewer-react verify:cloud
-```
-
-这层是最接近真实产品链路的浏览器 smoke，当前重点覆盖：
-
-- [ ] 真实学习者登录、首页/课程库/课时主链路
-- [ ] 真实家长登录与 `/parent` 报告主链路
-- [ ] 真实创作者进入 `/builder/dashboard` 与 `/builder/editor/:courseId`
-- [ ] smoke 课程 lesson 改名、保存、发布
-- [ ] 发布后从 Viewer 课程库读回 smoke 课程与 lesson 标题
-- [ ] AI Tutor 基础回复链路可用
-- [ ] 社区笔记/消息至少一条真实持久化路径可用
-- [ ] Dashboard 的 `weekly learners` / `published viewers` / 重点课程 analytics 能读到真实结果
-
-这层不负责：
-
-- 覆盖所有页面的全量回归
-- 替代本地静态检查和 fixture 回归
-
-## 补充说明
-
-- 如果没有 `VIEWER_PREVIEW_URL`，就不要跑 preview smoke。
-- 如果没有真实 Supabase secrets 或 smoke 账号，就不要跑 cloud smoke；CI 应明确输出“跳过原因”，而不是制造假失败。
-- 本清单只描述“应该跑哪类验证”；详细发布、恢复和工作流职责见 [viewer-react-cutover-runbook.md](./viewer-react-cutover-runbook.md)。
+1. Dashboard 收入数据仍是 fallback 派生值。
+2. 部分分析/粉丝操作只有前端入口，后端接口未接入。
+3. Cloud smoke 的 analytics 验证仍依赖已配置的真实 Supabase smoke 凭据。
