@@ -4,7 +4,17 @@ import { defineConfig, loadEnv } from 'vite';
 
 function manualChunks(id: string) {
   if (id.includes('node_modules')) {
-    if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
+    if (
+      id.includes('@tiptap/') ||
+      id.includes('prosemirror') ||
+      id.includes('orderedmap') ||
+      id.includes('rope-sequence') ||
+      id.includes('w3c-keyname') ||
+      id.includes('@floating-ui/')
+    ) {
+      return 'editor-richtext';
+    }
+    if (id.includes('/react/') || id.includes('/scheduler/')) {
       return 'framework';
     }
     if (id.includes('react-router-dom')) {
@@ -39,7 +49,21 @@ export default defineConfig(({ mode }) => {
   return {
     base,
     envDir,
-    plugins: [react()],
+    plugins: [
+      react(),
+      {
+        name: 'require-supabase-env',
+        buildStart() {
+          if (fixtureMode) return;
+          if (!env.VITE_SUPABASE_URL?.trim() || !env.VITE_SUPABASE_ANON_KEY?.trim()) {
+            throw new Error(
+              '[require-supabase-env] Build requires VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.\n' +
+                'For fixture/demo builds, set VITE_VIEWER_DEMO_MODE=1.',
+            );
+          }
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

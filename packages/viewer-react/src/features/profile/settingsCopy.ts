@@ -1,35 +1,29 @@
 import type { ViewerLanguage } from '@/shared/i18n/locale';
 
 export type SettingsSectionId =
-  | 'account'
-  | 'appearance'
-  | 'learning'
-  | 'aiTutor'
-  | 'notifications'
-  | 'privacy'
-  | 'parent'
+  | 'profile'
+  | 'study'
+  | 'assistant'
+  | 'family'
   | 'support';
 
 export type SupportPageId = 'help' | 'feedback' | 'privacy' | 'terms';
 
 const settingsDictionary = {
   'zh-CN': {
-    title: '设置中心',
-    subtitle: '管理你的账号、学习偏好、通知与家长模式。',
+    title: '账号设置',
+    subtitle: '把资料、学习偏好、提醒和家长查看整理在一起。',
     overviewEyebrow: 'Profile Settings',
     overviewRole: '当前身份',
     overviewJoined: '加入时间',
     overviewVersion: '版本信息',
     overviewActiveSection: '当前分区',
     sections: {
-      account: { label: '账号与资料', description: '管理头像、封面、用户名和个人简介。' },
-      appearance: { label: '显示与语言', description: '选择主题模式与界面语言。' },
-      learning: { label: '学习偏好', description: '调整学习体验开关与每日目标。' },
-      aiTutor: { label: 'AI 导师', description: '设置 AI 导师人格，以及是否在首页显示导师形象。' },
-      notifications: { label: '通知与提醒', description: '控制浏览器推送权限与提醒时间。' },
-      privacy: { label: '隐私与数据', description: '管理可见性、社交权限与本地数据行为。' },
-      parent: { label: '家长模式', description: '切换角色并管理孩子绑定能力。' },
-      support: { label: '支持与关于', description: '帮助、反馈、隐私和版本信息。' },
+      profile: { label: '个人资料', description: '管理名字、头像、封面和界面语言。' },
+      study: { label: '学习与提醒', description: '调整学习习惯、目标和提醒方式。' },
+      assistant: { label: '学习助手', description: '决定学习助手的语气和首页陪伴方式。' },
+      family: { label: '家长查看', description: '切换家长身份，管理绑定码和查看入口。' },
+      support: { label: '帮助与隐私', description: '查看帮助、反馈、隐私说明和退出账号。' },
     },
     common: {
       save: '保存更改',
@@ -47,7 +41,7 @@ const settingsDictionary = {
     },
     account: {
       title: '账号与资料',
-      description: '头像和封面先沿用 React 版现有的 URL 方式；保存后同步到 `profiles`。',
+      description: '更新你的名字、头像、封面和个人简介，让别人更容易认出你。',
       username: '用户名',
       bio: '个人简介',
       avatarUrl: '头像 URL',
@@ -61,7 +55,7 @@ const settingsDictionary = {
     },
     appearance: {
       title: '显示与语言',
-      description: '主题与语言会立即应用到当前设置页，同时同步到 `user_settings`。',
+      description: '选择你看着最舒服的主题和语言。',
       theme: '主题模式',
       language: '界面语言',
       system: '跟随系统',
@@ -74,7 +68,7 @@ const settingsDictionary = {
     },
     learning: {
       title: '学习偏好',
-      description: '这些开关保存在当前浏览器，用于还原 Flutter 版的学习体验偏好。',
+      description: '把学习节奏调成更适合你的方式。',
       sound: { label: '声音反馈', hint: '答题与关键操作时播放音效。' },
       haptics: { label: '震动反馈', hint: '在支持设备上启用触觉反馈。' },
       autoplay: { label: '自动播放讲解音频', hint: '进入支持音频的内容时自动播放。' },
@@ -84,21 +78,21 @@ const settingsDictionary = {
       minutesPerDay: '分钟 / 天',
     },
     aiTutor: {
-      title: 'AI 导师',
-      description: '导师人格和首页导师形象会立即应用到当前设备，并同步到你的账号设置。',
-      personalityTitle: '导师人格',
-      personalityHint: '选择 AI 导师默认的引导风格。不同人格会影响 AI 导师页和首页相关文案。',
+      title: '学习助手',
+      description: '调整学习助手的引导方式，让它更像你想要的陪学伙伴。',
+      personalityTitle: '助手语气',
+      personalityHint: '选择学习助手默认的引导风格。不同人格会影响学习助手页和首页相关文案。',
       currentMode: '当前人格',
       examplePrompt: '示例开场',
       homeCompanion: {
-        label: '首页显示 AI 导师形象',
-        hint: '关闭后仅隐藏首页浮动导师形象，AI 导师页面和入口仍然可用。',
+        label: '首页显示学习助手形象',
+        hint: '关闭后只会隐藏首页里的陪伴形象，学习助手入口仍然可以使用。',
       },
-      saveSuccess: 'AI 导师设置已同步。',
+      saveSuccess: '学习助手设置已更新。',
     },
     notifications: {
       title: '通知与提醒',
-      description: '启用通知会请求浏览器权限并注册 Web Push 订阅。每日提醒配置同步到 `user_settings`。',
+      description: '决定什么时候提醒你回来继续学。',
       master: { label: '启用通知', hint: '关闭后不会继续接收学习推送。' },
       dailyReminder: { label: '每日学习提醒', hint: '每天固定时间提醒你继续学习。' },
       reminderTime: '提醒时间',
@@ -113,7 +107,7 @@ const settingsDictionary = {
     },
     privacy: {
       title: '隐私与数据',
-      description: '这些选项保存在本地，用于控制 viewer 的展示和缓存行为。',
+      description: '控制谁能看到你，以及这台设备上保留哪些临时内容。',
       privateProfile: { label: '私密资料页', hint: '仅授权用户可见你的资料页。' },
       shareLearningActivity: { label: '公开学习动态', hint: '允许他人看到你的进度变化。' },
       allowFollowers: { label: '允许被关注', hint: '关闭后新用户无法关注你。' },
@@ -123,34 +117,34 @@ const settingsDictionary = {
       clearCacheDone: '本地缓存已清理。',
     },
     parent: {
-      title: '家长模式',
-      descriptionLearner: '生成绑定码后，家长账号即可关联并查看你的学习报告。',
-      descriptionParent: '你当前是家长账号，可以进入家长看板绑定孩子并查看学习报告。',
+      title: '家长查看',
+      descriptionLearner: '生成绑定码后，家长就能查看你的学习进度和最近报告。',
+      descriptionParent: '你正在使用家长身份，可以进入家长查看页管理孩子和学习报告。',
       currentRole: '当前模式',
       learner: '学习者',
       parent: '家长',
       switching: '切换中…',
-      switchToParent: '切换为家长模式',
-      switchToLearner: '切换为学习者模式',
-      switchSuccessParent: '已切换为家长模式。',
-      switchSuccessLearner: '已切换为学习者模式。',
+      switchToParent: '切换为家长查看',
+      switchToLearner: '切换回学习者',
+      switchSuccessParent: '已切换为家长查看。',
+      switchSuccessLearner: '已切换回学习者。',
       bindingCode: '孩子绑定码',
       bindingCodeEmpty: '尚未生成绑定码，点击下方按钮创建。',
       bindingCodeGenerate: '生成绑定码',
       bindingCodeRefresh: '刷新绑定码',
       bindingCodeCopied: '绑定码已复制。',
       bindingCodeExpires: '有效期至',
-      openDashboard: '打开家长看板',
+      openDashboard: '打开家长查看',
     },
     support: {
-      title: '支持与关于',
-      description: '迁移 Flutter 设置页时，把原先的占位入口都收敛成 viewer 内的正式页面。',
+      title: '帮助与隐私',
+      description: '把常用帮助、隐私说明和退出账号收在一起。',
       help: '帮助中心',
       feedback: '提交反馈',
       privacy: '隐私政策',
       terms: '服务条款',
-      versionLabel: '版本',
-      signOut: '退出当前账号',
+      versionLabel: '当前版本',
+      signOut: '退出账号',
       signOutHint: '退出后需要重新登录才能继续学习。',
       signOutConfirmTitle: '确认退出？',
       signOutConfirmBody: '退出后当前设备的登录状态会被清除。',
@@ -158,55 +152,52 @@ const settingsDictionary = {
     supportPages: {
       help: {
         title: '帮助中心',
-        subtitle: '这里会承接设置页中的产品帮助入口，当前提供 viewer 内部说明和联系落点。',
+        subtitle: '先从这里快速找到常见问题和下一步建议。',
         blocks: [
-          { title: '使用说明', body: '如果你在课程、AI 导师或家长模式中遇到问题，先回到对应页面确认登录状态与网络连接。' },
-          { title: '反馈路径', body: '需要更详细协助时，请前往“提交反馈”页面记录问题、截图和复现步骤。' },
+          { title: '先检查什么', body: '如果课程打不开、消息没同步，先确认网络、登录状态和页面是否刷新完成。' },
+          { title: '还没解决怎么办', body: '把问题页面、出现时间和操作步骤记下来，再去“提交反馈”里发给我们。' },
         ],
       },
       feedback: {
         title: '提交反馈',
-        subtitle: '这里是设置中心的正式反馈落点，用于收集问题、建议和迁移阶段的体验反馈。',
+        subtitle: '告诉我们哪里不顺、哪里不清楚，或者你希望下一步补什么。',
         blocks: [
-          { title: '建议附带信息', body: '推荐附上问题页面、账号角色、出现时间，以及能复现问题的操作步骤。' },
-          { title: '当前占位说明', body: '该页面当前为 viewer 内占位页，后续可接工单系统或 Supabase feedback 表。' },
+          { title: '建议附带信息', body: '建议附上页面名称、账号身份、出现时间，以及你刚刚做了什么。' },
+          { title: '我们最想知道', body: '哪里让你犹豫、哪里信息太多、哪里不像你以为会发生的那样。' },
         ],
       },
       privacy: {
         title: '隐私政策',
-        subtitle: '这里保留设置中心中的隐私政策入口，当前展示 viewer 侧的数据使用范围说明。',
+        subtitle: '这里说明我们会保存什么，以及这些内容用来做什么。',
         blocks: [
-          { title: '账号数据', body: '账号资料、角色、提醒时间等设置会同步到 Supabase 中与你账户关联的表。' },
-          { title: '本地数据', body: '学习偏好和部分临时缓存保留在当前浏览器，用于恢复你的 viewer 使用体验。' },
+          { title: '账号资料', body: '你的名字、头像、身份和提醒设置会跟着账号保存，方便你换设备后继续使用。' },
+          { title: '本机数据', body: '一些学习偏好和临时缓存会留在当前浏览器里，用来帮你更快回到上次状态。' },
         ],
       },
       terms: {
         title: '服务条款',
-        subtitle: '这里是设置中心的服务条款占位页，说明 viewer 当前的能力边界和环境依赖。',
+        subtitle: '这里说明当前产品提供什么、不提供什么，以及你能期待怎样的使用方式。',
         blocks: [
-          { title: '功能边界', body: '部分功能仍处于 React 迁移阶段，界面与数据能力会逐步对齐 Flutter viewer。' },
-          { title: '通知能力', body: '浏览器推送依赖设备权限、service worker 和部署环境中的 VAPID 配置。' },
+          { title: '使用边界', body: '不同页面会持续改进，但不会影响你已经创建的课程、资料和学习记录。' },
+          { title: '提醒说明', body: '提醒是否生效，还会受到浏览器权限和设备设置的影响。' },
         ],
       },
     },
   },
   en: {
-    title: 'Settings Center',
-    subtitle: 'Manage your account, preferences, notifications, and parent mode.',
+    title: 'Account Settings',
+    subtitle: 'Keep your profile, study habits, reminders, and family access in one place.',
     overviewEyebrow: 'Profile Settings',
     overviewRole: 'Role',
     overviewJoined: 'Joined',
     overviewVersion: 'Version',
     overviewActiveSection: 'Active Section',
     sections: {
-      account: { label: 'Account & Profile', description: 'Manage avatar, cover image, username, and bio.' },
-      appearance: { label: 'Appearance & Language', description: 'Choose theme mode and interface language.' },
-      learning: { label: 'Learning Preferences', description: 'Tune learning experience switches and daily goals.' },
-      aiTutor: { label: 'AI Tutor', description: 'Set tutor persona and whether the home companion appears.' },
-      notifications: { label: 'Notifications & Reminders', description: 'Control browser push access and reminder timing.' },
-      privacy: { label: 'Privacy & Data', description: 'Manage visibility, social permissions, and local cache behavior.' },
-      parent: { label: 'Parent Mode', description: 'Switch roles and manage child binding capabilities.' },
-      support: { label: 'Support & About', description: 'Help, feedback, privacy, and version information.' },
+      profile: { label: 'Profile', description: 'Manage your name, image, cover, and interface language.' },
+      study: { label: 'Study & Reminders', description: 'Adjust your habits, goals, and reminder timing.' },
+      assistant: { label: 'Study Helper', description: 'Choose how the helper sounds and shows up.' },
+      family: { label: 'Family Access', description: 'Switch parent access and manage child linking.' },
+      support: { label: 'Help & Privacy', description: 'Open help, feedback, privacy, and sign out.' },
     },
     common: {
       save: 'Save Changes',
@@ -224,7 +215,7 @@ const settingsDictionary = {
     },
     account: {
       title: 'Account & Profile',
-      description: 'Avatar and cover still use the current React URL workflow and save into `profiles`.',
+      description: 'Update the basics so your account feels like yours.',
       username: 'Username',
       bio: 'Bio',
       avatarUrl: 'Avatar URL',
@@ -238,7 +229,7 @@ const settingsDictionary = {
     },
     appearance: {
       title: 'Appearance & Language',
-      description: 'Theme and language apply to settings immediately and sync into `user_settings`.',
+      description: 'Choose the theme and language that feel easiest to use.',
       theme: 'Theme Mode',
       language: 'Interface Language',
       system: 'System',
@@ -251,7 +242,7 @@ const settingsDictionary = {
     },
     learning: {
       title: 'Learning Preferences',
-      description: 'These switches remain browser-local and mirror the Flutter viewer behavior.',
+      description: 'Shape the learning pace that works best for you.',
       sound: { label: 'Sound Effects', hint: 'Play sound during answers and key interactions.' },
       haptics: { label: 'Haptic Feedback', hint: 'Enable tactile feedback on supported devices.' },
       autoplay: { label: 'Auto-play Lesson Audio', hint: 'Automatically start audio on supported content.' },
@@ -261,21 +252,21 @@ const settingsDictionary = {
       minutesPerDay: 'min / day',
     },
     aiTutor: {
-      title: 'AI Tutor',
-      description: 'Tutor persona and the home companion apply immediately on this device and sync to your account settings.',
-      personalityTitle: 'Tutor Persona',
-      personalityHint: 'Choose the default guidance style for AI Tutor. Persona affects the AI Tutor page and related home copy.',
+      title: 'Study Helper',
+      description: 'Adjust how your helper guides you and how much presence it has on home.',
+      personalityTitle: 'Helper tone',
+      personalityHint: 'Choose the default guidance style. It affects the helper page and related home copy.',
       currentMode: 'Current persona',
       examplePrompt: 'Example opener',
       homeCompanion: {
-        label: 'Show AI tutor on home',
-        hint: 'Turning this off only hides the floating home companion. The AI Tutor page and entry points stay available.',
+        label: 'Show helper on home',
+        hint: 'This only hides the home companion. The helper page and entry points stay available.',
       },
-      saveSuccess: 'AI Tutor settings synced.',
+      saveSuccess: 'Study Helper settings updated.',
     },
     notifications: {
       title: 'Notifications & Reminders',
-      description: 'Enabling notifications requests browser permission and registers a Web Push subscription.',
+      description: 'Decide when you want a nudge to come back.',
       master: { label: 'Enable Notifications', hint: 'Turn this off to stop receiving study pushes.' },
       dailyReminder: { label: 'Daily Study Reminder', hint: 'Send a reminder at a fixed time every day.' },
       reminderTime: 'Reminder Time',
@@ -290,7 +281,7 @@ const settingsDictionary = {
     },
     privacy: {
       title: 'Privacy & Data',
-      description: 'These controls remain local to the viewer and affect visibility and cache behavior.',
+      description: 'Control who can see you and what this device remembers.',
       privateProfile: { label: 'Private Profile', hint: 'Only approved users can view your profile.' },
       shareLearningActivity: { label: 'Share Learning Activity', hint: 'Let other users see your progress updates.' },
       allowFollowers: { label: 'Allow Followers', hint: 'Turn this off to stop new follow requests.' },
@@ -300,33 +291,33 @@ const settingsDictionary = {
       clearCacheDone: 'Local cache cleared.',
     },
     parent: {
-      title: 'Parent Mode',
-      descriptionLearner: 'Generate a binding code so a parent account can link to your learning report.',
-      descriptionParent: 'You are using a parent account. Open the dashboard to manage linked children.',
+      title: 'Family Access',
+      descriptionLearner: 'Generate a code so a parent can review your learning progress and reports.',
+      descriptionParent: 'You are using parent access. Open the family view to manage linked children.',
       currentRole: 'Current Mode',
       learner: 'Learner',
       parent: 'Parent',
       switching: 'Switching…',
-      switchToParent: 'Switch to Parent Mode',
-      switchToLearner: 'Switch to Learner Mode',
-      switchSuccessParent: 'Switched to parent mode.',
-      switchSuccessLearner: 'Switched to learner mode.',
+      switchToParent: 'Switch to Parent Access',
+      switchToLearner: 'Switch to Learner',
+      switchSuccessParent: 'Switched to parent access.',
+      switchSuccessLearner: 'Switched back to learner mode.',
       bindingCode: 'Child Binding Code',
       bindingCodeEmpty: 'No active binding code yet. Generate one below.',
       bindingCodeGenerate: 'Generate Code',
       bindingCodeRefresh: 'Refresh Code',
       bindingCodeCopied: 'Binding code copied.',
       bindingCodeExpires: 'Expires at',
-      openDashboard: 'Open Parent Dashboard',
+      openDashboard: 'Open Family View',
     },
     support: {
-      title: 'Support & About',
-      description: 'These entries now land on formal in-viewer pages instead of temporary placeholders.',
+      title: 'Help & Privacy',
+      description: 'Keep help, privacy, feedback, and sign out in one place.',
       help: 'Help Center',
       feedback: 'Send Feedback',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
-      versionLabel: 'Version',
+      versionLabel: 'Current version',
       signOut: 'Sign Out',
       signOutHint: 'You will need to sign in again to continue learning.',
       signOutConfirmTitle: 'Sign out now?',
@@ -335,34 +326,34 @@ const settingsDictionary = {
     supportPages: {
       help: {
         title: 'Help Center',
-        subtitle: 'This page now serves as the in-viewer destination for help links from settings.',
+        subtitle: 'Start here for common questions and quick next steps.',
         blocks: [
-          { title: 'Usage Notes', body: 'If something breaks in courses, AI Tutor, or parent mode, first confirm network connectivity and sign-in state.' },
-          { title: 'Escalation Path', body: 'When you need more support, continue to the feedback page with screenshots and reproduction steps.' },
+          { title: 'Check first', body: 'If a course or message is not loading, first confirm your network, sign-in state, and whether the page finished refreshing.' },
+          { title: 'Still stuck?', body: 'Bring the page name, time, and steps you took into the feedback page so we can follow it clearly.' },
         ],
       },
       feedback: {
         title: 'Send Feedback',
-        subtitle: 'This page is the formal settings destination for issue reports and product suggestions.',
+        subtitle: 'Tell us what felt unclear, too heavy, or not quite how you expected it to work.',
         blocks: [
-          { title: 'Recommended Details', body: 'Include the page, active role, time, and the steps required to reproduce the issue.' },
-          { title: 'Current Placeholder Scope', body: 'This is still an in-viewer placeholder page and can later connect to a real feedback queue.' },
+          { title: 'Helpful details', body: 'Include the page, your current role, the time it happened, and the steps you took.' },
+          { title: 'What matters most', body: 'Tell us where you hesitated, where there was too much information, or what felt off.' },
         ],
       },
       privacy: {
         title: 'Privacy Policy',
-        subtitle: 'This preserves the settings privacy entry and explains the current viewer data boundaries.',
+        subtitle: 'This explains what we keep, and why we keep it.',
         blocks: [
-          { title: 'Account Data', body: 'Profile, role, and reminder settings sync into Supabase tables associated with your account.' },
-          { title: 'Local Data', body: 'Learning preferences and some temporary cache remain in this browser to restore your viewer experience.' },
+          { title: 'Account data', body: 'Your profile, role, and reminder settings stay with your account so your setup can follow you across devices.' },
+          { title: 'Device data', body: 'Some temporary preferences and cache stay in this browser to help you return faster.' },
         ],
       },
       terms: {
         title: 'Terms of Service',
-        subtitle: 'This page documents the current viewer capability boundaries and environment dependencies.',
+        subtitle: 'This explains what the current product supports and how it is meant to be used.',
         blocks: [
-          { title: 'Capability Scope', body: 'Some flows are still being migrated from the Flutter viewer and will continue to evolve.' },
-          { title: 'Notification Requirements', body: 'Browser push depends on permissions, service workers, and deployed VAPID configuration.' },
+          { title: 'Current scope', body: 'Screens will keep improving, but your courses, materials, and learning records stay intact.' },
+          { title: 'Reminder behavior', body: 'Reminders also depend on browser permissions and device settings.' },
         ],
       },
     },
@@ -370,13 +361,10 @@ const settingsDictionary = {
 } as const;
 
 export const settingsSectionOrder: SettingsSectionId[] = [
-  'account',
-  'appearance',
-  'learning',
-  'aiTutor',
-  'notifications',
-  'privacy',
-  'parent',
+  'profile',
+  'study',
+  'assistant',
+  'family',
   'support',
 ];
 

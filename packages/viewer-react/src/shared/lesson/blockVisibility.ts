@@ -43,6 +43,12 @@ export function computeBlockVisibility(
   const visibility = Array.from({ length: blocks.length }, () => true);
 
   for (let index = 0; index < blocks.length; index += 1) {
+    const previousVisible = index === 0 ? true : visibility[index - 1] ?? false;
+    if (!previousVisible) {
+      visibility[index] = false;
+      continue;
+    }
+
     const block = blocks[index]!;
     if (getBlockVisibilityRule(block) !== 'afterPreviousCorrect') {
       visibility[index] = true;

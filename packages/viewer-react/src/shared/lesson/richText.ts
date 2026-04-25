@@ -69,3 +69,11 @@ export function richTextToHtml(value: unknown) {
   return html || '<p><br /></p>';
 }
 
+export function richTextToPlainText(value: unknown) {
+  const text = normalizeRichTextOps(value)
+    .map((op) => op.insert)
+    .join('')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return text;
+}

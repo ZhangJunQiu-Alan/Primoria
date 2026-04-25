@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,6 +5,7 @@ import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { Input, Select } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import { nanoid } from '@/lib/nanoid';
 import type { Block } from '@primoria/schema';
 
@@ -43,13 +43,14 @@ export function FunctionFlowPanel({ block, lessonId, pageId }: FunctionFlowPanel
     nodes?: Array<{ id: string; label: string; type: string }>;
     edges?: Array<{ id: string; from: string; to: string; label?: string }>;
   };
+  const formValues: FormValues = {
+    nodes: (c.nodes as FormValues['nodes']) ?? [],
+    edges: (c.edges as FormValues['edges']) ?? [],
+  };
 
   const { register, watch, control, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      nodes: (c.nodes as FormValues['nodes']) ?? [],
-      edges: (c.edges as FormValues['edges']) ?? [],
-    },
+    defaultValues: formValues,
   });
 
   const { fields: nodeFields, append: appendNode, remove: removeNode } = useFieldArray({
@@ -61,19 +62,15 @@ export function FunctionFlowPanel({ block, lessonId, pageId }: FunctionFlowPanel
     name: 'edges',
   });
 
-  useEffect(() => {
-    reset({
-      nodes: (c.nodes as FormValues['nodes']) ?? [],
-      edges: (c.edges as FormValues['edges']) ?? [],
-    });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(updateBlock({ lessonId, pageId, block: { ...block, content: values } }));
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   const nodes = watch('nodes');
 

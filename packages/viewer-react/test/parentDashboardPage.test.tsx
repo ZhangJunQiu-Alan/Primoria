@@ -7,7 +7,7 @@ describe('ParentDashboardPage', () => {
     const user = userEvent.setup();
     renderRoute('/parent', 'parent');
 
-    expect(await screen.findByRole('heading', { name: /家长看板/i }, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /家长查看/i }, { timeout: 10000 })).toBeInTheDocument();
     expect(await screen.findByPlaceholderText(/输入孩子绑定码/i, {}, { timeout: 10000 })).toBeInTheDocument();
 
     await user.type(await screen.findByPlaceholderText(/输入孩子绑定码/i, {}, { timeout: 10000 }), 'DEMO-2419');

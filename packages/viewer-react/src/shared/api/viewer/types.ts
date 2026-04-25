@@ -24,6 +24,124 @@ export type ViewerCourse = {
   published_at: string | null;
 };
 
+export type ViewerOwnedCourse = ViewerCourse & {
+  status: string;
+  updated_at: string | null;
+};
+
+export type TutorDocument = {
+  id: string;
+  filename: string;
+  display_title: string | null;
+  mime_type: string;
+  extracted_chars: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type LegacyMindMapNode = {
+  id: string;
+  label: string;
+  children?: LegacyMindMapNode[];
+};
+
+export type MindMapLink = {
+  id: string;
+  label: string;
+  url: string;
+};
+
+export type MindMapThemePreset = 'sage' | 'amber' | 'stone';
+export type MindMapLayoutMode = 'balanced';
+export type MindMapConnectionStyle = 'curve';
+export type MindMapNodeShape = 'capsule' | 'rounded' | 'underline';
+export type MindMapNodeFill = 'auto' | 'sage' | 'amber' | 'stone' | 'slate';
+export type MindMapBranchColor = 'auto' | 'sage' | 'amber' | 'stone' | 'rose' | 'slate';
+export type MindMapMarker =
+  | 'priority-high'
+  | 'priority-medium'
+  | 'status-active'
+  | 'status-done'
+  | 'star';
+
+export type MindMapTheme = {
+  preset: MindMapThemePreset;
+};
+
+export type MindMapLayout = {
+  mode: MindMapLayoutMode;
+  connectionStyle: MindMapConnectionStyle;
+};
+
+export type MindMapNodeStyle = {
+  shape: MindMapNodeShape;
+  fill: MindMapNodeFill;
+  emphasis: 'normal' | 'strong';
+  branchColor: MindMapBranchColor;
+};
+
+export type MindMapNode = {
+  id: string;
+  parentId: string | null;
+  childIds: string[];
+  label: string;
+  collapsed: boolean;
+  icon: string | null;
+  tags: string[];
+  markers: MindMapMarker[];
+  style: MindMapNodeStyle;
+  noteHtml: string;
+  imageUrl: string | null;
+  links: MindMapLink[];
+  documentRefs: string[];
+};
+
+export type MindMapDocument = {
+  id: string;
+  title: string;
+  sourceDocumentIds: string[];
+  userPrompt: string;
+  theme: MindMapTheme;
+  layout: MindMapLayout;
+  rootNodeId: string;
+  nodes: Record<string, MindMapNode>;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type MindMapSummary = {
+  id: string;
+  title: string;
+  sourceDocumentIds: string[];
+  nodeCount: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateMindMapFromDocsRequest = {
+  documentIds: string[];
+  prompt?: string;
+};
+
+export type CreateMindMapFromDocsResponse = {
+  title: string;
+  mindMapId: string;
+  root: LegacyMindMapNode;
+};
+
+export type QuizOutputLanguage = 'en' | 'zh-CN';
+
+export type CreateQuizFromDocsRequest = {
+  documentIds: string[];
+  questionCount: number;
+  language: QuizOutputLanguage;
+};
+
+export type CreateQuizFromDocsResponse = {
+  courseId: string;
+  courseTitle: string;
+};
+
 export type ViewerEnrollment = {
   id?: string;
   course_id: string;
@@ -248,7 +366,16 @@ export type CommunityNote = {
   body: string;
   content_language?: string | null;
   room_id: string | null;
+  lesson_id: string | null;
   updated_at: string;
+};
+
+export type CommunityNoteInput = {
+  id?: string;
+  title: string;
+  body: string;
+  room_id?: string | null;
+  lesson_id?: string | null;
 };
 
 export type CommunityWorkspace = {

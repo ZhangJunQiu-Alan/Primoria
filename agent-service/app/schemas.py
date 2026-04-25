@@ -12,6 +12,12 @@ class ChatContext(BaseModel):
     lesson_id: str | None = None
     block_id: str | None = None
     locale: str | None = None
+    lesson_title: str | None = None
+    page_index: int | None = None
+    page_count: int | None = None
+    page_title: str | None = None
+    page_content: str | None = None
+    learner_state: str | None = None
 
 
 class ChatRequest(BaseModel):

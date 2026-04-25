@@ -670,6 +670,85 @@ button.viewer-button-flat:focus-visible {
     0 12px 20px rgba(90, 70, 50, 0.08);
 }
 
+.viewer-botanical-button--lesson-prev {
+  min-height: 3.7rem;
+  border: 1px solid #d8d0c3;
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(246, 240, 230, 0.94));
+  color: #8d7e70;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 7px 0 rgba(214, 203, 191, 0.96),
+    0 16px 24px rgba(90, 70, 50, 0.08);
+}
+
+.viewer-botanical-button--ai {
+  position: relative;
+  min-height: 3.7rem;
+  border: 1px solid rgba(162, 175, 255, 0.56);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(247, 244, 255, 0.96)),
+    linear-gradient(115deg, #76dbff 0%, #7ea8ff 22%, #9c8cff 45%, #d986ff 68%, #ff9ac5 86%, #ffc47f 100%);
+  color: #4d4472;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 7px 0 rgba(194, 186, 221, 0.96),
+    0 20px 34px rgba(150, 132, 232, 0.24);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.viewer-botanical-button--ai::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(126, 233, 255, 0.44), transparent 32%),
+    radial-gradient(circle at 82% 24%, rgba(245, 148, 255, 0.3), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.76));
+  z-index: -2;
+}
+
+.viewer-botanical-button--ai::after {
+  content: '';
+  position: absolute;
+  top: -34%;
+  left: -18%;
+  width: 34%;
+  height: 180%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  transform: rotate(22deg);
+  opacity: 0.8;
+  transition: transform 300ms ease;
+  z-index: -1;
+}
+
+.viewer-botanical-button--ai:hover::after {
+  transform: translateX(320%) rotate(22deg);
+}
+
+.viewer-botanical-button--lesson-next {
+  min-height: 3.7rem;
+  border: 1px solid #9fcca9;
+  background: linear-gradient(145deg, #7ebb8a 0%, #4f9961 100%);
+  color: #f7fff9;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 7px 0 rgba(68, 132, 84, 0.94),
+    0 18px 30px rgba(91, 161, 108, 0.24);
+}
+
+.viewer-botanical-button--lesson-next:disabled {
+  opacity: 1;
+  border-color: #d3e8d7;
+  background: linear-gradient(145deg, #dcefdc 0%, #c9e3cb 100%);
+  color: #f9fffb;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 7px 0 rgba(187, 211, 190, 0.96),
+    0 16px 28px rgba(122, 158, 126, 0.12);
+}
+
 .viewer-botanical-notice {
   border-radius: 22px;
   border: 1px solid var(--viewer-border);
@@ -916,26 +995,25 @@ button.viewer-button-flat:focus-visible {
 }
 
 .viewer-dock-shell {
-  pointer-events: none;
   position: fixed;
-  left: 0;
-  right: 0;
+  left: 50%;
   bottom: 0;
   z-index: 50;
   display: flex;
   justify-content: center;
+  width: min(calc(100vw - 1.5rem), 800px);
   padding:
-    0 0.75rem
+    0
     calc(var(--viewer-dock-offset) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
 }
 
 .viewer-dock {
-  pointer-events: auto;
   display: flex;
   align-items: stretch;
   justify-content: space-between;
   gap: 0;
-  width: min(calc(100vw - 1.5rem), 800px);
+  width: 100%;
   min-height: var(--viewer-dock-height);
   padding: 0;
   border-radius: 999px;
@@ -1015,13 +1093,10 @@ button.viewer-button-flat:focus-visible {
 
 @media (max-width: 767px) {
   .viewer-dock-shell {
-    padding:
-      0 0.5rem
-      calc(var(--viewer-dock-offset) + env(safe-area-inset-bottom));
-  }
-
-  .viewer-dock {
     width: min(calc(100vw - 1rem), 560px);
+    padding:
+      0
+      calc(var(--viewer-dock-offset) + env(safe-area-inset-bottom));
   }
 
   .viewer-dock__item {
@@ -1063,6 +1138,18 @@ button.viewer-button-flat:focus-visible {
   }
   50% {
     transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes landing-stage-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -1122,4 +1209,28 @@ button.viewer-button-flat:focus-visible {
 .viewer-float-fast {
   animation: viewer-float 5.4s ease-in-out infinite;
   animation-delay: 1.2s;
+}
+
+.landing-stage-enter {
+  animation: landing-stage-enter 0.72s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.landing-stage-enter-delay-1 {
+  animation-delay: 0.12s;
+}
+
+.landing-stage-enter-delay-2 {
+  animation-delay: 0.24s;
+}
+
+.landing-panel-hover {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.landing-panel-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 32px 70px rgba(42, 52, 78, 0.12);
 }

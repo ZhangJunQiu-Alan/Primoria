@@ -6,12 +6,21 @@
     "db:types:check": "node scripts/check-db-types.js",
     "dev:viewer": "pnpm --filter @primoria/viewer-react dev",
     "build:viewer": "pnpm --filter @primoria/viewer-react build",
+    "seed:author-courses": "node ./scripts/seed-author-courses.mjs",
     "test": "pnpm -r test",
+    "test:functions": "deno test --allow-env supabase/functions/",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"
   },
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "typescript-eslint": "^8.58.2"
   }
 }

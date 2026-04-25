@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/shared/state/store';
 import { cn } from '@/shared/utils/cn';
 import { type ViewerLanguage } from '@/shared/i18n/locale';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { useCoreCopy } from '@/shared/theme/coreCopy';
 
 const options: ViewerLanguage[] = ['zh-CN', 'en'];
 
@@ -19,7 +19,7 @@ export function LanguageSwitcher({
 }) {
   const dispatch = useAppDispatch();
   const language = useProductLanguage();
-  const copy = useViewerCopy();
+  const copy = useCoreCopy();
 
   return (
     <div

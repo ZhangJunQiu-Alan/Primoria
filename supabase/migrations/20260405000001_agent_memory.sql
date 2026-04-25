@@ -15,32 +15,22 @@ CREATE TABLE public.agent_threads (
     updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     last_message_at  TIMESTAMPTZ
 );
-
 CREATE INDEX idx_agent_threads_user_updated
     ON public.agent_threads(user_id, updated_at DESC);
-
 CREATE INDEX idx_agent_threads_user_surface
     ON public.agent_threads(user_id, surface);
-
 CREATE TRIGGER trg_agent_threads_updated_at
     BEFORE UPDATE ON public.agent_threads
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
 ALTER TABLE public.agent_threads ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "agent_threads_select_own"
     ON public.agent_threads FOR SELECT USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_threads_insert_own"
     ON public.agent_threads FOR INSERT WITH CHECK (auth.uid() = user_id);
-
 CREATE POLICY "agent_threads_update_own"
     ON public.agent_threads FOR UPDATE USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_threads_delete_own"
     ON public.agent_threads FOR DELETE USING (auth.uid() = user_id);
-
-
 CREATE TABLE public.agent_thread_messages (
     id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     thread_id      TEXT NOT NULL REFERENCES public.agent_threads(id) ON DELETE CASCADE,
@@ -52,28 +42,19 @@ CREATE TABLE public.agent_thread_messages (
     metadata       JSONB NOT NULL DEFAULT '{}'::JSONB,
     created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
 CREATE INDEX idx_agent_thread_messages_thread_created
     ON public.agent_thread_messages(thread_id, created_at ASC);
-
 CREATE INDEX idx_agent_thread_messages_user_created
     ON public.agent_thread_messages(user_id, created_at DESC);
-
 ALTER TABLE public.agent_thread_messages ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "agent_thread_messages_select_own"
     ON public.agent_thread_messages FOR SELECT USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_thread_messages_insert_own"
     ON public.agent_thread_messages FOR INSERT WITH CHECK (auth.uid() = user_id);
-
 CREATE POLICY "agent_thread_messages_update_own"
     ON public.agent_thread_messages FOR UPDATE USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_thread_messages_delete_own"
     ON public.agent_thread_messages FOR DELETE USING (auth.uid() = user_id);
-
-
 CREATE TABLE public.agent_thread_checkpoints (
     id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     thread_id             TEXT NOT NULL REFERENCES public.agent_threads(id) ON DELETE CASCADE,
@@ -87,28 +68,19 @@ CREATE TABLE public.agent_thread_checkpoints (
     created_at            TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (thread_id, checkpoint_ns, checkpoint_id)
 );
-
 CREATE INDEX idx_agent_thread_checkpoints_thread_created
     ON public.agent_thread_checkpoints(thread_id, created_at DESC);
-
 CREATE INDEX idx_agent_thread_checkpoints_user_created
     ON public.agent_thread_checkpoints(user_id, created_at DESC);
-
 ALTER TABLE public.agent_thread_checkpoints ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "agent_thread_checkpoints_select_own"
     ON public.agent_thread_checkpoints FOR SELECT USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_thread_checkpoints_insert_own"
     ON public.agent_thread_checkpoints FOR INSERT WITH CHECK (auth.uid() = user_id);
-
 CREATE POLICY "agent_thread_checkpoints_update_own"
     ON public.agent_thread_checkpoints FOR UPDATE USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_thread_checkpoints_delete_own"
     ON public.agent_thread_checkpoints FOR DELETE USING (auth.uid() = user_id);
-
-
 CREATE TABLE public.agent_memories (
     id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id            UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
@@ -133,43 +105,30 @@ CREATE TABLE public.agent_memories (
     created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
 CREATE INDEX idx_agent_memories_user_scope_updated
     ON public.agent_memories(user_id, scope_type, updated_at DESC);
-
 CREATE INDEX idx_agent_memories_user_scope_key
     ON public.agent_memories(user_id, scope_key, updated_at DESC);
-
 CREATE INDEX idx_agent_memories_user_kind_updated
     ON public.agent_memories(user_id, kind, updated_at DESC);
-
 CREATE INDEX idx_agent_memories_user_course_lesson
     ON public.agent_memories(user_id, course_id, lesson_id, updated_at DESC);
-
 CREATE INDEX idx_agent_memories_user_day
     ON public.agent_memories(user_id, day_key DESC);
-
 CREATE INDEX idx_agent_memories_user_active
     ON public.agent_memories(user_id, is_active, is_summary, updated_at DESC);
-
 CREATE INDEX idx_agent_memories_fingerprint
     ON public.agent_memories(user_id, fingerprint)
     WHERE fingerprint IS NOT NULL;
-
 CREATE TRIGGER trg_agent_memories_updated_at
     BEFORE UPDATE ON public.agent_memories
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
 ALTER TABLE public.agent_memories ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "agent_memories_select_own"
     ON public.agent_memories FOR SELECT USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_memories_insert_own"
     ON public.agent_memories FOR INSERT WITH CHECK (auth.uid() = user_id);
-
 CREATE POLICY "agent_memories_update_own"
     ON public.agent_memories FOR UPDATE USING (auth.uid() = user_id);
-
 CREATE POLICY "agent_memories_delete_own"
     ON public.agent_memories FOR DELETE USING (auth.uid() = user_id);

@@ -12,8 +12,9 @@ import {
   PasswordVisibilityButton,
 } from '@/features/public/BuilderAuthLayout';
 import { getFieldErrors, loginSchema, passwordResetSchema } from '@/features/public/builderAuthSchemas';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { usePublicCopy } from '@/features/public/publicCopy';
 import { supabase } from '@/shared/api/supabase';
+import { useDocumentMeta } from '@/shared/i18n/documentMeta';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { buildAuthCallbackUrl, readReturnTo } from '@/shared/utils/authRedirect';
 import { publicAssetPath } from '@/shared/utils/publicAsset';
@@ -23,7 +24,7 @@ type AuthMode = 'signin' | 'forgot';
 type Provider = 'google' | 'apple' | 'email' | null;
 
 export function LoginPage() {
-  const copy = useViewerCopy();
+  const copy = usePublicCopy();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [mode, setMode] = useState<AuthMode>('signin');
@@ -38,6 +39,7 @@ export function LoginPage() {
   const isSubmitting = loadingProvider === 'email';
   const returnTo = readReturnTo(`?${searchParams.toString()}`);
   const registerPath = `/register?returnTo=${encodeURIComponent(returnTo)}`;
+  useDocumentMeta(copy.meta.login);
 
   async function handleOAuth(provider: 'google' | 'apple') {
     setLoadingProvider(provider);
@@ -142,7 +144,7 @@ export function LoginPage() {
 
       <AuthDivider />
 
-      <section className="auth-form-block" aria-label={copy.auth.emailSectionTitle}>
+      <section className="auth-form-block" aria-label={copy.layout.emailSignInForm}>
         <div className="auth-form-block__header">
           <h3 className="auth-form-block__title">
             {isForgotMode ? copy.auth.forgotModeTitle : copy.auth.emailSectionTitle}

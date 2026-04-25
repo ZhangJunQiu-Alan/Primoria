@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import type { PointerEvent as ReactPointerEvent } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { BookOpenText, ChevronRight, Flame, Menu, Sparkles, Users } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -147,11 +148,11 @@ function StatBlock({
   label: string;
 }) {
   return (
-    <div className="flex items-center gap-3.5">
-      <div className={cn('flex h-12 w-12 items-center justify-center rounded-[18px] border border-[#ddd3c3]', iconBoxClass)}>{icon}</div>
-      <div>
-        <div className="text-[2.05rem] font-semibold text-[#3d342a]">{value}</div>
-        <div className="text-[0.92rem] font-bold text-[#8d8176]">{label}</div>
+    <div className="flex items-center gap-3">
+      <div className={cn('flex h-11 w-11 items-center justify-center rounded-[16px] border border-[#ddd3c3]', iconBoxClass)}>{icon}</div>
+      <div className="flex min-w-0 items-end gap-2.5">
+        <div className="shrink-0 text-[2.05rem] font-semibold leading-none text-[#3d342a]">{value}</div>
+        <div className="truncate pb-0.5 text-[0.92rem] font-bold leading-none text-[#8d8176]">{label}</div>
       </div>
     </div>
   );
@@ -199,8 +200,10 @@ export function ProfilePage() {
   const isChinese = language === 'zh-CN';
   const user = useAppSelector((state) => state.auth.user);
   const heatmapViewportRef = useRef<HTMLDivElement | null>(null);
+  const heatmapDragStateRef = useRef<{ pointerId: number; startX: number; startScrollLeft: number } | null>(null);
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
   const [heatmapCellSize, setHeatmapCellSize] = useState(14);
+  const [isDraggingHeatmap, setIsDraggingHeatmap] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileText = isChinese
     ? {
@@ -364,8 +367,9 @@ export function ProfilePage() {
   const labelColumnWidth = 20;
   const labelGap = 12;
   const heatmapInnerPadding = 8;
+  const heatmapRightPadding = 12;
   const gridWidth = weekCount * heatmapCellSize + Math.max(weekCount - 1, 0) * cellGap;
-  const heatmapContentWidth = gridWidth + labelColumnWidth + labelGap + heatmapInnerPadding;
+  const heatmapContentWidth = gridWidth + labelColumnWidth + labelGap + heatmapInnerPadding + heatmapRightPadding;
 
   useEffect(() => {
     const viewport = heatmapViewportRef.current;
@@ -379,7 +383,7 @@ export function ProfilePage() {
         return;
       }
 
-      const usableWidth = viewportWidth - labelColumnWidth - labelGap - heatmapInnerPadding;
+      const usableWidth = viewportWidth - labelColumnWidth - labelGap - heatmapInnerPadding - heatmapRightPadding;
       const nextCellSize = Math.floor((usableWidth - Math.max(weekCount - 1, 0) * cellGap) / weekCount);
       setHeatmapCellSize(Math.max(12, Math.min(24, nextCellSize)));
     };
@@ -397,7 +401,48 @@ export function ProfilePage() {
     observer.observe(viewport);
 
     return () => observer.disconnect();
-  }, [cellGap, labelColumnWidth, labelGap, heatmapInnerPadding, weekCount]);
+  }, [cellGap, labelColumnWidth, labelGap, heatmapInnerPadding, heatmapRightPadding, weekCount]);
+
+  const handleHeatmapPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const viewport = heatmapViewportRef.current;
+    if (!viewport || viewport.scrollWidth <= viewport.clientWidth) {
+      return;
+    }
+
+    heatmapDragStateRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: viewport.scrollLeft,
+    };
+
+    if (typeof event.currentTarget.setPointerCapture === 'function') {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    setIsDraggingHeatmap(true);
+  };
+
+  const handleHeatmapPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const viewport = heatmapViewportRef.current;
+    const dragState = heatmapDragStateRef.current;
+    if (!viewport || !dragState || dragState.pointerId !== event.pointerId) {
+      return;
+    }
+
+    event.preventDefault();
+    viewport.scrollLeft = dragState.startScrollLeft - (event.clientX - dragState.startX);
+  };
+
+  const stopHeatmapDragging = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (heatmapDragStateRef.current?.pointerId !== event.pointerId) {
+      return;
+    }
+
+    if (typeof event.currentTarget.releasePointerCapture === 'function' && event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    heatmapDragStateRef.current = null;
+    setIsDraggingHeatmap(false);
+  };
 
   useEffect(() => {
     if (!isProfileMenuOpen) {
@@ -565,8 +610,8 @@ export function ProfilePage() {
             </p>
           </div>
 
-          <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] p-4 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
-            <div className="grid gap-4 md:grid-cols-2">
+          <div className="mt-6 rounded-[24px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.9)] px-4 py-3 shadow-[0_18px_42px_rgba(90,70,50,0.08)]">
+            <div className="grid gap-3 md:grid-cols-2">
               <StatBlock
                 icon={<BookOpenText size={28} />}
                 iconBoxClass="bg-[#edf5ec] text-[#5c7d60]"
@@ -579,7 +624,7 @@ export function ProfilePage() {
                 value={formatCompactStat(stats?.total_xp ?? 0, language)}
                 label={profileText.totalXp}
               />
-              <div className="border-t border-[#edf2f8] pt-4 md:border-t">
+              <div className="border-t border-[#edf2f8] pt-3 md:border-t">
                 <StatBlock
                   icon={<Flame size={28} />}
                   iconBoxClass="bg-[#f7ede2] text-[#b46f53]"
@@ -587,7 +632,7 @@ export function ProfilePage() {
                   label={profileText.dayStreak}
                 />
               </div>
-              <div className="border-t border-[#edf2f8] pt-4 md:border-t">
+              <div className="border-t border-[#edf2f8] pt-3 md:border-t">
                 <StatBlock
                   icon={<Users size={28} />}
                   iconBoxClass="bg-[#f3edf7] text-[#7f6f88]"
@@ -617,8 +662,19 @@ export function ProfilePage() {
               </div>
             </div>
 
-            <div ref={heatmapViewportRef} className="viewer-scrollbar-hidden mt-5 overflow-x-auto pb-1">
-              <div style={{ minWidth: `${heatmapContentWidth}px` }}>
+            <div
+              ref={heatmapViewportRef}
+              className={cn(
+                'viewer-scrollbar-hidden mt-5 overflow-x-auto pb-1 select-none',
+                isDraggingHeatmap ? 'cursor-grabbing' : 'cursor-grab',
+              )}
+              onPointerDown={handleHeatmapPointerDown}
+              onPointerMove={handleHeatmapPointerMove}
+              onPointerUp={stopHeatmapDragging}
+              onPointerCancel={stopHeatmapDragging}
+              style={{ touchAction: 'pan-y' }}
+            >
+              <div className="pr-3" style={{ minWidth: `${heatmapContentWidth}px` }}>
                 <div className="relative ml-8 h-5" style={{ width: `${gridWidth}px` }}>
                   {heatmapData.markers.map((marker) => (
                     <div

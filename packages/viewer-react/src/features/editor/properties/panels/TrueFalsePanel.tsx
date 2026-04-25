@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { FormField, Input, Textarea } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import type { Block } from '@primoria/schema';
 
 const schema = z.object({
@@ -24,26 +24,26 @@ interface TrueFalsePanelProps {
 export function TrueFalsePanel({ block, lessonId, pageId }: TrueFalsePanelProps) {
   const dispatch = useAppDispatch();
   const c = block.content as { statement?: string; isTrue?: boolean; explanation?: string };
+  const formValues: FormValues = {
+    statement: c.statement ?? '',
+    isTrue: c.isTrue ?? true,
+    explanation: c.explanation ?? '',
+  };
 
   const { register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      statement: c.statement ?? '',
-      isTrue: c.isTrue ?? true,
-      explanation: c.explanation ?? '',
-    },
+    defaultValues: formValues,
   });
 
-  useEffect(() => {
-    reset({ statement: c.statement ?? '', isTrue: c.isTrue ?? true, explanation: c.explanation ?? '' });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(updateBlock({ lessonId, pageId, block: { ...block, content: values } }));
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   return (
     <div className="space-y-4">

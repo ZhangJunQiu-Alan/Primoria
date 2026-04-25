@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { FormField, Input, Select } from '../FormField';
+import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import type { Block } from '@primoria/schema';
 
 const schema = z.object({
@@ -35,32 +35,27 @@ export function VideoPanel({ block, lessonId, pageId }: VideoPanelProps) {
     caption?: string;
     autoplay?: boolean;
   };
+  const formValues: FormValues = {
+    provider: c.provider ?? 'youtube',
+    url: c.url ?? '',
+    caption: c.caption ?? '',
+    autoplay: c.autoplay ?? false,
+  };
 
   const { register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      provider: c.provider ?? 'youtube',
-      url: c.url ?? '',
-      caption: c.caption ?? '',
-      autoplay: c.autoplay ?? false,
-    },
+    defaultValues: formValues,
   });
 
-  useEffect(() => {
-    reset({
-      provider: c.provider ?? 'youtube',
-      url: c.url ?? '',
-      caption: c.caption ?? '',
-      autoplay: c.autoplay ?? false,
-    });
-  }, [block.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const sub = watch((values) => {
+  useSyncedInspectorForm({
+    entityKey: block.id,
+    sourceValues: formValues,
+    reset,
+    watch,
+    onChange: (values) => {
       dispatch(updateBlock({ lessonId, pageId, block: { ...block, content: values } }));
-    });
-    return () => sub.unsubscribe();
-  }, [watch, block, lessonId, pageId, dispatch]);
+    },
+  });
 
   const url = watch('url') ?? '';
   const provider = watch('provider');
