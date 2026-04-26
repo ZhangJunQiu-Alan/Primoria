@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
-import { supabase } from '@/lib/supabase';
 import { FormField, Input, Select, Textarea } from '../FormField';
 import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
 import type { Block } from '@primoria/schema';
@@ -42,7 +41,6 @@ interface InteractiveVisualPanelProps {
 
 export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveVisualPanelProps) {
   const dispatch = useAppDispatch();
-  const [generating, setGenerating] = useState(false);
   const [genError, setGenError] = useState<string | null>(null);
   const c = block.content as {
     template?: string;
@@ -79,32 +77,7 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
   });
 
   async function handleGenerate() {
-    const prompt = (block.content as { aiPrompt?: string }).aiPrompt ?? '';
-    if (!prompt.trim()) {
-      setGenError('Enter an AI prompt first.');
-      return;
-    }
-    setGenerating(true);
-    setGenError(null);
-    try {
-      const { data, error } = await supabase.functions.invoke('gemini-generate', {
-        body: { prompt },
-      });
-      if (error) throw error;
-      const html = typeof data === 'string' ? data : (data as { html?: string }).html ?? '';
-      if (!html) throw new Error('No HTML returned from AI');
-      dispatch(
-        updateBlock({
-          lessonId,
-          pageId,
-          block: { ...block, content: { ...(block.content as object), generatedHtml: html } },
-        }),
-      );
-    } catch (err) {
-      setGenError(err instanceof Error ? err.message : 'Generation failed');
-    } finally {
-      setGenerating(false);
-    }
+    setGenError('AI generation is being migrated to the new agent-service backend and is temporarily unavailable.');
   }
 
   return (
@@ -134,10 +107,11 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
 
       <button
         onClick={() => void handleGenerate()}
-        disabled={generating}
-        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+        disabled
+        title="AI generation is being migrated to the new agent-service backend"
+        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground opacity-50 cursor-not-allowed transition-colors"
       >
-        {generating ? 'Generating…' : '✨ Generate with AI'}
+        ✨ Generate with AI (maintenance)
       </button>
 
       {genError && (
