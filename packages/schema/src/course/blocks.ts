@@ -141,6 +141,7 @@ export const InteractiveVisualContentSchema = z.object({
   version: z.string().optional(),
   engine: z.string().optional(),
   template: z.string(),
+  experienceMode: z.enum(['simulation', 'graph', 'scenario', 'story']).optional(),
   title: z.string().optional(),
   description: z.string().optional(),
   initialState: z.record(z.unknown()).optional(),

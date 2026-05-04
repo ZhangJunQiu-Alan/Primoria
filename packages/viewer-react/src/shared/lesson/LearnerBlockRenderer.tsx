@@ -1,5 +1,5 @@
 import { useId, useMemo } from 'react';
-import { BlockRenderer } from '@/shared/lesson/BlockRenderer';
+import { BlockRenderer, type InteractiveVisualAnalyticsContext } from '@/shared/lesson/BlockRenderer';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
 import type { QuestionEvaluation, QuestionResponse } from '@/shared/lesson/questionFlow';
 import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
@@ -15,12 +15,14 @@ export function LearnerBlockRenderer({
   evaluation,
   locked = false,
   onResponseChange,
+  analyticsContext,
 }: {
   block: LessonBlock;
   response?: QuestionResponse;
   evaluation?: QuestionEvaluation;
   locked?: boolean;
   onResponseChange?: (response: QuestionResponse) => void;
+  analyticsContext?: InteractiveVisualAnalyticsContext;
 }) {
   if (block.type === 'sorting') {
     return (
@@ -76,7 +78,7 @@ export function LearnerBlockRenderer({
         />
       );
     default:
-      return <BlockRenderer block={block} />;
+      return <BlockRenderer block={block} analyticsContext={analyticsContext} />;
   }
 }
 

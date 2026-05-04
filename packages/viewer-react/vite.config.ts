@@ -42,6 +42,8 @@ function manualChunks(id: string) {
 export default defineConfig(({ mode }) => {
   const envDir = path.resolve(__dirname, '../..');
   const env = loadEnv(mode, envDir, '');
+  const supabaseUrl = env.VITE_SUPABASE_URL?.trim() || env.SUPABASE_URL?.trim() || '';
+  const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY?.trim() || env.SUPABASE_ANON_KEY?.trim() || '';
   const fixtureMode = mode === 'test' || env.VITE_VIEWER_DEMO_MODE === '1';
   const requestedBase = env.VITE_PUBLIC_BASE_PATH?.trim() || '/';
   const base = requestedBase === '/' ? '/' : requestedBase.endsWith('/') ? requestedBase : `${requestedBase}/`;
@@ -55,7 +57,7 @@ export default defineConfig(({ mode }) => {
         name: 'require-supabase-env',
         buildStart() {
           if (fixtureMode) return;
-          if (!env.VITE_SUPABASE_URL?.trim() || !env.VITE_SUPABASE_ANON_KEY?.trim()) {
+          if (!supabaseUrl || !supabaseAnonKey) {
             throw new Error(
               '[require-supabase-env] Build requires VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.\n' +
                 'For fixture/demo builds, set VITE_VIEWER_DEMO_MODE=1.',
@@ -68,6 +70,10 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': path.resolve(__dirname, './src'),
       },
+    },
+    define: {
+      'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(supabaseUrl),
+      'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(supabaseAnonKey),
     },
     server: {
       host: '127.0.0.1',

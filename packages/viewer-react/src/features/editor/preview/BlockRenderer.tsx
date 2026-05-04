@@ -1,6 +1,13 @@
 import { cn } from '@/lib/utils';
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
+import { trackInteractiveVisualAnalyticsEvent } from '@/shared/api/viewer/interactiveVisualAnalyticsApi';
+import { InteractiveVisualEmbed } from '@/shared/interactive/InteractiveVisualEmbed';
+import {
+  getInteractiveVisualGenerationPreview,
+  getInteractiveVisualModeOption,
+  inferInteractiveVisualMode,
+} from '@/shared/interactive/interactiveVisualModes';
 import { richTextToHtml } from '../richText';
 
 interface BlockRendererProps {
@@ -188,18 +195,68 @@ function BlockContent({ block }: { block: Block }) {
 
     // ── Interactive visual ────────────────────────────────────────────────────
     case 'interactive-visual':
-      return (
-        <div className="rounded-lg border bg-muted/30 p-6 text-center space-y-1">
-          <div className="text-2xl">🔭</div>
-          <p className="font-medium text-sm">{String(c['title'] ?? 'Interactive Visual')}</p>
-          <p className="text-xs text-muted-foreground">
-            Template: <span className="font-mono">{String(c['template'] ?? '')}</span>
-          </p>
-          <p className="text-xs text-muted-foreground italic">
-            Rendered in full player
-          </p>
-        </div>
-      );
+      return (() => {
+        const generatedHtml = String(c['generatedHtml'] ?? c['legacyCustomHtml'] ?? '').trim();
+        const title = String(c['title'] ?? 'AI Element');
+        const mode = inferInteractiveVisualMode(
+          String(c['aiPrompt'] ?? ''),
+          typeof c['experienceMode'] === 'string' ? c['experienceMode'] : null,
+        );
+        const modeOption = getInteractiveVisualModeOption(mode);
+        const generationPreview = getInteractiveVisualGenerationPreview({
+          mode,
+          prompt: String(c['aiPrompt'] ?? ''),
+          template: String(c['template'] ?? 'generic'),
+        });
+
+        if (!generatedHtml) {
+          return (
+            <div className="rounded-[22px] border border-dashed border-[#d7d8d3] bg-[rgba(247,250,252,0.68)] p-6 text-left space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="text-2xl">✨</div>
+                  <p className="mt-2 font-semibold text-sm text-foreground">{title}</p>
+                </div>
+                <span className="rounded-full bg-[rgba(116,189,240,0.14)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#3477ae]">
+                  {modeOption.shortLabel}
+                </span>
+              </div>
+              <div className="rounded-[18px] border border-white/80 bg-white/80 px-4 py-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7a8ea2]">{generationPreview.title}</p>
+                <p className="mt-2 text-sm text-foreground">{generationPreview.promptHint}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{generationPreview.detail}</p>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <div className="overflow-hidden rounded-[24px] border border-[#d9dde3] bg-[rgba(247,250,252,0.68)] p-2 shadow-[0_14px_28px_rgba(31,72,110,0.08)]">
+            <InteractiveVisualEmbed
+              title={title}
+              html={generatedHtml}
+              minHeight={360}
+              className="w-full rounded-[20px] bg-transparent"
+              onAnalyticsEvent={({ eventName, payload }) =>
+                void trackInteractiveVisualAnalyticsEvent({
+                  surface: 'builder-preview',
+                  blockId: block.id,
+                  interactionType:
+                    eventName === 'visual_loaded'
+                      ? 'view'
+                      : eventName === 'control_changed'
+                        ? 'input'
+                        : eventName === 'action_clicked'
+                          ? 'action'
+                          : 'custom',
+                  eventName,
+                  payload,
+                })
+              }
+            />
+          </div>
+        );
+      })();
 
     // ── Function flow ─────────────────────────────────────────────────────────
     case 'function-flow': {

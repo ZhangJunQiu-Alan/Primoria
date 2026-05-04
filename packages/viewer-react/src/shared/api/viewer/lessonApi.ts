@@ -173,8 +173,21 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
       type: 'interactive-visual',
       position: { order },
       content: {
+        version: toString(content.version),
+        engine: toString(content.engine),
         template: toString(content.template || 'generic'),
-        title: toString(content.title || rawBlock.title || 'Interactive Visual'),
+        experienceMode: toString(content.experienceMode || content.experience_mode || 'simulation'),
+        title: toString(content.title || rawBlock.title || 'AI Element'),
+        description: toString(content.description),
+        aiPrompt: toString(content.aiPrompt || content.ai_prompt),
+        generatedHtml: toString(content.generatedHtml || content.generated_html),
+        legacyCustomHtml: toString(content.legacyCustomHtml || content.legacy_custom_html),
+        themeTone: toString(content.themeTone || content.theme_tone),
+        initialState: toObject(content.initialState || content.initial_state),
+        scene: toObject(content.scene),
+        runtime: toObject(content.runtime),
+        controls: Array.isArray(content.controls) ? content.controls : [],
+        formulas: Array.isArray(content.formulas) ? content.formulas : [],
       },
     }, rawBlock);
   }

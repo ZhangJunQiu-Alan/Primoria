@@ -29,8 +29,11 @@ export function AiTutorPage() {
   const session = useAiTutorSession({
     welcomeBody: personaCopy.welcomeBody,
     copy,
+    language,
   });
   const {
+    generatingVisualTranscriptIndex,
+    handleGenerateVisual,
     handleSend,
     hasStartedConversation,
     initialToolRuntime,
@@ -197,6 +200,8 @@ export function AiTutorPage() {
             transcript={transcript}
             isSending={isSending}
             handleSend={handleSend}
+            handleGenerateVisual={handleGenerateVisual}
+            generatingVisualTranscriptIndex={generatingVisualTranscriptIndex}
           />
 
           <AiTutorComposer

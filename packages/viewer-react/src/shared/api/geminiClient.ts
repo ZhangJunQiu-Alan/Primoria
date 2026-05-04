@@ -1,6 +1,7 @@
 import { supabase } from '@/shared/api/supabase';
 import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
+import type { InteractiveVisualArtifact } from '@/shared/interactive/interactiveVisual';
 import { normalizeViewerLanguage, viewerLanguageToLocale } from '@/shared/i18n/locale';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 
@@ -16,6 +17,7 @@ const EDGE_REQUEST_RETRY_DELAY_MS = 500;
 export type TutorMessage = {
   role: 'user' | 'model';
   text: string;
+  artifact?: InteractiveVisualArtifact;
 };
 
 export type TutorReplyStreamResult = {
@@ -369,10 +371,14 @@ function buildAgentChatBody(history: TutorMessage[], options: TutorRequestOption
     throw new Error('AI Tutor requires a learner message.');
   }
 
+  const sanitizedHistory = history
+    .slice(0, -1)
+    .map((message) => ({ role: message.role, text: message.text }));
+
   return {
     thread_id: getTutorThreadId(),
     message: latestUserMessage,
-    history: history.slice(0, -1),
+    history: sanitizedHistory,
     context: buildAgentRequestContext(options.context),
   };
 }
@@ -630,7 +636,7 @@ async function requestTutorTool<T>(
         body: JSON.stringify({
           mode,
           model: activeModel(options.model),
-          history,
+          history: history.map((message) => ({ role: message.role, text: message.text })),
           persona: currentAiTutorPersona(),
           allowModelFallback: options.allowModelFallback ?? true,
           context: options.context,

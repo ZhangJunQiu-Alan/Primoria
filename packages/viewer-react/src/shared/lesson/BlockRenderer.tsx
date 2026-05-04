@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
+import { trackInteractiveVisualAnalyticsEvent } from '@/shared/api/viewer/interactiveVisualAnalyticsApi';
 import { useViewerCopy } from '@/shared/theme/copy';
+import { InteractiveVisualEmbed } from '@/shared/interactive/InteractiveVisualEmbed';
 import { richTextToHtml } from '@/shared/lesson/richText';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
 import { cn } from '@/shared/utils/cn';
@@ -26,12 +28,28 @@ export function getBlockStyleFrame(style: Block['style'] | undefined) {
   };
 }
 
-export function BlockRenderer({ block }: { block: LessonBlock }) {
+export type InteractiveVisualAnalyticsContext = {
+  surface: 'lesson' | 'ai-tutor' | 'builder-preview';
+  courseId?: string | null;
+  lessonId?: string | null;
+};
+
+export function BlockRenderer({
+  block,
+  analyticsContext,
+}: {
+  block: LessonBlock;
+  analyticsContext?: InteractiveVisualAnalyticsContext;
+}) {
   const frame = 'style' in block ? getBlockStyleFrame(block.style) : { className: 'py-3', style: {} };
 
   return (
     <div className={frame.className} style={frame.style}>
-      {'type' in block && block.type === 'sorting' ? <SortingRenderer block={block} /> : <CanonicalBlockRenderer block={block} />}
+      {'type' in block && block.type === 'sorting' ? (
+        <SortingRenderer block={block} />
+      ) : (
+        <CanonicalBlockRenderer block={block} analyticsContext={analyticsContext} />
+      )}
     </div>
   );
 }
@@ -51,7 +69,13 @@ function SortingRenderer({ block }: { block: SortingBlock }) {
   );
 }
 
-function CanonicalBlockRenderer({ block }: { block: Block }) {
+function CanonicalBlockRenderer({
+  block,
+  analyticsContext,
+}: {
+  block: Block;
+  analyticsContext?: InteractiveVisualAnalyticsContext;
+}) {
   const copy = useViewerCopy();
   const content = block.content as Record<string, unknown>;
 
@@ -182,13 +206,58 @@ function CanonicalBlockRenderer({ block }: { block: Block }) {
       );
     }
     case 'interactive-visual':
-      return (
-        <div className="rounded-3xl border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-6 text-center">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">Interactive visual</p>
-          <h3 className="mt-2 text-lg font-black text-[var(--viewer-text)]">{String(content.title ?? 'Interactive Visual')}</h3>
-          <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">{copy.lesson.unsupported}</p>
-        </div>
-      );
+      return (() => {
+        const generatedHtml = String(content.generatedHtml ?? content.legacyCustomHtml ?? '').trim();
+        const title = String(content.title ?? 'AI Element');
+        const description = String(content.description ?? '').trim();
+
+        if (!generatedHtml) {
+          return (
+            <div className="rounded-3xl border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-6 text-center">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">AI element</p>
+              <h3 className="mt-2 text-lg font-black text-[var(--viewer-text)]">{title}</h3>
+              <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">{copy.lesson.unsupported}</p>
+            </div>
+          );
+        }
+
+        return (
+          <div className="space-y-3">
+            <div className="rounded-[26px] border border-[var(--viewer-border)] bg-[rgba(245,251,255,0.78)] p-2 shadow-[0_16px_34px_rgba(36,92,138,0.08)]">
+              <InteractiveVisualEmbed
+                title={title}
+                html={generatedHtml}
+                minHeight={400}
+                className="w-full rounded-[22px] bg-transparent"
+                onAnalyticsEvent={
+                  analyticsContext
+                    ? ({ eventName, payload }) =>
+                        void trackInteractiveVisualAnalyticsEvent({
+                          surface: analyticsContext.surface,
+                          courseId: analyticsContext.courseId ?? null,
+                          lessonId: analyticsContext.lessonId ?? null,
+                          blockId: block.id,
+                          interactionType:
+                            eventName === 'visual_loaded'
+                              ? 'view'
+                              : eventName === 'control_changed'
+                                ? 'input'
+                                : eventName === 'action_clicked'
+                                  ? 'action'
+                                  : 'custom',
+                          eventName,
+                          payload,
+                        })
+                    : undefined
+                }
+              />
+            </div>
+            {description ? (
+              <p className="text-sm font-medium text-[var(--viewer-text-muted)]">{description}</p>
+            ) : null}
+          </div>
+        );
+      })();
     default:
       return <div className="text-sm font-medium text-[var(--viewer-text-muted)]">[{block.type}]</div>;
   }

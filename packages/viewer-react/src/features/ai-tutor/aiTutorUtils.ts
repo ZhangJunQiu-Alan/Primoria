@@ -1,6 +1,7 @@
 import type { TutorMessage } from '@/shared/api/geminiClient';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 import type { LegacyMindMapNode, TutorDocument } from '@/shared/api/viewer/types';
+import { normalizeInteractiveVisualArtifact } from '@/shared/interactive/interactiveVisual';
 import type {
   PendingTutorUpload,
   StoredAiTutorSession,
@@ -17,6 +18,14 @@ export const EMPTY_TUTOR_DOCUMENTS: TutorDocument[] = [];
 export const TUTOR_QUIZ_SERVICE_UNAVAILABLE_CODE = 'TUTOR_QUIZ_SERVICE_UNAVAILABLE';
 export const TUTOR_MINDMAP_SERVICE_UNAVAILABLE_CODE = 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE';
 
+function safeNormalizeArtifact(value: unknown) {
+  try {
+    return normalizeInteractiveVisualArtifact(value) ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function replaceLastModelMessage(messages: TutorMessage[], text: string): TutorMessage[] {
   const next: TutorMessage[] = [...messages];
   for (let index = next.length - 1; index >= 0; index -= 1) {
@@ -26,6 +35,34 @@ export function replaceLastModelMessage(messages: TutorMessage[], text: string):
     }
   }
   return [...next, { role: 'model', text }];
+}
+
+export function attachArtifactToLastModelMessage(messages: TutorMessage[], artifact: TutorMessage['artifact']): TutorMessage[] {
+  const next: TutorMessage[] = [...messages];
+  for (let index = next.length - 1; index >= 0; index -= 1) {
+    if (next[index]?.role === 'model') {
+      next[index] = { ...next[index], artifact };
+      return next;
+    }
+  }
+  return next;
+}
+
+export function attachArtifactToTranscriptModelMessage(
+  messages: TutorMessage[],
+  transcriptIndex: number,
+  artifact: TutorMessage['artifact'],
+): TutorMessage[] {
+  const next: TutorMessage[] = [...messages];
+  let visibleIndex = -1;
+  for (let index = 1; index < next.length; index += 1) {
+    visibleIndex += 1;
+    if (visibleIndex === transcriptIndex && next[index]?.role === 'model') {
+      next[index] = { ...next[index], artifact };
+      return next;
+    }
+  }
+  return next;
 }
 
 export function defaultTutorMessages(welcomeBody: string): TutorMessage[] {
@@ -49,9 +86,13 @@ export function isTutorMessage(value: unknown): value is TutorMessage {
   }
 
   const message = value as { role?: unknown; text?: unknown };
+  const artifact = 'artifact' in (value as Record<string, unknown>)
+    ? safeNormalizeArtifact((value as Record<string, unknown>).artifact)
+    : undefined;
   return (
     (message.role === 'user' || message.role === 'model') &&
-    typeof message.text === 'string'
+    typeof message.text === 'string' &&
+    (!('artifact' in (value as Record<string, unknown>)) || artifact !== undefined)
   );
 }
 
@@ -101,7 +142,12 @@ export function isTutorToolModal(value: unknown): value is TutorToolModal {
 }
 
 export function normalizeStoredMessages(messages: TutorMessage[], welcomeBody: string) {
-  const sanitized = messages.filter(isTutorMessage);
+  const sanitized = messages
+    .filter(isTutorMessage)
+    .map((message) => ({
+      ...message,
+      artifact: message.artifact ? safeNormalizeArtifact(message.artifact) : undefined,
+    }));
   if (!sanitized.length) {
     return defaultTutorMessages(welcomeBody);
   }

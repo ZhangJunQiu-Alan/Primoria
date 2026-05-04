@@ -4,8 +4,10 @@ import {
   persistGeminiKey,
   type TutorMessage,
 } from '@/shared/api/geminiClient';
+import { createInteractiveVisual } from '@/shared/api/viewer/interactiveVisualApi';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import {
+  attachArtifactToTranscriptModelMessage,
   defaultTutorMessages,
   persistAiTutorSession,
   readAiTutorSession,
@@ -32,9 +34,11 @@ function resolveWelcomeMessages(messages: TutorMessage[], welcomeBody: string) {
 export function useAiTutorSession({
   welcomeBody,
   copy,
+  language,
 }: {
   welcomeBody: string;
   copy: AiTutorCopyLike;
+  language: 'zh-CN' | 'en';
 }) {
   const [{ context: initialContext, messages: initialMessages, toolRuntime: initialToolRuntime }] = useState(() =>
     readAiTutorSession(welcomeBody),
@@ -43,6 +47,7 @@ export function useAiTutorSession({
   const [input, setInput] = useState('');
   const [notice, setNotice] = useState<TutorStatusNotice | null>(null);
   const [isSending, setIsSending] = useState(false);
+  const [generatingVisualTranscriptIndex, setGeneratingVisualTranscriptIndex] = useState<number | null>(null);
   const [sessionContext, setSessionContext] = useState<TutorConversationContext | null>(initialContext);
   const streamedReplyRef = useRef('');
   const frameRef = useRef<number | null>(null);
@@ -137,7 +142,64 @@ export function useAiTutorSession({
         setIsSending(false);
       }
     },
-    [copy.aiTutor.apiKeyStored, copy.aiTutor.missingKey, copy.aiTutor.responsePreparing, isSending],
+    [copy.aiTutor.apiKeyStored, copy.aiTutor.missingKey, copy.aiTutor.responsePreparing, isSending, language],
+  );
+
+  const handleGenerateVisual = useCallback(
+    async (transcriptIndex: number) => {
+      const transcriptMessages = latestMessagesRef.current.slice(1);
+      const targetMessage = transcriptMessages[transcriptIndex];
+      if (!targetMessage || targetMessage.role !== 'model') {
+        return;
+      }
+
+      const sourceUserMessage = (() => {
+        for (let index = transcriptIndex - 1; index >= 0; index -= 1) {
+          const candidate = transcriptMessages[index];
+          if (candidate?.role === 'user' && candidate.text.trim()) {
+            return candidate.text.trim();
+          }
+        }
+        return '';
+      })();
+
+      const combinedPrompt = [sourceUserMessage, targetMessage.text.trim()]
+        .filter(Boolean)
+        .join('\n\nTutor explanation:\n');
+
+      if (!combinedPrompt.trim()) {
+        return;
+      }
+
+      setGeneratingVisualTranscriptIndex(transcriptIndex);
+      try {
+        const artifact = await createInteractiveVisual({
+          prompt: combinedPrompt,
+          language,
+          surface: 'ai-tutor',
+        });
+        setMessages((current) =>
+          attachArtifactToTranscriptModelMessage(current, transcriptIndex, artifact),
+        );
+        setNotice({
+          tone: 'success',
+          text: language === 'zh-CN' ? '已生成交互式可视化内容。' : 'Interactive visual generated.',
+        });
+        captureViewerEvent('viewer_ai_tutor_interactive_visual_created', {
+          template: artifact.template,
+          mode: artifact.experienceMode,
+        });
+      } catch (error) {
+        setNotice({
+          tone: 'error',
+          text: error instanceof Error ? error.message : copy.aiTutor.missingKey,
+        });
+        captureViewerError(error, { area: 'ai_tutor_interactive_visual' });
+      } finally {
+        setGeneratingVisualTranscriptIndex(null);
+      }
+    },
+    [copy.aiTutor.missingKey, language],
   );
 
   const syncSession = useCallback((toolRuntime: Record<TutorToolKind, TutorToolRuntime>) => {
@@ -161,7 +223,9 @@ export function useAiTutorSession({
 
   return {
     handleSend,
+    handleGenerateVisual,
     hasStartedConversation: transcript.length > 0,
+    generatingVisualTranscriptIndex,
     initialToolRuntime,
     input,
     isSending,

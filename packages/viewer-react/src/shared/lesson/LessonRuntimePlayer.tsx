@@ -413,6 +413,11 @@ export function LessonRuntimePlayer({
                     <div key={block.id} className="viewer-surface bg-[rgba(255,252,247,0.88)] p-5">
                       <LearnerBlockRenderer
                         block={block}
+                        analyticsContext={{
+                          surface: 'lesson',
+                          courseId: data.courseId ?? null,
+                          lessonId: data.lessonId,
+                        }}
                         response={pageSession.responses[block.id]}
                         evaluation={pageSession.evaluations[block.id]}
                         locked={

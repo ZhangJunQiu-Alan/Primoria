@@ -1,4 +1,4 @@
-import { Bot, ChevronDown, ChevronUp, GitBranch, LoaderCircle, PenLine, SendHorizontal, Trash2, Upload } from 'lucide-react';
+import { Bot, ChevronDown, ChevronUp, GitBranch, LoaderCircle, PenLine, SendHorizontal, Sparkles, Trash2, Upload } from 'lucide-react';
 import { artifactTitle, formatDocumentType, interpolateCount, resolveDocumentTitle, TOOL_ORDER } from '@/features/ai-tutor/aiTutorUtils';
 import type {
   AiTutorCopyLike,
@@ -8,6 +8,9 @@ import type {
   TutorToolRuntime,
 } from '@/features/ai-tutor/aiTutorTypes';
 import { TutorMarkdown } from '@/shared/ai-tutor/TutorMarkdown';
+import { trackInteractiveVisualAnalyticsEvent } from '@/shared/api/viewer/interactiveVisualAnalyticsApi';
+import { InteractiveVisualEmbed } from '@/shared/interactive/InteractiveVisualEmbed';
+import type { TutorMessage } from '@/shared/api/geminiClient';
 import type { MindMapSummary, QuizOutputLanguage, TutorDocument } from '@/shared/api/viewer/types';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 
@@ -20,15 +23,19 @@ export function AiTutorConversationPane({
   transcript,
   isSending,
   handleSend,
+  handleGenerateVisual,
+  generatingVisualTranscriptIndex,
 }: {
   copy: AiTutorCopyLike;
   language: 'zh-CN' | 'en';
   personaCopy: { welcomeTitle: string; prompts: string[] };
   suggestedPrompts: string[];
   hasStartedConversation: boolean;
-  transcript: Array<{ role: 'user' | 'model'; text: string }>;
+  transcript: TutorMessage[];
   isSending: boolean;
   handleSend: (text: string) => Promise<void>;
+  handleGenerateVisual: (transcriptIndex: number) => Promise<void>;
+  generatingVisualTranscriptIndex: number | null;
 }) {
   return (
     <div className="min-h-0 flex-1 overflow-hidden px-5 pb-4 pt-0 md:px-6 md:pb-5">
@@ -86,7 +93,52 @@ export function AiTutorConversationPane({
                     {isPendingModel ? (
                       language === 'zh-CN' ? '正在思考…' : 'Thinking…'
                     ) : (
-                      <TutorMarkdown text={message.text} className="leading-6" />
+                      <div className="space-y-3">
+                        <TutorMarkdown text={message.text} className="leading-6" />
+                        {message.role === 'model' && message.artifact ? (
+                          <div className="overflow-hidden rounded-[20px] border border-[#d8d9d3] bg-[rgba(248,252,247,0.74)] p-2 shadow-[0_12px_24px_rgba(122,158,126,0.12)]">
+                            <InteractiveVisualEmbed
+                              title={message.artifact.title}
+                              html={message.artifact.generatedHtml}
+                              minHeight={380}
+                              className="w-full rounded-[18px] bg-transparent"
+                              onAnalyticsEvent={({ eventName, payload }) =>
+                                void trackInteractiveVisualAnalyticsEvent({
+                                  surface: 'ai-tutor',
+                                  blockId: `ai-tutor-${index}`,
+                                  interactionType:
+                                    eventName === 'visual_loaded'
+                                      ? 'view'
+                                      : eventName === 'control_changed'
+                                        ? 'input'
+                                        : eventName === 'action_clicked'
+                                          ? 'action'
+                                          : 'custom',
+                                  eventName,
+                                  payload,
+                                })
+                              }
+                            />
+                          </div>
+                        ) : null}
+                        {message.role === 'model' ? (
+                          <div className="pt-1">
+                            <button
+                              type="button"
+                              onClick={() => void handleGenerateVisual(index)}
+                              disabled={generatingVisualTranscriptIndex === index}
+                              className="inline-flex items-center gap-2 rounded-full border border-[#d6d5cb] bg-[rgba(255,252,247,0.84)] px-3 py-1.5 text-[0.72rem] font-semibold text-[#6f6359] transition hover:border-[#bfc7b5] hover:bg-[rgba(248,252,247,0.98)] disabled:cursor-not-allowed disabled:opacity-70"
+                            >
+                              {generatingVisualTranscriptIndex === index ? (
+                                <LoaderCircle size={14} className="animate-spin" />
+                              ) : (
+                                <Sparkles size={14} />
+                              )}
+                              {message.artifact ? 'Regenerate visual' : 'Generate visual'}
+                            </button>
+                          </div>
+                        ) : null}
+                      </div>
                     )}
                   </div>
                 );

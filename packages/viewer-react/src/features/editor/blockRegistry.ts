@@ -80,10 +80,10 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     defaultContent: { pairs: [] },
   },
   'interactive-visual': {
-    label: 'Interactive Visual',
-    icon: '🔭',
+    label: 'AI Element',
+    icon: '✨',
     category: 'interactive',
-    defaultContent: { template: 'generic', title: 'Interactive Visual' },
+    defaultContent: { template: 'generic', experienceMode: 'simulation', title: 'AI Element' },
   },
   video: {
     label: 'Video',
