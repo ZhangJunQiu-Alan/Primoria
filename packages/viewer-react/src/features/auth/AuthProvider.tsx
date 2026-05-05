@@ -6,6 +6,7 @@ import { captureViewerError, clearViewerUserContext, setViewerUserContext } from
 import { getDemoRole } from '@/shared/utils/demoMode';
 import { useAppDispatch } from '@/shared/state/store';
 import { clearSession, setLoading, setSession } from '@/features/auth/authSlice';
+import { clearAiTutorSessionStorage } from '@/features/ai-tutor/aiTutorUtils';
 
 async function fetchUserRole(userId: string) {
   const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
@@ -50,6 +51,7 @@ async function syncSupabaseSession(dispatch: ReturnType<typeof useAppDispatch>, 
     }
 
     clearViewerUserContext();
+    clearAiTutorSessionStorage();
     dispatch(clearSession());
     markBootSplashAuthSettled();
     return;

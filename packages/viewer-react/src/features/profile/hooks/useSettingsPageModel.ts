@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { clearSession, setSession } from '@/features/auth/authSlice';
+import { clearAiTutorSessionStorage } from '@/features/ai-tutor/aiTutorUtils';
 import { getSettingsCopy, type SettingsSectionId } from '@/features/profile/settingsCopy';
 import { getAiTutorPersonaDefinition, getAiTutorPersonaOptions } from '@/shared/ai-tutor/persona';
 import { generateChildBindingCode } from '@/shared/api/viewer/parentApi';
@@ -256,6 +257,7 @@ export function useSettingsPageModel() {
     }
     captureViewerEvent('viewer_sign_out_clicked', { source: 'settings' });
     clearDemoRole();
+    clearAiTutorSessionStorage();
     dispatch(clearSession());
     queryClient.clear();
     try {
