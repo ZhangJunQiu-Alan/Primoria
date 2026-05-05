@@ -175,6 +175,13 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
       content: {
         template: toString(content.template || 'generic'),
         title: toString(content.title || rawBlock.title || 'Interactive Visual'),
+        description: toString(content.description),
+        aiPrompt: toString(content.aiPrompt || content.ai_prompt),
+        version: toString(content.version),
+        engine: toString(content.engine),
+        themeTone: toString(content.themeTone || content.theme_tone),
+        generatedHtml: toString(content.generatedHtml || content.generated_html),
+        legacyCustomHtml: toString(content.legacyCustomHtml || content.legacy_custom_html),
       },
     }, rawBlock);
   }

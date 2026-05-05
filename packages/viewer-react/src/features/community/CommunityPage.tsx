@@ -43,7 +43,7 @@ export function CommunityPage() {
 
   if (workspace.workspaceQuery.isLoading) {
     return (
-      <div className="px-5 py-6 md:px-6 md:py-7">
+      <div className="w-full px-5 py-6 md:px-6 md:py-7">
         <LoadingStateCard />
       </div>
     );
@@ -51,7 +51,7 @@ export function CommunityPage() {
 
   if (workspace.workspaceQuery.error) {
     return (
-      <div className="px-5 py-6 md:px-6 md:py-7">
+      <div className="w-full px-5 py-6 md:px-6 md:py-7">
         <ErrorStateCard
           message={workspace.workspaceQuery.error instanceof Error ? workspace.workspaceQuery.error.message : undefined}
           onRetry={() => void workspace.workspaceQuery.refetch()}
@@ -61,8 +61,8 @@ export function CommunityPage() {
   }
 
   return (
-    <div className="mx-auto w-[90%] max-w-[1380px] px-0 py-5 md:py-6">
-      <div className="grid gap-4 xl:grid-cols-[194px_minmax(0,1fr)]">
+    <div className="mx-auto min-h-screen w-full max-w-[1380px] px-0">
+      <div className="grid gap-0 xl:grid-cols-[240px_minmax(0,1fr)]">
         <CommunitySectionNav
           copy={copy}
           language={language}
@@ -71,7 +71,7 @@ export function CommunityPage() {
           unreadCount={workspace.unreadCount}
         />
 
-        <section className="space-y-3.5">
+        <section className="space-y-3.5 px-5 py-5 md:px-6 md:py-6">
           <CompanionContextBanner
             companionTopic={companionTopic}
             language={language}

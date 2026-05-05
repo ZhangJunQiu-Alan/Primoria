@@ -2,6 +2,12 @@ import { supabase } from '@/shared/api/supabase';
 import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { normalizeViewerLanguage, viewerLanguageToLocale } from '@/shared/i18n/locale';
+import {
+  buildLocalInteractiveVisualReply,
+  looksLikeInteractiveVisualRequest,
+  serializeTutorInteractiveVisual,
+  type TutorInteractiveVisualPayload,
+} from '@/shared/interactive-visual/tutorInteractiveVisuals';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 
 const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
@@ -51,6 +57,8 @@ export type TutorRequestOptions = {
   allowModelFallback?: boolean;
   context?: TutorRequestContext;
 };
+
+type InteractiveVisualServiceResponse = TutorInteractiveVisualPayload;
 
 function activeModel(override?: string) {
   return override?.trim() || (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || 'gemini-2.0-flash';
@@ -261,6 +269,10 @@ function fixtureReply(history: TutorMessage[]) {
   return `Fixture tutor reply: focus the next step on ${lastUserMessage.toLowerCase()}.`;
 }
 
+function latestTutorUserPrompt(history: TutorMessage[]) {
+  return [...history].reverse().find((message) => message.role === 'user')?.text.trim() ?? '';
+}
+
 function tutorFunctionUrl() {
   if (!rawSupabaseUrl) {
     throw new Error('AI Tutor requires VITE_SUPABASE_URL.');
@@ -271,6 +283,18 @@ function tutorFunctionUrl() {
   }
 
   return `${rawSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-tutor`;
+}
+
+function interactiveVisualFunctionUrl() {
+  if (!rawSupabaseUrl) {
+    throw new Error('Interactive visual generation requires VITE_SUPABASE_URL.');
+  }
+
+  if (rawSupabaseUrl.includes('.supabase.co')) {
+    return `${rawSupabaseUrl.replace('.supabase.co', '.functions.supabase.co')}/viewer-ai-interactive-visual`;
+  }
+
+  return `${rawSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-interactive-visual`;
 }
 
 function agentServiceChatUrl() {
@@ -363,8 +387,127 @@ async function getAgentAccessToken() {
   return accessToken;
 }
 
+function formatInteractiveVisualReply(payload: InteractiveVisualServiceResponse, language: 'zh-CN' | 'en') {
+  const intro =
+    language === 'zh-CN'
+      ? '下面是一个可直接操作的图像。'
+      : 'Here is an interactive graph you can explore right away.';
+  const outro =
+    language === 'zh-CN'
+      ? '拖动滑块、点击关键角按钮，并观察单位圆上的点如何同步改变两条曲线。'
+      : 'Drag the slider, tap the key-angle buttons, and watch how the unit-circle point updates both curves together.';
+
+  return `${intro}\n\n${serializeTutorInteractiveVisual(payload)}\n\n${outro}`;
+}
+
+async function requestInteractiveVisual(
+  prompt: string,
+  options: TutorRequestOptions = {},
+): Promise<InteractiveVisualServiceResponse> {
+  if (!rawSupabaseAnonKey) {
+    throw new Error('Interactive visual generation requires VITE_SUPABASE_ANON_KEY.');
+  }
+
+  const accessToken = await getAgentAccessToken();
+  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
+  try {
+    const response = await fetch(interactiveVisualFunctionUrl(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: rawSupabaseAnonKey,
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        prompt,
+        language: currentUiLanguage(),
+        surface: options.context?.surface === 'builder' ? 'builder' : 'ai-tutor',
+        experienceMode: 'graph',
+      }),
+      signal: timeout.signal,
+    });
+
+    const text = await response.text();
+    if (!response.ok) {
+      throw buildHttpError(response.status, text, `Interactive visual request failed with HTTP ${response.status}.`);
+    }
+
+    const parsed = parseJsonObject(text);
+    if (
+      !parsed ||
+      typeof parsed.title !== 'string' ||
+      typeof parsed.description !== 'string' ||
+      typeof parsed.generatedHtml !== 'string'
+    ) {
+      throw new Error('Interactive visual response was invalid.');
+    }
+
+    return {
+      title: parsed.title,
+      description: parsed.description,
+      generatedHtml: parsed.generatedHtml,
+      template: typeof parsed.template === 'string' ? parsed.template : undefined,
+      experienceMode:
+        parsed.experienceMode === 'simulation' ||
+        parsed.experienceMode === 'graph' ||
+        parsed.experienceMode === 'scenario' ||
+        parsed.experienceMode === 'story'
+          ? parsed.experienceMode
+          : undefined,
+      themeTone: typeof parsed.themeTone === 'string' ? parsed.themeTone : undefined,
+    };
+  } catch (error) {
+    throw normalizeTutorError(error);
+  } finally {
+    timeout.cleanup();
+  }
+}
+
+async function maybeGenerateInteractiveVisualReply(
+  history: TutorMessage[],
+  options: TutorRequestOptions = {},
+): Promise<TutorReplyStreamResult | null> {
+  const prompt = latestTutorUserPrompt(history);
+  if (!looksLikeInteractiveVisualRequest(prompt)) {
+    return null;
+  }
+
+  const language = currentUiLanguage();
+
+  try {
+    if (rawSupabaseUrl && rawSupabaseAnonKey) {
+      const payload = await requestInteractiveVisual(prompt, options);
+      return {
+        threadId: getTutorThreadId(),
+        reply: formatInteractiveVisualReply(payload, language),
+        usedTools: ['interactive_visual'],
+      };
+    }
+  } catch {
+    const localReply = buildLocalInteractiveVisualReply(prompt, language);
+    if (localReply) {
+      return {
+        threadId: getTutorThreadId(),
+        reply: localReply,
+        usedTools: ['interactive_visual_local'],
+      };
+    }
+  }
+
+  const localReply = buildLocalInteractiveVisualReply(prompt, language);
+  if (!localReply) {
+    return null;
+  }
+
+  return {
+    threadId: getTutorThreadId(),
+    reply: localReply,
+    usedTools: ['interactive_visual_local'],
+  };
+}
+
 function buildAgentChatBody(history: TutorMessage[], options: TutorRequestOptions = {}) {
-  const latestUserMessage = [...history].reverse().find((message) => message.role === 'user')?.text.trim() ?? '';
+  const latestUserMessage = latestTutorUserPrompt(history);
   if (!latestUserMessage) {
     throw new Error('AI Tutor requires a learner message.');
   }
@@ -667,6 +810,11 @@ async function requestTutorTool<T>(
 }
 
 export async function generateTutorReply(history: TutorMessage[], options: TutorRequestOptions = {}) {
+  const visualReply = await maybeGenerateInteractiveVisualReply(history, options);
+  if (visualReply) {
+    return visualReply.reply;
+  }
+
   const response = await requestTutorTool<{ reply: string }>('reply', history, options);
   return response.reply;
 }
@@ -676,6 +824,13 @@ export async function generateTutorReplyStream(
   handlers: TutorReplyStreamHandlers = {},
   options: TutorRequestOptions = {},
 ) {
+  const visualReply = await maybeGenerateInteractiveVisualReply(history, options);
+  if (visualReply) {
+    handlers.onToken?.(visualReply.reply);
+    handlers.onFinal?.(visualReply);
+    return visualReply;
+  }
+
   if (usesViewerFixtures()) {
     const reply = fixtureReply(history);
     const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };

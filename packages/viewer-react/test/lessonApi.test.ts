@@ -125,4 +125,53 @@ describe('fetchLessonRuntime', () => {
       explanation: 'This statement is false in the source material.',
     });
   });
+
+  it('preserves generated interactive visual HTML and metadata for lesson runtime rendering', async () => {
+    singleMock.mockResolvedValue({
+      data: {
+        id: 'lesson-interactive-visual',
+        course_id: 'course-3',
+        title: 'Interactive visual lesson',
+        xp_reward: 25,
+        duration_seconds: 300,
+        content_json: {
+          lesson_id: 'lesson-interactive-visual',
+          title: 'Interactive visual lesson',
+          pages: [
+            {
+              page_id: 'page-1',
+              order: 0,
+              blocks: [
+                {
+                  id: 'visual-1',
+                  type: 'interactive-visual',
+                  content: {
+                    template: 'unit-circle-sine-cosine',
+                    title: 'Trig explorer',
+                    description: 'Interactive trig graph',
+                    generated_html: '<div>visual</div>',
+                    theme_tone: 'botanical-sage',
+                    ai_prompt: 'Show sin and cosine together',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+      error: null,
+    });
+
+    const { fetchLessonRuntime } = await import('@/shared/api/viewer/lessonApi');
+    const runtime = await fetchLessonRuntime('lesson-interactive-visual');
+
+    expect(runtime?.pages[0]?.blocks[0]?.content).toMatchObject({
+      template: 'unit-circle-sine-cosine',
+      title: 'Trig explorer',
+      description: 'Interactive trig graph',
+      generatedHtml: '<div>visual</div>',
+      themeTone: 'botanical-sage',
+      aiPrompt: 'Show sin and cosine together',
+    });
+  });
 });

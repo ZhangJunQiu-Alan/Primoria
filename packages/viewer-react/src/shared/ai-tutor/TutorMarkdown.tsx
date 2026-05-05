@@ -1,5 +1,11 @@
 import { Fragment, type ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
+import { InteractiveVisualEmbed } from '@/shared/interactive-visual/InteractiveVisualEmbed';
+import {
+  getInteractiveVisualFenceName,
+  parseTutorInteractiveVisual,
+  type TutorInteractiveVisualPayload,
+} from '@/shared/interactive-visual/tutorInteractiveVisuals';
 
 type MarkdownBlock =
   | {
@@ -9,6 +15,10 @@ type MarkdownBlock =
   | {
       type: 'ordered-list' | 'unordered-list';
       items: string[];
+    }
+  | {
+      type: 'interactive-visual';
+      payload: TutorInteractiveVisualPayload;
     };
 
 type ListBlockType = Extract<MarkdownBlock['type'], 'ordered-list' | 'unordered-list'>;
@@ -37,13 +47,35 @@ function parseBlocks(text: string): MarkdownBlock[] {
     return [];
   }
 
+  const fenceName = getInteractiveVisualFenceName();
+  const lines = normalized.split('\n');
   const blocks: MarkdownBlock[] = [];
   const paragraphLines: string[] = [];
   const listItems: string[] = [];
   let listType: ListBlockType | null = null;
 
-  for (const line of normalized.split('\n')) {
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index] ?? '';
     const trimmed = line.trim();
+
+    if (trimmed === `\`\`\`${fenceName}`) {
+      flushParagraph(blocks, paragraphLines);
+      flushList(blocks, listType, listItems);
+      listType = null;
+
+      const payloadLines: string[] = [];
+      index += 1;
+      while (index < lines.length && lines[index]?.trim() !== '```') {
+        payloadLines.push(lines[index] ?? '');
+        index += 1;
+      }
+
+      const payload = parseTutorInteractiveVisual(payloadLines.join('\n'));
+      if (payload) {
+        blocks.push({ type: 'interactive-visual', payload });
+      }
+      continue;
+    }
 
     if (!trimmed) {
       flushParagraph(blocks, paragraphLines);
@@ -196,6 +228,19 @@ export function TutorMarkdown({
             <p key={`paragraph-${index}`} className="m-0">
               {renderInline(block.content, `paragraph-${index}`)}
             </p>
+          );
+        }
+
+        if (block.type === 'interactive-visual') {
+          return (
+            <InteractiveVisualEmbed
+              key={`interactive-visual-${index}`}
+              title={block.payload.title}
+              description={block.payload.description}
+              generatedHtml={block.payload.generatedHtml}
+              className="overflow-hidden"
+              frameClassName="h-[520px] md:h-[560px]"
+            />
           );
         }
 

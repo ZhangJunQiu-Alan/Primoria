@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
+import { InteractiveVisualEmbed } from '@/shared/interactive-visual/InteractiveVisualEmbed';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { richTextToHtml } from '@/shared/lesson/richText';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
@@ -182,7 +183,21 @@ function CanonicalBlockRenderer({ block }: { block: Block }) {
       );
     }
     case 'interactive-visual':
-      return (
+      return typeof content.generatedHtml === 'string' && content.generatedHtml.trim() ? (
+        <InteractiveVisualEmbed
+          title={String(content.title ?? 'Interactive Visual')}
+          description={typeof content.description === 'string' ? content.description : undefined}
+          generatedHtml={content.generatedHtml}
+          frameClassName="h-[540px] md:h-[620px]"
+        />
+      ) : typeof content.legacyCustomHtml === 'string' && content.legacyCustomHtml.trim() ? (
+        <InteractiveVisualEmbed
+          title={String(content.title ?? 'Interactive Visual')}
+          description={typeof content.description === 'string' ? content.description : undefined}
+          generatedHtml={content.legacyCustomHtml}
+          frameClassName="h-[540px] md:h-[620px]"
+        />
+      ) : (
         <div className="rounded-3xl border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-6 text-center">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">Interactive visual</p>
           <h3 className="mt-2 text-lg font-black text-[var(--viewer-text)]">{String(content.title ?? 'Interactive Visual')}</h3>
