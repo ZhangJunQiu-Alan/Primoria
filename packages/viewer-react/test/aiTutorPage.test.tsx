@@ -2,6 +2,7 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { LegacyMindMapNode, MindMapSummary, TutorDocument } from '@/shared/api/viewer/types';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
+import { AI_TUTOR_SESSION_STORAGE_KEY } from '@/features/ai-tutor/aiTutorUtils';
 import { renderRoute } from './renderApp';
 
 let mockDocuments: TutorDocument[] = [];
@@ -192,6 +193,26 @@ describe('AiTutorPage', () => {
 
     await user.click(screen.getByRole('button', { name: /展开最近生成/i }));
     expect(await screen.findByText(/还没有最近结果/i, {}, { timeout: 15000 })).toBeInTheDocument();
+  }, 30000);
+
+  it('falls back to the intro state when a stored tutor session only contains an unanswered user prompt', async () => {
+    window.localStorage.setItem(
+      AI_TUTOR_SESSION_STORAGE_KEY,
+      JSON.stringify({
+        version: 3,
+        messages: [{ role: 'user', text: 'Give me an interactive graph visual explaining cosine and sin value' }],
+        artifacts: [],
+        context: null,
+      }),
+    );
+
+    renderRoute('/ai-tutor', 'user');
+
+    expect(await screen.findByRole('heading', { name: /你好，我们慢慢把这件事理顺/i }, { timeout: 15000 })).toBeInTheDocument();
+    expect(
+      screen.queryByText(/Give me an interactive graph visual explaining cosine and sin value/i),
+    ).not.toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /我现在有点不知道从哪开始，可以先带我起步吗/i }, { timeout: 15000 })).toBeInTheDocument();
   }, 30000);
 
   it('uploads pdf and docx materials, then keeps them selected by default', async () => {

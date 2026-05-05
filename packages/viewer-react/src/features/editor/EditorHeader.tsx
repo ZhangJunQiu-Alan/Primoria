@@ -12,6 +12,7 @@ import { supabase } from '@/lib/supabase';
 import { useAppSelector, useAppDispatch } from '@/store';
 import { togglePreview, updateLessonTitle } from '@/store/editorSlice';
 import { AccountMenu } from '@/components/account/AccountMenu';
+import { clearAiTutorSessionStorage } from '@/features/ai-tutor/aiTutorUtils';
 import { useSaveCourse } from './hooks/useSaveCourse';
 import { usePublish } from './hooks/usePublish';
 import { useEditorKeyboard } from './hooks/useEditorKeyboard';
@@ -122,6 +123,7 @@ export function EditorHeader({
   }
 
   async function handleSignOut() {
+    clearAiTutorSessionStorage();
     await supabase.auth.signOut();
     navigate('/login');
   }

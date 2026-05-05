@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { clearSession } from '@/features/auth/authSlice';
 import { useBootSplashGate } from '@/shared/boot/bootSplash';
 import { supabase } from '@/shared/api/supabase';
+import { clearAiTutorSessionStorage } from '@/features/ai-tutor/aiTutorUtils';
 import {
   fetchAchievements,
   fetchDailyXpHistory,
@@ -465,6 +466,7 @@ export function ProfilePage() {
       return;
     }
     clearDemoRole();
+    clearAiTutorSessionStorage();
     dispatch(clearSession());
     queryClient.clear();
     try {
