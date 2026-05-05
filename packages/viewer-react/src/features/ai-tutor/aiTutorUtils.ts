@@ -32,6 +32,19 @@ export function defaultTutorMessages(welcomeBody: string): TutorMessage[] {
   return [{ role: 'model', text: welcomeBody }];
 }
 
+function trimIncompleteStoredTurn(messages: TutorMessage[]) {
+  if (!messages.length) {
+    return messages;
+  }
+
+  const lastMessage = messages[messages.length - 1];
+  if (lastMessage?.role !== 'user') {
+    return messages;
+  }
+
+  return messages.slice(0, -1);
+}
+
 export function interpolateCount(template: string, count: number) {
   return template.replace('{count}', String(count));
 }
@@ -101,7 +114,7 @@ export function isTutorToolModal(value: unknown): value is TutorToolModal {
 }
 
 export function normalizeStoredMessages(messages: TutorMessage[], welcomeBody: string) {
-  const sanitized = messages.filter(isTutorMessage);
+  const sanitized = trimIncompleteStoredTurn(messages.filter(isTutorMessage));
   if (!sanitized.length) {
     return defaultTutorMessages(welcomeBody);
   }
@@ -166,6 +179,15 @@ export function readAiTutorSession(welcomeBody: string) {
   } catch {
     return fallback;
   }
+}
+
+export function clearAiTutorSessionStorage() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.localStorage.removeItem(AI_TUTOR_SESSION_STORAGE_KEY);
+  window.localStorage.removeItem(AI_TUTOR_LEGACY_SESSION_STORAGE_KEY);
 }
 
 export function persistAiTutorSession({
