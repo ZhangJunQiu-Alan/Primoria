@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Bot, ChevronDown, ChevronUp, GitBranch, LoaderCircle, PenLine, SendHorizontal, Trash2, Upload } from 'lucide-react';
 import { artifactTitle, formatDocumentType, interpolateCount, resolveDocumentTitle, TOOL_ORDER } from '@/features/ai-tutor/aiTutorUtils';
 import type {
@@ -9,6 +10,7 @@ import type {
 } from '@/features/ai-tutor/aiTutorTypes';
 import { TutorMarkdown } from '@/shared/ai-tutor/TutorMarkdown';
 import type { MindMapSummary, QuizOutputLanguage, TutorDocument } from '@/shared/api/viewer/types';
+import { containsTutorInteractiveVisual } from '@/shared/interactive-visual/tutorInteractiveVisuals';
 import type { TutorToolModal } from '@/features/ai-tutor/toolTypes';
 
 export function AiTutorConversationPane({
@@ -30,6 +32,58 @@ export function AiTutorConversationPane({
   isSending: boolean;
   handleSend: (text: string) => Promise<void>;
 }) {
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const transcriptContentRef = useRef<HTMLDivElement | null>(null);
+  const shouldStickToBottomRef = useRef(true);
+
+  function scrollTranscriptToBottom(scroller: HTMLDivElement, behavior: ScrollBehavior) {
+    if (typeof scroller.scrollTo === 'function') {
+      scroller.scrollTo({ top: scroller.scrollHeight, behavior });
+      return;
+    }
+    scroller.scrollTop = scroller.scrollHeight;
+  }
+
+  useEffect(() => {
+    if (!hasStartedConversation) {
+      shouldStickToBottomRef.current = true;
+      return;
+    }
+
+    const scroller = scrollContainerRef.current;
+    if (!scroller || !shouldStickToBottomRef.current) {
+      return;
+    }
+
+    const rafId = window.requestAnimationFrame(() => {
+      scrollTranscriptToBottom(scroller, transcript.length > 1 ? 'smooth' : 'auto');
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [hasStartedConversation, isSending, transcript]);
+
+  useEffect(() => {
+    if (!hasStartedConversation) {
+      return;
+    }
+
+    const scroller = scrollContainerRef.current;
+    const content = transcriptContentRef.current;
+    if (!scroller || !content || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      if (!shouldStickToBottomRef.current) {
+        return;
+      }
+      scrollTranscriptToBottom(scroller, 'auto');
+    });
+
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [hasStartedConversation]);
+
   return (
     <div className="min-h-0 flex-1 overflow-hidden px-5 pb-4 pt-0 md:px-6 md:pb-5">
       <div className="flex h-full min-h-0 flex-col gap-4">
@@ -69,19 +123,35 @@ export function AiTutorConversationPane({
             <div className="min-h-0 flex-1" />
           </>
         ) : (
-          <div className="viewer-scrollbar-hidden min-h-0 flex-1 overflow-auto pr-1">
-            <div className="space-y-3 rounded-[22px] border border-[#e2d7c9] bg-[rgba(255,250,245,0.84)] p-4">
+          <div
+            ref={scrollContainerRef}
+            className="viewer-scrollbar-hidden min-h-0 flex-1 overflow-auto pr-1 pb-3"
+            onScroll={(event) => {
+              const target = event.currentTarget;
+              const distanceFromBottom = target.scrollHeight - target.scrollTop - target.clientHeight;
+              shouldStickToBottomRef.current = distanceFromBottom <= 72;
+            }}
+          >
+            <div
+              ref={transcriptContentRef}
+              className="flex flex-col gap-3 rounded-[22px] border border-[#e2d7c9] bg-[rgba(255,250,245,0.84)] p-4"
+            >
               {transcript.map((message, index) => {
                 const isPendingModel =
                   isSending && index === transcript.length - 1 && message.role === 'model' && !message.text.trim();
+                const hasInteractiveVisual = message.role === 'model' && containsTutorInteractiveVisual(message.text);
+
+                const messageClassName =
+                  message.role === 'user'
+                    ? 'self-end w-fit max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
+                    : hasInteractiveVisual
+                      ? 'self-stretch rounded-[24px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-4 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
+                      : 'self-start w-fit max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]';
+
                 return (
                   <div
                     key={`${message.role}-${index}`}
-                    className={
-                      message.role === 'user'
-                        ? 'ml-auto max-w-[82%] rounded-[20px] border border-[#b9d1bc] bg-[linear-gradient(145deg,#a8c5ac_0%,#7a9e7e_100%)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-white shadow-[0_12px_24px_rgba(122,158,126,0.2)]'
-                        : 'max-w-[82%] rounded-[20px] border border-[#e2d7c9] bg-[rgba(255,252,247,0.92)] px-4 py-3 text-[0.88rem] font-medium leading-6 text-[#4d4239] shadow-[0_10px_24px_rgba(90,70,50,0.08)]'
-                    }
+                    className={messageClassName}
                   >
                     {isPendingModel ? (
                       language === 'zh-CN' ? '正在思考…' : 'Thinking…'
@@ -300,44 +370,21 @@ export function AiTutorMaterialsSection({
 }) {
   return (
     <section className="rounded-[22px] border border-[#ddd3c3] bg-[rgba(255,252,247,0.92)] px-4 py-4 shadow-[0_10px_24px_rgba(90,70,50,0.08)]">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h3
-            className="text-[1.8rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
-            style={{ fontFamily: '"Cormorant Garamond", serif' }}
-          >
-            {copy.aiTutor.materials}
-          </h3>
-          <div className="mt-1 text-[0.74rem] font-medium text-[#8b7d72]">
-            {userId
-              ? interpolateCount(copy.aiTutor.materialsSelected, selectedDocumentCount)
-              : copy.aiTutor.materialsProtected}
+      <div className="space-y-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <h3
+              className="text-[1.8rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+              style={{ fontFamily: '"Cormorant Garamond", serif' }}
+            >
+              {copy.aiTutor.materials}
+            </h3>
+            <div className="mt-1 text-[0.74rem] font-medium text-[#8b7d72]">
+              {userId
+                ? interpolateCount(copy.aiTutor.materialsSelected, selectedDocumentCount)
+                : copy.aiTutor.materialsProtected}
+            </div>
           </div>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <input
-            ref={fileInputRef}
-            type="file"
-            className="sr-only"
-            aria-label={copy.aiTutor.uploadMaterials}
-            multiple
-            accept=".pdf,.docx,.ppt,.pptx,.doc"
-            onChange={(event) => {
-              void handleUploadFiles(event.target.files);
-              event.currentTarget.value = '';
-            }}
-          />
-          <button
-            type="button"
-            className="viewer-botanical-button viewer-botanical-button--secondary px-3 py-2 text-[0.76rem]"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={!userId || pendingUploads.length > 0 || createDocumentPending || Boolean(documentsErrorMessage)}
-          >
-            <span className="flex items-center gap-2">
-              <Upload size={15} />
-              {copy.aiTutor.uploadMaterials}
-            </span>
-          </button>
           <button
             type="button"
             aria-label={materialsToggleLabel}
@@ -350,6 +397,28 @@ export function AiTutorMaterialsSection({
             {materialsExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
         </div>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          className="sr-only"
+          aria-label={copy.aiTutor.uploadMaterials}
+          multiple
+          accept=".pdf,.docx,.ppt,.pptx,.doc"
+          onChange={(event) => {
+            void handleUploadFiles(event.target.files);
+            event.currentTarget.value = '';
+          }}
+        />
+        <button
+          type="button"
+          className="viewer-botanical-button viewer-botanical-button--secondary flex w-full items-center justify-center gap-2 px-4 py-2.5 text-[0.82rem]"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={!userId || pendingUploads.length > 0 || createDocumentPending || Boolean(documentsErrorMessage)}
+        >
+          <Upload size={15} />
+          <span>{copy.aiTutor.uploadMaterials}</span>
+        </button>
       </div>
 
       {materialsExpanded ? (

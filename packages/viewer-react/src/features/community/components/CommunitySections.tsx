@@ -45,25 +45,28 @@ export function CommunitySectionNav({
     { id: 'trending' as const, label: copy.community.sections[2] },
     { id: 'notes' as const, label: copy.community.sections[3] },
   ];
+  const subtitle = language === 'zh-CN' ? '选一个你现在\n要做的事' : 'Pick what you\nWant to do now';
 
   return (
-    <aside className="viewer-panel rounded-[30px] p-4">
-      <div className="flex items-center gap-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-[20px] border border-[#e4d2b6] bg-[linear-gradient(145deg,#d4b896_0%,#c4956a_100%)] text-white shadow-[0_14px_24px_rgba(196,149,106,0.18)]">
-          <Users size={28} />
+    <aside className="border-b border-[rgba(141,124,105,0.14)] bg-[rgba(255,252,248,0.6)] p-5 backdrop-blur-[18px] md:p-6 xl:sticky xl:top-0 xl:min-h-screen xl:self-stretch xl:border-b-0 xl:border-r">
+      <div className="flex flex-col items-center text-center">
+        <div className="flex h-[4.4rem] w-[4.4rem] items-center justify-center rounded-[1.15rem] border border-[#e4d2b6] bg-[linear-gradient(145deg,#d4b896_0%,#c4956a_100%)] text-white shadow-[0_14px_24px_rgba(196,149,106,0.18)]">
+          <Users size={32} />
         </div>
-        <div>
+        <div className="mt-5 flex flex-col gap-2">
           <h1
-            className="text-[2.2rem] font-semibold tracking-[-0.04em] text-[#3d342a]"
+            className="viewer-botanical-heading text-[2.35rem] leading-[0.94] md:text-[2.55rem]"
             style={{ fontFamily: '"Cormorant Garamond", serif' }}
           >
             {copy.community.title}
           </h1>
-          <p className="viewer-botanical-eyebrow">{language === 'zh-CN' ? '选一个你现在要做的事' : 'Pick what you want to do now'}</p>
+          <p className="whitespace-pre-line text-[0.92rem] font-semibold leading-[1.45] tracking-[0.14em] text-[#93857a]">
+            {subtitle}
+          </p>
         </div>
       </div>
 
-      <nav className="mt-7 space-y-2.5">
+      <nav className="mt-7 space-y-3">
         {sectionItems.map((item) => {
           const visual = sectionVisuals[item.id];
           const Icon = visual.icon;
@@ -73,15 +76,15 @@ export function CommunitySectionNav({
               key={item.id}
               type="button"
               className={cn(
-                'flex w-full items-center gap-3.5 rounded-[20px] border px-3.5 py-3 text-left text-[0.92rem] font-bold transition',
+                'viewer-botanical-button flex w-full items-center justify-start gap-3.5 rounded-[20px] px-5 py-4 text-left text-[1rem] font-bold leading-[1.15]',
                 isActive
-                  ? 'border-[#b9d1bc] bg-[linear-gradient(180deg,rgba(235,243,232,0.96)_0%,rgba(223,240,224,0.88)_100%)] text-[#5c7d60]'
-                  : 'border-transparent text-[#7a6b5e] hover:bg-[#faf4ea]',
+                  ? 'border border-[#b9d1bc] bg-[linear-gradient(180deg,rgba(235,243,232,0.96)_0%,rgba(223,240,224,0.88)_100%)] text-[#5c7d60] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),0_6px_0_rgba(197,213,199,0.82),0_14px_20px_rgba(90,70,50,0.08)]'
+                  : 'viewer-botanical-button--secondary text-[#7a6b5e]',
               )}
               onClick={() => setSection(item.id)}
             >
               <Icon size={25} />
-              <span className="flex-1">{item.label}</span>
+              <span className="flex-1 whitespace-normal text-left">{item.label}</span>
               {item.id === 'messages' && unreadCount > 0 ? (
                 <span className="flex h-9 min-w-9 items-center justify-center rounded-full bg-[#f34848] px-2 text-sm text-white">
                   {unreadCount}

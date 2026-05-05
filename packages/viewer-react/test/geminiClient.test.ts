@@ -361,4 +361,37 @@ describe('geminiClient', () => {
       ),
     ).rejects.toThrow('AI 暂时不可用，请稍后再试。');
   });
+
+  it('falls back to the built-in trigonometry visual reply when the visual service is unavailable', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    document.documentElement.lang = 'en';
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ error: 'name resolution failed' }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream([
+      { role: 'user', text: 'Give me an interactive graph visual explaining cosine and sin value' },
+    ]);
+
+    expect(result.reply).toContain('```primoria-interactive-visual');
+    expect(result.reply).toContain('Drag the angle slider');
+    expect(result.usedTools).toEqual(['interactive_visual_local']);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://demo-project.functions.supabase.co/viewer-ai-interactive-visual',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          apikey: 'demo-anon-key',
+          Authorization: 'Bearer demo-access-token',
+        }),
+      }),
+    );
+  });
 });
