@@ -16,4 +16,31 @@ describe('TutorMarkdown', () => {
     expect(screen.queryByText(/\*\*Singleton Pattern\*\*/)).not.toBeInTheDocument();
     expect(screen.getByText(/结论：优先隔离依赖。/)).toBeInTheDocument();
   });
+
+  it('renders embedded interactive visual cards from the custom tutor fence', () => {
+    render(
+      <TutorMarkdown
+        text={[
+          'Explore this graph below.',
+          '',
+          '```primoria-interactive-visual',
+          JSON.stringify({
+            title: 'Interactive sine and cosine graph',
+            description: 'Move the slider to compare both values.',
+            generatedHtml: '<div id="graph">hello</div>',
+          }),
+          '```',
+          '',
+          'Then compare the two curves.',
+        ].join('\n')}
+      />,
+    );
+
+    expect(screen.getByText('Explore this graph below.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Interactive sine and cosine graph' })).toBeInTheDocument();
+    expect(screen.getByText('Move the slider to compare both values.')).toBeInTheDocument();
+    expect(screen.getByTitle('Interactive sine and cosine graph')).toBeInTheDocument();
+    expect(screen.getByText('Then compare the two curves.')).toBeInTheDocument();
+    expect(screen.queryByText('```primoria-interactive-visual')).not.toBeInTheDocument();
+  });
 });

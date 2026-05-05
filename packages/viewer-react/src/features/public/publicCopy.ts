@@ -97,7 +97,7 @@ const publicCopyDictionary = {
       },
       authPanel: {
         badge: '学习入口',
-        title: '找课程、开始学习、边学边问，都在 Primoria 里完成',
+        title: '找一门课程\n开始学习并继续在同一个地方提问',
         features: [
           '从找课程到完成一节课，路径简单清楚',
           '学习助手会继续解释、整理重点并生成练习',
@@ -324,7 +324,7 @@ const publicCopyDictionary = {
       },
       authPanel: {
         badge: 'Learning entry',
-        title: 'Discover a course, start learning, and keep asking questions in one place',
+        title: 'Discover a course\nStart learning and keep asking\nquestions in one place',
         features: [
           'The path from discovery to finishing a lesson is easy to follow',
           'The study helper can explain, summarize, and generate quick practice',

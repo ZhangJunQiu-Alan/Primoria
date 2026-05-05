@@ -113,7 +113,6 @@
 
 .auth-brand-panel__copy {
   margin-top: clamp(2.2rem, 5vh, 3.6rem);
-  max-width: 23rem;
 }
 
 .auth-brand-panel__eyebrow,
@@ -135,7 +134,8 @@
 
 .auth-brand-panel__title {
   font-size: clamp(1.91rem, 3.4vw, 3.12rem);
-  max-width: 8ch;
+  white-space: pre-line;
+  text-wrap: balance;
 }
 
 .auth-brand-panel__summary {
