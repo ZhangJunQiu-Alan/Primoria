@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.7-nightly.202604280703.51ccd662",
+  "checkpoint_id": "0cbe7c7b5a06",
+  "strategy": "manual-commit",
+  "branch": "feat/hello-how-can-i-help-you-today",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "agent-service/app/agent.py",
+    "agent-service/app/schemas.py",
+    "agent-service/pyproject.toml",
+    "agent-service/uv.lock",
+    "packages/viewer-react/src/features/ai-tutor/hooks/useAiTutorSession.ts",
+    "packages/viewer-react/src/features/profile/components/SettingsSections.tsx",
+    "packages/viewer-react/src/features/profile/hooks/useSettingsPageModel.ts",
+    "packages/viewer-react/src/features/profile/settingsCopy.ts",
+    "packages/viewer-react/src/shared/api/geminiClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/fixtureStore.ts",
+    "packages/viewer-react/src/shared/api/viewer/settingsApi.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/src/shared/state/preferencesSlice.ts",
+    "supabase/migrations/20260506013105_ai_tutor_custom_provider.sql"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0c/be7c7b5a06/0/metadata.json",
+      "transcript": "/0c/be7c7b5a06/0/full.jsonl",
+      "content_hash": "/0c/be7c7b5a06/0/content_hash.txt",
+      "prompt": "/0c/be7c7b5a06/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 284695,
+    "cache_creation_tokens": 523128,
+    "cache_read_tokens": 9664038,
+    "output_tokens": 37418,
+    "api_call_count": 115
+  }
+}
