@@ -52,3 +52,4 @@ Viewer/
 agent-service/data/memory/*
 !agent-service/data/memory/.gitkeep
 .omx/
+.omc/
