@@ -18,6 +18,7 @@ import type {
   TutorToolKind,
   TutorToolRuntime,
 } from '@/features/ai-tutor/aiTutorTypes';
+import { useAppSelector } from '@/shared/state/store';
 
 function resolveWelcomeMessages(messages: TutorMessage[], welcomeBody: string) {
   if (messages.length !== 1 || messages[0]?.role !== 'model') {
@@ -49,6 +50,7 @@ export function useAiTutorSession({
   const latestMessagesRef = useRef(messages);
   const latestContextRef = useRef(sessionContext);
   const resolvedMessages = useMemo(() => resolveWelcomeMessages(messages, welcomeBody), [messages, welcomeBody]);
+  const { aiProvider, aiBaseUrl, aiApiKey } = useAppSelector((state) => state.viewerPreferences);
 
   useEffect(() => {
     latestMessagesRef.current = resolvedMessages;
@@ -114,6 +116,10 @@ export function useAiTutorSession({
               toolCount: payload.usedTools.length,
             });
           },
+        }, {
+          aiProvider,
+          aiBaseUrl,
+          aiApiKey,
         });
         if (!result.reply.trim()) {
           throw new Error('AI Tutor returned an empty response.');
