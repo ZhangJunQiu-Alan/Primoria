@@ -21,6 +21,9 @@ class ChatContext(BaseModel):
     page_title: str | None = None
     page_content: str | None = None
     learner_state: str | None = None
+    ai_provider: str | None = None
+    ai_base_url: str | None = None
+    ai_api_key: str | None = None
 
 
 class ChatRequest(BaseModel):

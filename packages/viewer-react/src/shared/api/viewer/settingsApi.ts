@@ -1,5 +1,5 @@
 import { DEFAULT_AI_TUTOR_PERSONA, normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
-import type { ViewerProfile, ViewerSettingsBundle, ViewerThemeMode, ViewerUserSettings } from '@/shared/api/viewer/types';
+import type { ViewerAiProvider, ViewerProfile, ViewerSettingsBundle, ViewerThemeMode, ViewerUserSettings } from '@/shared/api/viewer/types';
 import { supabase } from '@/shared/api/supabase';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
@@ -15,6 +15,9 @@ export const DEFAULT_VIEWER_USER_SETTINGS: ViewerUserSettings = {
   accessibility_mode: false,
   ai_tutor_persona: DEFAULT_AI_TUTOR_PERSONA,
   home_companion_enabled: true,
+  ai_provider: 'google',
+  ai_base_url: '',
+  ai_api_key: '',
 };
 
 function normalizeThemeMode(value: unknown): ViewerThemeMode {
@@ -36,7 +39,18 @@ function normalizeUserSettings(raw: Partial<ViewerUserSettings> | null | undefin
     accessibility_mode: raw?.accessibility_mode === true,
     ai_tutor_persona: normalizeAiTutorPersona(raw?.ai_tutor_persona),
     home_companion_enabled: raw?.home_companion_enabled !== false,
+    ai_provider: normalizeAiProvider(raw?.ai_provider),
+    ai_base_url: normalizeOptionalString(raw?.ai_base_url),
+    ai_api_key: normalizeOptionalString(raw?.ai_api_key),
   };
+}
+
+function normalizeAiProvider(value: unknown): ViewerAiProvider {
+  return value === 'openai' || value === 'anthropic' ? value : 'google';
+}
+
+function normalizeOptionalString(value: unknown): string {
+  return typeof value === 'string' && value.trim() ? value.trim() : '';
 }
 
 export async function fetchViewerSettings(userId: string): Promise<ViewerSettingsBundle> {
@@ -91,7 +105,7 @@ export async function saveAccountSystemSettings(
   const { data: existingSettings, error: loadError } = await supabase
     .from('user_settings')
     .select(
-      'theme_mode, language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode, ai_tutor_persona, home_companion_enabled',
+      'theme_mode, language, notification_daily_reminder, notification_reminder_time, marketing_emails, accessibility_mode, ai_tutor_persona, home_companion_enabled, ai_provider, ai_base_url, ai_api_key',
     )
     .eq('user_id', userId)
     .maybeSingle();
@@ -115,6 +129,9 @@ export async function saveAccountSystemSettings(
     accessibility_mode: next.accessibility_mode,
     ai_tutor_persona: next.ai_tutor_persona,
     home_companion_enabled: next.home_companion_enabled,
+    ai_provider: next.ai_provider,
+    ai_base_url: next.ai_base_url,
+    ai_api_key: next.ai_api_key,
   });
 
   if (error) {
