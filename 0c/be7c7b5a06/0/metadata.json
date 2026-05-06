@@ -1,0 +1,128 @@
+{
+  "cli_version": "0.5.7-nightly.202604280703.51ccd662",
+  "checkpoint_id": "0cbe7c7b5a06",
+  "session_id": "7df7a81f-4874-4a2b-9ec2-1685dd67a483",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T01:54:43.260612Z",
+  "branch": "feat/hello-how-can-i-help-you-today",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "agent-service/app/agent.py",
+    "agent-service/app/schemas.py",
+    "agent-service/pyproject.toml",
+    "agent-service/uv.lock",
+    "packages/viewer-react/src/features/ai-tutor/hooks/useAiTutorSession.ts",
+    "packages/viewer-react/src/features/profile/components/SettingsSections.tsx",
+    "packages/viewer-react/src/features/profile/hooks/useSettingsPageModel.ts",
+    "packages/viewer-react/src/features/profile/settingsCopy.ts",
+    "packages/viewer-react/src/shared/api/geminiClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/fixtureStore.ts",
+    "packages/viewer-react/src/shared/api/viewer/settingsApi.ts",
+    "packages/viewer-react/src/shared/api/viewer/types.ts",
+    "packages/viewer-react/src/shared/state/preferencesSlice.ts",
+    "supabase/migrations/20260506013105_ai_tutor_custom_provider.sql"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "ac2f3c750fb6",
+  "token_usage": {
+    "input_tokens": 284695,
+    "cache_creation_tokens": 523128,
+    "cache_read_tokens": 9664038,
+    "output_tokens": 37418,
+    "api_call_count": 115
+  },
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T01:54:43.240349Z",
+    "agent_lines": 198,
+    "agent_removed": 10,
+    "human_added": 226,
+    "human_modified": 5,
+    "human_removed": 0,
+    "total_committed": 429,
+    "total_lines_changed": 439,
+    "agent_percentage": 47.380410022779046,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 209,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".omc/project-memory.json": 203,
+        ".omc/state/sessions/7df7a81f-4874-4a2b-9ec2-1685dd67a483/session-started.json": 6
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 12,
+      "user_lines_removed": 6,
+      "agent_lines_added": 295,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".omc/project-memory.json": 12
+      },
+      "user_removed_per_file": {
+        ".omc/project-memory.json": 6
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 333,
+      "user_lines_removed": 28,
+      "agent_lines_added": 502,
+      "agent_lines_removed": 12,
+      "user_added_per_file": {
+        ".omc/project-memory.json": 91,
+        ".omc/state/last-tool-error.json": 4,
+        "agent-service/.omc/state/last-tool-error.json": 7,
+        "agent-service/app/agent.py": 8,
+        "agent-service/uv.lock": 223
+      },
+      "user_removed_per_file": {
+        ".omc/project-memory.json": 19,
+        ".omc/state/last-tool-error.json": 4,
+        "agent-service/app/agent.py": 2,
+        "agent-service/uv.lock": 3
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 102,
+      "user_lines_removed": 23,
+      "agent_lines_added": 731,
+      "agent_lines_removed": 15,
+      "user_added_per_file": {
+        ".omc/project-memory.json": 91,
+        ".omc/state/last-tool-error.json": 4,
+        "agent-service/.omc/state/last-tool-error.json": 7
+      },
+      "user_removed_per_file": {
+        ".omc/project-memory.json": 19,
+        ".omc/state/last-tool-error.json": 4
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 102,
+      "user_lines_removed": 23,
+      "agent_lines_added": 736,
+      "agent_lines_removed": 15,
+      "user_added_per_file": {
+        ".omc/project-memory.json": 91,
+        ".omc/state/last-tool-error.json": 4,
+        "agent-service/.omc/state/last-tool-error.json": 7
+      },
+      "user_removed_per_file": {
+        ".omc/project-memory.json": 19,
+        ".omc/state/last-tool-error.json": 4
+      }
+    }
+  ]
+}
