@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.7-nightly.202604280703.51ccd662",
+  "checkpoint_id": "5705b92813bc",
+  "strategy": "manual-commit",
+  "branch": "feat/hello-how-can-i-help-you-today",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/57/05b92813bc/0/metadata.json",
+      "transcript": "/57/05b92813bc/0/full.jsonl",
+      "content_hash": "/57/05b92813bc/0/content_hash.txt",
+      "prompt": "/57/05b92813bc/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 285306,
+    "cache_creation_tokens": 526063,
+    "cache_read_tokens": 11414002,
+    "output_tokens": 38890,
+    "api_call_count": 128
+  }
+}

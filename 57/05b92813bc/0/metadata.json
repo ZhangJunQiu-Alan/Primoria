@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.7-nightly.202604280703.51ccd662",
+  "checkpoint_id": "5705b92813bc",
+  "session_id": "7df7a81f-4874-4a2b-9ec2-1685dd67a483",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T01:56:18.088496Z",
+  "branch": "feat/hello-how-can-i-help-you-today",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "b522cfe68d27",
+  "token_usage": {
+    "input_tokens": 285306,
+    "cache_creation_tokens": 526063,
+    "cache_read_tokens": 11414002,
+    "output_tokens": 38890,
+    "api_call_count": 128
+  },
+  "session_metrics": {
+    "turn_count": 8
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 367,
+      "user_lines_removed": 0,
+      "agent_lines_added": 14,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".omc/project-memory.json": 354,
+        ".omc/state/sessions/7df7a81f-4874-4a2b-9ec2-1685dd67a483/session-started.json": 6,
+        "agent-service/.omc/state/last-tool-error.json": 7
+      }
+    }
+  ]
+}
