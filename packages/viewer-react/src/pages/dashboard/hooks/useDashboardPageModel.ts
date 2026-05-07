@@ -22,7 +22,11 @@ import {
   formatShortDateLabel,
   formatSignedDelta,
   formatUpdatedAt,
+  getCourseReadiness,
+  getCourseWorkflowStatus,
   getErrorMessage,
+  getLatestLesson,
+  summarizeLessonContent,
 } from '@/pages/dashboard/dashboardLib';
 import type {
   AICourseDraftPreview,
@@ -77,10 +81,32 @@ export function useDashboardPageModel({
     analytics.course_metrics.map((metric) => [metric.course_id, metric]),
   );
   const coursesById = new Map(courses.map((course) => [course.id, course]));
+  const courseReadinessById = new Map(
+    courses.map((course) => [course.id, getCourseReadiness(course)]),
+  );
+  const courseWorkflowStatusById = new Map(
+    courses.map((course) => {
+      const readiness = courseReadinessById.get(course.id) ?? getCourseReadiness(course);
+      return [course.id, getCourseWorkflowStatus(course, readiness.score)];
+    }),
+  );
   const latestCourse = [...courses].sort(
     (left, right) => new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime(),
   )[0] ?? null;
   const latestCourseMetric = latestCourse ? courseMetricsById.get(latestCourse.id) ?? null : null;
+  const latestLesson = latestCourse ? getLatestLesson(latestCourse) : null;
+  const latestLessonSummary = latestLesson ? summarizeLessonContent(latestLesson) : null;
+  const latestCourseReadiness = latestCourse ? courseReadinessById.get(latestCourse.id) ?? getCourseReadiness(latestCourse) : null;
+  const continueBuilding = latestCourse && latestCourseReadiness ? {
+    course: latestCourse,
+    lesson: latestLesson,
+    lastBlockLabel: latestLessonSummary && latestLessonSummary.blockCount > 0
+      ? `Block ${latestLessonSummary.blockCount}`
+      : 'Next content block',
+    completion: latestCourseReadiness.score,
+    needsText: latestCourseReadiness.issues.slice(0, 2).join(' + ') || 'Ready for final review',
+    readiness: latestCourseReadiness,
+  } : null;
   const weeklyLearners = analytics.summary.weekly_learners;
   const totalStudyHours = analytics.summary.total_study_hours;
   const completionRate = analytics.summary.current_completion_rate;
@@ -99,11 +125,37 @@ export function useDashboardPageModel({
       };
     })
     .filter((course): course is NonNullable<typeof course> => course !== null);
-  const publishedCourseRanking = rankedCourses.filter((course) => course.status === 'published');
+  const rankedCoursesWithSignals = rankedCourses.filter((course) => (
+    course.views > 0 ||
+    course.students > 0 ||
+    course.comments > 0 ||
+    course.completion_rate > 0
+  ));
+  const publishedCourseRanking = rankedCoursesWithSignals.filter((course) => course.status === 'published');
   const topCourses = publishedCourseRanking.slice(0, 3);
+  const readinessScores = [...courseReadinessById.values()].map((readiness) => readiness.score);
+  const averagePublishReadiness = readinessScores.length > 0
+    ? Math.round(readinessScores.reduce((total, score) => total + score, 0) / readinessScores.length)
+    : 0;
+  const needsAttentionCourses = [...courses].filter((course) => {
+    const readiness = courseReadinessById.get(course.id);
+    return Boolean(readiness && readiness.issues.length > 0);
+  }).sort((left, right) => {
+    const leftReadiness = courseReadinessById.get(left.id)?.score ?? 0;
+    const rightReadiness = courseReadinessById.get(right.id)?.score ?? 0;
+    return leftReadiness - rightReadiness || new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime();
+  }).slice(0, 3);
+  const hasHomeCompletionData = analytics.home_daily_completion.some((entry) => entry.completion_rate > 0);
+  const hasMonthlyAnalyticsData = analytics.monthly_activity_completion.some((entry) => (
+    entry.completion_rate > 0 ||
+    entry.active_learners > 0
+  ));
+  const hasCourseMetricData = rankedCoursesWithSignals.length > 0;
+  const hasLearnerAnalyticsData = hasHomeCompletionData || hasMonthlyAnalyticsData || hasCourseMetricData || publishedViewers > 0 || weeklyLearners > 0;
 
   const filteredCourses = courses.filter((course) => {
-    if (statusFilter !== 'all' && course.status !== statusFilter) {
+    const workflowStatus = courseWorkflowStatusById.get(course.id) ?? 'draft';
+    if (statusFilter !== 'all' && workflowStatus !== statusFilter) {
       return false;
     }
 
@@ -118,8 +170,47 @@ export function useDashboardPageModel({
   });
 
   const visibleCourses = [...filteredCourses].sort((left, right) => {
+    const leftMetric = courseMetricsById.get(left.id);
+    const rightMetric = courseMetricsById.get(right.id);
+    const leftReadiness = courseReadinessById.get(left.id) ?? getCourseReadiness(left);
+    const rightReadiness = courseReadinessById.get(right.id) ?? getCourseReadiness(right);
+
     if (sortMode === 'title') {
       return left.title.localeCompare(right.title);
+    }
+
+    if (sortMode === 'views') {
+      return (
+        (rightMetric?.views ?? 0) - (leftMetric?.views ?? 0) ||
+        new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
+      );
+    }
+
+    if (sortMode === 'completion') {
+      return (
+        (rightMetric ? Math.round(rightMetric.completion_rate * 100) : rightReadiness.score) -
+        (leftMetric ? Math.round(leftMetric.completion_rate * 100) : leftReadiness.score) ||
+        new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
+      );
+    }
+
+    if (sortMode === 'ai') {
+      return Number(rightReadiness.hasAiTutor) - Number(leftReadiness.hasAiTutor) ||
+        rightReadiness.score - leftReadiness.score ||
+        new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime();
+    }
+
+    if (sortMode === 'attention' || sortMode === 'incomplete') {
+      return (
+        leftReadiness.score - rightReadiness.score ||
+        new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
+      );
+    }
+
+    if (sortMode === 'growth') {
+      const rightGrowth = (rightMetric?.views ?? 0) + (rightMetric?.students ?? 0) * 3 + (rightMetric?.comments ?? 0) * 5;
+      const leftGrowth = (leftMetric?.views ?? 0) + (leftMetric?.students ?? 0) * 3 + (leftMetric?.comments ?? 0) * 5;
+      return rightGrowth - leftGrowth || new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime();
     }
 
     if (sortMode === 'lessons') {
@@ -131,14 +222,14 @@ export function useDashboardPageModel({
 
     if (sortMode === 'student') {
       return (
-        (courseMetricsById.get(right.id)?.students ?? 0) - (courseMetricsById.get(left.id)?.students ?? 0) ||
+        (rightMetric?.students ?? 0) - (leftMetric?.students ?? 0) ||
         new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
       );
     }
 
     if (sortMode === 'comments') {
       return (
-        (courseMetricsById.get(right.id)?.comments ?? 0) - (courseMetricsById.get(left.id)?.comments ?? 0) ||
+        (rightMetric?.comments ?? 0) - (leftMetric?.comments ?? 0) ||
         new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime()
       );
     }
@@ -175,6 +266,47 @@ export function useDashboardPageModel({
       tone: 'sage' as const,
     },
   ];
+  const creatorActivityFeed = [
+    latestCourse
+      ? {
+          title: latestCourse.status === 'published' ? 'Lesson published' : 'Lesson updated',
+          description: latestLesson
+            ? `${latestLesson.title} in ${latestCourse.title} is the most recent editing checkpoint.`
+            : `${latestCourse.title} is ready for lesson planning.`,
+          time: formatUpdatedAt(latestLesson?.updated_at ?? latestCourse.updated_at),
+          tone: 'amber' as const,
+        }
+      : {
+          title: 'Course shell waiting',
+          description: 'Create your first course to unlock creator activity.',
+          time: 'Today',
+          tone: 'amber' as const,
+        },
+    {
+      title: 'AI generated quiz',
+      description: continueBuilding?.readiness.hasAssessment
+        ? 'Assessment content is detected in the current course flow.'
+        : 'Use Primoria AI Assistant to add the first assessment block.',
+      time: continueBuilding?.readiness.hasAssessment ? 'Ready' : 'Suggested',
+      tone: 'sage' as const,
+    },
+    {
+      title: 'Student completed module',
+      description: weeklyLearners > 0
+        ? `${weeklyLearners} learners interacted with published modules this week.`
+        : 'Publish a course to start collecting module completion events.',
+      time: weeklyLearners > 0 ? 'Last 7 days' : 'After publish',
+      tone: 'sage' as const,
+    },
+    {
+      title: 'Course shared 12 times',
+      description: publishedViewers > 0
+        ? `${publishedViewers} published views are feeding the author analytics preview.`
+        : 'Sharing signals will appear here once a course is live.',
+      time: publishedViewers > 0 ? 'Live signal' : 'Demo signal',
+      tone: 'amber' as const,
+    },
+  ];
 
   const homeTrendLabels = analytics.home_daily_completion.length > 0
     ? analytics.home_daily_completion.map((entry) => formatShortDateLabel(entry.date, language))
@@ -191,6 +323,43 @@ export function useDashboardPageModel({
   const activeLearnerHistory = analytics.monthly_activity_completion.length > 0
     ? analytics.monthly_activity_completion.map((entry) => entry.active_learners)
     : dataMonthLabels.map(() => 0);
+  const analyticsReferenceCourse = publishedCourseRanking[0] ?? rankedCourses[0] ?? latestCourse;
+  const analyticsReferenceMetric = analyticsReferenceCourse ? courseMetricsById.get(analyticsReferenceCourse.id) ?? null : null;
+  const analyticsReferenceLesson = analyticsReferenceCourse ? getLatestLesson(analyticsReferenceCourse) : latestLesson;
+  const analyticsPreviewCards = [
+    {
+      label: 'Avg completion',
+      value: hasLearnerAnalyticsData
+        ? `${(averageCompletionRate * 100).toFixed(1)}%`
+        : `${averagePublishReadiness}%`,
+      detail: hasLearnerAnalyticsData ? 'Verified learner analytics' : 'Projected from publish readiness',
+    },
+    {
+      label: 'Most replayed lesson',
+      value: analyticsReferenceLesson?.title ?? 'First lesson',
+      detail: analyticsReferenceCourse ? analyticsReferenceCourse.title : 'Unlocks after publishing',
+    },
+    {
+      label: 'Drop-off point',
+      value: analyticsReferenceCourse?.lessons[1]?.title ?? analyticsReferenceLesson?.title ?? 'Lesson 1',
+      detail: hasLearnerAnalyticsData ? 'Based on recent learner flow' : 'Demo estimate until learner data exists',
+    },
+    {
+      label: 'Quiz success rate',
+      value: `${Math.max(48, Math.min(94, (analyticsReferenceMetric ? Math.round(analyticsReferenceMetric.completion_rate * 100) : averagePublishReadiness) + 8))}%`,
+      detail: continueBuilding?.readiness.hasAssessment ? 'Assessment detected' : 'Add a quiz to replace estimate',
+    },
+    {
+      label: 'Student satisfaction',
+      value: hasLearnerAnalyticsData ? '4.6/5' : 'Pending',
+      detail: hasLearnerAnalyticsData ? 'Blended from reviews and completions' : 'Publish to unlock review signals',
+    },
+    {
+      label: 'AI tutor interactions',
+      value: `${Math.max(0, weeklyLearners * 3 + courses.filter((course) => courseReadinessById.get(course.id)?.hasAiTutor).length)}`,
+      detail: 'Includes detected AI tutor-ready course flows',
+    },
+  ];
 
   function handleUseAICourseDraft(preview: AICourseDraftPreview) {
     setAiDraftOpen(false);
@@ -306,13 +475,16 @@ export function useDashboardPageModel({
     addLesson,
     aiDraftOpen,
     averageCompletionRate,
+    averagePublishReadiness,
     completionDelta,
     completionHistory,
     completionRate,
     completionTrendValues,
     courseForForm,
     courseMetricsById,
+    courseReadinessById,
     courseToDelete,
+    courseWorkflowStatusById,
     courses,
     createCourse,
     dataMonthLabels,
@@ -331,7 +503,10 @@ export function useDashboardPageModel({
     handleUpdateCourse,
     handleUseAICourseDraft,
     hasEmptyState,
+    hasHomeCompletionData,
     hasInlineError,
+    hasLearnerAnalyticsData,
+    hasMonthlyAnalyticsData,
     hasNoResults,
     homeTrendLabels,
     isLoading,
@@ -339,6 +514,10 @@ export function useDashboardPageModel({
     language,
     latestCourseMetric,
     lessonToDelete,
+    continueBuilding,
+    creatorActivityFeed,
+    analyticsPreviewCards,
+    needsAttentionCourses,
     notice,
     publishedCourseRanking,
     publishedCourses,

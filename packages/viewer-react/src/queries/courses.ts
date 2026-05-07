@@ -36,7 +36,7 @@ type CourseListSelectRow = Pick<
   lessons: Array<
     Pick<
       LessonTableRow,
-      'id' | 'title' | 'sort_key' | 'duration_seconds' | 'type' | 'updated_at'
+      'id' | 'title' | 'sort_key' | 'duration_seconds' | 'type' | 'updated_at' | 'content_json'
     >
   > | null;
 };
@@ -78,6 +78,7 @@ export interface CourseLessonRow {
   duration_seconds: number;
   type: LessonType;
   updated_at: string;
+  content_json?: Json;
 }
 
 export interface CourseRow {
@@ -148,7 +149,8 @@ const courseListSelectFragment = `
     sort_key,
     duration_seconds,
     type,
-    updated_at
+    updated_at,
+    content_json
   )
 `;
 
@@ -310,7 +312,7 @@ export function useCreateCourse() {
           unlock_type: 'none' as LessonUnlockType,
           content_json: buildLessonDraftJson(firstLessonId, firstLessonTitle),
         })
-        .select('id, title, sort_key, duration_seconds, type, updated_at')
+        .select('id, title, sort_key, duration_seconds, type, updated_at, content_json')
         .single();
 
       if (lessonError) {

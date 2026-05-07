@@ -4,29 +4,51 @@ import {
   Activity,
   ArrowUpRight,
   BadgeCheck,
+  BarChart3,
   BookCopy,
   BookOpen,
   BookPlus,
+  Bot,
   BrainCircuit,
   ChevronDown,
+  CheckCircle2,
   Clock3,
   Copy,
+  Eye,
+  FileText,
+  Flag,
+  GitBranch,
   GraduationCap,
-  LayoutGrid,
+  ListChecks,
   Loader2,
+  MessageSquare,
   Pencil,
   Plus,
   RefreshCcw,
   Search,
+  ShieldCheck,
+  Sparkles,
+  Tags,
   Trash2,
   TriangleAlert,
   Users,
   X,
 } from 'lucide-react';
-import { formatDuration, formatLessonDuration, formatStatus, formatUpdatedAt, getErrorMessage } from '@/pages/dashboard/dashboardLib';
+import {
+  formatDifficulty,
+  formatDuration,
+  formatLessonDuration,
+  formatUpdatedAt,
+  formatWorkflowStatus,
+  getCourseDisplayTags,
+  getCourseInitials,
+  getErrorMessage,
+  getLatestLesson,
+} from '@/pages/dashboard/dashboardLib';
 import { MetricCard, TrendChart } from '@/pages/dashboard/components/DashboardStats';
 import type { DashboardPageModel } from '@/pages/dashboard/hooks/useDashboardPageModel';
 import type { DashboardTab } from '@/pages/dashboard/dashboardTypes';
+import type { CourseRow } from '@/queries/courses';
 
 function PageHeader({
   eyebrow,
@@ -51,6 +73,44 @@ function PageHeader({
   );
 }
 
+function ReadinessMeter({ value, label = 'Publish Readiness' }: { value: number; label?: string }) {
+  return (
+    <div className="studio-readiness">
+      <div className="studio-readiness__meta">
+        <span>{label}</span>
+        <strong>{value}%</strong>
+      </div>
+      <div className="studio-progress">
+        <span style={{ width: `${value}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function CourseCover({ course }: { course: CourseRow }) {
+  return (
+    <div className="studio-course-card__cover">
+      {course.thumbnail_url ? (
+        <img src={course.thumbnail_url} alt="" />
+      ) : (
+        <span>{getCourseInitials(course.title)}</span>
+      )}
+    </div>
+  );
+}
+
+function AnalyticsUnlockPrompt({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="studio-empty-card studio-empty-card--soft studio-empty-card--compact">
+      <BarChart3 size={20} />
+      <div>
+        <strong>{title}</strong>
+        <p>{body}</p>
+      </div>
+    </div>
+  );
+}
+
 export function DashboardHomeTab({
   model,
   navigate,
@@ -70,6 +130,49 @@ export function DashboardHomeTab({
 
       <section className="studio-home-grid">
         <div className="studio-home-grid__main">
+          <section className="studio-card studio-panel studio-continue-card">
+            <div className="studio-panel__header">
+              <div>
+                <p className="studio-overline">{language === 'zh-CN' ? '继续创作' : 'Continue Building'}</p>
+                <h2>{language === 'zh-CN' ? '回到上次停下的位置' : 'Continue where you left off'}</h2>
+              </div>
+              {model.continueBuilding ? (
+                <button
+                  type="button"
+                  className="studio-button studio-button--primary"
+                  onClick={() => navigate(`/builder/editor/${model.continueBuilding!.course.id}`)}
+                >
+                  <ArrowUpRight size={16} />
+                  <span>{language === 'zh-CN' ? '继续编辑' : 'Resume Editing'}</span>
+                </button>
+              ) : null}
+            </div>
+
+            {model.continueBuilding ? (
+              <div className="studio-continue-card__body">
+                <CourseCover course={model.continueBuilding.course} />
+                <div className="studio-continue-card__copy">
+                  <h3>{model.continueBuilding.course.title}</h3>
+                  <p>
+                    {model.continueBuilding.lesson
+                      ? `${model.continueBuilding.lesson.title} • ${model.continueBuilding.lastBlockLabel}`
+                      : 'Course shell • Next lesson block'}
+                  </p>
+                  <ReadinessMeter value={model.continueBuilding.completion} label="Draft completion" />
+                  <small>{model.continueBuilding.needsText}</small>
+                </div>
+              </div>
+            ) : (
+              <div className="studio-empty-card studio-empty-card--soft">
+                <Sparkles size={22} />
+                <div>
+                  <strong>{language === 'zh-CN' ? '还没有可继续的课程' : 'No active draft yet'}</strong>
+                  <p>{language === 'zh-CN' ? '创建课程后，这里会直接显示最近编辑的位置。' : 'Create a course and Studio will return you to the exact next editing step.'}</p>
+                </div>
+              </div>
+            )}
+          </section>
+
           <section className="studio-card studio-panel">
             <div className="studio-panel__header">
               <div>
@@ -87,17 +190,25 @@ export function DashboardHomeTab({
               <strong>{language === 'zh-CN' ? `${model.formatSignedDelta(model.completionDelta)} 较上周` : `${model.formatSignedDelta(model.completionDelta)} vs last week`}</strong>
             </div>
 
-            <TrendChart
-              labels={model.homeTrendLabels}
-              series={[
-                {
-                  name: 'Completion',
-                  values: model.completionTrendValues,
-                  color: '#7a9e7e',
-                  fillColor: 'rgba(122, 158, 126, 0.16)',
-                },
-              ]}
-            />
+            {model.hasHomeCompletionData ? (
+              <TrendChart
+                labels={model.homeTrendLabels}
+                height={172}
+                series={[
+                  {
+                    name: 'Completion',
+                    values: model.completionTrendValues,
+                    color: '#7a9e7e',
+                    fillColor: 'rgba(122, 158, 126, 0.16)',
+                  },
+                ]}
+              />
+            ) : (
+              <AnalyticsUnlockPrompt
+                title={language === 'zh-CN' ? '发布课程后解锁趋势' : 'Publish your first course to unlock learner analytics'}
+                body={language === 'zh-CN' ? '在真实数据出现前，Studio 会优先显示创作进度和发布准备度。' : 'Until real learner data exists, Studio focuses on building momentum and publish readiness.'}
+              />
+            )}
           </section>
 
           <section className="studio-card studio-panel">
@@ -157,7 +268,7 @@ export function DashboardHomeTab({
           <section className="studio-card studio-panel">
             <div className="studio-panel__header">
               <div>
-                <h2>{language === 'zh-CN' ? '最近编辑' : 'Recent activity'}</h2>
+                <h2>{language === 'zh-CN' ? '创作者动态' : 'Creator activity feed'}</h2>
               </div>
               <button
                 type="button"
@@ -169,8 +280,8 @@ export function DashboardHomeTab({
             </div>
 
             <div className="studio-activity-list">
-              {model.recentActivities.map((activity) => (
-                <article key={activity.title} className={`studio-activity studio-activity--${activity.tone}`}>
+              {model.creatorActivityFeed.map((activity) => (
+                <article key={`${activity.title}-${activity.time}`} className={`studio-activity studio-activity--${activity.tone}`}>
                   <span className="studio-activity__dot" />
                   <div>
                     <strong>{activity.title}</strong>
@@ -190,33 +301,24 @@ export function DashboardHomeTab({
             </div>
 
             <div className="studio-split-metrics">
-              <MetricCard icon={LayoutGrid} label={language === 'zh-CN' ? '草稿课程' : 'Draft courses'} value={model.draftCourses} tone="lavender" />
-              <MetricCard icon={TriangleAlert} label={language === 'zh-CN' ? '待补内容' : 'Needs content'} value={model.emptyCourses} tone="amber" />
+              <MetricCard icon={BadgeCheck} label={language === 'zh-CN' ? '平均准备度' : 'Avg readiness'} value={`${model.averagePublishReadiness}%`} tone="lavender" />
+              <MetricCard icon={TriangleAlert} label={language === 'zh-CN' ? '待处理课程' : 'Needs attention'} value={model.needsAttentionCourses.length} tone="amber" />
             </div>
 
             <div className="studio-activity-list">
-              <article className="studio-activity studio-activity--amber">
-                <span className="studio-activity__dot" />
-                <div>
-                  <strong>{language === 'zh-CN' ? '优先整理草稿' : 'Polish the drafts first'}</strong>
-                  <p>
-                    {language === 'zh-CN'
-                      ? `${model.draftCourses} 门课程还没发布，先把最接近完成的那一门推进出去。`
-                      : `${model.draftCourses} courses are still in draft. Push the one closest to publish first.`}
-                  </p>
-                </div>
-              </article>
-              <article className="studio-activity studio-activity--sage">
-                <span className="studio-activity__dot" />
-                <div>
-                  <strong>{language === 'zh-CN' ? '补齐空课程' : 'Fill the empty courses'}</strong>
-                  <p>
-                    {language === 'zh-CN'
-                      ? `${model.emptyCourses} 门课程还没有课时，先补上最小可发布内容。`
-                      : `${model.emptyCourses} courses still have no lessons. Add the minimum viable lesson set next.`}
-                  </p>
-                </div>
-              </article>
+              {model.needsAttentionCourses.map((course) => {
+                const readiness = model.courseReadinessById.get(course.id);
+                return (
+                  <article key={course.id} className="studio-activity studio-activity--amber">
+                    <span className="studio-activity__dot" />
+                    <div>
+                      <strong>{course.title}</strong>
+                      <p>{readiness?.nextAction ?? 'Review course readiness before publishing.'}</p>
+                    </div>
+                    <small>{readiness?.score ?? 0}%</small>
+                  </article>
+                );
+              })}
             </div>
           </section>
         </div>
@@ -279,8 +381,8 @@ export function DashboardCoursesTab({
       <section className="studio-summary-strip studio-summary-strip--course">
         <MetricCard icon={BookCopy} label="Courses" value={model.courses.length} tone="mist" />
         <MetricCard icon={ArrowUpRight} label="Published" value={model.publishedCourses} tone="amber" />
-        <MetricCard icon={LayoutGrid} label="Drafts" value={model.draftCourses} tone="lavender" />
-        <MetricCard icon={TriangleAlert} label="Needs content" value={model.emptyCourses} tone="sky" />
+        <MetricCard icon={BadgeCheck} label="Avg readiness" value={`${model.averagePublishReadiness}%`} tone="lavender" />
+        <MetricCard icon={TriangleAlert} label="Needs attention" value={model.needsAttentionCourses.length} tone="sky" />
       </section>
 
       <section className="studio-controls-card studio-card studio-card--soft">
@@ -307,8 +409,13 @@ export function DashboardCoursesTab({
         <div className="studio-chip-group" aria-label="Course status filters">
           {([
             { value: 'all', label: 'All statuses' },
-            { value: 'draft', label: 'Draft only' },
-            { value: 'published', label: 'Published only' },
+            { value: 'draft', label: 'Draft' },
+            { value: 'inReview', label: 'In Review' },
+            { value: 'scheduled', label: 'Scheduled' },
+            { value: 'published', label: 'Published' },
+            { value: 'archived', label: 'Archived' },
+            { value: 'private', label: 'Private' },
+            { value: 'collaborative', label: 'Collaborative' },
           ] as const).map((filter) => (
             <button
               key={filter.value}
@@ -325,13 +432,57 @@ export function DashboardCoursesTab({
           <span>Sort</span>
           <select value={model.sortMode} onChange={(event) => model.setSortMode(event.target.value as typeof model.sortMode)}>
             <option value="updated">Recently updated</option>
-            <option value="lessons">Most lessons</option>
+            <option value="views">Most viewed</option>
+            <option value="completion">Highest completion</option>
+            <option value="ai">AI generated</option>
+            <option value="attention">Needs attention</option>
+            <option value="growth">Fastest growing</option>
+            <option value="incomplete">Incomplete</option>
             <option value="student">Most students</option>
+            <option value="lessons">Most lessons</option>
             <option value="comments">Most comments</option>
             <option value="title">Course title</option>
           </select>
           <ChevronDown size={14} />
         </label>
+      </section>
+
+      <section className="studio-card studio-panel studio-ai-assistant-panel">
+        <div className="studio-panel__header">
+          <div>
+            <p className="studio-overline">PRIMORIA AI ASSISTANT</p>
+            <h2>Keep improving the course flow</h2>
+            <p>Use AI as a persistent teaching design assistant, not only a course starter.</p>
+          </div>
+          <Bot size={22} />
+        </div>
+        <div className="studio-ai-action-grid">
+          {[
+            { label: 'Generate lesson summary', icon: FileText },
+            { label: 'Improve quiz difficulty', icon: ListChecks },
+            { label: 'Rewrite explanation simpler', icon: Sparkles },
+            { label: 'Add exercises', icon: BookPlus },
+            { label: 'Detect weak learning flow', icon: GitBranch },
+          ].map((action) => {
+            const Icon = action.icon;
+            return (
+              <button
+                key={action.label}
+                type="button"
+                className="studio-ai-action"
+                onClick={() => {
+                  model.setNotice({
+                    tone: 'info',
+                    text: `${action.label} is queued for the next AI generator pass.`,
+                  });
+                }}
+              >
+                <Icon size={16} />
+                <span>{action.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </section>
 
       {model.hasInlineError ? (
@@ -374,8 +525,8 @@ export function DashboardCoursesTab({
           <div className="studio-authless__mark">
             <GraduationCap size={28} />
           </div>
-          <h2>No courses yet</h2>
-          <p>Create a course shell first, then return here to manage lessons and publish status.</p>
+          <h2>Build your first AI-assisted course</h2>
+          <p>Start from a template, generate a lesson plan, or create a course shell. Studio will track readiness as you build.</p>
           <div className="studio-empty-state__actions">
             <button
               type="button"
@@ -405,7 +556,7 @@ export function DashboardCoursesTab({
         <section className="studio-card studio-empty-state">
           <Search size={34} />
           <h2>No matching courses</h2>
-          <p>Try clearing the query or switching filters.</p>
+          <p>Try clearing filters, or switch to Needs attention to find the next course worth improving.</p>
           <button
             type="button"
             className="studio-button studio-button--secondary"
@@ -422,124 +573,224 @@ export function DashboardCoursesTab({
 
       {model.visibleCourses.length > 0 ? (
         <section className="studio-course-list" aria-label="Course list">
-          {model.visibleCourses.map((course) => (
-            <article key={course.id} className="studio-card studio-course-card">
-              <div className="studio-course-card__body">
-                <div className="studio-course-card__header">
-                  <div className="studio-course-card__title-group">
-                    <p className="studio-overline">{formatUpdatedAt(course.updated_at)}</p>
-                    <h2>{course.title}</h2>
-                  </div>
+          {model.visibleCourses.map((course) => {
+            const readiness = model.courseReadinessById.get(course.id);
+            const workflowStatus = model.courseWorkflowStatusById.get(course.id) ?? 'draft';
+            const metric = model.courseMetricsById.get(course.id);
+            const latestLesson = getLatestLesson(course);
+            const displayTags = getCourseDisplayTags(course);
+            const issuePreview = readiness?.issues.slice(0, 4) ?? [];
 
-                  <div className="studio-course-card__actions">
-                    <span className={`studio-status-badge studio-status-badge--${course.status}`}>
-                      {formatStatus(course.status)}
-                    </span>
-                    <button
-                      type="button"
-                      className="studio-button studio-button--secondary"
-                      onClick={() => navigate(`/builder/editor/${course.id}`)}
-                    >
-                      <ArrowUpRight size={16} />
-                      <span>Open editor</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="studio-button studio-button--ghost"
-                      onClick={() => {
-                        model.setFormError(null);
-                        model.setCourseForForm(course);
-                        model.setFormMode('edit');
-                      }}
-                    >
-                      <Pencil size={16} />
-                      <span>Edit</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="studio-button studio-button--ghost"
-                      onClick={() => void model.handleDuplicateCourse(course)}
-                      disabled={model.duplicateCourse.isPending}
-                    >
-                      {model.duplicateCourse.isPending ? <Loader2 className="dashboard-spin" size={16} /> : <Copy size={16} />}
-                      <span>Duplicate</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="studio-button studio-button--danger-soft"
-                      onClick={() => model.setCourseToDelete(course)}
-                    >
-                      <Trash2 size={16} />
-                      <span>Delete</span>
-                    </button>
-                  </div>
-                </div>
+            return (
+              <article key={course.id} className="studio-card studio-course-card">
+                <div className="studio-course-card__shell">
+                  <CourseCover course={course} />
 
-                <p className="studio-course-card__description">
-                  {course.description || 'Add a short course description so the team can scan the catalog faster.'}
-                </p>
+                  <div className="studio-course-card__body">
+                    <div className="studio-course-card__header">
+                      <div className="studio-course-card__title-group">
+                        <p className="studio-overline">{formatUpdatedAt(course.updated_at)}</p>
+                        <h2>{course.title}</h2>
+                      </div>
 
-                <div className="studio-meta-row">
-                  <span className="studio-meta-chip">{formatDuration(course.estimated_minutes)}</span>
-                  <span className="studio-meta-chip">{course.lessons.length} lessons</span>
-                </div>
-
-                <section className="studio-lesson-panel">
-                  <div className="studio-lesson-panel__header">
-                    <div>
-                      <p className="studio-overline">LESSON MANAGEMENT</p>
-                      <h3>Lesson management</h3>
-                    </div>
-                    <span>{course.lessons.length > 0 ? `${course.lessons.length} lessons` : 'No lessons yet'}</span>
-                  </div>
-
-                  <div className="studio-lesson-grid">
-                    {course.lessons.map((lesson, index) => (
-                      <article key={lesson.id} className="studio-lesson-tile">
+                      <div className="studio-course-card__actions">
+                        <span className={`studio-status-badge studio-status-badge--${workflowStatus}`}>
+                          {formatWorkflowStatus(workflowStatus)}
+                        </span>
                         <button
                           type="button"
-                          className="studio-lesson-tile__open"
+                          className="studio-button studio-button--secondary"
                           onClick={() => navigate(`/builder/editor/${course.id}`)}
                         >
-                          <span className="studio-lesson-tile__index">Lesson {index + 1}</span>
-                          <strong>{lesson.title}</strong>
-                          <small>{formatLessonDuration(lesson.duration_seconds)}</small>
+                          <ArrowUpRight size={16} />
+                          <span>Open editor</span>
                         </button>
                         <button
                           type="button"
-                          className="studio-lesson-tile__delete"
-                          aria-label={`Delete ${lesson.title}`}
+                          className="studio-button studio-button--ghost"
                           onClick={() => {
-                            if (course.lessons.length <= 1) {
-                              model.setNotice({
-                                tone: 'error',
-                                text: 'A course must keep at least one lesson.',
-                              });
-                              return;
-                            }
-                            model.setLessonToDelete({ course, lesson, index });
+                            model.setFormError(null);
+                            model.setCourseForForm(course);
+                            model.setFormMode('edit');
                           }}
                         >
-                          <Trash2 size={14} />
+                          <Pencil size={16} />
+                          <span>Edit</span>
                         </button>
-                      </article>
-                    ))}
+                        <button
+                          type="button"
+                          className="studio-button studio-button--ghost"
+                          onClick={() => void model.handleDuplicateCourse(course)}
+                          disabled={model.duplicateCourse.isPending}
+                        >
+                          {model.duplicateCourse.isPending ? <Loader2 className="dashboard-spin" size={16} /> : <Copy size={16} />}
+                          <span>Duplicate</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="studio-button studio-button--danger-soft"
+                          onClick={() => model.setCourseToDelete(course)}
+                        >
+                          <Trash2 size={16} />
+                          <span>Delete</span>
+                        </button>
+                      </div>
+                    </div>
 
-                    <button
-                      type="button"
-                      className="studio-lesson-tile studio-lesson-tile--add"
-                      onClick={() => void model.handleAddLesson(course)}
-                      disabled={model.addLesson.isPending}
-                    >
-                      {model.addLesson.isPending ? <Loader2 className="dashboard-spin" size={18} /> : <BookPlus size={18} />}
-                      <strong>Add lesson</strong>
-                      <small>Create a new lesson shell and continue refining it in the editor.</small>
-                    </button>
+                    <p className="studio-course-card__description">
+                      {course.description || 'Add a short course description so the team can scan the catalog faster.'}
+                    </p>
+
+                    <div className="studio-meta-row">
+                      <span className="studio-meta-chip">{formatDifficulty(course.difficulty_level)}</span>
+                      <span className="studio-meta-chip">{formatDuration(course.estimated_minutes)}</span>
+                      <span className="studio-meta-chip">{course.lessons.length} lessons</span>
+                      {displayTags.map((tag) => (
+                        <span key={tag} className="studio-meta-chip">
+                          <Tags size={13} />
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="studio-course-card__hover-intel" aria-label="Course quick intelligence">
+                      <span><BadgeCheck size={14} /> {readiness?.score ?? 0}% complete</span>
+                      <span><Eye size={14} /> {metric?.views ?? 0} views</span>
+                      <span><MessageSquare size={14} /> {metric?.comments ?? 0} comments</span>
+                      <button
+                        type="button"
+                        className="studio-link-button"
+                        onClick={() => {
+                          model.setFormError(null);
+                          model.setCourseForForm(course);
+                          model.setFormMode('edit');
+                        }}
+                      >
+                        Quick edit
+                      </button>
+                    </div>
+
+                    <div className="studio-course-intel-grid">
+                      <section className="studio-course-health">
+                        <div className="studio-course-health__header">
+                          <div>
+                            <p className="studio-overline">COURSE HEALTH</p>
+                            <h3>Publish readiness</h3>
+                          </div>
+                          <strong>{readiness?.score ?? 0}%</strong>
+                        </div>
+                        <ReadinessMeter value={readiness?.score ?? 0} />
+                        <div className="studio-health-list">
+                          {(issuePreview.length > 0 ? issuePreview : readiness?.resolved.slice(0, 4) ?? []).map((item) => (
+                            <span key={item}>
+                              {issuePreview.length > 0 ? <TriangleAlert size={13} /> : <CheckCircle2 size={13} />}
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </section>
+
+                      <section className="studio-course-health">
+                        <div className="studio-course-health__header">
+                          <div>
+                            <p className="studio-overline">COLLABORATION</p>
+                            <h3>Team setup</h3>
+                          </div>
+                          <Users size={18} />
+                        </div>
+                        <div className="studio-collab-row">
+                          <span><ShieldCheck size={13} /> You • Owner</span>
+                          <span><Pencil size={13} /> Editor slot</span>
+                          <span><Bot size={13} /> AI Tutor {readiness?.hasAiTutor ? 'enabled' : 'setup needed'}</span>
+                        </div>
+                      </section>
+                    </div>
+
+                    <section className="studio-lesson-panel">
+                      <div className="studio-lesson-panel__header">
+                        <div>
+                          <p className="studio-overline">CONTENT STRUCTURE</p>
+                          <h3>Course map</h3>
+                        </div>
+                        <span>{latestLesson ? `Last edited: ${latestLesson.title}` : 'No lessons yet'}</span>
+                      </div>
+
+                      <div className="studio-course-map">
+                        <div className="studio-course-map__node studio-course-map__node--root">
+                          <Flag size={14} />
+                          <span>Course</span>
+                        </div>
+                        <div className="studio-course-map__branch">
+                          <div className="studio-course-map__node">
+                            <GitBranch size={14} />
+                            <span>Module 1</span>
+                          </div>
+                          {course.lessons.slice(0, 4).map((lesson, index) => (
+                            <button
+                              key={lesson.id}
+                              type="button"
+                              className="studio-course-map__node studio-course-map__node--lesson"
+                              onClick={() => navigate(`/builder/editor/${course.id}`)}
+                            >
+                              <BookOpen size={14} />
+                              <span>Lesson {index + 1}: {lesson.title}</span>
+                            </button>
+                          ))}
+                          {course.lessons.length > 4 ? (
+                            <span className="studio-course-map__more">+{course.lessons.length - 4} more lessons</span>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <div className="studio-lesson-grid">
+                        {course.lessons.map((lesson, index) => (
+                          <article key={lesson.id} className="studio-lesson-tile">
+                            <button
+                              type="button"
+                              className="studio-lesson-tile__open"
+                              onClick={() => navigate(`/builder/editor/${course.id}`)}
+                            >
+                              <span className="studio-lesson-tile__index">Lesson {index + 1}</span>
+                              <strong>{lesson.title}</strong>
+                              <small>{formatLessonDuration(lesson.duration_seconds)}</small>
+                            </button>
+                            <button
+                              type="button"
+                              className="studio-lesson-tile__delete"
+                              aria-label={`Delete ${lesson.title}`}
+                              onClick={() => {
+                                if (course.lessons.length <= 1) {
+                                  model.setNotice({
+                                    tone: 'error',
+                                    text: 'A course must keep at least one lesson.',
+                                  });
+                                  return;
+                                }
+                                model.setLessonToDelete({ course, lesson, index });
+                              }}
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </article>
+                        ))}
+
+                        <button
+                          type="button"
+                          className="studio-lesson-tile studio-lesson-tile--add"
+                          onClick={() => void model.handleAddLesson(course)}
+                          disabled={model.addLesson.isPending}
+                        >
+                          {model.addLesson.isPending ? <Loader2 className="dashboard-spin" size={18} /> : <BookPlus size={18} />}
+                          <strong>Add lesson</strong>
+                          <small>Create a new lesson shell and continue refining it in the editor.</small>
+                        </button>
+                      </div>
+                    </section>
                   </div>
-                </section>
-              </div>
-            </article>
-          ))}
+                </div>
+              </article>
+            );
+          })}
         </section>
       ) : null}
     </>
@@ -566,10 +817,20 @@ export function DashboardAnalyticsTab({
       />
 
       <section className="studio-summary-strip">
-        <MetricCard icon={BookCopy} label={language === 'zh-CN' ? '课程总数' : 'Total courses'} value={model.courses.length} tone="mist" detail={language === 'zh-CN' ? `草稿 ${model.draftCourses} · 已归档 ${model.courses.filter((course) => course.status === 'archived').length}` : `Draft ${model.draftCourses} · Archived ${model.courses.filter((course) => course.status === 'archived').length}`} />
+        <MetricCard icon={BookCopy} label={language === 'zh-CN' ? '课程总数' : 'Total courses'} value={model.courses.length} tone="mist" detail={language === 'zh-CN' ? `平均准备度 ${model.averagePublishReadiness}%` : `Avg readiness ${model.averagePublishReadiness}%`} />
         <MetricCard icon={ArrowUpRight} label={language === 'zh-CN' ? '已发布课程' : 'Published courses'} value={model.publishedCourses} tone="sage" detail={model.courses.length > 0 ? `${Math.round((model.publishedCourses / model.courses.length) * 100)}%` : '0%'} />
         <MetricCard icon={Activity} label={language === 'zh-CN' ? '已发布浏览' : 'Published viewers'} value={model.publishedViewers} tone="amber" />
         <MetricCard icon={BadgeCheck} label={language === 'zh-CN' ? '平均完成率' : 'Average completion'} value={`${(model.averageCompletionRate * 100).toFixed(1)}%`} tone="sky" />
+      </section>
+
+      <section className="studio-analytics-preview-grid">
+        {model.analyticsPreviewCards.map((card) => (
+          <article key={card.label} className="studio-card studio-analytics-preview-card">
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+            <p>{card.detail}</p>
+          </article>
+        ))}
       </section>
 
       <section className="studio-analytics-grid">
@@ -581,17 +842,25 @@ export function DashboardAnalyticsTab({
             </div>
           </div>
 
-          <TrendChart
-            labels={model.dataMonthLabels}
-            series={[
-              {
-                name: 'Completion',
-                values: model.completionHistory,
-                color: '#7a9e7e',
-                fillColor: 'rgba(122, 158, 126, 0.12)',
-              },
-            ]}
-          />
+          {model.hasMonthlyAnalyticsData ? (
+            <TrendChart
+              labels={model.dataMonthLabels}
+              height={172}
+              series={[
+                {
+                  name: 'Completion',
+                  values: model.completionHistory,
+                  color: '#7a9e7e',
+                  fillColor: 'rgba(122, 158, 126, 0.12)',
+                },
+              ]}
+            />
+          ) : (
+            <AnalyticsUnlockPrompt
+              title={language === 'zh-CN' ? '还没有完成趋势' : 'Publish your first course to unlock learner analytics'}
+              body={language === 'zh-CN' ? '这里不会再显示空图表；有真实学习数据后趋势会自动出现。' : 'Studio hides empty charts until real learner activity exists.'}
+            />
+          )}
         </article>
 
         <article className="studio-card studio-panel">
@@ -602,17 +871,25 @@ export function DashboardAnalyticsTab({
             </div>
           </div>
 
-          <TrendChart
-            labels={model.dataMonthLabels}
-            series={[
-              {
-                name: 'Active learners',
-                values: model.activeLearnerHistory,
-                color: '#a99ab4',
-                fillColor: 'rgba(169, 154, 180, 0.12)',
-              },
-            ]}
-          />
+          {model.hasMonthlyAnalyticsData ? (
+            <TrendChart
+              labels={model.dataMonthLabels}
+              height={172}
+              series={[
+                {
+                  name: 'Active learners',
+                  values: model.activeLearnerHistory,
+                  color: '#a99ab4',
+                  fillColor: 'rgba(169, 154, 180, 0.12)',
+                },
+              ]}
+            />
+          ) : (
+            <AnalyticsUnlockPrompt
+              title={language === 'zh-CN' ? '等待学习者数据' : 'No empty learner graph'}
+              body={language === 'zh-CN' ? '发布后会用真实学习者走势替换这个提示。' : 'Active learner charts appear only after courses collect real engagement.'}
+            />
+          )}
         </article>
 
         <article className="studio-card studio-panel">
@@ -633,7 +910,10 @@ export function DashboardAnalyticsTab({
               ))}
             </div>
           ) : (
-            <p className="studio-panel__empty">{language === 'zh-CN' ? '还没有数据' : 'No data yet'}</p>
+            <AnalyticsUnlockPrompt
+              title={language === 'zh-CN' ? '课程排行等待发布' : 'Publish to unlock course ranking'}
+              body={language === 'zh-CN' ? '没有真实排行时，这里保留行动提示，不展示空列表。' : 'Course rankings stay hidden until published lessons receive learner signals.'}
+            />
           )}
         </article>
       </section>

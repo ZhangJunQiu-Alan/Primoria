@@ -77,6 +77,7 @@ const publicCopyDictionary = {
       soon: '即将上线',
       or: '或',
       wechatSoon: '微信登录还在开发中。',
+      networkError: '暂时无法连接 Primoria 登录服务。请检查网络后再试一次。',
       verifyTitle: '请检查你的邮箱',
       verifyMessage: '我们已经发出验证邮件，确认邮箱后再回来登录。',
       resetSuccess: '重置链接已发送，请查看邮箱。',
@@ -304,6 +305,7 @@ const publicCopyDictionary = {
       soon: 'Soon',
       or: 'or',
       wechatSoon: 'WeChat sign-in is still coming soon.',
+      networkError: 'Primoria could not reach the sign-in service. Check your connection and try again.',
       verifyTitle: 'Check your email',
       verifyMessage: 'We sent a verification email. Confirm it, then come back to sign in.',
       resetSuccess: 'Reset link sent. Check your inbox.',
@@ -324,7 +326,7 @@ const publicCopyDictionary = {
       },
       authPanel: {
         badge: 'Learning entry',
-        title: 'Discover a course\nStart learning and keep asking\nquestions in one place',
+        title: 'Discover a course\nstart Learning and\nkeep Asking all\nQuestions in one place',
         features: [
           'The path from discovery to finishing a lesson is easy to follow',
           'The study helper can explain, summarize, and generate quick practice',
