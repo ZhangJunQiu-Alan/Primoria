@@ -27,12 +27,6 @@ export const emptyAICourseDraftForm: AICourseDraftFormState = {
   pace: 'balanced',
 };
 
-export const aiCourseTopicPresets = [
-  'Physics problem-solving sprint',
-  'Prompt design for beginners',
-  'Interactive web fundamentals',
-];
-
 export function parseDashboardTab(value: string | null): DashboardTab {
   switch (value) {
     case 'course':

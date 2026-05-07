@@ -1,10 +1,9 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import * as Dialog from '@radix-ui/react-dialog';
-import { Bot, BrainCircuit, Image as ImageIcon, Loader2, X } from 'lucide-react';
+import { Bot, BrainCircuit, ChevronDown, Image as ImageIcon, Loader2, X } from 'lucide-react';
 import type { CourseRow } from '@/queries/courses';
 import {
-  aiCourseTopicPresets,
   buildAICourseDraftPreview,
   courseToFormState,
   emptyAICourseDraftForm,
@@ -120,19 +119,22 @@ export function CourseFormDialog({
             <div className="dashboard-dialog__grid">
               <label className="dashboard-field">
                 <span>Difficulty</span>
-                <select
-                  value={form.difficultyLevel}
-                  onChange={(event) =>
-                    setForm((current) => ({
-                      ...current,
-                      difficultyLevel: event.target.value as CourseFormState['difficultyLevel'],
-                    }))
-                  }
-                >
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
-                </select>
+                <div className="dashboard-select">
+                  <select
+                    value={form.difficultyLevel}
+                    onChange={(event) =>
+                      setForm((current) => ({
+                        ...current,
+                        difficultyLevel: event.target.value as CourseFormState['difficultyLevel'],
+                      }))
+                    }
+                  >
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                  <ChevronDown size={18} aria-hidden="true" />
+                </div>
               </label>
 
               <label className="dashboard-field">
@@ -151,18 +153,21 @@ export function CourseFormDialog({
             <div className="dashboard-dialog__grid">
               <label className="dashboard-field">
                 <span>Pricing</span>
-                <select
-                  value={form.priceTier}
-                  onChange={(event) =>
-                    setForm((current) => ({
-                      ...current,
-                      priceTier: event.target.value as CourseFormState['priceTier'],
-                    }))
-                  }
-                >
-                  <option value="free">Free</option>
-                  <option value="premium">Premium</option>
-                </select>
+                <div className="dashboard-select">
+                  <select
+                    value={form.priceTier}
+                    onChange={(event) =>
+                      setForm((current) => ({
+                        ...current,
+                        priceTier: event.target.value as CourseFormState['priceTier'],
+                      }))
+                    }
+                  >
+                    <option value="free">Free</option>
+                    <option value="premium">Premium</option>
+                  </select>
+                  <ChevronDown size={18} aria-hidden="true" />
+                </div>
               </label>
 
               <label className="dashboard-field">
@@ -284,24 +289,6 @@ export function AICourseDraftDialog({
               />
             </label>
 
-            <div className="dashboard-ai-presets" aria-label="AI topic presets">
-              {aiCourseTopicPresets.map((preset) => (
-                <button
-                  key={preset}
-                  type="button"
-                  className="studio-chip"
-                  onClick={() =>
-                    setForm((current) => ({
-                      ...current,
-                      topic: preset,
-                    }))
-                  }
-                >
-                  {preset}
-                </button>
-              ))}
-            </div>
-
             <div className="dashboard-dialog__grid">
               <label className="dashboard-field">
                 <span>Target learner</span>
@@ -316,19 +303,22 @@ export function AICourseDraftDialog({
 
               <label className="dashboard-field">
                 <span>Pacing</span>
-                <select
-                  value={form.pace}
-                  onChange={(event) =>
-                    setForm((current) => ({
-                      ...current,
-                      pace: event.target.value as AICourseDraftPace,
-                    }))
-                  }
-                >
-                  <option value="quick">Quick start</option>
-                  <option value="balanced">Balanced</option>
-                  <option value="deep">Deep dive</option>
-                </select>
+                <div className="dashboard-select">
+                  <select
+                    value={form.pace}
+                    onChange={(event) =>
+                      setForm((current) => ({
+                        ...current,
+                        pace: event.target.value as AICourseDraftPace,
+                      }))
+                    }
+                  >
+                    <option value="quick">Quick start</option>
+                    <option value="balanced">Balanced</option>
+                    <option value="deep">Deep dive</option>
+                  </select>
+                  <ChevronDown size={18} aria-hidden="true" />
+                </div>
               </label>
             </div>
 
