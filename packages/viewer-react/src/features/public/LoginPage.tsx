@@ -11,6 +11,7 @@ import {
   FooterPrompt,
   PasswordVisibilityButton,
 } from '@/features/public/BuilderAuthLayout';
+import { getAuthFailureMessage, runAuthRequest } from '@/features/public/authRequest';
 import { getFieldErrors, loginSchema, passwordResetSchema } from '@/features/public/builderAuthSchemas';
 import { usePublicCopy } from '@/features/public/publicCopy';
 import { supabase } from '@/shared/api/supabase';
@@ -46,15 +47,23 @@ export function LoginPage() {
     setStatus(null);
     captureViewerEvent('viewer_login_oauth_started', { provider });
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: buildAuthCallbackUrl(returnTo) },
-    });
+    try {
+      const { error } = await runAuthRequest(() =>
+        supabase.auth.signInWithOAuth({
+          provider,
+          options: { redirectTo: buildAuthCallbackUrl(returnTo) },
+        }),
+      );
 
-    setLoadingProvider(null);
-    if (error) {
-      setStatus({ tone: 'error', message: error.message });
-      captureViewerError(error, { area: 'login_oauth', provider });
+      if (error) {
+        setStatus({ tone: 'error', message: error.message });
+        captureViewerError(error, { area: 'login_oauth', provider });
+      }
+    } catch (error) {
+      setStatus({ tone: 'error', message: getAuthFailureMessage(error, copy.auth.networkError) });
+      captureViewerError(error, { area: 'login_oauth_network', provider });
+    } finally {
+      setLoadingProvider(null);
     }
   }
 
@@ -74,17 +83,23 @@ export function LoginPage() {
 
       setFieldErrors({});
       setLoadingProvider('email');
-      const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
-      setLoadingProvider(null);
+      try {
+        const { error } = await runAuthRequest(() => supabase.auth.resetPasswordForEmail(result.data.email));
 
-      if (error) {
-        setStatus({ tone: 'error', message: error.message });
-        captureViewerError(error, { area: 'login_reset_password' });
-        return;
+        if (error) {
+          setStatus({ tone: 'error', message: error.message });
+          captureViewerError(error, { area: 'login_reset_password' });
+          return;
+        }
+
+        captureViewerEvent('viewer_reset_password_requested');
+        setStatus({ tone: 'success', message: copy.auth.resetSuccess });
+      } catch (error) {
+        setStatus({ tone: 'error', message: getAuthFailureMessage(error, copy.auth.networkError) });
+        captureViewerError(error, { area: 'login_reset_password_network' });
+      } finally {
+        setLoadingProvider(null);
       }
-
-      captureViewerEvent('viewer_reset_password_requested');
-      setStatus({ tone: 'success', message: copy.auth.resetSuccess });
       return;
     }
 
@@ -96,17 +111,23 @@ export function LoginPage() {
 
     setFieldErrors({});
     setLoadingProvider('email');
-    const { error } = await supabase.auth.signInWithPassword(result.data);
-    setLoadingProvider(null);
+    try {
+      const { error } = await runAuthRequest(() => supabase.auth.signInWithPassword(result.data));
 
-    if (error) {
-      setStatus({ tone: 'error', message: error.message });
-      captureViewerError(error, { area: 'login_password' });
-      return;
+      if (error) {
+        setStatus({ tone: 'error', message: error.message });
+        captureViewerError(error, { area: 'login_password' });
+        return;
+      }
+
+      captureViewerEvent('viewer_login_password_success');
+      navigate(returnTo, { replace: true });
+    } catch (error) {
+      setStatus({ tone: 'error', message: getAuthFailureMessage(error, copy.auth.networkError) });
+      captureViewerError(error, { area: 'login_password_network' });
+    } finally {
+      setLoadingProvider(null);
     }
-
-    captureViewerEvent('viewer_login_password_success');
-    navigate(returnTo, { replace: true });
   }
 
   return (

@@ -11,6 +11,7 @@ import {
   FooterPrompt,
   PasswordVisibilityButton,
 } from '@/features/public/BuilderAuthLayout';
+import { getAuthFailureMessage, runAuthRequest } from '@/features/public/authRequest';
 import { getFieldErrors, registerSchema } from '@/features/public/builderAuthSchemas';
 import { usePublicCopy } from '@/features/public/publicCopy';
 import { supabase } from '@/shared/api/supabase';
@@ -49,15 +50,23 @@ export function RegisterPage() {
     setStatus(null);
     captureViewerEvent('viewer_register_oauth_started', { provider });
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: buildAuthCallbackUrl(returnTo) },
-    });
+    try {
+      const { error } = await runAuthRequest(() =>
+        supabase.auth.signInWithOAuth({
+          provider,
+          options: { redirectTo: buildAuthCallbackUrl(returnTo) },
+        }),
+      );
 
-    setLoadingProvider(null);
-    if (error) {
-      setStatus({ tone: 'error', message: error.message });
-      captureViewerError(error, { area: 'register_oauth', provider });
+      if (error) {
+        setStatus({ tone: 'error', message: error.message });
+        captureViewerError(error, { area: 'register_oauth', provider });
+      }
+    } catch (error) {
+      setStatus({ tone: 'error', message: getAuthFailureMessage(error, copy.auth.networkError) });
+      captureViewerError(error, { area: 'register_oauth_network', provider });
+    } finally {
+      setLoadingProvider(null);
     }
   }
 
@@ -78,39 +87,46 @@ export function RegisterPage() {
     setLoadingProvider('email');
     captureViewerEvent('viewer_register_started');
 
-    const { data, error } = await supabase.auth.signUp({
-      email: result.data.email,
-      password: result.data.password,
-      options: {
-        emailRedirectTo: buildAuthCallbackUrl(returnTo),
-        data: {
-          name: result.data.name,
-          username: result.data.name,
-          display_name: result.data.name,
-        },
-      },
-    });
+    try {
+      const { data, error } = await runAuthRequest(() =>
+        supabase.auth.signUp({
+          email: result.data.email,
+          password: result.data.password,
+          options: {
+            emailRedirectTo: buildAuthCallbackUrl(returnTo),
+            data: {
+              name: result.data.name,
+              username: result.data.name,
+              display_name: result.data.name,
+            },
+          },
+        }),
+      );
 
-    setLoadingProvider(null);
+      if (error) {
+        setStatus({ tone: 'error', message: error.message });
+        captureViewerError(error, { area: 'register' });
+        return;
+      }
 
-    if (error) {
-      setStatus({ tone: 'error', message: error.message });
-      captureViewerError(error, { area: 'register' });
-      return;
+      if (data.session) {
+        captureViewerEvent('viewer_register_completed', { sessionCreated: true });
+        navigate(returnTo, { replace: true });
+        return;
+      }
+
+      setCreatedAccount(true);
+      captureViewerEvent('viewer_register_completed', { sessionCreated: false });
+      setStatus({
+        tone: 'success',
+        message: copy.auth.registerSuccess,
+      });
+    } catch (error) {
+      setStatus({ tone: 'error', message: getAuthFailureMessage(error, copy.auth.networkError) });
+      captureViewerError(error, { area: 'register_network' });
+    } finally {
+      setLoadingProvider(null);
     }
-
-    if (data.session) {
-      captureViewerEvent('viewer_register_completed', { sessionCreated: true });
-      navigate(returnTo, { replace: true });
-      return;
-    }
-
-    setCreatedAccount(true);
-    captureViewerEvent('viewer_register_completed', { sessionCreated: false });
-    setStatus({
-      tone: 'success',
-      message: copy.auth.registerSuccess,
-    });
   }
 
   if (createdAccount) {
