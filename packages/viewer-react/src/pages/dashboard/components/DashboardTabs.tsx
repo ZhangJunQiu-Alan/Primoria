@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
 import type { NavigateFunction } from 'react-router-dom';
 import {
-  Activity,
   ArrowUpRight,
   BadgeCheck,
   BarChart3,
@@ -9,33 +8,26 @@ import {
   BookOpen,
   BookPlus,
   BrainCircuit,
-  ChevronDown,
   Clock3,
   Copy,
-  Eye,
   Flag,
   GitBranch,
   GraduationCap,
   Loader2,
-  MessageSquare,
   Pencil,
   Plus,
   RefreshCcw,
   Search,
   Sparkles,
-  Tags,
   Trash2,
   TriangleAlert,
   Users,
   X,
 } from 'lucide-react';
 import {
-  formatDifficulty,
-  formatDuration,
   formatLessonDuration,
   formatUpdatedAt,
   formatWorkflowStatus,
-  getCourseDisplayTags,
   getCourseInitials,
   getErrorMessage,
   getLatestLesson,
@@ -403,14 +395,8 @@ export function DashboardCoursesTab({
 
         <div className="studio-chip-group" aria-label="Course status filters">
           {([
-            { value: 'all', label: 'All statuses' },
+            { value: 'all', label: 'All' },
             { value: 'draft', label: 'Draft' },
-            { value: 'inReview', label: 'In Review' },
-            { value: 'scheduled', label: 'Scheduled' },
-            { value: 'published', label: 'Published' },
-            { value: 'archived', label: 'Archived' },
-            { value: 'private', label: 'Private' },
-            { value: 'collaborative', label: 'Collaborative' },
           ] as const).map((filter) => (
             <button
               key={filter.value}
@@ -423,23 +409,6 @@ export function DashboardCoursesTab({
           ))}
         </div>
 
-        <label className="studio-sort">
-          <span>Sort</span>
-          <select value={model.sortMode} onChange={(event) => model.setSortMode(event.target.value as typeof model.sortMode)}>
-            <option value="updated">Recently updated</option>
-            <option value="views">Most viewed</option>
-            <option value="completion">Highest completion</option>
-            <option value="ai">AI generated</option>
-            <option value="attention">Needs attention</option>
-            <option value="growth">Fastest growing</option>
-            <option value="incomplete">Incomplete</option>
-            <option value="student">Most students</option>
-            <option value="lessons">Most lessons</option>
-            <option value="comments">Most comments</option>
-            <option value="title">Course title</option>
-          </select>
-          <ChevronDown size={14} />
-        </label>
       </section>
 
       {model.hasInlineError ? (
@@ -531,11 +500,8 @@ export function DashboardCoursesTab({
       {model.visibleCourses.length > 0 ? (
         <section className="studio-course-list" aria-label="Course list">
           {model.visibleCourses.map((course) => {
-            const readiness = model.courseReadinessById.get(course.id);
             const workflowStatus = model.courseWorkflowStatusById.get(course.id) ?? 'draft';
-            const metric = model.courseMetricsById.get(course.id);
             const latestLesson = getLatestLesson(course);
-            const displayTags = getCourseDisplayTags(course);
 
             return (
               <article key={course.id} className="studio-card studio-course-card">
@@ -596,35 +562,6 @@ export function DashboardCoursesTab({
                     <p className="studio-course-card__description">
                       {course.description || 'Add a short course description so the team can scan the catalog faster.'}
                     </p>
-
-                    <div className="studio-meta-row">
-                      <span className="studio-meta-chip">{formatDifficulty(course.difficulty_level)}</span>
-                      <span className="studio-meta-chip">{formatDuration(course.estimated_minutes)}</span>
-                      <span className="studio-meta-chip">{course.lessons.length} lessons</span>
-                      {displayTags.map((tag) => (
-                        <span key={tag} className="studio-meta-chip">
-                          <Tags size={13} />
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="studio-course-card__hover-intel" aria-label="Course quick intelligence">
-                      <span><BadgeCheck size={14} /> {readiness?.score ?? 0}% complete</span>
-                      <span><Eye size={14} /> {metric?.views ?? 0} views</span>
-                      <span><MessageSquare size={14} /> {metric?.comments ?? 0} comments</span>
-                      <button
-                        type="button"
-                        className="studio-link-button"
-                        onClick={() => {
-                          model.setFormError(null);
-                          model.setCourseForForm(course);
-                          model.setFormMode('edit');
-                        }}
-                      >
-                        Quick edit
-                      </button>
-                    </div>
 
                     <section className="studio-lesson-panel">
                       <div className="studio-lesson-panel__header">
@@ -733,28 +670,11 @@ export function DashboardAnalyticsTab({
       <PageHeader
         eyebrow={language === 'zh-CN' ? '学习表现' : 'Learning performance'}
         title={language === 'zh-CN' ? '学习表现总览' : 'Learning performance overview'}
-        description={language === 'zh-CN' ? '只保留完成趋势、活跃学习者和课程排行。' : 'Keep the view focused on completion trend, active learners, and course ranking.'}
+        description={language === 'zh-CN' ? '只保留完成趋势、活跃学习者、课程排行和关键学习信号。' : 'Keep the view focused on completion trend, active learners, course ranking, and key learning signals.'}
       />
 
-      <section className="studio-summary-strip">
-        <MetricCard icon={BookCopy} label={language === 'zh-CN' ? '课程总数' : 'Total courses'} value={model.courses.length} tone="mist" detail={language === 'zh-CN' ? `平均准备度 ${model.averagePublishReadiness}%` : `Avg readiness ${model.averagePublishReadiness}%`} />
-        <MetricCard icon={ArrowUpRight} label={language === 'zh-CN' ? '已发布课程' : 'Published courses'} value={model.publishedCourses} tone="sage" detail={model.courses.length > 0 ? `${Math.round((model.publishedCourses / model.courses.length) * 100)}%` : '0%'} />
-        <MetricCard icon={Activity} label={language === 'zh-CN' ? '已发布浏览' : 'Published viewers'} value={model.publishedViewers} tone="amber" />
-        <MetricCard icon={BadgeCheck} label={language === 'zh-CN' ? '平均完成率' : 'Average completion'} value={`${(model.averageCompletionRate * 100).toFixed(1)}%`} tone="sky" />
-      </section>
-
-      <section className="studio-analytics-preview-grid">
-        {model.analyticsPreviewCards.map((card) => (
-          <article key={card.label} className="studio-card studio-analytics-preview-card">
-            <span>{card.label}</span>
-            <strong>{card.value}</strong>
-            <p>{card.detail}</p>
-          </article>
-        ))}
-      </section>
-
       <section className="studio-analytics-grid">
-        <article className="studio-card studio-panel">
+        <article className="studio-card studio-card--mist studio-panel">
           <div className="studio-panel__header">
             <div>
               <h2>{language === 'zh-CN' ? '完成趋势' : 'Completion trend'}</h2>
@@ -783,7 +703,7 @@ export function DashboardAnalyticsTab({
           )}
         </article>
 
-        <article className="studio-card studio-panel">
+        <article className="studio-card studio-card--sage studio-panel">
           <div className="studio-panel__header">
             <div>
               <h2>{language === 'zh-CN' ? '活跃学习者' : 'Active learners'}</h2>
@@ -812,7 +732,7 @@ export function DashboardAnalyticsTab({
           )}
         </article>
 
-        <article className="studio-card studio-panel">
+        <article className="studio-card studio-card--lavender studio-panel">
           <div className="studio-panel__header">
             <div>
               <h2>{language === 'zh-CN' ? '课程表现排行' : 'Course ranking'}</h2>
@@ -835,6 +755,25 @@ export function DashboardAnalyticsTab({
               body={language === 'zh-CN' ? '没有真实排行时，这里保留行动提示，不展示空列表。' : 'Course rankings stay hidden until published lessons receive learner signals.'}
             />
           )}
+        </article>
+
+        <article className="studio-card studio-card--sky studio-panel">
+          <div className="studio-panel__header">
+            <div>
+              <h2>{language === 'zh-CN' ? '学习信号快照' : 'Learning signal snapshot'}</h2>
+              <p>{language === 'zh-CN' ? '把当前最值得关注的完成、复看、流失和测验信号集中在一起。' : 'Keep completion, replay, drop-off, and quiz signals together in one place.'}</p>
+            </div>
+          </div>
+
+          <div className="studio-analytics-snapshot-grid">
+            {model.analyticsPreviewCards.map((card) => (
+              <article key={card.label} className="studio-analytics-snapshot-item">
+                <span>{card.label}</span>
+                <strong>{card.value}</strong>
+                <p>{card.detail}</p>
+              </article>
+            ))}
+          </div>
         </article>
       </section>
     </>
