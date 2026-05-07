@@ -8,7 +8,7 @@
     "build:viewer": "pnpm --filter @primoria/viewer-react build",
     "seed:author-courses": "node ./scripts/seed-author-courses.mjs",
     "test": "pnpm -r test",
-    "test:functions": "deno test --allow-env supabase/functions/",
+    "test:functions": "deno test --config supabase/functions/deno.json --allow-env supabase/functions/",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"
   },
