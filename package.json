@@ -5,6 +5,7 @@
     "db:types": "supabase gen types typescript --project-id rygafvlzzkvqhhenajzi --schema public > packages/db/src/database.generated.ts",
     "db:types:check": "node scripts/check-db-types.js",
     "dev:viewer": "pnpm --filter @primoria/viewer-react dev",
+    "dev:connected": "node scripts/dev-connected.mjs",
     "build:viewer": "pnpm --filter @primoria/viewer-react build",
     "seed:author-courses": "node ./scripts/seed-author-courses.mjs",
     "test": "pnpm -r test",

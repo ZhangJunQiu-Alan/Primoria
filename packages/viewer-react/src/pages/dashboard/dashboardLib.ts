@@ -1,9 +1,10 @@
 import { formatViewerDate, formatViewerWeekday } from '@/shared/i18n/format';
-import type { CourseRow } from '@/queries/courses';
+import type { CourseLessonRow, CourseRow } from '@/queries/courses';
 import type {
   AICourseDraftFormState,
   AICourseDraftPace,
   AICourseDraftPreview,
+  CourseWorkflowStatus,
   CourseFormPayload,
   CourseFormState,
   DashboardTab,
@@ -201,6 +202,197 @@ export function formatStatus(status: CourseRow['status']) {
       return 'Published';
     case 'archived':
       return 'Archived';
+    default:
+      return 'Draft';
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value && typeof value === 'object' && !Array.isArray(value));
+}
+
+function normalizeKind(value: unknown) {
+  if (!isRecord(value)) return '';
+
+  return [
+    value.type,
+    value.kind,
+    value.block_type,
+    value.component,
+    value.name,
+  ]
+    .filter((entry): entry is string => typeof entry === 'string')
+    .join(' ')
+    .toLowerCase();
+}
+
+function collectBlocksFromValue(value: unknown): unknown[] {
+  if (!isRecord(value)) return [];
+
+  const blocks: unknown[] = [];
+  const directBlocks = value.blocks;
+  if (Array.isArray(directBlocks)) {
+    blocks.push(...directBlocks);
+  }
+
+  const pages = value.pages;
+  if (Array.isArray(pages)) {
+    for (const page of pages) {
+      if (!isRecord(page) || !Array.isArray(page.blocks)) continue;
+      blocks.push(...page.blocks);
+    }
+  }
+
+  return blocks;
+}
+
+export function summarizeLessonContent(lesson: CourseLessonRow) {
+  const blocks = collectBlocksFromValue(lesson.content_json);
+  const kindText = blocks.map(normalizeKind).join(' ');
+
+  return {
+    blockCount: blocks.length,
+    hasAssessment: /\b(quiz|question|assessment|checkpoint|choice|blank|match|poll)\b/.test(kindText),
+    hasExercise: /\b(exercise|practice|challenge|activity|task|lab|drill)\b/.test(kindText),
+    hasAiTutor: /\b(ai|tutor|assistant|coach|prompt)\b/.test(kindText),
+  };
+}
+
+export function getLatestLesson(course: CourseRow) {
+  return [...course.lessons].sort(
+    (left, right) => new Date(right.updated_at).getTime() - new Date(left.updated_at).getTime(),
+  )[0] ?? null;
+}
+
+export function getCourseInitials(title: string) {
+  const words = title.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return 'PR';
+  return words.slice(0, 2).map((word) => word[0]?.toUpperCase()).join('');
+}
+
+export function formatDifficulty(value: CourseRow['difficulty_level']) {
+  switch (value) {
+    case 'advanced':
+      return 'Advanced';
+    case 'intermediate':
+      return 'Intermediate';
+    default:
+      return 'Beginner';
+  }
+}
+
+export function getCourseDisplayTags(course: CourseRow) {
+  const existingTags = course.tags.map((tag) => tag.trim()).filter(Boolean);
+  if (existingTags.length > 0) return existingTags.slice(0, 4);
+
+  const haystack = `${course.title} ${course.description ?? ''}`.toLowerCase();
+  const inferred = [
+    ['Python', /\bpython\b/],
+    ['AI', /\b(ai|artificial intelligence|prompt|model)\b/],
+    ['Cybersecurity', /\b(cyber|security|network|privacy)\b/],
+    ['UI/UX', /\b(ui|ux|design|interface|product)\b/],
+    ['Data', /\b(data|analytics|sql|statistics)\b/],
+    ['Web', /\b(web|html|css|javascript|react)\b/],
+  ]
+    .filter(([, pattern]) => (pattern as RegExp).test(haystack))
+    .map(([label]) => label as string);
+
+  return (inferred.length > 0 ? inferred : ['Course design']).slice(0, 4);
+}
+
+export function getCourseReadiness(course: CourseRow) {
+  const lessonSummaries = course.lessons.map(summarizeLessonContent);
+  const blockCount = lessonSummaries.reduce((total, lesson) => total + lesson.blockCount, 0);
+  const hasAssessment = lessonSummaries.some((lesson) => lesson.hasAssessment);
+  const hasExercise = lessonSummaries.some((lesson) => lesson.hasExercise);
+  const hasAiTutor = lessonSummaries.some((lesson) => lesson.hasAiTutor);
+  const description = course.description?.trim() ?? '';
+  const hasLearningOutcomes = /\b(outcome|learn|master|understand|build|practice|able to)\b/i.test(description);
+  const criteria = [
+    {
+      pass: Boolean(course.thumbnail_url),
+      issue: 'Cover image / thumbnail missing',
+      complete: 'Cover image ready',
+    },
+    {
+      pass: description.length >= 24,
+      issue: 'No description',
+      complete: 'Description added',
+    },
+    {
+      pass: hasLearningOutcomes,
+      issue: 'No learning outcomes',
+      complete: 'Learning outcomes visible',
+    },
+    {
+      pass: course.lessons.length > 0,
+      issue: 'No lesson structure',
+      complete: 'Lesson structure started',
+    },
+    {
+      pass: blockCount > 0,
+      issue: 'No interactive content blocks',
+      complete: `${blockCount} content block${blockCount === 1 ? '' : 's'}`,
+    },
+    {
+      pass: hasAssessment,
+      issue: 'No assessment',
+      complete: 'Assessment included',
+    },
+    {
+      pass: hasAiTutor,
+      issue: 'No AI tutor enabled',
+      complete: 'AI tutor enabled',
+    },
+    {
+      pass: hasExercise,
+      issue: 'No exercises',
+      complete: 'Exercise flow included',
+    },
+  ];
+  const resolved = criteria.filter((item) => item.pass).map((item) => item.complete);
+  const issues = criteria.filter((item) => !item.pass).map((item) => item.issue);
+  const score = Math.round((resolved.length / criteria.length) * 100);
+
+  return {
+    score,
+    issues,
+    resolved,
+    blockCount,
+    hasAssessment,
+    hasExercise,
+    hasAiTutor,
+    nextAction: issues[0] ?? 'Ready for final review',
+  };
+}
+
+export function getCourseWorkflowStatus(course: CourseRow, readinessScore: number): CourseWorkflowStatus {
+  const tagText = course.tags.join(' ').toLowerCase();
+  const publishedAt = course.published_at ? new Date(course.published_at).getTime() : null;
+
+  if (course.status === 'archived') return 'archived';
+  if (tagText.includes('collaborative') || tagText.includes('co-author')) return 'collaborative';
+  if (tagText.includes('private')) return 'private';
+  if (publishedAt && publishedAt > Date.now()) return 'scheduled';
+  if (course.status === 'published') return 'published';
+  if (readinessScore >= 80) return 'inReview';
+  return 'draft';
+}
+
+export function formatWorkflowStatus(status: CourseWorkflowStatus) {
+  switch (status) {
+    case 'inReview':
+      return 'In Review';
+    case 'scheduled':
+      return 'Scheduled';
+    case 'published':
+      return 'Published';
+    case 'archived':
+      return 'Archived';
+    case 'private':
+      return 'Private';
+    case 'collaborative':
+      return 'Collaborative';
     default:
       return 'Draft';
   }

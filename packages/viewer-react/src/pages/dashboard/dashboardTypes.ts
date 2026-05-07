@@ -2,8 +2,27 @@ import type { LucideIcon } from 'lucide-react';
 import type { CourseRow } from '@/queries/courses';
 
 export type DashboardTab = 'home' | 'course' | 'data';
-export type StatusFilter = 'all' | 'draft' | 'published';
-export type SortMode = 'updated' | 'title' | 'lessons' | 'student' | 'comments';
+export type CourseWorkflowStatus =
+  | 'draft'
+  | 'inReview'
+  | 'scheduled'
+  | 'published'
+  | 'archived'
+  | 'private'
+  | 'collaborative';
+export type StatusFilter = 'all' | CourseWorkflowStatus;
+export type SortMode =
+  | 'updated'
+  | 'views'
+  | 'completion'
+  | 'ai'
+  | 'attention'
+  | 'growth'
+  | 'incomplete'
+  | 'lessons'
+  | 'student'
+  | 'comments'
+  | 'title';
 export type DifficultyLevel = CourseRow['difficulty_level'];
 export type PriceTier = CourseRow['price_tier'];
 
