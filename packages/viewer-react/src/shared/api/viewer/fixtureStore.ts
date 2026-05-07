@@ -316,6 +316,9 @@ function buildInitialState(): ViewerFixtureState {
       accessibility_mode: false,
       ai_tutor_persona: 'gentle',
       home_companion_enabled: true,
+      ai_provider: 'google',
+      ai_base_url: '',
+      ai_api_key: '',
     },
     webPushSubscription: null,
     community: {

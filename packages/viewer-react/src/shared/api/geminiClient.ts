@@ -56,6 +56,9 @@ export type TutorRequestOptions = {
   model?: string;
   allowModelFallback?: boolean;
   context?: TutorRequestContext;
+  aiProvider?: string;
+  aiBaseUrl?: string;
+  aiApiKey?: string;
 };
 
 type InteractiveVisualServiceResponse = TutorInteractiveVisualPayload;
@@ -358,7 +361,7 @@ function currentAiTutorPersona() {
   }
 }
 
-function buildAgentRequestContext(context?: TutorRequestContext) {
+function buildAgentRequestContext(context?: TutorRequestContext, options?: TutorRequestOptions) {
   return {
     surface: normalizeOptionalString(context?.surface) ?? 'ai-tutor',
     course_id: normalizeOptionalString(context?.courseId),
@@ -372,6 +375,9 @@ function buildAgentRequestContext(context?: TutorRequestContext) {
     page_content: normalizeOptionalString(context?.pageContent),
     learner_state: normalizeOptionalString(context?.learnerState),
     ai_tutor_persona: currentAiTutorPersona(),
+    ai_provider: normalizeOptionalString(options?.aiProvider),
+    ai_base_url: normalizeOptionalString(options?.aiBaseUrl),
+    ai_api_key: normalizeOptionalString(options?.aiApiKey),
   };
 }
 
@@ -516,7 +522,7 @@ function buildAgentChatBody(history: TutorMessage[], options: TutorRequestOption
     thread_id: getTutorThreadId(),
     message: latestUserMessage,
     history: history.slice(0, -1),
-    context: buildAgentRequestContext(options.context),
+    context: buildAgentRequestContext(options.context, options),
   };
 }
 

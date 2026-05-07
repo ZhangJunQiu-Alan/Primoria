@@ -38,15 +38,30 @@ export function useSettingsPageModel() {
     avatar_url: '',
     cover_image_url: '',
   });
-  const [systemDraft, setSystemDraft] = useState({
-    theme_mode: 'system' as ViewerPreferencesState['themeMode'],
-    language: 'zh-CN' as ViewerLanguage,
+  const [systemDraft, setSystemDraft] = useState<{
+    theme_mode: ViewerPreferencesState['themeMode'];
+    language: ViewerLanguage;
+    notification_daily_reminder: boolean;
+    notification_reminder_time: string;
+    marketing_emails: boolean;
+    accessibility_mode: boolean;
+    ai_tutor_persona: ViewerPreferencesState['aiTutorPersona'];
+    home_companion_enabled: boolean;
+    ai_provider: 'google' | 'openai' | 'anthropic';
+    ai_base_url: string;
+    ai_api_key: string;
+  }>({
+    theme_mode: 'system',
+    language: 'zh-CN',
     notification_daily_reminder: false,
     notification_reminder_time: '20:00',
     marketing_emails: false,
     accessibility_mode: false,
     ai_tutor_persona: preferences.aiTutorPersona,
     home_companion_enabled: preferences.homeCompanionEnabled,
+    ai_provider: 'google',
+    ai_base_url: '',
+    ai_api_key: '',
   });
   const [bindingCode, setBindingCode] = useState<string | null>(null);
   const [bindingCodeExpiresAt, setBindingCodeExpiresAt] = useState<string | null>(null);
@@ -78,6 +93,9 @@ export function useSettingsPageModel() {
         homeCompanionEnabled: payload.userSettings.home_companion_enabled,
         dailyReminderEnabled: payload.userSettings.notification_daily_reminder,
         dailyReminderTime: payload.userSettings.notification_reminder_time,
+        aiProvider: payload.userSettings.ai_provider,
+        aiBaseUrl: payload.userSettings.ai_base_url,
+        aiApiKey: payload.userSettings.ai_api_key,
       }),
     );
   }, [dispatch, settingsQuery.data]);
