@@ -8,25 +8,20 @@ import {
   BookCopy,
   BookOpen,
   BookPlus,
-  Bot,
   BrainCircuit,
   ChevronDown,
-  CheckCircle2,
   Clock3,
   Copy,
   Eye,
-  FileText,
   Flag,
   GitBranch,
   GraduationCap,
-  ListChecks,
   Loader2,
   MessageSquare,
   Pencil,
   Plus,
   RefreshCcw,
   Search,
-  ShieldCheck,
   Sparkles,
   Tags,
   Trash2,
@@ -447,44 +442,6 @@ export function DashboardCoursesTab({
         </label>
       </section>
 
-      <section className="studio-card studio-panel studio-ai-assistant-panel">
-        <div className="studio-panel__header">
-          <div>
-            <p className="studio-overline">PRIMORIA AI ASSISTANT</p>
-            <h2>Keep improving the course flow</h2>
-            <p>Use AI as a persistent teaching design assistant, not only a course starter.</p>
-          </div>
-          <Bot size={22} />
-        </div>
-        <div className="studio-ai-action-grid">
-          {[
-            { label: 'Generate lesson summary', icon: FileText },
-            { label: 'Improve quiz difficulty', icon: ListChecks },
-            { label: 'Rewrite explanation simpler', icon: Sparkles },
-            { label: 'Add exercises', icon: BookPlus },
-            { label: 'Detect weak learning flow', icon: GitBranch },
-          ].map((action) => {
-            const Icon = action.icon;
-            return (
-              <button
-                key={action.label}
-                type="button"
-                className="studio-ai-action"
-                onClick={() => {
-                  model.setNotice({
-                    tone: 'info',
-                    text: `${action.label} is queued for the next AI generator pass.`,
-                  });
-                }}
-              >
-                <Icon size={16} />
-                <span>{action.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
       {model.hasInlineError ? (
         <section className="studio-inline-notice studio-inline-notice--error">
           <p>{getErrorMessage(model.error)}</p>
@@ -579,7 +536,6 @@ export function DashboardCoursesTab({
             const metric = model.courseMetricsById.get(course.id);
             const latestLesson = getLatestLesson(course);
             const displayTags = getCourseDisplayTags(course);
-            const issuePreview = readiness?.issues.slice(0, 4) ?? [];
 
             return (
               <article key={course.id} className="studio-card studio-course-card">
@@ -668,42 +624,6 @@ export function DashboardCoursesTab({
                       >
                         Quick edit
                       </button>
-                    </div>
-
-                    <div className="studio-course-intel-grid">
-                      <section className="studio-course-health">
-                        <div className="studio-course-health__header">
-                          <div>
-                            <p className="studio-overline">COURSE HEALTH</p>
-                            <h3>Publish readiness</h3>
-                          </div>
-                          <strong>{readiness?.score ?? 0}%</strong>
-                        </div>
-                        <ReadinessMeter value={readiness?.score ?? 0} />
-                        <div className="studio-health-list">
-                          {(issuePreview.length > 0 ? issuePreview : readiness?.resolved.slice(0, 4) ?? []).map((item) => (
-                            <span key={item}>
-                              {issuePreview.length > 0 ? <TriangleAlert size={13} /> : <CheckCircle2 size={13} />}
-                              {item}
-                            </span>
-                          ))}
-                        </div>
-                      </section>
-
-                      <section className="studio-course-health">
-                        <div className="studio-course-health__header">
-                          <div>
-                            <p className="studio-overline">COLLABORATION</p>
-                            <h3>Team setup</h3>
-                          </div>
-                          <Users size={18} />
-                        </div>
-                        <div className="studio-collab-row">
-                          <span><ShieldCheck size={13} /> You • Owner</span>
-                          <span><Pencil size={13} /> Editor slot</span>
-                          <span><Bot size={13} /> AI Tutor {readiness?.hasAiTutor ? 'enabled' : 'setup needed'}</span>
-                        </div>
-                      </section>
                     </div>
 
                     <section className="studio-lesson-panel">
