@@ -52,7 +52,7 @@ jobs:
           deno-version: v2.x
 
       - name: Edge Function unit tests
-        run: deno test --allow-env supabase/functions/
+        run: deno test --config supabase/functions/deno.json --allow-env supabase/functions/
 
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
