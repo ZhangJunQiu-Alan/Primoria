@@ -349,16 +349,6 @@ export function useDashboardPageModel({
       value: `${Math.max(48, Math.min(94, (analyticsReferenceMetric ? Math.round(analyticsReferenceMetric.completion_rate * 100) : averagePublishReadiness) + 8))}%`,
       detail: continueBuilding?.readiness.hasAssessment ? 'Assessment detected' : 'Add a quiz to replace estimate',
     },
-    {
-      label: 'Student satisfaction',
-      value: hasLearnerAnalyticsData ? '4.6/5' : 'Pending',
-      detail: hasLearnerAnalyticsData ? 'Blended from reviews and completions' : 'Publish to unlock review signals',
-    },
-    {
-      label: 'AI tutor interactions',
-      value: `${Math.max(0, weeklyLearners * 3 + courses.filter((course) => courseReadinessById.get(course.id)?.hasAiTutor).length)}`,
-      detail: 'Includes detected AI tutor-ready course flows',
-    },
   ];
 
   function handleUseAICourseDraft(preview: AICourseDraftPreview) {
