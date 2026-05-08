@@ -184,13 +184,13 @@ export const FIXTURE_LEGACY_COURSE_MIGRATED_SHAPE = {
       lesson_id: 'lesson-1',
       title: 'Old Lesson',
       pages: [
-        {
-          blocks: [
-            { id: 'b1', type: 'code-block' },
-            { id: 'b2', type: 'multiple-choice', visibilityRule: 'afterPreviousCorrect' },
+            {
+              blocks: [
+                { id: 'b1', type: 'code-block' },
+                { id: 'b2', type: 'multiple-choice', visibilityRule: 'always' },
+              ],
+            },
           ],
         },
-      ],
-    },
   ],
 };

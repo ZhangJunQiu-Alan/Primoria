@@ -1,6 +1,5 @@
 import { type Block } from '@primoria/schema';
 import { BLOCK_META } from '../blockRegistry';
-import { VISIBILITY_LABELS, getBlockVisibilityRule } from '../blockVisibility';
 import { EditableBlockCanvasContent } from './EditableBlockCanvasContent';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -23,9 +22,6 @@ export function BlockPreview({
   onClick,
 }: BlockPreviewProps) {
   const meta = BLOCK_META[block.type];
-  const visibilityRule = getBlockVisibilityRule(block);
-  const tagTone =
-    visibilityRule === 'afterPreviousCorrect' ? 'editor-block-card__tag--gated' : 'editor-block-card__tag--always';
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -74,9 +70,6 @@ export function BlockPreview({
             <div className="editor-block-card__label">{meta.label}</div>
           </div>
         </div>
-        <span className={cn('editor-block-card__tag', tagTone)}>
-          {VISIBILITY_LABELS[visibilityRule]}
-        </span>
       </div>
 
       <div className="editor-block-card__body">

@@ -80,7 +80,7 @@ const CourseSchema = z.object({
                   height: z.number().optional(),
                 })
                 .optional(),
-              visibilityRule: z.enum(['always', 'afterPreviousCorrect']).optional(),
+              visibilityRule: z.enum(['always', 'hidden']).optional(),
               content: z.record(z.unknown()),
             }),
           ),

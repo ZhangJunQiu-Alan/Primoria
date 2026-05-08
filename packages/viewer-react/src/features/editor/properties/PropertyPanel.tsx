@@ -37,9 +37,6 @@ export function PropertyPanel({ lessonId, pageId }: PropertyPanelProps) {
                 {BLOCK_META[block.type].icon}
               </span>
               <span className="text-sm font-semibold">{BLOCK_META[block.type].label}</span>
-              <span className="ml-auto text-xs text-muted-foreground font-mono">
-                {block.id.slice(0, 8)}
-              </span>
             </div>
             <div className="p-4">
               <BlockPropertyPanel block={block} lessonId={lessonId} pageId={pageId} />

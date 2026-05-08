@@ -89,7 +89,7 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     label: 'Video',
     icon: '📹',
     category: 'content',
-    defaultContent: { provider: 'youtube' },
+    defaultContent: {},
   },
 };
 

@@ -680,6 +680,10 @@
   color: var(--editor-primary-dark);
 }
 
+.editor-sortable-block__action--muted {
+  color: var(--editor-text-muted);
+}
+
 .editor-sortable-block__action--danger:hover {
   background: rgba(255, 234, 232, 0.9);
   color: var(--editor-clay);
@@ -714,8 +718,7 @@
 
 .editor-block-card__header {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  align-items: flex-start;
   padding-right: 8.5rem;
   margin-bottom: 1rem;
 }
@@ -738,30 +741,6 @@
 
 .editor-block-card__summary {
   margin-top: 0.15rem;
-}
-
-.editor-block-card__tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2rem;
-  max-width: 14rem;
-  padding: 0.35rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.74rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.editor-block-card__tag--always {
-  background: rgba(223, 240, 224, 0.76);
-  color: var(--editor-primary-dark);
-}
-
-.editor-block-card__tag--gated {
-  background: rgba(246, 229, 210, 0.82);
-  color: var(--editor-secondary);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.46);
 }
 
 .editor-block-card__body {
@@ -799,7 +778,7 @@
   font-size: 2rem;
   line-height: 1.15;
   font-weight: 800;
-  color: var(--editor-text);
+  color: inherit;
 }
 
 .editor-inline-richtext h2,
@@ -808,7 +787,7 @@
   font-size: 1.45rem;
   line-height: 1.2;
   font-weight: 800;
-  color: var(--editor-text);
+  color: inherit;
 }
 
 .editor-inline-richtext p,
@@ -904,6 +883,10 @@
   background: rgba(255, 255, 255, 0.78);
 }
 
+.editor-inline-image__frame--interactive {
+  cursor: pointer;
+}
+
 .editor-inline-image__asset {
   display: block;
   width: 100%;
@@ -917,6 +900,54 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0.7rem;
+}
+
+.editor-inline-video__asset {
+  display: block;
+  width: 100%;
+  min-height: 16rem;
+  max-height: 28rem;
+  background: rgba(245, 239, 231, 0.7);
+}
+
+.editor-inline-video__placeholder {
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.editor-inline-video__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+}
+
+.editor-inline-video__url-form {
+  display: flex;
+  flex: 1 1 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.editor-inline-video__url-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 1px solid rgba(141, 124, 105, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--editor-text);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.editor-inline-video__url-input:focus {
+  border-color: rgba(168, 197, 172, 0.72);
+  box-shadow: 0 0 0 3px rgba(168, 197, 172, 0.18);
 }
 
 .editor-inline-code {

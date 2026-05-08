@@ -6,6 +6,7 @@ import { TutorMarkdown } from '@/shared/ai-tutor/TutorMarkdown';
 import type { CommunityNote } from '@/shared/api/viewer/types';
 import { LearnerBlockRenderer } from '@/shared/lesson/LearnerBlockRenderer';
 import { buildLessonAiContext } from '@/shared/lesson/lessonAiContext';
+import { isBlockVisibleInPublishedCourse } from '@/shared/lesson/blockVisibility';
 import {
   buildRecordedResults,
   buildWrongReviewItems,
@@ -68,7 +69,9 @@ export function LessonRuntimePlayer({
         .sort((a, b) => a.order - b.order)
         .map((page) => ({
           page,
-          blocks: [...page.blocks].sort((a, b) => a.position.order - b.position.order),
+          blocks: [...page.blocks]
+            .sort((a, b) => a.position.order - b.position.order)
+            .filter((block) => isBlockVisibleInPublishedCourse(block)),
         })),
     [data.pages],
   );

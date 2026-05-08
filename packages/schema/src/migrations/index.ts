@@ -121,8 +121,9 @@ const BLOCK_TYPE_ALIASES: Record<string, string> = {
 };
 
 const VISIBILITY_ALIASES: Record<string, string> = {
-  after_previous_correct: 'afterPreviousCorrect',
-  'after-previous-correct': 'afterPreviousCorrect',
+  after_previous_correct: 'always',
+  'after-previous-correct': 'always',
+  afterPreviousCorrect: 'always',
 };
 
 function migrateBlock(raw: Record<string, unknown>): Record<string, unknown> {

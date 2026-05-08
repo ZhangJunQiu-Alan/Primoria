@@ -1,18 +1,20 @@
 import type { Block, BlockType, VisibilityRule } from '@primoria/schema';
 
-export const VISIBILITY_LABELS: Record<VisibilityRule, string> = {
-  always: 'Always visible',
-  afterPreviousCorrect: 'After previous correct',
-};
-
 export function getDefaultVisibilityRule(order: number): VisibilityRule {
-  return order <= 0 ? 'always' : 'afterPreviousCorrect';
+  void order;
+  return 'always';
 }
 
 export function getBlockVisibilityRule(
   block: Pick<Block, 'position' | 'visibilityRule'>,
 ): VisibilityRule {
   return block.visibilityRule ?? getDefaultVisibilityRule(block.position.order);
+}
+
+export function isBlockVisibleInPublishedCourse(
+  block: Pick<Block, 'position' | 'visibilityRule'>,
+) {
+  return getBlockVisibilityRule(block) !== 'hidden';
 }
 
 export function isQuestionBlockType(type: BlockType): boolean {
@@ -42,34 +44,7 @@ export function computeBlockVisibility(
   correctState: Record<string, boolean>,
   checked: boolean,
 ): boolean[] {
-  const visibility = Array.from({ length: blocks.length }, () => true);
-
-  for (let index = 0; index < blocks.length; index += 1) {
-    const previousVisible = index === 0 ? true : visibility[index - 1] ?? false;
-    if (!previousVisible) {
-      visibility[index] = false;
-      continue;
-    }
-
-    const block = blocks[index]!;
-    if (getBlockVisibilityRule(block) !== 'afterPreviousCorrect') {
-      visibility[index] = true;
-      continue;
-    }
-
-    if (!checked) {
-      visibility[index] = false;
-      continue;
-    }
-
-    if (index === 0) {
-      visibility[index] = true;
-      continue;
-    }
-
-    const previousBlock = blocks[index - 1]!;
-    visibility[index] = correctState[previousBlock.id] === true;
-  }
-
-  return visibility;
+  void correctState;
+  void checked;
+  return blocks.map((block) => isBlockVisibleInPublishedCourse(block));
 }

@@ -13,8 +13,10 @@ import {
   serializeRichTextValue,
   tipTapDocToRichTextValue,
 } from '../richText';
-import { uploadBlockImage } from '@/services/blockImageUpload';
+import { uploadBlockImage, uploadBlockMedia } from '@/services/blockImageUpload';
 import { BlockRenderer, getBlockStyleFrame } from '../preview/BlockRenderer';
+import { getTextBlockColorStyle } from '@/shared/color/textBlockColorStyle';
+import { inferVideoProvider, resolveVideoSource } from '@/shared/media/videoSource';
 import { cn } from '@/lib/utils';
 import type { Block } from '@primoria/schema';
 
@@ -63,6 +65,9 @@ export function EditableBlockCanvasContent({
       break;
     case 'image':
       content = <CanvasImageBlock block={block} lessonId={lessonId} pageId={pageId} />;
+      break;
+    case 'video':
+      content = <CanvasVideoBlock block={block} lessonId={lessonId} pageId={pageId} />;
       break;
     case 'code-block':
       content = (
@@ -114,6 +119,7 @@ function CanvasTextBlock({
     [content.value],
   );
   const incomingHtml = useMemo(() => richTextToHtml(content.value), [content.value]);
+  const textStyle = useMemo(() => getTextBlockColorStyle(block.style?.textColor), [block.style?.textColor]);
   const lastSavedRef = useRef(incomingValue);
 
   const editor = useEditor(
@@ -177,6 +183,7 @@ function CanvasTextBlock({
     return (
       <div
         className="editor-inline-richtext prose prose-sm max-w-none text-foreground"
+        style={textStyle}
         dangerouslySetInnerHTML={{ __html: incomingHtml }}
       />
     );
@@ -185,10 +192,12 @@ function CanvasTextBlock({
   return (
     <div className="editor-inline-text-editor" onClick={(event) => event.stopPropagation()}>
       {editor ? <TextToolbar editor={editor} /> : null}
-      <EditorContent
-        editor={editor}
-        className="editor-inline-text-editor__surface prose prose-sm max-w-none min-h-[150px] text-sm [&_.tiptap]:outline-none [&_.tiptap_p.is-editor-empty:first-child::before]:text-muted-foreground [&_.tiptap_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.tiptap_p.is-editor-empty:first-child::before]:float-left [&_.tiptap_p.is-editor-empty:first-child::before]:pointer-events-none"
-      />
+      <div style={textStyle}>
+        <EditorContent
+          editor={editor}
+          className="editor-inline-text-editor__surface prose prose-sm max-w-none min-h-[150px] text-sm [&_.tiptap]:outline-none [&_.tiptap_p.is-editor-empty:first-child::before]:text-muted-foreground [&_.tiptap_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.tiptap_p.is-editor-empty:first-child::before]:float-left [&_.tiptap_p.is-editor-empty:first-child::before]:pointer-events-none"
+        />
+      </div>
     </div>
   );
 }
@@ -355,7 +364,7 @@ function CanvasImageBlock({
       <input
         ref={inputRef}
         type="file"
-        accept="image/png,image/jpeg,image/webp,image/gif"
+        accept="image/*"
         className="hidden"
         onChange={(event) => {
           const file = event.target.files?.[0];
@@ -366,7 +375,19 @@ function CanvasImageBlock({
       />
 
       {content.url ? (
-        <div className="editor-inline-image__frame">
+        <div
+          className="editor-inline-image__frame editor-inline-image__frame--interactive"
+          onClick={() => inputRef.current?.click()}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              inputRef.current?.click();
+            }
+          }}
+          title="Choose a different image"
+        >
           <img src={content.url} alt="Block asset" className="editor-inline-image__asset" />
         </div>
       ) : (
@@ -381,14 +402,6 @@ function CanvasImageBlock({
       )}
 
       <div className="editor-inline-image__actions">
-        <button
-          type="button"
-          className="editor-inline-secondary-button"
-          onClick={() => inputRef.current?.click()}
-          disabled={isUploading}
-        >
-          {content.url ? 'Replace image' : 'Choose image'}
-        </button>
         {content.url ? (
           <span className="text-xs text-muted-foreground truncate">
             {content.url}
@@ -396,6 +409,180 @@ function CanvasImageBlock({
         ) : null}
       </div>
 
+      {uploadError ? <p className="text-xs text-destructive">{uploadError}</p> : null}
+    </div>
+  );
+}
+
+function CanvasVideoBlock({
+  block,
+  lessonId,
+  pageId,
+}: {
+  block: Block;
+  lessonId: string;
+  pageId: string;
+}) {
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.auth.user?.id ?? null);
+  const courseId = useAppSelector((state) => state.editor.draft?.course_id ?? null);
+  const content = block.content as {
+    url?: string;
+    provider?: 'youtube' | 'vimeo' | 'custom';
+    caption?: string;
+    autoplay?: boolean;
+  };
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [urlDraft, setUrlDraft] = useState(content.url ?? '');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const video = resolveVideoSource({
+    url: content.url,
+    provider: content.provider,
+    autoplay: content.autoplay,
+  });
+
+  useEffect(() => {
+    setUrlDraft(content.url ?? '');
+  }, [content.url]);
+
+  async function handleFileSelected(file: File) {
+    if (!userId || !courseId) {
+      setUploadError('Please sign in before uploading videos.');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadError(null);
+
+    try {
+      const publicUrl = await uploadBlockMedia({
+        file,
+        userId,
+        courseId,
+        lessonId,
+        pageId,
+        blockId: block.id,
+        kind: 'video',
+      });
+
+      dispatch(
+        updateBlock({
+          lessonId,
+          pageId,
+          block: {
+            ...block,
+            content: {
+              ...content,
+              url: publicUrl,
+              provider: 'custom',
+            },
+          },
+        }),
+      );
+    } catch (error) {
+      setUploadError(error instanceof Error ? error.message : 'Video upload failed.');
+    } finally {
+      setIsUploading(false);
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
+    }
+  }
+
+  function handleApplyUrl() {
+    const nextUrl = urlDraft.trim();
+    setUploadError(null);
+    dispatch(
+      updateBlock({
+        lessonId,
+        pageId,
+        block: {
+          ...block,
+          content: {
+            ...content,
+            url: nextUrl || undefined,
+            provider: nextUrl ? inferVideoProvider(nextUrl) : undefined,
+          },
+        },
+      }),
+    );
+  }
+
+  function openFilePicker() {
+    inputRef.current?.click();
+  }
+
+  return (
+    <div className="editor-inline-image" onClick={(event) => event.stopPropagation()}>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="video/*"
+        className="hidden"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+          if (file) {
+            void handleFileSelected(file);
+          }
+        }}
+      />
+
+      {video.kind === 'embed' ? (
+        <div className="editor-inline-image__frame">
+          <iframe
+            src={video.embedUrl}
+            className="editor-inline-video__asset"
+            allowFullScreen
+            title="Block video"
+          />
+        </div>
+      ) : video.kind === 'native' ? (
+        <div className="editor-inline-image__frame">
+          <video
+            src={video.url}
+            controls
+            autoPlay={video.autoPlay}
+            muted={video.autoPlay}
+            playsInline
+            className="editor-inline-video__asset"
+          />
+        </div>
+      ) : (
+        <button
+          type="button"
+          className="editor-inline-image__placeholder editor-inline-video__placeholder"
+          onClick={openFilePicker}
+          disabled={isUploading}
+        >
+          Upload a video or paste a link below.
+        </button>
+      )}
+
+      <div className="editor-inline-video__actions">
+        <form
+          className="editor-inline-video__url-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleApplyUrl();
+          }}
+        >
+          <input
+            value={urlDraft}
+            onChange={(event) => setUrlDraft(event.target.value)}
+            placeholder="Paste a video URL"
+            type="url"
+            className="editor-inline-video__url-input"
+          />
+          <button type="submit" className="editor-inline-primary-button">
+            Use link
+          </button>
+        </form>
+      </div>
+
+      {content.url ? (
+        <p className="text-xs text-muted-foreground break-all">{content.url}</p>
+      ) : null}
       {uploadError ? <p className="text-xs text-destructive">{uploadError}</p> : null}
     </div>
   );

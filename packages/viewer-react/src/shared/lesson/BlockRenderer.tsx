@@ -3,6 +3,8 @@ import type { Block } from '@primoria/schema';
 import { InteractiveVisualEmbed } from '@/shared/interactive-visual/InteractiveVisualEmbed';
 import { useViewerCopy } from '@/shared/theme/copy';
 import { richTextToHtml } from '@/shared/lesson/richText';
+import { getTextBlockColorStyle } from '@/shared/color/textBlockColorStyle';
+import { resolveVideoSource } from '@/shared/media/videoSource';
 import type { LessonBlock, SortingBlock } from '@/shared/lesson/types';
 import { cn } from '@/shared/utils/cn';
 
@@ -57,13 +59,16 @@ function CanonicalBlockRenderer({ block }: { block: Block }) {
   const content = block.content as Record<string, unknown>;
 
   switch (block.type) {
-    case 'text':
+    case 'text': {
+      const textStyle = getTextBlockColorStyle(block.style?.textColor);
       return (
         <div
           className="prose prose-sm max-w-none text-[var(--viewer-text)]"
+          style={textStyle}
           dangerouslySetInnerHTML={{ __html: richTextToHtml(content.value) }}
         />
       );
+    }
     case 'image':
       return content.url ? (
         <img src={String(content.url)} alt={String(content.altText ?? content.alt ?? 'Lesson image')} className="max-h-[340px] w-full rounded-2xl object-cover" />
@@ -165,20 +170,29 @@ function CanonicalBlockRenderer({ block }: { block: Block }) {
       );
     }
     case 'video': {
-      const url = String(content.url ?? '');
-      const youtubeId = /(?:youtu\.be\/|v=)([\w-]{11})/.exec(url)?.[1];
-      return youtubeId ? (
+      const video = resolveVideoSource({
+        url: content.url,
+        provider: content.provider,
+        autoplay: content.autoplay,
+      });
+      return video.kind === 'embed' ? (
         <div className="aspect-video overflow-hidden rounded-3xl">
-          <iframe
-            src={`https://www.youtube.com/embed/${youtubeId}`}
-            title="Lesson video"
-            allowFullScreen
-            className="h-full w-full border-0"
+          <iframe src={video.embedUrl} title="Lesson video" allowFullScreen className="h-full w-full border-0" />
+        </div>
+      ) : video.kind === 'native' ? (
+        <div className="overflow-hidden rounded-3xl border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)]">
+          <video
+            src={video.url}
+            controls
+            autoPlay={video.autoPlay}
+            muted={video.autoPlay}
+            playsInline
+            className="aspect-video h-full w-full"
           />
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-[var(--viewer-border)] p-8 text-center text-sm text-[var(--viewer-text-muted)]">
-          {url || 'No video URL selected.'}
+          No video selected.
         </div>
       );
     }

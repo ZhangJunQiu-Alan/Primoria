@@ -1,29 +1,36 @@
 import { supabase } from '@/lib/supabase';
 
-const BLOCK_IMAGE_BUCKET = 'course-block-images';
-const FALLBACK_IMAGE_BUCKETS = ['course-thumbnails', 'avatars'] as const;
+const BLOCK_MEDIA_BUCKETS = {
+  image: ['course-block-media', 'course-block-images'],
+  video: ['course-block-media', 'course-block-videos', 'course-block-images'],
+} as const;
+const FALLBACK_MEDIA_BUCKETS = ['course-thumbnails', 'avatars'] as const;
 
-export async function uploadBlockImage({
-  file,
-  userId,
-  courseId,
-  lessonId,
-  pageId,
-  blockId,
-}: {
+interface UploadBlockMediaArgs {
   file: File;
   userId: string;
   courseId: string;
   lessonId: string;
   pageId: string;
   blockId: string;
-}) {
-  const extension = getFileExtension(file.name, file.type);
-  const safeName = sanitizeFileName(file.name.replace(/\.[^.]+$/, ''));
+  kind: 'image' | 'video';
+}
+
+export async function uploadBlockMedia({
+  file,
+  userId,
+  courseId,
+  lessonId,
+  pageId,
+  blockId,
+  kind,
+}: UploadBlockMediaArgs) {
+  const extension = getFileExtension(file.name, file.type, kind);
+  const safeName = sanitizeFileName(file.name.replace(/\.[^.]+$/, ''), kind);
   const path = `${userId}/${courseId}/${lessonId}/${pageId}/${blockId}/${Date.now()}-${safeName}.${extension}`;
   const contentType = file.type || mimeTypeFromExtension(extension);
 
-  const bucketsToTry = [BLOCK_IMAGE_BUCKET, ...FALLBACK_IMAGE_BUCKETS];
+  const bucketsToTry = [...BLOCK_MEDIA_BUCKETS[kind], ...FALLBACK_MEDIA_BUCKETS];
   for (const bucket of bucketsToTry) {
     const { error } = await supabase.storage.from(bucket).upload(path, file, {
       cacheControl: '3600',
@@ -36,54 +43,92 @@ export async function uploadBlockImage({
       return data.publicUrl;
     }
 
-    // If this project doesn't have the preferred bucket yet, try the next bucket.
     if (isBucketMissingError(error) && bucket !== bucketsToTry[bucketsToTry.length - 1]) {
       continue;
     }
 
-    throw normalizeUploadError(error);
+    throw normalizeUploadError(error, kind);
   }
 
-  throw new Error('Image upload failed.');
+  throw new Error(`${capitalize(kind)} upload failed.`);
 }
 
-function getFileExtension(fileName: string, mimeType: string) {
+export async function uploadBlockImage(
+  args: Omit<UploadBlockMediaArgs, 'kind'>,
+) {
+  return uploadBlockMedia({ ...args, kind: 'image' });
+}
+
+function getFileExtension(fileName: string, mimeType: string, kind: 'image' | 'video') {
   const fromName = fileName.includes('.') ? fileName.split('.').pop()?.toLowerCase() : null;
   if (fromName) {
-    return fromName;
+    return fromName.replace(/[^a-z0-9]+/g, '') || defaultExtension(kind);
   }
 
-  if (mimeType === 'image/png') {
-    return 'png';
-  }
-  if (mimeType === 'image/webp') {
-    return 'webp';
-  }
-  if (mimeType === 'image/gif') {
-    return 'gif';
+  if (mimeType.includes('/')) {
+    const fromMime = mimeType.split('/').pop()?.toLowerCase().replace(/[^a-z0-9]+/g, '');
+    if (fromMime) {
+      return fromMime === 'quicktime' ? 'mov' : fromMime;
+    }
   }
 
-  return 'jpg';
+  return defaultExtension(kind);
 }
 
-function sanitizeFileName(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9-]+/g, '-')
-    .replace(/^-+|-+$/g, '') || 'image';
+function defaultExtension(kind: 'image' | 'video') {
+  return kind === 'video' ? 'mp4' : 'jpg';
+}
+
+function sanitizeFileName(value: string, kind: 'image' | 'video') {
+  return (
+    value
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || kind
+  );
 }
 
 function mimeTypeFromExtension(extension: string) {
   switch (extension) {
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
     case 'png':
       return 'image/png';
     case 'gif':
       return 'image/gif';
     case 'webp':
       return 'image/webp';
+    case 'bmp':
+      return 'image/bmp';
+    case 'tif':
+    case 'tiff':
+      return 'image/tiff';
+    case 'svg':
+      return 'image/svg+xml';
+    case 'avif':
+      return 'image/avif';
+    case 'heic':
+      return 'image/heic';
+    case 'heif':
+      return 'image/heif';
+    case 'mp4':
+    case 'm4v':
+      return 'video/mp4';
+    case 'webm':
+      return 'video/webm';
+    case 'ogg':
+    case 'ogv':
+      return 'video/ogg';
+    case 'mov':
+      return 'video/quicktime';
+    case 'avi':
+      return 'video/x-msvideo';
+    case 'mkv':
+      return 'video/x-matroska';
     default:
-      return 'image/jpeg';
+      return 'application/octet-stream';
   }
 }
 
@@ -97,10 +142,10 @@ function isBucketMissingError(error: unknown) {
   return haystack.includes('bucket not found');
 }
 
-function normalizeUploadError(error: unknown) {
+function normalizeUploadError(error: unknown, kind: 'image' | 'video') {
   if (isBucketMissingError(error)) {
     return new Error(
-      'Storage is not configured for image uploads on this project. Please ask an admin to run the latest Supabase storage migrations.',
+      `Storage is not configured for ${kind} uploads on this project. Please ask an admin to run the latest Supabase storage migrations.`,
     );
   }
 
@@ -108,5 +153,9 @@ function normalizeUploadError(error: unknown) {
     return error;
   }
 
-  return new Error('Image upload failed.');
+  return new Error(`${capitalize(kind)} upload failed.`);
+}
+
+function capitalize(value: string) {
+  return value.slice(0, 1).toUpperCase() + value.slice(1);
 }

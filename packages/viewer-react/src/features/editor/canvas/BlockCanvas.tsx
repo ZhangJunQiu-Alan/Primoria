@@ -16,7 +16,15 @@ import {
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { nanoid } from '../../../lib/nanoid';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { addBlock, removeBlock, reorderBlocks, selectBlock, duplicateBlock } from '@/store/editorSlice';
+import {
+  addBlock,
+  removeBlock,
+  reorderBlocks,
+  selectBlock,
+  duplicateBlock,
+  updateBlock,
+  updateBlockSettings,
+} from '@/store/editorSlice';
 import { BLOCK_META } from '../blockRegistry';
 import { getDefaultVisibilityRule } from '../blockVisibility';
 import { SortableBlock } from './SortableBlock';
@@ -109,6 +117,31 @@ export function BlockCanvas({ lessonId, pageId, showAddMenu = true }: BlockCanva
                 onDelete={() => dispatch(removeBlock({ lessonId, pageId, blockId: block.id }))}
                 onDuplicate={() =>
                   dispatch(duplicateBlock({ lessonId, pageId, blockId: block.id, newId: nanoid() }))
+                }
+                onToggleVisibility={() =>
+                  dispatch(
+                    updateBlockSettings({
+                      lessonId,
+                      pageId,
+                      blockId: block.id,
+                      visibilityRule: block.visibilityRule === 'hidden' ? 'always' : 'hidden',
+                    }),
+                  )
+                }
+                onClearMedia={
+                  block.type === 'image' || block.type === 'video'
+                    ? () =>
+                        dispatch(
+                          updateBlock({
+                            lessonId,
+                            pageId,
+                            block: {
+                              ...block,
+                              content: {},
+                            },
+                          }),
+                        )
+                    : undefined
                 }
               />
             ))}

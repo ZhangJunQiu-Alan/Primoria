@@ -71,7 +71,7 @@ export type DemoCourseLessonSummary = {
 };
 
 type DemoBlock = LessonBlock & {
-  visibilityRule?: 'always' | 'afterPreviousCorrect';
+  visibilityRule?: 'always' | 'hidden';
 };
 
 type DemoLessonPage = {
@@ -297,7 +297,7 @@ const reactViewerBundle = buildCourseBundle({
             ]),
             {
               ...textBlock('gated', 2, 'The gated block is now visible.'),
-              visibilityRule: 'afterPreviousCorrect',
+              visibilityRule: 'always',
             },
           ],
         },

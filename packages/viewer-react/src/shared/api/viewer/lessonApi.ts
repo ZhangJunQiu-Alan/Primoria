@@ -4,6 +4,7 @@ import type { ViewerLessonCompletion } from '@/shared/api/viewer/types';
 import { loadDemoViewerData, loadFixtureStore } from '@/shared/api/viewer/fixtureLoader';
 import { normalizeType, toObject, toString, usesViewerFixtures } from '@/shared/api/viewer/core';
 import { getDefaultVisibilityRule } from '@/shared/lesson/blockVisibility';
+import { resolveVideoProvider } from '@/shared/media/videoSource';
 import { supabase } from '@/shared/api/supabase';
 
 function buildTextBlock(id: string, order: number, text: string): Block {
@@ -20,8 +21,15 @@ function buildTextBlock(id: string, order: number, text: string): Block {
 
 function resolveVisibilityRule(rawBlock: Record<string, unknown>, order: number) {
   const visibilityRule = toString(rawBlock.visibilityRule || rawBlock.visibility_rule);
-  if (visibilityRule === 'afterPreviousCorrect' || visibilityRule === 'always') {
+  if (visibilityRule === 'hidden' || visibilityRule === 'always') {
     return visibilityRule;
+  }
+  if (
+    visibilityRule === 'afterPreviousCorrect' ||
+    visibilityRule === 'after_previous_correct' ||
+    visibilityRule === 'after-previous-correct'
+  ) {
+    return 'always';
   }
   return getDefaultVisibilityRule(order);
 }
@@ -156,13 +164,14 @@ function normalizeDbBlock(rawBlock: Record<string, unknown>, order: number): Les
   }
 
   if (type === 'video') {
+    const url = toString(content.url || content.video_url);
     return withVisibilityRule({
       id: blockId,
       type: 'video',
       position: { order },
       content: {
-        url: toString(content.url || content.video_url),
-        provider: toString(content.provider || 'youtube') as 'youtube' | 'vimeo' | 'custom',
+        url,
+        provider: resolveVideoProvider(content.provider, url),
       },
     }, rawBlock);
   }
