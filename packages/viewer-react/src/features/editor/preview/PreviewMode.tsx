@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 import { useAppSelector } from '@/store';
-import { isQuestionBlock } from '../blockVisibility';
+import { isBlockVisibleInPublishedCourse, isQuestionBlock } from '@/shared/lesson/blockVisibility';
 import { LearnerBlockRenderer } from '@/shared/lesson/LearnerBlockRenderer';
 import {
   deriveLessonPageState,
@@ -34,7 +34,9 @@ export function PreviewMode({ lessonId, pageId, onSelectPage }: PreviewModeProps
 
   const page = pages[currentPageIndex];
   const blocks = page?.blocks ?? [];
-  const sorted = [...blocks].sort((a, b) => a.position.order - b.position.order);
+  const sorted = [...blocks]
+    .sort((a, b) => a.position.order - b.position.order)
+    .filter((block) => isBlockVisibleInPublishedCourse(block));
   const [pageSessions, setPageSessions] = useState<Record<string, LessonPageSessionState>>({});
 
   useEffect(() => {
@@ -60,13 +62,17 @@ export function PreviewMode({ lessonId, pageId, onSelectPage }: PreviewModeProps
   function goToPage(index: number) {
     const nextPage = pages[index];
     if (!nextPage) return;
-    if (!pages.slice(0, index).every((candidate) => deriveLessonPageState(
-      [...candidate.blocks].sort((a, b) => a.position.order - b.position.order),
-      ensureLessonPageSession(
-        [...candidate.blocks].sort((a, b) => a.position.order - b.position.order),
-        pageSessions[candidate.page_id],
-      ),
-    ).canAdvancePage)) {
+    if (
+      !pages.slice(0, index).every((candidate) => {
+        const candidateBlocks = [...candidate.blocks]
+          .sort((a, b) => a.position.order - b.position.order)
+          .filter((block) => isBlockVisibleInPublishedCourse(block));
+        return deriveLessonPageState(
+          candidateBlocks,
+          ensureLessonPageSession(candidateBlocks, pageSessions[candidate.page_id]),
+        ).canAdvancePage;
+      })
+    ) {
       return;
     }
     setCurrentPageIndex(index);

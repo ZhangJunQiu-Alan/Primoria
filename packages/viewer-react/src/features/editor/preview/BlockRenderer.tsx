@@ -1,6 +1,8 @@
 import { cn } from '@/lib/utils';
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
+import { getTextBlockColorStyle } from '@/shared/color/textBlockColorStyle';
+import { resolveVideoSource } from '@/shared/media/videoSource';
 import { richTextToHtml } from '../richText';
 
 interface BlockRendererProps {
@@ -52,9 +54,11 @@ function BlockContent({ block }: { block: Block }) {
   switch (block.type) {
     // ── Text ──────────────────────────────────────────────────────────────────
     case 'text': {
+      const textStyle = getTextBlockColorStyle(block.style?.textColor);
       return (
         <div
           className="prose prose-sm max-w-none text-foreground"
+          style={textStyle}
           dangerouslySetInnerHTML={{ __html: richTextToHtml(c['value']) }}
         />
       );
@@ -170,18 +174,40 @@ function BlockContent({ block }: { block: Block }) {
 
     // ── Video ─────────────────────────────────────────────────────────────────
     case 'video': {
-      const url = String(c['url'] ?? '');
-      const ytId = url.match(/(?:youtu\.be\/|v=)([\w-]{11})/)?.[1];
-      if (ytId) {
+      const video = resolveVideoSource({
+        url: c['url'],
+        provider: c['provider'],
+        autoplay: c['autoplay'],
+      });
+      if (video.kind === 'embed') {
         return (
           <div className="aspect-video rounded-md overflow-hidden">
-            <iframe src={`https://www.youtube.com/embed/${ytId}`} className="w-full h-full" allowFullScreen title="Video" />
+            <iframe
+              src={video.embedUrl}
+              className="h-full w-full border-0"
+              allowFullScreen
+              title="Video"
+            />
+          </div>
+        );
+      }
+      if (video.kind === 'native') {
+        return (
+          <div className="overflow-hidden rounded-md border bg-muted/20">
+            <video
+              src={video.url}
+              controls
+              autoPlay={video.autoPlay}
+              muted={video.autoPlay}
+              playsInline
+              className="aspect-video h-full w-full"
+            />
           </div>
         );
       }
       return (
         <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground text-sm">
-          {url || 'No video URL set'}
+          No video set
         </div>
       );
     }

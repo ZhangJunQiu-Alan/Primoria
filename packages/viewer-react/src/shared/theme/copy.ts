@@ -284,7 +284,7 @@ const landingCopy = {
       schema: [
         '`lessons` 为规范顶层键',
         '历史 `pages` 导入会自动迁移',
-        '可见性规则支持 `always` 与 `afterPreviousCorrect`',
+        '可见性规则支持 `always` 与 `hidden`',
         '发布 / 导出阶段启用更严格校验',
       ],
       previewTitle: '同一套 schema 进入编辑器，也进入学习运行时',
@@ -596,7 +596,7 @@ const landingCopy = {
       schema: [
         '`lessons` is the canonical top-level key',
         'Legacy `pages` imports are normalized automatically',
-        'Visibility rules support `always` and `afterPreviousCorrect`',
+        'Visibility rules support `always` and `hidden`',
         'Publish and export use stricter validation',
       ],
       previewTitle: 'The same schema drives editing and learner playback',

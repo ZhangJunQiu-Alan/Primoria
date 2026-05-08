@@ -1,25 +1,20 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
-import { FormField, Input, Select } from '../FormField';
+import { FormField, Input } from '../FormField';
 import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
+import { resolveVideoProvider, resolveVideoSource } from '@/shared/media/videoSource';
 import type { Block } from '@primoria/schema';
 
 const schema = z.object({
-  provider: z.enum(['youtube', 'vimeo', 'custom']),
   url: z.string().optional(),
   caption: z.string().optional(),
   autoplay: z.boolean().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
-
-function youtubeId(url: string): string | null {
-  const m = url.match(/(?:youtu\.be\/|v=)([\w-]{11})/);
-  return m ? m[1] : null;
-}
 
 interface VideoPanelProps {
   block: Block;
@@ -29,20 +24,19 @@ interface VideoPanelProps {
 
 export function VideoPanel({ block, lessonId, pageId }: VideoPanelProps) {
   const dispatch = useAppDispatch();
-  const c = block.content as {
+  const content = block.content as {
     provider?: 'youtube' | 'vimeo' | 'custom';
     url?: string;
     caption?: string;
     autoplay?: boolean;
   };
   const formValues: FormValues = {
-    provider: c.provider ?? 'youtube',
-    url: c.url ?? '',
-    caption: c.caption ?? '',
-    autoplay: c.autoplay ?? false,
+    url: content.url ?? '',
+    caption: content.caption ?? '',
+    autoplay: content.autoplay ?? false,
   };
 
-  const { register, watch, reset } = useForm<FormValues>({
+  const { control, register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: formValues,
   });
@@ -53,49 +47,67 @@ export function VideoPanel({ block, lessonId, pageId }: VideoPanelProps) {
     reset,
     watch,
     onChange: (values) => {
-      dispatch(updateBlock({ lessonId, pageId, block: { ...block, content: values } }));
+      const nextUrl = values.url?.trim() ?? '';
+      dispatch(
+        updateBlock({
+          lessonId,
+          pageId,
+          block: {
+            ...block,
+            content: {
+              ...content,
+              url: nextUrl || undefined,
+              provider: nextUrl ? resolveVideoProvider(content.provider, nextUrl) : undefined,
+              caption: values.caption?.trim() || undefined,
+              autoplay: values.autoplay ?? false,
+            },
+          },
+        }),
+      );
     },
   });
 
-  const url = watch('url') ?? '';
-  const provider = watch('provider');
-  const ytId = provider === 'youtube' ? youtubeId(url) : null;
+  const watchedUrl = useWatch({ control, name: 'url' });
+  const watchedAutoplay = useWatch({ control, name: 'autoplay' });
+  const video = resolveVideoSource({
+    url: watchedUrl,
+    provider: content.provider,
+    autoplay: watchedAutoplay,
+  });
 
   return (
     <div className="space-y-4">
-      <FormField label="Provider">
-        <Select {...register('provider')}>
-          <option value="youtube">YouTube</option>
-          <option value="vimeo">Vimeo</option>
-          <option value="custom">Custom URL</option>
-        </Select>
+      <FormField label="Source">
+        <p className="text-sm text-muted-foreground">
+          Upload on the canvas or paste a video URL here.
+        </p>
       </FormField>
 
-      <FormField label="URL">
-        <Input
-          {...register('url')}
-          placeholder={
-            provider === 'youtube'
-              ? 'https://youtube.com/watch?v=...'
-              : provider === 'vimeo'
-              ? 'https://vimeo.com/...'
-              : 'https://...'
-          }
-          type="url"
-        />
+      <FormField label="Video URL">
+        <Input {...register('url')} placeholder="https://..." type="url" />
       </FormField>
 
-      {/* YouTube preview */}
-      {ytId && (
-        <div className="aspect-video rounded-md overflow-hidden border">
+      {video.kind === 'embed' ? (
+        <div className="aspect-video overflow-hidden rounded-md border">
           <iframe
-            src={`https://www.youtube.com/embed/${ytId}`}
-            className="w-full h-full"
+            src={video.embedUrl}
+            className="h-full w-full border-0"
             allowFullScreen
-            title="YouTube preview"
+            title="Video preview"
           />
         </div>
-      )}
+      ) : video.kind === 'native' ? (
+        <div className="overflow-hidden rounded-md border bg-muted/20">
+          <video
+            src={video.url}
+            controls
+            autoPlay={video.autoPlay}
+            muted={video.autoPlay}
+            playsInline
+            className="aspect-video h-full w-full"
+          />
+        </div>
+      ) : null}
 
       <FormField label="Caption (optional)">
         <Input {...register('caption')} placeholder="Caption shown below video" />
