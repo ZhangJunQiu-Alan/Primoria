@@ -1,8 +1,8 @@
 import type { Block } from '@primoria/schema';
-import { computeBlockVisibility, seedCorrectState } from '@/shared/lesson/blockVisibility';
+import { computeBlockVisibility } from '@/shared/lesson/blockVisibility';
 
 describe('computeBlockVisibility', () => {
-  it('keeps later gated blocks hidden when an earlier gated block is still hidden', () => {
+  it('hides only blocks marked hidden', () => {
     const blocks: Block[] = [
       {
         id: 'question-1',
@@ -17,29 +17,24 @@ describe('computeBlockVisibility', () => {
         id: 'text-1',
         type: 'text',
         position: { order: 1 },
-        visibilityRule: 'afterPreviousCorrect',
+        visibilityRule: 'hidden',
         content: {
           format: 'richtext',
-          value: { ops: [{ insert: 'Gated block 1\n' }] },
+          value: { ops: [{ insert: 'Hidden block\n' }] },
         },
       },
       {
         id: 'text-2',
         type: 'text',
         position: { order: 2 },
-        visibilityRule: 'afterPreviousCorrect',
+        visibilityRule: 'always',
         content: {
           format: 'richtext',
-          value: { ops: [{ insert: 'Gated block 2\n' }] },
+          value: { ops: [{ insert: 'Visible block\n' }] },
         },
       },
     ];
 
-    const correctState = {
-      ...seedCorrectState(blocks),
-      'question-1': false,
-    };
-
-    expect(computeBlockVisibility(blocks, correctState, true)).toEqual([true, false, false]);
+    expect(computeBlockVisibility(blocks, {}, true)).toEqual([true, false, true]);
   });
 });

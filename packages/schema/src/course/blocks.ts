@@ -21,7 +21,7 @@ export type BlockType = (typeof BLOCK_TYPES)[number];
 
 // ─── Visibility ───────────────────────────────────────────────────────────────
 
-export const VisibilityRuleSchema = z.enum(['always', 'afterPreviousCorrect']);
+export const VisibilityRuleSchema = z.enum(['always', 'hidden']);
 export type VisibilityRule = z.infer<typeof VisibilityRuleSchema>;
 
 // ─── Block style ─────────────────────────────────────────────────────────────
@@ -29,6 +29,7 @@ export type VisibilityRule = z.infer<typeof VisibilityRuleSchema>;
 export const BlockStyleSchema = z.object({
   spacing: z.enum(['none', 'sm', 'md', 'lg']).optional(),
   alignment: z.enum(['left', 'center', 'right']).optional(),
+  textColor: z.string().optional(),
   width: z.number().optional(),
   height: z.number().optional(),
 });

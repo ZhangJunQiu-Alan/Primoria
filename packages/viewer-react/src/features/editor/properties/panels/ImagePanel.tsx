@@ -15,7 +15,7 @@ export function ImagePanel({ block }: ImagePanelProps) {
         Content
       </p>
       <p className="text-sm text-muted-foreground">
-        Use the image block on the canvas to upload or replace the asset.
+        Use the image block on the canvas to upload an asset, or click the current image to replace it.
       </p>
       {content.url ? (
         <p className="text-xs text-muted-foreground break-all">{content.url}</p>

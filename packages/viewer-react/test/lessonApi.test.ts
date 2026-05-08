@@ -16,7 +16,7 @@ describe('fetchLessonRuntime', () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
   });
 
-  it('applies the default visibility rule to page blocks when legacy content omits visibilityRule', async () => {
+  it('defaults legacy blocks to visible and preserves explicit hidden blocks', async () => {
     singleMock.mockResolvedValue({
       data: {
         id: 'lesson-visibility',
@@ -44,15 +44,15 @@ describe('fetchLessonRuntime', () => {
                   id: 'text-1',
                   type: 'text',
                   content: {
-                    text: 'This block should stay gated by default.',
+                    text: 'This block should stay visible by default.',
                   },
                 },
                 {
                   id: 'text-2',
                   type: 'text',
-                  visibility_rule: 'always',
+                  visibility_rule: 'hidden',
                   content: {
-                    text: 'This block is explicitly always visible.',
+                    text: 'This block is explicitly hidden.',
                   },
                 },
               ],
@@ -68,8 +68,8 @@ describe('fetchLessonRuntime', () => {
 
     expect(runtime?.pages[0]?.blocks.map((block) => block.visibilityRule)).toEqual([
       'always',
-      'afterPreviousCorrect',
       'always',
+      'hidden',
     ]);
   });
 

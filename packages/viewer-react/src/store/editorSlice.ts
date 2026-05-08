@@ -299,7 +299,7 @@ const editorSlice = createSlice({
         lessonId: string;
         pageId: string;
         blockId: string;
-        visibilityRule?: 'always' | 'afterPreviousCorrect';
+        visibilityRule?: 'always' | 'hidden';
       }>,
     ) {
       if (!state.draft) return;

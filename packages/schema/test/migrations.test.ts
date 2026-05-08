@@ -65,12 +65,12 @@ describe('migrateCourseJson', () => {
     expect(blocks[1]['type']).toBe('multiple-choice');
   });
 
-  it('migrates visibilityRule alias after_previous_correct → afterPreviousCorrect', () => {
+  it('migrates visibilityRule alias after_previous_correct → always', () => {
     const result = migrateCourseJson(FIXTURE_LEGACY_COURSE_RAW);
     const lessons = result['lessons'] as Record<string, unknown>[];
     const pages = lessons[0]['pages'] as Record<string, unknown>[];
     const blocks = pages[0]['blocks'] as Record<string, unknown>[];
-    expect(blocks[1]['visibilityRule']).toBe('afterPreviousCorrect');
+    expect(blocks[1]['visibilityRule']).toBe('always');
   });
 
   it('migrates legacy animation blocks to interactive-visual blocks', () => {
