@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, type InputHTMLAttributes } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAppDispatch } from '@/store';
@@ -24,14 +24,35 @@ const TEMPLATES = [
   'generic',
 ] as const;
 
+const ENGINE_OPTIONS = [
+  { value: 'physics-canvas', label: 'Physics canvas' },
+  { value: 'html-iframe', label: 'HTML iframe' },
+  { value: 'r3f-cell-3d', label: '3D cell renderer' },
+] as const;
+
 const schema = z.object({
+  engine: z.enum(['physics-canvas', 'html-iframe', 'r3f-cell-3d']),
   template: z.string(),
   title: z.string().optional(),
   description: z.string().optional(),
   aiPrompt: z.string().optional(),
+  amplitude: z.coerce.number().min(0.2).max(2.5),
+  frequency: z.coerce.number().min(0.5).max(4),
+  phase: z.coerce.number().min(0).max(6.3),
+  speed: z.coerce.number().min(0).max(2),
 });
 
 type FormValues = z.infer<typeof schema>;
+
+function resolveEditorEngine(engine: string | undefined): FormValues['engine'] {
+  if (engine === 'r3f-cell-3d' || engine === 'physics-canvas') {
+    return engine;
+  }
+  if (engine === 'html-iframe' || engine === 'interactive-html5' || engine === 'gemini-html5' || engine === 'fallback-html5') {
+    return 'html-iframe';
+  }
+  return 'physics-canvas';
+}
 
 interface InteractiveVisualPanelProps {
   block: Block;
@@ -43,21 +64,42 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
   const dispatch = useAppDispatch();
   const [genError, setGenError] = useState<string | null>(null);
   const c = block.content as {
+    engine?: string;
     template?: string;
     title?: string;
     description?: string;
     aiPrompt?: string;
+    runtime?: {
+      simulation?: string;
+      params?: {
+        amplitude?: number;
+        frequency?: number;
+        phase?: number;
+        speed?: number;
+      };
+    };
   };
+  const waveParams = c.runtime?.simulation === 'wave' ? c.runtime.params : undefined;
+  const resolvedEngine = resolveEditorEngine(c.engine);
   const formValues: FormValues = {
-    template: c.template ?? 'generic',
+    engine: resolvedEngine,
+    template: c.template ?? (resolvedEngine === 'physics-canvas' ? 'wave' : 'generic'),
     title: c.title ?? '',
     description: c.description ?? '',
     aiPrompt: c.aiPrompt ?? '',
+    amplitude: waveParams?.amplitude ?? 1,
+    frequency: waveParams?.frequency ?? 1,
+    phase: waveParams?.phase ?? 0,
+    speed: waveParams?.speed ?? 0.7,
   };
 
-  const { register, watch, reset } = useForm<FormValues>({
+  const { control, register, watch, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: formValues,
+  });
+  const [selectedEngine, amplitude, frequency, phase, speed] = useWatch({
+    control,
+    name: ['engine', 'amplitude', 'frequency', 'phase', 'speed'],
   });
 
   useSyncedInspectorForm({
@@ -66,11 +108,32 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
     reset,
     watch,
     onChange: (values) => {
+      const nextContent = {
+        ...(block.content as object),
+        engine: values.engine,
+        template: values.engine === 'physics-canvas' ? 'wave' : values.template,
+        title: values.title,
+        description: values.description,
+        aiPrompt: values.aiPrompt,
+        runtime:
+          values.engine === 'physics-canvas'
+            ? {
+                simulation: 'wave',
+                params: {
+                  amplitude: values.amplitude,
+                  frequency: values.frequency,
+                  phase: values.phase,
+                  speed: values.speed,
+                },
+              }
+            : (block.content as { runtime?: unknown }).runtime,
+      };
+
       dispatch(
         updateBlock({
           lessonId,
           pageId,
-          block: { ...block, content: { ...(block.content as object), ...values } },
+          block: { ...block, content: nextContent },
         }),
       );
     },
@@ -82,6 +145,16 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
 
   return (
     <div className="space-y-4">
+      <FormField label="Renderer">
+        <Select {...register('engine')}>
+          {ENGINE_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+      </FormField>
+
       <FormField label="Template">
         <Select {...register('template')}>
           {TEMPLATES.map((t) => (
@@ -91,6 +164,7 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
           ))}
         </Select>
       </FormField>
+
       <FormField label="Title">
         <Input {...register('title')} placeholder="Shown above the visual" />
       </FormField>
@@ -104,6 +178,49 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
           placeholder="Describe what you want the visual to show…"
         />
       </FormField>
+
+      {selectedEngine === 'physics-canvas' && (
+        <div className="rounded-md border bg-muted/30 p-3 space-y-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Wave simulation</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              These values drive the trusted canvas renderer directly. No generated HTML is executed.
+            </p>
+          </div>
+          <RangeField
+            label="Amplitude"
+            min={0.2}
+            max={2.5}
+            step={0.1}
+            value={amplitude}
+            inputProps={register('amplitude', { valueAsNumber: true })}
+          />
+          <RangeField
+            label="Frequency"
+            min={0.5}
+            max={4}
+            step={0.1}
+            value={frequency}
+            inputProps={register('frequency', { valueAsNumber: true })}
+          />
+          <RangeField
+            label="Phase"
+            min={0}
+            max={6.3}
+            step={0.1}
+            value={phase}
+            inputProps={register('phase', { valueAsNumber: true })}
+          />
+          <RangeField
+            label="Speed"
+            min={0}
+            max={2}
+            step={0.1}
+            value={speed}
+            inputProps={register('speed', { valueAsNumber: true })}
+          />
+        </div>
+      )}
 
       <button
         onClick={() => void handleGenerate()}
@@ -122,5 +239,40 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
         <p className="text-xs text-green-600">AI-generated HTML ready — will render in player.</p>
       )}
     </div>
+  );
+}
+
+function RangeField({
+  label,
+  min,
+  max,
+  step,
+  value,
+  inputProps,
+}: {
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  value: number | undefined;
+  inputProps: InputHTMLAttributes<HTMLInputElement>;
+}) {
+  const displayValue = typeof value === 'number' && Number.isFinite(value) ? value.toFixed(1) : '-';
+
+  return (
+    <label className="block space-y-1">
+      <span className="flex items-center justify-between text-xs font-medium text-muted-foreground">
+        <span>{label}</span>
+        <span className="font-mono">{displayValue}</span>
+      </span>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        {...inputProps}
+        className="w-full accent-primary"
+      />
+    </label>
   );
 }
