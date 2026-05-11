@@ -138,22 +138,34 @@ export function EditorHeader({
 
   return (
     <header className="editor-topbar">
-      <button
-        type="button"
-        onClick={() => {
-          if (!confirmLeaveWorkspace()) {
-            return;
-          }
-          navigate('/builder/dashboard');
-        }}
-        className="editor-topbar__brand"
-        aria-label="Back to dashboard"
-      >
-        <span className="editor-topbar__brand-mark">
+      <div className="editor-topbar__brand">
+        <button
+          type="button"
+          onClick={() => {
+            if (!confirmLeaveWorkspace()) {
+              return;
+            }
+            navigate('/builder/dashboard');
+          }}
+          className="editor-topbar__brand-mark"
+          aria-label="Back to dashboard"
+        >
           <img src={publicAssetPath('primoria-logo.png')} alt="" />
-        </span>
+        </button>
         <span className="editor-topbar__brand-copy">
-          <strong>{draft?.metadata.title ?? 'Untitled Course'}</strong>
+          <button
+            type="button"
+            onClick={() => {
+              if (!confirmLeaveWorkspace()) {
+                return;
+              }
+              navigate('/builder/dashboard');
+            }}
+            className="editor-topbar__brand-title-button"
+            aria-label="Back to dashboard"
+          >
+            <strong>{draft?.metadata.title ?? 'Untitled Course'}</strong>
+          </button>
           {isEditingLessonTitle && activeLessonId ? (
             <span className="flex items-center gap-2">
               <input
@@ -205,7 +217,7 @@ export function EditorHeader({
             </span>
           )}
         </span>
-      </button>
+      </div>
 
       <div className="editor-topbar__actions">
         <span
