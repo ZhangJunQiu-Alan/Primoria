@@ -1,4 +1,4 @@
-import { useState, type InputHTMLAttributes } from 'react';
+import { useEffect, useState, type InputHTMLAttributes } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,6 +6,17 @@ import { useAppDispatch } from '@/store';
 import { updateBlock } from '@/store/editorSlice';
 import { FormField, Input, Select, Textarea } from '../FormField';
 import { useSyncedInspectorForm } from '../useSyncedInspectorForm';
+import {
+  createInteractiveVisual,
+  postDevHealthLog,
+  type InteractiveVisualGenerationJob,
+} from '@/shared/api/viewer/interactiveVisualApi';
+import {
+  INTERACTIVE_VISUAL_HEALTH_EVENT,
+  classifyInteractiveVisualHealth,
+  type InteractiveVisualHealthSnapshot,
+} from '@/shared/interactive-visual/InteractiveVisualEmbed';
+import { useProductLanguage } from '@/shared/i18n/useProductLanguage';
 import type { Block } from '@primoria/schema';
 
 const TEMPLATES = [
@@ -51,7 +62,15 @@ function resolveEditorEngine(engine: string | undefined): FormValues['engine'] {
   if (engine === 'html-iframe' || engine === 'interactive-html5' || engine === 'gemini-html5' || engine === 'fallback-html5') {
     return 'html-iframe';
   }
-  return 'physics-canvas';
+  return 'html-iframe';
+}
+
+function containsChineseText(value: string) {
+  return /[\u3400-\u9fff\uf900-\ufaff]/.test(value);
+}
+
+function resolveGenerationLanguage(prompt: string, productLanguage: 'en' | 'zh-CN') {
+  return containsChineseText(prompt) ? 'zh-CN' : productLanguage;
 }
 
 interface InteractiveVisualPanelProps {
@@ -62,7 +81,38 @@ interface InteractiveVisualPanelProps {
 
 export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveVisualPanelProps) {
   const dispatch = useAppDispatch();
+  const language = useProductLanguage();
   const [genError, setGenError] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationJob, setGenerationJob] = useState<InteractiveVisualGenerationJob | null>(null);
+  const [health, setHealth] = useState<InteractiveVisualHealthSnapshot | null>(null);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    const handler = (event: MessageEvent) => {
+      const data = event.data;
+      if (!data || typeof data !== 'object') return;
+      if (data.type !== INTERACTIVE_VISUAL_HEALTH_EVENT) return;
+      const snapshot: InteractiveVisualHealthSnapshot = {
+        when: typeof data.when === 'string' ? data.when : 'unknown',
+        errors: Array.isArray(data.errors) ? data.errors.slice(0, 10) : [],
+        trackEventCount: typeof data.trackEventCount === 'number' ? data.trackEventCount : 0,
+        domStats:
+          data.domStats && typeof data.domStats === 'object'
+            ? {
+                interactives: Number(data.domStats.interactives ?? 0),
+                svgChildren: Number(data.domStats.svgChildren ?? 0),
+                hasObservation: Boolean(data.domStats.hasObservation),
+              }
+            : { interactives: 0, svgChildren: 0, hasObservation: false },
+        receivedAt: new Date().toISOString(),
+      };
+      setHealth(snapshot);
+      postDevHealthLog(snapshot);
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, []);
   const c = block.content as {
     engine?: string;
     template?: string;
@@ -93,7 +143,7 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
     speed: waveParams?.speed ?? 0.7,
   };
 
-  const { control, register, watch, reset } = useForm<FormValues>({
+  const { control, register, watch, reset, getValues } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: formValues,
   });
@@ -108,26 +158,28 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
     reset,
     watch,
     onChange: (values) => {
-      const nextContent = {
+      const nextContent: Record<string, unknown> = {
         ...(block.content as object),
         engine: values.engine,
         template: values.engine === 'physics-canvas' ? 'wave' : values.template,
         title: values.title,
         description: values.description,
         aiPrompt: values.aiPrompt,
-        runtime:
-          values.engine === 'physics-canvas'
-            ? {
-                simulation: 'wave',
-                params: {
-                  amplitude: values.amplitude,
-                  frequency: values.frequency,
-                  phase: values.phase,
-                  speed: values.speed,
-                },
-              }
-            : (block.content as { runtime?: unknown }).runtime,
       };
+
+      if (values.engine === 'physics-canvas') {
+        nextContent.runtime = {
+          simulation: 'wave',
+          params: {
+            amplitude: values.amplitude,
+            frequency: values.frequency,
+            phase: values.phase,
+            speed: values.speed,
+          },
+        };
+      } else {
+        delete nextContent.runtime;
+      }
 
       dispatch(
         updateBlock({
@@ -140,7 +192,62 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
   });
 
   async function handleGenerate() {
-    setGenError('AI generation is being migrated to the new agent-service backend and is temporarily unavailable.');
+    const values = getValues();
+    const prompt = values.aiPrompt?.trim() ?? '';
+    if (prompt.length < 8) {
+      setGenError('Describe the interactive visual in at least a few words before generating.');
+      return;
+    }
+
+    setIsGenerating(true);
+    setGenError(null);
+    setGenerationJob(null);
+    setHealth(null);
+
+    try {
+      const artifact = await createInteractiveVisual({
+        prompt,
+        template: values.template,
+        title: values.title?.trim() || undefined,
+        description: values.description?.trim() || undefined,
+        language: resolveGenerationLanguage(prompt, language),
+        surface: 'builder',
+        allowFallback: false,
+        onJobUpdate: setGenerationJob,
+      });
+      const currentContent = block.content && typeof block.content === 'object' ? (block.content as Record<string, unknown>) : {};
+      const baseContent = { ...currentContent };
+      delete baseContent.runtime;
+      const nextContent: Record<string, unknown> = {
+        ...baseContent,
+        version: artifact.version,
+        engine: artifact.engine,
+        template: artifact.template,
+        title: artifact.title,
+        description: artifact.description,
+        aiPrompt: artifact.aiPrompt ?? prompt,
+        generatedHtml: artifact.generatedHtml,
+        themeTone: artifact.themeTone,
+        experienceMode: artifact.experienceMode,
+      };
+
+      if (artifact.runtime) {
+        nextContent.runtime = artifact.runtime;
+      }
+
+      dispatch(
+        updateBlock({
+          lessonId,
+          pageId,
+          block: { ...block, content: nextContent },
+        }),
+      );
+      setGenerationJob(null);
+    } catch (error) {
+      setGenError(error instanceof Error ? error.message : 'AI interactive visual generation failed.');
+    } finally {
+      setIsGenerating(false);
+    }
   }
 
   return (
@@ -171,11 +278,11 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
       <FormField label="Description (optional)">
         <Input {...register('description')} placeholder="Brief context for learners" />
       </FormField>
-      <FormField label="AI Prompt (optional)">
+      <FormField label="AI Prompt">
         <Textarea
           rows={4}
           {...register('aiPrompt')}
-          placeholder="Describe what you want the visual to show…"
+          placeholder="Describe what you want the visual to show..."
         />
       </FormField>
 
@@ -223,20 +330,70 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
       )}
 
       <button
+        type="button"
         onClick={() => void handleGenerate()}
-        disabled
-        title="AI generation is being migrated to the new agent-service backend"
-        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground opacity-50 cursor-not-allowed transition-colors"
+        disabled={isGenerating}
+        aria-busy={isGenerating}
+        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        ✨ Generate with AI (maintenance)
+        {isGenerating ? 'Generating interactive HTML...' : 'Generate with AI'}
       </button>
 
       {genError && (
         <p className="text-xs text-destructive">{genError}</p>
       )}
 
+      {generationJob && (
+        <div className="rounded-md border bg-muted/30 p-3 text-xs text-muted-foreground">
+          <p className="font-semibold text-foreground">
+            Generation job {generationJob.id.slice(0, 8)}: {generationJob.status}
+          </p>
+          <p className="mt-1">
+            Attempts: {generationJob.attemptCount}
+            {generationJob.nextAttemptAt ? ` · next retry ${new Date(generationJob.nextAttemptAt).toLocaleTimeString()}` : ''}
+          </p>
+          {generationJob.lastError ? <p className="mt-1 text-destructive">{generationJob.lastError}</p> : null}
+        </div>
+      )}
+
       {(block.content as { generatedHtml?: string }).generatedHtml && (
-        <p className="text-xs text-green-600">AI-generated HTML ready — will render in player.</p>
+        <p className="text-xs text-green-600">AI-generated HTML ready - will render in player.</p>
+      )}
+
+      {import.meta.env.DEV ? <DevHealthBadge health={health} /> : null}
+    </div>
+  );
+}
+
+function DevHealthBadge({ health }: { health: InteractiveVisualHealthSnapshot | null }) {
+  const status = classifyInteractiveVisualHealth(health);
+  const palette =
+    status === 'healthy'
+      ? { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', dot: 'bg-emerald-500' }
+      : status === 'partial'
+        ? { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700', dot: 'bg-amber-500' }
+        : status === 'broken'
+          ? { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', dot: 'bg-rose-500' }
+          : { bg: 'bg-muted/30', border: 'border-border', text: 'text-muted-foreground', dot: 'bg-muted-foreground' };
+
+  return (
+    <div className={`rounded-md border ${palette.border} ${palette.bg} ${palette.text} px-3 py-2 text-xs`}>
+      <div className="flex items-center gap-2 font-semibold">
+        <span className={`inline-block h-2 w-2 rounded-full ${palette.dot}`} />
+        <span>Runtime health (dev): {status}</span>
+      </div>
+      {health ? (
+        <ul className="mt-1 space-y-0.5">
+          <li>captured: {health.when} @ {new Date(health.receivedAt).toLocaleTimeString()}</li>
+          <li>errors: {health.errors.length}{health.errors[0] ? ` · "${health.errors[0].message.slice(0, 80)}"` : ''}</li>
+          <li>
+            dom: interactives={health.domStats.interactives}, svgChildren={health.domStats.svgChildren},
+            observation={health.domStats.hasObservation ? 'yes' : 'no'}
+          </li>
+          <li>track events: {health.trackEventCount}</li>
+        </ul>
+      ) : (
+        <p className="mt-1">Waiting for iframe probe…</p>
       )}
     </div>
   );

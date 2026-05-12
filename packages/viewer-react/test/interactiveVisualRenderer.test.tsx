@@ -54,14 +54,18 @@ describe('interactive visual renderer dispatch', () => {
         block={buildInteractiveVisualBlock({
           engine: 'gemini-html5',
           title: 'AI generated visual',
-          generatedHtml: '<div id="ai-visual">generated</div>',
+          generatedHtml: '<!doctype html><html><head><title>AI</title></head><body><div id="ai-visual">generated</div></body></html>',
         })}
       />,
     );
 
     const frame = screen.getByTitle('AI generated visual');
     expect(frame).toHaveAttribute('sandbox', 'allow-scripts');
-    expect(frame).toHaveAttribute('srcdoc', expect.stringContaining('<div id="ai-visual">generated</div>'));
+    const srcDoc = frame.getAttribute('srcdoc') ?? '';
+    expect(srcDoc).toContain('<html>');
+    expect(srcDoc.match(/<html/gi)).toHaveLength(1);
+    expect(srcDoc).toContain('<div id="ai-visual">generated</div>');
+    expect(srcDoc).toContain('window.PrimoriaInteractive');
   });
 
   it('routes trusted 3D cell visuals to the trusted renderer boundary', () => {
@@ -111,12 +115,14 @@ describe('interactive visual renderer dispatch', () => {
     expect(screen.queryByTitle('Wave laboratory')).not.toBeInTheDocument();
   });
 
-  it('makes new interactive visual blocks usable as physics wave visuals by default', () => {
+  it('makes new interactive visual blocks empty HTML iframe blocks by default', () => {
     render(<BlockRenderer block={buildInteractiveVisualBlock(BLOCK_META['interactive-visual'].defaultContent)} />);
 
-    expect(screen.getByText('Physics canvas')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Wave Laboratory' })).toBeInTheDocument();
-    expect(screen.getByLabelText('Wave Laboratory wave simulation')).toBeInTheDocument();
+    expect(screen.getByText('Interactive visual')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Interactive Visual' })).toBeInTheDocument();
+    expect(screen.getByText('Add generated HTML or choose a trusted renderer to display this block.')).toBeInTheDocument();
+    expect(screen.queryByText('Physics canvas')).not.toBeInTheDocument();
+    expect(screen.queryByText('Wave Laboratory')).not.toBeInTheDocument();
   });
 
   it('rejects unsupported physics canvas simulations safely', () => {

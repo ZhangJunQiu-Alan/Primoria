@@ -428,7 +428,6 @@ async function requestInteractiveVisual(
         prompt,
         language: currentUiLanguage(),
         surface: options.context?.surface === 'builder' ? 'builder' : 'ai-tutor',
-        experienceMode: 'graph',
       }),
       signal: timeout.signal,
     });
