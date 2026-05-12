@@ -144,16 +144,21 @@ Audit checklist (verdict "repair" if ANY blocker is present):
 1. Plan implementation: every plan.keyElement has a VISIBLE, identifiable counterpart in the HTML (e.g. "Numerical labels on bars" requires actual <text> nodes — aria-label alone is insufficient).
 2. Interactions wired: every plan.interaction has a working event listener that updates the visualization AND produces a visible reaction.
 3. Live observation: the observation strip / .iv-observation-card / .iv-conclusion text updates on interaction events.
-4. Runtime safety: scan for likely runtime errors — undefined variable references, off-by-one in array indexing, gsap.to misuse, dom queries against missing ids.
-5. Palette adherence: plan.palette.primary and plan.palette.accent are visibly used for accent colors (not overridden by ad-hoc hex values).
-6. Accessibility: every interactive control has an aria-label (or visible text label tied via <label for>).
+4. Initial state completeness: on first paint, the hero visual already shows a meaningful teaching state. Reject blank canvases or empty visual cards that require the learner to guess what should be there.
+5. Runtime safety: scan for likely runtime errors — undefined variable references, off-by-one in array indexing, gsap.to misuse, dom queries against missing ids.
+6. Palette adherence: plan.palette.primary and plan.palette.accent are visibly used for accent colors (not overridden by ad-hoc hex values).
+7. Accessibility: every interactive control has an aria-label (or visible text label tied via <label for>).
+8. Numeric-entry UX: when the learner request involves fractions, decimals, ratios, or other arbitrary numeric values, prefer a direct text/number input as the primary control instead of a select dropdown. Sliders should stay synchronized with the displayed value.
+9. Fraction UI contract: for fraction-like tasks, verify that 1/1 renders as a full pie chart, the decimal conversion is shown directly below the pie chart, both numerator and denominator sliders work in both directions while dragging, and comparison layouts show at most two fraction illustration sets per row before wrapping.
 
 Issue categories (pick one):
 - missing-keyElement       (something in plan.keyElements not visibly implemented)
 - broken-interaction       (interaction declared in plan but not wired or won't produce visible feedback)
 - observation-not-live     (observation strip is static or won't update)
+- initial-state            (blank or critically incomplete first frame)
 - plan-mismatch            (HTML deviates from plan in template/technology/palette)
 - runtime-error            (likely JavaScript error at runtime)
+- control-choice           (control type is a poor fit for the learner task, e.g. dropdown instead of direct numeric entry)
 - accessibility            (missing aria-label, low contrast, keyboard inaccessible)
 - other                    (anything else that makes the visualization unusable or significantly worse than the plan)
 

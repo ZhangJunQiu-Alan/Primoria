@@ -10,6 +10,16 @@ import { useAppSelector } from '@/shared/state/store';
 
 type DebugLanguage = 'auto' | 'en' | 'zh-CN';
 
+type PromptPreset = {
+  id: string;
+  label: string;
+  prompt: string;
+  title: string;
+  description: string;
+  template?: string;
+  language?: DebugLanguage;
+};
+
 type DebugResult = {
   startedAt: string;
   endedAt?: string;
@@ -56,8 +66,55 @@ type DebugJob = {
   resultArtifact?: unknown;
 };
 
-const DEFAULT_PROMPT =
-  '请做一个一次函数 y=ax+b 的交互式可视化。画面里要有坐标系和直线，学生可以拖动两个滑块改变 a 和 b，并实时看到斜率和截距如何变化。';
+const PROMPT_PRESETS: PromptPreset[] = [
+  {
+    id: 'fraction-explorer',
+    label: 'Fraction Explorer',
+    prompt:
+      'Create an interactive visualization for fractions. Important requirements: show a full pie chart that changes with the value, display the decimal conversion directly below the pie chart, allow the value to be typed manually as a fraction or decimal, and provide numerator and denominator sliders that update the value live while dragging in both directions. If comparison is shown, place fraction illustration sets side by side with a maximum of two per row and wrap additional sets onto the next row. Do not add any other representation unless it is required by these instructions.',
+    title: 'Fraction Visual Explorer',
+    description:
+      'Interactively explore fractions through pie charts, decimals, percentages, and number lines to better understand proportional relationships.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'equivalent-fractions',
+    label: 'Equivalent Fractions',
+    prompt:
+      'Create an interactive visualization for equivalent fractions. Important requirements: show a full pie chart that changes with the current value, display the decimal conversion directly below the pie chart, allow the value to be typed manually as a fraction or decimal, and provide numerator and denominator sliders that update live while dragging in both directions. If multiple equivalent fractions are compared, place the illustration sets side by side with a maximum of two per row and wrap additional sets onto the next row. Do not add any representation not requested here.',
+    title: 'Equivalent Fraction Builder',
+    description:
+      'Discover how fractions can change form while keeping the same value using animated visuals and real-time simplification.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'fraction-operations',
+    label: 'Fraction Operations',
+    prompt:
+      'Create an interactive visualization for fraction operations using fraction illustration sets that each show a full pie chart and the decimal conversion directly below the pie chart. Allow values to be typed manually as fractions or decimals, and provide numerator and denominator sliders that update live in both directions while dragging. If multiple fractions are shown at once, place at most two illustration sets per row and wrap additional sets onto the next row. Do not add any extra representations unless required for these instructions.',
+    title: 'Fraction Operations Lab',
+    description:
+      'Visualize fraction addition, subtraction, multiplication, and division step-by-step with interactive charts and animations.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'fraction-comparison',
+    label: 'Fraction Comparison',
+    prompt:
+      'Create an interactive visualization for comparing fractions. Each fraction illustration set must show a full pie chart with the decimal conversion directly below the pie chart. Allow each value to be typed manually as a fraction or decimal, and provide numerator and denominator sliders that update live in both directions while dragging. Show comparison sets side by side with a maximum of two per row and wrap any third or later set onto the next row. Do not add any extra representation unless it is required by these instructions.',
+    title: 'Fraction Comparison Arena',
+    description:
+      'Compare and sort fractions visually using pie charts, number lines, decimals, and percentages to understand relative sizes.',
+    template: 'generic',
+    language: 'en',
+  },
+];
+
+const DEFAULT_PRESET = PROMPT_PRESETS[0];
+const DEFAULT_PROMPT = DEFAULT_PRESET.prompt;
 const PRE_CLASS =
   'overflow-auto whitespace-pre-wrap break-words rounded-md border border-[#e0d7cc] bg-[#f8f5f0] p-3 font-mono text-xs leading-5 text-[#2f2a25]';
 
@@ -146,15 +203,23 @@ async function parseDebugResponse(response: Response) {
 export function InteractiveVisualDebugPage() {
   const user = useAppSelector((state) => state.auth.user);
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
-  const [language, setLanguage] = useState<DebugLanguage>('auto');
-  const [template, setTemplate] = useState('generic');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [language, setLanguage] = useState<DebugLanguage>(DEFAULT_PRESET.language ?? 'auto');
+  const [template, setTemplate] = useState(DEFAULT_PRESET.template ?? 'generic');
+  const [title, setTitle] = useState(DEFAULT_PRESET.title);
+  const [description, setDescription] = useState(DEFAULT_PRESET.description);
   const [isSending, setIsSending] = useState(false);
   const [result, setResult] = useState<DebugResult | null>(null);
 
   const endpoint = useMemo(buildFunctionUrl, []);
   const resolvedLanguage = resolveLanguage(prompt, language);
+
+  function applyPreset(preset: PromptPreset) {
+    setPrompt(preset.prompt);
+    setTitle(preset.title);
+    setDescription(preset.description);
+    setTemplate(preset.template ?? 'generic');
+    setLanguage(preset.language ?? 'en');
+  }
 
   async function sendRequest() {
     const started = performance.now();
@@ -349,9 +414,10 @@ export function InteractiveVisualDebugPage() {
         <header className="flex flex-col gap-2 border-b border-[#ded5ca] pb-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7a6f65]">Interactive Visual Debug</p>
-            <h1 className="mt-1 text-2xl font-bold">AI 生成调试台</h1>
+            <h1 className="mt-1 text-2xl font-bold">AI Generation Debug Console</h1>
             <p className="mt-1 text-sm text-[#6f665e]">
-              直接调用 Edge Function，展示请求、认证、HTTP、原始响应、解析结果和 iframe 预览。
+              Send requests straight to the Edge Function and inspect auth, HTTP events, parsed output, raw payloads,
+              and the iframe preview in one place.
             </p>
           </div>
           <div className="rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-xs text-[#5f554b]">
@@ -366,12 +432,27 @@ export function InteractiveVisualDebugPage() {
               <div className="grid gap-3">
                 <label className="grid gap-1 text-sm font-semibold">
                   Prompt
+                  <div className="flex flex-wrap gap-2">
+                    {PROMPT_PRESETS.map((preset) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => applyPreset(preset)}
+                        className="rounded-full border border-[#d7cec3] bg-[#f8f5f0] px-3 py-1 text-xs font-semibold text-[#5f554b] transition hover:border-[#7c9d72] hover:text-[#35553d]"
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
                   <textarea
                     value={prompt}
                     onChange={(event) => setPrompt(event.target.value)}
                     rows={8}
                     className="min-h-40 rounded-md border border-[#d7cec3] bg-[#fffdf9] px-3 py-2 text-sm font-normal leading-6 outline-none focus:border-[#7c9d72]"
                   />
+                  <span className="text-xs font-normal text-[#7a6f65]">
+                    Presets load English prompts similar to the dedicated visual-test flows used earlier on this branch.
+                  </span>
                 </label>
 
                 <div className="grid gap-3 md:grid-cols-3">
