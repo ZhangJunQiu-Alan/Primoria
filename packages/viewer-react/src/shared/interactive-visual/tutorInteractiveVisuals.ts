@@ -1,3 +1,5 @@
+import { createInteractiveVisualFallback } from '@/shared/interactive/interactiveVisual';
+
 export type TutorInteractiveVisualPayload = {
   title: string;
   description: string;
@@ -545,10 +547,19 @@ export function looksLikeInteractiveVisualRequest(prompt: string) {
     return false;
   }
 
-  const visualIntent =
-    /(interactive|animated|animation|visual|graph|plot|chart|simulation|explainer)/i.test(normalized);
-  const trigTopic = /\b(sin|sine|cos|cosine|trig|trigonometry)\b/i.test(normalized);
-  return visualIntent && trigTopic;
+  const strongVisualIntent =
+    /(interactive|interact|animated|animation|simulation|simulator|iframe|html|可交互|交互式|交互|互动|动画|模拟|滑块|拖动)/i.test(
+      normalized,
+    );
+  const visualOutputIntent =
+    /(visuali[sz]e|visual|graph|plot|chart|diagram|explorer|可视化|图像|图表|图形|坐标|曲线|直线|函数图)/i.test(
+      normalized,
+    );
+  const creationIntent =
+    /(create|make|generate|build|draw|plot|show|demo|帮我做|做一个|生成|创建|绘制|画出|展示|演示)/i.test(
+      normalized,
+    );
+  return strongVisualIntent || (visualOutputIntent && creationIntent);
 }
 
 export function containsTutorInteractiveVisual(text: string) {
@@ -593,17 +604,32 @@ export function buildLocalInteractiveVisualReply(prompt: string, language: 'zh-C
     return null;
   }
 
-  const payload: TutorInteractiveVisualPayload = {
-    title: language === 'zh-CN' ? '正弦与余弦交互图' : 'Interactive sine and cosine graph',
-    description:
-      language === 'zh-CN'
-        ? '拖动角度，观察单位圆上的点如何映射到 sin(theta) 与 cos(theta) 曲线。'
-        : 'Move the angle slider to see how the unit-circle point maps onto the sine and cosine curves.',
-    template: 'unit-circle-sine-cosine',
-    experienceMode: 'graph',
-    themeTone: 'botanical-sage',
-    generatedHtml: buildTrigExplorerHtml(language),
-  };
+  const trigTopic = /\b(sin|sine|cos|cosine|trig|trigonometry)\b/i.test(prompt);
+  const fallback = trigTopic ? null : createInteractiveVisualFallback({ prompt, language });
+  const payload: TutorInteractiveVisualPayload = trigTopic
+    ? {
+        title: language === 'zh-CN' ? '正弦与余弦交互图' : 'Interactive sine and cosine graph',
+        description:
+          language === 'zh-CN'
+            ? '拖动角度，观察单位圆上的点如何映射到 sin(theta) 与 cos(theta) 曲线。'
+            : 'Move the angle slider to see how the unit-circle point maps onto the sine and cosine curves.',
+        template: 'unit-circle-sine-cosine',
+        experienceMode: 'graph',
+        themeTone: 'botanical-sage',
+        generatedHtml: buildTrigExplorerHtml(language),
+      }
+    : {
+        title: fallback?.title ?? (language === 'zh-CN' ? 'AI 交互元素' : 'AI Interactive Element'),
+        description:
+          fallback?.description ??
+          (language === 'zh-CN'
+            ? '这是一个可离线运行的交互式 HTML5 学习组件。'
+            : 'This is a self-contained offline HTML5 learning component.'),
+        template: fallback?.template,
+        experienceMode: fallback?.experienceMode,
+        themeTone: fallback?.themeTone,
+        generatedHtml: fallback?.generatedHtml ?? '',
+      };
 
   const intro =
     language === 'zh-CN'
@@ -611,8 +637,12 @@ export function buildLocalInteractiveVisualReply(prompt: string, language: 'zh-C
       : 'Here is an interactive graph you can explore right away.';
   const outro =
     language === 'zh-CN'
-      ? '拖动角度滑块，比较单位圆上的位置与两条曲线的数值变化。重点观察 45°、90°、180° 和 270°。'
-      : 'Drag the angle slider to compare the unit-circle point with the two curves. Pay special attention to 45°, 90°, 180°, and 270°.';
+      ? trigTopic
+        ? '拖动角度滑块，比较单位圆上的位置与两条曲线的数值变化。重点观察 45°、90°、180° 和 270°。'
+        : '先操作控件观察变化，再用自己的话总结这个视觉元素展示的规律。'
+      : trigTopic
+        ? 'Drag the angle slider to compare the unit-circle point with the two curves. Pay special attention to 45°, 90°, 180°, and 270°.'
+        : 'Use the controls first, then summarize the pattern the visual makes easier to see.';
 
   return `${intro}\n\n${serializeTutorInteractiveVisual(payload)}\n\n${outro}`;
 }

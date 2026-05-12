@@ -28,6 +28,7 @@ const MAX_HEIGHT = 900;
 const MIN_HEIGHT = 320;
 const EMBED_EVENT_TYPE = 'primoria:interactive-visual-height';
 const ANALYTICS_EVENT_TYPE = 'primoria:interactive-visual-analytics';
+const HEALTH_EVENT_TYPE = 'primoria:interactive-visual-health';
 
 function trimOptionalString(value: unknown) {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
@@ -84,23 +85,95 @@ export function shouldGenerateInteractiveVisualForPrompt(prompt: string) {
   );
 }
 
+function removeAllowedNamespaceUrls(html: string) {
+  return html
+    .replace(
+      /\sxmlns(?::[A-Za-z][\w.-]*)?\s*=\s*(["'])https?:\/\/www\.w3\.org\/(?:2000\/svg|1999\/xlink)\1/gi,
+      '',
+    )
+    .replace(
+      /(["'])https?:\/\/www\.w3\.org\/(?:2000\/svg|1999\/xlink)\1/gi,
+      '$1$1',
+    );
+}
+
+const ALLOWED_CDN_PREFIX = /^https:\/\/(?:esm\.sh\/|cdn\.jsdelivr\.net\/npm\/)/;
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function collectScriptSrcs(html: string): Array<{ src: string; isModule: boolean }> {
+  const results: Array<{ src: string; isModule: boolean }> = [];
+  const tagRe = /<script\b([^>]*)>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = tagRe.exec(html))) {
+    const attrs = match[1];
+    const srcMatch = /\bsrc\s*=\s*(?:"([^"]*)"|'([^']*)')/i.exec(attrs);
+    if (!srcMatch) continue;
+    const src = (srcMatch[1] ?? srcMatch[2] ?? '').trim();
+    const isModule = /\btype\s*=\s*["']?module["']?/i.test(attrs);
+    results.push({ src, isModule });
+  }
+  return results;
+}
+
+function collectImportSpecifiers(html: string): string[] {
+  const results: string[] = [];
+  const importRe = /\bimport\b[\s\S]*?\bfrom\s*(?:"([^"]+)"|'([^']+)')/g;
+  let match: RegExpExecArray | null;
+  while ((match = importRe.exec(html))) {
+    results.push((match[1] ?? match[2] ?? '').trim());
+  }
+  const bareImportRe = /\bimport\s+(?:"([^"]+)"|'([^']+)')/g;
+  while ((match = bareImportRe.exec(html))) {
+    results.push((match[1] ?? match[2] ?? '').trim());
+  }
+  return results;
+}
+
 export function validateOfflineInteractiveHtml(html: string) {
   const normalized = stripMarkdownFences(html);
   if (!normalized) {
     return 'Interactive visual HTML is empty.';
   }
 
-  if (/<script[^>]+src\s*=/i.test(normalized)) {
-    return 'Interactive visuals must use inline JavaScript only.';
+  if (/\bimport\s*\(/i.test(normalized)) {
+    return 'Interactive visuals must not use dynamic import().';
+  }
+  if (/<link[^>]+href\s*=/i.test(normalized)) {
+    return 'Interactive visuals must not load external stylesheets.';
   }
   if (/<(iframe|object|embed)\b/i.test(normalized)) {
     return 'Interactive visuals cannot embed external frames or objects.';
   }
-  if (/\bhttps?:\/\//i.test(normalized)) {
-    return 'Interactive visuals must run offline and cannot reference external URLs.';
-  }
   if (/\bfetch\s*\(/i.test(normalized) || /\bXMLHttpRequest\b/i.test(normalized) || /\bWebSocket\b/i.test(normalized)) {
     return 'Interactive visuals must run offline and cannot request network resources.';
+  }
+
+  const allowedUrls: string[] = [];
+  for (const { src, isModule } of collectScriptSrcs(normalized)) {
+    if (!isModule) {
+      return 'Interactive visuals must use inline JavaScript only; <script src> must be type="module" on an allowlisted CDN.';
+    }
+    if (!ALLOWED_CDN_PREFIX.test(src)) {
+      return `Interactive visuals can only load module scripts from esm.sh or cdn.jsdelivr.net/npm: got ${src}`;
+    }
+    allowedUrls.push(src);
+  }
+  for (const specifier of collectImportSpecifiers(normalized)) {
+    if (!ALLOWED_CDN_PREFIX.test(specifier)) {
+      return `Interactive visuals can only import modules from esm.sh or cdn.jsdelivr.net/npm: got ${specifier}`;
+    }
+    allowedUrls.push(specifier);
+  }
+
+  let stripped = removeAllowedNamespaceUrls(normalized);
+  for (const url of allowedUrls) {
+    stripped = stripped.replace(new RegExp(escapeRegExp(url), 'g'), '');
+  }
+  if (/\bhttps?:\/\//i.test(stripped)) {
+    return 'Interactive visuals must run offline and cannot reference external URLs.';
   }
 
   return null;
@@ -191,7 +264,11 @@ export function buildInteractiveVisualSrcDoc(html: string, title: string) {
       (function () {
         const EVENT_TYPE = '${EMBED_EVENT_TYPE}';
         const ANALYTICS_TYPE = '${ANALYTICS_EVENT_TYPE}';
+        const HEALTH_TYPE = '${HEALTH_EVENT_TYPE}';
+        const healthErrors = [];
+        let trackCount = 0;
         function track(eventName, payload) {
+          trackCount += 1;
           parent.postMessage(
             {
               type: ANALYTICS_TYPE,
@@ -205,6 +282,43 @@ export function buildInteractiveVisualSrcDoc(html: string, title: string) {
         window.PrimoriaInteractive = {
           track: track,
         };
+
+        window.addEventListener('error', function (event) {
+          healthErrors.push({
+            message: String(event.message || 'unknown error'),
+            source: String(event.filename || ''),
+            line: event.lineno || 0,
+            col: event.colno || 0
+          });
+        });
+        window.addEventListener('unhandledrejection', function (event) {
+          const reason = event.reason && typeof event.reason === 'object'
+            ? (event.reason.message || JSON.stringify(event.reason))
+            : String(event.reason);
+          healthErrors.push({ message: 'unhandledrejection: ' + reason, source: '', line: 0, col: 0 });
+        });
+
+        function emitHealth(when) {
+          let interactives = 0;
+          let svgChildren = 0;
+          let hasObservation = false;
+          try {
+            interactives = document.querySelectorAll('button,input,select,textarea,[role="button"]').length;
+            svgChildren = document.querySelectorAll('svg *').length;
+            hasObservation = !!document.querySelector('.iv-observation-card,.iv-conclusion');
+          } catch (_err) {
+            // safe defaults
+          }
+          parent.postMessage({
+            type: HEALTH_TYPE,
+            when: when,
+            errors: healthErrors.slice(-10),
+            trackEventCount: trackCount,
+            domStats: { interactives: interactives, svgChildren: svgChildren, hasObservation: hasObservation }
+          }, '*');
+        }
+        window.addEventListener('load', function () { setTimeout(function () { emitHealth('initial'); }, 400); });
+        setTimeout(function () { emitHealth('post-1500ms'); }, 1500);
 
         function measure() {
           const height = Math.max(
@@ -263,7 +377,23 @@ export function interactiveVisualEmbedDefaults() {
     maxHeight: MAX_HEIGHT,
     resizeEventType: EMBED_EVENT_TYPE,
     analyticsEventType: ANALYTICS_EVENT_TYPE,
+    healthEventType: HEALTH_EVENT_TYPE,
   };
+}
+
+export type InteractiveVisualHealth = {
+  when: string;
+  errors: Array<{ message: string; source: string; line: number; col: number }>;
+  trackEventCount: number;
+  domStats: { interactives: number; svgChildren: number; hasObservation: boolean };
+};
+
+export function classifyInteractiveVisualHealth(
+  health: InteractiveVisualHealth,
+): 'healthy' | 'partial' | 'broken' {
+  if (health.errors.length > 0) return 'broken';
+  if (health.domStats.svgChildren === 0 && health.domStats.interactives === 0) return 'partial';
+  return 'healthy';
 }
 
 function createWaveExplorerHtml(title: string, prompt: string, language: 'en' | 'zh-CN') {
