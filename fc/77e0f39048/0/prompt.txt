@@ -1,0 +1,104 @@
+/plan 我的Interactive Visualization Block设计的Prompt不是很好,整个生成的思路也有待改进. 我发现有一个Github项目的Visualization做的很好,请你在功能性和视觉效果提升上抄一下他们的Promt.https://github.com/CopilotKit/OpenGenerativeUI
+
+---
+
+使用中文 总结一下做完了吗 做的怎么样了
+
+---
+
+好 开始做
+
+---
+
+好 你直接帮我部署
+
+---
+
+启动一下项目
+
+---
+
+check dev server output
+
+---
+
+我每次运行visualization的测试 你能不能看到相关的记录和结果
+
+---
+
+好 启动logs follow 然后看一下最新一次测试的Jobs Error HIstory返回的是什么
+
+---
+
+看看[
+  {
+    "at": "2026-05-12T08:21:02.056Z",
+    "kind": "validation",
+    "step": "plan",
+    "attempt": 1,
+    "message": "Plan JSON did not match the required schema. palette.primary: Invalid; palette.accent: Invalid; palette.surface: Invalid",
+    "retryable": true
+  }
+] 先不要写代码 告诉我为什么会有这个问题
+
+---
+
+3+4吧
+
+---
+
+这次Gemini直接返回503 有什么好的解决方案吗
+
+---
+
+A. 扩大模型 fallback 池（最直接，~30 分钟）
+  - 加 gemini-2.5-pro-latest / gemini-2.5-pro  B. 给 plan 步骤单独的、更激进的 transient 配额（很值，plan 输出小） 先做A和B, C暂时不需要,目前都是开发者视角来调试功能
+
+---
+
+你看看visualization_error.md中的案例 是什么问题导致的
+
+---
+
+做1和2吧
+
+---
+
+你看看visualization_error.md中的案例 是什么问题导致的
+
+---
+
+好 做这3点
+
+---
+
+你看看visualization_error.md中的案例 是什么问题导致的
+
+---
+
+先加3条Prompt加固 但是一直这样改不是问题呀 能不能有个Agent来负责审核AI产出的内容呢
+
+---
+
+/plan 3层都要做 列一个plan 然后开始逐步实现
+
+---
+
+[
+  {
+    "at": "2026-05-12T09:56:24.939Z",
+    "kind": "validation",
+    "step": "render",
+    "attempt": 1,
+    "message": "Static audit blockers (gsap-ms-duration):\n[gsap-ms-duration] parseFloat(--duration-*) result is passed to gsap without /1000 conversion (token is ms, gsap wants seconds). HINT: --duration-* tokens are in milliseconds. gsap.to duration is in seconds. Either use literal seconds (0.22) or divide the token value by 1000 before passing to gsap.",
+    "retryable": true
+  }
+] 先别写代码 这是什么原因
+
+---
+
+你不要输出这么长 简短一点描述 是什么原因 导致的
+
+---
+
+总结一下我今天的工作,不要参杂技术术语,直接使用中文

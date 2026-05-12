@@ -1,0 +1,57 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "fc77e0f39048",
+  "strategy": "manual-commit",
+  "branch": "new-version-visualization",
+  "checkpoints_count": 22,
+  "files_touched": [
+    ".gitignore",
+    "packages/viewer-react/src/app/router.tsx",
+    "packages/viewer-react/src/features/editor/blockRegistry.ts",
+    "packages/viewer-react/src/features/editor/properties/panels/InteractiveVisualPanel.tsx",
+    "packages/viewer-react/src/shared/api/geminiClient.ts",
+    "packages/viewer-react/src/shared/api/viewer/interactiveVisualApi.ts",
+    "packages/viewer-react/src/shared/interactive-visual/InteractiveVisualEmbed.tsx",
+    "packages/viewer-react/src/shared/interactive-visual/tutorInteractiveVisuals.ts",
+    "packages/viewer-react/src/shared/interactive/interactiveVisual.ts",
+    "packages/viewer-react/test/geminiClient.test.ts",
+    "packages/viewer-react/test/interactiveVisualApi.test.ts",
+    "packages/viewer-react/test/interactiveVisualRenderer.test.tsx",
+    "packages/viewer-react/test/interactiveVisualValidation.test.ts",
+    "packages/viewer-react/vite.config.ts",
+    "supabase/functions/viewer-ai-interactive-visual/auditStep.test.ts",
+    "supabase/functions/viewer-ai-interactive-visual/auditStep.ts",
+    "supabase/functions/viewer-ai-interactive-visual/geminiCall.ts",
+    "supabase/functions/viewer-ai-interactive-visual/htmlAuditor.test.ts",
+    "supabase/functions/viewer-ai-interactive-visual/htmlAuditor.ts",
+    "supabase/functions/viewer-ai-interactive-visual/index.test.ts",
+    "supabase/functions/viewer-ai-interactive-visual/index.ts",
+    "supabase/functions/viewer-ai-interactive-visual/planSchema.test.ts",
+    "supabase/functions/viewer-ai-interactive-visual/planSchema.ts",
+    "supabase/functions/viewer-ai-interactive-visual/planStep.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/coreSystem.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/designTokens.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/skills/chart.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/skills/generic.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/skills/index.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/skills/linearFunction.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/skills/threeDScene.ts",
+    "supabase/functions/viewer-ai-interactive-visual/prompts/skills/wave.ts",
+    "supabase/functions/viewer-ai-interactive-visual/renderStep.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/fc/77e0f39048/0/metadata.json",
+      "transcript": "/fc/77e0f39048/0/full.jsonl",
+      "content_hash": "/fc/77e0f39048/0/content_hash.txt",
+      "prompt": "/fc/77e0f39048/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 895,
+    "cache_creation_tokens": 1043348,
+    "cache_read_tokens": 63834606,
+    "output_tokens": 260710,
+    "api_call_count": 223
+  }
+}
