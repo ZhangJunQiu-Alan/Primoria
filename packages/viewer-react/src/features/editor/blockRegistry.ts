@@ -84,19 +84,12 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     icon: '🔭',
     category: 'interactive',
     defaultContent: {
-      engine: 'physics-canvas',
-      template: 'wave',
-      title: 'Wave Laboratory',
-      description: 'Explore how amplitude, frequency, phase, and speed shape a wave.',
-      runtime: {
-        simulation: 'wave',
-        params: {
-          amplitude: 1,
-          frequency: 1,
-          phase: 0,
-          speed: 0.7,
-        },
-      },
+      engine: 'html-iframe',
+      template: 'generic',
+      title: '',
+      description: '',
+      aiPrompt: '',
+      generatedHtml: '',
     },
   },
   video: {
