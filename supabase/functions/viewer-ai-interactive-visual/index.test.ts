@@ -44,6 +44,33 @@ Deno.test('legacy interactive visual prompt requires complete offline iframe HTM
   assertIncludes(prompt, 'Write learner-facing labels and explanatory text in Simplified Chinese.');
 });
 
+Deno.test('fraction prompts require visible default state, direct input, and live updates', () => {
+  const prompt = buildInteractiveVisualPrompt({
+    prompt: 'Create an interactive visualization for fractions.',
+    language: 'en',
+    surface: 'builder',
+  });
+
+  assertIncludes(prompt, 'render a meaningful default state with numerator 1 and denominator 1');
+  assertIncludes(prompt, 'full pie chart');
+  assertIncludes(prompt, 'decimal conversion displayed directly below the pie chart');
+  assertIncludes(prompt, 'Enter fraction or decimal');
+  assertIncludes(prompt, 'numerator and denominator sliders');
+  assertIncludes(prompt, 'live while dragging in either direction');
+  assertIncludes(prompt, 'maximum of two per row');
+});
+
+Deno.test('solar system prompts inherit stored topic memory guidance', () => {
+  const prompt = buildInteractiveVisualPrompt({
+    prompt: 'Create an interactive visualization for the solar system with animated orbits.',
+    language: 'en',
+    surface: 'builder',
+  });
+
+  assertIncludes(prompt, 'Suggested title: Solar System Explorer');
+  assertIncludes(prompt, 'reveal facts such as size, temperature, distance from the sun, and number of moons');
+});
+
 Deno.test('complete HTML documents pass offline validation', () => {
   const html = `<!doctype html>
 <html>

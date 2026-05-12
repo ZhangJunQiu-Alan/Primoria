@@ -9,6 +9,7 @@ import {
 import { generateInteractivePlan } from './planStep.ts';
 import { generateInteractiveHtmlFromPlan } from './renderStep.ts';
 import { DESIGN_TOKEN_CSS } from './prompts/designTokens.ts';
+import { buildTopicMemoryBlock } from './prompts/topicMemories.ts';
 import { extractGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
 import type { Plan } from './planSchema.ts';
 import { auditHtmlStatic, formatAuditIssuesForRepair, type AuditReport } from './htmlAuditor.ts';
@@ -487,6 +488,20 @@ function buildTopicSpecificGuidance(payload: z.infer<typeof RequestSchema>) {
     .join('\n')
     .toLowerCase();
 
+  if (/(fraction|fractions|numerator|denominator|equivalent fraction|decimal|percentage|percent|number line)/i.test(topicText)) {
+    return `
+Topic-specific requirements for fraction visuals:
+- On first paint, render a meaningful default state with numerator 1 and denominator 1. Never leave the hero visual blank.
+- Render a full pie chart that changes with the fraction value. The 1/1 default must appear as a complete filled circle.
+- Show the current value as fraction form plus a decimal conversion displayed directly below the pie chart.
+- Only add percentage, number-line, or other secondary visuals when the learner request explicitly asks for them.
+- Use a direct text input labeled like "Enter fraction or decimal" as the primary control. Accept values such as 2/5 or 0.032. Do not use a select dropdown as the main picker.
+- Include numerator and denominator sliders for these fraction-editing visuals, and make sure both sliders update the visible values and pie chart live while dragging in either direction.
+- Keep each fraction illustration set compact and readable: pie chart, decimal below it, and current fraction text grouped together.
+- If the request explicitly asks for comparison, place fraction illustration sets side by side with a maximum of two per row and wrap additional sets onto the next row. Otherwise avoid extra add/remove management controls.
+`.trim();
+  }
+
   if (/(一次函数|线性函数|linear function|y\s*=\s*a\s*x\s*\+\s*b|y\s*=\s*ax\s*\+\s*b|slope|intercept|斜率|截距)/i.test(topicText)) {
     return `
 Topic-specific requirements for linear function visuals:
@@ -499,6 +514,18 @@ Topic-specific requirements for linear function visuals:
 - Use two primary sliders for a and b. A reset button is useful, but do not add unrelated controls.
 - Keep explanations short and dynamic. Avoid long static paragraphs.
 `.trim();
+  }
+
+  const topicMemory = buildTopicMemoryBlock([
+    payload.prompt,
+    payload.template,
+    payload.title,
+    payload.description,
+  ]
+    .filter((value): value is string => typeof value === 'string')
+    .join('\n'));
+  if (topicMemory) {
+    return topicMemory;
   }
 
   return `
@@ -651,6 +678,9 @@ function inferGeneratedTemplate(payload: z.infer<typeof RequestSchema>) {
   }
 
   const topicText = `${payload.prompt}\n${payload.title ?? ''}\n${payload.description ?? ''}`.toLowerCase();
+  if (/(fraction|fractions|numerator|denominator|equivalent fraction|decimal|percentage|percent|number line)/i.test(topicText)) {
+    return 'fraction-explorer';
+  }
   if (/(一次函数|线性函数|linear function|y\s*=\s*a\s*x\s*\+\s*b|y\s*=\s*ax\s*\+\s*b|slope|intercept|斜率|截距)/i.test(topicText)) {
     return 'linear-function-graph';
   }

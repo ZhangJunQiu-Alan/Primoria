@@ -1,5 +1,6 @@
 import { CORE_SYSTEM_INSTRUCTION, PLAN_INSTRUCTIONS } from './prompts/coreSystem.ts';
 import { DESIGN_TOKEN_GUIDE } from './prompts/designTokens.ts';
+import { buildTopicMemoryBlock } from './prompts/topicMemories.ts';
 import { type Plan, parsePlanText, PlanParseError } from './planSchema.ts';
 import {
   callGeminiOnce,
@@ -32,6 +33,12 @@ export function buildPlanPrompt(input: PlanInput, repairNote?: string) {
   const modeHint = input.experienceMode
     ? `Author requested experienceMode: ${input.experienceMode}.`
     : 'experienceMode not specified.';
+  const topicMemoryBlock = buildTopicMemoryBlock([
+    input.prompt,
+    input.template,
+    input.title,
+    input.description,
+  ].filter(Boolean).join('\n'));
 
   const parts = [
     PLAN_INSTRUCTIONS,
@@ -39,6 +46,7 @@ export function buildPlanPrompt(input: PlanInput, repairNote?: string) {
     languageLine,
     templateHint,
     modeHint,
+    topicMemoryBlock,
     `Author context:\n- Surface: ${input.surface ?? 'builder'}\n- Suggested title: ${input.title?.trim() || 'none'}\n- Suggested description: ${input.description?.trim() || 'none'}`,
     `Learner request:\n${input.prompt.trim()}`,
   ];

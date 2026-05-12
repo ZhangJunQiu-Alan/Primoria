@@ -92,5 +92,9 @@ Deno.test('buildAuditPrompt includes user prompt, plan, html, checklist', () => 
   if (!prompt.includes('GENERATED HTML')) throw new Error('missing html section');
   if (!prompt.includes('"verdict"')) throw new Error('missing verdict instruction');
   if (!prompt.includes('missing-keyElement')) throw new Error('missing category list');
+  if (!prompt.includes('Initial state completeness')) throw new Error('missing initial-state checklist');
+  if (!prompt.includes('control-choice')) throw new Error('missing control-choice category');
+  if (!prompt.includes('full pie chart')) throw new Error('missing fraction pie-chart checklist');
+  if (!prompt.includes('decimal conversion is shown directly below the pie chart')) throw new Error('missing fraction decimal checklist');
   if (!prompt.includes('create a sort visualization')) throw new Error('user prompt not injected');
 });

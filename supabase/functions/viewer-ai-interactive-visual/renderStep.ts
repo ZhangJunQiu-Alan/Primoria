@@ -1,6 +1,7 @@
 import { CORE_SYSTEM_INSTRUCTION, CORE_SYSTEM_PROMPT } from './prompts/coreSystem.ts';
 import { DESIGN_TOKEN_GUIDE } from './prompts/designTokens.ts';
 import { pickSkillsForTemplate, renderSkills } from './prompts/skills/index.ts';
+import { buildTopicMemoryBlock } from './prompts/topicMemories.ts';
 import type { Plan } from './planSchema.ts';
 import {
   callGeminiOnce,
@@ -37,8 +38,14 @@ export function buildRenderPrompt(args: {
   repairErrors?: string[];
 }) {
   const { plan, input, repairErrors } = args;
-  const skills = pickSkillsForTemplate(plan.template, plan.technology);
+  const skills = pickSkillsForTemplate(plan.template, plan.technology, input.prompt);
   const skillBlock = renderSkills(skills);
+  const topicMemoryBlock = buildTopicMemoryBlock([
+    input.prompt,
+    input.template,
+    input.title,
+    input.description,
+  ].filter(Boolean).join('\n'));
   const languageLine =
     input.language === 'zh-CN'
       ? 'Write learner-facing labels and explanatory text in Simplified Chinese.'
@@ -70,6 +77,7 @@ export function buildRenderPrompt(args: {
     CORE_SYSTEM_PROMPT,
     DESIGN_TOKEN_GUIDE,
     skillBlock,
+    topicMemoryBlock,
     IV_CLASS_GUIDE,
     planBlock,
     languageLine,
