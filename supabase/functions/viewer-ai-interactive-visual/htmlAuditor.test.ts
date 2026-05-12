@@ -17,6 +17,15 @@ const PLAN_WITH_LABELS: Plan = {
   keyElements: ['bars', 'numerical labels on bars', 'observation strip'],
 };
 
+const FRACTION_PLAN: Plan = {
+  ...BASE_PLAN,
+  template: 'fraction-explorer',
+  approach: 'Show a fraction as text, decimal, percentage, pie, and number-line position with direct value entry.',
+  keyElements: ['fraction text', 'decimal text', 'pie chart', 'number-line marker'],
+  interactions: [{ control: 'input:fraction', purpose: 'type a fraction or decimal directly' }],
+  observationCopyHint: '1/1 equals 100% of the whole.',
+};
+
 function wrap(body: string): string {
   return `<!doctype html><html><head></head><body>${body}</body></html>`;
 }
@@ -166,6 +175,130 @@ Deno.test('root-redeclaration: silent when the design-token block is the injecte
   assertRuleSilent(html, BASE_PLAN, 'root-redeclaration');
 });
 
+// ── missing-primary-visual ─────────────────────────────────────────────────
+
+Deno.test('missing-primary-visual: fires when .iv-visual-card is missing', () => {
+  const html = wrap('<main class="iv-shell"><section class="iv-controls-card"></section></main>');
+  assertRuleFired(html, BASE_PLAN, 'missing-primary-visual', 'blocker');
+});
+
+Deno.test('missing-primary-visual: fires when no svg or canvas is rendered', () => {
+  const html = wrap('<main class="iv-shell"><section class="iv-visual-card"><div>Blank</div></section></main>');
+  assertRuleFired(html, BASE_PLAN, 'missing-primary-visual', 'blocker');
+});
+
+Deno.test('missing-primary-visual: silent when svg exists inside .iv-visual-card', () => {
+  const html = wrap('<main class="iv-shell"><section class="iv-visual-card"><svg></svg></section></main>');
+  assertRuleSilent(html, BASE_PLAN, 'missing-primary-visual');
+});
+
+// ── range-input-no-live-update ─────────────────────────────────────────────
+
+Deno.test('range-input-no-live-update: fires when range input has only change handlers', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <input type="range" />
+    <script>
+      document.querySelector('input').addEventListener('change', () => {});
+    </script>
+  `);
+  assertRuleFired(html, BASE_PLAN, 'range-input-no-live-update', 'blocker');
+});
+
+Deno.test('range-input-no-live-update: silent when input event listener exists', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <input type="range" />
+    <script>
+      document.querySelector('input').addEventListener('input', () => {});
+    </script>
+  `);
+  assertRuleSilent(html, BASE_PLAN, 'range-input-no-live-update');
+});
+
+// ── fraction-dropdown-instead-of-direct-input ──────────────────────────────
+
+Deno.test('fraction-dropdown-instead-of-direct-input: fires for fraction plans with select and no text input', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <label>Select fraction</label>
+    <select><option>1/2</option></select>
+  `);
+  assertRuleFired(html, FRACTION_PLAN, 'fraction-dropdown-instead-of-direct-input', 'blocker');
+});
+
+Deno.test('fraction-dropdown-instead-of-direct-input: silent when direct text input is present', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <label for="fractionInput">Enter fraction or decimal</label>
+    <input id="fractionInput" type="text" />
+    <select><option>1/2</option></select>
+  `);
+  assertRuleSilent(html, FRACTION_PLAN, 'fraction-dropdown-instead-of-direct-input');
+});
+
+// ── fraction-missing-decimal-readout ───────────────────────────────────────
+
+Deno.test('fraction-missing-decimal-readout: fires when no decimal label/readout is present', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <label for="fractionInput">Enter fraction or decimal</label>
+    <input id="fractionInput" type="text" />
+    <label>Numerator</label><input type="range" />
+    <label>Denominator</label><input type="range" />
+  `);
+  assertRuleFired(html, FRACTION_PLAN, 'fraction-missing-decimal-readout', 'blocker');
+});
+
+Deno.test('fraction-missing-decimal-readout: silent when decimal label exists', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <div>Decimal</div>
+    <label for="fractionInput">Enter fraction or decimal</label>
+    <input id="fractionInput" type="text" />
+    <label>Numerator</label><input type="range" />
+    <label>Denominator</label><input type="range" />
+  `);
+  assertRuleSilent(html, FRACTION_PLAN, 'fraction-missing-decimal-readout');
+});
+
+// ── fraction-missing-sliders ───────────────────────────────────────────────
+
+Deno.test('fraction-missing-sliders: fires when fewer than two sliders exist', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <div>Decimal</div>
+    <label for="fractionInput">Enter fraction or decimal</label>
+    <input id="fractionInput" type="text" />
+    <label>Numerator</label><input type="range" />
+  `);
+  assertRuleFired(html, FRACTION_PLAN, 'fraction-missing-sliders', 'blocker');
+});
+
+Deno.test('fraction-missing-sliders: fires when slider labels are missing', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <div>Decimal</div>
+    <label for="fractionInput">Enter fraction or decimal</label>
+    <input id="fractionInput" type="text" />
+    <input type="range" />
+    <input type="range" />
+  `);
+  assertRuleFired(html, FRACTION_PLAN, 'fraction-missing-sliders', 'blocker');
+});
+
+Deno.test('fraction-missing-sliders: silent when numerator and denominator sliders are present', () => {
+  const html = wrap(`
+    <section class="iv-visual-card"><svg></svg></section>
+    <div>Decimal</div>
+    <label for="fractionInput">Enter fraction or decimal</label>
+    <input id="fractionInput" type="text" />
+    <label>Numerator</label><input type="range" />
+    <label>Denominator</label><input type="range" />
+  `);
+  assertRuleSilent(html, FRACTION_PLAN, 'fraction-missing-sliders');
+});
+
 // ── key-elements-missing-text-labels ───────────────────────────────────────
 
 Deno.test('key-elements-missing-text-labels: fires when plan asks for labels but HTML has no <text>', () => {
@@ -249,7 +382,7 @@ Deno.test('dom-references-undefined: querySelector("#id") also checked', () => {
 // ── overall report shape ────────────────────────────────────────────────────
 
 Deno.test('auditHtmlStatic returns passed=true when no rules fire', () => {
-  const html = wrap('<svg><rect width="20" height="50"></rect></svg>');
+  const html = wrap('<section class="iv-visual-card"><svg><rect width="20" height="50"></rect></svg></section>');
   const report = auditHtmlStatic(html, BASE_PLAN);
   if (!report.passed) {
     throw new Error(

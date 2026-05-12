@@ -104,6 +104,9 @@ CSS variables vs JavaScript (CRITICAL — common AI mistake):
 Interaction discipline:
 - Every control must have a clear educational purpose. No decorative dials.
 - Default state is the simplest meaningful configuration.
+- On first paint, the hero visual must already show a complete, meaningful teaching state. Never leave the main canvas blank while waiting for the first interaction.
+- If a control changes a value, chart, label, or annotation, wire it to live updates on the input event (or equivalent drag event), not only change/release.
+- When the learner may need arbitrary numeric entry (fractions, decimals, ratios, coordinates, thresholds), prefer a direct text/number input as the primary control. Use a select dropdown only when the option set is intentionally small and fixed.
 - When a value changes, update the visual AND a one-sentence live observation referencing the current value.
 - Provide a reset affordance when the experience has 3+ controls.
 - Keyboard: every interactive element reachable by Tab; visible focus ring using var(--color-focus-ring).
@@ -132,7 +135,7 @@ The JSON must match this exact shape:
   },
   "keyElements": ["<2-8 short noun phrases naming what appears on screen>"],
   "interactions": [
-    { "control": "<slider:name | button:name | drag:name | toggle:name | select:name>", "purpose": "<short educational reason>" }
+    { "control": "<slider:name | button:name | drag:name | toggle:name | select:name | input:name>", "purpose": "<short educational reason>" }
   ],
   "accessibilityNotes": ["<1-6 short rules, e.g. 'sliders have aria-labels', 'AA contrast against surface'>"],
   "observationCopyHint": "<<= 280 chars: what the live observation strip should say when the learner changes a control>"
@@ -143,5 +146,8 @@ Constraints:
 - "palette.primary" is the dominant accent (lines, focused slider). "palette.accent" is the contrasting accent (highlights, comparisons). "palette.surface" is the visualization background — usually a near-white or near-black close to var(--color-background-secondary).
 - IMPORTANT — palette colors are the ONE exception to the "no hardcoded hex" rule. In this JSON, EVERY palette color MUST be a 6-digit hex literal like "#2563eb". Do NOT use CSS variables (no "var(--…)"), do NOT use rgb()/rgba(), do NOT use named CSS colors, do NOT use 3-digit shorthand like "#fff". The "no hardcoded hex" rule applies ONLY to the HTML that gets generated in the next step, not to this plan JSON.
 - At least 2 keyElements and 1 interaction.
+- The default state must already render a complete, meaningful visual on first paint. Do not plan blank hero states.
+- For arbitrary numeric-entry tasks such as fractions, decimals, ratios, or coordinates, prefer input:name over select:name so learners can type values directly.
+- If you plan sliders, assume the renderer will update them live on input while dragging.
 - Output JSON only. No prose. No markdown.
 `.trim();

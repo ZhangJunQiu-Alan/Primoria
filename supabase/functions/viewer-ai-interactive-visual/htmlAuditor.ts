@@ -66,6 +66,30 @@ function stripStringLiterals(jsCode: string): string {
   return jsCode.replace(/(['"`])((?:\\.|(?!\1).)*)\1/g, (m, q, body) => `${q}${' '.repeat(body.length)}${q}`);
 }
 
+function isFractionLikePlan(plan: Plan): boolean {
+  const haystack = [
+    plan.template,
+    plan.approach,
+    ...plan.keyElements,
+    ...plan.interactions.map((interaction) => `${interaction.control} ${interaction.purpose}`),
+    plan.observationCopyHint,
+  ]
+    .join('\n')
+    .toLowerCase();
+  return /(fraction|fractions|numerator|denominator|equivalent fraction|decimal|percentage|percent|number line)/i.test(
+    haystack,
+  );
+}
+
+function hasLiveInputUpdates(html: string, scripts: ScriptBlock[]): boolean {
+  if (/\boninput\s*=/i.test(html)) {
+    return true;
+  }
+  return scripts.some((script) =>
+    /addEventListener\s*\(\s*['"]input['"]/i.test(script.body) || /\.oninput\s*=/i.test(script.body)
+  );
+}
+
 function findUnconvertedDurationParseFloat(body: string): boolean {
   const re = /parseFloat\s*\(/g;
   let start: RegExpExecArray | null;
@@ -94,6 +118,10 @@ function findUnconvertedDurationParseFloat(body: string): boolean {
     }
   }
   return false;
+}
+
+function countRangeInputs(html: string): number {
+  return (html.match(/<input\b[^>]*\btype\s*=\s*(?:"range"|'range'|range)(?=[\s>])/gi) ?? []).length;
 }
 
 const RULES: Rule[] = [
@@ -177,6 +205,86 @@ const RULES: Rule[] = [
         if (/:root\b[^{]*\{[^}]*--(?:color|shadow|radius|space|font|duration|ease)-/i.test(body)) {
           return 'AI-authored <style> contains a :root { --color-* / --duration-* / ... } redeclaration.';
         }
+      }
+      return null;
+    },
+  },
+  {
+    key: 'missing-primary-visual',
+    severity: 'blocker',
+    hint: 'Render the hero teaching visual as an actual <svg> or <canvas> inside .iv-visual-card on first paint.',
+    check: ({ html }) => {
+      const hasVisualCard = /\biv-visual-card\b/i.test(html);
+      const hasGraphic = /<(svg|canvas)\b/i.test(html);
+      if (!hasVisualCard) {
+        return 'HTML is missing the .iv-visual-card hero container.';
+      }
+      if (!hasGraphic) {
+        return 'HTML does not render an <svg> or <canvas> for the primary visual.';
+      }
+      return null;
+    },
+  },
+  {
+    key: 'range-input-no-live-update',
+    severity: 'blocker',
+    hint: 'Range inputs must update on the input event while dragging, not only on change/release.',
+    check: ({ html, scripts }) => {
+      if (!/<input\b[^>]*\btype\s*=\s*(?:"range"|'range'|range)(?=[\s>])/i.test(html)) {
+        return null;
+      }
+      if (hasLiveInputUpdates(html, scripts)) {
+        return null;
+      }
+      return 'HTML contains range inputs but no live input handler (addEventListener("input") or oninput=) was found.';
+    },
+  },
+  {
+    key: 'fraction-dropdown-instead-of-direct-input',
+    severity: 'blocker',
+    hint: 'Fraction and decimal visuals should use a direct text/number input for quick entry. Do not rely on a dropdown as the primary value picker.',
+    check: ({ html, plan }) => {
+      if (!isFractionLikePlan(plan) || !/<select\b/i.test(html)) {
+        return null;
+      }
+      const hasDirectInput = /<input\b[^>]*\btype\s*=\s*(?:"text"|'text'|text|"number"|'number'|number)(?=[\s>])/i.test(html) ||
+        /<input\b(?![^>]*\btype\s*=)[^>]*>/i.test(html);
+      if (hasDirectInput) {
+        return null;
+      }
+      return 'Fraction-style visualization uses a <select> but no direct text/number input for quick value entry.';
+    },
+  },
+  {
+    key: 'fraction-missing-decimal-readout',
+    severity: 'blocker',
+    hint: 'Fraction visuals must show a decimal conversion, ideally labeled as decimal and positioned directly below the pie chart.',
+    check: ({ html, plan }) => {
+      if (!isFractionLikePlan(plan)) {
+        return null;
+      }
+      const strippedInputLabel = html.replace(/enter fraction or decimal/gi, '');
+      if (/\bdecimal\b/i.test(strippedInputLabel) || /小数/.test(strippedInputLabel)) {
+        return null;
+      }
+      return 'Fraction-style visualization does not expose an obvious decimal readout label.';
+    },
+  },
+  {
+    key: 'fraction-missing-sliders',
+    severity: 'blocker',
+    hint: 'Fraction editing visuals must expose both numerator and denominator sliders with clear labels.',
+    check: ({ html, plan }) => {
+      if (!isFractionLikePlan(plan)) {
+        return null;
+      }
+      if (countRangeInputs(html) < 2) {
+        return 'Fraction-style visualization is missing the required numerator and denominator slider pair.';
+      }
+      const hasNumeratorLabel = /\bnumerator\b/i.test(html) || /分子/.test(html);
+      const hasDenominatorLabel = /\bdenominator\b/i.test(html) || /分母/.test(html);
+      if (!hasNumeratorLabel || !hasDenominatorLabel) {
+        return 'Fraction-style visualization is missing a clear numerator or denominator label for its sliders.';
       }
       return null;
     },
