@@ -236,7 +236,7 @@ describe('geminiClient', () => {
       [{ role: 'user', text: 'Explain this page.' }],
       {},
       {
-        model: 'gemini-2.5-flash',
+        model: 'gemini-2.5-pro',
         allowModelFallback: false,
         context: {
           surface: 'lesson-runtime',
@@ -294,7 +294,7 @@ describe('geminiClient', () => {
       {},
       {
         provider: 'gemini',
-        model: 'gemini-2.5-flash',
+        model: 'gemini-2.5-pro',
         allowModelFallback: false,
         context: {
           surface: 'lesson-runtime',
@@ -320,7 +320,7 @@ describe('geminiClient', () => {
       }),
     );
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-pro',
       allowModelFallback: false,
       context: {
         surface: 'lesson-runtime',

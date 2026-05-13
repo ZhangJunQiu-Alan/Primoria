@@ -73,6 +73,8 @@ Animating SVG attributes with gsap (CRITICAL):
         .transition().duration(220).ease(d3.easeCubicInOut)
         .attr('x', 100).attr('y', 50).attr('width', 30).attr('height', 80);
 - Bare gsap.to(el, { x: 100 }) on an SVG element is fine ONLY when you intend a CSS transform translate and you have NOT set the x attribute (e.g., sliding an icon by a delta). In bar charts / scatter plots / any layout driven by xScale/yScale where attributes are set, ALWAYS use Strategy A or B.
+- This rule applies regardless of how props are written. Shorthand object-literal form — gsap.to(el, { x, y, width, height }) — is the SAME as longhand and just as wrong. The shorthand does not "opt out" of the conflict.
+- Never combine bare {x|y|width|height} with an onUpdate that calls .attr('x'|'y'|'width'|'height'|'transform', ...) on the same element. The tween moves the CSS transform while onUpdate rewrites the SVG attribute — every frame they fight, and the element either freezes, jumps, or disappears.
 
 gsap ease values (CRITICAL):
 - gsap's ease parameter accepts named eases ('power2.out', 'sine.inOut', 'expo.out', 'back.out(1.7)', 'elastic.out(1, 0.3)') or a function.

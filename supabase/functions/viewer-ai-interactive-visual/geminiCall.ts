@@ -1,25 +1,17 @@
 import { extractGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
+import {
+  GEMINI_DEFAULT_MODEL,
+  GEMINI_FALLBACK_MODEL,
+  GEMINI_MODEL_CANDIDATES,
+} from '../_shared/geminiModels.ts';
 
 export const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
-export const DEFAULT_MODEL = 'gemini-2.0-flash';
-export const FALLBACK_MODELS = ['gemini-2.5-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
-export const GEMINI_MODELS = [DEFAULT_MODEL, ...FALLBACK_MODELS.filter((m) => m !== DEFAULT_MODEL)];
+export const DEFAULT_MODEL = GEMINI_DEFAULT_MODEL;
+export const FALLBACK_MODELS: string[] = [GEMINI_FALLBACK_MODEL];
+export const GEMINI_MODELS: string[] = [...GEMINI_MODEL_CANDIDATES];
 
-export const GEMINI_PLAN_MODELS = [
-  'gemini-2.0-flash',
-  'gemini-2.5-flash-latest',
-  'gemini-2.5-flash',
-  'gemini-2.5-pro-latest',
-  'gemini-2.5-pro',
-];
-
-export const GEMINI_RENDER_MODELS = [
-  'gemini-2.0-flash',
-  'gemini-2.5-flash-latest',
-  'gemini-2.5-flash',
-  'gemini-2.5-pro-latest',
-  'gemini-2.5-pro',
-];
+export const GEMINI_PLAN_MODELS: string[] = [...GEMINI_MODEL_CANDIDATES];
+export const GEMINI_RENDER_MODELS: string[] = [...GEMINI_MODEL_CANDIDATES];
 
 export type GenerationStep = 'plan' | 'render';
 export type GenerationErrorKind = 'transient' | 'validation' | 'fatal';

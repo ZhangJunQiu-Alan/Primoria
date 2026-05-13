@@ -1,6 +1,7 @@
 import { z } from 'npm:zod@3.25.76';
 import {
   callGeminiOnce,
+  GEMINI_MODELS,
   type GenerationErrorKind,
 } from './geminiCall.ts';
 import type { Plan } from './planSchema.ts';
@@ -8,12 +9,7 @@ import type { Plan } from './planSchema.ts';
 const AUDIT_TEMPERATURE = 0.2;
 const AUDIT_MAX_OUTPUT_TOKENS = 1_024;
 
-export const GEMINI_AUDIT_MODELS = [
-  'gemini-2.5-pro-latest',
-  'gemini-2.5-pro',
-  'gemini-2.5-flash-latest',
-  'gemini-2.5-flash',
-];
+export const GEMINI_AUDIT_MODELS = [...GEMINI_MODELS];
 
 const AUDIT_SYSTEM_INSTRUCTION =
   'You are a strict reviewer of AI-generated interactive educational HTML. Return ONLY one JSON object. No markdown, no commentary.';

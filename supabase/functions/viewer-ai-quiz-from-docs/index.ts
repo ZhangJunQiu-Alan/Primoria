@@ -3,6 +3,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.2';
 import { QuizDslSchema, compileQuizDslToLessonContent, type QuizDsl } from './quizCompiler.ts';
 import { extractNormalizedGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
 import {
+  GEMINI_DEFAULT_MODEL,
+  GEMINI_FALLBACK_MODEL,
+} from '../_shared/geminiModels.ts';
+import {
   buildCourseSlug,
   buildQuizPrompt,
   type QuizOutputLanguage,
@@ -11,8 +15,8 @@ import {
 import { selectQuestionsForQuiz } from './quizRules.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
-const DEFAULT_MODEL = 'gemini-2.0-flash';
-const FALLBACK_MODELS = ['gemini-2.5-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+const DEFAULT_MODEL = GEMINI_DEFAULT_MODEL;
+const FALLBACK_MODELS: string[] = [GEMINI_FALLBACK_MODEL];
 const MAX_OUTPUT_TOKENS = 16384;
 const MAX_COMBINED_TEXT_LENGTH = 70_000;
 const DOCUMENT_SELECT_FIELDS = 'id, filename, display_title, extracted_text';

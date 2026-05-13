@@ -1,11 +1,11 @@
 # Dashboard 架构说明
 
-最后更新：2026-04-19
+最后更新：2026-05-13
 
 ## 范围
 
 Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路由为 `/builder/dashboard`。
-它是创作者工作台主壳，包含侧边导航、顶部操作区和四个核心 Tab。
+它是创作者工作台主壳，最终要承接“自然语言生成完整互动课程”的入口、课程管理、数据反馈和用户关系管理。
 
 当前 Tab：
 1. Home
@@ -37,7 +37,7 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
 ### 1）Home
 
 - 按时间段显示问候语
-- 快捷操作：创建、继续编辑、查看数据
+- 快捷操作：用自然语言创建课程、继续编辑、查看数据
 - 概览 KPI：最近 7 天学习者与累计学习时长
 - 最近 7 天真实完成率趋势
 - 按浏览量 / 学员数 / 完成质量排序的重点课程
@@ -47,13 +47,19 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
 ### 2）Course Management
 
 - 负责课程生产操作：
-  - 创建课程
+  - 通过自然语言生成完整课程草稿
+  - 创建空白课程
   - 编辑元数据
   - 删除课程
   - 复制课程
   - 添加课时
   - 删除课时
   - 直接打开指定课程/课时进入 Builder 工作台
+- 课程生成目标：
+  - 输出符合 `Course -> Lesson -> Page -> Block` 的结构
+  - 每个 lesson 可以包含多个 page
+  - Page 内包含多个 block
+  - 优先生成有学习价值的 `interactive-visual` block，而不是只生成纯文本课程大纲
 - 控制栏：搜索、状态筛选、排序方式
 - 排序方式已接入真实 `student` / `comments` 指标
 - 摘要条：课程数 / 课时数 / 已发布 / 草稿 / 待补内容
@@ -99,6 +105,7 @@ Builder 的 Dashboard 现在位于统一的 Viewer React 应用中，对外路�
 Dashboard 当前采用混合策略：
 - 能用 Supabase 真实数据的域优先走真实数据
 - 作者侧 analytics 通过 `viewer_analytics_events` + baseline 表 + RPC 聚合提供真实事实
+- AI 课程生成应把自然语言请求、规划结果和生成出的 course JSON 关联起来，便于后续审校、失败诊断和质量分析
 - 收入仍保留预估值，等待真实结算数据接入
 - 工作流偏好由本地存储负责
 
@@ -122,3 +129,4 @@ Dashboard 当前采用混合策略：
 1. 收入/结算真实数据源
 2. 粉丝管理后端能力
 3. 学员分群与 cohort 分析
+4. AI 生成课程质量与 interactive visualization 质量观测

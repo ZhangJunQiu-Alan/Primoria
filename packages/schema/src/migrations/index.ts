@@ -159,19 +159,15 @@ function migrateLegacyAnimationContent(raw: unknown): Record<string, unknown> {
   const customHtml = typeof content['customHtml'] === 'string' ? content['customHtml'] : undefined;
   const aiPrompt = typeof content['aiPrompt'] === 'string' ? content['aiPrompt'] : undefined;
 
+  // Legacy `animation` blocks predate the html-iframe consolidation. Promote
+  // any hand-authored HTML they carried into `generatedHtml` so it still
+  // renders in the iframe; drop the old layout/state placeholders.
   return {
-    version: 'sim-v1',
-    mode: 'presentation',
     template: 'generic',
     title: 'Interactive Visual',
-    layoutPreset: 'scene-only',
     themeTone: 'light-science',
-    initialState: {},
-    controls: [],
-    formulas: [],
-    scene: {},
     ...(aiPrompt ? { aiPrompt } : {}),
-    ...(customHtml ? { legacyCustomHtml: customHtml } : {}),
+    ...(customHtml ? { generatedHtml: customHtml } : {}),
   };
 }
 
