@@ -66,6 +66,97 @@ function stripStringLiterals(jsCode: string): string {
   return jsCode.replace(/(['"`])((?:\\.|(?!\1).)*)\1/g, (m, q, body) => `${q}${' '.repeat(body.length)}${q}`);
 }
 
+type GsapCall = {
+  /** Props body with nested `{...}` regions blanked out so top-level keys are visible. String literals are also stripped. */
+  topLevelProps: string;
+  /** Raw props body including nested braces and original string literal contents. Use for substring scans like `.attr('x', …)`. */
+  rawProps: string;
+};
+
+/**
+ * Walk a script body and extract every `gsap.to|from|fromTo|set(target, { ... })` call.
+ * Uses balanced-brace scanning so a props object with nested function bodies
+ * (`onUpdate: function () { ... }`) is captured fully, not truncated at the first `}`.
+ * String literals are stripped only for the brace/comma scan (so quoted braces/commas
+ * cannot fool the parser); the returned rawProps slices the ORIGINAL body so callers
+ * can still match patterns like .attr('x', …) inside nested callbacks.
+ */
+function extractGsapCalls(scriptBody: string): GsapCall[] {
+  const stripped = stripStringLiterals(scriptBody);
+  const startRe = /gsap\s*\.\s*(?:to|from|fromTo|set)\s*\(/g;
+  const results: GsapCall[] = [];
+
+  let match: RegExpExecArray | null;
+  while ((match = startRe.exec(stripped))) {
+    // Walk to find the top-level `,` separating target from props.
+    let i = startRe.lastIndex;
+    let depth = 0;
+    let commaIdx = -1;
+    while (i < stripped.length) {
+      const ch = stripped[i];
+      if (ch === '(' || ch === '[' || ch === '{') depth += 1;
+      else if (ch === ')' || ch === ']' || ch === '}') {
+        if (depth === 0) break;
+        depth -= 1;
+      } else if (ch === ',' && depth === 0) {
+        commaIdx = i;
+        break;
+      }
+      i += 1;
+    }
+    if (commaIdx === -1) continue;
+
+    // Skip whitespace then expect `{`.
+    let j = commaIdx + 1;
+    while (j < stripped.length && /\s/.test(stripped[j])) j += 1;
+    if (stripped[j] !== '{') continue;
+
+    // Balanced-brace scan for the matching close.
+    let braceDepth = 1;
+    const propsStart = j + 1;
+    j += 1;
+    while (j < stripped.length && braceDepth > 0) {
+      const ch = stripped[j];
+      if (ch === '{') braceDepth += 1;
+      else if (ch === '}') {
+        braceDepth -= 1;
+        if (braceDepth === 0) break;
+      }
+      j += 1;
+    }
+    if (braceDepth !== 0) continue;
+
+    const strippedProps = stripped.slice(propsStart, j);
+    const rawProps = scriptBody.slice(propsStart, j);
+    results.push({ rawProps, topLevelProps: blankNestedBraces(strippedProps) });
+  }
+
+  return results;
+}
+
+/** Replace any content inside nested `{...}` with spaces so top-level keys remain readable. */
+function blankNestedBraces(body: string): string {
+  let depth = 0;
+  let out = '';
+  for (const ch of body) {
+    if (ch === '{') {
+      depth += 1;
+      out += ' ';
+      continue;
+    }
+    if (ch === '}') {
+      depth -= 1;
+      out += ' ';
+      continue;
+    }
+    out += depth > 0 ? (ch === '\n' ? '\n' : ' ') : ch;
+  }
+  return out;
+}
+
+const BARE_COORD_LONGHAND_RE = /\b(?:x|y|width|height)\b\s*:/;
+const BARE_COORD_SHORTHAND_RE = /\b(?:x|y|width|height)\b\s*(?:,|\n|$)/;
+
 function isFractionLikePlan(plan: Plan): boolean {
   const haystack = [
     plan.template,
@@ -142,21 +233,44 @@ const RULES: Rule[] = [
   {
     key: 'gsap-svg-attr-conflict',
     severity: 'blocker',
-    hint: 'When using d3 .attr("x"|"y"|"width"|"height", …) on SVG elements, animate with gsap.to(el, { attr: { x, y, width, height } }) or use d3.transition() — never gsap.to(el, { x, y, width, height }) bare shorthand, which doubles positions.',
+    hint: 'When d3 .attr("x"|"y"|"width"|"height", …) is used on SVG elements, animate with gsap.to(el, { attr: { x, y, width, height } }) or use d3.transition() — never gsap.to(el, { x, y, width, height }) bare, which animates the CSS transform and produces doubled positions or off-screen elements.',
     check: ({ scripts }) => {
       for (const script of scripts) {
-        // Use raw body so we see the "x" string argument; only strip for the gsap arg scan.
+        // hasD3Attr scans the raw body so the "x"/"y"/... string argument is visible.
         const hasD3Attr = /\.attr\s*\(\s*(["'])(?:x|y|width|height)\1/i.test(script.body);
         if (!hasD3Attr) continue;
-        const stripped = stripStringLiterals(script.body);
-        const bareGsapRe = /gsap\s*\.\s*(?:to|from|fromTo|set)\s*\(\s*[^,]+,\s*\{([^}]*)\}/g;
-        let m: RegExpExecArray | null;
-        while ((m = bareGsapRe.exec(stripped))) {
-          const props = m[1];
-          const mentionsBare = /\b(?:x|y|width|height)\s*:/.test(props);
-          const hasAttrWrapper = /\battr\s*:/.test(props);
-          if (mentionsBare && !hasAttrWrapper) {
+        for (const call of extractGsapCalls(script.body)) {
+          const props = call.topLevelProps;
+          // attr: { ... } wrapper means coords are correctly going through SVG attrs.
+          if (/\battr\s*:/.test(props)) continue;
+          // Detect both longhand (`x: 100`) and shorthand (`{ x, y, width, height }`).
+          if (BARE_COORD_LONGHAND_RE.test(props) || BARE_COORD_SHORTHAND_RE.test(props)) {
             return 'gsap.to(...) uses bare {x|y|width|height} on an SVG element that also has .attr() set — produces doubled positions.';
+          }
+        }
+      }
+      return null;
+    },
+  },
+  {
+    key: 'gsap-onupdate-attr-conflict',
+    severity: 'blocker',
+    hint: 'Do not combine bare {x|y|width|height} props on a gsap tween with an onUpdate callback that re-sets the same SVG attribute via .attr()/.setAttribute(). The tween animates the CSS transform while onUpdate clobbers the attribute every frame — the element either freezes, jumps, or disappears off-screen.',
+    check: ({ scripts }) => {
+      for (const script of scripts) {
+        for (const call of extractGsapCalls(script.body)) {
+          // Top-level props only — ignore nested onUpdate body when scanning bare coords.
+          const top = call.topLevelProps;
+          const mentionsBareCoord =
+            BARE_COORD_LONGHAND_RE.test(top) || BARE_COORD_SHORTHAND_RE.test(top);
+          if (!mentionsBareCoord) continue;
+          if (/\battr\s*:/.test(top)) continue;
+          // rawProps contains the nested onUpdate body — look for attribute writes there.
+          const rewritesAttr =
+            /\.attr\s*\(\s*(["'])(?:x|y|width|height|cx|cy|r|d|points|transform)\1/i.test(call.rawProps) ||
+            /\.setAttribute\s*\(\s*(["'])(?:x|y|width|height|cx|cy|r|d|points|transform)\1/i.test(call.rawProps);
+          if (rewritesAttr) {
+            return 'gsap.to(...) has bare {x|y|width|height} props plus an onUpdate that rewrites the same SVG attribute via .attr()/.setAttribute() — the tween and the callback fight each frame.';
           }
         }
       }

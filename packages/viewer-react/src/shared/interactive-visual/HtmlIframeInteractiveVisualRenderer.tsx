@@ -34,7 +34,7 @@ export function InteractiveVisualEmptyState({ title }: { title: string }) {
       </p>
       <h3 className="mt-2 text-lg font-black text-[var(--viewer-text)]">{title}</h3>
       <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">
-        Add generated HTML or choose a trusted renderer to display this block.
+        Generate or paste HTML to display this interactive visual.
       </p>
     </div>
   );

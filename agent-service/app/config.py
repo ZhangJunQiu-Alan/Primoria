@@ -4,6 +4,8 @@ from pathlib import Path
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.model_config import DEFAULT_GEMINI_MODEL
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=('.env', '../.env'), env_file_encoding='utf-8', extra='ignore')
@@ -21,8 +23,8 @@ class Settings(BaseSettings):
     supabase_anon_key: str = Field(alias='SUPABASE_ANON_KEY')
 
     google_api_key: str | None = Field(default=None, alias='GOOGLE_API_KEY')
-    agent_model: str = Field(default='gemini-2.5-flash', alias='AGENT_MODEL')
-    memory_summary_model: str = Field(default='gemini-2.5-flash', alias='MEMORY_SUMMARY_MODEL')
+    agent_model: str = Field(default=DEFAULT_GEMINI_MODEL, alias='AGENT_MODEL')
+    memory_summary_model: str = Field(default=DEFAULT_GEMINI_MODEL, alias='MEMORY_SUMMARY_MODEL')
     agent_system_prompt: str = Field(
         default=(
             'You are Primoria Learning Copilot. '

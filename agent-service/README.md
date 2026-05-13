@@ -1,6 +1,8 @@
 # Primoria Agent Service
 
-独立的 learner AI agent 服务，面向 `packages/viewer-react` 的 `/ai-tutor` 页面。
+Primoria 的 AI agent 服务，面向 `packages/viewer-react` 的 `/ai-tutor` 页面和 Builder 侧课程生成能力。
+
+长期产品目标是支持用户通过自然语言生成一整套类似教科书的完整互动课程。生成结果必须能落到 Primoria 的规范层级：`Course -> Lesson -> Page -> Block`。其中 `interactive-visual` 是关键 Block 类型，目标是 Brilliant 式互动学习体验。
 
 ## v1 能力
 
@@ -9,6 +11,8 @@
 - 使用 LangChain Deep Agents 组织 tool-calling
 - thread short-term memory（Supabase `agent_thread_checkpoints`）
 - user long-term memory（已迁移为 Supabase `agent_memories`）
+- Builder 课程生成服务：从自然语言和上下文生成 course brief、outline、lesson plan、critique 和 course draft
+- 生成 course draft 时必须保持 lesson/page/block 层级，并优先为适合视觉化的概念生成 interactive visualization block
 
 ## 环境变量
 
@@ -24,8 +28,8 @@ SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 
 # 推荐沿用现有 Gemini 体系
 GOOGLE_API_KEY=YOUR_GEMINI_KEY
-AGENT_MODEL=gemini-2.5-flash
-MEMORY_SUMMARY_MODEL=gemini-2.5-flash
+AGENT_MODEL=gemini-2.5-pro
+MEMORY_SUMMARY_MODEL=gemini-2.5-pro
 ```
 
 ## 本地启动
@@ -42,6 +46,7 @@ uv run uvicorn app.main:app --reload --port 8787
 - `POST /v1/chat`
 - `POST /v1/chat/stream`
 - `GET /v1/memory/inspect`
+- Builder 课程生成相关接口位于 `app/routes/builder.py`，由前端 Builder 工作台调用
 
 ## Memory 持久化结构
 
