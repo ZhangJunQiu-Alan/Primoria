@@ -52,7 +52,6 @@ describe('InteractiveVisualPanel', () => {
       type: 'interactive-visual',
       position: { order: 0 },
       content: {
-        engine: 'html-iframe',
         template: 'generic',
         title: '',
         description: '',
@@ -63,7 +62,6 @@ describe('InteractiveVisualPanel', () => {
     store.dispatch(openDraft(buildCourse(block)));
     createInteractiveVisualMock.mockResolvedValue({
       version: '1',
-      engine: 'gemini-html5',
       template: 'linear-function-graph',
       experienceMode: 'graph',
       title: '一次函数参数交互可视化',
@@ -99,16 +97,17 @@ describe('InteractiveVisualPanel', () => {
     await waitFor(() =>
       expect(getStoredBlock(store)?.content).toEqual(
         expect.objectContaining({
-          engine: 'gemini-html5',
           template: 'linear-function-graph',
           title: '一次函数参数交互可视化',
           description: '拖动 a 和 b，观察直线斜率与截距变化。',
           aiPrompt: '生成一个一次函数 y=ax+b 的交互图。',
-          generatedHtml: '<!doctype html><html><body><section id="linear-graph"><input type="range" /></section></body></html>',
+          generatedHtml:
+            '<!doctype html><html><body><section id="linear-graph"><input type="range" /></section></body></html>',
           themeTone: 'minimal-math',
           experienceMode: 'graph',
         }),
       ),
     );
+    expect(getStoredBlock(store)?.content).not.toHaveProperty('engine');
   });
 });

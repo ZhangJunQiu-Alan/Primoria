@@ -1,6 +1,6 @@
 # 数据库 Schema（Supabase/PostgreSQL）
 
-最后更新：2026-03-08
+最后更新：2026-05-13
 
 本文档基于 `supabase/migrations/` 的迁移结果与当前代码实际使用状态整理。
 
@@ -30,9 +30,10 @@
   - AI Agentic 新增字段：
     - `animation_style`
     - `content_language`
-    - `planning_json`
+    - `planning_json`：保存自然语言生成完整课程时的规划、结构化意图、质量约束和生成上下文
 - `lessons`
   - 关键字段：`id`、`course_id`、`title`、`type`、`sort_key`、`content_json`、`content_hash`、解锁相关字段
+  - `content_json` 的规范内容层级应为 `lessons[].pages[].blocks[]`；历史 flat blocks 或顶层 pages 只作为导入兼容格式存在
   - 解锁字段：
     - `is_locked`
     - `unlock_type`
@@ -85,6 +86,7 @@
 - `lessons.group_title` 与 `lessons.group_sort_key` 已移除。
 - 课时顺序统一由 `lessons.sort_key` 控制。
 - `courses` 已增加 AI 规划字段与价格字段。
+- 当前产品口径下，AI 规划字段服务于“自然语言 -> 完整 Course -> Lesson -> Page -> Block”的课程生成链路，不应只被理解为单个草稿增强字段。
 - `profiles` 已增加 `cover_image_url` 与 pinned achievements 支持。
 - 家长模式 v1 新增 `parent_child_binding_codes`、`parent_child_links` 表及 `'parent'` role 枚举值。
 - 种子数据课程「心理学基础」（Basics of Psychology）已作为已发布社会学课程插入（迁移 `20260308000001`）。
