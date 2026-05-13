@@ -1,0 +1,28 @@
+你看一下 Doc 里面的文档，然后根据信息压缩一下CLAUDE.md 去掉一些无关紧要的内容,删除一些错误信息。我觉得目前对于整个项目来说，最关键的就是赶快实现 Interactive Visualization Block 这个功能。
+
+---
+
+你看一下目前的 interactive visualization block 它的实现怎么样？
+
+---
+
+把这4条修好吧。Severity 1:补一条专用规则，并增加 runtime smoke
+Severity 2: 高频题型用确定性方案兜底，这个方案行得通吗？我一直考虑到的是边界，而且这里为什么要分为三种 engine 呢？我目前完成的 html iframe 不能 cover 所有场景吗
+Severity 3: 很好，加入 runtime 检验。
+Severity 4: 有一条正在完成的 Interactive Visualization Block，是我们正在以开发者视图去测试并编写的。等我们完成之后，就会要并入到 Studio 的里面去
+
+---
+
+怎么卡住了
+
+---
+
+现在模拟真实用户生成20个不同的Prompt 填入到 Visualization Prompts.md 我来手动做测试。
+
+---
+
+现在查看 visualization prompts.md 在7、8、9生成都遇到了问题。先不要修改任何代码，告诉我是什么问题导致的,你能看到那几个？生成图表有错误的代码吗,有什么方法可以解决
+
+---
+
+我刚刚说错了。应该是689有问题，我在 Visualization Prompts 这个文档里面已经提供了相应的截图和错误提示。
