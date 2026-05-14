@@ -103,6 +103,124 @@ Deno.test('gsap-svg-attr-conflict: silent when there is no d3.attr() pairing', (
   assertRuleSilent(html, BASE_PLAN, 'gsap-svg-attr-conflict');
 });
 
+Deno.test('gsap-svg-attr-conflict: fires on shorthand props {x, y, width, height}', () => {
+  const html = wrap(`
+    <script type="module">
+      bar.attr("x", d => xScale(d));
+      const x = 1, y = 2, width = 3, height = 4;
+      gsap.to(this, { duration: 0.22, x, y, width, height });
+    </script>
+  `);
+  assertRuleFired(html, BASE_PLAN, 'gsap-svg-attr-conflict', 'blocker');
+});
+
+Deno.test('gsap-svg-attr-conflict: fires even when props contain nested function bodies', () => {
+  // Reproduces the bubble-sort failure sample: gsap.to(this, {...}) inside .each(),
+  // with an onUpdate function body containing nested {}.
+  const html = wrap(`
+    <script type="module">
+      const enteringBars = bars.enter().append("rect")
+        .attr("x", (d, idx) => xScale(idx))
+        .attr("y", (d) => visualCard.clientHeight - yScale(d))
+        .attr("width", xScale.bandwidth())
+        .attr("height", (d) => yScale(d));
+
+      bars.merge(enteringBars).each(function(d, idx) {
+        gsap.to(this, {
+          duration: 0.22,
+          ease: 'power2.out',
+          x: xScale(idx),
+          y: visualCard.clientHeight - yScale(d),
+          width: xScale.bandwidth(),
+          height: yScale(d),
+          fill: '#abc',
+          onUpdate: function () {
+            d3.select(this).attr('aria-label', \`val \${d}\`);
+          }
+        });
+      });
+    </script>
+  `);
+  assertRuleFired(html, BASE_PLAN, 'gsap-svg-attr-conflict', 'blocker');
+});
+
+Deno.test('gsap-svg-attr-conflict: silent when nested onUpdate writes attrs but tween uses attr wrapper', () => {
+  const html = wrap(`
+    <script type="module">
+      bar.attr("x", d => xScale(d));
+      gsap.to(rect, {
+        duration: 0.22,
+        attr: { x: 100, y: 50, width: 30, height: 80 },
+        onUpdate: function () { console.log('updating'); }
+      });
+    </script>
+  `);
+  assertRuleSilent(html, BASE_PLAN, 'gsap-svg-attr-conflict');
+});
+
+// ── gsap-onupdate-attr-conflict ─────────────────────────────────────────────
+
+Deno.test('gsap-onupdate-attr-conflict: fires when onUpdate rewrites the same positional attr', () => {
+  const html = wrap(`
+    <script type="module">
+      gsap.to(this, {
+        duration: 0.3,
+        x: 100,
+        y: 50,
+        onUpdate: function () {
+          d3.select(this).attr('x', 200);
+        }
+      });
+    </script>
+  `);
+  assertRuleFired(html, BASE_PLAN, 'gsap-onupdate-attr-conflict', 'blocker');
+});
+
+Deno.test('gsap-onupdate-attr-conflict: fires when onUpdate uses setAttribute on transform', () => {
+  const html = wrap(`
+    <script type="module">
+      gsap.to(rect, {
+        duration: 0.3,
+        x: 100,
+        onUpdate: function () {
+          rect.setAttribute('transform', 'translate(10, 10)');
+        }
+      });
+    </script>
+  `);
+  assertRuleFired(html, BASE_PLAN, 'gsap-onupdate-attr-conflict', 'blocker');
+});
+
+Deno.test('gsap-onupdate-attr-conflict: silent when onUpdate touches unrelated attrs (aria-label)', () => {
+  const html = wrap(`
+    <script type="module">
+      gsap.to(this, {
+        duration: 0.3,
+        x: 100,
+        onUpdate: function () {
+          d3.select(this).attr('aria-label', 'hi');
+        }
+      });
+    </script>
+  `);
+  assertRuleSilent(html, BASE_PLAN, 'gsap-onupdate-attr-conflict');
+});
+
+Deno.test('gsap-onupdate-attr-conflict: silent when there is no bare positional prop', () => {
+  const html = wrap(`
+    <script type="module">
+      gsap.to(rect, {
+        duration: 0.3,
+        attr: { x: 100 },
+        onUpdate: function () {
+          d3.select(this).attr('x', 50);
+        }
+      });
+    </script>
+  `);
+  assertRuleSilent(html, BASE_PLAN, 'gsap-onupdate-attr-conflict');
+});
+
 // ── gsap-css-bezier-ease ────────────────────────────────────────────────────
 
 Deno.test('gsap-css-bezier-ease: fires when ease is a CSS bezier string', () => {

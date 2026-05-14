@@ -109,7 +109,7 @@ describe('migrateCourseJson', () => {
 
     expect(blocks[0]['type']).toBe('interactive-visual');
     expect(content['template']).toBe('generic');
-    expect(content['legacyCustomHtml']).toBe('<canvas></canvas>');
+    expect(content['generatedHtml']).toBe('<canvas></canvas>');
     expect(content['aiPrompt']).toBe('Show a pendulum.');
   });
 
