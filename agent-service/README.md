@@ -22,8 +22,27 @@ AGENT_SERVICE_CORS_ORIGINS=http://localhost:5180,http://127.0.0.1:5180
 SUPABASE_URL=https://YOUR_PROJECT.supabase.co
 SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 
-# 推荐沿用现有 Gemini 体系
+# 统一模型 API 服务配置；Viewer 的 AI 功能统一经由本服务转发
+AI_PROVIDER=google
+AI_MODEL=gemini-2.5-flash
+AI_API_KEY=
+AI_BASE_URL=
+
+# Provider-specific override
 GOOGLE_API_KEY=YOUR_GEMINI_KEY
+# Alias also supported for compatibility:
+GEMINI_API_KEY=
+GOOGLE_MODEL=gemini-2.5-flash
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta
+
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-5.4-mini
+OPENAI_BASE_URL=https://api.openai.com/v1
+
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-sonnet-4-6
+ANTHROPIC_BASE_URL=https://api.anthropic.com
+
 AGENT_MODEL=gemini-2.5-flash
 MEMORY_SUMMARY_MODEL=gemini-2.5-flash
 ```
@@ -41,6 +60,10 @@ uv run uvicorn app.main:app --reload --port 8787
 - `GET /healthz`
 - `POST /v1/chat`
 - `POST /v1/chat/stream`
+- `POST /v1/llm/tutor/reply`
+- `POST /v1/llm/tutor/quiz-from-docs`
+- `POST /v1/llm/tutor/mindmap-from-docs`
+- `POST /v1/llm/interactive-visual`
 - `GET /v1/memory/inspect`
 
 ## Memory 持久化结构
@@ -66,7 +89,7 @@ public.agent_thread_checkpoints
 - `agent_thread_checkpoints`: LangGraph checkpoint 持久化
 
 summary 不再写 `*.summary.md` 文件，而是写回 `agent_memories` 里的 `is_summary=true` 记录。
-如果配置了 `GOOGLE_API_KEY`，summary 合并会优先使用 Gemini；没有 key 时回退到规则压缩。
+如果配置了 `GOOGLE_API_KEY` / `GEMINI_API_KEY` / `AI_API_KEY`，summary 合并会优先使用统一模型服务；没有 key 时回退到规则压缩。
 
 ## Memory Inspector
 

@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.auth import AuthenticatedUser, require_user
-from app.config import get_settings
+from app.model_service import build_chat_model
 from app.schemas import (
     ChatHistoryMessage,
     TutorMindMapResponse,
@@ -44,12 +43,7 @@ async def _generate_structured_tool_output(kind: str, request: TutorToolRequest,
     if not request.history:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='history is required')
 
-    settings = get_settings()
-    model = ChatGoogleGenerativeAI(
-        model=settings.agent_model,
-        google_api_key=settings.google_api_key,
-        temperature=0.2,
-    ).with_structured_output(response_model)
+    model = build_chat_model(temperature=0.2).with_structured_output(response_model)
 
     prompt = _build_tool_prompt(kind, request)
     result = await model.ainvoke(prompt)

@@ -18,17 +18,17 @@ describe('geminiClient', () => {
     document.documentElement.lang = '';
   });
 
-  it('calls the edge function when fixture mode is explicitly disabled in tests', async () => {
+  it('calls the agent chat endpoint when fixture mode is explicitly disabled in tests', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    document.documentElement.lang = 'en';
     window.localStorage.setItem(
       'primoria.viewer.preferences',
       JSON.stringify({ language: 'zh-CN', aiTutorPersona: 'socratic' }),
     );
 
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify({ reply: 'Edge reply' }), {
+      new Response(JSON.stringify({ reply: 'Model reply' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       }),
@@ -37,28 +37,29 @@ describe('geminiClient', () => {
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
     const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
 
-    expect(reply).toBe('Edge reply');
+    expect(reply).toBe('Model reply');
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://demo-project.functions.supabase.co/viewer-ai-tutor',
+      'http://localhost:8787/v1/chat',
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
-          apikey: 'demo-anon-key',
+          Authorization: 'Bearer demo-access-token',
         }),
       }),
     );
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
-      persona: 'socratic',
+      context: expect.objectContaining({
+        ai_tutor_persona: 'socratic',
+      }),
     });
   });
 
-  it('surfaces API error payloads from the edge function', async () => {
+  it('surfaces API error payloads from the agent model endpoint', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
 
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify({ error: 'Tutor quota exceeded.' }), {
+      new Response(JSON.stringify({ detail: 'Tutor quota exceeded.' }), {
         status: 429,
         headers: { 'Content-Type': 'application/json' },
       }),
@@ -66,16 +67,17 @@ describe('geminiClient', () => {
 
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
 
-    await expect(generateTutorReply([{ role: 'user', text: 'Hello' }])).rejects.toThrow('Tutor quota exceeded.');
+    await expect(generateTutorReply([{ role: 'user', text: 'Hello' }], { route: 'model' })).rejects.toThrow(
+      'Tutor quota exceeded.',
+    );
   });
 
-  it('parses tutor edge responses wrapped in prose and fenced JSON', async () => {
+  it('parses tutor model responses wrapped in prose and fenced JSON', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
 
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response('Here is the JSON you asked for:\n```json\n{"reply":"Edge reply"}\n```\n', {
+      new Response('Here is the JSON you asked for:\n```json\n{"reply":"Model reply"}\n```\n', {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       }),
@@ -84,34 +86,27 @@ describe('geminiClient', () => {
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
     const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
 
-    expect(reply).toBe('Edge reply');
+    expect(reply).toBe('Model reply');
   });
 
-  it('retries the edge function once after a transient service unavailable response', async () => {
+  it('normalizes transient agent model outages', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    document.documentElement.lang = 'en';
 
-    const fetchMock = vi.spyOn(globalThis, 'fetch');
-    fetchMock
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ error: 'Temporary outage.' }), {
-          status: 503,
-          headers: { 'Content-Type': 'application/json' },
-        }),
-      )
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ reply: 'Recovered edge reply' }), {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-        }),
-      );
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ detail: 'Temporary outage.' }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
 
     const { generateTutorReply } = await import('@/shared/api/geminiClient');
-    const reply = await generateTutorReply([{ role: 'user', text: 'Hello' }]);
 
-    expect(reply).toBe('Recovered edge reply');
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    await expect(generateTutorReply([{ role: 'user', text: 'Hello' }], { route: 'model' })).rejects.toThrow(
+      'AI is temporarily unavailable. Please try again shortly.',
+    );
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('streams tutor replies from the agent service', async () => {
@@ -179,11 +174,9 @@ describe('geminiClient', () => {
     });
   });
 
-  it('falls back from the ai-tutor agent stream to the edge function when the agent is unavailable', async () => {
+  it('falls back from the ai-tutor agent stream to the agent model endpoint when the agent is unavailable', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
     vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
 
     const fetchMock = vi.spyOn(globalThis, 'fetch');
     fetchMock
@@ -194,7 +187,7 @@ describe('geminiClient', () => {
         }),
       )
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ reply: 'Edge fallback reply' }), {
+        new Response(JSON.stringify({ reply: 'Model fallback reply' }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' },
         }),
@@ -203,17 +196,15 @@ describe('geminiClient', () => {
     const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
     const result = await generateTutorReplyStream([{ role: 'user', text: 'Hello' }]);
 
-    expect(result.reply).toBe('Edge fallback reply');
+    expect(result.reply).toBe('Model fallback reply');
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls[0]?.[0]).toBe('http://localhost:8787/v1/chat/stream');
-    expect(fetchMock.mock.calls[1]?.[0]).toBe('https://demo-project.functions.supabase.co/viewer-ai-tutor');
+    expect(fetchMock.mock.calls[1]?.[0]).toBe('http://localhost:8787/v1/llm/tutor/reply');
   });
 
-  it('falls back from the lesson agent stream to the edge function with strict page context', async () => {
+  it('falls back from the lesson agent stream to the agent model endpoint with strict page context', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
     vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
     document.documentElement.lang = 'en';
 
     const fetchMock = vi.spyOn(globalThis, 'fetch');
@@ -225,7 +216,7 @@ describe('geminiClient', () => {
         }),
       )
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ reply: 'Grounded edge reply' }), {
+        new Response(JSON.stringify({ reply: 'Grounded model reply' }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' },
         }),
@@ -236,7 +227,6 @@ describe('geminiClient', () => {
       [{ role: 'user', text: 'Explain this page.' }],
       {},
       {
-        model: 'gemini-2.5-flash',
         allowModelFallback: false,
         context: {
           surface: 'lesson-runtime',
@@ -254,7 +244,7 @@ describe('geminiClient', () => {
       },
     );
 
-    expect(result.reply).toBe('Grounded edge reply');
+    expect(result.reply).toBe('Grounded model reply');
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls[0]?.[0]).toBe('http://localhost:8787/v1/chat/stream');
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
@@ -272,14 +262,28 @@ describe('geminiClient', () => {
         learner_state: 'Question 1: answered incorrectly',
       },
     });
-    expect(fetchMock.mock.calls[1]?.[0]).toBe('https://demo-project.functions.supabase.co/viewer-ai-tutor');
+    expect(fetchMock.mock.calls[1]?.[0]).toBe('http://localhost:8787/v1/llm/tutor/reply');
+    expect(JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body))).toMatchObject({
+      allowModelFallback: false,
+      context: {
+        surface: 'lesson-runtime',
+        courseId: 'course-1',
+        lessonId: 'lesson-1',
+        blockId: 'mc-1',
+        locale: 'en-US',
+        lessonTitle: 'Lesson A',
+        pageIndex: 1,
+        pageCount: 2,
+        pageTitle: 'Page 1',
+        pageContent: 'Visible content',
+        learnerState: 'Question 1: answered incorrectly',
+      },
+    });
   });
 
-  it('can force lesson ask-ai requests to bypass the agent and hit Gemini with explicit model context', async () => {
+  it('can force lesson ask-ai requests to bypass the agent chat stream and use the model endpoint', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
     vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
 
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(JSON.stringify({ reply: 'Grounded answer' }), {
@@ -293,8 +297,7 @@ describe('geminiClient', () => {
       [{ role: 'user', text: 'Explain this page.' }],
       {},
       {
-        provider: 'gemini',
-        model: 'gemini-2.5-flash',
+        route: 'model',
         allowModelFallback: false,
         context: {
           surface: 'lesson-runtime',
@@ -311,16 +314,15 @@ describe('geminiClient', () => {
     expect(result.reply).toBe('Grounded answer');
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://demo-project.functions.supabase.co/viewer-ai-tutor',
+      'http://localhost:8787/v1/llm/tutor/reply',
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
-          apikey: 'demo-anon-key',
+          Authorization: 'Bearer demo-access-token',
         }),
       }),
     );
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
-      model: 'gemini-2.5-flash',
       allowModelFallback: false,
       context: {
         surface: 'lesson-runtime',
@@ -336,8 +338,7 @@ describe('geminiClient', () => {
 
   it('normalizes lesson transport failures into a localized unavailable message', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
     document.documentElement.lang = 'zh-CN';
 
     vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('Failed to fetch'));
@@ -349,7 +350,7 @@ describe('geminiClient', () => {
         [{ role: 'user', text: 'Explain this page.' }],
         {},
         {
-          provider: 'gemini',
+          route: 'model',
           context: {
             surface: 'lesson-runtime',
             lessonId: 'lesson-1',
@@ -364,8 +365,7 @@ describe('geminiClient', () => {
 
   it('falls back to the built-in trigonometry visual reply when the visual service is unavailable', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
     document.documentElement.lang = 'en';
 
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
@@ -384,11 +384,10 @@ describe('geminiClient', () => {
     expect(result.reply).toContain('Drag the angle slider');
     expect(result.usedTools).toEqual(['interactive_visual_local']);
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://demo-project.functions.supabase.co/viewer-ai-interactive-visual',
+      'http://localhost:8787/v1/llm/interactive-visual',
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
-          apikey: 'demo-anon-key',
           Authorization: 'Bearer demo-access-token',
         }),
       }),

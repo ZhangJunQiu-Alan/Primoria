@@ -111,8 +111,6 @@ const extractTutorDocumentTextMock = vi.fn(async (file: File) => {
 });
 
 vi.mock('@/shared/api/geminiClient', () => ({
-  bootstrapGeminiKey: vi.fn(async () => 'demo-key'),
-  persistGeminiKey: vi.fn(async () => undefined),
   generateTutorReply: vi.fn(async () => '学习报告第一段。\n\n下一步建议。'),
   generateTutorReplyStream: vi.fn(async (_history, handlers) => {
     handlers?.onToken?.('Mock tutor reply');
@@ -439,17 +437,12 @@ describe('AiTutorPage', () => {
     });
   }, 30000);
 
-  it('stores runtime API keys, keeps mind maps in the notebook, and opens them in a new tab', async () => {
+  it('keeps mind maps in the notebook and opens them in a new tab', async () => {
     const user = userEvent.setup();
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null);
     renderRoute('/ai-tutor', 'user');
 
     expect(await screen.findByRole('heading', { name: /你好，我们慢慢把这件事理顺/i }, { timeout: 15000 })).toBeInTheDocument();
-
-    await user.type(await screen.findByPlaceholderText(/开始输入/i, {}, { timeout: 15000 }), '/apikey demo-key');
-    await user.click(await screen.findByRole('button', { name: /^发送$/i }, { timeout: 15000 }));
-
-    expect(await screen.findByText(/Gemini key 已保存在本地/i, {}, { timeout: 15000 })).toBeInTheDocument();
 
     const uploadInput = await screen.findByLabelText(/上传资料/i, {}, { timeout: 15000 });
     await user.upload(uploadInput, new File(['chapter 1'], 'chapter-1.pdf', { type: 'application/pdf' }));

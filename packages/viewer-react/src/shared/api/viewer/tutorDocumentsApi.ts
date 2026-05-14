@@ -21,6 +21,7 @@ import type {
   TutorDocument,
 } from '@/shared/api/viewer/types';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { supabase } from '@/shared/api/supabase';
 import { countMeaningfulChars } from '@/shared/utils/textStats';
 
@@ -275,33 +276,6 @@ function normalizeMindMapResponse(value: unknown): CreateMindMapFromDocsResponse
   };
 }
 
-function isResponse(value: unknown): value is Response {
-  return typeof Response !== 'undefined' && value instanceof Response;
-}
-
-async function readFunctionErrorResponse(response: Response) {
-  const contentType = response.headers.get('Content-Type')?.toLowerCase() ?? '';
-
-  try {
-    if (contentType.includes('application/json')) {
-      const payload = (await response.clone().json()) as Record<string, unknown>;
-      const message = ['error', 'message', 'details', 'hint']
-        .map((key) => payload[key])
-        .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
-        .join(' ')
-        .trim();
-
-      if (message) {
-        return message;
-      }
-    }
-
-    return (await response.clone().text()).trim();
-  } catch {
-    return '';
-  }
-}
-
 function createServiceUnavailableError(code: string, message: string, status?: number) {
   return Object.assign(new Error(message), {
     code,
@@ -309,46 +283,21 @@ function createServiceUnavailableError(code: string, message: string, status?: n
   });
 }
 
-function isMissingFunction(status: number, message: string) {
-  const normalized = message.toLowerCase();
-  return (
-    status === 404 ||
-    (normalized.includes('function') && normalized.includes('not found')) ||
-    normalized.includes('edge function not found')
-  );
-}
-
-async function normalizeDocsToolInvocationError(error: unknown, options: {
+function normalizeDocsToolInvocationError(error: unknown, options: {
   unavailableCode: string;
   fallbackMessage: string;
-}): Promise<never> {
+}): never {
   const record = error && typeof error === 'object' ? (error as Record<string, unknown>) : null;
-  const name = typeof record?.name === 'string' ? record.name : '';
-  const context = record?.context;
-  const response = isResponse(context) ? context : null;
-  const responseMessage = response ? await readFunctionErrorResponse(response) : '';
+  const status = typeof record?.status === 'number' ? record.status : undefined;
   const rawMessage = error instanceof Error ? error.message.trim() : '';
-  const message = responseMessage || rawMessage;
+  const message = rawMessage || options.fallbackMessage;
 
-  if (name === 'FunctionsFetchError' || name === 'FunctionsRelayError') {
+  if (!status || status >= 500 || status === 404) {
     throw createServiceUnavailableError(
       options.unavailableCode,
-      message || 'Failed to send a request to the Edge Function',
+      message,
+      status,
     );
-  }
-
-  if (response) {
-    if (isMissingFunction(response.status, message)) {
-      throw createServiceUnavailableError(
-        options.unavailableCode,
-        message || 'Edge Function returned a non-2xx status code',
-        response.status,
-      );
-    }
-
-    if (responseMessage) {
-      throw new Error(responseMessage);
-    }
   }
 
   if (error instanceof Error) {
@@ -370,20 +319,6 @@ async function requireTutorUserId() {
   }
 
   return userId;
-}
-
-async function getTutorAccessToken() {
-  const { data, error } = await supabase.auth.getSession();
-  if (error) {
-    throw error;
-  }
-
-  const accessToken = data.session?.access_token?.trim();
-  if (!accessToken) {
-    throw new Error(getTutorDocsCopy().signInGenerateQuiz);
-  }
-
-  return accessToken;
 }
 
 function normalizeMindMapStorage(value: Json, rowId: string): StoredMindMapDocument {
@@ -645,16 +580,14 @@ export async function createQuizFromDocs(payload: CreateQuizFromDocsRequest) {
     throw new Error(getTutorDocsCopy().demoQuiz);
   }
 
-  const accessToken = await getTutorAccessToken();
-  const { data, error } = await supabase.functions.invoke('viewer-ai-quiz-from-docs', {
-    body: payload,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (error) {
-    await normalizeDocsToolInvocationError(error, {
+  let data: unknown;
+  try {
+    data = await fetchAgentJson('/v1/llm/tutor/quiz-from-docs', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  } catch (error) {
+    normalizeDocsToolInvocationError(error, {
       unavailableCode: QUIZ_SERVICE_UNAVAILABLE_CODE,
       fallbackMessage: getTutorDocsCopy().quizUnavailable,
     });
@@ -668,16 +601,14 @@ export async function createMindMapFromDocs(payload: CreateMindMapFromDocsReques
     throw new Error(getTutorDocsCopy().demoMindMapCreate);
   }
 
-  const accessToken = await getTutorAccessToken();
-  const { data, error } = await supabase.functions.invoke('viewer-ai-mindmap-from-docs', {
-    body: payload,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (error) {
-    await normalizeDocsToolInvocationError(error, {
+  let data: unknown;
+  try {
+    data = await fetchAgentJson('/v1/llm/tutor/mindmap-from-docs', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  } catch (error) {
+    normalizeDocsToolInvocationError(error, {
       unavailableCode: MINDMAP_SERVICE_UNAVAILABLE_CODE,
       fallbackMessage: getTutorDocsCopy().mindMapUnavailable,
     });

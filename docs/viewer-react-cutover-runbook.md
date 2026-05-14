@@ -38,7 +38,10 @@ Optional frontend values:
 - `VITE_VIEWER_COMMUNITY_ENABLED`
 
 Agent-service secrets:
-- `GEMINI_API_KEY`
+- `AI_PROVIDER`
+- `AI_MODEL`
+- `AI_API_KEY` / provider-specific key such as `GOOGLE_API_KEY`, `GEMINI_API_KEY`, `OPENAI_API_KEY`, or `ANTHROPIC_API_KEY`
+- optional `AI_BASE_URL` / provider-specific base URL
 
 Cloud smoke runtime:
 - `VIEWER_BASE_URL`

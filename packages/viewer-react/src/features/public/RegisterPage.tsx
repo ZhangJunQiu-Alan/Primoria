@@ -23,6 +23,25 @@ import { publicAssetPath } from '@/shared/utils/publicAsset';
 type RegisterField = 'name' | 'email' | 'password' | 'confirmPassword';
 type Provider = 'google' | 'apple' | 'email' | null;
 
+function buildSignupUsername(displayName: string, email: string) {
+  const emailLocalPart = email.split('@')[0]?.trim() || 'user';
+  const base = displayName.trim() || emailLocalPart;
+  const normalizedBase = base
+    .replace(/\s+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 21);
+  const safeBase = normalizedBase.length >= 3 ? normalizedBase : `user-${emailLocalPart}`.slice(0, 21);
+  const uniquenessSuffix = email
+    .trim()
+    .toLowerCase()
+    .split('')
+    .reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 0)
+    .toString(36)
+    .slice(0, 8);
+
+  return `${safeBase}-${uniquenessSuffix}`.slice(0, 32);
+}
+
 export function RegisterPage() {
   const copy = usePublicCopy();
   const navigate = useNavigate();
@@ -87,6 +106,8 @@ export function RegisterPage() {
     setLoadingProvider('email');
     captureViewerEvent('viewer_register_started');
 
+    const signupUsername = buildSignupUsername(result.data.name, result.data.email);
+
     try {
       const { data, error } = await runAuthRequest(() =>
         supabase.auth.signUp({
@@ -95,8 +116,8 @@ export function RegisterPage() {
           options: {
             emailRedirectTo: buildAuthCallbackUrl(returnTo),
             data: {
-              name: result.data.name,
-              username: result.data.name,
+              name: signupUsername,
+              username: signupUsername,
               display_name: result.data.name,
             },
           },

@@ -2,13 +2,8 @@ from __future__ import annotations
 
 import re
 
-import httpx
+from app.model_service import invoke_text_model
 
-from app.config import get_settings
-
-GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
-MODEL = 'gemini-2.0-flash'
-MAX_OUTPUT_TOKENS = 8192
 
 SYSTEM_PROMPT = """You are an expert STEM animation engineer. Your task is to generate a single,
 self-contained HTML file that visually animates a STEM concept described by the teacher.
@@ -74,48 +69,19 @@ async def generate_interactive_visual_html(
     title: str | None = None,
     description: str | None = None,
 ) -> str:
-    settings = get_settings()
-    if not settings.google_api_key:
-        raise RuntimeError('Platform AI service not configured')
-
-    gemini_url = f'{GEMINI_BASE_URL}/models/{MODEL}:generateContent?key={settings.google_api_key}'
-    gemini_body = {
-        'system_instruction': {'parts': [{'text': SYSTEM_PROMPT}]},
-        'contents': [
-            {
-                'role': 'user',
-                'parts': [
-                    {
-                        'text': build_visual_prompt(
-                            prompt=prompt,
-                            template=template,
-                            title=title,
-                            description=description,
-                        )
-                    }
-                ],
-            }
-        ],
-        'generationConfig': {
-            'temperature': 0.7,
-            'maxOutputTokens': MAX_OUTPUT_TOKENS,
-        },
-    }
-
-    async with httpx.AsyncClient(timeout=60.0) as client:
-        response = await client.post(
-            gemini_url,
-            headers={'Content-Type': 'application/json'},
-            json=gemini_body,
-        )
-
-    if not response.is_success:
-        raise RuntimeError(f'AI generation failed ({response.status_code})')
-
-    payload = response.json()
-    raw = (((payload.get('candidates') or [{}])[0] or {}).get('content') or {}).get('parts') or [{}]
-    text = str((raw[0] or {}).get('text') or '')
-    html = normalize_gemini_html(text)
+    raw = await invoke_text_model(
+        system_prompt=SYSTEM_PROMPT,
+        user_prompt=build_visual_prompt(
+            prompt=prompt,
+            template=template,
+            title=title,
+            description=description,
+        ),
+        temperature=0.7,
+        timeout_seconds=60.0,
+    )
+    html = normalize_gemini_html(raw)
     if not html.strip():
         raise RuntimeError('AI returned empty response')
     return html
+

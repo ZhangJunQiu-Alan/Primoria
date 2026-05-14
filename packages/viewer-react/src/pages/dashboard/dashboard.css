@@ -749,7 +749,7 @@
 
 .studio-controls-card {
   display: grid;
-  grid-template-columns: minmax(24rem, 38rem) minmax(0, 1fr);
+  grid-template-columns: minmax(24rem, 38rem) minmax(0, 1fr) auto;
   gap: 0.8rem;
   align-items: center;
   padding: 0.9rem;
@@ -824,6 +824,30 @@
   background: rgba(223, 240, 224, 0.88);
   border-color: rgba(168, 197, 172, 0.4);
   color: var(--studio-primary-dark);
+}
+
+.studio-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(141, 124, 105, 0.2);
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--studio-text-sub);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.studio-sort select {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--studio-text);
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
 }
 
 .studio-button,

@@ -21,9 +21,6 @@ class ChatContext(BaseModel):
     page_title: str | None = None
     page_content: str | None = None
     learner_state: str | None = None
-    ai_provider: str | None = None
-    ai_base_url: str | None = None
-    ai_api_key: str | None = None
 
 
 class ChatRequest(BaseModel):
@@ -118,6 +115,69 @@ class TutorPresentationSlide(BaseModel):
 class TutorPresentationResponse(BaseModel):
     title: str
     slides: list[TutorPresentationSlide] = Field(default_factory=list)
+
+
+class GenerateTutorReplyRequest(BaseModel):
+    mode: Literal['reply'] = 'reply'
+    history: list[ChatHistoryMessage] = Field(default_factory=list)
+    persona: str | None = None
+    allowModelFallback: bool = True
+    context: dict[str, Any] | None = None
+
+
+class GenerateTutorReplyResponse(BaseModel):
+    reply: str
+
+
+class CreateQuizFromDocsRequest(BaseModel):
+    documentIds: list[str] = Field(default_factory=list)
+    questionCount: int = 10
+    language: Literal['en', 'zh-CN'] = 'en'
+
+
+class CreateQuizFromDocsResponse(BaseModel):
+    courseId: str
+    courseTitle: str
+
+
+class CreateMindMapFromDocsRequest(BaseModel):
+    documentIds: list[str] = Field(default_factory=list)
+    prompt: str | None = None
+
+
+class LegacyMindMapNode(BaseModel):
+    id: str
+    label: str
+    children: list['LegacyMindMapNode'] = Field(default_factory=list)
+
+
+class CreateMindMapFromDocsResponse(BaseModel):
+    title: str
+    mindMapId: str
+    root: LegacyMindMapNode
+
+
+class CreateInteractiveVisualRequest(BaseModel):
+    prompt: str = Field(min_length=1)
+    template: str | None = None
+    experienceMode: str | None = None
+    title: str | None = None
+    description: str | None = None
+    language: Literal['en', 'zh-CN'] = 'en'
+    surface: Literal['builder', 'ai-tutor'] = 'builder'
+
+
+class CreateInteractiveVisualResponse(BaseModel):
+    version: str = '1'
+    engine: str = 'interactive-html5'
+    template: str = 'generic'
+    experienceMode: str = 'simulation'
+    title: str
+    description: str | None = None
+    aiPrompt: str
+    generatedHtml: str
+    themeTone: str | None = None
+    runtime: dict[str, Any] = Field(default_factory=dict)
 
 
 class CourseDetailLesson(BaseModel):
@@ -302,12 +362,15 @@ class BuilderImportCourseRequest(BaseModel):
     raw: dict[str, Any]
 
 
-class GenerateInteractiveVisualRequest(BaseModel):
+class GenerateBuilderInteractiveVisualRequest(BaseModel):
     prompt: str = Field(min_length=1)
     template: str | None = None
     title: str | None = None
     description: str | None = None
 
 
-class GenerateInteractiveVisualResponse(BaseModel):
+class GenerateBuilderInteractiveVisualResponse(BaseModel):
     html: str
+
+
+LegacyMindMapNode.model_rebuild()

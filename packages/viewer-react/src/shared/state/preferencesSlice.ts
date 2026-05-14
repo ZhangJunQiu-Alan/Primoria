@@ -29,18 +29,7 @@ export type ViewerPreferencesState = {
   shareLearningActivity: boolean;
   allowFollowers: boolean;
   wifiOnlyDownloads: boolean;
-  aiProvider: 'google' | 'openai' | 'anthropic';
-  aiBaseUrl: string;
-  aiApiKey: string;
 };
-
-function normalizeAiProvider(value: unknown): 'google' | 'openai' | 'anthropic' {
-  return value === 'openai' || value === 'anthropic' ? value : 'google';
-}
-
-function normalizeOptionalString(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value.trim() : '';
-}
 
 const defaultState: ViewerPreferencesState = {
   themeMode: 'system',
@@ -61,9 +50,6 @@ const defaultState: ViewerPreferencesState = {
   shareLearningActivity: true,
   allowFollowers: true,
   wifiOnlyDownloads: false,
-  aiProvider: 'google',
-  aiBaseUrl: '',
-  aiApiKey: '',
 };
 
 function loadState(): ViewerPreferencesState {
@@ -87,9 +73,6 @@ function loadState(): ViewerPreferencesState {
       language: normalizeViewerLanguage(parsed.language),
       aiTutorPersona: normalizeAiTutorPersona(parsed.aiTutorPersona),
       homeCompanionEnabled: parsed.homeCompanionEnabled !== false,
-      aiProvider: normalizeAiProvider(parsed.aiProvider),
-      aiBaseUrl: normalizeOptionalString(parsed.aiBaseUrl),
-      aiApiKey: normalizeOptionalString(parsed.aiApiKey),
     };
   } catch {
     return {

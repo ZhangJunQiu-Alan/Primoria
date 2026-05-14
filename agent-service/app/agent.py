@@ -6,9 +6,6 @@ from datetime import datetime, timezone
 from typing import Any, AsyncIterator
 
 from deepagents import create_deep_agent
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
 
 from app.auth import AuthenticatedUser
 from app.config import get_settings
@@ -19,54 +16,19 @@ from app.memory import (
     search_user_memories,
     thread_checkpoint_exists,
 )
+from app.model_service import build_chat_model
 from app.prompts import build_user_prompt
-from app.schemas import ChatHistoryMessage, ChatRequest, ChatResponse
+from app.schemas import ChatContext, ChatHistoryMessage, ChatRequest, ChatResponse
 from app.services.supabase_client import SupabaseUserClient
 from app.thread_store import build_thread_record_payload
 from app.tools import build_all_tools
 
 
-def build_llm_from_context(context: ChatRequest.context) -> Any:
-    """Build an LLM client based on the user's AI provider settings."""
+def build_llm_from_context(_context: ChatContext) -> Any:
+    """Build the backend-configured LLM client."""
     settings = get_settings()
-    provider = context.ai_provider or 'google'
-
-    if provider == 'openai':
-        api_key = context.ai_api_key or ''
-        if not api_key:
-            raise ValueError('OpenAI API key is required when using OpenAI provider.')
-        base_url = (context.ai_base_url or '').rstrip('/')
-        if base_url and not base_url.endswith('/v1'):
-            base_url = f'{base_url}/v1'
-        return ChatOpenAI(
-            model='gpt-5.4-mini',
-            api_key=api_key,
-            base_url=base_url or None,
-            temperature=0.3,
-        )
-
-    if provider == 'anthropic':
-        api_key = context.ai_api_key or ''
-        if not api_key:
-            raise ValueError('Anthropic API key is required when using Anthropic provider.')
-        base_url = (context.ai_base_url or '').rstrip('/')
-        # Anthropic client appends /v1/messages, so strip any /v1 suffix
-        if base_url.endswith('/v1'):
-            base_url = base_url[:-3]
-        return ChatAnthropic(
-            model='claude-sonnet-4-6',
-            api_key=api_key,
-            base_url=base_url or None,
-            temperature=0.3,
-        )
-
-    # Default: Google Gemini
-    api_key = context.ai_api_key or settings.google_api_key or ''
-    if not api_key:
-        raise ValueError('Google API key is required when using Google provider.')
-    return ChatGoogleGenerativeAI(
-        model=settings.agent_model,
-        google_api_key=api_key,
+    return build_chat_model(
+        provider=settings.ai_provider,
         temperature=0.3,
     )
 

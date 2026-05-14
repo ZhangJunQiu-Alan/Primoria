@@ -597,52 +597,6 @@ export function AssistantSettingsSection({ model }: { model: SettingsPageModel }
         </div>
       </div>
 
-      <div className="rounded-[24px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
-        <div className="flex items-center gap-2 text-sm font-black text-[var(--viewer-text)]">
-          <Globe size={16} />
-          <span>{copy.aiTutor.provider}</span>
-        </div>
-        <p className="mt-2 text-sm font-medium leading-6 text-[var(--viewer-text-muted)]">{copy.aiTutor.providerHint}</p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          {([
-            { key: 'google', label: copy.aiTutor.providerGoogle },
-            { key: 'openai', label: copy.aiTutor.providerOpenAI },
-            { key: 'anthropic', label: copy.aiTutor.providerAnthropic },
-          ] as const).map((option) => (
-            <ChoicePill
-              key={option.key}
-              active={systemDraft.ai_provider === option.key}
-              label={option.label}
-              onClick={() => {
-                setSystemDraft((current) => ({ ...current, ai_provider: option.key }));
-                saveSystemMutation.mutate({ ai_provider: option.key });
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="space-y-4 rounded-[24px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
-        <TextField
-          label={copy.aiTutor.baseUrl}
-          value={systemDraft.ai_base_url}
-          onChange={(value) => setSystemDraft((current) => ({ ...current, ai_base_url: value }))}
-        />
-        <TextField
-          label={copy.aiTutor.apiKey}
-          value={systemDraft.ai_api_key}
-          onChange={(value) => setSystemDraft((current) => ({ ...current, ai_api_key: value }))}
-        />
-        <button
-          type="button"
-          className="viewer-botanical-button viewer-botanical-button--primary"
-          onClick={() => saveSystemMutation.mutate({ ai_provider: systemDraft.ai_provider, ai_base_url: systemDraft.ai_base_url, ai_api_key: systemDraft.ai_api_key })}
-          disabled={saveSystemMutation.isPending}
-        >
-          {copy.common.save}
-        </button>
-      </div>
-
       <div className="grid gap-4 lg:grid-cols-2">
         <ToggleTile
           label={copy.aiTutor.homeCompanion.label}

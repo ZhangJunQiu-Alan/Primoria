@@ -1,7 +1,7 @@
 const insertMock = vi.fn();
 const selectMock = vi.fn();
 const orderMock = vi.fn();
-const invokeMock = vi.fn();
+const fetchMock = vi.fn();
 const deleteEqMock = vi.fn();
 const deleteEqBuilder = { eq: deleteEqMock };
 const deleteMock = vi.fn(() => deleteEqBuilder);
@@ -35,15 +35,14 @@ vi.mock('@/shared/api/supabase', () => ({
       })),
     },
     from: fromMock,
-    functions: {
-      invoke: invokeMock,
-    },
   },
 }));
 
 describe('tutorDocumentsApi', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.stubEnv('VITE_AGENT_SERVICE_URL', 'http://localhost:8787');
+    vi.spyOn(globalThis, 'fetch').mockImplementation(fetchMock);
 
     orderMock.mockResolvedValue({ data: [], error: null });
     selectMock.mockReturnValue({ order: orderMock });
@@ -76,7 +75,18 @@ describe('tutorDocumentsApi', () => {
       error: null,
     });
     deleteEqMock.mockResolvedValue({ error: null });
-    invokeMock.mockResolvedValue({ data: { courseId: 'course-1', courseTitle: 'Quiz' }, error: null });
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ courseId: 'course-1', courseTitle: 'Quiz' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
+    vi.resetModules();
   });
 
   it('inserts tutor documents with the signed-in user id', async () => {
@@ -248,12 +258,7 @@ describe('tutorDocumentsApi', () => {
 
   it('maps transport failures to a quiz service unavailable error', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    invokeMock.mockResolvedValue({
-      data: null,
-      error: Object.assign(new Error('Failed to send a request to the Edge Function'), {
-        name: 'FunctionsFetchError',
-      }),
-    });
+    fetchMock.mockRejectedValue(new TypeError('Failed to fetch'));
 
     const { createQuizFromDocs } = await import('@/shared/api/viewer/tutorDocumentsApi');
 
@@ -265,30 +270,24 @@ describe('tutorDocumentsApi', () => {
       }),
     ).rejects.toMatchObject({
       code: 'TUTOR_QUIZ_SERVICE_UNAVAILABLE',
-      message: 'Failed to send a request to the Edge Function',
+      message: 'Failed to fetch',
     });
-    expect(invokeMock).toHaveBeenCalledWith(
-      'viewer-ai-quiz-from-docs',
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:8787/v1/llm/tutor/quiz-from-docs',
       expect.objectContaining({
-        headers: {
-          Authorization: 'Bearer session-token-123',
-        },
+        method: 'POST',
       }),
     );
   });
 
-  it('surfaces backend quiz errors from function responses', async () => {
+  it('surfaces backend quiz errors from agent responses', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    invokeMock.mockResolvedValue({
-      data: null,
-      error: Object.assign(new Error('Edge Function returned a non-2xx status code'), {
-        name: 'FunctionsHttpError',
-        context: new Response(JSON.stringify({ error: 'The selected documents are too long. Remove some and try again.' }), {
-          status: 413,
-          headers: { 'Content-Type': 'application/json' },
-        }),
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ detail: 'The selected documents are too long. Remove some and try again.' }), {
+        status: 413,
+        headers: { 'Content-Type': 'application/json' },
       }),
-    });
+    );
 
     const { createQuizFromDocs } = await import('@/shared/api/viewer/tutorDocumentsApi');
 
@@ -303,8 +302,8 @@ describe('tutorDocumentsApi', () => {
 
   it('creates a docs-based mind map and validates the response shape', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    invokeMock.mockResolvedValueOnce({
-      data: {
+    fetchMock.mockResolvedValueOnce(
+      new Response(JSON.stringify({
         title: 'Physics review',
         mindMapId: 'mindmap-1',
         root: {
@@ -312,9 +311,11 @@ describe('tutorDocumentsApi', () => {
           label: 'Physics review',
           children: [{ id: 'child-1', label: 'Motion' }],
         },
-      },
-      error: null,
-    });
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
 
     const { createMindMapFromDocs } = await import('@/shared/api/viewer/tutorDocumentsApi');
     const result = await createMindMapFromDocs({
@@ -325,25 +326,21 @@ describe('tutorDocumentsApi', () => {
     expect(result.title).toBe('Physics review');
     expect(result.mindMapId).toBe('mindmap-1');
     expect(result.root.children?.[0]?.label).toBe('Motion');
-    expect(invokeMock).toHaveBeenCalledWith(
-      'viewer-ai-mindmap-from-docs',
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:8787/v1/llm/tutor/mindmap-from-docs',
       expect.objectContaining({
-        body: {
+        method: 'POST',
+        body: JSON.stringify({
           documentIds: ['doc-1'],
           prompt: 'Focus on cause and effect.',
-        },
+        }),
       }),
     );
   });
 
   it('maps transport failures to a mind map service unavailable error', async () => {
     vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
-    invokeMock.mockResolvedValueOnce({
-      data: null,
-      error: Object.assign(new Error('Failed to send a request to the Edge Function'), {
-        name: 'FunctionsFetchError',
-      }),
-    });
+    fetchMock.mockRejectedValueOnce(new TypeError('Failed to fetch'));
 
     const { createMindMapFromDocs } = await import('@/shared/api/viewer/tutorDocumentsApi');
 
@@ -353,7 +350,7 @@ describe('tutorDocumentsApi', () => {
       }),
     ).rejects.toMatchObject({
       code: 'TUTOR_MINDMAP_SERVICE_UNAVAILABLE',
-      message: 'Failed to send a request to the Edge Function',
+      message: 'Failed to fetch',
     });
   });
 });

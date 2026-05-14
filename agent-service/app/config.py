@@ -20,7 +20,21 @@ class Settings(BaseSettings):
     supabase_url: str = Field(alias='SUPABASE_URL')
     supabase_anon_key: str = Field(alias='SUPABASE_ANON_KEY')
 
+    ai_provider: str = Field(default='google', alias='AI_PROVIDER')
+    ai_model: str | None = Field(default=None, alias='AI_MODEL')
+    ai_api_key: str | None = Field(default=None, alias='AI_API_KEY')
+    ai_base_url: str | None = Field(default=None, alias='AI_BASE_URL')
+
     google_api_key: str | None = Field(default=None, alias='GOOGLE_API_KEY')
+    gemini_api_key: str | None = Field(default=None, alias='GEMINI_API_KEY')
+    google_model: str | None = Field(default=None, alias='GOOGLE_MODEL')
+    gemini_base_url: str = Field(default='https://generativelanguage.googleapis.com/v1beta', alias='GEMINI_BASE_URL')
+    openai_api_key: str | None = Field(default=None, alias='OPENAI_API_KEY')
+    openai_model: str = Field(default='gpt-5.4-mini', alias='OPENAI_MODEL')
+    openai_base_url: str | None = Field(default=None, alias='OPENAI_BASE_URL')
+    anthropic_api_key: str | None = Field(default=None, alias='ANTHROPIC_API_KEY')
+    anthropic_model: str = Field(default='claude-sonnet-4-6', alias='ANTHROPIC_MODEL')
+    anthropic_base_url: str | None = Field(default=None, alias='ANTHROPIC_BASE_URL')
     agent_model: str = Field(default='gemini-2.5-flash', alias='AGENT_MODEL')
     memory_summary_model: str = Field(default='gemini-2.5-flash', alias='MEMORY_SUMMARY_MODEL')
     agent_system_prompt: str = Field(
@@ -33,6 +47,8 @@ class Settings(BaseSettings):
             'If the learner shares a stable preference, goal, background fact, or explicitly asks you to remember something, call remember_user_memory before answering. '
             'If the learner asks what you remember, what you know about them, or asks for a memory overview, call inspect_user_memory_overview before answering. '
             'When personalization would help, call recall_user_memories to ground the reply in what you already know. '
+            'When the learner asks to visualize, draw, diagram, animate, simulate, plot, graph, or make an idea interactive, call create_interactive_visual_widget. '
+            'After using create_interactive_visual_widget, include the returned markdown field verbatim in your final answer so the frontend can render it. '
             'Be concise, practical, and supportive.'
         ),
         alias='AGENT_SYSTEM_PROMPT',

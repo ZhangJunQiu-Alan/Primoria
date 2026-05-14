@@ -18,6 +18,10 @@ if [[ -z "${VITE_SUPABASE_ANON_KEY:-}" && -n "${SUPABASE_ANON_KEY:-}" ]]; then
   export VITE_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
 fi
 
+if [[ -z "${VITE_AGENT_SERVICE_URL:-}" && -n "${AGENT_SERVICE_URL:-}" ]]; then
+  export VITE_AGENT_SERVICE_URL="$AGENT_SERVICE_URL"
+fi
+
 case $APP in
   viewer)
     cd "$ROOT_DIR"

@@ -2,6 +2,11 @@ import {
   inferInteractiveVisualMode,
   type InteractiveVisualMode,
 } from '@/shared/interactive/interactiveVisualModes';
+import {
+  buildPrimoriaInteractiveVisualSrcDoc,
+  INTERACTIVE_VISUAL_ANALYTICS_EVENT,
+  INTERACTIVE_VISUAL_RESIZE_EVENT,
+} from '@/shared/interactive/interactiveVisualDocument';
 
 export type InteractiveVisualArtifact = {
   version: string;
@@ -26,8 +31,8 @@ type InteractiveVisualGenerationRequest = {
 const DEFAULT_HEIGHT = 430;
 const MAX_HEIGHT = 900;
 const MIN_HEIGHT = 320;
-const EMBED_EVENT_TYPE = 'primoria:interactive-visual-height';
-const ANALYTICS_EVENT_TYPE = 'primoria:interactive-visual-analytics';
+const EMBED_EVENT_TYPE = INTERACTIVE_VISUAL_RESIZE_EVENT;
+const ANALYTICS_EVENT_TYPE = INTERACTIVE_VISUAL_ANALYTICS_EVENT;
 
 function trimOptionalString(value: unknown) {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
@@ -37,6 +42,15 @@ function stripMarkdownFences(value: string) {
   const trimmed = value.trim();
   const fenced = /```(?:html)?\s*([\s\S]*?)```/i.exec(trimmed)?.[1];
   return (fenced ?? trimmed).trim();
+}
+
+
+function escapeAttribute(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
 }
 
 function humanizePrompt(prompt: string) {
@@ -148,112 +162,8 @@ export function normalizeInteractiveVisualArtifact(
   };
 }
 
-function escapeAttribute(value: string) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('"', '&quot;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;');
-}
-
 export function buildInteractiveVisualSrcDoc(html: string, title: string) {
-  const fragment = stripMarkdownFences(html);
-  const safeTitle = escapeAttribute(title || 'Interactive visual');
-
-  return `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${safeTitle}</title>
-    <style>
-      :root {
-        color-scheme: light;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-        background: transparent;
-        overflow-x: hidden;
-        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
-      body {
-        min-height: 100vh;
-      }
-      *, *::before, *::after {
-        box-sizing: border-box;
-      }
-    </style>
-  </head>
-  <body>
-    ${fragment}
-    <script>
-      (function () {
-        const EVENT_TYPE = '${EMBED_EVENT_TYPE}';
-        const ANALYTICS_TYPE = '${ANALYTICS_EVENT_TYPE}';
-        function track(eventName, payload) {
-          parent.postMessage(
-            {
-              type: ANALYTICS_TYPE,
-              eventName: eventName,
-              payload: payload && typeof payload === 'object' ? payload : {}
-            },
-            '*'
-          );
-        }
-
-        window.PrimoriaInteractive = {
-          track: track,
-        };
-
-        function measure() {
-          const height = Math.max(
-            document.documentElement.scrollHeight,
-            document.body.scrollHeight,
-            document.documentElement.offsetHeight,
-            document.body.offsetHeight
-          );
-          parent.postMessage({ type: EVENT_TYPE, height: height }, '*');
-        }
-
-        const resizeObserver = new ResizeObserver(measure);
-        resizeObserver.observe(document.body);
-        document.addEventListener('click', function (event) {
-          const target = event.target instanceof Element ? event.target.closest('button,[role="button"],[data-primoria-action]') : null;
-          if (!target) {
-            return;
-          }
-          track('action_clicked', {
-            controlId: target.getAttribute('id') || target.getAttribute('data-primoria-action') || target.textContent?.trim()?.slice(0, 80) || 'action',
-            tagName: target.tagName.toLowerCase(),
-          });
-        });
-        document.addEventListener('input', function (event) {
-          const target = event.target;
-          if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)) {
-            return;
-          }
-          track('control_changed', {
-            controlId: target.id || target.name || target.getAttribute('aria-label') || target.tagName.toLowerCase(),
-            inputType: target instanceof HTMLInputElement ? target.type || 'text' : target.tagName.toLowerCase(),
-            value:
-              target instanceof HTMLInputElement && (target.type === 'checkbox' || target.type === 'radio')
-                ? Boolean(target.checked)
-                : String(target.value).slice(0, 120),
-          });
-        });
-        window.addEventListener('load', measure);
-        window.addEventListener('load', function () {
-          track('visual_loaded', { title: ${JSON.stringify(title || 'Interactive visual')} });
-        });
-        window.addEventListener('resize', measure);
-        requestAnimationFrame(measure);
-        setTimeout(measure, 120);
-        setTimeout(measure, 600);
-      })();
-    </script>
-  </body>
-</html>`;
+  return buildPrimoriaInteractiveVisualSrcDoc(html, title);
 }
 
 export function interactiveVisualEmbedDefaults() {

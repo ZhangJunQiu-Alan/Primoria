@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { BookOpen, Home, PanelsTopLeft, Sparkles, UserRound, Users } from 'lucide-react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { prefetchViewerNavigationTarget } from '@/shared/api/viewer/prefetch';
+import { prefetchViewerNavigationTarget } from '@/shared/api/viewer/routePrefetch';
 import { useAppSelector } from '@/shared/state/store';
 import { useCoreCopy } from '@/shared/theme/coreCopy';
 import { cn } from '@/shared/utils/cn';

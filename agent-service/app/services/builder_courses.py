@@ -9,10 +9,10 @@ from uuid import UUID
 from uuid import uuid4
 
 from deepagents import create_deep_agent
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.config import get_settings
 from app.memory import save_user_memory, search_user_memories
+from app.model_service import build_chat_model
 from app.schemas import (
     BuilderBlock,
     BuilderCourseMutationRequest,
@@ -82,18 +82,17 @@ def generation_model_candidates() -> list[str]:
     return unique
 
 
-def build_generation_model(model_name: str | None = None) -> ChatGoogleGenerativeAI:
+def build_generation_model(model_name: str | None = None):
     settings = get_settings()
-    if not settings.google_api_key:
+    if not (settings.google_api_key or settings.gemini_api_key or settings.ai_api_key):
         raise RuntimeError('Course generation is not configured on the backend.')
-    return ChatGoogleGenerativeAI(
+    return build_chat_model(
         model=model_name or settings.agent_model,
-        google_api_key=settings.google_api_key,
         temperature=0.35,
     )
 
 
-async def invoke_structured_generation(prompt: str, schema_type, *, model: ChatGoogleGenerativeAI | None = None):
+async def invoke_structured_generation(prompt: str, schema_type, *, model: Any | None = None):
     if model is not None:
         structured_model = model.with_structured_output(schema_type)
         return schema_type.model_validate(await asyncio.wait_for(structured_model.ainvoke(prompt), timeout=60))
@@ -294,7 +293,7 @@ async def invoke_course_generation_agent(
     return brief, outline, critique, plan, draft, revised, generation_context, used_tools
 
 
-async def generate_course_brief(context: dict, *, model: ChatGoogleGenerativeAI | None = None) -> GeneratedCourseBrief:
+async def generate_course_brief(context: dict, *, model: Any | None = None) -> GeneratedCourseBrief:
     return await invoke_structured_generation(
         build_course_brief_prompt(context),
         GeneratedCourseBrief,
@@ -306,7 +305,7 @@ async def generate_course_outline(
     context: dict,
     brief: GeneratedCourseBrief,
     *,
-    model: ChatGoogleGenerativeAI | None = None,
+    model: Any | None = None,
 ) -> GeneratedCourseOutline:
     return await invoke_structured_generation(
         build_course_outline_prompt(context, brief),
@@ -320,7 +319,7 @@ async def generate_course_plan(
     brief: GeneratedCourseBrief,
     outline: GeneratedCourseOutline,
     *,
-    model: ChatGoogleGenerativeAI | None = None,
+    model: Any | None = None,
 ) -> GeneratedCoursePlan:
     return await invoke_structured_generation(
         build_course_plan_prompt(context, brief, outline),
@@ -335,7 +334,7 @@ async def generate_course_critique(
     outline: GeneratedCourseOutline,
     plan: GeneratedCoursePlan,
     *,
-    model: ChatGoogleGenerativeAI | None = None,
+    model: Any | None = None,
 ) -> GeneratedCourseCritique:
     return await invoke_structured_generation(
         build_course_critique_prompt(context, brief, outline, plan),
@@ -351,7 +350,7 @@ async def revise_course_plan(
     plan: GeneratedCoursePlan,
     critique: GeneratedCourseCritique,
     *,
-    model: ChatGoogleGenerativeAI | None = None,
+    model: Any | None = None,
 ) -> GeneratedCoursePlan:
     return await invoke_structured_generation(
         build_course_revise_prompt(context, brief, outline, plan, critique),

@@ -1,5 +1,6 @@
 import { supabase } from '@/shared/api/supabase';
 import { normalizeAiTutorPersona } from '@/shared/ai-tutor/persona';
+import { agentServiceUrl } from '@/shared/api/agentService';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import { normalizeViewerLanguage, viewerLanguageToLocale } from '@/shared/i18n/locale';
 import {
@@ -10,14 +11,9 @@ import {
 } from '@/shared/interactive-visual/tutorInteractiveVisuals';
 import { VIEWER_PREFERENCES_STORAGE_KEY } from '@/shared/state/preferencesSlice';
 
-const GEMINI_STORAGE_KEY = 'primoria.viewer.gemini-api-key';
 const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
-const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim() ?? '';
-const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() ?? '';
 const rawAgentServiceUrl = (import.meta.env.VITE_AGENT_SERVICE_URL as string | undefined)?.trim() ?? '';
 const TUTOR_TIMEOUT_MS = 30_000;
-const EDGE_REQUEST_MAX_ATTEMPTS = 2;
-const EDGE_REQUEST_RETRY_DELAY_MS = 500;
 
 export type TutorMessage = {
   role: 'user' | 'model';
@@ -52,20 +48,12 @@ export type TutorRequestContext = {
 };
 
 export type TutorRequestOptions = {
-  provider?: 'auto' | 'gemini';
-  model?: string;
+  route?: 'auto' | 'model';
   allowModelFallback?: boolean;
   context?: TutorRequestContext;
-  aiProvider?: string;
-  aiBaseUrl?: string;
-  aiApiKey?: string;
 };
 
 type InteractiveVisualServiceResponse = TutorInteractiveVisualPayload;
-
-function activeModel(override?: string) {
-  return override?.trim() || (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || 'gemini-2.0-flash';
-}
 
 function normalizeOptionalString(value: unknown) {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
@@ -212,59 +200,21 @@ function buildHttpError(status: number, text: string, fallback: string) {
   if (isServiceUnavailableStatus(status)) {
     return new Error(localizedAiUnavailableMessage());
   }
-  const parsed = parseJsonObject(text);
-  const message =
-    (parsed && typeof parsed.error === 'string' && parsed.error.trim()) ||
-    (parsed && typeof parsed.detail === 'string' && parsed.detail.trim()) ||
-    text.trim() ||
-    fallback;
+  const message = extractErrorMessageFromText(text) || fallback;
   return normalizeTutorError(new Error(message));
 }
 
-function shouldFallbackToEdgeFunction(options: TutorRequestOptions) {
-  return options.provider !== 'gemini' && Boolean(rawSupabaseUrl && rawSupabaseAnonKey);
-}
-
-function shouldRetryEdgeFunctionStatus(status: number) {
-  return isServiceUnavailableStatus(status);
-}
-
-function shouldRetryEdgeFunctionError(error: unknown) {
-  const message = readErrorText(error);
+function extractErrorMessageFromText(text: string) {
+  const parsed = parseJsonObject(text);
   return (
-    (error instanceof Error && error.name === 'AbortError') ||
-    isTransportFailureMessage(message)
+    (parsed && typeof parsed.error === 'string' && parsed.error.trim()) ||
+    (parsed && typeof parsed.detail === 'string' && parsed.detail.trim()) ||
+    text.trim()
   );
 }
 
-function waitForEdgeRetry() {
-  return new Promise<void>((resolve) => {
-    globalThis.setTimeout(resolve, EDGE_REQUEST_RETRY_DELAY_MS);
-  });
-}
-
-export function getStoredGeminiKey() {
-  if (typeof window === 'undefined') {
-    return '';
-  }
-
-  return (
-    ((import.meta.env.VITE_GEMINI_API_KEY as string | undefined)?.trim() ??
-      window.localStorage.getItem(GEMINI_STORAGE_KEY) ??
-      '') || ''
-  );
-}
-
-export async function persistGeminiKey(key: string) {
-  const normalized = key.trim();
-  if (!normalized || typeof window === 'undefined') {
-    return;
-  }
-  window.localStorage.setItem(GEMINI_STORAGE_KEY, normalized);
-}
-
-export async function bootstrapGeminiKey() {
-  return getStoredGeminiKey();
+function shouldFallbackToTutorReply(options: TutorRequestOptions) {
+  return options.route !== 'model' && Boolean(rawAgentServiceUrl);
 }
 
 function fixtureReply(history: TutorMessage[]) {
@@ -274,30 +224,6 @@ function fixtureReply(history: TutorMessage[]) {
 
 function latestTutorUserPrompt(history: TutorMessage[]) {
   return [...history].reverse().find((message) => message.role === 'user')?.text.trim() ?? '';
-}
-
-function tutorFunctionUrl() {
-  if (!rawSupabaseUrl) {
-    throw new Error('AI Tutor requires VITE_SUPABASE_URL.');
-  }
-
-  if (rawSupabaseUrl.includes('.supabase.co')) {
-    return `${rawSupabaseUrl.replace('.supabase.co', '.functions.supabase.co')}/viewer-ai-tutor`;
-  }
-
-  return `${rawSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-tutor`;
-}
-
-function interactiveVisualFunctionUrl() {
-  if (!rawSupabaseUrl) {
-    throw new Error('Interactive visual generation requires VITE_SUPABASE_URL.');
-  }
-
-  if (rawSupabaseUrl.includes('.supabase.co')) {
-    return `${rawSupabaseUrl.replace('.supabase.co', '.functions.supabase.co')}/viewer-ai-interactive-visual`;
-  }
-
-  return `${rawSupabaseUrl.replace(/\/$/, '')}/functions/v1/viewer-ai-interactive-visual`;
 }
 
 function agentServiceChatUrl() {
@@ -361,7 +287,7 @@ function currentAiTutorPersona() {
   }
 }
 
-function buildAgentRequestContext(context?: TutorRequestContext, options?: TutorRequestOptions) {
+function buildAgentRequestContext(context?: TutorRequestContext) {
   return {
     surface: normalizeOptionalString(context?.surface) ?? 'ai-tutor',
     course_id: normalizeOptionalString(context?.courseId),
@@ -375,9 +301,6 @@ function buildAgentRequestContext(context?: TutorRequestContext, options?: Tutor
     page_content: normalizeOptionalString(context?.pageContent),
     learner_state: normalizeOptionalString(context?.learnerState),
     ai_tutor_persona: currentAiTutorPersona(),
-    ai_provider: normalizeOptionalString(options?.aiProvider),
-    ai_base_url: normalizeOptionalString(options?.aiBaseUrl),
-    ai_api_key: normalizeOptionalString(options?.aiApiKey),
   };
 }
 
@@ -410,18 +333,13 @@ async function requestInteractiveVisual(
   prompt: string,
   options: TutorRequestOptions = {},
 ): Promise<InteractiveVisualServiceResponse> {
-  if (!rawSupabaseAnonKey) {
-    throw new Error('Interactive visual generation requires VITE_SUPABASE_ANON_KEY.');
-  }
-
   const accessToken = await getAgentAccessToken();
   const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
   try {
-    const response = await fetch(interactiveVisualFunctionUrl(), {
+    const response = await fetch(agentServiceUrl('/v1/llm/interactive-visual'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        apikey: rawSupabaseAnonKey,
         Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
@@ -481,7 +399,7 @@ async function maybeGenerateInteractiveVisualReply(
   const language = currentUiLanguage();
 
   try {
-    if (rawSupabaseUrl && rawSupabaseAnonKey) {
+    if (rawAgentServiceUrl) {
       const payload = await requestInteractiveVisual(prompt, options);
       return {
         threadId: getTutorThreadId(),
@@ -522,7 +440,7 @@ function buildAgentChatBody(history: TutorMessage[], options: TutorRequestOption
     thread_id: getTutorThreadId(),
     message: latestUserMessage,
     history: history.slice(0, -1),
-    context: buildAgentRequestContext(options.context, options),
+    context: buildAgentRequestContext(options.context),
   };
 }
 
@@ -619,7 +537,12 @@ async function requestAgentReplyStream(
   }
 
   if (!response.ok) {
-    const text = await response.text();
+    let text = '';
+    try {
+      text = await response.clone().text();
+    } catch {
+      text = '';
+    }
     timeout.cleanup();
     throw buildHttpError(response.status, text, `AI Tutor agent failed with HTTP ${response.status}.`);
   }
@@ -748,71 +671,60 @@ async function requestTutorTool<T>(
     }
   }
 
-  if (mode === 'reply' && options.provider !== 'gemini') {
+  if (mode === 'reply' && options.route !== 'model') {
     try {
       const agentReply = await requestAgentReply(history, options);
       if (agentReply) {
         return { reply: agentReply } as T;
       }
     } catch (error) {
-      if (!shouldFallbackToEdgeFunction(options)) {
+      if (!shouldFallbackToTutorReply(options)) {
         throw normalizeTutorError(error);
       }
     }
   }
 
-  const apiKeyOverride = getStoredGeminiKey();
-  if (!rawSupabaseAnonKey) {
-    throw new Error('AI Tutor requires VITE_SUPABASE_ANON_KEY.');
-  }
-
-  for (let attempt = 1; attempt <= EDGE_REQUEST_MAX_ATTEMPTS; attempt += 1) {
-    const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
-    try {
-      const response = await fetch(tutorFunctionUrl(), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: rawSupabaseAnonKey,
-          Authorization: `Bearer ${rawSupabaseAnonKey}`,
-        },
-        body: JSON.stringify({
+  const accessToken = await getAgentAccessToken();
+  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
+  const toolPath = mode === 'reply' ? '/v1/llm/tutor/reply' : `/v1/tools/${mode}`;
+  const body =
+    mode === 'reply'
+      ? {
           mode,
-          model: activeModel(options.model),
           history,
           persona: currentAiTutorPersona(),
           allowModelFallback: options.allowModelFallback ?? true,
           context: options.context,
-          apiKeyOverride: apiKeyOverride || undefined,
-        }),
-        signal: timeout.signal,
-      });
-
-      const text = await response.text();
-      const parsed = parseJsonObject(text);
-      if (!response.ok) {
-        if (attempt < EDGE_REQUEST_MAX_ATTEMPTS && shouldRetryEdgeFunctionStatus(response.status)) {
-          await waitForEdgeRetry();
-          continue;
         }
-        throw buildHttpError(response.status, text, `AI Tutor request failed with HTTP ${response.status}.`);
-      }
-      if (!parsed) {
-        throw new Error('AI Tutor returned invalid JSON.');
-      }
-      return parsed as T;
-    } catch (error) {
-      if (attempt < EDGE_REQUEST_MAX_ATTEMPTS && shouldRetryEdgeFunctionError(error)) {
-        await waitForEdgeRetry();
-        continue;
-      }
-      throw normalizeTutorError(error);
-    } finally {
-      timeout.cleanup();
-    }
-  }
+      : {
+          history,
+          context: buildAgentRequestContext(options.context),
+        };
+  try {
+    const response = await fetch(agentServiceUrl(toolPath), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+      signal: timeout.signal,
+    });
 
-  throw new Error('AI Tutor request failed after retry.');
+    const text = await response.text();
+    const parsed = parseJsonObject(text);
+    if (!response.ok) {
+      throw buildHttpError(response.status, text, `AI Tutor request failed with HTTP ${response.status}.`);
+    }
+    if (!parsed) {
+      throw new Error('AI Tutor returned invalid JSON.');
+    }
+    return parsed as T;
+  } catch (error) {
+    throw normalizeTutorError(error);
+  } finally {
+    timeout.cleanup();
+  }
 }
 
 export async function generateTutorReply(history: TutorMessage[], options: TutorRequestOptions = {}) {
@@ -847,13 +759,13 @@ export async function generateTutorReplyStream(
 
   let agentError: Error | null = null;
   try {
-    const streamed = options.provider === 'gemini' ? null : await requestAgentReplyStream(history, handlers, options);
+    const streamed = options.route === 'model' ? null : await requestAgentReplyStream(history, handlers, options);
     if (streamed) {
       return streamed;
     }
   } catch (error) {
     const normalized = normalizeTutorError(error);
-    if (!shouldFallbackToEdgeFunction(options)) {
+    if (!shouldFallbackToTutorReply(options)) {
       handlers.onError?.(normalized);
       throw normalized;
     }
@@ -862,7 +774,7 @@ export async function generateTutorReplyStream(
 
   const reply = await generateTutorReply(
     history,
-    agentError ? { ...options, provider: 'gemini' } : options,
+    agentError ? { ...options, route: 'model' } : options,
   );
   const payload = { threadId: getTutorThreadId(), reply, usedTools: [] };
   handlers.onToken?.(reply);

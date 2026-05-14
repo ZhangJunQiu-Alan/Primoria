@@ -134,15 +134,15 @@ const landingCopy = {
       eyebrow: 'AI 导师',
       title: 'AI Tutor 不是一句“在线”，而是一套可操作工作台',
       subtitle:
-        '页面需要明确展示：对话答疑、跟进解释、`/apikey` 临时覆盖、材料上传、以及导图/测验/演示等 Studio tools。',
+        '页面需要明确展示：对话答疑、跟进解释、统一模型服务、材料上传、以及导图/测验/演示等 Studio tools。',
       capabilities: [
         {
           title: 'Grounded chat',
           description: '围绕课程、页面上下文与学习问题持续对话，而不是离开学习链路单独聊天。',
         },
         {
-          title: '/apikey override',
-          description: '开发或个人使用时可通过命令临时覆盖服务端 key，而不需要改动正式环境配置。',
+          title: '统一模型服务',
+          description: '模型 provider、Base URL 与 Key 统一配置在 agent-service；前端只调用同一个后端入口。',
         },
         {
           title: 'Tool outputs',
@@ -446,15 +446,15 @@ const landingCopy = {
       eyebrow: 'AI Tutor',
       title: 'AI Tutor is a working desk, not a single “AI is online” claim',
       subtitle:
-        'The page needs to show chat guidance, follow-up explanation, `/apikey` overrides, material uploads, and Studio tools for mind maps, quizzes, and presentations.',
+        'The page needs to show chat guidance, follow-up explanation, unified model service settings, material uploads, and Studio tools for mind maps, quizzes, and presentations.',
       capabilities: [
         {
           title: 'Grounded chat',
           description: 'Conversations stay attached to courses, page context, and current study questions instead of drifting into a disconnected chatbot.',
         },
         {
-          title: '/apikey override',
-          description: 'A local command can temporarily override the server key for development or personal usage without changing production wiring.',
+          title: 'Unified model service',
+          description: 'Model provider, Base URL, and keys are centralized in agent-service; the frontend only calls one backend entry point.',
         },
         {
           title: 'Tool outputs',
@@ -881,7 +881,7 @@ const viewerCatalog = {
       noArtifactsBody: '先生成一份导图或小测，这里会帮你留好最近结果。',
       responsePreparing: '正在整理回复…',
       responseReady: '回复已更新。',
-      apiKeyStored: 'Gemini key 已保存在本地。',
+      apiKeyStored: '模型服务配置已保存。',
       missingKey: '学习助手暂时还没准备好，请稍后再试。',
       disabled: '学习助手暂时还没开放，请稍后再来。',
       prompts: [
@@ -1194,7 +1194,7 @@ const viewerCatalog = {
       noArtifactsBody: 'Generate a mind map or quiz and it will stay here for later.',
       responsePreparing: 'Preparing reply…',
       responseReady: 'Reply updated.',
-      apiKeyStored: 'Gemini key stored locally.',
+      apiKeyStored: 'Model service settings saved.',
       missingKey: 'Study Helper is not ready right now. Please try again later.',
       disabled: 'Study Helper is not available right now. Check back soon.',
       prompts: [

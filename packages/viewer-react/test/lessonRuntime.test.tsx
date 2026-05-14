@@ -269,7 +269,6 @@ describe('LessonRuntimePlayer', () => {
       [{ role: 'user', text: 'Explain this page' }],
       expect.any(Object),
       expect.objectContaining({
-        model: 'gemini-2.5-flash',
         allowModelFallback: false,
         context: expect.objectContaining({
           surface: 'lesson-runtime',

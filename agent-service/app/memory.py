@@ -22,9 +22,9 @@ from langgraph.checkpoint.base import (
     get_checkpoint_id,
     get_checkpoint_metadata,
 )
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.config import get_settings
+from app.model_service import build_chat_model
 from app.schemas import ChatContext
 from app.services.supabase_client import SupabaseUserClient
 
@@ -1563,7 +1563,7 @@ def _merge_summary_entries_with_ai(
     title: str,
 ) -> list[tuple[str, str]] | None:
     settings = get_settings()
-    if not settings.google_api_key:
+    if not (settings.google_api_key or settings.gemini_api_key or settings.ai_api_key):
         return None
 
     combined = [*existing, *incoming]
@@ -1589,9 +1589,8 @@ def _merge_summary_entries_with_ai(
     )
 
     try:
-        model = ChatGoogleGenerativeAI(
+        model = build_chat_model(
             model=settings.memory_summary_model or settings.agent_model,
-            google_api_key=settings.google_api_key,
             temperature=0.1,
         )
         response = model.invoke(prompt)

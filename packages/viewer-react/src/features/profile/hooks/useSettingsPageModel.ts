@@ -47,9 +47,6 @@ export function useSettingsPageModel() {
     accessibility_mode: boolean;
     ai_tutor_persona: ViewerPreferencesState['aiTutorPersona'];
     home_companion_enabled: boolean;
-    ai_provider: 'google' | 'openai' | 'anthropic';
-    ai_base_url: string;
-    ai_api_key: string;
   }>({
     theme_mode: 'system',
     language: 'zh-CN',
@@ -59,9 +56,6 @@ export function useSettingsPageModel() {
     accessibility_mode: false,
     ai_tutor_persona: preferences.aiTutorPersona,
     home_companion_enabled: preferences.homeCompanionEnabled,
-    ai_provider: 'google',
-    ai_base_url: '',
-    ai_api_key: '',
   });
   const [bindingCode, setBindingCode] = useState<string | null>(null);
   const [bindingCodeExpiresAt, setBindingCodeExpiresAt] = useState<string | null>(null);
@@ -93,9 +87,6 @@ export function useSettingsPageModel() {
         homeCompanionEnabled: payload.userSettings.home_companion_enabled,
         dailyReminderEnabled: payload.userSettings.notification_daily_reminder,
         dailyReminderTime: payload.userSettings.notification_reminder_time,
-        aiProvider: payload.userSettings.ai_provider,
-        aiBaseUrl: payload.userSettings.ai_base_url,
-        aiApiKey: payload.userSettings.ai_api_key,
       }),
     );
   }, [dispatch, settingsQuery.data]);

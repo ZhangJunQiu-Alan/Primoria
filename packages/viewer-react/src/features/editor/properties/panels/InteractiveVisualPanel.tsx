@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createInteractiveVisual } from '@/shared/api/viewer/interactiveVisualApi';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -42,6 +43,7 @@ interface InteractiveVisualPanelProps {
 export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveVisualPanelProps) {
   const dispatch = useAppDispatch();
   const [genError, setGenError] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const c = block.content as {
     template?: string;
     title?: string;
@@ -77,7 +79,49 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
   });
 
   async function handleGenerate() {
-    setGenError('AI generation is being migrated to the new agent-service backend and is temporarily unavailable.');
+    const values = watch();
+    const prompt = values.aiPrompt?.trim();
+    if (!prompt) {
+      setGenError('Add an AI prompt before generating.');
+      return;
+    }
+
+    setGenError(null);
+    setIsGenerating(true);
+    try {
+      const artifact = await createInteractiveVisual({
+        prompt,
+        template: values.template,
+        title: values.title,
+        description: values.description,
+        surface: 'builder',
+      });
+      dispatch(
+        updateBlock({
+          lessonId,
+          pageId,
+          block: {
+            ...block,
+            content: {
+              ...(block.content as object),
+              template: artifact.template,
+              title: artifact.title,
+              description: artifact.description,
+              aiPrompt: artifact.aiPrompt ?? prompt,
+              generatedHtml: artifact.generatedHtml,
+              version: artifact.version,
+              engine: artifact.engine,
+              runtime: artifact.runtime,
+              themeTone: artifact.themeTone,
+            },
+          },
+        }),
+      );
+    } catch (error) {
+      setGenError(error instanceof Error ? error.message : 'AI generation failed.');
+    } finally {
+      setIsGenerating(false);
+    }
   }
 
   return (
@@ -107,11 +151,10 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
 
       <button
         onClick={() => void handleGenerate()}
-        disabled
-        title="AI generation is being migrated to the new agent-service backend"
-        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground opacity-50 cursor-not-allowed transition-colors"
+        disabled={isGenerating}
+        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors disabled:cursor-not-allowed disabled:opacity-50"
       >
-        ✨ Generate with AI (maintenance)
+        {isGenerating ? 'Generating…' : '✨ Generate with AI'}
       </button>
 
       {genError && (

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   generateTutorReplyStream,
-  persistGeminiKey,
   type TutorMessage,
 } from '@/shared/api/geminiClient';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
@@ -18,7 +17,6 @@ import type {
   TutorToolKind,
   TutorToolRuntime,
 } from '@/features/ai-tutor/aiTutorTypes';
-import { useAppSelector } from '@/shared/state/store';
 
 function resolveWelcomeMessages(messages: TutorMessage[], welcomeBody: string) {
   if (messages.length !== 1 || messages[0]?.role !== 'model') {
@@ -50,7 +48,6 @@ export function useAiTutorSession({
   const latestMessagesRef = useRef(messages);
   const latestContextRef = useRef(sessionContext);
   const resolvedMessages = useMemo(() => resolveWelcomeMessages(messages, welcomeBody), [messages, welcomeBody]);
-  const { aiProvider, aiBaseUrl, aiApiKey } = useAppSelector((state) => state.viewerPreferences);
 
   useEffect(() => {
     latestMessagesRef.current = resolvedMessages;
@@ -87,14 +84,6 @@ export function useAiTutorSession({
       const trimmed = text.trim();
       if (!trimmed || isSending) return;
 
-      if (trimmed.startsWith('/apikey ')) {
-        await persistGeminiKey(trimmed.replace('/apikey', '').trim());
-        setNotice({ tone: 'success', text: copy.aiTutor.apiKeyStored });
-        setInput('');
-        captureViewerEvent('viewer_ai_tutor_key_overridden');
-        return;
-      }
-
       const requestHistory = [...latestMessagesRef.current, { role: 'user', text: trimmed } as TutorMessage];
       streamedReplyRef.current = '';
       setMessages([...latestMessagesRef.current, { role: 'user', text: trimmed }, { role: 'model', text: '' }]);
@@ -116,10 +105,6 @@ export function useAiTutorSession({
               toolCount: payload.usedTools.length,
             });
           },
-        }, {
-          aiProvider,
-          aiBaseUrl,
-          aiApiKey,
         });
         if (!result.reply.trim()) {
           throw new Error('AI Tutor returned an empty response.');
@@ -143,7 +128,7 @@ export function useAiTutorSession({
         setIsSending(false);
       }
     },
-    [copy.aiTutor.apiKeyStored, copy.aiTutor.missingKey, copy.aiTutor.responsePreparing, isSending],
+    [copy.aiTutor.missingKey, copy.aiTutor.responsePreparing, isSending],
   );
 
   const syncSession = useCallback((toolRuntime: Record<TutorToolKind, TutorToolRuntime>) => {

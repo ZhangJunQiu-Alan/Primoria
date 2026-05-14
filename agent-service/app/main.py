@@ -7,6 +7,7 @@ from app.routes.chat import router as chat_router
 from app.routes.courses import router as courses_router
 from app.routes.health import router as health_router
 from app.routes.interactive_visuals import router as interactive_visuals_router
+from app.routes.llm_tools import router as llm_tools_router
 from app.routes.memory import router as memory_router
 from app.routes.threads import router as threads_router
 from app.routes.tools import router as tools_router
@@ -26,6 +27,7 @@ app.include_router(chat_router)
 app.include_router(memory_router)
 app.include_router(builder_router)
 app.include_router(interactive_visuals_router)
+app.include_router(llm_tools_router)
 app.include_router(threads_router)
 app.include_router(tools_router)
 app.include_router(courses_router)

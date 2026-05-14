@@ -8,6 +8,7 @@ import {
   BookOpen,
   BookPlus,
   BrainCircuit,
+  ChevronDown,
   Clock3,
   Copy,
   Flag,
@@ -409,6 +410,23 @@ export function DashboardCoursesTab({
           ))}
         </div>
 
+        <label className="studio-sort">
+          <span>Sort</span>
+          <select value={model.sortMode} onChange={(event) => model.setSortMode(event.target.value as typeof model.sortMode)}>
+            <option value="updated">Recently updated</option>
+            <option value="views">Most viewed</option>
+            <option value="completion">Highest completion</option>
+            <option value="ai">AI generated</option>
+            <option value="attention">Needs attention</option>
+            <option value="growth">Fastest growing</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="student">Most students</option>
+            <option value="lessons">Most lessons</option>
+            <option value="comments">Most comments</option>
+            <option value="title">Course title</option>
+          </select>
+          <ChevronDown size={14} />
+        </label>
       </section>
 
       {model.hasInlineError ? (
@@ -766,7 +784,14 @@ export function DashboardAnalyticsTab({
           </div>
 
           <div className="studio-analytics-snapshot-grid">
-            {model.analyticsPreviewCards.map((card) => (
+            {[
+              {
+                label: language === 'zh-CN' ? '已发布浏览' : 'Published viewers',
+                value: model.publishedViewers,
+                detail: language === 'zh-CN' ? '来自已发布课程的真实浏览信号' : 'Verified views on published courses',
+              },
+              ...model.analyticsPreviewCards,
+            ].map((card) => (
               <article key={card.label} className="studio-analytics-snapshot-item">
                 <span>{card.label}</span>
                 <strong>{card.value}</strong>

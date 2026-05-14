@@ -328,7 +328,7 @@ export function useDashboardPageModel({
   const analyticsReferenceLesson = analyticsReferenceCourse ? getLatestLesson(analyticsReferenceCourse) : latestLesson;
   const analyticsPreviewCards = [
     {
-      label: 'Avg completion',
+      label: 'Average completion',
       value: hasLearnerAnalyticsData
         ? `${(averageCompletionRate * 100).toFixed(1)}%`
         : `${averagePublishReadiness}%`,
@@ -337,7 +337,7 @@ export function useDashboardPageModel({
     {
       label: 'Most replayed lesson',
       value: analyticsReferenceLesson?.title ?? 'First lesson',
-      detail: analyticsReferenceCourse ? analyticsReferenceCourse.title : 'Unlocks after publishing',
+      detail: hasLearnerAnalyticsData ? 'Based on recent learner flow' : 'Unlocks after publishing',
     },
     {
       label: 'Drop-off point',

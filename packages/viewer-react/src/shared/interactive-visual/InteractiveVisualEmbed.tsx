@@ -1,38 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  buildPrimoriaInteractiveVisualSrcDoc,
+  INTERACTIVE_VISUAL_ANALYTICS_EVENT,
+  INTERACTIVE_VISUAL_OPEN_LINK_EVENT,
+  INTERACTIVE_VISUAL_RESIZE_EVENT,
+} from '@/shared/interactive/interactiveVisualDocument';
 import { cn } from '@/shared/utils/cn';
 
-function buildInteractiveVisualDocument(html: string, title: string) {
-  return `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${title}</title>
-    <style>
-      html, body {
-        margin: 0;
-        min-height: 100%;
-        background: transparent;
-      }
-    </style>
-  </head>
-  <body>
-    <script>
-      window.PrimoriaInteractive = {
-        track(eventName, payload) {
-          try {
-            window.parent.postMessage(
-              { type: 'primoria-interactive-track', eventName, payload },
-              '*',
-            );
-          } catch {}
-        },
-      };
-    </script>
-    ${html}
-  </body>
-</html>`;
-}
+const MIN_HEIGHT = 320;
+const MAX_HEIGHT = 1200;
 
 export function InteractiveVisualEmbed({
   title,
@@ -47,10 +23,38 @@ export function InteractiveVisualEmbed({
   className?: string;
   frameClassName?: string;
 }) {
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const [height, setHeight] = useState(560);
   const srcDoc = useMemo(
-    () => buildInteractiveVisualDocument(generatedHtml, title?.trim() || 'Primoria interactive visual'),
+    () => buildPrimoriaInteractiveVisualSrcDoc(generatedHtml, title?.trim() || 'Primoria interactive visual'),
     [generatedHtml, title],
   );
+
+  useEffect(() => {
+    function handleMessage(event: MessageEvent) {
+      if (event.source !== iframeRef.current?.contentWindow) {
+        return;
+      }
+      const payload = event.data;
+      if (!payload || typeof payload !== 'object') {
+        return;
+      }
+      if (payload.type === INTERACTIVE_VISUAL_RESIZE_EVENT && typeof payload.height === 'number') {
+        setHeight(Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, Math.ceil(payload.height))));
+        return;
+      }
+      if (payload.type === INTERACTIVE_VISUAL_OPEN_LINK_EVENT && typeof payload.url === 'string') {
+        window.open(payload.url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+      if (payload.type === INTERACTIVE_VISUAL_ANALYTICS_EVENT) {
+        // Reserved for future persistence; keeping the bridge active matches lesson runtime embeds.
+      }
+    }
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   return (
     <div
@@ -73,8 +77,9 @@ export function InteractiveVisualEmbed({
         </div>
       ) : null}
 
-      <div className={cn('h-[560px] bg-white/50', frameClassName)}>
+      <div className={cn('bg-white/50', frameClassName)} style={frameClassName ? undefined : { height }}>
         <iframe
+          ref={iframeRef}
           title={title?.trim() || 'Interactive visual'}
           srcDoc={srcDoc}
           sandbox="allow-scripts"

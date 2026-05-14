@@ -329,7 +329,6 @@ export function LessonRuntimePlayer({
           },
         },
         {
-          model: 'gemini-2.5-flash',
           allowModelFallback: false,
           context: lessonAiContext,
         },

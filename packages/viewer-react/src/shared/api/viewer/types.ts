@@ -188,8 +188,6 @@ export type ViewerProfile = {
   pinned_achievement_ids: string[];
 };
 
-export type ViewerAiProvider = 'google' | 'openai' | 'anthropic';
-
 export type ViewerUserSettings = {
   theme_mode: ViewerThemeMode;
   language: ViewerLanguage;
@@ -199,9 +197,6 @@ export type ViewerUserSettings = {
   accessibility_mode: boolean;
   ai_tutor_persona: ViewerAiTutorPersona;
   home_companion_enabled: boolean;
-  ai_provider: ViewerAiProvider;
-  ai_base_url: string;
-  ai_api_key: string;
 };
 
 export type ViewerSettingsBundle = {

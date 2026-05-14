@@ -1,4 +1,4 @@
-import { supabase } from '@/shared/api/supabase';
+import { fetchAgentJson } from '@/shared/api/agentService';
 import { usesViewerFixtures } from '@/shared/api/viewer/core';
 import {
   createInteractiveVisualFallback,
@@ -17,14 +17,6 @@ export type CreateInteractiveVisualRequest = {
   surface?: 'builder' | 'ai-tutor';
 };
 
-async function getInteractiveVisualAccessToken() {
-  const { data, error } = await supabase.auth.getSession();
-  if (error) {
-    throw error;
-  }
-  return data.session?.access_token ?? null;
-}
-
 export async function createInteractiveVisual(
   request: CreateInteractiveVisualRequest,
 ): Promise<InteractiveVisualArtifact> {
@@ -38,9 +30,9 @@ export async function createInteractiveVisual(
   }
 
   try {
-    const accessToken = await getInteractiveVisualAccessToken();
-    const { data, error } = await supabase.functions.invoke('viewer-ai-interactive-visual', {
-      body: {
+    const data = await fetchAgentJson('/v1/llm/interactive-visual', {
+      method: 'POST',
+      body: JSON.stringify({
         prompt,
         template: request.template,
         experienceMode: request.experienceMode,
@@ -48,17 +40,8 @@ export async function createInteractiveVisual(
         description: request.description,
         language: request.language ?? 'en',
         surface: request.surface ?? 'builder',
-      },
-      headers: accessToken
-        ? {
-            Authorization: `Bearer ${accessToken}`,
-          }
-        : undefined,
+      }),
     });
-
-    if (error) {
-      throw error;
-    }
 
     const artifact = normalizeInteractiveVisualArtifact(data, {
       prompt,
