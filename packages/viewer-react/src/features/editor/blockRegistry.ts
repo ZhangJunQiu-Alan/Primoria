@@ -84,7 +84,6 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     icon: '🔭',
     category: 'interactive',
     defaultContent: {
-      engine: 'html-iframe',
       template: 'generic',
       title: '',
       description: '',

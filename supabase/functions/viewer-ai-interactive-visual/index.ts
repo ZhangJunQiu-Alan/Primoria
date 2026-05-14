@@ -2,6 +2,8 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.2';
 import { z } from 'npm:zod@3.25.76';
 import {
+  DEFAULT_MODEL,
+  FALLBACK_MODELS,
   GenerationAttemptError,
   isGenerationAttemptError,
   isTransientGeminiStatus,
@@ -14,10 +16,14 @@ import { extractGeminiCandidateTexts } from '../_shared/geminiResponse.ts';
 import type { Plan } from './planSchema.ts';
 import { auditHtmlStatic, formatAuditIssuesForRepair, type AuditReport } from './htmlAuditor.ts';
 import { auditHtmlWithLLM, type AuditOutcome, type LlmAuditReport } from './auditStep.ts';
+import { auditHtmlWithAst, formatAstAuditIssuesForRepair, type AstAuditReport } from './astAudit.ts';
+import {
+  runtimeSmokeHtml,
+  formatRuntimeSmokeIssuesForRepair,
+  type RuntimeSmokeReport,
+} from './runtimeSmoke.ts';
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
-const DEFAULT_MODEL = 'gemini-2.0-flash';
-const FALLBACK_MODELS = ['gemini-2.5-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 const MAX_OUTPUT_TOKENS = 16_384;
 const JOB_TABLE = 'interactive_visual_generation_jobs';
 const RENDER_TRANSIENT_DELAYS_MS = [2_000, 6_000, 15_000, 40_000] as const;
@@ -36,6 +42,10 @@ const STATIC_AUDIT_ENABLED =
   (Deno.env.get('INTERACTIVE_VISUAL_STATIC_AUDIT_ENABLED') ?? 'true').toLowerCase() !== 'false';
 const LLM_AUDIT_ENABLED =
   (Deno.env.get('INTERACTIVE_VISUAL_LLM_AUDIT_ENABLED') ?? 'true').toLowerCase() !== 'false';
+const AST_AUDIT_ENABLED =
+  (Deno.env.get('INTERACTIVE_VISUAL_AST_AUDIT_ENABLED') ?? 'true').toLowerCase() !== 'false';
+const RUNTIME_SMOKE_ENABLED =
+  (Deno.env.get('INTERACTIVE_VISUAL_RUNTIME_SMOKE_ENABLED') ?? 'true').toLowerCase() !== 'false';
 
 const ALLOWED_CDN_PREFIX = /^https:\/\/(?:esm\.sh\/|cdn\.jsdelivr\.net\/npm\/)/;
 
@@ -756,7 +766,12 @@ type LlmAuditSummary =
 
 type GeneratedArtifact = ReturnType<typeof buildInteractiveVisualArtifactFromHtml> & {
   plan?: Plan;
-  audit?: { static?: AuditReport; llm?: LlmAuditSummary };
+  audit?: {
+    static?: AuditReport;
+    llm?: LlmAuditSummary;
+    ast?: AstAuditReport;
+    runtime?: RuntimeSmokeReport;
+  };
 };
 
 async function generateInteractiveVisualLegacy(
@@ -868,6 +883,21 @@ async function generateInteractiveVisual(
     }
   }
 
+  let astAudit: AstAuditReport | undefined;
+  if (AST_AUDIT_ENABLED) {
+    astAudit = auditHtmlWithAst(html);
+    const blockers = astAudit.issues.filter((i) => i.severity === 'blocker');
+    if (blockers.length > 0) {
+      const hints = formatAstAuditIssuesForRepair(blockers);
+      throw new GenerationAttemptError(
+        `AST audit blockers (${blockers.map((b) => b.rule).join(', ')}):\n${hints.join('\n')}`,
+        'validation',
+        undefined,
+        'render',
+      );
+    }
+  }
+
   let llmAudit: LlmAuditSummary | undefined;
   if (LLM_AUDIT_ENABLED) {
     const outcome: AuditOutcome = await auditHtmlWithLLM({
@@ -896,13 +926,45 @@ async function generateInteractiveVisual(
     }
   }
 
+  let runtimeAudit: RuntimeSmokeReport | undefined;
+  if (RUNTIME_SMOKE_ENABLED) {
+    runtimeAudit = await runtimeSmokeHtml(html).catch((error) => ({
+      issues: [
+        {
+          rule: 'runtime:smoke-unavailable' as const,
+          severity: 'warning' as const,
+          message: `Runtime smoke failed to execute: ${error instanceof Error ? error.message : String(error)}`,
+          hint: 'happy-dom could not load the document. Treating as a warning so it does not block generation; investigate the runtime if this recurs.',
+        },
+      ],
+      passed: true,
+      errors: [],
+      domStats: { interactives: 0, svgChildren: 0, hasObservation: false },
+    }));
+    const blockers = runtimeAudit.issues.filter((i) => i.severity === 'blocker');
+    if (blockers.length > 0) {
+      const hints = formatRuntimeSmokeIssuesForRepair(blockers);
+      throw new GenerationAttemptError(
+        `Runtime smoke blockers (${blockers.map((b) => b.rule).join(', ')}):\n${hints.join('\n')}`,
+        'validation',
+        undefined,
+        'render',
+      );
+    }
+  }
+
   const artifact = buildInteractiveVisualArtifactFromHtml(payload, html);
   return {
     ...artifact,
     plan,
     audit:
-      staticAudit || llmAudit
-        ? { ...(staticAudit ? { static: staticAudit } : {}), ...(llmAudit ? { llm: llmAudit } : {}) }
+      staticAudit || llmAudit || astAudit || runtimeAudit
+        ? {
+            ...(staticAudit ? { static: staticAudit } : {}),
+            ...(llmAudit ? { llm: llmAudit } : {}),
+            ...(astAudit ? { ast: astAudit } : {}),
+            ...(runtimeAudit ? { runtime: runtimeAudit } : {}),
+          }
         : undefined,
   };
 }
@@ -931,7 +993,6 @@ export function serializeJob(row: JobRow) {
 function artifactResponse(generated: GeneratedArtifact, prompt: string) {
   return {
     version: '1',
-    engine: 'gemini-html5',
     title: generated.title,
     description: generated.description,
     template: generated.template,
