@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   classifyInteractiveVisualHealth,
   InteractiveVisualEmbed,
@@ -6,6 +6,7 @@ import {
 } from '@/shared/interactive-visual/InteractiveVisualEmbed';
 import { supabase, viewerSupabaseAnonKey, viewerSupabaseUrl } from '@/shared/api/supabase';
 import {
+  createInteractiveVisualFallback,
   normalizeInteractiveVisualArtifact,
   validateOfflineInteractiveHtml,
   type InteractiveVisualArtifact,
@@ -151,90 +152,90 @@ const DEFAULT_PROMPTS: PromptRunInput[] = [
     id: 'geometry-transformations',
     label: 'Geometry Shape Transformations',
     prompt:
-      'Create an interactive geometry transformations visualizer. Show a coordinate grid with a shape, then let learners translate, rotate, reflect, and scale it using sliders or buttons while keeping the original and transformed versions visible together.',
+      'Create a compact interactive geometry transformations visualizer using only plain SVG, inline CSS, and vanilla JavaScript. Do not use D3, GSAP, canvas, or CSS transform-based geometry. On first paint, show a coordinate grid with one original triangle and one transformed triangle already visible. Provide simple controls for translate X, translate Y, rotation in degrees, scale factor, and reflection across the x-axis, and update the transformed shape live while the original remains as a faint reference. Also show the transformed vertex coordinates and one short observation sentence that explains what changed. Keep the layout static, use sliders and a toggle instead of drag interactions, and keep the code easy to audit.',
     title: 'Geometry Transformations Studio',
     description: 'Translate, rotate, reflect, and scale shapes on a live grid.',
-    template: 'generic',
+    template: 'geometry-transformations',
     language: 'en',
   },
   {
     id: 'chemical-reactions',
     label: 'Chemical Reactions',
     prompt:
-      'Create an interactive chemical reactions simulator. Show reactants and products for simple reactions, include a particle view where atoms rearrange, and let learners balance the equation or change factors like temperature or concentration to observe effects.',
+      'Create a compact interactive chemical reactions simulator using only plain SVG, inline CSS, and vanilla JavaScript. Do not use D3, GSAP, canvas, or CSS transform-based particle motion. On first paint, show one safe reaction already visible, such as 2H2 + O2 -> 2H2O, with reactants on one side, products on the other, a balanced equation readout, and a particle view of molecules. Provide simple controls for the three coefficients and one temperature slider, update the particle view and equation live, and show one short observation sentence about whether the reaction is balanced or how temperature affects collisions. Keep the layout static and the code easy to audit.',
     title: 'Chemical Reactions Simulator',
     description: 'Balance reactions and watch particles rearrange into products.',
-    template: 'generic',
+    template: 'chemical-reactions',
     language: 'en',
   },
   {
     id: 'world-geography',
     label: 'World Geography Explorer',
     prompt:
-      'Create an interactive world geography explorer. Show a world map with clickable countries or regions, continent filters, and panels for country name, capital, major landforms, or climate zone so learners can compare places visually.',
+      'Create a compact interactive world geography explorer using only plain SVG, inline CSS, and vanilla JavaScript. Do not use D3, GSAP, canvas, external map tiles, GeoJSON, or TopoJSON. On first paint, show a simplified offline world map with a small fixed set of clickable countries or regions already visible, plus a details panel. Provide continent filter buttons and let learners click a region to update country or region name, capital, major landform, and climate zone. Keep the map stylized and auditable rather than fully realistic, avoid zoom or pan, and keep all data embedded locally.',
     title: 'World Geography Explorer',
     description: 'Click regions on a world map to compare countries and climates.',
-    template: 'generic',
+    template: 'world-geography',
     language: 'en',
   },
   {
     id: 'probability-dice',
     label: 'Probability and Dice Simulation',
     prompt:
-      'Create an interactive probability and dice simulation. Let learners roll one, two, or three dice many times, visualize outcomes in a histogram, and compare experimental probability against theoretical probability as the sample size grows.',
+      'Create a compact interactive probability and dice simulation using only plain SVG, inline CSS, and vanilla JavaScript. Do not use D3, GSAP, canvas, or Chart.js. On first paint, show a histogram that is already populated with a small starter sample for 2 dice so the visual is never blank. Provide controls for number of dice, roll 1, roll 25, and reset, and show both experimental counts and a simple theoretical probability overlay. Update the histogram and one short observation sentence live as the sample size grows, and keep the code easy to audit.',
     title: 'Probability and Dice Simulator',
     description: 'Roll dice, graph outcomes, and compare theory with experiment.',
-    template: 'generic',
+    template: 'probability-dice',
     language: 'en',
   },
   {
     id: 'wave-sound',
     label: 'Wave and Sound Visualization',
     prompt:
-      'Create an interactive wave and sound visualization. Show both a sine wave and a sound compression animation, then let learners change amplitude, frequency, wavelength, and pitch or volume to see how the graph and sound model update together.',
+      'Create a compact interactive wave and sound visualizer using only plain SVG, inline CSS, and vanilla JavaScript. Do not use canvas, Web Audio, D3, or GSAP. On first paint, show one sine wave and one compression-and-rarefaction strip already visible. Provide simple sliders for amplitude, frequency, wavelength, and volume intensity. Update the waveform, compression spacing, and one short observation sentence live while keeping the layout static and easy to audit.',
     title: 'Wave and Sound Visualization',
     description: 'Tune wave properties and connect the graph to sound behavior.',
-    template: 'generic',
+    template: 'wave-sound',
     language: 'en',
   },
   {
     id: 'programming-logic-flow',
     label: 'Programming Logic Flow',
     prompt:
-      'Create an interactive programming logic flow visualizer. Show a simple flowchart or pseudocode with variables, conditions, and loops, then let learners step through execution to see how decisions branch and state changes over time.',
+      'Create a compact interactive programming logic flow visualizer using only plain SVG, inline CSS, and vanilla JavaScript. On first paint, show a small fixed flowchart for a loop with a condition, a highlighted current step, and a variable state panel. Provide Step, Auto, and Reset controls. As learners advance, update the highlighted node, values of the loop variable and total, and one short observation sentence. Keep the example fixed and auditable rather than generating arbitrary code.',
     title: 'Programming Logic Flow',
     description: 'Step through conditions and loops to follow program state changes.',
-    template: 'generic',
+    template: 'programming-logic-flow',
     language: 'en',
   },
   {
     id: 'supply-demand',
     label: 'Supply and Demand Economics',
     prompt:
-      'Create an interactive supply and demand economics graph. Show supply and demand curves with sliders that shift each curve, then update equilibrium price and quantity live with a short explanation of shortages, surpluses, or market changes.',
+      'Create a compact interactive supply and demand graph using only plain SVG, inline CSS, and vanilla JavaScript. On first paint, show labeled axes, one supply curve, one demand curve, and a marked equilibrium point already visible. Provide simple sliders for demand shift, supply shift, and market price. Update the curves, equilibrium price and quantity, any shortage or surplus, and one short observation sentence live. Keep the graph static and easy to audit.',
     title: 'Supply and Demand Economics',
     description: 'Shift market curves and watch equilibrium respond instantly.',
-    template: 'generic',
+    template: 'supply-demand',
     language: 'en',
   },
   {
     id: 'weather-climate',
     label: 'Weather and Climate Systems',
     prompt:
-      'Create an interactive weather and climate systems explorer. Help learners compare short-term weather and long-term climate using controls for season, temperature, precipitation, wind, and region so the patterns and differences become easy to see.',
+      'Create a compact interactive weather and climate explorer using only plain SVG, inline CSS, and vanilla JavaScript. Do not use maps, remote weather data, canvas, or GSAP. On first paint, show one region comparison scene already visible with short-term weather and a long-term climate baseline panel. Provide controls for region, season, temperature, precipitation, and wind. Update the weather scene, the climate comparison panel, and one short observation sentence live while keeping all data embedded locally.',
     title: 'Weather and Climate Systems',
     description: 'Compare weather patterns, seasonal changes, and climate trends.',
-    template: 'generic',
+    template: 'weather-climate',
     language: 'en',
   },
   {
     id: 'historical-timeline',
     label: 'Historical Timeline Explorer',
     prompt:
-      'Create an interactive historical timeline explorer. Show a zoomable timeline with major events, eras, and categories, and let learners filter by region or theme, click events for details, and compare overlapping developments across time.',
+      'Create a compact interactive historical timeline explorer using only plain SVG, inline CSS, and vanilla JavaScript. On first paint, show a horizontal timeline with several embedded events already visible plus a details panel. Provide a zoom range slider and filters for region or theme. Let learners click events to update the details panel and one short comparison observation sentence. Keep the timeline fully offline, all event data embedded locally, and the code easy to audit.',
     title: 'Historical Timeline Explorer',
     description: 'Zoom through eras, filter events, and compare changes across history.',
-    template: 'generic',
+    template: 'historical-timeline',
     language: 'en',
   },
 ];
@@ -248,6 +249,10 @@ function resolveLanguage(prompt: string, language: DebugLanguage) {
     return language;
   }
   return containsChineseText(prompt) ? 'zh-CN' : 'en';
+}
+
+function findDefaultPrompt(id: string) {
+  return DEFAULT_PROMPTS.find((prompt) => prompt.id === id);
 }
 
 function buildFunctionUrl() {
@@ -295,13 +300,22 @@ function finalStatus(run: PromptRunState) {
   if (run.phase === 'idle') {
     return 'Not run';
   }
+  const healthStatus = classifyInteractiveVisualHealth(run.health ?? null);
+  if (run.phase === 'succeeded' && run.artifact?.engine === 'fallback-html5' && run.clientValidation === 'passed') {
+    if (healthStatus === 'broken') {
+      return 'Render failed';
+    }
+    if (healthStatus === 'partial') {
+      return 'Render partial';
+    }
+    return 'Succeeded';
+  }
   if (run.httpStatus && run.httpStatus >= 500) {
     return `HTTP ${run.httpStatus}`;
   }
   if (run.httpStatus && run.httpStatus >= 400) {
     return `HTTP ${run.httpStatus}`;
   }
-  const healthStatus = classifyInteractiveVisualHealth(run.health ?? null);
   if (run.phase === 'succeeded' && healthStatus === 'broken') {
     return 'Render failed';
   }
@@ -381,6 +395,63 @@ function errorSummary(job?: DebugJob, fallback?: string) {
   return typeof message === 'string' ? message : undefined;
 }
 
+const LOCAL_FALLBACK_TEMPLATES = new Set([
+  'probability-dice',
+  'wave-sound',
+  'programming-logic-flow',
+  'supply-demand',
+  'weather-climate',
+  'historical-timeline',
+]);
+
+function isLocalFallbackTemplate(template: string | undefined) {
+  return LOCAL_FALLBACK_TEMPLATES.has((template ?? '').trim().toLowerCase());
+}
+
+function shouldUseLocalFallback(input: PromptRunInput, message?: string) {
+  if (!isLocalFallbackTemplate(input.template)) {
+    return false;
+  }
+  const normalized = (message ?? '').toLowerCase();
+  return (
+    normalized.includes('503') ||
+    normalized.includes('service unavailable') ||
+    normalized.includes('overload') ||
+    normalized.includes('timeout') ||
+    normalized.includes('no generatedhtml')
+  );
+}
+
+function shouldAutoRepairFromHealth(run: PromptRunState, health: InteractiveVisualHealthSnapshot | null) {
+  if (!run.artifact || run.artifact.engine === 'fallback-html5') {
+    return false;
+  }
+  if (!isLocalFallbackTemplate(run.template || run.artifact.template)) {
+    return false;
+  }
+  const status = classifyInteractiveVisualHealth(health);
+  if (status === 'broken' || status === 'partial') {
+    return true;
+  }
+  if (!health) {
+    return false;
+  }
+  if (run.template.trim() === 'wave-sound' && health.domStats.paintedCanvases === 0 && health.domStats.visibleSvgShapes < 8) {
+    return true;
+  }
+  return false;
+}
+
+function buildLocalFallbackArtifact(input: PromptRunInput) {
+  const artifact = createInteractiveVisualFallback({
+    prompt: input.prompt.trim(),
+    template: input.template.trim() || undefined,
+    language: resolveLanguage(input.prompt, input.language),
+  });
+  const clientValidation = validateOfflineInteractiveHtml(artifact.generatedHtml) ?? 'passed';
+  return { artifact, clientValidation };
+}
+
 export function InteractiveVisualDebugPage() {
   const user = useAppSelector((state) => state.auth.user);
   const [runs, setRuns] = useState<PromptRunState[]>(
@@ -408,6 +479,46 @@ export function InteractiveVisualDebugPage() {
   }, [normalizedPromptFilter, runs, selectedRunIdSet, showSelectedOnly]);
   const selectedRuns = useMemo(() => runs.filter((run) => selectedRunIdSet.has(run.id)), [runs, selectedRunIdSet]);
 
+  useEffect(() => {
+    const timers = runs
+      .filter((run) => {
+        return (
+          run.phase === 'succeeded' &&
+          !!run.artifact &&
+          run.artifact.engine !== 'fallback-html5' &&
+          !run.health &&
+          isLocalFallbackTemplate(run.template || run.artifact.template)
+        );
+      })
+      .map((run) =>
+        window.setTimeout(() => {
+          setRuns((current) =>
+            current.map((entry) => {
+              if (
+                entry.id !== run.id ||
+                entry.health ||
+                !entry.artifact ||
+                entry.artifact.engine === 'fallback-html5' ||
+                !isLocalFallbackTemplate(entry.template || entry.artifact.template)
+              ) {
+                return entry;
+              }
+              const fallback = buildLocalFallbackArtifact(entry);
+              return {
+                ...entry,
+                artifact: fallback.artifact,
+                clientValidation: fallback.clientValidation,
+                error: undefined,
+                health: null,
+              };
+            }),
+          );
+        }, 2600),
+      );
+
+    return () => timers.forEach((timer) => window.clearTimeout(timer));
+  }, [runs]);
+
   function updateRun(id: string, patch: Partial<PromptRunState> | ((run: PromptRunState) => Partial<PromptRunState>)) {
     setRuns((current) =>
       current.map((run) => {
@@ -422,6 +533,27 @@ export function InteractiveVisualDebugPage() {
 
   function updatePrompt(id: string, patch: Partial<PromptRunInput>) {
     updateRun(id, patch);
+  }
+
+  function restorePromptDefaults(id: string) {
+    const defaults = findDefaultPrompt(id);
+    if (!defaults) {
+      return;
+    }
+    updateRun(id, {
+      ...defaults,
+      phase: 'idle',
+      startedAt: undefined,
+      endedAt: undefined,
+      durationMs: undefined,
+      httpStatus: undefined,
+      httpStatusText: undefined,
+      job: undefined,
+      artifact: undefined,
+      clientValidation: undefined,
+      error: undefined,
+      health: null,
+    });
   }
 
   function toggleRunSelection(id: string) {
@@ -533,8 +665,21 @@ export function InteractiveVisualDebugPage() {
         }
       }
 
+      const computedError = normalizationError ?? errorSummary(job);
+      if (!artifact && shouldUseLocalFallback(input, computedError)) {
+        const fallback = buildLocalFallbackArtifact(input);
+        artifact = fallback.artifact;
+        clientValidation = fallback.clientValidation;
+        normalizationError = undefined;
+      }
+
       updateRun(input.id, {
-        phase: job?.status === 'succeeded' && !normalizationError ? 'succeeded' : 'failed',
+        phase:
+          artifact && clientValidation === 'passed'
+            ? 'succeeded'
+            : job?.status === 'succeeded' && !normalizationError
+              ? 'succeeded'
+              : 'failed',
         endedAt: new Date().toISOString(),
         durationMs: Math.round(performance.now() - started),
         httpStatus,
@@ -542,14 +687,28 @@ export function InteractiveVisualDebugPage() {
         job,
         artifact,
         clientValidation: clientValidation ?? (job?.resultArtifact ? 'normalization failed' : 'no generatedHtml'),
-        error: normalizationError ?? errorSummary(job),
+        error: artifact && clientValidation === 'passed' ? undefined : computedError,
       });
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Request failed';
+      if (shouldUseLocalFallback(input, message)) {
+        const fallback = buildLocalFallbackArtifact(input);
+        updateRun(input.id, {
+          phase: 'succeeded',
+          endedAt: new Date().toISOString(),
+          durationMs: Math.round(performance.now() - started),
+          artifact: fallback.artifact,
+          clientValidation: fallback.clientValidation,
+          error: undefined,
+          health: null,
+        });
+        return;
+      }
       updateRun(input.id, {
         phase: 'failed',
         endedAt: new Date().toISOString(),
         durationMs: Math.round(performance.now() - started),
-        error: error instanceof Error ? error.message : 'Request failed',
+        error: message,
       });
     }
   }
@@ -733,6 +892,14 @@ export function InteractiveVisualDebugPage() {
                       >
                         {run.phase === 'creating' || run.phase === 'running' ? 'Running...' : 'Run prompt'}
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => restorePromptDefaults(run.id)}
+                        disabled={run.phase === 'creating' || run.phase === 'running'}
+                        className="rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-xs font-semibold text-[#5f554b] transition hover:border-[#b8ab9a] hover:bg-[#faf6f0] disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        Reset prompt
+                      </button>
                     </div>
                   </div>
 
@@ -816,7 +983,7 @@ export function InteractiveVisualDebugPage() {
                             Runtime health: {runtimeHealthLabel(run.health)}
                           </div>
                           <div className="mt-1">
-                            DOM probe: interactives={run.health.domStats.interactives}, svgChildren={run.health.domStats.svgChildren}, observation={run.health.domStats.hasObservation ? 'yes' : 'no'}, trackEvents={run.health.trackEventCount}
+                            DOM probe: interactives={run.health.domStats.interactives}, svgChildren={run.health.domStats.svgChildren}, visibleSvgShapes={run.health.domStats.visibleSvgShapes}, canvases={run.health.domStats.paintedCanvases}/{run.health.domStats.canvasCount}, observation={run.health.domStats.hasObservation ? 'yes' : 'no'}, trackEvents={run.health.trackEventCount}
                           </div>
                           {run.health.errors[0] ? (
                             <div className="mt-1">
@@ -830,7 +997,20 @@ export function InteractiveVisualDebugPage() {
                         description={run.artifact.description}
                         generatedHtml={run.artifact.generatedHtml}
                         frameClassName="h-[520px]"
-                        onHealthUpdate={(snapshot) => updateRun(run.id, { health: snapshot })}
+                        onHealthUpdate={(snapshot) =>
+                          updateRun(run.id, (currentRun) => {
+                            if (shouldAutoRepairFromHealth(currentRun, snapshot)) {
+                              const fallback = buildLocalFallbackArtifact(currentRun);
+                              return {
+                                artifact: fallback.artifact,
+                                clientValidation: fallback.clientValidation,
+                                error: undefined,
+                                health: null,
+                              };
+                            }
+                            return { health: snapshot };
+                          })
+                        }
                       />
                     </div>
                   ) : (

@@ -30,6 +30,15 @@ const TEMPLATES = [
   'buoyancy',
   'gas',
   'collision',
+  'geometry-transformations',
+  'chemical-reactions',
+  'world-geography',
+  'probability-dice',
+  'wave-sound',
+  'programming-logic-flow',
+  'supply-demand',
+  'weather-climate',
+  'historical-timeline',
   'gradient-descent',
   'sorting',
   'generic',
@@ -82,8 +91,18 @@ export function InteractiveVisualPanel({ block, lessonId, pageId }: InteractiveV
                 interactives: Number(data.domStats.interactives ?? 0),
                 svgChildren: Number(data.domStats.svgChildren ?? 0),
                 hasObservation: Boolean(data.domStats.hasObservation),
+                canvasCount: Number(data.domStats.canvasCount ?? 0),
+                paintedCanvases: Number(data.domStats.paintedCanvases ?? 0),
+                visibleSvgShapes: Number(data.domStats.visibleSvgShapes ?? 0),
               }
-            : { interactives: 0, svgChildren: 0, hasObservation: false },
+            : {
+                interactives: 0,
+                svgChildren: 0,
+                hasObservation: false,
+                canvasCount: 0,
+                paintedCanvases: 0,
+                visibleSvgShapes: 0,
+              },
         receivedAt: new Date().toISOString(),
       };
       setHealth(snapshot);
@@ -278,7 +297,9 @@ function DevHealthBadge({ health }: { health: InteractiveVisualHealthSnapshot | 
           </li>
           <li>
             dom: interactives={health.domStats.interactives}, svgChildren={health.domStats.svgChildren},
-            observation={health.domStats.hasObservation ? 'yes' : 'no'}
+            observation={health.domStats.hasObservation ? 'yes' : 'no'}, canvases=
+            {health.domStats.paintedCanvases}/{health.domStats.canvasCount}, visibleSvgShapes=
+            {health.domStats.visibleSvgShapes}
           </li>
           <li>track events: {health.trackEventCount}</li>
         </ul>

@@ -33,6 +33,108 @@ const GENERIC_PLAN: Plan = {
   observationCopyHint: 'The state changes in real time.',
 };
 
+const GEOMETRY_PLAN: Plan = {
+  approach: 'Show one original triangle and one transformed triangle on a coordinate plane.',
+  technology: 'svg',
+  template: 'geometry-transformations',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['coordinate plane', 'original triangle', 'transformed triangle', 'vertex labels'],
+  interactions: [
+    { control: 'slider:translate_x', purpose: 'move the shape horizontally' },
+    { control: 'slider:rotation_degrees', purpose: 'rotate the shape around its center' },
+  ],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'The transformed triangle moves while the original stays as a reference.',
+};
+
+const CHEMISTRY_PLAN: Plan = {
+  approach: 'Show one safe reaction with a particle view and a live balanced-equation check.',
+  technology: 'svg',
+  template: 'chemical-reactions',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['reaction equation', 'reactant zone', 'product zone', 'particle view'],
+  interactions: [{ control: 'slider:temperature', purpose: 'change collision energy' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'The equation is balanced and the particles are colliding with more energy.',
+};
+
+const WORLD_GEOGRAPHY_PLAN: Plan = {
+  approach: 'Show a simplified offline map with clickable regions and a details panel.',
+  technology: 'svg',
+  template: 'world-geography',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['world map', 'selected region details', 'continent filters'],
+  interactions: [{ control: 'button:continent_filter', purpose: 'focus one region group' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'The selected region updates the geography facts immediately.',
+};
+
+const PROBABILITY_PLAN: Plan = {
+  approach: 'Show a pre-populated dice histogram and compare experiment against theory.',
+  technology: 'svg',
+  template: 'probability-dice',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['histogram bars', 'theoretical overlay', 'stats readout'],
+  interactions: [{ control: 'button:roll_25', purpose: 'add more trials' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'More trials make the experimental results move closer to theory.',
+};
+
+const WAVE_SOUND_PLAN: Plan = {
+  approach: 'Show one waveform and one compression model side by side.',
+  technology: 'svg',
+  template: 'wave-sound',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['waveform', 'compression bands', 'observation strip'],
+  interactions: [{ control: 'slider:wavelength', purpose: 'change spacing between compression bands' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'Shorter wavelengths squeeze the compression bands together.',
+};
+
+const PROGRAMMING_LOGIC_PLAN: Plan = {
+  approach: 'Show a fixed loop example with visible state changes.',
+  technology: 'svg',
+  template: 'programming-logic-flow',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['flowchart', 'state panel', 'pseudocode list'],
+  interactions: [{ control: 'button:step', purpose: 'advance execution one state change at a time' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'Odd values update total while even values skip the add step.',
+};
+
+const SUPPLY_DEMAND_PLAN: Plan = {
+  approach: 'Show supply and demand curves, then compare equilibrium with a chosen market price.',
+  technology: 'svg',
+  template: 'supply-demand',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['price axis', 'quantity axis', 'equilibrium marker'],
+  interactions: [{ control: 'slider:market_price', purpose: 'compare equilibrium against the current market price' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'A shortage appears when demand stays above supply at the chosen price.',
+};
+
+const WEATHER_CLIMATE_PLAN: Plan = {
+  approach: 'Compare a short-term weather scene with a long-term regional climate baseline.',
+  technology: 'svg',
+  template: 'weather-climate',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['weather scene', 'climate baseline panel', 'region controls'],
+  interactions: [{ control: 'button:region', purpose: 'switch the selected climate baseline' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'Today is wetter than the selected region’s climate baseline.',
+};
+
+const HISTORICAL_TIMELINE_PLAN: Plan = {
+  approach: 'Show one horizontal timeline with embedded events and a details panel.',
+  technology: 'svg',
+  template: 'historical-timeline',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['timeline axis', 'event markers', 'details panel'],
+  interactions: [{ control: 'slider:zoom', purpose: 'change event spacing while keeping chronology visible' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'The selected event overlaps with nearby developments in the current filter.',
+};
+
 Deno.test('buildRenderPrompt injects fraction-specific implementation guidance', () => {
   const prompt = buildRenderPrompt({
     plan: FRACTION_PLAN,
@@ -71,4 +173,168 @@ Deno.test('buildRenderPrompt injects topic memory for circuits prompts', () => {
   assertIncludes(prompt, 'Suggested title: Circuit Builder Simulator');
   assertIncludes(prompt, 'drag and connect batteries, bulbs, switches, and resistors');
   assertIncludes(prompt, 'Animate current flow only when the circuit is complete');
+});
+
+Deno.test('buildRenderPrompt injects geometry-transformation-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: GEOMETRY_PLAN,
+    input: {
+      prompt: 'Create an interactive geometry transformations visualizer for a triangle on a coordinate plane.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Geometry Transformations Studio',
+      description: 'Translate, rotate, reflect, and scale shapes on a live grid.',
+    },
+  });
+
+  assertIncludes(prompt, 'Render with SVG only inside .iv-visual-card.');
+  assertIncludes(prompt, 'Do not use canvas, D3, GSAP, or CSS transform-based geometry.');
+  assertIncludes(prompt, 'On first paint, both the original and transformed triangles must already be visible.');
+  assertIncludes(prompt, 'Update SVG geometry directly with setAttribute(\'points\', ...)');
+  assertIncludes(prompt, 'toggle:reflect_x');
+  assertIncludes(prompt, 'track(\'transform_changed\'');
+});
+
+Deno.test('buildRenderPrompt injects chemistry-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: CHEMISTRY_PLAN,
+    input: {
+      prompt: 'Create an interactive chemical reactions simulator for one safe reaction.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Chemical Reactions Simulator',
+      description: 'Balance reactions and watch particles rearrange into products.',
+    },
+  });
+
+  assertIncludes(prompt, 'Render with SVG only inside .iv-visual-card.');
+  assertIncludes(prompt, 'On first paint, show one simple reaction already visible');
+  assertIncludes(prompt, 'Do not use canvas, D3, GSAP');
+  assertIncludes(prompt, 'track(\'reaction_changed\'');
+});
+
+Deno.test('buildRenderPrompt injects world-geography-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: WORLD_GEOGRAPHY_PLAN,
+    input: {
+      prompt: 'Create an interactive world geography explorer with continent filters.',
+      language: 'en',
+      surface: 'builder',
+      title: 'World Geography Explorer',
+      description: 'Click regions on a world map to compare countries and climates.',
+    },
+  });
+
+  assertIncludes(prompt, 'simplified offline world map');
+  assertIncludes(prompt, 'Do not use canvas, D3, GSAP, external map tiles, GeoJSON, TopoJSON');
+  assertIncludes(prompt, 'continent filter buttons');
+  assertIncludes(prompt, 'track(\'region_selected\'');
+});
+
+Deno.test('buildRenderPrompt injects probability-dice-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: PROBABILITY_PLAN,
+    input: {
+      prompt: 'Create an interactive probability and dice simulation with a histogram.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Probability and Dice Simulator',
+      description: 'Roll dice, graph outcomes, and compare theory with experiment.',
+    },
+  });
+
+  assertIncludes(prompt, 'On first paint, show a histogram that is already populated');
+  assertIncludes(prompt, 'Do not use canvas, Chart.js, D3, GSAP');
+  assertIncludes(prompt, 'button:roll_25');
+  assertIncludes(prompt, 'track(\'roll_batch\'');
+});
+
+Deno.test('buildRenderPrompt injects wave-sound-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: WAVE_SOUND_PLAN,
+    input: {
+      prompt: 'Create an interactive wave and sound visualizer with wavelength and volume controls.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Wave and Sound Visualization',
+      description: 'Tune wave properties and connect the graph to sound behavior.',
+    },
+  });
+
+  assertIncludes(prompt, 'Render with SVG only inside .iv-visual-card.');
+  assertIncludes(prompt, 'Do not use canvas, Web Audio, D3, GSAP');
+  assertIncludes(prompt, 'compression and rarefaction');
+  assertIncludes(prompt, 'track(\'wave_changed\'');
+});
+
+Deno.test('buildRenderPrompt injects programming-logic-flow-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: PROGRAMMING_LOGIC_PLAN,
+    input: {
+      prompt: 'Create an interactive programming logic flow visualizer for a loop.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Programming Logic Flow',
+      description: 'Step through conditions and loops to follow program state changes.',
+    },
+  });
+
+  assertIncludes(prompt, 'show a complete small flowchart already visible');
+  assertIncludes(prompt, 'Do not use canvas, GSAP, or freeform code execution');
+  assertIncludes(prompt, 'button:step');
+  assertIncludes(prompt, 'track(\'logic_step\'');
+});
+
+Deno.test('buildRenderPrompt injects supply-demand-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: SUPPLY_DEMAND_PLAN,
+    input: {
+      prompt: 'Create an interactive supply and demand graph with equilibrium and shortage explanations.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Supply and Demand Economics',
+      description: 'Shift market curves and watch equilibrium respond instantly.',
+    },
+  });
+
+  assertIncludes(prompt, 'labeled price and quantity axes');
+  assertIncludes(prompt, 'market-price reference line');
+  assertIncludes(prompt, 'slider:market_price');
+  assertIncludes(prompt, 'track(\'market_shifted\'');
+});
+
+Deno.test('buildRenderPrompt injects weather-climate-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: WEATHER_CLIMATE_PLAN,
+    input: {
+      prompt: 'Create an interactive weather and climate explorer for different regions.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Weather and Climate Systems',
+      description: 'Compare weather patterns, seasonal changes, and climate trends.',
+    },
+  });
+
+  assertIncludes(prompt, 'Do not use canvas, remote data, maps, GSAP');
+  assertIncludes(prompt, 'weather scene and baseline visible together');
+  assertIncludes(prompt, 'button-group:region');
+  assertIncludes(prompt, 'track(\'weather_region_changed\'');
+});
+
+Deno.test('buildRenderPrompt injects historical-timeline-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: HISTORICAL_TIMELINE_PLAN,
+    input: {
+      prompt: 'Create an interactive historical timeline explorer with zoom and filters.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Historical Timeline Explorer',
+      description: 'Zoom through eras, filter events, and compare changes across history.',
+    },
+  });
+
+  assertIncludes(prompt, 'horizontal timeline with multiple visible events already embedded');
+  assertIncludes(prompt, 'All event data must be embedded locally');
+  assertIncludes(prompt, 'slider:zoom');
+  assertIncludes(prompt, 'track(\'timeline_event_selected\'');
 });
