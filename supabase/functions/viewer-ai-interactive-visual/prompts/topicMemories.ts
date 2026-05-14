@@ -77,10 +77,10 @@ const TOPIC_MEMORIES: TopicMemory[] = [
     match: /(geometry|transformation|transformations|rotate|rotation|reflect|reflection|translate|translation|scale|coordinate plane|coordinates)/i,
     suggestedTitle: 'Geometry Transformation Studio',
     suggestedDescription:
-      'Learn geometric transformations interactively with animated shapes and coordinate visualizations.',
+      'Learn geometric transformations interactively with shapes on a coordinate plane.',
     guidance: [
       'Use a coordinate plane with shapes that can be rotated, reflected, translated, and scaled.',
-      'Animate each transformation step by step rather than jumping directly to the result.',
+      'Render both the original and transformed shape on first paint, then use only short direct updates when controls change.',
       'Show coordinates before and after transformation, with clear color or label differences between original and transformed shapes.',
       'Keep controls close to the plane so learners can see the mapping from action to geometric change.',
     ],
@@ -90,12 +90,12 @@ const TOPIC_MEMORIES: TopicMemory[] = [
     match: /(chemical reaction|chemical reactions|molecule|molecules|atom|atoms|balanced equation|mix chemicals|chemistry experiment)/i,
     suggestedTitle: 'Chemical Reaction Simulator',
     suggestedDescription:
-      'Visualize atoms and molecules reacting in real time through interactive chemistry experiments.',
+      'Visualize a safe chemical reaction through a constrained particle view and live equation updates.',
     guidance: [
-      'Show atoms and molecules combining or breaking apart at the particle level during reactions.',
-      'Let learners mix chemicals safely using constrained controls rather than freeform unsafe combinations.',
-      'Animate bond formation and bond breaking while updating the balanced chemical equation dynamically.',
-      'Use color, labels, or legends to distinguish reactants, products, and intermediate states.',
+      'Render one simple safe reaction on first paint so reactants, products, and the equation are already visible.',
+      'Let learners adjust only constrained coefficients or temperature, not arbitrary freeform chemicals.',
+      'Update the particle view and balanced equation directly instead of relying on heavy animation choreography.',
+      'Use color, labels, or legends to distinguish reactants and products clearly.',
     ],
   },
   {
@@ -103,12 +103,12 @@ const TOPIC_MEMORIES: TopicMemory[] = [
     match: /(world geography|atlas|globe|interactive map|countries|capitals|landmarks|population|climate|tectonic|trade routes)/i,
     suggestedTitle: 'Interactive World Atlas',
     suggestedDescription:
-      'Explore countries, geography, climate, and global landmarks through immersive interactive maps.',
+      'Explore world geography through a simplified offline map with focused regional facts.',
     guidance: [
-      'Use an interactive map or globe where learners can explore countries, capitals, landmarks, populations, and climates.',
-      'Support click or hover-based region exploration with a focused details panel instead of too many inline labels.',
-      'Animate weather systems, tectonic plates, or trade routes only when those layers are selected or relevant.',
-      'Keep navigation clear with zoom, pan, and readable geographic boundaries.',
+      'Use a simplified offline SVG world map with a small fixed set of clickable regions or countries.',
+      'Support click and filter-based exploration with a focused details panel instead of full GIS navigation.',
+      'Keep all map data embedded locally and avoid external tiles, GeoJSON, or globe engines.',
+      'Prefer readable boundaries and labels over zoom, pan, or complex animated layers.',
     ],
   },
   {
@@ -116,12 +116,12 @@ const TOPIC_MEMORIES: TopicMemory[] = [
     match: /(probability|statistics|dice|coin|coins|spinner|spinners|distribution|outcome distribution|simulation lab)/i,
     suggestedTitle: 'Probability Simulation Lab',
     suggestedDescription:
-      'Learn probability through interactive simulations with live statistical and graphical feedback.',
+      'Learn probability through visible dice simulations with live histograms and theory comparisons.',
     guidance: [
-      'Allow repeated simulations with dice, coins, or spinners and update results continuously.',
-      'Show percentages, frequency counts, and outcome distributions with graphs that refresh as trials accumulate.',
-      'Make sample size and convergence over repeated trials easy to observe.',
-      'Use controls for run count, reset, and simulation type without hiding the relationship between trials and outcomes.',
+      'Render a starter sample on first paint so the histogram is never blank.',
+      'Show both experimental counts and a simple theoretical comparison as trials accumulate.',
+      'Make sample size and convergence easy to observe with clear bars and summary readouts.',
+      'Use controls for dice count, roll batch, and reset without hiding the relationship between rolls and outcomes.',
     ],
   },
   {

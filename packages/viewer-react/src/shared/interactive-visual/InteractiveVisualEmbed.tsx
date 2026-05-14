@@ -7,7 +7,14 @@ export type InteractiveVisualHealthSnapshot = {
   when: string;
   errors: Array<{ message: string; source: string; line: number; col: number }>;
   trackEventCount: number;
-  domStats: { interactives: number; svgChildren: number; hasObservation: boolean };
+  domStats: {
+    interactives: number;
+    svgChildren: number;
+    hasObservation: boolean;
+    canvasCount: number;
+    paintedCanvases: number;
+    visibleSvgShapes: number;
+  };
   receivedAt: string;
 };
 
@@ -16,7 +23,7 @@ export function classifyInteractiveVisualHealth(
 ): 'unknown' | 'healthy' | 'partial' | 'broken' {
   if (!health) return 'unknown';
   if (health.errors.length > 0) return 'broken';
-  if (health.domStats.svgChildren === 0 && health.domStats.interactives === 0) return 'partial';
+  if (health.domStats.visibleSvgShapes === 0 && health.domStats.paintedCanvases === 0) return 'partial';
   return 'healthy';
 }
 
@@ -51,14 +58,81 @@ const INTERACTIVE_VISUAL_BRIDGE = `<script>
     healthErrors.push({ message: 'unhandledrejection: ' + reason, source: '', line: 0, col: 0 });
   });
 
+  function isPaintVisible(value) {
+    return !!value &&
+      value !== 'none' &&
+      value !== 'transparent' &&
+      value !== 'rgba(0, 0, 0, 0)' &&
+      value !== 'rgba(0,0,0,0)';
+  }
+
+  function countPaintedCanvases() {
+    var canvases = document.querySelectorAll('canvas');
+    var painted = 0;
+    canvases.forEach(function (canvas) {
+      try {
+        var context = canvas.getContext('2d', { willReadFrequently: true });
+        if (!context) return;
+        var width = Math.max(1, Math.min(canvas.width || 1, 32));
+        var height = Math.max(1, Math.min(canvas.height || 1, 32));
+        var data = context.getImageData(0, 0, width, height).data;
+        var nonWhite = 0;
+        for (var index = 0; index < data.length; index += 4) {
+          var red = data[index];
+          var green = data[index + 1];
+          var blue = data[index + 2];
+          var alpha = data[index + 3];
+          if (alpha > 0 && (red < 248 || green < 248 || blue < 248)) {
+            nonWhite += 1;
+            if (nonWhite > 12) {
+              painted += 1;
+              return;
+            }
+          }
+        }
+      } catch (_e) {}
+    });
+    return { canvasCount: canvases.length, paintedCanvases: painted };
+  }
+
+  function countVisibleSvgShapes() {
+    var count = 0;
+    var nodes = document.querySelectorAll('svg path,svg line,svg polyline,svg polygon,svg rect,svg circle,svg ellipse,svg text');
+    nodes.forEach(function (node) {
+      try {
+        var style = window.getComputedStyle(node);
+        if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity || '1') <= 0) {
+          return;
+        }
+        if (
+          node.tagName.toLowerCase() === 'text' ||
+          isPaintVisible(style.fill) ||
+          isPaintVisible(style.stroke)
+        ) {
+          count += 1;
+        }
+      } catch (_e) {
+        count += 1;
+      }
+    });
+    return count;
+  }
+
   function emitHealth(when) {
     var interactives = 0;
     var svgChildren = 0;
     var hasObservation = false;
+    var canvasCount = 0;
+    var paintedCanvases = 0;
+    var visibleSvgShapes = 0;
     try {
       interactives = document.querySelectorAll('button,input,select,textarea,[role="button"]').length;
       svgChildren = document.querySelectorAll('svg *').length;
       hasObservation = !!document.querySelector('.iv-observation-card,.iv-conclusion');
+      var canvasStats = countPaintedCanvases();
+      canvasCount = canvasStats.canvasCount;
+      paintedCanvases = canvasStats.paintedCanvases;
+      visibleSvgShapes = countVisibleSvgShapes();
     } catch (_e) {}
     try {
       window.parent.postMessage({
@@ -66,7 +140,14 @@ const INTERACTIVE_VISUAL_BRIDGE = `<script>
         when: when,
         errors: healthErrors.slice(-10),
         trackEventCount: trackCount,
-        domStats: { interactives: interactives, svgChildren: svgChildren, hasObservation: hasObservation },
+        domStats: {
+          interactives: interactives,
+          svgChildren: svgChildren,
+          hasObservation: hasObservation,
+          canvasCount: canvasCount,
+          paintedCanvases: paintedCanvases,
+          visibleSvgShapes: visibleSvgShapes,
+        },
       }, '*');
     } catch (_e) {}
   }
@@ -179,8 +260,18 @@ export function InteractiveVisualEmbed({
                 interactives: Number(data.domStats.interactives ?? 0),
                 svgChildren: Number(data.domStats.svgChildren ?? 0),
                 hasObservation: Boolean(data.domStats.hasObservation),
+                canvasCount: Number(data.domStats.canvasCount ?? 0),
+                paintedCanvases: Number(data.domStats.paintedCanvases ?? 0),
+                visibleSvgShapes: Number(data.domStats.visibleSvgShapes ?? 0),
               }
-            : { interactives: 0, svgChildren: 0, hasObservation: false },
+            : {
+                interactives: 0,
+                svgChildren: 0,
+                hasObservation: false,
+                canvasCount: 0,
+                paintedCanvases: 0,
+                visibleSvgShapes: 0,
+              },
         receivedAt: new Date().toISOString(),
       };
       onHealthUpdateRef.current?.(snapshot);
