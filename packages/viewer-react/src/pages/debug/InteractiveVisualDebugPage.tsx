@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react';
-import { InteractiveVisualEmbed } from '@/shared/interactive-visual/InteractiveVisualEmbed';
+import {
+  classifyInteractiveVisualHealth,
+  InteractiveVisualEmbed,
+  type InteractiveVisualHealthSnapshot,
+} from '@/shared/interactive-visual/InteractiveVisualEmbed';
 import { supabase, viewerSupabaseAnonKey, viewerSupabaseUrl } from '@/shared/api/supabase';
 import {
   normalizeInteractiveVisualArtifact,
@@ -43,6 +47,7 @@ type PromptRunState = PromptRunInput & {
   artifact?: InteractiveVisualArtifact;
   clientValidation?: string;
   error?: string;
+  health?: InteractiveVisualHealthSnapshot | null;
 };
 
 type ParsedDebugResponse = {
@@ -56,21 +61,21 @@ const DEFAULT_PROMPTS: PromptRunInput[] = [
     id: 'gas-compression',
     label: 'Gas Compression',
     prompt:
-      '我想讲理想气体压缩过程。请做一个活塞压缩气体的交互动画，用户可以拖动活塞位置，并看到体积变小、粒子更密集、压强变化更明显。希望学生通过拖动直接感受到“体积减小会影响分子状态和压强表现”。',
-    title: '理想气体压缩过程',
-    description: '拖动活塞，观察气体体积、密度与压强的变化。',
+      'Create an interactive ideal-gas compression demo. Let the learner drag a piston and observe the volume shrink, particles crowd together, and pressure increase so the relationship between volume and pressure feels immediate.',
+    title: 'Ideal Gas Compression',
+    description: 'Drag the piston to explore volume, density, and pressure changes.',
     template: 'generic',
-    language: 'zh-CN',
+    language: 'en',
   },
   {
     id: 'linear-function',
     label: 'Linear Function',
     prompt:
-      '请做一个一次函数 y=ax+b 的交互式可视化。画面里要有坐标系和直线，学生可以拖动两个滑块改变 a 和 b，并实时看到斜率和截距如何变化。',
-    title: '一次函数探索',
-    description: '调整斜率和截距，观察直线如何变化。',
+      'Create an interactive visualization for the linear function y = ax + b. Show axes and a line, then let the learner adjust a and b with sliders to see how slope and intercept change in real time.',
+    title: 'Linear Function Explorer',
+    description: 'Adjust slope and intercept to watch the line update live.',
     template: 'generic',
-    language: 'zh-CN',
+    language: 'en',
   },
   {
     id: 'fractions',
@@ -99,6 +104,136 @@ const DEFAULT_PROMPTS: PromptRunInput[] = [
       'Create an interactive projectile motion visualization. Let students change launch angle and speed, then show the trajectory, range, height, and a short observation that updates live.',
     title: 'Projectile Motion',
     description: 'Change launch conditions and inspect the trajectory.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'human-body-systems',
+    label: 'Human Body Systems',
+    prompt:
+      'Create an interactive human body systems explorer. Show a body diagram with clickable systems like circulatory, respiratory, digestive, nervous, muscular, and skeletal. When a learner selects a system, highlight the major organs, animate the flow or function, and show a simple explanation panel.',
+    title: 'Human Body Systems Explorer',
+    description: 'Select a body system to inspect major organs and their roles.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'dna-genetics',
+    label: 'DNA and Genetics',
+    prompt:
+      'Create a compact interactive DNA and genetics explainer using only plain SVG, inline CSS, and vanilla JavaScript. Do not use GSAP, D3, module imports, external libraries, or timeline-based animation. On first paint, show a clearly visible SVG DNA double helix with labeled color-coded base pairs A-T and C-G so the main visual is complete immediately. Add a simple base-pair matching activity where one DNA base is highlighted and the learner clicks one of four answer buttons to choose the correct complement with instant feedback. Also add two small parent allele dropdowns that update a simple 2x2 Punnett square, genotype summary, phenotype summary, and one observation sentence in real time. Keep the layout static, the controls simple, and the code easy to audit.',
+    title: 'DNA and Genetics Lab',
+    description: 'Match DNA bases and update a simple Punnett square live.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'electricity-circuits',
+    label: 'Electricity and Circuits',
+    prompt:
+      'Create an interactive electricity and circuits simulation. Let learners build or modify a simple circuit with a battery, switch, bulb, and resistor, then adjust voltage and resistance to see current, brightness, and whether the circuit is open or closed.',
+    title: 'Electricity and Circuits',
+    description: 'Adjust circuit parts and observe current flow and bulb brightness.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'ecosystem-food-chains',
+    label: 'Ecosystem Food Chains',
+    prompt:
+      'Create an interactive ecosystem food chain explorer. Show producers, consumers, and decomposers that learners can arrange into a food chain or food web. Visualize energy flow with arrows, and update the ecosystem balance when one organism is removed or added.',
+    title: 'Ecosystem Food Chain Explorer',
+    description: 'Build food chains and track how energy moves through an ecosystem.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'geometry-transformations',
+    label: 'Geometry Shape Transformations',
+    prompt:
+      'Create an interactive geometry transformations visualizer. Show a coordinate grid with a shape, then let learners translate, rotate, reflect, and scale it using sliders or buttons while keeping the original and transformed versions visible together.',
+    title: 'Geometry Transformations Studio',
+    description: 'Translate, rotate, reflect, and scale shapes on a live grid.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'chemical-reactions',
+    label: 'Chemical Reactions',
+    prompt:
+      'Create an interactive chemical reactions simulator. Show reactants and products for simple reactions, include a particle view where atoms rearrange, and let learners balance the equation or change factors like temperature or concentration to observe effects.',
+    title: 'Chemical Reactions Simulator',
+    description: 'Balance reactions and watch particles rearrange into products.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'world-geography',
+    label: 'World Geography Explorer',
+    prompt:
+      'Create an interactive world geography explorer. Show a world map with clickable countries or regions, continent filters, and panels for country name, capital, major landforms, or climate zone so learners can compare places visually.',
+    title: 'World Geography Explorer',
+    description: 'Click regions on a world map to compare countries and climates.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'probability-dice',
+    label: 'Probability and Dice Simulation',
+    prompt:
+      'Create an interactive probability and dice simulation. Let learners roll one, two, or three dice many times, visualize outcomes in a histogram, and compare experimental probability against theoretical probability as the sample size grows.',
+    title: 'Probability and Dice Simulator',
+    description: 'Roll dice, graph outcomes, and compare theory with experiment.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'wave-sound',
+    label: 'Wave and Sound Visualization',
+    prompt:
+      'Create an interactive wave and sound visualization. Show both a sine wave and a sound compression animation, then let learners change amplitude, frequency, wavelength, and pitch or volume to see how the graph and sound model update together.',
+    title: 'Wave and Sound Visualization',
+    description: 'Tune wave properties and connect the graph to sound behavior.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'programming-logic-flow',
+    label: 'Programming Logic Flow',
+    prompt:
+      'Create an interactive programming logic flow visualizer. Show a simple flowchart or pseudocode with variables, conditions, and loops, then let learners step through execution to see how decisions branch and state changes over time.',
+    title: 'Programming Logic Flow',
+    description: 'Step through conditions and loops to follow program state changes.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'supply-demand',
+    label: 'Supply and Demand Economics',
+    prompt:
+      'Create an interactive supply and demand economics graph. Show supply and demand curves with sliders that shift each curve, then update equilibrium price and quantity live with a short explanation of shortages, surpluses, or market changes.',
+    title: 'Supply and Demand Economics',
+    description: 'Shift market curves and watch equilibrium respond instantly.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'weather-climate',
+    label: 'Weather and Climate Systems',
+    prompt:
+      'Create an interactive weather and climate systems explorer. Help learners compare short-term weather and long-term climate using controls for season, temperature, precipitation, wind, and region so the patterns and differences become easy to see.',
+    title: 'Weather and Climate Systems',
+    description: 'Compare weather patterns, seasonal changes, and climate trends.',
+    template: 'generic',
+    language: 'en',
+  },
+  {
+    id: 'historical-timeline',
+    label: 'Historical Timeline Explorer',
+    prompt:
+      'Create an interactive historical timeline explorer. Show a zoomable timeline with major events, eras, and categories, and let learners filter by region or theme, click events for details, and compare overlapping developments across time.',
+    title: 'Historical Timeline Explorer',
+    description: 'Zoom through eras, filter events, and compare changes across history.',
     template: 'generic',
     language: 'en',
   },
@@ -166,6 +301,13 @@ function finalStatus(run: PromptRunState) {
   if (run.httpStatus && run.httpStatus >= 400) {
     return `HTTP ${run.httpStatus}`;
   }
+  const healthStatus = classifyInteractiveVisualHealth(run.health ?? null);
+  if (run.phase === 'succeeded' && healthStatus === 'broken') {
+    return 'Render failed';
+  }
+  if (run.phase === 'succeeded' && healthStatus === 'partial') {
+    return 'Render partial';
+  }
   if (run.phase === 'succeeded' && run.clientValidation === 'passed') {
     return 'Succeeded';
   }
@@ -189,10 +331,27 @@ function statusClassName(run: PromptRunState) {
   if (status === 'Succeeded') {
     return 'border-[#9fc49f] bg-[#eef8ee] text-[#2f5f38]';
   }
+  if (status === 'Render partial') {
+    return 'border-[#e7c98c] bg-[#fff6e6] text-[#8a5a12]';
+  }
   if (status === 'Not run' || status.startsWith('Running') || status === 'Creating') {
     return 'border-[#d8cec2] bg-[#f8f5f0] text-[#6f665e]';
   }
   return 'border-[#e3a9a1] bg-[#fff0ee] text-[#9b2f25]';
+}
+
+function runtimeHealthLabel(health: InteractiveVisualHealthSnapshot | null | undefined) {
+  const status = classifyInteractiveVisualHealth(health ?? null);
+  if (status === 'healthy') {
+    return 'healthy';
+  }
+  if (status === 'partial') {
+    return 'partial';
+  }
+  if (status === 'broken') {
+    return 'broken';
+  }
+  return '[waiting]';
 }
 
 function nextPollDelay(job: DebugJob) {
@@ -227,9 +386,27 @@ export function InteractiveVisualDebugPage() {
   const [runs, setRuns] = useState<PromptRunState[]>(
     DEFAULT_PROMPTS.map((prompt) => ({ ...prompt, phase: 'idle' })),
   );
-  const [isRunningAll, setIsRunningAll] = useState(false);
+  const [selectedRunIds, setSelectedRunIds] = useState<string[]>(DEFAULT_PROMPTS.map((prompt) => prompt.id));
+  const [promptFilter, setPromptFilter] = useState('');
+  const [showSelectedOnly, setShowSelectedOnly] = useState(false);
+  const [isRunningBatch, setIsRunningBatch] = useState(false);
 
   const endpoint = useMemo(() => buildFunctionUrl(), []);
+  const selectedRunIdSet = useMemo(() => new Set(selectedRunIds), [selectedRunIds]);
+  const normalizedPromptFilter = promptFilter.trim().toLowerCase();
+  const filteredRuns = useMemo(() => {
+    return runs.filter((run) => {
+      if (showSelectedOnly && !selectedRunIdSet.has(run.id)) {
+        return false;
+      }
+      if (!normalizedPromptFilter) {
+        return true;
+      }
+      const searchable = [run.label, run.title, run.description, run.prompt].join('\n').toLowerCase();
+      return searchable.includes(normalizedPromptFilter);
+    });
+  }, [normalizedPromptFilter, runs, selectedRunIdSet, showSelectedOnly]);
+  const selectedRuns = useMemo(() => runs.filter((run) => selectedRunIdSet.has(run.id)), [runs, selectedRunIdSet]);
 
   function updateRun(id: string, patch: Partial<PromptRunState> | ((run: PromptRunState) => Partial<PromptRunState>)) {
     setRuns((current) =>
@@ -245,6 +422,24 @@ export function InteractiveVisualDebugPage() {
 
   function updatePrompt(id: string, patch: Partial<PromptRunInput>) {
     updateRun(id, patch);
+  }
+
+  function toggleRunSelection(id: string) {
+    setSelectedRunIds((current) =>
+      current.includes(id) ? current.filter((entry) => entry !== id) : [...current, id],
+    );
+  }
+
+  function replaceSelection(ids: string[]) {
+    setSelectedRunIds(Array.from(new Set(ids)));
+  }
+
+  async function loadAccessToken() {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) {
+      throw error;
+    }
+    return data.session?.access_token ?? '';
   }
 
   async function callFunction(body: Record<string, unknown>, accessToken: string) {
@@ -284,6 +479,7 @@ export function InteractiveVisualDebugPage() {
       artifact: undefined,
       clientValidation: undefined,
       error: undefined,
+      health: null,
     });
 
     try {
@@ -358,30 +554,59 @@ export function InteractiveVisualDebugPage() {
     }
   }
 
-  async function runAllPrompts() {
-    setIsRunningAll(true);
+  async function runSinglePrompt(runId: string) {
+    const run = runs.find((entry) => entry.id === runId);
+    if (!run || run.prompt.trim().length < 8 || run.phase === 'creating' || run.phase === 'running') {
+      return;
+    }
     try {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) {
-        setRuns((current) =>
-          current.map((run) => ({
-            ...run,
-            phase: 'failed',
-            error: error.message,
-            endedAt: new Date().toISOString(),
-          })),
-        );
-        return;
-      }
-      const accessToken = data.session?.access_token ?? '';
-      await Promise.all(runs.map((run) => runPrompt(run, accessToken)));
+      const accessToken = await loadAccessToken();
+      await runPrompt(run, accessToken);
+    } catch (error) {
+      updateRun(runId, {
+        phase: 'failed',
+        error: error instanceof Error ? error.message : 'Session lookup failed',
+        endedAt: new Date().toISOString(),
+      });
+    }
+  }
+
+  async function runSelectedPrompts() {
+    const targetRuns = runs.filter((run) => selectedRunIdSet.has(run.id));
+    const targetRunIds = new Set(targetRuns.map((run) => run.id));
+    if (targetRuns.length === 0) {
+      return;
+    }
+    setIsRunningBatch(true);
+    try {
+      const accessToken = await loadAccessToken();
+      await Promise.all(targetRuns.map((run) => runPrompt(run, accessToken)));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Session lookup failed';
+      setRuns((current) =>
+        current.map((run) =>
+          targetRunIds.has(run.id)
+            ? {
+                ...run,
+                phase: 'failed',
+                error: message,
+                endedAt: new Date().toISOString(),
+              }
+            : run,
+        ),
+      );
     } finally {
-      setIsRunningAll(false);
+      setIsRunningBatch(false);
     }
   }
 
   const completedCount = runs.filter((run) => ['succeeded', 'failed'].includes(run.phase)).length;
   const successCount = runs.filter((run) => finalStatus(run) === 'Succeeded').length;
+  const selectedCount = selectedRuns.length;
+  const visibleCount = filteredRuns.length;
+  const selectedVisibleCount = filteredRuns.filter((run) => selectedRunIdSet.has(run.id)).length;
+  const hasInvalidSelectedPrompt = selectedRuns.some((run) => run.prompt.trim().length < 8);
+  const hasRunningSelectedPrompt = selectedRuns.some((run) => run.phase === 'creating' || run.phase === 'running');
 
   return (
     <div className="min-h-full bg-[#f6f3ef] px-4 py-5 text-[#2f2a25] md:px-8">
@@ -389,27 +614,70 @@ export function InteractiveVisualDebugPage() {
         <header className="flex flex-col gap-3 border-b border-[#ded5ca] pb-4 xl:flex-row xl:items-end xl:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7a6f65]">Interactive Visual Debug</p>
-            <h1 className="mt-1 text-2xl font-bold">Batch Prompt Test Console</h1>
+            <h1 className="mt-1 text-2xl font-bold">Prompt Test Console</h1>
             <p className="mt-1 max-w-3xl text-sm text-[#6f665e]">
-              Test five prompts in parallel. Each result keeps only the final status, duration, job summary, and iframe output.
+              Filter the prompt library, select a group, or run one prompt at a time. Each result keeps the final status, duration, job summary, and iframe output.
             </p>
           </div>
-          <div className="flex flex-col gap-2 lg:min-w-[460px]">
+          <div className="flex flex-col gap-2 lg:min-w-[560px]">
             <div className="rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-xs text-[#5f554b]">
               <div>Endpoint</div>
               <code className="break-all text-[#3b6f9f]">{endpoint}</code>
             </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                value={promptFilter}
+                onChange={(event) => setPromptFilter(event.target.value)}
+                placeholder="Filter prompts by topic, title, or description"
+                className="min-w-[240px] flex-1 rounded-md border border-[#d7cec3] bg-white px-3 py-2 text-sm outline-none focus:border-[#7c9d72]"
+              />
+              <button
+                type="button"
+                onClick={() => replaceSelection(filteredRuns.map((run) => run.id))}
+                disabled={filteredRuns.length === 0}
+                className="rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-sm font-semibold text-[#5f554b] transition hover:border-[#b8ab9a] hover:bg-[#faf6f0] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Select visible
+              </button>
+              <button
+                type="button"
+                onClick={() => replaceSelection(runs.map((run) => run.id))}
+                disabled={runs.length === 0}
+                className="rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-sm font-semibold text-[#5f554b] transition hover:border-[#b8ab9a] hover:bg-[#faf6f0] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Select all
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRunIds([])}
+                disabled={selectedCount === 0}
+                className="rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-sm font-semibold text-[#5f554b] transition hover:border-[#b8ab9a] hover:bg-[#faf6f0] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Clear
+              </button>
+              <label className="inline-flex items-center gap-2 rounded-md border border-[#d8cec2] bg-white px-3 py-2 text-sm font-semibold text-[#5f554b]">
+                <input
+                  type="checkbox"
+                  checked={showSelectedOnly}
+                  onChange={(event) => setShowSelectedOnly(event.target.checked)}
+                  className="h-4 w-4 rounded border-[#b8ab9a] text-[#466d4f] focus:ring-[#7c9d72]"
+                />
+                Only selected
+              </label>
+            </div>
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-sm font-semibold text-[#5f554b]">
-                {successCount}/{runs.length} succeeded · {completedCount}/{runs.length} completed
+                {successCount}/{runs.length} succeeded · {completedCount}/{runs.length} completed · {selectedCount} selected · {visibleCount} visible
               </span>
               <button
                 type="button"
-                onClick={() => void runAllPrompts()}
-                disabled={isRunningAll || runs.some((run) => run.prompt.trim().length < 8)}
+                onClick={() => void runSelectedPrompts()}
+                disabled={isRunningBatch || selectedCount === 0 || hasInvalidSelectedPrompt || hasRunningSelectedPrompt}
                 className="rounded-md bg-[#466d4f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#385b40] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {isRunningAll ? 'Testing all...' : 'Run 5 Prompts'}
+                {isRunningBatch
+                  ? `Testing ${selectedCount} selected...`
+                  : `Run ${selectedCount} Selected${selectedCount === 1 ? ' Prompt' : ' Prompts'}`}
               </button>
             </div>
           </div>
@@ -425,12 +693,18 @@ export function InteractiveVisualDebugPage() {
         </section>
 
         <section className="grid gap-4">
-          {runs.map((run, index) => (
+          {filteredRuns.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-[#d8cec2] bg-white px-6 py-10 text-center text-sm font-semibold text-[#7a6f65] shadow-sm">
+              No prompts match the current filter.
+            </div>
+          ) : null}
+
+          {filteredRuns.map((run, index) => (
             <article key={run.id} className="rounded-xl border border-[#d8cec2] bg-white p-4 shadow-sm">
               <div className="grid gap-4 xl:grid-cols-[minmax(360px,0.76fr)_minmax(0,1.24fr)]">
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#7a6f65]">Prompt {index + 1}</p>
                       <input
                         value={run.label}
@@ -438,9 +712,28 @@ export function InteractiveVisualDebugPage() {
                         className="mt-1 w-full rounded-md border border-transparent bg-transparent text-lg font-bold outline-none focus:border-[#d7cec3] focus:bg-[#fffdf9]"
                       />
                     </div>
-                    <span className={`rounded-full border px-3 py-1 text-xs font-bold ${statusClassName(run)}`}>
-                      {finalStatus(run)}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <label className="inline-flex items-center gap-2 rounded-full border border-[#d8cec2] bg-[#faf7f1] px-3 py-1 text-xs font-bold text-[#5f554b]">
+                        <input
+                          type="checkbox"
+                          checked={selectedRunIdSet.has(run.id)}
+                          onChange={() => toggleRunSelection(run.id)}
+                          className="h-4 w-4 rounded border-[#b8ab9a] text-[#466d4f] focus:ring-[#7c9d72]"
+                        />
+                        Select
+                      </label>
+                      <span className={`rounded-full border px-3 py-1 text-xs font-bold ${statusClassName(run)}`}>
+                        {finalStatus(run)}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => void runSinglePrompt(run.id)}
+                        disabled={run.phase === 'creating' || run.phase === 'running' || run.prompt.trim().length < 8}
+                        className="rounded-md bg-[#466d4f] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#385b40] disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {run.phase === 'creating' || run.phase === 'running' ? 'Running...' : 'Run prompt'}
+                      </button>
+                    </div>
                   </div>
 
                   <textarea
@@ -495,6 +788,7 @@ export function InteractiveVisualDebugPage() {
                     <StatusDatum label="Job" value={run.job ? `${run.job.status} · ${run.job.id}` : '[none]'} />
                     <StatusDatum label="Attempts" value={run.job ? String(run.job.attemptCount) : '[none]'} />
                     <StatusDatum label="Client validation" value={run.clientValidation ?? '[not run]'} />
+                    <StatusDatum label="Runtime health" value={runtimeHealthLabel(run.health)} />
                     <StatusDatum label="Error" value={errorSummary(run.job, run.error) ?? '[none]'} />
                   </div>
                 </div>
@@ -508,16 +802,44 @@ export function InteractiveVisualDebugPage() {
                           {run.artifact.title} · {run.artifact.generatedHtml.length.toLocaleString()} chars
                         </span>
                       </div>
+                      {run.health ? (
+                        <div
+                          className={`rounded-md border px-3 py-2 text-xs ${
+                            classifyInteractiveVisualHealth(run.health) === 'healthy'
+                              ? 'border-[#9fc49f] bg-[#eef8ee] text-[#2f5f38]'
+                              : classifyInteractiveVisualHealth(run.health) === 'partial'
+                                ? 'border-[#e7c98c] bg-[#fff6e6] text-[#8a5a12]'
+                                : 'border-[#e3a9a1] bg-[#fff0ee] text-[#9b2f25]'
+                          }`}
+                        >
+                          <div className="font-semibold">
+                            Runtime health: {runtimeHealthLabel(run.health)}
+                          </div>
+                          <div className="mt-1">
+                            DOM probe: interactives={run.health.domStats.interactives}, svgChildren={run.health.domStats.svgChildren}, observation={run.health.domStats.hasObservation ? 'yes' : 'no'}, trackEvents={run.health.trackEventCount}
+                          </div>
+                          {run.health.errors[0] ? (
+                            <div className="mt-1">
+                              First iframe error: {run.health.errors[0].message}
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : null}
                       <InteractiveVisualEmbed
                         title={run.artifact.title}
                         description={run.artifact.description}
                         generatedHtml={run.artifact.generatedHtml}
                         frameClassName="h-[520px]"
+                        onHealthUpdate={(snapshot) => updateRun(run.id, { health: snapshot })}
                       />
                     </div>
                   ) : (
                     <div className="flex min-h-[520px] items-center justify-center rounded-lg border border-dashed border-[#d8cec2] bg-[#faf7f1] px-4 text-center text-sm font-semibold text-[#7a6f65]">
-                      {run.phase === 'idle' ? 'Run this batch to see the generated visualization here.' : 'Waiting for generated output...'}
+                      {run.phase === 'idle'
+                        ? selectedVisibleCount > 0
+                          ? 'Run this prompt or the selected group to see the generated visualization here.'
+                          : 'Select this prompt or run it directly to see the generated visualization here.'
+                        : 'Waiting for generated output...'}
                     </div>
                   )}
                 </div>

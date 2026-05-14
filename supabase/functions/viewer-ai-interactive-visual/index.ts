@@ -574,12 +574,16 @@ Technical requirements:
 - Use only HTML, CSS, and vanilla JavaScript.
 - Do not use React.
 - Do not use external libraries.
+- Do not use GSAP, D3, anime.js, p5, Three.js, or any third-party animation or rendering library.
 - Do not use external images.
 - Do not use external URLs.
 - Do not use script src, link href, module imports, fetch, XMLHttpRequest, WebSocket, iframe, object, or embed.
 - The code must be self-contained and run directly inside a sandboxed iframe.
 - Use SVG or Canvas for the main visualization.
 - Use input controls such as sliders, buttons, toggles, or draggable elements when useful.
+- Prefer plain SVG plus direct DOM updates for concept diagrams and simple educational interactions.
+- If motion is necessary, use vanilla JavaScript or CSS transitions only; do not use animation helper libraries.
+- When changing SVG position, size, or shape, update SVG attributes directly instead of relying on CSS transform shorthands.
 
 System-provided base CSS will be injected into <head> after your answer.
 Use these classes for layout and visual quality instead of writing broad CSS boilerplate:
@@ -752,11 +756,23 @@ function buildRepairInstruction(errors: string[]) {
     return '';
   }
 
+  const requiresVanillaSvgRepair = errors.some((error) => /\b(gsap|d3)\b/i.test(error));
+
   return `
 Previous generated HTML failed validation. Fix the HTML and return the complete document again.
 Validation errors to fix:
 ${errors.map((error, index) => `${index + 1}. ${error}`).join('\n')}
 Preserve the same educational intent. Do not explain the fix.
+${requiresVanillaSvgRepair
+    ? `
+Special repair requirements for this retry:
+- Remove all GSAP, D3, and third-party animation or rendering library usage entirely.
+- Rebuild the interaction with plain SVG + vanilla JavaScript only.
+- Update SVG geometry directly with setAttribute or direct DOM updates; do not animate SVG positions with CSS transform shorthands.
+- Use simple click, input, or select controls instead of complex drag or physics behaviour when possible.
+- Return a complete HTML document that renders a visible SVG on first paint.
+`.trim()
+    : ''}
 `.trim();
 }
 
