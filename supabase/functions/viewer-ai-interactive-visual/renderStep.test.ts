@@ -91,6 +91,17 @@ const WAVE_SOUND_PLAN: Plan = {
   observationCopyHint: 'Shorter wavelengths squeeze the compression bands together.',
 };
 
+const PROJECTILE_PLAN: Plan = {
+  approach: 'Show one projectile arc with live flight measurements and simple comparisons.',
+  technology: 'svg',
+  template: 'projectile',
+  palette: { mode: 'auto', primary: '#2563eb', accent: '#e4572e', surface: '#ffffff' },
+  keyElements: ['launch point', 'trajectory path', 'apex marker', 'landing marker', 'metrics strip'],
+  interactions: [{ control: 'slider:launch_angle', purpose: 'change the arc shape and landing distance' }],
+  accessibilityNotes: ['controls have labels'],
+  observationCopyHint: 'Higher launch angles trade range for height in this no-drag model.',
+};
+
 const PROGRAMMING_LOGIC_PLAN: Plan = {
   approach: 'Show a fixed loop example with visible state changes.',
   technology: 'svg',
@@ -265,6 +276,25 @@ Deno.test('buildRenderPrompt injects wave-sound-specific implementation guidance
   assertIncludes(prompt, 'Do not use canvas, Web Audio, D3, GSAP');
   assertIncludes(prompt, 'compression and rarefaction');
   assertIncludes(prompt, 'track(\'wave_changed\'');
+});
+
+Deno.test('buildRenderPrompt injects projectile-specific implementation guidance', () => {
+  const prompt = buildRenderPrompt({
+    plan: PROJECTILE_PLAN,
+    input: {
+      prompt: 'Create an interactive projectile motion visualization with launch angle and speed controls.',
+      language: 'en',
+      surface: 'builder',
+      title: 'Projectile Motion',
+      description: 'Change launch conditions and inspect the trajectory.',
+    },
+  });
+
+  assertIncludes(prompt, 'Suggested title: Projectile Motion Lab');
+  assertIncludes(prompt, 'Render one complete projectile trajectory on first paint');
+  assertIncludes(prompt, 'SVG only inside .iv-visual-card');
+  assertIncludes(prompt, 'constant gravity');
+  assertIncludes(prompt, 'track(\'projectile_changed\'');
 });
 
 Deno.test('buildRenderPrompt injects programming-logic-flow-specific implementation guidance', () => {

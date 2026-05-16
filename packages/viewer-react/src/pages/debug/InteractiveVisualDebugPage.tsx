@@ -92,20 +92,20 @@ const DEFAULT_PROMPTS: PromptRunInput[] = [
     id: 'wave-motion',
     label: 'Wave Motion',
     prompt:
-      'Create an interactive wave visualization. Students can adjust amplitude, frequency, and phase, and the graph should animate so they can see how each parameter changes the wave.',
+      'Create a compact interactive wave visualizer using only HTML, inline CSS, and vanilla JavaScript. On first paint, show a clearly visible sine wave on labeled axes so the graph is never blank. Provide sliders for amplitude, frequency, and phase, update the curve live on every input event, and keep one short observation sentence in sync with the current parameter values. Keep the layout static, easy to audit, and free of external libraries.',
     title: 'Wave Motion Lab',
     description: 'Adjust wave parameters and observe the animated graph.',
-    template: 'generic',
+    template: 'wave',
     language: 'en',
   },
   {
     id: 'projectile',
     label: 'Projectile',
     prompt:
-      'Create an interactive projectile motion visualization. Let students change launch angle and speed, then show the trajectory, range, height, and a short observation that updates live.',
+      'Create a compact interactive projectile motion visualizer using only HTML, inline CSS, and vanilla JavaScript. On first paint, show a launch point, labeled axes, and one complete projectile trajectory that is already visible. Provide sliders for launch angle and launch speed, update the trajectory, range, max height, flight time, and one short observation sentence live, and keep the model limited to simple constant-gravity motion with no drag, external libraries, or decorative scenery.',
     title: 'Projectile Motion',
     description: 'Change launch conditions and inspect the trajectory.',
-    template: 'generic',
+    template: 'projectile',
     language: 'en',
   },
   {
