@@ -83,7 +83,13 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
     label: 'Interactive Visual',
     icon: '🔭',
     category: 'interactive',
-    defaultContent: { template: 'generic', title: 'Interactive Visual' },
+    defaultContent: {
+      template: 'generic',
+      title: '',
+      description: '',
+      aiPrompt: '',
+      generatedHtml: '',
+    },
   },
   video: {
     label: 'Video',

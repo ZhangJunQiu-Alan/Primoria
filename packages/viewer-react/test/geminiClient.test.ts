@@ -236,7 +236,7 @@ describe('geminiClient', () => {
       [{ role: 'user', text: 'Explain this page.' }],
       {},
       {
-        model: 'gemini-2.5-flash',
+        model: 'gemini-2.5-pro',
         allowModelFallback: false,
         context: {
           surface: 'lesson-runtime',
@@ -294,7 +294,7 @@ describe('geminiClient', () => {
       {},
       {
         provider: 'gemini',
-        model: 'gemini-2.5-flash',
+        model: 'gemini-2.5-pro',
         allowModelFallback: false,
         context: {
           surface: 'lesson-runtime',
@@ -320,7 +320,7 @@ describe('geminiClient', () => {
       }),
     );
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-pro',
       allowModelFallback: false,
       context: {
         surface: 'lesson-runtime',
@@ -393,5 +393,57 @@ describe('geminiClient', () => {
         }),
       }),
     );
+  });
+
+  it('routes broad natural-language interactive visual prompts to the visual service', async () => {
+    vi.stubEnv('VITE_VIEWER_TEST_FIXTURES', '0');
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://demo-project.supabase.co');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'demo-anon-key');
+    document.documentElement.lang = 'zh-CN';
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          title: '一次函数参数交互可视化',
+          description: '拖动 a 和 b，观察直线斜率与截距变化。',
+          generatedHtml: '<section id="linear-graph"><input type="range" /></section>',
+          template: 'linear-function-graph',
+          experienceMode: 'graph',
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        },
+      ),
+    );
+
+    const { generateTutorReplyStream } = await import('@/shared/api/geminiClient');
+    const result = await generateTutorReplyStream([
+      {
+        role: 'user',
+        text: '请帮我做一个交互式可视化，用来讲解一次函数 y=ax+b，学生可以拖动滑块改变 a 和 b。',
+      },
+    ]);
+
+    expect(result.reply).toContain('```primoria-interactive-visual');
+    expect(result.reply).toContain('一次函数参数交互可视化');
+    expect(result.usedTools).toEqual(['interactive_visual']);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://demo-project.functions.supabase.co/viewer-ai-interactive-visual',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          apikey: 'demo-anon-key',
+          Authorization: 'Bearer demo-access-token',
+        }),
+      }),
+    );
+    const body = JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body));
+    expect(body).toMatchObject({
+      prompt: '请帮我做一个交互式可视化，用来讲解一次函数 y=ax+b，学生可以拖动滑块改变 a 和 b。',
+      language: 'zh-CN',
+      surface: 'ai-tutor',
+    });
+    expect(body.experienceMode).toBeUndefined();
   });
 });

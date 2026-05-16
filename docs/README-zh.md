@@ -1,6 +1,6 @@
 # Primoria 文档索引
 
-最后更新：2026-04-19
+最后更新：2026-05-13
 
 ## 文档原则
 
@@ -15,8 +15,14 @@
 - `packages/db/`：Supabase 生成类型
 - `packages/viewer-react/`：统一的 Viewer + Builder React 应用
 - `supabase/`：数据库迁移、RLS、RPC 与 Edge Functions
-- `agent-service/`：可选 AI Tutor 聊天服务
+- `agent-service/`：AI agent 服务，覆盖 learner AI Tutor 与课程生成相关能力
 - `external-tests/`：独立的 Python API 级黑盒测试
+
+## 产品口径
+
+Primoria 的最终产品目标是让用户通过自然语言输入，由 AI 生成一整套类似教科书的完整高质量课程。课程结构统一为 `Course -> Lesson -> Page -> Block`。其中 `interactive-visual` 是核心 Block，目标体验对齐 Brilliant 式互动学习：学习者通过操作、观察、反馈和推理理解概念，而不是只阅读静态内容。
+
+文档中如果出现“AI 草稿”“辅助生成”等表述，应理解为当前实现阶段的能力描述；目标口径仍是自然语言生成完整结构化互动课程。
 
 ## 当前质量基线（2026-04-19）
 
