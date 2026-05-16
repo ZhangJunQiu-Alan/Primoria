@@ -1,6 +1,6 @@
 # 回归测试清单（统一 Viewer + Builder 工作台）
 
-最后更新：2026-04-04
+最后更新：2026-05-13
 
 ## A. 构建与静态检查
 
@@ -25,6 +25,8 @@
 - [ ] 在 `/builder/editor` 创建空白 lesson
 - [ ] 使用规范 `lessons` 键导入 JSON 成功
 - [ ] 使用历史 `pages` 键导入 JSON 并验证迁移成功
+- [ ] 规范 Course JSON 符合 `Course -> Lesson -> Page -> Block` 层级
+- [ ] lesson 内多个 page 可创建、排序、保存并在 learner preview 中按页播放
 - [ ] 显式保存流程可在无远端错误时完成
 - [ ] 如果保存失败，发布流程会中止
 - [ ] 保存与发布流程在无阻断错误时可完成
@@ -36,6 +38,18 @@
   - 非首个 block = `afterPreviousCorrect`
 - [ ] 被 gating 的 block 只有在答对并点击 `Check` 后才解锁
 - [ ] learner preview 支持页进度与 `Prev / Check / Next`
+
+## C2. AI 课程生成与 interactive visualization
+
+- [ ] 输入自然语言课程需求后，AI 生成完整 Course 草稿，而不是只生成标题、大纲或单个 block
+- [ ] AI 生成结果包含多个 lesson；每个 lesson 包含 page；每个 page 包含可播放 block
+- [ ] 适合视觉化的概念课程至少生成一个 `interactive-visual` block
+- [ ] `interactive-visual` block 有清晰默认状态，打开后不是空白画布
+- [ ] `interactive-visual` block 至少有一个真实可操作控件或可推进步骤
+- [ ] 操作控件后，视觉状态和解释文本会同步变化
+- [ ] 生成的 interactive visual 在 Builder preview 和 Viewer lesson runtime 中都能渲染
+- [ ] 移动端 viewport 下 interactive visual 不溢出、不遮挡、不依赖不可用外部资源
+- [ ] 生成失败时能看到可诊断错误，不会把不可播放内容静默保存为正式课程
 
 ## D. Dashboard Tab 测试
 
@@ -98,6 +112,7 @@
 ## F. 数据一致性
 
 - [ ] 在 Builder 改 lesson 名并保存，回 `/builder/dashboard` 能看到新名
+- [ ] AI 生成课程保存后，Dashboard、Editor、Viewer 读取到的 course / lesson / page / block 层级一致
 - [ ] `smoke:cloud` 会在 lesson 改名后发布复用 smoke 课程，进入 Viewer React 验证标题一致，并回作者 Dashboard 验证 `weekly learners` / `published viewers` / 重点课程 analytics
 - [ ] 对快照内容不完整的课程，React viewer fallback 仍可打开
 
@@ -106,3 +121,4 @@
 1. Dashboard 收入数据仍是 fallback 派生值。
 2. 部分分析/粉丝操作只有前端入口，后端接口未接入。
 3. Cloud smoke 的 analytics 验证仍依赖已配置的真实 Supabase smoke 凭据。
+4. AI 生成课程质量与 interactive visualization 质量仍需要更完整的自动化评价。

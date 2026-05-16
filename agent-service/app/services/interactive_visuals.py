@@ -5,9 +5,9 @@ import re
 import httpx
 
 from app.config import get_settings
+from app.model_config import gemini_model_candidates
 
 GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
-MODEL = 'gemini-2.0-flash'
 MAX_OUTPUT_TOKENS = 8192
 
 SYSTEM_PROMPT = """You are an expert STEM animation engineer. Your task is to generate a single,
@@ -78,7 +78,6 @@ async def generate_interactive_visual_html(
     if not settings.google_api_key:
         raise RuntimeError('Platform AI service not configured')
 
-    gemini_url = f'{GEMINI_BASE_URL}/models/{MODEL}:generateContent?key={settings.google_api_key}'
     gemini_body = {
         'system_instruction': {'parts': [{'text': SYSTEM_PROMPT}]},
         'contents': [
@@ -102,20 +101,26 @@ async def generate_interactive_visual_html(
         },
     }
 
+    last_error: str | None = None
     async with httpx.AsyncClient(timeout=60.0) as client:
-        response = await client.post(
-            gemini_url,
-            headers={'Content-Type': 'application/json'},
-            json=gemini_body,
-        )
+        for model in gemini_model_candidates(settings.agent_model):
+            gemini_url = f'{GEMINI_BASE_URL}/models/{model}:generateContent?key={settings.google_api_key}'
+            response = await client.post(
+                gemini_url,
+                headers={'Content-Type': 'application/json'},
+                json=gemini_body,
+            )
 
-    if not response.is_success:
-        raise RuntimeError(f'AI generation failed ({response.status_code})')
+            if not response.is_success:
+                last_error = f'AI generation failed ({response.status_code})'
+                continue
 
-    payload = response.json()
-    raw = (((payload.get('candidates') or [{}])[0] or {}).get('content') or {}).get('parts') or [{}]
-    text = str((raw[0] or {}).get('text') or '')
-    html = normalize_gemini_html(text)
-    if not html.strip():
-        raise RuntimeError('AI returned empty response')
-    return html
+            payload = response.json()
+            raw = (((payload.get('candidates') or [{}])[0] or {}).get('content') or {}).get('parts') or [{}]
+            text = str((raw[0] or {}).get('text') or '')
+            html = normalize_gemini_html(text)
+            if html.strip():
+                return html
+            last_error = 'AI returned empty response'
+
+    raise RuntimeError(last_error or 'AI generation failed')
