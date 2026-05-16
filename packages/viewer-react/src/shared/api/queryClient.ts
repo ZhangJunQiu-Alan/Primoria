@@ -49,8 +49,6 @@ export function createViewerQueryClient() {
   queryClient.setQueryDefaults(['viewer', 'course'], { staleTime: 2 * 60_000 });
   queryClient.setQueryDefaults(['viewer', 'lesson'], { staleTime: 15 * 60_000, retry: 0 });
   queryClient.setQueryDefaults(['viewer', 'community'], { staleTime: 15_000, refetchOnWindowFocus: true });
-  queryClient.setQueryDefaults(['viewer', 'parent-children'], { staleTime: 30_000 });
-  queryClient.setQueryDefaults(['viewer', 'parent-report'], { staleTime: 30_000 });
   queryClient.setQueryDefaults(['viewer', 'profile'], { staleTime: 2 * 60_000 });
   queryClient.setQueryDefaults(['viewer', 'stats'], { staleTime: 2 * 60_000 });
   queryClient.setQueryDefaults(['viewer', 'xp-history'], { staleTime: 2 * 60_000 });

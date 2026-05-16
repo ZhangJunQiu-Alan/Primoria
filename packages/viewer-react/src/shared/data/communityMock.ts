@@ -73,5 +73,4 @@ export const communityTrending: CommunityTrendingItem[] = [
 
 export const communityNotes: CommunityNote[] = [
   { id: 'note-1', title: 'Lesson runtime notes', body: 'Track gating, page reset, and completion summary.' },
-  { id: 'note-2', title: 'Parent flow', body: 'Child binding code remains powered by current RPCs.' },
 ];

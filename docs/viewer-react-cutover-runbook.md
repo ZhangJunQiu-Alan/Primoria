@@ -82,7 +82,6 @@ Successful coverage included:
 - community note persistence
 - AI Tutor reply and tool modals
 - binding-code generation
-- parent redirect and bind-by-code flow
 
 Additional validated commands on 2026-03-31:
 
@@ -105,7 +104,6 @@ Validation notes:
 - largest shared chunk was `framework` at `189.73 KiB` raw
 - latest cloud smoke report was written to `packages/viewer-react/test-results/cloud-smoke-20260331055808/report.json`
 - fixed preprod blockers before the smoke snapshot:
-  - parent dashboard switched to bind-by-code instead of learner-side code generation
   - course enrollment refreshes the course detail UI immediately after mutation success
   - community no longer fails on recursive `community_conversation_members` RLS
 - AI Tutor now reaches `agent-service` through the authenticated backend path
@@ -148,13 +146,6 @@ Profile and settings:
 - Open `/settings`
 - Save profile fields
 - Change a viewer preference and refresh
-- Generate a binding code
-
-Parent flow:
-- Sign in as a parent
-- Confirm redirect to `/parent`
-- Select a child and verify report refresh
-- Bind or unbind a child if the environment allows it
 
 Builder publish/readback:
 - Sign in as the smoke author

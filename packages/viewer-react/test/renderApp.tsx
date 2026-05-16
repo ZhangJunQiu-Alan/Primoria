@@ -57,7 +57,7 @@ export function renderRoute(route: string, role: string | null = null) {
         user: {
           id: 'demo-user',
           email: `${role}@demo.primoria.dev`,
-          displayName: role === 'parent' ? 'Demo Parent' : 'Demo Learner',
+          displayName: 'Demo Learner',
         },
         role,
         source: 'demo',

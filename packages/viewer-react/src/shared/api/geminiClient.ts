@@ -16,6 +16,7 @@ const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)
 const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() ?? '';
 const rawAgentServiceUrl = (import.meta.env.VITE_AGENT_SERVICE_URL as string | undefined)?.trim() ?? '';
 const TUTOR_TIMEOUT_MS = 30_000;
+const AGENT_TUTOR_TIMEOUT_MS = 180_000;
 const EDGE_REQUEST_MAX_ATTEMPTS = 2;
 const EDGE_REQUEST_RETRY_DELAY_MS = 500;
 
@@ -222,7 +223,7 @@ function buildHttpError(status: number, text: string, fallback: string) {
 }
 
 function shouldFallbackToEdgeFunction(options: TutorRequestOptions) {
-  return options.provider !== 'gemini' && Boolean(rawSupabaseUrl && rawSupabaseAnonKey);
+  return options.provider !== 'gemini' && !rawAgentServiceUrl && Boolean(rawSupabaseUrl && rawSupabaseAnonKey);
 }
 
 function shouldRetryEdgeFunctionStatus(status: number) {
@@ -415,7 +416,7 @@ async function requestInteractiveVisual(
   }
 
   const accessToken = await getAgentAccessToken();
-  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
+  const timeout = createTimeoutSignal(AGENT_TUTOR_TIMEOUT_MS);
   try {
     const response = await fetch(interactiveVisualFunctionUrl(), {
       method: 'POST',
@@ -533,7 +534,7 @@ async function requestAgentReply(history: TutorMessage[], options: TutorRequestO
   }
 
   const accessToken = await getAgentAccessToken();
-  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
+  const timeout = createTimeoutSignal(AGENT_TUTOR_TIMEOUT_MS);
   try {
     const response = await fetch(chatUrl, {
       method: 'POST',
@@ -601,7 +602,7 @@ async function requestAgentReplyStream(
   }
 
   const accessToken = await getAgentAccessToken();
-  const timeout = createTimeoutSignal(TUTOR_TIMEOUT_MS);
+  const timeout = createTimeoutSignal(AGENT_TUTOR_TIMEOUT_MS);
   let response: Response;
   try {
     response = await fetch(streamUrl, {

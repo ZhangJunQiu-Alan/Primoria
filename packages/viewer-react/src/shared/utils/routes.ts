@@ -1,9 +1,5 @@
-export function isParentRole(role: string | null | undefined) {
-  return (role ?? '').trim().toLowerCase() === 'parent';
-}
-
-export function learnerHomeForRole(role: string | null | undefined) {
-  return isParentRole(role) ? '/parent' : '/home';
+export function learnerHomeForRole(_role: string | null | undefined) {
+  return '/home';
 }
 
 export const learnerNavItems = [
@@ -13,4 +9,3 @@ export const learnerNavItems = [
   { to: '/ai-tutor', label: 'AI Tutor' },
   { to: '/profile', label: 'Profile' },
 ] as const;
-

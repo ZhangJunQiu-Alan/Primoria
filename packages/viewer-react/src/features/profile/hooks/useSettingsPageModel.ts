@@ -5,7 +5,6 @@ import { clearSession, setSession } from '@/features/auth/authSlice';
 import { clearAiTutorSessionStorage } from '@/features/ai-tutor/aiTutorUtils';
 import { getSettingsCopy, type SettingsSectionId } from '@/features/profile/settingsCopy';
 import { getAiTutorPersonaDefinition, getAiTutorPersonaOptions } from '@/shared/ai-tutor/persona';
-import { generateChildBindingCode } from '@/shared/api/viewer/parentApi';
 import { fetchViewerSettings, saveAccountSystemSettings, saveProfileSettings } from '@/shared/api/viewer/settingsApi';
 import { supabase } from '@/shared/api/supabase';
 import { clearViewerLocalCache, disableViewerPushNotifications, enableViewerPushNotifications } from '@/shared/api/viewer/pushApi';
@@ -13,8 +12,7 @@ import type { ViewerLanguage } from '@/shared/i18n/locale';
 import { captureViewerError, captureViewerEvent } from '@/shared/platform/observability';
 import { patchPreferences, type ViewerPreferencesState } from '@/shared/state/preferencesSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/state/store';
-import { clearDemoRole, seedDemoRole } from '@/shared/utils/demoMode';
-import { isParentRole, learnerHomeForRole } from '@/shared/utils/routes';
+import { clearDemoRole } from '@/shared/utils/demoMode';
 
 export type NoticeState = {
   tone: 'success' | 'error' | 'info';
@@ -63,8 +61,6 @@ export function useSettingsPageModel() {
     ai_base_url: '',
     ai_api_key: '',
   });
-  const [bindingCode, setBindingCode] = useState<string | null>(null);
-  const [bindingCodeExpiresAt, setBindingCodeExpiresAt] = useState<string | null>(null);
 
   const settingsQuery = useQuery({
     queryKey: ['viewer', 'settings', auth.user?.id],
@@ -101,7 +97,6 @@ export function useSettingsPageModel() {
   }, [dispatch, settingsQuery.data]);
 
   const currentRole = auth.role ?? settingsQuery.data?.profile.role ?? 'user';
-  const isParent = isParentRole(currentRole);
 
   const showNotice = (message: string, tone: NoticeState['tone'] = 'success') => {
     setNotice({ message, tone });
@@ -174,59 +169,6 @@ export function useSettingsPageModel() {
     },
   });
 
-  const switchRoleMutation = useMutation({
-    mutationFn: async (targetRole: 'user' | 'parent') => {
-      if (!auth.user?.id) {
-        throw new Error(copy.common.sessionExpired);
-      }
-      await saveProfileSettings(auth.user.id, { role: targetRole });
-      return targetRole;
-    },
-    onSuccess: async (targetRole) => {
-      if (auth.source === 'demo') {
-        seedDemoRole(targetRole);
-      }
-      if (auth.user) {
-        dispatch(
-          setSession({
-            user: {
-              ...auth.user,
-              displayName: profileForm.username.trim() || auth.user.displayName,
-            },
-            role: targetRole,
-            source: auth.source,
-          }),
-        );
-      }
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['viewer', 'settings', auth.user?.id] }),
-        queryClient.invalidateQueries({ queryKey: ['viewer', 'profile', auth.user?.id] }),
-      ]);
-      showNotice(
-        targetRole === 'parent' ? copy.parent.switchSuccessParent : copy.parent.switchSuccessLearner,
-        'success',
-      );
-      navigate(learnerHomeForRole(targetRole), { replace: true });
-    },
-    onError: (error) => {
-      captureViewerError(error, { area: 'settings_role_switch' });
-      showNotice(error instanceof Error ? error.message : 'Role switch failed.', 'error');
-    },
-  });
-
-  const bindingCodeMutation = useMutation({
-    mutationFn: generateChildBindingCode,
-    onSuccess: (payload) => {
-      setBindingCode(payload?.code ? String(payload.code) : null);
-      setBindingCodeExpiresAt(payload?.expires_at ? String(payload.expires_at) : null);
-      captureViewerEvent('viewer_binding_code_generated', { userId: auth.user?.id ?? 'anonymous' });
-    },
-    onError: (error) => {
-      captureViewerError(error, { area: 'settings_binding_code' });
-      showNotice(error instanceof Error ? error.message : 'Binding code generation failed.', 'error');
-    },
-  });
-
   const pushEnableMutation = useMutation({
     mutationFn: enableViewerPushNotifications,
     onSuccess: (result) => {
@@ -256,18 +198,6 @@ export function useSettingsPageModel() {
       showNotice(error instanceof Error ? error.message : copy.notifications.unsupported, 'error');
     },
   });
-
-  const handleCopyBindingCode = async () => {
-    if (!bindingCode) {
-      return;
-    }
-    if (!navigator.clipboard) {
-      showNotice(copy.parent.bindingCodeCopied, 'info');
-      return;
-    }
-    await navigator.clipboard.writeText(bindingCode);
-    showNotice(copy.parent.bindingCodeCopied, 'success');
-  };
 
   const handleSignOut = async () => {
     if (!window.confirm(`${copy.support.signOutConfirmTitle}\n\n${copy.support.signOutConfirmBody}`)) {
@@ -323,16 +253,11 @@ export function useSettingsPageModel() {
     aiTutorPersonaOptions,
     appearanceChoices,
     auth,
-    bindingCode,
-    bindingCodeExpiresAt,
-    bindingCodeMutation,
     copy,
     currentRole,
     displayName,
     handleClearCache,
-    handleCopyBindingCode,
     handleSignOut,
-    isParent,
     language,
     languageChoices,
     notice,
@@ -348,7 +273,6 @@ export function useSettingsPageModel() {
     setProfileForm,
     setSystemDraft,
     settingsQuery,
-    switchRoleMutation,
     systemDraft,
   };
 }

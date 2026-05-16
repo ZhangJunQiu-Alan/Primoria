@@ -11,7 +11,7 @@ describe('SettingsPage', () => {
     vi.restoreAllMocks();
   });
 
-  it('persists profile edits, local preferences, and binding code actions for learner mode', async () => {
+  it('persists profile edits and local preferences for learner mode', async () => {
     const user = userEvent.setup();
     renderRoute('/settings', 'user');
 
@@ -48,10 +48,6 @@ describe('SettingsPage', () => {
         userSettings: { ai_tutor_persona: 'coach', home_companion_enabled: false },
       });
     });
-
-    await user.click(await screen.findByRole('button', { name: /家长查看/i }));
-    await user.click(await screen.findByRole('button', { name: /生成绑定码/i }));
-    expect(await screen.findByText(/DEMO-2419/i)).toBeInTheDocument();
   }, 30000);
 
   it('switches settings language and persists system settings', async () => {
@@ -72,18 +68,6 @@ describe('SettingsPage', () => {
     });
   }, 30000);
 
-  it('allows parent users to open the settings center and support pages', async () => {
-    const user = userEvent.setup();
-    const { locationRef } = renderRoute('/settings', 'parent');
-
-    expect(await screen.findByRole('heading', { name: /账号设置/i }, { timeout: 15000 })).toBeInTheDocument();
-
-    await user.click(await screen.findByRole('button', { name: /帮助与隐私/i }));
-    await user.click(await screen.findByRole('link', { name: /帮助中心/i }));
-
-    expect(await screen.findByRole('heading', { name: /帮助中心/i }, { timeout: 15000 })).toBeInTheDocument();
-    expect(locationRef.pathname).toBe('/support/help');
-  }, 30000);
 
   it('signs out cleanly from demo mode', async () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);

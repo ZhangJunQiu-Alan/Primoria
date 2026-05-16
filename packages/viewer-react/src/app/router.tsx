@@ -10,7 +10,7 @@ import {
   useParams,
   useRoutes,
 } from 'react-router-dom';
-import { RedirectIfAuth, RequireAuth, RequireLearnerAuth, RequireParentAuth } from '@/features/auth/routeGuards';
+import { RedirectIfAuth, RequireAuth, RequireLearnerAuth } from '@/features/auth/routeGuards';
 import { FeatureDisabledState } from '@/shared/layout/AsyncState';
 import { PageContainer } from '@/shared/layout/PageContainer';
 import { RouteErrorBoundary } from '@/shared/layout/RouteErrorBoundary';
@@ -75,9 +75,6 @@ const SettingsPage = lazy(async () => ({
 }));
 const SupportInfoPage = lazy(async () => ({
   default: (await import('@/features/support/SupportInfoPage')).SupportInfoPage,
-}));
-const ParentDashboardPage = lazy(async () => ({
-  default: (await import('@/features/parent/ParentDashboardPage')).ParentDashboardPage,
 }));
 const BuilderDashboardPage = lazy(async () => ({
   default: (await import('@/pages/dashboard/DashboardPage')).DashboardPage,
@@ -414,20 +411,6 @@ export function buildViewerRoutes(): RouteObject[] {
                   ),
                 },
               ],
-            },
-          ],
-        },
-        {
-          element: <RequireParentAuth />,
-          errorElement: <RouteErrorBoundary scope="parent dashboard" />,
-          children: [
-            {
-              path: '/parent',
-              element: (
-                <WithSuspense>
-                  <ParentDashboardPage />
-                </WithSuspense>
-              ),
             },
           ],
         },

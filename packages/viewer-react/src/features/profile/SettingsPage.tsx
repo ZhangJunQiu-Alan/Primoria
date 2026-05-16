@@ -3,7 +3,6 @@ import { ErrorStateCard, LoadingStateCard } from '@/shared/layout/AsyncState';
 import { useSettingsPageModel } from '@/features/profile/hooks/useSettingsPageModel';
 import {
   AssistantSettingsSection,
-  FamilySettingsSection,
   NoticeBanner,
   ProfileSettingsSection,
   SettingsSectionNav,
@@ -51,7 +50,6 @@ export function SettingsPage() {
           {activeSection === 'profile' ? <ProfileSettingsSection model={model} /> : null}
           {activeSection === 'study' ? <StudySettingsSection model={model} /> : null}
           {activeSection === 'assistant' ? <AssistantSettingsSection model={model} /> : null}
-          {activeSection === 'family' ? <FamilySettingsSection model={model} /> : null}
           {activeSection === 'support' ? <SupportSettingsSection model={model} /> : null}
         </div>
       </div>

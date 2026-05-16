@@ -4,7 +4,6 @@ export type SettingsSectionId =
   | 'profile'
   | 'study'
   | 'assistant'
-  | 'family'
   | 'support';
 
 export type SupportPageId = 'help' | 'feedback' | 'privacy' | 'terms';
@@ -12,7 +11,7 @@ export type SupportPageId = 'help' | 'feedback' | 'privacy' | 'terms';
 const settingsDictionary = {
   'zh-CN': {
     title: '账号设置',
-    subtitle: '把资料、学习偏好、提醒和家长查看整理在一起。',
+    subtitle: '把资料、学习偏好、提醒和帮助整理在一起。',
     overviewEyebrow: 'Profile Settings',
     overviewRole: '当前身份',
     overviewJoined: '加入时间',
@@ -22,7 +21,6 @@ const settingsDictionary = {
       profile: { label: '个人资料', description: '管理名字、头像、封面和界面语言。' },
       study: { label: '学习与提醒', description: '调整学习习惯、目标和提醒方式。' },
       assistant: { label: '学习助手', description: '决定学习助手的语气和首页陪伴方式。' },
-      family: { label: '家长查看', description: '切换家长身份，管理绑定码和查看入口。' },
       support: { label: '帮助与隐私', description: '查看帮助、反馈、隐私说明和退出账号。' },
     },
     common: {
@@ -126,26 +124,6 @@ const settingsDictionary = {
       clearCacheHint: '清除临时缓存和 AI Key，不影响账号数据。',
       clearCacheDone: '本地缓存已清理。',
     },
-    parent: {
-      title: '家长查看',
-      descriptionLearner: '生成绑定码后，家长就能查看你的学习进度和最近报告。',
-      descriptionParent: '你正在使用家长身份，可以进入家长查看页管理孩子和学习报告。',
-      currentRole: '当前模式',
-      learner: '学习者',
-      parent: '家长',
-      switching: '切换中…',
-      switchToParent: '切换为家长查看',
-      switchToLearner: '切换回学习者',
-      switchSuccessParent: '已切换为家长查看。',
-      switchSuccessLearner: '已切换回学习者。',
-      bindingCode: '孩子绑定码',
-      bindingCodeEmpty: '尚未生成绑定码，点击下方按钮创建。',
-      bindingCodeGenerate: '生成绑定码',
-      bindingCodeRefresh: '刷新绑定码',
-      bindingCodeCopied: '绑定码已复制。',
-      bindingCodeExpires: '有效期至',
-      openDashboard: '打开家长查看',
-    },
     support: {
       title: '帮助与隐私',
       description: '把常用帮助、隐私说明和退出账号收在一起。',
@@ -196,7 +174,7 @@ const settingsDictionary = {
   },
   en: {
     title: 'Account Settings',
-    subtitle: 'Keep your profile, study habits, reminders, and family access in one place.',
+    subtitle: 'Keep your profile, study habits, reminders, and help in one place.',
     overviewEyebrow: 'Profile Settings',
     overviewRole: 'Role',
     overviewJoined: 'Joined',
@@ -206,7 +184,6 @@ const settingsDictionary = {
       profile: { label: 'Profile', description: 'Manage your name, image, cover, and interface language.' },
       study: { label: 'Study & Reminders', description: 'Adjust your habits, goals, and reminder timing.' },
       assistant: { label: 'Study Helper', description: 'Choose how the helper sounds and shows up.' },
-      family: { label: 'Family Access', description: 'Switch parent access and manage child linking.' },
       support: { label: 'Help & Privacy', description: 'Open help, feedback, privacy, and sign out.' },
     },
     common: {
@@ -310,26 +287,6 @@ const settingsDictionary = {
       clearCacheHint: 'Removes temporary cache and AI key without deleting account data.',
       clearCacheDone: 'Local cache cleared.',
     },
-    parent: {
-      title: 'Family Access',
-      descriptionLearner: 'Generate a code so a parent can review your learning progress and reports.',
-      descriptionParent: 'You are using parent access. Open the family view to manage linked children.',
-      currentRole: 'Current Mode',
-      learner: 'Learner',
-      parent: 'Parent',
-      switching: 'Switching…',
-      switchToParent: 'Switch to Parent Access',
-      switchToLearner: 'Switch to Learner',
-      switchSuccessParent: 'Switched to parent access.',
-      switchSuccessLearner: 'Switched back to learner mode.',
-      bindingCode: 'Child Binding Code',
-      bindingCodeEmpty: 'No active binding code yet. Generate one below.',
-      bindingCodeGenerate: 'Generate Code',
-      bindingCodeRefresh: 'Refresh Code',
-      bindingCodeCopied: 'Binding code copied.',
-      bindingCodeExpires: 'Expires at',
-      openDashboard: 'Open Family View',
-    },
     support: {
       title: 'Help & Privacy',
       description: 'Keep help, privacy, feedback, and sign out in one place.',
@@ -384,7 +341,6 @@ export const settingsSectionOrder: SettingsSectionId[] = [
   'profile',
   'study',
   'assistant',
-  'family',
   'support',
 ];
 

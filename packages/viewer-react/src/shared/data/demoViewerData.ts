@@ -53,15 +53,6 @@ export type DemoAchievement = {
   earned_at: string | null;
 };
 
-export type DemoParentChild = {
-  child_id: string;
-  child_name: string;
-  role: string;
-  current_streak: number;
-  total_xp: number;
-  lessons_completed: number;
-};
-
 export type DemoCourseLessonSummary = {
   id: string;
   title: string;
@@ -834,56 +825,6 @@ export const demoXpHistory = new Map<string, number>([
   ['2026-03-29', 180],
   ['2026-03-30', 140],
 ]);
-
-export const demoParentChildren: DemoParentChild[] = [
-  {
-    child_id: 'demo-child-1',
-    child_name: 'Ava',
-    role: 'user',
-    current_streak: 6,
-    total_xp: 840,
-    lessons_completed: 11,
-  },
-  {
-    child_id: 'demo-child-2',
-    child_name: 'Noah',
-    role: 'user',
-    current_streak: 3,
-    total_xp: 520,
-    lessons_completed: 7,
-  },
-];
-
-export const demoParentReports: Record<string, Record<string, unknown>> = {
-  'demo-child-1': {
-    child_id: 'demo-child-1',
-    summary: {
-      study_minutes: 142,
-      lessons_completed: 11,
-      streak: 6,
-      top_subject: 'Physics',
-    },
-    daily_breakdown: [
-      { date: '2026-03-24', minutes: 24, xp: 120 },
-      { date: '2026-03-25', minutes: 18, xp: 80 },
-      { date: '2026-03-26', minutes: 30, xp: 140 },
-    ],
-  },
-  'demo-child-2': {
-    child_id: 'demo-child-2',
-    summary: {
-      study_minutes: 88,
-      lessons_completed: 7,
-      streak: 3,
-      top_subject: 'Computer Science',
-    },
-    daily_breakdown: [
-      { date: '2026-03-24', minutes: 10, xp: 40 },
-      { date: '2026-03-25', minutes: 22, xp: 100 },
-      { date: '2026-03-26', minutes: 18, xp: 60 },
-    ],
-  },
-};
 
 const demoCourseBundleById = new Map(demoCourseBundles.map((bundle) => [bundle.course.id, bundle]));
 const demoLessonIndex = new Map(

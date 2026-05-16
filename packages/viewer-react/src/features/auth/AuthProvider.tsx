@@ -35,8 +35,8 @@ async function syncSupabaseSession(dispatch: ReturnType<typeof useAppDispatch>, 
     if (demoRole) {
       const demoUser = {
         id: 'demo-user',
-        email: demoRole === 'parent' ? 'parent@demo.primoria.dev' : 'learner@demo.primoria.dev',
-        displayName: demoRole === 'parent' ? 'Demo Parent' : 'Demo Learner',
+        email: 'learner@demo.primoria.dev',
+        displayName: 'Demo Learner',
       };
       setViewerUserContext({ ...demoUser, role: demoRole });
       dispatch(

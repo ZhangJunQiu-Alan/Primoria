@@ -13,13 +13,10 @@ import {
   MoonStar,
   Sparkles,
   SunMedium,
-  UserRoundCog,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getSettingsCopy, settingsSectionOrder, type SettingsSectionId } from '@/features/profile/settingsCopy';
 import type { NoticeState, SettingsPageModel } from '@/features/profile/hooks/useSettingsPageModel';
-import { formatViewerDateTime } from '@/shared/i18n/format';
-import type { ViewerLanguage } from '@/shared/i18n/locale';
 import { SurfaceCard } from '@/shared/layout/SurfaceCard';
 import { cn } from '@/shared/utils/cn';
 
@@ -27,20 +24,8 @@ const sectionIcons: Record<SettingsSectionId, ReactNode> = {
   profile: <CircleUserRound size={18} />,
   study: <GraduationCap size={18} />,
   assistant: <Bot size={18} />,
-  family: <UserRoundCog size={18} />,
   support: <Sparkles size={18} />,
 };
-
-function formatBindingExpiry(dateString: string | null, language: ViewerLanguage) {
-  if (!dateString) {
-    return '';
-  }
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) {
-    return '';
-  }
-  return formatViewerDateTime(date, language);
-}
 
 export function NoticeBanner({ notice }: { notice: NoticeState }) {
   return (
@@ -274,8 +259,6 @@ export function ProfileSettingsSection({ model }: { model: SettingsPageModel }) 
   const {
     copy,
     displayName,
-    isParent,
-    currentRole,
     profileForm,
     saveProfileMutation,
     saveSystemMutation,
@@ -347,12 +330,6 @@ export function ProfileSettingsSection({ model }: { model: SettingsPageModel }) 
                 </div>
                 <div>
                   <div className="text-sm font-black text-[var(--viewer-text)]">{displayName}</div>
-                  <div className="mt-1 text-sm font-medium text-[var(--viewer-text-muted)]">
-                    {copy.account.role}: {isParent ? copy.parent.parent : copy.parent.learner}
-                  </div>
-                  <div className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--viewer-text-muted)]">
-                    {currentRole}
-                  </div>
                 </div>
               </div>
             </div>
@@ -659,125 +636,6 @@ export function AssistantSettingsSection({ model }: { model: SettingsPageModel }
       <div className="flex flex-wrap items-center gap-3">
         <div className="rounded-full border border-[var(--viewer-border)] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">
           {saveSystemMutation.isPending ? copy.common.saving : copy.aiTutor.saveSuccess}
-        </div>
-      </div>
-    </SectionCard>
-  );
-}
-
-export function FamilySettingsSection({ model }: { model: SettingsPageModel }) {
-  const {
-    bindingCode,
-    bindingCodeExpiresAt,
-    bindingCodeMutation,
-    copy,
-    currentRole,
-    handleCopyBindingCode,
-    isParent,
-    language,
-    setActiveSection,
-    switchRoleMutation,
-  } = model;
-
-  void currentRole;
-  void setActiveSection;
-
-  return (
-    <SectionCard
-      eyebrow="Family"
-      title={copy.parent.title}
-      description={isParent ? copy.parent.descriptionParent : copy.parent.descriptionLearner}
-    >
-      <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-[26px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
-          <FieldLabel>{copy.parent.currentRole}</FieldLabel>
-          <div className="mt-3 text-2xl font-black text-[var(--viewer-text)]">
-            {isParent ? copy.parent.parent : copy.parent.learner}
-          </div>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <ChoicePill
-              active={!isParent}
-              icon={<GraduationCap size={16} />}
-              label={copy.parent.learner}
-              onClick={() => {
-                if (!isParent) return;
-                switchRoleMutation.mutate('user');
-              }}
-            />
-            <ChoicePill
-              active={isParent}
-              icon={<UserRoundCog size={16} />}
-              label={copy.parent.parent}
-              onClick={() => {
-                if (isParent) return;
-                switchRoleMutation.mutate('parent');
-              }}
-            />
-          </div>
-          <button
-            type="button"
-            className="viewer-botanical-button viewer-botanical-button--primary mt-5"
-            onClick={() => switchRoleMutation.mutate(isParent ? 'user' : 'parent')}
-            disabled={switchRoleMutation.isPending}
-          >
-            {switchRoleMutation.isPending
-              ? copy.parent.switching
-              : isParent
-                ? copy.parent.switchToLearner
-                : copy.parent.switchToParent}
-          </button>
-        </div>
-
-        <div className="rounded-[26px] border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-5">
-          {isParent ? (
-            <div>
-              <div className="text-xl font-black text-[var(--viewer-text)]">{copy.parent.openDashboard}</div>
-              <p className="mt-2 text-sm font-medium leading-7 text-[var(--viewer-text-muted)]">{copy.parent.descriptionParent}</p>
-              <Link to="/parent" className="viewer-botanical-button viewer-botanical-button--primary mt-5 inline-flex">
-                {copy.parent.openDashboard}
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <div className="text-xl font-black text-[var(--viewer-text)]">{copy.parent.bindingCode}</div>
-              {bindingCode ? (
-                <>
-                  <div className="mt-4 font-mono text-[2rem] font-black tracking-[0.24em] text-[var(--viewer-primary)]">{bindingCode}</div>
-                  {bindingCodeExpiresAt ? (
-                    <div className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">
-                      {copy.parent.bindingCodeExpires} {formatBindingExpiry(bindingCodeExpiresAt, language)}
-                    </div>
-                  ) : null}
-                </>
-              ) : (
-                <p className="mt-3 text-sm font-medium leading-7 text-[var(--viewer-text-muted)]">{copy.parent.bindingCodeEmpty}</p>
-              )}
-
-              <div className="mt-5 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  className="viewer-botanical-button viewer-botanical-button--primary"
-                  onClick={() => bindingCodeMutation.mutate()}
-                  disabled={bindingCodeMutation.isPending}
-                >
-                  {bindingCodeMutation.isPending
-                    ? copy.parent.switching
-                    : bindingCode
-                      ? copy.parent.bindingCodeRefresh
-                      : copy.parent.bindingCodeGenerate}
-                </button>
-                {bindingCode ? (
-                  <button
-                    type="button"
-                    className="viewer-botanical-button viewer-botanical-button--secondary"
-                    onClick={() => void handleCopyBindingCode()}
-                  >
-                    {copy.common.copy}
-                  </button>
-                ) : null}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </SectionCard>

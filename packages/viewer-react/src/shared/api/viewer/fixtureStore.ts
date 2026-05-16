@@ -6,8 +6,6 @@ import {
   demoFollowCounts,
   getDemoCourseIdForLesson,
   getDemoCourseLessons,
-  demoParentChildren,
-  demoParentReports,
   demoProfile,
   demoStats,
   demoSubjects,
@@ -24,8 +22,6 @@ import type {
   ViewerEnrollment,
   ViewerFollowCounts,
   ViewerHomePayload,
-  ViewerParentChild,
-  ViewerParentReport,
   ViewerProfile,
   ViewerStats,
   ViewerSubject,
@@ -46,9 +42,6 @@ type ViewerFixtureState = {
   stats: ViewerStats;
   followCounts: ViewerFollowCounts;
   xpHistory: Array<{ date: string; xp: number }>;
-  parentChildren: ViewerParentChild[];
-  parentReports: Record<string, ViewerParentReport>;
-  bindingCode: { code: string; expires_at: string } | null;
   userSettings: ViewerUserSettings;
   webPushSubscription: ViewerWebPushSubscription | null;
   community: {
@@ -198,7 +191,7 @@ function buildInitialState(): ViewerFixtureState {
     {
       id: 'discussion-1',
       title: 'How should the viewer shell handle role redirects?',
-      body: 'I want the learner shell and parent dashboard to stay unambiguous after sign-in.',
+      body: 'I want the learner shell to stay unambiguous after sign-in.',
       category: 'Engineering',
       author_id: 'community-mia',
       author_name: 'Mia',
@@ -238,57 +231,7 @@ function buildInitialState(): ViewerFixtureState {
       lesson_id: null,
       updated_at: '2026-03-30T15:00:00Z',
     },
-    {
-      id: 'note-2',
-      title: 'Parent flow',
-      body: 'Child binding code remains powered by the current RPCs.',
-      room_id: 'room-1',
-      lesson_id: null,
-      updated_at: '2026-03-30T16:00:00Z',
-    },
   ];
-
-  const parentChildren: ViewerParentChild[] = demoParentChildren.map((child) => ({
-    child_id: child.child_id,
-    child_name: child.child_name,
-    avatar_url: '',
-    total_xp: child.total_xp,
-    current_streak: child.current_streak,
-    lessons_completed: child.lessons_completed,
-    courses_completed: 0,
-    last_active_at: nowIso(),
-  }));
-
-  const parentReports: Record<string, ViewerParentReport> = Object.fromEntries(
-    Object.entries(demoParentReports).map(([childId, report]) => {
-      const child = parentChildren.find((entry) => entry.child_id === childId);
-      const summary = (report.summary ?? {}) as Record<string, unknown>;
-      const dailyBreakdown = Array.isArray(report.daily_breakdown)
-        ? (report.daily_breakdown as Array<Record<string, unknown>>).map((entry) => ({
-            date: String(entry.date ?? ''),
-            minutes: Number(entry.minutes ?? 0),
-            xp: Number(entry.xp ?? 0),
-          }))
-        : [];
-
-      return [
-        childId,
-        {
-          child_id: childId,
-          summary: {
-            study_minutes: Number(summary.study_minutes ?? 0),
-            lessons_completed: Number(summary.lessons_completed ?? 0),
-            courses_completed: 0,
-            streak: Number(summary.streak ?? 0),
-            total_xp: child?.total_xp ?? 0,
-          },
-          daily_breakdown: dailyBreakdown,
-          courses: [],
-          recent_lessons: [],
-        } satisfies ViewerParentReport,
-      ];
-    }),
-  );
 
   return {
     profile: {
@@ -304,9 +247,6 @@ function buildInitialState(): ViewerFixtureState {
     stats: cloneState(demoStats),
     followCounts: cloneState(demoFollowCounts),
     xpHistory: Array.from(demoXpHistory.entries()).map(([date, xp]) => ({ date, xp })),
-    parentChildren,
-    parentReports,
-    bindingCode: { code: 'DEMO-2419', expires_at: '2026-03-30T21:30:00Z' },
     userSettings: {
       theme_mode: 'system',
       language: 'zh-CN',

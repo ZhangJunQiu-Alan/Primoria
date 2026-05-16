@@ -61,9 +61,9 @@ const defaultState: ViewerPreferencesState = {
   shareLearningActivity: true,
   allowFollowers: true,
   wifiOnlyDownloads: false,
-  aiProvider: 'google',
-  aiBaseUrl: '',
-  aiApiKey: '',
+  aiProvider: (import.meta.env.VITE_AI_PROVIDER as 'google' | 'openai' | 'anthropic' | undefined) ?? 'google',
+  aiBaseUrl: (import.meta.env.VITE_AI_BASE_URL as string | undefined)?.trim() ?? '',
+  aiApiKey: (import.meta.env.VITE_AI_API_KEY as string | undefined)?.trim() ?? '',
 };
 
 function loadState(): ViewerPreferencesState {

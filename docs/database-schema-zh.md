@@ -63,16 +63,6 @@
 - `follows`
 - `course_feedback`
 
-### 家长模式
-
-- `parent_child_binding_codes`
-  - 主要字段：`child_id`（主键，FK → profiles）、`code`（唯一短时效码）、`expires_at`
-  - 子账号生成短时效码，家长扫码/输入后完成绑定
-- `parent_child_links`
-  - 主要字段：`parent_id`（FK → profiles）、`child_id`（FK → profiles），联合主键 (parent_id, child_id)
-  - 记录已确认的家长–子账号关系；RLS 限制仅家长可查询
-- `user_role` 枚举新增 `'parent'` 值
-
 ### 系统
 
 - `app_versions`
@@ -86,7 +76,6 @@
 - 课时顺序统一由 `lessons.sort_key` 控制。
 - `courses` 已增加 AI 规划字段与价格字段。
 - `profiles` 已增加 `cover_image_url` 与 pinned achievements 支持。
-- 家长模式 v1 新增 `parent_child_binding_codes`、`parent_child_links` 表及 `'parent'` role 枚举值。
 - 种子数据课程「心理学基础」（Basics of Psychology）已作为已发布社会学课程插入（迁移 `20260308000001`）。
 
 ## 代码使用的主要 RPC / SQL 函数
@@ -97,7 +86,6 @@
 - `complete_lesson_and_award_xp(...)`
 - `upsert_daily_activity(...)`
 - `update_user_streak(...)`
-- `get_parent_child_report(p_child_id uuid, p_days integer)` — 返回指定子账号的 JSONB 报告（统计数据、活跃趋势、课程、近期课时完成记录）；调用者须为已认证家长
 
 ## RLS 说明
 

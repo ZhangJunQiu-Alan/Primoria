@@ -409,6 +409,22 @@ export function DashboardCoursesTab({
           ))}
         </div>
 
+        <label className="studio-sort">
+          <span>Sort</span>
+          <select
+            aria-label="Sort"
+            value={model.sortMode}
+            onChange={(event) => model.setSortMode(event.target.value as typeof model.sortMode)}
+          >
+            <option value="updated">Recently updated</option>
+            <option value="student">Students</option>
+            <option value="comments">Comments</option>
+            <option value="views">Views</option>
+            <option value="completion">Completion</option>
+            <option value="title">Title</option>
+          </select>
+        </label>
+
       </section>
 
       {model.hasInlineError ? (
@@ -672,6 +688,11 @@ export function DashboardAnalyticsTab({
         title={language === 'zh-CN' ? '学习表现总览' : 'Learning performance overview'}
         description={language === 'zh-CN' ? '只保留完成趋势、活跃学习者、课程排行和关键学习信号。' : 'Keep the view focused on completion trend, active learners, course ranking, and key learning signals.'}
       />
+
+      <section className="studio-summary-strip studio-summary-strip--data">
+        <MetricCard icon={Users} label={language === 'zh-CN' ? '已发布浏览' : 'Published viewers'} value={model.publishedViewers} tone="mist" />
+        <MetricCard icon={BadgeCheck} label={language === 'zh-CN' ? '平均完成率' : 'Average completion'} value={`${(model.averageCompletionRate * 100).toFixed(1)}%`} tone="lavender" />
+      </section>
 
       <section className="studio-analytics-grid">
         <article className="studio-card studio-card--mist studio-panel">

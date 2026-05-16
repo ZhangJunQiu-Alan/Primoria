@@ -25,7 +25,7 @@ describe('LandingPage', () => {
     ).toBeInTheDocument();
     expect(
       within(screen.getByTestId('landing-section-support')).getByRole('heading', {
-        name: /给家长和创作者各自留入口/i,
+        name: /给创作者留入口/i,
       }),
     ).toBeInTheDocument();
     expect(screen.getByTestId('landing-hero-primary-cta')).toHaveAttribute('href', '/register');
@@ -47,7 +47,7 @@ describe('LandingPage', () => {
 
     expect(await screen.findByRole('heading', { name: /Make it easier/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Ask questions, summarize key points/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Keep space for families and creators/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Keep space for creators/i })).toBeInTheDocument();
     expect(screen.getByTestId('landing-hero-primary-cta')).toHaveAttribute('href', '/register');
     expect(screen.getByTestId('landing-hero-secondary-cta')).toHaveAttribute('href', '/login');
   });

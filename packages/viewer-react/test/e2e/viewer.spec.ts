@@ -52,16 +52,6 @@ test('demo learner flow reaches lesson result', async ({ page }) => {
   await expect(page.getByText(/result summary|结果总结/i)).toBeVisible();
 });
 
-test('demo parent users normalize to the parent dashboard', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.localStorage.setItem('primoria.viewer.demo-role', 'parent');
-  });
-
-  await page.goto('/home');
-  await expect(page).toHaveURL(/\/parent$/);
-  await expect(page.getByRole('heading', { name: /家长查看|Family View/i })).toBeVisible();
-});
-
 test('demo learner can sign out from settings', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.setItem('primoria.viewer.demo-role', 'user');

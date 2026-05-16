@@ -932,71 +932,6 @@ export type Database = {
           },
         ]
       }
-      parent_child_binding_codes: {
-        Row: {
-          child_id: string
-          code: string
-          created_at: string
-          expires_at: string
-          updated_at: string
-        }
-        Insert: {
-          child_id: string
-          code: string
-          created_at?: string
-          expires_at: string
-          updated_at?: string
-        }
-        Update: {
-          child_id?: string
-          code?: string
-          created_at?: string
-          expires_at?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "parent_child_binding_codes_child_id_fkey"
-            columns: ["child_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      parent_child_links: {
-        Row: {
-          child_id: string
-          created_at: string
-          parent_id: string
-        }
-        Insert: {
-          child_id: string
-          created_at?: string
-          parent_id: string
-        }
-        Update: {
-          child_id?: string
-          created_at?: string
-          parent_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "parent_child_links_child_id_fkey"
-            columns: ["child_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "parent_child_links_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -1406,14 +1341,6 @@ export type Database = {
         }
         Returns: Json
       }
-      bind_child_with_code: {
-        Args: { p_code: string }
-        Returns: {
-          child_id: string
-          created: boolean
-          parent_id: string
-        }[]
-      }
       complete_lesson_and_award_xp:
         | {
             Args: { p_lesson_id: string; p_score?: number; p_seconds?: number }
@@ -1433,35 +1360,10 @@ export type Database = {
         Args: { p_other_user_id: string }
         Returns: string
       }
-      generate_child_binding_code: {
-        Args: { p_ttl_minutes?: number }
-        Returns: {
-          code: string
-          expires_at: string
-        }[]
-      }
       get_author_dashboard_analytics: {
         Args: { p_days?: number; p_months?: number }
         Returns: Json
       }
-      get_parent_child_report: {
-        Args: { p_child_id: string; p_days?: number }
-        Returns: Json
-      }
-      get_parent_children_overview: {
-        Args: never
-        Returns: {
-          avatar_url: string
-          child_id: string
-          courses_completed: number
-          last_active_at: string
-          lessons_completed: number
-          streak_days: number
-          username: string
-          xp_points: number
-        }[]
-      }
-      is_parent_user: { Args: { p_user_id: string }; Returns: boolean }
       join_study_room: { Args: { p_room_id: string }; Returns: Json }
       publish_course: { Args: { p_course_id: string }; Returns: undefined }
       search_courses: {
@@ -1514,7 +1416,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      unbind_child: { Args: { p_child_id: string }; Returns: boolean }
       update_user_streak: { Args: { p_user_id: string }; Returns: undefined }
       upsert_daily_activity: {
         Args: { p_lessons?: number; p_user_id: string; p_xp?: number }
@@ -1550,7 +1451,7 @@ export type Database = {
       price_tier: "free" | "premium"
       subscription_status: "active" | "canceled" | "expired"
       theme_mode: "system" | "light" | "dark"
-      user_role: "user" | "subscriber" | "author" | "admin" | "parent"
+      user_role: "user" | "subscriber" | "author" | "admin"
       viewer_analytics_event_type: "course_view" | "lesson_started"
       xp_source_type: "lesson_complete" | "daily_bonus" | "admin_adjustment"
     }
@@ -1706,7 +1607,7 @@ export const Constants = {
       price_tier: ["free", "premium"],
       subscription_status: ["active", "canceled", "expired"],
       theme_mode: ["system", "light", "dark"],
-      user_role: ["user", "subscriber", "author", "admin", "parent"],
+      user_role: ["user", "subscriber", "author", "admin"],
       viewer_analytics_event_type: ["course_view", "lesson_started"],
       xp_source_type: ["lesson_complete", "daily_bonus", "admin_adjustment"],
     },

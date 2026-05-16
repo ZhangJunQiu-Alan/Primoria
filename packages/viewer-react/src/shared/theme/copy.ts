@@ -10,11 +10,11 @@ const landingCopy = {
     },
     authPanel: {
       badge: '平台入口',
-      title: '把创作、学习、AI 与家长报告放进同一条产品链路',
+      title: '把创作、学习与 AI 放进同一条产品链路',
       features: [
         '同一应用内覆盖课程发现、学习运行时、AI Tutor 与个人中心',
         'Builder 负责课程管理、编辑、发布与作者工作流',
-        '家长模式、双语界面与共享 schema 构成完整平台闭环',
+        '双语界面与共享 schema 构成完整平台闭环',
       ],
     },
     nav: {
@@ -23,14 +23,13 @@ const landingCopy = {
       tutor: 'AI 导师',
       community: '社区',
       builder: 'Builder',
-      family: '家长模式',
     },
     hero: {
       announcement: '平台级互动课程系统',
       title: '从创作到学习',
       accentTitle: '把互动课程真正跑起来',
       subtitle:
-        'Primoria 把 Builder、学习运行时、AI Tutor、社区和家长报告放进一个连续产品闭环里。作者能发布结构化互动课程，学习者能在同一应用里学习、提问、讨论并持续升级。',
+        'Primoria 把 Builder、学习运行时、AI Tutor 和社区放进一个连续产品闭环里。作者能发布结构化互动课程，学习者能在同一应用里学习、提问、讨论并持续升级。',
       primaryCta: '创建账号',
       secondaryCta: '登录',
       trustSignals: [
@@ -54,18 +53,13 @@ const landingCopy = {
           title: 'AI Tutor',
           meta: 'Chat / Mind Map / Quiz / Presentation',
         },
-        {
-          eyebrow: 'Family view',
-          title: 'Parent Dashboard',
-          meta: 'Binding code / child reports',
-        },
       ],
     },
     platform: {
       eyebrow: '产品闭环',
       title: '一个产品把课程生产、学习执行与回流连接起来',
       subtitle:
-        'Primoria 不是把功能散落在多个站点里，而是把创作者、学习者、AI 和家长模式收进一个连续路径。',
+        'Primoria 不是把功能散落在多个站点里，而是把创作者、学习者和 AI 收进一个连续路径。',
       lanes: [
         {
           eyebrow: 'Builder side',
@@ -78,12 +72,6 @@ const landingCopy = {
           title: '学习者沿着真实课程链路前进',
           description:
             '学习者从课程库进入课程页、再进入 Lesson Runtime，完成答题、解锁、结果总结与 XP 回流，而不是停留在静态内容页。',
-        },
-        {
-          eyebrow: 'Family side',
-          title: '家长模式接住监督与复盘场景',
-          description:
-            '学习者生成绑定码后，家长账号可进入看板查看孩子列表、切换孩子并读取最新学习报告。',
         },
       ],
       foundations: [
@@ -222,26 +210,6 @@ const landingCopy = {
         },
       ],
     },
-    family: {
-      eyebrow: '家长模式',
-      title: '家长模式不抢首页主叙事，但必须清楚可见',
-      subtitle:
-        '它负责把学习者的绑定码、已关联孩子列表与学习报告汇总成单独视角，让监督与复盘不需要脱离产品。',
-      cards: [
-        {
-          title: 'Binding code flow',
-          description: '学习者在设置中心生成绑定码，家长账号输入后建立关系。',
-        },
-        {
-          title: 'Child switching',
-          description: '家长看板可以切换当前孩子，避免报告只覆盖单一账户。',
-        },
-        {
-          title: 'Latest report view',
-          description: '绑定后即可读取当前孩子的学习报告、概览指标与最新动态。',
-        },
-      ],
-    },
     builderDashboard: {
       eyebrow: 'Builder Dashboard',
       title: 'Builder Dashboard 负责把课程经营面与作者工作流收在一起',
@@ -303,13 +271,12 @@ const landingCopy = {
         'Achievement Wall',
         'Schema 兼容与导入迁移',
         'Feature flags 与恢复路径',
-        'Parent binding codes',
       ],
     },
     finalCta: {
       title: '先进入 Primoria，再沿着真实产品路径继续探索',
       subtitle:
-        '登录与注册入口保持不变，但新的首页会把平台全貌讲清楚，让学习者、创作者和家长都知道自己会进入什么系统。',
+        '登录与注册入口保持不变，但新的首页会把平台全貌讲清楚，让学习者和创作者都知道自己会进入什么系统。',
       primaryCta: '创建账号',
       secondaryCta: '登录',
     },
@@ -322,11 +289,11 @@ const landingCopy = {
     },
     authPanel: {
       badge: 'Platform access',
-      title: 'One product loop for creation, learning, AI guidance, and parent reporting',
+      title: 'One product loop for creation, learning, and AI guidance',
       features: [
         'A single app now covers discovery, lesson runtime, AI Tutor, and profile surfaces',
         'Builder owns course operations, editing, publishing, and author workflows',
-        'Parent mode, bilingual UI, and shared schema complete the platform loop',
+        'Bilingual UI and shared schema complete the platform loop',
       ],
     },
     nav: {
@@ -335,14 +302,13 @@ const landingCopy = {
       tutor: 'AI Tutor',
       community: 'Community',
       builder: 'Builder',
-      family: 'Family',
     },
     hero: {
       announcement: 'Interactive course platform',
       title: 'From course creation to active learning',
       accentTitle: 'run the full loop inside one product',
       subtitle:
-        'Primoria connects Builder, learner runtime, AI Tutor, community, and parent reports into one continuous system. Authors publish structured interactive courses, and learners move through courses, questions, discussion, and progress without leaving the app.',
+        'Primoria connects Builder, learner runtime, AI Tutor, and community into one continuous system. Authors publish structured interactive courses, and learners move through courses, questions, discussion, and progress without leaving the app.',
       primaryCta: 'Create account',
       secondaryCta: 'Log in',
       trustSignals: [
@@ -366,18 +332,13 @@ const landingCopy = {
           title: 'AI Tutor',
           meta: 'Chat / Mind Map / Quiz / Presentation',
         },
-        {
-          eyebrow: 'Family view',
-          title: 'Parent Dashboard',
-          meta: 'Binding code / child reports',
-        },
       ],
     },
     platform: {
       eyebrow: 'Product Loop',
       title: 'One platform connects course production, learner execution, and feedback loops',
       subtitle:
-        'Primoria does not scatter capability across separate products. It turns authors, learners, AI tools, and family reporting into one continuous path.',
+        'Primoria does not scatter capability across separate products. It turns authors, learners, and AI tools into one continuous path.',
       lanes: [
         {
           eyebrow: 'Builder side',
@@ -390,12 +351,6 @@ const landingCopy = {
           title: 'Learners move through the real course runtime',
           description:
             'The path starts in Library, continues through course detail, enters Lesson Runtime, and returns into result, XP, and achievement flows instead of stopping at static content.',
-        },
-        {
-          eyebrow: 'Family side',
-          title: 'Parent mode closes the supervision and review loop',
-          description:
-            'Learners can generate binding codes, and parent accounts can enter a dedicated dashboard to inspect linked children and the latest reports.',
         },
       ],
       foundations: [
@@ -534,26 +489,6 @@ const landingCopy = {
         },
       ],
     },
-    family: {
-      eyebrow: 'Parent Mode',
-      title: 'Parent mode stays secondary in the layout, but must stay explicit',
-      subtitle:
-        'It turns learner binding codes, linked-child lists, and report access into a dedicated review view without fragmenting the product.',
-      cards: [
-        {
-          title: 'Binding code flow',
-          description: 'Learners generate a binding code in settings and parent accounts use it to establish the relationship.',
-        },
-        {
-          title: 'Child switching',
-          description: 'The parent dashboard switches between children instead of collapsing reporting into one ambiguous account.',
-        },
-        {
-          title: 'Latest report view',
-          description: 'Once linked, the parent route exposes current study reports and the latest child activity summary.',
-        },
-      ],
-    },
     builderDashboard: {
       eyebrow: 'Builder Dashboard',
       title: 'Builder Dashboard keeps the operating layer of the platform in one place',
@@ -615,13 +550,12 @@ const landingCopy = {
         'Achievement Wall',
         'Schema compatibility and import migration',
         'Feature flags and recovery paths',
-        'Parent binding codes',
       ],
     },
     finalCta: {
       title: 'Enter Primoria first, then continue through the real product path',
       subtitle:
-        'The auth entry points stay the same, but the new landing page explains the full platform so learners, creators, and parents know what system they are entering.',
+        'The auth entry points stay the same, but the new landing page explains the full platform so learners and creators know what system they are entering.',
       primaryCta: 'Create account',
       secondaryCta: 'Log in',
     },
@@ -907,22 +841,13 @@ const viewerCatalog = {
     },
     settings: {
       title: '账号设置',
-      subtitle: '把资料、学习偏好、提醒和家长查看整理在一起。',
+      subtitle: '把资料、学习偏好、提醒和帮助整理在一起。',
       signOut: '退出登录',
-      generateBindingCode: '生成绑定码',
     },
     achievements: {
       title: '成就馆',
       manage: '管理精选',
       done: '完成整理',
-    },
-    parent: {
-      title: '家长查看',
-      subtitle: '查看已绑定的学习者、切换孩子，并查看最新学习报告。',
-      bind: '使用绑定码关联孩子',
-      binding: '关联中…',
-      unbind: '解除关联',
-      unbinding: '解除中…',
     },
     accountMenu: {
       open: '打开账号菜单',
@@ -1220,22 +1145,13 @@ const viewerCatalog = {
     },
     settings: {
       title: 'Account Settings',
-      subtitle: 'Keep your profile, study habits, reminders, and family access in one place.',
+      subtitle: 'Keep your profile, study habits, reminders, and help in one place.',
       signOut: 'Sign out',
-      generateBindingCode: 'Generate binding code',
     },
     achievements: {
       title: 'Achievement Hall',
       manage: 'Manage pinned',
       done: 'Done',
-    },
-    parent: {
-      title: 'Family View',
-      subtitle: 'Review linked learners, switch active child, and inspect the latest report.',
-      bind: 'Bind child with code',
-      binding: 'Binding…',
-      unbind: 'Unbind',
-      unbinding: 'Unbinding…',
     },
     accountMenu: {
       open: 'Open account menu',

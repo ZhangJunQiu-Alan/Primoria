@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Any, AsyncIterator
@@ -25,31 +26,38 @@ from app.services.supabase_client import SupabaseUserClient
 from app.thread_store import build_thread_record_payload
 from app.tools import build_all_tools
 
+logger = logging.getLogger('primoria.agent')
+
 
 def build_llm_from_context(context: ChatRequest.context) -> Any:
     """Build an LLM client based on the user's AI provider settings."""
     settings = get_settings()
-    provider = context.ai_provider or 'google'
+    has_server_ai_config = bool(
+        settings.ai_provider
+        and (settings.ai_api_key or settings.openai_api_key or settings.google_api_key or settings.gemini_api_key)
+    )
+    use_context_ai_config = bool(context.ai_provider and context.ai_api_key and not has_server_ai_config)
+    provider = context.ai_provider if use_context_ai_config else settings.ai_provider or 'google'
 
     if provider == 'openai':
-        api_key = context.ai_api_key or ''
+        api_key = (context.ai_api_key if use_context_ai_config else None) or settings.ai_api_key or settings.openai_api_key or ''
         if not api_key:
             raise ValueError('OpenAI API key is required when using OpenAI provider.')
-        base_url = (context.ai_base_url or '').rstrip('/')
+        base_url = ((context.ai_base_url if use_context_ai_config else None) or settings.ai_base_url or settings.openai_base_url or '').rstrip('/')
         if base_url and not base_url.endswith('/v1'):
             base_url = f'{base_url}/v1'
         return ChatOpenAI(
-            model='gpt-5.4-mini',
+            model=settings.ai_model or settings.openai_model or 'gpt-5.4-mini',
             api_key=api_key,
             base_url=base_url or None,
             temperature=0.3,
         )
 
     if provider == 'anthropic':
-        api_key = context.ai_api_key or ''
+        api_key = (context.ai_api_key if use_context_ai_config else None) or settings.ai_api_key or settings.openai_api_key or ''
         if not api_key:
             raise ValueError('Anthropic API key is required when using Anthropic provider.')
-        base_url = (context.ai_base_url or '').rstrip('/')
+        base_url = ((context.ai_base_url if use_context_ai_config else None) or settings.ai_base_url or settings.openai_base_url or '').rstrip('/')
         # Anthropic client appends /v1/messages, so strip any /v1 suffix
         if base_url.endswith('/v1'):
             base_url = base_url[:-3]
@@ -61,7 +69,7 @@ def build_llm_from_context(context: ChatRequest.context) -> Any:
         )
 
     # Default: Google Gemini
-    api_key = context.ai_api_key or settings.google_api_key or ''
+    api_key = (context.ai_api_key if use_context_ai_config else None) or settings.google_api_key or settings.gemini_api_key or ''
     if not api_key:
         raise ValueError('Google API key is required when using Google provider.')
     return ChatGoogleGenerativeAI(
@@ -113,6 +121,7 @@ async def stream_chat_agent(request: ChatRequest, user: AuthenticatedUser) -> As
             event_name = event.get('event')
             if event_name == 'on_tool_start':
                 tool_name = event.get('name')
+                logger.info('agent_tool_start name=%r', tool_name)
                 if isinstance(tool_name, str) and tool_name:
                     used_tools.add(tool_name)
                 continue
@@ -130,6 +139,7 @@ async def stream_chat_agent(request: ChatRequest, user: AuthenticatedUser) -> As
                     final_output = output
 
         reply = ''.join(reply_parts).strip() or _extract_reply_text(final_output)
+        logger.info('agent_final used_tools=%s reply_head=%r', sorted(used_tools), reply[:220])
         await _persist_assistant_reply(prepared, reply)
         yield _format_sse_event(
             'final',
@@ -154,6 +164,16 @@ async def _prepare_chat_run(request: ChatRequest, user: AuthenticatedUser) -> Pr
     await _persist_thread_message(supabase_client, user.id, thread_id, 'user', request.message)
     checkpointer = build_checkpointer(supabase_client, user.id)
     model = build_llm_from_context(request.context)
+    logger.info(
+        'agent_prepare message=%r provider=%r context_provider=%r context_has_key=%s model_class=%s model_name=%r tools=%s',
+        request.message[:160],
+        get_settings().ai_provider,
+        request.context.ai_provider,
+        bool(request.context.ai_api_key),
+        type(model).__name__,
+        getattr(model, 'model_name', getattr(model, 'model', None)),
+        [getattr(tool, 'name', 'tool') for tool in tools],
+    )
     agent = create_deep_agent(
         model=model,
         tools=tools,

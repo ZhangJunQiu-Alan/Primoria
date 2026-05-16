@@ -7,7 +7,7 @@ const publicCopyDictionary = {
     meta: {
       landing: {
         title: 'Primoria | 让学习更容易开始，也更容易继续',
-        description: 'Primoria 帮你找课程、边学边问、和同伴一起学，也让家长和创作者各自看见需要的信息。',
+        description: 'Primoria 帮你找课程、边学边问、和同伴一起学，也让创作者清楚管理课程。',
       },
       login: {
         title: '登录 | Primoria',
@@ -102,14 +102,14 @@ const publicCopyDictionary = {
         features: [
           '从找课程到完成一节课，路径简单清楚',
           '学习助手会继续解释、整理重点并生成练习',
-          '家长查看和创作台各自保留需要的信息，不打扰学习主线',
+          '创作台保留课程管理所需的信息，不打扰学习主线',
         ],
       },
       nav: {
         start: '怎么开始',
         assistant: '学习助手',
         community: '一起学',
-        support: '给家长与创作者',
+        support: '给创作者',
       },
       hero: {
         announcement: '陪你把学习继续下去',
@@ -122,7 +122,7 @@ const publicCopyDictionary = {
         trustSignals: [
           '先找课程，再进课时，路径一眼看懂',
           '学习助手会接着当前内容继续帮你',
-          '支持家长查看与创作台，但不打断学习主线',
+          '支持创作台，但不打断学习主线',
         ],
       },
       start: {
@@ -206,16 +206,10 @@ const publicCopyDictionary = {
       },
       support: {
         eyebrow: '补充说明',
-        title: '给家长和创作者各自留入口，但不抢学习者的首页',
+        title: '给创作者留入口，但不抢学习者的首页',
         subtitle:
-          'Primoria 先服务学习者；家长查看和创作台保留各自职责，需要时再进入。',
+          'Primoria 先服务学习者；创作台保留课程管理职责，需要时再进入。',
         cards: [
-          {
-            eyebrow: '给家长',
-            title: '家长查看',
-            description: '查看绑定后的学习进度和最近表现，知道孩子最近学到了哪里。',
-            points: ['绑定后查看最新学习情况', '切换不同孩子', '更适合复盘，而不是在学习时打断'],
-          },
           {
             eyebrow: '给创作者',
             title: '创作台',
@@ -225,7 +219,7 @@ const publicCopyDictionary = {
         ],
         closingTitle: '先开始学习，其他入口在需要时再用',
         closingBody:
-          '如果你是学习者，现在直接进来找课就够了；如果你是家长或创作者，也能在进入后很快找到自己的入口。',
+          '如果你是学习者，现在直接进来找课就够了；如果你是创作者，也能在进入后很快找到自己的入口。',
         primaryCta: '创建账号',
         secondaryCta: '登录',
       },
@@ -330,14 +324,14 @@ const publicCopyDictionary = {
         features: [
           'The path from discovery to finishing a lesson is easy to follow',
           'The study helper can explain, summarize, and generate quick practice',
-          'Family view and the creator studio stay available without taking over the learner homepage',
+          'Creator tools stay available without taking over the learner homepage',
         ],
       },
       nav: {
         start: 'How To Start',
         assistant: 'Study Helper',
         community: 'Study Together',
-        support: 'For Families & Creators',
+        support: 'For Creators',
       },
       hero: {
         announcement: 'A calmer way to keep learning',
@@ -350,7 +344,7 @@ const publicCopyDictionary = {
         trustSignals: [
           'The next step is clear from course discovery to lesson finish',
           'The study helper stays connected to what you are learning',
-          'Family view and creator tools stay available without interrupting the learner path',
+          'Creator tools stay available without interrupting the learner path',
         ],
       },
       start: {
@@ -434,16 +428,10 @@ const publicCopyDictionary = {
       },
       support: {
         eyebrow: 'Extra Paths',
-        title: 'Keep space for families and creators without letting them take over the learner homepage',
+        title: 'Keep space for creators without letting them take over the learner homepage',
         subtitle:
-          'Primoria serves learners first. Family view and the creator studio stay available for the moments when those roles need them.',
+          'Primoria serves learners first. The creator studio stays available for the moments when authors need it.',
         cards: [
-          {
-            eyebrow: 'For families',
-            title: 'Family View',
-            description: 'Review linked progress and recent learning activity without interrupting the learner while they study.',
-            points: ['Check the latest learning status after linking', 'Switch between children', 'Better for review than live interruption'],
-          },
           {
             eyebrow: 'For creators',
             title: 'Studio',
@@ -453,7 +441,7 @@ const publicCopyDictionary = {
         ],
         closingTitle: 'Start learning first and use the other paths when you actually need them',
         closingBody:
-          'Learners can come in and discover a course right away. Families and creators can still find their own entry points quickly after signing in.',
+          'Learners can come in and discover a course right away. Creators can still find their own entry points quickly after signing in.',
         primaryCta: 'Create account',
         secondaryCta: 'Log in',
       },

@@ -246,48 +246,6 @@ export type ViewerFollowCounts = {
   followers: number;
 };
 
-export type ViewerParentChild = {
-  child_id: string;
-  child_name: string;
-  avatar_url: string;
-  total_xp: number;
-  current_streak: number;
-  lessons_completed: number;
-  courses_completed: number;
-  last_active_at: string | null;
-};
-
-export type ViewerParentCourseProgress = {
-  course_id: string;
-  title: string;
-  status: string;
-  progress_percentage: number;
-  completed_lessons: number;
-  last_accessed_at: string | null;
-};
-
-export type ViewerParentLessonActivity = {
-  lesson_id: string;
-  lesson_title: string;
-  score: number;
-  correct_count: number;
-  total_count: number;
-  completed_at: string | null;
-};
-
-export type ViewerParentReport = {
-  child_id: string;
-  summary: {
-    study_minutes: number;
-    lessons_completed: number;
-    courses_completed: number;
-    streak: number;
-    total_xp: number;
-  };
-  daily_breakdown: Array<{ date: string; minutes: number; xp: number }>;
-  courses: ViewerParentCourseProgress[];
-  recent_lessons: ViewerParentLessonActivity[];
-};
 
 export type ViewerLessonCompletion = {
   xp_earned: number;
