@@ -138,6 +138,19 @@ const TOPIC_MEMORIES: TopicMemory[] = [
     ],
   },
   {
+    id: 'projectile-motion',
+    match: /(projectile|projectile motion|trajectory|launch angle|launch speed|ballistic|parabola)/i,
+    suggestedTitle: 'Projectile Motion Lab',
+    suggestedDescription:
+      'Explore projectile motion with a visible launch path, live measurements, and simple angle-versus-range comparisons.',
+    guidance: [
+      'Render one complete projectile trajectory on first paint with a visible launch point, apex marker, and landing point.',
+      'Keep the model constrained to angle and speed controls with constant gravity so the learner sees direct cause and effect.',
+      'Show live range, max height, and flight time together with the path instead of burying the numbers in separate cards.',
+      'Prefer a clean coordinate view and one comparison cue over decorative scenery or game-like obstacles.',
+    ],
+  },
+  {
     id: 'programming-logic-flow',
     match: /(programming logic|algorithm|algorithms|flowchart|flowcharts|variables|loops|conditional|conditionals|memory|code execution)/i,
     suggestedTitle: 'Programming Logic Visualizer',

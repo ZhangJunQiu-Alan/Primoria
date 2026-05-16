@@ -704,6 +704,9 @@ function inferGeneratedTemplate(payload: z.infer<typeof RequestSchema>) {
   if (/(wave|amplitude|frequency|phase|波|振幅|频率)/i.test(topicText)) {
     return 'wave';
   }
+  if (/(projectile|trajectory|launch angle|launch speed|ballistic|parabola)/i.test(topicText)) {
+    return 'projectile';
+  }
   return 'generic';
 }
 

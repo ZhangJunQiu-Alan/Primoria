@@ -13,6 +13,7 @@ import { PROGRAMMING_LOGIC_FLOW_SKILL } from './programmingLogicFlow.ts';
 import { SUPPLY_DEMAND_SKILL } from './supplyDemand.ts';
 import { WEATHER_CLIMATE_SKILL } from './weatherClimate.ts';
 import { HISTORICAL_TIMELINE_SKILL } from './historicalTimeline.ts';
+import { PROJECTILE_SKILL } from './projectile.ts';
 
 export type SkillName =
   | 'linearFunction'
@@ -29,7 +30,8 @@ export type SkillName =
   | 'programmingLogicFlow'
   | 'supplyDemand'
   | 'weatherClimate'
-  | 'historicalTimeline';
+  | 'historicalTimeline'
+  | 'projectile';
 
 const SKILL_BODIES: Record<SkillName, string> = {
   linearFunction: LINEAR_FUNCTION_SKILL,
@@ -47,6 +49,7 @@ const SKILL_BODIES: Record<SkillName, string> = {
   supplyDemand: SUPPLY_DEMAND_SKILL,
   weatherClimate: WEATHER_CLIMATE_SKILL,
   historicalTimeline: HISTORICAL_TIMELINE_SKILL,
+  projectile: PROJECTILE_SKILL,
 };
 
 export function pickSkillsForTemplate(
@@ -78,6 +81,8 @@ export function pickSkillsForTemplate(
     if (!picked.includes('probabilityDice')) picked.push('probabilityDice');
   } else if (/(wave and sound|sound wave|compression|rarefaction|wavelength|pitch|volume intensity)/i.test(t)) {
     if (!picked.includes('waveSound')) picked.push('waveSound');
+  } else if (/(projectile|trajectory|launch angle|launch speed|parabola|ballistic)/i.test(t)) {
+    if (!picked.includes('projectile')) picked.push('projectile');
   } else if (/(programming logic|flowchart|pseudocode|variables|loops|conditions|code execution|algorithm)/i.test(t)) {
     if (!picked.includes('programmingLogicFlow')) picked.push('programmingLogicFlow');
   } else if (/(supply and demand|equilibrium|shortage|surplus|market price|economics)/i.test(t)) {
