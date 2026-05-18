@@ -15,6 +15,9 @@
 
 # Dependencies and build outputs
 node_modules/
+.pnpm-home/
+.next/
+*.tsbuildinfo
 dist/
 build/
 .cache/

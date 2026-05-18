@@ -1,0 +1,15 @@
+{
+  "name": "primoria",
+  "private": true,
+  "packageManager": "pnpm@10.28.1",
+  "scripts": {
+    "dev": "pnpm --filter @primoria/web dev",
+    "build": "pnpm --filter @primoria/web build",
+    "lint": "pnpm --filter @primoria/web lint",
+    "typecheck": "pnpm --filter @primoria/web typecheck"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0",
+    "typescript": "^5.7.0"
+  }
+}
