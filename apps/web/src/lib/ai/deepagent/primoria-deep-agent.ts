@@ -50,7 +50,7 @@ function createModel(settings: TutorProviderSettings) {
     apiKey,
     temperature: 0.2,
     maxTokens: 4096,
-    streaming: false,
+    streaming: true,
     configuration: {
       baseURL: baseUrl.replace(/\/$/, ""),
     },
@@ -278,6 +278,7 @@ export async function invokePrimoriaDeepAgentStream(
 
   const toolCallBuffers = new Map<string, AccumulatedToolCall>();
   const emittedArtifacts = new Set<string>();
+  const executingEmitted = new Set<string>();
   const finalArtifacts: TutorArtifact[] = [];
   let replyBuffer = "";
 
@@ -325,6 +326,7 @@ export async function invokePrimoriaDeepAgentStream(
 
         if (buf.name && !buf.executingEmitted && VISIBLE_TOOLS.has(buf.name)) {
           buf.executingEmitted = true;
+          executingEmitted.add(buf.name);
           emit({ type: "tool_status", artifact: toolStatusEvent(buf.name, "executing") });
         }
 
@@ -365,7 +367,10 @@ export async function invokePrimoriaDeepAgentStream(
       }
     } else if (ev.event === "on_tool_start" && VISIBLE_TOOLS.has(ev.name ?? "")) {
       const name = ev.name!;
-      emit({ type: "tool_status", artifact: toolStatusEvent(name, "executing") });
+      if (!executingEmitted.has(name)) {
+        executingEmitted.add(name);
+        emit({ type: "tool_status", artifact: toolStatusEvent(name, "executing") });
+      }
     } else if (ev.event === "on_tool_end" && VISIBLE_TOOLS.has(ev.name ?? "")) {
       const name = ev.name!;
       emit({ type: "tool_status", artifact: toolStatusEvent(name, "complete") });
