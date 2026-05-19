@@ -62,6 +62,22 @@ async function generateNarration(
   }
 }
 
+function extractInlineHtml(text: string): { html: string; cleaned: string } | null {
+  const fenced = text.match(/```(?:html|HTML)?\s*([\s\S]*?)```/);
+  if (fenced && fenced[1].trim().length > 0) {
+    const html = fenced[1].trim();
+    const cleaned = (text.slice(0, fenced.index ?? 0) + text.slice((fenced.index ?? 0) + fenced[0].length)).trim();
+    return { html, cleaned };
+  }
+  const rawTagMatch = text.match(/<(div|svg|section|main|article|canvas|form|table)[\s\S]+<\/\1>/i);
+  if (rawTagMatch && rawTagMatch[0].length > 80) {
+    const html = rawTagMatch[0];
+    const cleaned = (text.slice(0, rawTagMatch.index ?? 0) + text.slice((rawTagMatch.index ?? 0) + html.length)).trim();
+    return { html, cleaned };
+  }
+  return null;
+}
+
 export async function runTutorAgentStream(
   messages: ChatMessage[],
   settings: TutorProviderSettings = {},
@@ -69,32 +85,55 @@ export async function runTutorAgentStream(
 ): Promise<TutorAgentResponse> {
   const userQuestion = latestUserMessage(messages);
 
-  let plan: VisualizationPlanArtifact | null = null;
-  let widget: HtmlWidgetArtifact | null = null;
+  const planContainer: { value: VisualizationPlanArtifact | null } = { value: null };
+  const widgetContainer: { value: HtmlWidgetArtifact | null } = { value: null };
 
   const result = await invokePrimoriaDeepAgentStream(messages, settings, (event) => {
     if (event.type === "artifact") {
-      if (event.artifact.type === "visualization_plan") plan = event.artifact;
-      if (event.artifact.type === "html_widget") widget = event.artifact;
+      if (event.artifact.type === "visualization_plan") planContainer.value = event.artifact;
+      if (event.artifact.type === "html_widget") widgetContainer.value = event.artifact;
     } else if (event.type === "artifact_delta" && event.artifact.type === "html_widget") {
-      widget = event.artifact;
+      widgetContainer.value = event.artifact;
     }
     emit(event);
   });
 
+  const capturedPlan = planContainer.value;
+  let resolvedWidget = widgetContainer.value;
+
   let reply = result.reply;
-  if (widget && !reply.trim()) {
-    const narration = await generateNarration(userQuestion, plan, widget, settings);
+  let artifacts = result.artifacts;
+
+  if (!resolvedWidget && reply) {
+    const extracted = extractInlineHtml(reply);
+    if (extracted) {
+      const salvagedWidget: HtmlWidgetArtifact = {
+        type: "html_widget",
+        title: capturedPlan?.title ?? "Interactive widget",
+        description: capturedPlan ? `Interactive visualization for: ${capturedPlan.approach}` : "",
+        html: extracted.html,
+      };
+      resolvedWidget = salvagedWidget;
+      reply = extracted.cleaned;
+      artifacts = [...artifacts, salvagedWidget];
+      emit({ type: "artifact", artifact: salvagedWidget });
+    }
+  }
+
+  if (resolvedWidget && !reply.trim()) {
+    const narration = await generateNarration(userQuestion, capturedPlan, resolvedWidget, settings);
     if (narration) {
       reply = narration;
       emit({ type: "assistant_message", label: result.label, reply, suggestions: [] });
     }
+  } else if (reply !== result.reply) {
+    emit({ type: "assistant_message", label: result.label, reply, suggestions: [] });
   }
 
   const response: TutorAgentResponse = {
     label: result.label,
     reply,
-    artifacts: result.artifacts,
+    artifacts,
     suggestions: result.suggestions,
   };
   emit({ type: "final", result: response });

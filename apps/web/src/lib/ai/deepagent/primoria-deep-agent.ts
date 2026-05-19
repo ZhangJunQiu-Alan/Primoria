@@ -166,7 +166,7 @@ function createTutorTools() {
     {
       name: "render_interactive_widget",
       description:
-        "Render an interactive HTML/CSS/JS learning widget. MUST be used for any visualization request. Use the Primoria warm palette: backgrounds #fbf7ee / #fffaf2 / #f7f3ea, accents amber #c8881a, sage #4a7a5a, lavender #7c6ad0, sky #4a7aa8, coral #c46a4e, rose #b56474, text #3a352d, borders #eadfce. Use 2-3 different accent colors per widget for visual distinction. Rounded 12-18px corners, soft 0.5-1px borders, no black backgrounds, no neon, no emoji decoration.",
+        "Render an interactive HTML/CSS/JS learning widget. MUST be used for any visualization request. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration. Goal: pale and airy overall, with one clearly distinct focus element via the tint+border pair.",
       schema: z.object({
         title: z.string(),
         description: z.string(),
@@ -187,7 +187,10 @@ For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / �
 4. Call render_interactive_widget with title, description, and a complete self-contained HTML fragment in the html argument.
 5. Call manage_todos one more time to mark all completed.
 
-Do NOT respond with text alone for visualization requests. The tool calls are required.
+CRITICAL OUTPUT RULES:
+- If you called plan_visualization, you MUST also call render_interactive_widget in the same turn. Never stop after planning.
+- NEVER paste HTML / CSS / JS code into your text reply. Code only belongs inside the render_interactive_widget html argument.
+- NEVER wrap output in markdown code blocks (no \`\`\`html, no \`\`\`).
 
 For plain questions, answer in 1-2 sentences without tools.`;
 
