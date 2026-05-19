@@ -6,9 +6,11 @@ import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
 import { SettingsModal } from "./settings-modal";
 import { TutorChatClient } from "./tutor-chat-client";
+import { TutorChatCopilot } from "./tutor-chat-copilot";
 import { TutorTopbar } from "./topbar";
 
 const STORAGE_KEY = "primoria:tutor-provider-settings";
+const USE_COPILOTKIT = process.env.NEXT_PUBLIC_USE_COPILOTKIT === "1";
 
 export function TutorWorkspaceClient() {
   const [settings, setSettings] = useState<TutorProviderSettings>({});
@@ -39,7 +41,11 @@ export function TutorWorkspaceClient() {
           onOpenSettings={() => setSettingsOpen(true)}
           onOpenHistory={() => setHistoryOpen(true)}
         />
-        <TutorChatClient key={chatResetKey} settings={settings} resetKey={chatResetKey} />
+        {USE_COPILOTKIT ? (
+          <TutorChatCopilot />
+        ) : (
+          <TutorChatClient key={chatResetKey} settings={settings} resetKey={chatResetKey} />
+        )}
         <SettingsModal
           open={settingsOpen}
           settings={settings}
