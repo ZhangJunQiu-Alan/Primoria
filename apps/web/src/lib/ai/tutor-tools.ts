@@ -1,3 +1,5 @@
+import { dispatchCustomEvent } from "@langchain/core/callbacks/dispatch";
+import type { RunnableConfig } from "@langchain/core/runnables";
 import { z } from "zod";
 import { parseJsonObject } from "./json";
 import { createChatCompletion, streamChatCompletion } from "./openai-compatible";
@@ -137,7 +139,7 @@ export async function streamInteractiveWidget(
   plan: VisualizationPlanArtifact,
   visualizationGoal: string,
   settings: TutorProviderSettings,
-  onHtmlDelta: (html: string) => void,
+  runConfig?: RunnableConfig,
 ): Promise<HtmlWidgetArtifact> {
   let html = "";
 
@@ -157,7 +159,17 @@ ${widgetRules({ json: false })}`,
     settings,
     (delta) => {
       html += delta;
-      onHtmlDelta(html);
+      if (runConfig) {
+        void dispatchCustomEvent(
+          "widget_html_delta",
+          {
+            html,
+            title: plan.title,
+            description: `Interactive visualization for: ${visualizationGoal}`,
+          },
+          runConfig,
+        ).catch(() => {});
+      }
     },
   );
 

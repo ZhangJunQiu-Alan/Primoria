@@ -758,3 +758,73 @@ button {
     font-size: 16px;
   }
 }
+
+.course-card {
+  max-width: 820px;
+}
+
+.course-draft > div:first-child {
+  display: grid;
+  gap: 7px;
+}
+
+.course-title {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1.08;
+}
+
+.course-modules {
+  display: grid;
+  gap: 10px;
+}
+
+.course-module {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 13px;
+  padding: 14px;
+  border: 1px solid #ead8c7;
+  border-radius: 18px;
+  background: #fffaf1;
+}
+
+.course-module > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: #6a4c18;
+  background: var(--yellow);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.course-module strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.course-module p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.course-module .plan-list button {
+  padding: 8px 11px;
+  border-radius: 999px;
+  color: #4f453c;
+  background: white;
+  border: 1px solid #ead8c7;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.course-project {
+  margin-top: 10px !important;
+  color: #6c3326 !important;
+}

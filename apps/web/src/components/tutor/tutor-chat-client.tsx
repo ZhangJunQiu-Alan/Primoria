@@ -129,6 +129,7 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
 
     const assistantId = crypto.randomUUID();
     let assistantCreated = false;
+    let pendingArtifacts: TutorAgentResponse["artifacts"] = [];
     let assistantArtifacts: TutorAgentResponse["artifacts"] = [];
     const decoder = new TextDecoder();
     const reader = response.body.getReader();
@@ -137,6 +138,7 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
     async function handleEvent(event: TutorStreamEvent) {
       if (event.type === "assistant_message") {
         assistantCreated = true;
+        assistantArtifacts = pendingArtifacts;
         setMessages((current) => [
           ...current,
           {
@@ -144,16 +146,20 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
             role: "assistant",
             label: event.label,
             content: event.reply,
-            artifacts: [],
+            artifacts: assistantArtifacts,
           },
         ]);
         return;
       }
 
       if (event.type === "tool_status") {
-        assistantArtifacts = upsertToolStatus(assistantArtifacts, event.artifact);
+        const targetArtifacts = assistantCreated ? assistantArtifacts : pendingArtifacts;
+        const nextArtifacts = upsertToolStatus(targetArtifacts, event.artifact);
         if (assistantCreated) {
+          assistantArtifacts = nextArtifacts;
           updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
+        } else {
+          pendingArtifacts = nextArtifacts;
         }
         return;
       }

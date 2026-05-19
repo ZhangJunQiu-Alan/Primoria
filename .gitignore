@@ -5,6 +5,7 @@
 .idea/
 .vscode/
 .omx/
+.omc/
 
 # Logs
 *.log

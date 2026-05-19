@@ -41,14 +41,33 @@ export type CodeArtifact = {
   code: string;
 };
 
+export type CourseDraftArtifact = {
+  type: "course_draft";
+  title: string;
+  audience: string;
+  duration: string;
+  modules: Array<{
+    title: string;
+    description: string;
+    lessons: string[];
+    project?: string;
+  }>;
+  nextActions: string[];
+};
+
 export type ToolStatusArtifact = {
   type: "tool_status";
-  name: string;
+  name: "deep_agent" | "plan_visualization" | "render_interactive_widget" | "generate_course" | string;
   status: "executing" | "complete" | "error";
   description: string;
 };
 
-export type TutorArtifact = HtmlWidgetArtifact | VisualizationPlanArtifact | CodeArtifact | ToolStatusArtifact;
+export type TutorArtifact =
+  | HtmlWidgetArtifact
+  | VisualizationPlanArtifact
+  | CodeArtifact
+  | CourseDraftArtifact
+  | ToolStatusArtifact;
 
 export type TutorAgentResponse = {
   label: TutorAgentLabel;
