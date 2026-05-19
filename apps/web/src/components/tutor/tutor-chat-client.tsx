@@ -1,10 +1,56 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import type { ChatMessage, ToolStatusArtifact, TutorAgentResponse, TutorProviderSettings, TutorStreamEvent } from "@/lib/ai/types";
 import { TutorComposer } from "./composer";
 import { AssistantMessage, UserMessage } from "./message";
+
+function ActivityList({ steps }: { steps: ToolStatusArtifact[] }) {
+  return (
+    <div className="message-row tool">
+      <div className="activity-list">
+        {steps.map((step, index) => (
+          <div key={`${step.name}-${index}`} className={`activity-row ${step.status}`}>
+            <span className={step.status === "executing" ? "tool-spinner activity-indicator" : "tool-dot activity-indicator"} />
+            <span className="activity-name">{step.name}</span>
+            <span className="activity-desc">{step.description}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function renderArtifactBlocks(
+  messageId: string,
+  artifacts: TutorAgentResponse["artifacts"],
+  onSendPrompt: (prompt: string) => void,
+): ReactNode[] {
+  const blocks: ReactNode[] = [];
+  let group: ToolStatusArtifact[] = [];
+  let groupIndex = 0;
+
+  const flush = () => {
+    if (group.length === 0) return;
+    blocks.push(<ActivityList key={`${messageId}-activity-${groupIndex}`} steps={group} />);
+    group = [];
+    groupIndex += 1;
+  };
+
+  artifacts.forEach((artifact, index) => {
+    if (artifact.type === "tool_status") {
+      group.push(artifact);
+      return;
+    }
+    flush();
+    blocks.push(<ToolCard key={`${messageId}-${index}`} artifact={artifact} onSendPrompt={onSendPrompt} />);
+  });
+  flush();
+
+  return blocks;
+}
 
 type UiMessage =
   | {
@@ -124,12 +170,13 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
     return artifacts.map((artifact, index) => (index === existingIndex ? nextArtifact : artifact));
   }
 
-  async function handleStreamingResponse(response: Response, retryContent: string) {
+  async function handleStreamingResponse(
+    response: Response,
+    retryContent: string,
+    assistantId: string,
+  ) {
     if (!response.body) throw new Error("Tutor stream did not include a response body.");
 
-    const assistantId = crypto.randomUUID();
-    let assistantCreated = false;
-    let pendingArtifacts: TutorAgentResponse["artifacts"] = [];
     let assistantArtifacts: TutorAgentResponse["artifacts"] = [];
     const decoder = new TextDecoder();
     const reader = response.body.getReader();
@@ -137,63 +184,39 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
 
     async function handleEvent(event: TutorStreamEvent) {
       if (event.type === "assistant_message") {
-        assistantCreated = true;
-        assistantArtifacts = pendingArtifacts;
-        setMessages((current) => [
-          ...current,
-          {
-            id: assistantId,
-            role: "assistant",
-            label: event.label,
-            content: event.reply,
-            artifacts: assistantArtifacts,
-          },
-        ]);
+        updateAssistantMessage(assistantId, {
+          label: event.label,
+          content: event.reply,
+          artifacts: assistantArtifacts,
+        });
         return;
       }
 
       if (event.type === "tool_status") {
-        const targetArtifacts = assistantCreated ? assistantArtifacts : pendingArtifacts;
-        const nextArtifacts = upsertToolStatus(targetArtifacts, event.artifact);
-        if (assistantCreated) {
-          assistantArtifacts = nextArtifacts;
-          updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
-        } else {
-          pendingArtifacts = nextArtifacts;
-        }
+        assistantArtifacts = upsertToolStatus(assistantArtifacts, event.artifact);
+        updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
         return;
       }
 
       if (event.type === "artifact") {
         assistantArtifacts = upsertArtifact(assistantArtifacts, event.artifact);
-        if (assistantCreated) {
-          updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
-        }
+        updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
         return;
       }
 
       if (event.type === "artifact_delta") {
         assistantArtifacts = upsertArtifact(assistantArtifacts, event.artifact);
-
-        if (assistantCreated) {
-          updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
-        }
+        updateAssistantMessage(assistantId, { artifacts: assistantArtifacts });
         return;
       }
 
       if (event.type === "error") {
-        setMessages((current) => [
-          ...current,
-          {
-            id: crypto.randomUUID(),
-            role: "assistant",
-            label: "Tutor team",
-            content: event.reply,
-            artifacts: [],
-            isError: true,
-            retryContent,
-          },
-        ]);
+        updateAssistantMessage(assistantId, {
+          content: event.reply,
+          isError: true,
+          retryContent,
+          artifacts: assistantArtifacts,
+        });
       }
     }
 
@@ -232,11 +255,20 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
     };
 
     const nextApiMessages = appendUserMessage ? [...apiMessages, { role: "user" as const, content: trimmed }] : apiMessages;
-    if (replaceMessageId) {
-      setMessages((current) => current.filter((message) => message.id !== replaceMessageId));
-    } else if (appendUserMessage) {
-      setMessages((current) => [...current, userMessage]);
-    }
+    const assistantId = crypto.randomUUID();
+    const placeholderAssistant: UiMessage = {
+      id: assistantId,
+      role: "assistant",
+      label: "Tutor team",
+      content: "",
+      artifacts: [],
+    };
+
+    setMessages((current) => {
+      const filtered = replaceMessageId ? current.filter((message) => message.id !== replaceMessageId) : current;
+      const withUser = appendUserMessage ? [...filtered, userMessage] : filtered;
+      return [...withUser, placeholderAssistant];
+    });
     setIsLoading(true);
 
     try {
@@ -247,7 +279,7 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
       });
 
       if (response.headers.get("content-type")?.includes("application/x-ndjson")) {
-        await handleStreamingResponse(response, trimmed);
+        await handleStreamingResponse(response, trimmed, assistantId);
         if (!response.ok) throw new Error("Tutor request failed");
         return;
       }
@@ -255,29 +287,17 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
       const result = (await response.json()) as TutorAgentResponse;
       if (!response.ok) throw new Error(result.reply || "Tutor request failed");
 
-      setMessages((current) => [
-        ...current,
-        {
-          id: crypto.randomUUID(),
-          role: "assistant",
-          label: result.label,
-          content: result.reply,
-          artifacts: result.artifacts ?? [],
-        },
-      ]);
+      updateAssistantMessage(assistantId, {
+        label: result.label,
+        content: result.reply,
+        artifacts: result.artifacts ?? [],
+      });
     } catch (error) {
-      setMessages((current) => [
-        ...current,
-        {
-          id: crypto.randomUUID(),
-          role: "assistant",
-          label: "Tutor team",
-          content: error instanceof Error ? error.message : "Something went wrong.",
-          artifacts: [],
-          isError: true,
-          retryContent: trimmed,
-        },
-      ]);
+      updateAssistantMessage(assistantId, {
+        content: error instanceof Error ? error.message : "Something went wrong.",
+        isError: true,
+        retryContent: trimmed,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -294,35 +314,29 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
 
             return (
               <Fragment key={message.id}>
-                <AssistantMessage label={message.label} tone={message.isError ? "error" : "default"}>
-                  <span>{message.content}</span>
-                  {message.retryContent ? (
-                    <button
-                      className="retry-btn"
-                      disabled={isLoading}
-                      onClick={() =>
-                        void sendMessage(message.retryContent ?? "", {
-                          appendUserMessage: false,
-                          replaceMessageId: message.id,
-                        })
-                      }
-                    >
-                      Retry
-                    </button>
-                  ) : null}
-                </AssistantMessage>
-                {message.artifacts.map((artifact, index) => (
-                  <ToolCard key={`${message.id}-${index}`} artifact={artifact} onSendPrompt={sendMessage} />
-                ))}
+                {renderArtifactBlocks(message.id, message.artifacts, sendMessage)}
+                {message.content ? (
+                  <AssistantMessage label={message.label} tone={message.isError ? "error" : "default"}>
+                    <span>{message.content}</span>
+                    {message.retryContent ? (
+                      <button
+                        className="retry-btn"
+                        disabled={isLoading}
+                        onClick={() =>
+                          void sendMessage(message.retryContent ?? "", {
+                            appendUserMessage: false,
+                            replaceMessageId: message.id,
+                          })
+                        }
+                      >
+                        Retry
+                      </button>
+                    ) : null}
+                  </AssistantMessage>
+                ) : null}
               </Fragment>
             );
           })}
-
-          {isLoading ? (
-            <AssistantMessage label="Tutor team">
-              Thinking through the concept and deciding whether an interactive widget would help…
-            </AssistantMessage>
-          ) : null}
         </div>
       </section>
 

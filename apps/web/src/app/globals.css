@@ -488,6 +488,64 @@ button {
   max-width: 770px;
 }
 
+.activity-list {
+  max-width: 770px;
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.92);
+  border: 1px solid var(--line);
+  box-shadow: var(--soft-shadow);
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.activity-indicator {
+  flex-shrink: 0;
+}
+
+.activity-row .tool-spinner.activity-indicator {
+  width: 11px;
+  height: 11px;
+  border-width: 1.6px;
+}
+
+.activity-row .tool-dot.activity-indicator {
+  width: 7px;
+  height: 7px;
+}
+
+.activity-name {
+  font-weight: 700;
+  color: #4f453c;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.activity-desc {
+  color: var(--quiet);
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-row.complete .activity-name {
+  opacity: 0.6;
+}
+
+.activity-row.complete .activity-desc {
+  opacity: 0.75;
+}
+
 .plan-copy {
   margin: 0;
   color: var(--muted);
