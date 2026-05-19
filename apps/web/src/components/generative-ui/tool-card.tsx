@@ -112,6 +112,27 @@ export function ToolCard({
     );
   }
 
+  if (artifact.type === "todo_list") {
+    return (
+      <div className="message-row tool">
+        <div className="tool-card todo-card">
+          <div className="tool-title">
+            <span className="tool-dot" />
+            <span>plan · tutor team</span>
+          </div>
+          <ol className="todo-list">
+            {artifact.items.map((item, index) => (
+              <li key={`${index}-${item.title}`} className={`todo-item ${item.status}`}>
+                <span className={`todo-indicator ${item.status}`} />
+                <span className="todo-title">{item.title}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="message-row tool">
       <div className="tool-card">

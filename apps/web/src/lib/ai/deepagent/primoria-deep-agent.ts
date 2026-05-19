@@ -57,6 +57,10 @@ function createModel(settings: TutorProviderSettings) {
   });
 }
 
+export function createTutorModel(settings: TutorProviderSettings = {}) {
+  return createModel(settings);
+}
+
 function parseDeepArtifact(value: unknown): TutorArtifact | undefined {
   let candidate: unknown;
   try {

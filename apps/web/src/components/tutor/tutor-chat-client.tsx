@@ -154,6 +154,12 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
     artifacts: TutorAgentResponse["artifacts"],
     nextArtifact: TutorAgentResponse["artifacts"][number],
   ): TutorAgentResponse["artifacts"] {
+    if (nextArtifact.type === "todo_list") {
+      const existingIndex = artifacts.findIndex((artifact) => artifact.type === "todo_list");
+      if (existingIndex === -1) return [...artifacts, nextArtifact];
+      return artifacts.map((artifact, index) => (index === existingIndex ? nextArtifact : artifact));
+    }
+
     if (nextArtifact.type !== "html_widget") return [...artifacts, nextArtifact];
 
     const existingIndex = artifacts.findIndex(

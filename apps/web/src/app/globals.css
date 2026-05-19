@@ -546,6 +546,64 @@ button {
   opacity: 0.75;
 }
 
+.todo-card {
+  max-width: 770px;
+}
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #3a352d;
+}
+
+.todo-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1.5px solid #c9bfa6;
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.todo-indicator.in_progress {
+  border-color: #ef7358;
+  background: radial-gradient(circle, #ef7358 35%, transparent 36%);
+  animation: todo-pulse 1.4s ease-in-out infinite;
+}
+
+.todo-indicator.done {
+  background: #7c6ad0;
+  border-color: #7c6ad0;
+}
+
+.todo-item.done .todo-title {
+  opacity: 0.55;
+  text-decoration: line-through;
+  text-decoration-color: rgba(0, 0, 0, 0.25);
+}
+
+.todo-item.in_progress .todo-title {
+  color: #5a3a26;
+  font-weight: 500;
+}
+
+@keyframes todo-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(0.92); }
+}
+
 .plan-copy {
   margin: 0;
   color: var(--muted);

@@ -55,6 +55,16 @@ export type CourseDraftArtifact = {
   nextActions: string[];
 };
 
+export type TodoListItem = {
+  title: string;
+  status: "pending" | "in_progress" | "done";
+};
+
+export type TodoListArtifact = {
+  type: "todo_list";
+  items: TodoListItem[];
+};
+
 export type ToolStatusArtifact = {
   type: "tool_status";
   name: "deep_agent" | "plan_visualization" | "render_interactive_widget" | "generate_course" | string;
@@ -67,6 +77,7 @@ export type TutorArtifact =
   | VisualizationPlanArtifact
   | CodeArtifact
   | CourseDraftArtifact
+  | TodoListArtifact
   | ToolStatusArtifact;
 
 export type TutorAgentResponse = {
@@ -93,7 +104,7 @@ export type TutorStreamEvent =
     }
   | {
       type: "artifact_delta";
-      artifact: HtmlWidgetArtifact;
+      artifact: HtmlWidgetArtifact | TodoListArtifact;
     }
   | {
       type: "final";
