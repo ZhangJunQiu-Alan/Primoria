@@ -396,6 +396,21 @@ button {
   background: var(--coral);
 }
 
+.tool-spinner {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(239, 115, 88, 0.25);
+  border-top-color: var(--coral);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .visualizer {
   padding: 18px;
   display: grid;
@@ -463,6 +478,36 @@ button {
   color: var(--quiet);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 15px;
+}
+
+.plan-card {
+  max-width: 770px;
+}
+
+.status-card {
+  max-width: 770px;
+}
+
+.plan-copy {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.plan-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plan-list span {
+  padding: 8px 11px;
+  border-radius: 999px;
+  color: #4f453c;
+  background: #fff8ef;
+  border: 1px solid #ead8c7;
+  font-size: 13px;
+  font-weight: 750;
 }
 
 .code-card {

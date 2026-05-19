@@ -10,16 +10,34 @@ Implemented:
 - Chat-first AI Tutor UI
 - Light Primoria visual style
 - Settings modal for OpenAI-compatible provider config
+- Local chat persistence with New chat reset
 - TypeScript backend route: `POST /api/tutor/chat`
 - OpenAI-compatible chat completions client
 - Lightweight DeepAgent-style tutor team prompt
 - Structured model response:
   - normal text reply
+  - visualization plan artifact
   - `html_widget` artifact
   - `code` artifact
   - suggestions
+- TypeScript visual tool pipeline:
+  - orchestrator decides whether a visual is needed
+  - `planVisualization`
+  - `renderInteractiveWidget`
+- Streaming tool events over NDJSON:
+  - assistant message
+  - tool status
+  - widget HTML delta
+  - artifact
+  - final result
 - Sandboxed iframe renderer for interactive HTML/CSS/JS widgets
 - Runtime iframe resize bridge
+- OpenGenerativeUI-style widget shell:
+  - Primoria theme CSS injection
+  - SVG helper classes
+  - form/input default styles
+  - import map for approved visualization modules
+  - widget-to-tutor prompt bridge
 - Real browser E2E verification against `https://ai.orbitlink.me/v1`
 
 ## Runtime config
@@ -56,14 +74,13 @@ Preview artifacts:
 ## Next implementation steps
 
 1. Add streaming response so the user sees progress before the model finishes.
-2. Add chat persistence.
-3. Add real tool registry:
+2. Add real tool registry:
    - `render_interactive_widget`
    - `generate_practice`
    - `generate_course`
    - `save_course`
-4. Add Library/Course pages after AI Tutor feels polished.
-5. Replace the prompt-only DeepAgent style with an explicit TypeScript orchestration pipeline if needed:
+3. Add Library/Course pages after AI Tutor feels polished.
+4. Replace the prompt-only DeepAgent style with an explicit TypeScript orchestration pipeline if needed:
    - classify intent
    - plan
    - generate explanation

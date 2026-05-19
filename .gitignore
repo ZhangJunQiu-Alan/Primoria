@@ -4,6 +4,7 @@
 # Editor directories
 .idea/
 .vscode/
+.omx/
 
 # Logs
 *.log

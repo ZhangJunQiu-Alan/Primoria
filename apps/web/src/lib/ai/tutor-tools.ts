@@ -1,0 +1,171 @@
+import { z } from "zod";
+import { parseJsonObject } from "./json";
+import { createChatCompletion, streamChatCompletion } from "./openai-compatible";
+import type {
+  ChatMessage,
+  HtmlWidgetArtifact,
+  TutorProviderSettings,
+  VisualizationPlanArtifact,
+} from "./types";
+
+const VisualizationPlanSchema = z.object({
+  title: z.string(),
+  approach: z.string(),
+  technology: z.string(),
+  key_elements: z.array(z.string()).min(2).max(4),
+});
+
+const WidgetSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  html: z.string(),
+});
+
+function transcript(messages: ChatMessage[]) {
+  return messages.map((message) => `${message.role}: ${message.content}`).join("\n");
+}
+
+function widgetRules({ json }: { json: boolean }) {
+  return `${json ? "Return ONLY valid JSON with title, description, and html fields." : "Return ONLY a self-contained HTML fragment. Do not return JSON. Do not wrap in markdown fences."}
+
+HTML rules:
+- Return an HTML fragment only, not a full document.
+- Use light, warm Primoria styling. Avoid black backgrounds and low-opacity main content.
+- Include readable labels and controls. Controls must work.
+- Keep the widget compact, responsive, and suitable inside a chat card.
+- Inline <style> and <script> are allowed.
+- Approved module imports are available in <script type="module">: three, gsap, d3, chart.js, chart.js/auto.
+- Do not load other external network resources.
+- If the widget should ask the tutor a follow-up, use window.sendPrompt("question") or an element with data-prompt="question".
+- Use window.openLink("https://...") for external links instead of direct navigation.`;
+}
+
+function widgetPrompt(messages: ChatMessage[], plan: VisualizationPlanArtifact, visualizationGoal: string) {
+  return `Conversation:
+${transcript(messages)}
+
+Visualization goal:
+${visualizationGoal}
+
+Plan:
+Title: ${plan.title}
+Approach: ${plan.approach}
+Technology: ${plan.technology}
+Key elements:
+${plan.keyElements.map((element) => `- ${element}`).join("\n")}`;
+}
+
+export async function planVisualization(
+  messages: ChatMessage[],
+  visualizationGoal: string,
+  settings: TutorProviderSettings,
+): Promise<VisualizationPlanArtifact> {
+  const raw = await createChatCompletion(
+    [
+      {
+        role: "system",
+        content: `You are Primoria's plan_visualization tool.
+
+Return ONLY valid JSON with this shape:
+{
+  "title": "short title",
+  "approach": "one sentence visualization strategy",
+  "technology": "HTML + inline SVG | HTML + Canvas | D3.js | Chart.js | Three.js | CSS + JS",
+  "key_elements": ["2-4 concrete elements"]
+}
+
+Choose the simplest technology that can teach the concept well. Prefer HTML + inline SVG for algorithms and conceptual diagrams. Use Three.js only when true 3D helps.`,
+      },
+      {
+        role: "user",
+        content: `Conversation:\n${transcript(messages)}\n\nVisualization goal:\n${visualizationGoal}`,
+      },
+    ],
+    settings,
+  );
+
+  const plan = VisualizationPlanSchema.parse(parseJsonObject(raw));
+  return {
+    type: "visualization_plan",
+    title: plan.title,
+    approach: plan.approach,
+    technology: plan.technology,
+    keyElements: plan.key_elements,
+  };
+}
+
+export async function renderInteractiveWidget(
+  messages: ChatMessage[],
+  plan: VisualizationPlanArtifact,
+  visualizationGoal: string,
+  settings: TutorProviderSettings,
+): Promise<HtmlWidgetArtifact> {
+  const raw = await createChatCompletion(
+    [
+      {
+        role: "system",
+        content: `You are Primoria's render_interactive_widget tool.
+
+Return ONLY valid JSON with this shape:
+{
+  "title": "short widget title",
+  "description": "one sentence description",
+  "html": "self-contained HTML fragment with inline style and optional script"
+}
+
+${widgetRules({ json: true })}`,
+      },
+      {
+        role: "user",
+        content: widgetPrompt(messages, plan, visualizationGoal),
+      },
+    ],
+    settings,
+  );
+
+  const widget = WidgetSchema.parse(parseJsonObject(raw));
+  return {
+    type: "html_widget",
+    title: widget.title,
+    description: widget.description,
+    html: widget.html,
+  };
+}
+
+export async function streamInteractiveWidget(
+  messages: ChatMessage[],
+  plan: VisualizationPlanArtifact,
+  visualizationGoal: string,
+  settings: TutorProviderSettings,
+  onHtmlDelta: (html: string) => void,
+): Promise<HtmlWidgetArtifact> {
+  let html = "";
+
+  const streamed = await streamChatCompletion(
+    [
+      {
+        role: "system",
+        content: `You are Primoria's render_interactive_widget streaming tool.
+
+${widgetRules({ json: false })}`,
+      },
+      {
+        role: "user",
+        content: widgetPrompt(messages, plan, visualizationGoal),
+      },
+    ],
+    settings,
+    (delta) => {
+      html += delta;
+      onHtmlDelta(html);
+    },
+  );
+
+  const finalHtml = html || streamed;
+  return {
+    type: "html_widget",
+    title: plan.title,
+    description: `Interactive visualization for: ${visualizationGoal}`,
+    html: finalHtml,
+  };
+}

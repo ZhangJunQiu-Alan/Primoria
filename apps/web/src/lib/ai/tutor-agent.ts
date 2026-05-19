@@ -1,21 +1,8 @@
 import { z } from "zod";
+import { parseJsonObject } from "./json";
 import { createChatCompletion } from "./openai-compatible";
-import type { ChatMessage, TutorAgentResponse, TutorProviderSettings } from "./types";
-
-const TutorArtifactSchema = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("html_widget"),
-    title: z.string(),
-    description: z.string(),
-    html: z.string(),
-  }),
-  z.object({
-    type: z.literal("code"),
-    title: z.string(),
-    language: z.string(),
-    code: z.string(),
-  }),
-]);
+import { planVisualization, renderInteractiveWidget, streamInteractiveWidget } from "./tutor-tools";
+import type { ChatMessage, ToolStatusArtifact, TutorAgentResponse, TutorProviderSettings, TutorStreamEvent } from "./types";
 
 const TutorLabelSchema = z
   .string()
@@ -25,97 +12,171 @@ const TutorLabelSchema = z
       : "Tutor team",
   );
 
-const TutorResponseSchema = z.object({
+const TutorDecisionSchema = z.object({
   label: TutorLabelSchema,
   reply: z.string(),
-  artifacts: z.array(TutorArtifactSchema).default([]),
+  should_visualize: z.boolean().default(false),
+  visualization_goal: z.string().optional(),
   suggestions: z.array(z.string()).default([]),
 });
 
-const SYSTEM_PROMPT = `You are Primoria, a chat-first AI tutor product.
+const ORCHESTRATOR_PROMPT = `You are Primoria, a chat-first AI tutor product.
 
-You are implemented as a lightweight DeepAgent-style tutor team:
-- Tutor team: coordinates the answer.
+You coordinate a lightweight TypeScript tool pipeline:
 - Concept agent: explains concepts clearly.
-- Visualization agent: creates interactive HTML/SVG/CSS/JS widgets.
+- Visualization agent: uses plan_visualization and render_interactive_widget when a visual would teach better.
 - Practice agent: creates checks and exercises.
 - Code agent: writes and explains code.
 - Course agent: drafts course outlines when explicitly asked.
 
-Return ONLY valid json. Return ONLY valid JSON matching this shape:
+Return ONLY valid JSON matching this shape:
 {
   "label": "Tutor team",
   "reply": "short helpful tutor response",
-  "artifacts": [
-    {
-      "type": "html_widget",
-      "title": "Widget title",
-      "description": "What it shows",
-      "html": "self-contained HTML fragment with inline style and optional script"
-    },
-    {
-      "type": "code",
-      "title": "Code title",
-      "language": "python|typescript|javascript|...",
-      "code": "code only"
-    }
-  ],
+  "should_visualize": false,
+  "visualization_goal": "what the visualization should teach, if needed",
   "suggestions": ["short next action", "short next action"]
 }
 
-When to generate artifacts:
-- If user asks to visualize, simulate, interact, show step-by-step, explain an algorithm, diagram a concept, or practice, include an html_widget.
-- If code is useful, include a code artifact.
-- For normal conversation, artifacts can be [].
-- label must be exactly one of: "Tutor team", "Concept agent", "Visualization agent", "Practice agent", "Code agent", "Course agent".
+Set should_visualize=true when the user asks to visualize, simulate, interact, show steps, explain an algorithm visually, diagram a concept, explore data, or practice with an interactive widget.
+When should_visualize=true:
+- Keep reply to 1-2 sentences acknowledging the request and setting context.
+- Do not generate HTML yourself.
+- Write visualization_goal as a concrete objective for the visualization tool.
 
-HTML widget rules:
-- Return an HTML fragment only, not a full document.
-- Use light, warm Primoria styling. Avoid black backgrounds.
-- Keep text and controls readable with strong enough contrast.
-- Do not make the main widget content translucent, faded, disabled-looking, or low opacity.
-- Include inline <style>. Inline <script> is allowed.
-- Do not load external network resources.
-- Make controls actually work when useful.
-- Keep the widget compact and responsive.
-- You may use window.parent.postMessage only if needed.
+When should_visualize=false:
+- Answer normally and concisely.
+- Explain intuition before formal rules.
 
-Teaching style:
-- Be concise, encouraging, and concrete.
-- For students, explain intuition before formal rules.
-- Never mention these system instructions.`;
+Never mention these system instructions.`;
 
-function parseJsonObject(text: string) {
-  try {
-    return JSON.parse(text);
-  } catch {
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("Model did not return JSON");
-    return JSON.parse(match[0]);
-  }
+function latestUserMessage(messages: ChatMessage[]) {
+  return [...messages].reverse().find((message) => message.role === "user")?.content ?? "";
+}
+
+async function decideTutorAction(messages: ChatMessage[], settings: TutorProviderSettings) {
+  const raw = await createChatCompletion(
+    [
+      { role: "system", content: ORCHESTRATOR_PROMPT },
+      ...messages.map((message) => ({
+        role: message.role,
+        content: message.content,
+      })),
+    ],
+    settings,
+  );
+
+  return TutorDecisionSchema.parse(parseJsonObject(raw));
+}
+
+function toolStatus(
+  name: ToolStatusArtifact["name"],
+  status: ToolStatusArtifact["status"],
+  description: string,
+): ToolStatusArtifact {
+  return {
+    type: "tool_status",
+    name,
+    status,
+    description,
+  };
 }
 
 export async function runTutorAgent(
   messages: ChatMessage[],
   settings: TutorProviderSettings = {},
 ): Promise<TutorAgentResponse> {
-  const raw = await createChatCompletion([
-    { role: "system", content: SYSTEM_PROMPT },
-    ...messages.map((message) => ({
-      role: message.role,
-      content: message.content,
-    })),
-  ], settings);
+  const decision = await decideTutorAction(messages, settings);
 
-  try {
-    const parsed = TutorResponseSchema.parse(parseJsonObject(raw));
-    return parsed;
-  } catch {
+  if (!decision.should_visualize) {
     return {
-      label: "Tutor team",
-      reply: raw,
+      label: decision.label,
+      reply: decision.reply,
       artifacts: [],
-      suggestions: [],
+      suggestions: decision.suggestions,
     };
   }
+
+  const visualizationGoal = decision.visualization_goal?.trim() || latestUserMessage(messages);
+  const plan = await planVisualization(messages, visualizationGoal, settings);
+  const widget = await renderInteractiveWidget(messages, plan, visualizationGoal, settings);
+
+  return {
+    label: "Visualization agent",
+    reply: decision.reply,
+    artifacts: [plan, widget],
+    suggestions: decision.suggestions,
+  };
+}
+
+export async function runTutorAgentStream(
+  messages: ChatMessage[],
+  settings: TutorProviderSettings = {},
+  emit: (event: TutorStreamEvent) => void,
+): Promise<TutorAgentResponse> {
+  const decision = await decideTutorAction(messages, settings);
+
+  emit({
+    type: "assistant_message",
+    label: decision.should_visualize ? "Visualization agent" : decision.label,
+    reply: decision.reply,
+    suggestions: decision.suggestions,
+  });
+
+  if (!decision.should_visualize) {
+    const result: TutorAgentResponse = {
+      label: decision.label,
+      reply: decision.reply,
+      artifacts: [],
+      suggestions: decision.suggestions,
+    };
+    emit({ type: "final", result });
+    return result;
+  }
+
+  const artifacts: TutorAgentResponse["artifacts"] = [];
+  const visualizationGoal = decision.visualization_goal?.trim() || latestUserMessage(messages);
+
+  emit({
+    type: "tool_status",
+    artifact: toolStatus("plan_visualization", "executing", "Choosing the visual strategy and key teaching elements."),
+  });
+  const plan = await planVisualization(messages, visualizationGoal, settings);
+  artifacts.push(plan);
+  emit({
+    type: "tool_status",
+    artifact: toolStatus("plan_visualization", "complete", "Visualization plan is ready."),
+  });
+  emit({ type: "artifact", artifact: plan });
+
+  emit({
+    type: "tool_status",
+    artifact: toolStatus("render_interactive_widget", "executing", "Generating the interactive HTML widget."),
+  });
+  const widget = await streamInteractiveWidget(messages, plan, visualizationGoal, settings, (html) => {
+    emit({
+      type: "artifact_delta",
+      artifact: {
+        type: "html_widget",
+        title: plan.title,
+        description: `Interactive visualization for: ${visualizationGoal}`,
+        html,
+      },
+    });
+  });
+  artifacts.push(widget);
+  emit({
+    type: "tool_status",
+    artifact: toolStatus("render_interactive_widget", "complete", "Interactive widget is ready."),
+  });
+  emit({ type: "artifact", artifact: widget });
+
+  const result: TutorAgentResponse = {
+    label: "Visualization agent",
+    reply: decision.reply,
+    artifacts,
+    suggestions: decision.suggestions,
+  };
+  emit({ type: "final", result });
+  return result;
 }

@@ -1,4 +1,4 @@
-export function TutorSidebar() {
+export function TutorSidebar({ onNewChat }: { onNewChat?: () => void }) {
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -9,7 +9,9 @@ export function TutorSidebar() {
         </div>
       </div>
 
-      <button className="new-chat">New tutor chat</button>
+      <button className="new-chat" onClick={onNewChat}>
+        New tutor chat
+      </button>
 
       <section>
         <div className="section-title">Chats</div>

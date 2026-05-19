@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { runTutorAgent } from "@/lib/ai/tutor-agent";
+import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
+import type { TutorStreamEvent } from "@/lib/ai/types";
 
 const RequestSchema = z.object({
   messages: z.array(
@@ -16,6 +17,7 @@ const RequestSchema = z.object({
       model: z.string().optional(),
     })
     .optional(),
+  stream: z.boolean().optional(),
 });
 
 function userFacingError(error: unknown) {
@@ -33,12 +35,46 @@ function userFacingError(error: unknown) {
     return "The model provider connection was interrupted. Please retry in a moment, or switch to a faster model in Settings.";
   }
 
+  if (/openai_error/i.test(message)) {
+    return "The model provider rejected this request with a generic OpenAI-compatible error. Check the API key, account credits, and selected model in Settings.";
+  }
+
   return "The tutor backend could not complete this request. Please retry.";
 }
 
 export async function POST(request: Request) {
   try {
     const body = RequestSchema.parse(await request.json());
+    if (body.stream) {
+      const encoder = new TextEncoder();
+
+      const stream = new ReadableStream({
+        start(controller) {
+          const emit = (event: TutorStreamEvent) => {
+            controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
+          };
+
+          void runTutorAgentStream(body.messages, body.settings, emit)
+            .catch((error) => {
+              console.error("[tutor/chat:stream]", error);
+              emit({
+                type: "error",
+                reply: userFacingError(error),
+              });
+            })
+            .finally(() => controller.close());
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          "content-type": "application/x-ndjson; charset=utf-8",
+          "cache-control": "no-cache, no-transform",
+          connection: "keep-alive",
+        },
+      });
+    }
+
     const result = await runTutorAgent(body.messages, body.settings);
     return NextResponse.json(result);
   } catch (error) {

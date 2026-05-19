@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
 export const WidgetRendererProps = z.object({
@@ -11,91 +11,341 @@ export const WidgetRendererProps = z.object({
 
 export type WidgetRendererProps = z.infer<typeof WidgetRendererProps>;
 
+type WidgetRendererComponentProps = WidgetRendererProps & {
+  onSendPrompt?: (prompt: string) => void;
+};
+
 const THEME_CSS = `
 :root {
-  --color-background-primary: #ffffff;
+  --color-background-primary: #fffdf8;
   --color-background-secondary: #f7f3ea;
+  --color-background-tertiary: #efe8dc;
+  --color-background-info: #eaf4ff;
+  --color-background-success: #eaf7ee;
+  --color-background-warning: #fff4cf;
+  --color-background-danger: #fff0ea;
   --color-text-primary: #17130f;
   --color-text-secondary: #6f675f;
-  --color-border-tertiary: rgba(23, 19, 15, 0.15);
+  --color-text-tertiary: #9a9187;
+  --color-text-info: #245f9f;
+  --color-text-success: #2f6b43;
+  --color-text-warning: #7c560e;
+  --color-text-danger: #9d3d2d;
+  --color-border-primary: rgba(23, 19, 15, 0.36);
+  --color-border-secondary: rgba(23, 19, 15, 0.22);
+  --color-border-tertiary: rgba(23, 19, 15, 0.12);
   --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --border-radius-md: 999px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 14px;
+  --border-radius-xl: 18px;
+  --p: var(--color-text-primary);
+  --s: var(--color-text-secondary);
+  --t: var(--color-text-tertiary);
+  --bg2: var(--color-background-secondary);
+  --b: var(--color-border-tertiary);
 }
-* { box-sizing: border-box; }
-html, body { margin: 0; background: transparent; color: var(--color-text-primary); font-family: var(--font-sans); }
+`;
+
+const SVG_CLASSES_CSS = `
+svg text.t { font: 400 14px var(--font-sans); fill: var(--p); }
+svg text.ts { font: 400 12px var(--font-sans); fill: var(--s); }
+svg text.th { font: 700 14px var(--font-sans); fill: var(--p); }
+svg .box > rect, svg .box > circle, svg .box > ellipse { fill: var(--bg2); stroke: var(--b); }
+svg .node { cursor: pointer; }
+svg .node:hover { opacity: 0.86; }
+svg .arr { stroke: var(--s); stroke-width: 1.5; fill: none; }
+svg .leader { stroke: var(--t); stroke-width: 0.5; stroke-dasharray: 4 4; fill: none; }
+svg .c-blue > rect, svg .c-blue > circle, svg .c-blue > ellipse,
+svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #e7f1ff; stroke: #4a82c5; }
+svg .c-green > rect, svg .c-green > circle, svg .c-green > ellipse,
+svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #e5f5e9; stroke: #4b9a61; }
+svg .c-amber > rect, svg .c-amber > circle, svg .c-amber > ellipse,
+svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #fff2c4; stroke: #c09123; }
+svg .c-coral > rect, svg .c-coral > circle, svg .c-coral > ellipse,
+svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #ffede6; stroke: #d76e52; }
+svg .c-purple > rect, svg .c-purple > circle, svg .c-purple > ellipse,
+svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #f0eaff; stroke: #806bd6; }
+svg .c-gray > rect, svg .c-gray > circle, svg .c-gray > ellipse,
+svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #f1eee8; stroke: #8a8178; }
+`;
+
+const FORM_STYLES_CSS = `
+* { box-sizing: border-box; margin: 0; }
+html { background: transparent; }
+body {
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+#content { width: 100%; min-width: 0; overflow: hidden; }
+#content > * + * { margin-top: 12px; }
 button {
-  min-height: 38px;
-  padding: 0 16px;
+  font-family: inherit;
+  font-size: 14px;
+  min-height: 36px;
+  padding: 7px 14px;
+  border: 1px solid var(--color-border-tertiary);
   border-radius: 999px;
-  border: 1px solid #e7ded0;
-  background: #fffdf8;
+  background: var(--color-background-primary);
   color: var(--color-text-primary);
   cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
 }
-button:hover { background: #fff8ef; }
+button:hover { background: var(--color-background-secondary); border-color: var(--color-border-secondary); }
+button:active { transform: scale(0.98); }
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="search"],
+textarea,
+select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-border-primary);
+  box-shadow: 0 0 0 3px rgba(255, 229, 143, 0.38);
+}
+input[type="range"] { width: 100%; accent-color: #ef7358; }
+input[type="checkbox"], input[type="radio"] { accent-color: #ef7358; }
+a { color: var(--color-text-info); text-decoration: none; }
+a:hover { text-decoration: underline; }
 #content.initial-render > * { animation: fadeSlideIn .35s ease-out both; }
+.morph-enter { animation: fadeSlideIn .35s ease-out both; }
 @keyframes fadeSlideIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
 `;
 
 const BRIDGE_JS = `
+window.sendPrompt = function(text) {
+  window.parent.postMessage({ type: 'primoria-send-prompt', text: String(text || '') }, '*');
+};
+
+window.openLink = function(url) {
+  window.parent.postMessage({ type: 'primoria-open-link', url: String(url || '') }, '*');
+};
+
+document.addEventListener('click', function(event) {
+  var promptButton = event.target.closest('button[data-prompt], [role="button"][data-prompt]');
+  if (promptButton) {
+    event.preventDefault();
+    window.sendPrompt(promptButton.getAttribute('data-prompt'));
+    return;
+  }
+
+  var anchor = event.target.closest('a[href]');
+  if (anchor && /^https?:\\/\\//.test(anchor.href)) {
+    event.preventDefault();
+    window.openLink(anchor.href);
+  }
+});
+
+function scriptKey(text) {
+  var hash = 0;
+  for (var i = 0; i < text.length; i += 1) {
+    hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+  }
+  return 's' + Math.abs(hash);
+}
+
+function runScripts(content, scripts, index) {
+  if (index >= scripts.length) return;
+  var info = scripts[index];
+  var key = scriptKey(info.src || info.text || String(index));
+  if (content.getAttribute('data-exec-' + key)) {
+    runScripts(content, scripts, index + 1);
+    return;
+  }
+  content.setAttribute('data-exec-' + key, '1');
+
+  try {
+    var nextScript = document.createElement('script');
+    var type = info.type || '';
+    if (!type && info.text && /\\b(import\\s|export\\s|import\\()/.test(info.text)) {
+      type = 'module';
+    }
+    if (type) nextScript.type = type;
+    if (info.src) {
+      nextScript.src = info.src;
+      nextScript.onload = function() { runScripts(content, scripts, index + 1); };
+      nextScript.onerror = function() { runScripts(content, scripts, index + 1); };
+      content.appendChild(nextScript);
+    } else {
+      nextScript.textContent = info.text || '';
+      content.appendChild(nextScript);
+      runScripts(content, scripts, index + 1);
+    }
+  } catch (error) {
+    console.warn('[primoria-widget] script execution failed', error);
+    runScripts(content, scripts, index + 1);
+  }
+}
+
+window.addEventListener('message', function(event) {
+  if (event.source !== window.parent) return;
+  if (!event.data || event.data.type !== 'primoria-update-content') return;
+
+  var content = document.getElementById('content');
+  if (!content) return;
+
+  var rawHtml = String(event.data.html || '');
+  var tmp = document.createElement('div');
+  tmp.innerHTML = rawHtml;
+  var scripts = [];
+  var scriptOpens = (rawHtml.match(/<script[\\s>]/gi) || []).length;
+  var scriptCloses = (rawHtml.match(/<\\/script>/gi) || []).length;
+  var allScriptsClosed = scriptOpens <= scriptCloses;
+  tmp.querySelectorAll('script').forEach(function(script) {
+    scripts.push({ src: script.src, text: script.textContent, type: script.type || '' });
+    script.remove();
+  });
+
+  var firstRender = !content.hasAttribute('data-has-content');
+  if (firstRender) {
+    content.classList.add('initial-render');
+    content.setAttribute('data-has-content', '1');
+    setTimeout(function() { content.classList.remove('initial-render'); }, 700);
+  }
+
+  content.innerHTML = tmp.innerHTML;
+  if (allScriptsClosed) {
+    runScripts(content, scripts, 0);
+  }
+  reportHeight();
+});
+
 function reportHeight() {
   var content = document.getElementById('content');
   if (!content) return;
-  window.parent.postMessage({ type: 'primoria-widget-resize', height: content.scrollHeight }, '*');
+  var rectHeight = Math.ceil(content.getBoundingClientRect().height);
+  var height = Math.max(content.scrollHeight, rectHeight, 80);
+  window.parent.postMessage({ type: 'primoria-widget-resize', height: height }, '*');
 }
-new ResizeObserver(reportHeight).observe(document.getElementById('content'));
+
+var target = document.getElementById('content') || document.body;
+new ResizeObserver(reportHeight).observe(target);
 window.addEventListener('load', reportHeight);
-document.addEventListener('click', function(event) {
-  var button = event.target.closest('button[data-prompt]');
-  if (!button) return;
-  window.parent.postMessage({ type: 'primoria-send-prompt', text: button.getAttribute('data-prompt') }, '*');
-});
+var resizeInterval = setInterval(reportHeight, 200);
+setTimeout(function() { clearInterval(resizeInterval); }, 12000);
 `;
 
-function assembleDocument(html: string) {
+function assembleShell() {
   return `<!doctype html>
 <html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>${THEME_CSS}</style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://esm.sh/three",
+      "three/": "https://esm.sh/three/",
+      "gsap": "https://esm.sh/gsap",
+      "gsap/": "https://esm.sh/gsap/",
+      "d3": "https://esm.sh/d3",
+      "d3/": "https://esm.sh/d3/",
+      "chart.js": "https://esm.sh/chart.js",
+      "chart.js/": "https://esm.sh/chart.js/",
+      "chart.js/auto": "https://esm.sh/chart.js/auto"
+    }
+  }
+  </script>
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'unsafe-inline' 'unsafe-eval' https://esm.sh https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;
+    style-src 'unsafe-inline';
+    img-src 'self' data: blob:;
+    font-src 'self' data:;
+    connect-src 'self' https://esm.sh https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;
+  " />
+  <style>
+    ${THEME_CSS}
+    ${SVG_CLASSES_CSS}
+    ${FORM_STYLES_CSS}
+  </style>
 </head>
 <body>
-  <div id="content" class="initial-render">${html}</div>
+  <div id="content"></div>
   <script>${BRIDGE_JS}</script>
 </body>
 </html>`;
 }
 
-export function WidgetRenderer({ html, title }: WidgetRendererProps) {
+export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComponentProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [height, setHeight] = useState(120);
-  const srcDoc = useMemo(() => assembleDocument(html), [html]);
+  const shellReadyRef = useRef(false);
+  const committedHtmlRef = useRef("");
+  const [height, setHeight] = useState(180);
+  const [loaded, setLoaded] = useState(false);
+
+  const handleMessage = useCallback(
+    (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow) return;
+
+      if (event.data?.type === "primoria-widget-resize" && typeof event.data.height === "number") {
+        setHeight(Math.max(90, Math.min(event.data.height, 4000)));
+        return;
+      }
+
+      if (event.data?.type === "primoria-send-prompt" && typeof event.data.text === "string") {
+        const prompt = event.data.text.trim();
+        if (prompt) onSendPrompt?.(prompt);
+        return;
+      }
+
+      if (event.data?.type === "primoria-open-link" && typeof event.data.url === "string") {
+        window.open(event.data.url, "_blank", "noopener,noreferrer");
+      }
+    },
+    [onSendPrompt],
+  );
 
   useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.source !== iframeRef.current?.contentWindow) return;
-      if (event.data?.type === "primoria-widget-resize" && typeof event.data.height === "number") {
-        setHeight(Math.max(80, Math.min(event.data.height, 2400)));
-      }
-    };
-
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [handleMessage]);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+
+    if (!shellReadyRef.current) {
+      shellReadyRef.current = true;
+      iframe.srcdoc = assembleShell();
+      return;
+    }
+
+    if (!loaded || !iframe.contentWindow || html === committedHtmlRef.current) return;
+    committedHtmlRef.current = html;
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html }, "*");
+  }, [html, loaded]);
 
   return (
     <iframe
       ref={iframeRef}
       className="widget-frame"
       title={title}
-      sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-      srcDoc={srcDoc}
+      sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      onLoad={() => setLoaded(true)}
       style={{ height }}
     />
   );
