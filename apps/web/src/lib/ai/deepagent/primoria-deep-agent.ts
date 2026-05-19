@@ -181,7 +181,7 @@ function createTutorTools() {
 const SYSTEM_PROMPT = `You are Primoria, an AI tutor.
 
 For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, you MUST:
-1. Call manage_todos first with 3-5 todos that are SPECIFIC to the learner's topic. Each title must mention a concrete noun from the question (algorithm name, concept, physics law, etc.). Bad: "确定需求 / 规划组件 / 构建演示 / 验证效果". Good (for 开普勒第二定律): "🌌 抓住等面积扫掠的直觉 / 🟠 用椭圆+扇区设计互动 / 🛠️ 让滑块控制离心率 / 🔍 检查近日点速度". Set first todo in_progress, rest pending.
+1. Call manage_todos first with 3-5 todos that are SPECIFIC to the learner's topic. Each title must mention a concrete noun from the question (algorithm name, concept, physics law, etc.). Bad: "确定需求 / 规划组件 / 构建演示 / 验证效果". Good (for 开普勒第二定律): "🌌 抓住等面积扫掠的直觉 / 🟠 用椭圆+扇区设计互动 / 🛠️ 让滑块控制离心率 / 🔍 检查近日点速度". Use the emoji field, NOT a leading emoji inside title. Set first todo in_progress, rest pending.
 2. Call plan_visualization with title, approach, technology, key_elements.
 3. Call manage_todos again to flip the planning todo to completed and the next one to in_progress.
 4. Call render_interactive_widget with title, description, and a complete self-contained HTML fragment in the html argument.
@@ -192,7 +192,9 @@ CRITICAL OUTPUT RULES:
 - NEVER paste HTML / CSS / JS code into your text reply. Code only belongs inside the render_interactive_widget html argument.
 - NEVER wrap output in markdown code blocks (no \`\`\`html, no \`\`\`).
 
-For plain questions, answer in 1-2 sentences without tools.`;
+For greetings ("hi", "你好"), thanks, casual chat, or anything that is clearly NOT a learning question, just reply with one short sentence and do NOT call any tools.
+
+For plain factual / conceptual questions that do not require a visualization, answer in 1-2 sentences without tools.`;
 
 let cachedAgent: PrimoriaAgent | null = null;
 let cachedKey = "";
@@ -357,12 +359,15 @@ export async function invokePrimoriaDeepAgentStream(
   function emitTodosFromState(rawTodos: unknown) {
     if (!Array.isArray(rawTodos) || rawTodos.length === 0) return;
     const items: TodoListArtifact["items"] = [];
+    const emojiPrefix = /^\s*[\p{Extended_Pictographic}\p{Emoji_Component}]+\s*/u;
     for (const todo of rawTodos as AgentTodo[]) {
       if (!todo || typeof todo.title !== "string") continue;
       const mappedStatus =
         todo.status === "completed" ? "done" : todo.status === "in_progress" ? "in_progress" : "pending";
+      const cleanedTitle = todo.title.replace(emojiPrefix, "").trim() || todo.title;
+      const emoji = todo.emoji?.trim();
       items.push({
-        title: todo.emoji ? `${todo.emoji} ${todo.title}` : todo.title,
+        title: emoji ? `${emoji} ${cleanedTitle}` : todo.title,
         status: mappedStatus,
       });
     }
@@ -482,11 +487,6 @@ export async function invokePrimoriaDeepAgentStream(
       ) {
         const update = (rawOutput as { update?: { todos?: unknown } }).update;
         emitTodosFromState(update?.todos);
-      }
-    } else if (ev.event === "on_chain_end") {
-      const out = ev.data?.output;
-      if (out && typeof out === "object" && !Array.isArray(out) && "todos" in out) {
-        emitTodosFromState((out as { todos?: unknown }).todos);
       }
     }
   }

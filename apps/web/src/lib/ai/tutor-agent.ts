@@ -131,11 +131,8 @@ export async function runTutorAgentStream(
   }
 
   if (!resolvedWidget) {
-    const hasTodos = artifacts.some((artifact) => artifact.type === "todo_list");
-    if (hasTodos) {
-      emit({ type: "artifact_delta", artifact: { type: "todo_list", items: [] } });
-      artifacts = artifacts.filter((artifact) => artifact.type !== "todo_list");
-    }
+    emit({ type: "artifact_delta", artifact: { type: "todo_list", items: [] } });
+    artifacts = artifacts.filter((artifact) => artifact.type !== "todo_list");
   }
 
   const response: TutorAgentResponse = {
