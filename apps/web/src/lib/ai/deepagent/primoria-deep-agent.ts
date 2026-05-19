@@ -110,7 +110,8 @@ function createTutorTools() {
     },
     {
       name: "render_interactive_widget",
-      description: "Render an interactive HTML/CSS/JS learning widget. MUST be used for any visualization request.",
+      description:
+        "Render an interactive HTML/CSS/JS learning widget. MUST be used for any visualization request. Use warm light styling: cream/off-white backgrounds, soft borders, rounded corners, no black, no neon, no emoji.",
       schema: z.object({
         title: z.string(),
         description: z.string(),

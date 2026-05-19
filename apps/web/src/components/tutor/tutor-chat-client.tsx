@@ -28,26 +28,20 @@ function renderArtifactBlocks(
   artifacts: TutorAgentResponse["artifacts"],
   onSendPrompt: (prompt: string) => void,
 ): ReactNode[] {
+  const statuses = artifacts.filter(
+    (artifact): artifact is ToolStatusArtifact => artifact.type === "tool_status",
+  );
+  const others = artifacts.filter((artifact) => artifact.type !== "tool_status");
+
   const blocks: ReactNode[] = [];
-  let group: ToolStatusArtifact[] = [];
-  let groupIndex = 0;
-
-  const flush = () => {
-    if (group.length === 0) return;
-    blocks.push(<ActivityList key={`${messageId}-activity-${groupIndex}`} steps={group} />);
-    group = [];
-    groupIndex += 1;
-  };
-
-  artifacts.forEach((artifact, index) => {
-    if (artifact.type === "tool_status") {
-      group.push(artifact);
-      return;
-    }
-    flush();
-    blocks.push(<ToolCard key={`${messageId}-${index}`} artifact={artifact} onSendPrompt={onSendPrompt} />);
+  if (statuses.length > 0) {
+    blocks.push(<ActivityList key={`${messageId}-activity`} steps={statuses} />);
+  }
+  others.forEach((artifact, index) => {
+    blocks.push(
+      <ToolCard key={`${messageId}-card-${index}`} artifact={artifact} onSendPrompt={onSendPrompt} />,
+    );
   });
-  flush();
 
   return blocks;
 }
