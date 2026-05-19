@@ -5,14 +5,12 @@ import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/r
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import type { TodoListArtifact, VisualizationPlanArtifact } from "@/lib/ai/types";
 
-const ManageTodosParams = z.object({
+const WriteTodosParams = z.object({
   todos: z.array(
     z.object({
-      id: z.string(),
-      title: z.string(),
-      description: z.string().optional(),
-      emoji: z.string().optional(),
-      status: z.enum(["pending", "in_progress", "completed"]),
+      content: z.string().optional(),
+      title: z.string().optional(),
+      status: z.enum(["pending", "in_progress", "completed"]).optional(),
     }),
   ),
 });
@@ -30,15 +28,17 @@ const RenderWidgetParams = z.object({
   html: z.string(),
 });
 
-function TodoListCard({ todos }: z.infer<typeof ManageTodosParams>) {
+function TodoListCard({ todos }: z.infer<typeof WriteTodosParams>) {
   const emojiPrefix = /^\s*\p{Extended_Pictographic}+\s*/u;
   const items: TodoListArtifact["items"] = todos.map((todo) => {
+    const rawStatus = todo.status ?? "pending";
     const status =
-      todo.status === "completed" ? "done" : todo.status === "in_progress" ? "in_progress" : "pending";
-    const stripped = todo.title.replace(emojiPrefix, "").trim() || todo.title;
-    const display = todo.emoji ? `${todo.emoji} ${stripped}` : todo.title;
-    return { title: display, status };
+      rawStatus === "completed" ? "done" : rawStatus === "in_progress" ? "in_progress" : "pending";
+    const raw = (todo.title ?? todo.content ?? "").trim();
+    const stripped = raw.replace(emojiPrefix, "").trim() || raw;
+    return { title: stripped, status };
   });
+  if (items.length === 0) return null;
   return (
     <div className="message-row tool">
       <div className="tool-card todo-card">
@@ -126,8 +126,8 @@ export function usePrimoriaGenerativeUI() {
   });
 
   useRenderTool({
-    name: "manage_todos",
-    parameters: ManageTodosParams,
+    name: "write_todos",
+    parameters: WriteTodosParams,
     render: ({ parameters }) => <TodoListCard todos={parameters?.todos ?? []} />,
   });
 

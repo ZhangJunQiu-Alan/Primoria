@@ -3,13 +3,14 @@ import {
   ExperimentalEmptyAdapter,
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
-import { LangGraphHttpAgent } from "@copilotkit/runtime/langgraph";
+import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 
 const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";
 
-const primoriaAgent = new LangGraphHttpAgent({
-  url: deploymentUrl,
+const primoriaAgent = new LangGraphAgent({
+  deploymentUrl,
+  graphId: "primoria_tutor",
 });
 
 export const POST = async (req: NextRequest) => {

@@ -1,44 +1,16 @@
 import { tool } from "@langchain/core/tools";
-import { Annotation, Command, MemorySaver, MessagesAnnotation } from "@langchain/langgraph";
-import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { MemorySaver } from "@langchain/langgraph";
 import { ChatOpenAI } from "@langchain/openai";
+import { createDeepAgent, FilesystemBackend } from "deepagents";
 import { z } from "zod";
 
-const TodoSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  description: z.string().optional(),
-  emoji: z.string().optional(),
-  status: z.enum(["pending", "in_progress", "completed"]),
-});
-
-const AgentStateAnnotation = Annotation.Root({
-  ...MessagesAnnotation.spec,
-  todos: Annotation({
-    reducer: (_prev, next) => next,
-    default: () => [],
-  }),
-});
-
-const manageTodosTool = tool(
-  async ({ todos }, config) => {
-    const toolCallId = config?.toolCall?.id ?? "manage_todos";
-    return new Command({
-      update: {
-        todos,
-        messages: [{ role: "tool", content: "Todos updated.", tool_call_id: toolCallId }],
-      },
-    });
-  },
-  {
-    name: "manage_todos",
-    description:
-      "Lay out or update the visible plan of steps the tutor will follow. Call this FIRST for any non-trivial visualization request, then call it again to mark steps completed.",
-    schema: z.object({
-      todos: z.array(TodoSchema).min(1).max(6),
-    }),
-  },
-);
+// plan_visualization and render_interactive_widget are PASSIVE — they
+// just take the args the model produces and surface them as artifacts
+// so the frontend can render them. deepagents also injects:
+//   - write_todos: plan card
+//   - task: subagent delegation
+//   - filesystem tools: skill markdown read access
+// (no need to define those here)
 
 const planVisualizationTool = tool(
   async ({ title, approach, technology, key_elements }) => {
@@ -84,14 +56,35 @@ const renderInteractiveWidgetTool = tool(
   },
 );
 
-const SYSTEM_PROMPT = `You are Primoria, an AI tutor.
+const subagents = [
+  {
+    name: "concept-agent",
+    description: "Explains concepts with clear intuition, examples, and Socratic questions.",
+    systemPrompt:
+      "You are Primoria's Concept agent. Explain with intuition first, then concise formal detail. Prefer questions that reveal learner understanding.",
+  },
+  {
+    name: "visualization-agent",
+    description: "Plans and renders interactive educational widgets using plan_visualization and render_interactive_widget.",
+    systemPrompt:
+      "You are Primoria's Visualization agent. For visual / simulated / step-by-step requests, call plan_visualization, then render_interactive_widget. Always write the complete HTML directly in the render_interactive_widget html argument.",
+  },
+];
+
+const SYSTEM_PROMPT = `You are Primoria, an AI tutor powered by deepagents.
+
+You have access to:
+- write_todos: lay out a short plan visible to the learner (call it first when a request needs multiple steps)
+- task: delegate a focused job to a subagent (concept-agent or visualization-agent)
+- plan_visualization / render_interactive_widget: visualization tools
+- A filesystem with skill documents you can read for guidance
 
 For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, you MUST:
-1. Call manage_todos first with 3-5 todos that are SPECIFIC to the learner's topic. Each title must mention a concrete noun from the question (algorithm name, concept, physics law, etc.). Bad: "确定需求 / 规划组件 / 构建演示 / 验证效果". Good (for 开普勒第二定律): "🌌 抓住等面积扫掠的直觉 / 🟠 用椭圆+扇区设计互动 / 🛠️ 让滑块控制离心率 / 🔍 检查近日点速度". Use the emoji field, NOT a leading emoji inside title. Set first todo in_progress, rest pending.
+1. Call write_todos with 3-5 todos SPECIFIC to the topic. Each title mentions a concrete noun from the question (algorithm name, concept, physics law). Bad: generic placeholders like "确定需求 / 规划组件 / 构建演示 / 验证效果". Good (for 开普勒第二定律): "🌌 抓住等面积扫掠的直觉 / 🟠 用椭圆+扇区设计互动 / 🛠️ 让滑块控制离心率 / 🔍 检查近日点速度".
 2. Call plan_visualization with title, approach, technology, key_elements.
-3. Call manage_todos again to flip the planning todo to completed and the next one to in_progress.
+3. Call write_todos again to mark the planning todo completed and flip the next one to in_progress.
 4. Call render_interactive_widget with title, description, and a complete self-contained HTML fragment in the html argument.
-5. Call manage_todos one more time to mark all completed.
+5. Call write_todos one more time to mark all completed.
 
 CRITICAL OUTPUT RULES:
 - If you called plan_visualization, you MUST also call render_interactive_widget in the same turn. Never stop after planning.
@@ -120,10 +113,15 @@ function createModel() {
 
 const checkpointer = new MemorySaver();
 
-export const graph = createReactAgent({
-  llm: createModel(),
-  tools: [manageTodosTool, planVisualizationTool, renderInteractiveWidgetTool],
-  prompt: SYSTEM_PROMPT,
-  stateSchema: AgentStateAnnotation,
+export const graph = createDeepAgent({
+  name: "primoria-tutor",
+  model: createModel(),
+  tools: [planVisualizationTool, renderInteractiveWidgetTool],
+  systemPrompt: SYSTEM_PROMPT,
+  subagents,
   checkpointer,
+  backend: new FilesystemBackend({
+    rootDir: process.cwd(),
+    virtualMode: true,
+  }),
 });
