@@ -1188,6 +1188,17 @@ button {
   line-height: 1.5;
 }
 
+.history-empty {
+  margin: 6px 0 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(23, 19, 15, 0.03);
+  font-size: 13px;
+  color: var(--quiet);
+  text-align: center;
+  line-height: 1.5;
+}
+
 /* ---------------- Topbar icon pill ---------------- */
 
 .icon-pill {
@@ -1305,4 +1316,85 @@ button {
   .hero-canvas {
     padding: 32px 16px 60px;
   }
+}
+
+/* ---------------- Hero explainer cards ---------------- */
+
+.hero-explainer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.hero-explainer-card {
+  padding: 14px 16px;
+  border: 1px solid rgba(23, 19, 15, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 253, 248, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero-explainer-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-explainer-head strong {
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.hero-explainer-icon {
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #fffaf2;
+  border: 1px solid rgba(23, 19, 15, 0.08);
+  color: var(--coral);
+}
+
+.hero-explainer-card p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--quiet);
+}
+
+/* ---------------- Plan card details ---------------- */
+
+.plan-card[open] .plan-chevron {
+  transform: rotate(180deg);
+}
+
+.plan-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plan-summary::-webkit-details-marker {
+  display: none;
+}
+
+.plan-title-text {
+  flex: 1;
+}
+
+.plan-chevron {
+  color: var(--quiet);
+  font-size: 12px;
+  transition: transform 0.15s ease;
+}
+
+.plan-card:not([open]) .visualizer {
+  display: none;
 }

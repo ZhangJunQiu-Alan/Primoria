@@ -4,9 +4,11 @@ import { WidgetRenderer } from "./widget-renderer";
 export function ToolCard({
   artifact,
   onSendPrompt,
+  collapsed = false,
 }: {
   artifact: TutorArtifact;
   onSendPrompt?: (prompt: string) => void;
+  collapsed?: boolean;
 }) {
   if (artifact.type === "code") {
     return (
@@ -19,11 +21,14 @@ export function ToolCard({
   if (artifact.type === "visualization_plan") {
     return (
       <div className="message-row tool">
-        <div className="tool-card plan-card">
-          <div className="tool-title">
+        <details className="tool-card plan-card" open={!collapsed}>
+          <summary className="tool-title plan-summary">
             <span className="tool-dot" />
-            <span>plan_visualization · complete</span>
-          </div>
+            <span className="plan-title-text">
+              {collapsed ? `Plan · ${artifact.technology}` : "plan_visualization · complete"}
+            </span>
+            <span className="plan-chevron" aria-hidden="true">▾</span>
+          </summary>
           <div className="visualizer">
             <strong>{artifact.title}</strong>
             <span className="tool-note">{artifact.technology}</span>
@@ -34,7 +39,7 @@ export function ToolCard({
               ))}
             </div>
           </div>
-        </div>
+        </details>
       </div>
     );
   }

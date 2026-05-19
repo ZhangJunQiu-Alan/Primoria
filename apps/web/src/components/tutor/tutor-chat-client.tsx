@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import type { ChatMessage, ToolStatusArtifact, TutorAgentResponse, TutorProviderSettings, TutorStreamEvent } from "@/lib/ai/types";
 import { TutorComposer } from "./composer";
+import { HeroExplainerCards } from "./hero-explainer-cards";
 import { AssistantMessage, UserMessage } from "./message";
 
 function ActivityList({ steps }: { steps: ToolStatusArtifact[] }) {
@@ -32,14 +33,21 @@ function renderArtifactBlocks(
     (artifact): artifact is ToolStatusArtifact => artifact.type === "tool_status",
   );
   const others = artifacts.filter((artifact) => artifact.type !== "tool_status");
+  const widgetReady = others.some((artifact) => artifact.type === "html_widget");
 
   const blocks: ReactNode[] = [];
   if (statuses.length > 0) {
     blocks.push(<ActivityList key={`${messageId}-activity`} steps={statuses} />);
   }
   others.forEach((artifact, index) => {
+    const collapsed = artifact.type === "visualization_plan" && widgetReady;
     blocks.push(
-      <ToolCard key={`${messageId}-card-${index}`} artifact={artifact} onSendPrompt={onSendPrompt} />,
+      <ToolCard
+        key={`${messageId}-card-${index}`}
+        artifact={artifact}
+        onSendPrompt={onSendPrompt}
+        collapsed={collapsed}
+      />,
     );
   });
 
@@ -343,6 +351,7 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
               </button>
             ))}
           </div>
+          <HeroExplainerCards />
         </div>
       </section>
     );

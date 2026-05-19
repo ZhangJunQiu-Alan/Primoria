@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
+import { IDIOMORPH_JS } from "./idiomorph-inline";
 
 export const WidgetRendererProps = z.object({
   title: z.string(),
@@ -226,7 +227,16 @@ window.addEventListener('message', function(event) {
     setTimeout(function() { content.classList.remove('initial-render'); }, 700);
   }
 
-  content.innerHTML = tmp.innerHTML;
+  if (window.Idiomorph && typeof window.Idiomorph.morph === 'function' && !firstRender) {
+    try {
+      window.Idiomorph.morph(content, tmp.innerHTML, { morphStyle: 'innerHTML', ignoreActive: true, ignoreActiveValue: true });
+    } catch (err) {
+      console.warn('[primoria-widget] idiomorph failed, falling back', err);
+      content.innerHTML = tmp.innerHTML;
+    }
+  } else {
+    content.innerHTML = tmp.innerHTML;
+  }
   if (allScriptsClosed) {
     runScripts(content, scripts, 0);
   }
@@ -285,6 +295,7 @@ function assembleShell() {
 </head>
 <body>
   <div id="content"></div>
+  <script>${IDIOMORPH_JS}</script>
   <script>${BRIDGE_JS}</script>
 </body>
 </html>`;
