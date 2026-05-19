@@ -1,4 +1,5 @@
 import { tool } from "@langchain/core/tools";
+import { Annotation, Command, MessagesAnnotation } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
@@ -6,6 +7,7 @@ import { z } from "zod";
 import type {
   ChatMessage,
   HtmlWidgetArtifact,
+  TodoListArtifact,
   ToolStatusArtifact,
   TutorAgentResponse,
   TutorArtifact,
@@ -15,6 +17,22 @@ import type {
 } from "../types";
 
 type PrimoriaAgent = ReturnType<typeof createReactAgent>;
+
+type AgentTodo = {
+  id: string;
+  title: string;
+  description?: string;
+  emoji?: string;
+  status: "pending" | "in_progress" | "completed";
+};
+
+const AgentStateAnnotation = Annotation.Root({
+  ...MessagesAnnotation.spec,
+  todos: Annotation<AgentTodo[]>({
+    reducer: (_, next) => next,
+    default: () => [],
+  }),
+});
 
 const VisualizationPlanSchema = z.object({
   type: z.literal("visualization_plan"),
@@ -79,6 +97,39 @@ function parseDeepArtifact(value: unknown): TutorArtifact | undefined {
 }
 
 function createTutorTools() {
+  const manageTodosTool = tool(
+    async ({ todos }, config) => {
+      const toolCallId = (config as { toolCall?: { id?: string } })?.toolCall?.id ?? "manage_todos";
+      return new Command({
+        update: {
+          todos,
+          messages: [
+            { role: "tool", content: "Todos updated.", tool_call_id: toolCallId },
+          ],
+        },
+      });
+    },
+    {
+      name: "manage_todos",
+      description:
+        "Lay out or update the visible plan of steps the tutor will follow. Call this FIRST for any non-trivial request, then call it again to mark steps completed.",
+      schema: z.object({
+        todos: z
+          .array(
+            z.object({
+              id: z.string(),
+              title: z.string(),
+              description: z.string().optional(),
+              emoji: z.string().optional(),
+              status: z.enum(["pending", "in_progress", "completed"]),
+            }),
+          )
+          .min(1)
+          .max(6),
+      }),
+    },
+  );
+
   const planVisualizationTool = tool(
     async ({ title, approach, technology, key_elements }) => {
       const plan: VisualizationPlanArtifact = {
@@ -124,14 +175,17 @@ function createTutorTools() {
     },
   );
 
-  return [planVisualizationTool, renderInteractiveWidgetTool] as const;
+  return [manageTodosTool, planVisualizationTool, renderInteractiveWidgetTool] as const;
 }
 
 const SYSTEM_PROMPT = `You are Primoria, an AI tutor.
 
 For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, you MUST:
-1. Call plan_visualization with title, approach, technology, key_elements.
-2. Call render_interactive_widget with title, description, and a complete self-contained HTML fragment in the html argument.
+1. Call manage_todos first with 3-5 short concrete todos for the upcoming work (set the first to in_progress, the rest pending). Each todo has an id, a short title, optional 1-emoji, status.
+2. Call plan_visualization with title, approach, technology, key_elements.
+3. Call manage_todos again to mark the planning todo completed and the next todo in_progress.
+4. Call render_interactive_widget with title, description, and a complete self-contained HTML fragment in the html argument.
+5. Call manage_todos one more time to mark all completed.
 
 Do NOT respond with text alone for visualization requests. The tool calls are required.
 
@@ -150,6 +204,7 @@ export function getPrimoriaDeepAgent(settings: TutorProviderSettings = {}) {
     llm: createModel(settings),
     tools: createTutorTools() as never,
     prompt: SYSTEM_PROMPT,
+    stateSchema: AgentStateAnnotation,
     checkpointer,
   });
   cachedKey = key;
@@ -157,9 +212,17 @@ export function getPrimoriaDeepAgent(settings: TutorProviderSettings = {}) {
   return cachedAgent;
 }
 
-const VISIBLE_TOOLS = new Set(["plan_visualization", "render_interactive_widget"]);
+const VISIBLE_TOOLS = new Set([
+  "manage_todos",
+  "plan_visualization",
+  "render_interactive_widget",
+]);
 
 const TOOL_LABELS: Record<string, { executing: string; complete: string }> = {
+  manage_todos: {
+    executing: "Updating the plan steps.",
+    complete: "Plan updated.",
+  },
   plan_visualization: {
     executing: "Planning the visualization.",
     complete: "Visualization plan is ready.",
@@ -286,6 +349,27 @@ export async function invokePrimoriaDeepAgentStream(
   const executingEmitted = new Set<string>();
   const finalArtifacts: TutorArtifact[] = [];
   let replyBuffer = "";
+  let lastTodosKey = "";
+
+  function emitTodosFromState(rawTodos: unknown) {
+    if (!Array.isArray(rawTodos) || rawTodos.length === 0) return;
+    const items: TodoListArtifact["items"] = [];
+    for (const todo of rawTodos as AgentTodo[]) {
+      if (!todo || typeof todo.title !== "string") continue;
+      const mappedStatus =
+        todo.status === "completed" ? "done" : todo.status === "in_progress" ? "in_progress" : "pending";
+      items.push({
+        title: todo.emoji ? `${todo.emoji} ${todo.title}` : todo.title,
+        status: mappedStatus,
+      });
+    }
+    if (items.length === 0) return;
+    const todoArtifact: TodoListArtifact = { type: "todo_list", items };
+    const key = JSON.stringify(todoArtifact);
+    if (key === lastTodosKey) return;
+    lastTodosKey = key;
+    emit({ type: "artifact_delta", artifact: todoArtifact });
+  }
 
   function pushArtifact(artifact: TutorArtifact) {
     const key = JSON.stringify(artifact);
@@ -386,6 +470,19 @@ export async function invokePrimoriaDeepAgentStream(
           : rawOutput;
       const artifact = parseDeepArtifact(candidate);
       if (artifact) pushArtifact(artifact);
+
+      if (
+        name === "manage_todos" &&
+        rawOutput &&
+        typeof rawOutput === "object" &&
+        "update" in rawOutput
+      ) {
+        const update = (rawOutput as { update?: { todos?: unknown } }).update;
+        emitTodosFromState(update?.todos);
+      }
+    } else if (ev.event === "on_chain_end") {
+      const out = ev.data?.output as { todos?: unknown } | undefined;
+      if (out && "todos" in out) emitTodosFromState(out.todos);
     }
   }
 
