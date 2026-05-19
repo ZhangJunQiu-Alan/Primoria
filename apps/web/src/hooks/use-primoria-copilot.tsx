@@ -128,7 +128,7 @@ export function usePrimoriaGenerativeUI() {
   useRenderTool({
     name: "write_todos",
     parameters: WriteTodosParams,
-    render: ({ parameters }) => <TodoListCard todos={parameters?.todos ?? []} />,
+    render: () => null,
   });
 
   useDefaultRenderTool({
