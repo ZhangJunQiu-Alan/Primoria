@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import type { TutorProviderSettings } from "@/lib/ai/types";
+import { ChatHistoryPopup } from "./history-popup";
+import { TutorNavRail } from "./nav-rail";
 import { SettingsModal } from "./settings-modal";
-import { TutorSidebar } from "./sidebar";
 import { TutorChatClient } from "./tutor-chat-client";
 import { TutorTopbar } from "./topbar";
 
@@ -12,6 +13,7 @@ const STORAGE_KEY = "primoria:tutor-provider-settings";
 export function TutorWorkspaceClient() {
   const [settings, setSettings] = useState<TutorProviderSettings>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [chatResetKey, setChatResetKey] = useState(0);
 
   useEffect(() => {
@@ -31,15 +33,23 @@ export function TutorWorkspaceClient() {
 
   return (
     <>
-      <TutorSidebar onNewChat={() => setChatResetKey((key) => key + 1)} />
+      <TutorNavRail />
       <section className="workspace">
-        <TutorTopbar onOpenSettings={() => setSettingsOpen(true)} />
+        <TutorTopbar
+          onOpenSettings={() => setSettingsOpen(true)}
+          onOpenHistory={() => setHistoryOpen(true)}
+        />
         <TutorChatClient key={chatResetKey} settings={settings} resetKey={chatResetKey} />
         <SettingsModal
           open={settingsOpen}
           settings={settings}
           onClose={() => setSettingsOpen(false)}
           onSave={saveSettings}
+        />
+        <ChatHistoryPopup
+          open={historyOpen}
+          onClose={() => setHistoryOpen(false)}
+          onNewChat={() => setChatResetKey((key) => key + 1)}
         />
       </section>
     </>

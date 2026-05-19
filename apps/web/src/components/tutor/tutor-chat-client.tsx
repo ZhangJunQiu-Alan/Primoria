@@ -62,16 +62,7 @@ type UiMessage =
       retryContent?: string;
     };
 
-const initialMessages: UiMessage[] = [
-  {
-    id: "welcome",
-    role: "assistant",
-    label: "Tutor team",
-    content:
-      "Hi. I’m your Primoria tutor. What would you like to learn today? I can explain concepts, walk through problems step by step, or create interactive visualizations.",
-    artifacts: [],
-  },
-];
+const initialMessages: UiMessage[] = [];
 
 const CHAT_STORAGE_KEY = "primoria:tutor-chat-messages";
 
@@ -116,7 +107,6 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
   const apiMessages = useMemo<ChatMessage[]>(
     () =>
       messages
-        .filter((message) => message.id !== "welcome")
         .filter((message) => message.role === "user" || !message.isError)
         .map((message) => ({
           role: message.role,
@@ -301,6 +291,61 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
     } finally {
       setIsLoading(false);
     }
+  }
+
+  const hasUserMessages = messages.some((message) => message.role === "user");
+
+  const suggestions = [
+    {
+      label: "Visualize",
+      hint: "Make an interactive widget",
+      prompt: "做一个二分查找的互动可视化，要有数组和步骤滑块",
+    },
+    {
+      label: "Explain",
+      hint: "Walk through a concept",
+      prompt: "用一段直觉解释什么是熵，再举一个生活中的例子",
+    },
+    {
+      label: "Step through",
+      hint: "Solve it together",
+      prompt: "带我一步步解开普勒第二定律的几何直觉",
+    },
+    {
+      label: "Code",
+      hint: "Read or refine code",
+      prompt: "帮我把一段 React 组件改成 useMemo 优化版本，先解释原因",
+    },
+  ];
+
+  if (!hasUserMessages) {
+    return (
+      <section className="hero-canvas">
+        <div className="hero-stack">
+          <h1 className="hero-title">
+            <span className="hero-mark" aria-hidden="true">✶</span>
+            What do you want to learn today?
+          </h1>
+          <div className="hero-composer">
+            <TutorComposer onSend={sendMessage} disabled={isLoading} />
+          </div>
+          <div className="hero-suggestions" aria-label="Quick prompts">
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion.label}
+                type="button"
+                className="hero-suggestion"
+                disabled={isLoading}
+                onClick={() => void sendMessage(suggestion.prompt)}
+              >
+                <strong>{suggestion.label}</strong>
+                <span>{suggestion.hint}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
