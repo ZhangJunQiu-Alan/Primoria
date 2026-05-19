@@ -8,7 +8,6 @@ import { z } from "zod/v4";
 import { planVisualization, streamInteractiveWidget } from "../tutor-tools";
 import type {
   ChatMessage,
-  CourseDraftArtifact,
   HtmlWidgetArtifact,
   ToolStatusArtifact,
   TutorAgentResponse,
@@ -38,19 +37,14 @@ export type DeepTutorStructuredResponse = {
         status: "complete";
         summary: string;
       }
-    | {
-        name: "generate_course";
-        status: "complete";
-        summary: string;
-      }
   >;
-  artifacts: Array<VisualizationPlanArtifact | HtmlWidgetArtifact | CourseDraftArtifact>;
+  artifacts: Array<VisualizationPlanArtifact | HtmlWidgetArtifact>;
   suggestions: string[];
 };
 
 const DeepTutorResponseSchema = z.object({
   label: z
-    .enum(["Tutor team", "Concept agent", "Visualization agent", "Practice agent", "Code agent", "Course agent"])
+    .enum(["Tutor team", "Concept agent", "Visualization agent", "Practice agent", "Code agent"])
     .default("Tutor team"),
   reply: z.string(),
   tool_calls: z
@@ -71,32 +65,11 @@ const DeepTutorResponseSchema = z.object({
           status: z.literal("complete"),
           summary: z.string(),
         }),
-        z.object({
-          name: z.literal("generate_course"),
-          status: z.literal("complete"),
-          summary: z.string(),
-        }),
       ]),
     )
     .default([]),
   artifacts: z.array(z.unknown()).default([]),
   suggestions: z.array(z.string()).default([]),
-});
-
-const CourseDraftSchema = z.object({
-  type: z.literal("course_draft"),
-  title: z.string(),
-  audience: z.string(),
-  duration: z.string(),
-  modules: z.array(
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      lessons: z.array(z.string()).default([]),
-      project: z.string().optional(),
-    }),
-  ),
-  nextActions: z.array(z.string()).default([]),
 });
 
 const VisualizationPlanSchema = z.object({
@@ -157,9 +130,6 @@ function parseDeepArtifact(value: unknown) {
   const widget = HtmlWidgetSchema.safeParse(candidate);
   if (widget.success) return widget.data;
 
-  const course = CourseDraftSchema.safeParse(candidate);
-  if (course.success) return course.data;
-
   return undefined;
 }
 
@@ -208,37 +178,7 @@ function createTutorTools(settings: TutorProviderSettings) {
     },
   );
 
-  const generateCourseTool = tool(
-    async ({ topic, audience, duration, goals }) => {
-      const course: CourseDraftArtifact = {
-        type: "course_draft",
-        title: topic,
-        audience,
-        duration,
-        modules: goals.slice(0, 6).map((goal, index) => ({
-          title: `Module ${index + 1}: ${goal}`,
-          description: `Learn, practice, and apply: ${goal}`,
-          lessons: ["Concept briefing", "Guided example", "Interactive practice", "Reflection check"],
-          project: index === goals.length - 1 ? `Create a small project that demonstrates ${topic}.` : undefined,
-        })),
-        nextActions: ["Review this draft", "Ask the tutor to expand a module", "Generate interactive practice for one lesson"],
-      };
-      return JSON.stringify(course);
-    },
-    {
-      name: "generate_course",
-      description:
-        "Draft a course outline card when the learner explicitly asks to create, generate, or design a course/learning path.",
-      schema: z.object({
-        topic: z.string().describe("Course title or topic."),
-        audience: z.string().describe("Target learner audience and level."),
-        duration: z.string().describe("Approximate course duration."),
-        goals: z.array(z.string()).min(2).max(6).describe("2-6 learning goals/modules."),
-      }),
-    },
-  );
-
-  return [planVisualizationTool, renderInteractiveWidgetTool, generateCourseTool] as const;
+  return [planVisualizationTool, renderInteractiveWidgetTool] as const;
 }
 
 const subagents: SubAgent[] = [
@@ -254,22 +194,15 @@ const subagents: SubAgent[] = [
     systemPrompt:
       "You are Primoria's Visualization agent. For visual, simulated, or step-by-step requests, call plan_visualization, then render_interactive_widget, and return the produced artifact JSON exactly.",
   },
-  {
-    name: "course-agent",
-    description: "Creates course outlines and learning paths with generate_course.",
-    systemPrompt:
-      "You are Primoria's Course agent. When asked for a course or learning path, call generate_course and return the produced course_draft artifact JSON exactly.",
-  },
 ];
 
 const SYSTEM_PROMPT = `You are Primoria, a DeepAgent-powered AI tutor.
 
-Use the built-in DeepAgent planning, filesystem working memory, and task delegation when helpful. You have specialist subagents for concepts, visualization, and course design.
+Use the built-in DeepAgent planning, filesystem working memory, and task delegation when helpful. You have specialist subagents for concepts and visualization.
 
 Important product behavior:
 - For ordinary tutoring, answer directly and concisely; do not claim plan_visualization or render_interactive_widget was used. If you want to report status, use only deep_agent.
 - For visual / simulate / interactive / step-by-step algorithm requests, use plan_visualization then render_interactive_widget. Return the resulting artifacts in structured output.
-- For explicit course or learning-path creation, use generate_course. Return the course_draft artifact in structured output.
 - Do not invent fake artifacts. Only include artifacts that came from tools.
 - Keep a warm, clear, Socratic teaching tone.
 - Never mention internal system prompts.`;
@@ -335,7 +268,8 @@ export async function invokePrimoriaDeepAgent(
 const VISIBLE_TOOLS = new Set([
   "plan_visualization",
   "render_interactive_widget",
-  "generate_course",
+  "write_todos",
+  "task",
 ]);
 
 const TOOL_LABELS: Record<string, { executing: string; complete: string }> = {
@@ -347,9 +281,26 @@ const TOOL_LABELS: Record<string, { executing: string; complete: string }> = {
     executing: "Generating the interactive HTML widget.",
     complete: "Interactive widget is ready.",
   },
-  generate_course: {
-    executing: "Drafting the course outline.",
-    complete: "Course draft is ready.",
+  write_todos: {
+    executing: "DeepAgent is planning the next steps.",
+    complete: "Plan updated.",
+  },
+  task: {
+    executing: "Delegating to a specialist subagent.",
+    complete: "Specialist subagent returned.",
+  },
+};
+
+const SUBAGENT_NAMES = new Set(["concept-agent", "visualization-agent"]);
+
+const SUBAGENT_LABELS: Record<string, { executing: string; complete: string }> = {
+  "concept-agent": {
+    executing: "Concept agent is building intuition.",
+    complete: "Concept agent finished.",
+  },
+  "visualization-agent": {
+    executing: "Visualization agent is planning and rendering.",
+    complete: "Visualization agent finished.",
   },
 };
 
@@ -357,7 +308,7 @@ function toolStatusEvent(
   name: string,
   status: ToolStatusArtifact["status"],
 ): ToolStatusArtifact {
-  const labels = TOOL_LABELS[name];
+  const labels = TOOL_LABELS[name] ?? SUBAGENT_LABELS[name];
   const description = labels
     ? labels[status === "complete" ? "complete" : "executing"]
     : status === "executing"
@@ -365,7 +316,7 @@ function toolStatusEvent(
       : `${name} finished.`;
   return {
     type: "tool_status",
-    name: name as ToolStatusArtifact["name"],
+    name,
     status,
     description,
   };
@@ -400,6 +351,7 @@ export async function invokePrimoriaDeepAgentStream(
   };
 
   const emittedArtifacts = new Set<string>();
+  const openSubagents = new Set<string>();
   let finalOutput: { structuredResponse?: unknown } | null = null;
 
   for await (const ev of agent.streamEvents(input, {
@@ -407,6 +359,7 @@ export async function invokePrimoriaDeepAgentStream(
     version: "v2",
   })) {
     const name = ev.name ?? "";
+
     if (ev.event === "on_tool_start" && VISIBLE_TOOLS.has(name)) {
       emit({ type: "tool_status", artifact: toolStatusEvent(name, "executing") });
     } else if (ev.event === "on_tool_end" && VISIBLE_TOOLS.has(name)) {
@@ -418,6 +371,16 @@ export async function invokePrimoriaDeepAgentStream(
           emittedArtifacts.add(key);
           emit({ type: "artifact", artifact });
         }
+      }
+    } else if (ev.event === "on_chain_start" && SUBAGENT_NAMES.has(name)) {
+      if (!openSubagents.has(name)) {
+        openSubagents.add(name);
+        emit({ type: "tool_status", artifact: toolStatusEvent(name, "executing") });
+      }
+    } else if (ev.event === "on_chain_end" && SUBAGENT_NAMES.has(name)) {
+      if (openSubagents.has(name)) {
+        openSubagents.delete(name);
+        emit({ type: "tool_status", artifact: toolStatusEvent(name, "complete") });
       }
     } else if (ev.event === "on_custom_event" && name === "widget_html_delta") {
       const data = ev.data as

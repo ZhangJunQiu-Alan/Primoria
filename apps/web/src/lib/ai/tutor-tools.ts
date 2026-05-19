@@ -17,18 +17,12 @@ const VisualizationPlanSchema = z.object({
   key_elements: z.array(z.string()).min(2).max(4),
 });
 
-const WidgetSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  html: z.string(),
-});
-
 function transcript(messages: ChatMessage[]) {
   return messages.map((message) => `${message.role}: ${message.content}`).join("\n");
 }
 
-function widgetRules({ json }: { json: boolean }) {
-  return `${json ? "Return ONLY valid JSON with title, description, and html fields." : "Return ONLY a self-contained HTML fragment. Do not return JSON. Do not wrap in markdown fences."}
+function widgetRules() {
+  return `Return ONLY a self-contained HTML fragment. Do not return JSON. Do not wrap in markdown fences.
 
 HTML rules:
 - Return an HTML fragment only, not a full document.
@@ -96,44 +90,6 @@ Choose the simplest technology that can teach the concept well. Prefer HTML + in
   };
 }
 
-export async function renderInteractiveWidget(
-  messages: ChatMessage[],
-  plan: VisualizationPlanArtifact,
-  visualizationGoal: string,
-  settings: TutorProviderSettings,
-): Promise<HtmlWidgetArtifact> {
-  const raw = await createChatCompletion(
-    [
-      {
-        role: "system",
-        content: `You are Primoria's render_interactive_widget tool.
-
-Return ONLY valid JSON with this shape:
-{
-  "title": "short widget title",
-  "description": "one sentence description",
-  "html": "self-contained HTML fragment with inline style and optional script"
-}
-
-${widgetRules({ json: true })}`,
-      },
-      {
-        role: "user",
-        content: widgetPrompt(messages, plan, visualizationGoal),
-      },
-    ],
-    settings,
-  );
-
-  const widget = WidgetSchema.parse(parseJsonObject(raw));
-  return {
-    type: "html_widget",
-    title: widget.title,
-    description: widget.description,
-    html: widget.html,
-  };
-}
-
 export async function streamInteractiveWidget(
   messages: ChatMessage[],
   plan: VisualizationPlanArtifact,
@@ -149,7 +105,7 @@ export async function streamInteractiveWidget(
         role: "system",
         content: `You are Primoria's render_interactive_widget streaming tool.
 
-${widgetRules({ json: false })}`,
+${widgetRules()}`,
       },
       {
         role: "user",
