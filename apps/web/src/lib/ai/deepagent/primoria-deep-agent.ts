@@ -166,7 +166,7 @@ function createTutorTools() {
     {
       name: "render_interactive_widget",
       description:
-        "Render an interactive HTML/CSS/JS learning widget. MUST be used for any visualization request. Use warm light styling: cream/off-white backgrounds, soft borders, rounded corners, no black, no neon, no emoji.",
+        "Render an interactive HTML/CSS/JS learning widget. MUST be used for any visualization request. Use the Primoria warm palette: backgrounds #fbf7ee / #fffaf2 / #f7f3ea, accents amber #c8881a, sage #4a7a5a, lavender #7c6ad0, sky #4a7aa8, coral #c46a4e, rose #b56474, text #3a352d, borders #eadfce. Use 2-3 different accent colors per widget for visual distinction. Rounded 12-18px corners, soft 0.5-1px borders, no black backgrounds, no neon, no emoji decoration.",
       schema: z.object({
         title: z.string(),
         description: z.string(),
