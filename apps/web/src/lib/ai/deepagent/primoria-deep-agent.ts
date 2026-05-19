@@ -481,8 +481,10 @@ export async function invokePrimoriaDeepAgentStream(
         emitTodosFromState(update?.todos);
       }
     } else if (ev.event === "on_chain_end") {
-      const out = ev.data?.output as { todos?: unknown } | undefined;
-      if (out && "todos" in out) emitTodosFromState(out.todos);
+      const out = ev.data?.output;
+      if (out && typeof out === "object" && !Array.isArray(out) && "todos" in out) {
+        emitTodosFromState((out as { todos?: unknown }).todos);
+      }
     }
   }
 
