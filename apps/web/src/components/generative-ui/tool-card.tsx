@@ -113,6 +113,7 @@ export function ToolCard({
   }
 
   if (artifact.type === "todo_list") {
+    if (artifact.items.length === 0) return null;
     return (
       <div className="message-row tool">
         <div className="tool-card todo-card">

@@ -130,6 +130,14 @@ export async function runTutorAgentStream(
     emit({ type: "assistant_message", label: result.label, reply, suggestions: [] });
   }
 
+  if (!resolvedWidget) {
+    const hasTodos = artifacts.some((artifact) => artifact.type === "todo_list");
+    if (hasTodos) {
+      emit({ type: "artifact_delta", artifact: { type: "todo_list", items: [] } });
+      artifacts = artifacts.filter((artifact) => artifact.type !== "todo_list");
+    }
+  }
+
   const response: TutorAgentResponse = {
     label: result.label,
     reply,
