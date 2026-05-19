@@ -1207,6 +1207,84 @@ button {
   gap: 6px;
 }
 
+/* ---------------- Plan progress (live state from agent) ---------------- */
+
+.copilot-chat-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.plan-progress {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: 12px 24px 0;
+  border-radius: 16px;
+  background: #fffaf2;
+  border: 1px solid rgba(23, 19, 15, 0.1);
+  box-shadow: 0 6px 18px rgba(23, 19, 15, 0.05);
+  overflow: hidden;
+}
+
+.plan-progress-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 13px;
+  text-align: left;
+}
+
+.plan-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+  flex-shrink: 0;
+}
+
+.plan-progress-label {
+  flex: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plan-progress-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--quiet);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.plan-progress-chevron {
+  font-size: 12px;
+  color: var(--quiet);
+  transition: transform 0.15s ease;
+}
+
+.plan-progress-chevron.open {
+  transform: rotate(180deg);
+}
+
+.plan-progress-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgba(23, 19, 15, 0.06);
+}
+
 /* ---------------- Hero empty state ---------------- */
 
 .hero-canvas {
@@ -1318,7 +1396,111 @@ button {
   }
 }
 
-/* ---------------- Hero explainer cards ---------------- */
+/* ---------------- CopilotKit plan progress card ---------------- */
+
+.copilot-chat-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+.plan-progress {
+  margin: 14px auto 0;
+  width: min(770px, calc(100% - 24px));
+  background: #fffdf8;
+  border: 1px solid rgba(23, 19, 15, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(23, 19, 15, 0.04);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.plan-progress-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+}
+
+.plan-progress-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--coral);
+  flex-shrink: 0;
+}
+
+.plan-progress-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plan-progress-count {
+  font-size: 12px;
+  color: var(--quiet);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.plan-progress-chevron {
+  color: var(--quiet);
+  font-size: 12px;
+}
+
+.plan-progress-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgba(23, 19, 15, 0.06);
+}
+
+.plan-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #3a352d;
+}
+
+.plan-progress-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1.5px solid #c9bfa6;
+  background: transparent;
+}
+
+.plan-progress-indicator.in_progress {
+  border-color: #ef7358;
+  background: radial-gradient(circle, #ef7358 35%, transparent 36%);
+  animation: todo-pulse 1.4s ease-in-out infinite;
+}
+
+.plan-progress-indicator.done {
+  background: #7c6ad0;
+  border-color: #7c6ad0;
+}
+
+.plan-progress-item.done .plan-progress-text {
+  opacity: 0.55;
+  text-decoration: line-through;
+  text-decoration-color: rgba(0, 0, 0, 0.25);
+}
 
 .hero-explainer-grid {
   display: grid;

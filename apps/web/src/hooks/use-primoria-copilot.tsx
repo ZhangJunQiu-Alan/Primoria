@@ -1,9 +1,11 @@
 "use client";
 
 import { z } from "zod";
+import { useEffect } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
-import type { TodoListArtifact, VisualizationPlanArtifact } from "@/lib/ai/types";
+import { setTodos } from "@/lib/todos-store";
+import type { VisualizationPlanArtifact } from "@/lib/ai/types";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -28,35 +30,11 @@ const RenderWidgetParams = z.object({
   html: z.string(),
 });
 
-function TodoListCard({ todos }: z.infer<typeof WriteTodosParams>) {
-  const emojiPrefix = /^\s*\p{Extended_Pictographic}+\s*/u;
-  const items: TodoListArtifact["items"] = todos.map((todo) => {
-    const rawStatus = todo.status ?? "pending";
-    const status =
-      rawStatus === "completed" ? "done" : rawStatus === "in_progress" ? "in_progress" : "pending";
-    const raw = (todo.title ?? todo.content ?? "").trim();
-    const stripped = raw.replace(emojiPrefix, "").trim() || raw;
-    return { title: stripped, status };
-  });
-  if (items.length === 0) return null;
-  return (
-    <div className="message-row tool">
-      <div className="tool-card todo-card">
-        <div className="tool-title">
-          <span className="tool-dot" />
-          <span>plan · tutor team</span>
-        </div>
-        <ol className="todo-list">
-          {items.map((item, index) => (
-            <li key={`${index}-${item.title}`} className={`todo-item ${item.status}`}>
-              <span className={`todo-indicator ${item.status}`} />
-              <span className="todo-title">{item.title}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </div>
-  );
+function WriteTodosSink({ todos }: { todos: z.infer<typeof WriteTodosParams>["todos"] }) {
+  useEffect(() => {
+    setTodos(todos ?? []);
+  }, [todos]);
+  return <></>;
 }
 
 function PlanCard({ title, approach, technology, key_elements }: z.infer<typeof PlanVisualizationParams>) {
@@ -115,20 +93,13 @@ export function usePrimoriaGenerativeUI() {
   useRenderTool({
     name: "plan_visualization",
     parameters: PlanVisualizationParams,
-    render: ({ parameters }) => (
-      <PlanCard
-        title={parameters?.title ?? ""}
-        approach={parameters?.approach ?? ""}
-        technology={parameters?.technology ?? "HTML"}
-        key_elements={parameters?.key_elements ?? []}
-      />
-    ),
+    render: () => <></>,
   });
 
   useRenderTool({
     name: "write_todos",
     parameters: WriteTodosParams,
-    render: () => null,
+    render: ({ parameters }) => <WriteTodosSink todos={parameters?.todos ?? []} />,
   });
 
   useDefaultRenderTool({
