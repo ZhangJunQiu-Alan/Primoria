@@ -2010,6 +2010,126 @@ button {
 .course-block-text p { margin: 0 0 10px; }
 .course-block-text p:last-child { margin-bottom: 0; }
 
+.course-markdown {
+  color: var(--ink);
+  line-height: 1.68;
+  overflow-wrap: anywhere;
+}
+.course-markdown > :first-child { margin-top: 0; }
+.course-markdown > :last-child { margin-bottom: 0; }
+.course-markdown h1,
+.course-markdown h2,
+.course-markdown h3,
+.course-markdown h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.22;
+  margin: 18px 0 8px;
+  color: var(--ink);
+}
+.course-markdown h1 { font-size: 24px; }
+.course-markdown h2 { font-size: 21px; }
+.course-markdown h3 { font-size: 18px; }
+.course-markdown h4 { font-size: 15px; }
+.course-markdown p {
+  margin: 0 0 11px;
+}
+.course-markdown ul,
+.course-markdown ol {
+  margin: 0 0 12px 1.25rem;
+  padding: 0;
+}
+.course-markdown li {
+  margin: 4px 0;
+  padding-left: 2px;
+}
+.course-markdown li > p {
+  margin: 4px 0;
+}
+.course-markdown blockquote {
+  margin: 14px 0;
+  padding: 10px 14px;
+  border-left: 3px solid #c8881a;
+  border-radius: 0 12px 12px 0;
+  background: #fff8eb;
+  color: var(--muted);
+}
+.course-markdown blockquote > :last-child { margin-bottom: 0; }
+.course-markdown a {
+  color: #7c4f10;
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.course-markdown hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 18px 0;
+}
+.course-markdown-inline-code {
+  padding: 2px 5px;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  border-radius: 6px;
+  background: #f6efe3;
+  color: #7a3e4d;
+  font-size: 0.92em;
+}
+.course-markdown-pre {
+  margin: 14px 0;
+  padding: 13px 14px;
+  overflow-x: auto;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  border-radius: 14px;
+  background: #17130f;
+  color: #fff8eb;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.course-markdown-pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+}
+.course-markdown-table-wrap {
+  width: 100%;
+  margin: 14px 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.course-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+  background: #fffdf8;
+}
+.course-markdown th,
+.course-markdown td {
+  padding: 9px 11px;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  vertical-align: top;
+}
+.course-markdown th:last-child,
+.course-markdown td:last-child { border-right: 0; }
+.course-markdown tr:last-child td { border-bottom: 0; }
+.course-markdown th {
+  background: var(--soft);
+  font-weight: 700;
+}
+.course-markdown input[type="checkbox"] {
+  margin-right: 6px;
+  accent-color: #c8881a;
+}
+.course-markdown .katex-display {
+  margin: 14px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0;
+}
+
 .course-analogy-pair {
   display: flex;
   align-items: stretch;
@@ -2434,7 +2554,6 @@ button {
   color: var(--ink);
   font-size: 13px;
   line-height: 1.5;
-  white-space: pre-wrap;
 }
 
 .course-local-message.user {
@@ -2446,6 +2565,35 @@ button {
 .course-local-message.assistant {
   align-self: flex-start;
   background: #fbf7f1;
+}
+
+.course-local-message.assistant .course-markdown {
+  line-height: 1.58;
+}
+.course-local-message.assistant .course-markdown h1 { font-size: 18px; }
+.course-local-message.assistant .course-markdown h2 { font-size: 16px; }
+.course-local-message.assistant .course-markdown h3 { font-size: 14px; }
+.course-local-message.assistant .course-markdown h1,
+.course-local-message.assistant .course-markdown h2,
+.course-local-message.assistant .course-markdown h3,
+.course-local-message.assistant .course-markdown h4 {
+  margin: 10px 0 6px;
+}
+.course-local-message.assistant .course-markdown p {
+  margin-bottom: 8px;
+}
+.course-local-message.assistant .course-markdown ul,
+.course-local-message.assistant .course-markdown ol {
+  margin-bottom: 8px;
+}
+.course-local-message.assistant .course-markdown-table-wrap {
+  margin: 10px 0;
+}
+.course-local-message.assistant .course-markdown table {
+  min-width: 360px;
+}
+.course-local-message.assistant .course-markdown-pre {
+  white-space: pre;
 }
 
 .course-local-message.assistant.error {
