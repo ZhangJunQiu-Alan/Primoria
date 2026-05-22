@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CopilotKitProvider } from "@/components/copilot-provider";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -8,6 +8,7 @@ import type {
   TransferBlock,
   VisualBlock,
 } from "@/lib/courses/types";
+import { CourseMarkdown } from "@/components/course/course-markdown";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 
 export function BlockRenderer({ block }: { block: CourseBlock }) {
@@ -42,11 +43,7 @@ function BlockShell({
 function TextBlockView({ block }: { block: TextBlock }) {
   return (
     <BlockShell kind="text" title={block.title}>
-      <div className="course-block-text">
-        {block.markdown.split(/\n{2,}/).map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
-      </div>
+      <CourseMarkdown markdown={block.markdown} />
     </BlockShell>
   );
 }
