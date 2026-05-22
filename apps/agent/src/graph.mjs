@@ -41,7 +41,7 @@ const planVisualizationTool = tool(
   {
     name: "plan_visualization",
     description:
-      "Plan a widget before building it. MUST be called before widgetRenderer.",
+      "Plan a widget before building it. MUST be called before widgetRenderer. Extract the user's non-negotiable visual/interaction requirements into key_elements; do not replace them with generic topic bullets.",
     schema: z.object({
       title: z.string().optional(),
       approach: z.string(),
@@ -254,7 +254,7 @@ const widgetRendererTool = tool(
   {
     name: "widgetRenderer",
     description:
-      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 80-160 lines. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration.",
+      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB. Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code. Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI. Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye. For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration.",
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),
@@ -349,7 +349,7 @@ const subagents = [
     name: "visualization-agent",
     description: "Plans and renders interactive educational widgets using plan_visualization and widgetRenderer.",
     systemPrompt:
-      "You are Primoria's Visualization agent. For visual / simulated / step-by-step requests, briefly acknowledge, call plan_visualization, then widgetRenderer. Always write the complete HTML directly in the widgetRenderer html argument.",
+      "You are Primoria's Visualization agent. For visual / simulated / step-by-step requests, briefly acknowledge, call plan_visualization, then widgetRenderer. Preserve concrete user constraints in the plan and make them visible/interactable in the widget. Always write the complete HTML directly in the widgetRenderer html argument.",
   },
 ];
 
@@ -373,8 +373,8 @@ Never call task, plan_visualization, or widgetRenderer in COURSE branch.
 
 VISUALIZATION branch only applies if COURSE branch does not match. For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, follow the OpenGenerativeUI-style workflow:
 1. Briefly acknowledge what you will build in 1 short sentence.
-2. Call plan_visualization with approach, technology, and 2-4 key elements.
-3. Call widgetRenderer with title, description, and a compact self-contained HTML fragment in the html argument. Prefer including title, but if the provider drops it the tool will derive a safe default. Do not include doctype/html/head/body wrappers.
+2. Call plan_visualization with approach, technology, and 2-4 key elements. The key elements must preserve the user's concrete constraints, controls, labels, and comparisons; do not summarize them away into generic topic names.
+3. Call widgetRenderer with title, description, and a compact self-contained HTML fragment in the html argument. Prefer including title, but if the provider drops it the tool will derive a safe default. Do not include doctype/html/head/body wrappers. Before calling widgetRenderer, mentally check that every user-stated requirement is visible or directly interactive in the HTML, but keep the code concise; use one canvas/SVG and a compact status panel rather than a large app.
 4. Stop immediately after widgetRenderer returns; widgetRenderer is returnDirect, so do not ask for or produce a post-widget narration.
 Never skip plan_visualization before widgetRenderer. Do not call task in VISUALIZATION branch.
 
