@@ -258,6 +258,27 @@ var resizeInterval = setInterval(reportHeight, 200);
 setTimeout(function() { clearInterval(resizeInterval); }, 12000);
 `;
 
+
+const LOADING_PHRASES = [
+  "Building widget",
+  "Arranging visuals",
+  "Wiring interactions",
+  "Rendering lesson",
+  "Polishing edges",
+];
+
+function useLoadingPhrase(active: boolean) {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    const interval = setInterval(() => {
+      setIndex((current) => (current + 1) % LOADING_PHRASES.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, [active]);
+  return LOADING_PHRASES[index];
+}
+
 function assembleShell() {
   return `<!doctype html>
 <html>
@@ -305,8 +326,13 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shellReadyRef = useRef(false);
   const committedHtmlRef = useRef("");
-  const [height, setHeight] = useState(180);
+  const [height, setHeight] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [htmlSettled, setHtmlSettled] = useState(false);
+  const [prevHtml, setPrevHtml] = useState(html);
+  const [fadingOut, setFadingOut] = useState(false);
+  const settledTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMessage = useCallback(
     (event: MessageEvent) => {
@@ -335,6 +361,38 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
     return () => window.removeEventListener("message", handleMessage);
   }, [handleMessage]);
 
+  if (html !== prevHtml) {
+    setPrevHtml(html);
+    setHtmlSettled(false);
+    setFadingOut(false);
+  }
+
+  useEffect(() => {
+    if (!html) return;
+    if (settledTimerRef.current) clearTimeout(settledTimerRef.current);
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+    settledTimerRef.current = setTimeout(() => {
+      setHtmlSettled(true);
+      setFadingOut(true);
+      fadeTimerRef.current = setTimeout(() => {
+        setFadingOut(false);
+      }, 600);
+    }, 800);
+    return () => {
+      if (settledTimerRef.current) clearTimeout(settledTimerRef.current);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+    };
+  }, [html]);
+
+  useEffect(() => {
+    if (!html || (loaded && height > 0)) return;
+    const timeout = setTimeout(() => {
+      setLoaded(true);
+      setHeight((current) => (current > 0 ? current : 300));
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, [html, loaded, height]);
+
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
@@ -350,14 +408,34 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
     iframe.contentWindow.postMessage({ type: "primoria-update-content", html }, "*");
   }, [html, loaded]);
 
+  const showIframe = Boolean(html);
+  const isStreaming = Boolean(html) && !htmlSettled;
+  const loadingPhrase = useLoadingPhrase(isStreaming);
+  const showStreamingIndicator = isStreaming || fadingOut;
+
   return (
-    <iframe
-      ref={iframeRef}
-      className="widget-frame"
-      title={title}
-      sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-      onLoad={() => setLoaded(true)}
-      style={{ height }}
-    />
+    <div className="widget-renderer-shell">
+      {showStreamingIndicator ? (
+        <div
+          className="widget-streaming-indicator"
+          style={{ opacity: isStreaming ? 1 : 0, maxHeight: isStreaming ? 32 : 0 }}
+        >
+          <span className="tool-spinner widget-streaming-spinner" aria-hidden="true" />
+          <span>{loadingPhrase}...</span>
+        </div>
+      ) : null}
+      <iframe
+        ref={iframeRef}
+        className="widget-frame"
+        title={title}
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        onLoad={() => setLoaded(true)}
+        style={{
+          height: showIframe ? (height > 0 ? height : 300) : 0,
+          opacity: showIframe ? 1 : 0,
+          display: html ? undefined : "none",
+        }}
+      />
+    </div>
   );
 }

@@ -309,7 +309,8 @@ button {
 .message-row.assistant .bubble,
 .message-row.tool .tool-card,
 .message-row.tool .code-card,
-.message-row.tool .inline-plan-card {
+.message-row.tool .inline-plan-card,
+.message-row.tool .widget-renderer-shell {
   grid-column: 2;
 }
 
@@ -637,6 +638,34 @@ button {
   font-weight: 800;
 }
 
+.widget-renderer-row {
+  margin-block: 4px 10px;
+}
+
+.widget-renderer-shell {
+  width: min(100%, 770px);
+  margin-block: 8px;
+}
+
+.widget-streaming-indicator {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  color: var(--quiet);
+  font-size: 12px;
+  font-weight: 750;
+  transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+.widget-streaming-spinner {
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+  flex: 0 0 auto;
+}
+
 .todo-card {
   max-width: 770px;
 }
@@ -857,6 +886,8 @@ button {
   width: 100%;
   border: 0;
   background: transparent;
+  overflow: hidden;
+  transition: height 200ms ease-out, opacity 160ms ease-out;
 }
 
 @media (max-width: 900px) {

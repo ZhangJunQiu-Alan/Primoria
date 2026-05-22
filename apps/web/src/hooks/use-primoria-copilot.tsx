@@ -4,10 +4,11 @@ import { z } from "zod";
 import { useEffect, useRef } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
+import { PlanCard } from "@/components/generative-ui/plan-card";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
 import { setTodos } from "@/lib/todos-store";
-import type { CourseCardArtifact, VisualizationPlanArtifact } from "@/lib/ai/types";
+import type { CourseCardArtifact } from "@/lib/ai/types";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -94,71 +95,10 @@ function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>
     .filter(Boolean);
 }
 
-type ToolRenderStatus = "inProgress" | "executing" | "complete";
-
-function PlanCard({
-  status,
-  title,
-  approach,
-  technology,
-  key_elements,
-}: z.infer<typeof PlanVisualizationParams> & { status: ToolRenderStatus }) {
-  const detailsRef = useRef<HTMLDetailsElement>(null);
-  const isRunning = status === "executing" || status === "inProgress";
-  const keyElements = normalizePlanKeyElements(key_elements);
-
-  useEffect(() => {
-    if (!detailsRef.current) return;
-    detailsRef.current.open = isRunning;
-  }, [isRunning]);
-
-  const plan: VisualizationPlanArtifact = {
-    type: "visualization_plan",
-    title: title ?? "Visualization plan",
-    approach,
-    technology,
-    keyElements,
-  };
-
-  return (
-    <div className="message-row tool inline-plan-row">
-      <details ref={detailsRef} className="inline-plan-card" open>
-        <summary className="inline-plan-summary">
-          <span className={isRunning ? "tool-spinner inline-plan-indicator" : "inline-plan-check"} aria-hidden="true">
-            {isRunning ? null : "✓"}
-          </span>
-          <span className="inline-plan-title">
-            {isRunning ? "Planning visualization…" : `Plan: ${plan.technology || "visualization"}`}
-          </span>
-          <span className="inline-plan-chevron" aria-hidden="true">▼</span>
-        </summary>
-        <div className="inline-plan-body">
-          {plan.technology ? <span className="inline-plan-badge">{plan.technology}</span> : null}
-          <p>{plan.approach}</p>
-          {plan.keyElements.length > 0 ? (
-            <ul>
-              {plan.keyElements.map((element) => (
-                <li key={element}>{element}</li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-      </details>
-    </div>
-  );
-}
-
 function WidgetCard({ title, description, html }: z.infer<typeof RenderWidgetParams>) {
-  const safeTitle = title || "Interactive learning widget";
   return (
-    <div className="message-row tool">
-      <div className="tool-card">
-        <div className="tool-title">
-          <span className="tool-dot" />
-          <span>{safeTitle}</span>
-        </div>
-        <WidgetRenderer title={safeTitle} description={description} html={html} />
-      </div>
+    <div className="message-row tool widget-renderer-row">
+      <WidgetRenderer title={title || "Interactive learning widget"} description={description} html={html} />
     </div>
   );
 }
@@ -250,10 +190,9 @@ export function usePrimoriaGenerativeUI() {
     render: ({ status, parameters }) => (
       <PlanCard
         status={status}
-        title={parameters?.title}
         approach={parameters?.approach ?? "Planning the visualization."}
         technology={parameters?.technology ?? "HTML + JavaScript"}
-        key_elements={parameters?.key_elements ?? []}
+        keyElements={normalizePlanKeyElements(parameters?.key_elements ?? [])}
       />
     ),
   });
