@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCopilotAction, useCopilotAdditionalInstructions, useCopilotReadable } from "@copilotkit/react-core";
 import { BlockRenderer } from "./block-renderer";
+import { CourseMarkdown } from "./course-markdown";
 import type { Course, CourseBlock } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
@@ -116,7 +117,7 @@ function CourseLocalChat({
         ) : (
           messages.map((message) => (
             <div key={message.id} className={`course-local-message ${message.role}${message.role === "assistant" && message.isError ? " error" : ""}`}>
-              {message.content}
+              {message.role === "assistant" ? <CourseMarkdown markdown={message.content} /> : message.content}
             </div>
           ))
         )}
