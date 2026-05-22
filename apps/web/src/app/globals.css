@@ -330,6 +330,11 @@ button {
   background: linear-gradient(180deg, rgba(231, 222, 208, 0.2), rgba(231, 222, 208, 0.9), rgba(231, 222, 208, 0.2));
 }
 
+.message-row.tool.inline-plan-row::before,
+.message-row.tool.widget-renderer-row::before {
+  content: none;
+}
+
 .message-label {
   display: block;
   margin-bottom: 8px;
