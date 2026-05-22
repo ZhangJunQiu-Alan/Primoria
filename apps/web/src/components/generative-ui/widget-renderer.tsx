@@ -84,7 +84,16 @@ body {
   background: transparent;
   -webkit-font-smoothing: antialiased;
 }
-#content { width: 100%; min-width: 0; overflow: hidden; }
+#content {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+}
+#content > * {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
 #content > * + * { margin-top: 12px; }
 button {
   font-family: inherit;

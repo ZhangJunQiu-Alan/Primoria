@@ -335,6 +335,17 @@ button {
   content: none;
 }
 
+.message-row.tool.inline-plan-row,
+.message-row.tool.widget-renderer-row {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.message-row.tool.inline-plan-row .inline-plan-card,
+.message-row.tool.widget-renderer-row .widget-renderer-shell {
+  grid-column: 1;
+}
+
 .message-label {
   display: block;
   margin-bottom: 8px;
@@ -554,10 +565,11 @@ button {
 }
 
 .inline-plan-row {
-  margin-block: -6px;
+  margin-block: 0 2px;
 }
 
 .inline-plan-card {
+  justify-self: start;
   width: fit-content;
   max-width: 620px;
   color: var(--quiet);
@@ -648,8 +660,9 @@ button {
 }
 
 .widget-renderer-shell {
+  justify-self: start;
   width: min(100%, 770px);
-  margin-block: 8px;
+  margin-block: 2px 8px;
 }
 
 .widget-streaming-indicator {
