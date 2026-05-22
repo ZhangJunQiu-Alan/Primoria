@@ -4,10 +4,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { IDIOMORPH_JS } from "./idiomorph-inline";
 
+export const WidgetDependency = z.object({
+  url: z.string(),
+  global: z.string().optional(),
+  kind: z.enum(["script", "module", "style"]).optional(),
+});
+
 export const WidgetRendererProps = z.object({
   title: z.string(),
   description: z.string(),
   html: z.string(),
+  dependencies: z.array(WidgetDependency).optional(),
 });
 
 export type WidgetRendererProps = z.infer<typeof WidgetRendererProps>;
@@ -156,6 +163,25 @@ window.openLink = function(url) {
   window.parent.postMessage({ type: 'primoria-open-link', url: String(url || '') }, '*');
 };
 
+function showWidgetError(message) {
+  var content = document.getElementById('content');
+  if (!content || content.querySelector('[data-primoria-widget-error]')) return;
+  var box = document.createElement('div');
+  box.setAttribute('data-primoria-widget-error', '1');
+  box.style.cssText = 'margin:12px 0;padding:10px 12px;border:1px solid #d76e52;border-radius:12px;background:#ffede6;color:#71331f;font:13px/1.45 var(--font-sans,system-ui);';
+  box.textContent = 'Widget script error: ' + String(message || 'unknown error');
+  content.prepend(box);
+  try { reportHeight(); } catch (_) {}
+}
+
+window.addEventListener('error', function(event) {
+  showWidgetError(event.message || (event.error && event.error.message) || 'script failed');
+});
+window.addEventListener('unhandledrejection', function(event) {
+  var reason = event.reason;
+  showWidgetError((reason && reason.message) || reason || 'promise rejected');
+});
+
 document.addEventListener('click', function(event) {
   var promptButton = event.target.closest('button[data-prompt], [role="button"][data-prompt]');
   if (promptButton) {
@@ -185,7 +211,129 @@ function notifyWidgetReady() {
   try { reportHeight(); } catch (_) {}
 }
 
-function runScripts(content, scripts, index) {
+var COMMON_DEPENDENCIES = {
+  d3: { global: 'd3', url: 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js', kind: 'script' },
+  Chart: { global: 'Chart', url: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js', kind: 'script' },
+  gsap: { global: 'gsap', url: 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', kind: 'script' },
+  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js', kind: 'script' },
+  anime: { global: 'anime', url: 'https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js', kind: 'script' },
+  Matter: { global: 'Matter', url: 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js', kind: 'script' },
+  p5: { global: 'p5', url: 'https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js', kind: 'script' },
+  math: { global: 'math', url: 'https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js', kind: 'script' },
+  L: { global: 'L', url: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', kind: 'script' },
+  mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' }
+};
+
+function readGlobal(path) {
+  if (!path) return undefined;
+  var current = window;
+  var parts = String(path).split('.');
+  for (var i = 0; i < parts.length; i += 1) {
+    if (current == null) return undefined;
+    current = current[parts[i]];
+  }
+  return current;
+}
+
+function normalizeDependency(dep) {
+  if (!dep) return null;
+  if (typeof dep === 'string') return COMMON_DEPENDENCIES[dep] || null;
+  if (!dep.url) return null;
+  return {
+    global: dep.global ? String(dep.global) : '',
+    url: String(dep.url),
+    kind: dep.kind === 'style' || dep.kind === 'module' ? dep.kind : 'script'
+  };
+}
+
+function dependencyKey(dep) {
+  return (dep.kind || 'script') + ':' + dep.url;
+}
+
+function missingDependencies(text, explicitDeps) {
+  var deps = [];
+  var seen = Object.create(null);
+  function add(dep) {
+    dep = normalizeDependency(dep);
+    if (!dep) return;
+    if (dep.global && readGlobal(dep.global)) return;
+    var key = dependencyKey(dep);
+    if (seen[key]) return;
+    seen[key] = true;
+    deps.push(dep);
+  }
+
+  (explicitDeps || []).forEach(add);
+
+  var source = String(text || '');
+  if (source.indexOf('d3.') !== -1 && !window.d3) add(COMMON_DEPENDENCIES.d3);
+  if ((source.indexOf('Chart.') !== -1 || source.indexOf('new Chart') !== -1) && !window.Chart) add(COMMON_DEPENDENCIES.Chart);
+  if (source.indexOf('gsap.') !== -1 && !window.gsap) add(COMMON_DEPENDENCIES.gsap);
+  if (source.indexOf('THREE.') !== -1 && !window.THREE) add(COMMON_DEPENDENCIES.THREE);
+  if ((source.indexOf('anime.') !== -1 || source.indexOf('anime(') !== -1) && !window.anime) add(COMMON_DEPENDENCIES.anime);
+  if (source.indexOf('Matter.') !== -1 && !window.Matter) add(COMMON_DEPENDENCIES.Matter);
+  if ((source.indexOf('new p5') !== -1 || source.indexOf('p5.') !== -1) && !window.p5) add(COMMON_DEPENDENCIES.p5);
+  if (source.indexOf('math.') !== -1 && !window.math) add(COMMON_DEPENDENCIES.math);
+  if ((source.indexOf('L.map') !== -1 || source.indexOf('L.tileLayer') !== -1) && !window.L) add(COMMON_DEPENDENCIES.L);
+  if (source.indexOf('mermaid.') !== -1 && !window.mermaid) add(COMMON_DEPENDENCIES.mermaid);
+  return deps;
+}
+
+function loadDependency(dep, done) {
+  dep = normalizeDependency(dep);
+  if (!dep) {
+    done();
+    return;
+  }
+  if (dep.global && readGlobal(dep.global)) {
+    done();
+    return;
+  }
+  var key = dependencyKey(dep);
+  var existing = document.querySelector('[data-primoria-dep="' + key.replace(/"/g, '') + '"]');
+  if (existing) {
+    existing.addEventListener('load', done, { once: true });
+    existing.addEventListener('error', done, { once: true });
+    return;
+  }
+
+  if (dep.kind === 'style') {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = dep.url;
+    link.setAttribute('data-primoria-dep', key);
+    link.onload = done;
+    link.onerror = function() {
+      console.warn('[primoria-widget] dependency failed to load', dep.url);
+      done();
+    };
+    document.head.appendChild(link);
+    return;
+  }
+
+  var script = document.createElement('script');
+  script.setAttribute('data-primoria-dep', key);
+  script.src = dep.url;
+  if (dep.kind === 'module') script.type = 'module';
+  script.onload = done;
+  script.onerror = function() {
+    console.warn('[primoria-widget] dependency failed to load', dep.url);
+    done();
+  };
+  document.head.appendChild(script);
+}
+
+function loadDependencies(deps, done) {
+  if (!deps.length) {
+    done();
+    return;
+  }
+  loadDependency(deps[0], function() {
+    loadDependencies(deps.slice(1), done);
+  });
+}
+
+function runScripts(content, scripts, index, dependencies) {
   if (index >= scripts.length) {
     notifyWidgetReady();
     return;
@@ -193,32 +341,34 @@ function runScripts(content, scripts, index) {
   var info = scripts[index];
   var key = scriptKey(info.src || info.text || String(index));
   if (content.getAttribute('data-exec-' + key)) {
-    runScripts(content, scripts, index + 1);
+    runScripts(content, scripts, index + 1, dependencies);
     return;
   }
-  content.setAttribute('data-exec-' + key, '1');
 
-  try {
-    var nextScript = document.createElement('script');
-    var type = info.type || '';
-    if (!type && info.text && /\\b(import\\s|export\\s|import\\()/.test(info.text)) {
-      type = 'module';
+  loadDependencies(missingDependencies(info.text, dependencies), function() {
+    content.setAttribute('data-exec-' + key, '1');
+    try {
+      var nextScript = document.createElement('script');
+      var type = info.type || '';
+      if (!type && info.text && (info.text.indexOf('import ') !== -1 || info.text.indexOf('export ') !== -1 || info.text.indexOf('import(') !== -1)) {
+        type = 'module';
+      }
+      if (type) nextScript.type = type;
+      if (info.src) {
+        nextScript.src = info.src;
+        nextScript.onload = function() { runScripts(content, scripts, index + 1, dependencies); };
+        nextScript.onerror = function() { runScripts(content, scripts, index + 1, dependencies); };
+        content.appendChild(nextScript);
+      } else {
+        nextScript.textContent = info.text || '';
+        content.appendChild(nextScript);
+        runScripts(content, scripts, index + 1, dependencies);
+      }
+    } catch (error) {
+      console.warn('[primoria-widget] script execution failed', error);
+      runScripts(content, scripts, index + 1, dependencies);
     }
-    if (type) nextScript.type = type;
-    if (info.src) {
-      nextScript.src = info.src;
-      nextScript.onload = function() { runScripts(content, scripts, index + 1); };
-      nextScript.onerror = function() { runScripts(content, scripts, index + 1); };
-      content.appendChild(nextScript);
-    } else {
-      nextScript.textContent = info.text || '';
-      content.appendChild(nextScript);
-      runScripts(content, scripts, index + 1);
-    }
-  } catch (error) {
-    console.warn('[primoria-widget] script execution failed', error);
-    runScripts(content, scripts, index + 1);
-  }
+  });
 }
 
 window.addEventListener('message', function(event) {
@@ -258,7 +408,7 @@ window.addEventListener('message', function(event) {
     content.innerHTML = tmp.innerHTML;
   }
   if (event.data.executeScripts !== false && allScriptsClosed) {
-    runScripts(content, scripts, 0);
+    runScripts(content, scripts, 0, event.data.dependencies || []);
   }
   reportHeight();
 });
@@ -350,7 +500,7 @@ function assembleShell() {
 </html>`;
 }
 
-export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComponentProps) {
+export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: WidgetRendererComponentProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shellReadyRef = useRef(false);
   const committedHtmlRef = useRef("");
@@ -435,15 +585,15 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
 
     if (!loaded || !iframe.contentWindow || html === committedHtmlRef.current) return;
     committedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, executeScripts: false }, "*");
-  }, [html, loaded]);
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies, executeScripts: false }, "*");
+  }, [html, dependencies, loaded]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!htmlSettled || !html || !loaded || !iframe?.contentWindow || html === executedHtmlRef.current) return;
     executedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, executeScripts: true }, "*");
-  }, [html, htmlSettled, loaded]);
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies, executeScripts: true }, "*");
+  }, [html, dependencies, htmlSettled, loaded]);
 
   const showIframe = Boolean(html);
   const isStreaming = Boolean(html) && !htmlSettled;

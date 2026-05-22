@@ -149,6 +149,7 @@ export function ToolCard({
           title={artifact.title}
           description={artifact.description}
           html={artifact.html}
+          dependencies={artifact.dependencies}
           onSendPrompt={onSendPrompt}
         />
       </div>
