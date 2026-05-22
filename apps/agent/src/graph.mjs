@@ -242,23 +242,44 @@ function stripJsCommentsAndStrings(source) {
   return out;
 }
 
+/**
+ * @param {unknown} dependencies
+ */
+function normalizeWidgetDependencies(dependencies) {
+  if (!Array.isArray(dependencies)) return [];
+  return dependencies
+    .map((dep) => ({
+      url: String(dep?.url ?? "").trim(),
+      global: dep?.global == null ? undefined : String(dep.global).trim(),
+      kind: dep?.kind === "style" || dep?.kind === "module" ? dep.kind : "script",
+    }))
+    .filter((dep) => /^https:\/\//.test(dep.url))
+    .slice(0, 6);
+}
+
 const widgetRendererTool = tool(
-  async ({ title, description, html }) => {
+  async ({ title, description, html, dependencies }) => {
     return JSON.stringify({
       type: "html_widget",
       title: title || "Interactive learning widget",
       description,
       html: normalizeWidgetHtml(html),
+      dependencies: normalizeWidgetDependencies(dependencies),
     });
   },
   {
     name: "widgetRenderer",
     description:
-      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB. Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code. Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI. Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye. For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration.",
+      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. If you use an external browser library, include it in the optional dependencies array as {url, global, kind} using an https CDN URL; do not rely on undeclared globals. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB. Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code. Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI. Avoid D3 unless absolutely necessary; for SVG, prefer plain DOM APIs such as createElementNS/setAttribute over complex D3 chains. Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye. For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration.",
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),
       html: z.string(),
+      dependencies: z.array(z.object({
+        url: z.string(),
+        global: z.string().optional(),
+        kind: z.enum(["script", "module", "style"]).optional(),
+      })).optional(),
     }),
     // Avoid a second post-tool model call with the full HTML in context.
     // That second call is where Anthropic-compatible MiniMax often hit the

@@ -31,6 +31,11 @@ const RenderWidgetParams = z.object({
   title: z.string().optional(),
   description: z.string(),
   html: z.string(),
+  dependencies: z.array(z.object({
+    url: z.string(),
+    global: z.string().optional(),
+    kind: z.enum(["script", "module", "style"]).optional(),
+  })).optional(),
 });
 
 const GenerateCourseParams = z.object({
@@ -95,10 +100,15 @@ function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>
     .filter(Boolean);
 }
 
-function WidgetCard({ title, description, html }: z.infer<typeof RenderWidgetParams>) {
+function WidgetCard({ title, description, html, dependencies }: z.infer<typeof RenderWidgetParams>) {
   return (
     <div className="message-row tool widget-renderer-row">
-      <WidgetRenderer title={title || "Interactive learning widget"} description={description} html={html} />
+      <WidgetRenderer
+        title={title || "Interactive learning widget"}
+        description={description}
+        html={html}
+        dependencies={dependencies}
+      />
     </div>
   );
 }

@@ -20,11 +20,18 @@ export type TutorAgentLabel =
   | "Code agent"
   | "Course agent";
 
+export type WidgetDependency = {
+  url: string;
+  global?: string;
+  kind?: "script" | "module" | "style";
+};
+
 export type HtmlWidgetArtifact = {
   type: "html_widget";
   title: string;
   description: string;
   html: string;
+  dependencies?: WidgetDependency[];
 };
 
 export type VisualizationPlanArtifact = {
