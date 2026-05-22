@@ -74,25 +74,46 @@ svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #f1eee8; stroke: 
 
 const FORM_STYLES_CSS = `
 * { box-sizing: border-box; margin: 0; }
-html { background: transparent; }
+html {
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden !important;
+}
 body {
+  width: 100%;
   min-width: 0;
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
   color: var(--color-text-primary);
   background: transparent;
+  overflow: hidden !important;
   -webkit-font-smoothing: antialiased;
 }
 #content {
   width: 100%;
+  max-width: 100%;
   min-width: 0;
-  overflow: hidden;
+  overflow: hidden !important;
   text-align: left;
 }
+#content,
+#content * {
+  max-width: 100% !important;
+}
 #content > * {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
   margin-left: 0 !important;
   margin-right: auto !important;
+}
+#content [style*="100vh"] {
+  min-height: 0 !important;
+}
+#content [style*="overflow"] {
+  overflow: visible !important;
 }
 #content > * + * { margin-top: 12px; }
 button {
@@ -217,7 +238,7 @@ window.addEventListener('message', function(event) {
   var content = document.getElementById('content');
   if (!content) return;
 
-  var rawHtml = String(event.data.html || '');
+  var rawHtml = sanitizeWidgetHtml(String(event.data.html || ''));
   var tmp = document.createElement('div');
   tmp.innerHTML = rawHtml;
   var scripts = [];
@@ -252,9 +273,19 @@ window.addEventListener('message', function(event) {
   reportHeight();
 });
 
+function sanitizeWidgetHtml(rawHtml) {
+  return rawHtml
+    .replace(/min-height\s*:\s*100vh\s*;?/gi, 'min-height:0;')
+    .replace(/height\s*:\s*100vh\s*;?/gi, 'height:auto;')
+    .replace(/overflow-y\s*:\s*(auto|scroll)\s*;?/gi, 'overflow-y:visible;')
+    .replace(/overflow\s*:\s*(auto|scroll)\s*;?/gi, 'overflow:visible;');
+}
+
 function reportHeight() {
   var content = document.getElementById('content');
   if (!content) return;
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
   var rectHeight = Math.ceil(content.getBoundingClientRect().height);
   var height = Math.max(content.scrollHeight, rectHeight, 80);
   window.parent.postMessage({ type: 'primoria-widget-resize', height: height }, '*');
