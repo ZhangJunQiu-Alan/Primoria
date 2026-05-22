@@ -179,8 +179,17 @@ function scriptKey(text) {
   return 's' + Math.abs(hash);
 }
 
+function notifyWidgetReady() {
+  try { document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true, cancelable: true })); } catch (_) {}
+  try { window.dispatchEvent(new Event('load')); } catch (_) {}
+  try { reportHeight(); } catch (_) {}
+}
+
 function runScripts(content, scripts, index) {
-  if (index >= scripts.length) return;
+  if (index >= scripts.length) {
+    notifyWidgetReady();
+    return;
+  }
   var info = scripts[index];
   var key = scriptKey(info.src || info.text || String(index));
   if (content.getAttribute('data-exec-' + key)) {
@@ -248,7 +257,7 @@ window.addEventListener('message', function(event) {
   } else {
     content.innerHTML = tmp.innerHTML;
   }
-  if (allScriptsClosed) {
+  if (event.data.executeScripts !== false && allScriptsClosed) {
     runScripts(content, scripts, 0);
   }
   reportHeight();
@@ -345,6 +354,7 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shellReadyRef = useRef(false);
   const committedHtmlRef = useRef("");
+  const executedHtmlRef = useRef("");
   const [height, setHeight] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [htmlSettled, setHtmlSettled] = useState(false);
@@ -384,6 +394,7 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
     setPrevHtml(html);
     setHtmlSettled(false);
     setFadingOut(false);
+    executedHtmlRef.current = "";
   }
 
   useEffect(() => {
@@ -424,8 +435,15 @@ export function WidgetRenderer({ html, title, onSendPrompt }: WidgetRendererComp
 
     if (!loaded || !iframe.contentWindow || html === committedHtmlRef.current) return;
     committedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html }, "*");
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, executeScripts: false }, "*");
   }, [html, loaded]);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!htmlSettled || !html || !loaded || !iframe?.contentWindow || html === executedHtmlRef.current) return;
+    executedHtmlRef.current = html;
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, executeScripts: true }, "*");
+  }, [html, htmlSettled, loaded]);
 
   const showIframe = Boolean(html);
   const isStreaming = Boolean(html) && !htmlSettled;
