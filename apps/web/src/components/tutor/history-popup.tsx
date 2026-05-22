@@ -1,6 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  createNewThread,
+  ensureThreadSummary,
+  getCurrentThreadId,
+  readThreadHistory,
+  setCurrentThreadId,
+  THREAD_EVENT_NAME,
+  type CopilotThreadSummary,
+} from "@/lib/copilot-thread-history";
 
 const CHAT_STORAGE_KEY = "primoria:tutor-chat-messages";
 
@@ -10,7 +19,7 @@ type StoredMessage = {
   content?: string;
 };
 
-function readSession(): { messageCount: number; lastUserPreview: string | null } {
+function readLegacySession(): { messageCount: number; lastUserPreview: string | null } {
   try {
     const raw = window.localStorage.getItem(CHAT_STORAGE_KEY);
     if (!raw) return { messageCount: 0, lastUserPreview: null };
@@ -26,33 +35,69 @@ function readSession(): { messageCount: number; lastUserPreview: string | null }
   }
 }
 
+function readSessions(useCopilotKit: boolean) {
+  if (!useCopilotKit) {
+    const legacy = readLegacySession();
+    return {
+      currentThreadId: "legacy-local-chat",
+      sessions: legacy.messageCount > 0
+        ? [{
+            id: "legacy-local-chat",
+            title: legacy.lastUserPreview ?? "Current tutor session",
+            messageCount: legacy.messageCount,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+          }]
+        : [],
+    };
+  }
+
+  const currentThreadId = getCurrentThreadId();
+  ensureThreadSummary(currentThreadId);
+  return {
+    currentThreadId,
+    sessions: readThreadHistory(),
+  };
+}
+
 export function ChatHistoryPopup({
   open,
   onClose,
   onNewChat,
+  onSelectChat,
+  useCopilotKit = false,
 }: {
   open: boolean;
   onClose: () => void;
   onNewChat: () => void;
+  onSelectChat?: (threadId: string) => void;
+  useCopilotKit?: boolean;
 }) {
-  const [session, setSession] = useState<{ messageCount: number; lastUserPreview: string | null }>({
-    messageCount: 0,
-    lastUserPreview: null,
-  });
+  const [currentThreadId, setCurrentThread] = useState("legacy-local-chat");
+  const [sessions, setSessions] = useState<CopilotThreadSummary[]>([]);
 
   useEffect(() => {
     if (!open) return;
-    setSession(readSession());
+    const refresh = () => {
+      const next = readSessions(useCopilotKit);
+      setCurrentThread(next.currentThreadId);
+      setSessions(next.sessions);
+    };
+    refresh();
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") onClose();
     }
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+    window.addEventListener(THREAD_EVENT_NAME, refresh);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener(THREAD_EVENT_NAME, refresh);
+    };
+  }, [open, onClose, useCopilotKit]);
 
   if (!open) return null;
 
-  const hasSession = session.messageCount > 0;
+  const hasSession = sessions.length > 0;
 
   return (
     <div className="history-overlay" role="dialog" aria-modal="true" aria-label="Chat history">
@@ -69,6 +114,10 @@ export function ChatHistoryPopup({
           type="button"
           className="history-new"
           onClick={() => {
+            if (useCopilotKit) {
+              const threadId = createNewThread();
+              onSelectChat?.(threadId);
+            }
             onNewChat();
             onClose();
           }}
@@ -81,12 +130,27 @@ export function ChatHistoryPopup({
           <>
             <div className="history-section-title">Recent</div>
             <ul className="history-list">
-              <li>
-                <button type="button" className="history-item active">
-                  <strong>{session.lastUserPreview ?? "Current tutor session"}</strong>
-                  <span>{session.messageCount} messages · live</span>
-                </button>
-              </li>
+              {sessions.map((session) => {
+                const active = session.id === currentThreadId;
+                return (
+                  <li key={session.id}>
+                    <button
+                      type="button"
+                      className={`history-item${active ? " active" : ""}`}
+                      onClick={() => {
+                        if (useCopilotKit) {
+                          setCurrentThreadId(session.id);
+                          onSelectChat?.(session.id);
+                        }
+                        onClose();
+                      }}
+                    >
+                      <strong>{session.title || "Tutor chat"}</strong>
+                      <span>{session.messageCount} messages · {active ? "live" : new Date(session.updatedAt).toLocaleDateString()}</span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </>
         ) : (
@@ -96,7 +160,9 @@ export function ChatHistoryPopup({
         )}
 
         <p className="history-hint">
-          Older sessions will appear here once multi-session storage is wired up.
+          {useCopilotKit
+            ? "CopilotKit sessions are stored locally by thread id on this browser."
+            : "Older sessions will appear here once multi-session storage is wired up."}
         </p>
       </div>
     </div>

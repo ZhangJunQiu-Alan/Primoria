@@ -54,8 +54,10 @@ export function TutorWorkspaceClient() {
         />
         <ChatHistoryPopup
           open={historyOpen}
+          useCopilotKit={USE_COPILOTKIT}
           onClose={() => setHistoryOpen(false)}
           onNewChat={() => setChatResetKey((key) => key + 1)}
+          onSelectChat={() => setChatResetKey((key) => key + 1)}
         />
       </section>
     </>
