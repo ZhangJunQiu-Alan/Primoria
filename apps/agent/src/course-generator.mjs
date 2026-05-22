@@ -711,30 +711,110 @@ function messageContentToString(content) {
 
 /**
  * @param {string} text
+ * @returns {unknown}
  */
 function parseJsonObject(text) {
   const trimmed = text.trim();
+  /** @type {string[]} */
   const candidates = [];
-  candidates.push(trimmed);
-  const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  if (fenced) candidates.push(fenced[1]);
+  pushUnique(candidates, trimmed);
+
+  const fencedBlocks = [...trimmed.matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)];
+  for (const match of fencedBlocks) pushUnique(candidates, match[1]);
+
+  const balanced = extractBalancedJsonObjects(trimmed);
+  for (const candidate of balanced) pushUnique(candidates, candidate);
+
   const start = trimmed.indexOf("{");
   const end = trimmed.lastIndexOf("}");
-  if (start !== -1 && end > start) candidates.push(trimmed.slice(start, end + 1));
+  if (start !== -1 && end > start) pushUnique(candidates, trimmed.slice(start, end + 1));
 
   for (const candidate of candidates) {
+    const parsed = tryParseCourseJson(candidate);
+    if (parsed !== undefined) return parsed;
+  }
+  const preview = trimmed.replace(/\s+/g, " ").slice(0, 240);
+  throw new Error(`Course generator did not return valid JSON. Preview: ${preview}`);
+}
+
+/**
+ * @param {string[]} candidates
+ * @param {string | undefined} value
+ */
+function pushUnique(candidates, value) {
+  const text = String(value ?? "").trim();
+  if (text && !candidates.includes(text)) candidates.push(text);
+}
+
+/**
+ * @param {string} text
+ * @returns {unknown | undefined}
+ */
+function tryParseCourseJson(text) {
+  const variants = [text, repairLikelyJson(text)];
+  for (const variant of variants) {
     try {
-      return JSON.parse(candidate);
-    } catch {
-      // try repaired candidate below
-    }
-    try {
-      return JSON.parse(repairLikelyJson(candidate));
+      const parsed = JSON.parse(variant);
+      if (Array.isArray(parsed)) {
+        const textParts = parsed
+          .map((part) => part && typeof part === "object" && "text" in part ? String(part.text) : "")
+          .filter(Boolean)
+          .join("\n");
+        if (textParts) {
+          return parseJsonObject(textParts);
+        }
+      }
+      return parsed;
     } catch {
       // keep trying
     }
   }
-  throw new Error("Course generator did not return valid JSON.");
+  return undefined;
+}
+
+/**
+ * Extract balanced JSON object substrings while ignoring braces inside quoted strings.
+ * @param {string} text
+ * @returns {string[]}
+ */
+function extractBalancedJsonObjects(text) {
+  /** @type {string[]} */
+  const results = [];
+  let start = -1;
+  let depth = 0;
+  /** @type {string | null} */
+  let quote = null;
+  let escaped = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (quote) {
+      if (escaped) {
+        escaped = false;
+      } else if (ch === "\\") {
+        escaped = true;
+      } else if (ch === quote) {
+        quote = null;
+      }
+      continue;
+    }
+    if (ch === "\"" || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (ch === "{") {
+      if (depth === 0) start = i;
+      depth++;
+    } else if (ch === "}" && depth > 0) {
+      depth--;
+      if (depth === 0 && start !== -1) {
+        results.push(text.slice(start, i + 1));
+        start = -1;
+      }
+    }
+  }
+
+  return results.sort((a, b) => b.length - a.length);
 }
 
 /**

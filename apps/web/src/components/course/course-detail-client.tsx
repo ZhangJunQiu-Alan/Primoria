@@ -1,24 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  CopilotChat,
-  CopilotChatAssistantMessage,
-  CopilotChatMessageView,
-  CopilotChatReasoningMessage,
-  type CopilotChatAssistantMessageProps,
-  type CopilotChatMessageViewProps,
-  type CopilotChatReasoningMessageProps,
-} from "@copilotkit/react-core/v2";
 import { useCopilotAction, useCopilotAdditionalInstructions, useCopilotReadable } from "@copilotkit/react-core";
 import { BlockRenderer } from "./block-renderer";
-import { usePrimoriaGenerativeUI, sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
 const DEFAULT_SIDEBAR_WIDTH = 410;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
+
+type CourseLocalMessage = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  isError?: boolean;
+};
 
 function blockToContext(block: CourseBlock) {
   const title = block.title ?? block.type;
@@ -88,49 +85,64 @@ function clampSidebarWidth(width: number) {
   return Math.min(MAX_SIDEBAR_WIDTH, Math.max(MIN_SIDEBAR_WIDTH, width));
 }
 
-function uuidFromString(input: string) {
-  let hash1 = 0x811c9dc5;
-  let hash2 = 0x01000193;
-  for (let index = 0; index < input.length; index += 1) {
-    const code = input.charCodeAt(index);
-    hash1 ^= code;
-    hash1 = Math.imul(hash1, 0x01000193);
-    hash2 ^= code + index;
-    hash2 = Math.imul(hash2, 0x811c9dc5);
+function CourseLocalChat({
+  messages,
+  isLoading,
+  placeholder,
+  onSubmit,
+}: {
+  messages: CourseLocalMessage[];
+  isLoading: boolean;
+  placeholder: string;
+  onSubmit: (value: string) => void;
+}) {
+  const [draft, setDraft] = useState("");
+
+  function submit() {
+    const value = draft.trim();
+    if (!value || isLoading) return;
+    setDraft("");
+    onSubmit(value);
   }
-  const hex = `${hash1 >>> 0}`.padStart(8, "0") + `${hash2 >>> 0}`.padStart(8, "0");
-  const expanded = (hex + hex.split("").reverse().join("")).slice(0, 32);
-  return `${expanded.slice(0, 8)}-${expanded.slice(8, 12)}-4${expanded.slice(13, 16)}-a${expanded.slice(17, 20)}-${expanded.slice(20, 32)}`;
+
+  return (
+    <div className="course-local-chat-view">
+      <div className="course-local-messages" aria-live="polite">
+        {messages.length === 0 ? (
+          <div className="course-local-empty">
+            <strong>Ask about this block</strong>
+            <span>Use the chips above, or type your own question.</span>
+          </div>
+        ) : (
+          messages.map((message) => (
+            <div key={message.id} className={`course-local-message ${message.role}${message.role === "assistant" && message.isError ? " error" : ""}`}>
+              {message.content}
+            </div>
+          ))
+        )}
+        {isLoading ? <div className="course-local-message assistant loading">Thinking…</div> : null}
+      </div>
+      <div className="course-local-input-wrap">
+        <textarea
+          value={draft}
+          placeholder={placeholder}
+          disabled={isLoading}
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault();
+              submit();
+            }
+          }}
+          rows={2}
+        />
+        <button type="button" disabled={isLoading || !draft.trim()} onClick={submit}>
+          Send
+        </button>
+      </div>
+    </div>
+  );
 }
-
-const CourseAssistantMessage = Object.assign(
-  function CourseAssistantMessage(props: CopilotChatAssistantMessageProps) {
-    const safeContent = sanitizeCopilotAssistantText(props.message.content);
-    const message = { ...props.message, content: safeContent };
-    return <CopilotChatAssistantMessage {...props} message={message} />;
-  },
-  CopilotChatAssistantMessage,
-);
-
-const CourseReasoningMessage = Object.assign(
-  function CourseReasoningMessage(_props: CopilotChatReasoningMessageProps) {
-    return null;
-  },
-  CopilotChatReasoningMessage,
-);
-
-const CourseMessageView = Object.assign(
-  function CourseMessageView(props: CopilotChatMessageViewProps) {
-    return (
-      <CopilotChatMessageView
-        {...props}
-        assistantMessage={CourseAssistantMessage}
-        reasoningMessage={CourseReasoningMessage}
-      />
-    );
-  },
-  CopilotChatMessageView,
-);
 
 function CourseAIContextBridge({
   course,
@@ -241,15 +253,53 @@ function CourseAIAssistantPanel({
   onWidthChange: (width: number) => void;
   onCourseUpdated: (course: Course) => void;
 }) {
-  usePrimoriaGenerativeUI();
-
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
   const startWidthRef = useRef(DEFAULT_SIDEBAR_WIDTH);
-  const threadId = useMemo(() => uuidFromString(`course:${course.id}`), [course.id]);
+  const [localMessages, setLocalMessages] = useState<CourseLocalMessage[]>([]);
+  const [localLoading, setLocalLoading] = useState(false);
   const [directRevisionStatus, setDirectRevisionStatus] = useState<
     { status: "idle" | "executing" | "complete" | "error"; message: string }
   >({ status: "idle", message: "" });
+
+  const appendLocalMessage = useCallback((message: Omit<CourseLocalMessage, "id">) => {
+    setLocalMessages((current) => [...current, { ...message, id: crypto.randomUUID() }]);
+  }, []);
+
+  const askCourseCopilot = useCallback(
+    async (message: string) => {
+      const trimmed = message.trim();
+      if (!trimmed || localLoading) return;
+      appendLocalMessage({ role: "user", content: trimmed });
+      setLocalLoading(true);
+      try {
+        const response = await fetch(`/api/courses/${course.id}/chat`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            message: trimmed,
+            selectedBlockId: selectedBlock?.id ?? null,
+            settings: readSettings(),
+          }),
+        });
+        const data = (await response.json()) as { reply?: string; error?: string };
+        if (!response.ok) throw new Error(data.error ?? "Course Copilot failed");
+        appendLocalMessage({
+          role: "assistant",
+          content: data.reply?.trim() || "我读到了上下文，但这次没有生成有效回答。请换个问法再试一次。",
+        });
+      } catch (error) {
+        appendLocalMessage({
+          role: "assistant",
+          content: error instanceof Error ? error.message : "Course Copilot failed",
+          isError: true,
+        });
+      } finally {
+        setLocalLoading(false);
+      }
+    },
+    [appendLocalMessage, course.id, localLoading, selectedBlock?.id],
+  );
 
   const reviseSelectedBlockDirectly = useCallback(
     async (instruction: string) => {
@@ -400,15 +450,8 @@ function CourseAIAssistantPanel({
               <button
                 key={prompt}
                 type="button"
-                onClick={() => {
-                  const textarea = document.querySelector<HTMLTextAreaElement>(
-                    ".course-ai-chat [data-testid='copilot-chat-textarea']",
-                  );
-                  if (!textarea) return;
-                  textarea.focus();
-                  textarea.value = prompt;
-                  textarea.dispatchEvent(new Event("input", { bubbles: true }));
-                }}
+                disabled={localLoading}
+                onClick={() => void askCourseCopilot(prompt)}
               >
                 {prompt}
               </button>
@@ -421,17 +464,13 @@ function CourseAIAssistantPanel({
             </div>
           ) : null}
           <div className="course-ai-chat">
-            <CopilotChat
-              threadId={threadId}
-              messageView={CourseMessageView}
-              welcomeScreen={false}
-              input={{
-                onSubmitMessage: (value: string) => {
-                  if (interceptCourseRevision(value)) return;
-                },
-              }}
-              labels={{
-                chatInputPlaceholder: "Ask about this course, or create the next one…",
+            <CourseLocalChat
+              messages={localMessages}
+              isLoading={localLoading}
+              placeholder="Ask about this course…"
+              onSubmit={(value) => {
+                if (interceptCourseRevision(value)) return;
+                void askCourseCopilot(value);
               }}
             />
           </div>
@@ -444,9 +483,6 @@ function CourseAIAssistantPanel({
 export function CourseDetailClient({ initialCourse }: { initialCourse: Course }) {
   const [course, setCourse] = useState<Course>(initialCourse);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
-  const [comment, setComment] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
-  const [editError, setEditError] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
 
@@ -463,33 +499,6 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
   }, [sidebarCollapsed, sidebarWidth]);
 
   const selectedBlock = course.blocks.find((b) => b.id === selectedBlockId) ?? null;
-
-  async function submitComment() {
-    if (!selectedBlock || !comment.trim() || isEditing) return;
-    setIsEditing(true);
-    setEditError(null);
-    try {
-      const response = await fetch(`/api/courses/${course.id}/edit`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          blockId: selectedBlock.id,
-          comment: comment.trim(),
-          settings: readSettings(),
-        }),
-      });
-      const data = (await response.json()) as { course?: Course; block?: CourseBlock; error?: string };
-      if (!response.ok || !data.course) {
-        throw new Error(data.error ?? "Edit failed");
-      }
-      setCourse(data.course);
-      setComment("");
-    } catch (error) {
-      setEditError(error instanceof Error ? error.message : "Edit failed");
-    } finally {
-      setIsEditing(false);
-    }
-  }
 
   return (
     <div
@@ -509,41 +518,6 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
             </button>
           ))}
         </div>
-        <section className="course-editor-panel inline-editor-panel">
-          <div className="course-editor-header">
-            <strong>Edit selected block</strong>
-            <p>Click a block above, then tell the AI what to revise in place.</p>
-          </div>
-          <div className="course-editor-selection">
-            {selectedBlock ? (
-              <>
-                <span className="course-editor-tag">{selectedBlock.type}</span>
-                <strong>{selectedBlock.title ?? selectedBlock.type}</strong>
-              </>
-            ) : (
-              <span className="course-editor-empty">No block selected.</span>
-            )}
-          </div>
-          <textarea
-            className="course-editor-textarea"
-            placeholder="e.g. 这个 analogy 不够直观，能换成日常生活的例子吗？"
-            value={comment}
-            disabled={!selectedBlock || isEditing}
-            onChange={(event) => setComment(event.target.value)}
-            rows={4}
-          />
-          <div className="course-editor-actions">
-            <button
-              type="button"
-              className="primary-btn"
-              disabled={!selectedBlock || !comment.trim() || isEditing}
-              onClick={() => void submitComment()}
-            >
-              {isEditing ? "Revising…" : "Revise block"}
-            </button>
-          </div>
-          {editError ? <p className="course-editor-error">{editError}</p> : null}
-        </section>
       </div>
       <CourseAIAssistantPanel
         course={course}

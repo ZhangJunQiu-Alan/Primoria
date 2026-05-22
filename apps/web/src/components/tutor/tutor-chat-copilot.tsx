@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CopilotChat,
   CopilotChatAssistantMessage,
@@ -13,7 +13,7 @@ import {
   type CopilotChatReasoningMessageProps,
 } from "@copilotkit/react-core/v2";
 import { usePrimoriaGenerativeUI, sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
-import { ensureThreadSummary, getCurrentThreadId } from "@/lib/copilot-thread-history";
+import { ensureThreadSummary, getCurrentThreadId, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
 
 const PrimoriaAssistantMessage = Object.assign(
   function PrimoriaAssistantMessage(props: CopilotChatAssistantMessageProps) {
@@ -45,8 +45,7 @@ const PrimoriaMessageView = Object.assign(
 );
 
 
-function CopilotThreadHistoryRecorder() {
-  const threadId = getCurrentThreadId();
+function CopilotThreadHistoryRecorder({ threadId }: { threadId: string }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const lastRecordedRef = useRef<string | null>(null);
 
@@ -73,13 +72,30 @@ function CopilotThreadHistoryRecorder() {
   return null;
 }
 
+function useCurrentCopilotThreadId() {
+  const [threadId, setThreadId] = useState(() => getCurrentThreadId());
+
+  useEffect(() => {
+    function onThreadChanged() {
+      setThreadId(getCurrentThreadId());
+    }
+    window.addEventListener(THREAD_EVENT_NAME, onThreadChanged);
+    return () => window.removeEventListener(THREAD_EVENT_NAME, onThreadChanged);
+  }, []);
+
+  return threadId;
+}
+
 export function TutorChatCopilot() {
   usePrimoriaGenerativeUI();
+  const threadId = useCurrentCopilotThreadId();
 
   return (
-    <div className="copilot-chat-shell">
-      <CopilotThreadHistoryRecorder />
+    <div className="copilot-chat-shell" aria-busy="false">
+      <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} />
       <CopilotChat
+        key={`chat-${threadId}`}
+        threadId={threadId}
         messageView={PrimoriaMessageView}
         labels={{
           chatInputPlaceholder: "Ask anything, or ask for an interactive visualization…",

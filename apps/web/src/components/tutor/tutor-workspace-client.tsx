@@ -56,8 +56,12 @@ export function TutorWorkspaceClient() {
           open={historyOpen}
           useCopilotKit={USE_COPILOTKIT}
           onClose={() => setHistoryOpen(false)}
-          onNewChat={() => setChatResetKey((key) => key + 1)}
-          onSelectChat={() => setChatResetKey((key) => key + 1)}
+          onNewChat={() => {
+            if (!USE_COPILOTKIT) setChatResetKey((key) => key + 1);
+          }}
+          onSelectChat={() => {
+            if (!USE_COPILOTKIT) setChatResetKey((key) => key + 1);
+          }}
         />
       </section>
     </>

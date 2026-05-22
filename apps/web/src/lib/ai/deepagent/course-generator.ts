@@ -206,18 +206,92 @@ function messageContentToString(content: unknown): string {
 
 function parseJsonObject(text: string): unknown {
   const trimmed = text.trim();
-  try {
-    return JSON.parse(trimmed);
-  } catch {
-    const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-    if (fenced) return JSON.parse(fenced[1]);
-    const start = trimmed.indexOf("{");
-    const end = trimmed.lastIndexOf("}");
-    if (start !== -1 && end > start) {
-      return JSON.parse(trimmed.slice(start, end + 1));
-    }
-    throw new Error("Course generator did not return valid JSON.");
+  const candidates: string[] = [];
+  pushUnique(candidates, trimmed);
+
+  for (const match of trimmed.matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)) {
+    pushUnique(candidates, match[1]);
   }
+  for (const candidate of extractBalancedJsonObjects(trimmed)) {
+    pushUnique(candidates, candidate);
+  }
+
+  const start = trimmed.indexOf("{");
+  const end = trimmed.lastIndexOf("}");
+  if (start !== -1 && end > start) pushUnique(candidates, trimmed.slice(start, end + 1));
+
+  for (const candidate of candidates) {
+    const parsed = tryParseCourseJson(candidate);
+    if (parsed !== undefined) return parsed;
+  }
+  throw new Error(`Course generator did not return valid JSON. Preview: ${trimmed.replace(/\s+/g, " ").slice(0, 240)}`);
+}
+
+function pushUnique(candidates: string[], value: string | undefined) {
+  const text = String(value ?? "").trim();
+  if (text && !candidates.includes(text)) candidates.push(text);
+}
+
+function tryParseCourseJson(text: string): unknown | undefined {
+  for (const variant of [text, repairLikelyJson(text)]) {
+    try {
+      const parsed = JSON.parse(variant) as unknown;
+      if (Array.isArray(parsed)) {
+        const textParts = parsed
+          .map((part) => part && typeof part === "object" && "text" in part ? String((part as { text: unknown }).text) : "")
+          .filter(Boolean)
+          .join("\n");
+        if (textParts) return parseJsonObject(textParts);
+      }
+      return parsed;
+    } catch {
+      // keep trying variants
+    }
+  }
+  return undefined;
+}
+
+function extractBalancedJsonObjects(text: string) {
+  const results: string[] = [];
+  let start = -1;
+  let depth = 0;
+  let quote: string | null = null;
+  let escaped = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (ch === "\\") escaped = true;
+      else if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === "\"" || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (ch === "{") {
+      if (depth === 0) start = i;
+      depth += 1;
+    } else if (ch === "}" && depth > 0) {
+      depth -= 1;
+      if (depth === 0 && start !== -1) {
+        results.push(text.slice(start, i + 1));
+        start = -1;
+      }
+    }
+  }
+
+  return results.sort((a, b) => b.length - a.length);
+}
+
+function repairLikelyJson(text: string) {
+  return text
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/,\s*([}\]])/g, "$1")
+    .replace(/},\s*"type"\s*:/g, '},{"type":')
+    .replace(/}\s*{/g, "},{");
 }
 
 export function normalizeCourseDraft(raw: unknown, topic: string): z.infer<typeof CourseSchema> {

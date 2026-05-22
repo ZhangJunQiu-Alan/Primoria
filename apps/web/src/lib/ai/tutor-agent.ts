@@ -1,6 +1,7 @@
 import { invokePrimoriaDeepAgent, invokePrimoriaDeepAgentStream, createTutorModel } from "./deepagent/primoria-deep-agent";
 import { generateCourse } from "./deepagent/course-generator";
 import { sedimentWidget } from "@/lib/capability-library/sedimentation";
+import { normalizeWidgetHtml } from "./widget-html";
 import type {
   ChatMessage,
   CourseCardArtifact,
@@ -222,7 +223,7 @@ export async function runTutorAgentStream(
         type: "html_widget",
         title: capturedPlan?.title ?? "Interactive widget",
         description: capturedPlan ? `Interactive visualization for: ${capturedPlan.approach}` : "",
-        html: extracted.html,
+        html: normalizeWidgetHtml(extracted.html),
       };
       resolvedWidget = salvagedWidget;
       reply = extracted.cleaned;

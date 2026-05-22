@@ -3,6 +3,7 @@ import { Annotation, Command, MessagesAnnotation } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { z } from "zod";
+import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import type {
   ChatMessage,
   CourseCardArtifact,
@@ -156,7 +157,7 @@ function createTutorTools(settings: TutorProviderSettings) {
         type: "html_widget",
         title,
         description,
-        html,
+        html: normalizeWidgetHtml(html),
       };
       return JSON.stringify(widget);
     },
@@ -507,7 +508,7 @@ export async function invokePrimoriaDeepAgentStream(
                 type: "html_widget",
                 title,
                 description,
-                html,
+                html: normalizeWidgetHtml(html),
               },
             });
           }
