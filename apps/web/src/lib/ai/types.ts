@@ -6,6 +6,7 @@ export type ChatMessage = {
 };
 
 export type TutorProviderSettings = {
+  provider?: "openai-compatible" | "anthropic-compatible";
   baseUrl?: string;
   apiKey?: string;
   model?: string;
@@ -41,18 +42,18 @@ export type CodeArtifact = {
   code: string;
 };
 
-export type CourseDraftArtifact = {
-  type: "course_draft";
+export type CourseCardArtifact = {
+  type: "course_card";
+  courseId: string;
   title: string;
-  audience: string;
-  duration: string;
-  modules: Array<{
+  topic: string;
+  summary: string;
+  estimatedMinutes: number;
+  outline: Array<{
+    type: "text" | "analogy" | "transfer" | "visual" | "code";
     title: string;
-    description: string;
-    lessons: string[];
-    project?: string;
   }>;
-  nextActions: string[];
+  status: "generating" | "ready";
 };
 
 export type TodoListItem = {
@@ -76,7 +77,7 @@ export type TutorArtifact =
   | HtmlWidgetArtifact
   | VisualizationPlanArtifact
   | CodeArtifact
-  | CourseDraftArtifact
+  | CourseCardArtifact
   | TodoListArtifact
   | ToolStatusArtifact;
 

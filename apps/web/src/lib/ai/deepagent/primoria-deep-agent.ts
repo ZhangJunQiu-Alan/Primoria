@@ -2,10 +2,10 @@ import { tool } from "@langchain/core/tools";
 import { Annotation, Command, MessagesAnnotation } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { ChatOpenAI } from "@langchain/openai";
 import { z } from "zod";
 import type {
   ChatMessage,
+  CourseCardArtifact,
   HtmlWidgetArtifact,
   TodoListArtifact,
   ToolStatusArtifact,
@@ -15,6 +15,10 @@ import type {
   TutorStreamEvent,
   VisualizationPlanArtifact,
 } from "../types";
+import { generateCourse } from "./course-generator";
+import { createTutorModel, resolveProviderSettings } from "./model";
+
+export { createTutorModel } from "./model";
 
 type PrimoriaAgent = ReturnType<typeof createReactAgent>;
 
@@ -49,34 +53,24 @@ const HtmlWidgetSchema = z.object({
   html: z.string(),
 });
 
-function resolveProviderSettings(settings: TutorProviderSettings = {}) {
-  const baseUrl = settings.baseUrl || process.env.OPENAI_BASE_URL;
-  const apiKey = settings.apiKey || process.env.OPENAI_API_KEY;
-  const model = settings.model || process.env.OPENAI_MODEL || "gpt-5.4";
-
-  if (!baseUrl) throw new Error("Missing OPENAI_BASE_URL");
-  if (!apiKey) throw new Error("Missing OPENAI_API_KEY");
-
-  return { baseUrl, apiKey, model };
-}
+const CourseCardSchema = z.object({
+  type: z.literal("course_card"),
+  courseId: z.string(),
+  title: z.string(),
+  topic: z.string(),
+  summary: z.string(),
+  estimatedMinutes: z.number(),
+  outline: z.array(
+    z.object({
+      type: z.enum(["text", "analogy", "transfer", "visual", "code"]),
+      title: z.string(),
+    }),
+  ),
+  status: z.enum(["generating", "ready"]),
+});
 
 function createModel(settings: TutorProviderSettings) {
-  const { baseUrl, apiKey, model } = resolveProviderSettings(settings);
-
-  return new ChatOpenAI({
-    model,
-    apiKey,
-    temperature: 0.2,
-    maxTokens: 4096,
-    streaming: true,
-    configuration: {
-      baseURL: baseUrl.replace(/\/$/, ""),
-    },
-  });
-}
-
-export function createTutorModel(settings: TutorProviderSettings = {}) {
-  return createModel(settings);
+  return createTutorModel(settings);
 }
 
 function parseDeepArtifact(value: unknown): TutorArtifact | undefined {
@@ -93,10 +87,13 @@ function parseDeepArtifact(value: unknown): TutorArtifact | undefined {
   const widget = HtmlWidgetSchema.safeParse(candidate);
   if (widget.success) return widget.data;
 
+  const card = CourseCardSchema.safeParse(candidate);
+  if (card.success) return card.data;
+
   return undefined;
 }
 
-function createTutorTools() {
+function createTutorTools(settings: TutorProviderSettings) {
   const manageTodosTool = tool(
     async ({ todos }, config) => {
       const toolCallId = (config as { toolCall?: { id?: string } })?.toolCall?.id ?? "manage_todos";
@@ -175,26 +172,91 @@ function createTutorTools() {
     },
   );
 
-  return [manageTodosTool, planVisualizationTool, renderInteractiveWidgetTool] as const;
+  const generateCourseTool = tool(
+    async ({ topic, context_hint }) => {
+      const { summary } = await generateCourse(
+        { topic, contextHint: context_hint },
+        settings,
+      );
+      const card: CourseCardArtifact = {
+        type: "course_card",
+        courseId: summary.id,
+        title: summary.title,
+        topic: summary.topic,
+        summary: summary.summary,
+        estimatedMinutes: summary.estimatedMinutes,
+        outline: summary.outline,
+        status: "ready",
+      };
+      return JSON.stringify(card);
+    },
+    {
+      name: "generate_course",
+      description:
+        "Generate a short structured course on a topic the learner wants to study. Use this when the user asks to LEARN / STUDY a topic, asks for a 'course' / 'lesson' / 'curriculum' / '教程' / '课程' / '系统讲解' / '系统学习' — i.e. wants a multi-step learning artifact, not a single answer or a single widget. The tool persists the course in the Library and returns a course card. After calling it, write ONE short sentence inviting the learner to open the course (do NOT restate the content).",
+      schema: z.object({
+        topic: z
+          .string()
+          .describe("The specific topic to teach. Extract from the user's question. Keep it focused."),
+        context_hint: z
+          .string()
+          .optional()
+          .describe(
+            "Optional 1-2 sentence summary of relevant prior chat (audience hints, what they've already understood). Leave empty if no useful context.",
+          ),
+      }),
+    },
+  );
+
+  return [
+    manageTodosTool,
+    planVisualizationTool,
+    renderInteractiveWidgetTool,
+    generateCourseTool,
+  ] as const;
 }
 
-const SYSTEM_PROMPT = `You are Primoria, an AI tutor.
+const SYSTEM_PROMPT = `You are Primoria, an AI tutor with THREE possible response modes. Pick exactly ONE per turn.
 
-For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, you MUST:
-1. Call manage_todos first with 3-5 todos that are SPECIFIC to the learner's topic. Each title must mention a concrete noun from the question (algorithm name, concept, physics law, etc.). Bad: "确定需求 / 规划组件 / 构建演示 / 验证效果". Good (for 开普勒第二定律): "🌌 抓住等面积扫掠的直觉 / 🟠 用椭圆+扇区设计互动 / 🛠️ 让滑块控制离心率 / 🔍 检查近日点速度". Use the emoji field, NOT a leading emoji inside title. Set first todo in_progress, rest pending.
-2. Call plan_visualization with title, approach, technology, key_elements.
-3. Call manage_todos again to flip the planning todo to completed and the next one to in_progress.
-4. Call render_interactive_widget with title, description, and a complete self-contained HTML fragment in the html argument.
-5. Call manage_todos one more time to mark all completed.
+═══ MODE PRECEDENCE (check in this order, stop at first match) ═══
 
-CRITICAL OUTPUT RULES:
-- If you called plan_visualization, you MUST also call render_interactive_widget in the same turn. Never stop after planning.
-- NEVER paste HTML / CSS / JS code into your text reply. Code only belongs inside the render_interactive_widget html argument.
-- NEVER wrap output in markdown code blocks (no \`\`\`html, no \`\`\`).
+(A) COURSE MODE — strongest priority.
+Trigger ANY of these and you MUST take this branch:
+- The latest user message contains: "课程" / "课" / "教程" / "微课" / "lesson" / "course" / "curriculum" / "系统讲" / "系统学" / "学一下" / "学习" / "教我" / "讲讲" / "teach me" / "I want to learn" / "learn about" / "study"
+- The user says "生成 X" / "create a course" / "make a lesson" / "build a course" referring to a topic
+- Any phrasing implying a multi-step, structured learning artifact
 
-For greetings ("hi", "你好"), thanks, casual chat, or anything that is clearly NOT a learning question, just reply with one short sentence and do NOT call any tools.
+In COURSE MODE:
+  1. Call manage_todos with 3 todos: "📋 拆解 {topic} 的学习路径" (in_progress) / "✍️ 生成结构化课程 blocks" (pending) / "✅ 入库并展示卡片" (pending).
+  2. Call generate_course({topic, context_hint}). topic = the specific subject. context_hint = 1-2 sentence summary of relevant prior chat if any, otherwise omit.
+  3. Call manage_todos again to mark all completed.
+  4. Reply with ONE short sentence inviting the user to open the course card. NEVER restate the course content.
 
-For plain factual / conceptual questions that do not require a visualization, answer in 1-2 sentences without tools.`;
+CRITICAL NEGATIVE RULE for COURSE MODE:
+  ✗ Do NOT call plan_visualization or render_interactive_widget in COURSE MODE. The course generator handles its own visuals internally as one block among several.
+  ✗ Do NOT explain why you picked course mode.
+
+(B) VISUALIZATION MODE — only if (A) does NOT match.
+Trigger: user asks for ONE interactive widget / demo / simulation, with phrases like "做一个...的可视化" / "演示" / "interactive widget" / "demo" — and NO course keywords.
+Steps:
+  1. Call manage_todos with 3-5 todos specific to the topic (use the emoji field, not inline emojis).
+  2. Call plan_visualization.
+  3. Call manage_todos again.
+  4. Call render_interactive_widget with a complete self-contained HTML fragment using the Primoria palette (cream backgrounds #fbf7ee / #fffaf2, amber/sage/lavender tint+border highlights, no black, no neon).
+  5. Call manage_todos one more time to mark all completed.
+Rule: if you called plan_visualization, you MUST also call render_interactive_widget in the same turn.
+
+(C) CASUAL MODE — only if neither (A) nor (B) match.
+Greetings, thanks, trivially answerable factual questions. Reply in 1-2 short sentences. Do NOT call any tools.
+
+═══ DECISION CHECKLIST (run silently before any tool call) ═══
+- Does the latest user message contain any course keyword from the list in (A)? → COURSE MODE.
+- Otherwise, does it ask for ONE interactive widget? → VISUALIZATION MODE.
+- Otherwise → CASUAL MODE.
+
+═══ OUTPUT RULES ═══
+- NEVER paste HTML / CSS / JS into your text reply.
+- NEVER wrap output in markdown code fences (no \`\`\`html, no \`\`\`).`;
 
 let cachedAgent: PrimoriaAgent | null = null;
 let cachedKey = "";
@@ -207,7 +269,7 @@ export function getPrimoriaDeepAgent(settings: TutorProviderSettings = {}) {
 
   cachedAgent = createReactAgent({
     llm: createModel(settings),
-    tools: createTutorTools() as never,
+    tools: createTutorTools(settings) as never,
     prompt: SYSTEM_PROMPT,
     stateSchema: AgentStateAnnotation,
     checkpointer,
@@ -221,6 +283,7 @@ const VISIBLE_TOOLS = new Set([
   "manage_todos",
   "plan_visualization",
   "render_interactive_widget",
+  "generate_course",
 ]);
 
 const TOOL_LABELS: Record<string, { executing: string; complete: string }> = {
@@ -235,6 +298,10 @@ const TOOL_LABELS: Record<string, { executing: string; complete: string }> = {
   render_interactive_widget: {
     executing: "Generating the interactive widget.",
     complete: "Interactive widget is ready.",
+  },
+  generate_course: {
+    executing: "Course agent is composing the lesson.",
+    complete: "Course saved to Library.",
   },
 };
 

@@ -1,3 +1,7 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import type { MouseEvent } from "react";
 import type { TutorArtifact } from "@/lib/ai/types";
 import { WidgetRenderer } from "./widget-renderer";
 
@@ -10,6 +14,8 @@ export function ToolCard({
   onSendPrompt?: (prompt: string) => void;
   collapsed?: boolean;
 }) {
+  const router = useRouter();
+
   if (artifact.type === "code") {
     return (
       <div className="message-row tool">
@@ -44,57 +50,50 @@ export function ToolCard({
     );
   }
 
-  if (artifact.type === "course_draft") {
+  if (artifact.type === "course_card") {
+    const courseHref = `/course/${encodeURIComponent(artifact.courseId)}`;
+    const typeIcon: Record<string, string> = {
+      text: "T",
+      analogy: "≈",
+      transfer: "→",
+      visual: "◐",
+      code: "{}",
+    };
     return (
       <div className="message-row tool">
-        <div className="tool-card course-card">
+        <a
+          className="tool-card course-card-link"
+          href={courseHref}
+          onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+            event.preventDefault();
+            event.stopPropagation();
+            router.push(courseHref);
+          }}
+        >
           <div className="tool-title">
             <span className="tool-dot" />
-            <span>generate_course · draft ready</span>
+            <span>
+              generate_course · {artifact.status === "ready" ? "ready" : "generating…"}
+            </span>
           </div>
-          <div className="visualizer course-draft">
-            <div>
-              <strong className="course-title">{artifact.title}</strong>
-              <span className="tool-note">
-                {artifact.audience} · {artifact.duration}
-              </span>
-            </div>
-            <div className="course-modules">
-              {artifact.modules.map((module, index) => (
-                <article key={`${module.title}-${index}`} className="course-module">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <strong>{module.title}</strong>
-                    <p>{module.description}</p>
-                    {module.lessons.length > 0 ? (
-                      <div className="plan-list">
-                        {module.lessons.map((lesson) => (
-                          <button
-                            key={lesson}
-                            type="button"
-                            onClick={() => onSendPrompt?.(`帮我展开课程《${artifact.title}》里的「${lesson}」这一课，并生成练习`)}
-                          >
-                            {lesson}
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-                    {module.project ? <p className="course-project">Project: {module.project}</p> : null}
-                  </div>
-                </article>
+          <div className="visualizer course-card-body">
+            <strong className="course-title">{artifact.title}</strong>
+            <p className="course-summary">{artifact.summary}</p>
+            <ul className="course-outline">
+              {artifact.outline.map((item, index) => (
+                <li key={`${item.type}-${index}`}>
+                  <span className={`course-outline-icon course-outline-${item.type}`}>
+                    {typeIcon[item.type] ?? "·"}
+                  </span>
+                  <span>{item.title}</span>
+                </li>
               ))}
-            </div>
-            {artifact.nextActions.length > 0 ? (
-              <div className="tool-actions">
-                {artifact.nextActions.map((action) => (
-                  <button key={action} type="button" className="soft-btn" onClick={() => onSendPrompt?.(action)}>
-                    {action}
-                  </button>
-                ))}
-              </div>
-            ) : null}
+            </ul>
+            <span className="course-meta">
+              {artifact.outline.length} blocks · ~{artifact.estimatedMinutes} min · click to open
+            </span>
           </div>
-        </div>
+        </a>
       </div>
     );
   }

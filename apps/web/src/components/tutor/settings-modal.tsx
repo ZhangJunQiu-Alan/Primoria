@@ -26,6 +26,7 @@ export function SettingsModal({ open, settings, onClose, onSave }: SettingsModal
         onSubmit={(event) => {
           event.preventDefault();
           onSave({
+            provider: draft.provider ?? "openai-compatible",
             baseUrl: draft.baseUrl?.trim() || undefined,
             apiKey: draft.apiKey?.trim() || undefined,
             model: draft.model?.trim() || undefined,
@@ -35,15 +36,35 @@ export function SettingsModal({ open, settings, onClose, onSave }: SettingsModal
       >
         <div>
           <div className="message-label">Provider settings</div>
-          <h2>OpenAI-compatible backend</h2>
-          <p>Leave fields blank to use the server defaults from <code>apps/web/.env.local</code>.</p>
+          <h2>Model backend</h2>
+          <p>Choose an OpenAI-compatible or Anthropic-compatible endpoint. Leave fields blank to use server defaults.</p>
         </div>
+
+        <label>
+          Provider
+          <select
+            value={draft.provider ?? "openai-compatible"}
+            onChange={(event) =>
+              setDraft((current) => ({
+                ...current,
+                provider: event.target.value as TutorProviderSettings["provider"],
+              }))
+            }
+          >
+            <option value="openai-compatible">OpenAI-compatible</option>
+            <option value="anthropic-compatible">Anthropic-compatible</option>
+          </select>
+        </label>
 
         <label>
           Base URL
           <input
             value={draft.baseUrl ?? ""}
-            placeholder="https://ai.orbitlink.me/v1"
+            placeholder={
+              (draft.provider ?? "openai-compatible") === "anthropic-compatible"
+                ? "https://api.anthropic.com"
+                : "https://openrouter.ai/api/v1"
+            }
             onChange={(event) => setDraft((current) => ({ ...current, baseUrl: event.target.value }))}
           />
         </label>
@@ -52,7 +73,11 @@ export function SettingsModal({ open, settings, onClose, onSave }: SettingsModal
           Model
           <input
             value={draft.model ?? ""}
-            placeholder="gpt-5.4"
+            placeholder={
+              (draft.provider ?? "openai-compatible") === "anthropic-compatible"
+                ? "claude-3-5-sonnet-latest"
+                : "gpt-5.4"
+            }
             onChange={(event) => setDraft((current) => ({ ...current, model: event.target.value }))}
           />
         </label>

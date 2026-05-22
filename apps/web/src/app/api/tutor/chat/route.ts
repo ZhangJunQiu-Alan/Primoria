@@ -12,6 +12,7 @@ const RequestSchema = z.object({
   ),
   settings: z
     .object({
+      provider: z.enum(["openai-compatible", "anthropic-compatible"]).optional(),
       baseUrl: z.string().optional(),
       apiKey: z.string().optional(),
       model: z.string().optional(),
