@@ -94,31 +94,54 @@ function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>
     .filter(Boolean);
 }
 
-function PlanCard({ title, approach, technology, key_elements }: z.infer<typeof PlanVisualizationParams>) {
+type ToolRenderStatus = "inProgress" | "executing" | "complete";
+
+function PlanCard({
+  status,
+  title,
+  approach,
+  technology,
+  key_elements,
+}: z.infer<typeof PlanVisualizationParams> & { status: ToolRenderStatus }) {
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+  const isRunning = status === "executing" || status === "inProgress";
+  const keyElements = normalizePlanKeyElements(key_elements);
+
+  useEffect(() => {
+    if (!detailsRef.current) return;
+    detailsRef.current.open = isRunning;
+  }, [isRunning]);
+
   const plan: VisualizationPlanArtifact = {
     type: "visualization_plan",
     title: title ?? "Visualization plan",
     approach,
     technology,
-    keyElements: normalizePlanKeyElements(key_elements),
+    keyElements,
   };
+
   return (
-    <div className="message-row tool">
-      <details className="tool-card plan-card" open>
-        <summary className="tool-title plan-summary">
-          <span className="tool-dot" />
-          <span className="plan-title-text">plan_visualization · complete</span>
-          <span className="plan-chevron" aria-hidden="true">▾</span>
+    <div className="message-row tool inline-plan-row">
+      <details ref={detailsRef} className="inline-plan-card" open>
+        <summary className="inline-plan-summary">
+          <span className={isRunning ? "tool-spinner inline-plan-indicator" : "inline-plan-check"} aria-hidden="true">
+            {isRunning ? null : "✓"}
+          </span>
+          <span className="inline-plan-title">
+            {isRunning ? "Planning visualization…" : `Plan: ${plan.technology || "visualization"}`}
+          </span>
+          <span className="inline-plan-chevron" aria-hidden="true">▼</span>
         </summary>
-        <div className="visualizer">
-          <strong>{plan.title}</strong>
-          <span className="tool-note">{plan.technology}</span>
-          <p className="plan-copy">{plan.approach}</p>
-          <div className="plan-list">
-            {plan.keyElements.map((element) => (
-              <span key={element}>{element}</span>
-            ))}
-          </div>
+        <div className="inline-plan-body">
+          {plan.technology ? <span className="inline-plan-badge">{plan.technology}</span> : null}
+          <p>{plan.approach}</p>
+          {plan.keyElements.length > 0 ? (
+            <ul>
+              {plan.keyElements.map((element) => (
+                <li key={element}>{element}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </details>
     </div>
@@ -224,8 +247,9 @@ export function usePrimoriaGenerativeUI() {
   useRenderTool({
     name: "plan_visualization",
     parameters: PlanVisualizationParams,
-    render: ({ parameters }) => (
+    render: ({ status, parameters }) => (
       <PlanCard
+        status={status}
         title={parameters?.title}
         approach={parameters?.approach ?? "Planning the visualization."}
         technology={parameters?.technology ?? "HTML + JavaScript"}

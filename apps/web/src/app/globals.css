@@ -308,7 +308,8 @@ button {
 
 .message-row.assistant .bubble,
 .message-row.tool .tool-card,
-.message-row.tool .code-card {
+.message-row.tool .code-card,
+.message-row.tool .inline-plan-card {
   grid-column: 2;
 }
 
@@ -544,6 +545,96 @@ button {
 
 .activity-row.complete .activity-desc {
   opacity: 0.75;
+}
+
+.inline-plan-row {
+  margin-block: -6px;
+}
+
+.inline-plan-card {
+  width: fit-content;
+  max-width: 620px;
+  color: var(--quiet);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.inline-plan-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+  color: #6d6258;
+  user-select: none;
+}
+
+.inline-plan-summary::-webkit-details-marker {
+  display: none;
+}
+
+.inline-plan-indicator {
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+}
+
+.inline-plan-check {
+  display: inline-grid;
+  place-items: center;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  color: #4f9f6f;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.inline-plan-title {
+  font-weight: 800;
+}
+
+.inline-plan-chevron {
+  color: #9d9288;
+  font-size: 10px;
+  transition: transform 0.15s ease;
+}
+
+.inline-plan-card[open] .inline-plan-chevron {
+  transform: rotate(180deg);
+}
+
+.inline-plan-body {
+  margin-top: 6px;
+  padding-left: 21px;
+  display: grid;
+  gap: 6px;
+  color: #756b62;
+  font-size: 12px;
+}
+
+.inline-plan-body p {
+  margin: 0;
+}
+
+.inline-plan-body ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 2px;
+}
+
+.inline-plan-badge {
+  width: fit-content;
+  padding: 2px 7px;
+  border-radius: 7px;
+  background: #f4efec;
+  border: 1px solid rgba(23, 19, 15, 0.07);
+  color: #5f554c;
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .todo-card {
