@@ -32,12 +32,12 @@ async function loadProviderSettingsFromServer() {
   }
 }
 
-export function TutorWorkspaceClient() {
+export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: AuthState }) {
   const [settings, setSettings] = useState<TutorProviderSettings>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [chatResetKey, setChatResetKey] = useState(0);
-  const [authState, setAuthState] = useState<AuthState>({ authEnabled: false, user: null, loaded: false });
+  const [authState, setAuthState] = useState<AuthState>(initialAuthState);
 
   useEffect(() => {
     let cancelled = false;
