@@ -1,69 +1,26 @@
 import { and, desc, eq, isNull } from "drizzle-orm";
-import fs from "node:fs";
-import path from "node:path";
 import { getCurrentUser } from "../auth/session";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { learningApps as learningAppsTable } from "../db/schema";
 import type { LearningApp, LearningAppSummary } from "./types";
 import { summarizeApp } from "./types";
 
-type GlobalStore = {
-  apps: Map<string, LearningApp>;
-  hydrated: boolean;
-  fileMtimeMs: number;
-};
-
-const globalKey = "__primoria_capability_library_store__";
-const globalAny = globalThis as unknown as Record<string, GlobalStore | undefined>;
-const storeFile = path.join(findWorkspaceRoot(), ".primoria-capability-library.json");
-
-function getStore(): GlobalStore {
-  let store = globalAny[globalKey];
-  if (!store) {
-    store = { apps: new Map(), hydrated: false, fileMtimeMs: 0 };
-    globalAny[globalKey] = store;
-  }
-  if (!store.hydrated) {
-    hydrateStore(store);
-  } else {
-    refreshStoreIfChanged(store);
-  }
-  return store;
-}
-
 export async function saveApp(app: LearningApp, ownerId?: string | null): Promise<LearningApp> {
-  const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) {
-    await saveAppToDb(app, resolvedOwnerId);
-    return app;
-  }
-  return saveAppLocal(app);
-}
-
-export function saveAppLocal(app: LearningApp): LearningApp {
-  getStore().apps.set(app.id, app);
-  persistStore();
+  const resolvedOwnerId = await requireOwnerId(ownerId, "save app");
+  await saveAppToDb(app, resolvedOwnerId);
   return app;
 }
 
 export async function getApp(id: string, ownerId?: string | null): Promise<LearningApp | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) return getAppFromDb(id, resolvedOwnerId);
-  return getStore().apps.get(id);
+  if (!resolvedOwnerId) return undefined;
+  return getAppFromDb(id, resolvedOwnerId);
 }
 
 export async function listApps(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<LearningAppSummary[]> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) {
-    const apps = await listAppsFromDb(resolvedOwnerId, options);
-    return apps.map(summarizeApp);
-  }
-  return listAppsLocal(options);
-}
-
-export function listAppsLocal(options: { includeArchived?: boolean } = {}): LearningAppSummary[] {
-  const apps = Array.from(getStore().apps.values()).filter((app) => options.includeArchived || !app.archivedAt);
-  apps.sort((a, b) => b.metadata.lastUsedAt - a.metadata.lastUsedAt);
+  if (!resolvedOwnerId) return [];
+  const apps = await listAppsFromDb(resolvedOwnerId, options);
   return apps.map(summarizeApp);
 }
 
@@ -95,20 +52,13 @@ export async function unarchiveApp(id: string, ownerId?: string | null): Promise
 
 export async function findAppByHtmlSignature(signature: string, ownerId?: string | null): Promise<LearningApp | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) {
-    const rows = await getDb()
-      .select()
-      .from(learningAppsTable)
-      .where(and(eq(learningAppsTable.ownerId, resolvedOwnerId), eq(learningAppsTable.htmlSignature, signature)))
-      .limit(1);
-    return rows[0] ? rowToApp(rows[0]) : undefined;
-  }
-  for (const app of getStore().apps.values()) {
-    if (app.template.type === "html" && hashHtmlSource(app.template.source) === signature) {
-      return app;
-    }
-  }
-  return undefined;
+  if (!resolvedOwnerId) return undefined;
+  const rows = await getDb()
+    .select()
+    .from(learningAppsTable)
+    .where(and(eq(learningAppsTable.ownerId, resolvedOwnerId), eq(learningAppsTable.htmlSignature, signature)))
+    .limit(1);
+  return rows[0] ? rowToApp(rows[0]) : undefined;
 }
 
 export function hashHtmlSource(source: string): string {
@@ -124,6 +74,13 @@ async function resolveOwnerId(ownerId?: string | null) {
   if (!hasDatabaseUrl()) return null;
   const user = await getCurrentUser();
   return user?.id ?? null;
+}
+
+async function requireOwnerId(ownerId: string | null | undefined, action: string) {
+  if (!hasDatabaseUrl()) throw new Error("DATABASE_URL is not configured. Primoria persistence requires Postgres.");
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) throw new Error(`You must sign in to ${action}.`);
+  return resolvedOwnerId;
 }
 
 async function saveAppToDb(app: LearningApp, ownerId: string) {
@@ -205,61 +162,4 @@ function rowToApp(row: typeof learningAppsTable.$inferSelect): LearningApp {
     archivedAt: row.archivedAt?.getTime() ?? null,
     version: row.version ?? 1,
   };
-}
-
-function hydrateStore(store: GlobalStore) {
-  store.hydrated = true;
-  try {
-    if (!fs.existsSync(storeFile)) {
-      store.fileMtimeMs = 0;
-      return;
-    }
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { apps?: LearningApp[] };
-    if (!Array.isArray(parsed.apps)) return;
-    store.apps = new Map(parsed.apps.map((app) => [app.id, app]));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[capability-library/store] Failed to hydrate", error);
-  }
-}
-
-function refreshStoreIfChanged(store: GlobalStore) {
-  try {
-    if (!fs.existsSync(storeFile)) {
-      if (store.fileMtimeMs !== 0) {
-        store.apps = new Map();
-        store.fileMtimeMs = 0;
-      }
-      return;
-    }
-    const mtimeMs = fs.statSync(storeFile).mtimeMs;
-    if (mtimeMs === store.fileMtimeMs) return;
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { apps?: LearningApp[] };
-    if (!Array.isArray(parsed.apps)) return;
-    store.apps = new Map(parsed.apps.map((app) => [app.id, app]));
-    store.fileMtimeMs = mtimeMs;
-  } catch (error) {
-    console.warn("[capability-library/store] Failed to refresh", error);
-  }
-}
-
-function persistStore() {
-  try {
-    const store = getStore();
-    const apps = Array.from(store.apps.values());
-    fs.writeFileSync(storeFile, JSON.stringify({ apps }, null, 2));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[capability-library/store] Failed to persist", error);
-  }
-}
-
-function findWorkspaceRoot() {
-  let dir = process.cwd();
-  while (true) {
-    if (fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return process.cwd();
-    dir = parent;
-  }
 }

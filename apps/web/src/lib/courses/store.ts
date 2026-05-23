@@ -1,95 +1,27 @@
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import type { Course, CourseBlock, CourseSummary } from "./types";
 import { summarizeCourse } from "./types";
 import { getCurrentUser } from "../auth/session";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { courses as coursesTable } from "../db/schema";
-import fs from "node:fs";
-import path from "node:path";
-
-type GlobalStore = {
-  courses: Map<string, Course>;
-  hydrated: boolean;
-  fileMtimeMs: number;
-};
-
-const globalKey = "__primoria_course_store__";
-const globalAny = globalThis as unknown as Record<string, GlobalStore | undefined>;
-const storeFile = path.join(findWorkspaceRoot(), ".primoria-courses.json");
-const LOCAL_OWNER_ID = "local";
-
-function getStore(): GlobalStore {
-  let store = globalAny[globalKey];
-  if (!store) {
-    store = { courses: new Map(), hydrated: false, fileMtimeMs: 0 };
-    globalAny[globalKey] = store;
-  }
-  if (!store.hydrated) {
-    hydrateStore(store);
-  } else {
-    refreshStoreIfChanged(store);
-  }
-  return store;
-}
 
 export async function saveCourse(course: Course, ownerId?: string | null): Promise<Course> {
-  const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) {
-    await saveCourseToDb(course, resolvedOwnerId);
-    return course;
-  }
-  return saveCourseLocal(course);
-}
-
-export function saveCourseLocal(course: Course): Course {
-  getStore().courses.set(course.id, course);
-  persistStore();
+  const resolvedOwnerId = await requireOwnerId(ownerId, "save course");
+  await saveCourseToDb(course, resolvedOwnerId);
   return course;
 }
 
 export async function getCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) {
-    const course = await getCourseFromDb(id, resolvedOwnerId);
-    if (course) return course;
-    // CopilotKit's separate LangGraph dev process still writes generated courses
-    // to the shared local JSON store. Keep a read-only fallback so freshly
-    // generated cards do not 404 while we bridge agent-side DB ownership.
-    return getCourseLocal(id);
-  }
-  return getCourseLocal(id);
-}
-
-export function getCourseLocal(id: string): Course | undefined {
-  return getStore().courses.get(id);
+  if (!resolvedOwnerId) return undefined;
+  return getCourseFromDb(id, resolvedOwnerId);
 }
 
 export async function listCourses(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<CourseSummary[]> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (resolvedOwnerId && hasDatabaseUrl()) {
-    const dbCourses = await listCoursesFromDb(resolvedOwnerId, options);
-    const merged = mergeCourseLists(dbCourses, listCoursesLocalRaw(options));
-    return merged.map(summarizeCourse);
-  }
-  return listCoursesLocal(options);
-}
-
-export function listCoursesLocal(options: { includeArchived?: boolean } = {}): CourseSummary[] {
-  return listCoursesLocalRaw(options).map(summarizeCourse);
-}
-
-function listCoursesLocalRaw(options: { includeArchived?: boolean } = {}): Course[] {
-  const courses = Array.from(getStore().courses.values()).filter((course) => options.includeArchived || !course.archivedAt);
-  courses.sort((a, b) => b.updatedAt - a.updatedAt);
-  return courses;
-}
-
-function mergeCourseLists(primary: Course[], fallback: Course[]): Course[] {
-  const byId = new Map<string, Course>();
-  for (const course of [...primary, ...fallback]) {
-    if (!byId.has(course.id)) byId.set(course.id, course);
-  }
-  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
+  if (!resolvedOwnerId) return [];
+  const dbCourses = await listCoursesFromDb(resolvedOwnerId, options);
+  return dbCourses.map(summarizeCourse);
 }
 
 export async function updateBlock(courseId: string, blockId: string, next: CourseBlock, ownerId?: string | null): Promise<Course | undefined> {
@@ -119,6 +51,13 @@ async function resolveOwnerId(ownerId?: string | null) {
   if (!hasDatabaseUrl()) return null;
   const user = await getCurrentUser();
   return user?.id ?? null;
+}
+
+async function requireOwnerId(ownerId: string | null | undefined, action: string) {
+  if (!hasDatabaseUrl()) throw new Error("DATABASE_URL is not configured. Primoria persistence requires Postgres.");
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) throw new Error(`You must sign in to ${action}.`);
+  return resolvedOwnerId;
 }
 
 async function saveCourseToDb(course: Course, ownerId: string) {
@@ -187,64 +126,3 @@ function rowToCourse(row: typeof coursesTable.$inferSelect): Course {
     updatedAt: row.updatedAt.getTime(),
   };
 }
-
-function hydrateStore(store: GlobalStore) {
-  store.hydrated = true;
-  try {
-    if (!fs.existsSync(storeFile)) {
-      store.fileMtimeMs = 0;
-      return;
-    }
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { courses?: Course[] };
-    if (!Array.isArray(parsed.courses)) return;
-    store.courses = new Map(parsed.courses.map((course) => [course.id, course]));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to hydrate course store", error);
-  }
-}
-
-function refreshStoreIfChanged(store: GlobalStore) {
-  try {
-    if (!fs.existsSync(storeFile)) {
-      if (store.fileMtimeMs !== 0) {
-        store.courses = new Map();
-        store.fileMtimeMs = 0;
-      }
-      return;
-    }
-
-    const mtimeMs = fs.statSync(storeFile).mtimeMs;
-    if (mtimeMs === store.fileMtimeMs) return;
-
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { courses?: Course[] };
-    if (!Array.isArray(parsed.courses)) return;
-    store.courses = new Map(parsed.courses.map((course) => [course.id, course]));
-    store.fileMtimeMs = mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to refresh course store", error);
-  }
-}
-
-function persistStore() {
-  try {
-    const store = getStore();
-    const courses = Array.from(store.courses.values());
-    fs.writeFileSync(storeFile, JSON.stringify({ courses }, null, 2));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to persist course store", error);
-  }
-}
-
-function findWorkspaceRoot() {
-  let dir = process.cwd();
-  while (true) {
-    if (fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return process.cwd();
-    dir = parent;
-  }
-}
-
-export { LOCAL_OWNER_ID };

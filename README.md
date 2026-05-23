@@ -48,9 +48,9 @@ ANTHROPIC_MODEL=your-model
 ```
 
 
-### Optional Postgres database and accounts
+### Postgres database and accounts
 
-Primoria can run in local JSON mode without a database. To enable account creation, user sessions, and user-isolated course/app storage, configure a standard PostgreSQL connection:
+Primoria currently uses Postgres for account creation, user sessions, CopilotKit chat history, provider settings, generated courses, and learning apps. Configure a standard PostgreSQL connection:
 
 ```bash
 DATABASE_URL=postgres://user:password@host:5432/primoria
@@ -73,9 +73,7 @@ Initial auth support includes:
 - email + password sign-up/sign-in
 - HTTP-only session cookies
 
-When `DATABASE_URL` is not set, Primoria falls back to the workspace JSON files below.
-
-To import existing local JSON courses/apps into a database account:
+Local JSON files are no longer used as a runtime fallback in the database-backed app. Use the import command only for one-time migration of older local data into a database account:
 
 ```bash
 pnpm --filter @primoria/web import:local-data you@example.com

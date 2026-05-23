@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
 import type { TutorStreamEvent } from "@/lib/ai/types";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 
 const RequestSchema = z.object({
   messages: z.array(
@@ -45,6 +46,9 @@ function userFacingError(error: unknown) {
 
 export async function POST(request: Request) {
   try {
+    if (isAuthEnabled() && !(await getCurrentUser())) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const body = RequestSchema.parse(await request.json());
     if (body.stream) {
       const encoder = new TextEncoder();
