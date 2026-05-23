@@ -2,6 +2,7 @@ import Link from "next/link";
 import { listCourses } from "@/lib/courses/store";
 import { listApps } from "@/lib/capability-library/store";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
@@ -16,8 +17,11 @@ export default async function LibraryPage({
   const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
   const activeTab: TabKey = rawTab === "apps" ? "apps" : "courses";
 
-  const courses = await listCourses();
-  const apps = await listApps();
+  const authEnabled = isAuthEnabled();
+  const user = await getCurrentUser();
+  const shouldGate = authEnabled && !user;
+  const courses = shouldGate ? [] : await listCourses(user?.id);
+  const apps = shouldGate ? [] : await listApps(user?.id);
 
   return (
     <main className="app-shell">
@@ -26,7 +30,7 @@ export default async function LibraryPage({
         <header className="library-header">
           <h1>Library</h1>
           <p>
-            Courses and capability apps Primoria has built up for you. Signed-in workspaces are saved to Postgres; local mode still uses JSON files.
+            Courses and capability apps Primoria has built up for you. Your workspace is saved to Postgres and only appears when you are signed in.
           </p>
         </header>
 
@@ -49,7 +53,17 @@ export default async function LibraryPage({
           </Link>
         </nav>
 
-        {activeTab === "courses" ? (
+        {shouldGate ? (
+          <div className="library-empty library-auth-empty">
+            <span className="course-block-tag">Private workspace</span>
+            <h2>Sign in to view your Library</h2>
+            <p>Your courses, apps, chat threads, and settings are tied to your account.</p>
+            <div className="auth-required-actions">
+              <Link href="/auth/sign-in">Sign in</Link>
+              <Link href="/auth/sign-up">Create account</Link>
+            </div>
+          </div>
+        ) : activeTab === "courses" ? (
           courses.length === 0 ? (
             <div className="library-empty">
               <p>No courses yet.</p>

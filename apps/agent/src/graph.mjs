@@ -352,8 +352,16 @@ const generateCourseTool = tool(
 );
 
 const getCourseCardTool = tool(
-  async ({ course_id }) => {
-    const course = getCourse(course_id);
+  async ({ course_id }, runtime) => {
+    const runtimeAny = /** @type {any} */ (runtime);
+    const ownerId = runtimeAny?.context?.primoria_owner_id
+      ?? runtimeAny?.context?.user_id
+      ?? runtimeAny?.configurable?.primoria_owner_id
+      ?? runtimeAny?.configurable?.user_id
+      ?? runtimeAny?.config?.configurable?.primoria_owner_id
+      ?? runtimeAny?.config?.configurable?.user_id
+      ?? null;
+    const course = await getCourse(course_id, ownerId);
     if (!course) {
       return JSON.stringify({ type: "course_card_error", courseId: course_id, status: "not_found" });
     }

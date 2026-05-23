@@ -69,10 +69,15 @@ function resetThreadsForRuntimeIfNeeded() {
   window.localStorage.removeItem(THREAD_HISTORY_STORAGE_KEY);
 }
 
-export function resetCopilotThreads() {
-  if (!canUseStorage()) return createThreadId();
+export function clearCopilotThreadStorage() {
+  if (!canUseStorage()) return;
   window.localStorage.removeItem(MAIN_THREAD_STORAGE_KEY);
   window.localStorage.removeItem(THREAD_HISTORY_STORAGE_KEY);
+}
+
+export function resetCopilotThreads() {
+  if (!canUseStorage()) return createThreadId();
+  clearCopilotThreadStorage();
   const threadId = createThreadId();
   setCurrentThreadId(threadId);
   return threadId;
@@ -141,7 +146,11 @@ export async function hydrateThreadHistoryFromServer() {
     const response = await fetch("/api/copilot-threads", { cache: "no-store" });
     if (!response.ok) return;
     const data = (await response.json()) as { threads?: CopilotThreadSummary[] };
-    if (!Array.isArray(data.threads) || data.threads.length === 0) return;
+    if (!Array.isArray(data.threads)) return;
+    if (data.threads.length === 0) {
+      clearCopilotThreadStorage();
+      return;
+    }
     const currentThreadId = window.localStorage.getItem(MAIN_THREAD_STORAGE_KEY);
     const localCurrent = currentThreadId ? readThreadHistory().find((thread) => thread.id === currentThreadId) : null;
     const preferredThread = data.threads.find((thread) => thread.messageCount > 0) ?? data.threads[0];
