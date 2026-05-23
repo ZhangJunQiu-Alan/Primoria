@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
+import { clearCopilotThreadStorage } from "@/lib/copilot-thread-history";
 
 type NavTab = {
   id: string;
@@ -82,6 +83,8 @@ export function TutorNavRail() {
 
   async function signOut() {
     await fetch("/api/auth/sign-out", { method: "POST" });
+    clearCopilotThreadStorage();
+    window.localStorage.removeItem("primoria:tutor-provider-settings");
     setUser(null);
     router.push("/");
     router.refresh();

@@ -38,52 +38,64 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const isSignUp = mode === "sign-up";
 
   return (
-    <form className="auth-card" onSubmit={submit}>
-      <div className="auth-heading">
-        <span className="course-block-tag">Account</span>
-        <h1>{isSignUp ? "Create your Primoria account" : "Sign in to Primoria"}</h1>
-        <p>
-          {isSignUp
-            ? "Save courses, learning apps, and future memory to your own workspace."
-            : "Continue with your saved courses and personalized learning context."}
-        </p>
+    <div className="auth-panel">
+      <div className="auth-hero" aria-hidden="true">
+        <span>Postgres workspace</span>
+        <strong>{isSignUp ? "Start with saved memory" : "Welcome back"}</strong>
+        <p>Courses, CopilotKit threads, provider settings, and generated apps stay under your account.</p>
+        <div className="auth-hero-orbits">
+          <i />
+          <i />
+          <i />
+        </div>
       </div>
 
-      {isSignUp ? (
+      <form className="auth-card" onSubmit={submit}>
+        <div className="auth-heading">
+          <span className="course-block-tag">Primoria account</span>
+          <h1>{isSignUp ? "Create your workspace" : "Sign in to your workspace"}</h1>
+          <p>
+            {isSignUp
+              ? "One account keeps every generated course and learning app cleanly separated."
+              : "Continue learning with your saved Library, chat history, and AI settings."}
+          </p>
+        </div>
+
+        {isSignUp ? (
+          <label className="auth-field">
+            <span>Name</span>
+            <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} placeholder="Ada" />
+          </label>
+        ) : null}
+
         <label className="auth-field">
-          <span>Name</span>
-          <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} placeholder="Ada" />
+          <span>Email</span>
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" required />
         </label>
-      ) : null}
 
-      <label className="auth-field">
-        <span>Email</span>
-        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" required />
-      </label>
+        <label className="auth-field">
+          <span>Password</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder={isSignUp ? "At least 8 characters" : "Your password"}
+            minLength={isSignUp ? 8 : undefined}
+            required
+          />
+        </label>
 
-      <label className="auth-field">
-        <span>Password</span>
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder={isSignUp ? "At least 8 characters" : "Your password"}
-          minLength={isSignUp ? 8 : undefined}
-          required
-        />
-      </label>
+        {error ? <p className="auth-error">{error}</p> : null}
 
-      {error ? <p className="auth-error">{error}</p> : null}
+        <button className="auth-submit" type="submit" disabled={loading}>
+          {loading ? "Working…" : isSignUp ? "Create account" : "Sign in"}
+        </button>
 
-      <button className="auth-submit" type="submit" disabled={loading}>
-        {loading ? "Working…" : isSignUp ? "Create account" : "Sign in"}
-      </button>
-
-      <p className="auth-switch">
-        {isSignUp ? "Already have an account?" : "New to Primoria?"} {" "}
-        <Link href={isSignUp ? "/auth/sign-in" : "/auth/sign-up"}>{isSignUp ? "Sign in" : "Create account"}</Link>
-      </p>
-      <p className="auth-note">Phone OTP identities are reserved in the data model and can be connected later.</p>
-    </form>
+        <p className="auth-switch">
+          {isSignUp ? "Already have an account?" : "New to Primoria?"} {" "}
+          <Link href={isSignUp ? "/auth/sign-in" : "/auth/sign-up"}>{isSignUp ? "Sign in" : "Create account"}</Link>
+        </p>
+      </form>
+    </div>
   );
 }
