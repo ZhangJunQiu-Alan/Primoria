@@ -53,9 +53,6 @@ export default async function LibraryPage({
           courses.length === 0 ? (
             <div className="library-empty">
               <p>No courses yet.</p>
-              <p>
-                Go back to the <Link href="/">tutor</Link> and ask something like &ldquo;教我熵的直觉&rdquo;.
-              </p>
             </div>
           ) : (
             <ul className="library-grid">
@@ -75,9 +72,6 @@ export default async function LibraryPage({
         ) : apps.length === 0 ? (
           <div className="library-empty">
             <p>No apps yet.</p>
-            <p>
-              Apps appear here automatically when the tutor produces an interactive widget worth keeping. Try asking for &ldquo;做一个牛顿摆动量传递的可视化&rdquo;.
-            </p>
           </div>
         ) : (
           <ul className="library-grid">
