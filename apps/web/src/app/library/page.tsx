@@ -16,8 +16,8 @@ export default async function LibraryPage({
   const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
   const activeTab: TabKey = rawTab === "apps" ? "apps" : "courses";
 
-  const courses = listCourses();
-  const apps = listApps();
+  const courses = await listCourses();
+  const apps = await listApps();
 
   return (
     <main className="app-shell">
@@ -26,7 +26,7 @@ export default async function LibraryPage({
         <header className="library-header">
           <h1>Library</h1>
           <p>
-            Courses and capability apps Primoria has built up for you. They live on disk for this server install.
+            Courses and capability apps Primoria has built up for you. Signed-in workspaces are saved to Postgres; local mode still uses JSON files.
           </p>
         </header>
 
@@ -65,7 +65,7 @@ export default async function LibraryPage({
                     <strong>{course.title}</strong>
                     <p className="library-card-summary">{course.summary}</p>
                     <span className="library-card-meta">
-                      {course.outline.length} blocks · ~{course.estimatedMinutes} min
+                      {course.outline.length} blocks · v{course.version} · ~{course.estimatedMinutes} min
                     </span>
                   </Link>
                 </li>
@@ -96,7 +96,7 @@ export default async function LibraryPage({
                     </ul>
                   ) : null}
                   <span className="library-card-meta">
-                    {originLabel(app.origin.kind)} · used {app.metadata.usageCount}× · {formatRelative(app.metadata.lastUsedAt)}
+                    {originLabel(app.origin.kind)} · v{app.version} · used {app.metadata.usageCount}× · {formatRelative(app.metadata.lastUsedAt)}
                   </span>
                 </article>
               </li>

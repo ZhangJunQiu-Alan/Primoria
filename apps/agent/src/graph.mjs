@@ -322,11 +322,20 @@ function normalizeCourseTopic(topic) {
 }
 
 const generateCourseTool = tool(
-  async ({ topic, context_hint }) => {
+  async ({ topic, context_hint }, runtime) => {
     const normalizedTopic = normalizeCourseTopic(topic);
+    const runtimeAny = /** @type {any} */ (runtime);
+    const ownerId = runtimeAny?.context?.primoria_owner_id
+      ?? runtimeAny?.context?.user_id
+      ?? runtimeAny?.configurable?.primoria_owner_id
+      ?? runtimeAny?.configurable?.user_id
+      ?? runtimeAny?.config?.configurable?.primoria_owner_id
+      ?? runtimeAny?.config?.configurable?.user_id
+      ?? null;
     const { summary } = await generateCourse(
       { topic: normalizedTopic, contextHint: context_hint },
       createModel({ streaming: false }),
+      { ownerId },
     );
     return serializeCourseCard(summary);
   },

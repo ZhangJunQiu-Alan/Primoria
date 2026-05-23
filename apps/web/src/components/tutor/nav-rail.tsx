@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import type { AuthUser } from "@/lib/auth/types";
 
 type NavTab = {
   id: string;
@@ -59,6 +61,32 @@ function isActive(pathname: string, href: string) {
 
 export function TutorNavRail() {
   const pathname = usePathname() ?? "/";
+  const router = useRouter();
+  const [authEnabled, setAuthEnabled] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/auth/me")
+      .then((response) => response.json() as Promise<{ authEnabled: boolean; user: AuthUser | null }>)
+      .then((data) => {
+        if (cancelled) return;
+        setAuthEnabled(data.authEnabled);
+        setUser(data.user);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
+
+  async function signOut() {
+    await fetch("/api/auth/sign-out", { method: "POST" });
+    setUser(null);
+    router.push("/");
+    router.refresh();
+  }
+
   return (
     <aside className="nav-rail" aria-label="Primoria sections">
       <div className="nav-brand">
@@ -98,6 +126,25 @@ export function TutorNavRail() {
           );
         })}
       </nav>
+      <div className="nav-account">
+        {!authEnabled ? (
+          <span className="nav-account-hint">Local JSON mode</span>
+        ) : user ? (
+          <>
+            <span className="nav-account-avatar" aria-hidden="true">{(user.displayName ?? user.email ?? "U").slice(0, 1).toUpperCase()}</span>
+            <span className="nav-account-copy">
+              <strong>{user.displayName ?? "Learner"}</strong>
+              <span>{user.email}</span>
+            </span>
+            <button type="button" onClick={signOut}>Sign out</button>
+          </>
+        ) : (
+          <>
+            <Link className="nav-account-link" href="/auth/sign-in">Sign in</Link>
+            <Link className="nav-account-link primary" href="/auth/sign-up">Create account</Link>
+          </>
+        )}
+      </div>
     </aside>
   );
 }

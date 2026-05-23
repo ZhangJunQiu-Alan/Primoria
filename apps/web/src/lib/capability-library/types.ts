@@ -30,6 +30,8 @@ export type LearningApp = {
   composition?: LearningAppComposition;
   capabilities?: string[];
   metadata: LearningAppMetadata;
+  archivedAt?: number | null;
+  version: number;
 };
 
 export type LearningAppSummary = {
@@ -41,6 +43,8 @@ export type LearningAppSummary = {
   origin: LearningAppOrigin;
   metadata: LearningAppMetadata;
   templateType: LearningAppTemplate["type"];
+  archivedAt?: number | null;
+  version: number;
 };
 
 export function summarizeApp(app: LearningApp): LearningAppSummary {
@@ -53,5 +57,7 @@ export function summarizeApp(app: LearningApp): LearningAppSummary {
     origin: app.origin,
     metadata: app.metadata,
     templateType: app.template.type,
+    archivedAt: app.archivedAt ?? null,
+    version: app.version ?? 1,
   };
 }

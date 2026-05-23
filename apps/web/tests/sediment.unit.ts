@@ -69,7 +69,7 @@ async function main() {
     // Case 1
     const widget = makeWidget("牛顿摆 momentum demo", longHtml);
     const plan = makePlan();
-    const result = sedimentWidget(widget, plan, { userQuestion: "做一个牛顿摆的可视化" });
+    const result = await sedimentWidget(widget, plan, { userQuestion: "做一个牛顿摆的可视化" });
     log("case1 saved?", result.saved, result.saved ? result.app.id : (result as { reason: string }).reason);
     assert(result.saved === true, "case1: widget should sediment");
     assert(result.app.displayName === "牛顿摆 momentum demo", "case1: displayName matches");
@@ -85,12 +85,12 @@ async function main() {
     assert(result.app.metadata.usageCount === 1, "case1: initial usage count");
 
     // Case 2: duplicate
-    const dup = sedimentWidget(widget, plan, {});
+    const dup = await sedimentWidget(widget, plan, {});
     log("case2 dup:", JSON.stringify(dup));
     assert(dup.saved === false && dup.reason === "duplicate", "case2: duplicate rejected");
 
     // Case 3: too short
-    const shortResult = sedimentWidget(makeWidget("short", "<div>tiny</div>"), null, {});
+    const shortResult = await sedimentWidget(makeWidget("short", "<div>tiny</div>"), null, {});
     log("case3 short:", JSON.stringify(shortResult));
     assert(
       shortResult.saved === false && shortResult.reason === "html_too_short",
@@ -98,7 +98,7 @@ async function main() {
     );
 
     // Case 4: empty title
-    const noTitleResult = sedimentWidget(
+    const noTitleResult = await sedimentWidget(
       makeWidget("   ", longHtml.replace("cradle", "cradle-no-title")),
       null,
       {},
@@ -110,7 +110,7 @@ async function main() {
     );
 
     // Case 5: listApps + on-disk
-    const apps = listApps();
+    const apps = await listApps();
     log("case5 listApps count:", apps.length);
     assert(apps.length >= 1, "case5: at least one entry");
     assert(
@@ -125,7 +125,7 @@ async function main() {
 
     // Case 6: hash lookup
     const sig = hashHtmlSource(longHtml);
-    const found = findAppByHtmlSignature(sig);
+    const found = await findAppByHtmlSignature(sig);
     log("case6 signature lookup found?", !!found);
     assert(!!found, "case6: findAppByHtmlSignature locates saved app");
 

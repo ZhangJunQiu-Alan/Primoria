@@ -12,6 +12,18 @@ import { TutorTopbar } from "./topbar";
 const STORAGE_KEY = "primoria:tutor-provider-settings";
 const USE_COPILOTKIT = process.env.NEXT_PUBLIC_USE_COPILOTKIT === "1";
 
+async function loadProviderSettingsFromServer() {
+  try {
+    const response = await fetch("/api/settings/provider", { cache: "no-store" });
+    if (!response.ok) return null;
+    const data = (await response.json()) as { authEnabled?: boolean; settings?: TutorProviderSettings };
+    if (!data.authEnabled) return null;
+    return data.settings ?? {};
+  } catch {
+    return null;
+  }
+}
+
 export function TutorWorkspaceClient() {
   const [settings, setSettings] = useState<TutorProviderSettings>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -19,18 +31,41 @@ export function TutorWorkspaceClient() {
   const [chatResetKey, setChatResetKey] = useState(0);
 
   useEffect(() => {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    try {
-      setSettings(JSON.parse(raw) as TutorProviderSettings);
-    } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+    let cancelled = false;
+    async function loadSettings() {
+      const serverSettings = await loadProviderSettingsFromServer();
+      if (cancelled) return;
+      if (serverSettings) {
+        setSettings(serverSettings);
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(serverSettings));
+        return;
+      }
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        setSettings(JSON.parse(raw) as TutorProviderSettings);
+      } catch {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
     }
+    void loadSettings();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  function saveSettings(next: TutorProviderSettings) {
+  async function saveSettings(next: TutorProviderSettings) {
     setSettings(next);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    try {
+      await fetch("/api/settings/provider", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(next),
+      });
+    } catch {
+      // Local fallback already persisted to localStorage.
+    }
   }
 
   return (
@@ -50,7 +85,9 @@ export function TutorWorkspaceClient() {
           open={settingsOpen}
           settings={settings}
           onClose={() => setSettingsOpen(false)}
-          onSave={saveSettings}
+          onSave={(next) => {
+            void saveSettings(next);
+          }}
         />
         <ChatHistoryPopup
           open={historyOpen}
