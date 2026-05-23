@@ -67,16 +67,29 @@ export function getCourseLocal(id: string): Course | undefined {
 export async function listCourses(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<CourseSummary[]> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
   if (resolvedOwnerId && hasDatabaseUrl()) {
-    const courses = await listCoursesFromDb(resolvedOwnerId, options);
-    return courses.map(summarizeCourse);
+    const dbCourses = await listCoursesFromDb(resolvedOwnerId, options);
+    const merged = mergeCourseLists(dbCourses, listCoursesLocalRaw(options));
+    return merged.map(summarizeCourse);
   }
   return listCoursesLocal(options);
 }
 
 export function listCoursesLocal(options: { includeArchived?: boolean } = {}): CourseSummary[] {
+  return listCoursesLocalRaw(options).map(summarizeCourse);
+}
+
+function listCoursesLocalRaw(options: { includeArchived?: boolean } = {}): Course[] {
   const courses = Array.from(getStore().courses.values()).filter((course) => options.includeArchived || !course.archivedAt);
-  courses.sort((a, b) => b.createdAt - a.createdAt);
-  return courses.map(summarizeCourse);
+  courses.sort((a, b) => b.updatedAt - a.updatedAt);
+  return courses;
+}
+
+function mergeCourseLists(primary: Course[], fallback: Course[]): Course[] {
+  const byId = new Map<string, Course>();
+  for (const course of [...primary, ...fallback]) {
+    if (!byId.has(course.id)) byId.set(course.id, course);
+  }
+  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
 }
 
 export async function updateBlock(courseId: string, blockId: string, next: CourseBlock, ownerId?: string | null): Promise<Course | undefined> {
