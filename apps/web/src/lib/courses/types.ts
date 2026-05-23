@@ -48,6 +48,8 @@ export type Course = {
   summary: string;
   estimatedMinutes: number;
   blocks: CourseBlock[];
+  archivedAt?: number | null;
+  version: number;
   createdAt: number;
   updatedAt: number;
 };
@@ -64,6 +66,8 @@ export type CourseSummary = {
   summary: string;
   estimatedMinutes: number;
   outline: CourseOutlineItem[];
+  archivedAt?: number | null;
+  version: number;
   createdAt: number;
   updatedAt: number;
 };
@@ -79,6 +83,8 @@ export function summarizeCourse(course: Course): CourseSummary {
       type: block.type,
       title: block.title ?? defaultTitleFor(block),
     })),
+    archivedAt: course.archivedAt ?? null,
+    version: course.version ?? 1,
     createdAt: course.createdAt,
     updatedAt: course.updatedAt,
   };

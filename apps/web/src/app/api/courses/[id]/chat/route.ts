@@ -65,7 +65,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   try {
     const { id } = await context.params;
     const body = RequestSchema.parse(await request.json());
-    const course = getCourse(id);
+    const course = await getCourse(id);
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
 
     const selectedBlock = body.selectedBlockId

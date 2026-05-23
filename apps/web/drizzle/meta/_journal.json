@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1779502999295,
+      "tag": "0000_cuddly_obadiah_stane",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779504298624,
+      "tag": "0001_pink_luke_cage",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779523500000,
+      "tag": "0002_memory_versions_archive",
+      "breakpoints": true
+    }
+  ]
+}

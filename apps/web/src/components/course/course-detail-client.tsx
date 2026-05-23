@@ -540,9 +540,26 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
 }
 
 const SETTINGS_KEY = "primoria:tutor-provider-settings";
+let providerSettingsCache: { provider?: "openai-compatible" | "anthropic-compatible"; baseUrl?: string; apiKey?: string; model?: string } | undefined;
+
+async function refreshProviderSettingsCache() {
+  try {
+    const response = await fetch("/api/settings/provider", { cache: "no-store" });
+    if (!response.ok) return;
+    const data = (await response.json()) as { authEnabled?: boolean; settings?: typeof providerSettingsCache };
+    if (data.authEnabled && data.settings) {
+      providerSettingsCache = data.settings;
+      window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(data.settings));
+    }
+  } catch {
+    // Keep local fallback.
+  }
+}
 
 function readSettings() {
   if (typeof window === "undefined") return undefined;
+  if (providerSettingsCache) return providerSettingsCache;
+  void refreshProviderSettingsCache();
   const raw = window.localStorage.getItem(SETTINGS_KEY);
   if (!raw) return undefined;
   try {

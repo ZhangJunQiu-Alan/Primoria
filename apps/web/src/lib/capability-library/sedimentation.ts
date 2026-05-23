@@ -14,11 +14,11 @@ export type SedimentationResult =
   | { saved: true; app: LearningApp }
   | { saved: false; reason: string };
 
-export function sedimentWidget(
+export async function sedimentWidget(
   widget: HtmlWidgetArtifact,
   plan: VisualizationPlanArtifact | null,
   context: SedimentationContext = {},
-): SedimentationResult {
+): Promise<SedimentationResult> {
   if (!widget || widget.type !== "html_widget") {
     return { saved: false, reason: "not_a_widget" };
   }
@@ -35,7 +35,7 @@ export function sedimentWidget(
   }
 
   const signature = hashHtmlSource(html);
-  const existing = findAppByHtmlSignature(signature);
+  const existing = await findAppByHtmlSignature(signature);
   if (existing) {
     return { saved: false, reason: "duplicate" };
   }
@@ -61,9 +61,11 @@ export function sedimentWidget(
       lastUsedAt: now,
       usageCount: 1,
     },
+    archivedAt: null,
+    version: 1,
   };
 
-  saveApp(app);
+  await saveApp(app);
   return { saved: true, app };
 }
 
