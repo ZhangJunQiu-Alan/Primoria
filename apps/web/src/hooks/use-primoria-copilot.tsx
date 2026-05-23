@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useEffect, useRef } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
+import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem-renderer";
 import { PlanCard } from "@/components/generative-ui/plan-card";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
@@ -205,6 +206,24 @@ export function usePrimoriaGenerativeUI() {
         keyElements={normalizePlanKeyElements(parameters?.key_elements ?? [])}
       />
     ),
+  });
+
+  useRenderTool({
+    name: "stemRenderer",
+    parameters: StemRendererProps,
+    render: ({ status, parameters }) => {
+      const { subject, scene, title, description, code } = parameters;
+      if (!subject || !scene || !title || !description || !code) return <></>;
+      return (
+        <div className="message-row tool widget-renderer-row">
+          <StemRenderer
+            subject={subject} scene={scene}
+            title={title} description={description}
+            code={code} status={status}
+          />
+        </div>
+      );
+    },
   });
 
   useRenderTool({

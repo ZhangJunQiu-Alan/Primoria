@@ -340,6 +340,8 @@ button {
 .message-row.tool.widget-renderer-row {
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
+  margin-left: -34px;
+  margin-right: -34px;
 }
 
 .message-row.tool.inline-plan-row .inline-plan-card,
@@ -685,6 +687,17 @@ button {
   flex: 0 0 auto;
 }
 
+.widget-renderer-error {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-text-danger);
+  border-radius: 12px;
+  background: var(--color-background-danger);
+  color: var(--color-text-danger);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .todo-card {
   max-width: 770px;
 }
@@ -956,6 +969,12 @@ button {
 
   .chat-canvas {
     padding: 22px 14px 24px;
+  }
+
+  .message-row.tool.inline-plan-row,
+  .message-row.tool.widget-renderer-row {
+    margin-left: -14px;
+    margin-right: -14px;
   }
 
   .thread {

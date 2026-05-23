@@ -1,8 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { IDIOMORPH_JS } from "./idiomorph-inline";
+import { ExportOverlay } from "./export-overlay";
+import { assembleWidgetStandaloneHtml } from "./export-utils";
+import { normalizeWidgetDependencies } from "@/lib/ai/widget-dependencies";
 
 export const WidgetDependency = z.object({
   url: z.string(),
@@ -23,7 +26,7 @@ type WidgetRendererComponentProps = WidgetRendererProps & {
   onSendPrompt?: (prompt: string) => void;
 };
 
-const THEME_CSS = `
+export const THEME_CSS = `
 :root {
   --color-background-primary: #fffdf8;
   --color-background-secondary: #f7f3ea;
@@ -54,32 +57,149 @@ const THEME_CSS = `
   --bg2: var(--color-background-secondary);
   --b: var(--color-border-tertiary);
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background-primary: #1c1914;
+    --color-background-secondary: #282420;
+    --color-background-tertiary: #221f1b;
+    --color-background-info: #0c3a6b;
+    --color-background-success: #143220;
+    --color-background-warning: #3a2700;
+    --color-background-danger: #3a1810;
+
+    --color-text-primary: #ede9df;
+    --color-text-secondary: #9a9187;
+    --color-text-tertiary: #6f675f;
+    --color-text-info: #7eb8f0;
+    --color-text-success: #7fc472;
+    --color-text-warning: #e8a84c;
+    --color-text-danger: #f09d8c;
+
+    --color-border-primary: rgba(237, 233, 223, 0.36);
+    --color-border-secondary: rgba(237, 233, 223, 0.22);
+    --color-border-tertiary: rgba(237, 233, 223, 0.12);
+  }
+}
 `;
 
-const SVG_CLASSES_CSS = `
-svg text.t { font: 400 14px var(--font-sans); fill: var(--p); }
-svg text.ts { font: 400 12px var(--font-sans); fill: var(--s); }
-svg text.th { font: 700 14px var(--font-sans); fill: var(--p); }
+export const SVG_CLASSES_CSS = `
+svg text.t   { font: 400 14px var(--font-sans); fill: var(--p); }
+svg text.ts  { font: 400 12px var(--font-sans); fill: var(--s); }
+svg text.th  { font: 700 14px var(--font-sans); fill: var(--p); }
 svg .box > rect, svg .box > circle, svg .box > ellipse { fill: var(--bg2); stroke: var(--b); }
 svg .node { cursor: pointer; }
 svg .node:hover { opacity: 0.86; }
 svg .arr { stroke: var(--s); stroke-width: 1.5; fill: none; }
 svg .leader { stroke: var(--t); stroke-width: 0.5; stroke-dasharray: 4 4; fill: none; }
+
+/* Blue */
 svg .c-blue > rect, svg .c-blue > circle, svg .c-blue > ellipse,
-svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #e7f1ff; stroke: #4a82c5; }
+svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #E6F1FB; stroke: #185FA5; }
+svg .c-blue text.th, svg .c-blue text.t { fill: #0C447C; }
+svg .c-blue text.ts { fill: #185FA5; }
+
+/* Green */
 svg .c-green > rect, svg .c-green > circle, svg .c-green > ellipse,
-svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #e5f5e9; stroke: #4b9a61; }
+svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #EAF3DE; stroke: #3B6D11; }
+svg .c-green text.th, svg .c-green text.t { fill: #27500A; }
+svg .c-green text.ts { fill: #3B6D11; }
+
+/* Amber */
 svg .c-amber > rect, svg .c-amber > circle, svg .c-amber > ellipse,
-svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #fff2c4; stroke: #c09123; }
+svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #FAEEDA; stroke: #854F0B; }
+svg .c-amber text.th, svg .c-amber text.t { fill: #633806; }
+svg .c-amber text.ts { fill: #854F0B; }
+
+/* Coral */
 svg .c-coral > rect, svg .c-coral > circle, svg .c-coral > ellipse,
-svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #ffede6; stroke: #d76e52; }
+svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #FAECE7; stroke: #993C1D; }
+svg .c-coral text.th, svg .c-coral text.t { fill: #712B13; }
+svg .c-coral text.ts { fill: #993C1D; }
+
+/* Purple */
 svg .c-purple > rect, svg .c-purple > circle, svg .c-purple > ellipse,
-svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #f0eaff; stroke: #806bd6; }
+svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #EEEDFE; stroke: #534AB7; }
+svg .c-purple text.th, svg .c-purple text.t { fill: #3C3489; }
+svg .c-purple text.ts { fill: #534AB7; }
+
+/* Gray */
 svg .c-gray > rect, svg .c-gray > circle, svg .c-gray > ellipse,
-svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #f1eee8; stroke: #8a8178; }
+svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #F1EFE8; stroke: #5F5E5A; }
+svg .c-gray text.th, svg .c-gray text.t { fill: #444441; }
+svg .c-gray text.ts { fill: #5F5E5A; }
+
+/* Teal */
+svg .c-teal > rect, svg .c-teal > circle, svg .c-teal > ellipse,
+svg rect.c-teal, svg circle.c-teal, svg ellipse.c-teal { fill: #E1F5EE; stroke: #0F6E56; }
+svg .c-teal text.th, svg .c-teal text.t { fill: #085041; }
+svg .c-teal text.ts { fill: #0F6E56; }
+
+/* Pink */
+svg .c-pink > rect, svg .c-pink > circle, svg .c-pink > ellipse,
+svg rect.c-pink, svg circle.c-pink, svg ellipse.c-pink { fill: #FBEAF0; stroke: #993556; }
+svg .c-pink text.th, svg .c-pink text.t { fill: #72243E; }
+svg .c-pink text.ts { fill: #993556; }
+
+/* Red */
+svg .c-red > rect, svg .c-red > circle, svg .c-red > ellipse,
+svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #FCEBEB; stroke: #A32D2D; }
+svg .c-red text.th, svg .c-red text.t { fill: #791F1F; }
+svg .c-red text.ts { fill: #A32D2D; }
+
+@media (prefers-color-scheme: dark) {
+  svg text.t   { fill: #ede9df; }
+  svg text.ts  { fill: #9a9187; }
+  svg text.th  { fill: #ede9df; }
+
+  svg .c-blue > rect, svg .c-blue > circle, svg .c-blue > ellipse,
+  svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #0C447C; stroke: #85B7EB; }
+  svg .c-blue text.th, svg .c-blue text.t { fill: #B5D4F4; }
+  svg .c-blue text.ts { fill: #85B7EB; }
+
+  svg .c-green > rect, svg .c-green > circle, svg .c-green > ellipse,
+  svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #27500A; stroke: #97C459; }
+  svg .c-green text.th, svg .c-green text.t { fill: #C0DD97; }
+  svg .c-green text.ts { fill: #97C459; }
+
+  svg .c-amber > rect, svg .c-amber > circle, svg .c-amber > ellipse,
+  svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #633806; stroke: #EF9F27; }
+  svg .c-amber text.th, svg .c-amber text.t { fill: #FAC775; }
+  svg .c-amber text.ts { fill: #EF9F27; }
+
+  svg .c-coral > rect, svg .c-coral > circle, svg .c-coral > ellipse,
+  svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #712B13; stroke: #F0997B; }
+  svg .c-coral text.th, svg .c-coral text.t { fill: #F5C4B3; }
+  svg .c-coral text.ts { fill: #F0997B; }
+
+  svg .c-purple > rect, svg .c-purple > circle, svg .c-purple > ellipse,
+  svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #3C3489; stroke: #AFA9EC; }
+  svg .c-purple text.th, svg .c-purple text.t { fill: #CECBF6; }
+  svg .c-purple text.ts { fill: #AFA9EC; }
+
+  svg .c-gray > rect, svg .c-gray > circle, svg .c-gray > ellipse,
+  svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #444441; stroke: #B4B2A9; }
+  svg .c-gray text.th, svg .c-gray text.t { fill: #D3D1C7; }
+  svg .c-gray text.ts { fill: #B4B2A9; }
+
+  svg .c-teal > rect, svg .c-teal > circle, svg .c-teal > ellipse,
+  svg rect.c-teal, svg circle.c-teal, svg ellipse.c-teal { fill: #085041; stroke: #5DCAA5; }
+  svg .c-teal text.th, svg .c-teal text.t { fill: #9FE1CB; }
+  svg .c-teal text.ts { fill: #5DCAA5; }
+
+  svg .c-pink > rect, svg .c-pink > circle, svg .c-pink > ellipse,
+  svg rect.c-pink, svg circle.c-pink, svg ellipse.c-pink { fill: #72243E; stroke: #ED93B1; }
+  svg .c-pink text.th, svg .c-pink text.t { fill: #F4C0D1; }
+  svg .c-pink text.ts { fill: #ED93B1; }
+
+  svg .c-red > rect, svg .c-red > circle, svg .c-red > ellipse,
+  svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #791F1F; stroke: #F09595; }
+  svg .c-red text.th, svg .c-red text.t { fill: #F7C1C1; }
+  svg .c-red text.ts { fill: #F09595; }
+}
 `;
 
-const FORM_STYLES_CSS = `
+export const FORM_STYLES_CSS = `
 * { box-sizing: border-box; margin: 0; }
 html { background: transparent; }
 body {
@@ -177,10 +297,14 @@ function showWidgetError(message) {
 window.addEventListener('error', function(event) {
   showWidgetError(event.message || (event.error && event.error.message) || 'script failed');
 });
+window.onerror = function(message, _source, _lineno, _colno, error) {
+  showWidgetError((error && error.message) || message || 'script failed');
+};
 window.addEventListener('unhandledrejection', function(event) {
   var reason = event.reason;
   showWidgetError((reason && reason.message) || reason || 'promise rejected');
 });
+window.__primoriaShowWidgetError = showWidgetError;
 
 document.addEventListener('click', function(event) {
   var promptButton = event.target.closest('button[data-prompt], [role="button"][data-prompt]');
@@ -223,6 +347,10 @@ var COMMON_DEPENDENCIES = {
   L: { global: 'L', url: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', kind: 'script' },
   mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' }
 };
+var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(map, key) {
+  map[COMMON_DEPENDENCIES[key].url] = true;
+  return map;
+}, Object.create(null));
 
 function readGlobal(path) {
   if (!path) return undefined;
@@ -239,6 +367,10 @@ function normalizeDependency(dep) {
   if (!dep) return null;
   if (typeof dep === 'string') return COMMON_DEPENDENCIES[dep] || null;
   if (!dep.url) return null;
+  if (!ALLOWED_DEPENDENCY_URLS[String(dep.url)]) {
+    showWidgetError('Blocked non-whitelisted dependency: ' + String(dep.url));
+    return null;
+  }
   return {
     global: dep.global ? String(dep.global) : '',
     url: String(dep.url),
@@ -304,7 +436,7 @@ function loadDependency(dep, done) {
     link.setAttribute('data-primoria-dep', key);
     link.onload = done;
     link.onerror = function() {
-      console.warn('[primoria-widget] dependency failed to load', dep.url);
+      showWidgetError('Dependency failed to load: ' + dep.url);
       done();
     };
     document.head.appendChild(link);
@@ -317,7 +449,7 @@ function loadDependency(dep, done) {
   if (dep.kind === 'module') script.type = 'module';
   script.onload = done;
   script.onerror = function() {
-    console.warn('[primoria-widget] dependency failed to load', dep.url);
+    showWidgetError('Dependency failed to load: ' + dep.url);
     done();
   };
   document.head.appendChild(script);
@@ -355,17 +487,26 @@ function runScripts(content, scripts, index, dependencies) {
       }
       if (type) nextScript.type = type;
       if (info.src) {
+        if (!ALLOWED_DEPENDENCY_URLS[String(info.src)]) {
+          showWidgetError('Blocked non-whitelisted script source: ' + String(info.src));
+          runScripts(content, scripts, index + 1, dependencies);
+          return;
+        }
         nextScript.src = info.src;
         nextScript.onload = function() { runScripts(content, scripts, index + 1, dependencies); };
         nextScript.onerror = function() { runScripts(content, scripts, index + 1, dependencies); };
         content.appendChild(nextScript);
       } else {
-        nextScript.textContent = info.text || '';
+        nextScript.textContent =
+          'try {\\n' +
+          (info.text || '') +
+          '\\n} catch (error) { window.__primoriaShowWidgetError(error && error.message ? error.message : \\'script failed\\'); throw error; }';
         content.appendChild(nextScript);
         runScripts(content, scripts, index + 1, dependencies);
       }
     } catch (error) {
       console.warn('[primoria-widget] script execution failed', error);
+      showWidgetError(error && error.message ? error.message : 'script execution failed');
       runScripts(content, scripts, index + 1, dependencies);
     }
   });
@@ -379,6 +520,12 @@ window.addEventListener('message', function(event) {
   if (!content) return;
 
   var rawHtml = String(event.data.html || '');
+  if (event.data.executeScripts !== false && !rawHtml.trim()) {
+    content.innerHTML = '';
+    showWidgetError('Widget returned empty HTML.');
+    reportHeight();
+    return;
+  }
   var tmp = document.createElement('div');
   tmp.innerHTML = rawHtml;
   var scripts = [];
@@ -407,8 +554,14 @@ window.addEventListener('message', function(event) {
   } else {
     content.innerHTML = tmp.innerHTML;
   }
-  if (event.data.executeScripts !== false && allScriptsClosed) {
-    runScripts(content, scripts, 0, event.data.dependencies || []);
+  if (event.data.executeScripts !== false) {
+    if (!allScriptsClosed) {
+      showWidgetError('Widget script tag is incomplete. Regenerate the widget to repair the HTML.');
+    } else if (scripts.length > 0) {
+      runScripts(content, scripts, 0, event.data.dependencies || []);
+    } else {
+      notifyWidgetReady();
+    }
   }
   reportHeight();
 });
@@ -507,11 +660,16 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
   const executedHtmlRef = useRef("");
   const [height, setHeight] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [htmlSettled, setHtmlSettled] = useState(false);
-  const [prevHtml, setPrevHtml] = useState(html);
+  const [settledHtml, setSettledHtml] = useState("");
   const [fadingOut, setFadingOut] = useState(false);
   const settledTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const normalizedDependencies = useMemo(() => normalizeWidgetDependencies(dependencies), [dependencies]);
+  const htmlSettled = html === settledHtml;
+  const exportHtml = useMemo(
+    () => (html ? assembleWidgetStandaloneHtml({ title, html, dependencies: normalizedDependencies }) : undefined),
+    [html, normalizedDependencies, title],
+  );
 
   const handleMessage = useCallback(
     (event: MessageEvent) => {
@@ -540,19 +698,15 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
     return () => window.removeEventListener("message", handleMessage);
   }, [handleMessage]);
 
-  if (html !== prevHtml) {
-    setPrevHtml(html);
-    setHtmlSettled(false);
-    setFadingOut(false);
+  useEffect(() => {
     executedHtmlRef.current = "";
-  }
+  }, [html]);
 
   useEffect(() => {
-    if (!html) return;
     if (settledTimerRef.current) clearTimeout(settledTimerRef.current);
     if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
     settledTimerRef.current = setTimeout(() => {
-      setHtmlSettled(true);
+      setSettledHtml(html);
       setFadingOut(true);
       fadeTimerRef.current = setTimeout(() => {
         setFadingOut(false);
@@ -585,15 +739,15 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
 
     if (!loaded || !iframe.contentWindow || html === committedHtmlRef.current) return;
     committedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies, executeScripts: false }, "*");
-  }, [html, dependencies, loaded]);
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies: normalizedDependencies, executeScripts: false }, "*");
+  }, [html, normalizedDependencies, loaded]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!htmlSettled || !html || !loaded || !iframe?.contentWindow || html === executedHtmlRef.current) return;
     executedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies, executeScripts: true }, "*");
-  }, [html, dependencies, htmlSettled, loaded]);
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies: normalizedDependencies, executeScripts: true }, "*");
+  }, [html, normalizedDependencies, htmlSettled, loaded]);
 
   const showIframe = Boolean(html);
   const isStreaming = Boolean(html) && !htmlSettled;
@@ -611,18 +765,25 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
           <span>{loadingPhrase}...</span>
         </div>
       ) : null}
-      <iframe
-        ref={iframeRef}
-        className="widget-frame"
-        title={title}
-        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-        onLoad={() => setLoaded(true)}
-        style={{
-          height: showIframe ? (height > 0 ? height : 300) : 0,
-          opacity: showIframe ? 1 : 0,
-          display: html ? undefined : "none",
-        }}
-      />
+      {htmlSettled && !html.trim() ? (
+        <div className="widget-renderer-error" role="alert">
+          Widget returned empty HTML.
+        </div>
+      ) : null}
+      <ExportOverlay title={title} exportHtml={exportHtml} ready={!!html && htmlSettled}>
+        <iframe
+          ref={iframeRef}
+          className="widget-frame"
+          title={title}
+          sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+          onLoad={() => setLoaded(true)}
+          style={{
+            height: showIframe ? (height > 0 ? height : 300) : 0,
+            opacity: showIframe ? 1 : 0,
+            display: html ? undefined : "none",
+          }}
+        />
+      </ExportOverlay>
     </div>
   );
 }
