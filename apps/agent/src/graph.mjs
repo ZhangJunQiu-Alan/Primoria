@@ -335,6 +335,8 @@ function getRuntimeOwnerId(runtime) {
   }
   return runtimeAny?.context?.primoria_owner_id
     ?? runtimeAny?.context?.user_id
+    ?? runtimeAny?.state?.primoria_owner_id
+    ?? runtimeAny?.state?.user_id
     ?? runtimeAny?.configurable?.primoria_owner_id
     ?? runtimeAny?.configurable?.user_id
     ?? runtimeAny?.metadata?.primoria_owner_id
@@ -362,9 +364,15 @@ const PrimoriaContextAnnotation = Annotation.Root({
   user_id: Annotation(),
 });
 
+const PrimoriaStateAnnotation = Annotation.Root({
+  primoria_owner_id: Annotation(),
+  user_id: Annotation(),
+});
+
 const primoriaContextMiddleware = createMiddleware({
   name: "PrimoriaContextMiddleware",
   contextSchema: PrimoriaContextSchema,
+  stateSchema: PrimoriaStateAnnotation,
 });
 
 const generateCourseTool = tool(

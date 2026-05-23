@@ -21,7 +21,19 @@ function normalizeAgentMessages(messages: any[] = []) {
 }
 
 class PrimoriaLangGraphAgent extends LangGraphAgent {
-  ownerId?: string | null;
+  ownerId: string | null;
+
+  constructor(config: ConstructorParameters<typeof LangGraphAgent>[0] & { ownerId?: string | null }) {
+    const { ownerId, ...agentConfig } = config;
+    super(agentConfig);
+    this.ownerId = ownerId ?? null;
+  }
+
+  clone() {
+    const cloned = super.clone() as PrimoriaLangGraphAgent;
+    cloned.ownerId = this.ownerId;
+    return cloned;
+  }
 
   run(input: any) {
     // First-principles fix for dev/runtime stability:
@@ -35,13 +47,20 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
     // does not need a long-lived MemorySaver thread for our current product
     // behavior. Use a fresh runtime thread per run and keep product history in DB.
     const runtimeThreadId = crypto.randomUUID();
+    const ownerId = this.ownerId ?? undefined;
     return super.run({
       ...input,
       threadId: runtimeThreadId,
       messages: normalizeAgentMessages(input?.messages),
+      state: {
+        ...(input?.state ?? {}),
+        primoria_owner_id: ownerId,
+        user_id: ownerId,
+      },
       context: {
         ...(input?.context ?? {}),
-        primoria_owner_id: this.ownerId ?? undefined,
+        primoria_owner_id: ownerId,
+        user_id: ownerId,
       },
       forwardedProps: {
         ...(input?.forwardedProps ?? {}),
@@ -49,11 +68,11 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
           ...(input?.forwardedProps?.config ?? {}),
           configurable: {
             ...(input?.forwardedProps?.config?.configurable ?? {}),
-            primoria_owner_id: this.ownerId ?? undefined,
+            primoria_owner_id: ownerId,
           },
           metadata: {
             ...(input?.forwardedProps?.config?.metadata ?? {}),
-            primoria_owner_id: this.ownerId ?? undefined,
+            primoria_owner_id: ownerId,
           },
         },
       },
@@ -61,17 +80,16 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
   }
 }
 
-const primoriaAgent = new PrimoriaLangGraphAgent({
-  deploymentUrl,
-  graphId: "primoria_tutor",
-});
-
 export const POST = async (req: NextRequest) => {
   const user = await getCurrentUser();
   if (isAuthEnabled() && !user) {
     return Response.json({ error: "Sign in required to use Primoria Tutor." }, { status: 401 });
   }
-  primoriaAgent.ownerId = user?.id ?? null;
+  const primoriaAgent = new PrimoriaLangGraphAgent({
+    deploymentUrl,
+    graphId: "primoria_tutor",
+    ownerId: user?.id ?? null,
+  });
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     endpoint: "/api/copilotkit",
     serviceAdapter: new ExperimentalEmptyAdapter(),
@@ -81,9 +99,5 @@ export const POST = async (req: NextRequest) => {
       },
     }),
   });
-  try {
-    return await handleRequest(req);
-  } finally {
-    primoriaAgent.ownerId = null;
-  }
+  return handleRequest(req);
 };
