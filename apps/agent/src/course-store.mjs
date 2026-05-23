@@ -2,9 +2,11 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import postgres from "postgres";
 import { summarizeCourse } from "./course-types.mjs";
 
 const globalKey = "__primoria_course_store__";
+const dbGlobalKey = "__primoria_agent_postgres__";
 const storeFile = path.join(findWorkspaceRoot(), ".primoria-courses.json");
 
 function getStore() {
@@ -19,10 +21,36 @@ function getStore() {
   return store;
 }
 
+function getSql() {
+  const url = process.env.DATABASE_URL;
+  if (!url) return null;
+  const globalAny = /** @type {any} */ (globalThis);
+  if (!globalAny[dbGlobalKey]) {
+    globalAny[dbGlobalKey] = postgres(url, { max: 1, prepare: false });
+  }
+  return /** @type {postgres.Sql} */ (globalAny[dbGlobalKey]);
+}
+
+/**
+ * @param {any} course
+ * @param {string | null | undefined} ownerId
+ */
+export async function saveCourse(course, ownerId) {
+  if (ownerId && process.env.DATABASE_URL) {
+    try {
+      await saveCourseToDb(course, ownerId);
+      return course;
+    } catch (error) {
+      console.warn("[agent/course-store] Postgres save failed, falling back to local JSON", error);
+    }
+  }
+  return saveCourseLocal(course);
+}
+
 /**
  * @param {any} course
  */
-export function saveCourse(course) {
+export function saveCourseLocal(course) {
   getStore().courses.set(course.id, course);
   persistStore();
   return course;
@@ -50,8 +78,39 @@ export function updateBlock(courseId, blockId, next) {
   const course = getCourse(courseId);
   if (!course) return undefined;
   const blocks = course.blocks.map((/** @type {any} */ block) => (block.id === blockId ? next : block));
-  const updated = { ...course, blocks, updatedAt: Date.now() };
-  return saveCourse(updated);
+  const updated = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourseLocal(updated);
+}
+
+/**
+ * @param {any} course
+ * @param {string} ownerId
+ */
+async function saveCourseToDb(course, ownerId) {
+  const sql = getSql();
+  if (!sql) throw new Error("DATABASE_URL is not configured.");
+  const createdAt = new Date(course.createdAt);
+  const updatedAt = new Date(course.updatedAt);
+  await sql`
+    insert into courses (
+      id, owner_id, title, topic, summary, estimated_minutes, blocks,
+      archived_at, version, created_at, updated_at
+    ) values (
+      ${course.id}, ${ownerId}, ${course.title}, ${course.topic}, ${course.summary},
+      ${course.estimatedMinutes}, ${sql.json(course.blocks)},
+      ${course.archivedAt ? new Date(course.archivedAt) : null}, ${course.version ?? 1}, ${createdAt}, ${updatedAt}
+    )
+    on conflict (id) do update set
+      owner_id = excluded.owner_id,
+      title = excluded.title,
+      topic = excluded.topic,
+      summary = excluded.summary,
+      estimated_minutes = excluded.estimated_minutes,
+      blocks = excluded.blocks,
+      archived_at = excluded.archived_at,
+      version = excluded.version,
+      updated_at = excluded.updated_at
+  `;
 }
 
 /**

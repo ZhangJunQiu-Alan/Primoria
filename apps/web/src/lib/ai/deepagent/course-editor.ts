@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getCourse, updateBlock } from "@/lib/courses/store";
+import { recordCourseEditEvent } from "@/lib/memory/course-edit-events";
 import type { Course, CourseBlock } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
@@ -77,7 +78,7 @@ export async function editBlock(
   input: EditBlockInput,
   settings: TutorProviderSettings = {},
 ): Promise<EditBlockResult> {
-  const course = getCourse(input.courseId);
+  const course = await getCourse(input.courseId);
   if (!course) throw new Error("Course not found");
   const block = course.blocks.find((b) => b.id === input.blockId);
   if (!block) throw new Error("Block not found");
@@ -88,8 +89,16 @@ export async function editBlock(
   const rewritten = await invokeBlockEdit(model, schema, block, userPrompt);
 
   const next = normalizeEditedBlock(rewritten, block);
-  const updatedCourse = updateBlock(input.courseId, input.blockId, next);
+  const updatedCourse = await updateBlock(input.courseId, input.blockId, next);
   if (!updatedCourse) throw new Error("Update failed");
+  await recordCourseEditEvent({
+    courseId: input.courseId,
+    blockId: input.blockId,
+    instruction: input.comment,
+    beforeBlock: block,
+    afterBlock: next,
+    metadata: { source: "course-editor" },
+  });
   return { course: updatedCourse, block: next };
 }
 

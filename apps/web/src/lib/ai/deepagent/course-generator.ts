@@ -131,11 +131,13 @@ export async function generateCourse(
     summary: draft.summary,
     estimatedMinutes: draft.estimatedMinutes,
     blocks,
+    archivedAt: null,
+    version: 1,
     createdAt: now,
     updatedAt: now,
   };
 
-  saveCourse(course);
+  await saveCourse(course);
 
   return { course, summary: summarizeCourse(course) };
 }

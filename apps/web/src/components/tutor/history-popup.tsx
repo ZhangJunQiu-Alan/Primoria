@@ -161,7 +161,7 @@ export function ChatHistoryPopup({
 
         <p className="history-hint">
           {useCopilotKit
-            ? "CopilotKit sessions are stored locally by thread id on this browser."
+            ? "CopilotKit sessions sync to your account and restore on this browser after sign-in."
             : "Older sessions will appear here once multi-session storage is wired up."}
         </p>
       </div>

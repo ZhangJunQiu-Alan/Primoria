@@ -47,6 +47,42 @@ ANTHROPIC_API_KEY=your-key
 ANTHROPIC_MODEL=your-model
 ```
 
+
+### Optional Postgres database and accounts
+
+Primoria can run in local JSON mode without a database. To enable account creation, user sessions, and user-isolated course/app storage, configure a standard PostgreSQL connection:
+
+```bash
+DATABASE_URL=postgres://user:password@host:5432/primoria
+```
+
+Then run migrations:
+
+```bash
+pnpm --filter @primoria/web db:migrate
+```
+
+The first database version is intentionally Postgres-first and vendor-portable. It can run on Railway Postgres, Supabase Postgres, Neon, RDS, Alibaba Cloud PostgreSQL, or a local Postgres instance. Supabase can be used as a provider, but application code should rely on Primoria repositories rather than direct vendor-specific calls.
+
+Initial auth support includes:
+
+- `users`
+- `identities`
+- `sessions`
+- reserved `otp_codes` for future phone/email OTP login
+- email + password sign-up/sign-in
+- HTTP-only session cookies
+
+When `DATABASE_URL` is not set, Primoria falls back to the workspace JSON files below.
+
+To import existing local JSON courses/apps into a database account:
+
+```bash
+pnpm --filter @primoria/web import:local-data you@example.com
+```
+
+Create the account in the app before running the import command.
+
 ### Optional CopilotKit / LangGraph mode
 
 The default web tutor can run directly through the Next.js API routes. If you want to use the CopilotKit + LangGraph agent path, also set:
@@ -110,6 +146,12 @@ pnpm build
 
 # Lint the web app
 pnpm lint
+
+# Generate database migrations after schema changes
+pnpm --filter @primoria/web db:generate
+
+# Apply database migrations when DATABASE_URL is configured
+pnpm --filter @primoria/web db:migrate
 ```
 
 ## Useful test / verification commands
