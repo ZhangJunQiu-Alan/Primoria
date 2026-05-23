@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCopilotAction, useCopilotAdditionalInstructions, useCopilotReadable } from "@copilotkit/react-core";
 import { BlockRenderer } from "./block-renderer";
 import { CourseMarkdown } from "./course-markdown";
+import { AttachmentChips, AttachmentPicker, attachmentMetadata } from "@/components/tutor/attachment-picker";
+import type { AttachmentMetadata, ChatAttachment } from "@/lib/ai/types";
 import type { Course, CourseBlock } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
@@ -15,6 +17,7 @@ type CourseLocalMessage = {
   id: string;
   role: "user" | "assistant";
   content: string;
+  attachments?: AttachmentMetadata[];
   isError?: boolean;
 };
 
@@ -95,15 +98,18 @@ function CourseLocalChat({
   messages: CourseLocalMessage[];
   isLoading: boolean;
   placeholder: string;
-  onSubmit: (value: string) => void;
+  onSubmit: (value: string, attachments: ChatAttachment[]) => void;
 }) {
   const [draft, setDraft] = useState("");
+  const [attachments, setAttachments] = useState<ChatAttachment[]>([]);
 
   function submit() {
     const value = draft.trim();
-    if (!value || isLoading) return;
+    if ((!value && attachments.length === 0) || isLoading) return;
+    const files = attachments;
     setDraft("");
-    onSubmit(value);
+    setAttachments([]);
+    onSubmit(value, files);
   }
 
   return (
@@ -117,13 +123,21 @@ function CourseLocalChat({
         ) : (
           messages.map((message) => (
             <div key={message.id} className={`course-local-message ${message.role}${message.role === "assistant" && message.isError ? " error" : ""}`}>
-              {message.role === "assistant" ? <CourseMarkdown markdown={message.content} /> : message.content}
+              {message.role === "assistant" ? (
+                <CourseMarkdown markdown={message.content} />
+              ) : (
+                <>
+                  {message.content}
+                  <AttachmentChips attachments={message.attachments ?? []} />
+                </>
+              )}
             </div>
           ))
         )}
         {isLoading ? <div className="course-local-message assistant loading">Thinking…</div> : null}
       </div>
       <div className="course-local-input-wrap">
+        <AttachmentPicker attachments={attachments} onChange={setAttachments} disabled={isLoading} compact />
         <textarea
           value={draft}
           placeholder={placeholder}
@@ -137,7 +151,7 @@ function CourseLocalChat({
           }}
           rows={2}
         />
-        <button type="button" disabled={isLoading || !draft.trim()} onClick={submit}>
+        <button type="button" disabled={isLoading || (!draft.trim() && attachments.length === 0)} onClick={submit}>
           Send
         </button>
       </div>
@@ -268,10 +282,11 @@ function CourseAIAssistantPanel({
   }, []);
 
   const askCourseCopilot = useCallback(
-    async (message: string) => {
+    async (message: string, attachments: ChatAttachment[] = []) => {
       const trimmed = message.trim();
-      if (!trimmed || localLoading) return;
-      appendLocalMessage({ role: "user", content: trimmed });
+      if ((!trimmed && attachments.length === 0) || localLoading) return;
+      const displayContent = trimmed || "Attached files";
+      appendLocalMessage({ role: "user", content: displayContent, attachments: attachments.map(attachmentMetadata) });
       setLocalLoading(true);
       try {
         const response = await fetch(`/api/courses/${course.id}/chat`, {
@@ -281,6 +296,7 @@ function CourseAIAssistantPanel({
             message: trimmed,
             selectedBlockId: selectedBlock?.id ?? null,
             settings: readSettings(),
+            attachments,
           }),
         });
         const data = (await response.json()) as { reply?: string; error?: string };
@@ -299,7 +315,7 @@ function CourseAIAssistantPanel({
         setLocalLoading(false);
       }
     },
-    [appendLocalMessage, course.id, localLoading, selectedBlock?.id],
+    [appendLocalMessage, course.id, localLoading, selectedBlock],
   );
 
   const reviseSelectedBlockDirectly = useCallback(
@@ -452,7 +468,7 @@ function CourseAIAssistantPanel({
                 key={prompt}
                 type="button"
                 disabled={localLoading}
-                onClick={() => void askCourseCopilot(prompt)}
+            onClick={() => void askCourseCopilot(prompt)}
               >
                 {prompt}
               </button>
@@ -469,9 +485,9 @@ function CourseAIAssistantPanel({
               messages={localMessages}
               isLoading={localLoading}
               placeholder="Ask about this course…"
-              onSubmit={(value) => {
-                if (interceptCourseRevision(value)) return;
-                void askCourseCopilot(value);
+              onSubmit={(value, attachments) => {
+                if (attachments.length === 0 && interceptCourseRevision(value)) return;
+                void askCourseCopilot(value, attachments);
               }}
             />
           </div>

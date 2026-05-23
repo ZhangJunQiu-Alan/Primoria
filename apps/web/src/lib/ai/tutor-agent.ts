@@ -26,9 +26,17 @@ export async function runTutorAgent(
 
 function latestUserMessage(messages: ChatMessage[]) {
   for (let i = messages.length - 1; i >= 0; i--) {
-    if (messages[i].role === "user") return messages[i].content;
+    if (messages[i].role === "user") return messageContentToString(messages[i].content);
   }
   return "";
+}
+
+function messageContentToString(content: ChatMessage["content"]) {
+  if (typeof content === "string") return content;
+  return content
+    .filter((part) => part.type === "text")
+    .map((part) => part.text)
+    .join("\n");
 }
 
 const COURSE_INTENT_PATTERN =

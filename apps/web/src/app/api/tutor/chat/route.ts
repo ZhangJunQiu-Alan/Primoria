@@ -2,12 +2,18 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
 import type { TutorStreamEvent } from "@/lib/ai/types";
+import { applyAttachmentsToLatestUserMessage, AttachmentsSchema, processAttachments } from "@/lib/ai/attachments";
+
+const ContentPartSchema = z.union([
+  z.object({ type: z.literal("text"), text: z.string() }),
+  z.object({ type: z.literal("image_url"), image_url: z.object({ url: z.string() }) }),
+]);
 
 const RequestSchema = z.object({
   messages: z.array(
     z.object({
       role: z.enum(["user", "assistant"]),
-      content: z.string(),
+      content: z.union([z.string(), z.array(ContentPartSchema)]),
     }),
   ),
   settings: z
@@ -19,6 +25,7 @@ const RequestSchema = z.object({
     })
     .optional(),
   stream: z.boolean().optional(),
+  attachments: AttachmentsSchema,
 });
 
 function userFacingError(error: unknown) {
@@ -46,6 +53,8 @@ function userFacingError(error: unknown) {
 export async function POST(request: Request) {
   try {
     const body = RequestSchema.parse(await request.json());
+    const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
+    const messages = applyAttachmentsToLatestUserMessage(body.messages, processedAttachments);
     if (body.stream) {
       const encoder = new TextEncoder();
 
@@ -55,7 +64,7 @@ export async function POST(request: Request) {
             controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
           };
 
-          void runTutorAgentStream(body.messages, body.settings, emit)
+          void runTutorAgentStream(messages, body.settings, emit)
             .catch((error) => {
               console.error("[tutor/chat:stream]", error);
               emit({
@@ -76,7 +85,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const result = await runTutorAgent(body.messages, body.settings);
+    const result = await runTutorAgent(messages, body.settings);
     return NextResponse.json(result);
   } catch (error) {
     console.error("[tutor/chat]", error);
