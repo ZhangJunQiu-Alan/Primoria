@@ -3,6 +3,7 @@ import { z } from "zod";
 import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
 import type { TutorStreamEvent } from "@/lib/ai/types";
 import { applyAttachmentsToLatestUserMessage, AttachmentsSchema, processAttachments } from "@/lib/ai/attachments";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 
 const ContentPartSchema = z.union([
   z.object({ type: z.literal("text"), text: z.string() }),
@@ -52,6 +53,9 @@ function userFacingError(error: unknown) {
 
 export async function POST(request: Request) {
   try {
+    if (isAuthEnabled() && !(await getCurrentUser())) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const body = RequestSchema.parse(await request.json());
     const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
     const messages = applyAttachmentsToLatestUserMessage(body.messages, processedAttachments);

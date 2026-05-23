@@ -6,7 +6,7 @@ import {
 import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 import { normalizeCopilotMessagesWithAttachments } from "@/lib/ai/copilot-attachments";
-import { getCurrentUser } from "@/lib/auth/session";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 
 const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";
 
@@ -76,6 +76,9 @@ const primoriaAgent = new PrimoriaLangGraphAgent({
 export const POST = async (req: NextRequest) => {
   const normalizedRequest = await requestWithNormalizedAttachments(req);
   const user = await getCurrentUser();
+  if (isAuthEnabled() && !user) {
+    return Response.json({ error: "Sign in required to use Primoria Tutor." }, { status: 401 });
+  }
   primoriaAgent.ownerId = user?.id ?? null;
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     endpoint: "/api/copilotkit",
