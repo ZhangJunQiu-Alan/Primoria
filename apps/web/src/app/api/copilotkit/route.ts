@@ -6,6 +6,7 @@ import {
 import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 import { normalizeCopilotMessagesWithAttachments } from "@/lib/ai/copilot-attachments";
+import { getCurrentUser } from "@/lib/auth/session";
 
 const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";
 
@@ -19,15 +20,6 @@ function settingsFromEnvironment() {
   } as const;
 }
 
-class PrimoriaLangGraphAgent extends LangGraphAgent {
-  run(input: any) {
-    return super.run({
-      ...input,
-      messages: normalizeAgentMessages(input?.messages),
-    });
-  }
-}
-
 function normalizeAgentMessages(messages: any[] = []) {
   return messages
     .filter((message) => message?.role !== "reasoning" && message?.role !== "activity")
@@ -39,6 +31,43 @@ function normalizeAgentMessages(messages: any[] = []) {
     });
 }
 
+class PrimoriaLangGraphAgent extends LangGraphAgent {
+  ownerId?: string | null;
+
+  run(input: any) {
+    // First-principles fix for dev/runtime stability:
+    // CopilotKit's threadId is a product/UI conversation id that we persist in
+    // Primoria Postgres. LangGraph dev server currently uses in-memory
+    // checkpoints. If we reuse the product threadId as the LangGraph runtime
+    // threadId, stale checkpoints can make @ag-ui/langgraph enter its
+    // "regenerate from checkpoint" path and throw `Message not found`.
+    //
+    // The request already carries the current CopilotKit messages, so LangGraph
+    // does not need a long-lived MemorySaver thread for our current product
+    // behavior. Use a fresh runtime thread per run and keep product history in DB.
+    const runtimeThreadId = crypto.randomUUID();
+    return super.run({
+      ...input,
+      threadId: runtimeThreadId,
+      messages: normalizeAgentMessages(input?.messages),
+      context: {
+        ...(input?.context ?? {}),
+        primoria_owner_id: this.ownerId ?? undefined,
+      },
+      forwardedProps: {
+        ...(input?.forwardedProps ?? {}),
+        config: {
+          ...(input?.forwardedProps?.config ?? {}),
+          configurable: {
+            ...(input?.forwardedProps?.config?.configurable ?? {}),
+            primoria_owner_id: this.ownerId ?? undefined,
+          },
+        },
+      },
+    });
+  }
+}
+
 const primoriaAgent = new PrimoriaLangGraphAgent({
   deploymentUrl,
   graphId: "primoria_tutor",
@@ -46,6 +75,8 @@ const primoriaAgent = new PrimoriaLangGraphAgent({
 
 export const POST = async (req: NextRequest) => {
   const normalizedRequest = await requestWithNormalizedAttachments(req);
+  const user = await getCurrentUser();
+  primoriaAgent.ownerId = user?.id ?? null;
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     endpoint: "/api/copilotkit",
     serviceAdapter: new ExperimentalEmptyAdapter(),
@@ -55,7 +86,11 @@ export const POST = async (req: NextRequest) => {
       },
     }),
   });
-  return handleRequest(normalizedRequest);
+  try {
+    return await handleRequest(normalizedRequest);
+  } finally {
+    primoriaAgent.ownerId = null;
+  }
 };
 
 async function requestWithNormalizedAttachments(req: NextRequest) {

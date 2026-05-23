@@ -259,7 +259,7 @@ export async function runTutorAgentStream(
 
   if (resolvedWidget) {
     try {
-      const outcome = sedimentWidget(resolvedWidget, capturedPlan, { userQuestion });
+      const outcome = await sedimentWidget(resolvedWidget, capturedPlan, { userQuestion });
       if (outcome.saved) {
         console.info("[capability-library] sedimented widget", outcome.app.id, outcome.app.displayName);
       }
@@ -315,7 +315,7 @@ async function runFixtureWidgetStream(
   emit({ type: "assistant_message", label: "Tutor team", reply, suggestions: [] });
 
   try {
-    const outcome = sedimentWidget(widget, plan, { userQuestion });
+    const outcome = await sedimentWidget(widget, plan, { userQuestion });
     if (outcome.saved) {
       console.info("[capability-library] sedimented widget", outcome.app.id, outcome.app.displayName);
     }

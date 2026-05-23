@@ -172,8 +172,9 @@ function randomId(prefix) {
 /**
  * @param {{ topic: string; contextHint?: string }} input
  * @param {{ invoke: Function }} model
+ * @param {{ ownerId?: string | null }} [options]
  */
-export async function generateCourse(input, model) {
+export async function generateCourse(input, model, options = {}) {
   const draft = COURSE_GENERATION_MODE === "blocks"
     ? await generateCourseByBlocks(input, model)
     : await generateCourseFast(input, model);
@@ -189,11 +190,13 @@ export async function generateCourse(input, model) {
       id: block.id ?? randomId("blk"),
       ...block,
     })),
+    archivedAt: null,
+    version: 1,
     createdAt: now,
     updatedAt: now,
   };
 
-  saveCourse(course);
+  await saveCourse(course, options.ownerId);
 
   return { course, summary: summarizeCourse(course) };
 }

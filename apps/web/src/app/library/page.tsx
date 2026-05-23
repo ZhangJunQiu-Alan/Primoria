@@ -16,8 +16,8 @@ export default async function LibraryPage({
   const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
   const activeTab: TabKey = rawTab === "apps" ? "apps" : "courses";
 
-  const courses = listCourses();
-  const apps = listApps();
+  const courses = await listCourses();
+  const apps = await listApps();
 
   return (
     <main className="app-shell">
@@ -26,7 +26,7 @@ export default async function LibraryPage({
         <header className="library-header">
           <h1>Library</h1>
           <p>
-            Courses and capability apps Primoria has built up for you. They live on disk for this server install.
+            Courses and capability apps Primoria has built up for you. Signed-in workspaces are saved to Postgres; local mode still uses JSON files.
           </p>
         </header>
 
@@ -53,9 +53,6 @@ export default async function LibraryPage({
           courses.length === 0 ? (
             <div className="library-empty">
               <p>No courses yet.</p>
-              <p>
-                Go back to the <Link href="/">tutor</Link> and ask something like &ldquo;教我熵的直觉&rdquo;.
-              </p>
             </div>
           ) : (
             <ul className="library-grid">
@@ -65,7 +62,7 @@ export default async function LibraryPage({
                     <strong>{course.title}</strong>
                     <p className="library-card-summary">{course.summary}</p>
                     <span className="library-card-meta">
-                      {course.outline.length} blocks · ~{course.estimatedMinutes} min
+                      {course.outline.length} blocks · v{course.version} · ~{course.estimatedMinutes} min
                     </span>
                   </Link>
                 </li>
@@ -75,9 +72,6 @@ export default async function LibraryPage({
         ) : apps.length === 0 ? (
           <div className="library-empty">
             <p>No apps yet.</p>
-            <p>
-              Apps appear here automatically when the tutor produces an interactive widget worth keeping. Try asking for &ldquo;做一个牛顿摆动量传递的可视化&rdquo;.
-            </p>
           </div>
         ) : (
           <ul className="library-grid">
@@ -96,7 +90,7 @@ export default async function LibraryPage({
                     </ul>
                   ) : null}
                   <span className="library-card-meta">
-                    {originLabel(app.origin.kind)} · used {app.metadata.usageCount}× · {formatRelative(app.metadata.lastUsedAt)}
+                    {originLabel(app.origin.kind)} · v{app.version} · used {app.metadata.usageCount}× · {formatRelative(app.metadata.lastUsedAt)}
                   </span>
                 </article>
               </li>
