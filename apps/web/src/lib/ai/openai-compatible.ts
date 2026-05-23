@@ -1,6 +1,8 @@
+import type { MessageContentPart } from "./types";
+
 type CompletionMessage = {
   role: "system" | "user" | "assistant";
-  content: string;
+  content: string | MessageContentPart[];
 };
 
 type CompletionChoice = {

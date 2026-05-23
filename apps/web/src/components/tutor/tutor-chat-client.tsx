@@ -3,10 +3,19 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { ToolCard } from "@/components/generative-ui/tool-card";
-import type { ChatMessage, ToolStatusArtifact, TutorAgentResponse, TutorProviderSettings, TutorStreamEvent } from "@/lib/ai/types";
+import type {
+  AttachmentMetadata,
+  ChatAttachment,
+  ChatMessage,
+  ToolStatusArtifact,
+  TutorAgentResponse,
+  TutorProviderSettings,
+  TutorStreamEvent,
+} from "@/lib/ai/types";
 import { TutorComposer } from "./composer";
 import { HeroExplainerCards } from "./hero-explainer-cards";
 import { AssistantMessage, UserMessage } from "./message";
+import { AttachmentChips, attachmentMetadata } from "./attachment-picker";
 
 function ActivityList({ steps }: { steps: ToolStatusArtifact[] }) {
   return (
@@ -59,6 +68,7 @@ type UiMessage =
       id: string;
       role: "user";
       content: string;
+      attachments?: AttachmentMetadata[];
     }
   | {
       id: string;
@@ -240,19 +250,23 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
 
   async function sendMessage(
     content: string,
+    attachments: ChatAttachment[] = [],
     options: { appendUserMessage?: boolean; replaceMessageId?: string } = {},
   ) {
     const { appendUserMessage = true, replaceMessageId } = options;
     const trimmed = content.trim();
-    if (!trimmed || isLoading) return;
+    if ((!trimmed && attachments.length === 0) || isLoading) return;
+    const displayContent = trimmed || "Attached files";
+    const attachmentMetas = attachments.map(attachmentMetadata);
 
     const userMessage: UiMessage = {
       id: crypto.randomUUID(),
       role: "user",
-      content: trimmed,
+      content: displayContent,
+      attachments: attachmentMetas,
     };
 
-    const nextApiMessages = appendUserMessage ? [...apiMessages, { role: "user" as const, content: trimmed }] : apiMessages;
+    const nextApiMessages = appendUserMessage ? [...apiMessages, { role: "user" as const, content: displayContent }] : apiMessages;
     const assistantId = crypto.randomUUID();
     const placeholderAssistant: UiMessage = {
       id: assistantId,
@@ -273,11 +287,11 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
       const response = await fetch("/api/tutor/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ messages: nextApiMessages, settings, stream: true }),
+        body: JSON.stringify({ messages: nextApiMessages, settings, stream: true, attachments }),
       });
 
       if (response.headers.get("content-type")?.includes("application/x-ndjson")) {
-        await handleStreamingResponse(response, trimmed, assistantId);
+        await handleStreamingResponse(response, displayContent, assistantId);
         if (!response.ok) throw new Error("Tutor request failed");
         return;
       }
@@ -294,7 +308,7 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
       updateAssistantMessage(assistantId, {
         content: error instanceof Error ? error.message : "Something went wrong.",
         isError: true,
-        retryContent: trimmed,
+        retryContent: attachments.length > 0 ? `${displayContent}\n\nPlease reattach the files before retrying.` : displayContent,
       });
     } finally {
       setIsLoading(false);
@@ -363,7 +377,12 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
         <div className="thread">
           {messages.map((message) => {
             if (message.role === "user") {
-              return <UserMessage key={message.id}>{message.content}</UserMessage>;
+              return (
+                <UserMessage key={message.id}>
+                  <span>{message.content}</span>
+                  <AttachmentChips attachments={message.attachments ?? []} />
+                </UserMessage>
+              );
             }
 
             return (
@@ -377,7 +396,7 @@ export function TutorChatClient({ settings, resetKey }: { settings: TutorProvide
                         className="retry-btn"
                         disabled={isLoading}
                         onClick={() =>
-                          void sendMessage(message.retryContent ?? "", {
+                          void sendMessage(message.retryContent ?? "", [], {
                             appendUserMessage: false,
                             replaceMessageId: message.id,
                           })

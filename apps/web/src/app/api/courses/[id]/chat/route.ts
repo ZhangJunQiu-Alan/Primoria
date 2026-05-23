@@ -4,6 +4,7 @@ import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
 import { createTutorModel } from "@/lib/ai/deepagent/model";
 import { generateCourse } from "@/lib/ai/deepagent/course-generator";
+import { AttachmentsSchema, buildAttachmentContext, buildCourseUserContent, processAttachments } from "@/lib/ai/attachments";
 
 const RequestSchema = z.object({
   message: z.string().min(1),
@@ -16,6 +17,7 @@ const RequestSchema = z.object({
       model: z.string().optional(),
     })
     .optional(),
+  attachments: AttachmentsSchema,
 });
 
 function blockToPrompt(block: CourseBlock) {
@@ -87,11 +89,26 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       });
     }
 
-    const model = createTutorModel(body.settings);
+    const model = createTutorModel(body.settings, { streaming: false });
     const outline = course.blocks
       .map((block, index) => `${index + 1}. [${block.type}] ${block.title ?? block.type}`)
       .join("\n");
     const selected = selectedBlock ? blockToPrompt(selectedBlock) : "No selected block; answer from the whole course.";
+    const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
+    const attachmentContext = buildAttachmentContext(processedAttachments);
+    const userContent = buildCourseUserContent(
+      [
+        `Course: ${course.title}`,
+        `Topic: ${course.topic}`,
+        `Summary: ${course.summary}`,
+        `Outline:\n${outline}`,
+        `Selected context:\n${selected}`,
+        "",
+        body.message,
+      ].join("\n"),
+      attachmentContext,
+      processedAttachments,
+    );
     const result = await model.invoke([
       {
         role: "system",
@@ -99,15 +116,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       },
       {
         role: "user",
-        content: [
-          `Course: ${course.title}`,
-          `Topic: ${course.topic}`,
-          `Summary: ${course.summary}`,
-          `Outline:\n${outline}`,
-          `Selected context:\n${selected}`,
-          "",
-          `Learner question: ${body.message}`,
-        ].join("\n"),
+        content: userContent,
       },
     ]);
 

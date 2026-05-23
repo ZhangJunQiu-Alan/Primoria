@@ -16,6 +16,23 @@ import {
 import { usePrimoriaGenerativeUI, sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
 import { ensureThreadSummary, getCurrentThreadId, hydrateThreadHistoryFromServer, hydrateThreadMessagesFromServer, persistThreadMessageToServer, persistThreadSummaryToServer, resetCopilotThreads, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
 
+const COPILOT_ACCEPTED_ATTACHMENTS = [
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+  "text/markdown",
+  "text/x-markdown",
+  ".txt",
+  ".md",
+  ".markdown",
+  ".pdf",
+  ".docx",
+].join(",");
+const MAX_COPILOT_ATTACHMENT_BYTES = 10 * 1024 * 1024;
+
 const PrimoriaAssistantMessage = Object.assign(
   function PrimoriaAssistantMessage(props: CopilotChatAssistantMessageProps) {
     const safeContent = sanitizeCopilotAssistantText(props.message.content);
@@ -45,7 +62,6 @@ const PrimoriaMessageView = Object.assign(
   CopilotChatMessageView,
   CopilotChatView,
 );
-
 
 function messageText(message: { content?: unknown }) {
   const content = message.content;
@@ -138,6 +154,7 @@ function CopilotRestorePanel() {
 
 function RestoredCopilotChat({ threadId }: { threadId: string }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
+  const [attachmentError, setAttachmentError] = useState("");
   const [restoration, setRestoration] = useState<{
     threadId: string;
     agent: typeof agent;
@@ -187,12 +204,42 @@ function RestoredCopilotChat({ threadId }: { threadId: string }) {
   return (
     <>
       <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} />
+      {attachmentError ? <p className="attachment-error copilot-attachment-error">{attachmentError}</p> : null}
       <CopilotChat
         key={`chat-${threadId}`}
         threadId={threadId}
         messageView={PrimoriaMessageView}
+        attachments={{
+          enabled: true,
+          accept: COPILOT_ACCEPTED_ATTACHMENTS,
+          maxSize: MAX_COPILOT_ATTACHMENT_BYTES,
+          onUpload: async (file) => {
+            setAttachmentError("");
+            const value = await new Promise<string>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const result = String(reader.result ?? "");
+                resolve(result.includes(",") ? result.slice(result.indexOf(",") + 1) : result);
+              };
+              reader.onerror = () => reject(reader.error ?? new Error("File read failed"));
+              reader.readAsDataURL(file);
+            });
+            return {
+              type: "data",
+              value,
+              mimeType: file.type,
+            };
+          },
+          onUploadFailed: ({ message }) => setAttachmentError(message),
+        }}
+        onError={(event) => {
+          if ("error" in event) {
+            setAttachmentError(event.error instanceof Error ? event.error.message : String(event.error));
+          }
+        }}
         labels={{
           chatInputPlaceholder: "Ask anything, or ask for an interactive visualization…",
+          chatInputToolbarAddButtonLabel: "Attach files",
         }}
       />
     </>
