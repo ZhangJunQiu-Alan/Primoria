@@ -1,8 +1,9 @@
 import { tool } from "@langchain/core/tools";
-import { MemorySaver } from "@langchain/langgraph";
+import { Annotation, MemorySaver, getConfig } from "@langchain/langgraph";
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatAnthropic } from "@langchain/anthropic";
 import { createDeepAgent, FilesystemBackend } from "deepagents";
+import { createMiddleware } from "langchain";
 import { z } from "zod";
 import { generateCourse } from "./course-generator.mjs";
 import { getCourse } from "./course-store.mjs";
@@ -321,17 +322,55 @@ function normalizeCourseTopic(topic) {
     .trim() || topic.trim();
 }
 
+/**
+ * @param {unknown} runtime
+ */
+function getRuntimeOwnerId(runtime) {
+  const runtimeAny = /** @type {any} */ (runtime);
+  let config = null;
+  try {
+    config = /** @type {any} */ (getConfig());
+  } catch {
+    config = null;
+  }
+  return runtimeAny?.context?.primoria_owner_id
+    ?? runtimeAny?.context?.user_id
+    ?? runtimeAny?.configurable?.primoria_owner_id
+    ?? runtimeAny?.configurable?.user_id
+    ?? runtimeAny?.metadata?.primoria_owner_id
+    ?? runtimeAny?.metadata?.user_id
+    ?? runtimeAny?.config?.configurable?.primoria_owner_id
+    ?? runtimeAny?.config?.configurable?.user_id
+    ?? runtimeAny?.config?.metadata?.primoria_owner_id
+    ?? runtimeAny?.config?.metadata?.user_id
+    ?? config?.context?.primoria_owner_id
+    ?? config?.context?.user_id
+    ?? config?.configurable?.primoria_owner_id
+    ?? config?.configurable?.user_id
+    ?? config?.metadata?.primoria_owner_id
+    ?? config?.metadata?.user_id
+    ?? null;
+}
+
+const PrimoriaContextSchema = z.object({
+  primoria_owner_id: z.string().optional(),
+  user_id: z.string().optional(),
+});
+
+const PrimoriaContextAnnotation = Annotation.Root({
+  primoria_owner_id: Annotation(),
+  user_id: Annotation(),
+});
+
+const primoriaContextMiddleware = createMiddleware({
+  name: "PrimoriaContextMiddleware",
+  contextSchema: PrimoriaContextSchema,
+});
+
 const generateCourseTool = tool(
   async ({ topic, context_hint }, runtime) => {
     const normalizedTopic = normalizeCourseTopic(topic);
-    const runtimeAny = /** @type {any} */ (runtime);
-    const ownerId = runtimeAny?.context?.primoria_owner_id
-      ?? runtimeAny?.context?.user_id
-      ?? runtimeAny?.configurable?.primoria_owner_id
-      ?? runtimeAny?.configurable?.user_id
-      ?? runtimeAny?.config?.configurable?.primoria_owner_id
-      ?? runtimeAny?.config?.configurable?.user_id
-      ?? null;
+    const ownerId = getRuntimeOwnerId(runtime);
     const { summary } = await generateCourse(
       { topic: normalizedTopic, contextHint: context_hint },
       createModel({ streaming: false }),
@@ -353,14 +392,7 @@ const generateCourseTool = tool(
 
 const getCourseCardTool = tool(
   async ({ course_id }, runtime) => {
-    const runtimeAny = /** @type {any} */ (runtime);
-    const ownerId = runtimeAny?.context?.primoria_owner_id
-      ?? runtimeAny?.context?.user_id
-      ?? runtimeAny?.configurable?.primoria_owner_id
-      ?? runtimeAny?.configurable?.user_id
-      ?? runtimeAny?.config?.configurable?.primoria_owner_id
-      ?? runtimeAny?.config?.configurable?.user_id
-      ?? null;
+    const ownerId = getRuntimeOwnerId(runtime);
     const course = await getCourse(course_id, ownerId);
     if (!course) {
       return JSON.stringify({ type: "course_card_error", courseId: course_id, status: "not_found" });
@@ -475,6 +507,8 @@ export const graph = createDeepAgent({
   tools: [planVisualizationTool, widgetRendererTool, generateCourseTool, getCourseCardTool],
   systemPrompt: SYSTEM_PROMPT,
   subagents,
+  middleware: [primoriaContextMiddleware],
+  contextSchema: /** @type {any} */ (PrimoriaContextAnnotation),
   checkpointer,
   backend: new FilesystemBackend({
     rootDir: process.cwd(),

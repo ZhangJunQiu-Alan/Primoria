@@ -51,6 +51,10 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
             ...(input?.forwardedProps?.config?.configurable ?? {}),
             primoria_owner_id: this.ownerId ?? undefined,
           },
+          metadata: {
+            ...(input?.forwardedProps?.config?.metadata ?? {}),
+            primoria_owner_id: this.ownerId ?? undefined,
+          },
         },
       },
     });
