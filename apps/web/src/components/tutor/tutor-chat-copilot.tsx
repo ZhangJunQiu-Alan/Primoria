@@ -11,7 +11,6 @@ import {
   useAgent,
   type CopilotChatAssistantMessageProps,
   type CopilotChatMessageViewProps,
-  type CopilotChatViewProps,
   type CopilotChatReasoningMessageProps,
 } from "@copilotkit/react-core/v2";
 import { usePrimoriaGenerativeUI, sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
@@ -63,43 +62,6 @@ function messageText(message: { content?: unknown }) {
   return String(content ?? "");
 }
 
-const RestoringCopilotChatView = Object.assign(
-  function RestoringCopilotChatView(props: CopilotChatViewProps & { primoriaThreadId?: string }) {
-  const { primoriaThreadId, ...chatProps } = props;
-  const { agent } = useAgent({ agentId: "primoria_tutor", threadId: primoriaThreadId, updates: [UseAgentUpdate.OnMessagesChanged] });
-  const restoredThreadRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    const threadId = primoriaThreadId;
-    if (!threadId) return;
-    const resolvedThreadId = threadId;
-    let cancelled = false;
-    async function restore() {
-      if (restoredThreadRef.current === resolvedThreadId) return;
-      restoredThreadRef.current = resolvedThreadId;
-      if (agent.messages.length > 0) return;
-      const stored = await hydrateThreadMessagesFromServer(resolvedThreadId);
-      if (cancelled || stored.length === 0 || agent.messages.length > 0) return;
-      const messages = stored
-        .filter((message) => message.role === "user" || message.role === "assistant")
-        .map((message) => ({
-          id: message.id,
-          role: message.role as "user" | "assistant",
-          content: message.content,
-        }));
-      if (messages.length > 0) agent.setMessages(messages);
-    }
-    void restore();
-    return () => {
-      cancelled = true;
-    };
-  }, [agent, primoriaThreadId]);
-
-  return <CopilotChatView {...chatProps} />;
-  },
-  CopilotChatView,
-);
-
 function CopilotThreadHistoryRecorder({ threadId }: { threadId: string }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const recordedMessagesRef = useRef<Set<string>>(new Set());
@@ -142,22 +104,104 @@ function CopilotThreadHistoryRecorder({ threadId }: { threadId: string }) {
 
 function useCurrentCopilotThreadId() {
   const [threadId, setThreadId] = useState(() => getCurrentThreadId());
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    void hydrateThreadHistoryFromServer().finally(() => setThreadId(getCurrentThreadId()));
+    let cancelled = false;
+    void hydrateThreadHistoryFromServer().finally(() => {
+      if (cancelled) return;
+      setThreadId(getCurrentThreadId());
+      setIsReady(true);
+    });
     function onThreadChanged() {
       setThreadId(getCurrentThreadId());
+      setIsReady(true);
     }
     window.addEventListener(THREAD_EVENT_NAME, onThreadChanged);
-    return () => window.removeEventListener(THREAD_EVENT_NAME, onThreadChanged);
+    return () => {
+      cancelled = true;
+      window.removeEventListener(THREAD_EVENT_NAME, onThreadChanged);
+    };
   }, []);
 
-  return threadId;
+  return { threadId, isReady };
+}
+
+function CopilotRestorePanel() {
+  return (
+    <div className="copilot-restore-panel" aria-live="polite">
+      <span className="copilot-restore-dot" />
+      <span>Restoring your conversation…</span>
+    </div>
+  );
+}
+
+function RestoredCopilotChat({ threadId }: { threadId: string }) {
+  const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
+  const [restoration, setRestoration] = useState<{
+    threadId: string;
+    agent: typeof agent;
+    done: boolean;
+  }>(() => ({
+    threadId,
+    agent,
+    done: agent.messages.length > 0,
+  }));
+
+  useEffect(() => {
+    const resolvedThreadId = threadId;
+    let cancelled = false;
+
+    async function restore() {
+      if (agent.messages.length > 0) {
+        setRestoration({ threadId: resolvedThreadId, agent, done: true });
+        return;
+      }
+
+      const stored = await hydrateThreadMessagesFromServer(resolvedThreadId);
+      if (cancelled) return;
+
+      const messages = stored
+        .filter((message) => message.role === "user" || message.role === "assistant")
+        .map((message) => ({
+          id: message.id,
+          role: message.role as "user" | "assistant",
+          content: message.content,
+        }));
+
+      if (messages.length > 0 && agent.messages.length === 0) agent.setMessages(messages as any);
+      setRestoration({ threadId: resolvedThreadId, agent, done: true });
+    }
+
+    void restore();
+    return () => {
+      cancelled = true;
+    };
+  }, [agent, threadId]);
+
+  const restoredForCurrentAgent =
+    agent.messages.length > 0 || (restoration.done && restoration.threadId === threadId && restoration.agent === agent);
+
+  if (!restoredForCurrentAgent) return <CopilotRestorePanel />;
+
+  return (
+    <>
+      <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} />
+      <CopilotChat
+        key={`chat-${threadId}`}
+        threadId={threadId}
+        messageView={PrimoriaMessageView}
+        labels={{
+          chatInputPlaceholder: "Ask anything, or ask for an interactive visualization…",
+        }}
+      />
+    </>
+  );
 }
 
 export function TutorChatCopilot() {
   usePrimoriaGenerativeUI();
-  const threadId = useCurrentCopilotThreadId();
+  const { threadId, isReady } = useCurrentCopilotThreadId();
 
   useEffect(() => {
     function onCopilotRunError(event: ErrorEvent) {
@@ -171,17 +215,8 @@ export function TutorChatCopilot() {
   }, []);
 
   return (
-    <div className="copilot-chat-shell" aria-busy="false">
-      <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} />
-      <CopilotChat
-        key={`chat-${threadId}`}
-        threadId={threadId}
-        messageView={PrimoriaMessageView}
-        chatView={((props: CopilotChatViewProps) => <RestoringCopilotChatView {...props} primoriaThreadId={threadId} />) as any}
-        labels={{
-          chatInputPlaceholder: "Ask anything, or ask for an interactive visualization…",
-        }}
-      />
+    <div className="copilot-chat-shell" aria-busy={!isReady}>
+      {isReady ? <RestoredCopilotChat key={`restore-${threadId}`} threadId={threadId} /> : <CopilotRestorePanel />}
     </div>
   );
 }

@@ -1548,6 +1548,39 @@ button {
   height: 100%;
 }
 
+.copilot-restore-panel {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  color: var(--quiet);
+  font-size: 14px;
+}
+
+.copilot-restore-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--coral);
+  box-shadow: 0 0 0 0 rgba(232, 136, 103, 0.35);
+  animation: copilot-restore-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes copilot-restore-pulse {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(232, 136, 103, 0.3);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(232, 136, 103, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(232, 136, 103, 0);
+  }
+}
+
 .plan-progress {
   margin: 14px 0;
   max-width: 770px;
