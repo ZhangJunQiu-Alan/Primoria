@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:widget": "tsx tests/widget-html.unit.ts && tsx tests/widget-export.unit.ts && tsx tests/stem-code.unit.ts",
+    "test:widget:e2e": "node tests/widget-renderer.e2e.mjs"
   },
   "dependencies": {
     "@copilotkit/react-core": "next",

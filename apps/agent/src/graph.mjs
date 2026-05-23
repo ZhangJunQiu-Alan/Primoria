@@ -4,9 +4,14 @@ import { ChatOpenAI } from "@langchain/openai";
 import { ChatAnthropic } from "@langchain/anthropic";
 import { createDeepAgent, FilesystemBackend } from "deepagents";
 import { z } from "zod";
+import { readFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import { generateCourse } from "./course-generator.mjs";
 import { getCourse } from "./course-store.mjs";
 import { summarizeCourse } from "./course-types.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // plan_visualization and widgetRenderer are PASSIVE — they
 // just take the args the model produces and surface them as artifacts
@@ -28,25 +33,40 @@ function normalizeKeyElements(value) {
     .slice(0, 4);
 }
 
+const STEM_SUBJECTS = ["physics", "math", "cs"];
+
 const planVisualizationTool = tool(
-  async ({ title, approach, technology, key_elements }) => {
-    return JSON.stringify({
+  async ({ title, approach, technology, key_elements, subject }) => {
+    let plan = JSON.stringify({
       type: "visualization_plan",
       title: title ?? "Visualization plan",
       approach,
       technology,
       keyElements: normalizeKeyElements(key_elements),
     });
+
+    if (subject && STEM_SUBJECTS.includes(subject)) {
+      try {
+        const apiDocPath = resolve(__dirname, "../skills/stem/", `${subject}-api.md`);
+        const apiDoc = readFileSync(apiDocPath, "utf-8");
+        plan += `\n\n---\n## ${subject.toUpperCase()} Runtime API Reference\n${apiDoc}`;
+      } catch {
+        // API doc not found — proceed without it
+      }
+    }
+
+    return plan;
   },
   {
     name: "plan_visualization",
     description:
-      "Plan a widget before building it. MUST be called before widgetRenderer. Extract the user's non-negotiable visual/interaction requirements into key_elements; do not replace them with generic topic bullets.",
+      "Plan a widget before building it. MUST be called before widgetRenderer or stemRenderer. Extract the user's non-negotiable visual/interaction requirements into key_elements. For physics/math/cs simulations, set subject to 'physics', 'math', or 'cs' to receive the Runtime API reference.",
     schema: z.object({
       title: z.string().optional(),
       approach: z.string(),
       technology: z.string(),
       key_elements: z.union([z.array(z.string()), z.string()]),
+      subject: z.enum(["physics", "math", "cs"]).optional(),
     }),
   },
 );
@@ -245,16 +265,34 @@ function stripJsCommentsAndStrings(source) {
 /**
  * @param {unknown} dependencies
  */
+const WIDGET_DEPENDENCY_ALLOWLIST = {
+  d3: { global: "d3", url: "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js", kind: "script" },
+  Chart: { global: "Chart", url: "https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js", kind: "script" },
+  gsap: { global: "gsap", url: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js", kind: "script" },
+  THREE: { global: "THREE", url: "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js", kind: "script" },
+  anime: { global: "anime", url: "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js", kind: "script" },
+  Matter: { global: "Matter", url: "https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js", kind: "script" },
+  p5: { global: "p5", url: "https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js", kind: "script" },
+  math: { global: "math", url: "https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js", kind: "script" },
+  L: { global: "L", url: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js", kind: "script" },
+  mermaid: { global: "mermaid", url: "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js", kind: "script" },
+};
+const WIDGET_DEPENDENCIES_BY_URL = new Map(
+  Object.values(WIDGET_DEPENDENCY_ALLOWLIST).map((dep) => [dep.url, dep]),
+);
+
 function normalizeWidgetDependencies(dependencies) {
   if (!Array.isArray(dependencies)) return [];
-  return dependencies
-    .map((dep) => ({
-      url: String(dep?.url ?? "").trim(),
-      global: dep?.global == null ? undefined : String(dep.global).trim(),
-      kind: dep?.kind === "style" || dep?.kind === "module" ? dep.kind : "script",
-    }))
-    .filter((dep) => /^https:\/\//.test(dep.url))
-    .slice(0, 6);
+  const seen = new Set();
+  const normalized = [];
+  for (const dep of dependencies) {
+    const allowed = WIDGET_DEPENDENCIES_BY_URL.get(String(dep?.url ?? "").trim());
+    if (!allowed || seen.has(allowed.url)) continue;
+    seen.add(allowed.url);
+    normalized.push(allowed);
+    if (normalized.length >= 6) break;
+  }
+  return normalized;
 }
 
 const widgetRendererTool = tool(
@@ -270,7 +308,7 @@ const widgetRendererTool = tool(
   {
     name: "widgetRenderer",
     description:
-      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. If you use an external browser library, include it in the optional dependencies array as {url, global, kind} using an https CDN URL; do not rely on undeclared globals. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB. Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code. Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI. Avoid D3 unless absolutely necessary; for SVG, prefer plain DOM APIs such as createElementNS/setAttribute over complex D3 chains. Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye. For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration.",
+      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. If you use an external browser library, include it in the optional dependencies array as {url, global, kind}; only Primoria's fixed whitelist is accepted, so prefer d3, Chart, gsap, THREE, anime, Matter, p5, math, L, or mermaid exact CDN URLs already known to the renderer. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB. Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code. Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI. Avoid D3 unless absolutely necessary; for SVG, prefer plain DOM APIs such as createElementNS/setAttribute over complex D3 chains. Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye. For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts. Use the soft Primoria palette: cream backgrounds #fbf7ee / #fffaf2. For HIGHLIGHTED / ACTIVE / SELECTED elements pair a tinted fill with a matching 1.5-2px solid border: amber pair (#fff2de + #c8881a), sage pair (#e8f3ea + #4a7a5a), lavender pair (#efe7d7 + #7c6ad0), rose pair (#fbeaf0 + #b56474). NEVER use the saturated border color alone as a fill. Inactive cells: cream background + 0.5px #eadfce border. Excluded / muted state: opacity 0.45-0.55. Text #3a352d for body, #6b6357 for muted. Rounded 12-18px corners, no black, no neon, no emoji decoration.",
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),
@@ -284,6 +322,34 @@ const widgetRendererTool = tool(
     // Avoid a second post-tool model call with the full HTML in context.
     // That second call is where Anthropic-compatible MiniMax often hit the
     // ~60s terminated/RUN_ERROR path, which then confused AG-UI's event state.
+    returnDirect: true,
+  },
+);
+
+const stemRendererTool = tool(
+  async ({ subject, scene, title, description, code }) => {
+    return JSON.stringify({
+      type: "stem_renderer",
+      subject,
+      scene,
+      title,
+      description,
+      code,
+    });
+  },
+  {
+    name: "stemRenderer",
+    description:
+      "Render a STEM simulation in a sandboxed iframe using a pre-loaded subject Runtime API. Use ONLY for rigid-body physics (Matter.js PhysicsRuntime), math function plots (MathGL Canvas), or CS algorithm step-by-step visualizations (AlgoViz). MUST be called after plan_visualization with subject set. The code argument must ONLY use the Runtime API methods documented by plan_visualization — do NOT import libraries, do NOT call Matter.Engine directly, do NOT use DOM APIs outside the API.",
+    schema: z.object({
+      subject: z.enum(["physics", "math", "cs"]),
+      scene: z.string().describe("Scene type, e.g. 'pendulum', 'spring', 'bubble-sort'"),
+      title: z.string().describe("Short title for the simulation"),
+      description: z.string().describe("One-sentence description of what this demonstrates"),
+      code: z.string().describe(
+        "JavaScript code calling the subject Runtime API (Physics / MathGL / AlgoViz). No imports. No document/window DOM calls. Call run() last."
+      ),
+    }),
     returnDirect: true,
   },
 );
@@ -392,12 +458,25 @@ COURSE branch has highest priority. If the latest user message contains 课程 /
 3. Stop immediately after generate_course returns. The tool result is the UI card.
 Never call task, plan_visualization, or widgetRenderer in COURSE branch.
 
-VISUALIZATION branch only applies if COURSE branch does not match. For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, follow the OpenGenerativeUI-style workflow:
+VISUALIZATION branch only applies if COURSE branch does not match. For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, choose the right renderer:
+
+STEM SIMULATION sub-branch — use when the request is specifically about:
+  • Physics: rigid-body, pendulum, spring, collision, projectile, gravity, orbital mechanics
+  • Math: function plots, trigonometry, calculus, vectors, parametric curves, Fourier series
+  • CS algorithms: sorting, graph traversal, tree operations, stack/queue visualization
+Workflow:
 1. Briefly acknowledge what you will build in 1 short sentence.
-2. Call plan_visualization with approach, technology, and 2-4 key elements. The key elements must preserve the user's concrete constraints, controls, labels, and comparisons; do not summarize them away into generic topic names.
-3. Call widgetRenderer with title, description, and a compact self-contained HTML fragment in the html argument. Prefer including title, but if the provider drops it the tool will derive a safe default. Do not include doctype/html/head/body wrappers. Before calling widgetRenderer, mentally check that every user-stated requirement is visible or directly interactive in the HTML, but keep the code concise; use one canvas/SVG and a compact status panel rather than a large app.
-4. Stop immediately after widgetRenderer returns; widgetRenderer is returnDirect, so do not ask for or produce a post-widget narration.
-Never skip plan_visualization before widgetRenderer. Do not call task in VISUALIZATION branch.
+2. Call plan_visualization with approach, technology, 2-4 key elements, and subject set to "physics", "math", or "cs". Read the Runtime API reference it returns carefully — your code must ONLY use the documented API methods.
+3. Call stemRenderer with subject, scene, title, description, and code that uses the Runtime API. Call run() last. No imports, no raw DOM/Matter.js calls.
+4. Stop immediately after stemRenderer returns.
+
+GENERAL WIDGET sub-branch — use for everything else (charts, diagrams, architecture visualizations, custom simulations, interactive tools):
+1. Briefly acknowledge what you will build in 1 short sentence.
+2. Call plan_visualization with approach, technology, and 2-4 key elements (no subject for general widgets).
+3. Call widgetRenderer with title, description, and a compact self-contained HTML fragment. Do not include doctype/html/head/body wrappers. Keep code concise; use one canvas/SVG and a compact status panel.
+4. Stop immediately after widgetRenderer returns.
+
+Never skip plan_visualization before stemRenderer or widgetRenderer. Do not call task in VISUALIZATION branch.
 
 CRITICAL OUTPUT RULES:
 - Prefer short, decisive tool sequences. For visualization, the expected sequence is plan_visualization → widgetRenderer, then stop.
@@ -455,7 +534,7 @@ const checkpointer = new MemorySaver();
 export const graph = createDeepAgent({
   name: "primoria-tutor",
   model: createModel(),
-  tools: [planVisualizationTool, widgetRendererTool, generateCourseTool, getCourseCardTool],
+  tools: [planVisualizationTool, widgetRendererTool, stemRendererTool, generateCourseTool, getCourseCardTool],
   systemPrompt: SYSTEM_PROMPT,
   subagents,
   checkpointer,

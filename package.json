@@ -6,10 +6,13 @@
     "dev": "pnpm --parallel --filter @primoria/agent --filter @primoria/web dev",
     "build": "pnpm --filter @primoria/web build",
     "lint": "pnpm --filter @primoria/web lint",
-    "typecheck": "pnpm --filter @primoria/web typecheck"
+    "typecheck": "pnpm --filter @primoria/web typecheck",
+    "test:widget": "pnpm --filter @primoria/web test:widget",
+    "test:widget:e2e": "pnpm --filter @primoria/web test:widget:e2e"
   },
   "devDependencies": {
     "playwright": "^1.60.0",
+    "tsx": "^4.22.3",
     "typescript": "^5.7.0"
   }
 }

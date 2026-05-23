@@ -299,7 +299,7 @@ function CourseAIAssistantPanel({
         setLocalLoading(false);
       }
     },
-    [appendLocalMessage, course.id, localLoading, selectedBlock?.id],
+    [appendLocalMessage, course.id, localLoading, selectedBlock],
   );
 
   const reviseSelectedBlockDirectly = useCallback(
