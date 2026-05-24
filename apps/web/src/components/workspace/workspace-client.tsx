@@ -10,6 +10,13 @@ import type {
   WorkspaceView,
 } from "@/lib/workspaces/types";
 
+type LibraryAppOption = {
+  id: string;
+  displayName: string;
+  description?: string;
+  version: number;
+};
+
 export function WorkspaceClient({ initialView }: { initialView: WorkspaceView }) {
   const [view, setView] = useState(initialView);
   const [activeThreadId, setActiveThreadId] = useState(initialView.threads[0]?.id ?? "");
@@ -29,6 +36,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [attachmentOpen, setAttachmentOpen] = useState(false);
   const [attachmentTitle, setAttachmentTitle] = useState("");
   const [attachmentDescription, setAttachmentDescription] = useState("");
+  const [libraryApps, setLibraryApps] = useState<LibraryAppOption[]>([]);
+  const [selectedAppId, setSelectedAppId] = useState("");
+  const [loadingApps, setLoadingApps] = useState(false);
   const [memberName, setMemberName] = useState("");
   const [memberRole, setMemberRole] = useState("Human");
   const [taskTitle, setTaskTitle] = useState("");
@@ -45,6 +55,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   );
   const tasks = view.tasks.filter((task) => !activeThread || task.threadId === activeThread.id);
   const activeTaskCount = tasks.length || view.tasks.length;
+  const selectedApp = libraryApps.find((app) => app.id === selectedAppId);
 
   useEffect(() => {
     let cancelled = false;
@@ -68,6 +79,28 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       window.clearInterval(interval);
     };
   }, [view.workspace.id]);
+
+  useEffect(() => {
+    if (!attachmentOpen || libraryApps.length > 0 || loadingApps) return;
+    let cancelled = false;
+    async function loadApps() {
+      setLoadingApps(true);
+      try {
+        const response = await fetch("/api/apps", { cache: "no-store" });
+        if (!response.ok || cancelled) return;
+        const data = (await response.json()) as { apps?: LibraryAppOption[] };
+        setLibraryApps(Array.isArray(data.apps) ? data.apps : []);
+      } catch {
+        setLibraryApps([]);
+      } finally {
+        if (!cancelled) setLoadingApps(false);
+      }
+    }
+    void loadApps();
+    return () => {
+      cancelled = true;
+    };
+  }, [attachmentOpen, libraryApps.length, loadingApps]);
 
   function selectThread(thread: WorkspaceThread) {
     setActiveThreadId(thread.id);
@@ -298,10 +331,10 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   async function shareAppCard(event?: React.FormEvent<HTMLFormElement>) {
     event?.preventDefault();
     if (!activeThread) return;
-    const title = attachmentTitle.trim();
-    const description = attachmentDescription.trim();
+    const title = selectedApp?.displayName ?? attachmentTitle.trim();
+    const description = selectedApp?.description ?? attachmentDescription.trim();
     if (!title || !description) {
-      setError("Add an app title and short description first.");
+      setError("Select an app or add a title and short description first.");
       return;
     }
     setSending(true);
@@ -315,6 +348,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           content: `Shared ${title}.`,
           artifact: {
             type: "app",
+            appId: selectedApp?.id,
+            version: selectedApp?.version,
             title,
             description,
             primaryAction: "Open app",
@@ -334,6 +369,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       }));
       setAttachmentTitle("");
       setAttachmentDescription("");
+      setSelectedAppId("");
       setAttachmentOpen(false);
     } catch (shareError) {
       setError(shareError instanceof Error ? shareError.message : "Application card could not be shared.");
@@ -501,6 +537,24 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           {attachmentOpen ? (
             <div className="workspace-attachment-tray">
               <div className="workspace-quick-form horizontal">
+                <select
+                  aria-label="Saved application"
+                  value={selectedAppId}
+                  onChange={(event) => {
+                    const appId = event.target.value;
+                    const app = libraryApps.find((entry) => entry.id === appId);
+                    setSelectedAppId(appId);
+                    if (app) {
+                      setAttachmentTitle(app.displayName);
+                      setAttachmentDescription(app.description ?? "");
+                    }
+                  }}
+                >
+                  <option value="">{loadingApps ? "Loading apps" : "Manual card"}</option>
+                  {libraryApps.map((app) => (
+                    <option key={app.id} value={app.id}>{app.displayName}</option>
+                  ))}
+                </select>
                 <input
                   aria-label="Application title"
                   value={attachmentTitle}
@@ -705,7 +759,7 @@ function MessageArtifact({ artifact, onPrompt }: { artifact: WorkspaceMessageArt
         <b />
       </div>
       <div>
-        <span className="course-block-tag">Shared application</span>
+        <span className="course-block-tag">{artifact.appId ? `Library app v${artifact.version ?? 1}` : "Shared application"}</span>
         <h2>{artifact.title}</h2>
         <p>{artifact.description}</p>
         <div className="workspace-card-actions">

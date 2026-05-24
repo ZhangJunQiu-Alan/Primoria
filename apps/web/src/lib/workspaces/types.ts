@@ -30,6 +30,8 @@ export type WorkspaceThread = {
 export type WorkspaceMessageArtifact =
   | {
       type: "app";
+      appId?: string;
+      version?: number;
       title: string;
       description: string;
       primaryAction: string;
