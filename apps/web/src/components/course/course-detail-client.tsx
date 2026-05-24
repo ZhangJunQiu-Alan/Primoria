@@ -1,25 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useCopilotAction, useCopilotAdditionalInstructions, useCopilotReadable } from "@copilotkit/react-core";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useAgent, useCopilotKit, useFrontendTool, UseAgentUpdate } from "@copilotkit/react-core/v2";
+import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
-import { CourseMarkdown } from "./course-markdown";
-import { AttachmentChips, AttachmentPicker, attachmentMetadata } from "@/components/tutor/attachment-picker";
-import type { AttachmentMetadata, ChatAttachment } from "@/lib/ai/types";
+import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
+import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
 const DEFAULT_SIDEBAR_WIDTH = 410;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
-
-type CourseLocalMessage = {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  attachments?: AttachmentMetadata[];
-  isError?: boolean;
-};
+const COURSE_COPILOT_PROMPT_EVENT = "primoria:course-copilot-prompt";
 
 function blockToContext(block: CourseBlock) {
   const title = block.title ?? block.type;
@@ -89,77 +82,7 @@ function clampSidebarWidth(width: number) {
   return Math.min(MAX_SIDEBAR_WIDTH, Math.max(MIN_SIDEBAR_WIDTH, width));
 }
 
-function CourseLocalChat({
-  messages,
-  isLoading,
-  placeholder,
-  onSubmit,
-}: {
-  messages: CourseLocalMessage[];
-  isLoading: boolean;
-  placeholder: string;
-  onSubmit: (value: string, attachments: ChatAttachment[]) => void;
-}) {
-  const [draft, setDraft] = useState("");
-  const [attachments, setAttachments] = useState<ChatAttachment[]>([]);
-
-  function submit() {
-    const value = draft.trim();
-    if ((!value && attachments.length === 0) || isLoading) return;
-    const files = attachments;
-    setDraft("");
-    setAttachments([]);
-    onSubmit(value, files);
-  }
-
-  return (
-    <div className="course-local-chat-view">
-      <div className="course-local-messages" aria-live="polite">
-        {messages.length === 0 ? (
-          <div className="course-local-empty">
-            <strong>Ask about this block</strong>
-            <span>Use the chips above, or type your own question.</span>
-          </div>
-        ) : (
-          messages.map((message) => (
-            <div key={message.id} className={`course-local-message ${message.role}${message.role === "assistant" && message.isError ? " error" : ""}`}>
-              {message.role === "assistant" ? (
-                <CourseMarkdown markdown={message.content} />
-              ) : (
-                <>
-                  {message.content}
-                  <AttachmentChips attachments={message.attachments ?? []} />
-                </>
-              )}
-            </div>
-          ))
-        )}
-        {isLoading ? <div className="course-local-message assistant loading">Thinking…</div> : null}
-      </div>
-      <div className="course-local-input-wrap">
-        <AttachmentPicker attachments={attachments} onChange={setAttachments} disabled={isLoading} compact />
-        <textarea
-          value={draft}
-          placeholder={placeholder}
-          disabled={isLoading}
-          onChange={(event) => setDraft(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-              event.preventDefault();
-              submit();
-            }
-          }}
-          rows={2}
-        />
-        <button type="button" disabled={isLoading || (!draft.trim() && attachments.length === 0)} onClick={submit}>
-          Send
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function CourseAIContextBridge({
+function CourseRevisionAction({
   course,
   selectedBlock,
   onCourseUpdated,
@@ -168,38 +91,15 @@ function CourseAIContextBridge({
   selectedBlock: CourseBlock | null;
   onCourseUpdated: (course: Course) => void;
 }) {
-  const context = useMemo(() => buildCourseContext(course, selectedBlock), [course, selectedBlock]);
-
-  useCopilotReadable(
-    {
-      description: "Current Primoria course detail page and selected lesson block. Use this before answering course questions.",
-      value: context,
-    },
-    [context],
-  );
-
-  useCopilotAdditionalInstructions(
-    {
-      instructions:
-        "You are inside a Primoria course detail page. Use the readable course context and selectedBlock when answering. If the learner asks to modify, rewrite, simplify, expand, fix, improve, localize, add examples to, or otherwise change the selected lesson block, call revise_selected_course_block with their requested change. If no block is selected, ask them to select a block first. If the learner asks to create another course, use generate_course and keep the result as a course card. Answer in the user's language.",
-    },
-    [],
-  );
-
-  useCopilotAction(
+  useFrontendTool(
     {
       name: "revise_selected_course_block",
       description:
-        "Revise the currently selected block in the open Primoria course. Use this whenever the learner asks to change/improve/rewrite/simplify/expand/fix the selected block. Requires a selected block.",
-      parameters: [
-        {
-          name: "instruction",
-          type: "string",
-          description: "The learner's concrete revision request for the selected block.",
-          required: true,
-        },
-      ],
-      handler: async ({ instruction }: { instruction: string }) => {
+        "Revise the currently selected block in the open Primoria course. Use this only when the learner explicitly asks to change/improve/rewrite/simplify/expand/fix the selected block.",
+      parameters: z.object({
+        instruction: z.string().describe("The learner's concrete revision request for the selected block."),
+      }),
+      handler: async ({ instruction }) => {
         if (!selectedBlock) {
           return { ok: false, error: "No block is selected. Ask the learner to click a course block first." };
         }
@@ -209,7 +109,7 @@ function CourseAIContextBridge({
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             blockId: selectedBlock.id,
-            comment: instruction,
+            comment: String(instruction ?? ""),
             settings: readSettings(),
           }),
         });
@@ -248,6 +148,34 @@ function CourseAIContextBridge({
 
   return null;
 }
+function sendCoursePrompt(threadId: string, prompt: string) {
+  window.dispatchEvent(new CustomEvent(COURSE_COPILOT_PROMPT_EVENT, { detail: { threadId, prompt } }));
+}
+
+function CourseSuggestionBridge({ threadId }: { threadId: string }) {
+  const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
+  const { copilotkit } = useCopilotKit();
+
+  useEffect(() => {
+    function onPrompt(event: Event) {
+      const detail = (event as CustomEvent<{ threadId?: string; prompt?: string }>).detail;
+      const prompt = detail?.prompt?.trim();
+      if (detail?.threadId !== threadId || !prompt || agent.isRunning) return;
+
+      agent.addMessage({
+        id: crypto.randomUUID(),
+        role: "user",
+        content: prompt,
+      });
+      void copilotkit.runAgent({ agent });
+    }
+
+    window.addEventListener(COURSE_COPILOT_PROMPT_EVENT, onPrompt);
+    return () => window.removeEventListener(COURSE_COPILOT_PROMPT_EVENT, onPrompt);
+  }, [agent, copilotkit, threadId]);
+
+  return null;
+}
 
 function CourseAIAssistantPanel({
   course,
@@ -258,6 +186,7 @@ function CourseAIAssistantPanel({
   onCollapsedChange,
   onWidthChange,
   onCourseUpdated,
+  copilotEnabled,
 }: {
   course: Course;
   selectedBlock: CourseBlock | null;
@@ -267,108 +196,17 @@ function CourseAIAssistantPanel({
   onCollapsedChange: (collapsed: boolean) => void;
   onWidthChange: (width: number) => void;
   onCourseUpdated: (course: Course) => void;
+  copilotEnabled: boolean;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
   const startWidthRef = useRef(DEFAULT_SIDEBAR_WIDTH);
-  const [localMessages, setLocalMessages] = useState<CourseLocalMessage[]>([]);
-  const [localLoading, setLocalLoading] = useState(false);
-  const [directRevisionStatus, setDirectRevisionStatus] = useState<
-    { status: "idle" | "executing" | "complete" | "error"; message: string }
-  >({ status: "idle", message: "" });
-
-  const appendLocalMessage = useCallback((message: Omit<CourseLocalMessage, "id">) => {
-    setLocalMessages((current) => [...current, { ...message, id: crypto.randomUUID() }]);
-  }, []);
-
-  const askCourseCopilot = useCallback(
-    async (message: string, attachments: ChatAttachment[] = []) => {
-      const trimmed = message.trim();
-      if ((!trimmed && attachments.length === 0) || localLoading) return;
-      const displayContent = trimmed || "Attached files";
-      appendLocalMessage({ role: "user", content: displayContent, attachments: attachments.map(attachmentMetadata) });
-      setLocalLoading(true);
-      try {
-        const response = await fetch(`/api/courses/${course.id}/chat`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            message: trimmed,
-            selectedBlockId: selectedBlock?.id ?? null,
-            settings: readSettings(),
-            attachments,
-          }),
-        });
-        const data = (await response.json()) as { reply?: string; error?: string };
-        if (!response.ok) throw new Error(data.error ?? "Course Copilot failed");
-        appendLocalMessage({
-          role: "assistant",
-          content: data.reply?.trim() || "我读到了上下文，但这次没有生成有效回答。请换个问法再试一次。",
-        });
-      } catch (error) {
-        appendLocalMessage({
-          role: "assistant",
-          content: error instanceof Error ? error.message : "Course Copilot failed",
-          isError: true,
-        });
-      } finally {
-        setLocalLoading(false);
-      }
-    },
-    [appendLocalMessage, course.id, localLoading, selectedBlock],
-  );
-
-  const reviseSelectedBlockDirectly = useCallback(
-    async (instruction: string) => {
-      if (!selectedBlock) {
-        setDirectRevisionStatus({ status: "error", message: "请先点击左侧选择一个要修改的课程 block。" });
-        return false;
-      }
-
-      setDirectRevisionStatus({ status: "executing", message: "正在根据你的反馈修改当前 block…" });
-      try {
-        const response = await fetch(`/api/courses/${course.id}/edit`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            blockId: selectedBlock.id,
-            comment: instruction,
-            settings: readSettings(),
-          }),
-        });
-        const data = (await response.json()) as { course?: Course; block?: CourseBlock; error?: string };
-        if (!response.ok || !data.course) throw new Error(data.error ?? "Edit failed");
-        onCourseUpdated(data.course);
-        setDirectRevisionStatus({
-          status: "complete",
-          message: `已修改：${data.block?.title ?? selectedBlock.title ?? selectedBlock.type}`,
-        });
-        return true;
-      } catch (error) {
-        setDirectRevisionStatus({
-          status: "error",
-          message: error instanceof Error ? error.message : "修改失败",
-        });
-        return false;
-      }
-    },
-    [course.id, onCourseUpdated, selectedBlock],
-  );
-
-  const interceptCourseRevision = useCallback(
-    (value: string) => {
-      const normalized = value.trim();
-      if (!normalized) return false;
-      if (!selectedBlock) return false;
-      const looksLikeRevision =
-        /(改|修改|优化|重写|换成|更口语|更简单|扩展|补充|增加|删掉|修复|调整|rewrite|revise|improve|simplify|expand|fix|change)/i.test(
-          normalized,
-        ) && /(当前|这节|这一节|这个|这段|block|选中|selected)/i.test(normalized);
-      if (!looksLikeRevision) return false;
-      void reviseSelectedBlockDirectly(normalized);
-      return true;
-    },
-    [reviseSelectedBlockDirectly, selectedBlock],
+  // Use a v5 namespace so old LangGraph/CopilotKit dev checkpoints and
+  // context-injected course-chat history cannot leak into Course Copilot.
+  const courseThreadId = `course-v5-${course.id}`;
+  const courseContext = useMemo(
+    () => buildCourseContext(course, selectedBlock),
+    [course, selectedBlock],
   );
 
   useEffect(() => {
@@ -418,7 +256,12 @@ function CourseAIAssistantPanel({
         aria-label="Resize AI sidebar"
         onPointerDown={beginResize}
       />
-      <CourseAIContextBridge course={course} selectedBlock={selectedBlock} onCourseUpdated={onCourseUpdated} />
+      {copilotEnabled ? (
+        <>
+          <CourseRevisionAction course={course} selectedBlock={selectedBlock} onCourseUpdated={onCourseUpdated} />
+          <CourseSuggestionBridge threadId={courseThreadId} />
+        </>
+      ) : null}
       <div className="course-ai-sidebar-header">
         <button
           type="button"
@@ -437,10 +280,9 @@ function CourseAIAssistantPanel({
       </div>
       {!collapsed ? (
         <>
-          <div className="course-ai-context-card">
-            <span className="course-ai-context-eyebrow">Auto context</span>
-            <strong>{course.title}</strong>
-            <p>{selectedBlock ? `正在读取：${selectedBlock.title ?? selectedBlock.type}` : "未选中 block，默认读取整门课程。"}</p>
+          <div className="course-ai-context-strip">
+            <span>Context</span>
+            <strong>{selectedBlock ? selectedBlock.title ?? selectedBlock.type : "Whole course"}</strong>
             <div className="course-ai-block-chips">
               <button
                 type="button"
@@ -462,42 +304,44 @@ function CourseAIAssistantPanel({
               ))}
             </div>
           </div>
-          <div className="course-ai-suggestions" aria-label="Suggested prompts">
-            {suggestedPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                type="button"
-                disabled={localLoading}
-                onClick={() => void askCourseCopilot(prompt)}
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-          {directRevisionStatus.status !== "idle" ? (
-            <div className={`course-ai-direct-status ${directRevisionStatus.status}`}>
-              <span />
-              <p>{directRevisionStatus.message}</p>
-            </div>
-          ) : null}
-          <div className="course-ai-chat">
-            <CourseLocalChat
-              messages={localMessages}
-              isLoading={localLoading}
-              placeholder="Ask about this course…"
-              onSubmit={(value, attachments) => {
-                if (attachments.length === 0 && interceptCourseRevision(value)) return;
-                void askCourseCopilot(value, attachments);
-              }}
-            />
-          </div>
+          {copilotEnabled ? (
+            <>
+              <div className="course-ai-suggestions" aria-label="Suggested prompts">
+                {suggestedPrompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => sendCoursePrompt(courseThreadId, prompt)}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+              <div className="course-ai-chat">
+                <PrimoriaCopilotChatSurface
+                  key={courseThreadId}
+                  threadId={courseThreadId}
+                  title={`Course: ${course.title}`}
+                  placeholder="Ask about this course, selected block, or upload a file…"
+                  className="course-copilot-surface"
+                  context={{
+                    description: "Primoria course detail mode",
+                    value: JSON.stringify(courseContext),
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="course-ai-chat auth-required">Sign in to use Course Copilot.</div>
+          )}
         </>
       ) : null}
     </aside>
   );
 }
 
-export function CourseDetailClient({ initialCourse }: { initialCourse: Course }) {
+export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialCourse: Course; copilotEnabled: boolean }) {
+  usePrimoriaGenerativeUI();
   const [course, setCourse] = useState<Course>(initialCourse);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -507,7 +351,9 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
     const saved = window.localStorage.getItem(SIDEBAR_WIDTH_KEY);
     if (!saved) return;
     const parsed = Number(saved);
-    if (Number.isFinite(parsed)) setSidebarWidth(clampSidebarWidth(parsed));
+    if (!Number.isFinite(parsed)) return;
+    const frame = window.requestAnimationFrame(() => setSidebarWidth(clampSidebarWidth(parsed)));
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
@@ -544,6 +390,7 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
         width={sidebarWidth}
         onCollapsedChange={setSidebarCollapsed}
         onWidthChange={setSidebarWidth}
+        copilotEnabled={copilotEnabled}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);
           if (selectedBlockId && !nextCourse.blocks.some((block) => block.id === selectedBlockId)) {

@@ -2,14 +2,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 
 export const dynamic = "force-dynamic";
 
 export default async function CoursePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const course = await getCourse(id);
+  const user = await getCurrentUser();
+  const course = await getCourse(id, user?.id ?? null);
   if (!course) notFound();
+  const copilotEnabled = !isAuthEnabled() || Boolean(user);
 
   return (
     <main className="app-shell">
@@ -25,7 +28,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
             </span>
           </div>
         </header>
-        <CourseDetailClient initialCourse={course} />
+        <CourseDetailClient initialCourse={course} copilotEnabled={copilotEnabled} />
       </section>
     </main>
   );

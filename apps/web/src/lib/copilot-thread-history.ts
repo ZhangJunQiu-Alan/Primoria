@@ -151,11 +151,16 @@ export async function hydrateThreadHistoryFromServer() {
       clearCopilotThreadStorage();
       return;
     }
+    const mainThreads = data.threads.filter((thread) => !thread.id.startsWith("course-"));
+    if (mainThreads.length === 0) {
+      clearCopilotThreadStorage();
+      return;
+    }
     const currentThreadId = window.localStorage.getItem(MAIN_THREAD_STORAGE_KEY);
     const localCurrent = currentThreadId ? readThreadHistory().find((thread) => thread.id === currentThreadId) : null;
-    const preferredThread = data.threads.find((thread) => thread.messageCount > 0) ?? data.threads[0];
-    writeThreadHistory(data.threads);
-    const currentExistsOnServer = currentThreadId ? data.threads.some((thread) => thread.id === currentThreadId) : false;
+    const preferredThread = mainThreads.find((thread) => thread.messageCount > 0) ?? mainThreads[0];
+    writeThreadHistory(mainThreads);
+    const currentExistsOnServer = currentThreadId ? mainThreads.some((thread) => thread.id === currentThreadId) : false;
     const currentIsEmptyPlaceholder = !localCurrent || localCurrent.messageCount === 0;
     if (!currentThreadId || (!currentExistsOnServer && currentIsEmptyPlaceholder) || (currentIsEmptyPlaceholder && preferredThread.messageCount > 0)) {
       setCurrentThreadId(preferredThread.id);

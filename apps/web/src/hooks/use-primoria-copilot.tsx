@@ -1,10 +1,9 @@
 "use client";
 
 import { z } from "zod";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
-import { PlanCard } from "@/components/generative-ui/plan-card";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
 import { setTodos } from "@/lib/todos-store";
@@ -65,31 +64,18 @@ const CourseCardResult = z.object({
 
 const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
 
-// First write_todos render slot to mount in this session claims the anchor
-// position and renders the PlanProgressCard; later write_todos calls in the
-// same turn still update the shared store but render nothing, so the card
-// updates in place instead of stacking.
-let anchorInstanceId: string | null = null;
-
 function WriteTodosSink({ todos }: { todos: z.infer<typeof WriteTodosParams>["todos"] }) {
-  const idRef = useRef<string | null>(null);
-  if (!idRef.current) {
-    idRef.current = Math.random().toString(36).slice(2);
-  }
-  const myId = idRef.current;
-
   useEffect(() => {
     setTodos(todos ?? []);
   }, [todos]);
 
-  if (anchorInstanceId === null) {
-    anchorInstanceId = myId;
-  }
+  if (!todos?.length) return null;
 
-  if (anchorInstanceId === myId) {
-    return <PlanProgressCard />;
-  }
-  return <></>;
+  return (
+    <div className="primoria-copilot-tool primoria-copilot-progress-tool">
+      <PlanProgressCard />
+    </div>
+  );
 }
 
 function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>["key_elements"]) {
@@ -102,7 +88,7 @@ function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>
 
 function WidgetCard({ title, description, html, dependencies }: z.infer<typeof RenderWidgetParams>) {
   return (
-    <div className="message-row tool widget-renderer-row">
+    <div className="primoria-copilot-tool primoria-copilot-widget-tool">
       <WidgetRenderer
         title={title || "Interactive learning widget"}
         description={description}
@@ -110,6 +96,44 @@ function WidgetCard({ title, description, html, dependencies }: z.infer<typeof R
         dependencies={dependencies}
       />
     </div>
+  );
+}
+
+function VisualizationPlanTool({
+  status,
+  approach,
+  technology,
+  keyElements,
+}: {
+  status: "inProgress" | "executing" | "complete";
+  approach?: string;
+  technology?: string;
+  keyElements?: string[];
+}) {
+  const isRunning = status === "executing" || status === "inProgress";
+  return (
+    <details className="primoria-copilot-tool primoria-copilot-plan-tool" open={isRunning || undefined}>
+      <summary>
+        <span className={isRunning ? "tool-spinner" : "inline-plan-check"} aria-hidden="true">
+          {isRunning ? null : "✓"}
+        </span>
+        <span>{isRunning ? "Planning visualization…" : `Plan: ${technology || "visualization"}`}</span>
+        <span className="inline-plan-chevron" aria-hidden="true">▾</span>
+      </summary>
+      {approach ? (
+        <div className="primoria-copilot-plan-body">
+          {technology ? <span>{technology}</span> : null}
+          <p>{approach}</p>
+          {keyElements && keyElements.length > 0 ? (
+            <ul>
+              {keyElements.map((element) => (
+                <li key={element}>{element}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      ) : null}
+    </details>
   );
 }
 
@@ -137,10 +161,10 @@ function CourseCardTool({
   parameters?: Partial<z.infer<typeof GenerateCourseParams>>;
 }) {
   const artifact = parseCourseCardResult(result);
-  if (artifact) return <ToolCard artifact={artifact} />;
+  if (artifact) return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
 
   return (
-    <div className="message-row tool">
+    <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
           <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
@@ -165,9 +189,9 @@ function GetCourseCardTool({
   parameters?: Partial<z.infer<typeof GetCourseCardParams>>;
 }) {
   const artifact = parseCourseCardResult(result);
-  if (artifact) return <ToolCard artifact={artifact} />;
+  if (artifact) return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
   return (
-    <div className="message-row tool">
+    <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
           <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
@@ -198,7 +222,7 @@ export function usePrimoriaGenerativeUI() {
     name: "plan_visualization",
     parameters: PlanVisualizationParams,
     render: ({ status, parameters }) => (
-      <PlanCard
+      <VisualizationPlanTool
         status={status}
         approach={parameters?.approach ?? "Planning the visualization."}
         technology={parameters?.technology ?? "HTML + JavaScript"}
@@ -230,17 +254,7 @@ export function usePrimoriaGenerativeUI() {
   });
 
   useDefaultRenderTool({
-    render: ({ name, status }) => (
-      <div className="message-row tool">
-        <div className="activity-list">
-          <div className={`activity-row ${status === "complete" ? "complete" : "executing"}`}>
-            <span className={status === "complete" ? "tool-dot activity-indicator" : "tool-spinner activity-indicator"} />
-            <span className="activity-name">{name}</span>
-            <span className="activity-desc">{status === "complete" ? `${name} finished.` : `Running ${name}.`}</span>
-          </div>
-        </div>
-      </div>
-    ),
+    render: () => <></>,
   });
 }
 
