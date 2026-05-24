@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type {
   WorkspaceMember,
   WorkspaceMessage,
@@ -57,28 +57,53 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const activeTaskCount = tasks.length || view.tasks.length;
   const selectedApp = libraryApps.find((app) => app.id === selectedAppId);
 
+  const applyWorkspaceView = useCallback((data: WorkspaceView) => {
+    setView(data);
+    setActiveThreadId((current) => {
+      if (data.threads.some((thread) => thread.id === current)) return current;
+      return data.threads[0]?.id ?? "";
+    });
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
+    let pollingInterval: number | undefined;
+
+    if (typeof EventSource !== "undefined") {
+      const source = new EventSource(`/api/workspaces/${view.workspace.id}/events`);
+      source.addEventListener("workspace", (event) => {
+        if (cancelled) return;
+        applyWorkspaceView(JSON.parse((event as MessageEvent<string>).data) as WorkspaceView);
+      });
+      source.onerror = () => {
+        source.close();
+        if (!cancelled && pollingInterval === undefined) {
+          pollingInterval = window.setInterval(() => void refreshWorkspace(), 8000);
+        }
+      };
+      return () => {
+        cancelled = true;
+        source.close();
+        if (pollingInterval !== undefined) window.clearInterval(pollingInterval);
+      };
+    }
+
     async function refreshWorkspace() {
       try {
         const response = await fetch(`/api/workspaces/${view.workspace.id}`, { cache: "no-store" });
         if (!response.ok || cancelled) return;
         const data = (await response.json()) as WorkspaceView;
-        setView(data);
-        setActiveThreadId((current) => {
-          if (data.threads.some((thread) => thread.id === current)) return current;
-          return data.threads[0]?.id ?? "";
-        });
+        applyWorkspaceView(data);
       } catch {
         // Polling is best-effort; direct actions still show errors when they fail.
       }
     }
-    const interval = window.setInterval(() => void refreshWorkspace(), 8000);
+    pollingInterval = window.setInterval(() => void refreshWorkspace(), 8000);
     return () => {
       cancelled = true;
-      window.clearInterval(interval);
+      if (pollingInterval !== undefined) window.clearInterval(pollingInterval);
     };
-  }, [view.workspace.id]);
+  }, [applyWorkspaceView, view.workspace.id]);
 
   useEffect(() => {
     if (!attachmentOpen || libraryApps.length > 0 || loadingApps) return;
@@ -121,8 +146,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       const response = await fetch(`/api/workspaces/${workspaceId}`, { cache: "no-store" });
       if (!response.ok) throw new Error("Workspace could not be opened.");
       const data = (await response.json()) as WorkspaceView;
-      setView(data);
-      setActiveThreadId(data.threads[0]?.id ?? "");
+      applyWorkspaceView(data);
       setChatMode(data.threads[0]?.type ?? "room");
       setDetailsOpen(false);
     } catch (switchError) {
@@ -146,8 +170,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       });
       if (!response.ok) throw new Error("Workspace could not be created.");
       const data = (await response.json()) as WorkspaceView;
-      setView(data);
-      setActiveThreadId(data.threads[0]?.id ?? "");
+      applyWorkspaceView(data);
       setChatMode(data.threads[0]?.type ?? "room");
       setNewWorkspaceName("");
       setNewWorkspaceOpen(false);
@@ -173,8 +196,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       });
       if (!response.ok) throw new Error("Workspace invite could not be joined.");
       const data = (await response.json()) as WorkspaceView;
-      setView(data);
-      setActiveThreadId(data.threads[0]?.id ?? "");
+      applyWorkspaceView(data);
       setChatMode(data.threads[0]?.type ?? "room");
       setJoinWorkspaceCode("");
       setJoinWorkspaceOpen(false);
