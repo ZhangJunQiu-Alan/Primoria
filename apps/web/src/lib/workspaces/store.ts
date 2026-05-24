@@ -531,6 +531,8 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
     progress: input.progress?.trim() || (status === "done" ? "done" : task.progress),
     assigneeId: input.assigneeId === undefined ? task.assigneeId : assignee?.id,
     assigneeName: input.assigneeId === undefined ? task.assigneeName : assignee?.displayName,
+    resultSummary: input.resultSummary?.trim() || task.resultSummary,
+    submittedAt: input.resultSummary?.trim() ? now : task.submittedAt,
     updatedAt: now,
   });
 
@@ -566,6 +568,7 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
       scope: existing.scope,
       status: existing.status,
       progress: existing.progress,
+      ...readTaskMetadata(existing.metadata),
       dueAt: existing.dueAt ?? undefined,
       createdAt: existing.createdAt.getTime(),
       updatedAt: existing.updatedAt.getTime(),
@@ -759,6 +762,8 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
         progress: task.progress,
         assigneeId: metadata.assigneeId,
         assigneeName: metadata.assigneeName,
+        resultSummary: metadata.resultSummary,
+        submittedAt: metadata.submittedAt,
         dueAt: task.dueAt ?? undefined,
         createdAt: task.createdAt.getTime(),
         updatedAt: task.updatedAt.getTime(),
@@ -840,19 +845,23 @@ async function resolveTaskAssignee(ownerId: string | null | undefined, workspace
 }
 
 function buildTaskMetadata(task: WorkspaceTask) {
-  if (!task.assigneeId && !task.assigneeName) return null;
+  if (!task.assigneeId && !task.assigneeName && !task.resultSummary && !task.submittedAt) return null;
   return {
     assigneeId: task.assigneeId,
     assigneeName: task.assigneeName,
+    resultSummary: task.resultSummary,
+    submittedAt: task.submittedAt,
   };
 }
 
-function readTaskMetadata(metadata: unknown): Pick<WorkspaceTask, "assigneeId" | "assigneeName"> {
+function readTaskMetadata(metadata: unknown): Pick<WorkspaceTask, "assigneeId" | "assigneeName" | "resultSummary" | "submittedAt"> {
   if (!metadata || typeof metadata !== "object") return {};
   const record = metadata as Record<string, unknown>;
   return {
     assigneeId: typeof record.assigneeId === "string" ? record.assigneeId : undefined,
     assigneeName: typeof record.assigneeName === "string" ? record.assigneeName : undefined,
+    resultSummary: typeof record.resultSummary === "string" ? record.resultSummary : undefined,
+    submittedAt: typeof record.submittedAt === "number" ? record.submittedAt : undefined,
   };
 }
 
