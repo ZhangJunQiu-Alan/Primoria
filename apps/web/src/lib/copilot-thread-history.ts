@@ -99,6 +99,20 @@ export function setCurrentThreadId(threadId: string) {
   window.dispatchEvent(new Event(THREAD_EVENT_NAME));
 }
 
+export function startFreshCurrentThread({ persistSummary = false }: { persistSummary?: boolean } = {}) {
+  const threadId = createThreadId();
+  setCurrentThreadId(threadId);
+  if (persistSummary) {
+    ensureThreadSummary(threadId, {
+      title: "New tutor chat",
+      messageCount: 0,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+  }
+  return threadId;
+}
+
 export function ensureThreadSummary(threadId: string, patch: Partial<Omit<CopilotThreadSummary, "id">> = {}) {
   const now = Date.now();
   const history = readThreadHistory();
@@ -116,15 +130,7 @@ export function ensureThreadSummary(threadId: string, patch: Partial<Omit<Copilo
 }
 
 export function createNewThread() {
-  const threadId = createThreadId();
-  setCurrentThreadId(threadId);
-  ensureThreadSummary(threadId, {
-    title: "New tutor chat",
-    messageCount: 0,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  });
-  return threadId;
+  return startFreshCurrentThread();
 }
 
 export function recordThreadMessage(threadId: string, message: string) {
@@ -147,24 +153,8 @@ export async function hydrateThreadHistoryFromServer() {
     if (!response.ok) return;
     const data = (await response.json()) as { threads?: CopilotThreadSummary[] };
     if (!Array.isArray(data.threads)) return;
-    if (data.threads.length === 0) {
-      clearCopilotThreadStorage();
-      return;
-    }
     const mainThreads = data.threads.filter((thread) => !thread.id.startsWith("course-"));
-    if (mainThreads.length === 0) {
-      clearCopilotThreadStorage();
-      return;
-    }
-    const currentThreadId = window.localStorage.getItem(MAIN_THREAD_STORAGE_KEY);
-    const localCurrent = currentThreadId ? readThreadHistory().find((thread) => thread.id === currentThreadId) : null;
-    const preferredThread = mainThreads.find((thread) => thread.messageCount > 0) ?? mainThreads[0];
     writeThreadHistory(mainThreads);
-    const currentExistsOnServer = currentThreadId ? mainThreads.some((thread) => thread.id === currentThreadId) : false;
-    const currentIsEmptyPlaceholder = !localCurrent || localCurrent.messageCount === 0;
-    if (!currentThreadId || (!currentExistsOnServer && currentIsEmptyPlaceholder) || (currentIsEmptyPlaceholder && preferredThread.messageCount > 0)) {
-      setCurrentThreadId(preferredThread.id);
-    }
   } catch {
     // Local-only mode or unauthenticated users can ignore this.
   }

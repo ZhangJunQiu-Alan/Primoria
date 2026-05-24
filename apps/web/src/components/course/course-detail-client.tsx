@@ -371,14 +371,21 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
       <div className="course-detail-main">
         <div className="course-blocks-column">
           {course.blocks.map((block) => (
-            <button
+            <div
               key={block.id}
-              type="button"
+              role="button"
+              tabIndex={0}
               className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
               onClick={() => setSelectedBlockId(block.id)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setSelectedBlockId(block.id);
+                }
+              }}
             >
               <BlockRenderer block={block} />
-            </button>
+            </div>
           ))}
         </div>
       </div>
