@@ -6,6 +6,7 @@ import { getWorkspaceView, updateWorkspaceTask } from "@/lib/workspaces/store";
 const TaskUpdateSchema = z.object({
   status: z.string().min(1).max(40),
   progress: z.string().min(1).max(80).optional(),
+  assigneeId: z.string().min(1).max(120).optional(),
 });
 
 export async function PATCH(request: Request, context: { params: Promise<{ id: string; taskId: string }> }) {
@@ -19,6 +20,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     taskId,
     status: body.status,
     progress: body.progress,
+    assigneeId: body.assigneeId,
   });
   return NextResponse.json({ task });
 }

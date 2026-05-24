@@ -8,6 +8,7 @@ const TaskSchema = z.object({
   title: z.string().min(1).max(160),
   scope: z.string().min(1).max(80).optional(),
   progress: z.string().min(1).max(80).optional(),
+  assigneeId: z.string().min(1).max(120).optional(),
   dueAt: z.string().max(80).optional(),
 });
 
@@ -23,6 +24,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     title: body.title,
     scope: body.scope,
     progress: body.progress,
+    assigneeId: body.assigneeId,
     dueAt: body.dueAt,
   });
   return NextResponse.json({ task });

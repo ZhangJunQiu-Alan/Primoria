@@ -457,6 +457,7 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
   if (!title) throw new Error("Task title is required.");
 
   const now = Date.now();
+  const assignee = await resolveTaskAssignee(ownerId, input.workspaceId, input.assigneeId);
   const task: WorkspaceTask = {
     id: `wtask_${randomBytes(10).toString("base64url")}`,
     workspaceId: input.workspaceId,
@@ -465,6 +466,8 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
     scope: input.scope?.trim() || "Shared",
     status: "open",
     progress: input.progress?.trim() || "new",
+    assigneeId: assignee?.id,
+    assigneeName: assignee?.displayName,
     dueAt: input.dueAt?.trim() || undefined,
     createdAt: now,
     updatedAt: now,
@@ -496,7 +499,7 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
       status: task.status,
       progress: task.progress,
       dueAt: task.dueAt ?? null,
-      metadata: null,
+      metadata: buildTaskMetadata(task),
       createdAt: new Date(task.createdAt),
       updatedAt: new Date(task.updatedAt),
     });
@@ -521,10 +524,13 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
   if (!status) throw new Error("Task status is required.");
 
   const now = Date.now();
+  const assignee = input.assigneeId === undefined ? undefined : await resolveTaskAssignee(ownerId, input.workspaceId, input.assigneeId);
   const applyPatch = (task: WorkspaceTask): WorkspaceTask => ({
     ...task,
     status,
     progress: input.progress?.trim() || (status === "done" ? "done" : task.progress),
+    assigneeId: input.assigneeId === undefined ? task.assigneeId : assignee?.id,
+    assigneeName: input.assigneeId === undefined ? task.assigneeName : assignee?.displayName,
     updatedAt: now,
   });
 
@@ -566,7 +572,7 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
     });
     await getDb()
       .update(workspaceTasks)
-      .set({ status: task.status, progress: task.progress, updatedAt: new Date(task.updatedAt) })
+      .set({ status: task.status, progress: task.progress, metadata: buildTaskMetadata(task), updatedAt: new Date(task.updatedAt) })
       .where(eq(workspaceTasks.id, task.id));
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
     return task;
@@ -652,7 +658,7 @@ async function ensureSeedWorkspace(ownerId: string) {
       status: task.status,
       progress: task.progress,
       dueAt: task.dueAt ?? null,
-      metadata: null,
+      metadata: buildTaskMetadata(task),
       createdAt: new Date(task.createdAt),
       updatedAt: new Date(task.updatedAt),
     })),
@@ -741,18 +747,23 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
       artifact: (message.artifact ?? undefined) as WorkspaceMessageArtifact | undefined,
       createdAt: message.createdAt.getTime(),
     })),
-    tasks: taskRows.map((task): WorkspaceTask => ({
-      id: task.id,
-      workspaceId: task.workspaceId,
-      threadId: task.threadId,
-      title: task.title,
-      scope: task.scope,
-      status: task.status,
-      progress: task.progress,
-      dueAt: task.dueAt ?? undefined,
-      createdAt: task.createdAt.getTime(),
-      updatedAt: task.updatedAt.getTime(),
-    })),
+    tasks: taskRows.map((task): WorkspaceTask => {
+      const metadata = readTaskMetadata(task.metadata);
+      return {
+        id: task.id,
+        workspaceId: task.workspaceId,
+        threadId: task.threadId,
+        title: task.title,
+        scope: task.scope,
+        status: task.status,
+        progress: task.progress,
+        assigneeId: metadata.assigneeId,
+        assigneeName: metadata.assigneeName,
+        dueAt: task.dueAt ?? undefined,
+        createdAt: task.createdAt.getTime(),
+        updatedAt: task.updatedAt.getTime(),
+      };
+    }),
     persisted: true,
   };
 }
@@ -801,6 +812,48 @@ async function requireDbThread(ownerId: string, workspaceId: string, threadId: s
     .where(and(eq(workspaceThreads.id, threadId), eq(workspaceThreads.workspaceId, workspaceId), eq(workspaceThreads.ownerId, ownerId)))
     .limit(1);
   if (!rows[0]) throw new Error("Thread not found.");
+}
+
+async function resolveTaskAssignee(ownerId: string | null | undefined, workspaceId: string, assigneeId?: string) {
+  if (!assigneeId) return undefined;
+
+  if (!hasDatabaseUrl() || !ownerId) {
+    const member = getLocalView(workspaceId).members.find((entry) => entry.id === assigneeId && entry.workspaceId === workspaceId);
+    if (!member) throw new Error("Assignee not found.");
+    return member;
+  }
+
+  const rows = await getDb()
+    .select()
+    .from(workspaceMembers)
+    .where(and(eq(workspaceMembers.id, assigneeId), eq(workspaceMembers.workspaceId, workspaceId)))
+    .limit(1);
+  const member = rows[0];
+  if (!member) throw new Error("Assignee not found.");
+  return {
+    id: member.id,
+    workspaceId: member.workspaceId,
+    displayName: member.displayName,
+    role: member.role,
+    status: member.status ?? undefined,
+  } satisfies WorkspaceMember;
+}
+
+function buildTaskMetadata(task: WorkspaceTask) {
+  if (!task.assigneeId && !task.assigneeName) return null;
+  return {
+    assigneeId: task.assigneeId,
+    assigneeName: task.assigneeName,
+  };
+}
+
+function readTaskMetadata(metadata: unknown): Pick<WorkspaceTask, "assigneeId" | "assigneeName"> {
+  if (!metadata || typeof metadata !== "object") return {};
+  const record = metadata as Record<string, unknown>;
+  return {
+    assigneeId: typeof record.assigneeId === "string" ? record.assigneeId : undefined,
+    assigneeName: typeof record.assigneeName === "string" ? record.assigneeName : undefined,
+  };
 }
 
 function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
@@ -858,9 +911,9 @@ function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
       seedMessage("dm1", workspace.id, SEED_PRIMORIA_DIRECT_ID, "Primoria Agent", "agent", "Send me a goal and I can turn it into a shared room update or a private task list.", now - 100_000),
     ],
     tasks: [
-      { id: "wt_launch", workspaceId: workspace.id, threadId: SEED_GENERAL_THREAD_ID, title: "Launch checklist", scope: "Shared", status: "open", progress: "6 / 10 done", dueAt: "Today 18:00", createdAt: now - 300_000, updatedAt: now - 50_000 },
-      { id: "wt_review", workspaceId: workspace.id, threadId: SEED_GENERAL_THREAD_ID, title: "Prototype review", scope: "Human decision", status: "open", progress: "2 approvals needed", dueAt: "Thu 14:00", createdAt: now - 280_000, updatedAt: now - 80_000 },
-      { id: "wt_assets", workspaceId: workspace.id, threadId: SEED_ARTIFACTS_THREAD_ID, title: "Asset cleanup", scope: "Agent-assisted", status: "open", progress: "8 files queued", dueAt: "Fri 18:00", createdAt: now - 260_000, updatedAt: now - 90_000 },
+      { id: "wt_launch", workspaceId: workspace.id, threadId: SEED_GENERAL_THREAD_ID, title: "Launch checklist", scope: "Shared", status: "open", progress: "6 / 10 done", assigneeId: "wm_jia", assigneeName: "Jia", dueAt: "Today 18:00", createdAt: now - 300_000, updatedAt: now - 50_000 },
+      { id: "wt_review", workspaceId: workspace.id, threadId: SEED_GENERAL_THREAD_ID, title: "Prototype review", scope: "Human decision", status: "open", progress: "2 approvals needed", assigneeId: "wm_mina", assigneeName: "Mina", dueAt: "Thu 14:00", createdAt: now - 280_000, updatedAt: now - 80_000 },
+      { id: "wt_assets", workspaceId: workspace.id, threadId: SEED_ARTIFACTS_THREAD_ID, title: "Asset cleanup", scope: "Agent-assisted", status: "open", progress: "8 files queued", assigneeId: "wm_ops", assigneeName: "Ops Agent", dueAt: "Fri 18:00", createdAt: now - 260_000, updatedAt: now - 90_000 },
     ],
     persisted,
   };

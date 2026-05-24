@@ -61,6 +61,8 @@ export type WorkspaceTask = {
   scope: string;
   status: string;
   progress: string;
+  assigneeId?: string;
+  assigneeName?: string;
   dueAt?: string;
   createdAt: number;
   updatedAt: number;
@@ -115,6 +117,7 @@ export type CreateWorkspaceTaskInput = {
   title: string;
   scope?: string;
   progress?: string;
+  assigneeId?: string;
   dueAt?: string;
 };
 
@@ -123,4 +126,5 @@ export type UpdateWorkspaceTaskInput = {
   taskId: string;
   status: string;
   progress?: string;
+  assigneeId?: string;
 };
