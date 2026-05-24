@@ -3337,6 +3337,43 @@ cpk-web-inspector {
   font-size: 12px;
 }
 
+.workspace-invite-code {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 10px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid rgba(23, 19, 15, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.64);
+}
+
+.workspace-invite-code span {
+  grid-column: 1 / -1;
+  color: var(--quiet);
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.workspace-invite-code strong {
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.workspace-invite-code button {
+  min-height: 30px;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  border-radius: 999px;
+  padding: 0 10px;
+  background: #fffdf8;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 850;
+}
+
 .workspace-agent-panel {
   background:
     linear-gradient(145deg, rgba(232, 221, 255, 0.46), rgba(255, 253, 248, 0.92)),

@@ -171,11 +171,13 @@ export const workspaces = pgTable(
     id: text("id").primaryKey(),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
+    inviteCode: text("invite_code"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
     ownerUpdatedIdx: index("workspaces_owner_updated_idx").on(table.ownerId, table.updatedAt),
+    inviteCodeIdx: uniqueIndex("workspaces_invite_code_idx").on(table.inviteCode),
   }),
 );
 

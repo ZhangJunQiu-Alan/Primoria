@@ -7,6 +7,7 @@ import {
   createWorkspaceTask,
   createWorkspaceThread,
   getWorkspaceView,
+  joinWorkspace,
   updateWorkspaceTask,
 } from "../src/lib/workspaces/store.ts";
 
@@ -29,6 +30,7 @@ async function main() {
     ownerName: "Unit Owner",
   });
   assert(createdWorkspace.workspace.name === "Unit workspace", "created workspace name");
+  assert(createdWorkspace.workspace.inviteCode, "created workspace invite code");
   assert(createdWorkspace.workspaces.some((workspace) => workspace.id === view.workspace.id), "workspace list keeps seed workspace");
   assert(createdWorkspace.workspaces.some((workspace) => workspace.id === createdWorkspace.workspace.id), "workspace list includes created workspace");
   assert(createdWorkspace.threads.some((thread) => thread.type === "room"), "created workspace has room");
@@ -39,6 +41,13 @@ async function main() {
   assert(seedAgain.workspace.id === view.workspace.id, "can switch back to seed workspace");
   const createdAgain = await getWorkspaceView(null, createdWorkspace.workspace.id);
   assert(createdAgain.workspace.id === createdWorkspace.workspace.id, "can switch to created workspace");
+
+  const joined = await joinWorkspace(null, {
+    inviteCode: createdWorkspace.workspace.inviteCode ?? "",
+    displayName: "Joined User",
+  });
+  assert(joined.workspace.id === createdWorkspace.workspace.id, "joined workspace by invite code");
+  assert(joined.members.some((member) => member.displayName === "Joined User"), "joined member appears");
 
   const newThread = await createWorkspaceThread(null, {
     workspaceId: createdWorkspace.workspace.id,
