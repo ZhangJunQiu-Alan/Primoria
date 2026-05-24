@@ -4,6 +4,7 @@ export type WorkspaceSenderKind = "human" | "agent" | "system";
 export type WorkspaceSummary = {
   id: string;
   name: string;
+  inviteCode?: string;
   createdAt: number;
   updatedAt: number;
 };
@@ -94,6 +95,11 @@ export type CreateWorkspaceMemberInput = {
   displayName: string;
   role?: string;
   status?: string;
+};
+
+export type JoinWorkspaceInput = {
+  inviteCode: string;
+  displayName?: string;
 };
 
 export type CreateWorkspaceThreadInput = {

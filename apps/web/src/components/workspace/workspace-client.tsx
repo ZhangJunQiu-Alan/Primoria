@@ -20,6 +20,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [newWorkspaceOpen, setNewWorkspaceOpen] = useState(false);
   const [newWorkspaceName, setNewWorkspaceName] = useState("");
+  const [joinWorkspaceOpen, setJoinWorkspaceOpen] = useState(false);
+  const [joinWorkspaceCode, setJoinWorkspaceCode] = useState("");
   const [newThreadOpen, setNewThreadOpen] = useState(false);
   const [newThreadType, setNewThreadType] = useState<WorkspaceThread["type"]>("room");
   const [newThreadName, setNewThreadName] = useState("");
@@ -117,6 +119,33 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       setDetailsOpen(false);
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : "Workspace could not be created.");
+    }
+  }
+
+  async function joinExistingWorkspace(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const inviteCode = joinWorkspaceCode.trim();
+    if (!inviteCode) {
+      setError("Enter an invite code first.");
+      return;
+    }
+    setError(null);
+    try {
+      const response = await fetch("/api/workspaces/join", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ inviteCode }),
+      });
+      if (!response.ok) throw new Error("Workspace invite could not be joined.");
+      const data = (await response.json()) as WorkspaceView;
+      setView(data);
+      setActiveThreadId(data.threads[0]?.id ?? "");
+      setChatMode(data.threads[0]?.type ?? "room");
+      setJoinWorkspaceCode("");
+      setJoinWorkspaceOpen(false);
+      setDetailsOpen(false);
+    } catch (joinError) {
+      setError(joinError instanceof Error ? joinError.message : "Workspace invite could not be joined.");
     }
   }
 
@@ -321,6 +350,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           </div>
           <div className="workspace-directory-actions">
             <button type="button" aria-label="New workspace" onClick={() => setNewWorkspaceOpen((open) => !open)}>W</button>
+            <button type="button" aria-label="Join workspace" onClick={() => setJoinWorkspaceOpen((open) => !open)}>J</button>
             <button type="button" aria-label="New chat" onClick={() => setNewThreadOpen((open) => !open)}>+</button>
           </div>
         </div>
@@ -334,6 +364,18 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               placeholder="Workspace name"
             />
             <button type="submit">Create workspace</button>
+          </form>
+        ) : null}
+
+        {joinWorkspaceOpen ? (
+          <form className="workspace-quick-form" onSubmit={joinExistingWorkspace}>
+            <input
+              aria-label="Workspace invite code"
+              value={joinWorkspaceCode}
+              onChange={(event) => setJoinWorkspaceCode(event.target.value)}
+              placeholder="Invite code"
+            />
+            <button type="submit">Join workspace</button>
           </form>
         ) : null}
 
@@ -468,6 +510,21 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               <strong>Members</strong>
               <span>{view.members.length}</span>
             </div>
+            {view.workspace.inviteCode ? (
+              <div className="workspace-invite-code">
+                <span>Invite code</span>
+                <strong>{view.workspace.inviteCode}</strong>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(view.workspace.inviteCode ?? "");
+                    setDraft(`Join ${view.workspace.name} with invite code ${view.workspace.inviteCode}.`);
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            ) : null}
             <form className="workspace-quick-form compact" onSubmit={inviteMember}>
               <input
                 aria-label="Invite name"

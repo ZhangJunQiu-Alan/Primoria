@@ -14,6 +14,7 @@ import type {
   CreateWorkspaceInput,
   CreateWorkspaceTaskInput,
   CreateWorkspaceThreadInput,
+  JoinWorkspaceInput,
   UpdateWorkspaceTaskInput,
   WorkspaceMember,
   WorkspaceMessage,
@@ -32,6 +33,8 @@ const SEED_ARTIFACTS_THREAD_ID = "thread_artifacts";
 const SEED_PRIMORIA_DIRECT_ID = "thread_direct_primoria";
 const SEED_MINA_DIRECT_ID = "thread_direct_mina";
 const SEED_OPS_DIRECT_ID = "thread_direct_ops";
+
+const SEED_INVITE_CODE = "PRIMORIA";
 
 declare global {
   var __primoriaWorkspaceLocalView: WorkspaceView | undefined;
@@ -77,6 +80,14 @@ function withWorkspaceList(view: WorkspaceView, views: WorkspaceView[]) {
   };
 }
 
+function createInviteCode() {
+  return randomBytes(5).toString("base64url").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+}
+
+function normalizeInviteCode(code: string) {
+  return code.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "");
+}
+
 export async function getWorkspaceView(ownerId?: string | null, workspaceId?: string | null): Promise<WorkspaceView> {
   if (!hasDatabaseUrl() || !ownerId) return getLocalView(workspaceId);
   try {
@@ -96,6 +107,7 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
   const workspace: WorkspaceSummary = {
     id: `workspace_${randomBytes(10).toString("base64url")}`,
     name,
+    inviteCode: createInviteCode(),
     createdAt: now,
     updatedAt: now,
   };
@@ -155,6 +167,7 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
         id: workspace.id,
         ownerId,
         name: workspace.name,
+        inviteCode: workspace.inviteCode,
         createdAt: new Date(workspace.createdAt),
         updatedAt: new Date(workspace.updatedAt),
       });
@@ -197,6 +210,85 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
   } catch (error) {
     console.warn("[workspace] falling back to local workspace creation", error);
     return setLocalView({ ...view, persisted: false });
+  }
+}
+
+export async function joinWorkspace(ownerId: string | null | undefined, input: JoinWorkspaceInput): Promise<WorkspaceView> {
+  const inviteCode = normalizeInviteCode(input.inviteCode);
+  if (!inviteCode) throw new Error("Invite code is required.");
+  const displayName = input.displayName?.trim() || "Guest";
+
+  if (!hasDatabaseUrl() || !ownerId) {
+    const views = getLocalViews();
+    const view = views.find((entry) => normalizeInviteCode(entry.workspace.inviteCode ?? entry.workspace.id) === inviteCode);
+    if (!view) throw new Error("Invite code not found.");
+    const now = Date.now();
+    const memberExists = view.members.some((member) => member.displayName.toLowerCase() === displayName.toLowerCase());
+    const nextView = setLocalView({
+      ...view,
+      members: memberExists
+        ? view.members
+        : [
+            ...view.members,
+            {
+              id: `wmember_${randomBytes(10).toString("base64url")}`,
+              workspaceId: view.workspace.id,
+              displayName,
+              role: "Human",
+              status: "joined",
+            },
+          ],
+      workspace: { ...view.workspace, updatedAt: now },
+    });
+    return nextView;
+  }
+
+  try {
+    await ensureSeedWorkspace(ownerId);
+    const rows = await getDb().select().from(workspaces).where(eq(workspaces.inviteCode, inviteCode)).limit(1);
+    const workspace = rows[0];
+    if (!workspace) throw new Error("Invite code not found.");
+
+    const membership = await getDb()
+      .select({ id: workspaceMembers.id })
+      .from(workspaceMembers)
+      .where(and(eq(workspaceMembers.workspaceId, workspace.id), eq(workspaceMembers.ownerId, ownerId)))
+      .limit(1);
+    if (!membership[0]) {
+      const now = new Date();
+      await getDb().insert(workspaceMembers).values({
+        id: `wmember_${randomBytes(10).toString("base64url")}`,
+        workspaceId: workspace.id,
+        ownerId,
+        displayName,
+        role: "Human",
+        status: "joined",
+        createdAt: now,
+        updatedAt: now,
+      });
+      await getDb().update(workspaces).set({ updatedAt: now }).where(eq(workspaces.id, workspace.id));
+    }
+    return getWorkspaceViewFromDb(ownerId, workspace.id);
+  } catch (error) {
+    console.warn("[workspace] falling back to local workspace join", error);
+    const views = getLocalViews();
+    const view = views.find((entry) => normalizeInviteCode(entry.workspace.inviteCode ?? entry.workspace.id) === inviteCode);
+    if (!view) throw error;
+    const now = Date.now();
+    return setLocalView({
+      ...view,
+      members: [
+        ...view.members,
+        {
+          id: `wmember_${randomBytes(10).toString("base64url")}`,
+          workspaceId: view.workspace.id,
+          displayName,
+          role: "Human",
+          status: "joined",
+        },
+      ],
+      workspace: { ...view.workspace, updatedAt: now },
+    });
   }
 }
 
@@ -508,6 +600,7 @@ async function ensureSeedWorkspace(ownerId: string) {
     id: scopedSeedId(ownerId, seed.workspace.id),
     ownerId,
     name: seed.workspace.name,
+    inviteCode: seed.workspace.inviteCode,
     createdAt: new Date(seed.workspace.createdAt),
     updatedAt: new Date(seed.workspace.updatedAt),
   });
@@ -567,14 +660,25 @@ async function ensureSeedWorkspace(ownerId: string) {
 }
 
 async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSummary[]> {
-  const rows = await getDb()
+  const ownedRows = await getDb()
     .select()
     .from(workspaces)
     .where(eq(workspaces.ownerId, ownerId))
     .orderBy(desc(workspaces.updatedAt));
-  return rows.map((workspace): WorkspaceSummary => ({
+  const memberRows = await getDb()
+    .select()
+    .from(workspaceMembers)
+    .innerJoin(workspaces, eq(workspaceMembers.workspaceId, workspaces.id))
+    .where(eq(workspaceMembers.ownerId, ownerId))
+    .orderBy(desc(workspaces.updatedAt));
+  const rows = [...ownedRows, ...memberRows.map((row) => row.workspaces)];
+  const uniqueRows = Array.from(new Map(rows.map((workspace) => [workspace.id, workspace])).values()).sort(
+    (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
+  );
+  return uniqueRows.map((workspace): WorkspaceSummary => ({
     id: workspace.id,
     name: workspace.name,
+    inviteCode: workspace.inviteCode ?? undefined,
     createdAt: workspace.createdAt.getTime(),
     updatedAt: workspace.updatedAt.getTime(),
   }));
@@ -582,10 +686,14 @@ async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSumma
 
 async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | null): Promise<WorkspaceView> {
   const summaries = await listDbWorkspaceSummaries(ownerId);
+  const targetWorkspaceId = workspaceId ?? summaries[0]?.id;
+  if (!targetWorkspaceId) return createSeedWorkspaceView(false);
+  const hasAccess = summaries.some((workspace) => workspace.id === targetWorkspaceId);
+  if (!hasAccess) return createSeedWorkspaceView(false);
   const workspaceRows = await getDb()
     .select()
     .from(workspaces)
-    .where(workspaceId ? and(eq(workspaces.ownerId, ownerId), eq(workspaces.id, workspaceId)) : eq(workspaces.ownerId, ownerId))
+    .where(eq(workspaces.id, targetWorkspaceId))
     .orderBy(desc(workspaces.updatedAt))
     .limit(1);
   const workspace = workspaceRows[0];
@@ -602,6 +710,7 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
     workspace: {
       id: workspace.id,
       name: workspace.name,
+      inviteCode: workspace.inviteCode ?? undefined,
       createdAt: workspace.createdAt.getTime(),
       updatedAt: workspace.updatedAt.getTime(),
     },
@@ -676,7 +785,13 @@ async function requireDbWorkspace(ownerId: string, workspaceId: string) {
     .from(workspaces)
     .where(and(eq(workspaces.id, workspaceId), eq(workspaces.ownerId, ownerId)))
     .limit(1);
-  if (!rows[0]) throw new Error("Workspace not found.");
+  if (rows[0]) return;
+  const memberRows = await getDb()
+    .select({ id: workspaceMembers.id })
+    .from(workspaceMembers)
+    .where(and(eq(workspaceMembers.workspaceId, workspaceId), eq(workspaceMembers.ownerId, ownerId)))
+    .limit(1);
+  if (!memberRows[0]) throw new Error("Workspace not found.");
 }
 
 async function requireDbThread(ownerId: string, workspaceId: string, threadId: string) {
@@ -693,6 +808,7 @@ function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
   const workspace: WorkspaceSummary = {
     id: SEED_WORKSPACE_ID,
     name: "Primoria",
+    inviteCode: SEED_INVITE_CODE,
     createdAt: now - 3_600_000,
     updatedAt: now - 120_000,
   };

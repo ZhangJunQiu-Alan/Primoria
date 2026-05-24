@@ -8,6 +8,7 @@ This iteration turns Workspace from a static communication mock into a basic usa
 - React client state is used for room/direct selection, message draft handling, optimistic UI updates, and the details drawer because these are local interaction states.
 - Drizzle/Postgres tables are used for the durable model because the app is already Postgres-first for auth, courses, apps, settings, and Copilot threads.
 - Workspace interaction follows the common collaboration split of channels/rooms for shared context and direct messages for focused private context. Agent participants are modeled as normal members with a role/status so the UI can stay general-purpose instead of teacher/student-specific.
+- Workspace invites use server-validated invite codes instead of purely client-side state. Joined users are granted access through `workspace_members`, which keeps the path open for real account-backed membership.
 - Realtime fanout is intentionally deferred. The client uses lightweight polling for a basic live view, and the schema tracks `updatedAt` on workspace, threads, and tasks, so SSE or WebSocket fanout can be added without reshaping the data model.
 
 Primary references checked before implementation:
@@ -24,6 +25,7 @@ Primary references checked before implementation:
 - Users can switch between Rooms and Direct chats.
 - Users can create a new workspace with a default General room, owner member, AI teammate, and welcome message.
 - Users can switch between multiple workspaces from the left rail.
+- Users can copy an invite code and join a workspace from an invite code.
 - Users can create either a new shared room or a new direct chat.
 - Users can add simulated human or AI teammate members from the details drawer.
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
@@ -36,7 +38,7 @@ Primary references checked before implementation:
 
 ## Deliberately deferred
 
-- True invite/join flow.
+- Expiring invite links, email delivery, and role-based approvals.
 - Multi-user realtime fanout.
 - Rich task editing, assignment rules, submissions, and analytics.
 - Sharing real LearningApp records into workspace messages instead of manually entered app cards.
