@@ -243,7 +243,7 @@ Steps:
   1. Call manage_todos with 3-5 todos specific to the topic (use the emoji field, not inline emojis).
   2. Call plan_visualization.
   3. Call manage_todos again.
-  4. Call render_interactive_widget with a complete self-contained HTML fragment using the Primoria palette (cream backgrounds #fbf7ee / #fffaf2, amber/sage/lavender tint+border highlights, no black, no neon).
+  4. Call render_interactive_widget with a complete self-contained HTML fragment using the Primoria palette (cream backgrounds #fbf7ee / #fffaf2, amber/sage/lavender tint+border highlights, no black, no neon). Build a compact embedded card, not a full-screen webpage: no doctype/html/head/body wrappers, no body/html CSS, no 100vh/100dvh layouts, no large empty spacer regions. The core visual state must be visible in the first viewport of the widget without scrolling.
   5. Call manage_todos one more time to mark all completed.
 Rule: if you called plan_visualization, you MUST also call render_interactive_widget in the same turn.
 

@@ -6,6 +6,7 @@ import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/r
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
+import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
 import type { CourseCardArtifact } from "@/lib/ai/types";
 
@@ -28,8 +29,8 @@ const PlanVisualizationParams = z.object({
 
 const RenderWidgetParams = z.object({
   title: z.string().optional(),
-  description: z.string(),
-  html: z.string(),
+  description: z.string().optional().default(""),
+  html: z.string().optional().default(""),
   dependencies: z.array(z.object({
     url: z.string(),
     global: z.string().optional(),
@@ -87,12 +88,13 @@ function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>
 }
 
 function WidgetCard({ title, description, html, dependencies }: z.infer<typeof RenderWidgetParams>) {
+  const safeHtml = typeof html === "string" ? normalizeWidgetHtml(html) : "";
   return (
     <div className="primoria-copilot-tool primoria-copilot-widget-tool">
       <WidgetRenderer
         title={title || "Interactive learning widget"}
-        description={description}
-        html={html}
+        description={description || ""}
+        html={safeHtml}
         dependencies={dependencies}
       />
     </div>
