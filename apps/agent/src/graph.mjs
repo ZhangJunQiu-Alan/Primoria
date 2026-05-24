@@ -357,16 +357,87 @@ function getRuntimeOwnerId(runtime) {
 const PrimoriaContextSchema = z.object({
   primoria_owner_id: z.string().optional(),
   user_id: z.string().optional(),
+  copilotkit: z.any().optional(),
 });
 
 const PrimoriaContextAnnotation = Annotation.Root({
   primoria_owner_id: Annotation(),
   user_id: Annotation(),
+  copilotkit: Annotation(),
 });
 
 const PrimoriaStateAnnotation = Annotation.Root({
   primoria_owner_id: Annotation(),
   user_id: Annotation(),
+  copilotkit: Annotation(),
+});
+
+/**
+ * @param {unknown} items
+ */
+function parseCourseDetailContextItems(items) {
+  if (!Array.isArray(items)) return null;
+  const item = items.find((entry) => entry?.description === "Primoria course detail mode");
+  if (!item?.value) return null;
+  try {
+    return JSON.parse(String(item.value));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * @param {unknown} request
+ */
+function getCourseDetailContext(request) {
+  const requestAny = /** @type {any} */ (request);
+  return parseCourseDetailContextItems(requestAny?.runtime?.context?.copilotkit?.context)
+    ?? parseCourseDetailContextItems(requestAny?.state?.copilotkit?.context)
+    ?? parseCourseDetailContextItems(requestAny?.runtime?.state?.copilotkit?.context)
+    ?? parseCourseDetailContextItems(requestAny?.runtime?.context?.["ag-ui"]?.context)
+    ?? parseCourseDetailContextItems(requestAny?.state?.["ag-ui"]?.context)
+    ?? parseCourseDetailContextItems(requestAny?.runtime?.state?.["ag-ui"]?.context)
+    ?? null;
+}
+
+/**
+ * @param {any} context
+ */
+function formatCourseDetailSystemPrompt(context) {
+  const course = context?.course;
+  const selected = context?.selectedBlock;
+  if (!course?.title) return "";
+  return `
+
+COURSE DETAIL MODE — highest priority for this run.
+The learner is currently inside an existing Primoria course detail page, not asking you to create a new course by default.
+Current course: ${course.title}
+Topic: ${course.topic ?? ""}
+Summary: ${course.summary ?? ""}
+Selected block: ${selected ? `${selected.title ?? selected.type} (${selected.type}, id=${selected.id})` : "none; answer from the whole course"}
+Available blocks: ${(course.blocks ?? []).map((/** @type {any} */ block) => `${block.index}. ${block.title} [${block.type}, id=${block.id}]`).join("; ")}
+
+Behavior in COURSE DETAIL MODE:
+- For summarize/explain/practice questions about this course, answer directly from this context. Do NOT call generate_course just because the message contains words like 课程, 学习路径, course, or lesson.
+- Only call generate_course if the learner explicitly asks to create a NEW/different course.
+- If the learner asks to modify/rewrite/simplify/expand/fix the selected block, call revise_selected_course_block.
+- If no block is selected and the learner asks to modify a block, ask them to select a block first.
+- Keep answers concise and in the user's language.
+`.trim();
+}
+
+const primoriaCourseDetailMiddleware = createMiddleware({
+  name: "PrimoriaCourseDetailMiddleware",
+  contextSchema: PrimoriaContextSchema,
+  wrapModelCall: async (request, handler) => {
+    const courseDetail = getCourseDetailContext(request);
+    const extra = formatCourseDetailSystemPrompt(courseDetail);
+    if (!extra) return handler(request);
+    return handler({
+      ...request,
+      systemMessage: request.systemMessage.concat(`\n\n${extra}`),
+    });
+  },
 });
 
 const primoriaContextMiddleware = createMiddleware({
@@ -439,11 +510,12 @@ You have access to:
 - plan_visualization / widgetRenderer: visualization tools
 - generate_course: create and save a multi-block course, then return an opaque PRIMORIA_COURSE_CARD tool result for the UI
 - get_course_card: restore a course card by id if needed
+- revise_selected_course_block: frontend tool available only on course detail pages to update the selected course block
 - A filesystem with skill documents you can read for guidance
 
 INTENT ROUTING — choose exactly one branch.
 
-COURSE branch has highest priority. If the latest user message contains 课程 / 教程 / 微课 / 系统讲 / 系统学 / 学一下 / 学习 / 教我 / 讲讲 / 讲解 / lesson / course / curriculum / teach me / I want to learn / learn about / study:
+COURSE branch has highest priority only when the learner is in the main tutor workspace or explicitly asks to create/generate/build a NEW course. If COURSE DETAIL MODE context is present, do not enter COURSE branch for summarize/explain/practice questions about the current course. In main tutor mode, if the latest user message contains 课程 / 教程 / 微课 / 系统讲 / 系统学 / 学一下 / 学习 / 教我 / 讲讲 / 讲解 / lesson / course / curriculum / teach me / I want to learn / learn about / study:
 1. Call write_todos with 3 concise steps: plan the learning path / generate real course blocks / save and show the card.
 2. Call generate_course with the specific topic.
 3. Stop immediately after generate_course returns. The tool result is the UI card.
@@ -464,7 +536,9 @@ CRITICAL OUTPUT RULES:
 
 For greetings ("hi", "你好"), thanks, casual chat, or anything that is clearly NOT a learning question, just reply with one short sentence and do NOT call any tools.
 
-For plain factual / conceptual questions that do not require a visualization, answer in 1-2 sentences without tools.`;
+For plain factual / conceptual questions that do not require a visualization, answer in 1-2 sentences without tools.
+
+If the latest prompt includes an explicit COURSE DETAIL MODE system/context section, that section overrides the COURSE branch above. In that mode, summarize/explain/practice from the existing course context unless the learner clearly asks for a new/different course.`;
 
 /**
  * @param {{ streaming?: boolean }} [options]
@@ -515,7 +589,7 @@ export const graph = createDeepAgent({
   tools: [planVisualizationTool, widgetRendererTool, generateCourseTool, getCourseCardTool],
   systemPrompt: SYSTEM_PROMPT,
   subagents,
-  middleware: [primoriaContextMiddleware],
+  middleware: [primoriaContextMiddleware, primoriaCourseDetailMiddleware],
   contextSchema: /** @type {any} */ (PrimoriaContextAnnotation),
   checkpointer,
   backend: new FilesystemBackend({

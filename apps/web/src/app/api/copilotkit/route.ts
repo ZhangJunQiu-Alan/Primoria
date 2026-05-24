@@ -20,8 +20,65 @@ function settingsFromEnvironment() {
   } as const;
 }
 
-function normalizeAgentMessages(messages: any[] = []) {
-  return messages
+function formatCourseDetailContextForAgent(context: unknown) {
+  const items = Array.isArray(context) ? context : [];
+  const item = items.find((entry: any) => entry?.description === "Primoria course detail mode");
+  if (!item?.value) return "";
+  try {
+    const parsed = JSON.parse(String(item.value));
+    const course = parsed?.course;
+    const selected = parsed?.selectedBlock;
+    if (!course?.title) return "";
+    return [
+      "COURSE DETAIL MODE — highest priority for this run.",
+      "The learner is inside an existing course detail page. Do not create a new course by default.",
+      `Current course: ${course.title}`,
+      `Topic: ${course.topic ?? ""}`,
+      `Summary: ${course.summary ?? ""}`,
+      `Selected block: ${selected ? `${selected.title ?? selected.type} (${selected.type}, id=${selected.id})` : "none; answer from the whole course"}`,
+      `Available blocks: ${(course.blocks ?? []).map((block: any) => `${block.index}. ${block.title} [${block.type}, id=${block.id}]`).join("; ")}`,
+      "For summarize/explain/practice questions, answer from this current course context. Only call generate_course if the learner explicitly asks for a new or different course.",
+      "If asked to revise the selected block, call revise_selected_course_block.",
+    ].join("\n");
+  } catch {
+    return "";
+  }
+}
+
+function withCourseDetailContext(content: unknown, courseContext: string) {
+  const visibleText = stripInjectedCourseContext(content);
+  return [
+    courseContext,
+    "",
+    "Learner question:",
+    visibleText,
+  ].join("\n");
+}
+
+function stripInjectedCourseContext(content: unknown) {
+  const text = contentToText(content);
+  const marker = "Learner question:";
+  if (!text.includes("COURSE DETAIL MODE") || !text.includes(marker)) return text;
+  const index = text.lastIndexOf(marker);
+  return text.slice(index + marker.length).trimStart();
+}
+
+function contentToText(content: unknown) {
+  if (typeof content === "string") return content;
+  if (Array.isArray(content)) {
+    return content
+      .map((part) => {
+        if (typeof part === "string") return part;
+        if (part && typeof part === "object" && "text" in part) return String((part as { text?: unknown }).text ?? "");
+        return "";
+      })
+      .join("\n");
+  }
+  return String(content ?? "");
+}
+
+function normalizeAgentMessages(messages: any[] = [], context?: unknown) {
+  const normalized = messages
     .filter((message) => message?.role !== "reasoning" && message?.role !== "activity")
     .map((message) => {
       if (message?.role === "developer") {
@@ -29,6 +86,26 @@ function normalizeAgentMessages(messages: any[] = []) {
       }
       return message;
     });
+  const courseContext = formatCourseDetailContextForAgent(context);
+  if (!courseContext) return normalized;
+  const lastUserIndex = normalized.findLastIndex((message) => message?.role === "user");
+  if (lastUserIndex < 0) return normalized;
+  return normalized.map((message, index) =>
+    index === lastUserIndex
+      ? { ...message, content: withCourseDetailContext(message.content, courseContext) }
+      : message,
+  );
+}
+
+function sanitizeAgentState(state: any) {
+  if (!state || !Array.isArray(state.messages)) return state ?? {};
+  return {
+    ...state,
+    messages: state.messages.map((message: any) => ({
+      ...message,
+      content: stripInjectedCourseContext(message?.content),
+    })),
+  };
 }
 
 class PrimoriaLangGraphAgent extends LangGraphAgent {
@@ -46,26 +123,38 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
     return cloned;
   }
 
+  connect() {
+    // Product chat history is restored from Postgres on the web side. Avoid
+    // attaching CopilotKit's UI thread directly to a LangGraph checkpoint on
+    // mount, because stale dev checkpoints can re-inject old/malformed messages
+    // before the learner sends anything.
+    return { subscribe: (subscriber: any) => { subscriber?.complete?.(); return { unsubscribe() {} }; } } as any;
+  }
+
   run(input: any) {
     // Keep Primoria product chat history in Postgres while using a fresh
     // LangGraph runtime checkpoint per run. This avoids stale dev checkpoints
     // causing @ag-ui/langgraph "Message not found" errors.
     const runtimeThreadId = crypto.randomUUID();
     const ownerId = this.ownerId ?? undefined;
+    const appContext = Array.isArray(input?.context) ? input.context : [];
+    const sanitizedState = sanitizeAgentState(input?.state);
     return super.run({
       ...input,
       threadId: runtimeThreadId,
-      messages: normalizeAgentMessages(input?.messages),
+      messages: normalizeAgentMessages(input?.messages, appContext),
       state: {
-        ...(input?.state ?? {}),
+        ...sanitizedState,
         primoria_owner_id: ownerId,
         user_id: ownerId,
+        copilotkit: {
+          ...(input?.state?.copilotkit ?? {}),
+          context: appContext,
+        },
       },
-      context: {
-        ...(input?.context ?? {}),
-        primoria_owner_id: ownerId,
-        user_id: ownerId,
-      },
+      // Keep CopilotKit/AG-UI readable context as the array shape expected by
+      // the LangGraph adapter. Owner data is passed via state/config below.
+      context: appContext,
       forwardedProps: {
         ...(input?.forwardedProps ?? {}),
         config: {
