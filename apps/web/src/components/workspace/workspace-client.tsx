@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type {
+  WorkspaceMember,
   WorkspaceMessage,
   WorkspaceMessageArtifact,
   WorkspaceTask,
@@ -17,6 +18,18 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [newThreadOpen, setNewThreadOpen] = useState(false);
+  const [newThreadType, setNewThreadType] = useState<WorkspaceThread["type"]>("room");
+  const [newThreadName, setNewThreadName] = useState("");
+  const [newThreadDescription, setNewThreadDescription] = useState("");
+  const [attachmentOpen, setAttachmentOpen] = useState(false);
+  const [attachmentTitle, setAttachmentTitle] = useState("");
+  const [attachmentDescription, setAttachmentDescription] = useState("");
+  const [memberName, setMemberName] = useState("");
+  const [memberRole, setMemberRole] = useState("Human");
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskScope, setTaskScope] = useState("");
+  const [taskDueAt, setTaskDueAt] = useState("");
 
   const activeThread = view.threads.find((thread) => thread.id === activeThreadId) ?? view.threads[0];
   const visibleThreads = view.threads.filter((thread) => thread.type === chatMode);
@@ -39,13 +52,23 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     if (nextThread) setActiveThreadId(nextThread.id);
   }
 
-  async function createDirectChat() {
+  async function createThread(event?: React.FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
+    const name = newThreadName.trim();
+    if (!name) {
+      setError("Name the room or direct chat first.");
+      return;
+    }
     setError(null);
     try {
       const response = await fetch(`/api/workspaces/${view.workspace.id}/threads`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ type: "direct", name: "New direct chat", description: "private conversation" }),
+        body: JSON.stringify({
+          type: newThreadType,
+          name,
+          description: newThreadDescription.trim() || (newThreadType === "direct" ? "private conversation" : "shared room"),
+        }),
       });
       if (!response.ok) throw new Error("Chat could not be created.");
       const data = (await response.json()) as { thread: WorkspaceThread };
@@ -55,14 +78,43 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         workspace: { ...current.workspace, updatedAt: data.thread.updatedAt },
       }));
       setActiveThreadId(data.thread.id);
-      setChatMode("direct");
+      setChatMode(data.thread.type);
+      setNewThreadName("");
+      setNewThreadDescription("");
+      setNewThreadOpen(false);
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : "Chat could not be created.");
     }
   }
 
-  async function createTask() {
+  async function inviteMember(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const displayName = memberName.trim();
+    if (!displayName) return;
+    setError(null);
+    try {
+      const response = await fetch(`/api/workspaces/${view.workspace.id}/members`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ displayName, role: memberRole || "Human", status: "invited" }),
+      });
+      if (!response.ok) throw new Error("Member could not be added.");
+      const data = (await response.json()) as { member: WorkspaceMember };
+      setView((current) => ({
+        ...current,
+        members: [...current.members, data.member],
+        workspace: { ...current.workspace, updatedAt: Date.now() },
+      }));
+      setMemberName("");
+    } catch (inviteError) {
+      setError(inviteError instanceof Error ? inviteError.message : "Member could not be added.");
+    }
+  }
+
+  async function createTask(event?: React.FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
     if (!activeThread) return;
+    const title = taskTitle.trim() || `Follow up from ${activeThread.name}`;
     setError(null);
     try {
       const response = await fetch(`/api/workspaces/${view.workspace.id}/tasks`, {
@@ -70,9 +122,10 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           threadId: activeThread.id,
-          title: `Follow up from ${activeThread.name}`,
-          scope: activeThread.type === "direct" ? "Private" : "Shared",
+          title,
+          scope: taskScope.trim() || (activeThread.type === "direct" ? "Private" : "Shared"),
           progress: "new",
+          dueAt: taskDueAt.trim() || undefined,
         }),
       });
       if (!response.ok) throw new Error("Task could not be created.");
@@ -83,8 +136,78 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         workspace: { ...current.workspace, updatedAt: data.task.updatedAt },
       }));
       setDetailsOpen(true);
+      setTaskTitle("");
+      setTaskScope("");
+      setTaskDueAt("");
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : "Task could not be created.");
+    }
+  }
+
+  async function updateTaskStatus(task: WorkspaceTask, status: "open" | "done") {
+    setError(null);
+    try {
+      const response = await fetch(`/api/workspaces/${view.workspace.id}/tasks/${task.id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status, progress: status === "done" ? "done" : "reopened" }),
+      });
+      if (!response.ok) throw new Error("Task could not be updated.");
+      const data = (await response.json()) as { task: WorkspaceTask };
+      setView((current) => ({
+        ...current,
+        tasks: current.tasks.map((entry) => (entry.id === data.task.id ? data.task : entry)),
+        workspace: { ...current.workspace, updatedAt: data.task.updatedAt },
+      }));
+    } catch (updateError) {
+      setError(updateError instanceof Error ? updateError.message : "Task could not be updated.");
+    }
+  }
+
+  async function shareAppCard(event?: React.FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
+    if (!activeThread) return;
+    const title = attachmentTitle.trim();
+    const description = attachmentDescription.trim();
+    if (!title || !description) {
+      setError("Add an app title and short description first.");
+      return;
+    }
+    setSending(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/workspaces/${view.workspace.id}/messages`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          threadId: activeThread.id,
+          content: `Shared ${title}.`,
+          artifact: {
+            type: "app",
+            title,
+            description,
+            primaryAction: "Open app",
+            secondaryAction: "Create task",
+          },
+        }),
+      });
+      if (!response.ok) throw new Error("Application card could not be shared.");
+      const data = (await response.json()) as { message: WorkspaceMessage };
+      setView((current) => ({
+        ...current,
+        messages: [...current.messages, data.message],
+        threads: current.threads.map((thread) =>
+          thread.id === data.message.threadId ? { ...thread, updatedAt: data.message.createdAt } : thread,
+        ),
+        workspace: { ...current.workspace, updatedAt: data.message.createdAt },
+      }));
+      setAttachmentTitle("");
+      setAttachmentDescription("");
+      setAttachmentOpen(false);
+    } catch (shareError) {
+      setError(shareError instanceof Error ? shareError.message : "Application card could not be shared.");
+    } finally {
+      setSending(false);
     }
   }
 
@@ -128,7 +251,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             <span className="course-block-tag">{view.persisted ? "Workspace" : "Local workspace"}</span>
             <strong>{view.workspace.name}</strong>
           </div>
-          <button type="button" aria-label="New chat" onClick={() => void createDirectChat()}>+</button>
+          <button type="button" aria-label="New chat" onClick={() => setNewThreadOpen((open) => !open)}>+</button>
         </div>
 
         <div className="workspace-switcher" aria-label="Chat type">
@@ -139,6 +262,32 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             Direct
           </button>
         </div>
+
+        {newThreadOpen ? (
+          <form className="workspace-quick-form" onSubmit={createThread}>
+            <div className="workspace-mini-switcher" aria-label="New chat type">
+              <button type="button" className={newThreadType === "room" ? "active" : ""} onClick={() => setNewThreadType("room")}>
+                Room
+              </button>
+              <button type="button" className={newThreadType === "direct" ? "active" : ""} onClick={() => setNewThreadType("direct")}>
+                Direct
+              </button>
+            </div>
+            <input
+              aria-label="Chat name"
+              value={newThreadName}
+              onChange={(event) => setNewThreadName(event.target.value)}
+              placeholder={newThreadType === "room" ? "Room name" : "Person or agent"}
+            />
+            <input
+              aria-label="Chat description"
+              value={newThreadDescription}
+              onChange={(event) => setNewThreadDescription(event.target.value)}
+              placeholder="Short context"
+            />
+            <button type="submit">Create</button>
+          </form>
+        ) : null}
 
         <ThreadSection title={chatMode === "room" ? "Rooms" : "Direct"} threads={visibleThreads} activeThreadId={activeThread?.id} onSelect={selectThread} />
       </aside>
@@ -151,8 +300,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           </div>
           <div className="workspace-room-actions">
             <span className="workspace-live-dot">Live</span>
-            <button type="button" onClick={() => setDetailsOpen(true)}>Invite</button>
-            <button type="button" onClick={() => void createTask()}>New task</button>
+            <button type="button" onClick={() => setDetailsOpen((open) => !open)}>{detailsOpen ? "Hide details" : "Details"}</button>
+            <button type="button" onClick={() => { setDetailsOpen(true); setMemberName(""); }}>Invite</button>
+            <button type="button" onClick={() => { setTaskTitle(`Follow up from ${activeThread?.name ?? "workspace"}`); setDetailsOpen(true); }}>New task</button>
           </div>
         </div>
 
@@ -173,13 +323,32 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         </div>
 
         <form className="workspace-composer" onSubmit={sendMessage}>
+          {attachmentOpen ? (
+            <div className="workspace-attachment-tray">
+              <div className="workspace-quick-form horizontal">
+                <input
+                  aria-label="Application title"
+                  value={attachmentTitle}
+                  onChange={(event) => setAttachmentTitle(event.target.value)}
+                  placeholder="Application title"
+                />
+                <input
+                  aria-label="Application description"
+                  value={attachmentDescription}
+                  onChange={(event) => setAttachmentDescription(event.target.value)}
+                  placeholder="What should this card do?"
+                />
+                <button type="button" disabled={sending} onClick={() => void shareAppCard()}>Share app</button>
+              </div>
+            </div>
+          ) : null}
           <input
             aria-label="Message"
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
             placeholder={`Message ${activeThread?.type === "room" ? "#" : ""}${activeThread?.name ?? "workspace"}, mention @Primoria, or attach an app...`}
           />
-          <button type="button" aria-label="Attach">+</button>
+          <button type="button" aria-label="Attach" onClick={() => setAttachmentOpen((open) => !open)}>+</button>
           <button type="submit" disabled={sending || !draft.trim()}>{sending ? "Sending" : "Send"}</button>
           {error ? <p className="workspace-send-error">{error}</p> : null}
         </form>
@@ -200,6 +369,20 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               <strong>Members</strong>
               <span>{view.members.length}</span>
             </div>
+            <form className="workspace-quick-form compact" onSubmit={inviteMember}>
+              <input
+                aria-label="Invite name"
+                value={memberName}
+                onChange={(event) => setMemberName(event.target.value)}
+                placeholder="Name or agent"
+              />
+              <select aria-label="Member role" value={memberRole} onChange={(event) => setMemberRole(event.target.value)}>
+                <option>Human</option>
+                <option>AI teammate</option>
+                <option>Observer</option>
+              </select>
+              <button type="submit">Add</button>
+            </form>
             <ul className="workspace-member-list">
               {view.members.map((member) => (
                 <li key={member.id}>
@@ -218,12 +401,36 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               <strong>Tasks</strong>
               <span>{view.tasks.length}</span>
             </div>
+            <form className="workspace-quick-form compact" onSubmit={createTask}>
+              <input
+                aria-label="Task title"
+                value={taskTitle}
+                onChange={(event) => setTaskTitle(event.target.value)}
+                placeholder="Task title"
+              />
+              <input
+                aria-label="Task scope"
+                value={taskScope}
+                onChange={(event) => setTaskScope(event.target.value)}
+                placeholder={activeThread?.type === "direct" ? "Private" : "Shared"}
+              />
+              <input
+                aria-label="Task due date"
+                value={taskDueAt}
+                onChange={(event) => setTaskDueAt(event.target.value)}
+                placeholder="Due, optional"
+              />
+              <button type="submit">Create task</button>
+            </form>
             <ul className="workspace-task-list">
               {(tasks.length ? tasks : view.tasks).map((item) => (
                 <li key={item.id}>
                   <strong>{item.title}</strong>
                   <span>{item.scope}</span>
                   <small>{item.progress}{item.dueAt ? ` / due ${item.dueAt}` : ""}</small>
+                  <button type="button" onClick={() => void updateTaskStatus(item, item.status === "done" ? "open" : "done")}>
+                    {item.status === "done" ? "Reopen" : "Complete"}
+                  </button>
                 </li>
               ))}
             </ul>

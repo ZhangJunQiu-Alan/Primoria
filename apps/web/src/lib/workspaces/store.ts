@@ -9,9 +9,11 @@ import {
   workspaceThreads,
 } from "../db/schema";
 import type {
+  CreateWorkspaceMemberInput,
   CreateWorkspaceMessageInput,
   CreateWorkspaceTaskInput,
   CreateWorkspaceThreadInput,
+  UpdateWorkspaceTaskInput,
   WorkspaceMember,
   WorkspaceMessage,
   WorkspaceMessageArtifact,
@@ -52,6 +54,58 @@ export async function getWorkspaceView(ownerId?: string | null): Promise<Workspa
   } catch (error) {
     console.warn("[workspace] falling back to local workspace view", error);
     return getLocalView();
+  }
+}
+
+export async function createWorkspaceMember(ownerId: string | null | undefined, input: CreateWorkspaceMemberInput): Promise<WorkspaceMember> {
+  const displayName = input.displayName.trim();
+  if (!displayName) throw new Error("Member name is required.");
+
+  const now = Date.now();
+  const member: WorkspaceMember = {
+    id: `wmember_${randomBytes(10).toString("base64url")}`,
+    workspaceId: input.workspaceId,
+    displayName,
+    role: input.role?.trim() || "Human",
+    status: input.status?.trim() || "invited",
+  };
+
+  if (!hasDatabaseUrl() || !ownerId) {
+    requireLocalWorkspace(input.workspaceId);
+    const current = getLocalView();
+    setLocalView({
+      ...current,
+      members: [...current.members, member],
+      workspace: { ...current.workspace, updatedAt: now },
+    });
+    return member;
+  }
+
+  try {
+    await ensureSeedWorkspace(ownerId);
+    await requireDbWorkspace(ownerId, input.workspaceId);
+    await getDb().insert(workspaceMembers).values({
+      id: member.id,
+      workspaceId: member.workspaceId,
+      ownerId,
+      displayName: member.displayName,
+      role: member.role,
+      status: member.status ?? null,
+      createdAt: new Date(now),
+      updatedAt: new Date(now),
+    });
+    await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
+    return member;
+  } catch (error) {
+    console.warn("[workspace] falling back to local member persistence", error);
+    requireLocalWorkspace(input.workspaceId);
+    const current = getLocalView();
+    setLocalView({
+      ...current,
+      members: [...current.members, member],
+      workspace: { ...current.workspace, updatedAt: now },
+    });
+    return member;
   }
 }
 
@@ -227,6 +281,76 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
   }
 }
 
+export async function updateWorkspaceTask(ownerId: string | null | undefined, input: UpdateWorkspaceTaskInput): Promise<WorkspaceTask> {
+  const status = input.status.trim();
+  if (!status) throw new Error("Task status is required.");
+
+  const now = Date.now();
+  const applyPatch = (task: WorkspaceTask): WorkspaceTask => ({
+    ...task,
+    status,
+    progress: input.progress?.trim() || (status === "done" ? "done" : task.progress),
+    updatedAt: now,
+  });
+
+  if (!hasDatabaseUrl() || !ownerId) {
+    requireLocalWorkspace(input.workspaceId);
+    const current = getLocalView();
+    const existing = current.tasks.find((task) => task.id === input.taskId && task.workspaceId === input.workspaceId);
+    if (!existing) throw new Error("Task not found.");
+    const task = applyPatch(existing);
+    setLocalView({
+      ...current,
+      tasks: current.tasks.map((entry) => (entry.id === task.id ? task : entry)),
+      workspace: { ...current.workspace, updatedAt: now },
+    });
+    return task;
+  }
+
+  try {
+    await ensureSeedWorkspace(ownerId);
+    await requireDbWorkspace(ownerId, input.workspaceId);
+    const rows = await getDb()
+      .select()
+      .from(workspaceTasks)
+      .where(and(eq(workspaceTasks.id, input.taskId), eq(workspaceTasks.workspaceId, input.workspaceId), eq(workspaceTasks.ownerId, ownerId)))
+      .limit(1);
+    const existing = rows[0];
+    if (!existing) throw new Error("Task not found.");
+    const task = applyPatch({
+      id: existing.id,
+      workspaceId: existing.workspaceId,
+      threadId: existing.threadId,
+      title: existing.title,
+      scope: existing.scope,
+      status: existing.status,
+      progress: existing.progress,
+      dueAt: existing.dueAt ?? undefined,
+      createdAt: existing.createdAt.getTime(),
+      updatedAt: existing.updatedAt.getTime(),
+    });
+    await getDb()
+      .update(workspaceTasks)
+      .set({ status: task.status, progress: task.progress, updatedAt: new Date(task.updatedAt) })
+      .where(eq(workspaceTasks.id, task.id));
+    await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
+    return task;
+  } catch (error) {
+    console.warn("[workspace] falling back to local task update", error);
+    requireLocalWorkspace(input.workspaceId);
+    const current = getLocalView();
+    const existing = current.tasks.find((task) => task.id === input.taskId && task.workspaceId === input.workspaceId);
+    if (!existing) throw new Error("Task not found.");
+    const task = applyPatch(existing);
+    setLocalView({
+      ...current,
+      tasks: current.tasks.map((entry) => (entry.id === task.id ? task : entry)),
+      workspace: { ...current.workspace, updatedAt: now },
+    });
+    return task;
+  }
+}
+
 async function ensureSeedWorkspace(ownerId: string) {
   const existing = await getDb()
     .select({ id: workspaces.id })
@@ -373,6 +497,7 @@ function buildMessage(input: CreateWorkspaceMessageInput, content: string): Work
     senderName: input.senderName?.trim() || "You",
     senderKind: input.senderKind ?? "human",
     content,
+    artifact: input.artifact,
     createdAt: Date.now(),
   };
 }
