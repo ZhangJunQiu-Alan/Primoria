@@ -2809,6 +2809,53 @@ cpk-web-inspector {
   color: #fffdf8;
 }
 
+.workspace-list {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid rgba(23, 19, 15, 0.08);
+  border-radius: 14px;
+  background: rgba(243, 238, 231, 0.48);
+}
+
+.workspace-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 7px 9px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+}
+
+.workspace-list button.active {
+  border-color: rgba(23, 19, 15, 0.08);
+  background: #fffdf8;
+  color: var(--ink);
+}
+
+.workspace-list strong,
+.workspace-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspace-list strong {
+  font-size: 12px;
+}
+
+.workspace-list small {
+  flex-shrink: 0;
+  color: var(--quiet);
+  font-size: 11px;
+}
+
 .workspace-chat-section {
   display: grid;
   gap: 6px;

@@ -12,7 +12,7 @@ const MemberSchema = z.object({
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
   const { id } = await context.params;
-  const view = await getWorkspaceView(user?.id);
+  const view = await getWorkspaceView(user?.id, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const body = MemberSchema.parse(await request.json());
   const member = await createWorkspaceMember(user?.id, {

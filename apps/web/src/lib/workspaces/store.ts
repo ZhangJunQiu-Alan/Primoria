@@ -35,26 +35,56 @@ const SEED_OPS_DIRECT_ID = "thread_direct_ops";
 
 declare global {
   var __primoriaWorkspaceLocalView: WorkspaceView | undefined;
+  var __primoriaWorkspaceLocalViews: WorkspaceView[] | undefined;
+  var __primoriaWorkspaceLocalActiveId: string | undefined;
 }
 
-function getLocalView() {
-  globalThis.__primoriaWorkspaceLocalView ??= createSeedWorkspaceView(false);
-  return globalThis.__primoriaWorkspaceLocalView;
+function getLocalViews() {
+  if (!globalThis.__primoriaWorkspaceLocalViews?.length) {
+    const seed = createSeedWorkspaceView(false);
+    globalThis.__primoriaWorkspaceLocalViews = [seed];
+    globalThis.__primoriaWorkspaceLocalActiveId = seed.workspace.id;
+    globalThis.__primoriaWorkspaceLocalView = seed;
+  }
+  return globalThis.__primoriaWorkspaceLocalViews;
+}
+
+function getLocalView(workspaceId?: string | null) {
+  const views = getLocalViews();
+  const targetId = workspaceId ?? globalThis.__primoriaWorkspaceLocalActiveId;
+  const view = views.find((entry) => entry.workspace.id === targetId) ?? views[0];
+  globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
+  globalThis.__primoriaWorkspaceLocalView = view;
+  return withWorkspaceList(view, views);
 }
 
 function setLocalView(view: WorkspaceView) {
-  globalThis.__primoriaWorkspaceLocalView = view;
-  return view;
+  const views = getLocalViews();
+  const stored = { ...view, workspaces: [] };
+  const nextViews = [stored, ...views.filter((entry) => entry.workspace.id !== view.workspace.id)].sort(
+    (a, b) => b.workspace.updatedAt - a.workspace.updatedAt,
+  );
+  globalThis.__primoriaWorkspaceLocalViews = nextViews;
+  globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
+  globalThis.__primoriaWorkspaceLocalView = stored;
+  return withWorkspaceList(stored, nextViews);
 }
 
-export async function getWorkspaceView(ownerId?: string | null): Promise<WorkspaceView> {
-  if (!hasDatabaseUrl() || !ownerId) return getLocalView();
+function withWorkspaceList(view: WorkspaceView, views: WorkspaceView[]) {
+  return {
+    ...view,
+    workspaces: views.map((entry) => entry.workspace).sort((a, b) => b.updatedAt - a.updatedAt),
+  };
+}
+
+export async function getWorkspaceView(ownerId?: string | null, workspaceId?: string | null): Promise<WorkspaceView> {
+  if (!hasDatabaseUrl() || !ownerId) return getLocalView(workspaceId);
   try {
     await ensureSeedWorkspace(ownerId);
-    return getWorkspaceViewFromDb(ownerId);
+    return getWorkspaceViewFromDb(ownerId, workspaceId);
   } catch (error) {
     console.warn("[workspace] falling back to local workspace view", error);
-    return getLocalView();
+    return getLocalView(workspaceId);
   }
 }
 
@@ -81,6 +111,7 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
   };
   const view: WorkspaceView = {
     workspace,
+    workspaces: [workspace],
     members: [
       {
         id: `wmember_${randomBytes(10).toString("base64url")}`,
@@ -162,7 +193,7 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
         createdAt: new Date(welcome.createdAt),
       });
     });
-    return view;
+    return { ...view, workspaces: await listDbWorkspaceSummaries(ownerId) };
   } catch (error) {
     console.warn("[workspace] falling back to local workspace creation", error);
     return setLocalView({ ...view, persisted: false });
@@ -535,11 +566,26 @@ async function ensureSeedWorkspace(ownerId: string) {
   );
 }
 
-async function getWorkspaceViewFromDb(ownerId: string): Promise<WorkspaceView> {
-  const workspaceRows = await getDb()
+async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSummary[]> {
+  const rows = await getDb()
     .select()
     .from(workspaces)
     .where(eq(workspaces.ownerId, ownerId))
+    .orderBy(desc(workspaces.updatedAt));
+  return rows.map((workspace): WorkspaceSummary => ({
+    id: workspace.id,
+    name: workspace.name,
+    createdAt: workspace.createdAt.getTime(),
+    updatedAt: workspace.updatedAt.getTime(),
+  }));
+}
+
+async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | null): Promise<WorkspaceView> {
+  const summaries = await listDbWorkspaceSummaries(ownerId);
+  const workspaceRows = await getDb()
+    .select()
+    .from(workspaces)
+    .where(workspaceId ? and(eq(workspaces.ownerId, ownerId), eq(workspaces.id, workspaceId)) : eq(workspaces.ownerId, ownerId))
     .orderBy(desc(workspaces.updatedAt))
     .limit(1);
   const workspace = workspaceRows[0];
@@ -559,6 +605,7 @@ async function getWorkspaceViewFromDb(ownerId: string): Promise<WorkspaceView> {
       createdAt: workspace.createdAt.getTime(),
       updatedAt: workspace.updatedAt.getTime(),
     },
+    workspaces: summaries,
     members: memberRows.map((member): WorkspaceMember => ({
       id: member.id,
       workspaceId: member.workspaceId,
@@ -659,6 +706,7 @@ function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
   ];
   return {
     workspace,
+    workspaces: [workspace],
     members: [
       { id: "wm_jia", workspaceId: workspace.id, displayName: "Jia", role: "Human", status: "reviewing plan" },
       { id: "wm_primoria", workspaceId: workspace.id, displayName: "Primoria Agent", role: "AI teammate", status: "routing work" },

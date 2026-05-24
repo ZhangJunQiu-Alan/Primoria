@@ -29,7 +29,7 @@ const MessageSchema = z.object({
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
   const { id } = await context.params;
-  const view = await getWorkspaceView(user?.id);
+  const view = await getWorkspaceView(user?.id, id);
   if (view.workspace.id !== id) return NextResponse.json({ messages: [] }, { status: 404 });
   return NextResponse.json({ messages: view.messages });
 }
@@ -37,7 +37,7 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
   const { id } = await context.params;
-  const view = await getWorkspaceView(user?.id);
+  const view = await getWorkspaceView(user?.id, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const body = MessageSchema.parse(await request.json());
   const message = await createWorkspaceMessage(user?.id, {

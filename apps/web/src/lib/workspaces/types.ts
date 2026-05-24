@@ -67,6 +67,7 @@ export type WorkspaceTask = {
 
 export type WorkspaceView = {
   workspace: WorkspaceSummary;
+  workspaces: WorkspaceSummary[];
   members: WorkspaceMember[];
   threads: WorkspaceThread[];
   messages: WorkspaceMessage[];
