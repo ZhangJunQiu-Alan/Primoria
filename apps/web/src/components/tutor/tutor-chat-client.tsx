@@ -84,43 +84,39 @@ const initialMessages: UiMessage[] = [];
 
 const CHAT_STORAGE_KEY = "primoria:tutor-chat-messages";
 
+function readStoredMessages() {
+  if (typeof window === "undefined") return initialMessages;
+  try {
+    const raw = window.localStorage.getItem(CHAT_STORAGE_KEY);
+    if (!raw) return initialMessages;
+    const saved = JSON.parse(raw) as UiMessage[];
+    return Array.isArray(saved) && saved.length > 0 ? saved : initialMessages;
+  } catch {
+    window.localStorage.removeItem(CHAT_STORAGE_KEY);
+    return initialMessages;
+  }
+}
+
 function isPersistableMessage(message: UiMessage) {
   if (message.role === "user") return true;
   return !message.isError && !message.artifacts.some((artifact) => artifact.type === "tool_status");
 }
 
 export function TutorChatClient({ settings, resetKey }: { settings: TutorProviderSettings; resetKey: number }) {
-  const [messages, setMessages] = useState<UiMessage[]>(initialMessages);
+  const [messages, setMessages] = useState<UiMessage[]>(() => readStoredMessages());
   const [isLoading, setIsLoading] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    if (resetKey > 0) {
-      window.localStorage.removeItem(CHAT_STORAGE_KEY);
-      setMessages(initialMessages);
-      setHydrated(true);
-      return;
-    }
-
-    const raw = window.localStorage.getItem(CHAT_STORAGE_KEY);
-    if (!raw) return;
-
-    try {
-      const saved = JSON.parse(raw) as UiMessage[];
-      if (Array.isArray(saved) && saved.length > 0) {
-        setMessages(saved);
-      }
-    } catch {
-      window.localStorage.removeItem(CHAT_STORAGE_KEY);
-    }
-    setHydrated(true);
+    if (resetKey <= 0) return;
+    window.localStorage.removeItem(CHAT_STORAGE_KEY);
+    const timer = window.setTimeout(() => setMessages(initialMessages), 0);
+    return () => window.clearTimeout(timer);
   }, [resetKey]);
 
   useEffect(() => {
-    if (!hydrated) return;
     const persistable = messages.filter(isPersistableMessage);
     window.localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(persistable));
-  }, [hydrated, messages]);
+  }, [messages]);
 
   const apiMessages = useMemo<ChatMessage[]>(
     () =>

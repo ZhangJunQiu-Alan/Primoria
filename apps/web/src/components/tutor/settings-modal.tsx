@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { TutorProviderSettings } from "@/lib/ai/types";
 
 type SettingsModalProps = {
@@ -11,13 +11,12 @@ type SettingsModalProps = {
 };
 
 export function SettingsModal({ open, settings, onClose, onSave }: SettingsModalProps) {
-  const [draft, setDraft] = useState<TutorProviderSettings>(settings);
-
-  useEffect(() => {
-    setDraft(settings);
-  }, [settings, open]);
-
   if (!open) return null;
+  return <SettingsForm key={JSON.stringify(settings)} settings={settings} onClose={onClose} onSave={onSave} />;
+}
+
+function SettingsForm({ settings, onClose, onSave }: Omit<SettingsModalProps, "open">) {
+  const [draft, setDraft] = useState<TutorProviderSettings>(settings);
 
   return (
     <div className="settings-backdrop" role="dialog" aria-modal="true" aria-label="Provider settings">
