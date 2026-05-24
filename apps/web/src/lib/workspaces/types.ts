@@ -63,6 +63,8 @@ export type WorkspaceTask = {
   progress: string;
   assigneeId?: string;
   assigneeName?: string;
+  resultSummary?: string;
+  submittedAt?: number;
   dueAt?: string;
   createdAt: number;
   updatedAt: number;
@@ -127,4 +129,5 @@ export type UpdateWorkspaceTaskInput = {
   status: string;
   progress?: string;
   assigneeId?: string;
+  resultSummary?: string;
 };

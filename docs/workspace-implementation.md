@@ -30,7 +30,7 @@ Primary references checked before implementation:
 - Users can add simulated human or AI teammate members from the details drawer.
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
 - Users can attach and publish a basic application card into the current chat.
-- Users can create tasks, assign them to workspace members, and mark them complete/reopened from the task list.
+- Users can create tasks, assign them to workspace members, submit result notes, and mark them complete/reopened from the task list.
 - The workspace client refreshes the current workspace periodically so changes made through API calls are visible without a manual reload.
 - Local development without `DATABASE_URL` uses an in-memory seed workspace so the UI remains usable.
 - Signed-in Postgres mode seeds and persists workspace, members, threads, messages, and tasks.

@@ -3337,6 +3337,39 @@ cpk-web-inspector {
   font-size: 12px;
 }
 
+.workspace-task-result {
+  margin: 9px 0 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(167, 227, 189, 0.22);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.workspace-task-submit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.workspace-task-submit input {
+  min-height: 30px;
+  width: 100%;
+  border: 1px solid rgba(23, 19, 15, 0.1);
+  border-radius: 999px;
+  padding: 0 10px;
+  background: #fffdf8;
+  color: var(--ink);
+  font-size: 12px;
+  outline: none;
+}
+
+.workspace-task-submit button {
+  margin-top: 0;
+}
+
 .workspace-invite-code {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

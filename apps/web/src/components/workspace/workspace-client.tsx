@@ -35,6 +35,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [taskScope, setTaskScope] = useState("");
   const [taskAssigneeId, setTaskAssigneeId] = useState("");
   const [taskDueAt, setTaskDueAt] = useState("");
+  const [taskResultDrafts, setTaskResultDrafts] = useState<Record<string, string>>({});
 
   const activeThread = view.threads.find((thread) => thread.id === activeThreadId) ?? view.threads[0];
   const visibleThreads = view.threads.filter((thread) => thread.type === chatMode);
@@ -261,6 +262,36 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       }));
     } catch (updateError) {
       setError(updateError instanceof Error ? updateError.message : "Task could not be updated.");
+    }
+  }
+
+  async function submitTaskResult(task: WorkspaceTask) {
+    const resultSummary = taskResultDrafts[task.id]?.trim();
+    if (!resultSummary) {
+      setError("Add a result note before submitting.");
+      return;
+    }
+    setError(null);
+    try {
+      const response = await fetch(`/api/workspaces/${view.workspace.id}/tasks/${task.id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status: "done", progress: "submitted", resultSummary }),
+      });
+      if (!response.ok) throw new Error("Task result could not be submitted.");
+      const data = (await response.json()) as { task: WorkspaceTask };
+      setView((current) => ({
+        ...current,
+        tasks: current.tasks.map((entry) => (entry.id === data.task.id ? data.task : entry)),
+        workspace: { ...current.workspace, updatedAt: data.task.updatedAt },
+      }));
+      setTaskResultDrafts((current) => {
+        const next = { ...current };
+        delete next[task.id];
+        return next;
+      });
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Task result could not be submitted.");
     }
   }
 
@@ -593,6 +624,18 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                   <strong>{item.title}</strong>
                   <span>{item.scope}{item.assigneeName ? ` / ${item.assigneeName}` : " / unassigned"}</span>
                   <small>{item.progress}{item.dueAt ? ` / due ${item.dueAt}` : ""}</small>
+                  {item.resultSummary ? (
+                    <p className="workspace-task-result">{item.resultSummary}</p>
+                  ) : null}
+                  <div className="workspace-task-submit">
+                    <input
+                      aria-label={`Result for ${item.title}`}
+                      value={taskResultDrafts[item.id] ?? ""}
+                      onChange={(event) => setTaskResultDrafts((current) => ({ ...current, [item.id]: event.target.value }))}
+                      placeholder="Result note"
+                    />
+                    <button type="button" onClick={() => void submitTaskResult(item)}>Submit</button>
+                  </div>
                   <button type="button" onClick={() => void updateTaskStatus(item, item.status === "done" ? "open" : "done")}>
                     {item.status === "done" ? "Reopen" : "Complete"}
                   </button>

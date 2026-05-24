@@ -113,10 +113,13 @@ async function main() {
     workspaceId: createdWorkspace.workspace.id,
     taskId: task.id,
     status: "done",
-    progress: "done",
+    progress: "submitted",
+    resultSummary: "Unit task result submitted.",
   });
   assert(updatedTask.status === "done", "updated task status");
   assert(updatedTask.assigneeId === member.id, "updated task keeps assignee");
+  assert(updatedTask.resultSummary === "Unit task result submitted.", "updated task result summary");
+  assert(updatedTask.submittedAt, "updated task submitted timestamp");
 
   const nextView = await getWorkspaceView(null);
   assert(nextView.threads.some((entry) => entry.id === newThread.id), "created thread appears in workspace view");
@@ -127,7 +130,10 @@ async function main() {
     "created message appears in workspace view",
   );
   assert(nextView.messages.some((entry) => entry.id === appMessage.id && entry.artifact?.type === "app"), "created app card appears in workspace view");
-  assert(nextView.tasks.some((entry) => entry.id === task.id && entry.status === "done" && entry.assigneeName === "Unit Agent"), "updated assigned task appears in workspace view");
+  assert(
+    nextView.tasks.some((entry) => entry.id === task.id && entry.status === "done" && entry.assigneeName === "Unit Agent" && entry.resultSummary),
+    "updated assigned task appears in workspace view",
+  );
   process.stdout.write("[workspace.unit] ALL UNIT CHECKS PASSED\n");
 }
 
