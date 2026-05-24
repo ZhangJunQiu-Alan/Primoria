@@ -23,12 +23,13 @@ Primary references checked before implementation:
 - Workspace page loads a server-provided workspace view.
 - Users can switch between Rooms and Direct chats.
 - Users can create a new workspace with a default General room, owner member, AI teammate, and welcome message.
+- Users can switch between multiple workspaces from the left rail.
 - Users can create either a new shared room or a new direct chat.
 - Users can add simulated human or AI teammate members from the details drawer.
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
 - Users can attach and publish a basic application card into the current chat.
 - Users can create tasks and mark them complete/reopened from the task list.
-- The workspace client refreshes the current view periodically so changes made through API calls are visible without a manual reload.
+- The workspace client refreshes the current workspace periodically so changes made through API calls are visible without a manual reload.
 - Local development without `DATABASE_URL` uses an in-memory seed workspace so the UI remains usable.
 - Signed-in Postgres mode seeds and persists workspace, members, threads, messages, and tasks.
 - Details are collapsed by default and can be expanded for members, tasks, and the agent brief.

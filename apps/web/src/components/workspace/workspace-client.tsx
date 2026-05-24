@@ -46,7 +46,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     let cancelled = false;
     async function refreshWorkspace() {
       try {
-        const response = await fetch("/api/workspaces", { cache: "no-store" });
+        const response = await fetch(`/api/workspaces/${view.workspace.id}`, { cache: "no-store" });
         if (!response.ok || cancelled) return;
         const data = (await response.json()) as WorkspaceView;
         setView(data);
@@ -63,7 +63,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, []);
+  }, [view.workspace.id]);
 
   function selectThread(thread: WorkspaceThread) {
     setActiveThreadId(thread.id);
@@ -75,6 +75,22 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     setChatMode(nextMode);
     const nextThread = view.threads.find((thread) => thread.type === nextMode);
     if (nextThread) setActiveThreadId(nextThread.id);
+  }
+
+  async function switchWorkspace(workspaceId: string) {
+    if (workspaceId === view.workspace.id) return;
+    setError(null);
+    try {
+      const response = await fetch(`/api/workspaces/${workspaceId}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Workspace could not be opened.");
+      const data = (await response.json()) as WorkspaceView;
+      setView(data);
+      setActiveThreadId(data.threads[0]?.id ?? "");
+      setChatMode(data.threads[0]?.type ?? "room");
+      setDetailsOpen(false);
+    } catch (switchError) {
+      setError(switchError instanceof Error ? switchError.message : "Workspace could not be opened.");
+    }
   }
 
   async function createNewWorkspace(event: React.FormEvent<HTMLFormElement>) {
@@ -319,6 +335,22 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             />
             <button type="submit">Create workspace</button>
           </form>
+        ) : null}
+
+        {view.workspaces.length > 1 ? (
+          <div className="workspace-list" aria-label="Workspaces">
+            {view.workspaces.map((workspace) => (
+              <button
+                key={workspace.id}
+                type="button"
+                className={workspace.id === view.workspace.id ? "active" : ""}
+                onClick={() => void switchWorkspace(workspace.id)}
+              >
+                <strong>{workspace.name}</strong>
+                <small>{formatDate(workspace.updatedAt)}</small>
+              </button>
+            ))}
+          </div>
         ) : null}
 
         <div className="workspace-switcher" aria-label="Chat type">
@@ -584,6 +616,10 @@ function MessageArtifact({ artifact, onPrompt }: { artifact: WorkspaceMessageArt
 
 function formatTime(timestamp: number) {
   return new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date(timestamp));
+}
+
+function formatDate(timestamp: number) {
+  return new Intl.DateTimeFormat([], { month: "short", day: "numeric" }).format(new Date(timestamp));
 }
 
 function agentCount(members: WorkspaceView["members"]) {

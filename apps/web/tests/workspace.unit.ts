@@ -29,9 +29,16 @@ async function main() {
     ownerName: "Unit Owner",
   });
   assert(createdWorkspace.workspace.name === "Unit workspace", "created workspace name");
+  assert(createdWorkspace.workspaces.some((workspace) => workspace.id === view.workspace.id), "workspace list keeps seed workspace");
+  assert(createdWorkspace.workspaces.some((workspace) => workspace.id === createdWorkspace.workspace.id), "workspace list includes created workspace");
   assert(createdWorkspace.threads.some((thread) => thread.type === "room"), "created workspace has room");
   assert(createdWorkspace.members.some((member) => member.displayName === "Primoria Agent"), "created workspace has agent");
   assert(createdWorkspace.messages.length === 1, "created workspace has welcome message");
+
+  const seedAgain = await getWorkspaceView(null, view.workspace.id);
+  assert(seedAgain.workspace.id === view.workspace.id, "can switch back to seed workspace");
+  const createdAgain = await getWorkspaceView(null, createdWorkspace.workspace.id);
+  assert(createdAgain.workspace.id === createdWorkspace.workspace.id, "can switch to created workspace");
 
   const newThread = await createWorkspaceThread(null, {
     workspaceId: createdWorkspace.workspace.id,
