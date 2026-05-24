@@ -33,6 +33,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [memberRole, setMemberRole] = useState("Human");
   const [taskTitle, setTaskTitle] = useState("");
   const [taskScope, setTaskScope] = useState("");
+  const [taskAssigneeId, setTaskAssigneeId] = useState("");
   const [taskDueAt, setTaskDueAt] = useState("");
 
   const activeThread = view.threads.find((thread) => thread.id === activeThreadId) ?? view.threads[0];
@@ -222,6 +223,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           title,
           scope: taskScope.trim() || (activeThread.type === "direct" ? "Private" : "Shared"),
           progress: "new",
+          assigneeId: taskAssigneeId || undefined,
           dueAt: taskDueAt.trim() || undefined,
         }),
       });
@@ -235,6 +237,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       setDetailsOpen(true);
       setTaskTitle("");
       setTaskScope("");
+      setTaskAssigneeId("");
       setTaskDueAt("");
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : "Task could not be created.");
@@ -570,6 +573,12 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                 onChange={(event) => setTaskScope(event.target.value)}
                 placeholder={activeThread?.type === "direct" ? "Private" : "Shared"}
               />
+              <select aria-label="Task assignee" value={taskAssigneeId} onChange={(event) => setTaskAssigneeId(event.target.value)}>
+                <option value="">Unassigned</option>
+                {view.members.map((member) => (
+                  <option key={member.id} value={member.id}>{member.displayName}</option>
+                ))}
+              </select>
               <input
                 aria-label="Task due date"
                 value={taskDueAt}
@@ -582,7 +591,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               {(tasks.length ? tasks : view.tasks).map((item) => (
                 <li key={item.id}>
                   <strong>{item.title}</strong>
-                  <span>{item.scope}</span>
+                  <span>{item.scope}{item.assigneeName ? ` / ${item.assigneeName}` : " / unassigned"}</span>
                   <small>{item.progress}{item.dueAt ? ` / due ${item.dueAt}` : ""}</small>
                   <button type="button" onClick={() => void updateTaskStatus(item, item.status === "done" ? "open" : "done")}>
                     {item.status === "done" ? "Reopen" : "Complete"}
