@@ -83,6 +83,11 @@ export type CreateWorkspaceMessageInput = {
   artifact?: WorkspaceMessageArtifact;
 };
 
+export type CreateWorkspaceInput = {
+  name: string;
+  ownerName?: string;
+};
+
 export type CreateWorkspaceMemberInput = {
   workspaceId: string;
   displayName: string;

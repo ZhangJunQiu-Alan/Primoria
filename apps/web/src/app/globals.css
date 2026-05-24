@@ -2701,6 +2701,13 @@ cpk-web-inspector {
   gap: 12px;
 }
 
+.workspace-directory-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
 .workspace-directory-head strong {
   display: block;
   margin-top: 6px;
@@ -2718,7 +2725,7 @@ cpk-web-inspector {
   font: inherit;
 }
 
-.workspace-directory-head button {
+.workspace-directory-actions button {
   width: 34px;
   height: 34px;
   border-radius: 50%;

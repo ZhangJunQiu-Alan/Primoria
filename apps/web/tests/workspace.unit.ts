@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 
 import {
+  createWorkspace,
   createWorkspaceMember,
   createWorkspaceMessage,
   createWorkspaceTask,
@@ -23,8 +24,17 @@ async function main() {
   const direct = view.threads.find((thread) => thread.type === "direct");
   assert(direct, "direct thread exists");
 
+  const createdWorkspace = await createWorkspace(null, {
+    name: "Unit workspace",
+    ownerName: "Unit Owner",
+  });
+  assert(createdWorkspace.workspace.name === "Unit workspace", "created workspace name");
+  assert(createdWorkspace.threads.some((thread) => thread.type === "room"), "created workspace has room");
+  assert(createdWorkspace.members.some((member) => member.displayName === "Primoria Agent"), "created workspace has agent");
+  assert(createdWorkspace.messages.length === 1, "created workspace has welcome message");
+
   const newThread = await createWorkspaceThread(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     type: "room",
     name: "Unit room",
     description: "test room",
@@ -32,7 +42,7 @@ async function main() {
   assert(newThread.type === "room", "created room thread type");
 
   const newDirect = await createWorkspaceThread(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     type: "direct",
     name: "Unit direct",
     description: "test direct",
@@ -40,7 +50,7 @@ async function main() {
   assert(newDirect.type === "direct", "created direct thread type");
 
   const member = await createWorkspaceMember(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     displayName: "Unit Agent",
     role: "AI teammate",
     status: "testing",
@@ -48,7 +58,7 @@ async function main() {
   assert(member.displayName === "Unit Agent", "created member name");
 
   const message = await createWorkspaceMessage(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     threadId: newThread.id,
     content: "workspace unit test message",
     senderName: "Test User",
@@ -57,7 +67,7 @@ async function main() {
   assert(message.threadId === newThread.id, "created message thread");
 
   const appMessage = await createWorkspaceMessage(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     threadId: newThread.id,
     content: "workspace unit app card",
     senderName: "Test User",
@@ -72,7 +82,7 @@ async function main() {
   assert(appMessage.artifact?.type === "app", "created app artifact message");
 
   const task = await createWorkspaceTask(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     threadId: newThread.id,
     title: "Workspace unit task",
     scope: "Private",
@@ -82,7 +92,7 @@ async function main() {
   assert(task.threadId === newThread.id, "created task thread");
 
   const updatedTask = await updateWorkspaceTask(null, {
-    workspaceId: view.workspace.id,
+    workspaceId: createdWorkspace.workspace.id,
     taskId: task.id,
     status: "done",
     progress: "done",
