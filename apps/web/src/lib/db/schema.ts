@@ -165,6 +165,97 @@ export const copilotChatMessages = pgTable(
   }),
 );
 
+export const workspaces = pgTable(
+  "workspaces",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerUpdatedIdx: index("workspaces_owner_updated_idx").on(table.ownerId, table.updatedAt),
+  }),
+);
+
+export const workspaceMembers = pgTable(
+  "workspace_members",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    displayName: text("display_name").notNull(),
+    role: text("role").notNull(),
+    status: text("status"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceIdx: index("workspace_members_workspace_idx").on(table.workspaceId),
+    ownerWorkspaceIdx: index("workspace_members_owner_workspace_idx").on(table.ownerId, table.workspaceId),
+  }),
+);
+
+export const workspaceThreads = pgTable(
+  "workspace_threads",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceTypeIdx: index("workspace_threads_workspace_type_idx").on(table.workspaceId, table.type),
+    ownerUpdatedIdx: index("workspace_threads_owner_updated_idx").on(table.ownerId, table.updatedAt),
+  }),
+);
+
+export const workspaceMessages = pgTable(
+  "workspace_messages",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    senderName: text("sender_name").notNull(),
+    senderKind: text("sender_kind").notNull(),
+    content: text("content").notNull(),
+    artifact: jsonb("artifact"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadCreatedIdx: index("workspace_messages_thread_created_idx").on(table.threadId, table.createdAt),
+    ownerCreatedIdx: index("workspace_messages_owner_created_idx").on(table.ownerId, table.createdAt),
+  }),
+);
+
+export const workspaceTasks = pgTable(
+  "workspace_tasks",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    scope: text("scope").notNull(),
+    status: text("status").notNull().default("open"),
+    progress: text("progress").notNull(),
+    dueAt: text("due_at"),
+    metadata: jsonb("metadata"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadStatusIdx: index("workspace_tasks_thread_status_idx").on(table.threadId, table.status),
+    ownerUpdatedIdx: index("workspace_tasks_owner_updated_idx").on(table.ownerId, table.updatedAt),
+  }),
+);
+
 export const userSettings = pgTable("user_settings", {
   userId: text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
   preferences: jsonb("preferences").notNull().default({}),

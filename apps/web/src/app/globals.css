@@ -2940,10 +2940,14 @@ cpk-web-inspector {
 
 .workspace-app-card,
 .workspace-assignment-card {
-  margin-left: 52px;
   border: 1px solid rgba(23, 19, 15, 0.09);
   border-radius: 18px;
   background: #fffdf8;
+}
+
+.workspace-message-list > .workspace-app-card,
+.workspace-message-list > .workspace-assignment-card {
+  margin-left: 52px;
 }
 
 .workspace-app-card {
@@ -3004,6 +3008,11 @@ cpk-web-inspector {
   line-height: 1.15;
 }
 
+.workspace-app-card.inline,
+.workspace-assignment-card.inline {
+  margin: 12px 0 0;
+}
+
 .workspace-card-actions {
   justify-content: flex-start;
   margin-top: 14px;
@@ -3042,6 +3051,13 @@ cpk-web-inspector {
   padding: 14px;
   border-top: 1px solid rgba(23, 19, 15, 0.08);
   background: rgba(255, 250, 242, 0.9);
+}
+
+.workspace-send-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #8a2f1f;
+  font-size: 12px;
 }
 
 .workspace-composer input {
@@ -3147,7 +3163,7 @@ cpk-web-inspector {
 }
 
 .workspace-member-list,
-.workspace-homework-list {
+.workspace-task-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3170,34 +3186,34 @@ cpk-web-inspector {
 
 .workspace-member-list strong,
 .workspace-member-list small,
-.workspace-homework-list strong,
-.workspace-homework-list span,
-.workspace-homework-list small {
+.workspace-task-list strong,
+.workspace-task-list span,
+.workspace-task-list small {
   display: block;
 }
 
 .workspace-member-list strong,
-.workspace-homework-list strong {
+.workspace-task-list strong {
   overflow-wrap: anywhere;
   font-size: 13px;
 }
 
 .workspace-member-list small,
-.workspace-homework-list span,
-.workspace-homework-list small {
+.workspace-task-list span,
+.workspace-task-list small {
   color: var(--quiet);
   font-size: 12px;
   line-height: 1.35;
 }
 
-.workspace-homework-list li {
+.workspace-task-list li {
   padding: 12px;
   border: 1px solid rgba(23, 19, 15, 0.08);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.54);
 }
 
-.workspace-homework-list span {
+.workspace-task-list span {
   margin-top: 5px;
   color: var(--muted);
 }
