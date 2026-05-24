@@ -9,7 +9,7 @@ This iteration turns Workspace from a static communication mock into a basic usa
 - Drizzle/Postgres tables are used for the durable model because the app is already Postgres-first for auth, courses, apps, settings, and Copilot threads.
 - Workspace interaction follows the common collaboration split of channels/rooms for shared context and direct messages for focused private context. Agent participants are modeled as normal members with a role/status so the UI can stay general-purpose instead of teacher/student-specific.
 - Workspace invites use server-validated invite codes instead of purely client-side state. Joined users are granted access through `workspace_members`, which keeps the path open for real account-backed membership.
-- Realtime fanout is intentionally deferred. The client uses lightweight polling for a basic live view, and the schema tracks `updatedAt` on workspace, threads, and tasks, so SSE or WebSocket fanout can be added without reshaping the data model.
+- Realtime uses a lightweight Server-Sent Events stream for the current workspace, with polling fallback if the stream fails. The schema tracks `updatedAt` on workspace, threads, and tasks, so WebSocket fanout can still be added later without reshaping the data model.
 
 Primary references checked before implementation:
 
@@ -31,7 +31,7 @@ Primary references checked before implementation:
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
 - Users can attach and publish a basic application card into the current chat, including references to saved Library apps when available.
 - Users can create tasks, assign them to workspace members, submit result notes, and mark them complete/reopened from the task list.
-- The workspace client refreshes the current workspace periodically so changes made through API calls are visible without a manual reload.
+- The workspace client streams current workspace updates through `GET /api/workspaces/[id]/events` and falls back to periodic refresh if streaming is unavailable.
 - Local development without `DATABASE_URL` uses an in-memory seed workspace so the UI remains usable.
 - Signed-in Postgres mode seeds and persists workspace, members, threads, messages, and tasks.
 - Details are collapsed by default and can be expanded for members, tasks, and the agent brief.
@@ -39,6 +39,6 @@ Primary references checked before implementation:
 ## Deliberately deferred
 
 - Expiring invite links, email delivery, and role-based approvals.
-- Multi-user realtime fanout.
+- WebSocket-grade presence, typing indicators, and high-frequency realtime fanout.
 - Rich task editing, assignment rules, submissions, and analytics.
 - Sharing real LearningApp records into workspace messages instead of manually entered app cards.
