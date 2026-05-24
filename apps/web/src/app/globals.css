@@ -2768,7 +2768,7 @@ cpk-web-inspector {
 }
 
 .workspace-quick-form.horizontal {
-  grid-template-columns: minmax(120px, 0.8fr) minmax(160px, 1.2fr) auto;
+  grid-template-columns: minmax(120px, 0.75fr) minmax(120px, 0.8fr) minmax(160px, 1.2fr) auto;
   padding: 0;
   border: 0;
   background: transparent;

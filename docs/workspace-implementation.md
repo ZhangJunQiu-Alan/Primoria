@@ -29,7 +29,7 @@ Primary references checked before implementation:
 - Users can create either a new shared room or a new direct chat.
 - Users can add simulated human or AI teammate members from the details drawer.
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
-- Users can attach and publish a basic application card into the current chat.
+- Users can attach and publish a basic application card into the current chat, including references to saved Library apps when available.
 - Users can create tasks, assign them to workspace members, submit result notes, and mark them complete/reopened from the task list.
 - The workspace client refreshes the current workspace periodically so changes made through API calls are visible without a manual reload.
 - Local development without `DATABASE_URL` uses an in-memory seed workspace so the UI remains usable.

@@ -89,6 +89,8 @@ async function main() {
     senderName: "Test User",
     artifact: {
       type: "app",
+      appId: "unit_app",
+      version: 2,
       title: "Unit App",
       description: "test app card",
       primaryAction: "Open app",
@@ -96,6 +98,7 @@ async function main() {
     },
   });
   assert(appMessage.artifact?.type === "app", "created app artifact message");
+  assert(appMessage.artifact?.type === "app" && appMessage.artifact.appId === "unit_app", "created app artifact reference");
 
   const task = await createWorkspaceTask(null, {
     workspaceId: createdWorkspace.workspace.id,

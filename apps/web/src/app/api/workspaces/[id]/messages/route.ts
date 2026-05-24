@@ -6,6 +6,8 @@ import { createWorkspaceMessage, getWorkspaceView } from "@/lib/workspaces/store
 const ArtifactSchema = z.union([
   z.object({
     type: z.literal("app"),
+    appId: z.string().min(1).max(160).optional(),
+    version: z.number().int().positive().optional(),
     title: z.string().min(1).max(120),
     description: z.string().min(1).max(240),
     primaryAction: z.string().min(1).max(40),
