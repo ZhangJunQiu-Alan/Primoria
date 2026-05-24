@@ -2655,7 +2655,9 @@ cpk-web-inspector {
 .workspace-card-actions button,
 .workspace-agent-panel button,
 .workspace-room-actions button,
-.workspace-composer button {
+.workspace-composer button,
+.workspace-quick-form button,
+.workspace-task-list button {
   min-height: 38px;
   border: 1px solid rgba(23, 19, 15, 0.14);
   border-radius: 999px;
@@ -2667,7 +2669,8 @@ cpk-web-inspector {
 }
 
 .workspace-room-actions button:first-of-type,
-.workspace-card-actions button + button {
+.workspace-card-actions button + button,
+.workspace-task-list button {
   background: #fffdf8;
   color: var(--ink);
 }
@@ -2746,6 +2749,57 @@ cpk-web-inspector {
   background: #fffdf8;
   color: var(--ink);
   box-shadow: 0 6px 14px rgba(57, 42, 25, 0.07);
+}
+
+.workspace-quick-form {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(23, 19, 15, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.72);
+}
+
+.workspace-quick-form.horizontal {
+  grid-template-columns: minmax(120px, 0.8fr) minmax(160px, 1.2fr) auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.workspace-quick-form.compact {
+  margin-bottom: 12px;
+}
+
+.workspace-quick-form input,
+.workspace-quick-form select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid rgba(23, 19, 15, 0.1);
+  border-radius: 10px;
+  padding: 0 10px;
+  background: #fffdf8;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.workspace-mini-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.workspace-mini-switcher button {
+  min-height: 30px;
+  background: #fffdf8;
+  color: var(--muted);
+}
+
+.workspace-mini-switcher button.active {
+  background: #17130f;
+  color: #fffdf8;
 }
 
 .workspace-chat-section {
@@ -3053,6 +3107,10 @@ cpk-web-inspector {
   background: rgba(255, 250, 242, 0.9);
 }
 
+.workspace-attachment-tray {
+  grid-column: 1 / -1;
+}
+
 .workspace-send-error {
   grid-column: 1 / -1;
   margin: 0;
@@ -3218,6 +3276,13 @@ cpk-web-inspector {
   color: var(--muted);
 }
 
+.workspace-task-list button {
+  min-height: 30px;
+  margin-top: 9px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
 .workspace-agent-panel {
   background:
     linear-gradient(145deg, rgba(232, 221, 255, 0.46), rgba(255, 253, 248, 0.92)),
@@ -3319,6 +3384,10 @@ cpk-web-inspector {
 
   .workspace-composer {
     grid-template-columns: minmax(0, 1fr) 40px;
+  }
+
+  .workspace-quick-form.horizontal {
+    grid-template-columns: 1fr;
   }
 
   .workspace-composer button[type="submit"] {

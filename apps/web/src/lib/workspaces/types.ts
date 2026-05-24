@@ -80,6 +80,14 @@ export type CreateWorkspaceMessageInput = {
   content: string;
   senderName?: string;
   senderKind?: WorkspaceSenderKind;
+  artifact?: WorkspaceMessageArtifact;
+};
+
+export type CreateWorkspaceMemberInput = {
+  workspaceId: string;
+  displayName: string;
+  role?: string;
+  status?: string;
 };
 
 export type CreateWorkspaceThreadInput = {
@@ -96,4 +104,11 @@ export type CreateWorkspaceTaskInput = {
   scope?: string;
   progress?: string;
   dueAt?: string;
+};
+
+export type UpdateWorkspaceTaskInput = {
+  workspaceId: string;
+  taskId: string;
+  status: string;
+  progress?: string;
 };
