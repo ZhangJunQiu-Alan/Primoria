@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import {
   createNewThread,
-  ensureThreadSummary,
   getCurrentThreadId,
   readThreadHistory,
   setCurrentThreadId,
@@ -53,10 +52,9 @@ function readSessions(useCopilotKit: boolean) {
   }
 
   const currentThreadId = getCurrentThreadId();
-  ensureThreadSummary(currentThreadId);
   return {
     currentThreadId,
-    sessions: readThreadHistory(),
+    sessions: readThreadHistory().filter((session) => session.messageCount > 0),
   };
 }
 

@@ -422,11 +422,8 @@ function CopilotThreadHistoryRecorder({ threadId, title }: { threadId: string; t
   const recordedMessagesRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    const initial = ensureThreadSummary(threadId, title ? { title } : {});
-    void persistThreadSummaryToServer(initial);
-  }, [threadId, title]);
+    if (agent.messages.length === 0) return;
 
-  useEffect(() => {
     const userMessages = agent.messages.filter((message) => message.role === "user");
     const lastUser = userMessages[userMessages.length - 1];
     const lastUserText = messageText(lastUser ?? {}).trim();

@@ -687,6 +687,17 @@ button {
   flex: 0 0 auto;
 }
 
+.widget-renderer-error {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-text-danger, #9d3d2d);
+  border-radius: 12px;
+  background: var(--color-background-danger, #fff0ea);
+  color: var(--color-text-danger, #9d3d2d);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .todo-card {
   max-width: 770px;
 }
@@ -2833,6 +2844,20 @@ cpk-web-inspector {
   overflow-y: hidden;
   padding: 2px 0;
 }
+.course-markdown-inline {
+  display: inline;
+  line-height: inherit;
+}
+.course-markdown-inline > * {
+  display: inline;
+  margin: 0;
+}
+.course-markdown-inline .katex-display {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 0;
+  vertical-align: middle;
+}
 
 .course-analogy-pair {
   display: flex;
@@ -2857,12 +2882,21 @@ cpk-web-inspector {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+.course-analogy-value,
+.course-transfer-domain {
+  color: var(--ink);
+  font-weight: 700;
+}
 .course-analogy-arrow {
   align-self: center;
   font-size: 18px;
   color: var(--muted);
 }
-.course-analogy-mapping { margin: 0; color: var(--muted); }
+.course-analogy-mapping,
+.course-analogy-mapping .course-markdown {
+  margin: 0;
+  color: var(--muted);
+}
 
 .course-transfer-line {
   display: inline-flex;
@@ -2870,7 +2904,7 @@ cpk-web-inspector {
   gap: 8px;
   margin-bottom: 10px;
 }
-.course-transfer-line span { color: var(--quiet); }
+.course-transfer-line > span:not(.course-transfer-domain) { color: var(--quiet); }
 .course-transfer-example { color: var(--muted); margin-top: 8px; }
 .course-transfer-example em { color: var(--ink); font-style: normal; font-weight: 600; }
 
@@ -3729,4 +3763,3 @@ cpk-web-inspector {
   border-top: 1px solid rgba(23, 19, 15, 0.06);
   background: linear-gradient(180deg, rgba(255, 253, 248, 0), #fffdf8 28%);
 }
-

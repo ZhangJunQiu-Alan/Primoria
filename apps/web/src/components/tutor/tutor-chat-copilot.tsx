@@ -2,20 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
-import { getCurrentThreadId, hydrateThreadHistoryFromServer, resetCopilotThreads, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
+import { getCurrentThreadId, hydrateThreadHistoryFromServer, resetCopilotThreads, startFreshCurrentThread, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
 import { CopilotRestorePanel, PRIMORIA_MAIN_SUGGESTIONS, PrimoriaCopilotChatSurface } from "./copilot-chat-surface";
 
 function useCurrentCopilotThreadId() {
-  const [threadId, setThreadId] = useState(() => getCurrentThreadId());
+  const [threadId, setThreadId] = useState("");
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    void hydrateThreadHistoryFromServer().finally(() => {
+    const timer = window.setTimeout(() => {
       if (cancelled) return;
-      setThreadId(getCurrentThreadId());
+      setThreadId(startFreshCurrentThread());
       setIsReady(true);
-    });
+      void hydrateThreadHistoryFromServer();
+    }, 0);
+
     function onThreadChanged() {
       setThreadId(getCurrentThreadId());
       setIsReady(true);
@@ -23,11 +25,12 @@ function useCurrentCopilotThreadId() {
     window.addEventListener(THREAD_EVENT_NAME, onThreadChanged);
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
       window.removeEventListener(THREAD_EVENT_NAME, onThreadChanged);
     };
   }, []);
 
-  return { threadId, isReady };
+  return { threadId, isReady: isReady && Boolean(threadId) };
 }
 
 export function TutorChatCopilot() {

@@ -8,7 +8,7 @@ import type {
   TransferBlock,
   VisualBlock,
 } from "@/lib/courses/types";
-import { CourseMarkdown } from "@/components/course/course-markdown";
+import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 
 export function BlockRenderer({ block }: { block: CourseBlock }) {
@@ -55,15 +55,15 @@ function AnalogyBlockView({ block }: { block: AnalogyBlock }) {
         <div className="course-analogy-pair">
           <span className="course-analogy-side">
             <em>Familiar</em>
-            <strong>{block.source}</strong>
+            <CourseInlineMarkdown markdown={block.source} className="course-analogy-value" />
           </span>
           <span className="course-analogy-arrow">≈</span>
           <span className="course-analogy-side">
             <em>Target</em>
-            <strong>{block.target}</strong>
+            <CourseInlineMarkdown markdown={block.target} className="course-analogy-value" />
           </span>
         </div>
-        <p className="course-analogy-mapping">{block.mapping}</p>
+        <CourseMarkdown markdown={block.mapping} className="course-analogy-mapping" />
       </div>
     </BlockShell>
   );
@@ -74,14 +74,14 @@ function TransferBlockView({ block }: { block: TransferBlock }) {
     <BlockShell kind="transfer" title={block.title}>
       <div className="course-block-transfer">
         <span className="course-transfer-line">
-          <strong>{block.fromDomain}</strong>
+          <CourseInlineMarkdown markdown={block.fromDomain} className="course-transfer-domain" />
           <span>→</span>
-          <strong>{block.toDomain}</strong>
+          <CourseInlineMarkdown markdown={block.toDomain} className="course-transfer-domain" />
         </span>
-        <p>{block.explanation}</p>
-        <p className="course-transfer-example">
-          <em>Example.</em> {block.example}
-        </p>
+        <CourseMarkdown markdown={block.explanation} />
+        <div className="course-transfer-example">
+          <em>Example.</em> <CourseInlineMarkdown markdown={block.example} />
+        </div>
       </div>
     </BlockShell>
   );
@@ -90,7 +90,7 @@ function TransferBlockView({ block }: { block: TransferBlock }) {
 function VisualBlockView({ block }: { block: VisualBlock }) {
   return (
     <BlockShell kind="visual" title={block.title}>
-      <p className="course-block-text course-visual-caption">{block.description}</p>
+      <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
       <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html} />
     </BlockShell>
   );
@@ -99,7 +99,7 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
 function CodeBlockView({ block }: { block: CodeBlock }) {
   return (
     <BlockShell kind="code" title={block.title}>
-      <p className="course-block-text">{block.explanation}</p>
+      <CourseMarkdown markdown={block.explanation} className="course-block-text" />
       <pre className="code-card course-code">
         <span className="course-code-lang">{block.language}</span>
         <code>{block.code}</code>
