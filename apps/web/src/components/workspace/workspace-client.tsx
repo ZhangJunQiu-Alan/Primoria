@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
   WorkspaceMember,
   WorkspaceMessage,
@@ -18,6 +18,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [newWorkspaceOpen, setNewWorkspaceOpen] = useState(false);
+  const [newWorkspaceName, setNewWorkspaceName] = useState("");
   const [newThreadOpen, setNewThreadOpen] = useState(false);
   const [newThreadType, setNewThreadType] = useState<WorkspaceThread["type"]>("room");
   const [newThreadName, setNewThreadName] = useState("");
@@ -40,6 +42,29 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const tasks = view.tasks.filter((task) => !activeThread || task.threadId === activeThread.id);
   const activeTaskCount = tasks.length || view.tasks.length;
 
+  useEffect(() => {
+    let cancelled = false;
+    async function refreshWorkspace() {
+      try {
+        const response = await fetch("/api/workspaces", { cache: "no-store" });
+        if (!response.ok || cancelled) return;
+        const data = (await response.json()) as WorkspaceView;
+        setView(data);
+        setActiveThreadId((current) => {
+          if (data.threads.some((thread) => thread.id === current)) return current;
+          return data.threads[0]?.id ?? "";
+        });
+      } catch {
+        // Polling is best-effort; direct actions still show errors when they fail.
+      }
+    }
+    const interval = window.setInterval(() => void refreshWorkspace(), 8000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, []);
+
   function selectThread(thread: WorkspaceThread) {
     setActiveThreadId(thread.id);
     setChatMode(thread.type);
@@ -50,6 +75,33 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     setChatMode(nextMode);
     const nextThread = view.threads.find((thread) => thread.type === nextMode);
     if (nextThread) setActiveThreadId(nextThread.id);
+  }
+
+  async function createNewWorkspace(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const name = newWorkspaceName.trim();
+    if (!name) {
+      setError("Name the workspace first.");
+      return;
+    }
+    setError(null);
+    try {
+      const response = await fetch("/api/workspaces", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name }),
+      });
+      if (!response.ok) throw new Error("Workspace could not be created.");
+      const data = (await response.json()) as WorkspaceView;
+      setView(data);
+      setActiveThreadId(data.threads[0]?.id ?? "");
+      setChatMode(data.threads[0]?.type ?? "room");
+      setNewWorkspaceName("");
+      setNewWorkspaceOpen(false);
+      setDetailsOpen(false);
+    } catch (createError) {
+      setError(createError instanceof Error ? createError.message : "Workspace could not be created.");
+    }
   }
 
   async function createThread(event?: React.FormEvent<HTMLFormElement>) {
@@ -251,8 +303,23 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             <span className="course-block-tag">{view.persisted ? "Workspace" : "Local workspace"}</span>
             <strong>{view.workspace.name}</strong>
           </div>
-          <button type="button" aria-label="New chat" onClick={() => setNewThreadOpen((open) => !open)}>+</button>
+          <div className="workspace-directory-actions">
+            <button type="button" aria-label="New workspace" onClick={() => setNewWorkspaceOpen((open) => !open)}>W</button>
+            <button type="button" aria-label="New chat" onClick={() => setNewThreadOpen((open) => !open)}>+</button>
+          </div>
         </div>
+
+        {newWorkspaceOpen ? (
+          <form className="workspace-quick-form" onSubmit={createNewWorkspace}>
+            <input
+              aria-label="Workspace name"
+              value={newWorkspaceName}
+              onChange={(event) => setNewWorkspaceName(event.target.value)}
+              placeholder="Workspace name"
+            />
+            <button type="submit">Create workspace</button>
+          </form>
+        ) : null}
 
         <div className="workspace-switcher" aria-label="Chat type">
           <button type="button" className={chatMode === "room" ? "active" : ""} onClick={() => switchMode("room")}>

@@ -11,6 +11,7 @@ import {
 import type {
   CreateWorkspaceMemberInput,
   CreateWorkspaceMessageInput,
+  CreateWorkspaceInput,
   CreateWorkspaceTaskInput,
   CreateWorkspaceThreadInput,
   UpdateWorkspaceTaskInput,
@@ -54,6 +55,117 @@ export async function getWorkspaceView(ownerId?: string | null): Promise<Workspa
   } catch (error) {
     console.warn("[workspace] falling back to local workspace view", error);
     return getLocalView();
+  }
+}
+
+export async function createWorkspace(ownerId: string | null | undefined, input: CreateWorkspaceInput): Promise<WorkspaceView> {
+  const name = input.name.trim();
+  if (!name) throw new Error("Workspace name is required.");
+
+  const now = Date.now();
+  const workspace: WorkspaceSummary = {
+    id: `workspace_${randomBytes(10).toString("base64url")}`,
+    name,
+    createdAt: now,
+    updatedAt: now,
+  };
+  const ownerName = input.ownerName?.trim() || "You";
+  const generalThread: WorkspaceThread = {
+    id: `wthread_${randomBytes(10).toString("base64url")}`,
+    workspaceId: workspace.id,
+    type: "room",
+    name: "General",
+    description: "shared room",
+    createdAt: now,
+    updatedAt: now,
+  };
+  const view: WorkspaceView = {
+    workspace,
+    members: [
+      {
+        id: `wmember_${randomBytes(10).toString("base64url")}`,
+        workspaceId: workspace.id,
+        displayName: ownerName,
+        role: "Human",
+        status: "owner",
+      },
+      {
+        id: `wmember_${randomBytes(10).toString("base64url")}`,
+        workspaceId: workspace.id,
+        displayName: "Primoria Agent",
+        role: "AI teammate",
+        status: "ready",
+      },
+    ],
+    threads: [generalThread],
+    messages: [
+      {
+        id: `wmsg_${randomBytes(10).toString("base64url")}`,
+        workspaceId: workspace.id,
+        threadId: generalThread.id,
+        senderName: "Primoria Agent",
+        senderKind: "agent",
+        content: `Created ${name}. Add people, start a direct chat, or share an app card when you are ready.`,
+        createdAt: now,
+      },
+    ],
+    tasks: [],
+    persisted: Boolean(hasDatabaseUrl() && ownerId),
+  };
+
+  if (!hasDatabaseUrl() || !ownerId) {
+    return setLocalView(view);
+  }
+
+  try {
+    const db = getDb();
+    await db.transaction(async (tx) => {
+      await tx.insert(workspaces).values({
+        id: workspace.id,
+        ownerId,
+        name: workspace.name,
+        createdAt: new Date(workspace.createdAt),
+        updatedAt: new Date(workspace.updatedAt),
+      });
+      await tx.insert(workspaceMembers).values(
+        view.members.map((member) => ({
+          id: member.id,
+          workspaceId: member.workspaceId,
+          ownerId,
+          displayName: member.displayName,
+          role: member.role,
+          status: member.status ?? null,
+          createdAt: new Date(now),
+          updatedAt: new Date(now),
+        })),
+      );
+      await tx.insert(workspaceThreads).values({
+        id: generalThread.id,
+        workspaceId: generalThread.workspaceId,
+        ownerId,
+        type: generalThread.type,
+        name: generalThread.name,
+        description: generalThread.description ?? null,
+        createdAt: new Date(generalThread.createdAt),
+        updatedAt: new Date(generalThread.updatedAt),
+      });
+      const welcome = view.messages[0];
+      await tx.insert(workspaceMessages).values({
+        id: welcome.id,
+        workspaceId: welcome.workspaceId,
+        threadId: welcome.threadId,
+        ownerId,
+        senderName: welcome.senderName,
+        senderKind: welcome.senderKind,
+        content: welcome.content,
+        artifact: null,
+        createdAt: new Date(welcome.createdAt),
+      });
+    });
+    return view;
+  } catch (error) {
+    console.warn("[workspace] falling back to local workspace creation", error);
+    return setLocalView({ ...view, persisted: false });
   }
 }
 

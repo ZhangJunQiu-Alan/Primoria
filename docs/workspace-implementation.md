@@ -8,7 +8,7 @@ This iteration turns Workspace from a static communication mock into a basic usa
 - React client state is used for room/direct selection, message draft handling, optimistic UI updates, and the details drawer because these are local interaction states.
 - Drizzle/Postgres tables are used for the durable model because the app is already Postgres-first for auth, courses, apps, settings, and Copilot threads.
 - Workspace interaction follows the common collaboration split of channels/rooms for shared context and direct messages for focused private context. Agent participants are modeled as normal members with a role/status so the UI can stay general-purpose instead of teacher/student-specific.
-- Realtime is intentionally deferred. The schema tracks `updatedAt` on workspace, threads, and tasks, so polling, SSE, or WebSocket fanout can be added without reshaping the data model.
+- Realtime fanout is intentionally deferred. The client uses lightweight polling for a basic live view, and the schema tracks `updatedAt` on workspace, threads, and tasks, so SSE or WebSocket fanout can be added without reshaping the data model.
 
 Primary references checked before implementation:
 
@@ -22,11 +22,13 @@ Primary references checked before implementation:
 
 - Workspace page loads a server-provided workspace view.
 - Users can switch between Rooms and Direct chats.
+- Users can create a new workspace with a default General room, owner member, AI teammate, and welcome message.
 - Users can create either a new shared room or a new direct chat.
 - Users can add simulated human or AI teammate members from the details drawer.
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
 - Users can attach and publish a basic application card into the current chat.
 - Users can create tasks and mark them complete/reopened from the task list.
+- The workspace client refreshes the current view periodically so changes made through API calls are visible without a manual reload.
 - Local development without `DATABASE_URL` uses an in-memory seed workspace so the UI remains usable.
 - Signed-in Postgres mode seeds and persists workspace, members, threads, messages, and tasks.
 - Details are collapsed by default and can be expanded for members, tasks, and the agent brief.
