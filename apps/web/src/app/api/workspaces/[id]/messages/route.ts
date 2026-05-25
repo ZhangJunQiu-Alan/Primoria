@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getApp } from "@/lib/capability-library/store";
+import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
 import { createWorkspaceMessage, getWorkspaceView } from "@/lib/workspaces/store";
 import type { WorkspaceMessageArtifact } from "@/lib/workspaces/types";
 
@@ -32,20 +33,22 @@ const MessageSchema = z.object({
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
+  const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(user?.id, id);
+  const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ messages: [] }, { status: 404 });
   return NextResponse.json({ messages: view.messages });
 }
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
+  const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(user?.id, id);
+  const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const body = MessageSchema.parse(await request.json());
   const artifact = await enrichMessageArtifact(user?.id, body.artifact);
-  const message = await createWorkspaceMessage(user?.id, {
+  const message = await createWorkspaceMessage(ownerId, {
     workspaceId: id,
     threadId: body.threadId,
     content: body.content,

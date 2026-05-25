@@ -137,14 +137,18 @@ async function main() {
     const detailsClosed = await page.locator("details.workspace-side-drawer").evaluate((node) => !node.open);
     assert(detailsClosed, "workspace details drawer should be collapsed by default");
     await page.getByRole("button", { name: "Private" }).click();
-    await page.getByRole("button", { name: "New chat" }).click();
-    await page.locator(".workspace-mini-switcher").getByRole("button", { name: "Private" }).click();
-    await page.getByLabel("Chat name").fill(DIRECT_TITLE);
-    const participantSelect = page.getByLabel("Direct participant");
+    const startForm = page.locator("form.workspace-start-form");
+    if ((await startForm.count()) === 0) {
+      await page.getByRole("button", { name: "New chat" }).click();
+      await page.locator(".workspace-mini-switcher").getByRole("button", { name: "Private" }).click();
+    }
+    const threadForm = (await startForm.count()) > 0 ? startForm : page.locator("form.workspace-quick-form").filter({ hasText: "Private" });
+    await threadForm.getByLabel("Chat name").fill(DIRECT_TITLE);
+    const participantSelect = threadForm.getByLabel("Direct participant");
     const participantValue = await participantSelect.locator("option").nth(1).getAttribute("value");
     assert(participantValue, "direct participant select should expose workspace members");
     await participantSelect.selectOption(participantValue);
-    await page.locator("form.workspace-quick-form").filter({ hasText: "Private" }).getByRole("button", { name: "Create" }).click();
+    await threadForm.getByRole("button", { name: /Create/ }).click();
     await page.locator(".workspace-chat-section", { hasText: "Private" }).getByText(DIRECT_TITLE).waitFor();
 
     await page.getByRole("button", { name: "Groups" }).click();

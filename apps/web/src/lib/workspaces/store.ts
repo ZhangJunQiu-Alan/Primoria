@@ -40,36 +40,65 @@ declare global {
   var __primoriaWorkspaceLocalView: WorkspaceView | undefined;
   var __primoriaWorkspaceLocalViews: WorkspaceView[] | undefined;
   var __primoriaWorkspaceLocalActiveId: string | undefined;
+  var __primoriaWorkspaceLocalStores: Record<string, { views: WorkspaceView[]; activeId: string; view: WorkspaceView }> | undefined;
 }
 
-function getLocalViews() {
-  if (!globalThis.__primoriaWorkspaceLocalViews?.length) {
+function localStoreKey(ownerId?: string | null) {
+  return ownerId ? `owner:${ownerId}` : "anonymous";
+}
+
+function usesDatabase(ownerId?: string | null): ownerId is string {
+  return Boolean(hasDatabaseUrl() && ownerId && !ownerId.startsWith("local_"));
+}
+
+function getLocalStore(ownerId?: string | null) {
+  const key = localStoreKey(ownerId);
+  globalThis.__primoriaWorkspaceLocalStores ??= {};
+  if (!globalThis.__primoriaWorkspaceLocalStores[key]?.views.length) {
     const seed = createSeedWorkspaceView(false);
-    globalThis.__primoriaWorkspaceLocalViews = [seed];
-    globalThis.__primoriaWorkspaceLocalActiveId = seed.workspace.id;
-    globalThis.__primoriaWorkspaceLocalView = seed;
+    globalThis.__primoriaWorkspaceLocalStores[key] = { views: [seed], activeId: seed.workspace.id, view: seed };
+    if (key === "anonymous") {
+      globalThis.__primoriaWorkspaceLocalViews = [seed];
+      globalThis.__primoriaWorkspaceLocalActiveId = seed.workspace.id;
+      globalThis.__primoriaWorkspaceLocalView = seed;
+    }
   }
-  return globalThis.__primoriaWorkspaceLocalViews;
+  return globalThis.__primoriaWorkspaceLocalStores[key];
 }
 
-function getLocalView(workspaceId?: string | null) {
-  const views = getLocalViews();
-  const targetId = workspaceId ?? globalThis.__primoriaWorkspaceLocalActiveId;
+function getLocalViews(ownerId?: string | null) {
+  return getLocalStore(ownerId).views;
+}
+
+function getLocalView(workspaceId?: string | null, ownerId?: string | null) {
+  const store = getLocalStore(ownerId);
+  const views = store.views;
+  const targetId = workspaceId ?? store.activeId;
   const view = views.find((entry) => entry.workspace.id === targetId) ?? views[0];
-  globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
-  globalThis.__primoriaWorkspaceLocalView = view;
+  store.activeId = view.workspace.id;
+  store.view = view;
+  if (localStoreKey(ownerId) === "anonymous") {
+    globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
+    globalThis.__primoriaWorkspaceLocalView = view;
+  }
   return withWorkspaceList(view, views);
 }
 
-function setLocalView(view: WorkspaceView) {
-  const views = getLocalViews();
+function setLocalView(view: WorkspaceView, ownerId?: string | null) {
+  const store = getLocalStore(ownerId);
+  const views = store.views;
   const stored = { ...view, workspaces: [] };
   const nextViews = [stored, ...views.filter((entry) => entry.workspace.id !== view.workspace.id)].sort(
     (a, b) => b.workspace.updatedAt - a.workspace.updatedAt,
   );
-  globalThis.__primoriaWorkspaceLocalViews = nextViews;
-  globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
-  globalThis.__primoriaWorkspaceLocalView = stored;
+  store.views = nextViews;
+  store.activeId = view.workspace.id;
+  store.view = stored;
+  if (localStoreKey(ownerId) === "anonymous") {
+    globalThis.__primoriaWorkspaceLocalViews = nextViews;
+    globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
+    globalThis.__primoriaWorkspaceLocalView = stored;
+  }
   return withWorkspaceList(stored, nextViews);
 }
 
@@ -84,18 +113,48 @@ function createInviteCode() {
   return randomBytes(5).toString("base64url").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
 }
 
+function createUniqueLocalInviteCode(ownerId?: string | null) {
+  const existingCodes = new Set(getLocalViews(ownerId).map((view) => normalizeInviteCode(view.workspace.inviteCode ?? view.workspace.id)));
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    const code = createInviteCode();
+    if (!existingCodes.has(normalizeInviteCode(code))) return code;
+  }
+  throw new Error("Workspace invite code could not be generated.");
+}
+
+async function createUniqueDbInviteCode() {
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    const code = createInviteCode();
+    const rows = await getDb().select({ id: workspaces.id }).from(workspaces).where(eq(workspaces.inviteCode, code)).limit(1);
+    if (!rows[0]) return code;
+  }
+  throw new Error("Workspace invite code could not be generated.");
+}
+
+async function scopedSeedInviteCodeForOwner(ownerId: string) {
+  const code = scopedSeedInviteCode(ownerId);
+  const rows = await getDb().select({ ownerId: workspaces.ownerId }).from(workspaces).where(eq(workspaces.inviteCode, code)).limit(1);
+  if (!rows[0] || rows[0].ownerId === ownerId) return code;
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    const fallbackCode = createInviteCode();
+    const fallbackRows = await getDb().select({ id: workspaces.id }).from(workspaces).where(eq(workspaces.inviteCode, fallbackCode)).limit(1);
+    if (!fallbackRows[0]) return fallbackCode;
+  }
+  throw new Error("Workspace invite code could not be generated.");
+}
+
 function normalizeInviteCode(code: string) {
   return code.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "");
 }
 
 export async function getWorkspaceView(ownerId?: string | null, workspaceId?: string | null): Promise<WorkspaceView> {
-  if (!hasDatabaseUrl() || !ownerId) return getLocalView(workspaceId);
+  if (!usesDatabase(ownerId)) return getLocalView(workspaceId, ownerId);
   try {
     await ensureSeedWorkspace(ownerId);
     return getWorkspaceViewFromDb(ownerId, workspaceId);
   } catch (error) {
-    console.warn("[workspace] falling back to local workspace view", error);
-    return getLocalView(workspaceId);
+    console.error("[workspace] database workspace view failed", error);
+    throw error;
   }
 }
 
@@ -104,10 +163,11 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
   if (!name) throw new Error("Workspace name is required.");
 
   const now = Date.now();
+  const inviteCode = usesDatabase(ownerId) ? await createUniqueDbInviteCode() : createUniqueLocalInviteCode(ownerId);
   const workspace: WorkspaceSummary = {
     id: `workspace_${randomBytes(10).toString("base64url")}`,
     name,
-    inviteCode: createInviteCode(),
+    inviteCode,
     createdAt: now,
     updatedAt: now,
   };
@@ -136,11 +196,11 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
     threads: [generalThread],
     messages: [],
     tasks: [],
-    persisted: Boolean(hasDatabaseUrl() && ownerId),
+    persisted: usesDatabase(ownerId),
   };
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    return setLocalView(view);
+  if (!usesDatabase(ownerId)) {
+    return setLocalView(view, ownerId);
   }
 
   try {
@@ -179,8 +239,8 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
     });
     return { ...view, workspaces: await listDbWorkspaceSummaries(ownerId) };
   } catch (error) {
-    console.warn("[workspace] falling back to local workspace creation", error);
-    return setLocalView({ ...view, persisted: false });
+    console.error("[workspace] database workspace creation failed", error);
+    throw error;
   }
 }
 
@@ -189,8 +249,8 @@ export async function joinWorkspace(ownerId: string | null | undefined, input: J
   if (!inviteCode) throw new Error("Invite code is required.");
   const displayName = input.displayName?.trim() || "Guest";
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    const views = getLocalViews();
+  if (!usesDatabase(ownerId)) {
+    const views = getLocalViews(ownerId);
     const view = views.find((entry) => normalizeInviteCode(entry.workspace.inviteCode ?? entry.workspace.id) === inviteCode);
     if (!view) throw new Error("Invite code not found.");
     const now = Date.now();
@@ -210,7 +270,7 @@ export async function joinWorkspace(ownerId: string | null | undefined, input: J
             },
           ],
       workspace: { ...view.workspace, updatedAt: now },
-    });
+    }, ownerId);
     return nextView;
   }
 
@@ -241,25 +301,8 @@ export async function joinWorkspace(ownerId: string | null | undefined, input: J
     }
     return getWorkspaceViewFromDb(ownerId, workspace.id);
   } catch (error) {
-    console.warn("[workspace] falling back to local workspace join", error);
-    const views = getLocalViews();
-    const view = views.find((entry) => normalizeInviteCode(entry.workspace.inviteCode ?? entry.workspace.id) === inviteCode);
-    if (!view) throw error;
-    const now = Date.now();
-    return setLocalView({
-      ...view,
-      members: [
-        ...view.members,
-        {
-          id: `wmember_${randomBytes(10).toString("base64url")}`,
-          workspaceId: view.workspace.id,
-          displayName,
-          role: "Human",
-          status: "joined",
-        },
-      ],
-      workspace: { ...view.workspace, updatedAt: now },
-    });
+    console.error("[workspace] database workspace join failed", error);
+    throw error;
   }
 }
 
@@ -276,14 +319,14 @@ export async function createWorkspaceMember(ownerId: string | null | undefined, 
     status: input.status?.trim() || "invited",
   };
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    requireLocalWorkspace(input.workspaceId);
-    const current = getLocalView();
+  if (!usesDatabase(ownerId)) {
+    requireLocalWorkspace(input.workspaceId, ownerId);
+    const current = getLocalView(input.workspaceId, ownerId);
     setLocalView({
       ...current,
       members: [...current.members, member],
       workspace: { ...current.workspace, updatedAt: now },
-    });
+    }, ownerId);
     return member;
   }
 
@@ -303,15 +346,8 @@ export async function createWorkspaceMember(ownerId: string | null | undefined, 
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
     return member;
   } catch (error) {
-    console.warn("[workspace] falling back to local member persistence", error);
-    requireLocalWorkspace(input.workspaceId);
-    const current = getLocalView();
-    setLocalView({
-      ...current,
-      members: [...current.members, member],
-      workspace: { ...current.workspace, updatedAt: now },
-    });
-    return member;
+    console.error("[workspace] database member persistence failed", error);
+    throw error;
   }
 }
 
@@ -319,17 +355,17 @@ export async function createWorkspaceMessage(ownerId: string | null | undefined,
   const content = input.content.trim();
   if (!content) throw new Error("Message content is required.");
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    requireLocalWorkspace(input.workspaceId);
-    requireLocalThread(input.threadId, input.workspaceId);
+  if (!usesDatabase(ownerId)) {
+    requireLocalWorkspace(input.workspaceId, ownerId);
+    requireLocalThread(input.threadId, input.workspaceId, ownerId);
     const message = buildMessage(input, content);
-    const current = getLocalView();
+    const current = getLocalView(input.workspaceId, ownerId);
     setLocalView({
       ...current,
       messages: [...current.messages, message],
       threads: bumpThread(current.threads, message.threadId, message.createdAt),
       workspace: { ...current.workspace, updatedAt: message.createdAt },
-    });
+    }, ownerId);
     return message;
   }
 
@@ -354,18 +390,8 @@ export async function createWorkspaceMessage(ownerId: string | null | undefined,
     await getDb().update(workspaces).set({ updatedAt: now }).where(eq(workspaces.id, message.workspaceId));
     return message;
   } catch (error) {
-    console.warn("[workspace] falling back to local message persistence", error);
-    requireLocalWorkspace(input.workspaceId);
-    requireLocalThread(input.threadId, input.workspaceId);
-    const message = buildMessage(input, content);
-    const current = getLocalView();
-    setLocalView({
-      ...current,
-      messages: [...current.messages, message],
-      threads: bumpThread(current.threads, message.threadId, message.createdAt),
-      workspace: { ...current.workspace, updatedAt: message.createdAt },
-    });
-    return message;
+    console.error("[workspace] database message persistence failed", error);
+    throw error;
   }
 }
 
@@ -385,9 +411,9 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
     updatedAt: now,
   };
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    requireLocalWorkspace(input.workspaceId);
-    const current = getLocalView();
+  if (!usesDatabase(ownerId)) {
+    requireLocalWorkspace(input.workspaceId, ownerId);
+    const current = getLocalView(input.workspaceId, ownerId);
     if (thread.type === "direct" && thread.participantIds?.some((participantId) => !current.members.some((member) => member.id === participantId))) {
       throw new Error("Direct participant not found.");
     }
@@ -395,7 +421,7 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
       ...current,
       threads: [thread, ...current.threads],
       workspace: { ...current.workspace, updatedAt: now },
-    });
+    }, ownerId);
     return thread;
   }
 
@@ -417,17 +443,13 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
       if (participantRows.length) await tx.insert(workspaceThreadMembers).values(participantRows);
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    return thread;
+    return {
+      ...thread,
+      participantIds: thread.type === "direct" ? participantRows.map((row) => row.memberId) : undefined,
+    };
   } catch (error) {
-    console.warn("[workspace] falling back to local thread persistence", error);
-    requireLocalWorkspace(input.workspaceId);
-    const current = getLocalView();
-    setLocalView({
-      ...current,
-      threads: [thread, ...current.threads],
-      workspace: { ...current.workspace, updatedAt: now },
-    });
-    return thread;
+    console.error("[workspace] database thread persistence failed", error);
+    throw error;
   }
 }
 
@@ -452,15 +474,15 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
     updatedAt: now,
   };
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    requireLocalWorkspace(input.workspaceId);
-    requireLocalThread(input.threadId, input.workspaceId);
-    const current = getLocalView();
+  if (!usesDatabase(ownerId)) {
+    requireLocalWorkspace(input.workspaceId, ownerId);
+    requireLocalThread(input.threadId, input.workspaceId, ownerId);
+    const current = getLocalView(input.workspaceId, ownerId);
     setLocalView({
       ...current,
       tasks: [task, ...current.tasks],
       workspace: { ...current.workspace, updatedAt: now },
-    });
+    }, ownerId);
     return task;
   }
 
@@ -485,16 +507,8 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
     return task;
   } catch (error) {
-    console.warn("[workspace] falling back to local task persistence", error);
-    requireLocalWorkspace(input.workspaceId);
-    requireLocalThread(input.threadId, input.workspaceId);
-    const current = getLocalView();
-    setLocalView({
-      ...current,
-      tasks: [task, ...current.tasks],
-      workspace: { ...current.workspace, updatedAt: now },
-    });
-    return task;
+    console.error("[workspace] database task persistence failed", error);
+    throw error;
   }
 }
 
@@ -504,20 +518,21 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
 
   const now = Date.now();
   const assignee = input.assigneeId === undefined ? undefined : await resolveTaskAssignee(ownerId, input.workspaceId, input.assigneeId);
+  const resultSummary = input.resultSummary?.trim();
   const applyPatch = (task: WorkspaceTask): WorkspaceTask => ({
     ...task,
     status,
     progress: input.progress?.trim() || (status === "done" ? "done" : task.progress),
     assigneeId: input.assigneeId === undefined ? task.assigneeId : assignee?.id,
     assigneeName: input.assigneeId === undefined ? task.assigneeName : assignee?.displayName,
-    resultSummary: input.resultSummary?.trim() || task.resultSummary,
-    submittedAt: input.resultSummary?.trim() ? now : task.submittedAt,
+    resultSummary: status === "done" ? resultSummary || task.resultSummary : undefined,
+    submittedAt: status === "done" ? (resultSummary ? now : task.submittedAt) : undefined,
     updatedAt: now,
   });
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    requireLocalWorkspace(input.workspaceId);
-    const current = getLocalView();
+  if (!usesDatabase(ownerId)) {
+    requireLocalWorkspace(input.workspaceId, ownerId);
+    const current = getLocalView(input.workspaceId, ownerId);
     const existing = current.tasks.find((task) => task.id === input.taskId && task.workspaceId === input.workspaceId);
     if (!existing) throw new Error("Task not found.");
     const task = applyPatch(existing);
@@ -525,7 +540,7 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
       ...current,
       tasks: current.tasks.map((entry) => (entry.id === task.id ? task : entry)),
       workspace: { ...current.workspace, updatedAt: now },
-    });
+    }, ownerId);
     return task;
   }
 
@@ -560,18 +575,8 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
     return task;
   } catch (error) {
-    console.warn("[workspace] falling back to local task update", error);
-    requireLocalWorkspace(input.workspaceId);
-    const current = getLocalView();
-    const existing = current.tasks.find((task) => task.id === input.taskId && task.workspaceId === input.workspaceId);
-    if (!existing) throw new Error("Task not found.");
-    const task = applyPatch(existing);
-    setLocalView({
-      ...current,
-      tasks: current.tasks.map((entry) => (entry.id === task.id ? task : entry)),
-      workspace: { ...current.workspace, updatedAt: now },
-    });
-    return task;
+    console.error("[workspace] database task update failed", error);
+    throw error;
   }
 }
 
@@ -592,7 +597,7 @@ async function ensureSeedWorkspace(ownerId: string) {
     id: scopedSeedId(ownerId, seed.workspace.id),
     ownerId,
     name: seed.workspace.name,
-    inviteCode: scopedSeedInviteCode(ownerId),
+    inviteCode: await scopedSeedInviteCodeForOwner(ownerId),
     createdAt: new Date(seed.workspace.createdAt),
     updatedAt: new Date(seed.workspace.updatedAt),
   });
@@ -825,12 +830,12 @@ function buildMessage(input: CreateWorkspaceMessageInput, content: string): Work
   };
 }
 
-function requireLocalWorkspace(workspaceId: string) {
-  if (getLocalView().workspace.id !== workspaceId) throw new Error("Workspace not found.");
+function requireLocalWorkspace(workspaceId: string, ownerId?: string | null) {
+  if (!getLocalViews(ownerId).some((view) => view.workspace.id === workspaceId)) throw new Error("Workspace not found.");
 }
 
-function requireLocalThread(threadId: string, workspaceId: string) {
-  const thread = getLocalView().threads.find((entry) => entry.id === threadId && entry.workspaceId === workspaceId);
+function requireLocalThread(threadId: string, workspaceId: string, ownerId?: string | null) {
+  const thread = getLocalView(workspaceId, ownerId).threads.find((entry) => entry.id === threadId && entry.workspaceId === workspaceId);
   if (!thread) throw new Error("Thread not found.");
 }
 
@@ -865,8 +870,8 @@ async function requireDbThread(ownerId: string, workspaceId: string, threadId: s
 async function resolveTaskAssignee(ownerId: string | null | undefined, workspaceId: string, assigneeId?: string) {
   if (!assigneeId) return undefined;
 
-  if (!hasDatabaseUrl() || !ownerId) {
-    const member = getLocalView(workspaceId).members.find((entry) => entry.id === assigneeId && entry.workspaceId === workspaceId);
+  if (!usesDatabase(ownerId)) {
+    const member = getLocalView(workspaceId, ownerId).members.find((entry) => entry.id === assigneeId && entry.workspaceId === workspaceId);
     if (!member) throw new Error("Assignee not found.");
     return member;
   }
