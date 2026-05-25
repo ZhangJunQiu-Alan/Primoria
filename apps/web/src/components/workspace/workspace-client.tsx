@@ -65,8 +65,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [libraryApps, setLibraryApps] = useState<LibraryAppOption[]>([]);
   const [selectedAppId, setSelectedAppId] = useState("");
   const [loadingApps, setLoadingApps] = useState(false);
+  const [memberPickerOpen, setMemberPickerOpen] = useState(false);
   const [memberName, setMemberName] = useState("");
-  const [memberRole, setMemberRole] = useState("Human");
+  const [memberRole, setMemberRole] = useState("Person");
   const [taskTitle, setTaskTitle] = useState("");
   const [taskScope, setTaskScope] = useState("");
   const [taskAssigneeId, setTaskAssigneeId] = useState("");
@@ -80,9 +81,12 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     () => view.messages.filter((message) => message.threadId === activeThread?.id),
     [activeThread?.id, view.messages],
   );
-  const tasks = view.tasks.filter((task) => !activeThread || task.threadId === activeThread.id);
-  const activeTaskCount = tasks.length || view.tasks.length;
+  const tasks = activeThread ? view.tasks.filter((task) => task.threadId === activeThread.id) : view.tasks;
+  const activeTaskCount = activeThread ? tasks.length : view.tasks.length;
   const selectedApp = libraryApps.find((app) => app.id === selectedAppId);
+  const chatCount = view.threads.length;
+  const roomCount = view.threads.filter((thread) => thread.type === "room").length;
+  const directCount = view.threads.filter((thread) => thread.type === "direct").length;
 
   const applyWorkspaceView = useCallback((data: WorkspaceView) => {
     setView(data);
@@ -100,7 +104,15 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       const source = new EventSource(`/api/workspaces/${view.workspace.id}/events`);
       source.addEventListener("workspace", (event) => {
         if (cancelled) return;
+        if (pollingInterval !== undefined) {
+          window.clearInterval(pollingInterval);
+          pollingInterval = undefined;
+        }
         applyWorkspaceView(JSON.parse((event as MessageEvent<string>).data) as WorkspaceView);
+      });
+      source.addEventListener("error", (event) => {
+        const message = (event as MessageEvent<string>).data;
+        if (message) setError("Workspace updates stopped. Refresh the page or try again.");
       });
       source.onerror = () => {
         source.close();
@@ -118,11 +130,15 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     async function refreshWorkspace() {
       try {
         const response = await fetch(`/api/workspaces/${view.workspace.id}`, { cache: "no-store" });
-        if (!response.ok || cancelled) return;
+        if (cancelled) return;
+        if (!response.ok) {
+          setError("Workspace could not be refreshed.");
+          return;
+        }
         const data = (await response.json()) as WorkspaceView;
         applyWorkspaceView(data);
       } catch {
-        // Polling is best-effort; direct actions still show errors when they fail.
+        if (!cancelled) setError("Workspace updates are temporarily unavailable.");
       }
     }
     pollingInterval = window.setInterval(() => void refreshWorkspace(), 8000);
@@ -171,8 +187,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
 
   function switchMode(nextMode: WorkspaceThread["type"]) {
     setChatMode(nextMode);
+    setNewThreadType(nextMode);
     const nextThread = view.threads.find((thread) => thread.type === nextMode);
-    setActiveThreadId(nextThread?.id ?? "");
+    if (nextThread) setActiveThreadId(nextThread.id);
   }
 
   function toggleWorkspaceAction(action: "create" | "join" | "thread") {
@@ -294,7 +311,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       const response = await fetch(`/api/workspaces/${view.workspace.id}/members`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ displayName, role: memberRole || "Human", status: "invited" }),
+        body: JSON.stringify({ displayName, role: memberRole || "Person", status: "invited" }),
       });
       if (!response.ok) throw new Error("Member could not be added.");
       const data = (await response.json()) as { member: WorkspaceMember };
@@ -304,6 +321,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         workspace: { ...current.workspace, updatedAt: Date.now() },
       }));
       setMemberName("");
+      setMemberPickerOpen(false);
     } catch (inviteError) {
       setError(inviteError instanceof Error ? inviteError.message : "Member could not be added.");
     }
@@ -397,8 +415,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   async function shareAppCard(event?: React.FormEvent<HTMLFormElement>) {
     event?.preventDefault();
     if (!activeThread) return;
-    const title = selectedApp?.displayName ?? attachmentTitle.trim();
-    const description = selectedApp?.description ?? attachmentDescription.trim();
+    const title = selectedApp?.displayName?.trim() || attachmentTitle.trim();
+    const description = selectedApp?.description?.trim() || attachmentDescription.trim();
     if (!title || !description) {
       setError("Select an app or add a title and short description first.");
       return;
@@ -503,7 +521,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         workspace: { ...current.workspace, updatedAt: data.message.createdAt },
       }));
     } catch (sendError) {
-      setDraft(content);
+      setDraft((current) => current || content);
       setError(sendError instanceof Error ? sendError.message : "Message could not be sent.");
     } finally {
       setSending(false);
@@ -549,7 +567,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           </form>
         ) : null}
 
-        {view.workspaces.length > 1 ? (
+        {view.workspaces.length ? (
           <div className="workspace-list" aria-label="Workspaces">
             {view.workspaces.map((workspace) => (
               <button
@@ -567,10 +585,10 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
 
         <div className="workspace-switcher" aria-label="Chat type">
           <button type="button" className={chatMode === "room" ? "active" : ""} onClick={() => switchMode("room")}>
-            Groups
+            Groups <span>{roomCount}</span>
           </button>
           <button type="button" className={chatMode === "direct" ? "active" : ""} onClick={() => switchMode("direct")}>
-            Private
+            Private <span>{directCount}</span>
           </button>
         </div>
 
@@ -629,27 +647,48 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       <section className="workspace-room" aria-label="Workspace chat">
         <div className="workspace-room-header">
           <div>
-            <strong>{activeThread?.type === "room" ? "# " : ""}{activeThread?.name ?? "Workspace"}</strong>
-            <span>{view.members.length} members / {agentCount(view.members)} agents online / {activeTaskCount} active tasks</span>
+            <strong>{activeThread ? `${activeThread.type === "room" ? "# " : ""}${activeThread.name}` : view.workspace.name}</strong>
+            <span>
+              {activeThread
+                ? `${view.members.length} members / ${agentCount(view.members)} agents / ${activeTaskCount} active tasks`
+                : `${view.members.length} members / ${chatCount} chats / ${view.tasks.length} tasks`}
+            </span>
           </div>
           <div className="workspace-room-actions">
             <span className="workspace-live-dot">Live</span>
             <button type="button" onClick={() => setDetailsOpen((open) => !open)}>{detailsOpen ? "Hide details" : "Details"}</button>
-            <button type="button" onClick={() => { setDetailsOpen(true); setMemberName(""); }}>Invite</button>
+            <button type="button" onClick={() => { setDetailsOpen(true); setMemberPickerOpen(true); setMemberName(""); }}>Invite</button>
             <button type="button" onClick={() => { setTaskTitle(`Follow up from ${activeThread?.name ?? "workspace"}`); setDetailsOpen(true); }}>New task</button>
           </div>
         </div>
 
-        <div className="workspace-message-list">
+        <div className={`workspace-message-list ${!activeThread ? "workspace-message-list-start" : ""}`}>
           {!activeThread ? (
-            <div className="workspace-empty-state">
-              <strong>{chatMode === "direct" ? "No private chat selected" : "No group chat selected"}</strong>
-              <span>Use the + button in the left rail to start one.</span>
-            </div>
+            <WorkspaceStartState
+              workspaceName={view.workspace.name}
+              chatMode={chatMode}
+              newThreadType={newThreadType}
+              newThreadName={newThreadName}
+              newThreadDescription={newThreadDescription}
+              newThreadParticipantId={newThreadParticipantId}
+              members={view.members}
+              onModeChange={switchMode}
+              onThreadTypeChange={setNewThreadType}
+              onThreadNameChange={setNewThreadName}
+              onThreadDescriptionChange={setNewThreadDescription}
+              onThreadParticipantChange={(memberId) => {
+                const member = view.members.find((entry) => entry.id === memberId);
+                setNewThreadParticipantId(memberId);
+                if (member && !newThreadName.trim()) setNewThreadName(member.displayName);
+              }}
+              onCreateThread={createThread}
+              onOpenDetails={() => setDetailsOpen(true)}
+            />
           ) : messages.length === 0 ? (
-            <div className="workspace-empty-state">
+            <div className="workspace-empty-state active-chat-empty">
+              <span className="course-block-tag">{activeThread.type === "room" ? "Group chat" : "Private chat"}</span>
               <strong>No messages yet</strong>
-              <span>Start the conversation or attach a real saved app.</span>
+              <span>Start with a note, share a saved app, or create a task when there is real work to track.</span>
             </div>
           ) : null}
           {messages.map((message) => (
@@ -738,10 +777,20 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           <span>Details</span>
         </summary>
         <aside className="workspace-side" aria-label="Workspace status">
-          <section className="workspace-panel">
+          <section className="workspace-panel workspace-members-panel">
             <div className="workspace-panel-header">
               <strong>Members</strong>
-              <span>{view.members.length}</span>
+              <div className="workspace-panel-header-actions">
+                <span>{view.members.length}</span>
+                <button
+                  type="button"
+                  aria-label="Add member"
+                  aria-expanded={memberPickerOpen}
+                  onClick={() => setMemberPickerOpen((open) => !open)}
+                >
+                  +
+                </button>
+              </div>
             </div>
             {view.workspace.inviteCode ? (
               <div className="workspace-invite-code">
@@ -751,27 +800,34 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                   type="button"
                   onClick={() => {
                     void navigator.clipboard?.writeText(view.workspace.inviteCode ?? "");
-                    setDraft(`Join ${view.workspace.name} with invite code ${view.workspace.inviteCode}.`);
                   }}
                 >
                   Copy
                 </button>
               </div>
             ) : null}
-            <form className="workspace-quick-form compact" onSubmit={inviteMember}>
-              <input
-                aria-label="Invite name"
-                value={memberName}
-                onChange={(event) => setMemberName(event.target.value)}
-                placeholder="Name or agent"
-              />
-              <select aria-label="Member role" value={memberRole} onChange={(event) => setMemberRole(event.target.value)}>
-                <option>Human</option>
-                <option>AI teammate</option>
-                <option>Observer</option>
-              </select>
-              <button type="submit">Add</button>
-            </form>
+            {memberPickerOpen ? (
+              <form className="workspace-member-popover" aria-label="Add workspace member" onSubmit={inviteMember}>
+                <div className="workspace-member-type-switch" aria-label="Member type">
+                  <button type="button" className={memberRole === "Person" ? "active" : ""} onClick={() => setMemberRole("Person")}>
+                    Person
+                  </button>
+                  <button type="button" className={memberRole === "Agent" ? "active" : ""} onClick={() => setMemberRole("Agent")}>
+                    Agent
+                  </button>
+                </div>
+                <input
+                  aria-label="Invite name"
+                  value={memberName}
+                  onChange={(event) => setMemberName(event.target.value)}
+                  placeholder={memberRole === "Agent" ? "Agent name or handle" : "Name or email"}
+                />
+                <div className="workspace-member-popover-actions">
+                  <button type="button" onClick={() => setMemberPickerOpen(false)}>Cancel</button>
+                  <button type="submit">Add</button>
+                </div>
+              </form>
+            ) : null}
             <ul className="workspace-member-list">
               {view.members.map((member) => (
                 <li key={member.id}>
@@ -790,7 +846,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               <strong>Tasks</strong>
               <span>{view.tasks.length}</span>
             </div>
-            <form className="workspace-quick-form compact" onSubmit={createTask}>
+            <form className="workspace-quick-form compact workspace-task-form" onSubmit={createTask}>
               <input
                 aria-label="Task title"
                 value={taskTitle}
@@ -818,7 +874,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               <button type="submit">Create task</button>
             </form>
             <ul className="workspace-task-list">
-              {(tasks.length ? tasks : view.tasks).map((item) => (
+              {tasks.map((item) => (
                 <li key={item.id}>
                   <strong>{item.title}</strong>
                   <span>{item.scope}{item.assigneeName ? ` / ${item.assigneeName}` : " / unassigned"}</span>
@@ -843,14 +899,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             </ul>
           </section>
 
-          <section className="workspace-panel workspace-agent-panel">
-            <span className="course-block-tag">Brief</span>
-            <h2>No brief yet</h2>
-            <p>Create tasks or invite teammates, then use a message to give an agent context.</p>
-            <button type="button" onClick={() => setDraft("Please summarize this workspace and suggest the next concrete action.")}>
-              Draft prompt
-            </button>
-          </section>
         </aside>
       </details>
 
@@ -895,6 +943,98 @@ function ThreadSection({
           <small>{thread.description}</small>
         </button>
       ))}
+    </section>
+  );
+}
+
+function WorkspaceStartState({
+  workspaceName,
+  chatMode,
+  newThreadType,
+  newThreadName,
+  newThreadDescription,
+  newThreadParticipantId,
+  members,
+  onModeChange,
+  onThreadTypeChange,
+  onThreadNameChange,
+  onThreadDescriptionChange,
+  onThreadParticipantChange,
+  onCreateThread,
+  onOpenDetails,
+}: {
+  workspaceName: string;
+  chatMode: WorkspaceThread["type"];
+  newThreadType: WorkspaceThread["type"];
+  newThreadName: string;
+  newThreadDescription: string;
+  newThreadParticipantId: string;
+  members: WorkspaceMember[];
+  onModeChange: (mode: WorkspaceThread["type"]) => void;
+  onThreadTypeChange: (type: WorkspaceThread["type"]) => void;
+  onThreadNameChange: (name: string) => void;
+  onThreadDescriptionChange: (description: string) => void;
+  onThreadParticipantChange: (memberId: string) => void;
+  onCreateThread: (event?: React.FormEvent<HTMLFormElement>) => void;
+  onOpenDetails: () => void;
+}) {
+  return (
+    <section className="workspace-start-state" aria-label="Start workspace">
+      <div className="workspace-start-copy">
+        <span className="course-block-tag">Empty workspace</span>
+        <h1>{workspaceName}</h1>
+        <p>Create the first real conversation. Use a group chat for shared context, or a private chat for focused work with one person or agent.</p>
+      </div>
+
+      <div className="workspace-start-actions" role="tablist" aria-label="Conversation type">
+        <button
+          type="button"
+          className={chatMode === "room" ? "active" : ""}
+          onClick={() => {
+            onModeChange("room");
+            onThreadTypeChange("room");
+          }}
+        >
+          Group
+        </button>
+        <button
+          type="button"
+          className={chatMode === "direct" ? "active" : ""}
+          onClick={() => {
+            onModeChange("direct");
+            onThreadTypeChange("direct");
+          }}
+        >
+          Private
+        </button>
+      </div>
+
+      <form className="workspace-start-form" onSubmit={onCreateThread}>
+        <input
+          aria-label="Chat name"
+          value={newThreadName}
+          onChange={(event) => onThreadNameChange(event.target.value)}
+          placeholder={newThreadType === "room" ? "Group name" : "Person or agent"}
+        />
+        {newThreadType === "direct" ? (
+          <select aria-label="Direct participant" value={newThreadParticipantId} onChange={(event) => onThreadParticipantChange(event.target.value)}>
+            <option value="">Private to me</option>
+            {members.map((member) => (
+              <option key={member.id} value={member.id}>{member.displayName}</option>
+            ))}
+          </select>
+        ) : null}
+        <input
+          aria-label="Chat description"
+          value={newThreadDescription}
+          onChange={(event) => onThreadDescriptionChange(event.target.value)}
+          placeholder="Short context, optional"
+        />
+        <div className="workspace-start-footer">
+          <button type="button" onClick={onOpenDetails}>Invite people</button>
+          <button type="submit">Create {newThreadType === "room" ? "group" : "private chat"}</button>
+        </div>
+      </form>
     </section>
   );
 }
@@ -1091,5 +1231,8 @@ function formatDate(timestamp: number) {
 }
 
 function agentCount(members: WorkspaceView["members"]) {
-  return members.filter((member) => member.role.toLowerCase().includes("ai") || member.displayName.toLowerCase().includes("agent")).length;
+  return members.filter((member) => {
+    const role = member.role.toLowerCase();
+    return role.includes("agent") || role.includes("ai");
+  }).length;
 }

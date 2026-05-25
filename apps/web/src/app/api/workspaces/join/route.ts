@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
+import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
 import { joinWorkspace } from "@/lib/workspaces/store";
 
 const JoinWorkspaceSchema = z.object({
@@ -10,8 +11,9 @@ const JoinWorkspaceSchema = z.object({
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
+  const ownerId = await getWorkspaceOwnerId(user);
   const body = JoinWorkspaceSchema.parse(await request.json());
-  const view = await joinWorkspace(user?.id, {
+  const view = await joinWorkspace(ownerId, {
     inviteCode: body.inviteCode,
     displayName: body.displayName ?? user?.displayName ?? "Guest",
   });

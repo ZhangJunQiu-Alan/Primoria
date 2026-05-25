@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
+import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
 import { createWorkspaceMember, getWorkspaceView } from "@/lib/workspaces/store";
 
 const MemberSchema = z.object({
@@ -11,11 +12,12 @@ const MemberSchema = z.object({
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
+  const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(user?.id, id);
+  const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const body = MemberSchema.parse(await request.json());
-  const member = await createWorkspaceMember(user?.id, {
+  const member = await createWorkspaceMember(ownerId, {
     workspaceId: id,
     displayName: body.displayName,
     role: body.role,
