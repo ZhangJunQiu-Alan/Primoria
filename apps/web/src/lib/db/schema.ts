@@ -217,6 +217,22 @@ export const workspaceThreads = pgTable(
   }),
 );
 
+export const workspaceThreadMembers = pgTable(
+  "workspace_thread_members",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    memberId: text("member_id").notNull().references(() => workspaceMembers.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadOwnerIdx: index("workspace_thread_members_thread_owner_idx").on(table.threadId, table.ownerId),
+    memberThreadUnique: uniqueIndex("workspace_thread_members_member_thread_uidx").on(table.memberId, table.threadId),
+  }),
+);
+
 export const workspaceMessages = pgTable(
   "workspace_messages",
   {

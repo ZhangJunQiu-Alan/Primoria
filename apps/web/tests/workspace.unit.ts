@@ -19,11 +19,9 @@ async function main() {
   const view = await getWorkspaceView(null);
   assert(view.workspace.id, "workspace exists");
   assert(view.threads.some((thread) => thread.type === "room"), "rooms exist");
-  assert(view.threads.some((thread) => thread.type === "direct"), "direct chats exist");
-  assert(view.messages.length > 0, "seed messages exist");
-
-  const direct = view.threads.find((thread) => thread.type === "direct");
-  assert(direct, "direct thread exists");
+  assert(view.members.some((member) => member.displayName === "You"), "local workspace has current user");
+  assert(view.messages.length === 0, "local workspace starts without mock messages");
+  assert(view.tasks.length === 0, "local workspace starts without mock tasks");
 
   const createdWorkspace = await createWorkspace(null, {
     name: "Unit workspace",
@@ -34,8 +32,8 @@ async function main() {
   assert(createdWorkspace.workspaces.some((workspace) => workspace.id === view.workspace.id), "workspace list keeps seed workspace");
   assert(createdWorkspace.workspaces.some((workspace) => workspace.id === createdWorkspace.workspace.id), "workspace list includes created workspace");
   assert(createdWorkspace.threads.some((thread) => thread.type === "room"), "created workspace has room");
-  assert(createdWorkspace.members.some((member) => member.displayName === "Primoria Agent"), "created workspace has agent");
-  assert(createdWorkspace.messages.length === 1, "created workspace has welcome message");
+  assert(createdWorkspace.members.some((member) => member.displayName === "Unit Owner"), "created workspace has owner");
+  assert(createdWorkspace.messages.length === 0, "created workspace starts without mock messages");
 
   const seedAgain = await getWorkspaceView(null, view.workspace.id);
   assert(seedAgain.workspace.id === view.workspace.id, "can switch back to seed workspace");
@@ -62,8 +60,10 @@ async function main() {
     type: "direct",
     name: "Unit direct",
     description: "test direct",
+    participantIds: [joined.members.find((entry) => entry.displayName === "Joined User")?.id ?? ""],
   });
   assert(newDirect.type === "direct", "created direct thread type");
+  assert(newDirect.participantIds?.length === 1, "created direct keeps participant metadata");
 
   const member = await createWorkspaceMember(null, {
     workspaceId: createdWorkspace.workspace.id,
@@ -100,6 +100,28 @@ async function main() {
   assert(appMessage.artifact?.type === "app", "created app artifact message");
   assert(appMessage.artifact?.type === "app" && appMessage.artifact.appId === "unit_app", "created app artifact reference");
 
+  const snapshotAppMessage = await createWorkspaceMessage(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    threadId: newThread.id,
+    content: "workspace unit app snapshot",
+    senderName: "Test User",
+    artifact: {
+      type: "app",
+      appId: "unit_snapshot_app",
+      version: 1,
+      title: "Unit Snapshot App",
+      description: "test app snapshot",
+      primaryAction: "Open app",
+      secondaryAction: "Create task",
+      template: { type: "html", source: "<section><h1>Unit snapshot app</h1></section>" },
+    },
+  });
+  assert(snapshotAppMessage.artifact?.type === "app", "created app snapshot artifact message");
+  assert(
+    snapshotAppMessage.artifact?.type === "app" && snapshotAppMessage.artifact.template?.type === "html",
+    "created app snapshot artifact keeps template",
+  );
+
   const task = await createWorkspaceTask(null, {
     workspaceId: createdWorkspace.workspace.id,
     threadId: newThread.id,
@@ -133,6 +155,10 @@ async function main() {
     "created message appears in workspace view",
   );
   assert(nextView.messages.some((entry) => entry.id === appMessage.id && entry.artifact?.type === "app"), "created app card appears in workspace view");
+  assert(
+    nextView.messages.some((entry) => entry.id === snapshotAppMessage.id && entry.artifact?.type === "app" && entry.artifact.template?.type === "html"),
+    "created app snapshot appears in workspace view",
+  );
   assert(
     nextView.tasks.some((entry) => entry.id === task.id && entry.status === "done" && entry.assigneeName === "Unit Agent" && entry.resultSummary),
     "updated assigned task appears in workspace view",

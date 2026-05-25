@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
+import { getApp } from "@/lib/capability-library/store";
 import { createWorkspaceMessage, getWorkspaceView } from "@/lib/workspaces/store";
+import type { WorkspaceMessageArtifact } from "@/lib/workspaces/types";
 
 const ArtifactSchema = z.union([
   z.object({
@@ -42,13 +44,28 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const view = await getWorkspaceView(user?.id, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const body = MessageSchema.parse(await request.json());
+  const artifact = await enrichMessageArtifact(user?.id, body.artifact);
   const message = await createWorkspaceMessage(user?.id, {
     workspaceId: id,
     threadId: body.threadId,
     content: body.content,
     senderName: body.senderName ?? user?.displayName ?? "You",
     senderKind: "human",
-    artifact: body.artifact,
+    artifact,
   });
   return NextResponse.json({ message });
+}
+
+async function enrichMessageArtifact(
+  ownerId: string | null | undefined,
+  artifact: z.infer<typeof ArtifactSchema> | undefined,
+): Promise<WorkspaceMessageArtifact | undefined> {
+  if (!artifact || artifact.type !== "app" || !artifact.appId) return artifact;
+  const app = await getApp(artifact.appId, ownerId);
+  if (!app) return artifact;
+  return {
+    ...artifact,
+    version: artifact.version ?? app.version,
+    template: app.template,
+  };
 }

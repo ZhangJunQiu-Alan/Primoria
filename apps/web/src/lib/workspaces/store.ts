@@ -1,11 +1,12 @@
-import { and, asc, desc, eq } from "drizzle-orm";
-import { randomBytes } from "node:crypto";
+import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { createHash, randomBytes } from "node:crypto";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import {
   workspaceMembers,
   workspaceMessages,
   workspaces,
   workspaceTasks,
+  workspaceThreadMembers,
   workspaceThreads,
 } from "../db/schema";
 import type {
@@ -28,13 +29,12 @@ import type {
 
 const SEED_WORKSPACE_ID = "workspace_seed";
 const SEED_GENERAL_THREAD_ID = "thread_general";
-const SEED_PRODUCT_THREAD_ID = "thread_product";
-const SEED_ARTIFACTS_THREAD_ID = "thread_artifacts";
-const SEED_PRIMORIA_DIRECT_ID = "thread_direct_primoria";
-const SEED_MINA_DIRECT_ID = "thread_direct_mina";
-const SEED_OPS_DIRECT_ID = "thread_direct_ops";
-
 const SEED_INVITE_CODE = "PRIMORIA";
+
+const LEGACY_SEED_THREAD_IDS = ["thread_product", "thread_artifacts", "thread_direct_primoria", "thread_direct_mina", "thread_direct_ops"];
+const LEGACY_SEED_MEMBER_IDS = ["wm_jia", "wm_primoria", "wm_mina", "wm_leo", "wm_ops"];
+const LEGACY_SEED_MESSAGE_IDS = ["m1", "m2", "m3", "m4", "m5", "m6", "dm1"];
+const LEGACY_SEED_TASK_IDS = ["wt_launch", "wt_review", "wt_assets"];
 
 declare global {
   var __primoriaWorkspaceLocalView: WorkspaceView | undefined;
@@ -132,26 +132,9 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
         role: "Human",
         status: "owner",
       },
-      {
-        id: `wmember_${randomBytes(10).toString("base64url")}`,
-        workspaceId: workspace.id,
-        displayName: "Primoria Agent",
-        role: "AI teammate",
-        status: "ready",
-      },
     ],
     threads: [generalThread],
-    messages: [
-      {
-        id: `wmsg_${randomBytes(10).toString("base64url")}`,
-        workspaceId: workspace.id,
-        threadId: generalThread.id,
-        senderName: "Primoria Agent",
-        senderKind: "agent",
-        content: `Created ${name}. Add people, start a direct chat, or share an app card when you are ready.`,
-        createdAt: now,
-      },
-    ],
+    messages: [],
     tasks: [],
     persisted: Boolean(hasDatabaseUrl() && ownerId),
   };
@@ -192,18 +175,6 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
         description: generalThread.description ?? null,
         createdAt: new Date(generalThread.createdAt),
         updatedAt: new Date(generalThread.updatedAt),
-      });
-      const welcome = view.messages[0];
-      await tx.insert(workspaceMessages).values({
-        id: welcome.id,
-        workspaceId: welcome.workspaceId,
-        threadId: welcome.threadId,
-        ownerId,
-        senderName: welcome.senderName,
-        senderKind: welcome.senderKind,
-        content: welcome.content,
-        artifact: null,
-        createdAt: new Date(welcome.createdAt),
       });
     });
     return { ...view, workspaces: await listDbWorkspaceSummaries(ownerId) };
@@ -409,6 +380,7 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
     type: input.type,
     name,
     description: input.description?.trim() || (input.type === "direct" ? "private conversation" : "shared room"),
+    participantIds: input.type === "direct" ? normalizeParticipantIds(input.participantIds) : undefined,
     createdAt: now,
     updatedAt: now,
   };
@@ -416,6 +388,9 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
   if (!hasDatabaseUrl() || !ownerId) {
     requireLocalWorkspace(input.workspaceId);
     const current = getLocalView();
+    if (thread.type === "direct" && thread.participantIds?.some((participantId) => !current.members.some((member) => member.id === participantId))) {
+      throw new Error("Direct participant not found.");
+    }
     setLocalView({
       ...current,
       threads: [thread, ...current.threads],
@@ -427,15 +402,19 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
   try {
     await ensureSeedWorkspace(ownerId);
     await requireDbWorkspace(ownerId, input.workspaceId);
-    await getDb().insert(workspaceThreads).values({
-      id: thread.id,
-      workspaceId: thread.workspaceId,
-      ownerId,
-      type: thread.type,
-      name: thread.name,
-      description: thread.description ?? null,
-      createdAt: new Date(thread.createdAt),
-      updatedAt: new Date(thread.updatedAt),
+    const participantRows = input.type === "direct" ? await buildDbThreadParticipantRows(ownerId, input.workspaceId, thread.id, thread.participantIds, now) : [];
+    await getDb().transaction(async (tx) => {
+      await tx.insert(workspaceThreads).values({
+        id: thread.id,
+        workspaceId: thread.workspaceId,
+        ownerId,
+        type: thread.type,
+        name: thread.name,
+        description: thread.description ?? null,
+        createdAt: new Date(thread.createdAt),
+        updatedAt: new Date(thread.updatedAt),
+      });
+      if (participantRows.length) await tx.insert(workspaceThreadMembers).values(participantRows);
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
     return thread;
@@ -556,10 +535,11 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
     const rows = await getDb()
       .select()
       .from(workspaceTasks)
-      .where(and(eq(workspaceTasks.id, input.taskId), eq(workspaceTasks.workspaceId, input.workspaceId), eq(workspaceTasks.ownerId, ownerId)))
+      .where(and(eq(workspaceTasks.id, input.taskId), eq(workspaceTasks.workspaceId, input.workspaceId)))
       .limit(1);
     const existing = rows[0];
     if (!existing) throw new Error("Task not found.");
+    await requireDbThread(ownerId, input.workspaceId, existing.threadId);
     const task = applyPatch({
       id: existing.id,
       workspaceId: existing.workspaceId,
@@ -602,14 +582,17 @@ async function ensureSeedWorkspace(ownerId: string) {
     .where(eq(workspaces.ownerId, ownerId))
     .orderBy(desc(workspaces.updatedAt))
     .limit(1);
-  if (existing[0]) return;
+  if (existing[0]) {
+    await removeLegacySeedWorkspaceMocks(ownerId);
+    return;
+  }
 
   const seed = createSeedWorkspaceView(true);
   await getDb().insert(workspaces).values({
     id: scopedSeedId(ownerId, seed.workspace.id),
     ownerId,
     name: seed.workspace.name,
-    inviteCode: seed.workspace.inviteCode,
+    inviteCode: scopedSeedInviteCode(ownerId),
     createdAt: new Date(seed.workspace.createdAt),
     updatedAt: new Date(seed.workspace.updatedAt),
   });
@@ -637,35 +620,86 @@ async function ensureSeedWorkspace(ownerId: string) {
       updatedAt: new Date(thread.updatedAt),
     })),
   );
-  await getDb().insert(workspaceMessages).values(
-    seed.messages.map((message) => ({
-      id: scopedSeedId(ownerId, message.id),
-      workspaceId: scopedSeedId(ownerId, message.workspaceId),
-      threadId: scopedSeedId(ownerId, message.threadId),
+  const seedThreadMembers = seed.threads.flatMap((thread) => buildSeedThreadMemberRows(ownerId, thread, seed.members, seed.workspace.createdAt));
+  if (seedThreadMembers.length) await getDb().insert(workspaceThreadMembers).values(seedThreadMembers);
+  if (seed.messages.length) {
+    await getDb().insert(workspaceMessages).values(
+      seed.messages.map((message) => ({
+        id: scopedSeedId(ownerId, message.id),
+        workspaceId: scopedSeedId(ownerId, message.workspaceId),
+        threadId: scopedSeedId(ownerId, message.threadId),
+        ownerId,
+        senderName: message.senderName,
+        senderKind: message.senderKind,
+        content: message.content,
+        artifact: message.artifact ?? null,
+        createdAt: new Date(message.createdAt),
+      })),
+    );
+  }
+  if (seed.tasks.length) {
+    await getDb().insert(workspaceTasks).values(
+      seed.tasks.map((task) => ({
+        id: scopedSeedId(ownerId, task.id),
+        workspaceId: scopedSeedId(ownerId, task.workspaceId),
+        threadId: scopedSeedId(ownerId, task.threadId),
+        ownerId,
+        title: task.title,
+        scope: task.scope,
+        status: task.status,
+        progress: task.progress,
+        dueAt: task.dueAt ?? null,
+        metadata: buildTaskMetadata(task),
+        createdAt: new Date(task.createdAt),
+        updatedAt: new Date(task.updatedAt),
+      })),
+    );
+  }
+}
+
+async function removeLegacySeedWorkspaceMocks(ownerId: string) {
+  const workspaceId = scopedSeedId(ownerId, SEED_WORKSPACE_ID);
+  const legacyWorkspace = await getDb()
+    .select({ id: workspaces.id })
+    .from(workspaces)
+    .where(and(eq(workspaces.id, workspaceId), eq(workspaces.ownerId, ownerId)))
+    .limit(1);
+  if (!legacyWorkspace[0]) return;
+
+  const legacyThreadIds = LEGACY_SEED_THREAD_IDS.map((id) => scopedSeedId(ownerId, id));
+  const legacyMemberIds = LEGACY_SEED_MEMBER_IDS.map((id) => scopedSeedId(ownerId, id));
+  const legacyMessageIds = LEGACY_SEED_MESSAGE_IDS.map((id) => scopedSeedId(ownerId, id));
+  const legacyTaskIds = LEGACY_SEED_TASK_IDS.map((id) => scopedSeedId(ownerId, id));
+  const youMemberId = scopedSeedId(ownerId, "wm_you");
+  const now = new Date();
+
+  await getDb().delete(workspaceMessages).where(inArray(workspaceMessages.id, legacyMessageIds));
+  await getDb().delete(workspaceTasks).where(inArray(workspaceTasks.id, legacyTaskIds));
+  await getDb().delete(workspaceThreadMembers).where(inArray(workspaceThreadMembers.threadId, legacyThreadIds));
+  await getDb().delete(workspaceThreads).where(inArray(workspaceThreads.id, legacyThreadIds));
+  await getDb().delete(workspaceMembers).where(inArray(workspaceMembers.id, legacyMemberIds));
+  await getDb()
+    .update(workspaceThreads)
+    .set({ description: "shared room", updatedAt: now })
+    .where(and(eq(workspaceThreads.id, scopedSeedId(ownerId, SEED_GENERAL_THREAD_ID)), eq(workspaceThreads.workspaceId, workspaceId)));
+
+  const existingYou = await getDb()
+    .select({ id: workspaceMembers.id })
+    .from(workspaceMembers)
+    .where(and(eq(workspaceMembers.id, youMemberId), eq(workspaceMembers.workspaceId, workspaceId)))
+    .limit(1);
+  if (!existingYou[0]) {
+    await getDb().insert(workspaceMembers).values({
+      id: youMemberId,
+      workspaceId,
       ownerId,
-      senderName: message.senderName,
-      senderKind: message.senderKind,
-      content: message.content,
-      artifact: message.artifact ?? null,
-      createdAt: new Date(message.createdAt),
-    })),
-  );
-  await getDb().insert(workspaceTasks).values(
-    seed.tasks.map((task) => ({
-      id: scopedSeedId(ownerId, task.id),
-      workspaceId: scopedSeedId(ownerId, task.workspaceId),
-      threadId: scopedSeedId(ownerId, task.threadId),
-      ownerId,
-      title: task.title,
-      scope: task.scope,
-      status: task.status,
-      progress: task.progress,
-      dueAt: task.dueAt ?? null,
-      metadata: buildTaskMetadata(task),
-      createdAt: new Date(task.createdAt),
-      updatedAt: new Date(task.updatedAt),
-    })),
-  );
+      displayName: "You",
+      role: "Human",
+      status: "owner",
+      createdAt: now,
+      updatedAt: now,
+    });
+  }
 }
 
 async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSummary[]> {
@@ -708,12 +742,16 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
   const workspace = workspaceRows[0];
   if (!workspace) return createSeedWorkspaceView(false);
 
-  const [memberRows, threadRows, messageRows, taskRows] = await Promise.all([
+  const [memberRows, threadRows, threadMemberRows, messageRows, taskRows] = await Promise.all([
     getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, workspace.id)).orderBy(asc(workspaceMembers.createdAt)),
     getDb().select().from(workspaceThreads).where(eq(workspaceThreads.workspaceId, workspace.id)).orderBy(desc(workspaceThreads.updatedAt)),
+    getDb().select().from(workspaceThreadMembers).where(eq(workspaceThreadMembers.workspaceId, workspace.id)).orderBy(asc(workspaceThreadMembers.createdAt)),
     getDb().select().from(workspaceMessages).where(eq(workspaceMessages.workspaceId, workspace.id)).orderBy(asc(workspaceMessages.createdAt)),
     getDb().select().from(workspaceTasks).where(eq(workspaceTasks.workspaceId, workspace.id)).orderBy(desc(workspaceTasks.updatedAt)),
   ]);
+  const membersByThreadId = groupThreadMembersByThreadId(threadMemberRows);
+  const visibleThreadRows = threadRows.filter((thread) => isDbThreadVisibleToOwner(thread, ownerId, membersByThreadId.get(thread.id)));
+  const visibleThreadIds = new Set(visibleThreadRows.map((thread) => thread.id));
 
   return {
     workspace: {
@@ -731,16 +769,17 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
       role: member.role,
       status: member.status ?? undefined,
     })),
-    threads: threadRows.map((thread): WorkspaceThread => ({
+    threads: visibleThreadRows.map((thread): WorkspaceThread => ({
       id: thread.id,
       workspaceId: thread.workspaceId,
       type: thread.type as WorkspaceThreadType,
       name: thread.name,
       description: thread.description ?? undefined,
+      participantIds: membersByThreadId.get(thread.id)?.map((member) => member.memberId),
       createdAt: thread.createdAt.getTime(),
       updatedAt: thread.updatedAt.getTime(),
     })),
-    messages: messageRows.map((message): WorkspaceMessage => ({
+    messages: messageRows.filter((message) => visibleThreadIds.has(message.threadId)).map((message): WorkspaceMessage => ({
       id: message.id,
       workspaceId: message.workspaceId,
       threadId: message.threadId,
@@ -750,7 +789,7 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
       artifact: (message.artifact ?? undefined) as WorkspaceMessageArtifact | undefined,
       createdAt: message.createdAt.getTime(),
     })),
-    tasks: taskRows.map((task): WorkspaceTask => {
+    tasks: taskRows.filter((task) => visibleThreadIds.has(task.threadId)).map((task): WorkspaceTask => {
       const metadata = readTaskMetadata(task.metadata);
       return {
         id: task.id,
@@ -811,12 +850,16 @@ async function requireDbWorkspace(ownerId: string, workspaceId: string) {
 }
 
 async function requireDbThread(ownerId: string, workspaceId: string, threadId: string) {
-  const rows = await getDb()
-    .select({ id: workspaceThreads.id })
-    .from(workspaceThreads)
-    .where(and(eq(workspaceThreads.id, threadId), eq(workspaceThreads.workspaceId, workspaceId), eq(workspaceThreads.ownerId, ownerId)))
-    .limit(1);
-  if (!rows[0]) throw new Error("Thread not found.");
+  const [threadRows, memberRows] = await Promise.all([
+    getDb()
+      .select()
+      .from(workspaceThreads)
+      .where(and(eq(workspaceThreads.id, threadId), eq(workspaceThreads.workspaceId, workspaceId)))
+      .limit(1),
+    getDb().select().from(workspaceThreadMembers).where(eq(workspaceThreadMembers.threadId, threadId)),
+  ]);
+  const thread = threadRows[0];
+  if (!thread || !isDbThreadVisibleToOwner(thread, ownerId, memberRows)) throw new Error("Thread not found.");
 }
 
 async function resolveTaskAssignee(ownerId: string | null | undefined, workspaceId: string, assigneeId?: string) {
@@ -842,6 +885,62 @@ async function resolveTaskAssignee(ownerId: string | null | undefined, workspace
     role: member.role,
     status: member.status ?? undefined,
   } satisfies WorkspaceMember;
+}
+
+function normalizeParticipantIds(participantIds?: string[] | null) {
+  const ids = (participantIds ?? []).map((id) => id.trim()).filter(Boolean);
+  return ids.length ? Array.from(new Set(ids)) : undefined;
+}
+
+async function buildDbThreadParticipantRows(ownerId: string, workspaceId: string, threadId: string, participantIds: string[] | undefined, now: number) {
+  const rows = await getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, workspaceId));
+  const requestedMemberIds = new Set(normalizeParticipantIds(participantIds));
+  const selectedMembers = rows.filter((member) => requestedMemberIds.has(member.id));
+  if (selectedMembers.length !== requestedMemberIds.size) throw new Error("Direct participant not found.");
+  const currentMembers = rows.filter((member) => member.ownerId === ownerId);
+  const participants = Array.from(new Map([...currentMembers, ...selectedMembers].map((member) => [member.id, member])).values());
+  return participants.map((member) => ({
+    id: `wtmember_${randomBytes(10).toString("base64url")}`,
+    workspaceId,
+    threadId,
+    memberId: member.id,
+    ownerId: member.ownerId,
+    createdAt: new Date(now),
+  }));
+}
+
+function buildSeedThreadMemberRows(ownerId: string, thread: WorkspaceThread, members: WorkspaceMember[], createdAt: number) {
+  if (thread.type !== "direct") return [];
+  const fallbackMember = members[0];
+  const participantIds = normalizeParticipantIds(thread.participantIds) ?? (fallbackMember ? [fallbackMember.id] : []);
+  return participantIds.map((memberId) => ({
+    id: scopedSeedId(ownerId, `wtmember_${thread.id}_${memberId}`),
+    workspaceId: scopedSeedId(ownerId, thread.workspaceId),
+    threadId: scopedSeedId(ownerId, thread.id),
+    memberId: scopedSeedId(ownerId, memberId),
+    ownerId,
+    createdAt: new Date(createdAt),
+  }));
+}
+
+function isDbThreadVisibleToOwner(
+  thread: typeof workspaceThreads.$inferSelect,
+  ownerId: string,
+  members: Array<typeof workspaceThreadMembers.$inferSelect> | undefined,
+) {
+  if (thread.type !== "direct") return true;
+  if (members?.length) return members.some((member) => member.ownerId === ownerId);
+  return thread.ownerId === ownerId;
+}
+
+function groupThreadMembersByThreadId(rows: Array<typeof workspaceThreadMembers.$inferSelect>) {
+  const grouped = new Map<string, Array<typeof workspaceThreadMembers.$inferSelect>>();
+  for (const row of rows) {
+    const existing = grouped.get(row.threadId) ?? [];
+    existing.push(row);
+    grouped.set(row.threadId, existing);
+  }
+  return grouped;
 }
 
 function buildTaskMetadata(task: WorkspaceTask) {
@@ -871,73 +970,23 @@ function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
     id: SEED_WORKSPACE_ID,
     name: "Primoria",
     inviteCode: SEED_INVITE_CODE,
-    createdAt: now - 3_600_000,
-    updatedAt: now - 120_000,
+    createdAt: now,
+    updatedAt: now,
   };
   const threads: WorkspaceThread[] = [
-    { id: SEED_GENERAL_THREAD_ID, workspaceId: workspace.id, type: "room", name: "General", description: "5 people / 2 agents", createdAt: now - 3_500_000, updatedAt: now - 60_000 },
-    { id: SEED_PRODUCT_THREAD_ID, workspaceId: workspace.id, type: "room", name: "Product", description: "scope and decisions", createdAt: now - 3_400_000, updatedAt: now - 360_000 },
-    { id: SEED_ARTIFACTS_THREAD_ID, workspaceId: workspace.id, type: "room", name: "Artifacts", description: "apps and drafts", createdAt: now - 3_300_000, updatedAt: now - 520_000 },
-    { id: SEED_PRIMORIA_DIRECT_ID, workspaceId: workspace.id, type: "direct", name: "Primoria Agent", description: "AI teammate", createdAt: now - 3_200_000, updatedAt: now - 100_000 },
-    { id: SEED_MINA_DIRECT_ID, workspaceId: workspace.id, type: "direct", name: "Mina", description: "human", createdAt: now - 3_100_000, updatedAt: now - 800_000 },
-    { id: SEED_OPS_DIRECT_ID, workspaceId: workspace.id, type: "direct", name: "Ops Agent", description: "automation", createdAt: now - 3_000_000, updatedAt: now - 900_000 },
+    { id: SEED_GENERAL_THREAD_ID, workspaceId: workspace.id, type: "room", name: "General", description: "shared room", createdAt: now, updatedAt: now },
   ];
   return {
     workspace,
     workspaces: [workspace],
     members: [
-      { id: "wm_jia", workspaceId: workspace.id, displayName: "Jia", role: "Human", status: "reviewing plan" },
-      { id: "wm_primoria", workspaceId: workspace.id, displayName: "Primoria Agent", role: "AI teammate", status: "routing work" },
-      { id: "wm_mina", workspaceId: workspace.id, displayName: "Mina", role: "Human", status: "setting priorities" },
-      { id: "wm_leo", workspaceId: workspace.id, displayName: "Leo", role: "Human", status: "checking assets" },
-      { id: "wm_ops", workspaceId: workspace.id, displayName: "Ops Agent", role: "AI teammate", status: "watching tasks" },
+      { id: "wm_you", workspaceId: workspace.id, displayName: "You", role: "Human", status: "owner" },
     ],
     threads,
-    messages: [
-      seedMessage("m1", workspace.id, SEED_GENERAL_THREAD_ID, "Jia", "human", "Let's turn the onboarding notes into a concrete launch checklist. Keep decisions, tasks, and shared apps in this room.", now - 240_000),
-      seedMessage("m2", workspace.id, SEED_GENERAL_THREAD_ID, "Primoria Agent", "agent", "I found three active threads: product scope, content assets, and follow-up tasks. I drafted a shared plan card and linked the app prototype below.", now - 180_000),
-      seedMessage("m3", workspace.id, SEED_GENERAL_THREAD_ID, "Mina", "human", "Can we separate what needs a human decision from what the agent can execute without waiting?", now - 120_000),
-      seedMessage("m4", workspace.id, SEED_GENERAL_THREAD_ID, "Primoria Agent", "agent", "Yes. I marked two approval gates and converted the rest into executable tasks. The workspace will keep updates visible to everyone in the room.", now - 60_000),
-      {
-        ...seedMessage("m5", workspace.id, SEED_GENERAL_THREAD_ID, "Primoria Agent", "agent", "Shared a prototype review app.", now - 45_000),
-        artifact: {
-          type: "app",
-          title: "Prototype Review App",
-          description: "Open the latest artifact, collect notes, and turn accepted changes into workspace tasks.",
-          primaryAction: "Open app",
-          secondaryAction: "Share",
-        },
-      },
-      {
-        ...seedMessage("m6", workspace.id, SEED_GENERAL_THREAD_ID, "Primoria Agent", "agent", "Converted the current room context into a launch plan.", now - 30_000),
-        artifact: {
-          type: "task",
-          title: "Launch Plan",
-          description: "Tasks, owners, and agent actions generated from the current room context.",
-          groups: ["Decisions / 2 pending", "Agent work / 6 queued", "Human work / 4 open"],
-        },
-      },
-      seedMessage("dm1", workspace.id, SEED_PRIMORIA_DIRECT_ID, "Primoria Agent", "agent", "Send me a goal and I can turn it into a shared room update or a private task list.", now - 100_000),
-    ],
-    tasks: [
-      { id: "wt_launch", workspaceId: workspace.id, threadId: SEED_GENERAL_THREAD_ID, title: "Launch checklist", scope: "Shared", status: "open", progress: "6 / 10 done", assigneeId: "wm_jia", assigneeName: "Jia", dueAt: "Today 18:00", createdAt: now - 300_000, updatedAt: now - 50_000 },
-      { id: "wt_review", workspaceId: workspace.id, threadId: SEED_GENERAL_THREAD_ID, title: "Prototype review", scope: "Human decision", status: "open", progress: "2 approvals needed", assigneeId: "wm_mina", assigneeName: "Mina", dueAt: "Thu 14:00", createdAt: now - 280_000, updatedAt: now - 80_000 },
-      { id: "wt_assets", workspaceId: workspace.id, threadId: SEED_ARTIFACTS_THREAD_ID, title: "Asset cleanup", scope: "Agent-assisted", status: "open", progress: "8 files queued", assigneeId: "wm_ops", assigneeName: "Ops Agent", dueAt: "Fri 18:00", createdAt: now - 260_000, updatedAt: now - 90_000 },
-    ],
+    messages: [],
+    tasks: [],
     persisted,
   };
-}
-
-function seedMessage(
-  id: string,
-  workspaceId: string,
-  threadId: string,
-  senderName: string,
-  senderKind: WorkspaceMessage["senderKind"],
-  content: string,
-  createdAt: number,
-): WorkspaceMessage {
-  return { id, workspaceId, threadId, senderName, senderKind, content, createdAt };
 }
 
 function bumpThread(threads: WorkspaceThread[], threadId: string, updatedAt: number) {
@@ -946,4 +995,8 @@ function bumpThread(threads: WorkspaceThread[], threadId: string, updatedAt: num
 
 function scopedSeedId(ownerId: string, id: string) {
   return `${ownerId}_${id}`;
+}
+
+function scopedSeedInviteCode(ownerId: string) {
+  return `PRI${createHash("sha1").update(ownerId).digest("base64url").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 5)}`;
 }
