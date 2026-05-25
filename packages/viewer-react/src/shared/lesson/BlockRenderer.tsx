@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
-import { InteractiveVisualEmbed } from '@/shared/interactive-visual/InteractiveVisualEmbed';
-import { useViewerCopy } from '@/shared/theme/copy';
+import { InteractiveVisualRendererView } from '@/shared/interactive-visual/InteractiveVisualRenderer';
 import { richTextToHtml } from '@/shared/lesson/richText';
 import { getTextBlockColorStyle } from '@/shared/color/textBlockColorStyle';
 import { resolveVideoSource } from '@/shared/media/videoSource';
@@ -55,7 +54,6 @@ function SortingRenderer({ block }: { block: SortingBlock }) {
 }
 
 function CanonicalBlockRenderer({ block }: { block: Block }) {
-  const copy = useViewerCopy();
   const content = block.content as Record<string, unknown>;
 
   switch (block.type) {
@@ -197,27 +195,7 @@ function CanonicalBlockRenderer({ block }: { block: Block }) {
       );
     }
     case 'interactive-visual':
-      return typeof content.generatedHtml === 'string' && content.generatedHtml.trim() ? (
-        <InteractiveVisualEmbed
-          title={String(content.title ?? 'Interactive Visual')}
-          description={typeof content.description === 'string' ? content.description : undefined}
-          generatedHtml={content.generatedHtml}
-          frameClassName="h-[540px] md:h-[620px]"
-        />
-      ) : typeof content.legacyCustomHtml === 'string' && content.legacyCustomHtml.trim() ? (
-        <InteractiveVisualEmbed
-          title={String(content.title ?? 'Interactive Visual')}
-          description={typeof content.description === 'string' ? content.description : undefined}
-          generatedHtml={content.legacyCustomHtml}
-          frameClassName="h-[540px] md:h-[620px]"
-        />
-      ) : (
-        <div className="rounded-3xl border border-[var(--viewer-border)] bg-[var(--viewer-surface-muted)] p-6 text-center">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--viewer-text-muted)]">Interactive visual</p>
-          <h3 className="mt-2 text-lg font-black text-[var(--viewer-text)]">{String(content.title ?? 'Interactive Visual')}</h3>
-          <p className="mt-2 text-sm font-medium text-[var(--viewer-text-muted)]">{copy.lesson.unsupported}</p>
-        </div>
-      );
+      return <InteractiveVisualRendererView content={content} frameClassName="h-[540px] md:h-[620px]" />;
     default:
       return <div className="text-sm font-medium text-[var(--viewer-text-muted)]">[{block.type}]</div>;
   }

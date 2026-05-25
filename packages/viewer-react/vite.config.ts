@@ -1,6 +1,60 @@
 import path from 'path';
+import { readFile, writeFile } from 'node:fs/promises';
 import react from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, type Plugin } from 'vite';
+
+function interactiveVisualDebugLogPlugin(): Plugin {
+  const logPath = path.resolve(__dirname, '../../.iv-debug.json');
+  async function readExisting(): Promise<Record<string, unknown>> {
+    try {
+      const raw = await readFile(logPath, 'utf8');
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed)
+        ? (parsed as Record<string, unknown>)
+        : {};
+    } catch {
+      return {};
+    }
+  }
+  return {
+    name: 'iv-debug-log',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use('/__dev/iv-log', (req, res) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          res.end('POST only');
+          return;
+        }
+        const chunks: Buffer[] = [];
+        req.on('data', (chunk: Buffer) => chunks.push(chunk));
+        req.on('end', async () => {
+          const body = Buffer.concat(chunks).toString('utf8');
+          let merged: Record<string, unknown>;
+          try {
+            const parsed = JSON.parse(body);
+            if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+              const existing = await readExisting();
+              merged = { ...existing, ...(parsed as Record<string, unknown>) };
+            } else {
+              merged = { raw: body };
+            }
+          } catch {
+            merged = { raw: body };
+          }
+          try {
+            await writeFile(logPath, JSON.stringify(merged, null, 2), 'utf8');
+            res.statusCode = 204;
+            res.end();
+          } catch (error) {
+            res.statusCode = 500;
+            res.end(`failed to write log: ${(error as Error).message}`);
+          }
+        });
+      });
+    },
+  };
+}
 
 function manualChunks(id: string) {
   if (id.includes('node_modules')) {
@@ -51,6 +105,7 @@ export default defineConfig(({ mode }) => {
     envDir,
     plugins: [
       react(),
+      interactiveVisualDebugLogPlugin(),
       {
         name: 'require-supabase-env',
         buildStart() {

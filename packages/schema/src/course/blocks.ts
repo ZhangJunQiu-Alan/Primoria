@@ -140,19 +140,13 @@ export const MatchingContentSchema = z.object({
 
 export const InteractiveVisualContentSchema = z.object({
   version: z.string().optional(),
-  engine: z.string().optional(),
   template: z.string(),
   title: z.string().optional(),
   description: z.string().optional(),
-  initialState: z.record(z.unknown()).optional(),
-  controls: z.array(z.record(z.unknown())).optional(),
-  formulas: z.array(z.record(z.unknown())).optional(),
-  scene: z.record(z.unknown()).optional(),
-  runtime: z.record(z.unknown()).optional(),
   themeTone: z.string().optional(),
   aiPrompt: z.string().optional(),
   generatedHtml: z.string().optional(),
-  legacyCustomHtml: z.string().optional(),
+  experienceMode: z.string().optional(),
 });
 
 export const VideoContentSchema = z.object({
