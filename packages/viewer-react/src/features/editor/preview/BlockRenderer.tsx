@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils';
 import type { CSSProperties } from 'react';
 import type { Block } from '@primoria/schema';
 import { getTextBlockColorStyle } from '@/shared/color/textBlockColorStyle';
+import { InteractiveVisualRendererView } from '@/shared/interactive-visual/InteractiveVisualRenderer';
 import { resolveVideoSource } from '@/shared/media/videoSource';
 import { richTextToHtml } from '../richText';
 
@@ -214,18 +215,7 @@ function BlockContent({ block }: { block: Block }) {
 
     // ── Interactive visual ────────────────────────────────────────────────────
     case 'interactive-visual':
-      return (
-        <div className="rounded-lg border bg-muted/30 p-6 text-center space-y-1">
-          <div className="text-2xl">🔭</div>
-          <p className="font-medium text-sm">{String(c['title'] ?? 'Interactive Visual')}</p>
-          <p className="text-xs text-muted-foreground">
-            Template: <span className="font-mono">{String(c['template'] ?? '')}</span>
-          </p>
-          <p className="text-xs text-muted-foreground italic">
-            Rendered in full player
-          </p>
-        </div>
-      );
+      return <InteractiveVisualRendererView content={c} frameClassName="h-[360px]" />;
 
     // ── Function flow ─────────────────────────────────────────────────────────
     case 'function-flow': {

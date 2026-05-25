@@ -15,6 +15,7 @@ const TUTOR_THREAD_STORAGE_KEY = 'primoria.viewer.ai-tutor-thread-id';
 const rawSupabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim() ?? '';
 const rawSupabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() ?? '';
 const rawAgentServiceUrl = (import.meta.env.VITE_AGENT_SERVICE_URL as string | undefined)?.trim() ?? '';
+const DEFAULT_GEMINI_MODEL = 'gemini-2.5-pro';
 const TUTOR_TIMEOUT_MS = 30_000;
 const AGENT_TUTOR_TIMEOUT_MS = 180_000;
 const EDGE_REQUEST_MAX_ATTEMPTS = 2;
@@ -65,7 +66,7 @@ export type TutorRequestOptions = {
 type InteractiveVisualServiceResponse = TutorInteractiveVisualPayload;
 
 function activeModel(override?: string) {
-  return override?.trim() || (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || 'gemini-2.0-flash';
+  return override?.trim() || (import.meta.env.VITE_GEMINI_MODEL as string | undefined)?.trim() || DEFAULT_GEMINI_MODEL;
 }
 
 function normalizeOptionalString(value: unknown) {
@@ -429,7 +430,6 @@ async function requestInteractiveVisual(
         prompt,
         language: currentUiLanguage(),
         surface: options.context?.surface === 'builder' ? 'builder' : 'ai-tutor',
-        experienceMode: 'graph',
       }),
       signal: timeout.signal,
     });

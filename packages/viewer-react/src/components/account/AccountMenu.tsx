@@ -33,11 +33,24 @@ export function AccountMenu({
 }: AccountMenuProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const authSource = useAppSelector((state) => state.auth.source);
   const language = useAppSelector((state) => state.viewerPreferences.language);
   const copy = useCoreCopy();
   const [profileSummary, setProfileSummary] = useState<DashboardProfileSummary | null>(null);
+  const demoProfileSummary: DashboardProfileSummary | null =
+    authSource === 'demo'
+      ? {
+          avatarUrl: null,
+          role: 'demo',
+          username: user.displayName,
+        }
+      : null;
 
   useEffect(() => {
+    if (authSource === 'demo') {
+      return undefined;
+    }
+
     let active = true;
 
     async function loadProfileSummary() {
@@ -58,11 +71,12 @@ export function AccountMenu({
     return () => {
       active = false;
     };
-  }, [user.id]);
+  }, [authSource, user.displayName, user.id]);
 
-  const displayName = getDisplayName(user.email, profileSummary?.username);
+  const effectiveProfileSummary = demoProfileSummary ?? profileSummary;
+  const displayName = getDisplayName(user.email, effectiveProfileSummary?.username);
   const avatarInitial = (displayName.trim()[0] ?? 'A').toUpperCase();
-  const avatarUrl = profileSummary?.avatarUrl?.trim() ?? '';
+  const avatarUrl = effectiveProfileSummary?.avatarUrl?.trim() ?? '';
   const nextLanguage = language === 'en' ? 'zh-CN' : 'en';
 
   return (

@@ -11,6 +11,7 @@ test-results/
 playwright-report/
 output/
 .playwright-cli/
+.iv-debug.json
 
 # Miscellaneous
 *.class

@@ -13,6 +13,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.config import get_settings
 from app.memory import save_user_memory, search_user_memories
+from app.model_config import gemini_model_candidates
 from app.schemas import (
     BuilderBlock,
     BuilderCourseMutationRequest,
@@ -31,7 +32,6 @@ from app.services.supabase_client import SupabaseUserClient
 
 SCHEMA_URL = 'https://primoria.com/course-schema/v1.json'
 SCHEMA_VERSION = '1.0.0'
-GENERATION_FALLBACK_MODELS = ('gemini-2.0-flash',)
 
 
 def build_course_slug(title: str, course_id: str) -> str:
@@ -73,13 +73,7 @@ def normalize_json_response(raw: str) -> str:
 
 def generation_model_candidates() -> list[str]:
     settings = get_settings()
-    candidates = [settings.agent_model, *GENERATION_FALLBACK_MODELS]
-    unique: list[str] = []
-    for candidate in candidates:
-        normalized = str(candidate or '').strip()
-        if normalized and normalized not in unique:
-            unique.append(normalized)
-    return unique
+    return gemini_model_candidates(settings.agent_model)
 
 
 def build_generation_model(model_name: str | None = None) -> ChatGoogleGenerativeAI:

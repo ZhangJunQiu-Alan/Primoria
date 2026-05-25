@@ -143,6 +143,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
+  min-width: 0;
+}
+
+.editor-topbar__brand-title-button {
   border: 0;
   background: transparent;
   color: inherit;

@@ -5,10 +5,9 @@ import re
 import httpx
 
 from app.config import get_settings
+from app.model_config import gemini_model_candidates
 
 GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
-DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash'
-DEFAULT_OPENAI_MODEL = 'gpt-5.4-mini'
 MAX_OUTPUT_TOKENS = 8192
 
 SYSTEM_PROMPT = """You are an expert STEM animation engineer. Your task is to generate a single,
@@ -76,63 +75,52 @@ async def generate_interactive_visual_html(
     description: str | None = None,
 ) -> str:
     settings = get_settings()
-    user_prompt = build_visual_prompt(
-        prompt=prompt,
-        template=template,
-        title=title,
-        description=description,
-    )
+    if not settings.google_api_key:
+        raise RuntimeError('Platform AI service not configured')
 
-    if settings.ai_provider == 'openai':
-        api_key = settings.ai_api_key or settings.openai_api_key
-        if not api_key:
-            raise RuntimeError('OpenAI-compatible AI service not configured')
-        base_url = (settings.ai_base_url or settings.openai_base_url or 'https://api.openai.com/v1').rstrip('/')
-        model = settings.ai_model or settings.openai_model or DEFAULT_OPENAI_MODEL
-        async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.post(
-                f'{base_url}/chat/completions',
-                headers={
-                    'Authorization': f'Bearer {api_key}',
-                    'Content-Type': 'application/json',
-                },
-                json={
-                    'model': model,
-                    'messages': [
-                        {'role': 'system', 'content': SYSTEM_PROMPT},
-                        {'role': 'user', 'content': user_prompt},
-                    ],
-                    'temperature': 0.7,
-                    'max_tokens': MAX_OUTPUT_TOKENS,
-                },
-            )
-        if not response.is_success:
-            raise RuntimeError(f'AI generation failed ({response.status_code}): {response.text[:500]}')
-        payload = response.json()
-        text = str((((payload.get('choices') or [{}])[0] or {}).get('message') or {}).get('content') or '')
-    else:
-        api_key = settings.google_api_key or settings.gemini_api_key
-        if not api_key:
-            raise RuntimeError('Platform AI service not configured')
-        model = settings.google_model or settings.ai_model or settings.agent_model or DEFAULT_GEMINI_MODEL
-        gemini_url = f'{GEMINI_BASE_URL}/models/{model}:generateContent?key={api_key}'
-        gemini_body = {
-            'system_instruction': {'parts': [{'text': SYSTEM_PROMPT}]},
-            'contents': [{'role': 'user', 'parts': [{'text': user_prompt}]}],
-            'generationConfig': {'temperature': 0.7, 'maxOutputTokens': MAX_OUTPUT_TOKENS},
-        }
-        async with httpx.AsyncClient(timeout=60.0) as client:
+    gemini_body = {
+        'system_instruction': {'parts': [{'text': SYSTEM_PROMPT}]},
+        'contents': [
+            {
+                'role': 'user',
+                'parts': [
+                    {
+                        'text': build_visual_prompt(
+                            prompt=prompt,
+                            template=template,
+                            title=title,
+                            description=description,
+                        )
+                    }
+                ],
+            }
+        ],
+        'generationConfig': {
+            'temperature': 0.7,
+            'maxOutputTokens': MAX_OUTPUT_TOKENS,
+        },
+    }
+
+    last_error: str | None = None
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        for model in gemini_model_candidates(settings.agent_model):
+            gemini_url = f'{GEMINI_BASE_URL}/models/{model}:generateContent?key={settings.google_api_key}'
             response = await client.post(
                 gemini_url,
                 headers={'Content-Type': 'application/json'},
                 json=gemini_body,
             )
-        if not response.is_success:
-            raise RuntimeError(f'AI generation failed ({response.status_code}): {response.text[:500]}')
-        payload = response.json()
-        raw = (((payload.get('candidates') or [{}])[0] or {}).get('content') or {}).get('parts') or [{}]
-        text = str((raw[0] or {}).get('text') or '')
-    html = normalize_gemini_html(text)
-    if not html.strip():
-        raise RuntimeError('AI returned empty response')
-    return html
+
+            if not response.is_success:
+                last_error = f'AI generation failed ({response.status_code})'
+                continue
+
+            payload = response.json()
+            raw = (((payload.get('candidates') or [{}])[0] or {}).get('content') or {}).get('parts') or [{}]
+            text = str((raw[0] or {}).get('text') or '')
+            html = normalize_gemini_html(text)
+            if html.strip():
+                return html
+            last_error = 'AI returned empty response'
+
+    raise RuntimeError(last_error or 'AI generation failed')

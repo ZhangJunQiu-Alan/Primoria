@@ -82,6 +82,9 @@ const BuilderDashboardPage = lazy(async () => ({
 const BuilderEditorPage = lazy(async () => ({
   default: (await import('@/pages/editor/EditorPage')).EditorPage,
 }));
+const InteractiveVisualDebugPage = lazy(async () => ({
+  default: (await import('@/pages/debug/InteractiveVisualDebugPage')).InteractiveVisualDebugPage,
+}));
 
 function RouteLoadingScreen() {
   return <FullScreenLoadingScreen />;
@@ -374,6 +377,14 @@ export function buildViewerRoutes(): RouteObject[] {
                   element: (
                     <WithSuspense>
                       <SupportInfoPage page="terms" />
+                    </WithSuspense>
+                  ),
+                },
+                {
+                  path: '/debug/interactive-visual',
+                  element: (
+                    <WithSuspense>
+                      <InteractiveVisualDebugPage />
                     </WithSuspense>
                   ),
                 },
