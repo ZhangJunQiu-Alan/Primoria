@@ -1,6 +1,6 @@
 {
   "id": "0002_memory_versions_archive",
-  "prevId": "0002_memory_versions_archive",
+  "prevId": "993f65ea-2be4-41aa-86c7-f189dfcd7b54",
   "version": "7",
   "dialect": "postgresql",
   "tables": {

@@ -1,3 +1,5 @@
+import type { LearningAppTemplate } from "@/lib/capability-library/types";
+
 export type WorkspaceThreadType = "room" | "direct";
 export type WorkspaceSenderKind = "human" | "agent" | "system";
 
@@ -23,6 +25,7 @@ export type WorkspaceThread = {
   type: WorkspaceThreadType;
   name: string;
   description?: string;
+  participantIds?: string[];
   createdAt: number;
   updatedAt: number;
 };
@@ -32,6 +35,7 @@ export type WorkspaceMessageArtifact =
       type: "app";
       appId?: string;
       version?: number;
+      template?: LearningAppTemplate;
       title: string;
       description: string;
       primaryAction: string;
@@ -113,6 +117,7 @@ export type CreateWorkspaceThreadInput = {
   type: WorkspaceThreadType;
   name: string;
   description?: string;
+  participantIds?: string[];
 };
 
 export type CreateWorkspaceTaskInput = {

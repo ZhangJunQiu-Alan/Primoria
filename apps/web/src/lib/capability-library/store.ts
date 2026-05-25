@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { getCurrentUser } from "../auth/session";
 import { getDb, hasDatabaseUrl } from "../db/client";
@@ -6,20 +8,24 @@ import type { LearningApp, LearningAppSummary } from "./types";
 import { summarizeApp } from "./types";
 
 export async function saveApp(app: LearningApp, ownerId?: string | null): Promise<LearningApp> {
-  const resolvedOwnerId = await requireOwnerId(ownerId, "save app");
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) {
+    saveAppToLocalFile(app);
+    return app;
+  }
   await saveAppToDb(app, resolvedOwnerId);
   return app;
 }
 
 export async function getApp(id: string, ownerId?: string | null): Promise<LearningApp | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (!resolvedOwnerId) return undefined;
+  if (!resolvedOwnerId) return getAppFromLocalFile(id);
   return getAppFromDb(id, resolvedOwnerId);
 }
 
 export async function listApps(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<LearningAppSummary[]> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (!resolvedOwnerId) return [];
+  if (!resolvedOwnerId) return listAppsFromLocalFile(options).map(summarizeApp);
   const apps = await listAppsFromDb(resolvedOwnerId, options);
   return apps.map(summarizeApp);
 }
@@ -52,7 +58,9 @@ export async function unarchiveApp(id: string, ownerId?: string | null): Promise
 
 export async function findAppByHtmlSignature(signature: string, ownerId?: string | null): Promise<LearningApp | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (!resolvedOwnerId) return undefined;
+  if (!resolvedOwnerId) {
+    return readLocalLibrary().apps.find((app) => app.template.type === "html" && hashHtmlSource(app.template.source) === signature);
+  }
   const rows = await getDb()
     .select()
     .from(learningAppsTable)
@@ -76,11 +84,59 @@ async function resolveOwnerId(ownerId?: string | null) {
   return user?.id ?? null;
 }
 
-async function requireOwnerId(ownerId: string | null | undefined, action: string) {
-  if (!hasDatabaseUrl()) throw new Error("DATABASE_URL is not configured. Primoria persistence requires Postgres.");
-  const resolvedOwnerId = await resolveOwnerId(ownerId);
-  if (!resolvedOwnerId) throw new Error(`You must sign in to ${action}.`);
-  return resolvedOwnerId;
+type LocalLibraryFile = {
+  apps: LearningApp[];
+};
+
+const LOCAL_LIBRARY_FILE = ".primoria-capability-library.json";
+
+function listAppsFromLocalFile(options: { includeArchived?: boolean } = {}): LearningApp[] {
+  const apps = readLocalLibrary().apps;
+  return apps
+    .filter((app) => options.includeArchived || !app.archivedAt)
+    .sort((a, b) => b.metadata.lastUsedAt - a.metadata.lastUsedAt);
+}
+
+function getAppFromLocalFile(id: string): LearningApp | undefined {
+  return readLocalLibrary().apps.find((app) => app.id === id);
+}
+
+function saveAppToLocalFile(app: LearningApp) {
+  const library = readLocalLibrary();
+  const nextApps = [app, ...library.apps.filter((entry) => entry.id !== app.id)];
+  writeLocalLibrary({ apps: nextApps });
+}
+
+function readLocalLibrary(): LocalLibraryFile {
+  const filePath = getLocalLibraryPath();
+  if (!fs.existsSync(filePath)) return { apps: [] };
+  try {
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf8")) as Partial<LocalLibraryFile>;
+    return { apps: Array.isArray(parsed.apps) ? parsed.apps : [] };
+  } catch {
+    return { apps: [] };
+  }
+}
+
+function writeLocalLibrary(library: LocalLibraryFile) {
+  const filePath = getLocalLibraryPath();
+  const tempPath = `${filePath}.${process.pid}.tmp`;
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(tempPath, `${JSON.stringify(library, null, 2)}\n`, "utf8");
+  fs.renameSync(tempPath, filePath);
+}
+
+function getLocalLibraryPath() {
+  let current = process.cwd();
+  for (let depth = 0; depth < 6; depth += 1) {
+    const candidate = path.join(current, LOCAL_LIBRARY_FILE);
+    if (fs.existsSync(candidate)) return candidate;
+    if (fs.existsSync(path.join(current, "pnpm-workspace.yaml"))) return candidate;
+    const parent = path.dirname(current);
+    if (parent === current) break;
+    current = parent;
+  }
+  return path.join(process.cwd(), LOCAL_LIBRARY_FILE);
 }
 
 async function saveAppToDb(app: LearningApp, ownerId: string) {
