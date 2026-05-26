@@ -1,3 +1,5 @@
+import type { PhysicsScene } from "@/lib/ai/types";
+
 export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code";
 
 type BlockBase = {
@@ -29,7 +31,12 @@ export type TransferBlock = BlockBase & {
 export type VisualBlock = BlockBase & {
   type: "visual";
   description: string;
-  html: string;
+  engine?: "html" | "echarts" | "mermaid" | "physics";
+  html?: string;
+  echartsOption?: Record<string, unknown>;
+  echartsHeight?: number;
+  mermaidDefinition?: string;
+  physicsScene?: PhysicsScene;
 };
 
 export type CodeBlock = BlockBase & {

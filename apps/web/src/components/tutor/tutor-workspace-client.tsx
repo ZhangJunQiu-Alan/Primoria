@@ -7,12 +7,10 @@ import type { TutorProviderSettings } from "@/lib/ai/types";
 import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
 import { SettingsModal } from "./settings-modal";
-import { TutorChatClient } from "./tutor-chat-client";
 import { TutorChatCopilot } from "./tutor-chat-copilot";
 import { TutorTopbar } from "./topbar";
 
 const STORAGE_KEY = "primoria:tutor-provider-settings";
-const USE_COPILOTKIT = process.env.NEXT_PUBLIC_USE_COPILOTKIT === "1";
 
 type AuthState = {
   authEnabled: boolean;
@@ -36,7 +34,6 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
   const [settings, setSettings] = useState<TutorProviderSettings>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [chatResetKey, setChatResetKey] = useState(0);
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
 
   useEffect(() => {
@@ -116,10 +113,8 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
           <AuthLoadingPanel />
         ) : authRequired ? (
           <AuthRequiredPanel />
-        ) : USE_COPILOTKIT ? (
-          <TutorChatCopilot />
         ) : (
-          <TutorChatClient key={chatResetKey} settings={settings} resetKey={chatResetKey} />
+          <TutorChatCopilot />
         )}
         <SettingsModal
           open={settingsOpen}
@@ -131,14 +126,9 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
         />
         <ChatHistoryPopup
           open={historyOpen && !authRequired}
-          useCopilotKit={USE_COPILOTKIT}
           onClose={() => setHistoryOpen(false)}
-          onNewChat={() => {
-            if (!USE_COPILOTKIT) setChatResetKey((key) => key + 1);
-          }}
-          onSelectChat={() => {
-            if (!USE_COPILOTKIT) setChatResetKey((key) => key + 1);
-          }}
+          onNewChat={() => {}}
+          onSelectChat={() => {}}
         />
       </section>
     </>
