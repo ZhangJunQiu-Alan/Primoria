@@ -94,18 +94,7 @@ async function main() {
     const threeFrame = page.frameLocator('iframe[title="Three dependency fixture"]');
     await threeFrame.locator("#three-status", { hasText: "THREE OrbitControls ok" }).waitFor({ timeout: 10000 });
 
-    const mathFrame = page.frameLocator('iframe[title="Math fixture"]');
-    await mathFrame.locator("canvas").first().waitFor({ timeout: 5000 });
-    const csFrame = page.frameLocator('iframe[title="CS fixture"]');
-    await csFrame.locator("canvas").first().waitFor({ timeout: 5000 });
-
-    const physicsCanvas = page.frameLocator('iframe[title="Physics fixture"]').locator("canvas").first();
-    const physicsError = page.getByText("Physics runtime error");
-    try {
-      await physicsCanvas.waitFor({ timeout: 8000 });
-    } catch {
-      await physicsError.waitFor({ timeout: 2000 });
-    }
+    await page.getByTestId("stem-section").getByText("STEM renderer fixtures not yet available.").waitFor();
 
     await page.getByTestId("export-menu-streaming-fixture").click();
     await page.getByTestId("copy-standalone-streaming-fixture").click();
