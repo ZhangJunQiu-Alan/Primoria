@@ -5,6 +5,7 @@ import { summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
+import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -33,7 +34,12 @@ const VisualBlockSchema = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
-  html: z.string(),
+  engine: z.enum(["html", "echarts", "mermaid", "physics"]).optional(),
+  html: z.string().optional(),
+  echartsOption: z.record(z.unknown()).optional(),
+  echartsHeight: z.number().optional(),
+  mermaidDefinition: z.string().optional(),
+  physicsScene: PhysicsSceneZodSchema.optional(),
 });
 
 const CodeBlockSchema = z.object({
@@ -78,10 +84,13 @@ COURSE STRUCTURE RULES:
 - Every block needs a short, specific title (no generic "Introduction").
 - Write in the same language as the user's topic prompt.
 
-VISUAL BLOCK RULES (when you include one):
-- Single self-contained HTML fragment. No external scripts.
-- Use the Primoria palette: cream backgrounds (#fbf7ee / #fffaf2), text #3a352d, muted #6b6357. Highlights: amber (#fff2de + #c8881a border), sage (#e8f3ea + #4a7a5a), lavender (#efe7d7 + #7c6ad0). Rounded 12-18px corners. No black, no neon.
-- Always include at least one interactive control (slider, button, toggle) so the learner can manipulate something.
+VISUAL BLOCK RULES (include at most one per course):
+Choose the engine that best fits the concept:
+- engine "echarts": charts, data plots, function curves, histograms, bar/line/scatter. Set echartsOption to a complete ECharts option object. Use Primoria palette: amber #c8881a, sage #4a7a5a, lavender #7c6ad0. Always set a chart title inside the option.
+- engine "mermaid": flowcharts, sequence diagrams, concept maps, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string.
+- engine "physics": physics simulations (pendulum, collision, projectile, spring, inclined plane). Set physicsScene with a bodies array and optional constraints. NEVER write simulation code — the renderer handles physics automatically.
+- engine "html" (fallback): custom interactive experiences not covered above. Single self-contained HTML fragment, no external scripts, must include at least one interactive control (slider, button, toggle).
+Only include fields for the chosen engine. Do not include "html" when using echarts/mermaid/physics.
 
 OUTPUT:
 - Return valid JSON matching the schema. No prose outside JSON.`;
@@ -171,7 +180,7 @@ Your provider may not support native structured output. You must still return ON
     { "type": "text", "title": "string", "markdown": "string" },
     { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
     { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
-    { "type": "visual", "title": "string", "description": "string", "html": "string" },
+    { "type": "visual", "title": "string", "description": "string", "engine": "echarts|mermaid|physics|html", "echartsOption": {}, "mermaidDefinition": "string", "html": "string" },
     { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" }
   ]
 }
@@ -347,12 +356,23 @@ function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSch
   }
 
   if (type === "visual") {
-    return {
-      type: "visual",
+    const engine = typeof obj.engine === "string" ? obj.engine : undefined;
+    const base = {
+      type: "visual" as const,
       title,
       description: cleanText(obj.description ?? obj.content ?? obj.markdown, `互动观察「${topic}」的关键关系。`).slice(0, 220),
-      html: normalizeHtml(obj.html, topic),
+      engine: engine as "html" | "echarts" | "mermaid" | "physics" | undefined,
     };
+    if (engine === "echarts" && obj.echartsOption && typeof obj.echartsOption === "object") {
+      return { ...base, echartsOption: obj.echartsOption as Record<string, unknown>, echartsHeight: typeof obj.echartsHeight === "number" ? obj.echartsHeight : undefined };
+    }
+    if (engine === "mermaid" && typeof obj.mermaidDefinition === "string" && obj.mermaidDefinition.trim()) {
+      return { ...base, mermaidDefinition: obj.mermaidDefinition };
+    }
+    if (engine === "physics" && obj.physicsScene && typeof obj.physicsScene === "object") {
+      return { ...base, physicsScene: obj.physicsScene as z.infer<typeof PhysicsSceneZodSchema> };
+    }
+    return { ...base, engine: "html" as const, html: normalizeHtml(obj.html, topic) };
   }
 
   if (type === "code") {
@@ -461,7 +481,7 @@ function isUsableCourseDraft(course: z.infer<typeof CourseSchema>): boolean {
     course.summary,
     ...course.blocks.flatMap((block) =>
       Object.entries(block)
-        .filter(([key, value]) => key !== "html" && typeof value === "string")
+        .filter(([key, value]) => !["html", "echartsOption", "mermaidDefinition", "physicsScene", "echartsHeight"].includes(key) && typeof value === "string")
         .map(([, value]) => value),
     ),
   ];

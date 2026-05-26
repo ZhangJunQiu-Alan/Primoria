@@ -30,7 +30,7 @@ function blockToPrompt(block: CourseBlock) {
     return `Block ${title} (transfer):\nFrom: ${block.fromDomain}\nTo: ${block.toDomain}\nExplanation: ${block.explanation}\nExample: ${block.example}`;
   }
   if (block.type === "visual") {
-    return `Block ${title} (visual):\nDescription: ${block.description}\nHTML summary: ${block.html.slice(0, 700)}`;
+    return `Block ${title} (visual):\nDescription: ${block.description}\nHTML summary: ${(block.html ?? "").slice(0, 700)}`;
   }
   return `Block ${title} (code/${block.language}):\nExplanation: ${block.explanation}\nCode:\n${block.code}`;
 }

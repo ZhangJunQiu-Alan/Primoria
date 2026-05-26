@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { getCourse, updateBlock } from "@/lib/courses/store";
 import { recordCourseEditEvent } from "@/lib/memory/course-edit-events";
-import type { Course, CourseBlock } from "@/lib/courses/types";
+import type { Course, CourseBlock, VisualBlock } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
+import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 
 const TextEdit = z.object({
   type: z.literal("text"),
@@ -25,11 +26,30 @@ const TransferEdit = z.object({
   explanation: z.string(),
   example: z.string(),
 });
-const VisualEdit = z.object({
+const VisualEditHtml = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
   html: z.string(),
+});
+const VisualEditECharts = z.object({
+  type: z.literal("visual"),
+  title: z.string(),
+  description: z.string(),
+  echartsOption: z.record(z.unknown()),
+  echartsHeight: z.number().optional(),
+});
+const VisualEditMermaid = z.object({
+  type: z.literal("visual"),
+  title: z.string(),
+  description: z.string(),
+  mermaidDefinition: z.string(),
+});
+const VisualEditPhysics = z.object({
+  type: z.literal("visual"),
+  title: z.string(),
+  description: z.string(),
+  physicsScene: PhysicsSceneZodSchema,
 });
 const CodeEdit = z.object({
   type: z.literal("code"),
@@ -42,10 +62,13 @@ const CodeEdit = z.object({
 const EDITOR_SYSTEM_PROMPT = `You are Primoria's Course Editor agent. You receive ONE block from a course and a learner comment, then rewrite the block to address the comment.
 
 RULES:
-- Keep the same block type. Do NOT switch types.
+- Keep the same block type AND the same engine. Do NOT switch types or engines.
 - Stay focused on the comment. Don't redesign the whole block if the comment only asks for one change.
 - Keep the same approximate length unless the learner asks for more or less.
-- For visual blocks, regenerate self-contained HTML using the Primoria palette (cream #fbf7ee, ink #3a352d, amber/sage/lavender accents). Include at least one interactive control.
+- For visual blocks with engine "html": regenerate self-contained HTML using the Primoria palette (cream #fbf7ee, ink #3a352d, amber/sage/lavender accents). Include at least one interactive control.
+- For visual blocks with engine "echarts": update the echartsOption JSON to address the comment. Keep Primoria palette colors.
+- For visual blocks with engine "mermaid": update the mermaidDefinition DSL string. Keep valid Mermaid syntax.
+- For visual blocks with engine "physics": update the physicsScene JSON (bodies/constraints) to address the comment. Never write simulation code.
 - Output valid JSON only.`;
 
 export type EditBlockInput = {
@@ -68,10 +91,17 @@ function schemaForBlock(block: CourseBlock) {
     case "transfer":
       return TransferEdit;
     case "visual":
-      return VisualEdit;
+      return schemaForVisualBlock(block);
     case "code":
       return CodeEdit;
   }
+}
+
+function schemaForVisualBlock(block: VisualBlock) {
+  if (block.engine === "echarts") return VisualEditECharts;
+  if (block.engine === "mermaid") return VisualEditMermaid;
+  if (block.engine === "physics") return VisualEditPhysics;
+  return VisualEditHtml;
 }
 
 export async function editBlock(
@@ -191,13 +221,17 @@ function normalizeEditedBlock(raw: unknown, previous: CourseBlock): CourseBlock 
   }
 
   if (previous.type === "visual") {
-    return {
-      ...previous,
-      type: "visual",
-      title,
-      description: cleanText(obj.description ?? obj.content, previous.description),
-      html: cleanText(obj.html, previous.html),
-    };
+    const description = cleanText(obj.description ?? obj.content, previous.description);
+    if (previous.engine === "echarts" && obj.echartsOption && typeof obj.echartsOption === "object") {
+      return { ...previous, title, description, echartsOption: obj.echartsOption as Record<string, unknown>, echartsHeight: typeof obj.echartsHeight === "number" ? obj.echartsHeight : previous.echartsHeight };
+    }
+    if (previous.engine === "mermaid" && typeof obj.mermaidDefinition === "string" && obj.mermaidDefinition.trim()) {
+      return { ...previous, title, description, mermaidDefinition: obj.mermaidDefinition };
+    }
+    if (previous.engine === "physics" && obj.physicsScene && typeof obj.physicsScene === "object") {
+      return { ...previous, title, description, physicsScene: obj.physicsScene as VisualBlock["physicsScene"] };
+    }
+    return { ...previous, title, description, engine: "html" as const, html: cleanText(obj.html, previous.html ?? "") };
   }
 
   return {
@@ -214,7 +248,12 @@ function exampleShapeForBlock(block: CourseBlock) {
   if (block.type === "text") return '{ "type": "text", "title": "string", "markdown": "string" }';
   if (block.type === "analogy") return '{ "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" }';
   if (block.type === "transfer") return '{ "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" }';
-  if (block.type === "visual") return '{ "type": "visual", "title": "string", "description": "string", "html": "string" }';
+  if (block.type === "visual") {
+    if (block.engine === "echarts") return '{ "type": "visual", "title": "string", "description": "string", "echartsOption": {}, "echartsHeight": 300 }';
+    if (block.engine === "mermaid") return '{ "type": "visual", "title": "string", "description": "string", "mermaidDefinition": "string" }';
+    if (block.engine === "physics") return '{ "type": "visual", "title": "string", "description": "string", "physicsScene": { "bodies": [], "render": { "width": 600, "height": 300 } } }';
+    return '{ "type": "visual", "title": "string", "description": "string", "html": "string" }';
+  }
   return '{ "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" }';
 }
 
