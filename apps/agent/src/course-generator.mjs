@@ -27,11 +27,73 @@ const TransferBlockSchema = z.object({
   example: z.string(),
 });
 
+const PhysicsBodySchema = z.object({
+  id: z.string(),
+  shape: z.enum(["circle", "rectangle", "polygon"]),
+  x: z.number(),
+  y: z.number(),
+  radius: z.number().optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+  vertices: z.array(z.object({ x: z.number(), y: z.number() })).optional(),
+  isStatic: z.boolean().optional(),
+  density: z.number().optional(),
+  friction: z.number().optional(),
+  restitution: z.number().optional(),
+  frictionAir: z.number().optional(),
+  angle: z.number().optional(),
+  velocity: z.object({ x: z.number(), y: z.number() }).optional(),
+  label: z.string().optional(),
+  render: z.object({
+    fillStyle: z.string().optional(),
+    strokeStyle: z.string().optional(),
+    lineWidth: z.number().optional(),
+  }).optional(),
+});
+
+const PhysicsConstraintSchema = z.object({
+  bodyAId: z.string(),
+  bodyBId: z.string().nullable(),
+  pointA: z.object({ x: z.number(), y: z.number() }).optional(),
+  pointB: z.object({ x: z.number(), y: z.number() }).optional(),
+  length: z.number().optional(),
+  stiffness: z.number().optional(),
+  damping: z.number().optional(),
+  render: z.object({
+    visible: z.boolean().optional(),
+    strokeStyle: z.string().optional(),
+    lineWidth: z.number().optional(),
+  }).optional(),
+});
+
+const PhysicsSceneSchema = z.object({
+  gravity: z.object({ x: z.number(), y: z.number() }).optional(),
+  walls: z.object({
+    top: z.boolean().optional(),
+    bottom: z.boolean().optional(),
+    left: z.boolean().optional(),
+    right: z.boolean().optional(),
+  }).optional(),
+  bodies: z.array(PhysicsBodySchema),
+  constraints: z.array(PhysicsConstraintSchema).optional(),
+  render: z.object({
+    width: z.number(),
+    height: z.number(),
+    background: z.string().optional(),
+  }),
+  timeScale: z.number().optional(),
+});
+
 const VisualBlockSchema = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
-  html: z.string(),
+  engine: z.enum(["html", "echarts", "mermaid", "physics"]).optional(),
+  html: z.string().optional(),
+  echartsOption: z.record(z.unknown()).optional(),
+  echartsHeight: z.number().optional(),
+  mermaidDefinition: z.string().optional(),
+  physicsScene: PhysicsSceneSchema.optional(),
 });
 
 const CodeBlockSchema = z.object({
@@ -142,12 +204,12 @@ Schemas:
 - analogy: {"type":"analogy","title":"...","source":"...","target":"...","mapping":"..."}
 - transfer: {"type":"transfer","title":"...","fromDomain":"...","toDomain":"...","explanation":"...","example":"..."}
 - code: {"type":"code","title":"...","language":"...","code":"...","explanation":"..."}
-- visual: {"type":"visual","title":"...","description":"...","html":"..."}
+- visual: {"type":"visual","title":"...","description":"...","engine":"echarts|mermaid|physics|html","echartsOption":{...},"mermaidDefinition":"...","html":"..."}
 
 Rules:
 - Generate only the requested block type.
 - Keep text concise and specific; no boilerplate.
-- For visual, produce a compact self-contained HTML fragment with one interaction. No external scripts.
+- For visual, choose the engine that best fits: "echarts" for charts/plots, "mermaid" for diagrams/flows, "physics" for simulations, "html" for other interactive. Only include fields for the chosen engine. Do not write simulation code — set physicsScene JSON for physics.
 - Same language as the course topic. No markdown fences. No prose outside JSON.`;
 
 const BLOCK_CONCURRENCY = Number(process.env.PRIMORIA_COURSE_BLOCK_CONCURRENCY ?? 4);
@@ -544,12 +606,23 @@ function normalizeBlock(block, topic) {
   }
 
   if (type === "visual") {
-    return {
-      type: "visual",
+    const engine = typeof block.engine === "string" ? block.engine : undefined;
+    const base = {
+      type: /** @type {"visual"} */ ("visual"),
       title,
       description: cleanText(block.description ?? block.content ?? block.markdown, `互动观察「${topic}」的关键关系。`).slice(0, 220),
-      html: normalizeHtml(block.html, topic),
+      engine,
     };
+    if (engine === "echarts" && block.echartsOption && typeof block.echartsOption === "object") {
+      return { ...base, echartsOption: block.echartsOption, echartsHeight: typeof block.echartsHeight === "number" ? block.echartsHeight : undefined };
+    }
+    if (engine === "mermaid" && typeof block.mermaidDefinition === "string" && block.mermaidDefinition.trim()) {
+      return { ...base, mermaidDefinition: block.mermaidDefinition };
+    }
+    if (engine === "physics" && block.physicsScene && typeof block.physicsScene === "object") {
+      return { ...base, physicsScene: block.physicsScene };
+    }
+    return { ...base, engine: "html", html: normalizeHtml(block.html, topic) };
   }
 
   if (type === "code") {
@@ -852,7 +925,7 @@ function isUsableCourseDraft(course) {
     course.summary,
     ...course.blocks.flatMap((/** @type {any} */ block) =>
       Object.entries(block)
-        .filter(([key, value]) => key !== "html" && typeof value === "string")
+        .filter(([key, value]) => !["html", "echartsOption", "mermaidDefinition", "physicsScene", "echartsHeight"].includes(key) && typeof value === "string")
         .map(([, value]) => value),
     ),
   ];
