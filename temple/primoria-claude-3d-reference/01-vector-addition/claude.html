@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vector Addition in 3D — Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0b1020;
+    --bg-1: #111634;
+    --panel: rgba(18, 22, 46, 0.78);
+    --panel-border: rgba(120, 140, 200, 0.18);
+    --ink: #e8ecff;
+    --ink-dim: #9aa3c7;
+    --ink-faint: #5d6690;
+    --rule: rgba(150, 160, 200, 0.14);
+    --vec-a: #5ab8ff;      /* cool blue */
+    --vec-b: #ffb547;      /* warm amber */
+    --vec-r: #ff5fb3;      /* magenta resultant */
+    --axis-x: #ff7373;
+    --axis-y: #7be38a;
+    --axis-z: #8ab4ff;
+    --glow: 0 0 24px rgba(120, 160, 255, 0.15);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 20% 0%, #1a2050 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 100%, #2a1242 0%, transparent 50%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1));
+    color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* subtle grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    z-index: 100;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    height: 100vh;
+    gap: 0;
+  }
+
+  /* ─── Canvas stage ─── */
+  #stage {
+    position: relative;
+    overflow: hidden;
+  }
+  #canvas {
+    position: absolute; inset: 0;
+    display: block;
+    cursor: grab;
+  }
+  #canvas:active { cursor: grabbing; }
+
+  /* Header overlay */
+  .header {
+    position: absolute;
+    top: 22px; left: 28px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .header .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 28px;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .header h1 .accent {
+    color: var(--vec-r);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* Legend */
+  .legend {
+    position: absolute;
+    bottom: 22px; left: 28px;
+    z-index: 10;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: var(--glow);
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-dim);
+  }
+  .swatch {
+    width: 22px; height: 3px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .swatch::after {
+    content: '';
+    position: absolute;
+    right: -5px; top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-left: 6px solid currentColor;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+  .legend-row strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Hint */
+  .hint {
+    position: absolute;
+    bottom: 22px; right: 28px;
+    z-index: 10;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .hint span { color: var(--ink-dim); }
+
+  /* ─── Control panel ─── */
+  #panel {
+    background: rgba(10, 14, 32, 0.6);
+    border-left: 1px solid var(--panel-border);
+    padding: 28px 24px;
+    overflow-y: auto;
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .section-title .meta {
+    font-family: 'JetBrains Mono';
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+  }
+
+  /* Vector readouts */
+  .readout {
+    font-family: 'JetBrains Mono';
+    font-size: 13px;
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+  .readout .name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+  }
+  .readout .components {
+    color: var(--ink-dim);
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+  .readout .components .val {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .readout .mag {
+    font-size: 10px;
+    color: var(--ink-faint);
+    text-align: right;
+  }
+  .readout .mag .num {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 12px;
+    display: block;
+  }
+  .readout.a { border-left: 3px solid var(--vec-a); }
+  .readout.a .name { color: var(--vec-a); }
+  .readout.b { border-left: 3px solid var(--vec-b); }
+  .readout.b .name { color: var(--vec-b); }
+  .readout.r {
+    border-left: 3px solid var(--vec-r);
+    background: rgba(255, 95, 179, 0.05);
+  }
+  .readout.r .name { color: var(--vec-r); }
+
+  /* Sliders */
+  .slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .slider {
+    display: grid;
+    grid-template-columns: 16px 1fr 44px;
+    align-items: center;
+    gap: 12px;
+  }
+  .slider .axis-tag {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+  }
+  .slider .axis-tag.x { color: var(--axis-x); }
+  .slider .axis-tag.y { color: var(--axis-y); }
+  .slider .axis-tag.z { color: var(--axis-z); }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 24px;
+    margin: 0;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,181,71,0.4) 50%,
+      rgba(255,255,255,0.05) 100%);
+    border-radius: 2px;
+  }
+  input[type="range"]::-moz-range-track {
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,181,71,0.4) 50%,
+      rgba(255,255,255,0.05) 100%);
+    border-radius: 2px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--vec-b);
+    margin-top: -5.5px;
+    border: 2px solid #0b1020;
+    box-shadow: 0 0 0 1px var(--vec-b), 0 0 12px rgba(255,181,71,0.5);
+    transition: transform 0.1s;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--vec-b);
+    border: 2px solid #0b1020;
+    box-shadow: 0 0 0 1px var(--vec-b), 0 0 12px rgba(255,181,71,0.5);
+  }
+  input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+  }
+
+  .slider-val {
+    font-family: 'JetBrains Mono';
+    font-size: 12px;
+    color: var(--ink);
+    text-align: right;
+    background: rgba(255,181,71,0.08);
+    border: 1px solid rgba(255,181,71,0.2);
+    border-radius: 4px;
+    padding: 3px 6px;
+  }
+
+  /* Vector A controls (smaller, secondary) */
+  .vec-a-controls .slider-val {
+    background: rgba(90,184,255,0.08);
+    border-color: rgba(90,184,255,0.2);
+  }
+  .vec-a-controls input[type="range"]::-webkit-slider-thumb {
+    background: var(--vec-a);
+    box-shadow: 0 0 0 1px var(--vec-a), 0 0 12px rgba(90,184,255,0.5);
+  }
+  .vec-a-controls input[type="range"]::-moz-range-thumb {
+    background: var(--vec-a);
+    box-shadow: 0 0 0 1px var(--vec-a), 0 0 12px rgba(90,184,255,0.5);
+  }
+  .vec-a-controls input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(90,184,255,0.4) 50%,
+      rgba(255,255,255,0.05) 100%);
+  }
+  .vec-a-controls input[type="range"]::-moz-range-track {
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(90,184,255,0.4) 50%,
+      rgba(255,255,255,0.05) 100%);
+  }
+
+  /* Reset button */
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--panel-border);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono';
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .reset-btn:hover {
+    border-color: var(--vec-r);
+    color: var(--vec-r);
+    background: rgba(255, 95, 179, 0.05);
+  }
+  .reset-btn:active {
+    transform: scale(0.98);
+  }
+  .reset-btn svg {
+    width: 12px; height: 12px;
+  }
+
+  /* Footer note */
+  .footnote {
+    font-size: 10px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    padding-top: 4px;
+    border-top: 1px solid var(--rule);
+  }
+  .footnote em {
+    color: var(--ink-dim);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+
+  /* Responsive */
+  @media (max-width: 820px) {
+    #app {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+    }
+    #panel {
+      border-left: none;
+      border-top: 1px solid var(--panel-border);
+      max-height: 50vh;
+      padding: 20px 18px;
+    }
+    .header h1 { font-size: 22px; }
+    .legend { font-size: 10px; padding: 10px; }
+    .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ─────────── 3D STAGE ─────────── -->
+  <div id="stage">
+    <canvas id="canvas"></canvas>
+
+    <div class="header">
+      <div class="eyebrow">Linear Algebra · Lesson 03</div>
+      <h1>Vector Addition in <span class="accent">3D</span></h1>
+    </div>
+
+    <div class="legend" aria-label="Legend">
+      <div class="legend-row">
+        <span class="swatch" style="background:var(--vec-a); color:var(--vec-a);"></span>
+        <span>Vector <strong>A</strong> — fixed reference</span>
+      </div>
+      <div class="legend-row">
+        <span class="swatch" style="background:var(--vec-b); color:var(--vec-b);"></span>
+        <span>Vector <strong>B</strong> — adjustable</span>
+      </div>
+      <div class="legend-row">
+        <span class="swatch" style="background:var(--vec-r); color:var(--vec-r);"></span>
+        <span>Sum <strong>A + B</strong> — head-to-tail</span>
+      </div>
+    </div>
+
+    <div class="hint"><span>Drag</span> to rotate · <span>Scroll</span> to zoom</div>
+  </div>
+
+  <!-- ─────────── CONTROL PANEL ─────────── -->
+  <aside id="panel">
+
+    <!-- Live readouts -->
+    <div class="section">
+      <div class="section-title">Live Readout <span class="meta">(x, y, z)</span></div>
+
+      <div class="readout a">
+        <div class="name">A</div>
+        <div class="components">
+          ⟨<span class="val" id="ax">2.0</span>, <span class="val" id="ay">1.0</span>, <span class="val" id="az">0.5</span>⟩
+        </div>
+        <div class="mag">‖A‖<span class="num" id="amag">2.29</span></div>
+      </div>
+
+      <div class="readout b">
+        <div class="name">B</div>
+        <div class="components">
+          ⟨<span class="val" id="bx">1.0</span>, <span class="val" id="by">2.0</span>, <span class="val" id="bz">2.0</span>⟩
+        </div>
+        <div class="mag">‖B‖<span class="num" id="bmag">3.00</span></div>
+      </div>
+
+      <div class="readout r">
+        <div class="name">R</div>
+        <div class="components">
+          ⟨<span class="val" id="rx">3.0</span>, <span class="val" id="ry">3.0</span>, <span class="val" id="rz">2.5</span>⟩
+        </div>
+        <div class="mag">‖R‖<span class="num" id="rmag">5.07</span></div>
+      </div>
+    </div>
+
+    <!-- Sliders for B -->
+    <div class="section">
+      <div class="section-title">Adjust Vector B <span class="meta">range ±4</span></div>
+      <div class="slider-group" id="b-sliders">
+        <div class="slider">
+          <div class="axis-tag x">x</div>
+          <input type="range" min="-4" max="4" step="0.1" value="1.0" id="bx-slider" />
+          <div class="slider-val" id="bx-val">+1.0</div>
+        </div>
+        <div class="slider">
+          <div class="axis-tag y">y</div>
+          <input type="range" min="-4" max="4" step="0.1" value="2.0" id="by-slider" />
+          <div class="slider-val" id="by-val">+2.0</div>
+        </div>
+        <div class="slider">
+          <div class="axis-tag z">z</div>
+          <input type="range" min="-4" max="4" step="0.1" value="2.0" id="bz-slider" />
+          <div class="slider-val" id="bz-val">+2.0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sliders for A -->
+    <div class="section vec-a-controls">
+      <div class="section-title">Adjust Vector A <span class="meta">range ±4</span></div>
+      <div class="slider-group">
+        <div class="slider">
+          <div class="axis-tag x">x</div>
+          <input type="range" min="-4" max="4" step="0.1" value="2.0" id="ax-slider" />
+          <div class="slider-val" id="ax-val">+2.0</div>
+        </div>
+        <div class="slider">
+          <div class="axis-tag y">y</div>
+          <input type="range" min="-4" max="4" step="0.1" value="1.0" id="ay-slider" />
+          <div class="slider-val" id="ay-val">+1.0</div>
+        </div>
+        <div class="slider">
+          <div class="axis-tag z">z</div>
+          <input type="range" min="-4" max="4" step="0.1" value="0.5" id="az-slider" />
+          <div class="slider-val" id="az-val">+0.5</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="reset-btn" id="reset-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <polyline points="3 4 3 10 9 10"/>
+      </svg>
+      Reset View &amp; Vectors
+    </button>
+
+    <div class="footnote">
+      <em>Tip:</em> Notice how the magenta sum <strong>R</strong> always connects the tail of <strong>A</strong> to the head of <strong>B</strong>. This is the <em>head-to-tail</em> rule — it works in any dimension.
+    </div>
+
+  </aside>
+</div>
+
+<!-- ─────────── THREE.JS ─────────── -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.min.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* ════════════════════════════════════════════════════════
+   SETUP
+════════════════════════════════════════════════════════ */
+const canvas = document.getElementById('canvas');
+const stage = document.getElementById('stage');
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x0b1020, 14, 30);
+
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+const DEFAULT_CAM = { radius: 12, theta: Math.PI / 4, phi: Math.PI / 3.2 };
+let cam = { ...DEFAULT_CAM };
+
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  antialias: true,
+  alpha: true
+});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 0);
+
+/* ════════════════════════════════════════════════════════
+   LIGHTING
+════════════════════════════════════════════════════════ */
+scene.add(new THREE.AmbientLight(0xa0b4ff, 0.6));
+const key = new THREE.DirectionalLight(0xffffff, 0.9);
+key.position.set(5, 8, 5);
+scene.add(key);
+const rim = new THREE.DirectionalLight(0xff5fb3, 0.3);
+rim.position.set(-5, 3, -5);
+scene.add(rim);
+
+/* ════════════════════════════════════════════════════════
+   GRID / AXES
+════════════════════════════════════════════════════════ */
+const COLORS = {
+  vecA: 0x5ab8ff,
+  vecB: 0xffb547,
+  vecR: 0xff5fb3,
+  axisX: 0xff7373,
+  axisY: 0x7be38a,
+  axisZ: 0x8ab4ff,
+};
+
+// Ground grid (XZ plane)
+const gridGroup = new THREE.Group();
+const GRID_SIZE = 8;
+const gridMat = new THREE.LineBasicMaterial({
+  color: 0x4a5680,
+  transparent: true,
+  opacity: 0.18
+});
+const gridMatMajor = new THREE.LineBasicMaterial({
+  color: 0x6878a8,
+  transparent: true,
+  opacity: 0.32
+});
+for (let i = -GRID_SIZE; i <= GRID_SIZE; i++) {
+  const isMajor = i === 0;
+  const m = isMajor ? gridMatMajor : gridMat;
+  // lines parallel to X
+  const g1 = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-GRID_SIZE, 0, i),
+    new THREE.Vector3(GRID_SIZE, 0, i)
+  ]);
+  gridGroup.add(new THREE.Line(g1, m));
+  // lines parallel to Z
+  const g2 = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(i, 0, -GRID_SIZE),
+    new THREE.Vector3(i, 0, GRID_SIZE)
+  ]);
+  gridGroup.add(new THREE.Line(g2, m));
+}
+scene.add(gridGroup);
+
+// Coordinate axes (longer, thinner reference)
+function makeAxis(dir, color, length = 5) {
+  const points = [
+    new THREE.Vector3(0, 0, 0),
+    dir.clone().multiplyScalar(length)
+  ];
+  const geo = new THREE.BufferGeometry().setFromPoints(points);
+  const mat = new THREE.LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity: 0.55
+  });
+  return new THREE.Line(geo, mat);
+}
+scene.add(makeAxis(new THREE.Vector3(1, 0, 0), COLORS.axisX));
+scene.add(makeAxis(new THREE.Vector3(0, 1, 0), COLORS.axisY));
+scene.add(makeAxis(new THREE.Vector3(0, 0, 1), COLORS.axisZ));
+
+// Tick marks
+function makeTicks(axis) {
+  const group = new THREE.Group();
+  const mat = new THREE.LineBasicMaterial({ color: 0x6878a8, transparent: true, opacity: 0.4 });
+  for (let i = -4; i <= 4; i++) {
+    if (i === 0) continue;
+    let p1, p2;
+    const TICK = 0.08;
+    if (axis === 'x') {
+      p1 = new THREE.Vector3(i, -TICK, 0);
+      p2 = new THREE.Vector3(i, TICK, 0);
+    } else if (axis === 'y') {
+      p1 = new THREE.Vector3(-TICK, i, 0);
+      p2 = new THREE.Vector3(TICK, i, 0);
+    } else {
+      p1 = new THREE.Vector3(0, -TICK, i);
+      p2 = new THREE.Vector3(0, TICK, i);
+    }
+    const g = new THREE.BufferGeometry().setFromPoints([p1, p2]);
+    group.add(new THREE.Line(g, mat));
+  }
+  return group;
+}
+scene.add(makeTicks('x'));
+scene.add(makeTicks('y'));
+scene.add(makeTicks('z'));
+
+/* ════════════════════════════════════════════════════════
+   TEXT LABELS (sprites)
+════════════════════════════════════════════════════════ */
+function makeTextSprite(text, color = '#e8ecff', size = 64, weight = 700, italic = true) {
+  const c = document.createElement('canvas');
+  const PAD = 12;
+  const FONT_SIZE = size;
+  c.width = 256;
+  c.height = 128;
+  const ctx = c.getContext('2d');
+  ctx.font = `${italic ? 'italic ' : ''}${weight} ${FONT_SIZE}px Fraunces, serif`;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // soft glow
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 14;
+  ctx.fillText(text, c.width / 2, c.height / 2);
+  ctx.shadowBlur = 0;
+  ctx.fillText(text, c.width / 2, c.height / 2);
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.minFilter = THREE.LinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(1.1, 0.55, 1);
+  sprite.renderOrder = 10;
+  return sprite;
+}
+
+// Axis labels
+const labelX = makeTextSprite('x', '#ff7373', 72);
+labelX.position.set(5.4, 0, 0);
+scene.add(labelX);
+const labelY = makeTextSprite('y', '#7be38a', 72);
+labelY.position.set(0, 5.4, 0);
+scene.add(labelY);
+const labelZ = makeTextSprite('z', '#8ab4ff', 72);
+labelZ.position.set(0, 0, 5.4);
+scene.add(labelZ);
+
+// Vector labels
+const labelA = makeTextSprite('A', '#5ab8ff', 80);
+const labelB = makeTextSprite('B', '#ffb547', 80);
+const labelR = makeTextSprite('A+B', '#ff5fb3', 64);
+labelR.scale.set(1.4, 0.55, 1);
+scene.add(labelA);
+scene.add(labelB);
+scene.add(labelR);
+
+/* ════════════════════════════════════════════════════════
+   ARROW CLASS — tube body + cone head
+════════════════════════════════════════════════════════ */
+class Arrow extends THREE.Group {
+  constructor(color, opts = {}) {
+    super();
+    this.color = color;
+    this.opts = Object.assign({
+      radius: 0.045,
+      headLen: 0.4,
+      headRadius: 0.14,
+      opacity: 1.0,
+      emissive: 0.5
+    }, opts);
+
+    this.mat = new THREE.MeshStandardMaterial({
+      color: color,
+      emissive: color,
+      emissiveIntensity: this.opts.emissive,
+      roughness: 0.4,
+      metalness: 0.1,
+      transparent: this.opts.opacity < 1,
+      opacity: this.opts.opacity
+    });
+
+    // Body: a unit cylinder we'll scale on Y
+    const bodyGeo = new THREE.CylinderGeometry(this.opts.radius, this.opts.radius, 1, 16);
+    this.body = new THREE.Mesh(bodyGeo, this.mat);
+    this.body.position.y = 0.5; // pivot at base
+    this.add(this.body);
+
+    // Head
+    const headGeo = new THREE.ConeGeometry(this.opts.headRadius, this.opts.headLen, 20);
+    this.head = new THREE.Mesh(headGeo, this.mat);
+    this.add(this.head);
+
+    // Base sphere (clean origin)
+    const baseGeo = new THREE.SphereGeometry(this.opts.radius * 1.2, 12, 12);
+    this.base = new THREE.Mesh(baseGeo, this.mat);
+    this.add(this.base);
+  }
+
+  // Set arrow from origin vector to tip vector
+  setFromTo(origin, tip) {
+    const o = origin.clone();
+    const t = tip.clone();
+    const dir = t.clone().sub(o);
+    const length = dir.length();
+
+    this.position.copy(o);
+
+    if (length < 1e-4) {
+      this.body.visible = false;
+      this.head.visible = false;
+      return;
+    }
+    this.body.visible = true;
+    this.head.visible = true;
+
+    const bodyLen = Math.max(0.01, length - this.opts.headLen);
+
+    // Scale body
+    this.body.scale.y = bodyLen;
+    this.body.position.y = bodyLen / 2;
+
+    // Position head at end of body
+    this.head.position.y = bodyLen + this.opts.headLen / 2;
+
+    // Orient whole group: default up = +Y, rotate to match dir
+    const up = new THREE.Vector3(0, 1, 0);
+    const ndir = dir.clone().normalize();
+    const quat = new THREE.Quaternion().setFromUnitVectors(up, ndir);
+    this.quaternion.copy(quat);
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   THE THREE VECTORS
+════════════════════════════════════════════════════════ */
+const arrowA = new Arrow(COLORS.vecA, { emissive: 0.6 });
+const arrowB = new Arrow(COLORS.vecB, { emissive: 0.6, opacity: 0.55 }); // ghost original
+const arrowBShifted = new Arrow(COLORS.vecB, { emissive: 0.6 }); // B from tip of A
+const arrowR = new Arrow(COLORS.vecR, {
+  emissive: 0.8,
+  radius: 0.055,
+  headRadius: 0.17,
+  headLen: 0.45
+});
+scene.add(arrowA, arrowB, arrowBShifted, arrowR);
+
+// Dashed parallelogram helper (faint guides)
+function makeDashed(color) {
+  const mat = new THREE.LineDashedMaterial({
+    color,
+    dashSize: 0.18,
+    gapSize: 0.12,
+    transparent: true,
+    opacity: 0.35
+  });
+  const geo = new THREE.BufferGeometry();
+  const line = new THREE.Line(geo, mat);
+  return line;
+}
+const guideA = makeDashed(COLORS.vecA);
+const guideB = makeDashed(COLORS.vecB);
+scene.add(guideA, guideB);
+
+function updateGuide(line, from, to) {
+  const pts = [from.clone(), to.clone()];
+  line.geometry.dispose();
+  line.geometry = new THREE.BufferGeometry().setFromPoints(pts);
+  line.computeLineDistances();
+}
+
+/* ════════════════════════════════════════════════════════
+   STATE + UPDATE
+════════════════════════════════════════════════════════ */
+const state = {
+  A: new THREE.Vector3(2.0, 1.0, 0.5),
+  B: new THREE.Vector3(1.0, 2.0, 2.0)
+};
+const DEFAULT_A = state.A.clone();
+const DEFAULT_B = state.B.clone();
+
+function fmt(n) {
+  const s = n.toFixed(1);
+  return n >= 0 ? '+' + s : s;
+}
+function fmtPlain(n) {
+  return n.toFixed(1);
+}
+function setText(id, val) {
+  document.getElementById(id).textContent = val;
+}
+
+function update() {
+  const A = state.A;
+  const B = state.B;
+  const R = A.clone().add(B);
+
+  const origin = new THREE.Vector3(0, 0, 0);
+  const tipA = A.clone();
+  const tipR = R.clone();
+
+  // A from origin
+  arrowA.setFromTo(origin, tipA);
+  // B (faint) from origin — shows B's "true" components
+  arrowB.setFromTo(origin, B.clone());
+  // B (solid) from tip of A — head-to-tail construction
+  arrowBShifted.setFromTo(tipA, tipR);
+  // R from origin to tip of shifted B
+  arrowR.setFromTo(origin, tipR);
+
+  // Guide lines for parallelogram suggestion
+  updateGuide(guideA, B.clone(), tipR);
+  updateGuide(guideB, tipA, tipR);
+
+  // Label positions — offset slightly along arrow midpoint
+  function midOffset(o, t, outDist = 0.35) {
+    const mid = o.clone().add(t).multiplyScalar(0.5);
+    // Offset perpendicular-ish (just add a small Y bump if flat)
+    return mid.add(new THREE.Vector3(0, outDist, 0));
+  }
+  labelA.position.copy(midOffset(origin, tipA, 0.35));
+  labelB.position.copy(midOffset(tipA, tipR, 0.35));
+  labelR.position.copy(midOffset(origin, tipR, -0.4));
+
+  // Readouts
+  setText('ax', fmtPlain(A.x));
+  setText('ay', fmtPlain(A.y));
+  setText('az', fmtPlain(A.z));
+  setText('amag', A.length().toFixed(2));
+
+  setText('bx', fmtPlain(B.x));
+  setText('by', fmtPlain(B.y));
+  setText('bz', fmtPlain(B.z));
+  setText('bmag', B.length().toFixed(2));
+
+  setText('rx', fmtPlain(R.x));
+  setText('ry', fmtPlain(R.y));
+  setText('rz', fmtPlain(R.z));
+  setText('rmag', R.length().toFixed(2));
+}
+
+/* ════════════════════════════════════════════════════════
+   SLIDERS
+════════════════════════════════════════════════════════ */
+function bindSlider(sliderId, valId, vec, key) {
+  const slider = document.getElementById(sliderId);
+  const valEl = document.getElementById(valId);
+  slider.addEventListener('input', () => {
+    const v = parseFloat(slider.value);
+    vec[key] = v;
+    valEl.textContent = fmt(v);
+    update();
+  });
+}
+bindSlider('bx-slider', 'bx-val', state.B, 'x');
+bindSlider('by-slider', 'by-val', state.B, 'y');
+bindSlider('bz-slider', 'bz-val', state.B, 'z');
+bindSlider('ax-slider', 'ax-val', state.A, 'x');
+bindSlider('ay-slider', 'ay-val', state.A, 'y');
+bindSlider('az-slider', 'az-val', state.A, 'z');
+
+/* ════════════════════════════════════════════════════════
+   RESET
+════════════════════════════════════════════════════════ */
+document.getElementById('reset-btn').addEventListener('click', () => {
+  state.A.copy(DEFAULT_A);
+  state.B.copy(DEFAULT_B);
+  cam = { ...DEFAULT_CAM };
+
+  const setSlider = (id, val) => {
+    const el = document.getElementById(id);
+    el.value = val;
+  };
+  setSlider('ax-slider', DEFAULT_A.x);
+  setSlider('ay-slider', DEFAULT_A.y);
+  setSlider('az-slider', DEFAULT_A.z);
+  setSlider('bx-slider', DEFAULT_B.x);
+  setSlider('by-slider', DEFAULT_B.y);
+  setSlider('bz-slider', DEFAULT_B.z);
+  document.getElementById('ax-val').textContent = fmt(DEFAULT_A.x);
+  document.getElementById('ay-val').textContent = fmt(DEFAULT_A.y);
+  document.getElementById('az-val').textContent = fmt(DEFAULT_A.z);
+  document.getElementById('bx-val').textContent = fmt(DEFAULT_B.x);
+  document.getElementById('by-val').textContent = fmt(DEFAULT_B.y);
+  document.getElementById('bz-val').textContent = fmt(DEFAULT_B.z);
+  update();
+});
+
+/* ════════════════════════════════════════════════════════
+   CAMERA — orbit + zoom
+════════════════════════════════════════════════════════ */
+function updateCamera() {
+  const x = cam.radius * Math.sin(cam.phi) * Math.cos(cam.theta);
+  const y = cam.radius * Math.cos(cam.phi);
+  const z = cam.radius * Math.sin(cam.phi) * Math.sin(cam.theta);
+  camera.position.set(x, y, z);
+  camera.lookAt(1, 1, 1); // slight bias toward where vectors live
+}
+
+let dragging = false;
+let lastX = 0, lastY = 0;
+canvas.addEventListener('pointerdown', (e) => {
+  dragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  cam.theta -= dx * 0.008;
+  cam.phi -= dy * 0.008;
+  cam.phi = Math.max(0.15, Math.min(Math.PI - 0.15, cam.phi));
+  updateCamera();
+});
+canvas.addEventListener('pointerup', (e) => {
+  dragging = false;
+  try { canvas.releasePointerCapture(e.pointerId); } catch(_) {}
+});
+canvas.addEventListener('pointercancel', () => { dragging = false; });
+
+canvas.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  cam.radius *= (1 + e.deltaY * 0.001);
+  cam.radius = Math.max(5, Math.min(22, cam.radius));
+  updateCamera();
+}, { passive: false });
+
+/* ════════════════════════════════════════════════════════
+   RESIZE
+════════════════════════════════════════════════════════ */
+function resize() {
+  const w = stage.clientWidth;
+  const h = stage.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize);
+
+/* ════════════════════════════════════════════════════════
+   GENTLE AUTO-SPIN UNTIL USER INTERACTS
+════════════════════════════════════════════════════════ */
+let userInteracted = false;
+['pointerdown', 'wheel'].forEach(ev => {
+  canvas.addEventListener(ev, () => { userInteracted = true; }, { once: true });
+});
+
+/* ════════════════════════════════════════════════════════
+   RENDER LOOP
+════════════════════════════════════════════════════════ */
+function animate() {
+  if (!userInteracted) {
+    cam.theta += 0.0015;
+    updateCamera();
+  }
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+
+// Boot
+resize();
+updateCamera();
+update();
+animate();
+
+</script>
+</body>
+</html>
