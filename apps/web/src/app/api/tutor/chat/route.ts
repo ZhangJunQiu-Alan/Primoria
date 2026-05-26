@@ -4,6 +4,7 @@ import { applyAttachmentsToLatestUserMessage, AttachmentsSchema, processAttachme
 import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
 import type { TutorStreamEvent } from "@/lib/ai/types";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { hasDatabaseUrl } from "@/lib/db/client";
 
 const ContentPartSchema = z.union([
   z.object({ type: z.literal("text"), text: z.string() }),
@@ -57,7 +58,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const body = RequestSchema.parse(await request.json());
-    const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
+    const providerSettings = isAuthEnabled() || hasDatabaseUrl() ? body.settings : undefined;
+    const processedAttachments = await processAttachments(body.attachments ?? [], providerSettings);
     const messages = applyAttachmentsToLatestUserMessage(body.messages, processedAttachments);
 
     if (body.stream) {
@@ -69,7 +71,7 @@ export async function POST(request: Request) {
             controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
           };
 
-          void runTutorAgentStream(messages, body.settings, emit)
+          void runTutorAgentStream(messages, providerSettings, emit)
             .catch((error) => {
               console.error("[tutor/chat:stream]", error);
               emit({
@@ -90,7 +92,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const result = await runTutorAgent(messages, body.settings);
+    const result = await runTutorAgent(messages, providerSettings);
     return NextResponse.json(result);
   } catch (error) {
     console.error("[tutor/chat]", error);
