@@ -46,7 +46,7 @@ function blockToContext(block: CourseBlock) {
       type: block.type,
       title,
       description: block.description,
-      htmlSummary: block.html.slice(0, 900),
+      htmlSummary: (block.html ?? "").slice(0, 900),
     };
   }
   return {

@@ -1,4 +1,5 @@
 import { normalizeWidgetDependencies, type WidgetDependency } from "@/lib/ai/widget-dependencies";
+import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 
 type WidgetExportInput = {
   title: string;
@@ -121,6 +122,7 @@ export function assembleWidgetStandaloneHtml({ html, title, dependencies }: Widg
         window.open(a.href, '_blank', 'noopener,noreferrer');
       }
     });
+    ${THREE_ORBIT_CONTROLS_SHIM}
   </script>
 </head>
 <body>

@@ -10,6 +10,9 @@ import type {
 } from "@/lib/courses/types";
 import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
+import { EChartsRenderer } from "@/components/generative-ui/echarts-renderer";
+import { MermaidRenderer } from "@/components/generative-ui/mermaid-renderer";
+import { PhysicsSceneRenderer } from "@/components/generative-ui/physics-scene-renderer";
 
 export function BlockRenderer({ block }: { block: CourseBlock }) {
   if (block.type === "text") return <TextBlockView block={block} />;
@@ -88,10 +91,34 @@ function TransferBlockView({ block }: { block: TransferBlock }) {
 }
 
 function VisualBlockView({ block }: { block: VisualBlock }) {
+  if (block.engine === "echarts" && block.echartsOption) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <EChartsRenderer artifact={{ type: "echarts_widget", title: block.title ?? "Chart", description: block.description, option: block.echartsOption, height: block.echartsHeight }} />
+      </BlockShell>
+    );
+  }
+  if (block.engine === "mermaid" && block.mermaidDefinition) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <MermaidRenderer artifact={{ type: "mermaid_diagram", title: block.title ?? "Diagram", definition: block.mermaidDefinition }} />
+      </BlockShell>
+    );
+  }
+  if (block.engine === "physics" && block.physicsScene) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <PhysicsSceneRenderer artifact={{ type: "physics_scene", title: block.title ?? "Simulation", description: block.description, scene: block.physicsScene }} />
+      </BlockShell>
+    );
+  }
   return (
     <BlockShell kind="visual" title={block.title}>
       <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-      <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html} />
+      <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html ?? ""} />
     </BlockShell>
   );
 }
