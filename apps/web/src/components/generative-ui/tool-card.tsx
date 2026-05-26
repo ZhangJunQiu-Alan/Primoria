@@ -4,6 +4,15 @@ import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
 import type { TutorArtifact } from "@/lib/ai/types";
 import { WidgetRenderer } from "./widget-renderer";
+import { EChartsRenderer } from "./echarts-renderer";
+import { MermaidRenderer } from "./mermaid-renderer";
+import { PhysicsSceneRenderer } from "./physics-scene-renderer";
+import { AlgorithmVisualizer } from "./algorithm-visualizer";
+import { MathExplorerRenderer } from "./math-explorer-renderer";
+import { WaveVisualizer } from "./wave-visualizer";
+import { GraphVisualizer } from "./graph-visualizer";
+import { MoleculeRenderer } from "./molecule-renderer";
+import { QuizRenderer } from "./quiz-renderer";
 
 export function ToolCard({
   artifact,
@@ -114,6 +123,42 @@ export function ToolCard({
         </div>
       </div>
     );
+  }
+
+  if (artifact.type === "echarts_widget") {
+    return <EChartsRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "mermaid_diagram") {
+    return <MermaidRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "physics_scene") {
+    return <PhysicsSceneRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "algorithm_visualization") {
+    return <AlgorithmVisualizer artifact={artifact} />;
+  }
+
+  if (artifact.type === "math_explorer") {
+    return <MathExplorerRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "wave_visualization") {
+    return <WaveVisualizer artifact={artifact} />;
+  }
+
+  if (artifact.type === "graph_visualization") {
+    return <GraphVisualizer artifact={artifact} />;
+  }
+
+  if (artifact.type === "molecule") {
+    return <MoleculeRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "quiz") {
+    return <QuizRenderer artifact={artifact} />;
   }
 
   if (artifact.type === "todo_list") {
