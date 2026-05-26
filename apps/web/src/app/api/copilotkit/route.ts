@@ -28,17 +28,21 @@ function formatCourseDetailContextForAgent(context: unknown) {
     const parsed = JSON.parse(String(item.value));
     const course = parsed?.course;
     const selected = parsed?.selectedBlock;
+    const selectedText = parsed?.selectedText;
     if (!course?.title) return "";
     return [
       "COURSE DETAIL MODE — highest priority for this run.",
       "The learner is inside an existing course detail page. Do not create a new course by default.",
+      `Course id: ${course.id ?? ""}`,
       `Current course: ${course.title}`,
       `Topic: ${course.topic ?? ""}`,
       `Summary: ${course.summary ?? ""}`,
       `Selected block: ${selected ? `${selected.title ?? selected.type} (${selected.type}, id=${selected.id})` : "none; answer from the whole course"}`,
+      `Selected text: ${selectedText?.text ? `"${String(selectedText.text)}" (block id=${selectedText.blockId}, ${selectedText.blockType ?? "block"})` : "none"}`,
       `Available blocks: ${(course.blocks ?? []).map((block: any) => `${block.index}. ${block.title} [${block.type}, id=${block.id}]`).join("; ")}`,
+      "If selected text is present, treat phrases like this, selected part, make this simpler, rewrite this, or explain this as referring to that exact selected text and its owning block.",
       "For summarize/explain/practice questions, answer from this current course context. Only call generate_course if the learner explicitly asks for a new or different course.",
-      "If asked to revise the selected block, call revise_selected_course_block.",
+      "If asked to revise the selected text or selected block, call revise_selected_course_block.",
     ].join("\n");
   } catch {
     return "";
