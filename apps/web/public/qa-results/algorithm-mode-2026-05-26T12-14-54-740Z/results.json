@@ -1,0 +1,3259 @@
+{
+  "runId": "algorithm-mode-2026-05-26T12-14-54-740Z",
+  "generatedAt": "2026-05-26T12:14:54.740Z",
+  "expectedMode": "ALGORITHM VISUALIZATION MODE",
+  "results": [
+    {
+      "id": "01-binary-search",
+      "prompt": "算法可视化模式：用数组 [2,5,8,12,16,23,38] 演示 binary search 查找 16。必须逐步显示 low、mid、high 指针、当前比较值、搜索区间收缩过程。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "algorithm_visualization",
+      "title": "Binary Search: 查找 16",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/01-binary-search.sse",
+      "artifact": {
+        "type": "algorithm_visualization",
+        "title": "Binary Search: 查找 16",
+        "description": "在排序数组 [2,5,8,12,16,23,38] 中逐步二分查找目标值 16，显示 low、mid、high 指针移动与比较过程",
+        "algorithm": "binary_search",
+        "steps": [
+          {
+            "description": "初始化搜索区间：low = 0, high = 6, 计算 mid = (0+6)//2 = 3",
+            "annotation": "目标值 16 与中间元素 12 比较",
+            "variables": [
+              {
+                "name": "low",
+                "value": 0
+              },
+              {
+                "name": "high",
+                "value": 6
+              },
+              {
+                "name": "mid",
+                "value": 3
+              },
+              {
+                "name": "arr[mid]",
+                "value": 12
+              },
+              {
+                "name": "目标",
+                "value": 16
+              },
+              {
+                "name": "比较",
+                "value": "12 < 16"
+              }
+            ],
+            "kind": "array",
+            "array": {
+              "values": [
+                2,
+                5,
+                8,
+                12,
+                16,
+                23,
+                38
+              ],
+              "highlights": [
+                {
+                  "index": 3,
+                  "role": "comparing"
+                },
+                {
+                  "index": 0,
+                  "role": "muted"
+                },
+                {
+                  "index": 1,
+                  "role": "muted"
+                },
+                {
+                  "index": 2,
+                  "role": "muted"
+                },
+                {
+                  "index": 4,
+                  "role": "muted"
+                },
+                {
+                  "index": 5,
+                  "role": "muted"
+                },
+                {
+                  "index": 6,
+                  "role": "muted"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 0,
+                  "label": "low"
+                },
+                {
+                  "index": 3,
+                  "label": "mid"
+                },
+                {
+                  "index": 6,
+                  "label": "high"
+                }
+              ]
+            }
+          },
+          {
+            "description": "目标值大于中间元素，搜索右半区间：low = mid + 1 = 4, high 保持 6",
+            "annotation": "区间缩小为 [4,6]，计算新 mid = (4+6)//2 = 5",
+            "variables": [
+              {
+                "name": "low",
+                "value": 4
+              },
+              {
+                "name": "high",
+                "value": 6
+              },
+              {
+                "name": "mid",
+                "value": 5
+              },
+              {
+                "name": "arr[mid]",
+                "value": 23
+              },
+              {
+                "name": "目标",
+                "value": 16
+              },
+              {
+                "name": "比较",
+                "value": "23 > 16"
+              }
+            ],
+            "kind": "array",
+            "array": {
+              "values": [
+                2,
+                5,
+                8,
+                12,
+                16,
+                23,
+                38
+              ],
+              "highlights": [
+                {
+                  "index": 5,
+                  "role": "comparing"
+                },
+                {
+                  "index": 0,
+                  "role": "muted"
+                },
+                {
+                  "index": 1,
+                  "role": "muted"
+                },
+                {
+                  "index": 2,
+                  "role": "muted"
+                },
+                {
+                  "index": 3,
+                  "role": "muted"
+                },
+                {
+                  "index": 4,
+                  "role": "muted"
+                },
+                {
+                  "index": 6,
+                  "role": "muted"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 4,
+                  "label": "low"
+                },
+                {
+                  "index": 5,
+                  "label": "mid"
+                },
+                {
+                  "index": 6,
+                  "label": "high"
+                }
+              ]
+            }
+          },
+          {
+            "description": "目标值小于中间元素，搜索左半区间：high = mid - 1 = 4, low 保持 4",
+            "annotation": "区间缩小为 [4,4]，计算新 mid = (4+4)//2 = 4",
+            "variables": [
+              {
+                "name": "low",
+                "value": 4
+              },
+              {
+                "name": "high",
+                "value": 4
+              },
+              {
+                "name": "mid",
+                "value": 4
+              },
+              {
+                "name": "arr[mid]",
+                "value": 16
+              },
+              {
+                "name": "目标",
+                "value": 16
+              },
+              {
+                "name": "比较",
+                "value": "16 == 16 ✓"
+              }
+            ],
+            "kind": "array",
+            "array": {
+              "values": [
+                2,
+                5,
+                8,
+                12,
+                16,
+                23,
+                38
+              ],
+              "highlights": [
+                {
+                  "index": 4,
+                  "role": "result"
+                },
+                {
+                  "index": 0,
+                  "role": "muted"
+                },
+                {
+                  "index": 1,
+                  "role": "muted"
+                },
+                {
+                  "index": 2,
+                  "role": "muted"
+                },
+                {
+                  "index": 3,
+                  "role": "muted"
+                },
+                {
+                  "index": 5,
+                  "role": "muted"
+                },
+                {
+                  "index": 6,
+                  "role": "muted"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 4,
+                  "label": "low"
+                },
+                {
+                  "index": 4,
+                  "label": "mid"
+                },
+                {
+                  "index": 4,
+                  "label": "high"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "Visualization plan",
+        "approach": "Binary search algorithm visualization with step-by-step pointer movement, comparison highlights, and interval shrinking",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"binary search\"",
+          "\"array [2",
+          "5",
+          "8"
+        ]
+      },
+      "status": "passed",
+      "order": 1,
+      "elapsedMs": 28588,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "render_algorithm:requested",
+        "primoria-tutor:complete",
+        "render_algorithm:success"
+      ],
+      "threadId": "019e6435-999d-7880-98ec-23939ce4d1a2",
+      "langGraphRunId": "019e6435-99b0-7880-98ec-79f4b8ac9210"
+    },
+    {
+      "id": "02-bubble-sort",
+      "prompt": "算法可视化模式：用数组 [8,3,5,1,9,2] 演示 bubble sort。必须逐步显示每一次相邻比较、swap、每轮结束后已排序区间。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "none",
+      "title": "02-bubble-sort",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/02-bubble-sort.sse",
+      "artifact": {
+        "type": "tool_status",
+        "name": "algorithm_qa",
+        "status": "error",
+        "description": "No algorithm_visualization artifact was produced."
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "Bubble Sort Step-by-Step Visualization",
+        "approach": "Visualize each comparison and swap in bubble sort with highlighted pairs, arrows for swaps, and shaded sorted region after each pass.",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"bubble sort algorithm\"",
+          "\"array [8",
+          "3",
+          "5"
+        ]
+      },
+      "status": "failed",
+      "error": "Expected algorithm_visualization but got none",
+      "order": 2,
+      "elapsedMs": 77647,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "primoria-tutor:complete"
+      ],
+      "threadId": "019e6435-999f-7880-98ec-2bb41be50a82",
+      "langGraphRunId": "019e6435-99ab-7880-98ec-77f195b62223"
+    },
+    {
+      "id": "03-merge-sort",
+      "prompt": "算法可视化模式：用数组 [7,2,6,3,9,1] 演示 merge sort。必须展示拆分阶段、左右子数组合并、比较指针和每次写回结果。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "none",
+      "title": "03-merge-sort",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/03-merge-sort.sse",
+      "artifact": {
+        "type": "tool_status",
+        "name": "algorithm_qa",
+        "status": "error",
+        "description": "No algorithm_visualization artifact was produced."
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "归并排序可视化",
+        "approach": "使用分治策略演示归并排序：递归拆分阶段展示数组分割，合并阶段展示双指针比较与逐步写回结果",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"数组 [7",
+          "2",
+          "6",
+          "3"
+        ]
+      },
+      "status": "failed",
+      "error": "Expected algorithm_visualization but got none",
+      "order": 3,
+      "elapsedMs": 71648,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "primoria-tutor:complete"
+      ],
+      "threadId": "019e6435-99a0-7880-98ec-312d3bfd4949",
+      "langGraphRunId": "019e6435-99b2-7880-98ec-878992898620"
+    },
+    {
+      "id": "04-quick-sort",
+      "prompt": "算法可视化模式：用数组 [6,1,8,4,7,2,5] 演示 quick sort 的 partition。必须展示 pivot、i/j 指针、比较、交换以及最终 pivot 就位。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "algorithm_visualization",
+      "title": "Quick Sort Partition (Lomuto) Visualization",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/04-quick-sort.sse",
+      "artifact": {
+        "type": "algorithm_visualization",
+        "title": "Quick Sort Partition (Lomuto) Visualization",
+        "description": "Step-by-step partition of array [6,1,8,4,7,2,5] with pivot=5. Shows comparisons, swaps, and final pivot placement.",
+        "algorithm": "quick_sort_partition",
+        "steps": [
+          {
+            "description": "Initial array. Pivot = 5 (last element). i = -1, j = 0.",
+            "kind": "array",
+            "array": {
+              "values": [
+                6,
+                1,
+                8,
+                4,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 0,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Compare arr[0]=6 with pivot=5. 6 > 5, so no swap.",
+            "kind": "array",
+            "array": {
+              "values": [
+                6,
+                1,
+                8,
+                4,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 0,
+                  "role": "comparing"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 0,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Compare arr[1]=1 with pivot=5. 1 <= 5, so swap arr[0] and arr[1].",
+            "kind": "array",
+            "array": {
+              "values": [
+                6,
+                1,
+                8,
+                4,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 1,
+                  "role": "comparing"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 1,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Swap arr[0] and arr[1]. i becomes 0.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                6,
+                8,
+                4,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 0,
+                  "role": "swapping"
+                },
+                {
+                  "index": 1,
+                  "role": "swapping"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 0,
+                  "label": "i"
+                },
+                {
+                  "index": 1,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Compare arr[2]=8 with pivot=5. 8 > 5, so no swap.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                6,
+                8,
+                4,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 2,
+                  "role": "comparing"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 0,
+                  "label": "i"
+                },
+                {
+                  "index": 2,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Compare arr[3]=4 with pivot=5. 4 <= 5, so swap arr[1] and arr[3].",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                6,
+                8,
+                4,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 3,
+                  "role": "comparing"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 0,
+                  "label": "i"
+                },
+                {
+                  "index": 3,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Swap arr[1] and arr[3]. i becomes 1.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                4,
+                8,
+                6,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 1,
+                  "role": "swapping"
+                },
+                {
+                  "index": 3,
+                  "role": "swapping"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 1,
+                  "label": "i"
+                },
+                {
+                  "index": 3,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Compare arr[4]=7 with pivot=5. 7 > 5, so no swap.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                4,
+                8,
+                6,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 4,
+                  "role": "comparing"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 1,
+                  "label": "i"
+                },
+                {
+                  "index": 4,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Compare arr[5]=2 with pivot=5. 2 <= 5, so swap arr[2] and arr[5].",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                4,
+                8,
+                6,
+                7,
+                2,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 5,
+                  "role": "comparing"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 1,
+                  "label": "i"
+                },
+                {
+                  "index": 5,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Swap arr[2] and arr[5]. i becomes 2.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                4,
+                2,
+                6,
+                7,
+                8,
+                5
+              ],
+              "highlights": [
+                {
+                  "index": 2,
+                  "role": "swapping"
+                },
+                {
+                  "index": 5,
+                  "role": "swapping"
+                },
+                {
+                  "index": 6,
+                  "role": "pivot"
+                }
+              ],
+              "pointers": [
+                {
+                  "index": 2,
+                  "label": "i"
+                },
+                {
+                  "index": 5,
+                  "label": "j"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Swap arr[i+1]=arr[3] with pivot arr[6]. Pivot 5 is now in its final position.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                4,
+                2,
+                5,
+                7,
+                8,
+                6
+              ],
+              "highlights": [
+                {
+                  "index": 3,
+                  "role": "sorted"
+                },
+                {
+                  "index": 6,
+                  "role": "swapping"
+                }
+              ],
+              "pointers": []
+            }
+          },
+          {
+            "description": "Partition complete. All elements left of pivot (index 3) are ≤5, all elements right are >5.",
+            "kind": "array",
+            "array": {
+              "values": [
+                1,
+                4,
+                2,
+                5,
+                7,
+                8,
+                6
+              ],
+              "highlights": [
+                {
+                  "index": 3,
+                  "role": "sorted"
+                },
+                {
+                  "index": 0,
+                  "role": "visited"
+                },
+                {
+                  "index": 1,
+                  "role": "visited"
+                },
+                {
+                  "index": 2,
+                  "role": "visited"
+                },
+                {
+                  "index": 4,
+                  "role": "muted"
+                },
+                {
+                  "index": 5,
+                  "role": "muted"
+                },
+                {
+                  "index": 6,
+                  "role": "muted"
+                }
+              ],
+              "pointers": []
+            }
+          }
+        ]
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "Visualization plan",
+        "approach": "Use SVG-based array visualization with labeled pointers for i and j, color-coded highlights for comparisons, swaps, and pivot placement. Step through Lomuto partition algorithm on array [6,1,8,4,7,2,5] with pivot=5.",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"quick sort partition\"",
+          "\"array\"",
+          "\"pivot\"",
+          "\"i pointer\""
+        ]
+      },
+      "status": "passed",
+      "order": 4,
+      "elapsedMs": 92780,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "render_algorithm:requested",
+        "primoria-tutor:complete",
+        "render_algorithm:success"
+      ],
+      "threadId": "019e6435-99a1-7880-98ec-388899cefd58",
+      "langGraphRunId": "019e6435-99ea-7880-98ec-8df90957e642"
+    },
+    {
+      "id": "05-bfs-graph",
+      "prompt": "算法可视化模式：演示 BFS 遍历无向图 A-B,A-C,B-D,C-E,D-F,E-F，从 A 开始。必须展示 queue、visited、当前节点、遍历顺序。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "algorithm_visualization",
+      "title": "BFS 遍历无向图",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/05-bfs-graph.sse",
+      "artifact": {
+        "type": "algorithm_visualization",
+        "title": "BFS 遍历无向图",
+        "description": "演示广度优先搜索（BFS）遍历无向图的过程，从节点 A 开始，展示队列、已访问节点、当前节点和遍历顺序。",
+        "algorithm": "bfs",
+        "steps": [
+          {
+            "description": "初始化：从节点 A 开始，将其加入队列并标记为已访问。",
+            "annotation": "BFS 开始",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[A]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A}"
+              },
+              {
+                "name": "当前节点",
+                "value": "A"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "current"
+                }
+              ],
+              "queue": [
+                "A"
+              ]
+            }
+          },
+          {
+            "description": "出队节点 A，探索其邻居 B 和 C。将 B 和 C 加入队列并标记为已访问。",
+            "annotation": "探索 A 的邻居",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[B, C]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A, B, C}"
+              },
+              {
+                "name": "当前节点",
+                "value": "B"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A, B, C]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "queued"
+                }
+              ],
+              "queue": [
+                "B",
+                "C"
+              ]
+            }
+          },
+          {
+            "description": "出队节点 B，探索其邻居 D。将 D 加入队列并标记为已访问。",
+            "annotation": "探索 B 的邻居",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[C, D]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A, B, C, D}"
+              },
+              {
+                "name": "当前节点",
+                "value": "C"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A, B, C, D]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "queued"
+                }
+              ],
+              "queue": [
+                "C",
+                "D"
+              ]
+            }
+          },
+          {
+            "description": "出队节点 C，探索其邻居 E。将 E 加入队列并标记为已访问。",
+            "annotation": "探索 C 的邻居",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[D, E]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A, B, C, D, E}"
+              },
+              {
+                "name": "当前节点",
+                "value": "D"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A, B, C, D, E]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "queued"
+                }
+              ],
+              "queue": [
+                "D",
+                "E"
+              ]
+            }
+          },
+          {
+            "description": "出队节点 D，探索其邻居 F。将 F 加入队列并标记为已访问。",
+            "annotation": "探索 D 的邻居",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[E, F]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A, B, C, D, E, F}"
+              },
+              {
+                "name": "当前节点",
+                "value": "E"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A, B, C, D, E, F]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "queued"
+                }
+              ],
+              "queue": [
+                "E",
+                "F"
+              ]
+            }
+          },
+          {
+            "description": "出队节点 E，探索其邻居 F。F 已访问，不再加入队列。",
+            "annotation": "F 已访问",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[F]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A, B, C, D, E, F}"
+              },
+              {
+                "name": "当前节点",
+                "value": "F"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A, B, C, D, E, F]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "current"
+                }
+              ],
+              "queue": [
+                "F"
+              ]
+            }
+          },
+          {
+            "description": "出队节点 F，无更多邻居。队列为空，BFS 遍历完成。",
+            "annotation": "BFS 完成",
+            "variables": [
+              {
+                "name": "队列",
+                "value": "[]"
+              },
+              {
+                "name": "已访问",
+                "value": "{A, B, C, D, E, F}"
+              },
+              {
+                "name": "当前节点",
+                "value": "无"
+              },
+              {
+                "name": "遍历顺序",
+                "value": "[A, B, C, D, E, F]"
+              }
+            ],
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.2
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.2,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.8,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.8
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.8
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.5,
+                  "y": 0.95
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B"
+                },
+                {
+                  "from": "A",
+                  "to": "C"
+                },
+                {
+                  "from": "B",
+                  "to": "D"
+                },
+                {
+                  "from": "C",
+                  "to": "E"
+                },
+                {
+                  "from": "D",
+                  "to": "F"
+                },
+                {
+                  "from": "E",
+                  "to": "F"
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "visited"
+                }
+              ],
+              "queue": []
+            }
+          }
+        ]
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "BFS 遍历无向图可视化",
+        "approach": "使用 SVG 和 D3.js 绘制图结构，并逐步动画展示 BFS 过程，包括队列、已访问节点、当前节点和遍历顺序。",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"无向图：A-B",
+          "A-C",
+          "B-D",
+          "C-E"
+        ]
+      },
+      "status": "passed",
+      "order": 5,
+      "elapsedMs": 71661,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "render_algorithm:requested",
+        "primoria-tutor:complete",
+        "render_algorithm:success"
+      ],
+      "threadId": "019e6435-99a2-7880-98ec-415ad920a5e9",
+      "langGraphRunId": "019e6435-9a07-7880-98ec-968359004ad0"
+    },
+    {
+      "id": "06-dfs-graph",
+      "prompt": "算法可视化模式：演示 DFS 遍历图 A-B,A-C,B-D,C-E,D-F，从 A 开始。必须展示 stack 或递归路径、visited、回溯过程和访问顺序。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "algorithm_visualization",
+      "title": "DFS 遍历图 A-B, A-C, B-D, C-E, D-F",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/06-dfs-graph.sse",
+      "artifact": {
+        "type": "algorithm_visualization",
+        "title": "DFS 遍历图 A-B, A-C, B-D, C-E, D-F",
+        "description": "从节点A开始深度优先遍历，展示栈、visited集合、回溯过程和访问顺序",
+        "algorithm": "graph_dfs",
+        "steps": [
+          {
+            "description": "初始化：栈包含起始节点A，visited为空，访问顺序为空",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "stacked"
+                }
+              ],
+              "stack": [
+                "A"
+              ]
+            }
+          },
+          {
+            "description": "访问节点A，标记为已访问。邻居B和C按逆序压入栈：先压C，再压B，栈顶为B",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "stacked"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "stacked"
+                }
+              ],
+              "stack": [
+                "C",
+                "B"
+              ]
+            }
+          },
+          {
+            "description": "弹出栈顶B并访问。邻居A已访问，D未访问，将D压入栈",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "stacked"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "stacked"
+                }
+              ],
+              "stack": [
+                "C",
+                "D"
+              ]
+            }
+          },
+          {
+            "description": "弹出栈顶D并访问。邻居B已访问，F未访问，将F压入栈",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "stacked"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "stacked"
+                }
+              ],
+              "stack": [
+                "C",
+                "F"
+              ]
+            }
+          },
+          {
+            "description": "弹出栈顶F并访问。邻居D已访问，无未访问邻居，回溯。栈中只剩C",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "stacked"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "visited"
+                }
+              ],
+              "stack": [
+                "C"
+              ]
+            }
+          },
+          {
+            "description": "弹出栈顶C并访问。邻居A已访问，E未访问，将E压入栈",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "stacked"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "visited"
+                }
+              ],
+              "stack": [
+                "E"
+              ]
+            }
+          },
+          {
+            "description": "弹出栈顶E并访问。邻居C已访问，无未访问邻居，回溯。栈为空，遍历结束",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.5,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.3,
+                  "y": 0.5
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.7,
+                  "y": 0.5
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.3,
+                  "y": 0.7
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.7,
+                  "y": 0.7
+                },
+                {
+                  "id": "F",
+                  "label": "F",
+                  "x": 0.3,
+                  "y": 0.9
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "directed": false
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "directed": false
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "directed": false
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "directed": false
+                },
+                {
+                  "from": "D",
+                  "to": "F",
+                  "directed": false
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "F",
+                  "role": "visited"
+                }
+              ],
+              "stack": []
+            }
+          }
+        ]
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "DFS 遍历可视化",
+        "approach": "使用栈实现DFS，逐步展示栈变化、visited集合和回溯过程",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"DFS深度优先遍历\"",
+          "\"栈数据结构\"",
+          "\"回溯过程\"",
+          "\"访问顺序\""
+        ]
+      },
+      "status": "passed",
+      "order": 6,
+      "elapsedMs": 84547,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "render_algorithm:requested",
+        "primoria-tutor:complete",
+        "render_algorithm:success"
+      ],
+      "threadId": "019e6435-99a3-7880-98ec-4abb5f486e83",
+      "langGraphRunId": "019e6435-9a09-7880-98ec-9dc1bce1a036"
+    },
+    {
+      "id": "07-dijkstra",
+      "prompt": "算法可视化模式：演示 Dijkstra 最短路径，从 A 到各点，边为 A-B:4,A-C:2,C-B:1,B-D:5,C-D:8,C-E:10,D-E:2。必须展示距离表、当前 settled 节点、候选边和更新。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "algorithm_visualization",
+      "title": "Dijkstra 最短路径 · A→各点",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/07-dijkstra.sse",
+      "artifact": {
+        "type": "algorithm_visualization",
+        "title": "Dijkstra 最短路径 · A→各点",
+        "description": "从节点 A 出发，逐步计算到 B、C、D、E 的最短距离，展示每步的 settled 集合、距离表更新和候选边松弛过程。",
+        "algorithm": "graph_dijkstra",
+        "steps": [
+          {
+            "description": "初始化：所有节点距离设为 ∞，起点 A 距离 = 0",
+            "annotation": "初始化距离表",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.15,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.45,
+                  "y": 0.15
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.45,
+                  "y": 0.55
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.75,
+                  "y": 0.2
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.85,
+                  "y": 0.6
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "weight": 4
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "weight": 2
+                },
+                {
+                  "from": "C",
+                  "to": "B",
+                  "weight": 1
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "weight": 5
+                },
+                {
+                  "from": "C",
+                  "to": "D",
+                  "weight": 8
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "weight": 10
+                },
+                {
+                  "from": "D",
+                  "to": "E",
+                  "weight": 2
+                }
+              ],
+              "highlights": [],
+              "distances": [
+                {
+                  "nodeId": "A",
+                  "value": "0"
+                },
+                {
+                  "nodeId": "B",
+                  "value": "∞"
+                },
+                {
+                  "nodeId": "C",
+                  "value": "∞"
+                },
+                {
+                  "nodeId": "D",
+                  "value": "∞"
+                },
+                {
+                  "nodeId": "E",
+                  "value": "∞"
+                }
+              ]
+            }
+          },
+          {
+            "description": "① Settle A（dist=0）：松弛邻居 B 和 C",
+            "annotation": "A→B: 0+4=4 < ∞ ✓ 更新\nA→C: 0+2=2 < ∞ ✓ 更新",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.15,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.45,
+                  "y": 0.15
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.45,
+                  "y": 0.55
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.75,
+                  "y": 0.2
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.85,
+                  "y": 0.6
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "weight": 4
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "weight": 2
+                },
+                {
+                  "from": "C",
+                  "to": "B",
+                  "weight": 1
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "weight": 5
+                },
+                {
+                  "from": "C",
+                  "to": "D",
+                  "weight": 8
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "weight": 10
+                },
+                {
+                  "from": "D",
+                  "to": "E",
+                  "weight": 2
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "queued"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "queued"
+                },
+                {
+                  "edgeKey": "A-B",
+                  "role": "visited"
+                },
+                {
+                  "edgeKey": "A-C",
+                  "role": "visited"
+                }
+              ],
+              "distances": [
+                {
+                  "nodeId": "A",
+                  "value": "0 ✓"
+                },
+                {
+                  "nodeId": "B",
+                  "value": "4"
+                },
+                {
+                  "nodeId": "C",
+                  "value": "2"
+                },
+                {
+                  "nodeId": "D",
+                  "value": "∞"
+                },
+                {
+                  "nodeId": "E",
+                  "value": "∞"
+                }
+              ]
+            }
+          },
+          {
+            "description": "② Settle C（dist=2）：松弛邻居 B、D、E",
+            "annotation": "C→B: 2+1=3 < 4 ✓ 更新（原4→3）\nC→D: 2+8=10 < ∞ ✓ 更新\nC→E: 2+10=12 < ∞ ✓ 更新",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.15,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.45,
+                  "y": 0.15
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.45,
+                  "y": 0.55
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.75,
+                  "y": 0.2
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.85,
+                  "y": 0.6
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "weight": 4
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "weight": 2
+                },
+                {
+                  "from": "C",
+                  "to": "B",
+                  "weight": 1
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "weight": 5
+                },
+                {
+                  "from": "C",
+                  "to": "D",
+                  "weight": 8
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "weight": 10
+                },
+                {
+                  "from": "D",
+                  "to": "E",
+                  "weight": 2
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "queued"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "queued"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "queued"
+                },
+                {
+                  "edgeKey": "C-B",
+                  "role": "visited"
+                },
+                {
+                  "edgeKey": "C-D",
+                  "role": "visited"
+                },
+                {
+                  "edgeKey": "C-E",
+                  "role": "visited"
+                }
+              ],
+              "distances": [
+                {
+                  "nodeId": "A",
+                  "value": "0 ✓"
+                },
+                {
+                  "nodeId": "B",
+                  "value": "3"
+                },
+                {
+                  "nodeId": "C",
+                  "value": "2 ✓"
+                },
+                {
+                  "nodeId": "D",
+                  "value": "10"
+                },
+                {
+                  "nodeId": "E",
+                  "value": "12"
+                }
+              ]
+            }
+          },
+          {
+            "description": "③ Settle B（dist=3）：松弛邻居 D",
+            "annotation": "B→D: 3+5=8 < 10 ✓ 更新（原10→8）\n候选：D(8), E(12) → 选 D",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.15,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.45,
+                  "y": 0.15
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.45,
+                  "y": 0.55
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.75,
+                  "y": 0.2
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.85,
+                  "y": 0.6
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "weight": 4
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "weight": 2
+                },
+                {
+                  "from": "C",
+                  "to": "B",
+                  "weight": 1
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "weight": 5
+                },
+                {
+                  "from": "C",
+                  "to": "D",
+                  "weight": 8
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "weight": 10
+                },
+                {
+                  "from": "D",
+                  "to": "E",
+                  "weight": 2
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "queued"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "queued"
+                },
+                {
+                  "edgeKey": "B-D",
+                  "role": "visited"
+                }
+              ],
+              "distances": [
+                {
+                  "nodeId": "A",
+                  "value": "0 ✓"
+                },
+                {
+                  "nodeId": "B",
+                  "value": "3 ✓"
+                },
+                {
+                  "nodeId": "C",
+                  "value": "2 ✓"
+                },
+                {
+                  "nodeId": "D",
+                  "value": "8"
+                },
+                {
+                  "nodeId": "E",
+                  "value": "12"
+                }
+              ]
+            }
+          },
+          {
+            "description": "④ Settle D（dist=8）：松弛邻居 E",
+            "annotation": "D→E: 8+2=10 < 12 ✓ 更新（原12→10）\n候选：E(10) → 选 E",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.15,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.45,
+                  "y": 0.15
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.45,
+                  "y": 0.55
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.75,
+                  "y": 0.2
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.85,
+                  "y": 0.6
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "weight": 4
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "weight": 2
+                },
+                {
+                  "from": "C",
+                  "to": "B",
+                  "weight": 1
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "weight": 5
+                },
+                {
+                  "from": "C",
+                  "to": "D",
+                  "weight": 8
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "weight": 10
+                },
+                {
+                  "from": "D",
+                  "to": "E",
+                  "weight": 2
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "current"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "queued"
+                },
+                {
+                  "edgeKey": "D-E",
+                  "role": "visited"
+                }
+              ],
+              "distances": [
+                {
+                  "nodeId": "A",
+                  "value": "0 ✓"
+                },
+                {
+                  "nodeId": "B",
+                  "value": "3 ✓"
+                },
+                {
+                  "nodeId": "C",
+                  "value": "2 ✓"
+                },
+                {
+                  "nodeId": "D",
+                  "value": "8 ✓"
+                },
+                {
+                  "nodeId": "E",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          {
+            "description": "⑤ Settle E（dist=10）：无未访问邻居",
+            "annotation": "所有节点已 settle ✓\n最短路径：\nA(0) → C(2) → B(3) → D(8) → E(10)\n路径树：A-C, C-B, B-D, D-E",
+            "kind": "graph",
+            "graph": {
+              "nodes": [
+                {
+                  "id": "A",
+                  "label": "A",
+                  "x": 0.15,
+                  "y": 0.3
+                },
+                {
+                  "id": "B",
+                  "label": "B",
+                  "x": 0.45,
+                  "y": 0.15
+                },
+                {
+                  "id": "C",
+                  "label": "C",
+                  "x": 0.45,
+                  "y": 0.55
+                },
+                {
+                  "id": "D",
+                  "label": "D",
+                  "x": 0.75,
+                  "y": 0.2
+                },
+                {
+                  "id": "E",
+                  "label": "E",
+                  "x": 0.85,
+                  "y": 0.6
+                }
+              ],
+              "edges": [
+                {
+                  "from": "A",
+                  "to": "B",
+                  "weight": 4
+                },
+                {
+                  "from": "A",
+                  "to": "C",
+                  "weight": 2
+                },
+                {
+                  "from": "C",
+                  "to": "B",
+                  "weight": 1
+                },
+                {
+                  "from": "B",
+                  "to": "D",
+                  "weight": 5
+                },
+                {
+                  "from": "C",
+                  "to": "D",
+                  "weight": 8
+                },
+                {
+                  "from": "C",
+                  "to": "E",
+                  "weight": 10
+                },
+                {
+                  "from": "D",
+                  "to": "E",
+                  "weight": 2
+                }
+              ],
+              "highlights": [
+                {
+                  "nodeId": "A",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "B",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "C",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "D",
+                  "role": "visited"
+                },
+                {
+                  "nodeId": "E",
+                  "role": "current"
+                },
+                {
+                  "edgeKey": "A-C",
+                  "role": "path"
+                },
+                {
+                  "edgeKey": "C-B",
+                  "role": "path"
+                },
+                {
+                  "edgeKey": "B-D",
+                  "role": "path"
+                },
+                {
+                  "edgeKey": "D-E",
+                  "role": "path"
+                }
+              ],
+              "distances": [
+                {
+                  "nodeId": "A",
+                  "value": "0 ✓"
+                },
+                {
+                  "nodeId": "B",
+                  "value": "3 ✓"
+                },
+                {
+                  "nodeId": "C",
+                  "value": "2 ✓"
+                },
+                {
+                  "nodeId": "D",
+                  "value": "8 ✓"
+                },
+                {
+                  "nodeId": "E",
+                  "value": "10 ✓"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "Dijkstra 最短路径可视化",
+        "approach": "Graph visualization with step-by-step Dijkstra algorithm showing distance table, settled nodes, candidate edges with weights, and relaxation updates. Each step highlights the node being settled and its outgoing edges.",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"Graph with nodes A-E\"",
+          "\"Weighted directed edges\"",
+          "\"Distance table per step\"",
+          "\"Settled node highlight\""
+        ]
+      },
+      "status": "passed",
+      "order": 7,
+      "elapsedMs": 50920,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "render_algorithm:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "render_algorithm:success"
+      ],
+      "threadId": "019e6435-99a4-7880-98ec-55bede6c3b94",
+      "langGraphRunId": "019e6435-9a0c-7880-98ec-ad42a9d4c426"
+    },
+    {
+      "id": "08-topological-sort",
+      "prompt": "算法可视化模式：演示 DAG 的 topological sort，边为 A->C,B->C,B->D,C->E,D->F,E->F。必须展示 indegree 表、zero-indegree queue、输出序列和边删除过程。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "none",
+      "title": "08-topological-sort",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/08-topological-sort.sse",
+      "artifact": {
+        "type": "tool_status",
+        "name": "algorithm_qa",
+        "status": "error",
+        "description": "No algorithm_visualization artifact was produced."
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "DAG拓扑排序可视化",
+        "approach": "使用Kahn算法，通过维护入度表和零入度队列逐步移除节点，展示拓扑顺序。每一步显示图状态、入度表、队列、输出序列，并高亮当前操作的节点和被删除的边。",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"拓扑排序\"",
+          "\"入度表\"",
+          "\"零入度队列\"",
+          "\"边删除\""
+        ]
+      },
+      "status": "failed",
+      "error": "Expected algorithm_visualization but got none",
+      "order": 8,
+      "elapsedMs": 90964,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "primoria-tutor:complete"
+      ],
+      "threadId": "019e6435-99a5-7880-98ec-5cd41f6a915f",
+      "langGraphRunId": "019e6435-9a0a-7880-98ec-a5886e53f972"
+    },
+    {
+      "id": "09-tree-inorder",
+      "prompt": "算法可视化模式：演示二叉树 inorder traversal。树结构：4 为根，左子树 2(1,3)，右子树 6(5,7)。必须展示当前节点、递归栈、visited/path 和输出序列。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "none",
+      "title": "09-tree-inorder",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/09-tree-inorder.sse",
+      "artifact": {
+        "type": "tool_status",
+        "name": "algorithm_qa",
+        "status": "error",
+        "description": "No algorithm_visualization artifact was produced."
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "二叉树中序遍历可视化",
+        "approach": "使用交互式树形图，显示当前节点高亮、递归栈动画、visited节点标记和输出序列面板。逐步展示中序遍历的递归调用过程。",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"二叉树节点(1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "status": "failed",
+      "error": "Expected algorithm_visualization but got none",
+      "order": 9,
+      "elapsedMs": 67526,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "primoria-tutor:complete"
+      ],
+      "threadId": "019e6435-99a5-7880-98ec-62a102ab65a2",
+      "langGraphRunId": "019e6435-9a0e-7880-98ec-b37973584036"
+    },
+    {
+      "id": "10-knapsack-dp",
+      "prompt": "算法可视化模式：演示 0/1 knapsack DP。物品 weights=[2,3,4], values=[3,4,5], capacity=6。必须展示 DP 表格、当前 item/capacity、include/exclude 公式和最终答案。",
+      "expectedMode": "ALGORITHM VISUALIZATION MODE",
+      "actualType": "none",
+      "title": "10-knapsack-dp",
+      "codeKind": "algorithm_visualization",
+      "codeFile": "/qa-results/algorithm-mode-2026-05-26T12-14-54-740Z/raw/10-knapsack-dp.sse",
+      "artifact": {
+        "type": "tool_status",
+        "name": "algorithm_qa",
+        "status": "error",
+        "description": "No algorithm_visualization artifact was produced."
+      },
+      "planArtifact": {
+        "type": "visualization_plan",
+        "title": "Visualization plan",
+        "approach": "Step-by-step DP table animation for 0/1 knapsack. Each step highlights the current cell, shows include/exclude formula, and updates the table progressively.",
+        "technology": "SVG/d3",
+        "keyElements": [
+          "[\"DP table 4×8 (rows=items",
+          "cols=capacity 0..6)\"",
+          "\"Current cell highlight with include/exclude formula\"",
+          "\"Pointers: item index i and capacity w\""
+        ]
+      },
+      "status": "failed",
+      "error": "Expected algorithm_visualization but got none",
+      "order": 10,
+      "elapsedMs": 110426,
+      "toolSequence": [
+        "plan_visualization:requested",
+        "primoria-tutor:complete",
+        "plan_visualization:success",
+        "primoria-tutor:complete"
+      ],
+      "threadId": "019e6435-99a6-7880-98ec-6d393c88db67",
+      "langGraphRunId": "019e6435-9a0f-7880-98ec-bba74084a402"
+    }
+  ]
+}
