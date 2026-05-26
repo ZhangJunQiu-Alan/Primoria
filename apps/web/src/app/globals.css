@@ -24,7 +24,9 @@
 
 html,
 body {
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -50,9 +52,11 @@ button {
 }
 
 .app-shell {
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 0;
   display: grid;
   grid-template-columns: 88px minmax(0, 1fr);
+  overflow: hidden;
 }
 
 .sidebar {
@@ -78,7 +82,7 @@ button {
 .brand-symbol {
   width: 42px;
   height: 42px;
-  border-radius: 50%;
+  border-radius: 999px;
   display: grid;
   place-items: center;
   background:
@@ -2625,6 +2629,10 @@ cpk-web-inspector {
 
 /* ── course detail page ────────────────────────────────────────────── */
 .course-workspace {
+  --course-sidebar-width: 410px;
+  width: calc(100vw - 88px - var(--course-sidebar-width));
+  height: 100vh;
+  min-height: 0;
   padding: 28px 40px;
   display: flex;
   flex-direction: column;
@@ -2931,13 +2939,13 @@ cpk-web-inspector {
 }
 
 .course-detail-main {
-  width: min(920px, calc(100vw - 88px - var(--course-sidebar-width) - 96px));
+  width: min(920px, 100%);
   max-width: 920px;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-right: calc(var(--course-sidebar-width) + 24px);
+  margin-right: 0;
 }
 
 
@@ -2966,10 +2974,10 @@ cpk-web-inspector {
 
 .course-sidebar-resize-handle {
   position: absolute;
-  left: -5px;
+  left: 0;
   top: 0;
   bottom: 0;
-  width: 10px;
+  width: 8px;
   border: 0;
   background: transparent;
   cursor: col-resize;
@@ -2979,7 +2987,7 @@ cpk-web-inspector {
 .course-sidebar-resize-handle::after {
   content: "";
   position: absolute;
-  left: 4px;
+  left: 0;
   top: 0;
   width: 1px;
   height: 100%;
@@ -2988,7 +2996,6 @@ cpk-web-inspector {
 
 .course-sidebar-resize-handle:hover::after,
 .course-sidebar-resizing .course-sidebar-resize-handle::after {
-  left: 3px;
   width: 3px;
   background: #c8881a;
 }
@@ -3106,6 +3113,75 @@ cpk-web-inspector {
   color: #2f5a3d;
 }
 
+.course-ai-composer-context {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 0 2px;
+}
+
+.course-ai-selection-pill {
+  max-width: 100%;
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  background: #17130f;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  box-shadow: 0 6px 18px rgba(57, 42, 25, 0.12);
+  color: #fffdf8;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.course-ai-selection-pill > span:not([aria-hidden="true"]) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.course-ai-selection-pill > span[aria-hidden="true"] {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  display: block;
+  border-radius: 50%;
+  background: #ffc857;
+  box-shadow: 0 0 0 3px rgba(255, 200, 87, 0.16);
+}
+
+.course-copilot-surface .course-ai-composer-context {
+  width: min(100%, 856px);
+  padding: 0 0 2px;
+}
+
+.course-copilot-surface .course-ai-selection-pill {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  background: #17130f;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  box-shadow: 0 6px 18px rgba(57, 42, 25, 0.12);
+  color: #fffdf8;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .course-ai-suggestions {
   flex: 0 0 auto;
   margin: 8px 12px;
@@ -3144,8 +3220,8 @@ cpk-web-inspector {
 }
 
 .course-detail-layout.sidebar-collapsed .course-detail-main {
-  width: min(980px, calc(100vw - 88px - 56px - 96px));
-  margin-right: 80px;
+  width: min(980px, 100%);
+  margin-right: 0;
 }
 
 .course-ai-sidebar.collapsed .course-ai-sidebar-header {
@@ -3161,6 +3237,10 @@ cpk-web-inspector {
 }
 
 @media (max-width: 1200px) {
+  .course-workspace {
+    width: auto;
+  }
+
   .course-detail-main,
   .course-detail-layout.sidebar-collapsed .course-detail-main {
     width: 100%;
@@ -3236,6 +3316,11 @@ cpk-web-inspector {
 .course-copilot-surface .copilot-attachment-error {
   flex: 0 0 auto;
   margin: 8px 12px 0;
+}
+
+.course-copilot-surface .primoria-copilot-composer {
+  padding: 14px 36px 18px;
+  gap: 10px;
 }
 
 .course-copilot-hidden {
