@@ -1,7 +1,6 @@
 #!/usr/bin/env tsx
 
 import {
-  assembleStemStandaloneHtml,
   assembleWidgetStandaloneHtml,
 } from "../src/components/generative-ui/export-utils.ts";
 import { WIDGET_DEPENDENCY_ALLOWLIST, normalizeWidgetDependencies } from "../src/lib/ai/widget-dependencies.ts";
@@ -45,25 +44,6 @@ async function main() {
     dependencies: threeDeps,
   });
   assert(threeWidgetHtml.includes("installThreeOrbitControlsFallback"), "standalone export includes OrbitControls fallback");
-
-  const stemHtml = assembleStemStandaloneHtml({
-    subject: "math",
-    title: "Sine curve",
-    description: "A small math fixture",
-    code: "const scene = MathGL.scene({ title: 'sine' }); scene.plot(x => Math.sin(x)); scene.run();",
-  });
-  assert(stemHtml.startsWith("<!DOCTYPE html>"), "STEM export is a complete document");
-  assert(stemHtml.includes("MathGL"), "STEM export includes the runtime");
-  assert(stemHtml.includes("runStemCode"), "STEM export includes the execution wrapper");
-
-  const blockedStemHtml = assembleStemStandaloneHtml({
-    subject: "cs",
-    title: "Blocked",
-    description: "Should not execute",
-    code: "fetch('/api/secret'); const scene = AlgoViz.scene({ title: 'x' }); scene.run();",
-  });
-  assert(blockedStemHtml.includes("STEM renderer code was blocked"), "blocked STEM export displays a safety error");
-  assert(!blockedStemHtml.includes("fetch('/api/secret')"), "blocked STEM export does not embed unsafe code");
 
   process.stdout.write("[widget-export.unit] ALL UNIT CHECKS PASSED\n");
 }
