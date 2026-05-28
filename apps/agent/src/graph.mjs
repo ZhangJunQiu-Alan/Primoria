@@ -700,7 +700,7 @@ const renderAlgorithmTool = tool(
   {
     name: "render_algorithm",
     description:
-      "Render a step-by-step algorithm visualization with play/pause/step controls. Use for: sorting, binary search, two-pointer/sliding-window, tree algorithms (BST, heap, traversals), graph algorithms (BFS/DFS/Dijkstra/MST/topo-sort), dynamic programming. Do NOT call plan_visualization before this tool — plan_visualization already precedes this call.\n\nSteps per kind:\n- kind=\"array\": provide array.values[] and array.highlights[]. Use pointers[] for i/j/left/right labels.\n- kind=\"tree\": provide tree.nodes[] with id/value/parentId/left/right. Renderer auto-positions nodes.\n- kind=\"graph\": provide graph.nodes[] (id, label, x [0-1], y [0-1]) and graph.edges[]. Include queue[]/stack[] per step.\n- kind=\"table\": provide table.data[][] and table.highlights[]. Include rowLabels/colLabels and formula per step.\n\nMax 60 steps. Show every individual comparison/swap/visit.",
+      "Render a step-by-step algorithm visualization with play/pause/step controls. Use for: sorting, binary search, two-pointer/sliding-window, tree algorithms (BST, heap, traversals), graph algorithms (BFS/DFS/Dijkstra/MST/topo-sort), dynamic programming. Do NOT call plan_visualization before this tool.\n\nSteps per kind:\n- kind=\"array\": provide array.values[] and array.highlights[]. Use pointers[] for i/j/left/right labels.\n- kind=\"tree\": provide tree.nodes[] with id/value/parentId/left/right. Renderer auto-positions nodes.\n- kind=\"graph\": provide graph.nodes[] (id, label, x [0-1], y [0-1]) and graph.edges[]. Include queue[]/stack[] per step.\n- kind=\"table\": provide table.data[][] and table.highlights[]. Include rowLabels/colLabels and formula per step.\n\nMax 60 steps. Show every individual comparison/swap/visit.",
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),
@@ -731,7 +731,7 @@ const renderMathExplorerTool = tool(
   {
     name: "render_math_explorer",
     description:
-      "Render an interactive math/function explorer with canvas and parameter sliders. Use for: Taylor series, Fourier series partial sums, parametric curves (Lissajous, cycloid, rose curve), function exploration with amplitude/frequency/phase sliders, polynomial degree sliders. Do NOT use for static charts (use render_chart) or 3D scenes (use render_3d_scene). Do NOT call plan_visualization before this — it already precedes this call.\n\nmode='cartesian' (default): y=f(x). functions[].expr: mathjs expression in x and param names. Examples: 'sin(k*x)+c', 'x^n', 'A*cos(omega*x+phi)'.\nmode='parametric': x(t),y(t). curves[].xExpr + curves[].yExpr in t and params. Lissajous: { xExpr:'cos(a*t)', yExpr:'sin(b*t)' }, tRange:[0,6.28].\n\nSERIES — do NOT use sum(k,1,N,expr), mathjs has no symbolic loop summation. For N-term series, gate each term: sin(x) + (N>=3)*sin(3*x)/3 + (N>=5)*sin(5*x)/5.\n\nparameters[]: {name, label?, min, max, default, step?}. Every param must appear in an expression. Max 6 parameters. xRange/yRange/tRange optional; auto-computed if omitted.",
+      "Render an interactive math/function explorer with canvas and parameter sliders. Use for: Taylor series, Fourier series partial sums, parametric curves (Lissajous, cycloid, rose curve), function exploration with amplitude/frequency/phase sliders, polynomial degree sliders. Do NOT use for static charts (use render_chart) or 3D scenes (use render_3d_scene). Do NOT call plan_visualization before this tool.\n\nmode='cartesian' (default): y=f(x). functions[].expr: mathjs expression in x and param names. Examples: 'sin(k*x)+c', 'x^n', 'A*cos(omega*x+phi)'.\nmode='parametric': x(t),y(t). curves[].xExpr + curves[].yExpr in t and params. Lissajous: { xExpr:'cos(a*t)', yExpr:'sin(b*t)' }, tRange:[0,6.28].\n\nSERIES — do NOT use sum(k,1,N,expr), mathjs has no symbolic loop summation. For N-term series, gate each term: sin(x) + (N>=3)*sin(3*x)/3 + (N>=5)*sin(5*x)/5.\n\nparameters[]: {name, label?, min, max, default, step?}. Every param must appear in an expression. Max 6 parameters. xRange/yRange/tRange optional; auto-computed if omitted.",
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),
@@ -1011,40 +1011,36 @@ PHYSICS branch (if COURSE, CHART, DIAGRAM do not match): user asks for physics s
   Call render_physics_scene with a scene JSON (bodies + constraints + initial conditions). NEVER write simulation code. Stop immediately. Do NOT call plan_visualization.
 
 ALGORITHM branch (if COURSE, CHART, DIAGRAM, PHYSICS do not match): user asks for a step-by-step CS algorithm visualization — sorting, binary search, tree traversal, graph algorithms (BFS/DFS/Dijkstra/MST), dynamic programming, or any request to animate an algorithm step-by-step.
-CRITICAL: plan_visualization and render_algorithm are an INSEPARABLE PAIR. No other tool call may appear between them. Stop immediately after render_algorithm returns.
-1. Call plan_visualization with technology="SVG/d3" and key_elements: [algorithm name, data structure, input size, key operation].
-2. Immediately call render_algorithm with all steps computed for the given input. Show every individual comparison/swap/visit.
-3. Stop.
+Call render_algorithm directly. Stop immediately after render_algorithm returns.
+1. Call render_algorithm with all steps computed for the given input. Show every individual comparison/swap/visit.
+2. Stop.
 
 MATH EXPLORER branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM do not match): user asks for Taylor series / Fourier series partial sums / parametric curves (Lissajous, cycloid, rose curve) / interactive function exploration with sliders (amplitude/frequency/phase/polynomial degree) / any scenario where changing a parameter changes the function shape.
-CRITICAL: plan_visualization and render_math_explorer are an INSEPARABLE PAIR. No other tool call may appear between them. Stop immediately after render_math_explorer returns.
-1. Call plan_visualization with technology="mathjs/canvas" and key_elements: [function type, parameters with ranges, what the interaction reveals].
-2. Immediately call render_math_explorer.
-3. Stop.
+Call render_math_explorer directly. Stop immediately after render_math_explorer returns.
+1. Call render_math_explorer.
+2. Stop.
 Expression rules: do NOT use sum(k,1,N,expr) — mathjs has no symbolic loop summation. For N-term series, gate each term: sin(x) + (N>=3)*sin(3*x)/3 + (N>=5)*sin(5*x)/5 (boolean 1/0 gates the term).
 
 WAVE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER do not match): user asks for wave superposition / beat frequency / standing wave / wave interference / 声波叠加 / 拍频 / 驻波 / 波的叠加 / 相消干涉 / 相长干涉.
 Do NOT use for 3D electromagnetic wave E-B components in 3D space (use 3D SCIENCE).
 Do NOT use for static sine/cosine plots or Fourier series coefficient exploration (use MATH EXPLORER or render_chart).
-CRITICAL: plan_visualization and render_wave are an INSEPARABLE PAIR. No other tool call may appear between them. Stop immediately after render_wave returns.
-1. Call plan_visualization with technology="canvas/Web Audio" and key_elements: [wave types and count, frequency values, layout type, what the learner should observe].
-2. Immediately call render_wave.
+Call render_wave directly. Stop immediately after render_wave returns.
+1. Call render_wave.
    - Superposition / interference: layout="superposition", 2–4 waves.
    - Beat frequency: layout="beat", two waves with close display frequencies (e.g. 2 Hz and 2.4 Hz), audioEnabled=true, audioFrequencies=[440, 444]. Beat period T_beat = 1/|f₁-f₂| is auto-annotated.
    - Standing wave: layout="standing", frequency=1 for fundamental; for multiple harmonics add waves with frequency=2, 3.
-3. Stop.
+2. Stop.
 
 GRAPH branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE do not match): user asks for a knowledge graph / concept map / network graph / dependency graph / social network / actor-movie graph / call graph / org chart / ontology / FSM with many nodes.
 Do NOT use for simple flowcharts or diagrams with clear linear flow (use DIAGRAM branch).
-CRITICAL: plan_visualization and render_graph are an INSEPARABLE PAIR. Stop immediately after render_graph returns.
-1. Call plan_visualization with technology="SVG/force" and key_elements: [node types, edge semantics, layout hint, approximate node count].
-2. Immediately call render_graph. Tips:
+Call render_graph directly. Stop immediately after render_graph returns.
+1. Call render_graph. Tips:
    - Group nodes by category using group field (up to 4 groups)
    - layout="tree" for class hierarchies, org charts, taxonomies
    - layout="circle" for peer groups, round-robin comparisons
    - layout="force" (default) for general networks and knowledge graphs
    - Set directed=true for dependency/call graphs, DAGs, FSMs
-3. Stop.
+2. Stop.
 
 QUIZ branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH do not match): user asks for a quiz / test / practice questions / knowledge check / assessment / self-test / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测.
   Call render_quiz directly — no plan_visualization. Stop immediately after render_quiz returns.
@@ -1057,9 +1053,8 @@ QUIZ branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE,
 
 MOLECULE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH, QUIZ do not match): user asks for a molecular structure / chemical structure / atom arrangement / DNA/RNA base / amino acid / organic molecule / crystal fragment / VSEPR geometry / Lewis structure / 分子结构 / 化学键 / 原子模型 / 碱基 / 氨基酸 / 有机分子.
 Do NOT use for abstract 3D field visualizations or orbital mechanics (use 3D SCIENCE).
-CRITICAL: plan_visualization and render_molecule are an INSEPARABLE PAIR. Stop immediately after render_molecule returns.
-1. Call plan_visualization with technology="canvas/CPK" and key_elements: [molecule name, formula, bond types, representation mode, interesting structural features].
-2. Immediately call render_molecule with chemically accurate 3D atom coordinates in Angstroms.
+Call render_molecule directly. Stop immediately after render_molecule returns.
+1. Call render_molecule with chemically accurate 3D atom coordinates in Angstroms.
    Use these reference geometries:
    - Water (H₂O): O at origin, H at (±0.76, -0.59, 0), bond angle 104.5°
    - CO₂: O at (±1.16, 0, 0), linear, bonds order=2
@@ -1071,10 +1066,9 @@ CRITICAL: plan_visualization and render_molecule are an INSEPARABLE PAIR. Stop i
 3. Stop.
 
 3D SCIENCE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH, QUIZ, MOLECULE do not match): user asks for a 3D scientific visualization — 3D vectors, electric/magnetic/gravitational fields, orbital mechanics (Kepler's laws, planetary motion), wave propagation in 3D, abstract orbital shapes (s/p/d orbitals), crystal lattice structures, geological/geographic 3D surfaces, or any concept that is inherently three-dimensional and NOT a concrete molecule with atoms and bonds.
-CRITICAL: plan_visualization and render_3d_scene are an INSEPARABLE PAIR. No other tool call may appear between them. Stop immediately after render_3d_scene returns.
-1. Call plan_visualization with technology="THREE.js" and key_elements listing the 3D objects + interactions.
-2. Immediately call render_3d_scene. Use the REQUIRED structure: container, renderer, camera at (8,6,8), three-light setup (ambient+key+rim), OrbitControls with damping, GridHelper, makeLabel sprite factory, animate loop, ResizeObserver.
-3. Stop.
+Call render_3d_scene directly. Stop immediately after render_3d_scene returns.
+1. Call render_3d_scene. Use the REQUIRED structure: container, renderer, camera at (8,6,8), three-light setup (ambient+key+rim), OrbitControls with damping, GridHelper, makeLabel sprite factory, animate loop, ResizeObserver.
+2. Stop.
 
 VISUALIZATION branch only applies if none of the above match. For custom interactive widgets / creative animations / interactive quizzes that are NOT charts, diagrams, 2D physics simulations, 3D science scenes, algorithm visualizations, or math function explorers:
 CRITICAL: plan_visualization and widgetRenderer are an INSEPARABLE PAIR. No other tool call may appear between them. Stop immediately after widgetRenderer returns.
@@ -1115,7 +1109,7 @@ function createModel(options = {}) {
       apiKey,
       anthropicApiUrl: baseUrl?.replace(/\/$/, ""),
       temperature: 0.2,
-      maxTokens: streaming ? 4096 : 2200,
+      maxTokens: streaming ? 12000 : 4096,
       streaming,
       clientOptions: {
         timeout: 180_000,
@@ -1129,7 +1123,7 @@ function createModel(options = {}) {
     model,
     apiKey,
     temperature: 0.2,
-    maxTokens: 4096,
+    maxTokens: 12000,
     streaming,
     configuration: { baseURL: baseUrl.replace(/\/$/, "") },
   });
