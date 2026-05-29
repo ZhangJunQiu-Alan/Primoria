@@ -50,6 +50,103 @@ const CodeBlockSchema = z.object({
   explanation: z.string(),
 });
 
+const SingleQuestionSchema = z.object({
+  kind: z.literal("single"),
+  id: z.string(),
+  question: z.string(),
+  choices: z.array(z.object({ id: z.string(), text: z.string() })).min(2).max(6),
+  correctId: z.string(),
+  explanation: z.string().optional(),
+});
+
+const MultiQuestionSchema = z.object({
+  kind: z.literal("multi"),
+  id: z.string(),
+  question: z.string(),
+  choices: z.array(z.object({ id: z.string(), text: z.string() })).min(2).max(6),
+  correctIds: z.array(z.string()).min(1),
+  explanation: z.string().optional(),
+});
+
+const TrueFalseQuestionSchema = z.object({
+  kind: z.literal("truefalse"),
+  id: z.string(),
+  question: z.string(),
+  correct: z.boolean(),
+  explanation: z.string().optional(),
+});
+
+const QuizBlockSchema = z.object({
+  type: z.literal("quiz"),
+  title: z.string(),
+  questions: z
+    .array(z.discriminatedUnion("kind", [SingleQuestionSchema, MultiQuestionSchema, TrueFalseQuestionSchema]))
+    .min(1)
+    .max(6),
+});
+
+type MindMapNodeRaw = { id: string; topic: string; children?: MindMapNodeRaw[] };
+const MindMapNodeSchema: z.ZodType<MindMapNodeRaw> = z.lazy(() =>
+  z.object({
+    id: z.string(),
+    topic: z.string(),
+    children: z.array(MindMapNodeSchema).optional(),
+  }),
+);
+
+const MindMapBlockSchema = z.object({
+  type: z.literal("mind_map"),
+  title: z.string(),
+  root: MindMapNodeSchema,
+});
+
+const SlideSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  layout: z.enum(["title", "bullets", "quote", "image-text"]),
+  bullets: z.array(z.string()).optional(),
+  markdown: z.string().optional(),
+  note: z.string().optional(),
+});
+
+const SlideBlockSchema = z.object({
+  type: z.literal("slide"),
+  title: z.string(),
+  slides: z.array(SlideSchema).min(2).max(10),
+});
+
+const ShortAnswerItemSchema = z.object({
+  kind: z.literal("short_answer"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  sampleAnswer: z.string().optional(),
+});
+
+const FillBlankItemSchema = z.object({
+  kind: z.literal("fill_blank"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  blanks: z.array(z.string()).min(1),
+});
+
+const ProblemItemSchema = z.object({
+  kind: z.literal("problem"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  sampleAnswer: z.string().optional(),
+});
+
+const WorksheetBlockSchema = z.object({
+  type: z.literal("worksheet"),
+  title: z.string(),
+  items: z.array(
+    z.discriminatedUnion("kind", [ShortAnswerItemSchema, FillBlankItemSchema, ProblemItemSchema]),
+  ).min(1).max(8),
+});
+
 const CourseSchema = z.object({
   title: z.string(),
   summary: z.string(),
@@ -62,6 +159,10 @@ const CourseSchema = z.object({
         TransferBlockSchema,
         VisualBlockSchema,
         CodeBlockSchema,
+        QuizBlockSchema,
+        MindMapBlockSchema,
+        SlideBlockSchema,
+        WorksheetBlockSchema,
       ]),
     )
     .min(3)
@@ -71,23 +172,31 @@ const CourseSchema = z.object({
 const COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator sub-agent. You design a single short, deeply learnable course on a topic, broken into 4-7 ordered blocks.
 
 Block types (use the right type for each idea, do NOT just use text):
-- text: a short prose explanation in markdown (2-4 short paragraphs max).
+- text: prose in markdown. Use for concept explanations (2-4 paragraphs), OR a "Further reading" section with 2-3 markdown links to real resources, OR a "Discussion" section with 2-3 open-ended reflection questions.
 - analogy: map an unfamiliar concept to a familiar one. Fields: source (familiar thing), target (concept being taught), mapping (what corresponds to what).
 - transfer: show how a principle from one domain applies in another. Fields: fromDomain, toDomain, explanation, example.
 - visual: a self-contained interactive HTML/CSS/JS fragment that visualizes a key intuition.
 - code: a small code snippet with a plain-language explanation.
+- quiz: a set of 2-4 questions to check understanding. Each question has a "kind": "single" (one correct answer), "multi" (multiple correct answers), or "truefalse" (true/false). All questions must have an "id" (short unique string like "q1"), a "question" string, and an optional "explanation" shown after submission. For "single" and "multi", include a "choices" array of {id, text} objects. For "single" set "correctId" to the correct choice id. For "multi" set "correctIds" to an array of correct choice ids. For "truefalse" set "correct" to true or false.
+- mind_map: an interactive, editable mind map. Use when the topic has a meaningful taxonomy, multi-branch categorization, or a knowledge overview with many sub-concepts. Do NOT use a mermaid mindmap inside a visual block — always use this block type for that purpose. Set "root" to a JSON node tree where each node has "id" (short unique string), "topic" (label text, max 40 chars), and optional "children" array. The root is the central concept; aim for 2-3 levels, 8-20 nodes total.
+- slide: a mini slide deck (2-6 slides). Use for step-by-step walkthroughs, processes, timelines, or comparisons. Each slide has "id" (short unique string), "title", "layout" ("title"|"bullets"|"quote"|"image-text"), and optionally "bullets" (string array), "markdown" (prose), "note" (speaker note). Use "title" layout for the opening slide, "bullets" for key points, "quote" for a memorable statement, "image-text" for explanation + supporting details.
+- worksheet: a practice worksheet with 2-5 items. Use for active recall and application. Each item has "kind": "short_answer" (open question + sampleAnswer), "fill_blank" (sentence with ___ placeholders + blanks array of answers in order, one per ___), or "problem" (multi-step problem + sampleAnswer). All items need "id" (short unique string) and "prompt". Optional "hint". For fill_blank, count the number of ___ in the prompt and provide exactly that many entries in "blanks".
 
 COURSE STRUCTURE RULES:
-- 4-7 blocks total. Order them as a learning arc: hook → core idea → one analogy → one visual or code → transfer to a different domain → wrap-up.
+- 4-7 blocks total. Order them as a learning arc: hook → core idea → one analogy → one visual or code → transfer to a different domain → quiz → wrap-up.
 - Include AT MOST ONE visual block per course. Keep its HTML compact (<300 lines).
 - Include at least one analogy block and one transfer block.
+- Include AT MOST ONE quiz block per course, placed near the end as a comprehension check.
+- Include AT MOST ONE mind_map block per course. Use it to show a concept overview or taxonomy, typically early in the course.
+- Include AT MOST ONE slide block per course. Use it for a process walkthrough or step-by-step overview.
+- Include AT MOST ONE worksheet block per course. Place it after the core content as a practice exercise.
 - Every block needs a short, specific title (no generic "Introduction").
 - Write in the same language as the user's topic prompt.
 
 VISUAL BLOCK RULES (include at most one per course):
 Choose the engine that best fits the concept:
 - engine "echarts": charts, data plots, function curves, histograms, bar/line/scatter. Set echartsOption to a complete ECharts option object. Use Primoria palette: amber #c8881a, sage #4a7a5a, lavender #7c6ad0. Always set a chart title inside the option.
-- engine "mermaid": flowcharts, sequence diagrams, concept maps, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string.
+- engine "mermaid": flowcharts, sequence diagrams, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string. Do NOT use mermaid mindmap syntax — use a mind_map block instead.
 - engine "physics": physics simulations (pendulum, collision, projectile, spring, inclined plane). Set physicsScene with a bodies array and optional constraints. NEVER write simulation code — the renderer handles physics automatically.
 - engine "html" (fallback): custom interactive experiences not covered above. Single self-contained HTML fragment, no external scripts, must include at least one interactive control (slider, button, toggle).
 Only include fields for the chosen engine. Do not include "html" when using echarts/mermaid/physics.
@@ -181,7 +290,9 @@ Your provider may not support native structured output. You must still return ON
     { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
     { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
     { "type": "visual", "title": "string", "description": "string", "engine": "echarts|mermaid|physics|html", "echartsOption": {}, "mermaidDefinition": "string", "html": "string" },
-    { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" }
+    { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" },
+    { "type": "slide", "title": "string", "slides": [{ "id": "s1", "title": "string", "layout": "bullets", "bullets": ["point 1"] }] },
+    { "type": "worksheet", "title": "string", "items": [{ "kind": "fill_blank", "id": "w1", "prompt": "The ___ is used to ___", "blanks": ["term", "purpose"] }, { "kind": "short_answer", "id": "w2", "prompt": "Explain X in your own words.", "sampleAnswer": "..." }] }
   ]
 }
 No markdown fences. No prose outside JSON.`,
@@ -386,11 +497,149 @@ function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSch
     };
   }
 
+  if (type === "quiz") {
+    const rawQuestions = Array.isArray(obj.questions) ? obj.questions : [];
+    const questions = rawQuestions
+      .map((q: unknown) => normalizeQuizQuestion(q))
+      .filter((q): q is NonNullable<ReturnType<typeof normalizeQuizQuestion>> => q !== null)
+      .slice(0, 6);
+    if (questions.length === 0) return null;
+    return { type: "quiz", title, questions };
+  }
+
+  if (type === "mind_map") {
+    const root = normalizeMindMapNode(obj.root ?? obj.nodeData, topic);
+    if (!root) return null;
+    return { type: "mind_map", title, root };
+  }
+
+  if (type === "slide") {
+    const rawSlides = Array.isArray(obj.slides) ? obj.slides : [];
+    const slides = rawSlides
+      .map((s: unknown, i: number) => normalizeSlide(s, i))
+      .filter((s): s is z.infer<typeof SlideSchema> => s !== null);
+    if (slides.length === 0) return null;
+    return { type: "slide", title, slides };
+  }
+
+  if (type === "worksheet") {
+    const rawItems = Array.isArray(obj.items) ? obj.items : [];
+    const items = rawItems
+      .map((item: unknown, i: number) => normalizeWorksheetItem(item, i))
+      .filter((item): item is z.infer<typeof WorksheetBlockSchema>["items"][number] => item !== null);
+    if (items.length === 0) return null;
+    return { type: "worksheet", title, items };
+  }
+
   return {
     type: "text",
     title,
     markdown: cleanText(obj.markdown ?? obj.content ?? obj.description ?? obj.text, `围绕「${topic}」建立核心直觉。`),
   };
+}
+
+function normalizeQuizQuestion(q: unknown): z.infer<typeof SingleQuestionSchema> | z.infer<typeof MultiQuestionSchema> | z.infer<typeof TrueFalseQuestionSchema> | null {
+  if (!q || typeof q !== "object") return null;
+  const obj = q as Record<string, unknown>;
+  const kind = typeof obj.kind === "string" ? obj.kind : "single";
+  const id = cleanText(obj.id, `q${Math.random().toString(36).slice(2, 6)}`);
+  const question = cleanText(obj.question, "").slice(0, 400);
+  if (!question) return null;
+  const explanation = typeof obj.explanation === "string" ? obj.explanation.trim() : undefined;
+
+  if (kind === "truefalse") {
+    return { kind: "truefalse", id, question, correct: obj.correct === true, explanation };
+  }
+
+  const rawChoices = Array.isArray(obj.choices) ? obj.choices : [];
+  const choices = rawChoices
+    .map((c: unknown) => {
+      if (!c || typeof c !== "object") return null;
+      const co = c as Record<string, unknown>;
+      const choiceId = cleanText(co.id, `c${Math.random().toString(36).slice(2, 6)}`);
+      const text = cleanText(co.text, "").slice(0, 200);
+      if (!text) return null;
+      return { id: choiceId, text };
+    })
+    .filter((c): c is { id: string; text: string } => c !== null);
+
+  if (choices.length < 2) return null;
+
+  if (kind === "multi") {
+    const correctIds = Array.isArray(obj.correctIds)
+      ? obj.correctIds.filter((cid) => typeof cid === "string" && choices.some((c) => c.id === cid))
+      : [];
+    if (correctIds.length === 0) return null;
+    return { kind: "multi", id, question, choices, correctIds, explanation };
+  }
+
+  const correctId = typeof obj.correctId === "string" && choices.some((c) => c.id === obj.correctId)
+    ? obj.correctId
+    : choices[0].id;
+  return { kind: "single", id, question, choices, correctId, explanation };
+}
+
+function normalizeWorksheetItem(item: unknown, index: number): z.infer<typeof WorksheetBlockSchema>["items"][number] | null {
+  if (!item || typeof item !== "object") return null;
+  const obj = item as Record<string, unknown>;
+  const kind = typeof obj.kind === "string" ? obj.kind : "short_answer";
+  const id = cleanText(obj.id, `w${index + 1}`);
+  const prompt = cleanText(obj.prompt ?? obj.question ?? obj.text, "").slice(0, 600);
+  if (!prompt) return null;
+  const hint = typeof obj.hint === "string" && obj.hint.trim() ? obj.hint.trim() : undefined;
+
+  if (kind === "fill_blank") {
+    const blanksInPrompt = (prompt.match(/___/g) ?? []).length;
+    const rawBlanks = Array.isArray(obj.blanks)
+      ? obj.blanks.filter((b): b is string => typeof b === "string" && b.trim().length > 0)
+      : [];
+    const blanks = blanksInPrompt > 0
+      ? rawBlanks.slice(0, blanksInPrompt).concat(
+          Array(Math.max(0, blanksInPrompt - rawBlanks.length)).fill("…"),
+        )
+      : rawBlanks;
+    if (blanks.length === 0) return null;
+    return { kind: "fill_blank", id, prompt, ...(hint ? { hint } : {}), blanks };
+  }
+
+  const sampleAnswer = typeof obj.sampleAnswer === "string" && obj.sampleAnswer.trim()
+    ? obj.sampleAnswer.trim()
+    : typeof obj.answer === "string" && obj.answer.trim()
+    ? obj.answer.trim()
+    : undefined;
+
+  if (kind === "problem") {
+    return { kind: "problem", id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
+  }
+  return { kind: "short_answer", id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
+}
+
+function normalizeSlide(s: unknown, index: number): z.infer<typeof SlideSchema> | null {
+  if (!s || typeof s !== "object") return null;
+  const obj = s as Record<string, unknown>;
+  const id = cleanText(obj.id, `s${index + 1}`);
+  const title = cleanText(obj.title, `Slide ${index + 1}`).slice(0, 80);
+  const validLayouts = ["title", "bullets", "quote", "image-text"] as const;
+  const layout: (typeof validLayouts)[number] =
+    validLayouts.includes(obj.layout as (typeof validLayouts)[number]) ? (obj.layout as (typeof validLayouts)[number]) : "bullets";
+  const bullets = Array.isArray(obj.bullets)
+    ? obj.bullets.filter((b): b is string => typeof b === "string" && b.trim().length > 0).slice(0, 8)
+    : undefined;
+  const markdown = typeof obj.markdown === "string" && obj.markdown.trim() ? obj.markdown.trim() : undefined;
+  const note = typeof obj.note === "string" && obj.note.trim() ? obj.note.trim() : undefined;
+  return { id, title, layout, ...(bullets && bullets.length > 0 ? { bullets } : {}), ...(markdown ? { markdown } : {}), ...(note ? { note } : {}) };
+}
+
+function normalizeMindMapNode(node: unknown, topicFallback: string): MindMapNodeRaw | null {
+  if (!node || typeof node !== "object") return null;
+  const obj = node as Record<string, unknown>;
+  const topic = cleanText(obj.topic ?? obj.name ?? obj.label, topicFallback).slice(0, 80);
+  const id = cleanText(obj.id, `n${Math.random().toString(36).slice(2, 8)}`);
+  const rawChildren = Array.isArray(obj.children) ? obj.children : [];
+  const children = rawChildren
+    .map((c: unknown) => normalizeMindMapNode(c, ""))
+    .filter((c): c is MindMapNodeRaw => c !== null);
+  return { id, topic, ...(children.length > 0 ? { children } : {}) };
 }
 
 function cleanText(value: unknown, fallback: string): string {
@@ -408,6 +657,14 @@ function defaultBlockTitle(type: string, topic: string): string {
       return "互动观察";
     case "code":
       return "代码中的函数";
+    case "quiz":
+      return "知识检测";
+    case "mind_map":
+      return `${topic}概念图`;
+    case "slide":
+      return `${topic}要点`;
+    case "worksheet":
+      return `${topic}练习`;
     default:
       return `理解${topic}`;
   }

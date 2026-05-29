@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { getCourse, updateBlock } from "@/lib/courses/store";
 import { recordCourseEditEvent } from "@/lib/memory/course-edit-events";
-import type { Course, CourseBlock, VisualBlock } from "@/lib/courses/types";
+import type { Course, CourseBlock, Slide, VisualBlock, WorksheetItem } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
@@ -59,6 +59,33 @@ const CodeEdit = z.object({
   explanation: z.string(),
 });
 
+const SlideItemEdit = z.object({
+  id: z.string(),
+  title: z.string(),
+  layout: z.enum(["title", "bullets", "quote", "image-text"]),
+  bullets: z.array(z.string()).optional(),
+  markdown: z.string().optional(),
+  note: z.string().optional(),
+});
+
+const SlideEdit = z.object({
+  type: z.literal("slide"),
+  title: z.string(),
+  slides: z.array(SlideItemEdit).min(2).max(10),
+});
+
+const WorksheetItemEdit = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("short_answer"), id: z.string(), prompt: z.string(), hint: z.string().optional(), sampleAnswer: z.string().optional() }),
+  z.object({ kind: z.literal("fill_blank"), id: z.string(), prompt: z.string(), hint: z.string().optional(), blanks: z.array(z.string()).min(1) }),
+  z.object({ kind: z.literal("problem"), id: z.string(), prompt: z.string(), hint: z.string().optional(), sampleAnswer: z.string().optional() }),
+]);
+
+const WorksheetEdit = z.object({
+  type: z.literal("worksheet"),
+  title: z.string(),
+  items: z.array(WorksheetItemEdit).min(1).max(8),
+});
+
 const EDITOR_SYSTEM_PROMPT = `You are Primoria's Course Editor agent. You receive ONE block from a course and a learner comment, then rewrite the block to address the comment.
 
 RULES:
@@ -95,6 +122,14 @@ function schemaForBlock(block: CourseBlock) {
       return schemaForVisualBlock(block);
     case "code":
       return CodeEdit;
+    case "quiz":
+      throw new Error("Quiz blocks cannot be edited via the block editor.");
+    case "mind_map":
+      throw new Error("Mind map blocks cannot be edited via the block editor.");
+    case "slide":
+      return SlideEdit;
+    case "worksheet":
+      return WorksheetEdit;
   }
 }
 
@@ -249,6 +284,48 @@ function normalizeEditedBlock(raw: unknown, previous: CourseBlock): CourseBlock 
     return { ...previous, title, description, engine: "html" as const, html: cleanText(obj.html, previous.html ?? "") };
   }
 
+  if (previous.type === "worksheet") {
+    const rawItems = Array.isArray(obj.items) ? obj.items : previous.items;
+    const items: WorksheetItem[] = rawItems
+      .filter((it): it is Record<string, unknown> => !!it && typeof it === "object")
+      .map((it, i) => {
+        const kind = typeof it.kind === "string" ? it.kind : "short_answer";
+        const id = cleanText(it.id, `w${i + 1}`);
+        const prompt = cleanText(it.prompt ?? it.question, "").slice(0, 600);
+        const hint = typeof it.hint === "string" && it.hint.trim() ? it.hint.trim() : undefined;
+        if (kind === "fill_blank") {
+          const blanks = Array.isArray(it.blanks)
+            ? it.blanks.filter((b): b is string => typeof b === "string")
+            : [];
+          return { kind: "fill_blank" as const, id, prompt, ...(hint ? { hint } : {}), blanks: blanks.length > 0 ? blanks : ["…"] };
+        }
+        const sampleAnswer = typeof it.sampleAnswer === "string" && it.sampleAnswer.trim() ? it.sampleAnswer.trim() : undefined;
+        if (kind === "problem") return { kind: "problem" as const, id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
+        return { kind: "short_answer" as const, id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
+      })
+      .filter((it) => it.prompt);
+    return { ...previous, title, items: items.length > 0 ? items : previous.items };
+  }
+
+  if (previous.type === "slide") {
+    const rawSlides = Array.isArray(obj.slides) ? obj.slides : previous.slides;
+    const slides: Slide[] = rawSlides
+      .filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
+      .map((s, i) => ({
+        id: cleanText(s.id, `s${i + 1}`),
+        title: cleanText(s.title, `Slide ${i + 1}`).slice(0, 80),
+        layout: (["title", "bullets", "quote", "image-text"] as const).includes(s.layout as Slide["layout"])
+          ? (s.layout as Slide["layout"])
+          : "bullets",
+        ...(Array.isArray(s.bullets) && s.bullets.length > 0 ? { bullets: s.bullets.filter((b): b is string => typeof b === "string") } : {}),
+        ...(typeof s.markdown === "string" && s.markdown.trim() ? { markdown: s.markdown.trim() } : {}),
+        ...(typeof s.note === "string" && s.note.trim() ? { note: s.note.trim() } : {}),
+      }))
+      .filter((s) => s.title);
+    return { ...previous, title, slides: slides.length > 0 ? slides : previous.slides };
+  }
+
+  if (previous.type !== "code") return previous;
   return {
     ...previous,
     type: "code",
@@ -269,6 +346,8 @@ function exampleShapeForBlock(block: CourseBlock) {
     if (block.engine === "physics") return '{ "type": "visual", "title": "string", "description": "string", "physicsScene": { "bodies": [], "render": { "width": 600, "height": 300 } } }';
     return '{ "type": "visual", "title": "string", "description": "string", "html": "string" }';
   }
+  if (block.type === "slide") return '{ "type": "slide", "title": "string", "slides": [{ "id": "s1", "title": "string", "layout": "bullets", "bullets": ["point 1"] }] }';
+  if (block.type === "worksheet") return '{ "type": "worksheet", "title": "string", "items": [{ "kind": "fill_blank", "id": "w1", "prompt": "The ___ converts ___", "blanks": ["answer1", "answer2"] }] }';
   return '{ "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" }';
 }
 
