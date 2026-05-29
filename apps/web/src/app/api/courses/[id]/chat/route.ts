@@ -32,6 +32,21 @@ function blockToPrompt(block: CourseBlock) {
   if (block.type === "visual") {
     return `Block ${title} (visual):\nDescription: ${block.description}\nHTML summary: ${(block.html ?? "").slice(0, 700)}`;
   }
+  if (block.type === "quiz") {
+    const qs = block.questions.map((q, i) => `Q${i + 1} [${q.kind}]: ${q.question}`).join("\n");
+    return `Block ${title} (quiz):\n${qs}`;
+  }
+  if (block.type === "mind_map") {
+    return `Block ${title} (mind_map): root="${block.root.topic}", ${block.root.children?.length ?? 0} top-level branches`;
+  }
+  if (block.type === "slide") {
+    const summary = block.slides.map((s, i) => `${i + 1}. ${s.title}`).join("; ");
+    return `Block ${title} (slide, ${block.slides.length} slides): ${summary}`;
+  }
+  if (block.type === "worksheet") {
+    const summary = block.items.map((it, i) => `${i + 1}[${it.kind}]: ${it.prompt.slice(0, 60)}`).join("; ");
+    return `Block ${title} (worksheet, ${block.items.length} items): ${summary}`;
+  }
   return `Block ${title} (code/${block.language}):\nExplanation: ${block.explanation}\nCode:\n${block.code}`;
 }
 
