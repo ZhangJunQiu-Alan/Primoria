@@ -15,6 +15,7 @@ const backupFile = `${libraryFile}.test-backup`;
 import { sedimentWidget } from "../src/lib/capability-library/sedimentation.ts";
 import {
   findAppByHtmlSignature,
+  getApp,
   hashHtmlSource,
   listApps,
 } from "../src/lib/capability-library/store.ts";
@@ -122,6 +123,11 @@ async function main() {
       apps?: Array<{ template: { type: string; source: string } }>;
     };
     assert(Array.isArray(parsed.apps) && parsed.apps.length >= 1, "case5: JSON has apps");
+
+    // Case 5b: direct lookup powers workspace app previews
+    const loadedApp = await getApp(result.app.id);
+    assert(loadedApp?.id === result.app.id, "case5b: getApp locates saved app");
+    assert(loadedApp.template.type === "html" && loadedApp.template.source === longHtml, "case5b: getApp returns HTML source");
 
     // Case 6: hash lookup
     const sig = hashHtmlSource(longHtml);

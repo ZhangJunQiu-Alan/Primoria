@@ -22,6 +22,27 @@
       "when": 1779523500000,
       "tag": "0002_memory_versions_archive",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779643266445,
+      "tag": "0003_mushy_gargoyle",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1779736800000,
+      "tag": "0004_workspace_invites",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779652180563,
+      "tag": "0005_workspace_thread_members",
+      "breakpoints": true
     }
   ]
 }

@@ -693,7 +693,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
           ref={iframeRef}
           className="widget-frame"
           title={title}
-          sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+          sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
           onLoad={() => setLoaded(true)}
           style={{
             height: showIframe ? (height > 0 ? height : 300) : 0,
