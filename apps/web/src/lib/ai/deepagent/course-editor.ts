@@ -75,6 +75,7 @@ export type EditBlockInput = {
   courseId: string;
   blockId: string;
   comment: string;
+  selectedText?: string;
 };
 
 export type EditBlockResult = {
@@ -115,7 +116,7 @@ export async function editBlock(
 
   const model = createTutorModel(settings);
   const schema = schemaForBlock(block);
-  const userPrompt = buildEditPrompt(course, block, input.comment);
+  const userPrompt = buildEditPrompt(course, block, input.comment, input.selectedText);
   const rewritten = await invokeBlockEdit(model, schema, block, userPrompt);
 
   const next = normalizeEditedBlock(rewritten, block);
@@ -127,12 +128,16 @@ export async function editBlock(
     instruction: input.comment,
     beforeBlock: block,
     afterBlock: next,
-    metadata: { source: "course-editor" },
+    metadata: {
+      source: "course-editor",
+      selectedText: cleanOptionalText(input.selectedText),
+    },
   });
   return { course: updatedCourse, block: next };
 }
 
-function buildEditPrompt(course: Course, block: CourseBlock, comment: string) {
+function buildEditPrompt(course: Course, block: CourseBlock, comment: string, selectedText?: string) {
+  const cleanSelectedText = cleanOptionalText(selectedText);
   return [
     `Course title: ${course.title}`,
     `Course topic: ${course.topic}`,
@@ -140,6 +145,16 @@ function buildEditPrompt(course: Course, block: CourseBlock, comment: string) {
     `Current block JSON:`,
     JSON.stringify(stripId(block), null, 2),
     "",
+    cleanSelectedText
+      ? [
+          "Selected text inside this block:",
+          cleanSelectedText,
+          "",
+          "The learner's request targets this selected text. Revise only that local passage unless the instruction explicitly requires nearby context.",
+          "Return the full updated block JSON, preserving the rest of the block as much as possible.",
+          "",
+        ].join("\n")
+      : "",
     `Learner comment: ${comment}`,
     "",
     "Rewrite the block as JSON. Keep the same type.",
@@ -289,6 +304,11 @@ function parseJsonObject(text: string): unknown {
 function cleanText(value: unknown, fallback: string): string {
   const text = String(value ?? "").trim();
   return text || fallback;
+}
+
+function cleanOptionalText(value: unknown): string | undefined {
+  const text = String(value ?? "").replace(/\s+/g, " ").trim();
+  return text || undefined;
 }
 
 function stripId<T extends { id: string }>(block: T): Omit<T, "id"> {

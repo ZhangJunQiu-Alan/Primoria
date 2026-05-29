@@ -5,6 +5,7 @@ import { editBlock } from "@/lib/ai/deepagent/course-editor";
 const RequestSchema = z.object({
   blockId: z.string(),
   comment: z.string().min(1),
+  selectedText: z.string().optional(),
   settings: z
     .object({
       provider: z.enum(["openai-compatible", "anthropic-compatible"]).optional(),
@@ -20,7 +21,12 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const { id } = await context.params;
     const body = RequestSchema.parse(await request.json());
     const result = await editBlock(
-      { courseId: id, blockId: body.blockId, comment: body.comment },
+      {
+        courseId: id,
+        blockId: body.blockId,
+        comment: body.comment,
+        selectedText: body.selectedText,
+      },
       body.settings,
     );
     return NextResponse.json({ course: result.course, block: result.block });

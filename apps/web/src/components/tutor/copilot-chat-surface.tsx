@@ -242,7 +242,10 @@ const PrimoriaMessageView = Object.assign(
 );
 
 const PrimoriaChatView = Object.assign(
-  function PrimoriaChatView(props: CopilotChatViewProps) {
+  function PrimoriaChatView({
+    composerContext,
+    ...props
+  }: CopilotChatViewProps & { composerContext?: React.ReactNode }) {
     return (
       <CopilotChatView
         {...props}
@@ -257,6 +260,7 @@ const PrimoriaChatView = Object.assign(
             messageView={messageView}
             input={input}
             suggestionView={suggestionView}
+            composerContext={composerContext}
           />
         )}
       </CopilotChatView>
@@ -278,10 +282,12 @@ function PrimoriaChatLayout({
   onDragLeave,
   onDrop,
   welcomeScreen,
+  composerContext,
 }: CopilotChatViewProps & {
   input: React.ReactElement;
   messageView: React.ReactElement;
   suggestionView: React.ReactElement;
+  composerContext?: React.ReactNode;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const lastMessage = messages[messages.length - 1];
@@ -314,6 +320,7 @@ function PrimoriaChatLayout({
             {messageView}
           </div>
           <div className="primoria-copilot-composer">
+            {composerContext}
             {hasAttachments ? (
               <CopilotChatAttachmentQueue
                 attachments={attachments}
@@ -472,6 +479,7 @@ export function PrimoriaCopilotChatSurface({
   context,
   welcomeScreen = false,
   suggestions,
+  composerContext,
 }: {
   threadId: string;
   title?: string;
@@ -480,6 +488,7 @@ export function PrimoriaCopilotChatSurface({
   context?: { description: string; value: string };
   welcomeScreen?: boolean;
   suggestions?: { title: string; message: string }[];
+  composerContext?: React.ReactNode;
 }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const stableContext = useMemo(
@@ -556,7 +565,9 @@ export function PrimoriaCopilotChatSurface({
       <CopilotChat
         key={`chat-${threadId}`}
         threadId={threadId}
-        chatView={PrimoriaChatView}
+        chatView={((props: CopilotChatViewProps) => (
+          <PrimoriaChatView {...props} composerContext={composerContext} />
+        )) as any}
         attachments={{
           enabled: true,
           accept: COPILOT_ACCEPTED_ATTACHMENTS,

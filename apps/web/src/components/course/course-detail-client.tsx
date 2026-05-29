@@ -14,6 +14,13 @@ const DEFAULT_SIDEBAR_WIDTH = 410;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
 const COURSE_COPILOT_PROMPT_EVENT = "primoria:course-copilot-prompt";
 
+type SelectedTextContext = {
+  blockId: string;
+  blockTitle: string;
+  blockType: CourseBlock["type"];
+  text: string;
+};
+
 function blockToContext(block: CourseBlock) {
   const title = block.title ?? block.type;
   if (block.type === "text") {
@@ -59,7 +66,11 @@ function blockToContext(block: CourseBlock) {
   };
 }
 
-function buildCourseContext(course: Course, selectedBlock: CourseBlock | null) {
+function buildCourseContext(
+  course: Course,
+  selectedBlock: CourseBlock | null,
+  selectedText: SelectedTextContext | null,
+) {
   return {
     course: {
       id: course.id,
@@ -75,6 +86,7 @@ function buildCourseContext(course: Course, selectedBlock: CourseBlock | null) {
       })),
     },
     selectedBlock: selectedBlock ? blockToContext(selectedBlock) : null,
+    selectedText,
   };
 }
 
@@ -82,13 +94,28 @@ function clampSidebarWidth(width: number) {
   return Math.min(MAX_SIDEBAR_WIDTH, Math.max(MIN_SIDEBAR_WIDTH, width));
 }
 
+function selectionTextInside(element: HTMLElement) {
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed || selection.rangeCount === 0) return "";
+  if (!selection.anchorNode || !selection.focusNode) return "";
+  if (!element.contains(selection.anchorNode) || !element.contains(selection.focusNode)) return "";
+  return selection.toString().replace(/\s+/g, " ").trim();
+}
+
+function nodeElement(node: Node | null) {
+  if (!node) return null;
+  return node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
+}
+
 function CourseRevisionAction({
   course,
   selectedBlock,
+  selectedTextContext,
   onCourseUpdated,
 }: {
   course: Course;
   selectedBlock: CourseBlock | null;
+  selectedTextContext: SelectedTextContext | null;
   onCourseUpdated: (course: Course) => void;
 }) {
   useFrontendTool(
@@ -110,6 +137,7 @@ function CourseRevisionAction({
           body: JSON.stringify({
             blockId: selectedBlock.id,
             comment: String(instruction ?? ""),
+            selectedText: selectedTextContext?.blockId === selectedBlock.id ? selectedTextContext.text : undefined,
             settings: readSettings(),
           }),
         });
@@ -123,7 +151,9 @@ function CourseRevisionAction({
           courseId: data.course.id,
           blockId: selectedBlock.id,
           blockTitle: data.block?.title ?? selectedBlock.title ?? selectedBlock.type,
-          message: "Selected course block was revised and the page has been updated.",
+          message: selectedTextContext?.blockId === selectedBlock.id
+            ? "Selected text was revised and the page has been updated."
+            : "Selected course block was revised and the page has been updated.",
         };
       },
       render: ({ status, result }) => {
@@ -143,7 +173,7 @@ function CourseRevisionAction({
         );
       },
     },
-    [course.id, selectedBlock?.id, onCourseUpdated],
+    [course.id, selectedBlock?.id, selectedTextContext?.blockId, selectedTextContext?.text, onCourseUpdated],
   );
 
   return null;
@@ -180,23 +210,23 @@ function CourseSuggestionBridge({ threadId }: { threadId: string }) {
 function CourseAIAssistantPanel({
   course,
   selectedBlock,
-  onSelectBlock,
   collapsed,
   width,
   onCollapsedChange,
   onWidthChange,
   onCourseUpdated,
   copilotEnabled,
+  selectedTextContext,
 }: {
   course: Course;
   selectedBlock: CourseBlock | null;
-  onSelectBlock: (blockId: string | null) => void;
   collapsed: boolean;
   width: number;
   onCollapsedChange: (collapsed: boolean) => void;
   onWidthChange: (width: number) => void;
   onCourseUpdated: (course: Course) => void;
   copilotEnabled: boolean;
+  selectedTextContext: SelectedTextContext | null;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -205,8 +235,8 @@ function CourseAIAssistantPanel({
   // context-injected course-chat history cannot leak into Course Copilot.
   const courseThreadId = `course-v5-${course.id}`;
   const courseContext = useMemo(
-    () => buildCourseContext(course, selectedBlock),
-    [course, selectedBlock],
+    () => buildCourseContext(course, selectedBlock, selectedTextContext),
+    [course, selectedBlock, selectedTextContext],
   );
 
   useEffect(() => {
@@ -243,6 +273,60 @@ function CourseAIAssistantPanel({
     selectedBlock ? `围绕当前 block 出 3 道练习题` : `基于这门课生成 3 个课后练习`,
     `继续创建一门和「${course.topic}」相关的进阶课程`,
   ];
+  const selectedTextPreview = selectedTextContext
+    ? `${Array.from(selectedTextContext.text).slice(0, 5).join("")}${Array.from(selectedTextContext.text).length > 5 ? "..." : ""}`
+    : "";
+  const composerContext = selectedTextContext ? (
+    <div
+      className="course-ai-composer-context"
+      aria-label="Current course context"
+      style={{
+        boxSizing: "border-box",
+        paddingLeft: 8,
+      }}
+    >
+      <div
+        className="course-ai-selection-pill"
+        title={selectedTextContext.text}
+        aria-label="Selected text is attached to this request."
+        style={{
+          width: "fit-content",
+          maxWidth: "100%",
+          minHeight: 26,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 7,
+          padding: "5px 10px 5px 8px",
+          borderRadius: 999,
+          background: "#fffaf2",
+          border: "1px solid rgba(200, 136, 26, 0.24)",
+          boxShadow: "0 4px 14px rgba(57, 42, 25, 0.08)",
+          color: "#7c4f10",
+          fontSize: 11,
+          fontWeight: 800,
+          lineHeight: 1,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            width: 6,
+            height: 6,
+            flex: "0 0 auto",
+            display: "block",
+            borderRadius: "50%",
+            background: "#c8881a",
+            boxShadow: "0 0 0 3px rgba(200, 136, 26, 0.12)",
+          }}
+        />
+        <span style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          &quot;{selectedTextPreview}&quot;
+        </span>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <aside
@@ -258,7 +342,12 @@ function CourseAIAssistantPanel({
       />
       {copilotEnabled ? (
         <>
-          <CourseRevisionAction course={course} selectedBlock={selectedBlock} onCourseUpdated={onCourseUpdated} />
+          <CourseRevisionAction
+            course={course}
+            selectedBlock={selectedBlock}
+            selectedTextContext={selectedTextContext}
+            onCourseUpdated={onCourseUpdated}
+          />
           <CourseSuggestionBridge threadId={courseThreadId} />
         </>
       ) : null}
@@ -274,36 +363,12 @@ function CourseAIAssistantPanel({
         {!collapsed ? (
           <div className="course-ai-titleblock">
             <strong>Course Copilot</strong>
-            <span>{selectedBlock ? `Context: ${selectedBlock.title ?? selectedBlock.type}` : "Context: whole course"}</span>
+            <span>Ask about this course</span>
           </div>
         ) : null}
       </div>
       {!collapsed ? (
         <>
-          <div className="course-ai-context-strip">
-            <span>Context</span>
-            <strong>{selectedBlock ? selectedBlock.title ?? selectedBlock.type : "Whole course"}</strong>
-            <div className="course-ai-block-chips">
-              <button
-                type="button"
-                className={!selectedBlock ? "active" : ""}
-                onClick={() => onSelectBlock(null)}
-              >
-                Whole course
-              </button>
-              {course.blocks.slice(0, 5).map((block, index) => (
-                <button
-                  key={block.id}
-                  type="button"
-                  className={selectedBlock?.id === block.id ? "active" : ""}
-                  onClick={() => onSelectBlock(block.id)}
-                  title={block.title ?? block.type}
-                >
-                  {index + 1}. {block.type}
-                </button>
-              ))}
-            </div>
-          </div>
           {copilotEnabled ? (
             <>
               <div className="course-ai-suggestions" aria-label="Suggested prompts">
@@ -328,6 +393,7 @@ function CourseAIAssistantPanel({
                     description: "Primoria course detail mode",
                     value: JSON.stringify(courseContext),
                   }}
+                  composerContext={composerContext}
                 />
               </div>
             </>
@@ -344,6 +410,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
   usePrimoriaGenerativeUI();
   const [course, setCourse] = useState<Course>(initialCourse);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
+  const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
 
@@ -361,7 +428,74 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
     window.localStorage.setItem(SIDEBAR_WIDTH_KEY, String(sidebarWidth));
   }, [sidebarCollapsed, sidebarWidth]);
 
+  useEffect(() => {
+    const workspace = document.querySelector<HTMLElement>(".course-workspace");
+    if (!workspace) return;
+    workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? 56 : sidebarWidth}px`);
+  }, [sidebarCollapsed, sidebarWidth]);
+
   const selectedBlock = course.blocks.find((b) => b.id === selectedBlockId) ?? null;
+
+  function selectBlock(block: CourseBlock) {
+    setSelectedBlockId(block.id);
+    setSelectedTextContext(null);
+  }
+
+  function updateSelectedText(block: CourseBlock, element: HTMLElement) {
+    const text = selectionTextInside(element);
+    if (!text) return;
+    setSelectedBlockId(block.id);
+    setSelectedTextContext({
+      blockId: block.id,
+      blockTitle: block.title ?? block.type,
+      blockType: block.type,
+      text,
+    });
+  }
+
+  useEffect(() => {
+    let frame = 0;
+
+    function syncSelectionContext() {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
+
+        const text = selection.toString().replace(/\s+/g, " ").trim();
+        if (!text) return;
+
+        const anchorBlock = nodeElement(selection.anchorNode)?.closest<HTMLElement>(".course-block-wrapper");
+        const focusBlock = nodeElement(selection.focusNode)?.closest<HTMLElement>(".course-block-wrapper");
+        if (!anchorBlock || !focusBlock || anchorBlock !== focusBlock) return;
+
+        const blockId = anchorBlock.dataset.blockId;
+        const block = course.blocks.find((candidate) => candidate.id === blockId);
+        if (!block) return;
+
+        setSelectedBlockId(block.id);
+        setSelectedTextContext((current) => {
+          if (current?.blockId === block.id && current.text === text) return current;
+          return {
+            blockId: block.id,
+            blockTitle: block.title ?? block.type,
+            blockType: block.type,
+            text,
+          };
+        });
+      });
+    }
+
+    document.addEventListener("selectionchange", syncSelectionContext);
+    window.addEventListener("mouseup", syncSelectionContext);
+    window.addEventListener("keyup", syncSelectionContext);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      document.removeEventListener("selectionchange", syncSelectionContext);
+      window.removeEventListener("mouseup", syncSelectionContext);
+      window.removeEventListener("keyup", syncSelectionContext);
+    };
+  }, [course.blocks]);
 
   return (
     <div
@@ -375,12 +509,22 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
               key={block.id}
               role="button"
               tabIndex={0}
+              data-block-id={block.id}
               className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
-              onClick={() => setSelectedBlockId(block.id)}
+              onClick={(event) => {
+                if (selectionTextInside(event.currentTarget)) return;
+                selectBlock(block);
+              }}
+              onMouseUp={(event) => updateSelectedText(block, event.currentTarget)}
+              onKeyUp={(event) => {
+                if (event.key === "Shift" || event.key.startsWith("Arrow")) {
+                  updateSelectedText(block, event.currentTarget);
+                }
+              }}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
-                  setSelectedBlockId(block.id);
+                  selectBlock(block);
                 }
               }}
             >
@@ -392,16 +536,20 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
       <CourseAIAssistantPanel
         course={course}
         selectedBlock={selectedBlock}
-        onSelectBlock={setSelectedBlockId}
         collapsed={sidebarCollapsed}
         width={sidebarWidth}
         onCollapsedChange={setSidebarCollapsed}
         onWidthChange={setSidebarWidth}
         copilotEnabled={copilotEnabled}
+        selectedTextContext={selectedTextContext}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);
           if (selectedBlockId && !nextCourse.blocks.some((block) => block.id === selectedBlockId)) {
             setSelectedBlockId(null);
+            setSelectedTextContext(null);
+          }
+          if (selectedTextContext && !nextCourse.blocks.some((block) => block.id === selectedTextContext.blockId)) {
+            setSelectedTextContext(null);
           }
         }}
       />

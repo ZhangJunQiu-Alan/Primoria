@@ -17,7 +17,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
   return (
     <main className="app-shell">
       <TutorNavRail />
-      <section className="workspace course-workspace">
+      <section className="workspace course-workspace" style={{ ["--course-sidebar-width" as string]: "410px" }}>
         <header className="course-header">
           <div>
             <Link href="/library" className="course-back">← Library</Link>
