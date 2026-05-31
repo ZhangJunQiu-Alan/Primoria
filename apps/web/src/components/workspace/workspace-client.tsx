@@ -2,6 +2,28 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { WorkspaceComposer, type LibraryAppOption } from "@/components/workspace/workspace-composer";
+import {
+  agentCount,
+  bumpThreadsForMessages,
+  getActiveAgentMentionRange,
+  isAgentMember,
+  latestWorkspaceTimestamp,
+  mergeAgentApprovals,
+  mergeAgentConnections,
+  mergeAgentMemories,
+  mergeAgentProfiles,
+  mergeAgentRunEvents,
+  mergeAgentRuns,
+  mergeArtifacts,
+  mergeMembers,
+  mergeMessages,
+  mergeThreads,
+  mergeWorkspaceViews,
+  readLastReadState,
+  removeMessageById,
+  writeLastReadState,
+} from "@/components/workspace/workspace-client-state";
 import type { LearningApp, LearningAppTemplate } from "@/lib/capability-library/types";
 import type {
   WorkspaceArtifact,
@@ -22,15 +44,7 @@ import type {
   WorkspaceThreadAgentTriggerMode,
   WorkspaceView,
 } from "@/lib/workspaces/types";
-import { isWorkspaceAgentMember } from "@/lib/workspaces/agent-triggers";
 import { AGENT_BEHAVIOR_MAX_LENGTH, AGENT_PURPOSE_MAX_LENGTH } from "@/lib/workspaces/agent-profile-guardrails";
-
-type LibraryAppOption = {
-  id: string;
-  displayName: string;
-  description?: string;
-  version: number;
-};
 
 type SharedAppArtifact = Extract<WorkspaceMessageArtifact, { type: "app" }>;
 type WorkspaceAgentSkillOption = { source: "workspace" | "user"; name: string; slug: string; path: string; description?: string; instructions?: string; version: number };
@@ -2114,87 +2128,38 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           })}
         </div>
 
-        <form className="workspace-composer" onSubmit={sendMessage}>
-          {attachmentOpen ? (
-            <div className="workspace-attachment-tray">
-              <div className="workspace-quick-form horizontal">
-                <select
-                  aria-label="Saved application"
-                  value={selectedAppId}
-                  onChange={(event) => {
-                    const appId = event.target.value;
-                    const app = libraryApps.find((entry) => entry.id === appId);
-                    setSelectedAppId(appId);
-                    if (app) {
-                      setAttachmentTitle(app.displayName);
-                      setAttachmentDescription(app.description ?? "");
-                    }
-                  }}
-                >
-                  <option value="">{loadingApps ? "Loading apps" : "Manual card"}</option>
-                  {libraryApps.map((app) => (
-                    <option key={app.id} value={app.id}>{app.displayName}</option>
-                  ))}
-                </select>
-                <input
-                  aria-label="Application title"
-                  value={attachmentTitle}
-                  onChange={(event) => setAttachmentTitle(event.target.value)}
-                  placeholder="Application title"
-                />
-                <input
-                  aria-label="Application description"
-                  value={attachmentDescription}
-                  onChange={(event) => setAttachmentDescription(event.target.value)}
-                  placeholder="What should this card do?"
-                />
-                <button type="button" disabled={sending} onClick={() => void shareAppCard()}>Share app</button>
-              </div>
-            </div>
-          ) : null}
-          <div className="workspace-composer-field">
-            {mentionPickerOpen ? (
-              <div className="workspace-mention-popover" role="listbox" aria-label="Agent mentions">
-                {mentionCandidates.map((member, index) => (
-                  <button
-                    key={member.id}
-                    type="button"
-                    role="option"
-                    aria-selected={index === mentionIndex}
-                    className={index === mentionIndex ? "selected" : undefined}
-                    onMouseDown={(event) => {
-                      event.preventDefault();
-                      insertComposerMention(member);
-                    }}
-                  >
-                    <span className="workspace-mention-avatar">{member.displayName.slice(0, 1).toUpperCase()}</span>
-                    <span>
-                      <strong>{member.displayName}</strong>
-                      <small>{member.status === "active" ? "Active agent" : member.role}</small>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            ) : null}
-            <input
-              ref={composerInputRef}
-              aria-label="Message"
-              value={draft}
-              onChange={(event) => setDraft(event.target.value)}
-              onKeyDown={handleComposerKeyDown}
-              disabled={!activeThread}
-              autoComplete="off"
-              placeholder={
-                activeThread
-                  ? `Message ${activeThread.type === "room" ? "#" : ""}${activeThread.name}, mention an agent, or attach an app...`
-                  : "Create or select a chat to send a message"
-              }
-            />
-          </div>
-          <button type="button" aria-label="Attach" disabled={!activeThread} onClick={() => setAttachmentOpen((open) => !open)}>+</button>
-          <button type="submit" disabled={sending || !draft.trim() || !activeThread}>{sending ? "Sending" : "Send"}</button>
-          {error ? <p className="workspace-send-error">{error}</p> : null}
-        </form>
+        <WorkspaceComposer
+          activeThread={activeThread}
+          attachmentDescription={attachmentDescription}
+          attachmentOpen={attachmentOpen}
+          attachmentTitle={attachmentTitle}
+          composerInputRef={composerInputRef}
+          draft={draft}
+          error={error}
+          libraryApps={libraryApps}
+          loadingApps={loadingApps}
+          mentionCandidates={mentionCandidates}
+          mentionIndex={mentionIndex}
+          mentionPickerOpen={mentionPickerOpen}
+          selectedAppId={selectedAppId}
+          sending={sending}
+          onAttachmentDescriptionChange={setAttachmentDescription}
+          onAttachmentTitleChange={setAttachmentTitle}
+          onDraftChange={setDraft}
+          onInsertMention={insertComposerMention}
+          onKeyDown={handleComposerKeyDown}
+          onSelectApp={(appId) => {
+            const app = libraryApps.find((entry) => entry.id === appId);
+            setSelectedAppId(appId);
+            if (app) {
+              setAttachmentTitle(app.displayName);
+              setAttachmentDescription(app.description ?? "");
+            }
+          }}
+          onShareAppCard={() => void shareAppCard()}
+          onSubmit={sendMessage}
+          onToggleAttachment={() => setAttachmentOpen((open) => !open)}
+        />
       </section>
 
       <details
@@ -4281,155 +4246,6 @@ function formatTaskAssigneeOption(member: WorkspaceMember) {
   return `${member.displayName} / ${isAgentMember(member) ? "Agent collaborator" : "Person collaborator"}`;
 }
 
-function getActiveAgentMentionRange(value: string, caret: number) {
-  const beforeCaret = value.slice(0, caret);
-  const at = beforeCaret.lastIndexOf("@");
-  if (at === -1) return null;
-  const beforeAt = at === 0 ? "" : beforeCaret[at - 1];
-  if (beforeAt && !/\s/.test(beforeAt)) return null;
-  const query = beforeCaret.slice(at + 1);
-  if (/[\n\r]/.test(query)) return null;
-  if (query.length > 40) return null;
-  return { start: at, end: caret, query: query.trim() };
-}
-
-function agentCount(members: WorkspaceView["members"]) {
-  return members.filter(isWorkspaceAgentMember).length;
-}
-
-function isAgentMember(member: WorkspaceMember) {
-  return isWorkspaceAgentMember(member);
-}
-
-function mergeWorkspaceViews(current: WorkspaceView, incoming: WorkspaceView): WorkspaceView {
-  if (current.workspace.id !== incoming.workspace.id) return incoming;
-  return {
-    ...incoming,
-    workspace: current.workspace.updatedAt > incoming.workspace.updatedAt ? current.workspace : incoming.workspace,
-    workspaces: mergeWorkspaceSummaries(current.workspaces, incoming.workspaces),
-    members: mergeMembers(current.members, incoming.members),
-    agentProfiles: mergeAgentProfiles(current.agentProfiles, incoming.agentProfiles),
-    threads: mergeThreads(current.threads, incoming.threads),
-    messages: mergeMessages(current.messages, incoming.messages),
-    tasks: mergeTasks(current.tasks, incoming.tasks),
-    artifacts: mergeArtifacts(current.artifacts, incoming.artifacts),
-    agentRuns: mergeAgentRuns(current.agentRuns, incoming.agentRuns),
-    agentRunEvents: mergeAgentRunEvents(current.agentRunEvents, incoming.agentRunEvents),
-    agentApprovals: mergeAgentApprovals(current.agentApprovals, incoming.agentApprovals),
-    agentMemories: mergeAgentMemories(current.agentMemories, incoming.agentMemories),
-    agentConnections: mergeAgentConnections(current.agentConnections, incoming.agentConnections),
-    persisted: incoming.persisted,
-  };
-}
-
-function mergeWorkspaceSummaries(current: WorkspaceView["workspaces"], incoming: WorkspaceView["workspaces"]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((workspace) => [workspace.id, workspace]));
-  for (const workspace of incoming) byId.set(workspace.id, workspace);
-  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
-function mergeThreads(current: WorkspaceThread[], incoming: WorkspaceThread[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((thread) => [thread.id, thread]));
-  for (const thread of incoming) byId.set(thread.id, thread);
-  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
-function mergeTasks(current: WorkspaceTask[], incoming: WorkspaceTask[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((task) => [task.id, task]));
-  for (const task of incoming) byId.set(task.id, task);
-  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
-function mergeMessages(current: WorkspaceMessage[], incoming: WorkspaceMessage[]) {
-  if (!incoming.length) return current;
-  let next = current;
-  for (const message of incoming) {
-    next = removeMatchingPendingMessage(next, message);
-  }
-  const seen = new Set(next.map((message) => message.id));
-  return [...next, ...incoming.filter((message) => !seen.has(message.id))].sort((a, b) => a.createdAt - b.createdAt);
-}
-
-function removeMessageById(messages: WorkspaceMessage[], messageId: string) {
-  return messages.filter((message) => message.id !== messageId);
-}
-
-function removeMatchingPendingMessage(messages: WorkspaceMessage[], incoming: WorkspaceMessage) {
-  if (incoming.id.startsWith("wmsg_pending_")) return messages;
-  return messages.filter((message) => {
-    if (!message.id.startsWith("wmsg_pending_")) return true;
-    return !(
-      message.workspaceId === incoming.workspaceId &&
-      message.threadId === incoming.threadId &&
-      message.senderKind === incoming.senderKind &&
-      message.senderName === incoming.senderName &&
-      message.content === incoming.content &&
-      Math.abs(message.createdAt - incoming.createdAt) < 120_000
-    );
-  });
-}
-
-function mergeAgentRuns(current: WorkspaceAgentRun[], incoming: WorkspaceAgentRun[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((run) => [run.id, run]));
-  for (const run of incoming) byId.set(run.id, run);
-  return Array.from(byId.values()).sort((a, b) => a.startedAt - b.startedAt);
-}
-
-function mergeAgentRunEvents(current: WorkspaceAgentRunEvent[], incoming: WorkspaceAgentRunEvent[]) {
-  if (!incoming.length) return current;
-  const seen = new Set(current.map((event) => event.id));
-  return [...current, ...incoming.filter((event) => !seen.has(event.id))].sort((a, b) => a.createdAt - b.createdAt);
-}
-
-function mergeAgentApprovals(current: WorkspaceAgentApproval[], incoming: WorkspaceAgentApproval[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((approval) => [approval.id, approval]));
-  for (const approval of incoming) byId.set(approval.id, approval);
-  return Array.from(byId.values()).sort((a, b) => a.requestedAt - b.requestedAt);
-}
-
-export function mergeAgentMemories(current: WorkspaceAgentMemory[], incoming: WorkspaceAgentMemory[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((memory) => [memory.id, memory]));
-  for (const memory of incoming) {
-    if (memory.archivedAt) byId.delete(memory.id);
-    else byId.set(memory.id, memory);
-  }
-  return Array.from(byId.values()).filter((memory) => !memory.archivedAt).sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
-function mergeMembers(current: WorkspaceMember[], incoming: WorkspaceMember[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((member) => [member.id, member]));
-  for (const member of incoming) byId.set(member.id, member);
-  return Array.from(byId.values());
-}
-
-function mergeAgentProfiles(current: WorkspaceAgentProfile[], incoming: WorkspaceAgentProfile[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((profile) => [profile.id, profile]));
-  for (const profile of incoming) byId.set(profile.id, profile);
-  return Array.from(byId.values()).sort((a, b) => a.createdAt - b.createdAt);
-}
-
-function mergeAgentConnections(current: WorkspaceAgentConnection[], incoming: WorkspaceAgentConnection[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((connection) => [connection.id, connection]));
-  for (const connection of incoming) byId.set(connection.id, connection);
-  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
-function mergeArtifacts(current: WorkspaceArtifact[], incoming: WorkspaceArtifact[]) {
-  if (!incoming.length) return current;
-  const byId = new Map(current.map((artifact) => [artifact.id, artifact]));
-  for (const artifact of incoming) byId.set(artifact.id, artifact);
-  return Array.from(byId.values()).sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
 function readAgentToolState(capabilities: Array<WorkspaceAgentCapability | WorkspaceAgentCapabilityInput>) {
   const searchMessages = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "search_workspace_messages");
   const summarize = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "summarize_thread");
@@ -4597,44 +4413,4 @@ function buildAgentCapabilityInputs(input: {
 
 function hasEnabledAgentCapabilities(capabilities: WorkspaceAgentCapabilityInput[]) {
   return capabilities.some((capability) => capability.enabled);
-}
-
-function bumpThreadsForMessages(threads: WorkspaceThread[], messages: WorkspaceMessage[]) {
-  if (!messages.length) return threads;
-  const updatedAtByThread = new Map<string, number>();
-  for (const message of messages) {
-    updatedAtByThread.set(message.threadId, Math.max(updatedAtByThread.get(message.threadId) ?? 0, message.createdAt));
-  }
-  return threads.map((thread) => {
-    const updatedAt = updatedAtByThread.get(thread.id);
-    return updatedAt ? { ...thread, updatedAt } : thread;
-  });
-}
-
-function latestWorkspaceTimestamp(base: number, messages: WorkspaceMessage[] | undefined) {
-  return Math.max(base, ...(messages ?? []).map((message) => message.createdAt));
-}
-
-function lastReadStorageKey(workspaceId: string) {
-  return `primoria:workspace:${workspaceId}:last-read`;
-}
-
-function readLastReadState(workspaceId: string): Record<string, number> {
-  if (typeof window === "undefined") return {};
-  try {
-    const stored = window.localStorage.getItem(lastReadStorageKey(workspaceId));
-    if (!stored) return {};
-    const parsed = JSON.parse(stored);
-    return parsed && typeof parsed === "object" ? (parsed as Record<string, number>) : {};
-  } catch {
-    return {};
-  }
-}
-
-function writeLastReadState(workspaceId: string, value: Record<string, number>) {
-  try {
-    window.localStorage.setItem(lastReadStorageKey(workspaceId), JSON.stringify(value));
-  } catch {
-    // Best-effort local read state.
-  }
 }
