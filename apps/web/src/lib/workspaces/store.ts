@@ -1,27 +1,122 @@
 import { and, asc, desc, eq, inArray, lt, or } from "drizzle-orm";
 import { createHash, randomBytes } from "node:crypto";
-import { getDb, hasDatabaseUrl } from "../db/client";
+import { getDb } from "../db/client";
 import {
   buildWorkspaceDeepAgentApprovalResume,
   buildWorkspaceAgentRunThreadId,
   buildWorkspaceDeepAgentConfig,
   composeWorkspacePlaceholderTaskResult,
   executeWorkspaceAgentRuntime,
-  resolveWorkspaceAgentSkillPath,
   resolveWorkspaceAgentRuntimeRunner,
   type WorkspaceAgentRuntimeEvent,
   type WorkspaceAgentRuntimeRunnerInput,
   type WorkspaceAgentRuntimeRunner,
 } from "./agent-runtime";
-import { isWorkspaceInternalToolName, WORKSPACE_INTERNAL_TOOL_POLICIES, type WorkspaceToolApproval } from "./agent-tools";
+import {
+  buildAgentRunEvent,
+  buildPendingWorkspaceAgentApprovals,
+  buildWorkspaceAgentProfileRunSnapshot,
+  buildWorkspaceRuntimeVisibleMessages,
+  createWorkspaceAgentRunId,
+  isTerminalAgentRunStatus,
+  readObject,
+  readOptionalNumber,
+  readOptionalString,
+  readStringArray,
+} from "./agent-run-helpers";
+import {
+  rowToWorkspaceAgentApproval,
+  rowToWorkspaceAgentRun,
+  rowToWorkspaceAgentRunEvent,
+  rowToWorkspaceMessage,
+} from "./agent-run-persistence";
+import { rowToWorkspaceMember } from "./workspace-member-service";
+import {
+  assertAgentCapabilityConnections as assertAgentCapabilityConnectionsWithContext,
+  normalizeConnectionToolNames,
+  requireWorkspaceAgentConnection as requireWorkspaceAgentConnectionWithContext,
+  type WorkspaceAgentConnectionServiceContext,
+} from "./agent-connection-service";
+import {
+  assertDbWorkspaceAgentMemorySourceVisibility as assertDbWorkspaceAgentMemorySourceVisibilityWithContext,
+  assertLocalWorkspaceAgentMemorySourceVisibility,
+  isDbWorkspaceAgentMemoryVisibleToOwner,
+  isLocalWorkspaceAgentMemoryVisibleToOwner,
+  rowToWorkspaceAgentMemory,
+  type WorkspaceAgentMemoryServiceContext,
+} from "./agent-memory-service";
+import {
+  assertAgentConnectionToolCapabilities,
+  assertAgentInternalToolCapabilities,
+  assertAgentProfileHasRunnableCapability,
+  assertAgentProfileTextGuardrails,
+  assertAgentSkillCapabilityPaths,
+  buildAgentCapabilities,
+  createUniqueAgentHandle,
+  slugifyAgentHandle,
+  WORKSPACE_AGENT_TEMPLATES,
+} from "./agent-profile-rules";
+import {
+  capabilityToDbRow,
+  filterAgentCapabilitiesByVisibleConnections,
+  groupAgentCapabilitiesByProfileId,
+  rowToWorkspaceAgentConnection,
+  rowToWorkspaceAgentProfile,
+} from "./agent-profile-persistence";
+import {
+  assertCanManageWorkspaceAgentProfile as assertCanManageWorkspaceAgentProfileWithContext,
+  listDbVisibleAgentProfileIds,
+  mergeHiddenReferenceCapabilityInputsForDbUpdate,
+  requireWorkspaceAgentProfile as requireWorkspaceAgentProfileWithContext,
+  type WorkspaceAgentProfileServiceContext,
+} from "./agent-profile-service";
 import {
   decideWorkspaceAgentsForMessage,
   isWorkspaceAgentMember,
   type WorkspaceAgentTriggerDecision,
   type WorkspaceAgentParticipant,
 } from "./agent-triggers";
-import { AGENT_BEHAVIOR_MAX_LENGTH, AGENT_PURPOSE_MAX_LENGTH } from "./agent-profile-guardrails";
 import { notifyWorkspaceChanged } from "./events";
+import {
+  alignWorkspaceArtifactCompatibilitySnapshot,
+  buildWorkspaceArtifactFromMessage,
+  buildWorkspaceArtifactRecord,
+  dbWorkspaceArtifactValues,
+  defaultWorkspaceArtifactReviewStatus,
+  inferWorkspaceArtifactKind,
+  rowToWorkspaceArtifact,
+  upsertWorkspaceArtifact,
+  type WorkspaceArtifactMessageBundle,
+  type WorkspaceArtifactSeedInput,
+} from "./workspace-artifact-service";
+import {
+  assertDbWorkspaceTaskSourceVisibility as assertDbWorkspaceTaskSourceVisibilityWithContext,
+  assertLocalWorkspaceTaskSourceVisibility,
+  buildTaskMetadata,
+  readTaskMetadata,
+  rowToWorkspaceTask,
+  type WorkspaceTaskServiceContext,
+} from "./workspace-task-service";
+import {
+  buildDbThreadParticipantRows,
+  buildLocalDirectParticipantIds,
+  groupThreadMembersByThreadId,
+  isDbThreadVisibleToOwner,
+  normalizeParticipantIds,
+  normalizeWorkspaceThreadAgentTriggerMode,
+  normalizeWorkspaceThreadAllowedAgentProfileIds,
+  rowToWorkspaceThread,
+} from "./workspace-thread-service";
+import { rowToWorkspaceSummary } from "./workspace-summary-service";
+import { buildMessage, bumpThread, limitMessagesPerThread, MESSAGE_WINDOW_PER_THREAD, nextMessageTimestamp } from "./workspace-message-service";
+import { withMessageWindow, withPersonalAgentLibrary, withVisibleAgentMemories, withWorkspaceList } from "./workspace-local-view-service";
+import {
+  listDbVisibleWorkspaceThreadIds,
+  requireDbThread,
+  requireDbWorkspace,
+  requireDbWorkspaceOwner,
+  usesDatabase,
+} from "./workspace-access-service";
 import {
   workspaceAgentCapabilities,
   workspaceAgentConnections,
@@ -68,7 +163,6 @@ import type {
   WorkspaceAgentMemoryPage,
   WorkspaceArtifact,
   WorkspaceArtifactKind,
-  WorkspaceArtifactReviewStatus,
   WorkspaceMember,
   WorkspaceMessage,
   WorkspaceMessageArtifact,
@@ -89,27 +183,10 @@ import type {
   WorkspaceAgentTemplate,
   WorkspaceTask,
   WorkspaceThread,
-  WorkspaceThreadAgentTriggerMode,
-  WorkspaceThreadType,
   WorkspaceView,
 } from "./types";
 
-type WorkspaceArtifactSeedInput = {
-  workspaceId: string;
-  threadId: string;
-  title: string;
-  description: string;
-  kind?: WorkspaceArtifactKind;
-  reviewStatus?: WorkspaceArtifactReviewStatus;
-  payload: WorkspaceMessageArtifact;
-  sourceRunId?: string;
-  now?: number;
-};
-
-type WorkspaceArtifactMessageBundle = {
-  message: WorkspaceMessage;
-  artifact: WorkspaceArtifact;
-};
+export { buildWorkspaceArtifactFromMessage } from "./workspace-artifact-service";
 
 const SEED_WORKSPACE_ID = "workspace_seed";
 const SEED_GENERAL_THREAD_ID = "thread_general";
@@ -119,9 +196,6 @@ const LEGACY_SEED_THREAD_IDS = ["thread_product", "thread_artifacts", "thread_di
 const LEGACY_SEED_MEMBER_IDS = ["wm_jia", "wm_primoria", "wm_mina", "wm_leo", "wm_ops"];
 const LEGACY_SEED_MESSAGE_IDS = ["m1", "m2", "m3", "m4", "m5", "m6", "dm1"];
 const LEGACY_SEED_TASK_IDS = ["wt_launch", "wt_review", "wt_assets"];
-const MESSAGE_WINDOW_PER_THREAD = 50;
-let lastWorkspaceMessageCreatedAt = 0;
-
 type WorkspaceLocalStore = {
   views: WorkspaceView[];
   activeId: string;
@@ -135,114 +209,8 @@ declare global {
   var __primoriaWorkspaceLocalStores: Record<string, WorkspaceLocalStore> | undefined;
 }
 
-const WORKSPACE_AGENT_TEMPLATES: WorkspaceAgentTemplate[] = [
-  {
-    key: "socratic-coach",
-    displayName: "Socratic Coach",
-    handle: "socratic-coach",
-    description: "Asks guiding questions and helps learners reason without giving full answers too early.",
-    systemPrompt: "You are a Socratic learning coach. Ask focused questions, surface assumptions, and help the learner make the next step themselves.",
-    memoryScope: "thread",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/socratic-questioning", enabled: true },
-      { kind: "skill", source: "system", path: "/skills/misconception-diagnosis", enabled: true },
-      { kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: true },
-      { kind: "internal_tool", toolName: "create_quiz", approval: "never", enabled: true },
-    ],
-  },
-  {
-    key: "visualizer",
-    displayName: "Visualizer",
-    handle: "visualizer",
-    description: "Turns abstract ideas into compact interactive explanations and simulations.",
-    systemPrompt: "You are a visualization agent. Preserve the learner's concrete constraints and build compact visual explanations when helpful.",
-    memoryScope: "workspace",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/visual-explainer", enabled: true },
-      { kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
-      { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-    ],
-  },
-  {
-    key: "examiner",
-    displayName: "Examiner",
-    handle: "examiner",
-    description: "Creates practice questions, checks answers, and identifies weak points.",
-    systemPrompt: "You are an examiner. Create targeted practice, grade answers constructively, and explain the next improvement step.",
-    memoryScope: "user",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/quiz-generation", enabled: true },
-      { kind: "skill", source: "system", path: "/skills/misconception-diagnosis", enabled: true },
-      { kind: "internal_tool", toolName: "create_quiz", approval: "never", enabled: true },
-      { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-    ],
-  },
-  {
-    key: "project-mentor",
-    displayName: "Project Mentor",
-    handle: "project-mentor",
-    description: "Breaks learning goals into concrete project tasks and review checkpoints.",
-    systemPrompt: "You are a project mentor. Turn vague goals into small tasks, checkpoints, and review loops.",
-    memoryScope: "workspace",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
-      { kind: "internal_tool", toolName: "create_workspace_task", approval: "on_risk", enabled: true },
-      { kind: "internal_tool", toolName: "update_workspace_task", approval: "on_risk", enabled: true },
-      { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-    ],
-  },
-  {
-    key: "research-buddy",
-    displayName: "Research Buddy",
-    handle: "research-buddy",
-    description: "Finds grounded references in the workspace context and prepares source-aware summaries.",
-    systemPrompt: "You are a research buddy. Ground claims in available context, separate evidence from assumptions, and ask before using external connections.",
-    memoryScope: "thread",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/source-grounded-research", enabled: true },
-      { kind: "internal_tool", toolName: "search_workspace_messages", approval: "never", enabled: true },
-      { kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: true },
-      { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-    ],
-  },
-  {
-    key: "course-designer",
-    displayName: "Course Designer",
-    handle: "course-designer",
-    description: "Turns a goal into a structured course plan, activities, and assessment checkpoints.",
-    systemPrompt: "You are a course designer. Convert learning goals into modular plans with activities, deliverables, assessment checkpoints, and review loops.",
-    memoryScope: "workspace",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
-      { kind: "skill", source: "system", path: "/skills/quiz-generation", enabled: true },
-      { kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true },
-      { kind: "internal_tool", toolName: "create_quiz", approval: "never", enabled: true },
-      { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-    ],
-  },
-  {
-    key: "critic-reviewer",
-    displayName: "Critic / Reviewer",
-    handle: "critic-reviewer",
-    description: "Reviews artifacts and learner attempts with strengths, risks, and concrete next actions.",
-    systemPrompt: "You are a critic and reviewer. Give concise, kind, specific review notes with one strength, one risk, and one next action.",
-    memoryScope: "thread",
-    capabilities: [
-      { kind: "skill", source: "system", path: "/skills/artifact-review", enabled: true },
-      { kind: "skill", source: "system", path: "/skills/misconception-diagnosis", enabled: true },
-      { kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: true },
-      { kind: "internal_tool", toolName: "update_workspace_task", approval: "on_risk", enabled: true },
-      { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-    ],
-  },
-];
-
 function localStoreKey(ownerId?: string | null) {
   return ownerId ? `owner:${ownerId}` : "anonymous";
-}
-
-function usesDatabase(ownerId?: string | null): ownerId is string {
-  return Boolean(hasDatabaseUrl() && ownerId && !ownerId.startsWith("local_"));
 }
 
 function assertLocalWorkspaceStoreAllowed() {
@@ -291,36 +259,6 @@ function getLocalView(workspaceId?: string | null, ownerId?: string | null) {
   return withWorkspaceList(withVisibleAgentMemories(withMessageWindow(withPersonalAgentLibrary(view, store.views, ownerId)), ownerId), store.views);
 }
 
-function withVisibleAgentMemories(view: WorkspaceView, ownerId?: string | null) {
-  return {
-    ...view,
-    agentMemories: view.agentMemories.filter((memory) => !memory.archivedAt && isLocalWorkspaceAgentMemoryVisibleToOwner(memory, ownerId)),
-  };
-}
-
-function isLocalWorkspaceAgentMemoryVisibleToOwner(memory: WorkspaceAgentMemory, ownerId?: string | null) {
-  return memory.scope !== "user" || !memory.userId || memory.userId === (ownerId ?? undefined);
-}
-
-function withMessageWindow(view: WorkspaceView) {
-  return {
-    ...view,
-    messages: limitMessagesPerThread(view.messages, MESSAGE_WINDOW_PER_THREAD),
-  };
-}
-
-function limitMessagesPerThread(messages: WorkspaceMessage[], limit: number) {
-  const byThread = new Map<string, WorkspaceMessage[]>();
-  for (const message of messages) {
-    const threadMessages = byThread.get(message.threadId) ?? [];
-    threadMessages.push(message);
-    byThread.set(message.threadId, threadMessages);
-  }
-  return Array.from(byThread.values())
-    .flatMap((threadMessages) => threadMessages.sort((a, b) => a.createdAt - b.createdAt).slice(-limit))
-    .sort((a, b) => a.createdAt - b.createdAt);
-}
-
 function setLocalView(view: WorkspaceView, ownerId?: string | null) {
   const store = getLocalStore(ownerId);
   const views = store.views;
@@ -338,25 +276,6 @@ function setLocalView(view: WorkspaceView, ownerId?: string | null) {
   }
   notifyWorkspaceChanged(view.workspace.id);
   return withWorkspaceList(withMessageWindow(stored), nextViews);
-}
-
-function withWorkspaceList(view: WorkspaceView, views: WorkspaceView[]) {
-  return {
-    ...view,
-    workspaces: views.map((entry) => entry.workspace).sort((a, b) => b.updatedAt - a.updatedAt),
-  };
-}
-
-function withPersonalAgentLibrary(view: WorkspaceView, views: WorkspaceView[], ownerId?: string | null) {
-  const currentProfileIds = new Set(view.agentProfiles.map((profile) => profile.id));
-  const personalProfiles = views.flatMap((entry) =>
-    entry.agentProfiles.filter((profile) => profile.visibility === "private" && profile.ownerId === (ownerId ?? undefined) && !currentProfileIds.has(profile.id)),
-  );
-  if (!personalProfiles.length) return view;
-  return {
-    ...view,
-    agentProfiles: [...view.agentProfiles, ...personalProfiles].sort((a, b) => a.createdAt - b.createdAt),
-  };
 }
 
 function createInviteCode() {
@@ -397,17 +316,6 @@ function normalizeInviteCode(code: string) {
   return code.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "");
 }
 
-function slugifyAgentHandle(value: string) {
-  return (
-    value
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 48) || "workspace-agent"
-  );
-}
-
 function createUniqueLocalAgentHandle(workspaceId: string, baseHandle: string, ownerId?: string | null) {
   const existing = new Set(
     getLocalRawView(workspaceId, ownerId).agentProfiles.map((profile) => profile.handle.toLowerCase()),
@@ -426,295 +334,28 @@ async function createUniqueDbAgentHandle(workspaceId: string, baseHandle: string
   });
 }
 
-async function createUniqueAgentHandle(baseHandle: string, exists: (handle: string) => boolean | Promise<boolean>) {
-  const base = slugifyAgentHandle(baseHandle);
-  for (let attempt = 0; attempt < 100; attempt += 1) {
-    const handle = attempt === 0 ? base : `${base}-${attempt + 1}`;
-    if (!(await exists(handle))) return handle;
-  }
-  throw new Error("Agent handle could not be generated.");
-}
+const agentConnectionServiceContext: WorkspaceAgentConnectionServiceContext = {
+  usesDatabase,
+  getLocalViews,
+  ensureSeedWorkspace,
+  requireDbWorkspace,
+};
 
-function buildAgentCapabilities(profileId: string, capabilities: WorkspaceAgentCapabilityInput[]) {
-  return capabilities.map((capability): WorkspaceAgentCapability => {
-    const base = {
-      id: `wcap_${randomBytes(10).toString("base64url")}`,
-      profileId,
-      enabled: capability.enabled,
-    };
-    if (capability.kind === "skill") {
-      return { ...base, kind: "skill", source: capability.source, path: capability.path };
-    }
-    if (capability.kind === "internal_tool") {
-      return { ...base, kind: "internal_tool", toolName: capability.toolName, approval: capability.approval };
-    }
-    if (capability.kind === "mcp_tool") {
-      return {
-        ...base,
-        kind: "mcp_tool",
-        connectionId: capability.connectionId,
-        toolName: capability.toolName,
-        approval: capability.approval,
-      };
-    }
-    return { ...base, kind: "subagent", agentProfileId: capability.agentProfileId };
-  });
-}
+const agentProfileServiceContext: WorkspaceAgentProfileServiceContext = {
+  usesDatabase,
+  getLocalViews,
+  ensureSeedWorkspace,
+  requireDbWorkspace,
+  requireDbWorkspaceOwner,
+};
 
-function assertAgentProfileHasRunnableCapability(capabilities: WorkspaceAgentCapabilityInput[]) {
-  if (!capabilities.some((capability) => capability.enabled)) {
-    throw new Error("Agent profile must include at least one enabled skill, action, delegate, or connection.");
-  }
-}
+const agentMemoryServiceContext: WorkspaceAgentMemoryServiceContext = {
+  requireDbThread,
+};
 
-function assertAgentSkillCapabilityPaths(ownerId: string | null | undefined, workspaceId: string, capabilities: WorkspaceAgentCapabilityInput[]) {
-  for (const capability of capabilities) {
-    if (capability.kind !== "skill" || !capability.enabled) continue;
-    if (capability.source === "system" && /^\/skills\/[a-z0-9-]+$/.test(capability.path)) {
-      if (!resolveWorkspaceAgentSkillPath(capability.path)) throw new Error("System skill not found.");
-      continue;
-    }
-    if (capability.source === "workspace" && capability.path.startsWith(`/workspace-skills/${workspaceId}/`) && /^\/workspace-skills\/[^/]+\/[a-z0-9-]+$/.test(capability.path)) continue;
-    if (capability.source === "user" && ownerId && capability.path.startsWith(`/user-skills/${ownerId}/`) && /^\/user-skills\/[^/]+\/[a-z0-9-]+$/.test(capability.path)) continue;
-    throw new Error("Skill source does not match path.");
-  }
-}
-
-function assertAgentInternalToolCapabilities(capabilities: WorkspaceAgentCapabilityInput[]) {
-  for (const capability of capabilities) {
-    if (capability.kind !== "internal_tool" || !capability.enabled) continue;
-    if (!isWorkspaceInternalToolName(capability.toolName)) {
-      throw new Error("Unknown internal tool capability.");
-    }
-    const policy = WORKSPACE_INTERNAL_TOOL_POLICIES[capability.toolName];
-    if (approvalRank(capability.approval) < approvalRank(policy.approval)) {
-      throw new Error("Internal tool approval cannot be weaker than policy.");
-    }
-  }
-}
-
-function assertAgentConnectionToolCapabilities(capabilities: WorkspaceAgentCapabilityInput[]) {
-  for (const capability of capabilities) {
-    if (capability.kind !== "mcp_tool" || !capability.enabled) continue;
-    if (capability.approval !== "always") {
-      throw new Error("External connection tools always require approval.");
-    }
-  }
-}
-
-function approvalRank(approval: WorkspaceToolApproval) {
-  if (approval === "always") return 2;
-  if (approval === "on_risk") return 1;
-  return 0;
-}
-
-function assertAgentProfileTextGuardrails(input: {
-  templateKey?: string;
-  description?: string;
-  systemPrompt?: string;
-  requireDescription?: boolean;
-  requireSystemPrompt?: boolean;
-}) {
-  if (!input.templateKey && input.requireDescription !== false && !input.description?.trim()) {
-    throw new Error("Custom agents must include a purpose.");
-  }
-  if (!input.templateKey && input.requireSystemPrompt !== false && !input.systemPrompt?.trim()) {
-    throw new Error("Custom agents must include behavior instructions.");
-  }
-  if (input.description !== undefined && !input.description.trim()) {
-    throw new Error("Agent purpose cannot be blank.");
-  }
-  if (input.description !== undefined && input.description.trim().length > AGENT_PURPOSE_MAX_LENGTH) {
-    throw new Error("Agent purpose is too long.");
-  }
-  if (input.systemPrompt !== undefined && !input.systemPrompt.trim()) {
-    throw new Error("Agent behavior cannot be blank.");
-  }
-  if (input.systemPrompt !== undefined && input.systemPrompt.trim().length > AGENT_BEHAVIOR_MAX_LENGTH) {
-    throw new Error("Agent behavior is too long.");
-  }
-}
-
-function capabilityToDbRow(capability: WorkspaceAgentCapability, profile: WorkspaceAgentProfile) {
-  const profileOwnerId = profile.ownerId;
-  if (!profileOwnerId) throw new Error("Agent profile owner is required.");
-  return {
-    id: capability.id,
-    profileId: capability.profileId,
-    workspaceId: profile.workspaceId,
-    ownerId: profileOwnerId,
-    kind: capability.kind,
-    source: capability.kind === "skill" ? capability.source : null,
-    path: capability.kind === "skill" ? capability.path : null,
-    toolName: capability.kind === "internal_tool" || capability.kind === "mcp_tool" ? capability.toolName : null,
-    connectionId: capability.kind === "mcp_tool" ? capability.connectionId : null,
-    agentProfileId: capability.kind === "subagent" ? capability.agentProfileId : null,
-    approval: capability.kind === "internal_tool" || capability.kind === "mcp_tool" ? capability.approval : null,
-    enabled: capability.enabled,
-    createdAt: new Date(profile.createdAt),
-  };
-}
-
-function rowToWorkspaceAgentCapability(row: typeof workspaceAgentCapabilities.$inferSelect): WorkspaceAgentCapability | undefined {
-  const base = { id: row.id, profileId: row.profileId, enabled: row.enabled };
-  if (row.kind === "skill" && row.source && row.path) {
-    return {
-      ...base,
-      kind: "skill",
-      source: row.source as Extract<WorkspaceAgentCapability, { kind: "skill" }>["source"],
-      path: row.path,
-    };
-  }
-  if (row.kind === "internal_tool" && row.toolName && row.approval) {
-    return {
-      ...base,
-      kind: "internal_tool",
-      toolName: row.toolName,
-      approval: row.approval as Extract<WorkspaceAgentCapability, { kind: "internal_tool" }>["approval"],
-    };
-  }
-  if (row.kind === "mcp_tool" && row.connectionId && row.toolName && row.approval) {
-    return {
-      ...base,
-      kind: "mcp_tool",
-      connectionId: row.connectionId,
-      toolName: row.toolName,
-      approval: row.approval as Extract<WorkspaceAgentCapability, { kind: "mcp_tool" }>["approval"],
-    };
-  }
-  if (row.kind === "subagent" && row.agentProfileId) {
-    return { ...base, kind: "subagent", agentProfileId: row.agentProfileId };
-  }
-  return undefined;
-}
-
-function groupAgentCapabilitiesByProfileId(rows: Array<typeof workspaceAgentCapabilities.$inferSelect>) {
-  const grouped = new Map<string, WorkspaceAgentCapability[]>();
-  for (const row of rows) {
-    const capability = rowToWorkspaceAgentCapability(row);
-    if (!capability) continue;
-    grouped.set(row.profileId, [...(grouped.get(row.profileId) ?? []), capability]);
-  }
-  return grouped;
-}
-
-function filterAgentCapabilitiesByVisibleConnections(
-  capabilitiesByProfileId: Map<string, WorkspaceAgentCapability[]>,
-  visibleConnections: WorkspaceAgentConnection[],
-  visibleProfileIds?: Set<string>,
-) {
-  const visibleConnectionIds = new Set(visibleConnections.map((connection) => connection.id));
-  const filtered = new Map<string, WorkspaceAgentCapability[]>();
-  for (const [profileId, capabilities] of capabilitiesByProfileId) {
-    filtered.set(
-      profileId,
-      capabilities.filter((capability) => {
-        if (capability.kind === "mcp_tool") return visibleConnectionIds.has(capability.connectionId);
-        if (capability.kind === "subagent" && visibleProfileIds) return visibleProfileIds.has(capability.agentProfileId);
-        return true;
-      }),
-    );
-  }
-  return filtered;
-}
-
-async function listDbVisibleAgentProfileIds(ownerId: string, workspaceId: string) {
-  const memberRows = await getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, workspaceId));
-  const memberProfileIds = new Set(memberRows.flatMap((member) => (member.agentProfileId ? [member.agentProfileId] : [])));
-  const [workspaceProfileRows, memberProfileRows, personalProfileRows] = await Promise.all([
-    getDb().select().from(workspaceAgentProfiles).where(eq(workspaceAgentProfiles.workspaceId, workspaceId)),
-    memberProfileIds.size
-      ? getDb()
-          .select()
-          .from(workspaceAgentProfiles)
-          .where(inArray(workspaceAgentProfiles.id, Array.from(memberProfileIds)))
-      : [],
-    getDb().select().from(workspaceAgentProfiles).where(and(eq(workspaceAgentProfiles.ownerId, ownerId), eq(workspaceAgentProfiles.visibility, "private"))),
-  ]);
-  const visibleWorkspaceProfileRows = [...workspaceProfileRows, ...memberProfileRows].filter(
-    (profile) => profile.visibility !== "private" || profile.ownerId === ownerId || memberProfileIds.has(profile.id),
-  );
-  return new Set(Array.from(new Map([...visibleWorkspaceProfileRows, ...personalProfileRows].map((profile) => [profile.id, profile])).keys()));
-}
-
-async function mergeHiddenReferenceCapabilityInputsForDbUpdate(
-  ownerId: string,
-  workspaceId: string,
-  profileId: string,
-  visibleCapabilityInputs: WorkspaceAgentCapabilityInput[],
-) {
-  const [capabilityRows, connectionRows, visibleProfileIds] = await Promise.all([
-    getDb().select().from(workspaceAgentCapabilities).where(eq(workspaceAgentCapabilities.profileId, profileId)),
-    getDb()
-      .select({ id: workspaceAgentConnections.id })
-      .from(workspaceAgentConnections)
-      .where(or(eq(workspaceAgentConnections.workspaceId, workspaceId), eq(workspaceAgentConnections.ownerId, ownerId))),
-    listDbVisibleAgentProfileIds(ownerId, workspaceId),
-  ]);
-  const visibleConnectionIds = new Set(connectionRows.map((connection) => connection.id));
-  const hiddenCapabilities = (groupAgentCapabilitiesByProfileId(capabilityRows).get(profileId) ?? []).flatMap((capability): WorkspaceAgentCapabilityInput[] => {
-    if (capability.kind === "mcp_tool" && !visibleConnectionIds.has(capability.connectionId)) {
-      return [{ kind: "mcp_tool", connectionId: capability.connectionId, toolName: capability.toolName, approval: capability.approval, enabled: capability.enabled }];
-    }
-    if (capability.kind === "subagent" && !visibleProfileIds.has(capability.agentProfileId)) {
-      return [{ kind: "subagent", agentProfileId: capability.agentProfileId, enabled: capability.enabled }];
-    }
-    return [];
-  });
-  return [...visibleCapabilityInputs, ...hiddenCapabilities];
-}
-
-function rowToWorkspaceAgentProfile(
-  row: typeof workspaceAgentProfiles.$inferSelect,
-  capabilitiesByProfileId: Map<string, WorkspaceAgentCapability[]>,
-): WorkspaceAgentProfile {
-  return {
-    id: row.id,
-    workspaceId: row.workspaceId,
-    ownerId: row.ownerId,
-    displayName: row.displayName,
-    handle: row.handle,
-    description: row.description,
-    visibility: row.visibility as WorkspaceAgentProfile["visibility"],
-    templateKey: row.templateKey ?? undefined,
-    systemPrompt: row.systemPrompt,
-    defaultModel: row.defaultModel ?? undefined,
-    memoryScope: row.memoryScope as WorkspaceAgentProfile["memoryScope"],
-    capabilities: capabilitiesByProfileId.get(row.id) ?? [],
-    createdAt: row.createdAt.getTime(),
-    updatedAt: row.updatedAt.getTime(),
-  };
-}
-
-function rowToWorkspaceAgentConnection(row: typeof workspaceAgentConnections.$inferSelect): WorkspaceAgentConnection {
-  return {
-    id: row.id,
-    workspaceId: row.workspaceId ?? undefined,
-    ownerId: row.ownerId,
-    scope: row.scope as WorkspaceAgentConnection["scope"],
-    displayName: row.displayName,
-    transport: row.transport as WorkspaceAgentConnection["transport"],
-    configRef: row.configRef,
-    allowedToolNames: Array.isArray(row.allowedToolNames) ? row.allowedToolNames.filter((entry): entry is string => typeof entry === "string") : [],
-    status: row.status as WorkspaceAgentConnection["status"],
-    createdAt: row.createdAt.getTime(),
-    updatedAt: row.updatedAt.getTime(),
-  };
-}
-
-function normalizeConnectionToolNames(toolNames: string[]) {
-  return Array.from(new Set(toolNames.map((toolName) => toolName.trim()).filter(Boolean))).slice(0, 80);
-}
-
-function isAgentConnectionVisibleToWorkspace(connection: WorkspaceAgentConnection, ownerId: string | null | undefined, workspaceId: string) {
-  if (connection.status === "disabled") return false;
-  return isAgentConnectionManageableInWorkspace(connection, ownerId, workspaceId);
-}
-
-function isAgentConnectionManageableInWorkspace(connection: WorkspaceAgentConnection, ownerId: string | null | undefined, workspaceId: string) {
-  if (connection.scope === "workspace") return connection.workspaceId === workspaceId;
-  return Boolean(ownerId && connection.ownerId === ownerId);
-}
+const workspaceTaskServiceContext: WorkspaceTaskServiceContext = {
+  requireDbThread,
+};
 
 async function requireWorkspaceAgentConnection(
   ownerId: string | null | undefined,
@@ -722,38 +363,11 @@ async function requireWorkspaceAgentConnection(
   connectionId: string,
   options: { includeDisabled?: boolean } = {},
 ) {
-  if (!usesDatabase(ownerId)) {
-    const connection = getLocalViews(ownerId)
-      .flatMap((view) => view.agentConnections)
-      .find((entry) =>
-        entry.id === connectionId &&
-        (options.includeDisabled
-          ? isAgentConnectionManageableInWorkspace(entry, ownerId, workspaceId)
-          : isAgentConnectionVisibleToWorkspace(entry, ownerId, workspaceId))
-      );
-    if (!connection) throw new Error("Agent connection not found.");
-    return connection;
-  }
-
-  await ensureSeedWorkspace(ownerId);
-  await requireDbWorkspace(ownerId, workspaceId);
-  const rows = await getDb().select().from(workspaceAgentConnections).where(eq(workspaceAgentConnections.id, connectionId)).limit(1);
-  const connection = rows[0] ? rowToWorkspaceAgentConnection(rows[0]) : undefined;
-  if (
-    !connection ||
-    !(options.includeDisabled
-      ? isAgentConnectionManageableInWorkspace(connection, ownerId, workspaceId)
-      : isAgentConnectionVisibleToWorkspace(connection, ownerId, workspaceId))
-  ) throw new Error("Agent connection not found.");
-  return connection;
+  return requireWorkspaceAgentConnectionWithContext(agentConnectionServiceContext, ownerId, workspaceId, connectionId, options);
 }
 
 async function assertAgentCapabilityConnections(ownerId: string | null | undefined, workspaceId: string, capabilities: WorkspaceAgentCapabilityInput[]) {
-  for (const capability of capabilities) {
-    if (capability.kind !== "mcp_tool" || !capability.enabled) continue;
-    const connection = await requireWorkspaceAgentConnection(ownerId, workspaceId, capability.connectionId);
-    if (!connection.allowedToolNames.includes(capability.toolName)) throw new Error("Agent connection tool is not allowed.");
-  }
+  await assertAgentCapabilityConnectionsWithContext(agentConnectionServiceContext, ownerId, workspaceId, capabilities);
 }
 
 async function assertAgentSubagentCapabilities(
@@ -778,49 +392,11 @@ async function assertAgentSubagentCapabilities(
 }
 
 async function requireWorkspaceAgentProfile(ownerId: string | null | undefined, workspaceId: string, profileId: string) {
-  if (!usesDatabase(ownerId)) {
-    const views = getLocalViews(ownerId);
-    const profile = views
-      .flatMap((view) => view.agentProfiles)
-      .find((entry) => entry.id === profileId && (entry.workspaceId === workspaceId || (entry.visibility === "private" && entry.ownerId === (ownerId ?? undefined))));
-    if (!profile) throw new Error("Agent profile not found.");
-    return profile;
-  }
-
-  await ensureSeedWorkspace(ownerId);
-  await requireDbWorkspace(ownerId, workspaceId);
-  const [profileRows, capabilityRows, connectionRows] = await Promise.all([
-    getDb()
-      .select()
-      .from(workspaceAgentProfiles)
-      .where(eq(workspaceAgentProfiles.id, profileId))
-      .limit(1),
-    getDb()
-      .select()
-      .from(workspaceAgentCapabilities)
-      .where(eq(workspaceAgentCapabilities.profileId, profileId)),
-    getDb()
-      .select()
-      .from(workspaceAgentConnections)
-      .where(or(eq(workspaceAgentConnections.workspaceId, workspaceId), eq(workspaceAgentConnections.ownerId, ownerId))),
-  ]);
-  const profile = profileRows[0];
-  if (!profile || !(await isDbAgentProfileResolvableInWorkspace(profile, ownerId, workspaceId))) throw new Error("Agent profile not found.");
-  const visibleProfileIds = await listDbVisibleAgentProfileIds(ownerId, workspaceId);
-  return rowToWorkspaceAgentProfile(
-    profile,
-    filterAgentCapabilitiesByVisibleConnections(
-      groupAgentCapabilitiesByProfileId(capabilityRows),
-      connectionRows.map(rowToWorkspaceAgentConnection),
-      visibleProfileIds,
-    ),
-  );
+  return requireWorkspaceAgentProfileWithContext(agentProfileServiceContext, ownerId, workspaceId, profileId);
 }
 
 async function assertCanManageWorkspaceAgentProfile(ownerId: string | null | undefined, profile: WorkspaceAgentProfile) {
-  if (!usesDatabase(ownerId)) return;
-  if (ownerId && profile.ownerId === ownerId) return;
-  await requireDbWorkspaceOwner(ownerId, profile.workspaceId);
+  await assertCanManageWorkspaceAgentProfileWithContext(agentProfileServiceContext, ownerId, profile);
 }
 
 export async function getWorkspaceView(ownerId?: string | null, workspaceId?: string | null): Promise<WorkspaceView> {
@@ -877,7 +453,7 @@ export async function createWorkspaceAgentMemory(ownerId: string | null | undefi
   await requireDbWorkspace(ownerId, input.workspaceId);
   const profile = await requireWorkspaceAgentProfile(ownerId, input.workspaceId, input.agentProfileId);
   if (input.threadId) await requireDbThread(ownerId, input.workspaceId, input.threadId);
-  await assertDbWorkspaceAgentMemorySourceVisibility(ownerId, input.workspaceId, input);
+  await assertDbWorkspaceAgentMemorySourceVisibilityWithContext(agentMemoryServiceContext, ownerId, input.workspaceId, input);
   const memory: WorkspaceAgentMemory = {
     id: `wamem_${randomBytes(10).toString("base64url")}`,
     workspaceId: input.scope === "user" ? input.workspaceId : profile.workspaceId,
@@ -909,44 +485,6 @@ export async function createWorkspaceAgentMemory(ownerId: string | null | undefi
   });
   notifyWorkspaceChanged(input.workspaceId);
   return memory;
-}
-
-function assertLocalWorkspaceAgentMemorySourceVisibility(view: WorkspaceView, input: CreateWorkspaceAgentMemoryInput) {
-  if (input.sourceRunId) {
-    const run = view.agentRuns.find((entry) => entry.id === input.sourceRunId && entry.workspaceId === input.workspaceId);
-    if (!run) throw new Error("Agent run not found.");
-    if (input.scope === "thread" && input.threadId && run.threadId !== input.threadId) throw new Error("Memory source run must belong to the memory thread.");
-  }
-  if (input.sourceMessageId) {
-    const message = view.messages.find((entry) => entry.id === input.sourceMessageId && entry.workspaceId === input.workspaceId);
-    if (!message) throw new Error("Message not found.");
-    if (input.scope === "thread" && input.threadId && message.threadId !== input.threadId) throw new Error("Memory source message must belong to the memory thread.");
-  }
-}
-
-async function assertDbWorkspaceAgentMemorySourceVisibility(ownerId: string, workspaceId: string, input: CreateWorkspaceAgentMemoryInput) {
-  if (input.sourceRunId) {
-    const runRows = await getDb()
-      .select()
-      .from(workspaceAgentRuns)
-      .where(and(eq(workspaceAgentRuns.id, input.sourceRunId), eq(workspaceAgentRuns.workspaceId, workspaceId)))
-      .limit(1);
-    const run = runRows[0];
-    if (!run) throw new Error("Agent run not found.");
-    await requireDbThread(ownerId, workspaceId, run.threadId);
-    if (input.scope === "thread" && input.threadId && run.threadId !== input.threadId) throw new Error("Memory source run must belong to the memory thread.");
-  }
-  if (input.sourceMessageId) {
-    const messageRows = await getDb()
-      .select()
-      .from(workspaceMessages)
-      .where(and(eq(workspaceMessages.id, input.sourceMessageId), eq(workspaceMessages.workspaceId, workspaceId)))
-      .limit(1);
-    const message = messageRows[0];
-    if (!message) throw new Error("Message not found.");
-    await requireDbThread(ownerId, workspaceId, message.threadId);
-    if (input.scope === "thread" && input.threadId && message.threadId !== input.threadId) throw new Error("Memory source message must belong to the memory thread.");
-  }
 }
 
 export async function archiveWorkspaceAgentMemory(ownerId: string | null | undefined, input: ArchiveWorkspaceAgentMemoryInput): Promise<WorkspaceAgentMemory> {
@@ -1922,21 +1460,7 @@ export async function getWorkspaceAgentRunDetail(
       approvals: approvalRows.map(rowToWorkspaceAgentApproval),
       inputMessage: run.inputMessageId ? messages.find((message) => message.id === run.inputMessageId) : undefined,
       outputMessage: run.outputMessageId ? messages.find((message) => message.id === run.outputMessageId) : undefined,
-      task: taskRows[0]
-        ? {
-            id: taskRows[0].id,
-            workspaceId: taskRows[0].workspaceId,
-            threadId: taskRows[0].threadId,
-            title: taskRows[0].title,
-            scope: taskRows[0].scope,
-            status: taskRows[0].status,
-            progress: taskRows[0].progress,
-            dueAt: taskRows[0].dueAt ?? undefined,
-            ...readTaskMetadata(taskRows[0].metadata),
-            createdAt: taskRows[0].createdAt.getTime(),
-            updatedAt: taskRows[0].updatedAt.getTime(),
-          }
-        : undefined,
+      task: taskRows[0] ? rowToWorkspaceTask(taskRows[0]) : undefined,
       artifacts: artifactRows.map(rowToWorkspaceArtifact),
       memories: memoryRows
         .filter((memory) => isDbWorkspaceAgentMemoryVisibleToOwner(memory, ownerId))
@@ -2381,17 +1905,7 @@ export async function updateWorkspaceThread(ownerId: string | null | undefined, 
       await tx.update(workspaces).set({ updatedAt }).where(eq(workspaces.id, input.workspaceId));
     });
     notifyWorkspaceChanged(input.workspaceId);
-    return {
-      id: existing.id,
-      workspaceId: existing.workspaceId,
-      type: existing.type as WorkspaceThreadType,
-      name: existing.name,
-      description: existing.description ?? undefined,
-      agentTriggerMode,
-      allowedAgentProfileIds,
-      createdAt: existing.createdAt.getTime(),
-      updatedAt: now,
-    };
+    return rowToWorkspaceThread({ ...existing, agentTriggerMode, allowedAgentProfileIds: allowedAgentProfileIds ?? null, updatedAt });
   } catch (error) {
     console.error("[workspace] database thread update failed", error);
     throw error;
@@ -2419,7 +1933,7 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
     await ensureSeedWorkspace(ownerId);
     await requireDbWorkspace(ownerId, input.workspaceId);
     await requireDbThread(ownerId, input.workspaceId, input.threadId);
-    await assertDbWorkspaceTaskSourceVisibility(ownerId, input.workspaceId, task);
+    await assertDbWorkspaceTaskSourceVisibilityWithContext(workspaceTaskServiceContext, ownerId, input.workspaceId, task);
     await getDb().insert(workspaceTasks).values({
       id: task.id,
       workspaceId: task.workspaceId,
@@ -2440,42 +1954,6 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
   } catch (error) {
     console.error("[workspace] database task persistence failed", error);
     throw error;
-  }
-}
-
-function assertLocalWorkspaceTaskSourceVisibility(view: WorkspaceView, task: WorkspaceTask) {
-  if (task.sourceArtifactId) {
-    const artifact = view.artifacts.find((entry) => entry.id === task.sourceArtifactId && entry.workspaceId === task.workspaceId);
-    if (!artifact) throw new Error("Workspace artifact not found.");
-    if (artifact.sourceRunId && task.sourceRunId && artifact.sourceRunId !== task.sourceRunId) throw new Error("Task source run does not match source artifact.");
-  }
-  if (task.sourceRunId) {
-    const run = view.agentRuns.find((entry) => entry.id === task.sourceRunId && entry.workspaceId === task.workspaceId);
-    if (!run && !task.sourceArtifactId) throw new Error("Agent run not found.");
-  }
-}
-
-async function assertDbWorkspaceTaskSourceVisibility(ownerId: string, workspaceId: string, task: WorkspaceTask) {
-  if (task.sourceArtifactId) {
-    const artifactRows = await getDb()
-      .select()
-      .from(workspaceArtifacts)
-      .where(and(eq(workspaceArtifacts.id, task.sourceArtifactId), eq(workspaceArtifacts.workspaceId, workspaceId)))
-      .limit(1);
-    const artifact = artifactRows[0];
-    if (!artifact) throw new Error("Workspace artifact not found.");
-    await requireDbThread(ownerId, workspaceId, artifact.threadId);
-    if (artifact.sourceRunId && task.sourceRunId && artifact.sourceRunId !== task.sourceRunId) throw new Error("Task source run does not match source artifact.");
-  }
-  if (task.sourceRunId) {
-    const runRows = await getDb()
-      .select()
-      .from(workspaceAgentRuns)
-      .where(and(eq(workspaceAgentRuns.id, task.sourceRunId), eq(workspaceAgentRuns.workspaceId, workspaceId)))
-      .limit(1);
-    const run = runRows[0];
-    if (!run && !task.sourceArtifactId) throw new Error("Agent run not found.");
-    if (run) await requireDbThread(ownerId, workspaceId, run.threadId);
   }
 }
 
@@ -3845,13 +3323,7 @@ async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSumma
   const uniqueRows = Array.from(new Map(rows.map((workspace) => [workspace.id, workspace])).values()).sort(
     (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
   );
-  return uniqueRows.map((workspace): WorkspaceSummary => ({
-    id: workspace.id,
-    name: workspace.name,
-    inviteCode: workspace.inviteCode ?? undefined,
-    createdAt: workspace.createdAt.getTime(),
-    updatedAt: workspace.updatedAt.getTime(),
-  }));
+  return uniqueRows.map(rowToWorkspaceSummary);
 }
 
 async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | null): Promise<WorkspaceView> {
@@ -3948,57 +3420,13 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
     : [[], []];
 
   return {
-    workspace: {
-      id: workspace.id,
-      name: workspace.name,
-      inviteCode: workspace.inviteCode ?? undefined,
-      createdAt: workspace.createdAt.getTime(),
-      updatedAt: workspace.updatedAt.getTime(),
-    },
+    workspace: rowToWorkspaceSummary(workspace),
     workspaces: summaries,
-    members: memberRows.map((member): WorkspaceMember => ({
-      id: member.id,
-      workspaceId: member.workspaceId,
-      displayName: member.displayName,
-      role: member.role,
-      status: member.status ?? undefined,
-      agentProfileId: member.agentProfileId ?? undefined,
-    })),
+    members: memberRows.map(rowToWorkspaceMember),
     agentProfiles: profileRows.map((profile) => rowToWorkspaceAgentProfile(profile, capabilitiesByProfileId)),
-    threads: visibleThreadRows.map((thread): WorkspaceThread => ({
-      id: thread.id,
-      workspaceId: thread.workspaceId,
-      type: thread.type as WorkspaceThreadType,
-      name: thread.name,
-      description: thread.description ?? undefined,
-      agentTriggerMode: normalizeWorkspaceThreadAgentTriggerMode(thread.agentTriggerMode),
-      allowedAgentProfileIds: normalizeWorkspaceThreadAllowedAgentProfileIds(thread.allowedAgentProfileIds),
-      participantIds: membersByThreadId.get(thread.id)?.map((member) => member.memberId),
-      createdAt: thread.createdAt.getTime(),
-      updatedAt: thread.updatedAt.getTime(),
-    })),
+    threads: visibleThreadRows.map((thread) => rowToWorkspaceThread(thread, membersByThreadId.get(thread.id)?.map((member) => member.memberId))),
     messages: messageRows.map(rowToWorkspaceMessage).sort((a, b) => a.createdAt - b.createdAt),
-    tasks: taskRows.filter((task) => visibleThreadIds.has(task.threadId)).map((task): WorkspaceTask => {
-      const metadata = readTaskMetadata(task.metadata);
-      return {
-        id: task.id,
-        workspaceId: task.workspaceId,
-        threadId: task.threadId,
-        title: task.title,
-        scope: task.scope,
-        status: task.status,
-        progress: task.progress,
-        assigneeId: metadata.assigneeId,
-        assigneeName: metadata.assigneeName,
-        resultSummary: metadata.resultSummary,
-        submittedAt: metadata.submittedAt,
-        sourceArtifactId: metadata.sourceArtifactId,
-        sourceRunId: metadata.sourceRunId,
-        dueAt: task.dueAt ?? undefined,
-        createdAt: task.createdAt.getTime(),
-        updatedAt: task.updatedAt.getTime(),
-      };
-    }),
+    tasks: taskRows.filter((task) => visibleThreadIds.has(task.threadId)).map(rowToWorkspaceTask),
     artifacts: artifactRows.filter((artifact) => visibleThreadIds.has(artifact.threadId)).map(rowToWorkspaceArtifact).sort((a, b) => b.updatedAt - a.updatedAt),
     agentRuns: visibleRunRows.map(rowToWorkspaceAgentRun).sort((a, b) => a.startedAt - b.startedAt),
     agentRunEvents: runEventRows.map(rowToWorkspaceAgentRunEvent).sort((a, b) => a.createdAt - b.createdAt),
@@ -4038,18 +3466,6 @@ async function linkWorkspaceArtifactToRun(ownerId: string | null | undefined, wo
   return undefined;
 }
 
-function inferWorkspaceArtifactKind(artifact: WorkspaceMessageArtifact): WorkspaceArtifactKind {
-  if (artifact.type === "app") return "app";
-  const groups = new Set(artifact.groups.map((group) => group.trim().toLowerCase()).filter(Boolean));
-  if (groups.has("course")) return "course";
-  if (groups.has("task result")) return "task_result";
-  return "saved_artifact";
-}
-
-function defaultWorkspaceArtifactReviewStatus(kind: WorkspaceArtifactKind): WorkspaceArtifactReviewStatus {
-  return kind === "app" ? "reviewed" : "needs_review";
-}
-
 export function buildWorkspaceArtifactMessageBundle(
   input: WorkspaceArtifactSeedInput & {
     senderName: string;
@@ -4083,190 +3499,6 @@ export function buildWorkspaceArtifactMessageBundle(
   return { message, artifact };
 }
 
-function buildWorkspaceArtifactRecord(input: WorkspaceArtifactSeedInput & { sourceMessageId: string }): WorkspaceArtifact {
-  const kind = input.kind ?? inferWorkspaceArtifactKind(input.payload);
-  return {
-    id: `wart_${input.sourceMessageId}`,
-    workspaceId: input.workspaceId,
-    threadId: input.threadId,
-    kind,
-    title: input.title,
-    description: input.description,
-    reviewStatus: input.reviewStatus ?? defaultWorkspaceArtifactReviewStatus(kind),
-    sourceMessageId: input.sourceMessageId,
-    sourceRunId: input.sourceRunId,
-    payload: input.payload,
-    createdAt: input.now ?? Date.now(),
-    updatedAt: input.now ?? Date.now(),
-  };
-}
-
-function alignWorkspaceArtifactCompatibilitySnapshot(artifact: WorkspaceMessageArtifact, title: string, description: string): WorkspaceMessageArtifact {
-  return {
-    ...artifact,
-    title,
-    description,
-  };
-}
-
-export function buildWorkspaceArtifactFromMessage(message: WorkspaceMessage, sourceRunId?: string): WorkspaceArtifact | undefined {
-  if (!message.artifact) return undefined;
-  return buildWorkspaceArtifactRecord({
-    workspaceId: message.workspaceId,
-    threadId: message.threadId,
-    title: message.artifact.title,
-    description: message.artifact.description,
-    sourceMessageId: message.id,
-    sourceRunId,
-    payload: message.artifact,
-    now: message.createdAt,
-  });
-}
-
-function upsertWorkspaceArtifact(artifacts: WorkspaceArtifact[], artifact: WorkspaceArtifact) {
-  return [artifact, ...artifacts.filter((entry) => entry.id !== artifact.id)].sort((a, b) => b.updatedAt - a.updatedAt);
-}
-
-function dbWorkspaceArtifactValues(artifact: WorkspaceArtifact, ownerId: string) {
-  return {
-    id: artifact.id,
-    workspaceId: artifact.workspaceId,
-    threadId: artifact.threadId,
-    ownerId,
-    kind: artifact.kind,
-    title: artifact.title,
-    description: artifact.description,
-    reviewStatus: artifact.reviewStatus,
-    sourceMessageId: artifact.sourceMessageId,
-    sourceRunId: artifact.sourceRunId ?? null,
-    payload: artifact.payload,
-    createdAt: new Date(artifact.createdAt),
-    updatedAt: new Date(artifact.updatedAt),
-  };
-}
-
-function rowToWorkspaceArtifact(artifact: typeof workspaceArtifacts.$inferSelect): WorkspaceArtifact {
-  return {
-    id: artifact.id,
-    workspaceId: artifact.workspaceId,
-    threadId: artifact.threadId,
-    kind: artifact.kind as WorkspaceArtifact["kind"],
-    title: artifact.title,
-    description: artifact.description,
-    reviewStatus: (artifact.reviewStatus as WorkspaceArtifactReviewStatus | undefined) ?? defaultWorkspaceArtifactReviewStatus(artifact.kind as WorkspaceArtifactKind),
-    sourceMessageId: artifact.sourceMessageId,
-    sourceRunId: artifact.sourceRunId ?? undefined,
-    payload: artifact.payload as WorkspaceMessageArtifact,
-    createdAt: artifact.createdAt.getTime(),
-    updatedAt: artifact.updatedAt.getTime(),
-  };
-}
-
-function buildMessage(input: CreateWorkspaceMessageInput, content: string): WorkspaceMessage {
-  return {
-    id: `wmsg_${randomBytes(10).toString("base64url")}`,
-    workspaceId: input.workspaceId,
-    threadId: input.threadId,
-    senderName: input.senderName?.trim() || "You",
-    senderKind: input.senderKind ?? "human",
-    content,
-    artifact: input.artifact,
-    createdAt: nextMessageTimestamp(),
-  };
-}
-
-function nextMessageTimestamp() {
-  const now = Date.now();
-  lastWorkspaceMessageCreatedAt = Math.max(now, lastWorkspaceMessageCreatedAt + 1);
-  return lastWorkspaceMessageCreatedAt;
-}
-
-function rowToWorkspaceMessage(message: typeof workspaceMessages.$inferSelect): WorkspaceMessage {
-  return {
-    id: message.id,
-    workspaceId: message.workspaceId,
-    threadId: message.threadId,
-    senderName: message.senderName,
-    senderKind: message.senderKind as WorkspaceMessage["senderKind"],
-    content: message.content,
-    artifact: (message.artifact ?? undefined) as WorkspaceMessageArtifact | undefined,
-    createdAt: message.createdAt.getTime(),
-  };
-}
-
-function rowToWorkspaceAgentRun(run: typeof workspaceAgentRuns.$inferSelect): WorkspaceAgentRun {
-  return {
-    id: run.id,
-    workspaceId: run.workspaceId,
-    threadId: run.threadId,
-    agentProfileId: run.agentProfileId,
-    agentMemberId: run.agentMemberId ?? undefined,
-    trigger: run.trigger as WorkspaceAgentRunTrigger,
-    status: run.status as WorkspaceAgentRunStatus,
-    inputMessageId: run.inputMessageId ?? undefined,
-    outputMessageId: run.outputMessageId ?? undefined,
-    taskId: run.taskId ?? undefined,
-    startedAt: run.startedAt.getTime(),
-    completedAt: run.completedAt?.getTime(),
-    error: run.error ?? undefined,
-  };
-}
-
-function rowToWorkspaceAgentRunEvent(event: typeof workspaceAgentRunEvents.$inferSelect): WorkspaceAgentRunEvent {
-  return {
-    id: event.id,
-    runId: event.runId,
-    workspaceId: event.workspaceId,
-    threadId: event.threadId,
-    type: event.type as WorkspaceAgentRunEvent["type"],
-    label: event.label,
-    payload: event.payload ?? undefined,
-    createdAt: event.createdAt.getTime(),
-  };
-}
-
-function rowToWorkspaceAgentApproval(approval: typeof workspaceAgentApprovals.$inferSelect): WorkspaceAgentApproval {
-  return {
-    id: approval.id,
-    workspaceId: approval.workspaceId,
-    threadId: approval.threadId,
-    runId: approval.runId,
-    agentProfileId: approval.agentProfileId,
-    agentMemberId: approval.agentMemberId ?? undefined,
-    toolName: approval.toolName,
-    status: approval.status as WorkspaceAgentApproval["status"],
-    input: approval.input ?? undefined,
-    policy: approval.policy ?? undefined,
-    deepAgentThreadId: approval.deepAgentThreadId ?? undefined,
-    requestedAt: approval.requestedAt.getTime(),
-    decidedAt: approval.decidedAt?.getTime(),
-    decidedBy: approval.decidedBy ?? undefined,
-    decisionReason: approval.decisionReason ?? undefined,
-  };
-}
-
-function rowToWorkspaceAgentMemory(memory: typeof workspaceAgentMemories.$inferSelect): WorkspaceAgentMemory {
-  return {
-    id: memory.id,
-    workspaceId: memory.workspaceId ?? undefined,
-    userId: memory.userId ?? undefined,
-    threadId: memory.threadId ?? undefined,
-    agentProfileId: memory.agentProfileId,
-    scope: memory.scope as WorkspaceAgentMemory["scope"],
-    title: memory.title,
-    summary: memory.summary,
-    sourceRunId: memory.sourceRunId ?? undefined,
-    sourceMessageId: memory.sourceMessageId ?? undefined,
-    createdAt: memory.createdAt.getTime(),
-    updatedAt: memory.updatedAt.getTime(),
-    archivedAt: memory.archivedAt?.getTime(),
-  };
-}
-
-function isDbWorkspaceAgentMemoryVisibleToOwner(memory: typeof workspaceAgentMemories.$inferSelect, ownerId: string | null | undefined) {
-  return memory.scope !== "user" || Boolean(ownerId && memory.userId === ownerId);
-}
-
 function requireLocalWorkspace(workspaceId: string, ownerId?: string | null) {
   if (!getLocalViews(ownerId).some((view) => view.workspace.id === workspaceId)) throw new Error("Workspace not found.");
 }
@@ -4274,71 +3506,6 @@ function requireLocalWorkspace(workspaceId: string, ownerId?: string | null) {
 function requireLocalThread(threadId: string, workspaceId: string, ownerId?: string | null) {
   const thread = getLocalView(workspaceId, ownerId).threads.find((entry) => entry.id === threadId && entry.workspaceId === workspaceId);
   if (!thread) throw new Error("Thread not found.");
-}
-
-async function requireDbWorkspace(ownerId: string, workspaceId: string) {
-  const rows = await getDb()
-    .select({ id: workspaces.id })
-    .from(workspaces)
-    .where(and(eq(workspaces.id, workspaceId), eq(workspaces.ownerId, ownerId)))
-    .limit(1);
-  if (rows[0]) return;
-  const memberRows = await getDb()
-    .select({ id: workspaceMembers.id })
-    .from(workspaceMembers)
-    .where(and(eq(workspaceMembers.workspaceId, workspaceId), eq(workspaceMembers.ownerId, ownerId)))
-    .limit(1);
-  if (!memberRows[0]) throw new Error("Workspace not found.");
-}
-
-async function requireDbWorkspaceOwner(ownerId: string, workspaceId: string) {
-  const rows = await getDb()
-    .select({ id: workspaces.id })
-    .from(workspaces)
-    .where(and(eq(workspaces.id, workspaceId), eq(workspaces.ownerId, ownerId)))
-    .limit(1);
-  if (!rows[0]) throw new Error("Workspace owner permission is required.");
-}
-
-async function isDbAgentProfileResolvableInWorkspace(
-  profile: typeof workspaceAgentProfiles.$inferSelect,
-  ownerId: string,
-  workspaceId: string,
-) {
-  const memberRows = await getDb()
-    .select({ id: workspaceMembers.id })
-    .from(workspaceMembers)
-    .where(and(eq(workspaceMembers.workspaceId, workspaceId), eq(workspaceMembers.agentProfileId, profile.id)))
-    .limit(1);
-  if (memberRows[0]) return true;
-  if (profile.visibility === "private") {
-    return profile.ownerId === ownerId && (profile.workspaceId === workspaceId || profile.ownerId === ownerId);
-  }
-  return profile.workspaceId === workspaceId;
-}
-
-async function requireDbThread(ownerId: string, workspaceId: string, threadId: string) {
-  const [threadRows, memberRows] = await Promise.all([
-    getDb()
-      .select()
-      .from(workspaceThreads)
-      .where(and(eq(workspaceThreads.id, threadId), eq(workspaceThreads.workspaceId, workspaceId)))
-      .limit(1),
-    getDb().select().from(workspaceThreadMembers).where(eq(workspaceThreadMembers.threadId, threadId)),
-  ]);
-  const thread = threadRows[0];
-  if (!thread || !isDbThreadVisibleToOwner(thread, ownerId, memberRows)) throw new Error("Thread not found.");
-}
-
-async function listDbVisibleWorkspaceThreadIds(ownerId: string, workspaceId: string) {
-  const [threadRows, memberRows] = await Promise.all([
-    getDb().select().from(workspaceThreads).where(eq(workspaceThreads.workspaceId, workspaceId)),
-    getDb().select().from(workspaceThreadMembers).where(eq(workspaceThreadMembers.workspaceId, workspaceId)),
-  ]);
-  const membersByThreadId = groupThreadMembersByThreadId(memberRows);
-  return threadRows
-    .filter((thread) => isDbThreadVisibleToOwner(thread, ownerId, membersByThreadId.get(thread.id)))
-    .map((thread) => thread.id);
 }
 
 async function resolveTaskAssignee(ownerId: string | null | undefined, workspaceId: string, assigneeId?: string) {
@@ -4357,51 +3524,7 @@ async function resolveTaskAssignee(ownerId: string | null | undefined, workspace
     .limit(1);
   const member = rows[0];
   if (!member) throw new Error("Assignee not found.");
-  return {
-    id: member.id,
-    workspaceId: member.workspaceId,
-    displayName: member.displayName,
-    role: member.role,
-    status: member.status ?? undefined,
-  } satisfies WorkspaceMember;
-}
-
-function normalizeParticipantIds(participantIds?: string[] | null) {
-  const ids = (participantIds ?? []).map((id) => id.trim()).filter(Boolean);
-  return ids.length ? Array.from(new Set(ids)) : undefined;
-}
-
-function buildLocalDirectParticipantIds(members: WorkspaceMember[], participantIds: string[] | undefined) {
-  const requestedMemberIds = new Set(normalizeParticipantIds(participantIds));
-  const selectedMembers = members.filter((member) => requestedMemberIds.has(member.id));
-  if (selectedMembers.length !== requestedMemberIds.size) throw new Error("Direct participant not found.");
-  const currentOwnerMember = members.find((member) => member.status === "owner" && !isWorkspaceAgentMember(member)) ?? members.find((member) => !isWorkspaceAgentMember(member));
-  const participants = Array.from(new Map([...(currentOwnerMember ? [currentOwnerMember] : []), ...selectedMembers].map((member) => [member.id, member])).values());
-  return participants.map((member) => member.id);
-}
-
-async function buildDbThreadParticipantRows(ownerId: string, workspaceId: string, threadId: string, participantIds: string[] | undefined, now: number) {
-  const rows = await getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, workspaceId));
-  const requestedMemberIds = new Set(normalizeParticipantIds(participantIds));
-  const selectedMembers = rows.filter((member) => requestedMemberIds.has(member.id));
-  if (selectedMembers.length !== requestedMemberIds.size) throw new Error("Direct participant not found.");
-  const currentOwnerMember = rows.find((member) => member.ownerId === ownerId && !isWorkspaceAgentMember({
-    id: member.id,
-    workspaceId: member.workspaceId,
-    displayName: member.displayName,
-    role: member.role,
-    status: member.status ?? undefined,
-    agentProfileId: member.agentProfileId ?? undefined,
-  }));
-  const participants = Array.from(new Map([...(currentOwnerMember ? [currentOwnerMember] : []), ...selectedMembers].map((member) => [member.id, member])).values());
-  return participants.map((member) => ({
-    id: `wtmember_${randomBytes(10).toString("base64url")}`,
-    workspaceId,
-    threadId,
-    memberId: member.id,
-    ownerId: member.ownerId,
-    createdAt: new Date(now),
-  }));
+  return rowToWorkspaceMember(member);
 }
 
 function buildSeedThreadMemberRows(ownerId: string, thread: WorkspaceThread, members: WorkspaceMember[], createdAt: number) {
@@ -4416,26 +3539,6 @@ function buildSeedThreadMemberRows(ownerId: string, thread: WorkspaceThread, mem
     ownerId,
     createdAt: new Date(createdAt),
   }));
-}
-
-function isDbThreadVisibleToOwner(
-  thread: typeof workspaceThreads.$inferSelect,
-  ownerId: string,
-  members: Array<typeof workspaceThreadMembers.$inferSelect> | undefined,
-) {
-  if (thread.type !== "direct") return true;
-  if (members?.length) return members.some((member) => member.ownerId === ownerId);
-  return thread.ownerId === ownerId;
-}
-
-function groupThreadMembersByThreadId(rows: Array<typeof workspaceThreadMembers.$inferSelect>) {
-  const grouped = new Map<string, Array<typeof workspaceThreadMembers.$inferSelect>>();
-  for (const row of rows) {
-    const existing = grouped.get(row.threadId) ?? [];
-    existing.push(row);
-    grouped.set(row.threadId, existing);
-  }
-  return grouped;
 }
 
 async function createCompletedWorkspaceAgentRun(
@@ -4602,101 +3705,6 @@ async function addRetrySourceEvents(
   return { ...result, events: [...retryEvents, ...result.events] };
 }
 
-function buildAgentRunEvent(
-  run: WorkspaceAgentRun,
-  type: WorkspaceAgentRunEvent["type"],
-  label: string,
-  payload?: unknown,
-  createdAt = Date.now(),
-): WorkspaceAgentRunEvent {
-  return {
-    id: `warevt_${randomBytes(10).toString("base64url")}`,
-    runId: run.id,
-    workspaceId: run.workspaceId,
-    threadId: run.threadId,
-    type,
-    label,
-    payload,
-    createdAt,
-  };
-}
-
-function buildWorkspaceAgentProfileRunSnapshot(profile: WorkspaceAgentProfile) {
-  return {
-    id: profile.id,
-    displayName: profile.displayName,
-    handle: profile.handle,
-    description: profile.description,
-    visibility: profile.visibility,
-    templateKey: profile.templateKey,
-    memoryScope: profile.memoryScope,
-    defaultModel: profile.defaultModel,
-    capabilities: profile.capabilities
-      .filter((capability) => capability.enabled)
-      .map((capability) => {
-        if (capability.kind === "skill") {
-          return { kind: capability.kind, source: capability.source, path: capability.path };
-        }
-        if (capability.kind === "internal_tool") {
-          return { kind: capability.kind, toolName: capability.toolName, approval: capability.approval };
-        }
-        if (capability.kind === "mcp_tool") {
-          return { kind: capability.kind, connectionId: capability.connectionId, toolName: capability.toolName, approval: capability.approval };
-        }
-        return { kind: capability.kind, agentProfileId: capability.agentProfileId };
-      }),
-  };
-}
-
-function isTerminalAgentRunStatus(status: WorkspaceAgentRunStatus) {
-  return status === "completed" || status === "failed" || status === "cancelled";
-}
-
-function buildWorkspaceRuntimeVisibleMessages(messages: WorkspaceMessage[]) {
-  return messages.map((message) => ({
-    id: message.id,
-    threadId: message.threadId,
-    senderName: message.senderName,
-    content: message.content,
-    createdAt: message.createdAt,
-  }));
-}
-
-function buildPendingWorkspaceAgentApprovals(
-  run: WorkspaceAgentRun,
-  events: WorkspaceAgentRunEvent[],
-  deepAgentThreadId: string,
-  requestedAt: number,
-): WorkspaceAgentApproval[] {
-  return events.flatMap((event) => {
-    if (event.type !== "approval_request") return [];
-    const payload = readObject(event.payload);
-    const policy = buildWorkspaceApprovalPolicyPayload(payload);
-    const input = "input" in payload ? payload.input : stripApprovalEnvelope(payload);
-    const eventThreadId = typeof payload.deepAgentThreadId === "string" ? payload.deepAgentThreadId : deepAgentThreadId;
-    return [
-      {
-        id: `waapr_${randomBytes(10).toString("base64url")}`,
-        workspaceId: run.workspaceId,
-        threadId: run.threadId,
-        runId: run.id,
-        agentProfileId: run.agentProfileId,
-        agentMemberId: run.agentMemberId,
-        toolName: event.label,
-        status: "pending",
-        input,
-        policy,
-        deepAgentThreadId: eventThreadId,
-        requestedAt: event.createdAt || requestedAt,
-      },
-    ];
-  });
-}
-
-function createWorkspaceAgentRunId() {
-  return `warun_${randomBytes(10).toString("base64url")}`;
-}
-
 async function ensureImplicitAgentProfile(ownerId: string | null | undefined, workspaceId: string, member: WorkspaceMember) {
   if (member.agentProfileId) return requireWorkspaceAgentProfile(ownerId, workspaceId, member.agentProfileId);
   const displayName = member.displayName.trim() || "Workspace Agent";
@@ -4725,77 +3733,6 @@ type WorkspaceAgentRunSeed = {
   triggerDecision?: Pick<WorkspaceAgentTriggerDecision, "reason" | "confidence"> & { selectedAgentIds?: string[] };
   runtimeEvents?: WorkspaceAgentRuntimeEvent[];
 };
-
-function buildTaskMetadata(task: WorkspaceTask) {
-  if (!task.assigneeId && !task.assigneeName && !task.resultSummary && !task.submittedAt && !task.sourceArtifactId && !task.sourceRunId) return null;
-  return {
-    assigneeId: task.assigneeId,
-    assigneeName: task.assigneeName,
-    resultSummary: task.resultSummary,
-    submittedAt: task.submittedAt,
-    sourceArtifactId: task.sourceArtifactId,
-    sourceRunId: task.sourceRunId,
-  };
-}
-
-function readTaskMetadata(metadata: unknown): Pick<WorkspaceTask, "assigneeId" | "assigneeName" | "resultSummary" | "submittedAt" | "sourceArtifactId" | "sourceRunId"> {
-  if (!metadata || typeof metadata !== "object") return {};
-  const record = metadata as Record<string, unknown>;
-  return {
-    assigneeId: typeof record.assigneeId === "string" ? record.assigneeId : undefined,
-    assigneeName: typeof record.assigneeName === "string" ? record.assigneeName : undefined,
-    resultSummary: typeof record.resultSummary === "string" ? record.resultSummary : undefined,
-    submittedAt: typeof record.submittedAt === "number" ? record.submittedAt : undefined,
-    sourceArtifactId: typeof record.sourceArtifactId === "string" ? record.sourceArtifactId : undefined,
-    sourceRunId: typeof record.sourceRunId === "string" ? record.sourceRunId : undefined,
-  };
-}
-
-function readObject(value: unknown): Record<string, unknown> {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
-  return value as Record<string, unknown>;
-}
-
-
-function buildWorkspaceApprovalPolicyPayload(payload: Record<string, unknown>) {
-  const basePolicy = readObject(payload.policy);
-  const reviewConfig = readObject(payload.reviewConfig);
-  const actionDescription = readOptionalString(payload.actionDescription);
-  const hasReviewConfig = Object.keys(reviewConfig).length > 0;
-  if (!hasReviewConfig && !actionDescription) return Object.keys(basePolicy).length ? basePolicy : undefined;
-  return {
-    ...basePolicy,
-    ...(hasReviewConfig ? { reviewConfig } : {}),
-    ...(actionDescription ? { actionDescription } : {}),
-  };
-}
-
-function stripApprovalEnvelope(payload: Record<string, unknown>) {
-  const { policy: _policy, deepAgentThreadId: _deepAgentThreadId, reviewConfig: _reviewConfig, actionDescription: _actionDescription, ...input } = payload;
-  return Object.keys(input).length ? input : undefined;
-}
-
-function readOptionalString(value: unknown) {
-  return typeof value === "string" ? value.trim() || undefined : undefined;
-}
-
-function readOptionalNumber(value: unknown) {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string") {
-    const parsed = Number.parseInt(value, 10);
-    return Number.isFinite(parsed) ? parsed : undefined;
-  }
-  return undefined;
-}
-
-function readStringArray(value: unknown, fallback: string[]) {
-  if (!Array.isArray(value)) return fallback;
-  const strings = value.flatMap((entry) => {
-    const next = readOptionalString(entry);
-    return next ? [next] : [];
-  });
-  return strings.length ? strings : fallback;
-}
 
 function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
   const now = Date.now();
@@ -4837,27 +3774,6 @@ function createSeedWorkspaceView(persisted: boolean): WorkspaceView {
     agentConnections: [],
     persisted,
   };
-}
-
-function bumpThread(threads: WorkspaceThread[], threadId: string, updatedAt: number) {
-  return threads.map((thread) => (thread.id === threadId ? { ...thread, updatedAt } : thread));
-}
-
-function normalizeWorkspaceThreadAgentTriggerMode(value: unknown): WorkspaceThreadAgentTriggerMode {
-  return value === "mention_only" || value === "quiet_review" || value === "room_default" ? value : "room_default";
-}
-
-function normalizeWorkspaceThreadAllowedAgentProfileIds(value: unknown): string[] | undefined {
-  if (!Array.isArray(value)) return undefined;
-  const ids = Array.from(
-    new Set(
-      value.flatMap((entry) => {
-        const id = readOptionalString(entry);
-        return id ? [id] : [];
-      }),
-    ),
-  );
-  return ids;
 }
 
 function assertWorkspaceThreadAllowedAgentProfileIdsForView(view: WorkspaceView, profileIds: string[] | undefined) {
