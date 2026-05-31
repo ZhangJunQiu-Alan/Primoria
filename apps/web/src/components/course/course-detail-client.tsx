@@ -207,6 +207,11 @@ function CourseSuggestionBridge({ threadId }: { threadId: string }) {
   return null;
 }
 
+function CourseGenerativeUI() {
+  usePrimoriaGenerativeUI();
+  return null;
+}
+
 function CourseAIAssistantPanel({
   course,
   selectedBlock,
@@ -342,6 +347,7 @@ function CourseAIAssistantPanel({
       />
       {copilotEnabled ? (
         <>
+          <CourseGenerativeUI />
           <CourseRevisionAction
             course={course}
             selectedBlock={selectedBlock}
@@ -407,7 +413,6 @@ function CourseAIAssistantPanel({
 }
 
 export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialCourse: Course; copilotEnabled: boolean }) {
-  usePrimoriaGenerativeUI();
   const [course, setCourse] = useState<Course>(initialCourse);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);

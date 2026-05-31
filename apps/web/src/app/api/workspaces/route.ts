@@ -2,16 +2,17 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { createWorkspace, getWorkspaceView } from "@/lib/workspaces/store";
+import { createWorkspace, getWorkspaceShellView, getWorkspaceView } from "@/lib/workspaces/store";
 
 const WorkspaceSchema = z.object({
   name: z.string().min(1).max(80),
 });
 
-export async function GET() {
+export async function GET(request: Request) {
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
-  return NextResponse.json(await getWorkspaceView(ownerId));
+  const url = new URL(request.url);
+  return NextResponse.json(url.searchParams.get("view") === "shell" ? await getWorkspaceShellView(ownerId) : await getWorkspaceView(ownerId));
 }
 
 export async function POST(request: Request) {

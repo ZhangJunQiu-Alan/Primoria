@@ -1,17 +1,7 @@
 import { and, asc, desc, eq, inArray, lt, or } from "drizzle-orm";
 import { createHash, randomBytes } from "node:crypto";
 import { getDb } from "../db/client";
-import {
-  buildWorkspaceDeepAgentApprovalResume,
-  buildWorkspaceAgentRunThreadId,
-  buildWorkspaceDeepAgentConfig,
-  composeWorkspacePlaceholderTaskResult,
-  executeWorkspaceAgentRuntime,
-  resolveWorkspaceAgentRuntimeRunner,
-  type WorkspaceAgentRuntimeEvent,
-  type WorkspaceAgentRuntimeRunnerInput,
-  type WorkspaceAgentRuntimeRunner,
-} from "./agent-runtime";
+import type { WorkspaceAgentRuntimeEvent, WorkspaceAgentRuntimeRunner, WorkspaceAgentRuntimeRunnerInput } from "./agent-runtime";
 import {
   buildAgentRunEvent,
   buildPendingWorkspaceAgentApprovals,
@@ -151,7 +141,6 @@ import type {
   ListWorkspaceAgentMemoriesInput,
   RestoreWorkspaceAgentMemoryInput,
   UpdateWorkspaceAgentProfileInput,
-  UpdateWorkspaceArtifactReviewInput,
   UpdateWorkspaceAgentConnectionInput,
   UpdateWorkspaceThreadInput,
   UpdateWorkspaceTaskInput,
@@ -187,6 +176,64 @@ import type {
 } from "./types";
 
 export { buildWorkspaceArtifactFromMessage } from "./workspace-artifact-service";
+
+type WorkspaceAgentRuntimeModule = typeof import("./agent-runtime");
+
+function loadWorkspaceAgentRuntime(): Promise<WorkspaceAgentRuntimeModule> {
+  return import("./agent-runtime");
+}
+
+function buildWorkspaceAgentRunThreadId(input: {
+  workspaceId: string;
+  threadId: string;
+  agentProfileId: string;
+  runId: string;
+}) {
+  return `workspace:${input.workspaceId}:thread:${input.threadId}:agent:${input.agentProfileId}:run:${input.runId}`;
+}
+
+function composeWorkspaceTaskPlaceholderResult(agent: WorkspaceMember, task: WorkspaceTask) {
+  const scope = task.scope || "Workspace";
+  const title = summarizeWorkspacePrompt(task.title);
+  return `${agent.displayName} prepared a first pass for ${scope}: ${title}. Next step: review it in this thread and reopen the task if it needs another iteration.`;
+}
+
+function summarizeWorkspacePrompt(value: string) {
+  const sentence = value.replace(/\s+/g, " ").trim();
+  if (sentence.length <= 160) return sentence;
+  return `${sentence.slice(0, 157)}...`;
+}
+
+const DB_WORKSPACE_VIEW_CACHE_TTL_MS = 30_000;
+const DB_SEED_WORKSPACE_CHECK_TTL_MS = 5 * 60_000;
+const dbSeedWorkspacePromises = new Map<string, Promise<void>>();
+const dbSeedWorkspaceCheckedUntil = new Map<string, number>();
+const dbWorkspaceViewCache = new Map<string, { expiresAt: number; promise: Promise<WorkspaceView> }>();
+
+type WorkspaceViewDbLoadMode = "full" | "shell";
+
+function dbWorkspaceViewCacheKey(ownerId: string, workspaceId: string | null | undefined, mode: WorkspaceViewDbLoadMode) {
+  return `${mode}:${ownerId}:${workspaceId ?? "__active__"}`;
+}
+
+function invalidateDbWorkspaceViewCache(ownerId?: string | null, workspaceId?: string | null) {
+  if (!ownerId) return;
+  if (!workspaceId) {
+    for (const key of Array.from(dbWorkspaceViewCache.keys())) {
+      if (key.startsWith(`full:${ownerId}:`) || key.startsWith(`shell:${ownerId}:`)) dbWorkspaceViewCache.delete(key);
+    }
+    return;
+  }
+  dbWorkspaceViewCache.delete(dbWorkspaceViewCacheKey(ownerId, workspaceId, "full"));
+  dbWorkspaceViewCache.delete(dbWorkspaceViewCacheKey(ownerId, workspaceId, "shell"));
+  dbWorkspaceViewCache.delete(dbWorkspaceViewCacheKey(ownerId, undefined, "full"));
+  dbWorkspaceViewCache.delete(dbWorkspaceViewCacheKey(ownerId, undefined, "shell"));
+}
+
+function notifyWorkspaceUpdated(workspaceId: string, ownerId?: string | null) {
+  invalidateDbWorkspaceViewCache(ownerId, workspaceId);
+  notifyWorkspaceChanged(workspaceId);
+}
 
 const SEED_WORKSPACE_ID = "workspace_seed";
 const SEED_GENERAL_THREAD_ID = "thread_general";
@@ -274,7 +321,7 @@ function setLocalView(view: WorkspaceView, ownerId?: string | null) {
     globalThis.__primoriaWorkspaceLocalActiveId = view.workspace.id;
     globalThis.__primoriaWorkspaceLocalView = stored;
   }
-  notifyWorkspaceChanged(view.workspace.id);
+  notifyWorkspaceUpdated(view.workspace.id, ownerId);
   return withWorkspaceList(withMessageWindow(stored), nextViews);
 }
 
@@ -403,11 +450,25 @@ export async function getWorkspaceView(ownerId?: string | null, workspaceId?: st
   if (!usesDatabase(ownerId)) return getLocalView(workspaceId, ownerId);
   try {
     await ensureSeedWorkspace(ownerId);
-    return getWorkspaceViewFromDb(ownerId, workspaceId);
+    return getCachedWorkspaceViewFromDb(ownerId, workspaceId, "full");
   } catch (error) {
     console.error("[workspace] database workspace view failed", error);
     throw error;
   }
+}
+
+export async function getWorkspaceShellView(ownerId?: string | null, workspaceId?: string | null): Promise<WorkspaceView> {
+  if (!usesDatabase(ownerId)) return getLocalView(workspaceId, ownerId);
+  try {
+    return getCachedWorkspaceViewFromDb(ownerId, workspaceId, "shell");
+  } catch (error) {
+    console.error("[workspace] database workspace view failed", error);
+    throw error;
+  }
+}
+
+export function createWorkspacePlaceholderView(): WorkspaceView {
+  return createSeedWorkspaceView(false);
 }
 
 export async function createWorkspaceAgentMemory(ownerId: string | null | undefined, input: CreateWorkspaceAgentMemoryInput): Promise<WorkspaceAgentMemory> {
@@ -483,7 +544,7 @@ export async function createWorkspaceAgentMemory(ownerId: string | null | undefi
     updatedAt: new Date(memory.updatedAt),
     archivedAt: null,
   });
-  notifyWorkspaceChanged(input.workspaceId);
+  notifyWorkspaceUpdated(input.workspaceId, ownerId);
   return memory;
 }
 
@@ -519,7 +580,7 @@ export async function archiveWorkspaceAgentMemory(ownerId: string | null | undef
     .update(workspaceAgentMemories)
     .set({ archivedAt, updatedAt: new Date(now) })
     .where(and(eq(workspaceAgentMemories.id, input.memoryId), eq(workspaceAgentMemories.workspaceId, input.workspaceId)));
-  notifyWorkspaceChanged(input.workspaceId);
+  notifyWorkspaceUpdated(input.workspaceId, ownerId);
   return rowToWorkspaceAgentMemory({ ...existing, archivedAt, updatedAt: new Date(now) });
 }
 
@@ -563,7 +624,7 @@ export async function archiveWorkspaceAgentMemories(ownerId: string | null | und
     .update(workspaceAgentMemories)
     .set({ archivedAt, updatedAt: new Date(now) })
     .where(and(eq(workspaceAgentMemories.workspaceId, input.workspaceId), inArray(workspaceAgentMemories.id, memoryIds)));
-  notifyWorkspaceChanged(input.workspaceId);
+  notifyWorkspaceUpdated(input.workspaceId, ownerId);
   const rowsById = new Map(rows.map((row) => [row.id, row]));
   return memoryIds
     .map((id) => rowsById.get(id))
@@ -602,7 +663,7 @@ export async function restoreWorkspaceAgentMemory(ownerId: string | null | undef
     .update(workspaceAgentMemories)
     .set({ archivedAt: null, updatedAt: new Date(now) })
     .where(and(eq(workspaceAgentMemories.id, input.memoryId), eq(workspaceAgentMemories.workspaceId, input.workspaceId)));
-  notifyWorkspaceChanged(input.workspaceId);
+  notifyWorkspaceUpdated(input.workspaceId, ownerId);
   return rowToWorkspaceAgentMemory({ ...existing, archivedAt: null, updatedAt: new Date(now) });
 }
 
@@ -635,7 +696,7 @@ export async function deleteWorkspaceAgentMemory(ownerId: string | null | undefi
   await getDb()
     .delete(workspaceAgentMemories)
     .where(and(eq(workspaceAgentMemories.id, input.memoryId), eq(workspaceAgentMemories.workspaceId, input.workspaceId)));
-  notifyWorkspaceChanged(input.workspaceId);
+  notifyWorkspaceUpdated(input.workspaceId, ownerId);
   return rowToWorkspaceAgentMemory(existing);
 }
 
@@ -760,7 +821,7 @@ export async function createWorkspace(ownerId: string | null | undefined, input:
         updatedAt: new Date(generalThread.updatedAt),
       });
     });
-    notifyWorkspaceChanged(workspace.id);
+    notifyWorkspaceUpdated(workspace.id, ownerId);
     return { ...view, workspaces: await listDbWorkspaceSummaries(ownerId) };
   } catch (error) {
     console.error("[workspace] database workspace creation failed", error);
@@ -851,7 +912,7 @@ export async function createWorkspaceAgentProfile(
       }
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return profile;
   } catch (error) {
     console.error("[workspace] database agent profile persistence failed", error);
@@ -958,8 +1019,8 @@ export async function updateWorkspaceAgentProfile(
         await tx.update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, existing.workspaceId));
       }
     });
-    notifyWorkspaceChanged(input.workspaceId);
-    if (existing.workspaceId !== input.workspaceId) notifyWorkspaceChanged(existing.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
+    if (existing.workspaceId !== input.workspaceId) notifyWorkspaceUpdated(existing.workspaceId, ownerId);
     return nextProfile;
   } catch (error) {
     console.error("[workspace] database agent profile update failed", error);
@@ -1036,7 +1097,7 @@ export async function createWorkspaceAgentConnection(
       updatedAt: new Date(connection.updatedAt),
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return connection;
   } catch (error) {
     console.error("[workspace] database agent connection persistence failed", error);
@@ -1083,7 +1144,7 @@ export async function updateWorkspaceAgentConnection(
       })
       .where(eq(workspaceAgentConnections.id, existing.id));
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return nextConnection;
   } catch (error) {
     console.error("[workspace] database agent connection update failed", error);
@@ -1147,7 +1208,7 @@ export async function joinWorkspace(ownerId: string | null | undefined, input: J
       });
       await getDb().update(workspaces).set({ updatedAt: now }).where(eq(workspaces.id, workspace.id));
     }
-    notifyWorkspaceChanged(workspace.id);
+    notifyWorkspaceUpdated(workspace.id, ownerId);
     return getWorkspaceViewFromDb(ownerId, workspace.id);
   } catch (error) {
     console.error("[workspace] database workspace join failed", error);
@@ -1196,7 +1257,7 @@ export async function createWorkspaceMember(ownerId: string | null | undefined, 
       updatedAt: new Date(now),
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return member;
   } catch (error) {
     console.error("[workspace] database member persistence failed", error);
@@ -1262,7 +1323,7 @@ export async function createWorkspaceMessage(ownerId: string | null | undefined,
       await tx.update(workspaceThreads).set({ updatedAt: now }).where(eq(workspaceThreads.id, message.threadId));
       await tx.update(workspaces).set({ updatedAt: now }).where(eq(workspaces.id, message.workspaceId));
     });
-    notifyWorkspaceChanged(message.workspaceId);
+    notifyWorkspaceUpdated(message.workspaceId, ownerId);
     return message;
   } catch (error) {
     console.error("[workspace] database message persistence failed", error);
@@ -1578,7 +1639,7 @@ export async function cancelWorkspaceAgentRun(
         .where(eq(workspaceAgentApprovals.runId, run.id))
         .orderBy(asc(workspaceAgentApprovals.requestedAt));
     });
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return { run, events: [event], approvals: approvalRows.map(rowToWorkspaceAgentApproval) };
   } catch (error) {
     console.error("[workspace] database agent run cancellation failed", error);
@@ -1780,7 +1841,7 @@ async function seedDbWorkspaceAgentRunForTest(
     }
     await tx.update(workspaces).set({ updatedAt: new Date(Date.now()) }).where(eq(workspaces.id, run.workspaceId));
   });
-  notifyWorkspaceChanged(run.workspaceId);
+  notifyWorkspaceUpdated(run.workspaceId, ownerId);
   return { agentRuns: [run], agentRunEvents: events, agentApprovals: approvals, agentMessages: outputMessage ? [outputMessage] : [] };
 }
 
@@ -1839,7 +1900,7 @@ export async function createWorkspaceThread(ownerId: string | null | undefined, 
       if (participantRows.length) await tx.insert(workspaceThreadMembers).values(participantRows);
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return {
       ...thread,
       participantIds: thread.type === "direct" ? participantRows.map((row) => row.memberId) : undefined,
@@ -1904,7 +1965,7 @@ export async function updateWorkspaceThread(ownerId: string | null | undefined, 
         .where(and(eq(workspaceThreads.id, input.threadId), eq(workspaceThreads.workspaceId, input.workspaceId)));
       await tx.update(workspaces).set({ updatedAt }).where(eq(workspaces.id, input.workspaceId));
     });
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return rowToWorkspaceThread({ ...existing, agentTriggerMode, allowedAgentProfileIds: allowedAgentProfileIds ?? null, updatedAt });
   } catch (error) {
     console.error("[workspace] database thread update failed", error);
@@ -1949,7 +2010,7 @@ export async function createWorkspaceTask(ownerId: string | null | undefined, in
       updatedAt: new Date(task.updatedAt),
     });
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return task;
   } catch (error) {
     console.error("[workspace] database task persistence failed", error);
@@ -1979,43 +2040,6 @@ async function buildWorkspaceTaskForCreate(ownerId: string | null | undefined, i
   };
 }
 
-export async function updateWorkspaceArtifactReview(ownerId: string | null | undefined, input: UpdateWorkspaceArtifactReviewInput): Promise<WorkspaceArtifact> {
-  const now = Date.now();
-  if (input.reviewStatus !== "needs_review" && input.reviewStatus !== "reviewed") throw new Error("Invalid artifact review status.");
-
-  if (!usesDatabase(ownerId)) {
-    const current = getLocalRawView(input.workspaceId, ownerId);
-    const existing = current.artifacts.find((artifact) => artifact.id === input.artifactId && artifact.workspaceId === input.workspaceId);
-    if (!existing) throw new Error("Workspace artifact not found.");
-    const updated: WorkspaceArtifact = { ...existing, reviewStatus: input.reviewStatus, updatedAt: now };
-    setLocalView(
-      {
-        ...current,
-        artifacts: upsertWorkspaceArtifact(current.artifacts, updated),
-        workspace: { ...current.workspace, updatedAt: now },
-      },
-      ownerId,
-    );
-    return updated;
-  }
-
-  await requireDbWorkspace(ownerId, input.workspaceId);
-  const rows = await getDb()
-    .select()
-    .from(workspaceArtifacts)
-    .where(and(eq(workspaceArtifacts.workspaceId, input.workspaceId), eq(workspaceArtifacts.id, input.artifactId)))
-    .limit(1);
-  const existing = rows[0];
-  if (!existing) throw new Error("Workspace artifact not found.");
-  await requireDbThread(ownerId, input.workspaceId, existing.threadId);
-  await getDb()
-    .update(workspaceArtifacts)
-    .set({ reviewStatus: input.reviewStatus, updatedAt: new Date(now) })
-    .where(and(eq(workspaceArtifacts.workspaceId, input.workspaceId), eq(workspaceArtifacts.id, input.artifactId)));
-  notifyWorkspaceChanged(input.workspaceId);
-  return rowToWorkspaceArtifact({ ...existing, reviewStatus: input.reviewStatus, updatedAt: new Date(now) });
-}
-
 export async function runWorkspaceAgentTurn(
   ownerId: string | null | undefined,
   input: { workspaceId: string; threadId: string; message: WorkspaceMessage; runner?: WorkspaceAgentRuntimeRunner },
@@ -2039,11 +2063,12 @@ export async function runWorkspaceAgentTurn(
   const events: WorkspaceAgentRunEvent[] = [];
   const approvals: WorkspaceAgentApproval[] = [];
   const memories: WorkspaceAgentMemory[] = [];
+  const runtime = await loadWorkspaceAgentRuntime();
 
   for (const agent of agents.slice(0, 1)) {
     const profile = agent.profile ?? await ensureImplicitAgentProfile(ownerId, input.workspaceId, agent.member);
     const runId = createWorkspaceAgentRunId();
-    const runtimeResult = await executeWorkspaceAgentRuntime(
+    const runtimeResult = await runtime.executeWorkspaceAgentRuntime(
       {
         runId,
         workspaceId: input.workspaceId,
@@ -2060,7 +2085,7 @@ export async function runWorkspaceAgentTurn(
         delegateProfiles: view.agentProfiles,
         prompt: input.message.content,
       },
-      input.runner ?? resolveWorkspaceAgentRuntimeRunner(),
+      input.runner ?? runtime.resolveWorkspaceAgentRuntimeRunner(),
     );
     const runStatus = runtimeResult.status ?? (runtimeResult.error ? "failed" : "completed");
     const message = await createWorkspaceMessage(ownerId, {
@@ -2125,7 +2150,8 @@ export async function runWorkspaceAgentTask(
   const openTasks = view.tasks.filter((task) => task.threadId === input.task.threadId && task.status !== "done").slice(0, 3);
   const agentMemories = view.agentMemories.filter((memory) => memory.scope !== "thread" || memory.threadId === input.task.threadId).slice(0, 8);
   const runId = createWorkspaceAgentRunId();
-  const runtimeResult = await executeWorkspaceAgentRuntime(
+  const runtime = await loadWorkspaceAgentRuntime();
+  const runtimeResult = await runtime.executeWorkspaceAgentRuntime(
     {
       runId,
       workspaceId: input.workspaceId,
@@ -2143,9 +2169,9 @@ export async function runWorkspaceAgentTask(
       prompt: `Complete task: ${input.task.title}. Scope: ${input.task.scope || "Workspace"}.`,
     },
     input.runner ??
-      resolveWorkspaceAgentRuntimeRunner() ??
+      runtime.resolveWorkspaceAgentRuntimeRunner() ??
       (async (runtimeInput) => ({
-        content: composeWorkspacePlaceholderTaskResult(assignee, input.task),
+        content: composeWorkspaceTaskPlaceholderResult(assignee, input.task),
         events: [
           {
             type: "status",
@@ -2295,7 +2321,7 @@ export async function updateWorkspaceTask(ownerId: string | null | undefined, in
       .set({ status: task.status, progress: task.progress, metadata: buildTaskMetadata(task), updatedAt: new Date(task.updatedAt) })
       .where(eq(workspaceTasks.id, task.id));
     await getDb().update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return task;
   } catch (error) {
     console.error("[workspace] database task update failed", error);
@@ -2595,7 +2621,7 @@ export async function decideWorkspaceAgentApproval(
         .orderBy(asc(workspaceAgentApprovals.requestedAt));
       returnedApprovals = updatedApprovalRows.map(rowToWorkspaceAgentApproval);
     });
-    notifyWorkspaceChanged(input.workspaceId);
+    notifyWorkspaceUpdated(input.workspaceId, ownerId);
     return {
       approval,
       approvals: returnedApprovals,
@@ -2782,7 +2808,8 @@ async function buildApprovedExternalWorkspaceAgentExecution(
   now: number,
   runner?: WorkspaceAgentRuntimeRunner,
 ): Promise<ApprovedWorkspaceAgentToolExecution> {
-  const runtimeRunner = runner ?? resolveWorkspaceAgentRuntimeRunner();
+  const runtime = await loadWorkspaceAgentRuntime();
+  const runtimeRunner = runner ?? runtime.resolveWorkspaceAgentRuntimeRunner();
   if (!runtimeRunner) {
     return {
       run,
@@ -2805,7 +2832,7 @@ async function buildApprovedExternalWorkspaceAgentExecution(
   }
 
   try {
-    const runtimeInput = buildWorkspaceExternalApprovalResumeRuntimeInput(view, approval, run);
+    const runtimeInput = await buildWorkspaceExternalApprovalResumeRuntimeInput(view, approval, run);
     const result = await runtimeRunner(runtimeInput);
     const status = result.status ?? (result.error ? "failed" : "completed");
     const messageContent = result.content.trim();
@@ -2894,11 +2921,11 @@ async function buildApprovedExternalWorkspaceAgentExecution(
   }
 }
 
-function buildWorkspaceExternalApprovalResumeRuntimeInput(
+async function buildWorkspaceExternalApprovalResumeRuntimeInput(
   view: WorkspaceView,
   approval: WorkspaceAgentApproval,
   run: WorkspaceAgentRun,
-): WorkspaceAgentRuntimeRunnerInput {
+): Promise<WorkspaceAgentRuntimeRunnerInput> {
   const profile = view.agentProfiles.find((entry) => entry.id === run.agentProfileId);
   if (!profile) throw new Error("Agent profile not found for approval resume.");
   const thread = view.threads.find((entry) => entry.id === run.threadId);
@@ -2926,9 +2953,10 @@ function buildWorkspaceExternalApprovalResumeRuntimeInput(
     agentMemories: view.agentMemories.filter((memory) => memory.scope !== "thread" || memory.threadId === run.threadId).slice(0, 8),
     agentConnections: view.agentConnections,
   };
-  const resume = buildWorkspaceDeepAgentApprovalResume(approval, "approved");
+  const runtime = await loadWorkspaceAgentRuntime();
+  const resume = runtime.buildWorkspaceDeepAgentApprovalResume(approval, "approved");
   return {
-    config: buildWorkspaceDeepAgentConfig({
+    config: runtime.buildWorkspaceDeepAgentConfig({
       ...context,
       profile,
       delegateProfiles: view.agentProfiles,
@@ -3166,16 +3194,33 @@ async function buildApprovedWorkspaceTaskUpdate(
 }
 
 async function ensureSeedWorkspace(ownerId: string) {
+  const checkedUntil = dbSeedWorkspaceCheckedUntil.get(ownerId);
+  if (checkedUntil && checkedUntil > Date.now()) return;
+  const existing = dbSeedWorkspacePromises.get(ownerId);
+  if (existing) return existing;
+  const promise = ensureSeedWorkspaceUncached(ownerId)
+    .then(() => {
+      dbSeedWorkspaceCheckedUntil.set(ownerId, Date.now() + DB_SEED_WORKSPACE_CHECK_TTL_MS);
+    })
+    .catch((error) => {
+      dbSeedWorkspaceCheckedUntil.delete(ownerId);
+      throw error;
+    })
+    .finally(() => {
+      dbSeedWorkspacePromises.delete(ownerId);
+    });
+  dbSeedWorkspacePromises.set(ownerId, promise);
+  return promise;
+}
+
+async function ensureSeedWorkspaceUncached(ownerId: string) {
   const existing = await getDb()
     .select({ id: workspaces.id })
     .from(workspaces)
     .where(eq(workspaces.ownerId, ownerId))
     .orderBy(desc(workspaces.updatedAt))
     .limit(1);
-  if (existing[0]) {
-    await removeLegacySeedWorkspaceMocks(ownerId);
-    return;
-  }
+  if (existing[0]) return;
 
   const seed = createSeedWorkspaceView(true);
   await getDb().insert(workspaces).values({
@@ -3326,7 +3371,21 @@ async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSumma
   return uniqueRows.map(rowToWorkspaceSummary);
 }
 
-async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | null): Promise<WorkspaceView> {
+function getCachedWorkspaceViewFromDb(ownerId: string, workspaceId: string | null | undefined, mode: WorkspaceViewDbLoadMode): Promise<WorkspaceView> {
+  const key = dbWorkspaceViewCacheKey(ownerId, workspaceId, mode);
+  const now = Date.now();
+  const cached = dbWorkspaceViewCache.get(key);
+  if (cached && cached.expiresAt > now) return cached.promise;
+  const promise = getWorkspaceViewFromDb(ownerId, workspaceId, mode).catch((error) => {
+    dbWorkspaceViewCache.delete(key);
+    throw error;
+  });
+  dbWorkspaceViewCache.set(key, { expiresAt: now + DB_WORKSPACE_VIEW_CACHE_TTL_MS, promise });
+  return promise;
+}
+
+async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | null, mode: WorkspaceViewDbLoadMode = "full"): Promise<WorkspaceView> {
+  const shellMode = mode === "shell";
   const summaries = await listDbWorkspaceSummaries(ownerId);
   const targetWorkspaceId = workspaceId ?? summaries[0]?.id;
   if (!targetWorkspaceId) return createSeedWorkspaceView(false);
@@ -3344,37 +3403,56 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
   const memberRows = await getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, workspace.id)).orderBy(asc(workspaceMembers.createdAt));
   const memberProfileIds = new Set(memberRows.flatMap((member) => (member.agentProfileId ? [member.agentProfileId] : [])));
   const [workspaceProfileRows, memberProfileRows, personalProfileRows, threadRows, threadMemberRows, taskRows, artifactRows, runRows, memoryRows, connectionRows] = await Promise.all([
-    getDb().select().from(workspaceAgentProfiles).where(eq(workspaceAgentProfiles.workspaceId, workspace.id)).orderBy(asc(workspaceAgentProfiles.createdAt)),
-    memberProfileIds.size
+    shellMode ? Promise.resolve([]) : getDb().select().from(workspaceAgentProfiles).where(eq(workspaceAgentProfiles.workspaceId, workspace.id)).orderBy(asc(workspaceAgentProfiles.createdAt)),
+    !shellMode && memberProfileIds.size
       ? getDb()
           .select()
           .from(workspaceAgentProfiles)
           .where(inArray(workspaceAgentProfiles.id, Array.from(memberProfileIds)))
           .orderBy(asc(workspaceAgentProfiles.createdAt))
       : [],
-    getDb()
-      .select()
-      .from(workspaceAgentProfiles)
-      .where(and(eq(workspaceAgentProfiles.ownerId, ownerId), eq(workspaceAgentProfiles.visibility, "private")))
-      .orderBy(asc(workspaceAgentProfiles.createdAt)),
+    shellMode
+      ? Promise.resolve([])
+      : getDb()
+          .select()
+          .from(workspaceAgentProfiles)
+          .where(and(eq(workspaceAgentProfiles.ownerId, ownerId), eq(workspaceAgentProfiles.visibility, "private")))
+          .orderBy(asc(workspaceAgentProfiles.createdAt)),
     getDb().select().from(workspaceThreads).where(eq(workspaceThreads.workspaceId, workspace.id)).orderBy(desc(workspaceThreads.updatedAt)),
     getDb().select().from(workspaceThreadMembers).where(eq(workspaceThreadMembers.workspaceId, workspace.id)).orderBy(asc(workspaceThreadMembers.createdAt)),
-    getDb().select().from(workspaceTasks).where(eq(workspaceTasks.workspaceId, workspace.id)).orderBy(desc(workspaceTasks.updatedAt)),
-    getDb().select().from(workspaceArtifacts).where(eq(workspaceArtifacts.workspaceId, workspace.id)).orderBy(desc(workspaceArtifacts.updatedAt)),
-    getDb().select().from(workspaceAgentRuns).where(eq(workspaceAgentRuns.workspaceId, workspace.id)).orderBy(desc(workspaceAgentRuns.startedAt)).limit(100),
-    getDb().select().from(workspaceAgentMemories).where(eq(workspaceAgentMemories.workspaceId, workspace.id)).orderBy(desc(workspaceAgentMemories.updatedAt)),
     getDb()
       .select()
-      .from(workspaceAgentConnections)
-      .where(or(eq(workspaceAgentConnections.workspaceId, workspace.id), eq(workspaceAgentConnections.ownerId, ownerId)))
-      .orderBy(desc(workspaceAgentConnections.updatedAt)),
+      .from(workspaceTasks)
+      .where(eq(workspaceTasks.workspaceId, workspace.id))
+      .orderBy(desc(workspaceTasks.updatedAt))
+      .limit(shellMode ? 30 : 1000),
+    getDb()
+      .select()
+      .from(workspaceArtifacts)
+      .where(eq(workspaceArtifacts.workspaceId, workspace.id))
+      .orderBy(desc(workspaceArtifacts.updatedAt))
+      .limit(shellMode ? 30 : 1000),
+    getDb()
+      .select()
+      .from(workspaceAgentRuns)
+      .where(eq(workspaceAgentRuns.workspaceId, workspace.id))
+      .orderBy(desc(workspaceAgentRuns.startedAt))
+      .limit(shellMode ? 20 : 100),
+    shellMode ? Promise.resolve([]) : getDb().select().from(workspaceAgentMemories).where(eq(workspaceAgentMemories.workspaceId, workspace.id)).orderBy(desc(workspaceAgentMemories.updatedAt)),
+    shellMode
+      ? Promise.resolve([])
+      : getDb()
+          .select()
+          .from(workspaceAgentConnections)
+          .where(or(eq(workspaceAgentConnections.workspaceId, workspace.id), eq(workspaceAgentConnections.ownerId, ownerId)))
+          .orderBy(desc(workspaceAgentConnections.updatedAt)),
   ]);
   const visibleWorkspaceProfileRows = [...workspaceProfileRows, ...memberProfileRows].filter(
     (profile) => profile.visibility !== "private" || profile.ownerId === ownerId || memberProfileIds.has(profile.id),
   );
   const profileRows = Array.from(new Map([...visibleWorkspaceProfileRows, ...personalProfileRows].map((profile) => [profile.id, profile])).values());
   const profileIds = profileRows.map((profile) => profile.id);
-  const capabilityRows = profileIds.length
+  const capabilityRows = !shellMode && profileIds.length
     ? await getDb()
         .select()
         .from(workspaceAgentCapabilities)
@@ -3392,18 +3470,16 @@ async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | nu
   const visibleThreadIds = new Set(visibleThreadRows.map((thread) => thread.id));
   const visibleRunRows = runRows.filter((run) => visibleThreadIds.has(run.threadId));
   const visibleRunIds = visibleRunRows.map((run) => run.id);
-  const messageRows = (
-    await Promise.all(
-      visibleThreadRows.map((thread) =>
-        getDb()
-          .select()
-          .from(workspaceMessages)
-          .where(and(eq(workspaceMessages.workspaceId, workspace.id), eq(workspaceMessages.threadId, thread.id)))
-          .orderBy(desc(workspaceMessages.createdAt))
-          .limit(MESSAGE_WINDOW_PER_THREAD),
-      ),
-    )
-  ).flat();
+  const visibleThreadIdList = Array.from(visibleThreadIds);
+  const messageThreadIds = shellMode ? visibleThreadIdList.slice(0, 1) : visibleThreadIdList;
+  const messageRows = messageThreadIds.length
+    ? await getDb()
+        .select()
+        .from(workspaceMessages)
+        .where(and(eq(workspaceMessages.workspaceId, workspace.id), inArray(workspaceMessages.threadId, messageThreadIds)))
+        .orderBy(desc(workspaceMessages.createdAt))
+        .limit(shellMode ? MESSAGE_WINDOW_PER_THREAD : Math.max(MESSAGE_WINDOW_PER_THREAD, MESSAGE_WINDOW_PER_THREAD * visibleThreadIdList.length))
+    : [];
   const [runEventRows, approvalRows] = visibleRunIds.length
     ? await Promise.all([
         getDb()
@@ -3462,7 +3538,7 @@ async function linkWorkspaceArtifactToRun(ownerId: string | null | undefined, wo
     .update(workspaceArtifacts)
     .set({ sourceRunId, reviewStatus: "needs_review", updatedAt: new Date() })
     .where(and(eq(workspaceArtifacts.workspaceId, workspaceId), eq(workspaceArtifacts.sourceMessageId, sourceMessageId)));
-  notifyWorkspaceChanged(workspaceId);
+  notifyWorkspaceUpdated(workspaceId, ownerId);
   return undefined;
 }
 
@@ -3656,7 +3732,7 @@ async function createCompletedWorkspaceAgentRun(
     }
   });
   await getDb().update(workspaces).set({ updatedAt: new Date(statusAt) }).where(eq(workspaces.id, seed.workspaceId));
-  notifyWorkspaceChanged(seed.workspaceId);
+  notifyWorkspaceUpdated(seed.workspaceId, ownerId);
   return { run, events, approvals };
 }
 
@@ -3701,7 +3777,7 @@ async function addRetrySourceEvents(
     );
     await tx.update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, workspaceId));
   });
-  notifyWorkspaceChanged(workspaceId);
+  notifyWorkspaceUpdated(workspaceId, ownerId);
   return { ...result, events: [...retryEvents, ...result.events] };
 }
 

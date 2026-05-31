@@ -20,8 +20,7 @@ export default async function LibraryPage({
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
   const shouldGate = authEnabled && !user;
-  const courses = shouldGate ? [] : await listCourses(user?.id);
-  const apps = shouldGate ? [] : await listApps(user?.id);
+  const [courses, apps] = shouldGate ? [[], []] : await Promise.all([listCourses(user?.id), listApps(user?.id)]);
 
   return (
     <main className="app-shell">

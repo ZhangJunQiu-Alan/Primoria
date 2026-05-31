@@ -92,6 +92,7 @@ async function readWorkspaceApiError(response: Response, fallback: string) {
 
 export function WorkspaceClient({ initialView }: { initialView: WorkspaceView }) {
   const [view, setView] = useState(initialView);
+  const [workspaceReady, setWorkspaceReady] = useState(initialView.persisted);
   const [activeThreadId, setActiveThreadId] = useState(initialView.threads[0]?.id ?? "");
   const [chatMode, setChatMode] = useState<WorkspaceThread["type"]>("room");
   const [draft, setDraft] = useState("");
@@ -99,10 +100,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [mentionIndex, setMentionIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [newWorkspaceOpen, setNewWorkspaceOpen] = useState(false);
-  const [newWorkspaceName, setNewWorkspaceName] = useState("");
-  const [joinWorkspaceOpen, setJoinWorkspaceOpen] = useState(false);
-  const [joinWorkspaceCode, setJoinWorkspaceCode] = useState("");
   const [newThreadOpen, setNewThreadOpen] = useState(false);
   const [newThreadType, setNewThreadType] = useState<WorkspaceThread["type"]>("room");
   const [newThreadName, setNewThreadName] = useState("");
@@ -206,6 +203,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [appPreview, setAppPreview] = useState<AppPreviewState | null>(null);
   const [loadingEarlier, setLoadingEarlier] = useState(false);
   const [exhaustedThreadIds, setExhaustedThreadIds] = useState<Record<string, boolean>>({});
+  const [loadedThreadActivityIds, setLoadedThreadActivityIds] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(initialView.messages.map((message) => [message.threadId, true])),
+  );
   const [lastReadByWorkspace, setLastReadByWorkspace] = useState<Record<string, Record<string, number>>>(() => ({
     [initialView.workspace.id]: readLastReadState(initialView.workspace.id),
   }));
@@ -292,13 +292,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     return counts;
   }, [activeThread?.id, lastReadByThread, view.messages]);
 
-  const primeLastReadWorkspace = useCallback((workspaceId: string) => {
-    setLastReadByWorkspace((current) => {
-      if (current[workspaceId]) return current;
-      return { ...current, [workspaceId]: readLastReadState(workspaceId) };
-    });
-  }, []);
-
   const markThreadRead = useCallback(
     (workspaceId: string, threadId: string | undefined, sourceMessages: WorkspaceMessage[], fallbackToNow = true) => {
       if (!threadId) return;
@@ -339,28 +332,39 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   }, [view.workspace.id]);
 
   useEffect(() => {
-    let cancelled = false;
-    let source: EventSource | undefined;
-    let fallbackPollingInterval: number | undefined;
-    let reconnectTimeout: number | undefined;
-
-    function stopFallbackPolling() {
-      if (fallbackPollingInterval !== undefined) {
-        window.clearInterval(fallbackPollingInterval);
-        fallbackPollingInterval = undefined;
+    if (initialView.persisted) return;
+    const controller = new AbortController();
+    async function loadInitialWorkspace() {
+      try {
+        const response = await fetch("/api/workspaces?view=shell", { cache: "no-store", signal: controller.signal });
+        if (!response.ok) throw new Error("Workspace could not be loaded.");
+        const data = (await response.json()) as WorkspaceView;
+        if (controller.signal.aborted) return;
+        setView(data);
+        workspaceIdRef.current = data.workspace.id;
+        setActiveThreadId(data.threads[0]?.id ?? "");
+        setChatMode(data.threads[0]?.type ?? "room");
+        setLoadedThreadActivityIds(Object.fromEntries(data.messages.map((message) => [message.threadId, true])));
+      } catch {
+        if (!controller.signal.aborted) setError("Workspace could not be loaded.");
+      } finally {
+        if (!controller.signal.aborted) setWorkspaceReady(true);
       }
     }
+    void loadInitialWorkspace();
+    return () => controller.abort();
+  }, [initialView.persisted]);
+
+  useEffect(() => {
+    if (!workspaceReady) return;
+    let cancelled = false;
+    let source: EventSource | undefined;
+    let reconnectTimeout: number | undefined;
 
     function clearReconnectTimer() {
       if (reconnectTimeout !== undefined) {
         window.clearTimeout(reconnectTimeout);
         reconnectTimeout = undefined;
-      }
-    }
-
-    function startFallbackPolling() {
-      if (!cancelled && fallbackPollingInterval === undefined) {
-        fallbackPollingInterval = window.setInterval(() => void refreshWorkspace(), 8000);
       }
     }
 
@@ -384,7 +388,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       source = nextSource;
       nextSource.addEventListener("workspace", (event) => {
         if (cancelled) return;
-        stopFallbackPolling();
         clearReconnectTimer();
         applyWorkspaceView(JSON.parse((event as MessageEvent<string>).data) as WorkspaceView);
       });
@@ -395,7 +398,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       nextSource.onerror = () => {
         if (source === nextSource) source = undefined;
         nextSource.close();
-        startFallbackPolling();
         scheduleStreamReconnect();
       };
     }
@@ -405,14 +407,13 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       return () => {
         cancelled = true;
         closeStream();
-        stopFallbackPolling();
         clearReconnectTimer();
       };
     }
 
     async function refreshWorkspace() {
       try {
-        const response = await fetch(`/api/workspaces/${view.workspace.id}`, { cache: "no-store" });
+        const response = await fetch(`/api/workspaces/${view.workspace.id}?view=shell`, { cache: "no-store" });
         if (cancelled) return;
         if (!response.ok) {
           setError("Workspace could not be refreshed.");
@@ -424,13 +425,46 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         if (!cancelled) setError("Workspace updates are temporarily unavailable.");
       }
     }
-    startFallbackPolling();
+    void refreshWorkspace();
     return () => {
       cancelled = true;
-      stopFallbackPolling();
       clearReconnectTimer();
     };
-  }, [applyWorkspaceView, view.workspace.id]);
+  }, [applyWorkspaceView, view.workspace.id, workspaceReady]);
+
+  useEffect(() => {
+    if (!workspaceReady || !activeThread || loadedThreadActivityIds[activeThread.id]) return;
+    const controller = new AbortController();
+    async function loadThreadActivity(threadId: string) {
+      try {
+        const messageParams = new URLSearchParams({ threadId, limit: String(MESSAGE_PAGE_SIZE) });
+        const runParams = new URLSearchParams({ threadId, limit: "20" });
+        const [messageResponse, runResponse] = await Promise.all([
+          fetch(`/api/workspaces/${view.workspace.id}/messages?${messageParams.toString()}`, { cache: "no-store", signal: controller.signal }),
+          fetch(`/api/workspaces/${view.workspace.id}/agent-runs?${runParams.toString()}`, { cache: "no-store", signal: controller.signal }),
+        ]);
+        if (controller.signal.aborted) return;
+        if (!messageResponse.ok || !runResponse.ok) throw new Error("Thread activity could not be loaded.");
+        const [messageData, runData] = await Promise.all([
+          messageResponse.json() as Promise<{ messages?: WorkspaceMessage[]; hasMore?: boolean }>,
+          runResponse.json() as Promise<{ runs?: WorkspaceAgentRun[]; events?: WorkspaceAgentRunEvent[]; approvals?: WorkspaceAgentApproval[] }>,
+        ]);
+        setView((current) => ({
+          ...current,
+          messages: mergeMessages(current.messages, messageData.messages ?? []),
+          agentRuns: mergeAgentRuns(current.agentRuns, runData.runs ?? []),
+          agentRunEvents: mergeAgentRunEvents(current.agentRunEvents, runData.events ?? []),
+          agentApprovals: mergeAgentApprovals(current.agentApprovals, runData.approvals ?? []),
+        }));
+        setLoadedThreadActivityIds((current) => ({ ...current, [threadId]: true }));
+        if (!messageData.hasMore) setExhaustedThreadIds((current) => ({ ...current, [threadId]: true }));
+      } catch {
+        if (!controller.signal.aborted) setError("Thread activity is temporarily unavailable.");
+      }
+    }
+    void loadThreadActivity(activeThread.id);
+    return () => controller.abort();
+  }, [activeThread, loadedThreadActivityIds, view.workspace.id, workspaceReady]);
 
   useEffect(() => {
     if (!attachmentOpen || libraryApps.length > 0) return;
@@ -453,6 +487,41 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       controller.abort();
     };
   }, [attachmentOpen, libraryApps.length]);
+
+  useEffect(() => {
+    if (!workspaceReady) return;
+    const controller = new AbortController();
+    async function loadWorkspaceCatalog() {
+      try {
+        const [agentsResponse, connectionsResponse] = await Promise.all([
+          fetch(`/api/workspaces/${view.workspace.id}/agents`, { cache: "no-store", signal: controller.signal }),
+          fetch(`/api/workspaces/${view.workspace.id}/agent-connections`, { cache: "no-store", signal: controller.signal }),
+        ]);
+        if (controller.signal.aborted) return;
+        if (agentsResponse.ok) {
+          const data = (await agentsResponse.json()) as { templates?: WorkspaceAgentTemplate[]; agentProfiles?: WorkspaceAgentProfile[]; agentMembers?: WorkspaceMember[] };
+          setAgentTemplates(Array.isArray(data.templates) ? data.templates : []);
+          setSelectedAgentTemplateKey((current) => current || data.templates?.[0]?.key || "");
+          setView((current) => ({
+            ...current,
+            agentProfiles: mergeAgentProfiles(current.agentProfiles, data.agentProfiles ?? []),
+            members: mergeMembers(current.members, data.agentMembers ?? []),
+          }));
+        }
+        if (connectionsResponse.ok) {
+          const data = (await connectionsResponse.json()) as { connections?: WorkspaceAgentConnection[] };
+          setView((current) => ({
+            ...current,
+            agentConnections: mergeAgentConnections(current.agentConnections, data.connections ?? []),
+          }));
+        }
+      } catch {
+        // The shell is usable without the side-panel catalog; explicit actions still retry their own APIs.
+      }
+    }
+    void loadWorkspaceCatalog();
+    return () => controller.abort();
+  }, [view.workspace.id, workspaceReady]);
 
   useEffect(() => {
     if (!memberPickerOpen || memberRole !== "Agent" || agentTemplates.length > 0) return;
@@ -515,88 +584,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     if (nextThread) {
       markThreadRead(view.workspace.id, nextThread.id, view.messages);
       setActiveThreadId(nextThread.id);
-    }
-  }
-
-  function toggleWorkspaceAction(action: "create" | "join" | "thread") {
-    setNewWorkspaceOpen((open) => (action === "create" ? !open : false));
-    setJoinWorkspaceOpen((open) => (action === "join" ? !open : false));
-    setNewThreadOpen((open) => (action === "thread" ? !open : false));
-  }
-
-  async function switchWorkspace(workspaceId: string) {
-    if (workspaceId === view.workspace.id) return;
-    markThreadRead(view.workspace.id, activeThread?.id, view.messages);
-    setError(null);
-    const previousWorkspaceId = view.workspace.id;
-    workspaceIdRef.current = workspaceId;
-    try {
-      const response = await fetch(`/api/workspaces/${workspaceId}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Workspace could not be opened."));
-      const data = (await response.json()) as WorkspaceView;
-      primeLastReadWorkspace(data.workspace.id);
-      applyWorkspaceView(data);
-      setChatMode(data.threads[0]?.type ?? "room");
-      setDetailsOpen(false);
-    } catch (switchError) {
-      workspaceIdRef.current = previousWorkspaceId;
-      setError(switchError instanceof Error ? switchError.message : "Workspace could not be opened.");
-    }
-  }
-
-  async function createNewWorkspace(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const name = newWorkspaceName.trim();
-    if (!name) {
-      setError("Name the workspace first.");
-      return;
-    }
-    setError(null);
-    try {
-      const response = await fetch("/api/workspaces", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Workspace could not be created."));
-      const data = (await response.json()) as WorkspaceView;
-      workspaceIdRef.current = data.workspace.id;
-      primeLastReadWorkspace(data.workspace.id);
-      applyWorkspaceView(data);
-      setChatMode(data.threads[0]?.type ?? "room");
-      setNewWorkspaceName("");
-      setNewWorkspaceOpen(false);
-      setDetailsOpen(false);
-    } catch (createError) {
-      setError(createError instanceof Error ? createError.message : "Workspace could not be created.");
-    }
-  }
-
-  async function joinExistingWorkspace(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const inviteCode = joinWorkspaceCode.trim();
-    if (!inviteCode) {
-      setError("Enter an invite code first.");
-      return;
-    }
-    setError(null);
-    try {
-      const response = await fetch("/api/workspaces/join", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ inviteCode }),
-      });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Workspace invite could not be joined."));
-      const data = (await response.json()) as WorkspaceView;
-      workspaceIdRef.current = data.workspace.id;
-      primeLastReadWorkspace(data.workspace.id);
-      applyWorkspaceView(data);
-      setChatMode(data.threads[0]?.type ?? "room");
-      setJoinWorkspaceCode("");
-      setJoinWorkspaceOpen(false);
-      setDetailsOpen(false);
-    } catch (joinError) {
-      setError(joinError instanceof Error ? joinError.message : "Workspace invite could not be joined.");
     }
   }
 
@@ -1397,60 +1384,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     setDetailsOpen(true);
   }
 
-  function useArtifactInChat(artifact: WorkspaceArtifact) {
-    setDraft(`Review artifact "${artifact.title}" (${workspaceArtifactKindLabel(artifact.kind)}) and suggest the next learning step.`);
-    setDetailsOpen(false);
-  }
-
-  async function createTaskFromWorkspaceArtifact(artifact: WorkspaceArtifact) {
-    if (!activeThread) return;
-    setError(null);
-    try {
-      const response = await fetch(`/api/workspaces/${view.workspace.id}/tasks`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          threadId: activeThread.id,
-          title: `Review ${artifact.title}`,
-          scope: workspaceArtifactKindLabel(artifact.kind),
-          progress: "new",
-          sourceArtifactId: artifact.id,
-          sourceRunId: artifact.sourceRunId ?? undefined,
-        }),
-      });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Review task could not be created."));
-      const data = (await response.json()) as { task: WorkspaceTask };
-      setView((current) => ({
-        ...current,
-        tasks: [data.task, ...current.tasks.filter((task) => task.id !== data.task.id)],
-        workspace: { ...current.workspace, updatedAt: data.task.updatedAt },
-      }));
-      setDetailsOpen(true);
-    } catch (taskError) {
-      setError(taskError instanceof Error ? taskError.message : "Review task could not be created.");
-    }
-  }
-
-  async function updateArtifactReviewStatus(artifact: WorkspaceArtifact, reviewStatus: WorkspaceArtifact["reviewStatus"]) {
-    setError(null);
-    try {
-      const response = await fetch(`/api/workspaces/${view.workspace.id}/artifacts/${artifact.id}`, {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ reviewStatus }),
-      });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Artifact review status could not be updated."));
-      const data = (await response.json()) as { artifact: WorkspaceArtifact };
-      setView((current) => ({
-        ...current,
-        artifacts: mergeArtifacts(current.artifacts, [data.artifact]),
-        workspace: { ...current.workspace, updatedAt: data.artifact.updatedAt },
-      }));
-    } catch (reviewError) {
-      setError(reviewError instanceof Error ? reviewError.message : "Artifact review status could not be updated.");
-    }
-  }
-
   async function loadEarlierMessages() {
     if (!activeThread || !messages.length || loadingEarlier) return;
     setLoadingEarlier(true);
@@ -1888,54 +1821,12 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         <div className="workspace-directory-head">
           <div>
             <span className="course-block-tag">{view.persisted ? "Workspace" : "Local workspace"}</span>
-            <strong>{view.workspace.name}</strong>
+            <strong>Chats</strong>
           </div>
           <div className="workspace-directory-actions">
-            <button type="button" aria-label="New workspace" title="New workspace" onClick={() => toggleWorkspaceAction("create")}>New</button>
-            <button type="button" aria-label="Join workspace" title="Join workspace" onClick={() => toggleWorkspaceAction("join")}>Join</button>
-            <button type="button" aria-label="New chat" title="New chat" onClick={() => toggleWorkspaceAction("thread")}>+</button>
+            <button type="button" aria-label="New chat" title="New chat" onClick={() => setNewThreadOpen((open) => !open)}>+</button>
           </div>
         </div>
-
-        {newWorkspaceOpen ? (
-          <form className="workspace-quick-form workspace-action-form" onSubmit={createNewWorkspace}>
-            <input
-              aria-label="Workspace name"
-              value={newWorkspaceName}
-              onChange={(event) => setNewWorkspaceName(event.target.value)}
-              placeholder="Workspace name"
-            />
-            <button type="submit">Create</button>
-          </form>
-        ) : null}
-
-        {joinWorkspaceOpen ? (
-          <form className="workspace-quick-form workspace-action-form" onSubmit={joinExistingWorkspace}>
-            <input
-              aria-label="Workspace invite code"
-              value={joinWorkspaceCode}
-              onChange={(event) => setJoinWorkspaceCode(event.target.value)}
-              placeholder="Invite code"
-            />
-            <button type="submit">Join</button>
-          </form>
-        ) : null}
-
-        {view.workspaces.length ? (
-          <div className="workspace-list" aria-label="Workspaces">
-            {view.workspaces.map((workspace) => (
-              <button
-                key={workspace.id}
-                type="button"
-                className={workspace.id === view.workspace.id ? "active" : ""}
-                onClick={() => void switchWorkspace(workspace.id)}
-              >
-                <strong>{workspace.name}</strong>
-                <small>{formatDate(workspace.updatedAt)}</small>
-              </button>
-            ))}
-          </div>
-        ) : null}
 
         <div className="workspace-switcher" aria-label="Chat type">
           <button type="button" className={chatMode === "room" ? "active" : ""} onClick={() => switchMode("room")}>
@@ -2629,15 +2520,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             </ul>
           </section>
 
-          <ArtifactLibraryPanel
-            artifacts={view.artifacts}
-            activeThreadId={activeThread?.id}
-            onOpenApp={(artifact) => void openAppArtifact(artifact)}
-            onUseInChat={useArtifactInChat}
-            onCreateTask={createTaskFromWorkspaceArtifact}
-            onUpdateReviewStatus={(artifact, reviewStatus) => void updateArtifactReviewStatus(artifact, reviewStatus)}
-          />
-
           <WorkspaceAgentLibraryPanel
             agentProfiles={view.agentProfiles}
             agentMembers={agentMembers}
@@ -3025,92 +2907,6 @@ function ActiveChatEmptyState({
   );
 }
 
-function ArtifactLibraryPanel({
-  artifacts,
-  activeThreadId,
-  onOpenApp,
-  onUseInChat,
-  onCreateTask,
-  onUpdateReviewStatus,
-}: {
-  artifacts: WorkspaceArtifact[];
-  activeThreadId?: string;
-  onOpenApp: (artifact: SharedAppArtifact) => void;
-  onUseInChat: (artifact: WorkspaceArtifact) => void;
-  onCreateTask: (artifact: WorkspaceArtifact) => void;
-  onUpdateReviewStatus: (artifact: WorkspaceArtifact, reviewStatus: WorkspaceArtifact["reviewStatus"]) => void;
-}) {
-  const [artifactReviewFilter, setArtifactReviewFilter] = useState<"needs_review" | WorkspaceArtifact["kind"] | "all">("needs_review");
-  const visibleArtifacts = artifacts
-    .filter((artifact) => !activeThreadId || artifact.threadId === activeThreadId)
-    .filter((artifact) => {
-      if (artifactReviewFilter === "all") return true;
-      if (artifactReviewFilter === "needs_review") return artifact.reviewStatus === "needs_review";
-      return artifact.kind === artifactReviewFilter;
-    })
-    .slice(0, 6);
-  const reviewCount = artifacts.filter((artifact) => (!activeThreadId || artifact.threadId === activeThreadId) && artifact.reviewStatus === "needs_review").length;
-  return (
-    <section className="workspace-panel workspace-artifact-library" aria-label="Review artifacts">
-      <div className="workspace-panel-header">
-        <strong>Artifact review queue</strong>
-        <a href="/workspace/review?tab=artifacts">Review artifacts</a>
-        <span>{reviewCount} review</span>
-      </div>
-      <p className="workspace-artifact-library-copy">Reusable outputs from real workspace work. No mock cards, no hidden activity.</p>
-      <div className="workspace-artifact-review-filter" aria-label="Artifact review filter">
-        {([
-          ["needs_review", "Needs review"],
-          ["all", "Review all"],
-          ["course", "Courses"],
-          ["saved_artifact", "Saved"],
-          ["task_result", "Task results"],
-          ["app", "Apps"],
-        ] as Array<[typeof artifactReviewFilter, string]>).map(([value, label]) => (
-          <button key={value} type="button" className={artifactReviewFilter === value ? "active" : ""} onClick={() => setArtifactReviewFilter(value)}>
-            {label}
-          </button>
-        ))}
-      </div>
-      {visibleArtifacts.length ? (
-        <ul className="workspace-artifact-list">
-          {visibleArtifacts.map((artifact) => (
-            <li key={artifact.id} className="workspace-artifact-card">
-              <div>
-                <span className={`workspace-artifact-kind ${artifact.kind}`}>{workspaceArtifactKindLabel(artifact.kind)}</span>
-                <strong>{artifact.title}</strong>
-                <small>{artifact.description}</small>
-                <div className="workspace-artifact-review-meta">
-                  <span>{formatWorkspaceArtifactReviewStatus(artifact.reviewStatus)}</span>
-                  {artifact.sourceRunId ? <span>Source run: {shortId(artifact.sourceRunId)}</span> : null}
-                </div>
-              </div>
-              <div className="workspace-artifact-actions">
-                {artifact.payload.type === "app" ? (
-                  <button type="button" onClick={() => onOpenApp(artifact.payload as SharedAppArtifact)}>Open</button>
-                ) : null}
-                <button type="button" onClick={() => onUseInChat(artifact)}>Use in chat</button>
-                <button type="button" onClick={() => onCreateTask(artifact)}>Create review task</button>
-                <button
-                  type="button"
-                  onClick={() => onUpdateReviewStatus(artifact, artifact.reviewStatus === "needs_review" ? "reviewed" : "needs_review")}
-                >
-                  {artifact.reviewStatus === "needs_review" ? "Mark reviewed" : "Reopen review"}
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="workspace-artifact-empty">
-          <strong>No artifacts saved yet</strong>
-          <span>Approved apps, courses, saved notes, and task results will appear here when agents or people create them.</span>
-        </div>
-      )}
-    </section>
-  );
-}
-
 function MessageArtifact({
   artifact,
   sourceArtifact,
@@ -3331,20 +3127,6 @@ function workspaceMessageArtifactLabel(kind: Exclude<WorkspaceArtifact["kind"], 
   return labels[kind];
 }
 
-function workspaceArtifactKindLabel(kind: WorkspaceArtifact["kind"]) {
-  const labels: Record<WorkspaceArtifact["kind"], string> = {
-    app: "App",
-    course: "Course",
-    saved_artifact: "Saved artifact",
-    task_result: "Task result",
-  };
-  return labels[kind] ?? kind;
-}
-
-function formatWorkspaceArtifactReviewStatus(status: WorkspaceArtifact["reviewStatus"]) {
-  return status === "needs_review" ? "Needs review" : "Reviewed";
-}
-
 function workspaceAgentMemoryScopeLabel(scope: WorkspaceAgentMemory["scope"]) {
   const labels: Record<WorkspaceAgentMemory["scope"], string> = {
     thread: "This chat",
@@ -3356,10 +3138,6 @@ function workspaceAgentMemoryScopeLabel(scope: WorkspaceAgentMemory["scope"]) {
 
 function shortId(value: string) {
   return value.length <= 12 ? value : `${value.slice(0, 6)}…${value.slice(-4)}`;
-}
-
-function formatDate(timestamp: number) {
-  return new Intl.DateTimeFormat([], { month: "short", day: "numeric" }).format(new Date(timestamp));
 }
 
 function AgentDelegateControls({

@@ -20,8 +20,7 @@ export async function getCourse(id: string, ownerId?: string | null): Promise<Co
 export async function listCourses(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<CourseSummary[]> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
   if (!resolvedOwnerId) return [];
-  const dbCourses = await listCoursesFromDb(resolvedOwnerId, options);
-  return dbCourses.map(summarizeCourse);
+  return listCourseSummariesFromDb(resolvedOwnerId, options);
 }
 
 export async function updateBlock(courseId: string, blockId: string, next: CourseBlock, ownerId?: string | null): Promise<Course | undefined> {
@@ -94,6 +93,42 @@ async function listCoursesFromDb(ownerId: string, options: { includeArchived?: b
     : and(eq(coursesTable.ownerId, ownerId), isNull(coursesTable.archivedAt));
   const rows = await getDb().select().from(coursesTable).where(whereClause).orderBy(desc(coursesTable.updatedAt));
   return rows.map(rowToCourse);
+}
+
+async function listCourseSummariesFromDb(ownerId: string, options: { includeArchived?: boolean } = {}): Promise<CourseSummary[]> {
+  const whereClause = options.includeArchived
+    ? eq(coursesTable.ownerId, ownerId)
+    : and(eq(coursesTable.ownerId, ownerId), isNull(coursesTable.archivedAt));
+  const rows = await getDb()
+    .select({
+      id: coursesTable.id,
+      title: coursesTable.title,
+      topic: coursesTable.topic,
+      summary: coursesTable.summary,
+      estimatedMinutes: coursesTable.estimatedMinutes,
+      blocks: coursesTable.blocks,
+      archivedAt: coursesTable.archivedAt,
+      version: coursesTable.version,
+      createdAt: coursesTable.createdAt,
+      updatedAt: coursesTable.updatedAt,
+    })
+    .from(coursesTable)
+    .where(whereClause)
+    .orderBy(desc(coursesTable.updatedAt));
+  return rows.map((row) =>
+    summarizeCourse({
+      id: row.id,
+      title: row.title,
+      topic: row.topic,
+      summary: row.summary,
+      estimatedMinutes: Number(row.estimatedMinutes),
+      blocks: row.blocks as CourseBlock[],
+      archivedAt: row.archivedAt?.getTime() ?? null,
+      version: row.version ?? 1,
+      createdAt: row.createdAt.getTime(),
+      updatedAt: row.updatedAt.getTime(),
+    }),
+  );
 }
 
 function courseToRow(course: Course, ownerId: string) {

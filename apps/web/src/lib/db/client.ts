@@ -20,13 +20,19 @@ export function getDatabaseUrl() {
   return url;
 }
 
+function getDatabasePoolMax() {
+  const configured = Number(process.env.DATABASE_POOL_MAX ?? "");
+  if (Number.isFinite(configured) && configured > 0) return Math.min(Math.floor(configured), 20);
+  return 5;
+}
+
 export function getDb() {
   const url = getDatabaseUrl();
   const existing = globalAny[globalKey];
   if (existing?.db) return existing.db;
 
   const client = postgres(url, {
-    max: 1,
+    max: getDatabasePoolMax(),
     prepare: false,
   });
   const db = drizzle(client, { schema });

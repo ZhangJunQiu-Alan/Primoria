@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { AGENT_BEHAVIOR_MAX_LENGTH, AGENT_PURPOSE_MAX_LENGTH } from "./agent-profile-guardrails";
-import { resolveWorkspaceAgentSkillPath } from "./agent-runtime";
+import { resolveWorkspaceAgentSkillPath } from "./agent-skill-paths";
 import { isWorkspaceInternalToolName, WORKSPACE_INTERNAL_TOOL_POLICIES, type WorkspaceToolApproval } from "./agent-tools";
 import type { WorkspaceAgentCapability, WorkspaceAgentCapabilityInput, WorkspaceAgentTemplate } from "./types";
 

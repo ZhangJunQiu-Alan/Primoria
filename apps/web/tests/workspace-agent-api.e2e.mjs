@@ -326,20 +326,6 @@ async function main() {
     assert(invalidSkillDelete.response.status === 400, "skill delete returns 400 for invalid body");
     assert(invalidSkillDelete.data.error === "Skill delete request is invalid.", "skill delete returns explicit validation JSON");
 
-    const invalidArtifactReview = await requestJson(`/api/workspaces/${workspaceId}/artifacts/missing_artifact`, {
-      method: "PATCH",
-      body: JSON.stringify({ reviewStatus: "done" }),
-    });
-    assert(invalidArtifactReview.response.status === 400, "artifact review returns 400 for invalid body");
-    assert(invalidArtifactReview.data.error === "Artifact review request is invalid.", "artifact review returns explicit validation JSON");
-
-    const missingArtifactReview = await requestJson(`/api/workspaces/${workspaceId}/artifacts/missing_artifact`, {
-      method: "PATCH",
-      body: JSON.stringify({ reviewStatus: "reviewed" }),
-    });
-    assert(missingArtifactReview.response.status === 404, "artifact review returns 404 for missing artifact");
-    assert(missingArtifactReview.data.error === "Workspace artifact not found.", "artifact review returns explicit not-found JSON");
-
     const invalidBulkMemoryArchive = await requestJson(`/api/workspaces/${workspaceId}/agent-memories/bulk-archive`, {
       method: "POST",
       body: JSON.stringify({ memoryIds: [] }),

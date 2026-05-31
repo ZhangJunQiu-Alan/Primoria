@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
+import { CopilotKitProvider } from "@/components/copilot-provider";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
@@ -28,7 +29,9 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
             </span>
           </div>
         </header>
-        <CourseDetailClient initialCourse={course} copilotEnabled={copilotEnabled} />
+        <CopilotKitProvider enabled={copilotEnabled}>
+          <CourseDetailClient initialCourse={course} copilotEnabled={copilotEnabled} />
+        </CopilotKitProvider>
       </section>
     </main>
   );

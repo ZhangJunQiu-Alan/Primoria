@@ -1,7 +1,18 @@
 import { NextResponse } from "next/server";
+import { and, asc, eq, inArray, or } from "drizzle-orm";
 import { z } from "zod";
+import { getDb } from "@/lib/db/client";
+import { workspaceAgentCapabilities, workspaceAgentConnections, workspaceAgentProfiles, workspaceMembers } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
+import {
+  filterAgentCapabilitiesByVisibleConnections,
+  groupAgentCapabilitiesByProfileId,
+  rowToWorkspaceAgentConnection,
+  rowToWorkspaceAgentProfile,
+} from "@/lib/workspaces/agent-profile-persistence";
+import { rowToWorkspaceMember } from "@/lib/workspaces/workspace-member-service";
+import { requireDbWorkspace, usesDatabase } from "@/lib/workspaces/workspace-access-service";
 import {
   createWorkspaceAgentMember,
   createWorkspaceAgentProfile,
@@ -82,6 +93,58 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
+  if (usesDatabase(ownerId)) {
+    try {
+      await requireDbWorkspace(ownerId, id);
+    } catch {
+      return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+    }
+    const [memberRows, workspaceProfileRows, personalProfileRows, connectionRows] = await Promise.all([
+      getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, id)).orderBy(asc(workspaceMembers.createdAt)),
+      getDb().select().from(workspaceAgentProfiles).where(eq(workspaceAgentProfiles.workspaceId, id)).orderBy(asc(workspaceAgentProfiles.createdAt)),
+      getDb()
+        .select()
+        .from(workspaceAgentProfiles)
+        .where(and(eq(workspaceAgentProfiles.ownerId, ownerId), eq(workspaceAgentProfiles.visibility, "private")))
+        .orderBy(asc(workspaceAgentProfiles.createdAt)),
+      getDb()
+        .select()
+        .from(workspaceAgentConnections)
+        .where(or(eq(workspaceAgentConnections.workspaceId, id), eq(workspaceAgentConnections.ownerId, ownerId)))
+        .orderBy(asc(workspaceAgentConnections.createdAt)),
+    ]);
+    const memberProfileIds = new Set(memberRows.flatMap((member) => (member.agentProfileId ? [member.agentProfileId] : [])));
+    const memberProfileRows = memberProfileIds.size
+      ? await getDb()
+          .select()
+          .from(workspaceAgentProfiles)
+          .where(inArray(workspaceAgentProfiles.id, Array.from(memberProfileIds)))
+          .orderBy(asc(workspaceAgentProfiles.createdAt))
+      : [];
+    const visibleWorkspaceProfileRows = [...workspaceProfileRows, ...memberProfileRows].filter(
+      (profile) => profile.visibility !== "private" || profile.ownerId === ownerId || memberProfileIds.has(profile.id),
+    );
+    const profileRows = Array.from(new Map([...visibleWorkspaceProfileRows, ...personalProfileRows].map((profile) => [profile.id, profile])).values());
+    const profileIds = profileRows.map((profile) => profile.id);
+    const capabilityRows = profileIds.length
+      ? await getDb()
+          .select()
+          .from(workspaceAgentCapabilities)
+          .where(inArray(workspaceAgentCapabilities.profileId, profileIds))
+          .orderBy(asc(workspaceAgentCapabilities.createdAt))
+      : [];
+    const visibleConnections = connectionRows.map(rowToWorkspaceAgentConnection);
+    const capabilitiesByProfileId = filterAgentCapabilitiesByVisibleConnections(
+      groupAgentCapabilitiesByProfileId(capabilityRows),
+      visibleConnections,
+      new Set(profileIds),
+    );
+    return NextResponse.json({
+      templates: listWorkspaceAgentTemplates(),
+      agentProfiles: profileRows.map((profile) => rowToWorkspaceAgentProfile(profile, capabilitiesByProfileId)),
+      agentMembers: memberRows.map(rowToWorkspaceMember).filter((member) => member.agentProfileId),
+    });
+  }
   const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   return NextResponse.json({

@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { getWorkspaceView, listWorkspaceAgentRuns } from "@/lib/workspaces/store";
+import { getWorkspaceShellView, listWorkspaceAgentRuns } from "@/lib/workspaces/store";
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(ownerId, id);
+  const view = await getWorkspaceShellView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ runs: [], events: [] }, { status: 404 });
 
   const url = new URL(request.url);

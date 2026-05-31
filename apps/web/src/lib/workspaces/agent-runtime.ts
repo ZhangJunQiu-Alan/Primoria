@@ -11,10 +11,11 @@ import {
   type WorkspaceToolInterruptConfig,
 } from "./agent-tools";
 import { buildWorkspaceMcpGuardedToolSpecs } from "./agent-mcp";
+import { resolveWorkspaceAgentSkillPath } from "./agent-skill-paths";
 import { Command } from "@langchain/langgraph";
 import { HumanMessage } from "@langchain/core/messages";
 import { createTutorModel } from "../ai/deepagent/model";
-import { cpSync, existsSync, mkdtempSync, rmSync } from "node:fs";
+import { cpSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 import {
@@ -25,7 +26,6 @@ import {
   listStoredWorkspaceAgentSkills,
   prepareWorkspaceAgentSkillDirectories,
   runWorkspaceAgentSkillStorageMaintenanceOnce,
-  resolveStoredWorkspaceAgentSkillPath,
   restoreStoredWorkspaceAgentSkillVersion,
   storeWorkspaceAgentSkill,
   updateStoredWorkspaceAgentSkill,
@@ -625,17 +625,6 @@ function downgradeSubagentWriteCapability(capability: WorkspaceAgentCapability):
     return { ...capability, approval: "always" };
   }
   return capability;
-}
-
-export function resolveWorkspaceAgentSkillPath(skillPath: string, options: WorkspaceAgentSkillStorageOptions = {}) {
-  if (skillPath.startsWith("/workspace-skills/") || skillPath.startsWith("/user-skills/")) {
-    return resolveStoredWorkspaceAgentSkillPath(skillPath, options);
-  }
-  if (!skillPath.startsWith("/skills/")) return undefined;
-  const skillName = skillPath.slice("/skills/".length);
-  if (!/^[a-z0-9-]+$/.test(skillName)) return undefined;
-  const directory = join(process.cwd(), "src/lib/workspaces/skills", skillName);
-  return existsSync(join(directory, "SKILL.md")) ? directory : undefined;
 }
 
 export async function executeWorkspaceAgentRuntime(

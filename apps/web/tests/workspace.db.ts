@@ -38,7 +38,6 @@ import {
   runWorkspaceAgentTurn,
   seedWorkspaceAgentRunForTest,
   updateWorkspaceAgentConnection,
-  updateWorkspaceArtifactReview,
   updateWorkspaceThread,
   updateWorkspaceAgentProfile,
   updateWorkspaceTask,
@@ -333,41 +332,6 @@ async function main() {
     const dbTaskResultArtifact = agentTaskRun.artifacts?.find((artifact) => artifact.sourceRunId === agentTaskRun.runs[0].id && artifact.kind === "task_result");
     assert(dbTaskResultArtifact, "DB agent task run returns a task result artifact record");
     assert(dbTaskResultArtifact.reviewStatus === "needs_review", "DB task result artifacts default to needs_review");
-    const dbReviewedArtifact = await updateWorkspaceArtifactReview(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      artifactId: dbTaskResultArtifact.id,
-      reviewStatus: "reviewed",
-    });
-    assert(dbReviewedArtifact.reviewStatus === "reviewed", "DB artifact review status can be marked reviewed");
-    const dbReopenedArtifact = await updateWorkspaceArtifactReview(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      artifactId: dbTaskResultArtifact.id,
-      reviewStatus: "needs_review",
-    });
-    assert(dbReopenedArtifact.reviewStatus === "needs_review", "DB artifact review status can be reopened");
-    const dbJoinerReviewedDirectArtifact = await updateWorkspaceArtifactReview(joinerId, {
-      workspaceId: ownerView.workspace.id,
-      artifactId: dbTaskResultArtifact.id,
-      reviewStatus: "reviewed",
-    });
-    assert(dbJoinerReviewedDirectArtifact.reviewStatus === "reviewed", "DB direct participant can review an artifact from that direct thread");
-    const dbOwnerReopenedDirectArtifact = await updateWorkspaceArtifactReview(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      artifactId: dbTaskResultArtifact.id,
-      reviewStatus: "needs_review",
-    });
-    assert(dbOwnerReopenedDirectArtifact.reviewStatus === "needs_review", "DB artifact owner can reopen direct artifact after participant review");
-    let outsiderRejectedDirectArtifactReview = false;
-    try {
-      await updateWorkspaceArtifactReview(outsiderId, {
-        workspaceId: ownerView.workspace.id,
-        artifactId: dbTaskResultArtifact.id,
-        reviewStatus: "reviewed",
-      });
-    } catch (error) {
-      outsiderRejectedDirectArtifactReview = error instanceof Error && error.message.includes("Thread not found");
-    }
-    assert(outsiderRejectedDirectArtifactReview, "DB non-participant cannot review an artifact from a private direct thread by id");
     let outsiderRejectedHiddenArtifactReviewTask = false;
     const publicThread = ownerView.threads.find((thread) => thread.type === "room");
     assert(publicThread, "DB workspace has a public room for source-artifact visibility checks");

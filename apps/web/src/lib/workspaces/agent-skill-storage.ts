@@ -235,14 +235,24 @@ async function deleteDbWorkspaceAgentSkill(input: WorkspaceAgentSkillStorageOpti
 }
 
 async function listDbWorkspaceAgentSkills(options: WorkspaceAgentSkillStorageOptions = {}): Promise<DbStoredWorkspaceAgentSkill[]> {
-  const results: DbStoredWorkspaceAgentSkill[] = [];
-  if (options.workspaceId) {
-    const rows = await getDb()
-      .select()
-      .from(workspaceAgentSkills)
-      .where(and(eq(workspaceAgentSkills.source, "workspace"), eq(workspaceAgentSkills.workspaceId, sanitizeSkillScope(options.workspaceId)), isNull(workspaceAgentSkills.deletedAt)))
-      .orderBy(asc(workspaceAgentSkills.createdAt));
-    results.push(...rows.map((row) => dbSkillDto({
+  const [workspaceRows, userRows] = await Promise.all([
+    options.workspaceId
+      ? getDb()
+          .select()
+          .from(workspaceAgentSkills)
+          .where(and(eq(workspaceAgentSkills.source, "workspace"), eq(workspaceAgentSkills.workspaceId, sanitizeSkillScope(options.workspaceId)), isNull(workspaceAgentSkills.deletedAt)))
+          .orderBy(asc(workspaceAgentSkills.createdAt))
+      : [],
+    options.ownerId
+      ? getDb()
+          .select()
+          .from(workspaceAgentSkills)
+          .where(and(eq(workspaceAgentSkills.source, "user"), eq(workspaceAgentSkills.ownerId, sanitizeSkillScope(options.ownerId)), isNull(workspaceAgentSkills.deletedAt)))
+          .orderBy(asc(workspaceAgentSkills.createdAt))
+      : [],
+  ]);
+  return [
+    ...workspaceRows.map((row) => dbSkillDto({
       source: "workspace",
       scope: row.workspaceId ?? options.workspaceId!,
       slug: row.slug,
@@ -250,15 +260,8 @@ async function listDbWorkspaceAgentSkills(options: WorkspaceAgentSkillStorageOpt
       description: row.description,
       instructions: row.instructions,
       version: row.currentVersion,
-    })));
-  }
-  if (options.ownerId) {
-    const rows = await getDb()
-      .select()
-      .from(workspaceAgentSkills)
-      .where(and(eq(workspaceAgentSkills.source, "user"), eq(workspaceAgentSkills.ownerId, sanitizeSkillScope(options.ownerId)), isNull(workspaceAgentSkills.deletedAt)))
-      .orderBy(asc(workspaceAgentSkills.createdAt));
-    results.push(...rows.map((row) => dbSkillDto({
+    })),
+    ...userRows.map((row) => dbSkillDto({
       source: "user",
       scope: row.ownerId,
       slug: row.slug,
@@ -266,9 +269,8 @@ async function listDbWorkspaceAgentSkills(options: WorkspaceAgentSkillStorageOpt
       description: row.description,
       instructions: row.instructions,
       version: row.currentVersion,
-    })));
-  }
-  return results;
+    })),
+  ];
 }
 
 async function listDbWorkspaceAgentSkillVersions(options: WorkspaceAgentSkillStorageOptions & { path: string }): Promise<DbStoredWorkspaceAgentSkillVersion[]> {
