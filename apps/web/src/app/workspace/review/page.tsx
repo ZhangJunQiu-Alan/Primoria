@@ -4,11 +4,11 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
 import { getWorkspaceView, listWorkspaceAgentMemories } from "@/lib/workspaces/store";
 import { createWorkspaceAgentSkillBackend } from "@/lib/workspaces/agent-skill-storage";
-import type { WorkspaceAgentMemory, WorkspaceArtifact } from "@/lib/workspaces/types";
+import type { WorkspaceAgentMemory } from "@/lib/workspaces/types";
 
 export const dynamic = "force-dynamic";
 
-type ReviewTab = "artifacts" | "skills" | "memories";
+type ReviewTab = "skills" | "memories";
 
 type WorkspaceReviewPageProps = {
   searchParams?: Promise<{ tab?: string | string[] }>;
@@ -17,7 +17,7 @@ type WorkspaceReviewPageProps = {
 export default async function WorkspaceReviewPage({ searchParams }: WorkspaceReviewPageProps) {
   const params = (await searchParams) ?? {};
   const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
-  const activeTab: ReviewTab = rawTab === "skills" || rawTab === "memories" ? rawTab : "artifacts";
+  const activeTab: ReviewTab = rawTab === "memories" ? rawTab : "skills";
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const view = await getWorkspaceView(ownerId);
@@ -33,8 +33,6 @@ export default async function WorkspaceReviewPage({ searchParams }: WorkspaceRev
       ]),
     ),
   );
-  const artifactsNeedingReview = view.artifacts.filter((artifact) => artifact.reviewStatus === "needs_review").length;
-
   return (
     <main className="app-shell">
       <TutorNavRail />
@@ -43,20 +41,12 @@ export default async function WorkspaceReviewPage({ searchParams }: WorkspaceRev
           <div>
             <span className="course-block-tag">Workspace memory</span>
             <h1>Review workspace outputs</h1>
-            <p>Collected artifacts, custom agent skills, and reviewable agent memories from real workspace activity.</p>
+            <p>Custom agent skills and reviewable agent memories from real workspace activity.</p>
           </div>
           <Link href="/workspace" className="workspace-review-back">Back to workspace</Link>
         </header>
 
         <nav className="workspace-review-tabs" aria-label="Workspace review sections">
-          <Link
-            href="/workspace/review?tab=artifacts"
-            className={activeTab === "artifacts" ? "active" : ""}
-            aria-current={activeTab === "artifacts" ? "page" : undefined}
-          >
-            Review artifacts
-            <span>{view.artifacts.length}</span>
-          </Link>
           <Link
             href="/workspace/review?tab=skills"
             className={activeTab === "skills" ? "active" : ""}
@@ -75,47 +65,7 @@ export default async function WorkspaceReviewPage({ searchParams }: WorkspaceRev
           </Link>
         </nav>
 
-        {activeTab === "artifacts" ? (
-          <section className="workspace-review-section" aria-label="Review artifacts">
-            <div className="workspace-review-summary">
-              <strong>{artifactsNeedingReview} need review</strong>
-              <span>Courses, saved artifacts, and task results are highlighted for follow-up.</span>
-            </div>
-            {view.artifacts.length ? (
-              <div className="workspace-review-grid">
-                {view.artifacts.map((artifact) => (
-                  <article key={artifact.id} className="workspace-review-card workspace-artifact-card">
-                    <span className={`workspace-artifact-kind ${artifact.kind}`}>{workspaceArtifactKindLabel(artifact.kind)}</span>
-                    <h2>{artifact.title}</h2>
-                    <p>{artifact.description}</p>
-                    <dl>
-                      <div>
-                        <dt>Status</dt>
-                        <dd>{formatWorkspaceArtifactReviewStatus(artifact.reviewStatus)}</dd>
-                      </div>
-                      <div>
-                        <dt>Source message</dt>
-                        <dd>{shortId(artifact.sourceMessageId)}</dd>
-                      </div>
-                      {artifact.sourceRunId ? (
-                        <div>
-                          <dt>Source run</dt>
-                          <dd>{shortId(artifact.sourceRunId)}</dd>
-                        </div>
-                      ) : null}
-                    </dl>
-                    <ArtifactReviewStatusForm workspaceId={view.workspace.id} artifact={artifact} />
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div className="workspace-review-empty">
-                <strong>No artifacts saved yet</strong>
-                <p>Approved apps, courses, saved notes, and task results will appear here once workspace members create them.</p>
-              </div>
-            )}
-          </section>
-        ) : activeTab === "skills" ? (
+        {activeTab === "skills" ? (
           <section className="workspace-review-section" aria-label="Review skills">
             <div className="workspace-review-summary">
               <strong>{skills.length} custom skills</strong>
@@ -257,22 +207,6 @@ function DeleteMemoryForm({
   );
 }
 
-function ArtifactReviewStatusForm({
-  workspaceId,
-  artifact,
-}: {
-  workspaceId: string;
-  artifact: WorkspaceArtifact;
-}) {
-  const nextStatus = artifact.reviewStatus === "needs_review" ? "reviewed" : "needs_review";
-  return (
-    <form className="workspace-artifact-review-status" action={`/api/workspaces/${workspaceId}/artifacts/${artifact.id}`} method="post">
-      <input type="hidden" name="reviewStatus" value={nextStatus} />
-      <button type="submit">{nextStatus === "reviewed" ? "Mark reviewed" : "Reopen review"}</button>
-    </form>
-  );
-}
-
 function SkillReviewCard({
   workspaceId,
   skill,
@@ -369,20 +303,6 @@ function formatSkillVersionCompare(
   ].filter(Boolean);
   if (!changes.length) return `Version ${current.version} matches version ${previous.version}.`;
   return `Version ${current.version} vs ${previous.version}: ${changes.join(", ")}.`;
-}
-
-function workspaceArtifactKindLabel(kind: WorkspaceArtifact["kind"]) {
-  const labels: Record<WorkspaceArtifact["kind"], string> = {
-    app: "App",
-    course: "Course",
-    saved_artifact: "Saved artifact",
-    task_result: "Task result",
-  };
-  return labels[kind] ?? kind;
-}
-
-function formatWorkspaceArtifactReviewStatus(status: WorkspaceArtifact["reviewStatus"]) {
-  return status === "needs_review" ? "Needs review" : "Reviewed";
 }
 
 function formatWorkspaceAgentSkillSource(source: "workspace" | "user") {

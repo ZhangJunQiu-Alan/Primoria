@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getApp } from "@/lib/capability-library/store";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { buildWorkspaceArtifactFromMessage, createWorkspaceMessage, getWorkspaceView, listWorkspaceMessages, runWorkspaceAgentTurn } from "@/lib/workspaces/store";
+import { buildWorkspaceArtifactFromMessage, createWorkspaceMessage, getWorkspaceShellView, getWorkspaceView, listWorkspaceMessages, runWorkspaceAgentTurn } from "@/lib/workspaces/store";
 import type { WorkspaceMessageArtifact } from "@/lib/workspaces/types";
 
 const ArtifactSchema = z.union([
@@ -41,7 +41,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(ownerId, id);
+  const view = await getWorkspaceShellView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ messages: [] }, { status: 404 });
   const url = new URL(request.url);
   const threadId = url.searchParams.get("threadId");

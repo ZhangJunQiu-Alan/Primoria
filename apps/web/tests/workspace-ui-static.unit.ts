@@ -9,6 +9,10 @@ function assert(condition: unknown, message: string): asserts condition {
 
 async function main() {
   const source = readFileSync(join(process.cwd(), "src/components/workspace/workspace-client.tsx"), "utf8");
+  const workspaceClientState = readFileSync(join(process.cwd(), "src/components/workspace/workspace-client-state.ts"), "utf8");
+  const rootLayout = readFileSync(join(process.cwd(), "src/app/layout.tsx"), "utf8");
+  const homePage = readFileSync(join(process.cwd(), "src/app/page.tsx"), "utf8");
+  const coursePage = readFileSync(join(process.cwd(), "src/app/course/[id]/page.tsx"), "utf8");
   const workspacesRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/route.ts"), "utf8");
   const workspaceJoinRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/join/route.ts"), "utf8");
   const threadsRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/threads/route.ts"), "utf8");
@@ -19,7 +23,6 @@ async function main() {
   const agentsRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/agents/route.ts"), "utf8");
   const agentProfileRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/agents/[profileId]/route.ts"), "utf8");
   const agentConnectionsRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/agent-connections/route.ts"), "utf8");
-  const artifactRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/artifacts/[artifactId]/route.ts"), "utf8");
   const agentRunRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/agent-runs/[runId]/route.ts"), "utf8");
   const agentRunCancelRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/agent-runs/[runId]/cancel/route.ts"), "utf8");
   const agentRunRetryRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/agent-runs/[runId]/retry/route.ts"), "utf8");
@@ -32,7 +35,13 @@ async function main() {
   const agentSkillStorage = readFileSync(join(process.cwd(), "src/lib/workspaces/agent-skill-storage.ts"), "utf8");
   const workspaceEventsRoute = readFileSync(join(process.cwd(), "src/app/api/workspaces/[id]/events/route.ts"), "utf8");
   const workspaceStore = readFileSync(join(process.cwd(), "src/lib/workspaces/store.ts"), "utf8");
+  const agentProfileService = readFileSync(join(process.cwd(), "src/lib/workspaces/agent-profile-service.ts"), "utf8");
+  const agentMemoryService = readFileSync(join(process.cwd(), "src/lib/workspaces/agent-memory-service.ts"), "utf8");
+  const workspaceTaskService = readFileSync(join(process.cwd(), "src/lib/workspaces/workspace-task-service.ts"), "utf8");
+  const workspaceAccessService = readFileSync(join(process.cwd(), "src/lib/workspaces/workspace-access-service.ts"), "utf8");
   const agentProfileGuardrails = readFileSync(join(process.cwd(), "src/lib/workspaces/agent-profile-guardrails.ts"), "utf8");
+  const agentProfileRules = readFileSync(join(process.cwd(), "src/lib/workspaces/agent-profile-rules.ts"), "utf8");
+  const agentProfilePersistence = readFileSync(join(process.cwd(), "src/lib/workspaces/agent-profile-persistence.ts"), "utf8");
   const styles = readFileSync(join(process.cwd(), "src/app/globals.css"), "utf8");
   const reviewPage = readFileSync(join(process.cwd(), "src/app/workspace/review/page.tsx"), "utf8");
   const artifactMigration = readFileSync(join(process.cwd(), "drizzle/0009_workspace_artifacts.sql"), "utf8");
@@ -47,11 +56,14 @@ async function main() {
   const agentRuntimeHealthRouteUnit = readFileSync(join(process.cwd(), "tests/workspace-agent-runtime-health-route.unit.ts"), "utf8");
 
   assert(source.includes("AgentRunStatusChip"), "workspace chat renders compact agent run status");
+  assert(!rootLayout.includes("CopilotKitProvider"), "root layout does not force CopilotKit onto workspace pages");
+  assert(homePage.includes("CopilotKitProvider"), "home tutor page owns its CopilotKit provider");
+  assert(coursePage.includes("CopilotKitProvider"), "course page owns its CopilotKit provider");
   assert(source.includes("AgentRunInlineDetail"), "workspace chat can expand compact agent run details inline");
   assert(source.includes("expandedAgentRunIds"), "workspace tracks which agent run details are expanded");
   assert(source.includes("mergeWorkspaceViews"), "workspace full-view refreshes merge with local state by id");
   assert(source.includes("setView((current) => mergeWorkspaceViews(current, data))"), "workspace stream updates do not blindly replace local merged state");
-  assert(source.includes("if (current.workspace.id !== incoming.workspace.id) return incoming"), "workspace switching still replaces the full view");
+  assert(workspaceClientState.includes("if (current.workspace.id !== incoming.workspace.id) return incoming"), "workspace switching still replaces the full view");
   assert(source.includes("Run details"), "agent run detail is an opt-in inline disclosure");
   assert(source.includes("workspace-agent-run-events"), "agent run detail renders persisted run events");
   assert(agentRunRoute.includes("getWorkspaceAgentRunDetail"), "agent run detail has an explicit single-run API route");
@@ -81,7 +93,6 @@ async function main() {
     agentProfileRoute,
     agentConnectionsRoute,
     agentSkillsRoute,
-    artifactRoute,
     agentApprovalRoute,
     agentRunCancelRoute,
     agentMemoryBulkArchiveRoute,
@@ -222,10 +233,10 @@ async function main() {
   assert(workspaceStore.includes("assertWorkspaceThreadAllowedAgentProfileIdsForView"), "local store validates room agent allowlist profile ids before persistence");
   assert(workspaceStore.includes("assertDbWorkspaceThreadAllowedAgentProfileIds"), "DB store validates room agent allowlist profile ids before persistence");
   assert(workspaceStore.includes("Allowed agent must be a member of this workspace."), "room agent allowlist rejects non-member agent profiles");
-  assert(workspaceStore.includes("isDbAgentProfileResolvableInWorkspace"), "DB store uses an explicit agent profile visibility resolver");
-  assert(workspaceStore.includes("profile.visibility === \"private\""), "DB profile resolver treats private saved agents as owner-scoped");
+  assert(agentProfileService.includes("isDbAgentProfileResolvableInWorkspace"), "DB store uses an explicit agent profile visibility resolver");
+  assert(agentProfileService.includes("profile.visibility === \"private\""), "DB profile resolver treats private saved agents as owner-scoped");
   assert(workspaceStore.includes("memberProfileRows"), "DB workspace view loads profile records referenced by current workspace members");
-  assert(workspaceStore.includes("eq(workspaceMembers.agentProfileId, profile.id)"), "DB profile resolver allows profiles already participating as workspace members");
+  assert(agentProfileService.includes("memberProfileIds.has(profile.id)"), "DB profile resolver allows profiles already participating as workspace members");
   assert(workspaceStore.includes("if (member.agentProfileId) await requireWorkspaceAgentProfile(ownerId, input.workspaceId, member.agentProfileId);"), "member creation validates agent profile references before persistence");
   assert(agentRuntime.includes("workspaceId: input.thread.workspaceId"), "runtime skill resolution uses the current run workspace, not only the profile home workspace");
   assert(agentRuntime.includes("const workspaceId = options.workspaceId ?? profile.workspaceId"), "runtime subagent selection can be scoped to the current run workspace");
@@ -236,7 +247,7 @@ async function main() {
   assert(workspaceAgentDoc.includes("subagent capabilities are validated before profile persistence"), "workspace agent doc records delegate capability persistence guardrails");
   assert(source.includes("agentConnections: mergeAgentConnections(current.agentConnections"), "client uses connection merge helper in mutation responses");
   assert(workspaceStore.includes("requireDbWorkspaceOwner"), "DB store has an explicit workspace owner permission helper");
-  assert(workspaceStore.includes("Workspace owner permission is required."), "workspace-scoped connection writes require owner permission");
+  assert(workspaceAccessService.includes("Workspace owner permission is required."), "workspace-scoped connection writes require owner permission");
   assert(workspaceAgentDoc.includes("workspace-scoped agent connections require workspace-owner permission"), "workspace agent doc records workspace connection owner guardrails");
   assert(source.includes("mergeArtifacts"), "workspace artifacts merge into client state without waiting for SSE");
   assert(source.includes("artifacts: mergeArtifacts(current.artifacts"), "client merges incoming first-class artifacts by id");
@@ -386,9 +397,9 @@ async function main() {
   assert(workspaceStore.includes('return scope === "thread" || scope === "workspace"'), "automatic run-summary memories are limited to thread and workspace scopes");
   assert(workspaceAgentDoc.includes("`user`-scope runs do not auto-write memory"), "workspace agent doc states user-scope runs cannot auto-write memory");
   assert(workspaceStore.includes("assertDbWorkspaceAgentMemorySourceVisibility"), "DB memory creation validates source run/message visibility");
-  assert(workspaceStore.includes("Memory source run must belong to the memory thread."), "memory provenance rejects mismatched thread source runs");
+  assert(agentMemoryService.includes("Memory source run must belong to the memory thread."), "memory provenance rejects mismatched thread source runs");
   assert(workspaceAgentDoc.includes("Memory source provenance is validated before persistence"), "workspace agent doc records memory source provenance guardrails");
-  assert(workspaceStore.includes("isDbWorkspaceAgentMemoryVisibleToOwner"), "DB workspace view filters user-scope memories to their owner");
+  assert(agentMemoryService.includes("isDbWorkspaceAgentMemoryVisibleToOwner"), "DB workspace view filters user-scope memories to their owner");
   assert(workspaceAgentDoc.includes("User-scope memories are owner-visible only"), "workspace agent doc records user-scope memory visibility guardrails");
   assert(source.includes("Can create practice quizzes"), "agent builder can toggle quiz generation tool");
   assert(source.includes("create_quiz"), "agent capability payload can include quiz generation tool");
@@ -445,33 +456,33 @@ async function main() {
   assert(!source.includes('`/skills/${slugifyAgentPath(input.name || "custom-agent")}`'), "custom agent creation does not invent a fake skill path when no skill is selected");
   assert(!source.includes('from "@/lib/workspaces/store"'), "client component must not import server workspace store code");
   assert(source.includes('from "@/lib/workspaces/agent-profile-guardrails"'), "client reads agent guardrail constants from a browser-safe module");
-  assert(workspaceStore.includes('from "./agent-profile-guardrails"'), "store reads agent guardrail constants from the shared module");
+  assert(agentProfileRules.includes('from "./agent-profile-guardrails"'), "store reads agent guardrail constants from the shared module");
   assert(agentProfileGuardrails.includes("AGENT_PURPOSE_MAX_LENGTH"), "agent profile guardrail module exports purpose length");
   assert(agentProfileGuardrails.includes("AGENT_BEHAVIOR_MAX_LENGTH"), "agent profile guardrail module exports behavior length");
   assert(workspaceStore.includes("assertAgentProfileTextGuardrails"), "store validates custom agent purpose and behavior guardrails");
   assert(workspaceStore.includes("assertAgentSkillCapabilityPaths"), "store validates agent skill source/path guardrails before persistence");
   assert(workspaceStore.includes("assertAgentInternalToolCapabilities"), "store validates internal tool names before persistence");
   assert(workspaceStore.includes("assertAgentConnectionToolCapabilities"), "store validates external connection tool approval before persistence");
-  assert(workspaceStore.includes("Unknown internal tool capability."), "store rejects unknown internal tool capabilities");
-  assert(workspaceStore.includes("isWorkspaceInternalToolName(capability.toolName)"), "store uses the typed internal tool policy whitelist");
-  assert(workspaceStore.includes("approvalRank(capability.approval)"), "store compares configured approval against policy minimums");
-  assert(workspaceStore.includes("Internal tool approval cannot be weaker than policy."), "store rejects internal tool approval downgrades");
-  assert(workspaceStore.includes("External connection tools always require approval."), "store rejects external connection approval downgrades");
-  assert(workspaceStore.includes("WORKSPACE_INTERNAL_TOOL_POLICIES[capability.toolName]"), "store reads internal tool policy approval defaults");
-  assert(workspaceStore.includes("Skill source does not match path."), "store rejects mismatched agent skill source/path pairs");
-  assert(workspaceStore.includes("System skill not found."), "store rejects unknown system skill capabilities before persistence");
-  assert(workspaceStore.includes("resolveWorkspaceAgentSkillPath(capability.path)"), "store resolves system skill ids before persisting profile capabilities");
-  assert(workspaceStore.includes('capability.source === "system"'), "store validates system skill capabilities explicitly");
-  assert(workspaceStore.includes('capability.path.startsWith(`/workspace-skills/${workspaceId}/`)'), "store scopes workspace skill paths to the current workspace");
-  assert(workspaceStore.includes('capability.path.startsWith(`/user-skills/${ownerId}/`)'), "store scopes user skill paths to the current owner");
-  assert(workspaceStore.includes("AGENT_PURPOSE_MAX_LENGTH"), "store uses one explicit custom agent purpose length limit");
-  assert(workspaceStore.includes("AGENT_BEHAVIOR_MAX_LENGTH"), "store uses one explicit custom agent behavior length limit");
+  assert(agentProfileRules.includes("Unknown internal tool capability."), "store rejects unknown internal tool capabilities");
+  assert(agentProfileRules.includes("isWorkspaceInternalToolName(capability.toolName)"), "store uses the typed internal tool policy whitelist");
+  assert(agentProfileRules.includes("approvalRank(capability.approval)"), "store compares configured approval against policy minimums");
+  assert(agentProfileRules.includes("Internal tool approval cannot be weaker than policy."), "store rejects internal tool approval downgrades");
+  assert(agentProfileRules.includes("External connection tools always require approval."), "store rejects external connection approval downgrades");
+  assert(agentProfileRules.includes("WORKSPACE_INTERNAL_TOOL_POLICIES[capability.toolName]"), "store reads internal tool policy approval defaults");
+  assert(agentProfileRules.includes("Skill source does not match path."), "store rejects mismatched agent skill source/path pairs");
+  assert(agentProfileRules.includes("System skill not found."), "store rejects unknown system skill capabilities before persistence");
+  assert(agentProfileRules.includes("resolveWorkspaceAgentSkillPath(capability.path)"), "store resolves system skill ids before persisting profile capabilities");
+  assert(agentProfileRules.includes('capability.source === "system"'), "store validates system skill capabilities explicitly");
+  assert(agentProfileRules.includes('capability.path.startsWith(`/workspace-skills/${workspaceId}/`)'), "store scopes workspace skill paths to the current workspace");
+  assert(agentProfileRules.includes('capability.path.startsWith(`/user-skills/${ownerId}/`)'), "store scopes user skill paths to the current owner");
+  assert(agentProfileRules.includes("AGENT_PURPOSE_MAX_LENGTH"), "store uses one explicit custom agent purpose length limit");
+  assert(agentProfileRules.includes("AGENT_BEHAVIOR_MAX_LENGTH"), "store uses one explicit custom agent behavior length limit");
   assert(source.includes("maxLength={AGENT_PURPOSE_MAX_LENGTH}"), "agent purpose inputs expose the store-backed length limit");
   assert(source.includes("maxLength={AGENT_BEHAVIOR_MAX_LENGTH}"), "agent behavior inputs expose the store-backed length limit");
-  assert(workspaceStore.includes("Custom agents must include a purpose."), "custom agent creation rejects missing explicit purpose");
-  assert(workspaceStore.includes("Agent purpose is too long."), "custom agent creation rejects overlong purpose");
-  assert(workspaceStore.includes("Agent behavior cannot be blank."), "agent profile updates reject blank behavior text");
-  assert(workspaceStore.includes("Agent behavior is too long."), "agent profile updates reject overlong behavior text");
+  assert(agentProfileRules.includes("Custom agents must include a purpose."), "custom agent creation rejects missing explicit purpose");
+  assert(agentProfileRules.includes("Agent purpose is too long."), "custom agent creation rejects overlong purpose");
+  assert(agentProfileRules.includes("Agent behavior cannot be blank."), "agent profile updates reject blank behavior text");
+  assert(agentProfileRules.includes("Agent behavior is too long."), "agent profile updates reject overlong behavior text");
   assert(workspaceAgentDoc.includes("Custom agent purpose and behavior are now explicit guardrails"), "workspace agent doc records custom agent text guardrails");
   assert(workspaceAgentDoc.includes("Agent skill capability paths are validated before persistence"), "workspace agent doc records skill path/source guardrails");
   assert(workspaceAgentDoc.includes("Agent internal tool capabilities are validated against Primoria's typed tool policy map"), "workspace agent doc records internal tool whitelist guardrails");
@@ -485,7 +496,7 @@ async function main() {
   assert(workspaceAgentDoc.includes("Editing a saved personal agent from any workspace"), "workspace agent doc captures cross-workspace personal-agent edit semantics");
   assert(workspaceAgentDoc.includes("Shared workspace agent profile edits are owner/admin-scoped"), "workspace agent doc records shared workspace agent edit ownership");
   assert(workspaceStore.includes("assertCanManageWorkspaceAgentProfile"), "store gates shared workspace agent profile edits by owner/admin authority");
-  assert(workspaceStore.includes("ownerId: profileOwnerId"), "agent capability rows remain owned by the profile owner during delegated edits");
+  assert(agentProfilePersistence.includes("ownerId: profileOwnerId"), "agent capability rows remain owned by the profile owner during delegated edits");
   assert(workspaceAgentDoc.includes("Capability rows remain owned by the profile owner"), "workspace agent doc records capability owner audit semantics");
   assert(workspaceStore.includes("filterAgentCapabilitiesByVisibleConnections"), "workspace views filter mcp_tool capability metadata by visible connections");
   assert(workspaceStore.includes("listDbVisibleAgentProfileIds"), "workspace capability views can filter delegate capabilities by visible profiles");
@@ -495,7 +506,7 @@ async function main() {
   assert(workspaceAgentDoc.includes("Hidden delegate `subagent` capability rows follow the same rule"), "workspace agent doc records hidden private delegate capability filtering");
   assert(workspaceAgentDoc.includes("Capability edits preserve hidden personal-connection `mcp_tool` rows and hidden delegate `subagent` rows"), "workspace agent doc records non-destructive hidden reference capability edits");
   assert(workspaceAgentDoc.includes("The inline profile editor can save visible identity/purpose/behavior/scope fields"), "workspace agent doc records hidden-capability profile edit behavior");
-  assert(workspaceAgentDoc.includes("Agent create/edit, connection registry, skill-library, artifact review, memory review, approval decision, and run cancel APIs should return explicit JSON errors"), "workspace agent doc captures agent, connection, skill, artifact, memory, approval, and run-cancel API error contracts");
+  assert(workspaceAgentDoc.includes("memory review, approval decision, and run cancel APIs should return explicit JSON errors"), "workspace agent doc captures current API error contracts");
   assert(source.includes("AGENT_SKILL_OPTIONS"), "agent builder exposes learning skill presets");
   assert(source.includes("Ways this agent works"), "agent builder shows skills as ways the agent works");
   assert(source.includes("toggleAgentSkill"), "agent builder can toggle selected skills");
@@ -552,40 +563,23 @@ async function main() {
   assert(source.includes("No memories saved yet"), "agent memory panel has a real empty state without mock memories");
   assert(source.includes("workspace-agent-memory-panel"), "agent memory panel uses a dedicated class hook");
   assert(source.includes("workspaceAgentMemoryScopeLabel"), "agent memory panel labels memory scopes in product language");
-  assert(source.includes("ArtifactLibraryPanel"), "workspace renders a compact first-class artifact library panel");
-  assert(source.includes("workspaceArtifactKindLabel"), "artifact library labels richer artifact kinds");
-  assert(source.includes("workspace-artifact-library"), "artifact library uses a dedicated class hook");
-  assert(source.includes("Review artifacts"), "artifact library has user-facing review copy");
-  assert(source.includes("Artifact review queue"), "artifact library exposes a review queue label");
-  assert(source.includes("artifactReviewFilter"), "artifact library can filter review cards by artifact kind");
-  assert(source.includes("Review all"), "artifact review workflow can show all artifacts");
-  assert(source.includes("Needs review"), "artifact review workflow highlights review-worthy artifacts");
-  assert(source.includes("reviewStatus"), "artifact review workflow reads real persisted artifact review status");
-  assert(source.includes("updateArtifactReviewStatus"), "workspace can update artifact review status");
-  assert(source.includes("Mark reviewed"), "artifact review workflow can mark artifacts reviewed");
-  assert(source.includes("Reopen review"), "artifact review workflow can reopen reviewed artifacts");
-  assert(artifactRoute.includes("updateWorkspaceArtifactReview"), "artifact review API persists review status changes");
-  assert(workspaceStore.includes("await requireDbThread(ownerId, input.workspaceId, existing.threadId);"), "artifact review mutations check artifact thread visibility");
-  assert(workspaceAgentDoc.includes("Artifact review mutations check the artifact thread visibility"), "workspace agent doc records artifact review thread visibility guardrails");
-  assert(artifactRoute.includes("reviewStatus"), "artifact review API validates review status payloads");
-  assert(artifactRoute.includes("Artifact review request is invalid."), "artifact review API returns explicit JSON validation errors");
-  assert(artifactRoute.includes("Artifact review status could not be updated."), "artifact review API returns explicit JSON persistence errors");
-  assert(source.includes("workspace-artifact-review-filter"), "artifact review filters use a dedicated class hook");
-  assert(source.includes("No artifacts saved yet"), "artifact library has a real empty state without mock artifacts");
-  assert(source.includes("Use in chat"), "artifact library can reuse artifacts in the composer");
-  assert(source.includes("Create review task"), "artifact library can create real review tasks from artifacts");
-  assert(source.includes("createTaskFromWorkspaceArtifact"), "workspace has an artifact-to-task triage handler");
-  assert(source.includes("sourceArtifactId: artifact.id"), "artifact-to-task triage persists source artifact provenance");
+  assert(!source.includes("ArtifactLibraryPanel"), "workspace no longer renders the artifact review queue panel");
+  assert(!source.includes("workspace-artifact-library"), "artifact review queue styling hook is removed from the workspace surface");
+  assert(!source.includes("Artifact review queue"), "artifact review queue copy stays out of the workspace surface");
+  assert(!source.includes("Review all"), "artifact review queue filters stay out of the workspace surface");
+  assert(!source.includes("updateArtifactReviewStatus"), "workspace cannot update artifact review status from the removed queue");
+  assert(!source.includes("Mark reviewed"), "artifact review status action is removed from the workspace surface");
+  assert(!source.includes("Reopen review"), "artifact review reopen action is removed from the workspace surface");
+  assert(!workspaceStore.includes("updateWorkspaceArtifactReview"), "artifact review status mutations are removed from the store");
   assert(workspaceStore.includes("assertDbWorkspaceTaskSourceVisibility"), "DB task creation validates source artifact/run visibility");
-  assert(workspaceStore.includes("Task source run does not match source artifact."), "task source provenance rejects mismatched artifact/run ids");
+  assert(workspaceTaskService.includes("Task source run does not match source artifact."), "task source provenance rejects mismatched artifact/run ids");
   assert(workspaceAgentDoc.includes("Task creation validates source artifact and source run visibility"), "workspace agent doc records task source provenance guardrails");
-  assert(source.includes("sourceRunId"), "artifact library exposes source run provenance when available");
   assert(source.includes("artifactsBySourceMessageId"), "chat artifact cards are keyed to first-class artifact records by source message");
   assert(source.includes("sourceArtifact={artifactsBySourceMessageId.get(message.id)}"), "chat artifact cards receive first-class artifact records when available");
   assert(source.includes("readWorkspaceArtifactDisplay"), "chat artifact cards normalize display from first-class artifacts");
   assert(source.includes("display.source === \"record\""), "chat artifact cards know when a first-class artifact record powered rendering");
   assert(source.includes("Artifact record"), "chat artifact cards expose first-class artifact provenance");
-  assert(source.includes('href="/workspace/review?tab=artifacts"'), "workspace details link to the full artifact review page");
+  assert(!source.includes('href="/workspace/review?tab=artifacts"'), "workspace details no longer link to the discarded artifact review page");
   assert(source.includes('href="/workspace/review?tab=skills"'), "workspace details link to the full skill review page");
   assert(source.includes('const kind = display.kind ?? workspaceMessageArtifactKind(displayPayload)'), "chat artifact cards only infer legacy kind as a fallback");
   assert(source.includes("const displayTitle = sourceArtifact?.title ?? artifact.title"), "chat artifact cards prefer first-class artifact title");
@@ -601,11 +595,10 @@ async function main() {
   assert(artifactMigration.includes("'wart_' || \"workspace_messages\".\"id\""), "artifact backfill uses source message ids for stable first-class artifact ids");
   assert(artifactMigration.includes("ON CONFLICT (\"source_message_id\") DO NOTHING"), "artifact backfill treats legacy message snapshots as compatibility input");
   assert(artifactMigration.includes("\"workspace_messages\".\"artifact\" IS NOT NULL"), "artifact backfill only imports legacy messages that actually have artifact snapshots");
-  assert(reviewPage.includes("WorkspaceReviewPage"), "workspace has a dedicated review page for accumulated artifacts, skills, and memories");
-  assert(reviewPage.includes("Review artifacts"), "workspace review page exposes artifact review");
-  assert(reviewPage.includes("ArtifactReviewStatusForm"), "workspace review page exposes artifact review status forms");
-  assert(reviewPage.includes("reviewStatus"), "workspace review page reads persisted artifact review status");
-  assert(reviewPage.includes("formatWorkspaceArtifactReviewStatus"), "workspace review page labels persisted artifact review status");
+  assert(reviewPage.includes("WorkspaceReviewPage"), "workspace has a dedicated review page for skills and memories");
+  assert(!reviewPage.includes("Review artifacts"), "workspace review page no longer exposes artifact review");
+  assert(!reviewPage.includes("ArtifactReviewStatusForm"), "workspace review page no longer exposes artifact review status forms");
+  assert(!reviewPage.includes("formatWorkspaceArtifactReviewStatus"), "workspace review page no longer labels artifact review status");
   assert(reviewPage.includes("Review skills"), "workspace review page exposes skill review");
   assert(reviewPage.includes("skillVersionsByPath"), "workspace review page loads real skill version history for comparison");
   assert(reviewPage.includes("Compare latest"), "workspace review page exposes skill version comparison");
@@ -628,7 +621,7 @@ async function main() {
   assert(reviewPage.includes("createWorkspaceAgentSkillBackend"), "workspace review page reads real persisted skill data");
   assert(reviewPage.includes("workspace-review-tabs"), "workspace review page has tabbed review navigation");
   assert(reviewPage.includes("workspace-review-grid"), "workspace review page uses a fuller grid layout");
-  assert(reviewPage.includes("No artifacts saved yet"), "workspace review page has a real empty artifact state");
+  assert(!reviewPage.includes("No artifacts saved yet"), "workspace review page no longer carries artifact empty-state copy");
   assert(reviewPage.includes("No custom skills yet"), "workspace review page has a real empty skill state");
   assert(reviewPage.includes("No memories saved yet"), "workspace review page has a real empty memory state");
   assert(styles.includes(".workspace-agent-run-chip"), "agent run chip has dedicated styling");
@@ -664,12 +657,12 @@ async function main() {
   assert(styles.includes(".workspace-agent-action-group > strong"), "agent action group headings have dedicated styling");
   assert(styles.includes(".workspace-agent-edit-actions"), "agent edit footer has dedicated styling");
   assert(!styles.includes(".workspace-agent-edit-form > div"), "agent edit form does not override nested grouped action controls");
-  assert(styles.includes(".workspace-artifact-library"), "artifact library has dedicated styling");
-  assert(styles.includes(".workspace-artifact-review-filter"), "artifact review filter has dedicated styling");
-  assert(styles.includes(".workspace-artifact-review-meta"), "artifact review metadata has dedicated styling");
-  assert(styles.includes(".workspace-artifact-review-status"), "artifact review status actions have dedicated styling");
-  assert(styles.includes(".workspace-artifact-card"), "artifact cards have dedicated styling");
-  assert(styles.includes(".workspace-artifact-kind"), "artifact kind labels have dedicated styling");
+  assert(!styles.includes(".workspace-artifact-library"), "artifact review queue styling has been removed");
+  assert(!styles.includes(".workspace-artifact-review-filter"), "artifact review filter styling has been removed");
+  assert(!styles.includes(".workspace-artifact-review-meta"), "artifact review metadata styling has been removed");
+  assert(!styles.includes(".workspace-artifact-review-status"), "artifact review status styling has been removed");
+  assert(!styles.includes(".workspace-artifact-card"), "artifact review card styling has been removed");
+  assert(!styles.includes(".workspace-artifact-kind"), "artifact review kind chip styling has been removed");
   assert(styles.includes(".workspace-artifact-message-card"), "semantic chat artifact cards have dedicated styling");
   assert(styles.includes(".workspace-artifact-message-card.course"), "course chat artifacts have dedicated styling");
   assert(styles.includes(".workspace-artifact-message-card.task_result"), "task result chat artifacts have dedicated styling");

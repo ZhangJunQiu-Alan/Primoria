@@ -7,6 +7,9 @@ import type { AuthUser } from "./types";
 
 export const SESSION_COOKIE = "primoria_session";
 const SESSION_DAYS = 30;
+const SESSION_USER_CACHE_TTL_MS = 2_000;
+
+const sessionUserCache = new Map<string, { expiresAt: number; user: AuthUser | null }>();
 
 export function isAuthEnabled() {
   return hasDatabaseUrl();
@@ -64,6 +67,8 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   if (!token) return null;
   const tokenHash = hashSessionToken(token);
+  const cached = sessionUserCache.get(tokenHash);
+  if (cached && cached.expiresAt > Date.now()) return cached.user;
   const now = new Date();
 
   const rows = await getDb()
@@ -80,13 +85,16 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
     .limit(1);
 
   const row = rows[0];
-  if (!row) return null;
-  return {
+  const user = row
+    ? {
     id: row.userId,
     displayName: row.displayName,
     avatarUrl: row.avatarUrl,
     email: row.email,
-  };
+      }
+    : null;
+  sessionUserCache.set(tokenHash, { expiresAt: Date.now() + SESSION_USER_CACHE_TTL_MS, user });
+  return user;
 }
 
 export async function signOutCurrentSession() {
@@ -97,7 +105,9 @@ export async function signOutCurrentSession() {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   if (token) {
-    await getDb().delete(sessions).where(eq(sessions.tokenHash, hashSessionToken(token)));
+    const tokenHash = hashSessionToken(token);
+    sessionUserCache.delete(tokenHash);
+    await getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash));
   }
   await clearSessionCookie();
 }

@@ -28,7 +28,6 @@ import {
   runWorkspaceAgentTurn,
   seedWorkspaceAgentRunForTest,
   updateWorkspaceAgentConnection,
-  updateWorkspaceArtifactReview,
   updateWorkspaceThread,
   updateWorkspaceAgentProfile,
   updateWorkspaceTask,
@@ -1606,21 +1605,6 @@ async function main() {
   const persistedArtifactReviewTask = viewWithArtifactReviewTask.tasks.find((entry) => entry.id === artifactReviewTask.id);
   assert(persistedArtifactReviewTask?.sourceArtifactId === indexedAppArtifact?.id, "workspace view preserves artifact review task provenance");
   assert(persistedArtifactReviewTask?.sourceRunId === "unit_review_source_run", "workspace view preserves review task source run provenance");
-  const reopenedAppArtifact = await updateWorkspaceArtifactReview(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    artifactId: indexedAppArtifact!.id,
-    reviewStatus: "needs_review",
-  });
-  assert(reopenedAppArtifact.reviewStatus === "needs_review", "artifact review status can be reopened");
-  const reviewedAppArtifact = await updateWorkspaceArtifactReview(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    artifactId: indexedAppArtifact!.id,
-    reviewStatus: "reviewed",
-  });
-  assert(reviewedAppArtifact.reviewStatus === "reviewed", "artifact review status can be marked reviewed");
-  const viewAfterArtifactReview = await getWorkspaceView(null, createdWorkspace.workspace.id);
-  assert(viewAfterArtifactReview.artifacts.some((artifact) => artifact.id === indexedAppArtifact?.id && artifact.reviewStatus === "reviewed"), "workspace view preserves artifact review status");
-
   const snapshotAppMessage = await createWorkspaceMessage(null, {
     workspaceId: createdWorkspace.workspace.id,
     threadId: newThread.id,

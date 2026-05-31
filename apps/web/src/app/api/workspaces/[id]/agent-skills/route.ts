@@ -2,9 +2,14 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { createWorkspaceAgentSkillBackend, runWorkspaceAgentSkillStorageMaintenanceOnce } from "@/lib/workspaces/agent-runtime";
-import type { WorkspaceAgentSkillBackendSkill, WorkspaceAgentSkillBackendVersion } from "@/lib/workspaces/agent-skill-storage";
+import {
+  createWorkspaceAgentSkillBackend,
+  runWorkspaceAgentSkillStorageMaintenanceOnce,
+  type WorkspaceAgentSkillBackendSkill,
+  type WorkspaceAgentSkillBackendVersion,
+} from "@/lib/workspaces/agent-skill-storage";
 import { getWorkspaceView } from "@/lib/workspaces/store";
+import { requireDbWorkspace, usesDatabase } from "@/lib/workspaces/workspace-access-service";
 
 const SkillSchema = z.object({
   source: z.enum(["workspace", "user"]).default("workspace"),
@@ -25,13 +30,25 @@ const SkillDeleteSchema = z.object({
   path: z.string().min(1).max(260),
 });
 
+async function hasWorkspaceAccess(ownerId: string | null | undefined, workspaceId: string) {
+  if (usesDatabase(ownerId)) {
+    try {
+      await requireDbWorkspace(ownerId, workspaceId);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  const view = await getWorkspaceView(ownerId, workspaceId);
+  return view.workspace.id === workspaceId;
+}
+
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   runWorkspaceAgentSkillStorageMaintenanceOnce();
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(ownerId, id);
-  if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+  if (!(await hasWorkspaceAccess(ownerId, id))) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const url = new URL(_request.url);
   const skillPath = url.searchParams.get("path");
   const backend = createWorkspaceAgentSkillBackend();
@@ -48,8 +65,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(ownerId, id);
-  if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+  if (!(await hasWorkspaceAccess(ownerId, id))) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const url = new URL(request.url);
   const contentType = request.headers.get("content-type") ?? "";
   if (url.searchParams.get("intent") === "restore") {
@@ -106,8 +122,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(ownerId, id);
-  if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+  if (!(await hasWorkspaceAccess(ownerId, id))) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const parsed = SkillPatchSchema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return NextResponse.json({ error: "Skill update request is invalid." }, { status: 400 });
   const body = parsed.data;
@@ -142,8 +157,7 @@ export async function DELETE(request: Request, context: { params: Promise<{ id: 
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceView(ownerId, id);
-  if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+  if (!(await hasWorkspaceAccess(ownerId, id))) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const parsed = SkillDeleteSchema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return NextResponse.json({ error: "Skill delete request is invalid." }, { status: 400 });
   const body = parsed.data;

@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/auth/session";
 import { subscribeWorkspaceChanges } from "@/lib/workspaces/events";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { getWorkspaceView } from "@/lib/workspaces/store";
+import { getWorkspaceShellView } from "@/lib/workspaces/store";
 import type { WorkspaceView } from "@/lib/workspaces/types";
 
 export const dynamic = "force-dynamic";
@@ -105,7 +105,7 @@ async function tickHub(hubKey: string) {
   }
   hub.ticking = true;
   try {
-    const view = await getWorkspaceView(hub.ownerId, hub.workspaceId);
+    const view = await getWorkspaceShellView(hub.ownerId, hub.workspaceId);
     if (view.workspace.id !== hub.workspaceId) {
       closeHub(hubKey, "error", { error: "Workspace not found" });
       return;
@@ -180,7 +180,7 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
 
       subscriber = { controller };
       hub.subscribers.add(subscriber);
-      void tickHub(hubKey);
+      sendEvent(subscriber, "ping", { at: Date.now() });
     },
     cancel() {
       if (subscriber) removeSubscriber(hubKey, subscriber);

@@ -26,8 +26,7 @@ export async function getApp(id: string, ownerId?: string | null): Promise<Learn
 export async function listApps(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<LearningAppSummary[]> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
   if (!resolvedOwnerId) return listAppsFromLocalFile(options).map(summarizeApp);
-  const apps = await listAppsFromDb(resolvedOwnerId, options);
-  return apps.map(summarizeApp);
+  return listAppSummariesFromDb(resolvedOwnerId, options);
 }
 
 export async function archiveApp(id: string, ownerId?: string | null): Promise<LearningApp | undefined> {
@@ -178,6 +177,43 @@ async function listAppsFromDb(ownerId: string, options: { includeArchived?: bool
     : and(eq(learningAppsTable.ownerId, ownerId), isNull(learningAppsTable.archivedAt));
   const rows = await getDb().select().from(learningAppsTable).where(whereClause).orderBy(desc(learningAppsTable.updatedAt));
   return rows.map(rowToApp);
+}
+
+async function listAppSummariesFromDb(ownerId: string, options: { includeArchived?: boolean } = {}): Promise<LearningAppSummary[]> {
+  const whereClause = options.includeArchived
+    ? eq(learningAppsTable.ownerId, ownerId)
+    : and(eq(learningAppsTable.ownerId, ownerId), isNull(learningAppsTable.archivedAt));
+  const rows = await getDb()
+    .select({
+      id: learningAppsTable.id,
+      name: learningAppsTable.name,
+      displayName: learningAppsTable.displayName,
+      description: learningAppsTable.description,
+      tags: learningAppsTable.tags,
+      template: learningAppsTable.template,
+      origin: learningAppsTable.origin,
+      metadata: learningAppsTable.metadata,
+      archivedAt: learningAppsTable.archivedAt,
+      version: learningAppsTable.version,
+    })
+    .from(learningAppsTable)
+    .where(whereClause)
+    .orderBy(desc(learningAppsTable.updatedAt));
+  return rows.map((row) => {
+    const template = row.template as LearningApp["template"];
+    return {
+      id: row.id,
+      name: row.name,
+      displayName: row.displayName,
+      description: row.description ?? undefined,
+      tags: row.tags as LearningApp["tags"],
+      origin: row.origin as LearningApp["origin"],
+      metadata: row.metadata as LearningApp["metadata"],
+      templateType: template.type,
+      archivedAt: row.archivedAt?.getTime() ?? null,
+      version: row.version ?? 1,
+    };
+  });
 }
 
 function appToRow(app: LearningApp, ownerId: string) {

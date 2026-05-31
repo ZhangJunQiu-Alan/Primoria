@@ -433,12 +433,6 @@ export type CreateWorkspaceTaskInput = {
   sourceRunId?: string;
 };
 
-export type UpdateWorkspaceArtifactReviewInput = {
-  workspaceId: string;
-  artifactId: string;
-  reviewStatus: WorkspaceArtifactReviewStatus;
-};
-
 export type UpdateWorkspaceTaskInput = {
   workspaceId: string;
   taskId: string;
