@@ -7,7 +7,7 @@ import type { AuthUser } from "./types";
 
 export const SESSION_COOKIE = "primoria_session";
 const SESSION_DAYS = 30;
-const SESSION_USER_CACHE_TTL_MS = 2_000;
+const SESSION_USER_CACHE_TTL_MS = 30_000;
 
 const sessionUserCache = new Map<string, { expiresAt: number; user: AuthUser | null }>();
 

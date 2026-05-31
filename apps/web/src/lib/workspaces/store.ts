@@ -205,6 +205,7 @@ function summarizeWorkspacePrompt(value: string) {
 }
 
 const DB_WORKSPACE_VIEW_CACHE_TTL_MS = 30_000;
+const DB_WORKSPACE_SHELL_CACHE_TTL_MS = 5 * 60_000;
 const DB_SEED_WORKSPACE_CHECK_TTL_MS = 5 * 60_000;
 const dbSeedWorkspacePromises = new Map<string, Promise<void>>();
 const dbSeedWorkspaceCheckedUntil = new Map<string, number>();
@@ -843,6 +844,24 @@ export async function createWorkspaceAgentProfile(
   const template = input.templateKey ? WORKSPACE_AGENT_TEMPLATES.find((entry) => entry.key === input.templateKey) : undefined;
   if (input.templateKey && !template) throw new Error("Agent template not found.");
   const displayName = input.displayName?.trim() || template?.displayName || "Workspace Agent";
+  const canReuseTemplateProfile = Boolean(
+    input.templateKey &&
+      !input.description &&
+      !input.systemPrompt &&
+      !input.visibility &&
+      !input.memoryScope &&
+      !input.capabilities,
+  );
+  const reusableTemplateProfile = canReuseTemplateProfile
+    ? (await getWorkspaceView(ownerId, input.workspaceId)).agentProfiles.find(
+        (profile) =>
+          profile.workspaceId === input.workspaceId &&
+          profile.templateKey === input.templateKey &&
+          profile.displayName.trim().toLowerCase() === displayName.toLowerCase() &&
+          profile.visibility !== "private",
+      )
+    : undefined;
+  if (reusableTemplateProfile) return reusableTemplateProfile;
   const capabilityInputs = input.capabilities ?? template?.capabilities ?? [];
   assertAgentProfileTextGuardrails({
     templateKey: input.templateKey,
@@ -1033,6 +1052,9 @@ export async function createWorkspaceAgentMember(
   input: CreateWorkspaceAgentMemberInput,
 ): Promise<WorkspaceMember> {
   const profile = await requireWorkspaceAgentProfile(ownerId, input.workspaceId, input.profileId);
+  const current = await getWorkspaceView(ownerId, input.workspaceId);
+  const existingMember = current.members.find((member) => member.agentProfileId === profile.id);
+  if (existingMember) return existingMember;
   return createWorkspaceMember(ownerId, {
     workspaceId: input.workspaceId,
     displayName: profile.displayName,
@@ -1353,8 +1375,6 @@ export async function listWorkspaceMessages(
   }
 
   try {
-    await ensureSeedWorkspace(ownerId);
-    await requireDbWorkspace(ownerId, input.workspaceId);
     await requireDbThread(ownerId, input.workspaceId, input.threadId);
     const whereClause =
       input.before === undefined
@@ -1403,9 +1423,11 @@ export async function listWorkspaceAgentRuns(
   }
 
   try {
-    await ensureSeedWorkspace(ownerId);
-    await requireDbWorkspace(ownerId, input.workspaceId);
-    if (input.threadId) await requireDbThread(ownerId, input.workspaceId, input.threadId);
+    if (input.threadId) {
+      await requireDbThread(ownerId, input.workspaceId, input.threadId);
+    } else {
+      await requireDbWorkspace(ownerId, input.workspaceId);
+    }
     const visibleThreadIds = input.threadId ? [input.threadId] : await listDbVisibleWorkspaceThreadIds(ownerId, input.workspaceId);
     if (!visibleThreadIds.length) return { runs: [], events: [], approvals: [] };
     const whereClause = and(eq(workspaceAgentRuns.workspaceId, input.workspaceId), inArray(workspaceAgentRuns.threadId, visibleThreadIds));
@@ -1432,6 +1454,72 @@ export async function listWorkspaceAgentRuns(
     };
   } catch (error) {
     console.error("[workspace] database agent run page failed", error);
+    throw error;
+  }
+}
+
+export async function listWorkspaceThreadActivity(
+  ownerId: string | null | undefined,
+  input: { workspaceId: string; threadId: string; messageLimit?: number; runLimit?: number },
+): Promise<WorkspaceMessagePage & WorkspaceAgentRunPage> {
+  const messageLimit = Math.max(1, Math.min(input.messageLimit ?? MESSAGE_WINDOW_PER_THREAD, 100));
+  const runLimit = Math.max(1, Math.min(input.runLimit ?? 20, 100));
+  if (!usesDatabase(ownerId)) {
+    const messagesPage = await listWorkspaceMessages(ownerId, {
+      workspaceId: input.workspaceId,
+      threadId: input.threadId,
+      limit: messageLimit,
+    });
+    const runsPage = await listWorkspaceAgentRuns(ownerId, {
+      workspaceId: input.workspaceId,
+      threadId: input.threadId,
+      limit: runLimit,
+    });
+    return { ...messagesPage, ...runsPage };
+  }
+
+  try {
+    await requireDbThread(ownerId, input.workspaceId, input.threadId);
+    const [messageRows, runRows] = await Promise.all([
+      getDb()
+        .select()
+        .from(workspaceMessages)
+        .where(and(eq(workspaceMessages.workspaceId, input.workspaceId), eq(workspaceMessages.threadId, input.threadId)))
+        .orderBy(desc(workspaceMessages.createdAt))
+        .limit(messageLimit + 1),
+      getDb()
+        .select()
+        .from(workspaceAgentRuns)
+        .where(and(eq(workspaceAgentRuns.workspaceId, input.workspaceId), eq(workspaceAgentRuns.threadId, input.threadId)))
+        .orderBy(desc(workspaceAgentRuns.startedAt))
+        .limit(runLimit),
+    ]);
+    const runs = runRows.map(rowToWorkspaceAgentRun).sort((a, b) => a.startedAt - b.startedAt);
+    const runIds = runs.map((run) => run.id);
+    const [eventRows, approvalRows] = runIds.length
+      ? await Promise.all([
+          getDb()
+            .select()
+            .from(workspaceAgentRunEvents)
+            .where(inArray(workspaceAgentRunEvents.runId, runIds))
+            .orderBy(asc(workspaceAgentRunEvents.createdAt)),
+          getDb()
+            .select()
+            .from(workspaceAgentApprovals)
+            .where(inArray(workspaceAgentApprovals.runId, runIds))
+            .orderBy(asc(workspaceAgentApprovals.requestedAt)),
+        ])
+      : [[], []];
+
+    return {
+      messages: messageRows.slice(0, messageLimit).map(rowToWorkspaceMessage).sort((a, b) => a.createdAt - b.createdAt),
+      hasMore: messageRows.length > messageLimit,
+      runs,
+      events: eventRows.map(rowToWorkspaceAgentRunEvent),
+      approvals: approvalRows.map(rowToWorkspaceAgentApproval),
+    };
+  } catch (error) {
+    console.error("[workspace] database thread activity failed", error);
     throw error;
   }
 }
@@ -3353,17 +3441,19 @@ async function removeLegacySeedWorkspaceMocks(ownerId: string) {
 }
 
 async function listDbWorkspaceSummaries(ownerId: string): Promise<WorkspaceSummary[]> {
-  const ownedRows = await getDb()
-    .select()
-    .from(workspaces)
-    .where(eq(workspaces.ownerId, ownerId))
-    .orderBy(desc(workspaces.updatedAt));
-  const memberRows = await getDb()
-    .select()
-    .from(workspaceMembers)
-    .innerJoin(workspaces, eq(workspaceMembers.workspaceId, workspaces.id))
-    .where(eq(workspaceMembers.ownerId, ownerId))
-    .orderBy(desc(workspaces.updatedAt));
+  const [ownedRows, memberRows] = await Promise.all([
+    getDb()
+      .select()
+      .from(workspaces)
+      .where(eq(workspaces.ownerId, ownerId))
+      .orderBy(desc(workspaces.updatedAt)),
+    getDb()
+      .select()
+      .from(workspaceMembers)
+      .innerJoin(workspaces, eq(workspaceMembers.workspaceId, workspaces.id))
+      .where(eq(workspaceMembers.ownerId, ownerId))
+      .orderBy(desc(workspaces.updatedAt)),
+  ]);
   const rows = [...ownedRows, ...memberRows.map((row) => row.workspaces)];
   const uniqueRows = Array.from(new Map(rows.map((workspace) => [workspace.id, workspace])).values()).sort(
     (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
@@ -3376,12 +3466,45 @@ function getCachedWorkspaceViewFromDb(ownerId: string, workspaceId: string | nul
   const now = Date.now();
   const cached = dbWorkspaceViewCache.get(key);
   if (cached && cached.expiresAt > now) return cached.promise;
-  const promise = getWorkspaceViewFromDb(ownerId, workspaceId, mode).catch((error) => {
+  const promise = (mode === "shell" ? getWorkspaceShellViewFromDb(ownerId, workspaceId) : getWorkspaceViewFromDb(ownerId, workspaceId, mode)).catch((error) => {
     dbWorkspaceViewCache.delete(key);
     throw error;
   });
-  dbWorkspaceViewCache.set(key, { expiresAt: now + DB_WORKSPACE_VIEW_CACHE_TTL_MS, promise });
+  dbWorkspaceViewCache.set(key, { expiresAt: now + (mode === "shell" ? DB_WORKSPACE_SHELL_CACHE_TTL_MS : DB_WORKSPACE_VIEW_CACHE_TTL_MS), promise });
   return promise;
+}
+
+async function getWorkspaceShellViewFromDb(ownerId: string, workspaceId?: string | null): Promise<WorkspaceView> {
+  const summaries = await listDbWorkspaceSummaries(ownerId);
+  const targetWorkspaceId = workspaceId ?? summaries[0]?.id;
+  if (!targetWorkspaceId) return createSeedWorkspaceView(false);
+  const workspace = summaries.find((entry) => entry.id === targetWorkspaceId);
+  if (!workspace) return createSeedWorkspaceView(false);
+
+  const [memberRows, threadRows, threadMemberRows] = await Promise.all([
+    getDb().select().from(workspaceMembers).where(eq(workspaceMembers.workspaceId, workspace.id)).orderBy(asc(workspaceMembers.createdAt)),
+    getDb().select().from(workspaceThreads).where(eq(workspaceThreads.workspaceId, workspace.id)).orderBy(desc(workspaceThreads.updatedAt)),
+    getDb().select().from(workspaceThreadMembers).where(eq(workspaceThreadMembers.workspaceId, workspace.id)).orderBy(asc(workspaceThreadMembers.createdAt)),
+  ]);
+  const membersByThreadId = groupThreadMembersByThreadId(threadMemberRows);
+  const visibleThreadRows = threadRows.filter((thread) => isDbThreadVisibleToOwner(thread, ownerId, membersByThreadId.get(thread.id)));
+
+  return {
+    workspace,
+    workspaces: summaries,
+    members: memberRows.map(rowToWorkspaceMember),
+    agentProfiles: [],
+    threads: visibleThreadRows.map((thread) => rowToWorkspaceThread(thread, membersByThreadId.get(thread.id)?.map((member) => member.memberId))),
+    messages: [],
+    tasks: [],
+    artifacts: [],
+    agentRuns: [],
+    agentRunEvents: [],
+    agentApprovals: [],
+    agentMemories: [],
+    agentConnections: [],
+    persisted: true,
+  };
 }
 
 async function getWorkspaceViewFromDb(ownerId: string, workspaceId?: string | null, mode: WorkspaceViewDbLoadMode = "full"): Promise<WorkspaceView> {
@@ -3649,6 +3772,16 @@ async function createCompletedWorkspaceAgentRun(
     agentProfileId: run.agentProfileId,
     runId: run.id,
   });
+  const runtimeEvents = seed.runtimeEvents?.some((event) => event.type === "status" && event.label === "runtime_configured")
+    ? seed.runtimeEvents
+    : [
+        ...(seed.runtimeEvents ?? []),
+        {
+          type: "status",
+          label: "runtime_configured",
+          payload: { deepAgentThreadId, source: "workspace_store" },
+        } satisfies WorkspaceAgentRuntimeEvent,
+      ];
   const events: WorkspaceAgentRunEvent[] = [
     buildAgentRunEvent(run, "status", "started", {
       trigger: run.trigger,
@@ -3658,7 +3791,7 @@ async function createCompletedWorkspaceAgentRun(
       agentProfileId: run.agentProfileId,
       agentProfileSnapshot: buildWorkspaceAgentProfileRunSnapshot(runProfile),
     }),
-    ...(seed.runtimeEvents ?? []).map((event) => buildAgentRunEvent(run, event.type, event.label, event.payload)),
+    ...runtimeEvents.map((event) => buildAgentRunEvent(run, event.type, event.label, event.payload)),
     buildAgentRunEvent(run, "status", run.status, { outputMessageId: run.outputMessageId, taskId: run.taskId }, statusAt),
   ];
   const approvals = run.status === "waiting_for_approval" ? buildPendingWorkspaceAgentApprovals(run, events, deepAgentThreadId, statusAt) : [];

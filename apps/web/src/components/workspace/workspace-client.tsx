@@ -41,7 +41,6 @@ import type {
   WorkspaceAgentMemory,
   WorkspaceTask,
   WorkspaceThread,
-  WorkspaceThreadAgentTriggerMode,
   WorkspaceView,
 } from "@/lib/workspaces/types";
 import { AGENT_BEHAVIOR_MAX_LENGTH, AGENT_PURPOSE_MAX_LENGTH } from "@/lib/workspaces/agent-profile-guardrails";
@@ -50,6 +49,7 @@ type SharedAppArtifact = Extract<WorkspaceMessageArtifact, { type: "app" }>;
 type WorkspaceAgentSkillOption = { source: "workspace" | "user"; name: string; slug: string; path: string; description?: string; instructions?: string; version: number };
 type WorkspaceAgentSkillVersion = WorkspaceAgentSkillOption & { skillFile?: string };
 const MESSAGE_PAGE_SIZE = 50;
+const WORKSPACE_SHELL_CACHE_KEY = "primoria:workspace:shell:v1";
 const AGENT_SKILL_OPTIONS = [
   { path: "/skills/socratic-questioning", label: "Socratic questions" },
   { path: "/skills/visual-explainer", label: "Visual explanations" },
@@ -81,6 +81,69 @@ const WorkspaceWidgetRenderer = dynamic(
   },
 );
 
+type CachedThreadActivity = {
+  messages: WorkspaceMessage[];
+  runs: WorkspaceAgentRun[];
+  events: WorkspaceAgentRunEvent[];
+  approvals: WorkspaceAgentApproval[];
+  hasMore?: boolean;
+};
+
+function readCachedWorkspaceShell() {
+  if (typeof window === "undefined") return null;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(WORKSPACE_SHELL_CACHE_KEY) ?? "null") as { view?: WorkspaceView; savedAt?: number } | null;
+    if (!parsed?.view?.persisted || !parsed.view.workspace?.id || !Array.isArray(parsed.view.threads)) return null;
+    return parsed.view;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedWorkspaceShell(view: WorkspaceView) {
+  if (!view.persisted || typeof window === "undefined") return;
+  try {
+    const shell: WorkspaceView = {
+      ...view,
+      messages: [],
+      tasks: [],
+      artifacts: [],
+      agentRuns: [],
+      agentRunEvents: [],
+      agentApprovals: [],
+      agentMemories: [],
+      agentConnections: [],
+    };
+    window.localStorage.setItem(WORKSPACE_SHELL_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), view: shell }));
+  } catch {
+    // Best-effort startup cache.
+  }
+}
+
+function threadActivityCacheKey(workspaceId: string, threadId: string) {
+  return `primoria:workspace:${workspaceId}:thread:${threadId}:activity:v1`;
+}
+
+function readCachedThreadActivity(workspaceId: string, threadId: string): CachedThreadActivity | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(threadActivityCacheKey(workspaceId, threadId)) ?? "null") as CachedThreadActivity | null;
+    if (!parsed || !Array.isArray(parsed.messages) || !Array.isArray(parsed.runs)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedThreadActivity(workspaceId: string, threadId: string, activity: CachedThreadActivity) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(threadActivityCacheKey(workspaceId, threadId), JSON.stringify(activity));
+  } catch {
+    // Best-effort startup cache.
+  }
+}
+
 async function readWorkspaceApiError(response: Response, fallback: string) {
   try {
     const data = (await response.clone().json()) as { error?: unknown };
@@ -88,6 +151,34 @@ async function readWorkspaceApiError(response: Response, fallback: string) {
   } catch {
     return fallback;
   }
+}
+
+function agentProfileDisplayKey(profile: WorkspaceAgentProfile) {
+  if (!profile.templateKey) return `profile:${profile.id}`;
+  return `template:${profile.workspaceId}:${profile.templateKey}:${profile.displayName.trim().toLowerCase()}`;
+}
+
+function dedupeVisibleAgentProfiles(profiles: WorkspaceAgentProfile[]) {
+  const byKey = new Map<string, WorkspaceAgentProfile>();
+  for (const profile of profiles) {
+    const key = agentProfileDisplayKey(profile);
+    const existing = byKey.get(key);
+    if (!existing || profile.createdAt < existing.createdAt) byKey.set(key, profile);
+  }
+  return Array.from(byKey.values()).sort((a, b) => a.createdAt - b.createdAt);
+}
+
+function dedupeVisibleMembers(members: WorkspaceMember[], profiles: WorkspaceAgentProfile[]) {
+  const profilesById = new Map(profiles.map((profile) => [profile.id, profile]));
+  const seenAgentKeys = new Set<string>();
+  return members.filter((member) => {
+    if (!member.agentProfileId) return true;
+    const profile = profilesById.get(member.agentProfileId);
+    const key = profile ? agentProfileDisplayKey(profile) : `profile:${member.agentProfileId}`;
+    if (seenAgentKeys.has(key)) return false;
+    seenAgentKeys.add(key);
+    return true;
+  });
 }
 
 export function WorkspaceClient({ initialView }: { initialView: WorkspaceView }) {
@@ -105,8 +196,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [newThreadName, setNewThreadName] = useState("");
   const [newThreadDescription, setNewThreadDescription] = useState("");
   const [newThreadParticipantId, setNewThreadParticipantId] = useState("");
-  const [newThreadAgentTriggerMode, setNewThreadAgentTriggerMode] = useState<WorkspaceThreadAgentTriggerMode>("room_default");
-  const [savingThreadAgentModeId, setSavingThreadAgentModeId] = useState("");
   const [attachmentOpen, setAttachmentOpen] = useState(false);
   const [attachmentTitle, setAttachmentTitle] = useState("");
   const [attachmentDescription, setAttachmentDescription] = useState("");
@@ -203,6 +292,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [appPreview, setAppPreview] = useState<AppPreviewState | null>(null);
   const [loadingEarlier, setLoadingEarlier] = useState(false);
   const [exhaustedThreadIds, setExhaustedThreadIds] = useState<Record<string, boolean>>({});
+  const [loadingThreadActivityIds, setLoadingThreadActivityIds] = useState<Record<string, boolean>>({});
   const [loadedThreadActivityIds, setLoadedThreadActivityIds] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(initialView.messages.map((message) => [message.threadId, true])),
   );
@@ -212,6 +302,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
 
   const visibleThreads = view.threads.filter((thread) => thread.type === chatMode);
   const activeThread = visibleThreads.find((thread) => thread.id === activeThreadId) ?? visibleThreads[0];
+  const activeThreadActivityLoading = Boolean(activeThread && loadingThreadActivityIds[activeThread.id] && !loadedThreadActivityIds[activeThread.id]);
   const messages = useMemo(
     () => view.messages.filter((message) => message.threadId === activeThread?.id),
     [activeThread?.id, view.messages],
@@ -252,13 +343,16 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const composerInputRef = useRef<HTMLInputElement | null>(null);
   const activeThreadIdRef = useRef(activeThread?.id ?? "");
   const workspaceIdRef = useRef(view.workspace.id);
+  const loadingThreadActivityIdsRef = useRef<Set<string>>(new Set());
   const tasks = activeThread ? view.tasks.filter((task) => task.threadId === activeThread.id) : view.tasks;
   const activeTaskCount = tasks.filter((task) => task.status !== "done").length;
   const selectedApp = libraryApps.find((app) => app.id === selectedAppId);
   const chatCount = view.threads.length;
   const roomCount = view.threads.filter((thread) => thread.type === "room").length;
   const directCount = view.threads.filter((thread) => thread.type === "direct").length;
-  const agentMembers = view.members.filter(isAgentMember);
+  const visibleAgentProfiles = useMemo(() => dedupeVisibleAgentProfiles(view.agentProfiles), [view.agentProfiles]);
+  const visibleMembers = useMemo(() => dedupeVisibleMembers(view.members, view.agentProfiles), [view.members, view.agentProfiles]);
+  const agentMembers = visibleMembers.filter(isAgentMember);
   const mentionRange = getActiveAgentMentionRange(draft, composerInputRef.current?.selectionStart ?? draft.length);
   const mentionCandidates = mentionRange
     ? agentMembers
@@ -266,8 +360,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         .slice(0, 6)
     : [];
   const mentionPickerOpen = Boolean(activeThread && mentionRange && mentionCandidates.length);
-  const peopleMembers = view.members.filter((member) => !isAgentMember(member) && member.status !== "owner");
-  const savedAgentProfiles = view.agentProfiles.filter((profile) => !view.members.some((member) => member.agentProfileId === profile.id));
+  const peopleMembers = visibleMembers.filter((member) => !isAgentMember(member) && member.status !== "owner");
+  const savedAgentProfiles = visibleAgentProfiles.filter((profile) => !visibleMembers.some((member) => member.agentProfileId === profile.id));
   const filteredPeopleMembers = peopleMembers.filter((member) =>
     agentPickerMatchesQuery(memberPickerQuery, [member.displayName, member.role, member.status ?? ""]),
   );
@@ -313,6 +407,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     if (data.workspace.id !== workspaceIdRef.current) return;
     markThreadRead(data.workspace.id, activeThreadIdRef.current, data.messages, false);
     setView((current) => mergeWorkspaceViews(current, data));
+    writeCachedWorkspaceShell(data);
     setActiveThreadId((current) => {
       if (data.threads.some((thread) => thread.id === current)) return current;
       return data.threads[0]?.id ?? "";
@@ -335,6 +430,15 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     if (initialView.persisted) return;
     const controller = new AbortController();
     async function loadInitialWorkspace() {
+      const cached = readCachedWorkspaceShell();
+      if (cached) {
+        setView(cached);
+        workspaceIdRef.current = cached.workspace.id;
+        setActiveThreadId(cached.threads[0]?.id ?? "");
+        setChatMode(cached.threads[0]?.type ?? "room");
+        setLoadedThreadActivityIds({});
+        setWorkspaceReady(true);
+      }
       try {
         const response = await fetch("/api/workspaces?view=shell", { cache: "no-store", signal: controller.signal });
         if (!response.ok) throw new Error("Workspace could not be loaded.");
@@ -344,7 +448,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         workspaceIdRef.current = data.workspace.id;
         setActiveThreadId(data.threads[0]?.id ?? "");
         setChatMode(data.threads[0]?.type ?? "room");
-        setLoadedThreadActivityIds(Object.fromEntries(data.messages.map((message) => [message.threadId, true])));
+        setLoadedThreadActivityIds({});
+        writeCachedWorkspaceShell(data);
       } catch {
         if (!controller.signal.aborted) setError("Workspace could not be loaded.");
       } finally {
@@ -360,12 +465,28 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     let cancelled = false;
     let source: EventSource | undefined;
     let reconnectTimeout: number | undefined;
+    let fallbackPollingInterval: number | undefined;
 
     function clearReconnectTimer() {
       if (reconnectTimeout !== undefined) {
         window.clearTimeout(reconnectTimeout);
         reconnectTimeout = undefined;
       }
+    }
+
+    function stopFallbackPolling() {
+      if (fallbackPollingInterval !== undefined) {
+        window.clearInterval(fallbackPollingInterval);
+        fallbackPollingInterval = undefined;
+      }
+    }
+
+    function startFallbackPolling() {
+      if (cancelled || fallbackPollingInterval !== undefined) return;
+      void refreshWorkspace();
+      fallbackPollingInterval = window.setInterval(() => {
+        void refreshWorkspace();
+      }, 10000);
     }
 
     function closeStream() {
@@ -389,6 +510,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       nextSource.addEventListener("workspace", (event) => {
         if (cancelled) return;
         clearReconnectTimer();
+        stopFallbackPolling();
         applyWorkspaceView(JSON.parse((event as MessageEvent<string>).data) as WorkspaceView);
       });
       nextSource.addEventListener("error", (event) => {
@@ -398,6 +520,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       nextSource.onerror = () => {
         if (source === nextSource) source = undefined;
         nextSource.close();
+        startFallbackPolling();
         scheduleStreamReconnect();
       };
     }
@@ -408,6 +531,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         cancelled = true;
         closeStream();
         clearReconnectTimer();
+        stopFallbackPolling();
       };
     }
 
@@ -425,41 +549,68 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         if (!cancelled) setError("Workspace updates are temporarily unavailable.");
       }
     }
-    void refreshWorkspace();
+    startFallbackPolling();
     return () => {
       cancelled = true;
       clearReconnectTimer();
+      stopFallbackPolling();
     };
   }, [applyWorkspaceView, view.workspace.id, workspaceReady]);
 
   useEffect(() => {
     if (!workspaceReady || !activeThread || loadedThreadActivityIds[activeThread.id]) return;
+    if (loadingThreadActivityIdsRef.current.has(activeThread.id)) return;
     const controller = new AbortController();
     async function loadThreadActivity(threadId: string) {
-      try {
-        const messageParams = new URLSearchParams({ threadId, limit: String(MESSAGE_PAGE_SIZE) });
-        const runParams = new URLSearchParams({ threadId, limit: "20" });
-        const [messageResponse, runResponse] = await Promise.all([
-          fetch(`/api/workspaces/${view.workspace.id}/messages?${messageParams.toString()}`, { cache: "no-store", signal: controller.signal }),
-          fetch(`/api/workspaces/${view.workspace.id}/agent-runs?${runParams.toString()}`, { cache: "no-store", signal: controller.signal }),
-        ]);
-        if (controller.signal.aborted) return;
-        if (!messageResponse.ok || !runResponse.ok) throw new Error("Thread activity could not be loaded.");
-        const [messageData, runData] = await Promise.all([
-          messageResponse.json() as Promise<{ messages?: WorkspaceMessage[]; hasMore?: boolean }>,
-          runResponse.json() as Promise<{ runs?: WorkspaceAgentRun[]; events?: WorkspaceAgentRunEvent[]; approvals?: WorkspaceAgentApproval[] }>,
-        ]);
+      loadingThreadActivityIdsRef.current.add(threadId);
+      setLoadingThreadActivityIds((current) => ({ ...current, [threadId]: true }));
+      const cached = readCachedThreadActivity(view.workspace.id, threadId);
+      if (cached) {
         setView((current) => ({
           ...current,
-          messages: mergeMessages(current.messages, messageData.messages ?? []),
-          agentRuns: mergeAgentRuns(current.agentRuns, runData.runs ?? []),
-          agentRunEvents: mergeAgentRunEvents(current.agentRunEvents, runData.events ?? []),
-          agentApprovals: mergeAgentApprovals(current.agentApprovals, runData.approvals ?? []),
+          messages: mergeMessages(current.messages, cached.messages),
+          agentRuns: mergeAgentRuns(current.agentRuns, cached.runs),
+          agentRunEvents: mergeAgentRunEvents(current.agentRunEvents, cached.events),
+          agentApprovals: mergeAgentApprovals(current.agentApprovals, cached.approvals),
         }));
+      }
+      try {
+        const params = new URLSearchParams({ threadId, messageLimit: String(MESSAGE_PAGE_SIZE), runLimit: "20" });
+        const response = await fetch(`/api/workspaces/${view.workspace.id}/thread-activity?${params.toString()}`, { cache: "no-store", signal: controller.signal });
+        if (controller.signal.aborted) return;
+        if (!response.ok) throw new Error("Thread activity could not be loaded.");
+        const activity = (await response.json()) as {
+          messages?: WorkspaceMessage[];
+          hasMore?: boolean;
+          runs?: WorkspaceAgentRun[];
+          events?: WorkspaceAgentRunEvent[];
+          approvals?: WorkspaceAgentApproval[];
+        };
+        setView((current) => ({
+          ...current,
+          messages: mergeMessages(current.messages, activity.messages ?? []),
+          agentRuns: mergeAgentRuns(current.agentRuns, activity.runs ?? []),
+          agentRunEvents: mergeAgentRunEvents(current.agentRunEvents, activity.events ?? []),
+          agentApprovals: mergeAgentApprovals(current.agentApprovals, activity.approvals ?? []),
+        }));
+        writeCachedThreadActivity(view.workspace.id, threadId, {
+          messages: activity.messages ?? [],
+          runs: activity.runs ?? [],
+          events: activity.events ?? [],
+          approvals: activity.approvals ?? [],
+          hasMore: activity.hasMore,
+        });
         setLoadedThreadActivityIds((current) => ({ ...current, [threadId]: true }));
-        if (!messageData.hasMore) setExhaustedThreadIds((current) => ({ ...current, [threadId]: true }));
+        if (!activity.hasMore) setExhaustedThreadIds((current) => ({ ...current, [threadId]: true }));
       } catch {
         if (!controller.signal.aborted) setError("Thread activity is temporarily unavailable.");
+      } finally {
+        loadingThreadActivityIdsRef.current.delete(threadId);
+        setLoadingThreadActivityIds((current) => {
+          const next = { ...current };
+          delete next[threadId];
+          return next;
+        });
       }
     }
     void loadThreadActivity(activeThread.id);
@@ -491,6 +642,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   useEffect(() => {
     if (!workspaceReady) return;
     const controller = new AbortController();
+    let timeout: number | undefined;
     async function loadWorkspaceCatalog() {
       try {
         const [agentsResponse, connectionsResponse] = await Promise.all([
@@ -519,8 +671,11 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         // The shell is usable without the side-panel catalog; explicit actions still retry their own APIs.
       }
     }
-    void loadWorkspaceCatalog();
-    return () => controller.abort();
+    timeout = window.setTimeout(() => void loadWorkspaceCatalog(), 800);
+    return () => {
+      if (timeout !== undefined) window.clearTimeout(timeout);
+      controller.abort();
+    };
   }, [view.workspace.id, workspaceReady]);
 
   useEffect(() => {
@@ -603,7 +758,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           type: newThreadType,
           name,
           description: newThreadDescription.trim() || (newThreadType === "direct" ? "private conversation" : "shared room"),
-          agentTriggerMode: newThreadType === "room" ? newThreadAgentTriggerMode : undefined,
           participantIds: newThreadType === "direct" && newThreadParticipantId ? [newThreadParticipantId] : undefined,
         }),
       });
@@ -619,68 +773,10 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       setNewThreadName("");
       setNewThreadDescription("");
       setNewThreadParticipantId("");
-      setNewThreadAgentTriggerMode("room_default");
       setNewThreadOpen(false);
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : "Chat could not be created.");
     }
-  }
-
-  async function updateThreadAgentMode(thread: WorkspaceThread, agentTriggerMode: WorkspaceThreadAgentTriggerMode) {
-    if (thread.type !== "room" || thread.agentTriggerMode === agentTriggerMode) return;
-    setError(null);
-    setSavingThreadAgentModeId(thread.id);
-    try {
-      const response = await fetch(`/api/workspaces/${view.workspace.id}/threads`, {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ threadId: thread.id, agentTriggerMode }),
-      });
-      const data = (await response.json()) as { thread?: WorkspaceThread; error?: string };
-      if (!response.ok || !data.thread) throw new Error(data.error || "Agent mode could not be updated.");
-      setView((current) => ({
-        ...current,
-        threads: current.threads.map((entry) => (entry.id === data.thread!.id ? data.thread! : entry)),
-        workspace: { ...current.workspace, updatedAt: Math.max(current.workspace.updatedAt, data.thread!.updatedAt) },
-      }));
-    } catch (updateError) {
-      setError(updateError instanceof Error ? updateError.message : "Agent mode could not be updated.");
-    } finally {
-      setSavingThreadAgentModeId("");
-    }
-  }
-
-  async function updateThreadAllowedAgents(thread: WorkspaceThread, allowedAgentProfileIds: string[] | undefined) {
-    if (thread.type !== "room") return;
-    setError(null);
-    setSavingThreadAgentModeId(thread.id);
-    try {
-      const response = await fetch(`/api/workspaces/${view.workspace.id}/threads`, {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ threadId: thread.id, allowedAgentProfileIds: allowedAgentProfileIds ?? null }),
-      });
-      const data = (await response.json()) as { thread?: WorkspaceThread; error?: string };
-      if (!response.ok || !data.thread) throw new Error(data.error || "Allowed agents could not be updated.");
-      setView((current) => ({
-        ...current,
-        threads: current.threads.map((entry) => (entry.id === data.thread!.id ? data.thread! : entry)),
-        workspace: { ...current.workspace, updatedAt: Math.max(current.workspace.updatedAt, data.thread!.updatedAt) },
-      }));
-    } catch (updateError) {
-      setError(updateError instanceof Error ? updateError.message : "Allowed agents could not be updated.");
-    } finally {
-      setSavingThreadAgentModeId("");
-    }
-  }
-
-  function toggleThreadAllowedAgent(thread: WorkspaceThread, profileId: string) {
-    const availableProfileIds = agentMembers.flatMap((member) => (member.agentProfileId ? [member.agentProfileId] : []));
-    const current = thread.allowedAgentProfileIds?.length ? thread.allowedAgentProfileIds : availableProfileIds;
-    const next = current.includes(profileId)
-      ? current.filter((id) => id !== profileId)
-      : [...current, profileId];
-    void updateThreadAllowedAgents(thread, next.length === availableProfileIds.length ? undefined : next);
   }
 
   async function loadWorkspaceAgentSkills(signal?: AbortSignal) {
@@ -1859,13 +1955,13 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                 value={newThreadParticipantId}
                 onChange={(event) => {
                   const memberId = event.target.value;
-                  const member = view.members.find((entry) => entry.id === memberId);
+                  const member = visibleMembers.find((entry) => entry.id === memberId);
                   setNewThreadParticipantId(memberId);
                   if (member && !newThreadName.trim()) setNewThreadName(member.displayName);
                 }}
               >
                 <option value="">Private to me</option>
-                {view.members.map((member) => (
+                {visibleMembers.map((member) => (
                   <option key={member.id} value={member.id}>{member.displayName}</option>
                 ))}
               </select>
@@ -1876,17 +1972,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               onChange={(event) => setNewThreadDescription(event.target.value)}
               placeholder="Short context"
             />
-            {newThreadType === "room" ? (
-              <select
-                aria-label="Agent mode"
-                value={newThreadAgentTriggerMode}
-                onChange={(event) => setNewThreadAgentTriggerMode(event.target.value as WorkspaceThreadAgentTriggerMode)}
-              >
-                <option value="room_default">Room default</option>
-                <option value="mention_only">Mention only</option>
-                <option value="quiet_review">Quiet review</option>
-              </select>
-            ) : null}
             <button type="submit">Create</button>
           </form>
         ) : null}
@@ -1907,8 +1992,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             <strong>{activeThread ? `${activeThread.type === "room" ? "# " : ""}${activeThread.name}` : view.workspace.name}</strong>
             <span>
               {activeThread
-                ? `${view.members.length} members / ${agentCount(view.members)} agents / ${activeTaskCount} active tasks / ${formatAgentTriggerMode(activeThread.agentTriggerMode)} / ${formatRoomAllowedAgents(activeThread, agentMembers)}`
-                : `${view.members.length} members / ${chatCount} chats / ${view.tasks.length} tasks`}
+                ? `${visibleMembers.length} members / ${agentCount(visibleMembers)} agents / ${activeTaskCount} active tasks`
+                : `${visibleMembers.length} members / ${chatCount} chats / ${view.tasks.length} tasks`}
             </span>
           </div>
           <div className="workspace-room-actions">
@@ -1933,24 +2018,24 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               newThreadName={newThreadName}
               newThreadDescription={newThreadDescription}
               newThreadParticipantId={newThreadParticipantId}
-              newThreadAgentTriggerMode={newThreadAgentTriggerMode}
-              members={view.members}
+              members={visibleMembers}
               onModeChange={switchMode}
               onThreadTypeChange={setNewThreadType}
               onThreadNameChange={setNewThreadName}
               onThreadDescriptionChange={setNewThreadDescription}
               onThreadParticipantChange={(memberId) => {
-                const member = view.members.find((entry) => entry.id === memberId);
+                const member = visibleMembers.find((entry) => entry.id === memberId);
                 setNewThreadParticipantId(memberId);
                 if (member && !newThreadName.trim()) setNewThreadName(member.displayName);
               }}
-              onThreadAgentTriggerModeChange={setNewThreadAgentTriggerMode}
               onCreateThread={createThread}
               onOpenMemberPicker={(role) => {
                 setDetailsOpen(true);
                 openMemberPicker(role);
               }}
             />
+          ) : activeThreadActivityLoading ? (
+            <ActiveChatLoadingState thread={activeThread} />
           ) : messages.length === 0 ? (
             <ActiveChatEmptyState
               thread={activeThread}
@@ -2063,22 +2148,11 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           <span>Workspace panel</span>
         </summary>
         <aside className="workspace-side" aria-label="Workspace status">
-          {activeThread ? (
-            <WorkspaceRoomSettingsPanel
-              activeThread={activeThread}
-              agentMembers={agentMembers}
-              saving={savingThreadAgentModeId === activeThread.id}
-              onUpdateMode={(thread, mode) => void updateThreadAgentMode(thread, mode)}
-              onUseAllAgents={(thread) => void updateThreadAllowedAgents(thread, undefined)}
-              onToggleAgent={toggleThreadAllowedAgent}
-            />
-          ) : null}
-
           <section className="workspace-panel workspace-members-panel">
             <div className="workspace-panel-header">
               <strong>Members</strong>
               <div className="workspace-panel-header-actions">
-                <span>{view.members.length}</span>
+                <span>{visibleMembers.length}</span>
                 <button
                   type="button"
                   aria-label="Add member"
@@ -2273,7 +2347,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                           onCancel={() => setEditingSkillPath("")}
                         />
                         <AgentDelegateControls
-                          profiles={view.agentProfiles}
+                          profiles={visibleAgentProfiles}
                           selectedProfileIds={agentDelegateProfileIds}
                           onToggle={(profileId) => setAgentDelegateProfileIds((current) => toggleAgentDelegate(current, profileId))}
                         />
@@ -2372,7 +2446,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               </form>
             ) : null}
             <ul className="workspace-member-list">
-              {view.members.map((member) => {
+              {visibleMembers.map((member) => {
                 const agentProfile = member.agentProfileId ? view.agentProfiles.find((profile) => profile.id === member.agentProfileId) : undefined;
                 return (
                   <li key={member.id}>
@@ -2465,7 +2539,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                           onCancel={() => setEditingSkillPath("")}
                         />
                         <AgentDelegateControls
-                          profiles={view.agentProfiles.filter((candidate) => candidate.id !== agentProfile.id)}
+                          profiles={visibleAgentProfiles.filter((candidate) => candidate.id !== agentProfile.id)}
                           selectedProfileIds={agentEditDelegateProfileIds}
                           onToggle={(profileId) => setAgentEditDelegateProfileIds((current) => toggleAgentDelegate(current, profileId))}
                         />
@@ -2521,7 +2595,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           </section>
 
           <WorkspaceAgentLibraryPanel
-            agentProfiles={view.agentProfiles}
+            agentProfiles={visibleAgentProfiles}
             agentMembers={agentMembers}
             agentRuns={view.agentRuns}
             activeThread={activeThread}
@@ -2563,7 +2637,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           <WorkspaceAgentMemoryPanel
             agentMemories={view.agentMemories}
             activeThreadId={activeThread?.id}
-            agentProfiles={view.agentProfiles}
+            agentProfiles={visibleAgentProfiles}
             archivingMemoryIds={archivingMemoryIds}
             onArchive={(memory) => void archiveAgentMemory(memory)}
           />
@@ -2586,7 +2660,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                 onChange={(event) => setTaskAssigneeId(event.target.value)}
               >
                 <option value="">Unassigned</option>
-                {view.members.map((member) => (
+                {visibleMembers.map((member) => (
                   <option key={member.id} value={member.id}>{formatTaskAssigneeOption(member)}</option>
                 ))}
               </select>
@@ -2687,88 +2761,6 @@ function ThreadSection({
   );
 }
 
-function WorkspaceRoomSettingsPanel({
-  activeThread,
-  agentMembers,
-  saving,
-  onUpdateMode,
-  onUseAllAgents,
-  onToggleAgent,
-}: {
-  activeThread: WorkspaceThread;
-  agentMembers: WorkspaceMember[];
-  saving: boolean;
-  onUpdateMode: (thread: WorkspaceThread, mode: WorkspaceThreadAgentTriggerMode) => void;
-  onUseAllAgents: (thread: WorkspaceThread) => void;
-  onToggleAgent: (thread: WorkspaceThread, profileId: string) => void;
-}) {
-  if (activeThread.type !== "room") {
-    return (
-      <section className="workspace-panel workspace-room-settings-panel" aria-label="Chat settings">
-        <div className="workspace-panel-header">
-          <strong>Chat settings</strong>
-          <span>Private</span>
-        </div>
-        <p>Private chats stay between the selected people and agents.</p>
-      </section>
-    );
-  }
-
-  const allAgentsAllowed = !activeThread.allowedAgentProfileIds?.length;
-
-  return (
-    <section className="workspace-panel workspace-room-settings-panel" aria-label="Chat settings">
-      <div className="workspace-panel-header">
-        <strong>Chat settings</strong>
-        <span>{formatAgentTriggerMode(activeThread.agentTriggerMode)}</span>
-      </div>
-      <label>
-        <span>Room agent mode</span>
-        <select
-          aria-label="Room agent mode"
-          value={activeThread.agentTriggerMode ?? "room_default"}
-          disabled={saving}
-          onChange={(event) => onUpdateMode(activeThread, event.target.value as WorkspaceThreadAgentTriggerMode)}
-        >
-          <option value="room_default">Room default</option>
-          <option value="mention_only">Mention only</option>
-          <option value="quiet_review">Quiet review</option>
-        </select>
-      </label>
-      <div className="workspace-room-agent-access" aria-label="Agent access">
-        <div>
-          <strong>Agent access</strong>
-          <span>{formatRoomAllowedAgents(activeThread, agentMembers)}</span>
-        </div>
-        {agentMembers.length ? (
-          <>
-            <button type="button" disabled={saving || allAgentsAllowed} onClick={() => onUseAllAgents(activeThread)}>
-              All agents
-            </button>
-            {agentMembers.map((member) => {
-              if (!member.agentProfileId) return null;
-              const checked = allAgentsAllowed || activeThread.allowedAgentProfileIds?.includes(member.agentProfileId);
-              return (
-                <label key={member.id}>
-                  <input
-                    type="checkbox"
-                    checked={Boolean(checked)}
-                    disabled={saving}
-                    onChange={() => onToggleAgent(activeThread, member.agentProfileId!)}
-                  />
-                  <span>{member.displayName}</span>
-                </label>
-              );
-            })}
-          </>
-        ) : (
-          <span>No agents have been added to this workspace yet.</span>
-        )}
-      </div>
-    </section>
-  );
-}
-
 function WorkspaceStartState({
   workspaceName,
   chatMode,
@@ -2776,14 +2768,12 @@ function WorkspaceStartState({
   newThreadName,
   newThreadDescription,
   newThreadParticipantId,
-  newThreadAgentTriggerMode,
   members,
   onModeChange,
   onThreadTypeChange,
   onThreadNameChange,
   onThreadDescriptionChange,
   onThreadParticipantChange,
-  onThreadAgentTriggerModeChange,
   onCreateThread,
   onOpenMemberPicker,
 }: {
@@ -2793,14 +2783,12 @@ function WorkspaceStartState({
   newThreadName: string;
   newThreadDescription: string;
   newThreadParticipantId: string;
-  newThreadAgentTriggerMode: WorkspaceThreadAgentTriggerMode;
   members: WorkspaceMember[];
   onModeChange: (mode: WorkspaceThread["type"]) => void;
   onThreadTypeChange: (type: WorkspaceThread["type"]) => void;
   onThreadNameChange: (name: string) => void;
   onThreadDescriptionChange: (description: string) => void;
   onThreadParticipantChange: (memberId: string) => void;
-  onThreadAgentTriggerModeChange: (mode: WorkspaceThreadAgentTriggerMode) => void;
   onCreateThread: (event?: React.FormEvent<HTMLFormElement>) => void;
   onOpenMemberPicker: (role: "Person" | "Agent") => void;
 }) {
@@ -2861,17 +2849,6 @@ function WorkspaceStartState({
           onChange={(event) => onThreadDescriptionChange(event.target.value)}
           placeholder="Short context, optional"
         />
-        {newThreadType === "room" ? (
-          <select
-            aria-label="Agent mode"
-            value={newThreadAgentTriggerMode}
-            onChange={(event) => onThreadAgentTriggerModeChange(event.target.value as WorkspaceThreadAgentTriggerMode)}
-          >
-            <option value="room_default">Room default</option>
-            <option value="mention_only">Mention only</option>
-            <option value="quiet_review">Quiet review</option>
-          </select>
-        ) : null}
         <div className="workspace-start-footer">
           <button type="button" onClick={() => onOpenMemberPicker("Person")}>Add a person</button>
           <button type="button" onClick={() => onOpenMemberPicker("Agent")}>Add an agent</button>
@@ -2903,6 +2880,16 @@ function ActiveChatEmptyState({
         <button type="button" onClick={onAddAgent}>Add an agent</button>
         <button type="button" onClick={onCreateTask}>New task</button>
       </div>
+    </div>
+  );
+}
+
+function ActiveChatLoadingState({ thread }: { thread: WorkspaceThread }) {
+  return (
+    <div className="workspace-empty-state active-chat-empty">
+      <span className="course-block-tag">{thread.type === "room" ? "Group chat" : "Private chat"}</span>
+      <strong>Loading messages...</strong>
+      <span>Recent messages and agent activity are being restored.</span>
     </div>
   );
 }
@@ -4001,23 +3988,6 @@ function isCancellableAgentRun(status: WorkspaceAgentRun["status"]) {
 
 function isRetryableAgentRun(status: WorkspaceAgentRun["status"]) {
   return status === "failed" || status === "cancelled";
-}
-
-function formatAgentTriggerMode(mode: WorkspaceThread["agentTriggerMode"]) {
-  if (mode === "mention_only") return "mention only";
-  if (mode === "quiet_review") return "quiet review";
-  return "room default";
-}
-
-function formatRoomAllowedAgents(thread: WorkspaceThread, agentMembers: WorkspaceMember[]) {
-  if (!Array.isArray(thread.allowedAgentProfileIds)) return "all agents";
-  if (!thread.allowedAgentProfileIds.length) return "no agents";
-  const names = agentMembers
-    .filter((member) => member.agentProfileId && thread.allowedAgentProfileIds?.includes(member.agentProfileId))
-    .map((member) => member.displayName);
-  if (!names.length) return "no agents";
-  if (names.length === 1) return names[0];
-  return `${names.length} allowed agents`;
 }
 
 function formatTaskAssigneeOption(member: WorkspaceMember) {
