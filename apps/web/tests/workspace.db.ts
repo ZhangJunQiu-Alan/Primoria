@@ -401,6 +401,21 @@ async function main() {
       templateKey: "socratic-coach",
       displayName: "DB Coach",
     });
+    const duplicateCoachProfile = await createWorkspaceAgentProfile(ownerId, {
+      workspaceId: ownerView.workspace.id,
+      templateKey: "socratic-coach",
+      displayName: "DB Coach",
+    });
+    assert(duplicateCoachProfile.id === coachProfile.id, "DB default template agents reuse the existing workspace profile");
+    const firstCoachMemberForDedupe = await createWorkspaceAgentMember(ownerId, {
+      workspaceId: ownerView.workspace.id,
+      profileId: coachProfile.id,
+    });
+    const duplicateCoachMemberForDedupe = await createWorkspaceAgentMember(ownerId, {
+      workspaceId: ownerView.workspace.id,
+      profileId: coachProfile.id,
+    });
+    assert(duplicateCoachMemberForDedupe.id === firstCoachMemberForDedupe.id, "DB adding the same agent profile to a workspace is idempotent");
     assert(coachProfile.capabilities.some((capability) => capability.kind === "skill"), "DB agent profile inherits capabilities");
     const customizedCoachProfile = await updateWorkspaceAgentProfile(ownerId, {
       workspaceId: ownerView.workspace.id,

@@ -128,6 +128,21 @@ async function main() {
     templateKey: "socratic-coach",
     displayName: "Unit Coach",
   });
+  const duplicateCoachProfile = await createWorkspaceAgentProfile(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    templateKey: "socratic-coach",
+    displayName: "Unit Coach",
+  });
+  assert(duplicateCoachProfile.id === coachProfile.id, "default template agents reuse the existing local workspace profile");
+  const firstCoachMemberForDedupe = await createWorkspaceAgentMember(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    profileId: coachProfile.id,
+  });
+  const duplicateCoachMemberForDedupe = await createWorkspaceAgentMember(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    profileId: coachProfile.id,
+  });
+  assert(duplicateCoachMemberForDedupe.id === firstCoachMemberForDedupe.id, "adding the same local agent profile to a workspace is idempotent");
   assert(coachProfile.handle === "unit-coach", "agent profile derives stable handle");
   assert(coachProfile.templateKey === "socratic-coach", "agent profile records source template");
   assert(coachProfile.capabilities.some((capability) => capability.kind === "skill" && capability.path.includes("socratic")), "agent profile inherits template skill");

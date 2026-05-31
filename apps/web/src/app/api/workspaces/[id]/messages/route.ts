@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getApp } from "@/lib/capability-library/store";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { buildWorkspaceArtifactFromMessage, createWorkspaceMessage, getWorkspaceShellView, getWorkspaceView, listWorkspaceMessages, runWorkspaceAgentTurn } from "@/lib/workspaces/store";
+import { buildWorkspaceArtifactFromMessage, createWorkspaceMessage, getWorkspaceView, listWorkspaceMessages, runWorkspaceAgentTurn } from "@/lib/workspaces/store";
 import type { WorkspaceMessageArtifact } from "@/lib/workspaces/types";
 
 const ArtifactSchema = z.union([
@@ -41,20 +41,22 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceShellView(ownerId, id);
-  if (view.workspace.id !== id) return NextResponse.json({ messages: [] }, { status: 404 });
   const url = new URL(request.url);
   const threadId = url.searchParams.get("threadId");
-  if (!threadId) return NextResponse.json({ messages: view.messages, hasMore: false });
+  if (!threadId) return NextResponse.json({ messages: [], hasMore: false });
   const before = Number(url.searchParams.get("before") ?? "");
   const limit = Number(url.searchParams.get("limit") ?? "");
-  const page = await listWorkspaceMessages(ownerId, {
-    workspaceId: id,
-    threadId,
-    before: Number.isFinite(before) && before > 0 ? before : undefined,
-    limit: Number.isFinite(limit) && limit > 0 ? limit : undefined,
-  });
-  return NextResponse.json(page);
+  try {
+    const page = await listWorkspaceMessages(ownerId, {
+      workspaceId: id,
+      threadId,
+      before: Number.isFinite(before) && before > 0 ? before : undefined,
+      limit: Number.isFinite(limit) && limit > 0 ? limit : undefined,
+    });
+    return NextResponse.json(page);
+  } catch (error) {
+    return messageErrorResponse(error);
+  }
 }
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {

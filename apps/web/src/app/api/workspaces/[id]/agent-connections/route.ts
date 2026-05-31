@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
+import { desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
+import { getDb } from "@/lib/db/client";
+import { workspaceAgentConnections } from "@/lib/db/schema";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
+import { rowToWorkspaceAgentConnection } from "@/lib/workspaces/agent-profile-persistence";
+import { requireDbWorkspace, usesDatabase } from "@/lib/workspaces/workspace-access-service";
 import {
   createWorkspaceAgentConnection,
-  getWorkspaceShellView,
   getWorkspaceView,
   updateWorkspaceAgentConnection,
 } from "@/lib/workspaces/store";
@@ -29,7 +33,20 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
-  const view = await getWorkspaceShellView(ownerId, id);
+  if (usesDatabase(ownerId)) {
+    try {
+      await requireDbWorkspace(ownerId, id);
+    } catch {
+      return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+    }
+    const rows = await getDb()
+      .select()
+      .from(workspaceAgentConnections)
+      .where(or(eq(workspaceAgentConnections.workspaceId, id), eq(workspaceAgentConnections.ownerId, ownerId)))
+      .orderBy(desc(workspaceAgentConnections.updatedAt));
+    return NextResponse.json({ connections: rows.map(rowToWorkspaceAgentConnection) });
+  }
+  const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   return NextResponse.json({ connections: view.agentConnections });
 }
