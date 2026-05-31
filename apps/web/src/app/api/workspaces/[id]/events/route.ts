@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/lib/auth/session";
+import { subscribeWorkspaceChanges } from "@/lib/workspaces/events";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
 import { getWorkspaceView } from "@/lib/workspaces/store";
 import type { WorkspaceView } from "@/lib/workspaces/types";
@@ -13,15 +14,18 @@ type WorkspaceEventHub = {
   subscribers: Set<Subscriber>;
   interval?: ReturnType<typeof setInterval>;
   ticking: boolean;
+  pendingTick: boolean;
   lastVersion: string;
   ownerId?: string | null;
   workspaceId: string;
   createdAt: number;
+  unsubscribe?: () => void;
 };
 
 const encoder = new TextEncoder();
 const hubs = new Map<string, WorkspaceEventHub>();
 const MAX_HUB_AGE_MS = 5 * 60 * 1000;
+const HEARTBEAT_INTERVAL_MS = 15_000;
 
 function workspaceVersion(view: WorkspaceView) {
   return [
@@ -29,7 +33,14 @@ function workspaceVersion(view: WorkspaceView) {
     view.threads.map((thread) => `${thread.id}:${thread.updatedAt}`).join(","),
     view.messages.map((message) => `${message.id}:${message.createdAt}`).join(","),
     view.tasks.map((task) => `${task.id}:${task.updatedAt}:${task.status}:${task.resultSummary ?? ""}:${task.submittedAt ?? ""}`).join(","),
-    view.members.map((member) => `${member.id}:${member.displayName}:${member.role}:${member.status ?? ""}`).join(","),
+    view.members.map((member) => `${member.id}:${member.displayName}:${member.role}:${member.status ?? ""}:${member.agentProfileId ?? ""}`).join(","),
+    view.agentProfiles.map((profile) => `${profile.id}:${profile.updatedAt}:${profile.displayName}:${profile.handle}`).join(","),
+    view.agentRuns.map((run) => `${run.id}:${run.status}:${run.completedAt ?? ""}:${run.outputMessageId ?? ""}`).join(","),
+    view.agentRunEvents.map((event) => `${event.id}:${event.createdAt}:${event.label}`).join(","),
+    view.agentApprovals.map((approval) => `${approval.id}:${approval.status}:${approval.decidedAt ?? ""}:${approval.decisionReason ?? ""}`).join(","),
+    view.artifacts.map((artifact) => `${artifact.id}:${artifact.updatedAt}:${artifact.kind}:${artifact.title}:${artifact.sourceRunId ?? ""}`).join(","),
+    view.agentMemories.map((memory) => `${memory.id}:${memory.updatedAt}:${memory.archivedAt ?? ""}:${memory.scope}:${memory.title}`).join(","),
+    view.agentConnections.map((connection) => `${connection.id}:${connection.updatedAt}:${connection.status}:${connection.allowedToolNames.join(",")}`).join(","),
   ].join("|");
 }
 
@@ -43,6 +54,7 @@ function removeSubscriber(hubKey: string, subscriber: Subscriber) {
   hub.subscribers.delete(subscriber);
   if (hub.subscribers.size === 0) {
     if (hub.interval) clearInterval(hub.interval);
+    hub.unsubscribe?.();
     hubs.delete(hubKey);
   }
 }
@@ -51,6 +63,7 @@ function closeHub(hubKey: string, event: string, data: unknown) {
   const hub = hubs.get(hubKey);
   if (!hub) return;
   if (hub.interval) clearInterval(hub.interval);
+  hub.unsubscribe?.();
   hubs.delete(hubKey);
   for (const subscriber of hub.subscribers) {
     try {
@@ -67,6 +80,7 @@ function retireHub(hubKey: string) {
   const hub = hubs.get(hubKey);
   if (!hub) return;
   if (hub.interval) clearInterval(hub.interval);
+  hub.unsubscribe?.();
   hubs.delete(hubKey);
   for (const subscriber of hub.subscribers) {
     try {
@@ -80,7 +94,11 @@ function retireHub(hubKey: string) {
 
 async function tickHub(hubKey: string) {
   const hub = hubs.get(hubKey);
-  if (!hub || hub.ticking) return;
+  if (!hub) return;
+  if (hub.ticking) {
+    hub.pendingTick = true;
+    return;
+  }
   if (Date.now() - hub.createdAt > MAX_HUB_AGE_MS) {
     retireHub(hubKey);
     return;
@@ -109,7 +127,29 @@ async function tickHub(hubKey: string) {
     closeHub(hubKey, "error", { error: error instanceof Error ? error.message : "Workspace stream failed" });
   } finally {
     const latestHub = hubs.get(hubKey);
-    if (latestHub) latestHub.ticking = false;
+    if (latestHub) {
+      latestHub.ticking = false;
+      if (latestHub.pendingTick) {
+        latestHub.pendingTick = false;
+        void tickHub(hubKey);
+      }
+    }
+  }
+}
+
+function heartbeatHub(hubKey: string) {
+  const hub = hubs.get(hubKey);
+  if (!hub) return;
+  if (Date.now() - hub.createdAt > MAX_HUB_AGE_MS) {
+    retireHub(hubKey);
+    return;
+  }
+  for (const subscriber of Array.from(hub.subscribers)) {
+    try {
+      sendEvent(subscriber, "ping", { at: Date.now() });
+    } catch {
+      removeSubscriber(hubKey, subscriber);
+    }
   }
 }
 
@@ -127,13 +167,15 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
         hub = {
           subscribers: new Set<Subscriber>(),
           ticking: false,
+          pendingTick: false,
           lastVersion: "",
           ownerId,
           workspaceId: id,
           createdAt: Date.now(),
         };
+        hub.unsubscribe = subscribeWorkspaceChanges(id, () => void tickHub(hubKey));
         hubs.set(hubKey, hub);
-        hub.interval = setInterval(() => void tickHub(hubKey), 3000);
+        hub.interval = setInterval(() => heartbeatHub(hubKey), HEARTBEAT_INTERVAL_MS);
       }
 
       subscriber = { controller };

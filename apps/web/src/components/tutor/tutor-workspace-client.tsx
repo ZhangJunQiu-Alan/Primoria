@@ -106,7 +106,7 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
 
   return (
     <>
-      <TutorNavRail />
+      <TutorNavRail initialAuthState={{ authEnabled: authState.authEnabled, user: authState.user }} />
       <section className="workspace">
         <TutorTopbar
           onOpenSettings={() => setSettingsOpen(true)}

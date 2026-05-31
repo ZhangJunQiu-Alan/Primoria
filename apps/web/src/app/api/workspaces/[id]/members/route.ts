@@ -16,12 +16,20 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const { id } = await context.params;
   const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
-  const body = MemberSchema.parse(await request.json());
-  const member = await createWorkspaceMember(ownerId, {
-    workspaceId: id,
-    displayName: body.displayName,
-    role: body.role,
-    status: body.status,
-  });
+  const parsed = MemberSchema.safeParse(await request.json().catch(() => ({})));
+  if (!parsed.success) return NextResponse.json({ error: "Member request is invalid." }, { status: 400 });
+  let member;
+  try {
+    member = await createWorkspaceMember(ownerId, {
+      workspaceId: id,
+      displayName: parsed.data.displayName,
+      role: parsed.data.role,
+      status: parsed.data.status,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Member could not be created.";
+    const status = message.includes("not found") ? 404 : message.includes("required") ? 400 : 500;
+    return NextResponse.json({ error: message || "Member could not be created." }, { status });
+  }
   return NextResponse.json({ member });
 }

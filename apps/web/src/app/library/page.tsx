@@ -25,7 +25,7 @@ export default async function LibraryPage({
 
   return (
     <main className="app-shell">
-      <TutorNavRail />
+      <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="workspace library-workspace">
         <header className="library-header">
           <h1>Library</h1>

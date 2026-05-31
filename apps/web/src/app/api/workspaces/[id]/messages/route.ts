@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getApp } from "@/lib/capability-library/store";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { createWorkspaceMessage, getWorkspaceView } from "@/lib/workspaces/store";
+import { buildWorkspaceArtifactFromMessage, createWorkspaceMessage, getWorkspaceView, listWorkspaceMessages, runWorkspaceAgentTurn } from "@/lib/workspaces/store";
 import type { WorkspaceMessageArtifact } from "@/lib/workspaces/types";
 
 const ArtifactSchema = z.union([
@@ -31,13 +31,30 @@ const MessageSchema = z.object({
   artifact: ArtifactSchema.optional(),
 });
 
-export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
+function messageErrorResponse(error: unknown) {
+  const message = error instanceof Error ? error.message : "Message could not be sent.";
+  const status = message.includes("not found") ? 404 : message.includes("required") ? 400 : 500;
+  return NextResponse.json({ error: message || "Message could not be sent." }, { status });
+}
+
+export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
   const { id } = await context.params;
   const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ messages: [] }, { status: 404 });
-  return NextResponse.json({ messages: view.messages });
+  const url = new URL(request.url);
+  const threadId = url.searchParams.get("threadId");
+  if (!threadId) return NextResponse.json({ messages: view.messages, hasMore: false });
+  const before = Number(url.searchParams.get("before") ?? "");
+  const limit = Number(url.searchParams.get("limit") ?? "");
+  const page = await listWorkspaceMessages(ownerId, {
+    workspaceId: id,
+    threadId,
+    before: Number.isFinite(before) && before > 0 ? before : undefined,
+    limit: Number.isFinite(limit) && limit > 0 ? limit : undefined,
+  });
+  return NextResponse.json(page);
 }
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -46,17 +63,35 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const { id } = await context.params;
   const view = await getWorkspaceView(ownerId, id);
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
-  const body = MessageSchema.parse(await request.json());
-  const artifact = await enrichMessageArtifact(user?.id, body.artifact);
-  const message = await createWorkspaceMessage(ownerId, {
-    workspaceId: id,
-    threadId: body.threadId,
-    content: body.content,
-    senderName: body.senderName ?? user?.displayName ?? "You",
-    senderKind: "human",
-    artifact,
+  const parsed = MessageSchema.safeParse(await request.json().catch(() => ({})));
+  if (!parsed.success) return NextResponse.json({ error: "Message request is invalid." }, { status: 400 });
+  let artifact;
+  let message;
+  let agentRun;
+  try {
+    artifact = await enrichMessageArtifact(user?.id, parsed.data.artifact);
+    message = await createWorkspaceMessage(ownerId, {
+      workspaceId: id,
+      threadId: parsed.data.threadId,
+      content: parsed.data.content,
+      senderName: parsed.data.senderName ?? user?.displayName ?? "You",
+      senderKind: "human",
+      artifact,
+    });
+    agentRun = await runWorkspaceAgentTurn(ownerId, { workspaceId: id, threadId: parsed.data.threadId, message });
+  } catch (error) {
+    return messageErrorResponse(error);
+  }
+  return NextResponse.json({
+    message,
+    artifact: buildWorkspaceArtifactFromMessage(message),
+    agentMessages: agentRun.messages,
+    agentRuns: agentRun.runs,
+    agentRunEvents: agentRun.events,
+    agentApprovals: agentRun.approvals ?? [],
+    agentMemories: agentRun.memories ?? [],
+    agentArtifacts: agentRun.artifacts ?? [],
   });
-  return NextResponse.json({ message });
 }
 
 async function enrichMessageArtifact(

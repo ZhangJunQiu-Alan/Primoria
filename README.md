@@ -48,21 +48,24 @@ ANTHROPIC_MODEL=your-model
 ```
 
 
-### Postgres database and accounts
+### Supabase cloud database and accounts
 
-Primoria currently uses Postgres for account creation, user sessions, CopilotKit chat history, provider settings, generated courses, and learning apps. Configure a standard PostgreSQL connection:
+Primoria currently uses Postgres for account creation, user sessions, CopilotKit chat history, provider settings, generated courses, learning apps, and workspace collaboration state. For team collaboration, use a shared Supabase cloud Postgres database.
 
 ```bash
-DATABASE_URL=postgres://user:password@host:5432/primoria
+DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
 ```
 
-Then run migrations:
+Create the Supabase project at `https://database.new`, copy the Session Pooler URI from the dashboard Connect panel, replace the password placeholder, and put the value in `apps/web/.env.local` or the hosted app environment variables. Do not guess the pooler host from the region; Supabase may use hosts such as `aws-0-...` or `aws-1-...`.
+
+Then verify the cloud connection and run migrations:
 
 ```bash
+pnpm --filter @primoria/web db:check
 pnpm --filter @primoria/web db:migrate
 ```
 
-The first database version is intentionally Postgres-first and vendor-portable. It can run on Railway Postgres, Supabase Postgres, Neon, RDS, Alibaba Cloud PostgreSQL, or a local Postgres instance. Supabase can be used as a provider, but application code should rely on Primoria repositories rather than direct vendor-specific calls.
+See `docs/supabase-cloud.md` for the full cloud setup runbook. The database layer remains Postgres-first and vendor-portable; Supabase is the current shared cloud provider, but application code should rely on Primoria repositories rather than direct vendor-specific calls.
 
 Initial auth support includes:
 
@@ -147,6 +150,9 @@ pnpm lint
 
 # Generate database migrations after schema changes
 pnpm --filter @primoria/web db:generate
+
+# Verify DATABASE_URL connectivity
+pnpm --filter @primoria/web db:check
 
 # Apply database migrations when DATABASE_URL is configured
 pnpm --filter @primoria/web db:migrate
