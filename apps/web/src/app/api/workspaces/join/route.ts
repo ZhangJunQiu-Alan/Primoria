@@ -12,10 +12,19 @@ const JoinWorkspaceSchema = z.object({
 export async function POST(request: Request) {
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
-  const body = JoinWorkspaceSchema.parse(await request.json());
-  const view = await joinWorkspace(ownerId, {
-    inviteCode: body.inviteCode,
-    displayName: body.displayName ?? user?.displayName ?? "Guest",
-  });
+  const parsed = JoinWorkspaceSchema.safeParse(await request.json().catch(() => ({})));
+  if (!parsed.success) return NextResponse.json({ error: "Workspace join request is invalid." }, { status: 400 });
+  let view;
+  try {
+    view = await joinWorkspace(ownerId, {
+      inviteCode: parsed.data.inviteCode,
+      displayName: parsed.data.displayName ?? user?.displayName ?? "Guest",
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Workspace could not be joined.";
+    if (message.includes("not found")) return NextResponse.json({ error: "Invite code not found." }, { status: 404 });
+    const status = message.includes("required") ? 400 : 500;
+    return NextResponse.json({ error: message || "Workspace could not be joined." }, { status });
+  }
   return NextResponse.json(view);
 }

@@ -17,10 +17,17 @@ export async function GET() {
 export async function POST(request: Request) {
   const user = await getCurrentUser();
   const ownerId = await getWorkspaceOwnerId(user);
-  const body = WorkspaceSchema.parse(await request.json());
-  const view = await createWorkspace(ownerId, {
-    name: body.name,
-    ownerName: user?.displayName ?? "You",
-  });
+  const parsed = WorkspaceSchema.safeParse(await request.json().catch(() => ({})));
+  if (!parsed.success) return NextResponse.json({ error: "Workspace request is invalid." }, { status: 400 });
+  let view;
+  try {
+    view = await createWorkspace(ownerId, {
+      name: parsed.data.name,
+      ownerName: user?.displayName ?? "You",
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Workspace could not be created.";
+    return NextResponse.json({ error: message || "Workspace could not be created." }, { status: 500 });
+  }
   return NextResponse.json(view);
 }

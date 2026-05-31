@@ -17,7 +17,7 @@ const repoRoot = path.resolve(__dirname, "..", "..", "..");
 const libraryFile = path.join(repoRoot, ".primoria-capability-library.json");
 const backupFile = `${libraryFile}.workspace-preview-backup`;
 const PORT = process.env.PORT || "3110";
-const BASE = process.env.WORKSPACE_E2E_BASE || `http://127.0.0.1:${PORT}`;
+const BASE = process.env.WORKSPACE_E2E_BASE || `http://localhost:${PORT}`;
 const SERVER_READY_TIMEOUT_MS = 90_000;
 const RUN_ID = Date.now().toString(36);
 const FIXTURE_APP_ID = `app_workspace_preview_${RUN_ID}`;
@@ -107,6 +107,20 @@ async function waitForFixtureApp() {
   throw new Error(`fixture app ${FIXTURE_APP_ID} did not appear in /api/apps`);
 }
 
+async function switchChatMode(page, label, sectionText) {
+  const chatTypeSwitcher = page.locator(".workspace-switcher");
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    await chatTypeSwitcher.getByRole("button", { name: new RegExp(label) }).click();
+    try {
+      await page.locator(".workspace-chat-section", { hasText: sectionText }).waitFor({ timeout: 2500 });
+      return;
+    } catch {
+      /* retry once hydration has definitely attached */
+    }
+  }
+  throw new Error(`could not switch workspace chat mode to ${label}`);
+}
+
 function startServerIfNeeded() {
   if (process.env.WORKSPACE_E2E_BASE) return null;
   log("starting Next.js dev server on port", PORT);
@@ -136,10 +150,11 @@ async function main() {
 
     const detailsClosed = await page.locator("details.workspace-side-drawer").evaluate((node) => !node.open);
     assert(detailsClosed, "workspace details drawer should be collapsed by default");
-    await page.getByRole("button", { name: "Private" }).click();
+    await switchChatMode(page, "Private", "Private chats");
     const startForm = page.locator("form.workspace-start-form");
     if ((await startForm.count()) === 0) {
-      await page.getByRole("button", { name: "New chat" }).click();
+      await page.locator('button[aria-label="New chat"]').click();
+      await page.locator(".workspace-mini-switcher").waitFor();
       await page.locator(".workspace-mini-switcher").getByRole("button", { name: "Private" }).click();
     }
     const threadForm = (await startForm.count()) > 0 ? startForm : page.locator("form.workspace-quick-form").filter({ hasText: "Private" });
@@ -151,7 +166,7 @@ async function main() {
     await threadForm.getByRole("button", { name: /Create/ }).click();
     await page.locator(".workspace-chat-section", { hasText: "Private" }).getByText(DIRECT_TITLE).waitFor();
 
-    await page.getByRole("button", { name: "Groups" }).click();
+    await switchChatMode(page, "Groups", "Group chats");
 
     await page.getByRole("button", { name: "Attach" }).click();
     await page.locator(`select[aria-label="Saved application"] option[value="${FIXTURE_APP_ID}"]`).waitFor({ state: "attached" });

@@ -74,11 +74,18 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function TutorNavRail() {
+type TutorNavRailProps = {
+  initialAuthState?: {
+    authEnabled: boolean;
+    user: AuthUser | null;
+  };
+};
+
+export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const pathname = usePathname() ?? "/";
   const router = useRouter();
-  const [authEnabled, setAuthEnabled] = useState(false);
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [authEnabled, setAuthEnabled] = useState<boolean | null>(initialAuthState?.authEnabled ?? null);
+  const [user, setUser] = useState<AuthUser | null>(initialAuthState?.user ?? null);
 
   useEffect(() => {
     let cancelled = false;
@@ -144,7 +151,9 @@ export function TutorNavRail() {
         })}
       </nav>
       <div className="nav-account">
-        {!authEnabled ? (
+        {authEnabled === null ? (
+          <span className="nav-account-hint">Checking workspace…</span>
+        ) : !authEnabled ? (
           <span className="nav-account-hint">Local JSON mode</span>
         ) : user ? (
           <>
