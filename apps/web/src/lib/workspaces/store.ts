@@ -3488,6 +3488,15 @@ async function getWorkspaceShellViewFromDb(ownerId: string, workspaceId?: string
   ]);
   const membersByThreadId = groupThreadMembersByThreadId(threadMemberRows);
   const visibleThreadRows = threadRows.filter((thread) => isDbThreadVisibleToOwner(thread, ownerId, membersByThreadId.get(thread.id)));
+  const visibleThreadIds = visibleThreadRows.map((thread) => thread.id);
+  const messageRows = visibleThreadIds.length
+    ? await getDb()
+        .select()
+        .from(workspaceMessages)
+        .where(and(eq(workspaceMessages.workspaceId, workspace.id), inArray(workspaceMessages.threadId, visibleThreadIds)))
+        .orderBy(desc(workspaceMessages.createdAt))
+        .limit(MESSAGE_WINDOW_PER_THREAD)
+    : [];
 
   return {
     workspace,
@@ -3495,7 +3504,7 @@ async function getWorkspaceShellViewFromDb(ownerId: string, workspaceId?: string
     members: memberRows.map(rowToWorkspaceMember),
     agentProfiles: [],
     threads: visibleThreadRows.map((thread) => rowToWorkspaceThread(thread, membersByThreadId.get(thread.id)?.map((member) => member.memberId))),
-    messages: [],
+    messages: messageRows.map(rowToWorkspaceMessage).sort((a, b) => a.createdAt - b.createdAt),
     tasks: [],
     artifacts: [],
     agentRuns: [],

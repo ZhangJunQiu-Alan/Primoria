@@ -103,9 +103,13 @@ function readCachedWorkspaceShell() {
 function writeCachedWorkspaceShell(view: WorkspaceView) {
   if (!view.persisted || typeof window === "undefined") return;
   try {
+    const shellMessages = [...view.messages]
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .slice(0, MESSAGE_PAGE_SIZE)
+      .sort((a, b) => a.createdAt - b.createdAt);
     const shell: WorkspaceView = {
       ...view,
-      messages: [],
+      messages: shellMessages,
       tasks: [],
       artifacts: [],
       agentRuns: [],
@@ -122,6 +126,42 @@ function writeCachedWorkspaceShell(view: WorkspaceView) {
 
 function threadActivityCacheKey(workspaceId: string, threadId: string) {
   return `primoria:workspace:${workspaceId}:thread:${threadId}:activity:v1`;
+}
+
+function activeThreadCacheKey(workspaceId: string) {
+  return `primoria:workspace:${workspaceId}:active-thread:v1`;
+}
+
+function readCachedActiveThreadId(workspaceId: string) {
+  if (typeof window === "undefined") return "";
+  try {
+    return window.localStorage.getItem(activeThreadCacheKey(workspaceId)) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+function writeCachedActiveThreadId(workspaceId: string, threadId: string) {
+  if (typeof window === "undefined" || !threadId) return;
+  try {
+    window.localStorage.setItem(activeThreadCacheKey(workspaceId), threadId);
+  } catch {
+    // Best-effort navigation restore.
+  }
+}
+
+function pickWorkspaceThread(view: WorkspaceView, preferredThreadId?: string) {
+  const latestMessage = [...view.messages].sort((a, b) => b.createdAt - a.createdAt)[0];
+  if (preferredThreadId) {
+    const preferred = view.threads.find((thread) => thread.id === preferredThreadId);
+    const preferredHasLoadedMessages = view.messages.some((message) => message.threadId === preferredThreadId);
+    if (preferred && (preferredHasLoadedMessages || !latestMessage)) return preferred;
+  }
+  if (latestMessage) {
+    const messageThread = view.threads.find((thread) => thread.id === latestMessage.threadId);
+    if (messageThread) return messageThread;
+  }
+  return [...view.threads].sort((a, b) => b.updatedAt - a.updatedAt)[0];
 }
 
 function readCachedThreadActivity(workspaceId: string, threadId: string): CachedThreadActivity | null {
@@ -184,8 +224,8 @@ function dedupeVisibleMembers(members: WorkspaceMember[], profiles: WorkspaceAge
 export function WorkspaceClient({ initialView }: { initialView: WorkspaceView }) {
   const [view, setView] = useState(initialView);
   const [workspaceReady, setWorkspaceReady] = useState(initialView.persisted);
-  const [activeThreadId, setActiveThreadId] = useState(initialView.threads[0]?.id ?? "");
-  const [chatMode, setChatMode] = useState<WorkspaceThread["type"]>("room");
+  const [activeThreadId, setActiveThreadId] = useState(() => pickWorkspaceThread(initialView, readCachedActiveThreadId(initialView.workspace.id))?.id ?? "");
+  const [chatMode, setChatMode] = useState<WorkspaceThread["type"]>(() => pickWorkspaceThread(initialView, readCachedActiveThreadId(initialView.workspace.id))?.type ?? "room");
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
   const [mentionIndex, setMentionIndex] = useState(0);
@@ -292,7 +332,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [appPreview, setAppPreview] = useState<AppPreviewState | null>(null);
   const [loadingEarlier, setLoadingEarlier] = useState(false);
   const [exhaustedThreadIds, setExhaustedThreadIds] = useState<Record<string, boolean>>({});
-  const [loadingThreadActivityIds, setLoadingThreadActivityIds] = useState<Record<string, boolean>>({});
   const [loadedThreadActivityIds, setLoadedThreadActivityIds] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(initialView.messages.map((message) => [message.threadId, true])),
   );
@@ -302,10 +341,14 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
 
   const visibleThreads = view.threads.filter((thread) => thread.type === chatMode);
   const activeThread = visibleThreads.find((thread) => thread.id === activeThreadId) ?? visibleThreads[0];
-  const activeThreadActivityLoading = Boolean(activeThread && loadingThreadActivityIds[activeThread.id] && !loadedThreadActivityIds[activeThread.id]);
   const messages = useMemo(
     () => view.messages.filter((message) => message.threadId === activeThread?.id),
     [activeThread?.id, view.messages],
+  );
+  const activeThreadActivityLoading = Boolean(
+    activeThread &&
+      !loadedThreadActivityIds[activeThread.id] &&
+      messages.length === 0,
   );
   const agentRunsByOutputMessageId = useMemo(() => {
     const runsByMessage = new Map<string, WorkspaceAgentRun>();
@@ -410,13 +453,16 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     writeCachedWorkspaceShell(data);
     setActiveThreadId((current) => {
       if (data.threads.some((thread) => thread.id === current)) return current;
-      return data.threads[0]?.id ?? "";
+      const nextThread = pickWorkspaceThread(data);
+      if (nextThread) setChatMode(nextThread.type);
+      return nextThread?.id ?? "";
     });
   }, [markThreadRead]);
 
   useEffect(() => {
     activeThreadIdRef.current = activeThread?.id ?? "";
-  }, [activeThread?.id]);
+    if (workspaceReady && view.persisted && activeThread) writeCachedActiveThreadId(view.workspace.id, activeThread.id);
+  }, [activeThread, view.persisted, view.workspace.id, workspaceReady]);
 
   useEffect(() => {
     setMentionIndex(0);
@@ -432,11 +478,12 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     async function loadInitialWorkspace() {
       const cached = readCachedWorkspaceShell();
       if (cached) {
+        const cachedThread = pickWorkspaceThread(cached, readCachedActiveThreadId(cached.workspace.id));
         setView(cached);
         workspaceIdRef.current = cached.workspace.id;
-        setActiveThreadId(cached.threads[0]?.id ?? "");
-        setChatMode(cached.threads[0]?.type ?? "room");
-        setLoadedThreadActivityIds({});
+        setActiveThreadId(cachedThread?.id ?? "");
+        setChatMode(cachedThread?.type ?? "room");
+        setLoadedThreadActivityIds(Object.fromEntries(cached.messages.map((message) => [message.threadId, true])));
         setWorkspaceReady(true);
       }
       try {
@@ -444,11 +491,12 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         if (!response.ok) throw new Error("Workspace could not be loaded.");
         const data = (await response.json()) as WorkspaceView;
         if (controller.signal.aborted) return;
+        const nextThread = pickWorkspaceThread(data, readCachedActiveThreadId(data.workspace.id));
         setView(data);
         workspaceIdRef.current = data.workspace.id;
-        setActiveThreadId(data.threads[0]?.id ?? "");
-        setChatMode(data.threads[0]?.type ?? "room");
-        setLoadedThreadActivityIds({});
+        setActiveThreadId(nextThread?.id ?? "");
+        setChatMode(nextThread?.type ?? "room");
+        setLoadedThreadActivityIds(Object.fromEntries(data.messages.map((message) => [message.threadId, true])));
         writeCachedWorkspaceShell(data);
       } catch {
         if (!controller.signal.aborted) setError("Workspace could not be loaded.");
@@ -563,7 +611,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     const controller = new AbortController();
     async function loadThreadActivity(threadId: string) {
       loadingThreadActivityIdsRef.current.add(threadId);
-      setLoadingThreadActivityIds((current) => ({ ...current, [threadId]: true }));
       const cached = readCachedThreadActivity(view.workspace.id, threadId);
       if (cached) {
         setView((current) => ({
@@ -606,11 +653,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         if (!controller.signal.aborted) setError("Thread activity is temporarily unavailable.");
       } finally {
         loadingThreadActivityIdsRef.current.delete(threadId);
-        setLoadingThreadActivityIds((current) => {
-          const next = { ...current };
-          delete next[threadId];
-          return next;
-        });
       }
     }
     void loadThreadActivity(activeThread.id);
@@ -645,10 +687,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     let timeout: number | undefined;
     async function loadWorkspaceCatalog() {
       try {
-        const [agentsResponse, connectionsResponse] = await Promise.all([
-          fetch(`/api/workspaces/${view.workspace.id}/agents`, { cache: "no-store", signal: controller.signal }),
-          fetch(`/api/workspaces/${view.workspace.id}/agent-connections`, { cache: "no-store", signal: controller.signal }),
-        ]);
+        const agentsResponse = await fetch(`/api/workspaces/${view.workspace.id}/agents`, { cache: "no-store", signal: controller.signal });
         if (controller.signal.aborted) return;
         if (agentsResponse.ok) {
           const data = (await agentsResponse.json()) as { templates?: WorkspaceAgentTemplate[]; agentProfiles?: WorkspaceAgentProfile[]; agentMembers?: WorkspaceMember[] };
@@ -658,13 +697,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             ...current,
             agentProfiles: mergeAgentProfiles(current.agentProfiles, data.agentProfiles ?? []),
             members: mergeMembers(current.members, data.agentMembers ?? []),
-          }));
-        }
-        if (connectionsResponse.ok) {
-          const data = (await connectionsResponse.json()) as { connections?: WorkspaceAgentConnection[] };
-          setView((current) => ({
-            ...current,
-            agentConnections: mergeAgentConnections(current.agentConnections, data.connections ?? []),
           }));
         }
       } catch {
@@ -2594,122 +2626,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
             </ul>
           </section>
 
-          <WorkspaceAgentLibraryPanel
-            agentProfiles={visibleAgentProfiles}
-            agentMembers={agentMembers}
-            agentRuns={view.agentRuns}
-            activeThread={activeThread}
-            startingDirectProfileId={startingAgentDirectProfileId}
-            onMentionAgent={mentionAgentFromLibrary}
-            onStartDirectChat={(profile) => void startDirectChatFromAgentLibrary(profile)}
-          />
-
-          <WorkspaceAgentConnectionPanel
-            connections={view.agentConnections}
-            connectionName={connectionName}
-            onConnectionNameChange={setConnectionName}
-            connectionScope={connectionScope}
-            onConnectionScopeChange={setConnectionScope}
-            connectionTransport={connectionTransport}
-            onConnectionTransportChange={setConnectionTransport}
-            connectionRef={connectionRef}
-            onConnectionRefChange={setConnectionRef}
-            connectionTools={connectionTools}
-            onConnectionToolsChange={setConnectionTools}
-            savingConnection={savingConnection}
-            updatingConnectionIds={updatingConnectionIds}
-            onCreateConnection={createWorkspaceAgentConnection}
-            onToggleConnectionStatus={(connection) => void updateWorkspaceAgentConnectionStatus(connection)}
-          />
-
-          <WorkspaceAgentSkillReviewPanel
-            skills={workspaceAgentSkills}
-            loadingSkills={loadingWorkspaceAgentSkills}
-            skillHistoryPath={skillHistoryPath}
-            skillVersionsByPath={skillVersionsByPath}
-            loadingSkillHistoryPath={loadingSkillHistoryPath}
-            restoringSkillVersionKey={restoringSkillVersionKey}
-            onEdit={startWorkspaceAgentSkillEdit}
-            onHistory={(skill) => void loadWorkspaceAgentSkillVersions(skill)}
-            onRestore={(path, version) => void restoreWorkspaceAgentSkillVersion(path, version)}
-          />
-
-          <WorkspaceAgentMemoryPanel
-            agentMemories={view.agentMemories}
-            activeThreadId={activeThread?.id}
-            agentProfiles={visibleAgentProfiles}
-            archivingMemoryIds={archivingMemoryIds}
-            onArchive={(memory) => void archiveAgentMemory(memory)}
-          />
-
-          <section className="workspace-panel">
-            <div className="workspace-panel-header">
-              <strong>Tasks</strong>
-              <span>{view.tasks.length}</span>
-            </div>
-            <form className="workspace-quick-form compact workspace-task-form" onSubmit={createTask}>
-              <input
-                aria-label="Task title"
-                value={taskTitle}
-                onChange={(event) => setTaskTitle(event.target.value)}
-                placeholder="New task"
-              />
-              <select
-                aria-label="Task assignee"
-                value={taskAssigneeId}
-                onChange={(event) => setTaskAssigneeId(event.target.value)}
-              >
-                <option value="">Unassigned</option>
-                {visibleMembers.map((member) => (
-                  <option key={member.id} value={member.id}>{formatTaskAssigneeOption(member)}</option>
-                ))}
-              </select>
-              <input
-                aria-label="Task scope"
-                value={taskScope}
-                onChange={(event) => setTaskScope(event.target.value)}
-                placeholder="Scope"
-              />
-              <input
-                aria-label="Task due date"
-                value={taskDueAt}
-                onChange={(event) => setTaskDueAt(event.target.value)}
-                placeholder="Due"
-              />
-              <button type="submit">Add</button>
-            </form>
-            <ul className="workspace-task-list">
-              {tasks.map((task) => (
-                <li key={task.id}>
-                  <span>
-                    <strong>{task.title}</strong>
-                    <small>{task.scope} / {task.status} / {task.progress}</small>
-                    {task.assigneeName ? <small>Owner: {task.assigneeName}</small> : null}
-                    {task.resultSummary ? <small>Result: {task.resultSummary}</small> : null}
-                  </span>
-                  <form
-                    className="workspace-task-submit"
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      void submitTaskResult(task);
-                    }}
-                  >
-                    <input
-                      aria-label={`Result for ${task.title}`}
-                      value={taskResultDrafts[task.id] ?? ""}
-                      onChange={(event) => setTaskResultDrafts((current) => ({ ...current, [task.id]: event.target.value }))}
-                      placeholder="Result"
-                    />
-                    <button type="submit">Submit</button>
-                  </form>
-                  <button type="button" onClick={() => void updateTaskStatus(task, task.status === "done" ? "open" : "done")}>
-                    {task.status === "done" ? "Reopen" : "Complete"}
-                  </button>
-                </li>
-              ))}
-              {!tasks.length ? <li className="workspace-muted-row">No tasks in this chat yet.</li> : null}
-            </ul>
-          </section>
         </aside>
       </details>
 
