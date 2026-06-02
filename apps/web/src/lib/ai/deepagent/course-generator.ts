@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { saveCourse } from "@/lib/courses/store";
-import type { Course, CourseBlock } from "@/lib/courses/types";
+import type { BlockType, Course, CourseBlock } from "@/lib/courses/types";
 import { summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
@@ -258,6 +258,110 @@ export async function generateCourse(
   await saveCourse(course);
 
   return { course, summary: summarizeCourse(course) };
+}
+
+const BLOCK_SCHEMAS = {
+  text: TextBlockSchema,
+  analogy: AnalogyBlockSchema,
+  transfer: TransferBlockSchema,
+  visual: VisualBlockSchema,
+  code: CodeBlockSchema,
+  quiz: QuizBlockSchema,
+  mind_map: MindMapBlockSchema,
+  slide: SlideBlockSchema,
+  worksheet: WorksheetBlockSchema,
+} as const satisfies Record<BlockType, z.ZodTypeAny>;
+
+export type GenerateBlockInput = {
+  course: Course;
+  targetType: BlockType;
+  instruction: string;
+  sourceBlock?: CourseBlock; // present when transforming an existing block
+};
+
+// Generate a single course block of a target type, reusing the course generator's
+// per-type schema and normalization. Used by the course editor for add/transform.
+export async function generateBlock(
+  input: GenerateBlockInput,
+  settings: TutorProviderSettings = {},
+): Promise<CourseBlock> {
+  const model = createTutorModel(settings);
+  const schema = BLOCK_SCHEMAS[input.targetType];
+  const systemPrompt = `${COURSE_SYSTEM_PROMPT}
+
+You are now generating EXACTLY ONE block of type "${input.targetType}" for an existing course. Return only that single block as JSON matching the schema for this type. Do not return a full course.`;
+  const userPrompt = buildSingleBlockPrompt(input);
+
+  const raw = await invokeSingleBlock(model, schema, systemPrompt, userPrompt, input.targetType);
+  const withType = raw && typeof raw === "object" ? { ...(raw as Record<string, unknown>), type: input.targetType } : raw;
+  const normalized = normalizeBlock(withType, input.course.topic);
+  if (!normalized || normalized.type !== input.targetType) {
+    throw new Error(`Could not generate a usable "${input.targetType}" block.`);
+  }
+  return { id: randomId("blk"), ...normalized };
+}
+
+function buildSingleBlockPrompt(input: GenerateBlockInput): string {
+  const outline = input.course.blocks
+    .map((block, i) => `${i + 1}. [${block.type}] ${block.title ?? block.type}`)
+    .join("\n");
+  const lines = [
+    `Course title: ${input.course.title}`,
+    `Course topic: ${input.course.topic}`,
+    `Existing blocks:`,
+    outline || "(none)",
+    "",
+  ];
+  if (input.sourceBlock) {
+    const { id: _id, ...rest } = input.sourceBlock;
+    lines.push(
+      `Transform the following block into a "${input.targetType}" block, preserving its teaching intent and meaning:`,
+      JSON.stringify(rest, null, 2),
+      "",
+    );
+  }
+  lines.push(
+    `Learner request: ${input.instruction}`,
+    "",
+    `Generate exactly one "${input.targetType}" block as JSON. Write in the same language as the course. Make it specific to this course, not boilerplate.`,
+  );
+  return lines.join("\n");
+}
+
+async function invokeSingleBlock(
+  model: ReturnType<typeof createTutorModel>,
+  schema: z.ZodTypeAny,
+  systemPrompt: string,
+  userPrompt: string,
+  targetType: BlockType,
+) {
+  try {
+    const structured = model.withStructuredOutput(schema, { name: "course_block" });
+    return await structured.invoke(
+      [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+      { callbacks: [] },
+    );
+  } catch (error) {
+    console.warn("[course-generator] single-block structured output failed, falling back to JSON prompt", error);
+  }
+
+  const result = await model.invoke(
+    [
+      {
+        role: "system",
+        content: `${systemPrompt}
+
+Your provider may not support native structured output. Return ONLY one JSON object for a "${targetType}" block. No markdown fences. No prose outside JSON.`,
+      },
+      { role: "user", content: userPrompt },
+    ],
+    { callbacks: [] },
+  );
+
+  return parseJsonObject(messageContentToString(result.content));
 }
 
 async function invokeCourseJson(model: ReturnType<typeof createTutorModel>, userPrompt: string, topic: string) {

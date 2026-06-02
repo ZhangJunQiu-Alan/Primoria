@@ -321,42 +321,6 @@ export type GraphVisualizationArtifact = {
   layout?: GraphLayout;
 };
 
-export type QuizQuestion =
-  | {
-      kind: "multiple_choice";
-      question: string;
-      options: string[];
-      correct: number;
-      explanation?: string;
-    }
-  | {
-      kind: "multi_select";
-      question: string;
-      options: string[];
-      correct: number[];
-      explanation?: string;
-    }
-  | {
-      kind: "fill_blank";
-      question: string;
-      answer: string;
-      alternates?: string[];
-      explanation?: string;
-    }
-  | {
-      kind: "matching";
-      question: string;
-      pairs: Array<{ left: string; right: string }>;
-      explanation?: string;
-    };
-
-export type QuizArtifact = {
-  type: "quiz";
-  title: string;
-  description?: string;
-  questions: QuizQuestion[];
-};
-
 export type MoleculeAtom = {
   id: string;
   element: string;
@@ -396,8 +360,7 @@ export type TutorArtifact =
   | MathExplorerArtifact
   | WaveVisualizationArtifact
   | GraphVisualizationArtifact
-  | MoleculeArtifact
-  | QuizArtifact;
+  | MoleculeArtifact;
 
 export type TutorAgentResponse = {
   label: TutorAgentLabel;

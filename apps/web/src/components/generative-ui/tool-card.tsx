@@ -12,7 +12,6 @@ import { MathExplorerRenderer } from "./math-explorer-renderer";
 import { WaveVisualizer } from "./wave-visualizer";
 import { GraphVisualizer } from "./graph-visualizer";
 import { MoleculeRenderer } from "./molecule-renderer";
-import { QuizRenderer } from "./quiz-renderer";
 
 export function ToolCard({
   artifact,
@@ -155,10 +154,6 @@ export function ToolCard({
 
   if (artifact.type === "molecule") {
     return <MoleculeRenderer artifact={artifact} />;
-  }
-
-  if (artifact.type === "quiz") {
-    return <QuizRenderer artifact={artifact} />;
   }
 
   if (artifact.type === "todo_list") {
