@@ -438,6 +438,7 @@ Behavior in COURSE DETAIL MODE:
 - For summarize/explain/practice questions about this course, answer directly from this context. Do NOT call generate_course just because the message contains words like 课程, 学习路径, course, or lesson.
 - Only call generate_course if the learner explicitly asks to create a NEW/different course.
 - If the learner asks to modify/rewrite/simplify/expand/fix the selected block, call revise_selected_course_block.
+- If the learner asks for a quiz / test / practice / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测, call add_course_block with targetType "quiz" (use "worksheet" only if they explicitly want open-ended practice). Do NOT build a widget or a new course for this. The quiz becomes a graded block in THIS course.
 - If no block is selected and the learner asks to modify a block, ask them to select a block first.
 - Keep answers concise and in the user's language.
 `.trim();
@@ -832,58 +833,6 @@ const renderGraphTool = tool(
   },
 );
 
-const QuizQuestionSchema = z.discriminatedUnion("kind", [
-  z.object({
-    kind: z.literal("multiple_choice"),
-    question: z.string(),
-    options: z.array(z.string()).min(2).max(6),
-    correct: z.number().int().min(0).describe("Index of the correct option (0-based)"),
-    explanation: z.string().optional(),
-  }),
-  z.object({
-    kind: z.literal("multi_select"),
-    question: z.string(),
-    options: z.array(z.string()).min(2).max(6),
-    correct: z.array(z.number().int().min(0)).min(1).describe("Indices of ALL correct options"),
-    explanation: z.string().optional(),
-  }),
-  z.object({
-    kind: z.literal("fill_blank"),
-    question: z.string(),
-    answer: z.string().describe("Primary correct answer (1-3 words, case-insensitive matched)"),
-    alternates: z.array(z.string()).optional().describe("Other acceptable answers / synonyms"),
-    explanation: z.string().optional(),
-  }),
-  z.object({
-    kind: z.literal("matching"),
-    question: z.string(),
-    pairs: z.array(z.object({ left: z.string(), right: z.string() })).min(3).max(8),
-    explanation: z.string().optional(),
-  }),
-]);
-
-const renderQuizTool = tool(
-  async ({ title, description, questions }) => {
-    return JSON.stringify({
-      type: "quiz",
-      title: title || "Quiz",
-      description,
-      questions,
-    });
-  },
-  {
-    name: "render_quiz",
-    description:
-      "Render an interactive quiz with instant per-question feedback, correct/incorrect highlighting, explanations, and a score summary. Supports multiple_choice, multi_select, fill_blank, and matching question types.\n\nUse for: practice questions, knowledge checks, concept review, formative assessment.\nDo NOT call plan_visualization before this tool.\n\nGuidelines:\n- 3–6 questions; mix types for variety\n- Always include explanation for every question\n- multiple_choice: 4 options, correct is index 0–3; auto-checked on click\n- multi_select: 4–5 options, correct is array of all correct indices; checked on button click\n- fill_blank: short answer (1–3 words); add alternates for synonyms/abbreviations; matched case-insensitively\n- matching: 3–6 pairs; right column is shuffled; left items are terms, right items are definitions/examples",
-    schema: z.object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-      questions: z.array(QuizQuestionSchema).min(1).max(10),
-    }),
-    returnDirect: true,
-  },
-);
-
 const MoleculeAtomSchema = z.object({
   id: z.string(),
   element: z.string().describe("Chemical symbol e.g. H, C, O, N, P, S, Cl, Br, Fe, etc."),
@@ -999,6 +948,7 @@ COURSE branch has highest priority only when the learner is in the main tutor wo
 2. Call generate_course with the specific topic.
 3. Stop immediately after generate_course returns. The tool result is the UI card.
 Never call task, plan_visualization, or widgetRenderer in COURSE branch.
+Quizzes live INSIDE courses, not as standalone widgets. In main tutor mode, if the learner asks for a quiz / test / practice questions / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测 on a topic, enter COURSE branch and call generate_course for that topic — generate_course includes a quiz block when it fits. (If they are already inside a course, COURSE DETAIL MODE handles this with add_course_block instead.)
 
 CHART branch (if COURSE does not match): user asks for chart / graph / data plot / bar chart / line chart / scatter / pie / radar / histogram / heatmap / treemap.
   Call render_chart with a complete ECharts option JSON. Stop immediately. Do NOT call plan_visualization.
@@ -1042,16 +992,7 @@ Call render_graph directly. Stop immediately after render_graph returns.
    - Set directed=true for dependency/call graphs, DAGs, FSMs
 2. Stop.
 
-QUIZ branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH do not match): user asks for a quiz / test / practice questions / knowledge check / assessment / self-test / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测.
-  Call render_quiz directly — no plan_visualization. Stop immediately after render_quiz returns.
-  - 3–6 questions; mix question types
-  - multiple_choice for factual recall and concept recognition
-  - multi_select for "which of the following…" / "all that apply" scenarios
-  - fill_blank for key terms, formulas, names (short phrase, 1–3 words)
-  - matching for definitions, examples, concept pairs (3–6 pairs)
-  - Always include a clear explanation for every question
-
-MOLECULE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH, QUIZ do not match): user asks for a molecular structure / chemical structure / atom arrangement / DNA/RNA base / amino acid / organic molecule / crystal fragment / VSEPR geometry / Lewis structure / 分子结构 / 化学键 / 原子模型 / 碱基 / 氨基酸 / 有机分子.
+MOLECULE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH do not match): user asks for a molecular structure / chemical structure / atom arrangement / DNA/RNA base / amino acid / organic molecule / crystal fragment / VSEPR geometry / Lewis structure / 分子结构 / 化学键 / 原子模型 / 碱基 / 氨基酸 / 有机分子.
 Do NOT use for abstract 3D field visualizations or orbital mechanics (use 3D SCIENCE).
 Call render_molecule directly. Stop immediately after render_molecule returns.
 1. Call render_molecule with chemically accurate 3D atom coordinates in Angstroms.
@@ -1065,7 +1006,7 @@ Call render_molecule directly. Stop immediately after render_molecule returns.
    Set representation="sphere" for space-fill questions, "stick" for bond-only diagrams.
 3. Stop.
 
-3D SCIENCE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH, QUIZ, MOLECULE do not match): user asks for a 3D scientific visualization — 3D vectors, electric/magnetic/gravitational fields, orbital mechanics (Kepler's laws, planetary motion), wave propagation in 3D, abstract orbital shapes (s/p/d orbitals), crystal lattice structures, geological/geographic 3D surfaces, or any concept that is inherently three-dimensional and NOT a concrete molecule with atoms and bonds.
+3D SCIENCE branch (if COURSE, CHART, DIAGRAM, PHYSICS, ALGORITHM, MATH EXPLORER, WAVE, GRAPH, MOLECULE do not match): user asks for a 3D scientific visualization — 3D vectors, electric/magnetic/gravitational fields, orbital mechanics (Kepler's laws, planetary motion), wave propagation in 3D, abstract orbital shapes (s/p/d orbitals), crystal lattice structures, geological/geographic 3D surfaces, or any concept that is inherently three-dimensional and NOT a concrete molecule with atoms and bonds.
 Call render_3d_scene directly. Stop immediately after render_3d_scene returns.
 1. Call render_3d_scene. Use the REQUIRED structure: container, renderer, camera at (8,6,8), three-light setup (ambient+key+rim), OrbitControls with damping, GridHelper, makeLabel sprite factory, animate loop, ResizeObserver.
 2. Stop.
@@ -1109,7 +1050,7 @@ function createModel(options = {}) {
       apiKey,
       anthropicApiUrl: baseUrl?.replace(/\/$/, ""),
       temperature: 0.2,
-      maxTokens: streaming ? 12000 : 4096,
+      maxTokens: streaming ? 24000 : 4096,
       streaming,
       clientOptions: {
         timeout: 180_000,
@@ -1123,7 +1064,7 @@ function createModel(options = {}) {
     model,
     apiKey,
     temperature: 0.2,
-    maxTokens: 12000,
+    maxTokens: 24000,
     streaming,
     configuration: { baseURL: baseUrl.replace(/\/$/, "") },
   });
@@ -1134,7 +1075,7 @@ const checkpointer = new MemorySaver();
 export const graph = createDeepAgent({
   name: "primoria-tutor",
   model: createModel(),
-  tools: [planVisualizationTool, widgetRendererTool, generateCourseTool, getCourseCardTool, renderChartTool, renderDiagramTool, renderPhysicsSceneTool, render3dSceneTool, renderAlgorithmTool, renderMathExplorerTool, renderWaveTool, renderGraphTool, renderQuizTool, renderMoleculeTool],
+  tools: [planVisualizationTool, widgetRendererTool, generateCourseTool, getCourseCardTool, renderChartTool, renderDiagramTool, renderPhysicsSceneTool, render3dSceneTool, renderAlgorithmTool, renderMathExplorerTool, renderWaveTool, renderGraphTool, renderMoleculeTool],
   systemPrompt: SYSTEM_PROMPT,
   subagents,
   middleware: [primoriaContextMiddleware, primoriaCourseDetailMiddleware],

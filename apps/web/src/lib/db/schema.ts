@@ -282,6 +282,24 @@ export const userSettings = pgTable("user_settings", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const quizAttempts = pgTable(
+  "quiz_attempts",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    blockId: text("block_id").notNull(),
+    answers: jsonb("answers").notNull(),
+    score: integer("score").notNull(),
+    total: integer("total").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerCourseIdx: index("quiz_attempts_owner_course_idx").on(table.ownerId, table.courseId),
+    blockIdx: index("quiz_attempts_block_idx").on(table.blockId),
+  }),
+);
+
 export type UserRow = typeof users.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;

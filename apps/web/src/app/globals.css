@@ -4551,6 +4551,9 @@ cpk-web-inspector {
 
 /* ── worksheet block ──────────────────────────────────────────────── */
 .course-block-tag-worksheet { background: #eef4e8; border-color: #4a7a5a; color: #2f5a3d; }
+.course-block-tag-unknown { background: #f0ece2; border-color: #b8a98c; color: #6b6357; }
+.course-block-fallback-note { margin: 0; color: #6b6357; font-size: 14px; }
+.course-block-fallback-note code { background: #fff2de; border: 1px solid #eadfce; border-radius: 6px; padding: 1px 6px; }
 
 .course-worksheet { display: flex; flex-direction: column; gap: 16px; }
 

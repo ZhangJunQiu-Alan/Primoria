@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { getCourse, updateBlock } from "@/lib/courses/store";
+import { getCourse, insertBlock, moveBlock, removeBlock, updateBlock } from "@/lib/courses/store";
 import { recordCourseEditEvent } from "@/lib/memory/course-edit-events";
-import type { Course, CourseBlock, Slide, VisualBlock, WorksheetItem } from "@/lib/courses/types";
+import type { BlockType, Course, CourseBlock, Slide, VisualBlock, WorksheetItem } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
+import { generateBlock } from "./course-generator";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 
 const TextEdit = z.object({
@@ -169,6 +170,130 @@ export async function editBlock(
     },
   });
   return { course: updatedCourse, block: next };
+}
+
+export type AddBlockInput = {
+  courseId: string;
+  targetType: BlockType;
+  instruction: string;
+  afterBlockId?: string; // insert right after this block; default appends to the end
+};
+
+export async function addBlock(
+  input: AddBlockInput,
+  settings: TutorProviderSettings = {},
+): Promise<EditBlockResult> {
+  const course = await getCourse(input.courseId);
+  if (!course) throw new Error("Course not found");
+
+  const block = await generateBlock(
+    { course, targetType: input.targetType, instruction: input.instruction },
+    settings,
+  );
+  const atIndex = resolveInsertIndex(course, input.afterBlockId);
+  const updatedCourse = await insertBlock(input.courseId, block, atIndex);
+  if (!updatedCourse) throw new Error("Insert failed");
+
+  await recordCourseEditEvent({
+    courseId: input.courseId,
+    blockId: block.id,
+    instruction: input.instruction,
+    beforeBlock: null,
+    afterBlock: block,
+    metadata: { source: "course-editor", action: "add", targetType: input.targetType },
+  });
+  return { course: updatedCourse, block };
+}
+
+export type TransformBlockInput = {
+  courseId: string;
+  blockId: string;
+  targetType: BlockType;
+  instruction: string;
+};
+
+export async function transformBlock(
+  input: TransformBlockInput,
+  settings: TutorProviderSettings = {},
+): Promise<EditBlockResult> {
+  const course = await getCourse(input.courseId);
+  if (!course) throw new Error("Course not found");
+  const previous = course.blocks.find((b) => b.id === input.blockId);
+  if (!previous) throw new Error("Block not found");
+  if (previous.type === input.targetType) {
+    throw new Error("Block is already this type. Use the block editor to rewrite it.");
+  }
+
+  const generated = await generateBlock(
+    { course, targetType: input.targetType, instruction: input.instruction, sourceBlock: previous },
+    settings,
+  );
+  // Keep the original block id so position and references are preserved.
+  const next = { ...generated, id: previous.id };
+  const updatedCourse = await updateBlock(input.courseId, input.blockId, next);
+  if (!updatedCourse) throw new Error("Update failed");
+
+  await recordCourseEditEvent({
+    courseId: input.courseId,
+    blockId: input.blockId,
+    instruction: input.instruction,
+    beforeBlock: previous,
+    afterBlock: next,
+    metadata: { source: "course-editor", action: "transform", fromType: previous.type, targetType: input.targetType },
+  });
+  return { course: updatedCourse, block: next };
+}
+
+export async function removeCourseBlock(
+  input: { courseId: string; blockId: string; instruction?: string },
+): Promise<{ course: Course }> {
+  const course = await getCourse(input.courseId);
+  if (!course) throw new Error("Course not found");
+  if (course.blocks.length <= 1) throw new Error("A course must keep at least one block.");
+  const previous = course.blocks.find((b) => b.id === input.blockId);
+  if (!previous) throw new Error("Block not found");
+
+  const updatedCourse = await removeBlock(input.courseId, input.blockId);
+  if (!updatedCourse) throw new Error("Remove failed");
+
+  await recordCourseEditEvent({
+    courseId: input.courseId,
+    blockId: input.blockId,
+    instruction: input.instruction ?? "remove block",
+    beforeBlock: previous,
+    afterBlock: null,
+    metadata: { source: "course-editor", action: "remove", removedType: previous.type },
+  });
+  return { course: updatedCourse };
+}
+
+export async function moveCourseBlock(
+  input: { courseId: string; blockId: string; toIndex: number; instruction?: string },
+): Promise<{ course: Course }> {
+  const course = await getCourse(input.courseId);
+  if (!course) throw new Error("Course not found");
+  const fromIndex = course.blocks.findIndex((b) => b.id === input.blockId);
+  if (fromIndex === -1) throw new Error("Block not found");
+  const block = course.blocks[fromIndex];
+
+  const updatedCourse = await moveBlock(input.courseId, input.blockId, input.toIndex);
+  if (!updatedCourse) throw new Error("Move failed");
+
+  await recordCourseEditEvent({
+    courseId: input.courseId,
+    blockId: input.blockId,
+    instruction: input.instruction ?? "reorder block",
+    beforeBlock: block,
+    afterBlock: block,
+    metadata: { source: "course-editor", action: "move", fromIndex, toIndex: input.toIndex },
+  });
+  return { course: updatedCourse };
+}
+
+function resolveInsertIndex(course: Course, afterBlockId?: string): number | undefined {
+  if (!afterBlockId) return undefined; // append
+  const idx = course.blocks.findIndex((b) => b.id === afterBlockId);
+  return idx === -1 ? undefined : idx + 1;
 }
 
 function buildEditPrompt(course: Course, block: CourseBlock, comment: string, selectedText?: string) {

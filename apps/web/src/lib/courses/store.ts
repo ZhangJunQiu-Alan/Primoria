@@ -32,6 +32,38 @@ export async function updateBlock(courseId: string, blockId: string, next: Cours
   return saveCourse(updated, ownerId);
 }
 
+export async function insertBlock(courseId: string, block: CourseBlock, atIndex?: number, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const blocks = [...course.blocks];
+  const idx = atIndex === undefined || atIndex < 0 || atIndex > blocks.length ? blocks.length : atIndex;
+  blocks.splice(idx, 0, block);
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
+export async function removeBlock(courseId: string, blockId: string, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const blocks = course.blocks.filter((block) => block.id !== blockId);
+  if (blocks.length === course.blocks.length) return undefined;
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
+export async function moveBlock(courseId: string, blockId: string, toIndex: number, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const from = course.blocks.findIndex((block) => block.id === blockId);
+  if (from === -1) return undefined;
+  const blocks = [...course.blocks];
+  const [moved] = blocks.splice(from, 1);
+  const dest = Math.max(0, Math.min(blocks.length, toIndex));
+  blocks.splice(dest, 0, moved);
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
 export async function archiveCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
   const course = await getCourse(id, ownerId);
   if (!course) return undefined;

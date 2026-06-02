@@ -39,7 +39,18 @@ export function BlockRenderer({ block, courseId }: { block: CourseBlock; courseI
   if (block.type === "mind_map") return <MindMapBlockView block={block} courseId={courseId} />;
   if (block.type === "slide") return <SlideBlockView block={block} />;
   if (block.type === "worksheet") return <WorksheetBlockView block={block} />;
-  return null;
+  return <UnknownBlockView block={block} />;
+}
+
+function UnknownBlockView({ block }: { block: CourseBlock }) {
+  const unknown = block as { type: string; title?: string };
+  return (
+    <BlockShell kind="unknown" title={unknown.title}>
+      <p className="course-block-fallback-note">
+        此内容类型(<code>{unknown.type}</code>)暂不支持显示，请更新到最新版本后再查看。
+      </p>
+    </BlockShell>
+  );
 }
 
 function BlockShell({

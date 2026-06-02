@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CopilotKitProvider } from "@/components/copilot-provider";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import "katex/dist/katex.min.css";
+import "mind-elixir/style.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

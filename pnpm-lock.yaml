@@ -102,6 +102,9 @@ importers:
       mermaid:
         specifier: ^11.15.0
         version: 11.15.0
+      mind-elixir:
+        specifier: ^5.12.2
+        version: 5.12.2
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -4828,6 +4831,9 @@ packages:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  mind-elixir@5.12.2:
+    resolution: {integrity: sha512-G9eyrmjp6Ot+Llf5oPZPj2N5ivzDVwiQpiJEaX7uTUvIRkUwkyoTW1vSKKayl6ZzRoEWE87zupEdlEJWwtqqVg==}
 
   minimatch@10.2.5:
     resolution: {integrity: sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==}
@@ -11775,6 +11781,8 @@ snapshots:
       mime-db: 1.54.0
 
   mime@1.6.0: {}
+
+  mind-elixir@5.12.2: {}
 
   minimatch@10.2.5:
     dependencies:
