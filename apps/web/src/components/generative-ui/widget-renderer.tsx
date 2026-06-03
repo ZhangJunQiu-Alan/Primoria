@@ -5,6 +5,7 @@ import { z } from "zod";
 import { IDIOMORPH_JS } from "./idiomorph-inline";
 import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
+import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 import { normalizeWidgetDependencies } from "@/lib/ai/widget-dependencies";
 
 export const WidgetDependency = z.object({
@@ -200,6 +201,8 @@ window.addEventListener('unhandledrejection', function(event) {
 });
 window.__primoriaShowWidgetError = showWidgetError;
 
+${THREE_ORBIT_CONTROLS_SHIM}
+
 document.addEventListener('click', function(event) {
   var promptButton = event.target.closest('button[data-prompt], [role="button"][data-prompt]');
   if (promptButton) {
@@ -233,13 +236,14 @@ var COMMON_DEPENDENCIES = {
   d3: { global: 'd3', url: 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js', kind: 'script' },
   Chart: { global: 'Chart', url: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js', kind: 'script' },
   gsap: { global: 'gsap', url: 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', kind: 'script' },
-  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js', kind: 'script' },
+  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js', kind: 'script' },
   anime: { global: 'anime', url: 'https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js', kind: 'script' },
   Matter: { global: 'Matter', url: 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js', kind: 'script' },
   p5: { global: 'p5', url: 'https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js', kind: 'script' },
   math: { global: 'math', url: 'https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js', kind: 'script' },
   L: { global: 'L', url: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', kind: 'script' },
-  mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' }
+  mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' },
+  cytoscape: { global: 'cytoscape', url: 'https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js', kind: 'script' }
 };
 var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(map, key) {
   map[COMMON_DEPENDENCIES[key].url] = true;
@@ -351,6 +355,9 @@ function loadDependency(dep, done) {
 
 function loadDependencies(deps, done) {
   if (!deps.length) {
+    try {
+      if (window.__primoriaInstallThreeOrbitControls) window.__primoriaInstallThreeOrbitControls();
+    } catch (_) {}
     done();
     return;
   }

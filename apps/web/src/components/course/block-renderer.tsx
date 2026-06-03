@@ -1,23 +1,56 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import type {
   AnalogyBlock,
   CodeBlock,
   CourseBlock,
+  FillBlankItem,
+  MindMapBlock,
+  MultiQuestion,
+  ProblemItem,
+  QuizBlock,
+  QuizQuestion,
+  ShortAnswerItem,
+  SingleQuestion,
+  Slide,
+  SlideBlock,
   TextBlock,
   TransferBlock,
+  TrueFalseQuestion,
   VisualBlock,
+  WorksheetBlock,
+  WorksheetItem,
 } from "@/lib/courses/types";
+import { MindMapBlockRenderer } from "@/components/course/mind-map-block-renderer";
 import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
+import { EChartsRenderer } from "@/components/generative-ui/echarts-renderer";
+import { MermaidRenderer } from "@/components/generative-ui/mermaid-renderer";
+import { PhysicsSceneRenderer } from "@/components/generative-ui/physics-scene-renderer";
 
-export function BlockRenderer({ block }: { block: CourseBlock }) {
+export function BlockRenderer({ block, courseId }: { block: CourseBlock; courseId?: string }) {
   if (block.type === "text") return <TextBlockView block={block} />;
   if (block.type === "analogy") return <AnalogyBlockView block={block} />;
   if (block.type === "transfer") return <TransferBlockView block={block} />;
   if (block.type === "visual") return <VisualBlockView block={block} />;
   if (block.type === "code") return <CodeBlockView block={block} />;
-  return null;
+  if (block.type === "quiz") return <QuizBlockView block={block} courseId={courseId} />;
+  if (block.type === "mind_map") return <MindMapBlockView block={block} courseId={courseId} />;
+  if (block.type === "slide") return <SlideBlockView block={block} />;
+  if (block.type === "worksheet") return <WorksheetBlockView block={block} />;
+  return <UnknownBlockView block={block} />;
+}
+
+function UnknownBlockView({ block }: { block: CourseBlock }) {
+  const unknown = block as { type: string; title?: string };
+  return (
+    <BlockShell kind="unknown" title={unknown.title}>
+      <p className="course-block-fallback-note">
+        此内容类型(<code>{unknown.type}</code>)暂不支持显示，请更新到最新版本后再查看。
+      </p>
+    </BlockShell>
+  );
 }
 
 function BlockShell({
@@ -88,10 +121,34 @@ function TransferBlockView({ block }: { block: TransferBlock }) {
 }
 
 function VisualBlockView({ block }: { block: VisualBlock }) {
+  if (block.engine === "echarts" && block.echartsOption) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <EChartsRenderer artifact={{ type: "echarts_widget", title: block.title ?? "Chart", description: block.description, option: block.echartsOption, height: block.echartsHeight }} />
+      </BlockShell>
+    );
+  }
+  if (block.engine === "mermaid" && block.mermaidDefinition) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <MermaidRenderer artifact={{ type: "mermaid_diagram", title: block.title ?? "Diagram", definition: block.mermaidDefinition }} />
+      </BlockShell>
+    );
+  }
+  if (block.engine === "physics" && block.physicsScene) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <PhysicsSceneRenderer artifact={{ type: "physics_scene", title: block.title ?? "Simulation", description: block.description, scene: block.physicsScene }} />
+      </BlockShell>
+    );
+  }
   return (
     <BlockShell kind="visual" title={block.title}>
       <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-      <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html} />
+      <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html ?? ""} />
     </BlockShell>
   );
 }
@@ -104,6 +161,516 @@ function CodeBlockView({ block }: { block: CodeBlock }) {
         <span className="course-code-lang">{block.language}</span>
         <code>{block.code}</code>
       </pre>
+    </BlockShell>
+  );
+}
+
+function MindMapBlockView({ block, courseId }: { block: MindMapBlock; courseId?: string }) {
+  return (
+    <BlockShell kind="mind_map" title={block.title}>
+      <MindMapBlockRenderer block={block} courseId={courseId} />
+    </BlockShell>
+  );
+}
+
+function SlideContent({ slide }: { slide: Slide }) {
+  if (slide.layout === "title") {
+    return (
+      <div className="course-slide course-slide-layout-title">
+        <h2 className="course-slide-title">{slide.title}</h2>
+        {slide.markdown && <CourseMarkdown markdown={slide.markdown} className="course-slide-body" />}
+      </div>
+    );
+  }
+  if (slide.layout === "quote") {
+    return (
+      <div className="course-slide course-slide-layout-quote">
+        <blockquote className="course-slide-quote">
+          {slide.markdown ?? slide.title}
+        </blockquote>
+        {slide.markdown && <p className="course-slide-quote-label">{slide.title}</p>}
+      </div>
+    );
+  }
+  if (slide.layout === "bullets") {
+    return (
+      <div className="course-slide course-slide-layout-bullets">
+        <h3 className="course-slide-heading">{slide.title}</h3>
+        {slide.bullets && slide.bullets.length > 0 ? (
+          <ul className="course-slide-bullets">
+            {slide.bullets.map((b, i) => <li key={i}>{b}</li>)}
+          </ul>
+        ) : (
+          slide.markdown && <CourseMarkdown markdown={slide.markdown} className="course-slide-body" />
+        )}
+      </div>
+    );
+  }
+  // image-text (no actual image — title + markdown)
+  return (
+    <div className="course-slide course-slide-layout-image-text">
+      <h3 className="course-slide-heading">{slide.title}</h3>
+      {slide.markdown && <CourseMarkdown markdown={slide.markdown} className="course-slide-body" />}
+      {slide.bullets && slide.bullets.length > 0 && (
+        <ul className="course-slide-bullets">
+          {slide.bullets.map((b, i) => <li key={i}>{b}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function SlideBlockView({ block }: { block: SlideBlock }) {
+  const [current, setCurrent] = useState(0);
+  const total = block.slides.length;
+  const slide = block.slides[Math.min(current, total - 1)];
+
+  return (
+    <BlockShell kind="slide" title={block.title}>
+      <div className="course-slide-deck">
+        <SlideContent slide={slide} />
+        {slide.note && (
+          <div className="course-slide-note">{slide.note}</div>
+        )}
+        <div className="course-slide-nav">
+          <button
+            className="course-slide-nav-btn"
+            disabled={current === 0}
+            onClick={() => setCurrent((c) => Math.max(0, c - 1))}
+            aria-label="Previous slide"
+          >
+            ←
+          </button>
+          <span className="course-slide-counter">{current + 1} / {total}</span>
+          <button
+            className="course-slide-nav-btn"
+            disabled={current === total - 1}
+            onClick={() => setCurrent((c) => Math.min(total - 1, c + 1))}
+            aria-label="Next slide"
+          >
+            →
+          </button>
+        </div>
+      </div>
+    </BlockShell>
+  );
+}
+
+type QuizState =
+  | { phase: "answering"; selections: Record<string, string | string[] | boolean> }
+  | { phase: "submitted"; selections: Record<string, string | string[] | boolean>; score: number };
+
+function isCorrect(q: QuizQuestion, sel: string | string[] | boolean | undefined): boolean {
+  if (sel === undefined) return false;
+  if (q.kind === "single") return sel === q.correctId;
+  if (q.kind === "multi") {
+    const selected = Array.isArray(sel) ? [...sel].sort() : [];
+    return JSON.stringify(selected) === JSON.stringify([...q.correctIds].sort());
+  }
+  return sel === q.correct;
+}
+
+function QuizBlockView({ block, courseId }: { block: QuizBlock; courseId?: string }) {
+  const [state, setState] = useState<QuizState>({
+    phase: "answering",
+    selections: {},
+  });
+
+  const setSelection = useCallback((qId: string, value: string | string[] | boolean) => {
+    setState((prev) => {
+      if (prev.phase !== "answering") return prev;
+      return { ...prev, selections: { ...prev.selections, [qId]: value } };
+    });
+  }, []);
+
+  const allAnswered = block.questions.every((q) => state.selections[q.id] !== undefined);
+
+  const handleSubmit = useCallback(async () => {
+    if (state.phase !== "answering") return;
+    const score = block.questions.filter((q) => isCorrect(q, state.selections[q.id])).length;
+    setState({ phase: "submitted", selections: state.selections, score });
+
+    if (courseId) {
+      const answers = block.questions.map((q) => {
+        const sel = state.selections[q.id];
+        if (q.kind === "single") return { kind: "single" as const, questionId: q.id, selectedId: String(sel ?? "") };
+        if (q.kind === "multi") return { kind: "multi" as const, questionId: q.id, selectedIds: Array.isArray(sel) ? sel : [] };
+        return { kind: "truefalse" as const, questionId: q.id, selected: sel === true };
+      });
+      try {
+        await fetch(`/api/courses/${courseId}/quiz`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ blockId: block.id, answers, score, total: block.questions.length }),
+        });
+      } catch {
+        // non-blocking
+      }
+    }
+  }, [block, courseId, state]);
+
+  return (
+    <BlockShell kind="quiz" title={block.title}>
+      <div className="course-quiz">
+        {block.questions.map((q, idx) => (
+          <QuestionView
+            key={q.id}
+            index={idx}
+            question={q}
+            selection={state.selections[q.id]}
+            submitted={state.phase === "submitted"}
+            onSelect={setSelection}
+          />
+        ))}
+        {state.phase === "answering" ? (
+          <button
+            className="course-quiz-submit"
+            disabled={!allAnswered}
+            onClick={handleSubmit}
+          >
+            提交答案
+          </button>
+        ) : (
+          <div className="course-quiz-score">
+            得分：{state.score} / {block.questions.length}
+            {state.score === block.questions.length ? " 🎉 全部正确！" : ""}
+          </div>
+        )}
+      </div>
+    </BlockShell>
+  );
+}
+
+function QuestionView({
+  index,
+  question,
+  selection,
+  submitted,
+  onSelect,
+}: {
+  index: number;
+  question: QuizQuestion;
+  selection: string | string[] | boolean | undefined;
+  submitted: boolean;
+  onSelect: (id: string, value: string | string[] | boolean) => void;
+}) {
+  const correct = submitted ? isCorrect(question, selection) : null;
+
+  return (
+    <div className={`course-quiz-question ${submitted ? (correct ? "is-correct" : "is-wrong") : ""}`}>
+      <div className="course-quiz-q-header">
+        <span className="course-quiz-q-index">{index + 1}</span>
+        <span className="course-quiz-q-kind">
+          {question.kind === "single" ? "单选" : question.kind === "multi" ? "多选" : "判断"}
+        </span>
+        {submitted && (
+          <span className={`course-quiz-q-result ${correct ? "correct" : "wrong"}`}>
+            {correct ? "✓ 正确" : "✗ 错误"}
+          </span>
+        )}
+      </div>
+      <p className="course-quiz-q-text">{question.question}</p>
+
+      {question.kind === "single" && (
+        <SingleChoiceView
+          question={question}
+          selected={typeof selection === "string" ? selection : undefined}
+          submitted={submitted}
+          onSelect={(id) => onSelect(question.id, id)}
+        />
+      )}
+      {question.kind === "multi" && (
+        <MultiChoiceView
+          question={question}
+          selected={Array.isArray(selection) ? selection : []}
+          submitted={submitted}
+          onSelect={(ids) => onSelect(question.id, ids)}
+        />
+      )}
+      {question.kind === "truefalse" && (
+        <TrueFalseView
+          question={question}
+          selected={typeof selection === "boolean" ? selection : undefined}
+          submitted={submitted}
+          onSelect={(val) => onSelect(question.id, val)}
+        />
+      )}
+
+      {submitted && question.explanation && (
+        <div className="course-quiz-explanation">{question.explanation}</div>
+      )}
+    </div>
+  );
+}
+
+function SingleChoiceView({
+  question,
+  selected,
+  submitted,
+  onSelect,
+}: {
+  question: SingleQuestion;
+  selected: string | undefined;
+  submitted: boolean;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <div className="course-quiz-choices">
+      {question.choices.map((c) => {
+        const isSelected = selected === c.id;
+        const isCorrectChoice = submitted && c.id === question.correctId;
+        const isWrongSelection = submitted && isSelected && c.id !== question.correctId;
+        return (
+          <button
+            key={c.id}
+            disabled={submitted}
+            className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
+            onClick={() => onSelect(c.id)}
+          >
+            {c.text}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function MultiChoiceView({
+  question,
+  selected,
+  submitted,
+  onSelect,
+}: {
+  question: MultiQuestion;
+  selected: string[];
+  submitted: boolean;
+  onSelect: (ids: string[]) => void;
+}) {
+  const toggle = (id: string) => {
+    const next = selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id];
+    onSelect(next);
+  };
+
+  return (
+    <div className="course-quiz-choices">
+      {question.choices.map((c) => {
+        const isSelected = selected.includes(c.id);
+        const isCorrectChoice = submitted && question.correctIds.includes(c.id);
+        const isWrongSelection = submitted && isSelected && !question.correctIds.includes(c.id);
+        return (
+          <button
+            key={c.id}
+            disabled={submitted}
+            className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
+            onClick={() => toggle(c.id)}
+          >
+            <span className="course-quiz-choice-check">{isSelected ? "☑" : "☐"}</span>
+            {c.text}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function TrueFalseView({
+  question,
+  selected,
+  submitted,
+  onSelect,
+}: {
+  question: TrueFalseQuestion;
+  selected: boolean | undefined;
+  submitted: boolean;
+  onSelect: (val: boolean) => void;
+}) {
+  return (
+    <div className="course-quiz-choices course-quiz-truefalse">
+      {([true, false] as const).map((val) => {
+        const isSelected = selected === val;
+        const isCorrectChoice = submitted && val === question.correct;
+        const isWrongSelection = submitted && isSelected && val !== question.correct;
+        return (
+          <button
+            key={String(val)}
+            disabled={submitted}
+            className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
+            onClick={() => onSelect(val)}
+          >
+            {val ? "正确 ✓" : "错误 ✗"}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── worksheet block ────────────────────────────────────────────────
+
+function FillBlankView({
+  item,
+  values,
+  revealed,
+  onChange,
+}: {
+  item: FillBlankItem;
+  values: string[];
+  revealed: boolean;
+  onChange: (idx: number, val: string) => void;
+}) {
+  const parts = item.prompt.split("___");
+  return (
+    <div className="worksheet-item-body">
+      <p className="worksheet-fill-text">
+        {parts.map((part, i) => (
+          <span key={i}>
+            {part}
+            {i < parts.length - 1 && (
+              <span className="worksheet-blank-wrap">
+                <input
+                  className={`worksheet-blank-input ${revealed ? "revealed" : ""}`}
+                  value={revealed ? (item.blanks[i] ?? "") : (values[i] ?? "")}
+                  readOnly={revealed}
+                  onChange={(e) => onChange(i, e.target.value)}
+                  size={Math.max(6, (item.blanks[i] ?? "").length + 2)}
+                />
+                {revealed && (
+                  <span className="worksheet-blank-answer">{item.blanks[i]}</span>
+                )}
+              </span>
+            )}
+          </span>
+        ))}
+      </p>
+    </div>
+  );
+}
+
+function ShortAnswerView({
+  item,
+  value,
+  revealed,
+  onChange,
+}: {
+  item: ShortAnswerItem | ProblemItem;
+  value: string;
+  revealed: boolean;
+  onChange: (val: string) => void;
+}) {
+  return (
+    <div className="worksheet-item-body">
+      <CourseMarkdown markdown={item.prompt} className="worksheet-prompt" />
+      <textarea
+        className="worksheet-textarea"
+        placeholder="在这里写下你的答案…"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={item.kind === "problem" ? 5 : 3}
+      />
+      {revealed && item.sampleAnswer && (
+        <div className="worksheet-sample-answer">
+          <span className="worksheet-sample-label">参考答案</span>
+          <CourseMarkdown markdown={item.sampleAnswer} className="worksheet-sample-body" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WorksheetItemView({
+  item,
+  index,
+  fillValues,
+  openValue,
+  revealed,
+  onFillChange,
+  onOpenChange,
+  onReveal,
+}: {
+  item: WorksheetItem;
+  index: number;
+  fillValues: string[];
+  openValue: string;
+  revealed: boolean;
+  onFillChange: (idx: number, val: string) => void;
+  onOpenChange: (val: string) => void;
+  onReveal: () => void;
+}) {
+  const kindLabel = item.kind === "short_answer" ? "简答" : item.kind === "fill_blank" ? "填空" : "解题";
+  const hasAnswer = item.kind === "fill_blank"
+    ? item.blanks.length > 0
+    : !!item.sampleAnswer;
+
+  return (
+    <div className={`worksheet-item ${revealed ? "is-revealed" : ""}`}>
+      <div className="worksheet-item-header">
+        <span className="worksheet-item-index">{index + 1}</span>
+        <span className="worksheet-item-kind">{kindLabel}</span>
+      </div>
+
+      {item.kind === "fill_blank" ? (
+        <FillBlankView
+          item={item}
+          values={fillValues}
+          revealed={revealed}
+          onChange={onFillChange}
+        />
+      ) : (
+        <ShortAnswerView
+          item={item}
+          value={openValue}
+          revealed={revealed}
+          onChange={onOpenChange}
+        />
+      )}
+
+      {item.hint && !revealed && (
+        <p className="worksheet-hint">提示：{item.hint}</p>
+      )}
+
+      {hasAnswer && !revealed && (
+        <button className="worksheet-reveal-btn" onClick={onReveal}>
+          查看参考答案
+        </button>
+      )}
+    </div>
+  );
+}
+
+function WorksheetBlockView({ block }: { block: WorksheetBlock }) {
+  const [fillAnswers, setFillAnswers] = useState<Record<string, string[]>>({});
+  const [openAnswers, setOpenAnswers] = useState<Record<string, string>>({});
+  const [revealed, setRevealed] = useState<Set<string>>(new Set());
+
+  const handleFillChange = useCallback((itemId: string, idx: number, val: string) => {
+    setFillAnswers((prev) => {
+      const arr = [...(prev[itemId] ?? [])];
+      arr[idx] = val;
+      return { ...prev, [itemId]: arr };
+    });
+  }, []);
+
+  const handleReveal = useCallback((itemId: string) => {
+    setRevealed((prev) => new Set([...prev, itemId]));
+  }, []);
+
+  return (
+    <BlockShell kind="worksheet" title={block.title}>
+      <div className="course-worksheet">
+        {block.items.map((item, idx) => (
+          <WorksheetItemView
+            key={item.id}
+            item={item}
+            index={idx}
+            fillValues={fillAnswers[item.id] ?? []}
+            openValue={openAnswers[item.id] ?? ""}
+            revealed={revealed.has(item.id)}
+            onFillChange={(i, val) => handleFillChange(item.id, i, val)}
+            onOpenChange={(val) => setOpenAnswers((prev) => ({ ...prev, [item.id]: val }))}
+            onReveal={() => handleReveal(item.id)}
+          />
+        ))}
+      </div>
     </BlockShell>
   );
 }

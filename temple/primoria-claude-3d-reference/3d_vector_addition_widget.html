@@ -1,0 +1,274 @@
+<h2 class="sr-only">Interactive 3D vector addition: drag to rotate, slider adjusts B's z-component, shows A, B, and A+B as labeled arrows.</h2>
+
+<div style="display: flex; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; font-size: 13px;">
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <span style="display: inline-block; width: 14px; height: 4px; background: #E24B4A; border-radius: 2px;"></span>
+    <span style="color: var(--color-text-secondary);">A</span>
+    <span id="a-readout" style="font-family: var(--font-mono); color: var(--color-text-primary);">(3, 0, 0)</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <span style="display: inline-block; width: 14px; height: 4px; background: #378ADD; border-radius: 2px;"></span>
+    <span style="color: var(--color-text-secondary);">B</span>
+    <span id="b-readout" style="font-family: var(--font-mono); color: var(--color-text-primary);">(0, 2, 0)</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <span style="display: inline-block; width: 14px; height: 4px; background: #1D9E75; border-radius: 2px;"></span>
+    <span style="color: var(--color-text-secondary);">A+B</span>
+    <span id="sum-readout" style="font-family: var(--font-mono); color: var(--color-text-primary);">(3, 2, 0)</span>
+  </div>
+</div>
+
+<div id="scene-container" style="width: 100%; height: 440px; background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); position: relative; overflow: hidden; cursor: grab;"></div>
+
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 16px;">
+  <label for="bz-slider" style="font-size: 14px; color: var(--color-text-secondary); min-width: 60px;">B<sub>z</sub></label>
+  <input type="range" id="bz-slider" min="-3" max="3" step="0.1" value="0" style="flex: 1;" />
+  <span id="bz-value" style="font-size: 14px; font-weight: 500; min-width: 36px; text-align: right; font-family: var(--font-mono);">0.0</span>
+  <button id="reset-btn" style="margin-left: 8px;"><i class="ti ti-refresh" style="font-size: 14px; vertical-align: -2px; margin-right: 4px;" aria-hidden="true"></i>Reset</button>
+</div>
+
+<p style="font-size: 12px; color: var(--color-text-tertiary); margin-top: 10px; text-align: center;">Drag to rotate · scroll to zoom</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  const container = document.getElementById('scene-container');
+  const slider = document.getElementById('bz-slider');
+  const bzValue = document.getElementById('bz-value');
+  const resetBtn = document.getElementById('reset-btn');
+  const aReadout = document.getElementById('a-readout');
+  const bReadout = document.getElementById('b-readout');
+  const sumReadout = document.getElementById('sum-readout');
+
+  // Detect dark mode for canvas text contrast (canvas pixels don't follow CSS vars)
+  const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const labelTextColor = isDark ? '#F0EEE6' : '#1F1E1D';
+  const axisColor = isDark ? 0x666666 : 0xAAAAAA;
+  const gridColor = isDark ? 0x333333 : 0xDDDDDD;
+
+  const W = container.clientWidth;
+  const H = container.clientHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
+
+  // Grid on XY plane
+  const grid = new THREE.GridHelper(8, 8, gridColor, gridColor);
+  grid.rotation.x = Math.PI / 2;
+  scene.add(grid);
+
+  // Axis lines (X red-ish, Y green-ish, Z blue-ish faint)
+  function makeAxis(dir, color) {
+    const mat = new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.4 });
+    const pts = [new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(4)];
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    return new THREE.Line(geo, mat);
+  }
+  scene.add(makeAxis(new THREE.Vector3(1,0,0), axisColor));
+  scene.add(makeAxis(new THREE.Vector3(0,1,0), axisColor));
+  scene.add(makeAxis(new THREE.Vector3(0,0,1), axisColor));
+
+  // Axis labels as sprites
+  function makeLabel(text, color) {
+    const canvas = document.createElement('canvas');
+    const size = 128;
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.font = 'bold 64px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, size/2, size/2);
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.needsUpdate = true;
+    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+    const sprite = new THREE.Sprite(mat);
+    sprite.scale.set(0.5, 0.5, 0.5);
+    return sprite;
+  }
+
+  const xLabel = makeLabel('x', labelTextColor);
+  xLabel.position.set(4.3, 0, 0);
+  scene.add(xLabel);
+  const yLabel = makeLabel('y', labelTextColor);
+  yLabel.position.set(0, 4.3, 0);
+  scene.add(yLabel);
+  const zLabel = makeLabel('z', labelTextColor);
+  zLabel.position.set(0, 0, 4.3);
+  scene.add(zLabel);
+
+  // Vector arrows
+  const A = new THREE.Vector3(3, 0, 0);
+  const B = new THREE.Vector3(0, 2, 0);
+
+  const colorA = 0xE24B4A;
+  const colorB = 0x378ADD;
+  const colorSum = 0x1D9E75;
+
+  function makeArrow(vec, origin, color) {
+    const dir = vec.clone().normalize();
+    const len = vec.length();
+    const arrow = new THREE.ArrowHelper(dir, origin, len, color, Math.min(0.35, len * 0.2), Math.min(0.18, len * 0.12));
+    arrow.line.material.linewidth = 3;
+    return arrow;
+  }
+
+  let arrowA = makeArrow(A, new THREE.Vector3(0,0,0), colorA);
+  let arrowB = makeArrow(B, A.clone(), colorB); // tail-to-head: place B at tip of A
+  let arrowSum = makeArrow(A.clone().add(B), new THREE.Vector3(0,0,0), colorSum);
+  scene.add(arrowA);
+  scene.add(arrowB);
+  scene.add(arrowSum);
+
+  // Vector labels
+  const labelA = makeLabel('A', '#E24B4A');
+  const labelB = makeLabel('B', '#378ADD');
+  const labelSum = makeLabel('A+B', '#1D9E75');
+  labelSum.scale.set(0.8, 0.8, 0.8);
+  scene.add(labelA);
+  scene.add(labelB);
+  scene.add(labelSum);
+
+  function updateLabelPositions() {
+    // midpoint of A, offset slightly
+    const midA = A.clone().multiplyScalar(0.5).add(new THREE.Vector3(0, -0.3, 0));
+    labelA.position.copy(midA);
+    // midpoint of B (which starts at A)
+    const midB = A.clone().add(B.clone().multiplyScalar(0.5)).add(new THREE.Vector3(0.3, 0.1, 0));
+    labelB.position.copy(midB);
+    // near tip of A+B
+    const sum = A.clone().add(B);
+    const sumDir = sum.clone().normalize().multiplyScalar(0.4);
+    labelSum.position.copy(sum.clone().add(sumDir));
+  }
+  updateLabelPositions();
+
+  function rebuildArrows() {
+    scene.remove(arrowA); scene.remove(arrowB); scene.remove(arrowSum);
+    arrowA.dispose && arrowA.dispose();
+    arrowB.dispose && arrowB.dispose();
+    arrowSum.dispose && arrowSum.dispose();
+
+    arrowA = makeArrow(A, new THREE.Vector3(0,0,0), colorA);
+    arrowB = makeArrow(B, A.clone(), colorB);
+    const sum = A.clone().add(B);
+    arrowSum = makeArrow(sum, new THREE.Vector3(0,0,0), colorSum);
+    scene.add(arrowA); scene.add(arrowB); scene.add(arrowSum);
+
+    updateLabelPositions();
+
+    bReadout.textContent = `(${B.x.toFixed(1)}, ${B.y.toFixed(1)}, ${B.z.toFixed(1)})`;
+    sumReadout.textContent = `(${sum.x.toFixed(1)}, ${sum.y.toFixed(1)}, ${sum.z.toFixed(1)})`;
+  }
+
+  // Camera orbit (manual implementation, no OrbitControls in r128 by default)
+  let camRadius = 9;
+  let camTheta = Math.PI / 4;  // azimuth
+  let camPhi = Math.PI / 3;    // polar
+
+  function updateCamera() {
+    const x = camRadius * Math.sin(camPhi) * Math.cos(camTheta);
+    const y = camRadius * Math.sin(camPhi) * Math.sin(camTheta);
+    const z = camRadius * Math.cos(camPhi);
+    camera.position.set(x, y, z);
+    camera.up.set(0, 0, 1); // z-up
+    camera.lookAt(0, 0, 0);
+  }
+  updateCamera();
+
+  // Mouse drag
+  let dragging = false;
+  let lastX = 0, lastY = 0;
+  container.addEventListener('mousedown', (e) => {
+    dragging = true;
+    lastX = e.clientX; lastY = e.clientY;
+    container.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+    container.style.cursor = 'grab';
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    lastX = e.clientX; lastY = e.clientY;
+    camTheta -= dx * 0.01;
+    camPhi -= dy * 0.01;
+    camPhi = Math.max(0.1, Math.min(Math.PI - 0.1, camPhi));
+    updateCamera();
+  });
+
+  // Touch
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      dragging = true;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+  container.addEventListener('touchmove', (e) => {
+    if (!dragging || e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - lastX;
+    const dy = e.touches[0].clientY - lastY;
+    lastX = e.touches[0].clientX;
+    lastY = e.touches[0].clientY;
+    camTheta -= dx * 0.01;
+    camPhi -= dy * 0.01;
+    camPhi = Math.max(0.1, Math.min(Math.PI - 0.1, camPhi));
+    updateCamera();
+    e.preventDefault();
+  }, { passive: false });
+  container.addEventListener('touchend', () => { dragging = false; });
+
+  // Scroll to zoom
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    camRadius *= (1 + e.deltaY * 0.001);
+    camRadius = Math.max(3, Math.min(25, camRadius));
+    updateCamera();
+  }, { passive: false });
+
+  // Slider
+  slider.addEventListener('input', () => {
+    const v = parseFloat(slider.value);
+    B.z = v;
+    bzValue.textContent = v.toFixed(1);
+    rebuildArrows();
+  });
+
+  // Reset
+  resetBtn.addEventListener('click', () => {
+    slider.value = 0;
+    B.set(0, 2, 0);
+    bzValue.textContent = '0.0';
+    camRadius = 9;
+    camTheta = Math.PI / 4;
+    camPhi = Math.PI / 3;
+    updateCamera();
+    rebuildArrows();
+  });
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  rebuildArrows();
+})();
+</script>

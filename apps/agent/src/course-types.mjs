@@ -34,6 +34,14 @@ function defaultTitleFor(block) {
       return "Interactive visual";
     case "code":
       return `Code (${block.language})`;
+    case "quiz":
+      return "Quiz";
+    case "mind_map":
+      return "Mind map";
+    case "slide":
+      return "Slides";
+    case "worksheet":
+      return "Worksheet";
     default:
       return "Block";
   }
