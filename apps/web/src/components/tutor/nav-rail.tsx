@@ -54,6 +54,21 @@ const TABS: NavTab[] = [
     ),
   },
   {
+    id: "agents",
+    label: "Agents",
+    description: "Create and manage agent teammates.",
+    href: "/workspace/agents",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 8V4H8" />
+        <rect x="4" y="8" width="16" height="12" rx="3" />
+        <path d="M8 13h.01" />
+        <path d="M16 13h.01" />
+        <path d="M9 17h6" />
+      </svg>
+    ),
+  },
+  {
     id: "course",
     label: "Course Builder",
     description: "Plan and generate a full course (soon).",
@@ -71,6 +86,7 @@ const TABS: NavTab[] = [
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
+  if (href === "/workspace") return pathname === "/workspace" || pathname.startsWith("/workspace/review");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 

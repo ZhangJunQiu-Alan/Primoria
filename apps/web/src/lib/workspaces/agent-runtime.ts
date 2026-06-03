@@ -34,6 +34,7 @@ import {
 import type { WorkspaceAgentApproval, WorkspaceAgentCapability, WorkspaceAgentConnection, WorkspaceAgentMemory, WorkspaceAgentProfile, WorkspaceAgentRunStatus, WorkspaceMember, WorkspaceMessage, WorkspaceTask, WorkspaceThread } from "./types";
 
 export { WorkspaceToolApprovalRequiredError, resolveWorkspaceInternalToolPolicies } from "./agent-tools";
+export { resolveWorkspaceAgentSkillPath } from "./agent-skill-paths";
 export { cleanupMaterializedWorkspaceAgentSkills, createWorkspaceAgentSkillBackend, createDbWorkspaceAgentSkillBackend, createLocalWorkspaceAgentSkillBackend, deleteStoredWorkspaceAgentSkill, listStoredWorkspaceAgentSkillVersions, listStoredWorkspaceAgentSkills, materializeWorkspaceAgentSkillMarkdown, prepareWorkspaceAgentSkillDirectories, restoreStoredWorkspaceAgentSkillVersion, runWorkspaceAgentSkillStorageMaintenanceOnce, storeWorkspaceAgentSkill, updateStoredWorkspaceAgentSkill } from "./agent-skill-storage";
 
 export type WorkspaceAgentRunThreadIdInput = {
