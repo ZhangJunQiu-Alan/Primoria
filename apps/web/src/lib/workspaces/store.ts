@@ -135,6 +135,7 @@ import type {
   CreateWorkspaceInput,
   CreateWorkspaceTaskInput,
   CreateWorkspaceThreadInput,
+  DeleteWorkspaceAgentProfileInput,
   DeleteWorkspaceAgentMemoryInput,
   DecideWorkspaceAgentApprovalInput,
   JoinWorkspaceInput,
@@ -1043,6 +1044,50 @@ export async function updateWorkspaceAgentProfile(
     return nextProfile;
   } catch (error) {
     console.error("[workspace] database agent profile update failed", error);
+    throw error;
+  }
+}
+
+export async function deleteWorkspaceAgentProfile(
+  ownerId: string | null | undefined,
+  input: DeleteWorkspaceAgentProfileInput,
+): Promise<WorkspaceAgentProfile> {
+  const existing = await requireWorkspaceAgentProfile(ownerId, input.workspaceId, input.profileId);
+  await assertCanManageWorkspaceAgentProfile(ownerId, existing);
+  const now = Date.now();
+
+  if (!usesDatabase(ownerId)) {
+    const views = getLocalViews(ownerId);
+    for (const view of views) {
+      const hasProfile = view.agentProfiles.some((profile) => profile.id === existing.id);
+      const hasMember = view.members.some((member) => member.agentProfileId === existing.id);
+      if (!hasProfile && !hasMember) continue;
+      setLocalView({
+        ...view,
+        agentProfiles: view.agentProfiles.filter((profile) => profile.id !== existing.id),
+        members: view.members.filter((member) => member.agentProfileId !== existing.id),
+        workspace: { ...view.workspace, updatedAt: now },
+      }, ownerId);
+    }
+    return existing;
+  }
+
+  try {
+    await ensureSeedWorkspace(ownerId);
+    await requireDbWorkspace(ownerId, input.workspaceId);
+    await getDb().transaction(async (tx) => {
+      await tx.delete(workspaceMembers).where(eq(workspaceMembers.agentProfileId, existing.id));
+      await tx.delete(workspaceAgentProfiles).where(and(eq(workspaceAgentProfiles.id, existing.id), eq(workspaceAgentProfiles.workspaceId, existing.workspaceId)));
+      await tx.update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, existing.workspaceId));
+      if (existing.workspaceId !== input.workspaceId) {
+        await tx.update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, input.workspaceId));
+      }
+    });
+    notifyWorkspaceUpdated(existing.workspaceId, ownerId);
+    if (existing.workspaceId !== input.workspaceId) notifyWorkspaceUpdated(input.workspaceId, ownerId);
+    return existing;
+  } catch (error) {
+    console.error("[workspace] database agent profile delete failed", error);
     throw error;
   }
 }

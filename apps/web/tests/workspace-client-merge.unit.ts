@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { mergeAgentMemories } from "../src/components/workspace/workspace-client.tsx";
+import { mergeAgentMemories } from "../src/components/workspace/workspace-client-state.ts";
 import type { WorkspaceAgentMemory } from "../src/lib/workspaces/types.ts";
 
 function assert(condition: unknown, message: string): asserts condition {

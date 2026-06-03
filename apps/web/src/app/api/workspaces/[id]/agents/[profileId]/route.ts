@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
-import { getWorkspaceView, updateWorkspaceAgentProfile } from "@/lib/workspaces/store";
+import { deleteWorkspaceAgentProfile, getWorkspaceView, updateWorkspaceAgentProfile } from "@/lib/workspaces/store";
 
 const CapabilitySchema = z.discriminatedUnion("kind", [
   z.object({
@@ -85,5 +85,21 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     const message = error instanceof Error ? error.message : "Agent could not be updated.";
     const status = agentRouteErrorStatus(message);
     return NextResponse.json({ error: message || "Agent could not be updated." }, { status });
+  }
+}
+
+export async function DELETE(_request: Request, context: { params: Promise<{ id: string; profileId: string }> }) {
+  const user = await getCurrentUser();
+  const ownerId = await getWorkspaceOwnerId(user);
+  const { id, profileId } = await context.params;
+  const view = await getWorkspaceView(ownerId, id);
+  if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
+  try {
+    const profile = await deleteWorkspaceAgentProfile(ownerId, { workspaceId: id, profileId });
+    return NextResponse.json({ profile });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Agent could not be deleted.";
+    const status = agentRouteErrorStatus(message);
+    return NextResponse.json({ error: message || "Agent could not be deleted." }, { status });
   }
 }

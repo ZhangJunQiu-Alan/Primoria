@@ -376,6 +376,11 @@ export type UpdateWorkspaceAgentProfileInput = {
   capabilities?: WorkspaceAgentCapabilityInput[];
 };
 
+export type DeleteWorkspaceAgentProfileInput = {
+  workspaceId: string;
+  profileId: string;
+};
+
 export type CreateWorkspaceAgentMemberInput = {
   workspaceId: string;
   profileId: string;
