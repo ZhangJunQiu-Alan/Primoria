@@ -10,8 +10,10 @@ export type CourseEditEventInput = {
   courseId: string;
   blockId: string;
   instruction: string;
-  beforeBlock: CourseBlock;
-  afterBlock: CourseBlock;
+  // For structural edits one side may be absent (add has no before, remove has no
+  // after). The columns are NOT NULL, so the missing side falls back to the other.
+  beforeBlock: CourseBlock | null;
+  afterBlock: CourseBlock | null;
   metadata?: unknown;
 };
 
@@ -31,6 +33,10 @@ export async function recordCourseEditEvent(input: CourseEditEventInput): Promis
   const ownerId = await resolveOwnerId(input.ownerId);
   if (!ownerId || !hasDatabaseUrl()) return null;
 
+  const beforeBlock = input.beforeBlock ?? input.afterBlock;
+  const afterBlock = input.afterBlock ?? input.beforeBlock;
+  if (!beforeBlock || !afterBlock) return null;
+
   const id = `cee_${randomBytes(12).toString("base64url")}`;
   const createdAt = new Date();
   await getDb().insert(courseEditEvents).values({
@@ -39,8 +45,8 @@ export async function recordCourseEditEvent(input: CourseEditEventInput): Promis
     courseId: input.courseId,
     blockId: input.blockId,
     instruction: input.instruction,
-    beforeBlock: input.beforeBlock,
-    afterBlock: input.afterBlock,
+    beforeBlock,
+    afterBlock,
     metadata: input.metadata ?? null,
     createdAt,
   });
@@ -51,8 +57,8 @@ export async function recordCourseEditEvent(input: CourseEditEventInput): Promis
     courseId: input.courseId,
     blockId: input.blockId,
     instruction: input.instruction,
-    beforeBlock: input.beforeBlock,
-    afterBlock: input.afterBlock,
+    beforeBlock,
+    afterBlock,
     metadata: input.metadata,
     createdAt: createdAt.getTime(),
   };

@@ -53,9 +53,10 @@ function blockToContext(block: CourseBlock) {
       type: block.type,
       title,
       description: block.description,
-      htmlSummary: block.html.slice(0, 900),
+      htmlSummary: (block.html ?? "").slice(0, 900),
     };
   }
+  if (block.type !== "code") return { id: block.id, type: block.type, title };
   return {
     id: block.id,
     type: block.type,
@@ -178,6 +179,143 @@ function CourseRevisionAction({
 
   return null;
 }
+
+const BLOCK_TYPE_ENUM = z.enum([
+  "text",
+  "analogy",
+  "transfer",
+  "visual",
+  "code",
+  "quiz",
+  "mind_map",
+  "slide",
+  "worksheet",
+]);
+
+function ActionStatus({ name, status, result }: { name: string; status: string; result: unknown }) {
+  const parsed = result as { ok?: boolean; error?: string; message?: string } | undefined;
+  return (
+    <div className="course-ai-action-status">
+      <span className={status === "complete" && parsed?.ok === false ? "error" : "ok"} />
+      <strong>{name}</strong>
+      <p>
+        {status === "complete"
+          ? parsed?.ok === false
+            ? parsed.error ?? "Action failed."
+            : parsed?.message ?? "Course updated."
+          : "Updating the course…"}
+      </p>
+    </div>
+  );
+}
+
+function CourseStructureActions({
+  course,
+  selectedBlock,
+  onCourseUpdated,
+}: {
+  course: Course;
+  selectedBlock: CourseBlock | null;
+  onCourseUpdated: (course: Course) => void;
+}) {
+  async function postEdit(body: Record<string, unknown>) {
+    const response = await fetch(`/api/courses/${course.id}/edit`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = (await response.json()) as { course?: Course; block?: CourseBlock; error?: string };
+    if (!response.ok || !data.course) {
+      return { ok: false as const, error: data.error ?? "Action failed" };
+    }
+    onCourseUpdated(data.course);
+    return { ok: true as const, course: data.course, block: data.block };
+  }
+
+  useFrontendTool(
+    {
+      name: "add_course_block",
+      description:
+        "Add a NEW block to the open Primoria course. Use when the learner asks to add a quiz, worksheet, mind map, slides, example, analogy, visual, etc. Pick the block type that best fits the request.",
+      parameters: z.object({
+        targetType: BLOCK_TYPE_ENUM.describe("The block type to create."),
+        instruction: z.string().describe("What the new block should cover, in the learner's terms."),
+        afterBlockId: z
+          .string()
+          .optional()
+          .describe("Insert the new block right after this existing block id. Omit to append at the end."),
+      }),
+      handler: async ({ targetType, instruction, afterBlockId }) => {
+        const res = await postEdit({ action: "add", targetType, instruction, afterBlockId, settings: readSettings() });
+        if (!res.ok) return res;
+        return { ok: true, blockId: res.block?.id, message: `Added a new ${targetType} block.` };
+      },
+      render: ({ status, result }) => <ActionStatus name="add_course_block" status={status} result={result} />,
+    },
+    [course.id, onCourseUpdated],
+  );
+
+  useFrontendTool(
+    {
+      name: "transform_selected_course_block",
+      description:
+        "Convert the currently selected course block into a DIFFERENT block type (e.g. turn a text block into a mind map, or a section into a quiz). Use only when a block is selected and the learner asks to change its format.",
+      parameters: z.object({
+        targetType: BLOCK_TYPE_ENUM.describe("The block type to convert into."),
+        instruction: z.string().describe("Any guidance for the conversion."),
+      }),
+      handler: async ({ targetType, instruction }) => {
+        if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
+        const res = await postEdit({ action: "transform", blockId: selectedBlock.id, targetType, instruction, settings: readSettings() });
+        if (!res.ok) return res;
+        return { ok: true, blockId: res.block?.id, message: `Converted the block into a ${targetType} block.` };
+      },
+      render: ({ status, result }) => <ActionStatus name="transform_selected_course_block" status={status} result={result} />,
+    },
+    [course.id, selectedBlock?.id, onCourseUpdated],
+  );
+
+  useFrontendTool(
+    {
+      name: "remove_selected_course_block",
+      description:
+        "Delete the currently selected block from the open course. Use only when the learner explicitly asks to remove/delete the selected block.",
+      parameters: z.object({
+        reason: z.string().optional().describe("Optional reason for removing the block."),
+      }),
+      handler: async ({ reason }) => {
+        if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
+        const res = await postEdit({ action: "remove", blockId: selectedBlock.id, instruction: reason });
+        if (!res.ok) return res;
+        return { ok: true, message: "Removed the selected block." };
+      },
+      render: ({ status, result }) => <ActionStatus name="remove_selected_course_block" status={status} result={result} />,
+    },
+    [course.id, selectedBlock?.id, onCourseUpdated],
+  );
+
+  useFrontendTool(
+    {
+      name: "move_selected_course_block",
+      description:
+        "Reorder the currently selected block to a new position in the course. toIndex is 0-based (0 = first). Use when the learner asks to move the selected block earlier or later.",
+      parameters: z.object({
+        toIndex: z.number().int().min(0).describe("0-based destination position in the course."),
+      }),
+      handler: async ({ toIndex }) => {
+        if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
+        const res = await postEdit({ action: "move", blockId: selectedBlock.id, toIndex });
+        if (!res.ok) return res;
+        return { ok: true, message: `Moved the block to position ${toIndex + 1}.` };
+      },
+      render: ({ status, result }) => <ActionStatus name="move_selected_course_block" status={status} result={result} />,
+    },
+    [course.id, selectedBlock?.id, onCourseUpdated],
+  );
+
+  return null;
+}
+
 function sendCoursePrompt(threadId: string, prompt: string) {
   window.dispatchEvent(new CustomEvent(COURSE_COPILOT_PROMPT_EVENT, { detail: { threadId, prompt } }));
 }
@@ -352,6 +490,11 @@ function CourseAIAssistantPanel({
             course={course}
             selectedBlock={selectedBlock}
             selectedTextContext={selectedTextContext}
+            onCourseUpdated={onCourseUpdated}
+          />
+          <CourseStructureActions
+            course={course}
+            selectedBlock={selectedBlock}
             onCourseUpdated={onCourseUpdated}
           />
           <CourseSuggestionBridge threadId={courseThreadId} />
@@ -533,7 +676,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
                 }
               }}
             >
-              <BlockRenderer block={block} />
+              <BlockRenderer block={block} courseId={course.id} />
             </div>
           ))}
         </div>

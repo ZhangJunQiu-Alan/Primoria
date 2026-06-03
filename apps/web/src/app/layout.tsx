@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "katex/dist/katex.min.css";
+import "mind-elixir/style.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

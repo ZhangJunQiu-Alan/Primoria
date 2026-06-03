@@ -1,4 +1,6 @@
-export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code";
+import type { PhysicsScene } from "@/lib/ai/types";
+
+export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 
 type BlockBase = {
   id: string;
@@ -29,7 +31,12 @@ export type TransferBlock = BlockBase & {
 export type VisualBlock = BlockBase & {
   type: "visual";
   description: string;
-  html: string;
+  engine?: "html" | "echarts" | "mermaid" | "physics";
+  html?: string;
+  echartsOption?: Record<string, unknown>;
+  echartsHeight?: number;
+  mermaidDefinition?: string;
+  physicsScene?: PhysicsScene;
 };
 
 export type CodeBlock = BlockBase & {
@@ -39,7 +46,101 @@ export type CodeBlock = BlockBase & {
   explanation: string;
 };
 
-export type CourseBlock = TextBlock | AnalogyBlock | TransferBlock | VisualBlock | CodeBlock;
+export type SingleQuestion = {
+  kind: "single";
+  id: string;
+  question: string;
+  choices: { id: string; text: string }[];
+  correctId: string;
+  explanation?: string;
+};
+
+export type MultiQuestion = {
+  kind: "multi";
+  id: string;
+  question: string;
+  choices: { id: string; text: string }[];
+  correctIds: string[];
+  explanation?: string;
+};
+
+export type TrueFalseQuestion = {
+  kind: "truefalse";
+  id: string;
+  question: string;
+  correct: boolean;
+  explanation?: string;
+};
+
+export type QuizQuestion = SingleQuestion | MultiQuestion | TrueFalseQuestion;
+
+export type QuizBlock = BlockBase & {
+  type: "quiz";
+  questions: QuizQuestion[];
+};
+
+export type QuizAnswer =
+  | { kind: "single"; questionId: string; selectedId: string }
+  | { kind: "multi"; questionId: string; selectedIds: string[] }
+  | { kind: "truefalse"; questionId: string; selected: boolean };
+
+export type MindMapNode = {
+  id: string;
+  topic: string;
+  children?: MindMapNode[];
+};
+
+export type MindMapBlock = BlockBase & {
+  type: "mind_map";
+  root: MindMapNode;
+};
+
+export type Slide = {
+  id: string;
+  title: string;
+  layout: "title" | "bullets" | "quote" | "image-text";
+  bullets?: string[];
+  markdown?: string;
+  note?: string;
+};
+
+export type SlideBlock = BlockBase & {
+  type: "slide";
+  slides: Slide[];
+};
+
+export type ShortAnswerItem = {
+  kind: "short_answer";
+  id: string;
+  prompt: string;
+  hint?: string;
+  sampleAnswer?: string;
+};
+
+export type FillBlankItem = {
+  kind: "fill_blank";
+  id: string;
+  prompt: string;   // contains ___ for each blank
+  hint?: string;
+  blanks: string[]; // answers in order, one per ___
+};
+
+export type ProblemItem = {
+  kind: "problem";
+  id: string;
+  prompt: string;
+  hint?: string;
+  sampleAnswer?: string;
+};
+
+export type WorksheetItem = ShortAnswerItem | FillBlankItem | ProblemItem;
+
+export type WorksheetBlock = BlockBase & {
+  type: "worksheet";
+  items: WorksheetItem[];
+};
+
+export type CourseBlock = TextBlock | AnalogyBlock | TransferBlock | VisualBlock | CodeBlock | QuizBlock | MindMapBlock | SlideBlock | WorksheetBlock;
 
 export type Course = {
   id: string;
@@ -102,5 +203,13 @@ function defaultTitleFor(block: CourseBlock): string {
       return "Interactive visual";
     case "code":
       return `Code (${block.language})`;
+    case "quiz":
+      return `Quiz (${block.questions.length} questions)`;
+    case "mind_map":
+      return `Mind map: ${block.root.topic}`;
+    case "slide":
+      return `Slides (${block.slides.length})`;
+    case "worksheet":
+      return `Worksheet (${block.items.length} items)`;
   }
 }

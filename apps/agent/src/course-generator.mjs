@@ -27,11 +27,73 @@ const TransferBlockSchema = z.object({
   example: z.string(),
 });
 
+const PhysicsBodySchema = z.object({
+  id: z.string(),
+  shape: z.enum(["circle", "rectangle", "polygon"]),
+  x: z.number(),
+  y: z.number(),
+  radius: z.number().optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+  vertices: z.array(z.object({ x: z.number(), y: z.number() })).optional(),
+  isStatic: z.boolean().optional(),
+  density: z.number().optional(),
+  friction: z.number().optional(),
+  restitution: z.number().optional(),
+  frictionAir: z.number().optional(),
+  angle: z.number().optional(),
+  velocity: z.object({ x: z.number(), y: z.number() }).optional(),
+  label: z.string().optional(),
+  render: z.object({
+    fillStyle: z.string().optional(),
+    strokeStyle: z.string().optional(),
+    lineWidth: z.number().optional(),
+  }).optional(),
+});
+
+const PhysicsConstraintSchema = z.object({
+  bodyAId: z.string(),
+  bodyBId: z.string().nullable(),
+  pointA: z.object({ x: z.number(), y: z.number() }).optional(),
+  pointB: z.object({ x: z.number(), y: z.number() }).optional(),
+  length: z.number().optional(),
+  stiffness: z.number().optional(),
+  damping: z.number().optional(),
+  render: z.object({
+    visible: z.boolean().optional(),
+    strokeStyle: z.string().optional(),
+    lineWidth: z.number().optional(),
+  }).optional(),
+});
+
+const PhysicsSceneSchema = z.object({
+  gravity: z.object({ x: z.number(), y: z.number() }).optional(),
+  walls: z.object({
+    top: z.boolean().optional(),
+    bottom: z.boolean().optional(),
+    left: z.boolean().optional(),
+    right: z.boolean().optional(),
+  }).optional(),
+  bodies: z.array(PhysicsBodySchema),
+  constraints: z.array(PhysicsConstraintSchema).optional(),
+  render: z.object({
+    width: z.number(),
+    height: z.number(),
+    background: z.string().optional(),
+  }),
+  timeScale: z.number().optional(),
+});
+
 const VisualBlockSchema = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
-  html: z.string(),
+  engine: z.enum(["html", "echarts", "mermaid", "physics"]).optional(),
+  html: z.string().optional(),
+  echartsOption: z.record(z.unknown()).optional(),
+  echartsHeight: z.number().optional(),
+  mermaidDefinition: z.string().optional(),
+  physicsScene: PhysicsSceneSchema.optional(),
 });
 
 const CodeBlockSchema = z.object({
@@ -42,12 +104,114 @@ const CodeBlockSchema = z.object({
   explanation: z.string(),
 });
 
+const SingleQuestionSchema = z.object({
+  kind: z.literal("single"),
+  id: z.string(),
+  question: z.string(),
+  choices: z.array(z.object({ id: z.string(), text: z.string() })).min(2).max(6),
+  correctId: z.string(),
+  explanation: z.string().optional(),
+});
+
+const MultiQuestionSchema = z.object({
+  kind: z.literal("multi"),
+  id: z.string(),
+  question: z.string(),
+  choices: z.array(z.object({ id: z.string(), text: z.string() })).min(2).max(6),
+  correctIds: z.array(z.string()).min(1),
+  explanation: z.string().optional(),
+});
+
+const TrueFalseQuestionSchema = z.object({
+  kind: z.literal("truefalse"),
+  id: z.string(),
+  question: z.string(),
+  correct: z.boolean(),
+  explanation: z.string().optional(),
+});
+
+const QuizBlockSchema = z.object({
+  type: z.literal("quiz"),
+  title: z.string(),
+  questions: z
+    .array(z.discriminatedUnion("kind", [SingleQuestionSchema, MultiQuestionSchema, TrueFalseQuestionSchema]))
+    .min(1)
+    .max(6),
+});
+
+/** @type {z.ZodType<{ id: string; topic: string; children?: any[] }>} */
+const MindMapNodeSchema = z.lazy(() =>
+  z.object({
+    id: z.string(),
+    topic: z.string(),
+    children: z.array(MindMapNodeSchema).optional(),
+  }),
+);
+
+const MindMapBlockSchema = z.object({
+  type: z.literal("mind_map"),
+  title: z.string(),
+  root: MindMapNodeSchema,
+});
+
+const SlideSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  layout: z.enum(["title", "bullets", "quote", "image-text"]),
+  bullets: z.array(z.string()).optional(),
+  markdown: z.string().optional(),
+  note: z.string().optional(),
+});
+
+const SlideBlockSchema = z.object({
+  type: z.literal("slide"),
+  title: z.string(),
+  slides: z.array(SlideSchema).min(2).max(10),
+});
+
+const ShortAnswerItemSchema = z.object({
+  kind: z.literal("short_answer"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  sampleAnswer: z.string().optional(),
+});
+
+const FillBlankItemSchema = z.object({
+  kind: z.literal("fill_blank"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  blanks: z.array(z.string()).min(1),
+});
+
+const ProblemItemSchema = z.object({
+  kind: z.literal("problem"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  sampleAnswer: z.string().optional(),
+});
+
+const WorksheetBlockSchema = z.object({
+  type: z.literal("worksheet"),
+  title: z.string(),
+  items: z
+    .array(z.discriminatedUnion("kind", [ShortAnswerItemSchema, FillBlankItemSchema, ProblemItemSchema]))
+    .min(1)
+    .max(8),
+});
+
 const BlockSchema = z.discriminatedUnion("type", [
   TextBlockSchema,
   AnalogyBlockSchema,
   TransferBlockSchema,
   VisualBlockSchema,
   CodeBlockSchema,
+  QuizBlockSchema,
+  MindMapBlockSchema,
+  SlideBlockSchema,
+  WorksheetBlockSchema,
 ]);
 
 const CourseSchema = z.object({
@@ -58,7 +222,7 @@ const CourseSchema = z.object({
 });
 
 const OutlineBlockSchema = z.object({
-  type: z.enum(["text", "analogy", "transfer", "visual", "code"]),
+  type: z.enum(["text", "analogy", "transfer", "visual", "code", "quiz", "mind_map", "slide", "worksheet"]),
   title: z.string(),
   goal: z.string(),
 });
@@ -78,39 +242,42 @@ const FastCourseSchema = z.object({
     TextBlockSchema,
     AnalogyBlockSchema,
     TransferBlockSchema,
+    VisualBlockSchema,
     CodeBlockSchema,
-  ])).min(4).max(4),
+    QuizBlockSchema,
+    MindMapBlockSchema,
+    SlideBlockSchema,
+    WorksheetBlockSchema,
+  ])).min(4).max(7),
 });
 
 const FAST_COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator. Generate one real short course as structured JSON.
 
-Use exactly 4 blocks in this order:
-1. text
-2. analogy
-3. transfer
-4. code
+Use 4-6 ordered blocks forming a learning arc: hook → core idea → analogy → (optional richer block) → transfer → wrap-up.
+Always include at least one text, one analogy, and one transfer block.
+Choose the RIGHT block type for each idea — do NOT make everything text.
 
-JSON shape:
-{
-  "title": "string",
-  "summary": "string",
-  "estimatedMinutes": 8,
-  "blocks": [
-    { "type": "text", "title": "string", "markdown": "string" },
-    { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
-    { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
-    { "type": "code", "title": "string", "language": "python", "code": "string", "explanation": "string" }
-  ]
-}
+Block JSON shapes:
+- text: { "type":"text", "title":"...", "markdown":"..." }
+- analogy: { "type":"analogy", "title":"...", "source":"...", "target":"...", "mapping":"..." }
+- transfer: { "type":"transfer", "title":"...", "fromDomain":"...", "toDomain":"...", "explanation":"...", "example":"..." }
+- code: { "type":"code", "title":"...", "language":"python", "code":"...", "explanation":"..." }
+- visual: { "type":"visual", "title":"...", "description":"...", "engine":"echarts|mermaid|physics|html", ...engine fields }
+- quiz: { "type":"quiz", "title":"...", "questions":[ { "kind":"single", "id":"q1", "question":"...", "choices":[{"id":"a","text":"..."},{"id":"b","text":"..."}], "correctId":"a", "explanation":"..." } ] }  (kinds: "single" → correctId; "multi" → correctIds:[...]; "truefalse" → correct:true|false, no choices)
+- mind_map: { "type":"mind_map", "title":"...", "root":{ "id":"r", "topic":"...", "children":[ { "id":"n1", "topic":"...", "children":[...] } ] } }
+- slide: { "type":"slide", "title":"...", "slides":[ { "id":"s1", "title":"...", "layout":"title|bullets|quote|image-text", "bullets":["..."], "markdown":"...", "note":"..." } ] }
+- worksheet: { "type":"worksheet", "title":"...", "items":[ { "kind":"short_answer|fill_blank|problem", "id":"i1", "prompt":"...", "hint":"...", "sampleAnswer":"...", "blanks":["..."] } ] }
 
 Rules:
-- Return a single JSON object with title, summary, estimatedMinutes, blocks.
-- Do not return flat keys like text/analogy/transfer/code.
-- Same language as the user.
-- Be concise but specific. No boilerplate.
-- No visual/html in this fast path.
-- Use executable code only in the code block.
-- Return only fields matching the JSON shape.`;
+- visual / code / quiz / mind_map / slide / worksheet are OPTIONAL and AT MOST ONE each. Add one only when it genuinely helps THIS topic; otherwise omit it.
+- quiz: 2-4 questions, place near the end as a comprehension check.
+- mind_map: only for taxonomies / overviews with many sub-concepts; 8-20 nodes, 2-3 levels.
+- slide: only for step-by-step processes, timelines, or comparisons; 2-6 slides.
+- worksheet: 2-5 practice items for active recall. For fill_blank, "blanks" has one answer per "___" in the prompt.
+- visual: echarts for charts/plots, mermaid for diagrams/flows, physics for simulations (set physicsScene JSON, never write simulation code), html otherwise (must include an interactive control). Only include fields for the chosen engine.
+- code: only when executable examples help. Use real runnable code.
+- Return a single JSON object with title, summary, estimatedMinutes, blocks. Do not return flat keys.
+- Same language as the user. Be concise but specific. No boilerplate. No prose outside JSON.`;
 
 const OUTLINE_SYSTEM_PROMPT = `You are Primoria's Course Planner. Plan a real short course as compact JSON.
 
@@ -128,10 +295,11 @@ Return only:
 }
 
 Rules:
-- Exactly 4 blocks by default. Use 5 blocks only when the user explicitly asks for visualization/interactive/demo and a visual block is needed.
-- Include at least one analogy and one transfer.
-- Include code only when the topic benefits from executable examples.
-- Include visual only if the user explicitly asks for visualization/interactive/demo OR if the topic is strongly process/spatial (sorting, stack, queue, graph traversal, physics motion).
+- 4-6 blocks. Include at least one analogy and one transfer.
+- Allowed types: text, analogy, transfer, code, visual, quiz, mind_map, slide, worksheet.
+- Choose the right type per block; do not make everything text. Each optional type (code/visual/quiz/mind_map/slide/worksheet) appears AT MOST ONCE and only when it fits this topic.
+- visual only if the user asks for visualization/interactive/demo OR the topic is strongly process/spatial (sorting, stack, queue, graph traversal, physics motion).
+- quiz near the end; mind_map for taxonomies/overviews; slide for step-by-step processes; worksheet for practice.
 - The outline is only a plan: do not write long body content here.
 - Same language as the user. No markdown fences. No prose outside JSON.`;
 
@@ -142,12 +310,16 @@ Schemas:
 - analogy: {"type":"analogy","title":"...","source":"...","target":"...","mapping":"..."}
 - transfer: {"type":"transfer","title":"...","fromDomain":"...","toDomain":"...","explanation":"...","example":"..."}
 - code: {"type":"code","title":"...","language":"...","code":"...","explanation":"..."}
-- visual: {"type":"visual","title":"...","description":"...","html":"..."}
+- visual: {"type":"visual","title":"...","description":"...","engine":"echarts|mermaid|physics|html","echartsOption":{...},"mermaidDefinition":"...","html":"..."}
+- quiz: {"type":"quiz","title":"...","questions":[{"kind":"single","id":"q1","question":"...","choices":[{"id":"a","text":"..."}],"correctId":"a","explanation":"..."}]} (kinds: single→correctId, multi→correctIds[], truefalse→correct:boolean)
+- mind_map: {"type":"mind_map","title":"...","root":{"id":"r","topic":"...","children":[{"id":"n1","topic":"..."}]}}
+- slide: {"type":"slide","title":"...","slides":[{"id":"s1","title":"...","layout":"title|bullets|quote|image-text","bullets":["..."],"markdown":"...","note":"..."}]}
+- worksheet: {"type":"worksheet","title":"...","items":[{"kind":"short_answer|fill_blank|problem","id":"i1","prompt":"...","hint":"...","sampleAnswer":"...","blanks":["..."]}]}
 
 Rules:
 - Generate only the requested block type.
 - Keep text concise and specific; no boilerplate.
-- For visual, produce a compact self-contained HTML fragment with one interaction. No external scripts.
+- For visual, choose the engine that best fits: "echarts" for charts/plots, "mermaid" for diagrams/flows, "physics" for simulations, "html" for other interactive. Only include fields for the chosen engine. Do not write simulation code — set physicsScene JSON for physics.
 - Same language as the course topic. No markdown fences. No prose outside JSON.`;
 
 const BLOCK_CONCURRENCY = Number(process.env.PRIMORIA_COURSE_BLOCK_CONCURRENCY ?? 4);
@@ -360,6 +532,14 @@ function schemaForBlockType(type) {
       return VisualBlockSchema;
     case "code":
       return CodeBlockSchema;
+    case "quiz":
+      return QuizBlockSchema;
+    case "mind_map":
+      return MindMapBlockSchema;
+    case "slide":
+      return SlideBlockSchema;
+    case "worksheet":
+      return WorksheetBlockSchema;
     default:
       return TextBlockSchema;
   }
@@ -380,6 +560,16 @@ async function invokeJsonText(model, system, user, label) {
     { callbacks: [] },
   );
   const text = messageContentToString(result.content);
+  const meta = result?.response_metadata ?? {};
+  const usage = result?.usage_metadata ?? {};
+  const stopReason = meta.stop_reason ?? meta.finish_reason ?? meta.stopReason ?? "unknown";
+  console.warn(
+    `[course-generator] ${label}: stop_reason=${stopReason} outputChars=${text.length} ` +
+      `inTok=${usage.input_tokens ?? "?"} outTok=${usage.output_tokens ?? "?"}`,
+  );
+  if (stopReason === "max_tokens" || stopReason === "length") {
+    console.warn(`[course-generator] ${label} HIT TOKEN LIMIT — output was truncated.`);
+  }
   if (!text.trim()) throw new Error(`Course generator returned empty ${label}.`);
   return text;
 }
@@ -544,12 +734,23 @@ function normalizeBlock(block, topic) {
   }
 
   if (type === "visual") {
-    return {
-      type: "visual",
+    const engine = typeof block.engine === "string" ? block.engine : undefined;
+    const base = {
+      type: /** @type {"visual"} */ ("visual"),
       title,
       description: cleanText(block.description ?? block.content ?? block.markdown, `互动观察「${topic}」的关键关系。`).slice(0, 220),
-      html: normalizeHtml(block.html, topic),
+      engine,
     };
+    if (engine === "echarts" && block.echartsOption && typeof block.echartsOption === "object") {
+      return { ...base, echartsOption: block.echartsOption, echartsHeight: typeof block.echartsHeight === "number" ? block.echartsHeight : undefined };
+    }
+    if (engine === "mermaid" && typeof block.mermaidDefinition === "string" && block.mermaidDefinition.trim()) {
+      return { ...base, mermaidDefinition: block.mermaidDefinition };
+    }
+    if (engine === "physics" && block.physicsScene && typeof block.physicsScene === "object") {
+      return { ...base, physicsScene: block.physicsScene };
+    }
+    return { ...base, engine: "html", html: normalizeHtml(block.html, topic) };
   }
 
   if (type === "code") {
@@ -561,6 +762,15 @@ function normalizeBlock(block, topic) {
       code: normalizeCode(block.code ?? block.example ?? block.content, language),
       explanation: cleanText(block.explanation ?? block.content, "这段代码把概念写成可执行的形式。"),
     };
+  }
+
+  // Richer structured types are passed through their schema as-is. If the model's
+  // payload does not satisfy the schema we drop the block (return null) rather
+  // than coercing rich content into a degraded text block.
+  if (type === "quiz" || type === "mind_map" || type === "slide" || type === "worksheet") {
+    const schema = schemaForBlockType(type);
+    const parsed = schema.safeParse({ ...block, type, title });
+    return parsed.success ? parsed.data : null;
   }
 
   return {
@@ -586,7 +796,11 @@ function inferBlockType(block) {
  * @param {string} type
  */
 function normalizeBlockType(type) {
-  if (["text", "analogy", "transfer", "visual", "code"].includes(type)) return /** @type {any} */ (type);
+  const aliases = { mindmap: "mind_map", mind_map: "mind_map", slides: "slide", quizzes: "quiz" };
+  const normalized = aliases[type] ?? type;
+  if (["text", "analogy", "transfer", "visual", "code", "quiz", "mind_map", "slide", "worksheet"].includes(normalized)) {
+    return /** @type {any} */ (normalized);
+  }
   return "text";
 }
 
@@ -613,6 +827,14 @@ function defaultBlockTitle(type, topic) {
       return "互动观察";
     case "code":
       return "代码实现";
+    case "quiz":
+      return "小测验";
+    case "mind_map":
+      return `${topic}思维导图`;
+    case "slide":
+      return "幻灯片讲解";
+    case "worksheet":
+      return "练习巩固";
     default:
       return `理解${topic}`;
   }
@@ -852,7 +1074,7 @@ function isUsableCourseDraft(course) {
     course.summary,
     ...course.blocks.flatMap((/** @type {any} */ block) =>
       Object.entries(block)
-        .filter(([key, value]) => key !== "html" && typeof value === "string")
+        .filter(([key, value]) => !["html", "echartsOption", "mermaidDefinition", "physicsScene", "echartsHeight"].includes(key) && typeof value === "string")
         .map(([, value]) => value),
     ),
   ];
