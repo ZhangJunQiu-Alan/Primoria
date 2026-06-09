@@ -2,6 +2,8 @@
 
 Primoria is an AI-native learning workspace for generating short courses, interactive learning widgets, course-aware tutoring, and future classroom/workspace collaboration flows.
 
+The main product direction is documented in [docs/long-horizon-learning-principles.md](docs/long-horizon-learning-principles.md).
+
 The repository is a pnpm monorepo with two main apps:
 
 - `apps/web` — Next.js web app, course library, tutor UI, course detail pages, API routes.
