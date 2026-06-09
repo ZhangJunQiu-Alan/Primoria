@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { signUpWithEmail } from "@/lib/auth/accounts";
 import { isAuthEnabled } from "@/lib/auth/session";
+import { withAuthTimeout } from "@/lib/auth/timeouts";
 
 const RequestSchema = z.object({
   email: z.string().email(),
@@ -15,11 +16,11 @@ export async function POST(request: Request) {
   }
   try {
     const body = RequestSchema.parse(await request.json());
-    const user = await signUpWithEmail(body);
+    const user = await withAuthTimeout(signUpWithEmail(body), "Sign up");
     return NextResponse.json({ user });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Sign up failed";
-    const status = /already exists|invalid|password|email/i.test(message) ? 400 : 500;
+    const status = /timed out|database/i.test(message) ? 503 : /already exists|invalid|password|email/i.test(message) ? 400 : 500;
     return NextResponse.json({ error: message }, { status });
   }
 }

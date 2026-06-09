@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { signInWithEmail } from "@/lib/auth/accounts";
 import { isAuthEnabled } from "@/lib/auth/session";
+import { withAuthTimeout } from "@/lib/auth/timeouts";
 
 const RequestSchema = z.object({
   email: z.string().email(),
@@ -14,11 +15,11 @@ export async function POST(request: Request) {
   }
   try {
     const body = RequestSchema.parse(await request.json());
-    const user = await signInWithEmail(body);
+    const user = await withAuthTimeout(signInWithEmail(body), "Sign in");
     return NextResponse.json({ user });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Sign in failed";
-    const status = /invalid|password|email/i.test(message) ? 401 : 500;
+    const status = /timed out|database/i.test(message) ? 503 : /invalid|password|email/i.test(message) ? 401 : 500;
     return NextResponse.json({ error: message }, { status });
   }
 }

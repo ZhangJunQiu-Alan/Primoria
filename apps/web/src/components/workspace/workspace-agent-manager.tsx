@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import type {
   WorkspaceAgentCapability,
   WorkspaceAgentCapabilityInput,
@@ -35,13 +35,6 @@ const TOOL_OPTIONS: Array<{
   { toolName: "save_agent_memory", label: "Save memory", approval: "always" },
 ];
 
-const EXAMPLE_PROMPTS = [
-  "Explain science concepts to me",
-  "Help me study more effectively",
-  "Turn goals into weekly project tasks",
-  "Create practice quizzes from our chats",
-];
-
 export function WorkspaceAgentManager({
   workspaceId,
   initialTemplates,
@@ -54,16 +47,9 @@ export function WorkspaceAgentManager({
   const [agentQuery, setAgentQuery] = useState("");
   const [storeQuery, setStoreQuery] = useState("");
   const [draftPrompt, setDraftPrompt] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [systemPrompt, setSystemPrompt] = useState("");
-  const [visibility, setVisibility] = useState<WorkspaceAgentProfile["visibility"]>("workspace");
-  const [memoryScope, setMemoryScope] = useState<WorkspaceAgentProfile["memoryScope"]>("thread");
-  const [selectedTools, setSelectedTools] = useState<string[]>(["summarize_thread"]);
-  const [preservedCapabilities, setPreservedCapabilities] = useState<WorkspaceAgentCapabilityInput[]>([]);
   const [selectedStoreTemplateKey, setSelectedStoreTemplateKey] = useState(initialTemplates[0]?.key ?? "");
   const [storeInstallTarget, setStoreInstallTarget] = useState<WorkspaceAgentProfile["visibility"]>("workspace");
-  const [editingId, setEditingId] = useState("");
+  const [agentComposerOpen, setAgentComposerOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [drafting, setDrafting] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -94,13 +80,6 @@ export function WorkspaceAgentManager({
     ? findInstalledTemplateProfile(profiles, memberProfileIds, selectedStoreTemplate.key, storeInstallTarget)
     : undefined;
 
-  const canSave = Boolean(
-    name.trim() &&
-    description.trim() &&
-    systemPrompt.trim() &&
-    buildAgentCapabilityPayload(preservedCapabilities, selectedTools).some((capability) => capability.enabled),
-  );
-
   function resetFeedback() {
     setFeedback("");
     setError("");
@@ -118,45 +97,28 @@ export function WorkspaceAgentManager({
   function removeProfile(profileId: string) {
     setProfiles((current) => current.filter((profile) => profile.id !== profileId));
     setMembers((current) => current.filter((member) => member.agentProfileId !== profileId));
-    if (editingId === profileId) clearForm();
   }
 
   function clearForm() {
-    setEditingId("");
-    setName("");
-    setDescription("");
-    setSystemPrompt("");
-    setVisibility("workspace");
-    setMemoryScope("thread");
-    setSelectedTools(["summarize_thread"]);
-    setPreservedCapabilities([]);
     setDraftPrompt("");
   }
 
-  function loadProfile(profile: WorkspaceAgentProfile) {
+  function openAgentComposer() {
     resetFeedback();
-    setTab("agents");
-    setEditingId(profile.id);
-    setName(profile.displayName);
-    setDescription(profile.description);
-    setSystemPrompt(profile.systemPrompt);
-    setVisibility(profile.visibility);
-    setMemoryScope(profile.memoryScope);
-    setSelectedTools(readEditableInternalToolNames(profile.capabilities));
-    setPreservedCapabilities(readPreservedCapabilityInputs(profile.capabilities));
+    clearForm();
+    setAgentComposerOpen(true);
+  }
+
+  function closeAgentComposer() {
+    resetFeedback();
+    clearForm();
+    setAgentComposerOpen(false);
   }
 
   function useTemplate(template: WorkspaceAgentTemplate) {
     resetFeedback();
     setTab("agents");
-    setEditingId("");
-    setName(template.displayName);
-    setDescription(template.description);
-    setSystemPrompt(template.systemPrompt);
-    setVisibility("workspace");
-    setMemoryScope(template.memoryScope);
-    setSelectedTools(readEditableInternalToolNames(template.capabilities));
-    setPreservedCapabilities(readPreservedCapabilityInputs(template.capabilities));
+    setAgentComposerOpen(true);
     setDraftPrompt(template.description);
   }
 
@@ -192,97 +154,47 @@ export function WorkspaceAgentManager({
     }
   }
 
-  function toggleTool(toolName: string) {
-    setSelectedTools((current) =>
-      current.includes(toolName) ? current.filter((entry) => entry !== toolName) : [...current, toolName],
-    );
-  }
-
-  async function draftWithAi(prompt = draftPrompt) {
-    const input = prompt.trim();
+  async function createAgentFromPrompt(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const input = draftPrompt.trim();
     if (!input) return;
+    setSaving(true);
     setDrafting(true);
     resetFeedback();
     try {
-      const response = await fetch(`/api/workspaces/${workspaceId}/agent-draft`, {
+      const draftResponse = await fetch(`/api/workspaces/${workspaceId}/agent-draft`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: input }),
       });
-      const data = (await response.json()) as {
+      const draftData = (await draftResponse.json()) as {
         draft?: { displayName: string; description: string; systemPrompt: string; skills: string[] };
         error?: string;
       };
-      if (!response.ok || !data.draft) throw new Error(data.error || "Draft could not be created.");
-      setName(data.draft.displayName);
-      setDescription(data.draft.description);
-      setSystemPrompt(data.draft.systemPrompt);
-      setSelectedTools(data.draft.skills.filter((skill) => TOOL_OPTIONS.some((tool) => tool.toolName === skill)));
-      if (!editingId) {
-        setMemoryScope("thread");
-        setPreservedCapabilities([]);
-      }
-      setDraftPrompt(input);
-      setFeedback("Draft ready. Review and save it.");
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Draft could not be created.");
-    } finally {
-      setDrafting(false);
-    }
-  }
-
-  async function saveAgent(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!canSave) return;
-    setSaving(true);
-    resetFeedback();
-    const payload = {
-      displayName: name,
-      description,
-      systemPrompt,
-      visibility,
-      memoryScope,
-      capabilities: buildAgentCapabilityPayload(preservedCapabilities, selectedTools),
-    };
-    try {
-      const response = await fetch(
-        editingId ? `/api/workspaces/${workspaceId}/agents/${editingId}` : `/api/workspaces/${workspaceId}/agents`,
-        {
-          method: editingId ? "PATCH" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        },
-      );
-      const data = (await response.json()) as { profile?: WorkspaceAgentProfile; member?: WorkspaceMember; error?: string };
-      if (!response.ok || !data.profile) throw new Error(data.error || "Agent could not be saved.");
-      mergeProfile(data.profile);
-      mergeMember(data.member);
-      setEditingId(data.profile.id);
-      setFeedback(editingId ? "Agent updated." : "Agent created.");
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Agent could not be saved.");
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  async function addToWorkspace(profile: WorkspaceAgentProfile) {
-    setSaving(true);
-    resetFeedback();
-    try {
+      if (!draftResponse.ok || !draftData.draft) throw new Error(draftData.error || "Agent could not be created.");
       const response = await fetch(`/api/workspaces/${workspaceId}/agents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profileId: profile.id }),
+        body: JSON.stringify({
+          displayName: draftData.draft.displayName,
+          description: draftData.draft.description,
+          systemPrompt: draftData.draft.systemPrompt,
+          visibility: "workspace",
+          memoryScope: "thread",
+          capabilities: buildInternalToolCapabilities(draftData.draft.skills),
+        }),
       });
       const data = (await response.json()) as { profile?: WorkspaceAgentProfile; member?: WorkspaceMember; error?: string };
-      if (!response.ok || !data.profile) throw new Error(data.error || "Agent could not be added.");
+      if (!response.ok || !data.profile) throw new Error(data.error || "Agent could not be created.");
       mergeProfile(data.profile);
       mergeMember(data.member);
-      setFeedback(`${data.profile.displayName} added to workspace.`);
+      setAgentComposerOpen(false);
+      clearForm();
+      setFeedback("Agent created.");
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Agent could not be added.");
+      setError(caught instanceof Error ? caught.message : "Agent could not be created.");
     } finally {
+      setDrafting(false);
       setSaving(false);
     }
   }
@@ -303,6 +215,19 @@ export function WorkspaceAgentManager({
       setSaving(false);
     }
   }
+
+  useEffect(() => {
+    if (!agentComposerOpen) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setFeedback("");
+      setError("");
+      setDraftPrompt("");
+      setAgentComposerOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [agentComposerOpen]);
 
   return (
     <section className="workspace-agent-manager simple">
@@ -336,103 +261,21 @@ export function WorkspaceAgentManager({
         />
         <button
           type="button"
-          onClick={() => {
-            clearForm();
-            setTab("agents");
-          }}
+          className="primary"
+          onClick={openAgentComposer}
         >
-          New blank
+          Create agent
         </button>
       </div>
+      {feedback || error ? (
+        <div className="workspace-agent-manager-status" aria-live="polite">
+          {feedback ? <p className="workspace-agent-manager-feedback">{feedback}</p> : null}
+          {error ? <p className="workspace-agent-manager-error">{error}</p> : null}
+        </div>
+      ) : null}
 
       {tab === "agents" ? (
         <div className="workspace-agent-simple-layout">
-          <section className="workspace-agent-create-card" aria-label="Create agent">
-            <form onSubmit={saveAgent}>
-              <div className="workspace-agent-create-title">
-                <strong>{editingId ? "Edit agent" : "Create agent"}</strong>
-                {editingId ? <button type="button" onClick={clearForm}>Close</button> : null}
-              </div>
-              <label className="workspace-agent-prompt-box">
-                <span>What should your agent do?</span>
-                <textarea
-                  value={draftPrompt}
-                  onChange={(event) => setDraftPrompt(event.target.value)}
-                  placeholder="Describe what your agent should do..."
-                  rows={4}
-                />
-                <button type="button" onClick={() => void draftWithAi()} disabled={drafting || !draftPrompt.trim()}>
-                  {drafting ? "Drafting..." : "AI create"}
-                </button>
-              </label>
-              <div className="workspace-agent-examples">
-                {EXAMPLE_PROMPTS.map((example) => (
-                  <button key={example} type="button" onClick={() => void draftWithAi(example)}>
-                    {example}
-                  </button>
-                ))}
-              </div>
-              <label>
-                <span>Name</span>
-                <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Enter agent name" required />
-              </label>
-              <label>
-                <span>System instructions</span>
-                <textarea
-                  value={systemPrompt}
-                  onChange={(event) => setSystemPrompt(event.target.value)}
-                  placeholder="Goal, skills, workflow, constraints..."
-                  rows={7}
-                  required
-                />
-              </label>
-              <label>
-                <span>Short purpose</span>
-                <input value={description} onChange={(event) => setDescription(event.target.value)} placeholder="One sentence purpose" required />
-              </label>
-              <div className="workspace-agent-compact-options">
-                <label>
-                  <span>Save as</span>
-                  <select value={visibility} onChange={(event) => setVisibility(event.target.value as WorkspaceAgentProfile["visibility"])}>
-                    <option value="workspace">Workspace agent</option>
-                    <option value="private">Personal agent</option>
-                  </select>
-                </label>
-                <label>
-                  <span>Memory</span>
-                  <select value={memoryScope} onChange={(event) => setMemoryScope(event.target.value as WorkspaceAgentProfile["memoryScope"])}>
-                    <option value="thread">Thread memory</option>
-                    <option value="workspace">Workspace memory</option>
-                    <option value="user">Personal memory</option>
-                    <option value="none">No memory</option>
-                  </select>
-                </label>
-              </div>
-              {preservedCapabilities.length ? (
-                <div className="workspace-agent-preserved-skills" aria-label="Template skills">
-                  {capabilityLabels(preservedCapabilities).map((label) => <span key={label}>{label}</span>)}
-                </div>
-              ) : null}
-              <div className="workspace-agent-skill-strip" aria-label="Agent skills">
-                {TOOL_OPTIONS.map((tool) => (
-                  <label key={tool.toolName}>
-                    <input
-                      type="checkbox"
-                      checked={selectedTools.includes(tool.toolName)}
-                      onChange={() => toggleTool(tool.toolName)}
-                    />
-                    <span>{tool.label}</span>
-                  </label>
-                ))}
-              </div>
-              <button type="submit" disabled={saving || !canSave}>
-                {editingId ? "Save agent" : visibility === "private" ? "Save to my agents" : "Create agent"}
-              </button>
-            </form>
-            {feedback ? <p className="workspace-agent-manager-feedback">{feedback}</p> : null}
-            {error ? <p className="workspace-agent-manager-error">{error}</p> : null}
-          </section>
-
           <section className="workspace-agent-list simple" aria-label="My agents">
             <div className="workspace-agent-section-heading">
               <strong>My agents</strong>
@@ -454,10 +297,6 @@ export function WorkspaceAgentManager({
                     {capabilityLabels(profile.capabilities).slice(0, 3).map((label) => <span key={label}>{label}</span>)}
                   </div>
                   <div className="workspace-agent-card-actions">
-                    {!memberProfileIds.has(profile.id) ? (
-                      <button type="button" onClick={() => void addToWorkspace(profile)} disabled={saving}>Add</button>
-                    ) : null}
-                    <button type="button" onClick={() => loadProfile(profile)}>Edit</button>
                     <button type="button" className="danger" onClick={() => void deleteAgent(profile)} disabled={saving}>Delete</button>
                   </div>
                 </article>
@@ -482,6 +321,8 @@ export function WorkspaceAgentManager({
               <div className="workspace-agent-store-grid">
                 {filteredTemplates.map((template) => {
                   const installed = findInstalledTemplateProfile(profiles, memberProfileIds, template.key, storeInstallTarget);
+                  const templateSkills = capabilityLabelsByKind(template.capabilities, "skill");
+                  const templateActions = capabilityLabelsByKind(template.capabilities, "internal_tool");
                   return (
                     <button
                       key={template.key}
@@ -497,9 +338,10 @@ export function WorkspaceAgentManager({
                           <small>{template.description}</small>
                         </span>
                       </div>
-                      <div className="workspace-agent-manager-tags">
+                      <div className="workspace-agent-store-card-meta">
                         {installed ? <span>Installed</span> : null}
-                        {capabilityLabels(template.capabilities).slice(0, 3).map((label) => <span key={label}>{label}</span>)}
+                        <span>{templateSkills.length} skills</span>
+                        <span>{templateActions.length} actions</span>
                       </div>
                     </button>
                   );
@@ -522,10 +364,10 @@ export function WorkspaceAgentManager({
                     <p>{selectedStoreTemplate.description}</p>
                   </div>
                 </div>
-                <div className="workspace-agent-manager-tags">
+                <div className="workspace-agent-store-scope">
                   <span>{formatMemoryScope(selectedStoreTemplate.memoryScope)}</span>
-                  {capabilityLabels(selectedStoreTemplate.capabilities).map((label) => <span key={label}>{label}</span>)}
                 </div>
+                <AgentCapabilitySummary capabilities={selectedStoreTemplate.capabilities} />
                 <div className="workspace-agent-store-instructions">
                   <strong>System instructions</strong>
                   <p>{selectedStoreTemplate.systemPrompt}</p>
@@ -548,6 +390,52 @@ export function WorkspaceAgentManager({
           </div>
         </section>
       )}
+
+      {agentComposerOpen ? (
+        <div className="workspace-agent-modal" role="dialog" aria-modal="true" aria-label="Create agent">
+          <button
+            type="button"
+            className="workspace-agent-modal-backdrop"
+            aria-label="Close agent editor"
+            onClick={closeAgentComposer}
+          />
+          <form className="workspace-agent-modal-panel" onSubmit={createAgentFromPrompt}>
+            <header className="workspace-agent-modal-header">
+              <div>
+                <span className="course-block-tag">Agent editor</span>
+                <h2>Create agent</h2>
+                <p>Describe what you want. The system will draft and create the agent for you.</p>
+              </div>
+              <button type="button" className="workspace-agent-modal-close" onClick={closeAgentComposer} aria-label="Close">
+                Close
+              </button>
+            </header>
+            <div className="workspace-agent-modal-body">
+              <label className="workspace-agent-prompt-box">
+                <span>What should your agent do?</span>
+                <textarea
+                  value={draftPrompt}
+                  onChange={(event) => setDraftPrompt(event.target.value)}
+                  placeholder="Describe what your agent should do..."
+                  rows={10}
+                />
+              </label>
+            </div>
+            <footer className="workspace-agent-modal-footer">
+              <div className="workspace-agent-modal-messages">
+                {feedback ? <p className="workspace-agent-manager-feedback">{feedback}</p> : null}
+                {error ? <p className="workspace-agent-manager-error">{error}</p> : null}
+              </div>
+              <button type="button" className="ghost-btn" onClick={closeAgentComposer}>
+                Cancel
+              </button>
+              <button type="submit" className="soft-btn" disabled={saving || drafting || !draftPrompt.trim()}>
+                {drafting ? "Creating..." : "Create agent"}
+              </button>
+            </footer>
+          </form>
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -568,62 +456,6 @@ function buildInternalToolCapabilities(toolNames: string[]): WorkspaceAgentCapab
   }));
 }
 
-function buildAgentCapabilityPayload(preserved: WorkspaceAgentCapabilityInput[], toolNames: string[]): WorkspaceAgentCapabilityInput[] {
-  const editableToolNames = new Set(TOOL_OPTIONS.map((option) => option.toolName));
-  const preservedInputs = preserved
-    .map(capabilityInput)
-    .filter((capability) => capability.kind !== "internal_tool" || !editableToolNames.has(capability.toolName));
-  const next = [...preservedInputs, ...buildInternalToolCapabilities(toolNames)];
-  const seen = new Set<string>();
-  return next.filter((capability) => {
-    const key = capabilityKey(capability);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
-
-function readEditableInternalToolNames(capabilities: Array<WorkspaceAgentCapability | WorkspaceAgentCapabilityInput>) {
-  const editableToolNames = new Set(TOOL_OPTIONS.map((option) => option.toolName));
-  const names = capabilities.flatMap((capability) =>
-    capability.kind === "internal_tool" && capability.enabled && editableToolNames.has(capability.toolName) ? [capability.toolName] : [],
-  );
-  return Array.from(new Set(names));
-}
-
-function readPreservedCapabilityInputs(capabilities: Array<WorkspaceAgentCapability | WorkspaceAgentCapabilityInput>) {
-  const editableToolNames = new Set(TOOL_OPTIONS.map((option) => option.toolName));
-  return capabilities
-    .map(capabilityInput)
-    .filter((capability) => capability.kind !== "internal_tool" || !editableToolNames.has(capability.toolName));
-}
-
-function capabilityInput(capability: WorkspaceAgentCapability | WorkspaceAgentCapabilityInput): WorkspaceAgentCapabilityInput {
-  if (capability.kind === "skill") {
-    return { kind: "skill", source: capability.source, path: capability.path, enabled: capability.enabled };
-  }
-  if (capability.kind === "internal_tool") {
-    return { kind: "internal_tool", toolName: capability.toolName, approval: capability.approval, enabled: capability.enabled };
-  }
-  if (capability.kind === "mcp_tool") {
-    return {
-      kind: "mcp_tool",
-      connectionId: capability.connectionId,
-      toolName: capability.toolName,
-      approval: capability.approval,
-      enabled: capability.enabled,
-    };
-  }
-  return { kind: "subagent", agentProfileId: capability.agentProfileId, enabled: capability.enabled };
-}
-
-function capabilityKey(capability: WorkspaceAgentCapabilityInput) {
-  if (capability.kind === "skill") return `skill:${capability.source}:${capability.path}`;
-  if (capability.kind === "internal_tool") return `internal:${capability.toolName}`;
-  if (capability.kind === "mcp_tool") return `mcp:${capability.connectionId}:${capability.toolName}`;
-  return `subagent:${capability.agentProfileId}`;
-}
-
 function findInstalledTemplateProfile(
   profiles: WorkspaceAgentProfile[],
   memberProfileIds: Set<string>,
@@ -637,13 +469,51 @@ function findInstalledTemplateProfile(
   });
 }
 
+function AgentCapabilitySummary({ capabilities }: { capabilities: Array<WorkspaceAgentCapability | WorkspaceAgentCapabilityInput> }) {
+  const skillLabels = capabilityLabelsByKind(capabilities, "skill");
+  const actionLabels = capabilityLabelsByKind(capabilities, "internal_tool");
+  const connectionLabels = capabilityLabelsByKind(capabilities, "mcp_tool");
+  const delegateLabels = capabilityLabelsByKind(capabilities, "subagent");
+
+  return (
+    <div className="workspace-agent-store-capabilities" aria-label="Agent skills and actions">
+      <CapabilitySection title="Skills" labels={skillLabels} emptyLabel="No dedicated skills" />
+      <CapabilitySection title="Actions" labels={actionLabels} emptyLabel="No tool actions" />
+      {connectionLabels.length ? <CapabilitySection title="Connections" labels={connectionLabels} /> : null}
+      {delegateLabels.length ? <CapabilitySection title="Delegates" labels={delegateLabels} /> : null}
+    </div>
+  );
+}
+
+function CapabilitySection({ title, labels, emptyLabel }: { title: string; labels: string[]; emptyLabel?: string }) {
+  return (
+    <section className="workspace-agent-capability-section">
+      <strong>{title}</strong>
+      <div>
+        {labels.length ? labels.map((label) => <span key={label}>{label}</span>) : <span>{emptyLabel ?? "None"}</span>}
+      </div>
+    </section>
+  );
+}
+
 function capabilityLabels(capabilities: Array<WorkspaceAgentCapability | WorkspaceAgentCapabilityInput>) {
   return capabilities
     .filter((capability) => capability.enabled)
-    .map((capability) => {
-      if (capability.kind === "skill") return capability.path.split("/").filter(Boolean).at(-1)?.replace(/-/g, " ") ?? "skill";
-      if (capability.kind === "internal_tool") return capability.toolName.replace(/_/g, " ");
-      if (capability.kind === "mcp_tool") return capability.toolName.replace(/_/g, " ");
-      return "delegate agent";
-    });
+    .map(capabilityLabel);
+}
+
+function capabilityLabelsByKind<K extends WorkspaceAgentCapabilityInput["kind"]>(
+  capabilities: Array<WorkspaceAgentCapability | WorkspaceAgentCapabilityInput>,
+  kind: K,
+) {
+  return capabilities
+    .filter((capability) => capability.enabled && capability.kind === kind)
+    .map(capabilityLabel);
+}
+
+function capabilityLabel(capability: WorkspaceAgentCapability | WorkspaceAgentCapabilityInput) {
+  if (capability.kind === "skill") return capability.path.split("/").filter(Boolean).at(-1)?.replace(/-/g, " ") ?? "skill";
+  if (capability.kind === "internal_tool") return capability.toolName.replace(/_/g, " ");
+  if (capability.kind === "mcp_tool") return capability.toolName.replace(/_/g, " ");
+  return "delegate agent";
 }

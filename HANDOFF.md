@@ -1,139 +1,196 @@
 # Handoff
 
+> Supersedes the prior workspace-layering handoff (that work is committed and done).
+
 ## Goal
 
-Continue layering the workspace / agent system without changing behavior. The current direction is to reduce the large workspace files into clear layers:
+Redesign Primoria as an **adaptive learning ecosystem operating system**, not a
+one-shot course generator. The system is structured as **3 nested rings**
+(personal loop → social/workspace → collective intelligence), driven by a
+**Decision Engine** that reads 5 layers of memory (User / Goal / Course /
+Agent / System) and dispatches to an **Agent Pool**.
 
-- UI components and client view-state helpers.
-- Agent profile domain rules.
-- Agent profile persistence row mappers.
-- Later: store services/repositories, then runtime provider/persistence/stream modules.
+The architectural redesign has two parallel threads:
 
-Keep changes surgical and verify after each extraction with `pnpm --filter @primoria/web typecheck`.
+1. **Code structure** — extract shared packages, eliminate duplication across
+   the TS/mjs boundary, split god-files.
+2. **Product system** — implement the adaptive learning loop: event capture,
+   memory writes, decision → action, feedback flow.
+
+User wants to **drive the plan step-by-step** rather than have the next agent
+execute a pre-designed roadmap. Each package, each schema, each file is
+discussed before it is written.
 
 ## Current Progress
 
-- Branch: `codex/workspace-layering`.
-- Working tree has uncommitted refactor changes.
-- Frontend extraction completed:
-  - `apps/web/src/components/workspace/workspace-composer.tsx` now owns the chat composer UI, attachment tray, and `@ agent` mention popover.
-  - `apps/web/src/components/workspace/workspace-client-state.ts` now owns client-side workspace merge rules, optimistic message dedupe, thread bumping, mention range detection, and last-read localStorage helpers.
-  - `apps/web/src/components/workspace/workspace-client.tsx` still owns container state, API calls, and business orchestration.
-- Backend rule extraction completed:
-  - `apps/web/src/lib/workspaces/agent-profile-rules.ts` now owns agent templates, handle slugging/unique handle generation, capability construction, capability policy validation, skill path validation, and text guardrails.
-  - `apps/web/src/lib/workspaces/store.ts` imports these rules instead of defining them inline.
-- Backend persistence mapper extraction completed:
-  - `apps/web/src/lib/workspaces/agent-profile-persistence.ts` now owns agent capability/profile/connection DB row conversion, profile capability grouping, visible connection filtering, and hidden reference capability input conversion helper.
-  - `apps/web/src/lib/workspaces/store.ts` imports the persistence mappers.
-- Agent connection service extraction completed:
-  - `apps/web/src/lib/workspaces/agent-connection-service.ts` now owns connection tool-name normalization, workspace/user connection visibility rules, connection lookup, and MCP capability connection validation.
-  - `apps/web/src/lib/workspaces/store.ts` keeps thin wrappers that pass local-store and DB workspace guards into the service.
-- Agent profile service extraction completed:
-  - `apps/web/src/lib/workspaces/agent-profile-service.ts` now owns DB visible profile id discovery, hidden reference capability merge for DB updates, profile lookup/resolution, and profile manage-permission checks.
-  - `apps/web/src/lib/workspaces/store.ts` still owns high-level create/update/member/run orchestration.
-- Agent memory helper extraction completed:
-  - `apps/web/src/lib/workspaces/agent-memory-service.ts` now owns memory row conversion, local/DB owner visibility checks, and source run/message visibility validation.
-  - `apps/web/src/lib/workspaces/store.ts` still owns create/archive/restore/delete/list orchestration.
-- Workspace artifact helper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-artifact-service.ts` now owns artifact kind inference, default review status, artifact record construction, artifact upsert, DB value conversion, row conversion, and artifact-from-message construction.
-  - `apps/web/src/lib/workspaces/store.ts` keeps `buildWorkspaceArtifactMessageBundle` because it depends on the existing message timestamp generation path.
-- Workspace task helper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-task-service.ts` now owns task metadata serialization/parsing, DB task row conversion, and local/DB task source visibility checks.
-  - `apps/web/src/lib/workspaces/store.ts` still owns task create/update orchestration.
-- Workspace thread helper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-thread-service.ts` now owns thread agent trigger normalization, allowed-agent id normalization, participant id normalization, local/DB direct participant construction, DB thread visibility/grouping helpers, and DB thread row conversion.
-  - `apps/web/src/lib/workspaces/store.ts` still owns thread create/update orchestration.
-- Workspace summary mapper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-summary-service.ts` now owns DB workspace row conversion.
-- Workspace message helper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-message-service.ts` now owns message construction, monotonic local message timestamps, per-thread message windowing, thread bumping, and `MESSAGE_WINDOW_PER_THREAD`.
-- Workspace access helper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-access-service.ts` now owns database-mode detection and DB workspace/thread access guards.
-  - `apps/web/src/lib/workspaces/store.ts` still owns local in-memory store access guards.
-- Local view helper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-local-view-service.ts` now owns local view shaping: visible memories, message windowing, workspace list, and personal agent library merge.
-- Agent run persistence mapper extraction completed:
-  - `apps/web/src/lib/workspaces/agent-run-persistence.ts` now owns message, agent run, agent run event, and approval DB row conversion.
-  - `apps/web/src/lib/workspaces/store.ts` still owns run creation/cancellation/retry and approval decision orchestration.
-- Agent run helper extraction completed:
-  - `apps/web/src/lib/workspaces/agent-run-helpers.ts` now owns run event construction, pending approval construction, terminal status checks, runtime visible message snapshots, run id generation, profile run snapshots, and approval payload/object readers.
-  - `apps/web/src/lib/workspaces/store.ts` still owns run lifecycle orchestration and DB writes.
-- Workspace member mapper extraction completed:
-  - `apps/web/src/lib/workspaces/workspace-member-service.ts` now owns DB member row conversion.
-  - `apps/web/src/lib/workspaces/store.ts` still owns member creation, join flow, and permission checks.
-- Verification:
-  - `pnpm --filter @primoria/web typecheck` passed after the frontend extraction.
-  - `pnpm --filter @primoria/web typecheck` also passed after the agent profile rules and persistence mapper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the agent connection service extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the agent profile service extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the agent memory helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace artifact helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace task helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace thread helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the agent run persistence mapper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace member mapper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the agent run helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the task source visibility extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the thread participant helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace summary mapper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace message helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the workspace access helper extraction.
-  - `pnpm --filter @primoria/web typecheck` passed after the local view helper extraction.
-  - `git diff --check` passed after the latest extraction.
+### Design phase (complete)
+
+- `docs/architecture.md` (217 lines) — code structure: package topology,
+  dependency laws, file-by-file migration plan, Phase 0–3.
+- `docs/product-architecture.md` (506 lines) — product system: 8 search spaces,
+  3 rings, 5-layer memory, agent ecosystem, 14-section comprehensive design.
+- `docs/long-horizon-learning-principles.md` — vision doc (already in repo).
+- `docs/issue-taxonomy-and-roadmap.md` — issue label system (already in repo).
+
+### Research phase (complete)
+
+- `deep-research` workflow run (105 sub-agents, 24 verified claims 3-0 votes).
+- Key verified tech decisions (see `memory/verified-tech-decisions.md`):
+  - **pg-boss** for event job queue (transactional outbox on PG, no Redis)
+  - **ts-fsrs** + simplified **BKT** for mastery model (TS-native, production-tested)
+  - **AG-UI / CopilotKit** for real-time multi-agent streaming (already in repo)
+  - **drizzle-zod** for schema → Zod → Type (single source of truth)
+  - **PG range partition by month** for event table
+
+### LobeHub reference (complete, in place)
+
+- Cloned to **`/Users/junjie/ai4edu/lobe-chat/`** (NOT inside primoria).
+- 82 packages. Key ones to reference:
+  - `packages/database/` — Drizzle schema + models + services pattern
+  - `packages/agent-runtime/src/groupOrchestration/` — multi-agent routing
+  - `packages/context-engine/src/` — provider+processor+token-accounting pipeline
+  - `packages/memory-user-memory/src/extractors/` — GateKeeper + LayerExtractor
+  - `packages/builtin-tools/` + 28 individual `@lobechat/builtin-tool-*` — one tool per package
+  - `packages/agent-signal/` — agent activity UI contract
+  - `packages/fetch-sse/`, `packages/openapi/` — SSE client, OpenAI-compatible gateway
+
+### Persistent memory (complete)
+
+- `/Users/junjie/.claude/projects/-Users-junjie-ai4edu-primoria/memory/`:
+  - `MEMORY.md` (index)
+  - `lobehub-package-patterns.md` — 50+ package breakdown
+  - `lobehub-context-engine.md` — pipeline pattern for LLM context
+  - `lobehub-memory-system.md` — 5-dim memory + AI extraction
+  - `lobehub-builtin-tool-pattern.md` — one tool per file
+  - `verified-tech-decisions.md` — industry-verified tech choices
+
+### Task list (in progress)
+
+11 tasks created. **Phase 0 (delete dead code) is in_progress** but the user
+interrupted to clarify direction before deletion actually executed. No files
+have been deleted yet.
+
+```
+#1  [in_progress] Phase 0: 删死代码    ← paused, awaiting user direction
+#2  [pending] Phase 1a: 建 packages/contracts 骨架
+#3  [pending] Phase 1b: 搬 artifact 类型 + Zod schema
+#4  [pending] Phase 1c: 搬 intent 关键词 + stream envelope
+#5  [pending] Phase 2a: 建 packages/domain 骨架
+#6  [pending] Phase 2b: 合并 course-generator 重复
+#7  [pending] Phase 2c: 14 个 tutor tool 拆成 modules
+#8  [pending] Phase 3: apps/web/lib/db 分层
+#9  [pending] P0 feature: Event Pipeline (pg-boss)
+#10 [pending] P0 feature: Memory layers (User + Course)
+#11 [pending] P0 feature: Decision Engine (规则版)
+```
 
 ## What Worked
 
-- Small behavior-preserving extractions worked well.
-- Keeping `WorkspaceClient` as the orchestrator while extracting pure UI/state helpers avoided risky frontend rewrites.
-- Moving agent profile rules before DB mapping made the backend layering more readable.
-- TypeScript caught the extraction boundaries cleanly; no runtime behavior changes were needed.
-- Passing a small context object from `store.ts` into service modules worked well for helpers that need local-store and DB workspace guard access without creating circular imports.
-- Leaving `buildWorkspaceArtifactMessageBundle` in `store.ts` avoided moving message timestamp behavior while still extracting pure artifact helpers.
-- Row mapper extraction is working well for `task` and `thread` without moving write orchestration.
-- Mapper-only modules are now covering profile, memory, artifact, task, thread, agent run, and member rows.
-- `agent-run-helpers.ts` took the pure run/approval helpers without moving DB lifecycle code.
-- `workspace-task-service.ts` and `workspace-thread-service.ts` now own their nearest validation/participant helpers, while orchestration stays in `store.ts`.
-- DB access guards and local view shaping now have separate modules, which keeps DB permissions separate from in-memory store state.
+- **End-to-end exploration before writing** — three parallel Explore agents
+  mapped the codebase (adaptive learning state, agent pipeline, DB schema)
+  and revealed: only 1 of 2 agent paths is live, 3 tables are write-only
+  dead-ends, schema is built around content ownership not learning. This
+  shaped the entire design.
+- **Convergence on first principles** — when the user said "think about it
+  with system design", narrowing to *"a package boundary is a cross-runtime
+  sharing line"* (vs. LobeHub's 50-package multi-platform approach) gave a
+  defensible 2-3 package decision instead of a copy.
+- **Verifying before deleting** — Phase 0 scope was triple-checked with
+  grep: legacy TS tutor path is genuinely dead (no JSX mount, only fetched
+  by dead client, only imported by dead route). But course-generator/editor
+  are NOT dead — initially assumed they were, corrected after grep.
+- **External research as evidence** — `deep-research` produced 3-0
+  verified claims (e.g. "BKT matches DKT within 0.04 AUC-ROC on 7/8
+  datasets"). Better than hand-waving.
+- **Local LobeHub clone** — when the user pointed out we should clone it,
+  made everything concrete. We can `ls packages/database/src/` instead of
+  guessing.
+- **Memory persistence** — LobeHub analysis saved to `.claude/projects/.../memory/`
+  survives session boundaries. Future agents on this project see them.
 
 ## What Didn't Work
 
-- The work was interrupted twice mid-turn, so avoid assuming the narrative in chat is complete. Trust the current files plus typecheck.
-- Do not jump straight into a full `store.ts` rewrite. It mixes local in-memory and DB-backed paths, so a big-bang refactor is risky.
-- Do not move database queries and business rules in the same step. The successful pattern so far is one boundary per change.
-- Keep service modules narrow. `agent-profile-persistence.ts` should remain row conversion/grouping/filtering, while `agent-profile-service.ts` owns workspace visibility and permission checks.
-- Do not move message construction just to extract artifact helpers. `buildMessage` and `nextMessageTimestamp` are shared store concerns for now.
-- Keep source visibility checks near orchestration until there is a clear service boundary; they currently depend on workspace/thread guards.
-- Remaining helpers are mostly orchestration or seed/local-store plumbing; pause before extracting unless doing a dedicated service slice.
-- Local store mutation/global state still lives in `store.ts`; keep it there unless intentionally creating a local store adapter.
+- **Front-loading 11 pre-designed tasks** — user pushed back: "我要一步步
+  自己和你讨论！而是不是已经设计好的这种！" The pre-designed roadmap
+  (Phase 0–3 + 3 P0 features) was too much pre-planning. User wants to
+  drive the plan, not execute one.
+- **Asking multi-choice architecture questions with full options pre-written**
+  — user rejected the AskUserQuestion for "包结构怎么分" because the
+  options were already pre-decided. User wants to be asked "what do you
+  want to do next" not "pick from A/B/C/D".
+- **Tool result truncation from WebFetch** — first attempt to fetch
+  LobeHub's package.json from raw GitHub hit a certificate error. Had to
+  use `dokobot` (Chrome-based fetch) instead.
+- **GitHub API rate limit** — using `/repos/.../contents/` for directory
+  listing hit unauthenticated rate limit. `dokobot read raw.githubusercontent.com`
+  works fine as an alternative.
+- **Deep-research synthesis step** — the 5-angle fan-out and verification
+  all worked, but the final synthesis agent crashed (socket closed). The
+  24 verified claims were returned raw; a final synthesis was done by
+  hand from the result.
+- **Long conversation drift** — the session went from code → design →
+  product vision → LobeHub research → tech stack → ready-to-implement,
+  in many direction changes. The plan in `docs/architecture.md` is sound
+  but may need reshaping as the user exercises the step-by-step mode.
 
-## Next Steps
+## What Must Survive Any Session Restart
 
-1. Inspect the current diff:
-   - `git status --short --branch`
-   - `git diff --stat`
-   - `git diff -- apps/web/src/lib/workspaces/store.ts apps/web/src/lib/workspaces/agent-profile-rules.ts apps/web/src/lib/workspaces/agent-profile-persistence.ts`
+If you (next agent) are reading this, here's the **minimum you need**:
 
-2. Decide whether to commit this first layering slice now.
-   - It already typechecks.
-   - Suggested commit message: `refactor: layer workspace agent profile helpers`
+1. **The vision is not "course generator".** It is "adaptive learning
+   ecosystem operating system" — 3 rings, 5 memory layers, Decision Engine,
+   agent pool. Read `docs/product-architecture.md` §1–6 to internalize.
 
-3. Consider committing the current layering slice before larger service extraction:
-   - The current diff is broad but behavior-preserving and repeatedly typechecked.
-   - Suggested commit message: `refactor: layer workspace helpers`
+2. **The package decision is "2-3 packages, not 50".** Boundary is
+   cross-runtime sharing (web TS + agent mjs). Read `docs/architecture.md`
+   §3–4 for the topology.
 
-4. If continuing extraction before committing, use a dedicated service slice:
-   - seed workspace helpers, or
-   - local store adapter, or
-   - invite-code helpers.
-   - Avoid mixing these with run lifecycle or approval decision changes.
+3. **LobeHub is at `/Users/junjie/ai4edu/lobe-chat/`**, NOT inside primoria.
+   82 packages. `ls packages/` and `ls packages/<name>/src/` to inspect.
+   Memory files summarize the patterns but the real code is there.
 
-5. Run verification after each slice:
-   - `pnpm --filter @primoria/web typecheck`
-   - `git diff --check`
+4. **Memory is at `/Users/junjie/.claude/projects/-Users-junjie-ai4edu-primoria/memory/`**
+   — 5 files + index. Read them before designing anything new.
 
-6. Later, when the store is thinner, split larger domains:
-   - `memory-service`
-   - `artifact-service`
-   - `agent-run-service`
-   - `approval-service`
-   - local/db adapters
+5. **User is in step-by-step mode.** Do not propose a 5-task roadmap.
+   Ask "what do you want to discuss next" or "which file/decision
+   first". Let user drive.
+
+6. **Phase 0 deletion has NOT happened yet** (5 files verified safe to
+   delete, but waiting for user OK). Task #1 is in_progress but paused.
+
+## Next Steps (immediate, awaiting user)
+
+The user has just cloned LobeHub locally and is ready to **discuss the plan
+fresh**. Suggested opening question (DO NOT auto-ask — let user direct):
+
+> "LobeHub 在 `/Users/junjie/ai4edu/lobe-chat/` 准备好了。你想从哪里开始?
+> 比如: ① 看 LobeHub 的 database 包实际怎么分层的, 我们也学着分;
+> ② 看 context-engine 的 pipeline, 我们的 Decision Engine 怎么映射;
+> ③ 看 memory-user-memory 的 5 维, 我们的 5 层 memory 怎么正交;
+> ④ 还是先删死代码(Phase 0)? 你来定。"
+
+Tasks #1–#11 remain valid as a *backlog* but the user may reshape them
+based on what they decide to discuss.
+
+## Files Created in This Session (don't recreate)
+
+- `docs/architecture.md` (217 lines)
+- `docs/product-architecture.md` (506 lines)
+- `/Users/junjie/.claude/projects/-Users-junjie-ai4edu-primoria/memory/`
+  - `MEMORY.md`
+  - `lobehub-package-patterns.md`
+  - `lobehub-context-engine.md`
+  - `lobehub-memory-system.md`
+  - `lobehub-builtin-tool-pattern.md`
+  - `verified-tech-decisions.md`
+
+## Files NOT Touched Yet (important)
+
+- No code files modified
+- No packages created
+- No files deleted (Phase 0 pending)
+- `apps/web/src/lib/db/schema.ts` — 544-line monolith, untouched (Phase 3)
+- `apps/agent/src/graph.mjs` — 1089 lines, untouched (Phase 2)
+- `apps/web/src/lib/ai/tutor-agent.ts` and `primoria-deep-agent.ts` —
+  verified dead, awaiting deletion (Phase 0)

@@ -26,6 +26,12 @@ function getDatabasePoolMax() {
   return 5;
 }
 
+function getDatabaseConnectTimeout() {
+  const configured = Number(process.env.DATABASE_CONNECT_TIMEOUT_SECONDS ?? "");
+  if (Number.isFinite(configured) && configured > 0) return Math.min(Math.floor(configured), 30);
+  return 5;
+}
+
 export function getDb() {
   const url = getDatabaseUrl();
   const existing = globalAny[globalKey];
@@ -33,6 +39,7 @@ export function getDb() {
 
   const client = postgres(url, {
     max: getDatabasePoolMax(),
+    connect_timeout: getDatabaseConnectTimeout(),
     prepare: false,
   });
   const db = drizzle(client, { schema });
