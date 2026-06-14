@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
 import type { TutorStreamEvent } from "@/lib/ai/types";
+import { requireAuth } from "@/lib/auth/guard";
 
 const RequestSchema = z.object({
   messages: z.array(
@@ -45,6 +46,8 @@ function userFacingError(error: unknown) {
 
 export async function POST(request: Request) {
   try {
+    const denied = await requireAuth();
+    if (denied) return denied;
     const body = RequestSchema.parse(await request.json());
     if (body.stream) {
       const encoder = new TextEncoder();

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { classifyEntry } from "@/lib/knowledge-graph/positioning";
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
 import { searchKnowledgeGraphNodes } from "@/lib/knowledge-graph/search";
+import { requireAuth } from "@/lib/auth/guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -31,6 +32,8 @@ function userFacingError(error: unknown) {
 
 export async function POST(request: Request) {
   try {
+    const denied = await requireAuth();
+    if (denied) return denied;
     const body = RequestSchema.parse(await request.json());
     const search = await searchKnowledgeGraphNodes(body);
     const result = classifyEntry(search, { tau: body.tau, floor: body.floor });
