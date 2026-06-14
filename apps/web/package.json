@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:widget": "tsx tests/widget-html.unit.ts && tsx tests/widget-export.unit.ts && tsx tests/stem-code.unit.ts",
-    "test:kg": "tsx tests/knowledge-graph-query.unit.ts",
+    "test:kg": "tsx tests/knowledge-graph-query.unit.ts && tsx tests/knowledge-graph-positioning.unit.ts",
+    "build:topic-graph": "node scripts/build-topic-graph.mjs",
+    "calibrate:kg-floor": "node scripts/calibrate-kg-floor.mjs",
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs"
   },
   "dependencies": {
