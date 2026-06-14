@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1200" viewBox="0 0 1500 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Primoria knowledge graph database schema</title>
+  <desc id="desc">Detailed entity relationship diagram for cross-graph prerequisite edges, semantic retrieval embeddings, constraints, and indexes.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f1e7; }
+      .grid { stroke: rgba(39,34,28,0.06); stroke-width: 1; }
+      .card { fill: #fffaf1; stroke: #d8cdbc; stroke-width: 1.2; }
+      .header { fill: #efe8dc; stroke: #d8cdbc; stroke-width: 1.2; }
+      .note { fill: #f1f7f3; stroke: #bad0c9; stroke-width: 1.1; }
+      .warn { fill: #fff2de; stroke: #d6b06c; stroke-width: 1.1; }
+      .title { fill: #27221c; font: 500 24px "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+      .subtitle { fill: #6d6258; font: 15px "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+      .table-title { fill: #27221c; font: 500 18px "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+      .section-title { fill: #27221c; font: 500 15px "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+      .field { fill: #3a332c; font: 13px "SFMono-Regular", Consolas, monospace; }
+      .small { fill: #6d6258; font: 12px "SFMono-Regular", Consolas, monospace; }
+      .muted { fill: #766b61; font: 13px "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+      .key { fill: #2f6b72; font: 500 13px "SFMono-Regular", Consolas, monospace; }
+      .constraint { fill: #7a5522; font: 12px "SFMono-Regular", Consolas, monospace; }
+      .line { stroke: #557982; stroke-width: 2.2; fill: none; }
+      .line-soft { stroke: #9a8460; stroke-width: 1.8; fill: none; stroke-dasharray: 7 6; }
+      .badge { fill: #e9f1ed; stroke: #bad0c9; stroke-width: 1; }
+      .badge-text { fill: #2f6b72; font: 500 12px "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#557982"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1500" height="1200"/>
+  <g opacity="0.8">
+    <path class="grid" d="M0 90H1500M0 180H1500M0 270H1500M0 360H1500M0 450H1500M0 540H1500M0 630H1500M0 720H1500M0 810H1500M0 900H1500M0 990H1500M0 1080H1500M0 1170H1500"/>
+    <path class="grid" d="M90 0V1200M180 0V1200M270 0V1200M360 0V1200M450 0V1200M540 0V1200M630 0V1200M720 0V1200M810 0V1200M900 0V1200M990 0V1200M1080 0V1200M1170 0V1200M1260 0V1200M1350 0V1200M1440 0V1200"/>
+  </g>
+
+  <text x="56" y="56" class="title">Primoria knowledge graph schema</text>
+  <text x="56" y="84" class="subtitle">graph: calculus_single_variable_v1 · 21 topics · 82 concepts · 126 prerequisite edges · 103 retrieval embeddings · edge ownership is to_graph_id</text>
+
+  <g transform="translate(56 130)">
+    <rect class="card" x="0" y="0" width="360" height="236" rx="10"/>
+    <rect class="header" x="0" y="0" width="360" height="52" rx="10"/>
+    <text x="18" y="33" class="table-title">knowledge_graphs</text>
+    <text x="22" y="80" class="key">PK: id</text>
+    <text x="22" y="110" class="field">id text not null</text>
+    <text x="22" y="138" class="field">subject text not null</text>
+    <text x="22" y="166" class="field">schema_doc jsonb not null</text>
+    <text x="22" y="194" class="field">created_at timestamptz not null</text>
+    <text x="22" y="222" class="field">updated_at timestamptz not null</text>
+  </g>
+
+  <g transform="translate(480 118)">
+    <rect class="card" x="0" y="0" width="410" height="306" rx="10"/>
+    <rect class="header" x="0" y="0" width="410" height="52" rx="10"/>
+    <text x="18" y="33" class="table-title">knowledge_graph_topics</text>
+    <text x="22" y="80" class="key">PK: (graph_id, topic_id)</text>
+    <text x="22" y="108" class="key">FK: graph_id -> knowledge_graphs(id)</text>
+    <text x="22" y="144" class="field">graph_id text not null</text>
+    <text x="22" y="172" class="field">topic_id text not null</text>
+    <text x="22" y="200" class="field">name text not null</text>
+    <text x="22" y="228" class="field">default_order int</text>
+    <text x="22" y="256" class="field">created_at timestamptz not null</text>
+    <text x="22" y="284" class="field">updated_at timestamptz not null</text>
+  </g>
+
+  <g transform="translate(480 530)">
+    <rect class="card" x="0" y="0" width="410" height="332" rx="10"/>
+    <rect class="header" x="0" y="0" width="410" height="52" rx="10"/>
+    <text x="18" y="33" class="table-title">knowledge_graph_concepts</text>
+    <text x="22" y="80" class="key">PK: (graph_id, concept_id)</text>
+    <text x="22" y="108" class="key">FK: graph_id -> knowledge_graphs(id)</text>
+    <text x="22" y="136" class="key">FK: (graph_id, topic_id) -> topics</text>
+    <text x="22" y="172" class="field">graph_id text not null</text>
+    <text x="22" y="200" class="field">concept_id text not null</text>
+    <text x="22" y="228" class="field">topic_id text not null</text>
+    <text x="22" y="256" class="field">name text not null</text>
+    <text x="22" y="284" class="field">description text not null</text>
+    <text x="22" y="312" class="field">default_order int</text>
+  </g>
+
+  <g transform="translate(960 230)">
+    <rect class="card" x="0" y="0" width="470" height="460" rx="10"/>
+    <rect class="header" x="0" y="0" width="470" height="52" rx="10"/>
+    <text x="18" y="33" class="table-title">knowledge_graph_edges</text>
+    <text x="22" y="80" class="key">PK: (from_graph_id, from_concept_id,</text>
+    <text x="57" y="102" class="key">to_graph_id, to_concept_id, edge_type)</text>
+    <text x="22" y="132" class="key">FK: (from_graph_id, from_concept_id) -> concepts</text>
+    <text x="22" y="158" class="key">FK: (to_graph_id, to_concept_id) -> concepts</text>
+    <text x="22" y="196" class="field">from_graph_id text not null</text>
+    <text x="22" y="224" class="field">from_concept_id text not null</text>
+    <text x="22" y="252" class="field">to_graph_id text not null</text>
+    <text x="22" y="280" class="field">to_concept_id text not null</text>
+    <text x="22" y="308" class="field">edge_type text not null</text>
+    <text x="22" y="336" class="field">strength text nullable</text>
+    <text x="22" y="364" class="field">created_at timestamptz not null</text>
+    <text x="22" y="392" class="field">updated_at timestamptz not null</text>
+  </g>
+
+  <g transform="translate(56 420)">
+    <rect class="note" x="0" y="0" width="360" height="158" rx="10"/>
+    <text x="18" y="30" class="section-title">Edge ownership rule</text>
+    <text x="18" y="62" class="small">owner graph = to_graph_id</text>
+    <text x="18" y="92" class="muted">No separate graph_id column on edges.</text>
+    <text x="18" y="120" class="muted">Query current graph prerequisites by to_graph_id.</text>
+  </g>
+
+  <g transform="translate(56 616)">
+    <rect class="warn" x="0" y="0" width="360" height="190" rx="10"/>
+    <text x="18" y="30" class="section-title">Edge checks</text>
+    <text x="18" y="62" class="constraint">no self loop:</text>
+    <text x="18" y="84" class="small">from_graph_id != to_graph_id</text>
+    <text x="18" y="106" class="small">OR from_concept_id != to_concept_id</text>
+    <text x="18" y="138" class="constraint">strength rule:</text>
+    <text x="18" y="160" class="small">prereq => strength in hard|soft</text>
+    <text x="18" y="182" class="small">non-prereq => strength is null</text>
+  </g>
+
+  <g transform="translate(960 735)">
+    <rect class="note" x="0" y="0" width="470" height="258" rx="10"/>
+    <text x="18" y="30" class="section-title">Indexes for core reads</text>
+    <text x="18" y="62" class="small">idx_kg_edges_to_lookup</text>
+    <text x="44" y="84" class="small">(to_graph_id, to_concept_id, edge_type)</text>
+    <text x="18" y="116" class="small">idx_kg_edges_from_lookup</text>
+    <text x="44" y="138" class="small">(from_graph_id, from_concept_id, edge_type)</text>
+    <text x="18" y="170" class="small">idx_kg_edges_owner_type (to_graph_id, edge_type)</text>
+    <text x="18" y="202" class="small">idx_kg_concepts_topic_order (graph_id, topic_id, default_order)</text>
+    <text x="18" y="234" class="small">idx_kg_node_embeddings_graph_model_kind</text>
+  </g>
+
+  <g transform="translate(480 910)">
+    <rect class="note" x="0" y="0" width="410" height="186" rx="10"/>
+    <text x="18" y="30" class="section-title">RAG read path</text>
+    <text x="18" y="62" class="small">1. embed user query with same model_version</text>
+    <text x="18" y="88" class="small">2. kg_node_embeddings ORDER BY vector distance</text>
+    <text x="18" y="114" class="small">3. resolve topic/concept by graph_id + node_id</text>
+    <text x="18" y="140" class="small">4. edges WHERE to_graph_id + to_concept_id</text>
+    <text x="18" y="166" class="small">5. join prereq endpoints back to concepts</text>
+  </g>
+
+  <g transform="translate(56 842)">
+    <rect class="card" x="0" y="0" width="360" height="352" rx="10"/>
+    <rect class="header" x="0" y="0" width="360" height="52" rx="10"/>
+    <text x="18" y="33" class="table-title">kg_node_embeddings</text>
+    <text x="22" y="80" class="key">PK: (graph_id, kind, node_id,</text>
+    <text x="57" y="102" class="key">model_version)</text>
+    <text x="22" y="130" class="key">FK: graph_id -> knowledge_graphs(id)</text>
+    <text x="22" y="158" class="constraint">CHECK: kind in topic|concept</text>
+    <text x="22" y="194" class="field">graph_id text not null</text>
+    <text x="22" y="222" class="field">node_id text not null</text>
+    <text x="22" y="250" class="field">kind text not null</text>
+    <text x="22" y="278" class="field">embed_text text not null</text>
+    <text x="22" y="306" class="field">embedding vector(1536) not null</text>
+    <text x="22" y="334" class="field">model_version text not null</text>
+  </g>
+
+  <g transform="translate(960 1024)">
+    <rect class="note" x="0" y="0" width="470" height="112" rx="10"/>
+    <text x="18" y="30" class="section-title">Embedding policy</text>
+    <text x="18" y="62" class="small">embed_text = kind + name + description + topic + aliases</text>
+    <text x="18" y="88" class="small">model_version = openai:text-embedding-3-small:1536</text>
+  </g>
+
+  <path class="line" marker-end="url(#arrow)" d="M416 230 C444 230, 450 230, 480 230"/>
+  <path class="line" marker-end="url(#arrow)" d="M685 424 C685 476, 685 490, 685 530"/>
+  <path class="line-soft" marker-end="url(#arrow)" d="M416 262 C454 350, 448 675, 480 696"/>
+  <path class="line" marker-end="url(#arrow)" d="M890 674 C922 674, 930 474, 960 474"/>
+  <path class="line" marker-end="url(#arrow)" d="M890 714 C924 714, 932 510, 960 510"/>
+  <path class="line-soft" marker-end="url(#arrow)" d="M416 288 C560 385, 800 238, 960 362"/>
+  <path class="line-soft" marker-end="url(#arrow)" d="M236 366 C236 520, 236 700, 236 842"/>
+  <path class="line-soft" marker-end="url(#arrow)" d="M480 710 C430 760, 392 800, 346 842"/>
+  <path class="line-soft" marker-end="url(#arrow)" d="M416 1003 C440 1003, 454 1003, 480 1003"/>
+
+  <g transform="translate(430 204)">
+    <rect class="badge" width="84" height="26" rx="13"/>
+    <text x="42" y="18" text-anchor="middle" class="badge-text">graph FK</text>
+  </g>
+  <g transform="translate(706 462)">
+    <rect class="badge" width="112" height="26" rx="13"/>
+    <text x="56" y="18" text-anchor="middle" class="badge-text">same graph FK</text>
+  </g>
+  <g transform="translate(860 570)">
+    <rect class="badge" width="86" height="26" rx="13"/>
+    <text x="43" y="18" text-anchor="middle" class="badge-text">endpoints</text>
+  </g>
+</svg>
