@@ -344,7 +344,7 @@ function randomId(prefix) {
 /**
  * @param {{ topic: string; contextHint?: string }} input
  * @param {{ invoke: Function }} model
- * @param {{ ownerId?: string | null }} [options]
+ * @param {{ ownerId?: string | null; courseId?: string }} [options]
  */
 export async function generateCourse(input, model, options = {}) {
   const draft = COURSE_GENERATION_MODE === "blocks"
@@ -353,7 +353,7 @@ export async function generateCourse(input, model, options = {}) {
 
   const now = Date.now();
   const course = {
-    id: randomId("crs"),
+    id: options.courseId ?? randomId("crs"),
     title: draft.title,
     topic: input.topic,
     summary: draft.summary,
@@ -796,6 +796,7 @@ function inferBlockType(block) {
  * @param {string} type
  */
 function normalizeBlockType(type) {
+  /** @type {Record<string, string>} */
   const aliases = { mindmap: "mind_map", mind_map: "mind_map", slides: "slide", quizzes: "quiz" };
   const normalized = aliases[type] ?? type;
   if (["text", "analogy", "transfer", "visual", "code", "quiz", "mind_map", "slide", "worksheet"].includes(normalized)) {
