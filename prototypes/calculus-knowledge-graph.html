@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculus concept graph prototype</title>
+  <style>
+    :root {
+      --paper: #f7f1e7;
+      --surface: #fffaf1;
+      --surface-2: #efe8dc;
+      --ink: #27221c;
+      --muted: #6d6258;
+      --line: #d8cdbc;
+      --blue: #8eb6c9;
+      --green: #86b48b;
+      --gold: #c79a4b;
+      --rose: #c9857d;
+      --violet: #9c8bc5;
+      --teal: #75a7a0;
+      --orange: #ce8b58;
+      --slate: #87919b;
+      --red: #b96f6f;
+      --focus: #2f6b72;
+      --shadow: 0 18px 42px rgba(61, 48, 35, 0.12);
+      color-scheme: light;
+      font-family: "Avenir Next", "Gill Sans", "Helvetica Neue", sans-serif;
+      letter-spacing: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(39, 34, 28, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(39, 34, 28, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid rgba(39, 34, 28, 0.16);
+      background: #fffdf8;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    button:hover,
+    button:focus-visible {
+      border-color: rgba(47, 107, 114, 0.62);
+      outline: none;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 310px minmax(720px, 1fr) 360px;
+    }
+
+    .panel {
+      background: rgba(255, 250, 241, 0.88);
+      border-right: 1px solid rgba(39, 34, 28, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .left {
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .right {
+      border-right: 0;
+      border-left: 1px solid rgba(39, 34, 28, 0.12);
+      padding: 20px 18px;
+      overflow: auto;
+    }
+
+    .brand {
+      padding: 4px 4px 12px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .metric {
+      border: 1px solid rgba(39, 34, 28, 0.12);
+      background: #fffdf8;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 500;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .control-section {
+      border-top: 1px solid rgba(39, 34, 28, 0.1);
+      padding-top: 14px;
+    }
+
+    .control-section h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .topic-list,
+    .edge-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .topic-button,
+    .edge-button {
+      width: 100%;
+      min-height: 38px;
+      border-radius: 8px;
+      padding: 7px 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .topic-button[aria-pressed="true"],
+    .edge-button[aria-pressed="true"] {
+      background: #e9f1ed;
+      border-color: rgba(47, 107, 114, 0.42);
+    }
+
+    .topic-label {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+      border: 1px solid rgba(39, 34, 28, 0.2);
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 12px;
+      flex: 0 0 auto;
+    }
+
+    .search {
+      width: 100%;
+      height: 40px;
+      border: 1px solid rgba(39, 34, 28, 0.16);
+      border-radius: 8px;
+      padding: 0 11px;
+      background: #fffdf8;
+      color: var(--ink);
+    }
+
+    .search:focus {
+      outline: 2px solid rgba(47, 107, 114, 0.22);
+      border-color: rgba(47, 107, 114, 0.5);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .actions button {
+      min-height: 38px;
+      border-radius: 8px;
+      padding: 7px 10px;
+    }
+
+    .canvas-wrap {
+      min-width: 0;
+      position: relative;
+      padding: 20px;
+    }
+
+    .map-frame {
+      height: calc(100vh - 40px);
+      min-height: 690px;
+      border: 1px solid rgba(39, 34, 28, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.72);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: sticky;
+      top: 20px;
+    }
+
+    .map-header {
+      position: absolute;
+      top: 18px;
+      left: 22px;
+      right: 22px;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      pointer-events: none;
+    }
+
+    .map-title {
+      max-width: 520px;
+    }
+
+    .map-title h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .map-title p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .legend {
+      background: rgba(255, 253, 248, 0.9);
+      border: 1px solid rgba(39, 34, 28, 0.12);
+      border-radius: 8px;
+      padding: 10px;
+      display: grid;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .edge-sample {
+      width: 34px;
+      height: 0;
+      border-top: 2px solid currentColor;
+    }
+
+    .edge-sample.part-of {
+      border-top-style: dashed;
+    }
+
+    #graph {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .topic-hull {
+      fill-opacity: 0.12;
+      stroke-opacity: 0.28;
+      stroke-width: 1.2;
+    }
+
+    .topic-caption {
+      font-size: 12px;
+      fill: rgba(39, 34, 28, 0.62);
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    .edge {
+      fill: none;
+      stroke-linecap: round;
+      opacity: 0.52;
+      transition: opacity 160ms ease, stroke-width 160ms ease;
+    }
+
+    .edge.prerequisite {
+      stroke: #446a75;
+      stroke-width: 1.5;
+      marker-end: url(#arrow-prerequisite);
+    }
+
+    .edge.part-of {
+      stroke: #8b7a5c;
+      stroke-width: 1.3;
+      stroke-dasharray: 6 5;
+      marker-end: url(#arrow-part-of);
+    }
+
+    .edge.dimmed {
+      opacity: 0.08;
+    }
+
+    .edge.highlight {
+      opacity: 0.95;
+      stroke-width: 2.4;
+    }
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node circle {
+      stroke: rgba(39, 34, 28, 0.36);
+      stroke-width: 1;
+      transition: transform 160ms ease, stroke-width 160ms ease, filter 160ms ease, opacity 160ms ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .node text {
+      pointer-events: none;
+      font-size: 11px;
+      fill: #2f2923;
+    }
+
+    .node .node-id {
+      font-size: 8px;
+      fill: rgba(39, 34, 28, 0.48);
+    }
+
+    .node:hover circle,
+    .node.selected circle {
+      stroke: #1f5f67;
+      stroke-width: 2.5;
+      filter: drop-shadow(0 5px 10px rgba(47, 107, 114, 0.2));
+    }
+
+    .node:hover circle {
+      transform: scale(1.08);
+    }
+
+    .node.dimmed {
+      opacity: 0.18;
+    }
+
+    .node.search-match circle {
+      stroke: #8b5d1f;
+      stroke-width: 2.5;
+    }
+
+    .detail h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .detail .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(39, 34, 28, 0.12);
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #fffdf8;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .detail-section {
+      border-top: 1px solid rgba(39, 34, 28, 0.1);
+      margin-top: 16px;
+      padding-top: 14px;
+    }
+
+    .detail-section h3 {
+      margin: 0 0 9px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .detail-section p,
+    .detail-section li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .detail-section p {
+      margin: 0;
+    }
+
+    .detail-section ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .relation-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .relation-item {
+      border: 1px solid rgba(39, 34, 28, 0.1);
+      background: #fffdf8;
+      border-radius: 8px;
+      padding: 9px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .relation-item strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    pre {
+      margin: 0;
+      max-height: 310px;
+      overflow: auto;
+      border: 1px solid rgba(39, 34, 28, 0.12);
+      border-radius: 8px;
+      background: #29251f;
+      color: #f6ead6;
+      padding: 12px;
+      font: 12px/1.45 "SFMono-Regular", Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .copy-button {
+      width: 100%;
+      min-height: 38px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .toast {
+      min-height: 20px;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1180px) {
+      .app {
+        grid-template-columns: 280px minmax(660px, 1fr);
+      }
+
+      .right {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid rgba(39, 34, 28, 0.12);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        display: block;
+      }
+
+      .panel,
+      .right {
+        border-right: 0;
+      }
+
+      .map-frame {
+        position: relative;
+        height: 760px;
+        min-height: 760px;
+      }
+
+      .map-header {
+        position: static;
+        padding: 16px 16px 0;
+        display: grid;
+      }
+
+      #graph {
+        height: calc(100% - 112px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="panel left" aria-label="Graph controls">
+      <section class="brand">
+        <h1>微积分知识图谱</h1>
+        <p>50 个 concept node，按 topic 聚类，并标出先修和归属关系。</p>
+      </section>
+
+      <section class="metric-row" aria-label="Graph metrics">
+        <div class="metric"><strong id="nodeCount">50</strong><span>nodes</span></div>
+        <div class="metric"><strong id="edgeCount">0</strong><span>edges</span></div>
+        <div class="metric"><strong id="topicCount">0</strong><span>topics</span></div>
+      </section>
+
+      <section class="control-section">
+        <h2>Search concept</h2>
+        <input class="search" id="searchInput" type="search" placeholder="例如 chain rule / 链式法则" autocomplete="off">
+      </section>
+
+      <section class="control-section">
+        <h2>Topics</h2>
+        <div class="topic-list" id="topicControls"></div>
+      </section>
+
+      <section class="control-section">
+        <h2>Relation types</h2>
+        <div class="edge-list" id="edgeControls"></div>
+      </section>
+
+      <section class="control-section">
+        <h2>Graph actions</h2>
+        <div class="actions">
+          <button type="button" id="resetButton">Reset</button>
+          <button type="button" id="focusWeakButton">Weak path</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="canvas-wrap" aria-label="Calculus knowledge graph">
+      <div class="map-frame">
+        <div class="map-header">
+          <div class="map-title">
+            <h2>Concept graph as model context</h2>
+            <p>Click a node to see the local packet that should be sent to a course-generation or diagnosis agent.</p>
+          </div>
+          <div class="legend" aria-label="Legend">
+            <div class="legend-row"><span class="edge-sample" style="color:#446a75"></span>prerequisite</div>
+            <div class="legend-row"><span class="edge-sample part-of" style="color:#8b7a5c"></span>part of</div>
+          </div>
+        </div>
+        <svg id="graph" viewBox="0 0 1100 760" role="img" aria-label="Interactive calculus concept graph"></svg>
+      </div>
+    </section>
+
+    <aside class="panel right" aria-label="Selected concept detail">
+      <section class="detail">
+        <h2 id="detailTitle">链式法则</h2>
+        <div class="meta">
+          <span class="pill" id="detailTopic">Derivatives</span>
+          <span class="pill" id="detailMastery">learning</span>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <h3>Definition</h3>
+        <p id="detailDefinition"></p>
+      </section>
+
+      <section class="detail-section">
+        <h3>Assessment handle</h3>
+        <p id="detailAssessment"></p>
+      </section>
+
+      <section class="detail-section">
+        <h3>Local relations</h3>
+        <div class="relation-list" id="relationList"></div>
+      </section>
+
+      <section class="detail-section">
+        <h3>LLM input packet</h3>
+        <pre id="packetOutput"></pre>
+        <button type="button" class="copy-button" id="copyButton">Copy packet</button>
+        <div class="toast" id="copyToast" aria-live="polite"></div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    const topics = [
+      { id: "foundations", label: "Foundations", color: "#8eb6c9", hull: [60, 95, 360, 95, 360, 285, 60, 285] },
+      { id: "limits", label: "Limits", color: "#86b48b", hull: [385, 95, 640, 95, 640, 285, 385, 285] },
+      { id: "derivatives", label: "Derivatives", color: "#c79a4b", hull: [665, 95, 1040, 95, 1040, 315, 665, 315] },
+      { id: "applications", label: "Derivative applications", color: "#c9857d", hull: [670, 335, 1040, 335, 1040, 545, 670, 545] },
+      { id: "integrals", label: "Integrals", color: "#9c8bc5", hull: [345, 315, 645, 315, 645, 545, 345, 545] },
+      { id: "series", label: "Sequences and series", color: "#75a7a0", hull: [60, 315, 325, 315, 325, 545, 60, 545] },
+      { id: "multivariable", label: "Multivariable", color: "#ce8b58", hull: [60, 570, 475, 570, 475, 735, 60, 735] },
+      { id: "diffeq", label: "Differential equations", color: "#87919b", hull: [500, 570, 1040, 570, 1040, 735, 500, 735] }
+    ];
+
+    const nodes = [
+      { id: "calc.real_numbers", label: "实数与区间", topic: "foundations", x: 120, y: 165, mastery: "mastered", definition: "把函数定义域和值域放在数轴和区间中理解。", assessment: "能判断表达式的定义域，并用区间表示。" },
+      { id: "calc.functions", label: "函数", topic: "foundations", x: 225, y: 140, mastery: "mastered", definition: "一个输入对应一个输出的规则，是微积分分析变化的对象。", assessment: "能从图像、公式、文字三种形式识别函数。" },
+      { id: "calc.graphs", label: "函数图像", topic: "foundations", x: 315, y: 210, mastery: "learning", definition: "用平面曲线表达输入和输出之间的变化关系。", assessment: "能从图像读出截距、单调性和局部变化。" },
+      { id: "calc.composition", label: "复合函数", topic: "foundations", x: 170, y: 235, mastery: "weak", definition: "把一个函数的输出作为另一个函数的输入。", assessment: "能拆分 f(g(x)) 的外层和内层。" },
+      { id: "calc.inverse", label: "反函数", topic: "foundations", x: 300, y: 120, mastery: "untested", definition: "把函数的输入输出关系反过来的函数。", assessment: "能判断函数是否可逆，并求简单反函数。" },
+      { id: "calc.trig_basics", label: "三角函数基础", topic: "foundations", x: 80, y: 245, mastery: "learning", definition: "正弦、余弦、正切及其周期性和单位圆意义。", assessment: "能用单位圆解释特殊角的三角值。" },
+
+      { id: "calc.limit_intuition", label: "极限直觉", topic: "limits", x: 440, y: 160, mastery: "learning", definition: "观察输入接近某点时输出趋向哪里。", assessment: "能用表格和图像判断一个极限的趋势。" },
+      { id: "calc.one_sided_limits", label: "单侧极限", topic: "limits", x: 545, y: 130, mastery: "untested", definition: "从左边或右边接近一点时的极限。", assessment: "能判断左右极限是否相等。" },
+      { id: "calc.limit_laws", label: "极限定律", topic: "limits", x: 585, y: 220, mastery: "learning", definition: "用代数规则把复杂极限拆成简单极限。", assessment: "能正确使用和、积、商的极限定律。" },
+      { id: "calc.continuity", label: "连续性", topic: "limits", x: 450, y: 245, mastery: "weak", definition: "函数值与极限值一致，图像没有断裂。", assessment: "能检查一点处连续的三个条件。" },
+      { id: "calc.squeeze", label: "夹逼定理", topic: "limits", x: 395, y: 105, mastery: "untested", definition: "如果函数被两个同极限函数夹住，它也有同样极限。", assessment: "能为振荡函数找到上下界。" },
+      { id: "calc.infinite_limits", label: "无穷极限", topic: "limits", x: 635, y: 145, mastery: "learning", definition: "函数值无限增大或减小时的极限行为。", assessment: "能从图像识别竖直渐近线。" },
+
+      { id: "calc.derivative_definition", label: "导数定义", topic: "derivatives", x: 725, y: 165, mastery: "learning", definition: "导数是差商在间隔趋近 0 时的极限。", assessment: "能从平均变化率过渡到瞬时变化率。" },
+      { id: "calc.tangent_line", label: "切线斜率", topic: "derivatives", x: 825, y: 130, mastery: "mastered", definition: "导数在几何上表示曲线某点切线的斜率。", assessment: "能用导数写出切线方程。" },
+      { id: "calc.power_rule", label: "幂法则", topic: "derivatives", x: 925, y: 165, mastery: "mastered", definition: "x 的幂函数求导时指数前移并减一。", assessment: "能快速求多项式导数。" },
+      { id: "calc.product_rule", label: "乘积法则", topic: "derivatives", x: 985, y: 245, mastery: "learning", definition: "两个函数乘积的导数需要分别对两个因子求导。", assessment: "能对 u(x)v(x) 正确求导。" },
+      { id: "calc.quotient_rule", label: "商法则", topic: "derivatives", x: 875, y: 260, mastery: "weak", definition: "两个函数相除时的求导规则。", assessment: "能正确处理分母平方和符号。" },
+      { id: "calc.chain_rule", label: "链式法则", topic: "derivatives", x: 760, y: 250, mastery: "weak", definition: "复合函数求导时，外层导数乘以内层导数。", assessment: "能拆出外层和内层，并解释为什么要乘内层导数。" },
+      { id: "calc.implicit_diff", label: "隐函数求导", topic: "derivatives", x: 1015, y: 125, mastery: "untested", definition: "当 y 隐含在方程中时，对两边同时求导并保留 dy/dx。", assessment: "能求圆或椭圆上的 dy/dx。" },
+      { id: "calc.higher_derivatives", label: "高阶导数", topic: "derivatives", x: 690, y: 115, mastery: "learning", definition: "对导数继续求导，描述变化率本身如何变化。", assessment: "能解释二阶导数和凹凸性的联系。" },
+
+      { id: "calc.monotonicity", label: "单调性", topic: "applications", x: 725, y: 390, mastery: "learning", definition: "用一阶导数符号判断函数增加或减少。", assessment: "能用导数符号表判断区间单调性。" },
+      { id: "calc.extrema", label: "极值", topic: "applications", x: 835, y: 375, mastery: "weak", definition: "函数在局部或全局达到最高或最低的点。", assessment: "能找临界点并区分局部极值和全局极值。" },
+      { id: "calc.concavity", label: "凹凸性", topic: "applications", x: 945, y: 405, mastery: "learning", definition: "由二阶导数描述曲线弯曲方向。", assessment: "能用二阶导数判断凹向上或凹向下。" },
+      { id: "calc.related_rates", label: "相关变化率", topic: "applications", x: 765, y: 505, mastery: "untested", definition: "多个量随时间变化时，用方程联系它们的变化率。", assessment: "能从文字题建立变量关系并对时间求导。" },
+      { id: "calc.optimization", label: "优化问题", topic: "applications", x: 890, y: 495, mastery: "learning", definition: "用导数寻找使目标最大或最小的输入。", assessment: "能建立目标函数和约束条件。" },
+      { id: "calc.linearization", label: "线性近似", topic: "applications", x: 1010, y: 495, mastery: "learning", definition: "用切线近似函数在某点附近的值。", assessment: "能用 L(x)=f(a)+f'(a)(x-a) 做近似。" },
+
+      { id: "calc.antiderivative", label: "原函数", topic: "integrals", x: 395, y: 385, mastery: "learning", definition: "导数为给定函数的函数。", assessment: "能识别不定积分和原函数之间的关系。" },
+      { id: "calc.riemann_sum", label: "黎曼和", topic: "integrals", x: 500, y: 350, mastery: "learning", definition: "用许多小矩形面积近似曲线下方面积。", assessment: "能写出简单函数在区间上的黎曼和。" },
+      { id: "calc.definite_integral", label: "定积分", topic: "integrals", x: 585, y: 415, mastery: "weak", definition: "累积量的精确极限，常解释为有符号面积。", assessment: "能区分定积分、面积和净变化。" },
+      { id: "calc.ftc", label: "微积分基本定理", topic: "integrals", x: 450, y: 505, mastery: "weak", definition: "把求导和积分连接起来，用原函数计算定积分。", assessment: "能说明积累函数的导数为何回到被积函数。" },
+      { id: "calc.substitution", label: "换元积分", topic: "integrals", x: 615, y: 510, mastery: "learning", definition: "积分中的链式法则逆过程。", assessment: "能选 u 并替换 dx 相关项。" },
+      { id: "calc.integration_by_parts", label: "分部积分", topic: "integrals", x: 350, y: 480, mastery: "untested", definition: "乘积法则的逆过程，用于两个因子相乘的积分。", assessment: "能选择 u 和 dv，并执行公式。" },
+
+      { id: "calc.sequences", label: "数列", topic: "series", x: 105, y: 365, mastery: "learning", definition: "按正整数索引排列的一串数。", assessment: "能判断数列是否收敛。" },
+      { id: "calc.series", label: "级数", topic: "series", x: 210, y: 355, mastery: "learning", definition: "把数列的项累加形成的无限和。", assessment: "能写出部分和并判断收敛目标。" },
+      { id: "calc.geometric_series", label: "几何级数", topic: "series", x: 295, y: 435, mastery: "mastered", definition: "相邻项成固定比例的级数。", assessment: "能用公比判断收敛并求和。" },
+      { id: "calc.convergence_tests", label: "收敛判别", topic: "series", x: 135, y: 480, mastery: "weak", definition: "用比较、比值、根值等方法判断级数收敛。", assessment: "能根据级数形式选择合适判别法。" },
+      { id: "calc.power_series", label: "幂级数", topic: "series", x: 250, y: 515, mastery: "untested", definition: "以 x 的幂为变量的函数级数。", assessment: "能求收敛半径和收敛区间。" },
+      { id: "calc.taylor_series", label: "泰勒级数", topic: "series", x: 80, y: 535, mastery: "untested", definition: "用函数在一点的各阶导数构造多项式近似。", assessment: "能写出常见函数的泰勒展开。" },
+
+      { id: "calc.vectors", label: "向量", topic: "multivariable", x: 115, y: 625, mastery: "mastered", definition: "具有大小和方向的量，是多变量空间的基本对象。", assessment: "能进行向量加法、点积和几何解释。" },
+      { id: "calc.multivariable_functions", label: "多元函数", topic: "multivariable", x: 245, y: 620, mastery: "learning", definition: "输入包含多个变量的函数。", assessment: "能解释 z=f(x,y) 的曲面含义。" },
+      { id: "calc.partial_derivatives", label: "偏导数", topic: "multivariable", x: 370, y: 625, mastery: "learning", definition: "固定其他变量，只看一个变量方向上的变化率。", assessment: "能计算并解释一阶偏导。" },
+      { id: "calc.gradient", label: "梯度", topic: "multivariable", x: 170, y: 700, mastery: "weak", definition: "由偏导数组成的向量，指向函数增长最快方向。", assessment: "能用梯度解释最陡上升方向。" },
+      { id: "calc.multiple_integrals", label: "重积分", topic: "multivariable", x: 305, y: 710, mastery: "untested", definition: "在二维或三维区域上累积函数值。", assessment: "能根据区域设置积分上下限。" },
+      { id: "calc.lagrange", label: "拉格朗日乘子", topic: "multivariable", x: 425, y: 690, mastery: "untested", definition: "在约束条件下寻找多元函数极值的方法。", assessment: "能建立梯度平行条件和约束方程。" },
+
+      { id: "calc.differential_equations", label: "微分方程", topic: "diffeq", x: 560, y: 625, mastery: "learning", definition: "包含未知函数及其导数的方程。", assessment: "能识别微分方程的阶数和未知函数。" },
+      { id: "calc.separable_odes", label: "可分离方程", topic: "diffeq", x: 690, y: 640, mastery: "learning", definition: "可以把 y 和 x 分到等号两边后积分的微分方程。", assessment: "能分离变量并积分求解。" },
+      { id: "calc.linear_odes", label: "一阶线性方程", topic: "diffeq", x: 820, y: 625, mastery: "untested", definition: "形如 y' + p(x)y = q(x) 的一阶方程。", assessment: "能使用积分因子求解。" },
+      { id: "calc.slope_fields", label: "方向场", topic: "diffeq", x: 950, y: 635, mastery: "learning", definition: "用小线段展示每个点处解曲线的斜率。", assessment: "能从方向场估计解的趋势。" },
+      { id: "calc.euler_method", label: "欧拉法", topic: "diffeq", x: 630, y: 710, mastery: "untested", definition: "用当前斜率逐步近似微分方程的解。", assessment: "能执行一到两步数值迭代。" },
+      { id: "calc.second_order_odes", label: "二阶微分方程", topic: "diffeq", x: 900, y: 710, mastery: "untested", definition: "包含二阶导数的方程，常用于振动和动力系统。", assessment: "能识别常系数二阶线性方程。" }
+    ];
+
+    const edges = [
+      ["calc.real_numbers", "calc.functions", "prerequisite"],
+      ["calc.functions", "calc.graphs", "prerequisite"],
+      ["calc.functions", "calc.composition", "prerequisite"],
+      ["calc.functions", "calc.inverse", "prerequisite"],
+      ["calc.trig_basics", "calc.derivative_definition", "prerequisite"],
+      ["calc.graphs", "calc.limit_intuition", "prerequisite"],
+      ["calc.limit_intuition", "calc.one_sided_limits", "prerequisite"],
+      ["calc.limit_intuition", "calc.limit_laws", "prerequisite"],
+      ["calc.one_sided_limits", "calc.continuity", "prerequisite"],
+      ["calc.limit_laws", "calc.continuity", "prerequisite"],
+      ["calc.limit_intuition", "calc.squeeze", "prerequisite"],
+      ["calc.limit_intuition", "calc.infinite_limits", "prerequisite"],
+      ["calc.continuity", "calc.derivative_definition", "prerequisite"],
+      ["calc.limit_laws", "calc.derivative_definition", "prerequisite"],
+      ["calc.derivative_definition", "calc.tangent_line", "prerequisite"],
+      ["calc.derivative_definition", "calc.power_rule", "prerequisite"],
+      ["calc.power_rule", "calc.product_rule", "prerequisite"],
+      ["calc.product_rule", "calc.quotient_rule", "prerequisite"],
+      ["calc.composition", "calc.chain_rule", "prerequisite"],
+      ["calc.power_rule", "calc.chain_rule", "prerequisite"],
+      ["calc.chain_rule", "calc.implicit_diff", "prerequisite"],
+      ["calc.derivative_definition", "calc.higher_derivatives", "prerequisite"],
+      ["calc.derivative_definition", "calc.monotonicity", "prerequisite"],
+      ["calc.monotonicity", "calc.extrema", "prerequisite"],
+      ["calc.higher_derivatives", "calc.concavity", "prerequisite"],
+      ["calc.chain_rule", "calc.related_rates", "prerequisite"],
+      ["calc.extrema", "calc.optimization", "prerequisite"],
+      ["calc.tangent_line", "calc.linearization", "prerequisite"],
+      ["calc.power_rule", "calc.antiderivative", "prerequisite"],
+      ["calc.graphs", "calc.riemann_sum", "prerequisite"],
+      ["calc.riemann_sum", "calc.definite_integral", "prerequisite"],
+      ["calc.antiderivative", "calc.ftc", "prerequisite"],
+      ["calc.definite_integral", "calc.ftc", "prerequisite"],
+      ["calc.chain_rule", "calc.substitution", "prerequisite"],
+      ["calc.product_rule", "calc.integration_by_parts", "prerequisite"],
+      ["calc.sequences", "calc.series", "prerequisite"],
+      ["calc.series", "calc.geometric_series", "prerequisite"],
+      ["calc.geometric_series", "calc.convergence_tests", "prerequisite"],
+      ["calc.convergence_tests", "calc.power_series", "prerequisite"],
+      ["calc.power_series", "calc.taylor_series", "prerequisite"],
+      ["calc.higher_derivatives", "calc.taylor_series", "prerequisite"],
+      ["calc.vectors", "calc.multivariable_functions", "prerequisite"],
+      ["calc.multivariable_functions", "calc.partial_derivatives", "prerequisite"],
+      ["calc.partial_derivatives", "calc.gradient", "prerequisite"],
+      ["calc.definite_integral", "calc.multiple_integrals", "prerequisite"],
+      ["calc.multivariable_functions", "calc.multiple_integrals", "prerequisite"],
+      ["calc.gradient", "calc.lagrange", "prerequisite"],
+      ["calc.optimization", "calc.lagrange", "prerequisite"],
+      ["calc.derivative_definition", "calc.differential_equations", "prerequisite"],
+      ["calc.antiderivative", "calc.separable_odes", "prerequisite"],
+      ["calc.differential_equations", "calc.separable_odes", "prerequisite"],
+      ["calc.separable_odes", "calc.linear_odes", "prerequisite"],
+      ["calc.differential_equations", "calc.slope_fields", "prerequisite"],
+      ["calc.tangent_line", "calc.euler_method", "prerequisite"],
+      ["calc.slope_fields", "calc.euler_method", "prerequisite"],
+      ["calc.higher_derivatives", "calc.second_order_odes", "prerequisite"],
+      ["calc.differential_equations", "calc.second_order_odes", "prerequisite"],
+
+      ["calc.functions", "calc.foundations", "part-of"],
+      ["calc.limit_intuition", "calc.limits", "part-of"],
+      ["calc.derivative_definition", "calc.derivatives", "part-of"],
+      ["calc.monotonicity", "calc.derivative_applications", "part-of"],
+      ["calc.definite_integral", "calc.integrals", "part-of"],
+      ["calc.series", "calc.sequences_series", "part-of"],
+      ["calc.partial_derivatives", "calc.multivariable", "part-of"],
+      ["calc.differential_equations", "calc.diffeq", "part-of"],
+
+    ].map(([from, to, type]) => ({ from, to, type }));
+
+    const topicAnchors = {
+      "calc.foundations": { label: "Foundations topic", x: 210, y: 90, topic: "foundations" },
+      "calc.limits": { label: "Limits topic", x: 515, y: 90, topic: "limits" },
+      "calc.derivatives": { label: "Derivatives topic", x: 850, y: 90, topic: "derivatives" },
+      "calc.derivative_applications": { label: "Applications topic", x: 850, y: 335, topic: "applications" },
+      "calc.integrals": { label: "Integrals topic", x: 500, y: 315, topic: "integrals" },
+      "calc.sequences_series": { label: "Series topic", x: 190, y: 315, topic: "series" },
+      "calc.multivariable": { label: "Multivariable topic", x: 250, y: 570, topic: "multivariable" },
+      "calc.diffeq": { label: "Differential equations topic", x: 760, y: 570, topic: "diffeq" }
+    };
+
+    const edgeLabels = {
+      prerequisite: "prerequisite for",
+      "part-of": "part of"
+    };
+
+    const state = {
+      activeTopics: new Set(topics.map((topic) => topic.id)),
+      activeEdges: new Set(["prerequisite", "part-of"]),
+      selectedId: "calc.chain_rule",
+      search: "",
+      weakPath: false
+    };
+
+    const svg = document.getElementById("graph");
+    const nodeById = new Map(nodes.map((node) => [node.id, node]));
+
+    document.getElementById("nodeCount").textContent = String(nodes.length);
+    document.getElementById("edgeCount").textContent = String(edges.length);
+    document.getElementById("topicCount").textContent = String(topics.length);
+
+    function nodeOrAnchor(id) {
+      return nodeById.get(id) || topicAnchors[id];
+    }
+
+    function polygonPoints(points) {
+      const pairs = [];
+      for (let index = 0; index < points.length; index += 2) {
+        pairs.push(points[index] + "," + points[index + 1]);
+      }
+      return pairs.join(" ");
+    }
+
+    function createSvgElement(name, attributes = {}) {
+      const element = document.createElementNS("http://www.w3.org/2000/svg", name);
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+      return element;
+    }
+
+    function isNodeVisible(node) {
+      if (!state.activeTopics.has(node.topic)) return false;
+      if (!state.weakPath) return true;
+      return node.mastery === "weak" || relatedToWeakNode(node.id);
+    }
+
+    function relatedToWeakNode(id) {
+      return edges.some((edge) => {
+        const other = edge.from === id ? edge.to : edge.to === id ? edge.from : null;
+        if (!other || !nodeById.has(other)) return false;
+        return nodeById.get(other).mastery === "weak";
+      });
+    }
+
+    function isSearchMatch(node) {
+      const query = state.search.trim().toLowerCase();
+      if (!query) return false;
+      return [node.id, node.label, node.definition].some((value) => value.toLowerCase().includes(query));
+    }
+
+    function visibleEdge(edge) {
+      if (!state.activeEdges.has(edge.type)) return false;
+      const from = nodeOrAnchor(edge.from);
+      const to = nodeOrAnchor(edge.to);
+      if (!from || !to) return false;
+      if (nodeById.has(edge.from) && !isNodeVisible(from)) return false;
+      if (nodeById.has(edge.to) && !isNodeVisible(to)) return false;
+      return true;
+    }
+
+    function edgePath(edge) {
+      const from = nodeOrAnchor(edge.from);
+      const to = nodeOrAnchor(edge.to);
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const curve = 0.12;
+      const mx = (from.x + to.x) / 2 - dy * curve;
+      const my = (from.y + to.y) / 2 + dx * curve;
+      return "M " + from.x + " " + from.y + " Q " + mx.toFixed(1) + " " + my.toFixed(1) + " " + to.x + " " + to.y;
+    }
+
+    function incomingPrerequisites(id) {
+      return edges.filter((edge) => edge.type === "prerequisite" && edge.to === id && nodeById.has(edge.from));
+    }
+
+    function outgoingPrerequisites(id) {
+      return edges.filter((edge) => edge.type === "prerequisite" && edge.from === id && nodeById.has(edge.to));
+    }
+
+    function localEdges(id) {
+      return edges.filter((edge) => edge.from === id || edge.to === id);
+    }
+
+    function localNodeIds(id) {
+      const ids = new Set([id]);
+      localEdges(id).forEach((edge) => {
+        if (nodeById.has(edge.from)) ids.add(edge.from);
+        if (nodeById.has(edge.to)) ids.add(edge.to);
+      });
+      return ids;
+    }
+
+    function buildPacket(id) {
+      const selected = nodeById.get(id);
+      const ids = localNodeIds(id);
+      const packetNodes = Array.from(ids).map((nodeId) => {
+        const node = nodeById.get(nodeId);
+        return {
+          id: node.id,
+          title: node.label,
+          topic: node.topic,
+          role: node.id === id ? "target" : incomingPrerequisites(id).some((edge) => edge.from === node.id) ? "prerequisite" : "neighbor",
+          learner_mastery: node.mastery,
+          assessment: node.assessment
+        };
+      });
+      const packetEdges = localEdges(id)
+        .filter((edge) => nodeById.has(edge.from) && nodeById.has(edge.to))
+        .map((edge) => ({ from: edge.from, to: edge.to, type: edge.type }));
+
+      return {
+        target_lesson: {
+          focus_concept_id: selected.id,
+          focus_concept_title: selected.label,
+          topic: topics.find((topic) => topic.id === selected.topic).label
+        },
+        concepts: packetNodes,
+        relations: packetEdges,
+        generation_rules: [
+          "Briefly repair weak prerequisites before teaching the target concept.",
+          "Tag every lesson block and quiz item with concept_ids.",
+          "Use part-of relations for scope and prerequisite relations for sequencing."
+        ]
+      };
+    }
+
+    function renderControls() {
+      const topicControls = document.getElementById("topicControls");
+      topicControls.innerHTML = "";
+      topics.forEach((topic) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "topic-button";
+        button.setAttribute("aria-pressed", String(state.activeTopics.has(topic.id)));
+        button.innerHTML = [
+          '<span class="topic-label"><span class="swatch" style="background:' + topic.color + '"></span><span>' + topic.label + '</span></span>',
+          '<span class="count">' + nodes.filter((node) => node.topic === topic.id).length + '</span>'
+        ].join("");
+        button.addEventListener("click", () => {
+          if (state.activeTopics.has(topic.id)) {
+            state.activeTopics.delete(topic.id);
+          } else {
+            state.activeTopics.add(topic.id);
+          }
+          if (!isNodeVisible(nodeById.get(state.selectedId))) {
+            const nextVisible = nodes.find(isNodeVisible);
+            if (nextVisible) state.selectedId = nextVisible.id;
+          }
+          render();
+        });
+        topicControls.appendChild(button);
+      });
+
+      const edgeControls = document.getElementById("edgeControls");
+      edgeControls.innerHTML = "";
+      Object.entries(edgeLabels).forEach(([type, label]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "edge-button";
+        button.setAttribute("aria-pressed", String(state.activeEdges.has(type)));
+        button.innerHTML = '<span class="topic-label"><span class="edge-sample ' + (type === "part-of" ? "part-of" : "") + '"></span><span>' + label + '</span></span><span class="count">' + edges.filter((edge) => edge.type === type).length + '</span>';
+        button.addEventListener("click", () => {
+          if (state.activeEdges.has(type)) {
+            state.activeEdges.delete(type);
+          } else {
+            state.activeEdges.add(type);
+          }
+          render();
+        });
+        edgeControls.appendChild(button);
+      });
+    }
+
+    function renderGraph() {
+      svg.innerHTML = "";
+      const defs = createSvgElement("defs");
+      defs.innerHTML = [
+        '<marker id="arrow-prerequisite" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">',
+        '<path d="M0,0 L8,4 L0,8 Z" fill="#446a75"></path>',
+        '</marker>',
+        '<marker id="arrow-part-of" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">',
+        '<path d="M0,0 L8,4 L0,8 Z" fill="#8b7a5c"></path>',
+        '</marker>'
+      ].join("");
+      svg.appendChild(defs);
+
+      const hullLayer = createSvgElement("g");
+      topics.forEach((topic) => {
+        if (!state.activeTopics.has(topic.id)) return;
+        const polygon = createSvgElement("polygon", {
+          points: polygonPoints(topic.hull),
+          fill: topic.color,
+          stroke: topic.color,
+          class: "topic-hull"
+        });
+        hullLayer.appendChild(polygon);
+        const text = createSvgElement("text", {
+          x: topic.hull[0] + 14,
+          y: topic.hull[1] + 22,
+          class: "topic-caption"
+        });
+        text.textContent = topic.label;
+        hullLayer.appendChild(text);
+      });
+      svg.appendChild(hullLayer);
+
+      const selectedLocalIds = localNodeIds(state.selectedId);
+      const edgeLayer = createSvgElement("g");
+      edges.filter(visibleEdge).forEach((edge) => {
+        const path = createSvgElement("path", {
+          d: edgePath(edge),
+          class: "edge " + edge.type
+        });
+        if (!selectedLocalIds.has(edge.from) && !selectedLocalIds.has(edge.to)) {
+          path.classList.add("dimmed");
+        }
+        if (edge.from === state.selectedId || edge.to === state.selectedId) {
+          path.classList.add("highlight");
+        }
+        edgeLayer.appendChild(path);
+      });
+      svg.appendChild(edgeLayer);
+
+      const nodeLayer = createSvgElement("g");
+      nodes.forEach((node) => {
+        if (!isNodeVisible(node)) return;
+        const topic = topics.find((item) => item.id === node.topic);
+        const group = createSvgElement("g", {
+          class: "node",
+          transform: "translate(" + node.x + " " + node.y + ")",
+          tabindex: "0",
+          role: "button",
+          "aria-label": node.label
+        });
+        if (node.id === state.selectedId) group.classList.add("selected");
+        if (!selectedLocalIds.has(node.id)) group.classList.add("dimmed");
+        if (isSearchMatch(node)) group.classList.add("search-match");
+
+        const size = node.mastery === "weak" ? 22 : node.mastery === "untested" ? 18 : 19;
+        group.appendChild(createSvgElement("circle", {
+          r: size,
+          fill: topic.color
+        }));
+        const label = createSvgElement("text", {
+          x: 0,
+          y: size + 15,
+          "text-anchor": "middle"
+        });
+        label.textContent = node.label;
+        group.appendChild(label);
+        const idText = createSvgElement("text", {
+          x: 0,
+          y: size + 27,
+          class: "node-id",
+          "text-anchor": "middle"
+        });
+        idText.textContent = node.id.replace("calc.", "");
+        group.appendChild(idText);
+
+        group.addEventListener("click", () => {
+          state.selectedId = node.id;
+          render();
+        });
+        group.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            state.selectedId = node.id;
+            render();
+          }
+        });
+        nodeLayer.appendChild(group);
+      });
+      svg.appendChild(nodeLayer);
+    }
+
+    function renderDetail() {
+      const node = nodeById.get(state.selectedId);
+      const topic = topics.find((item) => item.id === node.topic);
+      document.getElementById("detailTitle").textContent = node.label;
+      document.getElementById("detailTopic").textContent = topic.label;
+      document.getElementById("detailMastery").textContent = node.mastery;
+      document.getElementById("detailDefinition").textContent = node.definition;
+      document.getElementById("detailAssessment").textContent = node.assessment;
+
+      const relationList = document.getElementById("relationList");
+      relationList.innerHTML = "";
+      localEdges(node.id)
+        .filter((edge) => nodeById.has(edge.from) && nodeById.has(edge.to))
+        .forEach((edge) => {
+          const from = nodeById.get(edge.from);
+          const to = nodeById.get(edge.to);
+          const item = document.createElement("div");
+          item.className = "relation-item";
+          item.innerHTML = '<strong>' + from.label + '</strong> ' + edgeLabels[edge.type] + ' <strong>' + to.label + '</strong>';
+          relationList.appendChild(item);
+        });
+
+      document.getElementById("packetOutput").textContent = JSON.stringify(buildPacket(node.id), null, 2);
+    }
+
+    function render() {
+      renderControls();
+      renderGraph();
+      renderDetail();
+    }
+
+    document.getElementById("searchInput").addEventListener("input", (event) => {
+      state.search = event.target.value;
+      const match = nodes.find((node) => isSearchMatch(node));
+      if (match) state.selectedId = match.id;
+      render();
+    });
+
+    document.getElementById("resetButton").addEventListener("click", () => {
+      state.activeTopics = new Set(topics.map((topic) => topic.id));
+      state.activeEdges = new Set(["prerequisite", "part-of"]);
+      state.selectedId = "calc.chain_rule";
+      state.search = "";
+      state.weakPath = false;
+      document.getElementById("searchInput").value = "";
+      render();
+    });
+
+    document.getElementById("focusWeakButton").addEventListener("click", () => {
+      state.weakPath = !state.weakPath;
+      document.getElementById("focusWeakButton").textContent = state.weakPath ? "All nodes" : "Weak path";
+      render();
+    });
+
+    document.getElementById("copyButton").addEventListener("click", async () => {
+      const text = document.getElementById("packetOutput").textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById("copyToast").textContent = "Packet copied.";
+      } catch {
+        document.getElementById("copyToast").textContent = "Copy unavailable in this browser.";
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
