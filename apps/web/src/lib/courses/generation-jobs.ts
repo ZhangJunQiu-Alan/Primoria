@@ -87,6 +87,8 @@ export async function claimNextCourseGenerationJob({
   requireDatabase();
   const now = new Date();
   const leaseExpiresAt = new Date(now.getTime() + leaseMs);
+  const nowSql = now.toISOString();
+  const leaseExpiresAtSql = leaseExpiresAt.toISOString();
   const result = await getDb().execute(sql`
     with candidate as (
       select id
@@ -95,7 +97,7 @@ export async function claimNextCourseGenerationJob({
         or (
           status = 'running'
           and lease_expires_at is not null
-          and lease_expires_at < ${now}
+          and lease_expires_at < ${nowSql}::timestamptz
           and attempts < ${maxAttempts}
         )
       order by created_at asc
@@ -107,8 +109,8 @@ export async function claimNextCourseGenerationJob({
       status = 'running',
       attempts = job.attempts + 1,
       lease_owner = ${workerId},
-      lease_expires_at = ${leaseExpiresAt},
-      updated_at = ${now}
+      lease_expires_at = ${leaseExpiresAtSql}::timestamptz,
+      updated_at = ${nowSql}::timestamptz
     from candidate
     where job.id = candidate.id
     returning job.*
