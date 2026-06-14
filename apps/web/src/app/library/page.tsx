@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { listCourses } from "@/lib/courses/store";
+import { listCourseGenerationJobs } from "@/lib/courses/generation-jobs";
 import { listApps } from "@/lib/capability-library/store";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { CourseLibraryGrid } from "@/components/library/course-library-grid";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +22,9 @@ export default async function LibraryPage({
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
   const shouldGate = authEnabled && !user;
-  const [courses, apps] = shouldGate ? [[], []] : await Promise.all([listCourses(user?.id), listApps(user?.id)]);
+  const [courses, apps, courseGenerationJobs] = shouldGate
+    ? [[], [], []]
+    : await Promise.all([listCourses(user?.id), listApps(user?.id), listCourseGenerationJobs(user?.id)]);
 
   return (
     <main className="app-shell">
@@ -40,7 +44,7 @@ export default async function LibraryPage({
             aria-current={activeTab === "courses" ? "page" : undefined}
           >
             Courses
-            <span className="library-tab-count">{courses.length}</span>
+            <span className="library-tab-count">{courses.length + courseGenerationJobs.length}</span>
           </Link>
           <Link
             href="/library?tab=apps"
@@ -63,25 +67,7 @@ export default async function LibraryPage({
             </div>
           </div>
         ) : activeTab === "courses" ? (
-          courses.length === 0 ? (
-            <div className="library-empty">
-              <p>No courses yet.</p>
-            </div>
-          ) : (
-            <ul className="library-grid">
-              {courses.map((course) => (
-                <li key={course.id}>
-                  <Link href={`/course/${course.id}`} className="library-card">
-                    <strong>{course.title}</strong>
-                    <p className="library-card-summary">{course.summary}</p>
-                    <span className="library-card-meta">
-                      {course.outline.length} blocks · v{course.version} · ~{course.estimatedMinutes} min
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )
+          <CourseLibraryGrid initialCourses={courses} initialJobs={courseGenerationJobs} />
         ) : apps.length === 0 ? (
           <div className="library-empty">
             <p>No apps yet.</p>

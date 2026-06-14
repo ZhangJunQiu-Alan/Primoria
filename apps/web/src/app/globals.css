@@ -2469,6 +2469,13 @@ cpk-web-inspector {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
+.course-card-pending {
+  cursor: default;
+}
+.course-card-pending:hover {
+  transform: none;
+  box-shadow: var(--soft-shadow);
+}
 .course-card-body {
   display: flex;
   flex-direction: column;
@@ -2515,6 +2522,10 @@ cpk-web-inspector {
 .course-outline-transfer { background: #e8f3ea; border-color: #4a7a5a; color: #2f5a3d; }
 .course-outline-visual { background: #fff2de; border-color: #c8881a; color: #8a5a14; }
 .course-outline-code { background: #fbeaf0; border-color: #b56474; color: #7a3e4d; }
+.course-outline-quiz { background: #e8f0fe; border-color: #4a6fa5; color: #2c4a80; }
+.course-outline-mind_map { background: #e6f4f1; border-color: #3a8a7a; color: #1f5a50; }
+.course-outline-slide { background: #fef3e2; border-color: #c8881a; color: #8a5a14; }
+.course-outline-worksheet { background: #eef4e8; border-color: #4a7a5a; color: #2f5a3d; }
 .course-meta {
   font-size: 12px;
   color: var(--quiet);
@@ -2580,6 +2591,41 @@ cpk-web-inspector {
 .library-card-meta {
   color: var(--quiet);
   font-size: 12px;
+}
+.library-card-generating,
+.library-card-failed {
+  cursor: default;
+}
+.library-card-generating:hover,
+.library-card-failed:hover {
+  transform: none;
+}
+.library-card-generating {
+  background: #fffaf2;
+  border-color: rgba(200, 136, 26, 0.32);
+}
+.library-card-failed {
+  background: #fff6f2;
+  border-color: rgba(181, 100, 116, 0.38);
+}
+.library-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--quiet);
+  font-size: 12px;
+  font-weight: 800;
+}
+.library-card-status .tool-spinner {
+  width: 11px;
+  height: 11px;
+  border-width: 1.6px;
+}
+.library-card-error-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #b56474;
 }
 
 .library-tabs {
