@@ -13,6 +13,7 @@
     "build:topic-graph": "node scripts/build-topic-graph.mjs",
     "calibrate:kg-floor": "node scripts/calibrate-kg-floor.mjs",
     "db:migrate:kg": "node scripts/migrate-kg.mjs",
+    "db:seed:kg": "node scripts/seed-kg.mjs",
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs"
   },
   "dependencies": {
