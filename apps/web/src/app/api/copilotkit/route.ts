@@ -6,6 +6,8 @@ import {
 import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 
+import { requireAuth } from "@/lib/auth/guard";
+
 const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";
 
 function normalizeAgentMessages(messages: any[] = []) {
@@ -34,6 +36,8 @@ const primoriaAgent = new PrimoriaLangGraphAgent({
 });
 
 export const POST = async (req: NextRequest) => {
+  const denied = await requireAuth();
+  if (denied) return denied;
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     endpoint: "/api/copilotkit",
     serviceAdapter: new ExperimentalEmptyAdapter(),
