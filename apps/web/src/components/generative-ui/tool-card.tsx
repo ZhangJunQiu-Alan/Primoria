@@ -60,28 +60,24 @@ export function ToolCard({
 
   if (artifact.type === "course_card") {
     const courseHref = `/course/${encodeURIComponent(artifact.courseId)}`;
+    const isReady = artifact.status === "ready";
     const typeIcon: Record<string, string> = {
       text: "T",
       analogy: "≈",
       transfer: "→",
       visual: "◐",
       code: "{}",
+      quiz: "?",
+      mind_map: "M",
+      slide: "S",
+      worksheet: "W",
     };
-    return (
-      <div className="message-row tool">
-        <a
-          className="tool-card course-card-link"
-          href={courseHref}
-          onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-            event.preventDefault();
-            event.stopPropagation();
-            router.push(courseHref);
-          }}
-        >
+    const body = (
+      <>
           <div className="tool-title">
-            <span className="tool-dot" />
+            <span className={isReady ? "tool-dot" : "tool-spinner"} />
             <span>
-              generate_course · {artifact.status === "ready" ? "ready" : "generating…"}
+              generate_course · {isReady ? "ready" : "generating…"}
             </span>
           </div>
           <div className="visualizer course-card-body">
@@ -98,10 +94,32 @@ export function ToolCard({
               ))}
             </ul>
             <span className="course-meta">
-              {artifact.outline.length} blocks · ~{artifact.estimatedMinutes} min · click to open
+              {isReady
+                ? `${artifact.outline.length} blocks · ~${artifact.estimatedMinutes} min · click to open`
+                : "You can switch pages; the course will appear in Library when it is ready."}
             </span>
           </div>
-        </a>
+      </>
+    );
+    return (
+      <div className="message-row tool">
+        {isReady ? (
+          <a
+            className="tool-card course-card-link"
+            href={courseHref}
+            onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();
+              event.stopPropagation();
+              router.push(courseHref);
+            }}
+          >
+            {body}
+          </a>
+        ) : (
+          <div className="tool-card course-card-link course-card-pending" aria-busy="true">
+            {body}
+          </div>
+        )}
       </div>
     );
   }

@@ -5,7 +5,7 @@ import { ChatAnthropic } from "@langchain/anthropic";
 import { createDeepAgent, FilesystemBackend } from "deepagents";
 import { createMiddleware } from "langchain";
 import { z } from "zod";
-import { generateCourse } from "./course-generator.mjs";
+import { enqueueCourseGenerationJob, ensureCourseGenerationWorker } from "./course-generation-jobs.mjs";
 import { getCourse } from "./course-store.mjs";
 import { summarizeCourse } from "./course-types.mjs";
 
@@ -311,16 +311,16 @@ const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
 /**
  * @param {any} summary
  */
-function serializeCourseCard(summary) {
+function serializeCourseCard(summary, status = "ready") {
   return `${COURSE_CARD_PREFIX}${JSON.stringify({
     type: "course_card",
     courseId: summary.id,
     title: summary.title,
     topic: summary.topic,
     summary: summary.summary,
-    estimatedMinutes: summary.estimatedMinutes,
-    outline: summary.outline,
-    status: "ready",
+    estimatedMinutes: summary.estimatedMinutes ?? 0,
+    outline: summary.outline ?? [],
+    status,
   })}`;
 }
 
@@ -468,12 +468,23 @@ const generateCourseTool = tool(
   async ({ topic, context_hint }, runtime) => {
     const normalizedTopic = normalizeCourseTopic(topic);
     const ownerId = getRuntimeOwnerId(runtime);
-    const { summary } = await generateCourse(
-      { topic: normalizedTopic, contextHint: context_hint },
-      createModel({ streaming: false }),
-      { ownerId },
+    ensureCourseGenerationWorker(() => createModel({ streaming: false }));
+    const job = await enqueueCourseGenerationJob({
+      ownerId,
+      topic: normalizedTopic,
+      contextHint: context_hint,
+    });
+    return serializeCourseCard(
+      {
+        id: job.courseId,
+        title: `Generating: ${normalizedTopic}`,
+        topic: normalizedTopic,
+        summary: "Primoria is composing this course in the background. It will appear in Library when it is ready.",
+        estimatedMinutes: 0,
+        outline: [],
+      },
+      "generating",
     );
-    return serializeCourseCard(summary);
   },
   {
     name: "generate_course",
@@ -1069,6 +1080,8 @@ function createModel(options = {}) {
     configuration: { baseURL: baseUrl.replace(/\/$/, "") },
   });
 }
+
+ensureCourseGenerationWorker(() => createModel({ streaming: false }));
 
 const checkpointer = new MemorySaver();
 
