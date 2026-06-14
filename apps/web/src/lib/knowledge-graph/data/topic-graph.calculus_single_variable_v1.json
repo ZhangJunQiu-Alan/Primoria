@@ -1,0 +1,887 @@
+{
+  "graphId": "calculus_single_variable_v1",
+  "subject": "微积分 (单变量微积分 / Calculus I-II)",
+  "generatedFrom": "temple/calculus_knowledge_graph.json",
+  "generatedAt": "2026-06-14",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "t_func_basic",
+      "name": "函数与基本初等函数",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "c_function",
+          "name": "函数概念",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_func_power",
+          "name": "幂函数与多项式",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_func_exp_log",
+          "name": "指数与对数函数",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_func_trig",
+          "name": "三角函数",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_func_inverse_trig",
+          "name": "反三角函数",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_func_ops",
+          "hard": true
+        },
+        {
+          "topicId": "t_limit_concept",
+          "hard": false
+        },
+        {
+          "topicId": "t_limit_calc",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_rules",
+          "hard": true
+        },
+        {
+          "topicId": "t_indef_method",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t_func_ops",
+      "name": "复合函数与反函数",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c_composite_function",
+          "name": "复合函数",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_inverse_function",
+          "name": "反函数",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_deriv_rules",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_func_basic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_limit_concept",
+      "name": "极限概念",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_sequence_limit",
+          "name": "数列极限",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_function_limit",
+          "name": "函数极限",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_limit_epsilon",
+          "name": "极限的 ε-δ 定义",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_one_sided_limit",
+          "name": "单侧极限",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_limit_at_infinity",
+          "name": "自变量趋于无穷时的极限",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_limit_calc",
+          "hard": true
+        },
+        {
+          "topicId": "t_infinitesimal",
+          "hard": true
+        },
+        {
+          "topicId": "t_continuity",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_concept",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_app_shape",
+          "hard": true
+        },
+        {
+          "topicId": "t_def_concept",
+          "hard": true
+        },
+        {
+          "topicId": "t_def_calc",
+          "hard": true
+        },
+        {
+          "topicId": "t_series_const",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_func_basic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_limit_calc",
+      "name": "极限运算与重要极限",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c_limit_laws",
+          "name": "极限运算法则",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_squeeze_theorem",
+          "name": "夹逼准则",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_limit_sinx",
+          "name": "第一个重要极限",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_limit_e",
+          "name": "第二个重要极限",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_infinitesimal",
+          "hard": false
+        },
+        {
+          "topicId": "t_deriv_concept",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t_func_basic",
+        "t_limit_concept"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_infinitesimal",
+      "name": "无穷小与无穷大",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c_infinite_limit",
+          "name": "无穷大量",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_infinitesimal",
+          "name": "无穷小量",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_infinitesimal_compare",
+          "name": "无穷小的比较与等价无穷小",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_taylor",
+          "hard": false
+        },
+        {
+          "topicId": "t_series_const",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t_limit_concept",
+        "t_limit_calc"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_continuity",
+      "name": "函数连续性",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "c_continuity",
+          "name": "函数连续性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_discontinuity",
+          "name": "间断点及其分类",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_intermediate_value_thm",
+          "name": "介值定理与零点定理",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_extreme_value_thm",
+          "name": "有界性与最值定理",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_deriv_concept",
+          "hard": true
+        },
+        {
+          "topicId": "t_mvt_thm",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_limit_concept"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_deriv_concept",
+      "name": "导数概念",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "c_derivative_def",
+          "name": "导数定义",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_derivative_geometry",
+          "name": "导数的几何意义",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_differentiable_continuous",
+          "name": "可导与连续的关系",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_deriv_rules",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_special",
+          "hard": true
+        },
+        {
+          "topicId": "t_mvt_thm",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_limit_concept",
+        "t_limit_calc",
+        "t_continuity"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_deriv_rules",
+      "name": "求导法则与基本公式",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "c_basic_derivatives",
+          "name": "基本求导公式",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_derivative_rules",
+          "name": "求导四则运算法则",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_chain_rule",
+          "name": "链式法则(复合函数求导)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_inverse_derivative",
+          "name": "反函数求导",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_deriv_special",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_app_mono",
+          "hard": true
+        },
+        {
+          "topicId": "t_indef_basic",
+          "hard": true
+        },
+        {
+          "topicId": "t_indef_method",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_func_basic",
+        "t_func_ops",
+        "t_deriv_concept"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_deriv_special",
+      "name": "特殊求导方法与微分",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "c_implicit_diff",
+          "name": "隐函数求导",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_param_derivative",
+          "name": "参数方程求导",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_log_diff",
+          "name": "对数求导法",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_higher_derivative",
+          "name": "高阶导数",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_differential",
+          "name": "微分",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_taylor",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_app_shape",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_deriv_concept",
+        "t_deriv_rules"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mvt_thm",
+      "name": "微分中值定理",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "c_rolle",
+          "name": "罗尔定理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_lagrange",
+          "name": "拉格朗日中值定理",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_cauchy_mvt",
+          "name": "柯西中值定理",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_taylor",
+          "hard": true
+        },
+        {
+          "topicId": "t_deriv_app_mono",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_continuity",
+        "t_deriv_concept"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_taylor",
+      "name": "洛必达法则与泰勒公式",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "c_lhopital",
+          "name": "洛必达法则",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_taylor",
+          "name": "泰勒公式",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_maclaurin",
+          "name": "麦克劳林公式",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_common_expansions",
+          "name": "常见函数的麦克劳林展开",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_series_power",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_infinitesimal",
+        "t_deriv_special",
+        "t_mvt_thm"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_deriv_app_mono",
+      "name": "单调性与极值最值",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "c_monotonicity",
+          "name": "函数单调性判定",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_extremum",
+          "name": "函数极值",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_max_min",
+          "name": "函数最值",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_deriv_app_shape",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_deriv_rules",
+        "t_mvt_thm"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_deriv_app_shape",
+      "name": "凹凸性与函数作图",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "c_concavity",
+          "name": "凹凸性与拐点",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_asymptote",
+          "name": "渐近线",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_curve_sketching",
+          "name": "函数图形描绘",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_curvature",
+          "name": "曲率",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_limit_concept",
+        "t_deriv_special",
+        "t_deriv_app_mono"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_indef_basic",
+      "name": "不定积分概念与基本积分",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "c_antiderivative",
+          "name": "原函数与不定积分",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_basic_integrals",
+          "name": "基本积分公式",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_integral_linearity",
+          "name": "不定积分的线性性质",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_indef_method",
+          "hard": true
+        },
+        {
+          "topicId": "t_def_calc",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_deriv_rules"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_indef_method",
+      "name": "积分方法",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "c_substitution_1",
+          "name": "第一类换元法(凑微分)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_substitution_2",
+          "name": "第二类换元法",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_integration_by_parts",
+          "name": "分部积分法",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_rational_integral",
+          "name": "有理函数积分",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_trig_integral",
+          "name": "三角函数有理式积分",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_def_calc",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_func_basic",
+        "t_deriv_rules",
+        "t_indef_basic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_def_concept",
+      "name": "定积分概念与性质",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "c_definite_def",
+          "name": "定积分定义(黎曼和)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_definite_geometry",
+          "name": "定积分的几何意义",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_definite_properties",
+          "name": "定积分的性质",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_def_calc",
+          "hard": true
+        },
+        {
+          "topicId": "t_app",
+          "hard": true
+        },
+        {
+          "topicId": "t_series_power",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_limit_concept"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_def_calc",
+      "name": "定积分计算与反常积分",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "c_ftc1",
+          "name": "变上限积分函数",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_ftc2",
+          "name": "牛顿-莱布尼茨公式",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_definite_substitution",
+          "name": "定积分换元法",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_definite_by_parts",
+          "name": "定积分分部积分法",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_improper_integral",
+          "name": "反常积分",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_app",
+          "hard": true
+        },
+        {
+          "topicId": "t_series_const",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_limit_concept",
+        "t_indef_basic",
+        "t_indef_method",
+        "t_def_concept"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_app",
+      "name": "定积分应用",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "c_area",
+          "name": "平面图形的面积",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_volume",
+          "name": "旋转体的体积",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_arc_length",
+          "name": "平面曲线的弧长",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_physics_application",
+          "name": "定积分的物理应用",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_def_concept",
+        "t_def_calc"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_series_const",
+      "name": "常数项级数与正项判别",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "c_series_concept",
+          "name": "常数项级数及其收敛",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_series_properties",
+          "name": "级数的基本性质",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_series_comparison",
+          "name": "比较判别法",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_series_ratio",
+          "name": "比值判别法",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_series_root",
+          "name": "根值判别法",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "c_series_integral",
+          "name": "积分判别法",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_series_any",
+          "hard": true
+        },
+        {
+          "topicId": "t_series_power",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t_limit_concept",
+        "t_infinitesimal",
+        "t_def_calc"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_series_any",
+      "name": "交错级数与绝对收敛",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "c_alternating_series",
+          "name": "交错级数与莱布尼茨判别法",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_abs_convergence",
+          "name": "绝对收敛与条件收敛",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_series_power",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_series_const"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_series_power",
+      "name": "幂级数与傅里叶级数",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "c_power_series",
+          "name": "幂级数",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_convergence_radius",
+          "name": "收敛半径",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_endpoint_convergence",
+          "name": "端点收敛判别与收敛区间",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_function_expansion",
+          "name": "函数展开成幂级数",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_fourier",
+          "name": "傅里叶级数",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_taylor",
+        "t_def_concept",
+        "t_series_const",
+        "t_series_any"
+      ],
+      "isRoot": false
+    }
+  ]
+}
