@@ -135,7 +135,7 @@ export async function generateCourse(
     updatedAt: now,
   };
 
-  saveCourse(course);
+  await saveCourse(course);
 
   return { course, summary: summarizeCourse(course) };
 }
