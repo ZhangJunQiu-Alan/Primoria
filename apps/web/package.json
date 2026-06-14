@@ -14,6 +14,8 @@
     "calibrate:kg-floor": "node scripts/calibrate-kg-floor.mjs",
     "db:migrate:kg": "node scripts/migrate-kg.mjs",
     "db:seed:kg": "node scripts/seed-kg.mjs",
+    "db:seed:kg-embeddings": "node scripts/seed-kg-embeddings.mjs",
+    "db:sync:kg": "pnpm db:migrate:kg && pnpm db:seed:kg && pnpm db:seed:kg-embeddings",
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs"
   },
   "dependencies": {
