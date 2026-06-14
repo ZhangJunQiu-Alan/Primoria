@@ -86,6 +86,30 @@ export const courses = pgTable(
   }),
 );
 
+export const courseGenerationJobs = pgTable(
+  "course_generation_jobs",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull(),
+    topic: text("topic").notNull(),
+    contextHint: text("context_hint"),
+    status: text("status").notNull().default("queued"),
+    attempts: integer("attempts").notNull().default(0),
+    lastError: text("last_error"),
+    leaseOwner: text("lease_owner"),
+    leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerStatusUpdatedIdx: index("course_generation_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
+    statusLeaseIdx: index("course_generation_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    courseIdUnique: uniqueIndex("course_generation_jobs_course_id_uidx").on(table.courseId),
+  }),
+);
+
 export const learningApps = pgTable(
   "learning_apps",
   {

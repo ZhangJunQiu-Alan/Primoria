@@ -47,6 +47,8 @@ const GetCourseCardParams = z.object({
   course_id: z.string(),
 });
 
+const CourseBlockTypeResult = z.enum(["text", "analogy", "transfer", "visual", "code", "quiz", "mind_map", "slide", "worksheet"]);
+
 const CourseCardResult = z.object({
   type: z.literal("course_card"),
   courseId: z.string(),
@@ -56,7 +58,7 @@ const CourseCardResult = z.object({
   estimatedMinutes: z.number(),
   outline: z.array(
     z.object({
-      type: z.enum(["text", "analogy", "transfer", "visual", "code"]),
+      type: CourseBlockTypeResult,
       title: z.string(),
     }),
   ),

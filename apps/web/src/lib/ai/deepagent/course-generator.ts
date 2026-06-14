@@ -207,6 +207,7 @@ OUTPUT:
 export type GenerateCourseInput = {
   topic: string;
   contextHint?: string;
+  courseId?: string;
 };
 
 export type GenerateCourseResult = {
@@ -243,7 +244,7 @@ export async function generateCourse(
   }));
 
   const course: Course = {
-    id: randomId("crs"),
+    id: input.courseId ?? randomId("crs"),
     title: draft.title,
     topic: input.topic,
     summary: draft.summary,
