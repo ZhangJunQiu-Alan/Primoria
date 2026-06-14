@@ -13,6 +13,7 @@
     "build:topic-graph": "node scripts/build-topic-graph.mjs",
     "calibrate:kg-floor": "node scripts/calibrate-kg-floor.mjs",
     "db:migrate:auth": "node scripts/migrate-auth.mjs",
+    "db:migrate:courses": "node scripts/migrate-courses.mjs",
     "db:migrate:kg": "node scripts/migrate-kg.mjs",
     "db:seed:kg": "node scripts/seed-kg.mjs",
     "db:seed:kg-embeddings": "node scripts/seed-kg-embeddings.mjs",

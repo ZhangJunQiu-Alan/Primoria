@@ -16,7 +16,7 @@ export default async function LibraryPage({
   const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
   const activeTab: TabKey = rawTab === "apps" ? "apps" : "courses";
 
-  const courses = listCourses();
+  const courses = await listCourses();
   const apps = listApps();
 
   return (

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { editBlock } from "@/lib/ai/deepagent/course-editor";
+import { requireAuth } from "@/lib/auth/guard";
 
 const RequestSchema = z.object({
   blockId: z.string(),
@@ -17,6 +18,8 @@ const RequestSchema = z.object({
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
+    const denied = await requireAuth();
+    if (denied) return denied;
     const { id } = await context.params;
     const body = RequestSchema.parse(await request.json());
     const result = await editBlock(

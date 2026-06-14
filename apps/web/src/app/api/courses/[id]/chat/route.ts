@@ -4,6 +4,7 @@ import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
 import { createTutorModel } from "@/lib/ai/deepagent/model";
 import { generateCourse } from "@/lib/ai/deepagent/course-generator";
+import { requireAuth } from "@/lib/auth/guard";
 
 const RequestSchema = z.object({
   message: z.string().min(1),
@@ -63,9 +64,11 @@ function messageContentToString(content: unknown): string {
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
+    const denied = await requireAuth();
+    if (denied) return denied;
     const { id } = await context.params;
     const body = RequestSchema.parse(await request.json());
-    const course = getCourse(id);
+    const course = await getCourse(id);
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
 
     const selectedBlock = body.selectedBlockId
