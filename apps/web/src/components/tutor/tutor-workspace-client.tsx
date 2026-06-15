@@ -5,18 +5,15 @@ import type { TutorProviderSettings } from "@/lib/ai/types";
 import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
 import { SettingsModal } from "./settings-modal";
-import { TutorChatClient } from "./tutor-chat-client";
 import { TutorChatCopilot } from "./tutor-chat-copilot";
 import { TutorTopbar } from "./topbar";
 
 const STORAGE_KEY = "primoria:tutor-provider-settings";
-const USE_COPILOTKIT = process.env.NEXT_PUBLIC_USE_COPILOTKIT === "1";
 
 export function TutorWorkspaceClient() {
   const [settings, setSettings] = useState<TutorProviderSettings>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [chatResetKey, setChatResetKey] = useState(0);
 
   useEffect(() => {
     const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -41,11 +38,7 @@ export function TutorWorkspaceClient() {
           onOpenSettings={() => setSettingsOpen(true)}
           onOpenHistory={() => setHistoryOpen(true)}
         />
-        {USE_COPILOTKIT ? (
-          <TutorChatCopilot />
-        ) : (
-          <TutorChatClient key={chatResetKey} settings={settings} resetKey={chatResetKey} />
-        )}
+        <TutorChatCopilot />
         <SettingsModal
           open={settingsOpen}
           settings={settings}
@@ -54,14 +47,9 @@ export function TutorWorkspaceClient() {
         />
         <ChatHistoryPopup
           open={historyOpen}
-          useCopilotKit={USE_COPILOTKIT}
           onClose={() => setHistoryOpen(false)}
-          onNewChat={() => {
-            if (!USE_COPILOTKIT) setChatResetKey((key) => key + 1);
-          }}
-          onSelectChat={() => {
-            if (!USE_COPILOTKIT) setChatResetKey((key) => key + 1);
-          }}
+          onNewChat={() => {}}
+          onSelectChat={() => {}}
         />
       </section>
     </>

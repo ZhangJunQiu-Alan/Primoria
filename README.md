@@ -115,11 +115,9 @@ pnpm lint
 ## Useful test / verification commands
 
 ```bash
-# Widget HTML normalization unit test
-node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/widget-html.unit.ts
-
-# Capability-library sedimentation unit test
-node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/sediment.unit.ts
+# Widget export and STEM renderer unit checks
+node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/widget-export.unit.ts
+node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/stem-code.unit.ts
 
 # Check agent graph syntax
 node --check apps/agent/src/graph.mjs

@@ -33,23 +33,11 @@ Primoria should borrow the architecture, not the exact visual skin.
   - resize bridge
   - widget-to-tutor prompt bridge via `window.sendPrompt()` and `data-prompt`
 - `usePrimoriaGenerativeUI` sketches the CopilotKit registration layer.
-- `/api/tutor/chat` is the current TypeScript route backed by an OpenAI-compatible provider.
-- TypeScript tool pipeline now mirrors the first OpenGenerativeUI backend pattern:
-  - tutor orchestrator decides whether a visual tool is needed
-  - `planVisualization()` creates a plan artifact
-  - `renderInteractiveWidget()` creates the iframe widget artifact
-  - the chat renders both the plan card and widget card inline
-- Tool execution now streams as NDJSON when the client passes `stream: true`:
-  - `assistant_message`
-  - `tool_status` executing/complete
-  - `artifact_delta` for streaming widget HTML
-  - `artifact`
-  - `final`
-- Chat messages persist locally and can be reset with New tutor chat.
+- The active tutor route is CopilotKit -> LangGraph `primoria_tutor`.
+- LangGraph owns intent routing and tool calls for course generation, widget rendering, and STEM simulations.
+- CopilotKit renders tool results in the chat and stores local thread history by thread id.
 
 ## Still not adopted
 
-- No CopilotKit runtime route yet.
-- No real DeepAgent runtime yet.
-- No LangGraph-style state/checkpointer yet.
-- `usePrimoriaGenerativeUI` is not mounted in the app runtime yet.
+- Capability-library sedimentation is not yet wired into the LangGraph renderer path.
+- Reuse of saved apps through a router agent remains future work.
