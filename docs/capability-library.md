@@ -1,5 +1,10 @@
 # Capability Library — 个性化学习应用库
 
+> Current implementation note: the original `/api/tutor/chat` sedimentation hook
+> has been retired with the legacy web tutor path. The concept and data model
+> remain valid, but LangGraph `widgetRenderer` / `stemRenderer` outputs need a
+> new sedimentation hook before new apps appear automatically in Library.
+
 ## 1. 背景与目标
 
 Primoria 目前的能力交付方式是：用户提问 → tutor agent 现场生成一个 HTML widget 或一节课程。每次都是一次性的，下次同类问题还要重新生成，模型既看不到"上次这个用户用过什么"，也无法复用过去的成功产出。
