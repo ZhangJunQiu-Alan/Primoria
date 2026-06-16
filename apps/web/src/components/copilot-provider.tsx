@@ -7,7 +7,7 @@ import { type ReactNode } from "react";
 
 export function CopilotKitProvider({ children }: { children: ReactNode }) {
   return (
-    <CopilotKit runtimeUrl="/api/copilotkit" agent="primoria_tutor">
+    <CopilotKit runtimeUrl="/api/copilotkit" agent="primoria_tutor" enableInspector={false}>
       {children}
     </CopilotKit>
   );

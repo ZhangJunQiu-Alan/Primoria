@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import {
   createNewThread,
-  ensureThreadSummary,
   getCurrentThreadId,
   readThreadHistory,
   setCurrentThreadId,
@@ -13,10 +12,26 @@ import {
 
 function readSessions() {
   const currentThreadId = getCurrentThreadId();
-  ensureThreadSummary(currentThreadId);
+  const sessions = readThreadHistory();
+  if (!sessions.some((session) => session.id === currentThreadId)) {
+    const now = Date.now();
+    return {
+      currentThreadId,
+      sessions: [
+        {
+          id: currentThreadId,
+          title: "New tutor chat",
+          messageCount: 0,
+          createdAt: now,
+          updatedAt: now,
+        },
+        ...sessions,
+      ],
+    };
+  }
   return {
     currentThreadId,
-    sessions: readThreadHistory(),
+    sessions,
   };
 }
 
