@@ -5,8 +5,8 @@ import {
   buildAttachmentContext,
   modelSupportsVision,
   processAttachments,
-} from "../src/lib/ai/attachments.ts";
-import type { ChatAttachment } from "../src/lib/ai/types.ts";
+} from "../src/lib/agent-os/index.ts";
+import type { ChatAttachment } from "../src/lib/agent-os/index.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);

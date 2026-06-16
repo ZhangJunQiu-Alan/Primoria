@@ -32,6 +32,8 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({
       run: result.run,
       agentRunEvents: result.events,
+      agentEvents: result.agentEvents ?? [],
+      agentSignals: result.agentSignals ?? [],
       agentApprovals: result.approvals,
     });
   } catch (error) {

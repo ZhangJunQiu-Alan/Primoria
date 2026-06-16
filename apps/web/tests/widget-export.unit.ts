@@ -3,7 +3,7 @@
 import {
   assembleWidgetStandaloneHtml,
 } from "../src/components/generative-ui/export-utils.ts";
-import { WIDGET_DEPENDENCY_ALLOWLIST, normalizeWidgetDependencies } from "../src/lib/ai/widget-dependencies.ts";
+import { WIDGET_DEPENDENCY_ALLOWLIST, normalizeWidgetDependencies } from "../src/lib/agent-os/index.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);

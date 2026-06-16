@@ -6,7 +6,7 @@ import { IDIOMORPH_JS } from "./idiomorph-inline";
 import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
-import { normalizeWidgetDependencies } from "@/lib/ai/widget-dependencies";
+import { normalizeWidgetDependencies } from "@/lib/agent-os";
 
 export const WidgetDependency = z.object({
   url: z.string(),

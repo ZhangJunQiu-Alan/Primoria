@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
-import type { MermaidArtifact } from "@/lib/ai/types";
+import type { MermaidArtifact } from "@/lib/agent-os";
 
 export function MermaidRenderer({ artifact }: { artifact: MermaidArtifact }) {
   const containerRef = useRef<HTMLDivElement>(null);

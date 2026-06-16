@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import type { WaveVisualizationArtifact, WaveComponent } from "@/lib/ai/types";
+import type { WaveVisualizationArtifact, WaveComponent } from "@/lib/agent-os";
 
 const PALETTE = ["#c8881a", "#4a7a5a", "#7c6ad0", "#b56474"];
 const C_BG = "#fbf7ee";

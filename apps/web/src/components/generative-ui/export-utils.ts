@@ -1,4 +1,4 @@
-import { normalizeWidgetDependencies, type WidgetDependency } from "@/lib/ai/widget-dependencies";
+import { normalizeWidgetDependencies, type WidgetDependency } from "../../lib/agent-os/artifacts";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 
 type WidgetExportInput = {

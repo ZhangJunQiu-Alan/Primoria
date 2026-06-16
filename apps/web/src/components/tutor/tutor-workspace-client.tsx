@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
-import type { TutorProviderSettings } from "@/lib/ai/types";
+import type { TutorProviderSettings } from "@/lib/agent-os";
 import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
 import { SettingsModal } from "./settings-modal";

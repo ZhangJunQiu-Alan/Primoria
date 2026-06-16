@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { TutorProviderSettings } from "@/lib/ai/types";
+import type { TutorProviderSettings } from "@/lib/agent-os";
 
 type SettingsModalProps = {
   open: boolean;

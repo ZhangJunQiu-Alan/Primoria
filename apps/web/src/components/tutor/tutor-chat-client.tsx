@@ -11,7 +11,7 @@ import type {
   TutorAgentResponse,
   TutorProviderSettings,
   TutorStreamEvent,
-} from "@/lib/ai/types";
+} from "@/lib/agent-os";
 import { TutorComposer } from "./composer";
 import { HeroExplainerCards } from "./hero-explainer-cards";
 import { AssistantMessage, UserMessage } from "./message";

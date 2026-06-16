@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import { ToolCard } from "@/components/generative-ui/tool-card";
-import type { TutorArtifact, TutorStreamEvent } from "@/lib/ai/types";
+import type { TutorArtifact, TutorStreamEvent } from "@/lib/agent-os";
 
 type RunStatus = "queued" | "running" | "passed" | "failed";
 

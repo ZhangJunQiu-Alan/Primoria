@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { EChartsArtifact } from "@/lib/ai/types";
+import type { EChartsArtifact } from "@/lib/agent-os";
 
 export function EChartsRenderer({ artifact }: { artifact: EChartsArtifact }) {
   const containerRef = useRef<HTMLDivElement>(null);

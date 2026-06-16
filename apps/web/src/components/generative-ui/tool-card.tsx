@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import type { TutorArtifact } from "@/lib/ai/types";
+import type { TutorArtifact } from "@/lib/agent-os";
 import { WidgetRenderer } from "./widget-renderer";
 import { EChartsRenderer } from "./echarts-renderer";
 import { MermaidRenderer } from "./mermaid-renderer";

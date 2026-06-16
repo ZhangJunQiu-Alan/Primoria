@@ -9,6 +9,9 @@ export function resolveWorkspaceAgentSkillPath(skillPath: string, options: Works
   if (!skillPath.startsWith("/skills/")) return undefined;
   const skillName = skillPath.slice("/skills/".length);
   if (!/^[a-z0-9-]+$/.test(skillName)) return undefined;
-  const directory = join(process.cwd(), "src/lib/workspaces/skills", skillName);
-  return existsSync(join(directory, "SKILL.md")) ? directory : undefined;
+  const candidates = [
+    join(process.cwd(), "src/lib/workspaces/skills", skillName),
+    join(process.cwd(), "apps/web/src/lib/workspaces/skills", skillName),
+  ];
+  return candidates.find((directory) => existsSync(join(directory, "SKILL.md")));
 }

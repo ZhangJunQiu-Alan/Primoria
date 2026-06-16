@@ -36,6 +36,8 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       approvals: result.approvals,
       run: result.run,
       agentRunEvents: result.events,
+      agentEvents: result.agentEvents ?? [],
+      agentSignals: result.agentSignals ?? [],
       task: result.task,
       message: result.message,
       artifact: result.artifact,

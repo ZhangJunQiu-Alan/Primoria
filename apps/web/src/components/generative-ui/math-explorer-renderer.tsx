@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { MathExplorerArtifact, MathExplorerParameter } from "@/lib/ai/types";
+import type { MathExplorerArtifact, MathExplorerParameter } from "@/lib/agent-os";
 
 type MathCompiled = { evaluate(scope?: Record<string, number>): unknown };
 type MathInstance = { compile(expr: string): MathCompiled };

@@ -6,7 +6,7 @@ import type {
   AlgorithmVisualizationArtifact,
   AlgorithmStep,
   AlgorithmHighlightRole,
-} from "@/lib/ai/types";
+} from "@/lib/agent-os";
 
 // ── Color palette ─────────────────────────────────────────────────────────────
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import type { MoleculeArtifact } from "@/lib/ai/types";
+import type { MoleculeArtifact } from "@/lib/agent-os";
 
 type Repr = "ball_stick" | "stick" | "sphere";
 

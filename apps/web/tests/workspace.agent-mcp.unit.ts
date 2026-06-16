@@ -4,8 +4,8 @@ import {
   buildWorkspaceMcpClientConfig,
   buildWorkspaceMcpGuardedToolSpecs,
   selectWorkspaceMcpToolSelections,
-  workspaceMcpRuntimeToolName,
 } from "../src/lib/workspaces/agent-mcp.ts";
+import { workspaceMcpRuntimeToolName, workspaceMcpToolManifest } from "../src/lib/agent-os/tools.ts";
 import { buildWorkspaceToolInterrupts, requiresWorkspaceToolApproval } from "../src/lib/workspaces/agent-tools.ts";
 import type { WorkspaceAgentConnection, WorkspaceAgentProfile } from "../src/lib/workspaces/types.ts";
 
@@ -56,6 +56,11 @@ async function main() {
   const selections = selectWorkspaceMcpToolSelections(profile, [connection, disabledConnection]);
   assert(selections.length === 1, "MCP selection keeps only visible allowlisted connection tools");
   assert(selections[0].toolName === "search_sources", "MCP selection preserves raw allowlisted tool name");
+  const mcpManifest = workspaceMcpToolManifest({ connection, toolName: "search_sources" });
+  assert(mcpManifest.source === "mcp", "MCP manifest records MCP source");
+  assert(mcpManifest.risk === "external" && mcpManifest.approval === "always", "MCP manifest preserves external risk and approval");
+  assert(mcpManifest.inspector?.label.includes("Source Search"), "MCP manifest carries inspector label");
+  assert(mcpManifest.render?.renderer === "workspace-tool-result", "MCP manifest uses generic tool result renderer");
 
   const config = buildWorkspaceMcpClientConfig([connection]);
   assert(config.throwOnLoadError === false, "MCP adapter config does not fail the whole run when one connection cannot load");

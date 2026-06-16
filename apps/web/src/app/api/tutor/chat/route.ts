@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { applyAttachmentsToLatestUserMessage, AttachmentsSchema, processAttachments } from "@/lib/ai/attachments";
-import { runTutorAgent, runTutorAgentStream } from "@/lib/ai/tutor-agent";
-import type { TutorStreamEvent } from "@/lib/ai/types";
+import { applyAttachmentsToLatestUserMessage, AttachmentsSchema, processAttachments } from "@/lib/agent-os";
+import { runTutorAgent, runTutorAgentStream, type TutorStreamEvent } from "@/lib/agent-os/ai";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { hasDatabaseUrl } from "@/lib/db/client";
 

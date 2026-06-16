@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { normalizeCopilotMessagesWithAttachments } from "../src/lib/ai/copilot-attachments.ts";
+import { normalizeCopilotMessagesWithAttachments } from "../src/lib/agent-os/index.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);

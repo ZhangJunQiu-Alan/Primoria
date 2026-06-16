@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ChatAttachment } from "@/lib/ai/types";
+import type { ChatAttachment } from "@/lib/agent-os";
 import { AttachmentPicker } from "./attachment-picker";
 
 type TutorComposerProps = {

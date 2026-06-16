@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { PhysicsSceneArtifact, PhysicsBody, PhysicsConstraint, PhysicsScene } from "@/lib/ai/types";
+import type { PhysicsSceneArtifact, PhysicsBody, PhysicsConstraint, PhysicsScene } from "@/lib/agent-os";
 
 type MatterModule = typeof import("matter-js");
 

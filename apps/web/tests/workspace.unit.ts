@@ -2097,6 +2097,46 @@ async function main() {
     nextView.agentRuns.some((entry) => entry.id === approvedUpdate.run.id && entry.taskId === approvedUpdate.task?.id && entry.outputMessageId === approvedUpdate.message?.id),
     "approved update run links persist in workspace view",
   );
+  const askUserMention = await createWorkspaceMessage(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    threadId: newThread.id,
+    content: "@Unit Learning Guide should I explain with hints or a full derivation?",
+    senderName: "Test User",
+  });
+  const askUserTurn = await runWorkspaceAgentTurn(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    threadId: newThread.id,
+    message: askUserMention,
+    runner: async () => ({
+      content: "I need one choice before continuing.",
+      status: "completed",
+      events: [
+        {
+          type: "ask_user_request",
+          label: "question_unit_path",
+          payload: {
+            questionId: "question_unit_path",
+            prompt: "Should I answer with hints or a full derivation?",
+            options: [
+              { label: "Hints", value: "hints" },
+              { label: "Full derivation", value: "full" },
+            ],
+            resumeToken: "resume-question-unit-path",
+          },
+        },
+      ],
+    }),
+  });
+  assert(askUserTurn.events.some((event) => event.type === "ask_user_request"), "ask-user request persists as a workspace run event");
+  assert(askUserTurn.agentEvents?.some((event) => event.type === "ask_user.requested"), "ask-user request is exposed through AgentEvent views");
+  assert((askUserTurn.approvals?.length ?? 0) === 0, "ask-user request does not create a durable tool approval");
+  const askUserApprovalAttempt = await decideWorkspaceAgentApproval(null, {
+    workspaceId: createdWorkspace.workspace.id,
+    approvalId: "question_unit_path",
+    decision: "approved",
+    decidedBy: "Unit Owner",
+  }).catch((error) => error);
+  assert(askUserApprovalAttempt instanceof Error && askUserApprovalAttempt.message.includes("not found"), "approval decisions do not accept ask-user question ids");
   const listedRuns = await listWorkspaceAgentRuns(null, { workspaceId: createdWorkspace.workspace.id, threadId: newThread.id });
   assert(listedRuns.runs.some((entry) => entry.id === coachTurn.runs[0].id), "agent runs can be listed for a thread");
   assert(listedRuns.events.some((entry) => entry.runId === coachTurn.runs[0].id), "agent run events can be listed for a thread");

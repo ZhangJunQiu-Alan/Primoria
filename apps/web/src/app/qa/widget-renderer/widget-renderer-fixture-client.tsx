@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
-import { WIDGET_DEPENDENCY_ALLOWLIST } from "@/lib/ai/widget-dependencies";
+import { WIDGET_DEPENDENCY_ALLOWLIST } from "@/lib/agent-os";
 
 const streamingInitialHtml = `
 <section data-testid="stream-fixture">

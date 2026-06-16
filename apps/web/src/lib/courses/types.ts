@@ -1,4 +1,4 @@
-import type { PhysicsScene } from "@/lib/ai/types";
+import type { PhysicsScene } from "@/lib/agent-os";
 
 export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 

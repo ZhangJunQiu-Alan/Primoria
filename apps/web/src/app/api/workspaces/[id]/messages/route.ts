@@ -90,6 +90,8 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     agentMessages: agentRun.messages,
     agentRuns: agentRun.runs,
     agentRunEvents: agentRun.events,
+    agentEvents: agentRun.agentEvents ?? [],
+    agentSignals: agentRun.agentSignals ?? [],
     agentApprovals: agentRun.approvals ?? [],
     agentMemories: agentRun.memories ?? [],
     agentArtifacts: agentRun.artifacts ?? [],

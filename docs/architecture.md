@@ -161,9 +161,9 @@ Before deleting anything, the legacy TS tutor path was traced end-to-end with
 
 | File | Live consumer |
 | --- | --- |
-| `lib/ai/deepagent/model.ts` | `createTutorModel` used by `courses/[id]/chat`, `workspaces/agent-runtime.ts`, course-generator, course-editor. |
-| `lib/ai/deepagent/course-generator.ts` | `/api/courses/[id]/chat` route. |
-| `lib/ai/deepagent/course-editor.ts` | `/api/courses/[id]/edit` route. |
+| `lib/ai/deepagent/model.ts` | Used through Agent OS facades by course chat, workspace runtime model creation, course-generator, and course-editor. |
+| `lib/ai/deepagent/course-generator.ts` | Used through `lib/agent-os/ai.ts` by `/api/courses/[id]/chat`. |
+| `lib/ai/deepagent/course-editor.ts` | Used through `lib/agent-os/ai.ts` by `/api/courses/[id]/edit`. |
 
 → course-generator/editor are **not** dead; they are deferred to Phase 2 (merge
 with the `.mjs` copies), not deleted in Phase 0.
@@ -210,8 +210,9 @@ described in `docs/long-horizon-learning-principles.md`:
 - `apps/web/lib/db` layering (models/services) is where the future
   `learning_events`, `learner_concept_state`, and concept-graph tables land
   cleanly, instead of as more inline queries.
-- Removing the agent duplication means the eventual "teaching-method dispatch"
-  logic is written **once** in `domain`, not twice across the TS/mjs split.
+- Removing the agent duplication means the eventual teaching-method policy and
+  action-selection helpers are written **once** in `domain`, not twice across
+  the TS/mjs split.
 
-This document covers structure only. The learning-loop engine (policy, mastery
-model, evidence log) is a separate design.
+This document covers structure only. The learning-loop policy, mastery model,
+and evidence log are separate design concerns.
