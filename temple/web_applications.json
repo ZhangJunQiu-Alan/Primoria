@@ -1,0 +1,104 @@
+{
+  "id": "cs142",
+  "name": "Web Applications",
+  "description": "Concepts of modern web application development.",
+  "topics": [
+    {
+      "id": "cs142_internet_basics",
+      "title": "Internet Basics",
+      "description": "Internet Basics in Web Applications",
+      "parent_id": null
+    },
+    {
+      "id": "cs142_http_protocol",
+      "title": "HTTP Protocol",
+      "description": "HTTP Protocol in Web Applications",
+      "parent_id": "cs142_internet_basics"
+    },
+    {
+      "id": "cs142_dns",
+      "title": "DNS",
+      "description": "DNS in Web Applications",
+      "parent_id": "cs142_internet_basics"
+    },
+    {
+      "id": "cs142_frontend_technologies",
+      "title": "Frontend Technologies",
+      "description": "Frontend Technologies in Web Applications",
+      "parent_id": null
+    },
+    {
+      "id": "cs142_html_and_css",
+      "title": "HTML and CSS",
+      "description": "HTML and CSS in Web Applications",
+      "parent_id": "cs142_frontend_technologies"
+    },
+    {
+      "id": "cs142_javascript_dom",
+      "title": "JavaScript DOM",
+      "description": "JavaScript DOM in Web Applications",
+      "parent_id": "cs142_frontend_technologies"
+    },
+    {
+      "id": "cs142_reactjs",
+      "title": "React.js",
+      "description": "React.js in Web Applications",
+      "parent_id": "cs142_frontend_technologies"
+    },
+    {
+      "id": "cs142_backend_technologies",
+      "title": "Backend Technologies",
+      "description": "Backend Technologies in Web Applications",
+      "parent_id": null
+    },
+    {
+      "id": "cs142_nodejs",
+      "title": "Node.js",
+      "description": "Node.js in Web Applications",
+      "parent_id": "cs142_backend_technologies"
+    },
+    {
+      "id": "cs142_rest_apis",
+      "title": "REST APIs",
+      "description": "REST APIs in Web Applications",
+      "parent_id": "cs142_backend_technologies"
+    },
+    {
+      "id": "cs142_databases",
+      "title": "Databases",
+      "description": "Databases in Web Applications",
+      "parent_id": null
+    },
+    {
+      "id": "cs142_relational_databases",
+      "title": "Relational Databases",
+      "description": "Relational Databases in Web Applications",
+      "parent_id": "cs142_databases"
+    },
+    {
+      "id": "cs142_nosql",
+      "title": "NoSQL",
+      "description": "NoSQL in Web Applications",
+      "parent_id": "cs142_databases"
+    },
+    {
+      "id": "cs142_web_security",
+      "title": "Web Security",
+      "description": "Web Security in Web Applications",
+      "parent_id": null
+    },
+    {
+      "id": "cs142_xss",
+      "title": "XSS",
+      "description": "XSS in Web Applications",
+      "parent_id": "cs142_web_security"
+    },
+    {
+      "id": "cs142_csrf",
+      "title": "CSRF",
+      "description": "CSRF in Web Applications",
+      "parent_id": "cs142_web_security"
+    }
+  ],
+  "edges": []
+}

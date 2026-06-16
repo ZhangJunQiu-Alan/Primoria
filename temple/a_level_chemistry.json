@@ -1,0 +1,584 @@
+{
+  "id": "alevel_chemistry",
+  "name": "A-Level Chemistry",
+  "description": "Advanced level chemistry topics.",
+  "topics": [
+    {
+      "id": "alevel_chemistry_atomic_structure_and_amount_of_substance",
+      "title": "Atomic Structure and Amount of Substance",
+      "description": "Atomic Structure and Amount of Substance in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_atomic_structure",
+      "title": "Atomic Structure",
+      "description": "Atomic Structure in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure_and_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_subatomic_particles",
+      "title": "Subatomic Particles",
+      "description": "Subatomic Particles in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure"
+    },
+    {
+      "id": "alevel_chemistry_atomic_number_and_mass_number",
+      "title": "Atomic Number and Mass Number",
+      "description": "Atomic Number and Mass Number in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure"
+    },
+    {
+      "id": "alevel_chemistry_isotopes",
+      "title": "Isotopes",
+      "description": "Isotopes in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure"
+    },
+    {
+      "id": "alevel_chemistry_relative_atomic_mass",
+      "title": "Relative Atomic Mass",
+      "description": "Relative Atomic Mass in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure"
+    },
+    {
+      "id": "alevel_chemistry_relative_molecular_mass",
+      "title": "Relative Molecular Mass",
+      "description": "Relative Molecular Mass in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure"
+    },
+    {
+      "id": "alevel_chemistry_electron_structure",
+      "title": "Electron Structure",
+      "description": "Electron Structure in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure_and_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_orbitals",
+      "title": "Orbitals",
+      "description": "Orbitals in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_electron_structure"
+    },
+    {
+      "id": "alevel_chemistry_aufbau_principle",
+      "title": "Aufbau Principle",
+      "description": "Aufbau Principle in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_electron_structure"
+    },
+    {
+      "id": "alevel_chemistry_pauli_exclusion_principle",
+      "title": "Pauli Exclusion Principle",
+      "description": "Pauli Exclusion Principle in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_electron_structure"
+    },
+    {
+      "id": "alevel_chemistry_hunds_rule",
+      "title": "Hunds Rule",
+      "description": "Hunds Rule in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_electron_structure"
+    },
+    {
+      "id": "alevel_chemistry_writing_electron_configurations",
+      "title": "Writing Electron Configurations",
+      "description": "Writing Electron Configurations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_electron_structure"
+    },
+    {
+      "id": "alevel_chemistry_amount_of_substance",
+      "title": "Amount of Substance",
+      "description": "Amount of Substance in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_atomic_structure_and_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_the_mole",
+      "title": "The Mole",
+      "description": "The Mole in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_core_mole_equation",
+      "title": "Core Mole Equation",
+      "description": "Core Mole Equation in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_using_chemical_equations",
+      "title": "Using Chemical Equations",
+      "description": "Using Chemical Equations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_concentration_of_solutions",
+      "title": "Concentration of Solutions",
+      "description": "Concentration of Solutions in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_ideal_gas_equation",
+      "title": "Ideal Gas Equation",
+      "description": "Ideal Gas Equation in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_avogadros_law",
+      "title": "Avogadros Law",
+      "description": "Avogadros Law in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_amount_of_substance"
+    },
+    {
+      "id": "alevel_chemistry_bonding_and_structure",
+      "title": "Bonding and Structure",
+      "description": "Bonding and Structure in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_types_of_bonding",
+      "title": "Types of Bonding",
+      "description": "Types of Bonding in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_bonding_and_structure"
+    },
+    {
+      "id": "alevel_chemistry_ionic_bonding",
+      "title": "Ionic Bonding",
+      "description": "Ionic Bonding in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_types_of_bonding"
+    },
+    {
+      "id": "alevel_chemistry_covalent_bonding",
+      "title": "Covalent Bonding",
+      "description": "Covalent Bonding in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_types_of_bonding"
+    },
+    {
+      "id": "alevel_chemistry_metallic_bonding",
+      "title": "Metallic Bonding",
+      "description": "Metallic Bonding in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_types_of_bonding"
+    },
+    {
+      "id": "alevel_chemistry_vsepr_theory",
+      "title": "VSEPR Theory",
+      "description": "VSEPR Theory in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_bonding_and_structure"
+    },
+    {
+      "id": "alevel_chemistry_electron_pair_repulsion",
+      "title": "Electron Pair Repulsion",
+      "description": "Electron Pair Repulsion in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_vsepr_theory"
+    },
+    {
+      "id": "alevel_chemistry_common_shapes_and_angles",
+      "title": "Common Shapes and Angles",
+      "description": "Common Shapes and Angles in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_vsepr_theory"
+    },
+    {
+      "id": "alevel_chemistry_effect_of_lone_pairs",
+      "title": "Effect of Lone Pairs",
+      "description": "Effect of Lone Pairs in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_vsepr_theory"
+    },
+    {
+      "id": "alevel_chemistry_intermolecular_forces",
+      "title": "Intermolecular Forces",
+      "description": "Intermolecular Forces in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_bonding_and_structure"
+    },
+    {
+      "id": "alevel_chemistry_london_dispersion_forces",
+      "title": "London Dispersion Forces",
+      "description": "London Dispersion Forces in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_intermolecular_forces"
+    },
+    {
+      "id": "alevel_chemistry_permanent_dipole_dipole_forces",
+      "title": "Permanent Dipole Dipole Forces",
+      "description": "Permanent Dipole Dipole Forces in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_intermolecular_forces"
+    },
+    {
+      "id": "alevel_chemistry_hydrogen_bonding",
+      "title": "Hydrogen Bonding",
+      "description": "Hydrogen Bonding in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_intermolecular_forces"
+    },
+    {
+      "id": "alevel_chemistry_structure_types",
+      "title": "Structure Types",
+      "description": "Structure Types in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_bonding_and_structure"
+    },
+    {
+      "id": "alevel_chemistry_giant_ionic_lattice",
+      "title": "Giant Ionic Lattice",
+      "description": "Giant Ionic Lattice in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_structure_types"
+    },
+    {
+      "id": "alevel_chemistry_simple_molecular",
+      "title": "Simple Molecular",
+      "description": "Simple Molecular in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_structure_types"
+    },
+    {
+      "id": "alevel_chemistry_giant_covalent",
+      "title": "Giant Covalent",
+      "description": "Giant Covalent in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_structure_types"
+    },
+    {
+      "id": "alevel_chemistry_metallic_lattice",
+      "title": "Metallic Lattice",
+      "description": "Metallic Lattice in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_structure_types"
+    },
+    {
+      "id": "alevel_chemistry_energetics",
+      "title": "Energetics",
+      "description": "Energetics in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_enthalpy_change",
+      "title": "Enthalpy Change",
+      "description": "Enthalpy Change in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_energetics"
+    },
+    {
+      "id": "alevel_chemistry_exothermic_reactions",
+      "title": "Exothermic Reactions",
+      "description": "Exothermic Reactions in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_enthalpy_change"
+    },
+    {
+      "id": "alevel_chemistry_endothermic_reactions",
+      "title": "Endothermic Reactions",
+      "description": "Endothermic Reactions in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_enthalpy_change"
+    },
+    {
+      "id": "alevel_chemistry_bond_enthalpy",
+      "title": "Bond Enthalpy",
+      "description": "Bond Enthalpy in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_energetics"
+    },
+    {
+      "id": "alevel_chemistry_hesss_law",
+      "title": "Hesss Law",
+      "description": "Hesss Law in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_energetics"
+    },
+    {
+      "id": "alevel_chemistry_standard_enthalpy_changes",
+      "title": "Standard Enthalpy Changes",
+      "description": "Standard Enthalpy Changes in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_energetics"
+    },
+    {
+      "id": "alevel_chemistry_enthalpy_of_formation",
+      "title": "Enthalpy of Formation",
+      "description": "Enthalpy of Formation in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_standard_enthalpy_changes"
+    },
+    {
+      "id": "alevel_chemistry_enthalpy_of_combustion",
+      "title": "Enthalpy of Combustion",
+      "description": "Enthalpy of Combustion in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_standard_enthalpy_changes"
+    },
+    {
+      "id": "alevel_chemistry_calorimetry",
+      "title": "Calorimetry",
+      "description": "Calorimetry in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_energetics"
+    },
+    {
+      "id": "alevel_chemistry_born_haber_cycles",
+      "title": "Born Haber Cycles",
+      "description": "Born Haber Cycles in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_energetics"
+    },
+    {
+      "id": "alevel_chemistry_kinetics",
+      "title": "Kinetics",
+      "description": "Kinetics in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_rate_of_reaction",
+      "title": "Rate of Reaction",
+      "description": "Rate of Reaction in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_collision_theory",
+      "title": "Collision Theory",
+      "description": "Collision Theory in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_factors_affecting_rate",
+      "title": "Factors Affecting Rate",
+      "description": "Factors Affecting Rate in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_temperature",
+      "title": "Temperature",
+      "description": "Temperature in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_factors_affecting_rate"
+    },
+    {
+      "id": "alevel_chemistry_concentration_and_pressure",
+      "title": "Concentration and Pressure",
+      "description": "Concentration and Pressure in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_factors_affecting_rate"
+    },
+    {
+      "id": "alevel_chemistry_surface_area",
+      "title": "Surface Area",
+      "description": "Surface Area in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_factors_affecting_rate"
+    },
+    {
+      "id": "alevel_chemistry_catalysts",
+      "title": "Catalysts",
+      "description": "Catalysts in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_factors_affecting_rate"
+    },
+    {
+      "id": "alevel_chemistry_maxwell_boltzmann_distribution",
+      "title": "Maxwell Boltzmann Distribution",
+      "description": "Maxwell Boltzmann Distribution in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_activation_energy",
+      "title": "Activation Energy",
+      "description": "Activation Energy in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_rate_equations",
+      "title": "Rate Equations",
+      "description": "Rate Equations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_orders_of_reaction",
+      "title": "Orders of Reaction",
+      "description": "Orders of Reaction in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_rate_determining_step",
+      "title": "Rate Determining Step",
+      "description": "Rate Determining Step in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_kinetics"
+    },
+    {
+      "id": "alevel_chemistry_chemical_equilibria",
+      "title": "Chemical Equilibria",
+      "description": "Chemical Equilibria in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_dynamic_equilibrium",
+      "title": "Dynamic Equilibrium",
+      "description": "Dynamic Equilibrium in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_chemical_equilibria"
+    },
+    {
+      "id": "alevel_chemistry_le_chateliers_principle",
+      "title": "Le Chateliers Principle",
+      "description": "Le Chateliers Principle in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_chemical_equilibria"
+    },
+    {
+      "id": "alevel_chemistry_effects_on_equilibrium",
+      "title": "Effects on Equilibrium",
+      "description": "Effects on Equilibrium in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_chemical_equilibria"
+    },
+    {
+      "id": "alevel_chemistry_concentration_effect",
+      "title": "Concentration Effect",
+      "description": "Concentration Effect in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_effects_on_equilibrium"
+    },
+    {
+      "id": "alevel_chemistry_pressure_effect",
+      "title": "Pressure Effect",
+      "description": "Pressure Effect in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_effects_on_equilibrium"
+    },
+    {
+      "id": "alevel_chemistry_temperature_effect",
+      "title": "Temperature Effect",
+      "description": "Temperature Effect in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_effects_on_equilibrium"
+    },
+    {
+      "id": "alevel_chemistry_catalyst_effect",
+      "title": "Catalyst Effect",
+      "description": "Catalyst Effect in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_effects_on_equilibrium"
+    },
+    {
+      "id": "alevel_chemistry_equilibrium_constant",
+      "title": "Equilibrium Constant",
+      "description": "Equilibrium Constant in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_chemical_equilibria"
+    },
+    {
+      "id": "alevel_chemistry_acids_bases_and_buffers",
+      "title": "Acids Bases and Buffers",
+      "description": "Acids Bases and Buffers in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_bronsted_lowry_theory",
+      "title": "Bronsted Lowry Theory",
+      "description": "Bronsted Lowry Theory in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_strong_vs_weak_acids",
+      "title": "Strong vs Weak Acids",
+      "description": "Strong vs Weak Acids in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_ph_calculations",
+      "title": "pH Calculations",
+      "description": "pH Calculations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_acid_dissociation_constant",
+      "title": "Acid Dissociation Constant",
+      "description": "Acid Dissociation Constant in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_ionic_product_of_water",
+      "title": "Ionic Product of Water",
+      "description": "Ionic Product of Water in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_buffers",
+      "title": "Buffers",
+      "description": "Buffers in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_buffer_ph_calculations",
+      "title": "Buffer pH Calculations",
+      "description": "Buffer pH Calculations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_acids_bases_and_buffers"
+    },
+    {
+      "id": "alevel_chemistry_redox_and_electrochemistry",
+      "title": "Redox and Electrochemistry",
+      "description": "Redox and Electrochemistry in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_redox_fundamentals",
+      "title": "Redox Fundamentals",
+      "description": "Redox Fundamentals in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_oxidation_numbers",
+      "title": "Oxidation Numbers",
+      "description": "Oxidation Numbers in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_half_equations",
+      "title": "Half Equations",
+      "description": "Half Equations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_redox_titrations",
+      "title": "Redox Titrations",
+      "description": "Redox Titrations in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_electrode_potentials",
+      "title": "Electrode Potentials",
+      "description": "Electrode Potentials in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_standard_cell_potential",
+      "title": "Standard Cell Potential",
+      "description": "Standard Cell Potential in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_fuel_cells",
+      "title": "Fuel Cells",
+      "description": "Fuel Cells in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_redox_and_electrochemistry"
+    },
+    {
+      "id": "alevel_chemistry_periodicity",
+      "title": "Periodicity",
+      "description": "Periodicity in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_atomic_radius",
+      "title": "Atomic Radius",
+      "description": "Atomic Radius in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_periodicity"
+    },
+    {
+      "id": "alevel_chemistry_ionisation_energy",
+      "title": "Ionisation Energy",
+      "description": "Ionisation Energy in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_periodicity"
+    },
+    {
+      "id": "alevel_chemistry_melting_point",
+      "title": "Melting Point",
+      "description": "Melting Point in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_periodicity"
+    },
+    {
+      "id": "alevel_chemistry_period_3_oxides",
+      "title": "Period 3 Oxides",
+      "description": "Period 3 Oxides in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_periodicity"
+    },
+    {
+      "id": "alevel_chemistry_period_3_chlorides",
+      "title": "Period 3 Chlorides",
+      "description": "Period 3 Chlorides in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_periodicity"
+    },
+    {
+      "id": "alevel_chemistry_group_chemistry",
+      "title": "Group Chemistry",
+      "description": "Group Chemistry in A-Level Chemistry",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_chemistry_group_2_alkaline_earth_metals",
+      "title": "Group 2 Alkaline Earth Metals",
+      "description": "Group 2 Alkaline Earth Metals in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_group_chemistry"
+    },
+    {
+      "id": "alevel_chemistry_group_7_halogens",
+      "title": "Group 7 Halogens",
+      "description": "Group 7 Halogens in A-Level Chemistry",
+      "parent_id": "alevel_chemistry_group_chemistry"
+    }
+  ],
+  "edges": []
+}

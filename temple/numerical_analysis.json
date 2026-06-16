@@ -1,0 +1,295 @@
+{
+  "subject": "MIT 18.330 Introduction to Numerical Analysis",
+  "schema": {
+    "description": "Knowledge graph for MIT 18.330",
+    "node_fields": {
+      "id": "unique id",
+      "kind": "topic | concept",
+      "name": "node name",
+      "topic": "parent topic id or null",
+      "description": "concept description",
+      "default_order": "integer"
+    },
+    "edge_types": {
+      "prereq": "hard or soft"
+    }
+  },
+  "nodes": [
+    {
+      "id": "t_mit18330_errors",
+      "kind": "topic",
+      "name": "Errors and Computer Arithmetic",
+      "topic": null,
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_floating_point",
+      "kind": "concept",
+      "name": "Floating Point Representation",
+      "topic": "t_mit18330_errors",
+      "description": "IEEE 754 and machine precision",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_error_analysis",
+      "kind": "concept",
+      "name": "Error Analysis",
+      "topic": "t_mit18330_errors",
+      "description": "Forward, backward error, stability",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit18330_conditioning",
+      "kind": "concept",
+      "name": "Conditioning",
+      "topic": "t_mit18330_errors",
+      "description": "Condition number of a problem",
+      "default_order": 3
+    },
+    {
+      "id": "t_mit18330_root_finding",
+      "kind": "topic",
+      "name": "Root Finding",
+      "topic": null,
+      "default_order": 2
+    },
+    {
+      "id": "c_mit18330_bisection",
+      "kind": "concept",
+      "name": "Bisection Method",
+      "topic": "t_mit18330_root_finding",
+      "description": "Simple bracketing method",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_newton",
+      "kind": "concept",
+      "name": "Newton's Method",
+      "topic": "t_mit18330_root_finding",
+      "description": "Quadratic convergence method",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit18330_secant",
+      "kind": "concept",
+      "name": "Secant Method",
+      "topic": "t_mit18330_root_finding",
+      "description": "Superlinear convergence without derivatives",
+      "default_order": 3
+    },
+    {
+      "id": "t_mit18330_linear_systems",
+      "kind": "topic",
+      "name": "Linear Systems",
+      "topic": null,
+      "default_order": 3
+    },
+    {
+      "id": "c_mit18330_lu",
+      "kind": "concept",
+      "name": "LU Factorization",
+      "topic": "t_mit18330_linear_systems",
+      "description": "Gaussian elimination",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_cholesky",
+      "kind": "concept",
+      "name": "Cholesky Factorization",
+      "topic": "t_mit18330_linear_systems",
+      "description": "For symmetric positive definite matrices",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit18330_iterative_linear",
+      "kind": "concept",
+      "name": "Iterative Methods",
+      "topic": "t_mit18330_linear_systems",
+      "description": "Jacobi and Gauss-Seidel methods",
+      "default_order": 3
+    },
+    {
+      "id": "t_mit18330_interpolation",
+      "kind": "topic",
+      "name": "Interpolation and Approximation",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "c_mit18330_polynomial_interp",
+      "kind": "concept",
+      "name": "Polynomial Interpolation",
+      "topic": "t_mit18330_interpolation",
+      "description": "Lagrange and Newton forms",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_splines",
+      "kind": "concept",
+      "name": "Spline Interpolation",
+      "topic": "t_mit18330_interpolation",
+      "description": "Piecewise polynomials",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit18330_least_squares",
+      "kind": "concept",
+      "name": "Least Squares Approximation",
+      "topic": "t_mit18330_interpolation",
+      "description": "Overdetermined systems and normal equations",
+      "default_order": 3
+    },
+    {
+      "id": "t_mit18330_integration",
+      "kind": "topic",
+      "name": "Numerical Integration",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "c_mit18330_newton_cotes",
+      "kind": "concept",
+      "name": "Newton-Cotes Formulas",
+      "topic": "t_mit18330_integration",
+      "description": "Trapezoidal and Simpson rules",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_gaussian_quad",
+      "kind": "concept",
+      "name": "Gaussian Quadrature",
+      "topic": "t_mit18330_integration",
+      "description": "Optimal node placement",
+      "default_order": 2
+    },
+    {
+      "id": "t_mit18330_odes",
+      "kind": "topic",
+      "name": "Ordinary Differential Equations",
+      "topic": null,
+      "default_order": 6
+    },
+    {
+      "id": "c_mit18330_euler",
+      "kind": "concept",
+      "name": "Euler's Method",
+      "topic": "t_mit18330_odes",
+      "description": "Forward and backward Euler",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit18330_runge_kutta",
+      "kind": "concept",
+      "name": "Runge-Kutta Methods",
+      "topic": "t_mit18330_odes",
+      "description": "Higher order explicit methods",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit18330_ode_stability",
+      "kind": "concept",
+      "name": "Stability of ODE Methods",
+      "topic": "t_mit18330_odes",
+      "description": "A-stability and stiff equations",
+      "default_order": 3
+    }
+  ],
+  "edges": [
+    {
+      "from": "c_mit18330_floating_point",
+      "to": "c_mit18330_error_analysis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_conditioning",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_bisection",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit18330_bisection",
+      "to": "c_mit18330_newton",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_newton",
+      "to": "c_mit18330_secant",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_conditioning",
+      "to": "c_mit18330_lu",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_lu",
+      "to": "c_mit18330_cholesky",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_lu",
+      "to": "c_mit18330_iterative_linear",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_polynomial_interp",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_polynomial_interp",
+      "to": "c_mit18330_splines",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_lu",
+      "to": "c_mit18330_least_squares",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_polynomial_interp",
+      "to": "c_mit18330_newton_cotes",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_polynomial_interp",
+      "to": "c_mit18330_gaussian_quad",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_euler",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_euler",
+      "to": "c_mit18330_runge_kutta",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_euler",
+      "to": "c_mit18330_ode_stability",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
+}

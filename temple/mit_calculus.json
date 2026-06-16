@@ -1,0 +1,975 @@
+{
+  "subject": "MIT 18.01/18.02 Calculus",
+  "schema": {
+    "description": "Knowledge graph mapping the detailed syllabus and topics of MIT 18.01 (Single Variable Calculus) and 18.02 (Multivariable Calculus)",
+    "node_fields": {
+      "id": "unique id",
+      "kind": "topic | concept",
+      "name": "node name",
+      "topic": "parent topic id or null",
+      "description": "concept description",
+      "default_order": 1
+    },
+    "edge_types": {
+      "prereq": "hard or soft"
+    }
+  },
+  "nodes": [
+    {
+      "id": "t_1801_differentiation",
+      "kind": "topic",
+      "name": "Differentiation",
+      "topic": null,
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_limits",
+      "kind": "concept",
+      "name": "Limits and Continuity",
+      "topic": "t_1801_differentiation",
+      "description": "Concept of limits, epsilon-delta definition, and continuity",
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_deriv_def",
+      "kind": "concept",
+      "name": "Definition of Derivative",
+      "topic": "t_1801_differentiation",
+      "description": "Derivative as a limit of difference quotients",
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_deriv_rules",
+      "kind": "concept",
+      "name": "Differentiation Rules",
+      "topic": "t_1801_differentiation",
+      "description": "Power, product, and quotient rules",
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_chain_rule",
+      "kind": "concept",
+      "name": "Chain Rule",
+      "topic": "t_1801_differentiation",
+      "description": "Differentiating composite functions",
+      "default_order": 4
+    },
+    {
+      "id": "c_1801_implicit_diff",
+      "kind": "concept",
+      "name": "Implicit Differentiation",
+      "topic": "t_1801_differentiation",
+      "description": "Differentiating implicit equations",
+      "default_order": 5
+    },
+    {
+      "id": "t_1801_apps_diff",
+      "kind": "topic",
+      "name": "Applications of Differentiation",
+      "topic": null,
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_related_rates",
+      "kind": "concept",
+      "name": "Related Rates",
+      "topic": "t_1801_apps_diff",
+      "description": "Solving problems involving related rates of change",
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_linear_approx",
+      "kind": "concept",
+      "name": "Linear Approximation",
+      "topic": "t_1801_apps_diff",
+      "description": "Linearization and Newton's Method",
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_curve_sketching",
+      "kind": "concept",
+      "name": "Curve Sketching",
+      "topic": "t_1801_apps_diff",
+      "description": "Using derivatives to find extrema, concavity, and sketch curves",
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_mvt",
+      "kind": "concept",
+      "name": "Mean Value Theorem",
+      "topic": "t_1801_apps_diff",
+      "description": "Mean Value Theorem and its consequences",
+      "default_order": 4
+    },
+    {
+      "id": "t_1801_integration",
+      "kind": "topic",
+      "name": "Integration",
+      "topic": null,
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_riemann_sums",
+      "kind": "concept",
+      "name": "Riemann Sums",
+      "topic": "t_1801_integration",
+      "description": "Approximating area using sums",
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_definite_integral",
+      "kind": "concept",
+      "name": "Definite Integrals",
+      "topic": "t_1801_integration",
+      "description": "Definition and properties of definite integrals",
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_ftc",
+      "kind": "concept",
+      "name": "Fundamental Theorem of Calculus",
+      "topic": "t_1801_integration",
+      "description": "Connecting derivatives and integrals",
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_substitution",
+      "kind": "concept",
+      "name": "Integration by Substitution",
+      "topic": "t_1801_integration",
+      "description": "Reversing the chain rule",
+      "default_order": 4
+    },
+    {
+      "id": "t_1801_tech_int",
+      "kind": "topic",
+      "name": "Techniques of Integration",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "c_1801_parts",
+      "kind": "concept",
+      "name": "Integration by Parts",
+      "topic": "t_1801_tech_int",
+      "description": "Reversing the product rule",
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_trig_integrals",
+      "kind": "concept",
+      "name": "Trigonometric Integrals",
+      "topic": "t_1801_tech_int",
+      "description": "Integrating products and powers of trig functions",
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_trig_sub",
+      "kind": "concept",
+      "name": "Trigonometric Substitution",
+      "topic": "t_1801_tech_int",
+      "description": "Using trig identities to evaluate integrals",
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_partial_fractions",
+      "kind": "concept",
+      "name": "Partial Fractions",
+      "topic": "t_1801_tech_int",
+      "description": "Integrating rational functions",
+      "default_order": 4
+    },
+    {
+      "id": "c_1801_improper_int",
+      "kind": "concept",
+      "name": "Improper Integrals",
+      "topic": "t_1801_tech_int",
+      "description": "Integrals over infinite intervals or with infinite discontinuities",
+      "default_order": 5
+    },
+    {
+      "id": "t_1801_apps_int",
+      "kind": "topic",
+      "name": "Applications of Integration",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "c_1801_area_curves",
+      "kind": "concept",
+      "name": "Area Between Curves",
+      "topic": "t_1801_apps_int",
+      "description": "Calculating areas bounded by functions",
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_volume",
+      "kind": "concept",
+      "name": "Volumes of Solids",
+      "topic": "t_1801_apps_int",
+      "description": "Volumes by slicing, disks, washers, and cylindrical shells",
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_arc_length",
+      "kind": "concept",
+      "name": "Arc Length",
+      "topic": "t_1801_apps_int",
+      "description": "Length of a plane curve",
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_work",
+      "kind": "concept",
+      "name": "Work",
+      "topic": "t_1801_apps_int",
+      "description": "Calculating physical work using integration",
+      "default_order": 4
+    },
+    {
+      "id": "t_1801_series",
+      "kind": "topic",
+      "name": "Infinite Series",
+      "topic": null,
+      "default_order": 6
+    },
+    {
+      "id": "c_1801_sequences",
+      "kind": "concept",
+      "name": "Sequences and Series",
+      "topic": "t_1801_series",
+      "description": "Convergence of sequences and basic series",
+      "default_order": 1
+    },
+    {
+      "id": "c_1801_conv_tests",
+      "kind": "concept",
+      "name": "Convergence Tests",
+      "topic": "t_1801_series",
+      "description": "Integral, comparison, ratio, and root tests",
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_power_series",
+      "kind": "concept",
+      "name": "Power Series",
+      "topic": "t_1801_series",
+      "description": "Radius and interval of convergence",
+      "default_order": 3
+    },
+    {
+      "id": "c_1801_taylor_series",
+      "kind": "concept",
+      "name": "Taylor Series",
+      "topic": "t_1801_series",
+      "description": "Taylor and Maclaurin series expansions",
+      "default_order": 4
+    },
+    {
+      "id": "t_1802_vectors",
+      "kind": "topic",
+      "name": "Vectors and Matrices",
+      "topic": null,
+      "default_order": 7
+    },
+    {
+      "id": "c_1802_dot_product",
+      "kind": "concept",
+      "name": "Dot Product",
+      "topic": "t_1802_vectors",
+      "description": "Vectors, magnitude, and the dot product",
+      "default_order": 1
+    },
+    {
+      "id": "c_1802_cross_product",
+      "kind": "concept",
+      "name": "Cross Product",
+      "topic": "t_1802_vectors",
+      "description": "Cross product and matrices",
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_lines_planes",
+      "kind": "concept",
+      "name": "Lines and Planes",
+      "topic": "t_1802_vectors",
+      "description": "Equations of lines and planes in 3D space",
+      "default_order": 3
+    },
+    {
+      "id": "c_1802_parametric_curves",
+      "kind": "concept",
+      "name": "Parametric Curves",
+      "topic": "t_1802_vectors",
+      "description": "Vector functions, velocity, and acceleration",
+      "default_order": 4
+    },
+    {
+      "id": "t_1802_partial_diff",
+      "kind": "topic",
+      "name": "Partial Derivatives",
+      "topic": null,
+      "default_order": 8
+    },
+    {
+      "id": "c_1802_multivar_functions",
+      "kind": "concept",
+      "name": "Multivariable Functions",
+      "topic": "t_1802_partial_diff",
+      "description": "Functions of several variables and level surfaces",
+      "default_order": 1
+    },
+    {
+      "id": "c_1802_partial_derivs",
+      "kind": "concept",
+      "name": "Partial Derivatives",
+      "topic": "t_1802_partial_diff",
+      "description": "Computing partial derivatives",
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_multivar_chain",
+      "kind": "concept",
+      "name": "Multivariable Chain Rule",
+      "topic": "t_1802_partial_diff",
+      "description": "Chain rule for functions of several variables",
+      "default_order": 3
+    },
+    {
+      "id": "c_1802_gradient",
+      "kind": "concept",
+      "name": "Gradient and Directional Derivative",
+      "topic": "t_1802_partial_diff",
+      "description": "Gradient vector and directional derivatives",
+      "default_order": 4
+    },
+    {
+      "id": "t_1802_apps_partial",
+      "kind": "topic",
+      "name": "Applications of Partial Derivatives",
+      "topic": null,
+      "default_order": 9
+    },
+    {
+      "id": "c_1802_tangent_planes",
+      "kind": "concept",
+      "name": "Tangent Planes",
+      "topic": "t_1802_apps_partial",
+      "description": "Tangent planes and linear approximation",
+      "default_order": 1
+    },
+    {
+      "id": "c_1802_local_extrema",
+      "kind": "concept",
+      "name": "Local Extrema",
+      "topic": "t_1802_apps_partial",
+      "description": "Finding local maxima, minima, and saddle points",
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_lagrange",
+      "kind": "concept",
+      "name": "Lagrange Multipliers",
+      "topic": "t_1802_apps_partial",
+      "description": "Optimization with constraints",
+      "default_order": 3
+    },
+    {
+      "id": "c_1802_differentials",
+      "kind": "concept",
+      "name": "Differentials",
+      "topic": "t_1802_apps_partial",
+      "description": "Differentials and error estimation",
+      "default_order": 4
+    },
+    {
+      "id": "t_1802_multiple_int",
+      "kind": "topic",
+      "name": "Multiple Integrals",
+      "topic": null,
+      "default_order": 10
+    },
+    {
+      "id": "c_1802_double_integrals",
+      "kind": "concept",
+      "name": "Double Integrals",
+      "topic": "t_1802_multiple_int",
+      "description": "Evaluating double integrals over general regions",
+      "default_order": 1
+    },
+    {
+      "id": "c_1802_polar_integrals",
+      "kind": "concept",
+      "name": "Polar Integrals",
+      "topic": "t_1802_multiple_int",
+      "description": "Double integrals in polar coordinates",
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_triple_integrals",
+      "kind": "concept",
+      "name": "Triple Integrals",
+      "topic": "t_1802_multiple_int",
+      "description": "Evaluating triple integrals",
+      "default_order": 3
+    },
+    {
+      "id": "c_1802_cyl_spherical",
+      "kind": "concept",
+      "name": "Cylindrical and Spherical Coordinates",
+      "topic": "t_1802_multiple_int",
+      "description": "Integration in cylindrical and spherical coordinate systems",
+      "default_order": 4
+    },
+    {
+      "id": "c_1802_jacobians",
+      "kind": "concept",
+      "name": "Change of Variables",
+      "topic": "t_1802_multiple_int",
+      "description": "Jacobians and changing variables in multiple integrals",
+      "default_order": 5
+    },
+    {
+      "id": "t_1802_vector_calc",
+      "kind": "topic",
+      "name": "Vector Calculus",
+      "topic": null,
+      "default_order": 11
+    },
+    {
+      "id": "c_1802_vector_fields",
+      "kind": "concept",
+      "name": "Vector Fields",
+      "topic": "t_1802_vector_calc",
+      "description": "Vector fields and line integrals",
+      "default_order": 1
+    },
+    {
+      "id": "c_1802_fundamental_line",
+      "kind": "concept",
+      "name": "Fundamental Theorem for Line Integrals",
+      "topic": "t_1802_vector_calc",
+      "description": "Conservative vector fields and potential functions",
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_greens_theorem",
+      "kind": "concept",
+      "name": "Green's Theorem",
+      "topic": "t_1802_vector_calc",
+      "description": "Green's Theorem in the plane",
+      "default_order": 3
+    },
+    {
+      "id": "c_1802_curl_div",
+      "kind": "concept",
+      "name": "Curl and Divergence",
+      "topic": "t_1802_vector_calc",
+      "description": "Computing curl and divergence of a vector field",
+      "default_order": 4
+    },
+    {
+      "id": "t_1802_surface_int",
+      "kind": "topic",
+      "name": "Surface Integrals and Theorems",
+      "topic": null,
+      "default_order": 12
+    },
+    {
+      "id": "c_1802_parametric_surfaces",
+      "kind": "concept",
+      "name": "Parametric Surfaces",
+      "topic": "t_1802_surface_int",
+      "description": "Parametric representations of surfaces and surface area",
+      "default_order": 1
+    },
+    {
+      "id": "c_1802_surface_integrals",
+      "kind": "concept",
+      "name": "Surface Integrals",
+      "topic": "t_1802_surface_int",
+      "description": "Surface integrals and flux of a vector field",
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_stokes_theorem",
+      "kind": "concept",
+      "name": "Stokes' Theorem",
+      "topic": "t_1802_surface_int",
+      "description": "Relating line integrals to surface integrals",
+      "default_order": 3
+    },
+    {
+      "id": "c_1802_divergence_theorem",
+      "kind": "concept",
+      "name": "Divergence Theorem",
+      "topic": "t_1802_surface_int",
+      "description": "Relating surface integrals to triple integrals",
+      "default_order": 4
+    }
+  ],
+  "edges": [
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_deriv_def",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_def",
+      "to": "c_1801_deriv_rules",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_chain_rule",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1801_implicit_diff",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1801_related_rates",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_implicit_diff",
+      "to": "c_1801_related_rates",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_linear_approx",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_curve_sketching",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_mvt",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_riemann_sums",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_riemann_sums",
+      "to": "c_1801_definite_integral",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_ftc",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_mvt",
+      "to": "c_1801_ftc",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_deriv_def",
+      "to": "c_1801_ftc",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1801_substitution",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1801_substitution",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_parts",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_substitution",
+      "to": "c_1801_parts",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_substitution",
+      "to": "c_1801_trig_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_trig_integrals",
+      "to": "c_1801_trig_sub",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1801_partial_fractions",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_improper_int",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1801_improper_int",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_area_curves",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_area_curves",
+      "to": "c_1801_volume",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_arc_length",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_work",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_sequences",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_sequences",
+      "to": "c_1801_conv_tests",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_improper_int",
+      "to": "c_1801_conv_tests",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_conv_tests",
+      "to": "c_1801_power_series",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_power_series",
+      "to": "c_1801_taylor_series",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_taylor_series",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1802_parametric_curves",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_cross_product",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_lines_planes",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_cross_product",
+      "to": "c_1802_lines_planes",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_parametric_curves",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1802_multivar_functions",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_multivar_functions",
+      "to": "c_1802_partial_derivs",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1802_partial_derivs",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_multivar_chain",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1802_multivar_chain",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_gradient",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_gradient",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_tangent_planes",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "c_1802_tangent_planes",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_local_extrema",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "c_1802_lagrange",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_differentials",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1802_double_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_multivar_functions",
+      "to": "c_1802_double_integrals",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_polar_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_triple_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_polar_integrals",
+      "to": "c_1802_cyl_spherical",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_triple_integrals",
+      "to": "c_1802_cyl_spherical",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_jacobians",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_jacobians",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_parametric_curves",
+      "to": "c_1802_vector_fields",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1802_fundamental_line",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "c_1802_fundamental_line",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_vector_fields",
+      "to": "c_1802_fundamental_line",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_greens_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_vector_fields",
+      "to": "c_1802_greens_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_curl_div",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_vector_fields",
+      "to": "c_1802_curl_div",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_parametric_curves",
+      "to": "c_1802_parametric_surfaces",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_cross_product",
+      "to": "c_1802_parametric_surfaces",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_parametric_surfaces",
+      "to": "c_1802_surface_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_surface_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_surface_integrals",
+      "to": "c_1802_stokes_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_curl_div",
+      "to": "c_1802_stokes_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_fundamental_line",
+      "to": "c_1802_stokes_theorem",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_greens_theorem",
+      "to": "c_1802_stokes_theorem",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_surface_integrals",
+      "to": "c_1802_divergence_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_triple_integrals",
+      "to": "c_1802_divergence_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_curl_div",
+      "to": "c_1802_divergence_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
+}

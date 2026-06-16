@@ -1,0 +1,977 @@
+{
+  "subject": "UCB CS70 Discrete Math and Probability Theory",
+  "schema": {
+    "nodes": {
+      "topic": "A broad module containing 4-5 concepts",
+      "concept": "A minimal testable concept"
+    },
+    "edges": {
+      "contains": "Topic to concept inclusion",
+      "prereq": "Dependency relationship, property 'condition' specifies hard or soft"
+    }
+  },
+  "nodes": [
+    {
+      "id": "topic_logic",
+      "name": "Logic and Proofs",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "propositional_logic",
+      "topic": "topic_logic",
+      "name": "Propositional Logic",
+      "kind": "concept"
+    },
+    {
+      "id": "direct_proofs",
+      "topic": "topic_logic",
+      "name": "Direct Proofs",
+      "kind": "concept"
+    },
+    {
+      "id": "proof_by_contraposition",
+      "topic": "topic_logic",
+      "name": "Proof by Contraposition",
+      "kind": "concept"
+    },
+    {
+      "id": "proof_by_contradiction",
+      "topic": "topic_logic",
+      "name": "Proof by Contradiction",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_induction",
+      "name": "Induction",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "simple_induction",
+      "topic": "topic_induction",
+      "name": "Simple Induction",
+      "kind": "concept"
+    },
+    {
+      "id": "strong_induction",
+      "topic": "topic_induction",
+      "name": "Strong Induction",
+      "kind": "concept"
+    },
+    {
+      "id": "well_ordering_principle",
+      "topic": "topic_induction",
+      "name": "Well-Ordering Principle",
+      "kind": "concept"
+    },
+    {
+      "id": "structural_induction",
+      "topic": "topic_induction",
+      "name": "Structural Induction",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_matching",
+      "name": "Stable Matching",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "stable_matching_problem",
+      "topic": "topic_matching",
+      "name": "Stable Matching Problem",
+      "kind": "concept"
+    },
+    {
+      "id": "gale_shapley_algorithm",
+      "topic": "topic_matching",
+      "name": "Gale-Shapley Algorithm",
+      "kind": "concept"
+    },
+    {
+      "id": "matching_optimality",
+      "topic": "topic_matching",
+      "name": "Matching Optimality",
+      "kind": "concept"
+    },
+    {
+      "id": "matching_pessimality",
+      "topic": "topic_matching",
+      "name": "Matching Pessimality",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_graphs",
+      "name": "Graph Theory",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "graph_basics",
+      "topic": "topic_graphs",
+      "name": "Graph Basics",
+      "kind": "concept"
+    },
+    {
+      "id": "eulerian_tours",
+      "topic": "topic_graphs",
+      "name": "Eulerian Tours",
+      "kind": "concept"
+    },
+    {
+      "id": "trees",
+      "topic": "topic_graphs",
+      "name": "Trees",
+      "kind": "concept"
+    },
+    {
+      "id": "planar_graphs",
+      "topic": "topic_graphs",
+      "name": "Planar Graphs",
+      "kind": "concept"
+    },
+    {
+      "id": "hypercubes",
+      "topic": "topic_graphs",
+      "name": "Hypercubes",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_modular_arithmetic",
+      "name": "Modular Arithmetic",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "euclids_algorithm",
+      "topic": "topic_modular_arithmetic",
+      "name": "Euclid's Algorithm",
+      "kind": "concept"
+    },
+    {
+      "id": "extended_euclid",
+      "topic": "topic_modular_arithmetic",
+      "name": "Extended Euclid",
+      "kind": "concept"
+    },
+    {
+      "id": "chinese_remainder_theorem",
+      "topic": "topic_modular_arithmetic",
+      "name": "Chinese Remainder Theorem",
+      "kind": "concept"
+    },
+    {
+      "id": "fermats_little_theorem",
+      "topic": "topic_modular_arithmetic",
+      "name": "Fermat's Little Theorem",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_crypto",
+      "name": "Cryptography",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "symmetric_cryptography",
+      "topic": "topic_crypto",
+      "name": "Symmetric Cryptography",
+      "kind": "concept"
+    },
+    {
+      "id": "rsa_setup_and_encryption",
+      "topic": "topic_crypto",
+      "name": "RSA Setup and Encryption",
+      "kind": "concept"
+    },
+    {
+      "id": "rsa_decryption_proof",
+      "topic": "topic_crypto",
+      "name": "RSA Decryption Proof",
+      "kind": "concept"
+    },
+    {
+      "id": "digital_signatures",
+      "topic": "topic_crypto",
+      "name": "Digital Signatures",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_polynomials",
+      "name": "Polynomials",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "polynomial_roots_and_degree",
+      "topic": "topic_polynomials",
+      "name": "Polynomial Roots and Degree",
+      "kind": "concept"
+    },
+    {
+      "id": "polynomial_interpolation",
+      "topic": "topic_polynomials",
+      "name": "Polynomial Interpolation",
+      "kind": "concept"
+    },
+    {
+      "id": "secret_sharing",
+      "topic": "topic_polynomials",
+      "name": "Secret Sharing",
+      "kind": "concept"
+    },
+    {
+      "id": "error_correcting_codes",
+      "topic": "topic_polynomials",
+      "name": "Error Correcting Codes",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_countability_computability",
+      "name": "Countability and Computability",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "bijections_and_cardinality",
+      "topic": "topic_countability_computability",
+      "name": "Bijections and Cardinality",
+      "kind": "concept"
+    },
+    {
+      "id": "cantors_diagonalization",
+      "topic": "topic_countability_computability",
+      "name": "Cantor's Diagonalization",
+      "kind": "concept"
+    },
+    {
+      "id": "uncountability_of_reals",
+      "topic": "topic_countability_computability",
+      "name": "Uncountability of Reals",
+      "kind": "concept"
+    },
+    {
+      "id": "the_halting_problem",
+      "topic": "topic_countability_computability",
+      "name": "The Halting Problem",
+      "kind": "concept"
+    },
+    {
+      "id": "undecidability",
+      "topic": "topic_countability_computability",
+      "name": "Undecidability",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_counting",
+      "name": "Counting",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "basic_counting_rules",
+      "topic": "topic_counting",
+      "name": "Basic Counting Rules",
+      "kind": "concept"
+    },
+    {
+      "id": "combinations_permutations",
+      "topic": "topic_counting",
+      "name": "Combinations and Permutations",
+      "kind": "concept"
+    },
+    {
+      "id": "combinatorial_proofs",
+      "topic": "topic_counting",
+      "name": "Combinatorial Proofs",
+      "kind": "concept"
+    },
+    {
+      "id": "stars_and_bars",
+      "topic": "topic_counting",
+      "name": "Stars and Bars",
+      "kind": "concept"
+    },
+    {
+      "id": "inclusion_exclusion",
+      "topic": "topic_counting",
+      "name": "Inclusion-Exclusion",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_discrete_prob",
+      "name": "Discrete Probability",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "probability_spaces",
+      "topic": "topic_discrete_prob",
+      "name": "Probability Spaces",
+      "kind": "concept"
+    },
+    {
+      "id": "conditional_probability",
+      "topic": "topic_discrete_prob",
+      "name": "Conditional Probability",
+      "kind": "concept"
+    },
+    {
+      "id": "bayes_rule",
+      "topic": "topic_discrete_prob",
+      "name": "Bayes' Rule",
+      "kind": "concept"
+    },
+    {
+      "id": "event_independence",
+      "topic": "topic_discrete_prob",
+      "name": "Event Independence",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_random_vars",
+      "name": "Random Variables and Expectation",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "discrete_random_variables",
+      "topic": "topic_random_vars",
+      "name": "Discrete Random Variables",
+      "kind": "concept"
+    },
+    {
+      "id": "expectation",
+      "topic": "topic_random_vars",
+      "name": "Expectation",
+      "kind": "concept"
+    },
+    {
+      "id": "linearity_of_expectation",
+      "topic": "topic_random_vars",
+      "name": "Linearity of Expectation",
+      "kind": "concept"
+    },
+    {
+      "id": "variance_and_covariance",
+      "topic": "topic_random_vars",
+      "name": "Variance and Covariance",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_discrete_dists",
+      "name": "Discrete Distributions",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "bernoulli_binomial_distributions",
+      "topic": "topic_discrete_dists",
+      "name": "Bernoulli and Binomial Distributions",
+      "kind": "concept"
+    },
+    {
+      "id": "geometric_distribution",
+      "topic": "topic_discrete_dists",
+      "name": "Geometric Distribution",
+      "kind": "concept"
+    },
+    {
+      "id": "poisson_distribution",
+      "topic": "topic_discrete_dists",
+      "name": "Poisson Distribution",
+      "kind": "concept"
+    },
+    {
+      "id": "hypergeometric_distribution",
+      "topic": "topic_discrete_dists",
+      "name": "Hypergeometric Distribution",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_continuous_prob",
+      "name": "Continuous Probability",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "continuous_random_variables",
+      "topic": "topic_continuous_prob",
+      "name": "Continuous Random Variables",
+      "kind": "concept"
+    },
+    {
+      "id": "probability_density_function",
+      "topic": "topic_continuous_prob",
+      "name": "Probability Density Function",
+      "kind": "concept"
+    },
+    {
+      "id": "cumulative_distribution_function",
+      "topic": "topic_continuous_prob",
+      "name": "Cumulative Distribution Function",
+      "kind": "concept"
+    },
+    {
+      "id": "uniform_exponential_distributions",
+      "topic": "topic_continuous_prob",
+      "name": "Uniform and Exponential Distributions",
+      "kind": "concept"
+    },
+    {
+      "id": "normal_distribution",
+      "topic": "topic_continuous_prob",
+      "name": "Normal Distribution",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_concentration",
+      "name": "Concentration Inequalities",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "markovs_inequality",
+      "topic": "topic_concentration",
+      "name": "Markov's Inequality",
+      "kind": "concept"
+    },
+    {
+      "id": "chebyshevs_inequality",
+      "topic": "topic_concentration",
+      "name": "Chebyshev's Inequality",
+      "kind": "concept"
+    },
+    {
+      "id": "chernoff_bounds",
+      "topic": "topic_concentration",
+      "name": "Chernoff Bounds",
+      "kind": "concept"
+    },
+    {
+      "id": "weak_law_of_large_numbers",
+      "topic": "topic_concentration",
+      "name": "Weak Law of Large Numbers",
+      "kind": "concept"
+    },
+    {
+      "id": "central_limit_theorem",
+      "topic": "topic_concentration",
+      "name": "Central Limit Theorem",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_markov",
+      "name": "Markov Chains",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "markov_chains_basics",
+      "topic": "topic_markov",
+      "name": "Markov Chains Basics",
+      "kind": "concept"
+    },
+    {
+      "id": "hitting_times",
+      "topic": "topic_markov",
+      "name": "Hitting Times",
+      "kind": "concept"
+    },
+    {
+      "id": "stationary_distributions",
+      "topic": "topic_markov",
+      "name": "Stationary Distributions",
+      "kind": "concept"
+    },
+    {
+      "id": "page_rank_algorithm",
+      "topic": "topic_markov",
+      "name": "PageRank Algorithm",
+      "kind": "concept"
+    }
+  ],
+  "edges": [
+    {
+      "type": "prereq",
+      "from": "topic_logic",
+      "to": "topic_induction",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_logic",
+      "to": "topic_matching",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_induction",
+      "to": "topic_graphs",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_induction",
+      "to": "topic_modular_arithmetic",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_modular_arithmetic",
+      "to": "topic_crypto",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_modular_arithmetic",
+      "to": "topic_polynomials",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_induction",
+      "to": "topic_countability_computability",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_induction",
+      "to": "topic_counting",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_counting",
+      "to": "topic_discrete_prob",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_discrete_prob",
+      "to": "topic_random_vars",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_random_vars",
+      "to": "topic_discrete_dists",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_random_vars",
+      "to": "topic_continuous_prob",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_random_vars",
+      "to": "topic_concentration",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_continuous_prob",
+      "to": "topic_concentration",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_discrete_prob",
+      "to": "topic_markov",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "propositional_logic",
+      "to": "direct_proofs",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "propositional_logic",
+      "to": "proof_by_contraposition",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "propositional_logic",
+      "to": "proof_by_contradiction",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "direct_proofs",
+      "to": "simple_induction",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "simple_induction",
+      "to": "strong_induction",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "strong_induction",
+      "to": "well_ordering_principle",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "simple_induction",
+      "to": "structural_induction",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "proof_by_contradiction",
+      "to": "stable_matching_problem",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "stable_matching_problem",
+      "to": "gale_shapley_algorithm",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "gale_shapley_algorithm",
+      "to": "matching_optimality",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "matching_optimality",
+      "to": "matching_pessimality",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "simple_induction",
+      "to": "graph_basics",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "graph_basics",
+      "to": "eulerian_tours",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "graph_basics",
+      "to": "trees",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "trees",
+      "to": "planar_graphs",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "graph_basics",
+      "to": "hypercubes",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "simple_induction",
+      "to": "euclids_algorithm",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "euclids_algorithm",
+      "to": "extended_euclid",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "extended_euclid",
+      "to": "chinese_remainder_theorem",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "extended_euclid",
+      "to": "fermats_little_theorem",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "fermats_little_theorem",
+      "to": "rsa_setup_and_encryption",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "rsa_setup_and_encryption",
+      "to": "rsa_decryption_proof",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "rsa_setup_and_encryption",
+      "to": "digital_signatures",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "extended_euclid",
+      "to": "polynomial_roots_and_degree",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "polynomial_roots_and_degree",
+      "to": "polynomial_interpolation",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "polynomial_interpolation",
+      "to": "secret_sharing",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "polynomial_interpolation",
+      "to": "error_correcting_codes",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "simple_induction",
+      "to": "bijections_and_cardinality",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "bijections_and_cardinality",
+      "to": "cantors_diagonalization",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "cantors_diagonalization",
+      "to": "uncountability_of_reals",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "proof_by_contradiction",
+      "to": "the_halting_problem",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "the_halting_problem",
+      "to": "undecidability",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "basic_counting_rules",
+      "to": "combinations_permutations",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "combinations_permutations",
+      "to": "combinatorial_proofs",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "combinations_permutations",
+      "to": "stars_and_bars",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "basic_counting_rules",
+      "to": "inclusion_exclusion",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "basic_counting_rules",
+      "to": "probability_spaces",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "probability_spaces",
+      "to": "conditional_probability",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "conditional_probability",
+      "to": "bayes_rule",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "conditional_probability",
+      "to": "event_independence",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "probability_spaces",
+      "to": "discrete_random_variables",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "discrete_random_variables",
+      "to": "expectation",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "expectation",
+      "to": "linearity_of_expectation",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "expectation",
+      "to": "variance_and_covariance",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "discrete_random_variables",
+      "to": "bernoulli_binomial_distributions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "discrete_random_variables",
+      "to": "geometric_distribution",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "discrete_random_variables",
+      "to": "poisson_distribution",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "discrete_random_variables",
+      "to": "hypergeometric_distribution",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "discrete_random_variables",
+      "to": "continuous_random_variables",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "continuous_random_variables",
+      "to": "probability_density_function",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "probability_density_function",
+      "to": "cumulative_distribution_function",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "probability_density_function",
+      "to": "uniform_exponential_distributions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "probability_density_function",
+      "to": "normal_distribution",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "expectation",
+      "to": "markovs_inequality",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "markovs_inequality",
+      "to": "chebyshevs_inequality",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "variance_and_covariance",
+      "to": "chebyshevs_inequality",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "markovs_inequality",
+      "to": "chernoff_bounds",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "chebyshevs_inequality",
+      "to": "weak_law_of_large_numbers",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "normal_distribution",
+      "to": "central_limit_theorem",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "weak_law_of_large_numbers",
+      "to": "central_limit_theorem",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "conditional_probability",
+      "to": "markov_chains_basics",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "markov_chains_basics",
+      "to": "hitting_times",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "expectation",
+      "to": "hitting_times",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "markov_chains_basics",
+      "to": "stationary_distributions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "stationary_distributions",
+      "to": "page_rank_algorithm",
+      "strength": "soft"
+    }
+  ]
+}

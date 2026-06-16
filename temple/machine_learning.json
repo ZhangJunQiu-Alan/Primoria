@@ -1,0 +1,104 @@
+{
+  "id": "cs229",
+  "name": "Machine Learning",
+  "description": "Machine learning algorithms and statistical pattern recognition.",
+  "topics": [
+    {
+      "id": "cs229_supervised_learning",
+      "title": "Supervised Learning",
+      "description": "Supervised Learning in Machine Learning",
+      "parent_id": null
+    },
+    {
+      "id": "cs229_linear_regression",
+      "title": "Linear Regression",
+      "description": "Linear Regression in Machine Learning",
+      "parent_id": "cs229_supervised_learning"
+    },
+    {
+      "id": "cs229_logistic_regression",
+      "title": "Logistic Regression",
+      "description": "Logistic Regression in Machine Learning",
+      "parent_id": "cs229_supervised_learning"
+    },
+    {
+      "id": "cs229_generalized_linear_models",
+      "title": "Generalized Linear Models",
+      "description": "Generalized Linear Models in Machine Learning",
+      "parent_id": "cs229_supervised_learning"
+    },
+    {
+      "id": "cs229_support_vector_machines",
+      "title": "Support Vector Machines",
+      "description": "Support Vector Machines in Machine Learning",
+      "parent_id": "cs229_supervised_learning"
+    },
+    {
+      "id": "cs229_decision_trees",
+      "title": "Decision Trees",
+      "description": "Decision Trees in Machine Learning",
+      "parent_id": "cs229_supervised_learning"
+    },
+    {
+      "id": "cs229_deep_learning",
+      "title": "Deep Learning",
+      "description": "Deep Learning in Machine Learning",
+      "parent_id": null
+    },
+    {
+      "id": "cs229_neural_networks",
+      "title": "Neural Networks",
+      "description": "Neural Networks in Machine Learning",
+      "parent_id": "cs229_deep_learning"
+    },
+    {
+      "id": "cs229_backpropagation",
+      "title": "Backpropagation",
+      "description": "Backpropagation in Machine Learning",
+      "parent_id": "cs229_deep_learning"
+    },
+    {
+      "id": "cs229_unsupervised_learning",
+      "title": "Unsupervised Learning",
+      "description": "Unsupervised Learning in Machine Learning",
+      "parent_id": null
+    },
+    {
+      "id": "cs229_kmeans_clustering",
+      "title": "K-Means Clustering",
+      "description": "K-Means Clustering in Machine Learning",
+      "parent_id": "cs229_unsupervised_learning"
+    },
+    {
+      "id": "cs229_gaussian_mixture_models",
+      "title": "Gaussian Mixture Models",
+      "description": "Gaussian Mixture Models in Machine Learning",
+      "parent_id": "cs229_unsupervised_learning"
+    },
+    {
+      "id": "cs229_principal_component_analysis",
+      "title": "Principal Component Analysis",
+      "description": "Principal Component Analysis in Machine Learning",
+      "parent_id": "cs229_unsupervised_learning"
+    },
+    {
+      "id": "cs229_reinforcement_learning",
+      "title": "Reinforcement Learning",
+      "description": "Reinforcement Learning in Machine Learning",
+      "parent_id": null
+    },
+    {
+      "id": "cs229_mdps",
+      "title": "MDPs",
+      "description": "MDPs in Machine Learning",
+      "parent_id": "cs229_reinforcement_learning"
+    },
+    {
+      "id": "cs229_value_iteration",
+      "title": "Value Iteration",
+      "description": "Value Iteration in Machine Learning",
+      "parent_id": "cs229_reinforcement_learning"
+    }
+  ],
+  "edges": []
+}

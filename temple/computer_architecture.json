@@ -1,0 +1,495 @@
+{
+  "subject": "UCB CS61C Great Ideas in Computer Architecture",
+  "schema": {
+    "nodeTypes": {
+      "topic": "A broad module containing 4-5 concepts",
+      "concept": "A minimal testable concept"
+    },
+    "edgeTypes": {
+      "prereq": "Prerequisite relationship, can be hard or soft"
+    }
+  },
+  "nodes": [
+    {
+      "id": "topic_data_rep",
+      "name": "Data Representation",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_binary_hex",
+      "topic": "topic_data_rep",
+      "name": "Binary and Hexadecimal",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_integer_rep",
+      "topic": "topic_data_rep",
+      "name": "Two's Complement & Integer Rep",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_floating_point",
+      "topic": "topic_data_rep",
+      "name": "IEEE 754 Floating Point",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_endianness",
+      "topic": "topic_data_rep",
+      "name": "Endianness and Memory Layout",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_c_prog",
+      "name": "C Programming",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_c_basics",
+      "topic": "topic_c_prog",
+      "name": "C Basics & Control Flow",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_pointers_arrays",
+      "topic": "topic_c_prog",
+      "name": "Pointers and Arrays",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_memory_management",
+      "topic": "topic_c_prog",
+      "name": "Dynamic Memory Management",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_structs_unions",
+      "topic": "topic_c_prog",
+      "name": "Structs, Unions, and Typedefs",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_riscv",
+      "name": "RISC-V Assembly",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_riscv_basics",
+      "topic": "topic_riscv",
+      "name": "Registers & Basic Instructions",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_riscv_control",
+      "topic": "topic_riscv",
+      "name": "Control Flow & Branches",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_riscv_functions",
+      "topic": "topic_riscv",
+      "name": "Function Calling Convention",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_riscv_formats",
+      "topic": "topic_riscv",
+      "name": "Instruction Formats",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_call_pipeline",
+      "topic": "topic_riscv",
+      "name": "Compiler, Assembler, Linker, Loader",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_sds",
+      "name": "Synchronous Digital Systems",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_boolean_algebra",
+      "topic": "topic_sds",
+      "name": "Boolean Algebra & Logic Gates",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_combinational_logic",
+      "topic": "topic_sds",
+      "name": "Combinational Logic Blocks",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_state_elements",
+      "topic": "topic_sds",
+      "name": "State Elements (Flip-Flops)",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_sequential_logic",
+      "topic": "topic_sds",
+      "name": "Sequential Logic & Timing",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_fsm",
+      "topic": "topic_sds",
+      "name": "Finite State Machines",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_cpu",
+      "name": "CPU Architecture & Datapath",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_single_cycle",
+      "topic": "topic_cpu",
+      "name": "Single-Cycle Datapath",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_cpu_control",
+      "topic": "topic_cpu",
+      "name": "CPU Control Logic",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_pipelining",
+      "topic": "topic_cpu",
+      "name": "Pipelining Principles",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_pipeline_hazards",
+      "topic": "topic_cpu",
+      "name": "Pipeline Hazards & Forwarding",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_branch_prediction",
+      "topic": "topic_cpu",
+      "name": "Branch Prediction",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_memory",
+      "name": "Memory Hierarchy",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_cache_basics",
+      "topic": "topic_memory",
+      "name": "Cache Basics & Direct Mapped",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_associative_caches",
+      "topic": "topic_memory",
+      "name": "Associative Caches",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_cache_performance",
+      "topic": "topic_memory",
+      "name": "AMAT & Cache Misses",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_virtual_memory",
+      "topic": "topic_memory",
+      "name": "Virtual Memory & Page Tables",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_tlb",
+      "topic": "topic_memory",
+      "name": "Translation Lookaside Buffer (TLB)",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_parallelism",
+      "name": "Parallel Computing",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_amdahls_law",
+      "topic": "topic_parallelism",
+      "name": "Amdahl's Law",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_simd",
+      "topic": "topic_parallelism",
+      "name": "Data-Level Parallelism (SIMD)",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_multithreading",
+      "topic": "topic_parallelism",
+      "name": "Thread-Level Parallelism (OpenMP)",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_cache_coherence",
+      "topic": "topic_parallelism",
+      "name": "Cache Coherence & False Sharing",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_warehouse_scale",
+      "topic": "topic_parallelism",
+      "name": "Warehouse-Scale Computing",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_io_dep",
+      "name": "I/O and Dependability",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "concept_memory_mapped_io",
+      "topic": "topic_io_dep",
+      "name": "Memory-Mapped I/O",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_polling_interrupts",
+      "topic": "topic_io_dep",
+      "name": "Polling and Interrupts",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_dma",
+      "topic": "topic_io_dep",
+      "name": "Direct Memory Access (DMA)",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_ecc_parity",
+      "topic": "topic_io_dep",
+      "name": "Error Correction Codes",
+      "kind": "concept"
+    },
+    {
+      "id": "concept_raid",
+      "topic": "topic_io_dep",
+      "name": "RAID and Dependability",
+      "kind": "concept"
+    }
+  ],
+  "edges": [
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "topic_data_rep",
+      "to": "topic_c_prog",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "topic_c_prog",
+      "to": "topic_riscv",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "topic_riscv",
+      "to": "topic_cpu",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "topic_sds",
+      "to": "topic_cpu",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "topic_cpu",
+      "to": "topic_memory",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "topic_memory",
+      "to": "topic_parallelism",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "topic_memory",
+      "to": "topic_io_dep",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_binary_hex",
+      "to": "concept_integer_rep",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_binary_hex",
+      "to": "concept_floating_point",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_c_basics",
+      "to": "concept_pointers_arrays",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_pointers_arrays",
+      "to": "concept_memory_management",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "concept_pointers_arrays",
+      "to": "concept_structs_unions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_riscv_basics",
+      "to": "concept_riscv_control",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_riscv_control",
+      "to": "concept_riscv_functions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "concept_riscv_functions",
+      "to": "concept_call_pipeline",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_boolean_algebra",
+      "to": "concept_combinational_logic",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_combinational_logic",
+      "to": "concept_state_elements",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_state_elements",
+      "to": "concept_sequential_logic",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_sequential_logic",
+      "to": "concept_fsm",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_single_cycle",
+      "to": "concept_pipelining",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_pipelining",
+      "to": "concept_pipeline_hazards",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "concept_pipeline_hazards",
+      "to": "concept_branch_prediction",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_cache_basics",
+      "to": "concept_associative_caches",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_associative_caches",
+      "to": "concept_cache_performance",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_cache_basics",
+      "to": "concept_virtual_memory",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_virtual_memory",
+      "to": "concept_tlb",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "hard",
+      "from": "concept_multithreading",
+      "to": "concept_cache_coherence",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "concept_polling_interrupts",
+      "to": "concept_dma",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "weight": "soft",
+      "from": "concept_ecc_parity",
+      "to": "concept_raid",
+      "strength": "hard"
+    }
+  ]
+}

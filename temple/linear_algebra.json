@@ -1,0 +1,389 @@
+{
+  "subject": "MIT 18.06 Linear Algebra",
+  "schema": {
+    "nodes": [
+      {
+        "type": "topic",
+        "description": "A broad module containing 4-5 concepts."
+      },
+      {
+        "type": "concept",
+        "description": "A minimal testable concept."
+      }
+    ],
+    "edges": [
+      {
+        "type": "prereq",
+        "description": "Indicates that one concept or topic is a prerequisite for another. Must form a DAG."
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "t_mit1806_linear_equations",
+      "kind": "topic",
+      "name": "Solving Linear Equations",
+      "topic": null,
+      "default_order": 1
+    },
+    {
+      "id": "c_mit1806_vectors",
+      "kind": "concept",
+      "name": "Vectors and Linear Combinations",
+      "topic": "t_mit1806_linear_equations",
+      "description": "Addition, scalar multiplication, dot products, and linear combinations of vectors.",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit1806_elimination",
+      "kind": "concept",
+      "name": "Elimination with Matrices",
+      "topic": "t_mit1806_linear_equations",
+      "description": "Solving systems of linear equations using Gaussian elimination, pivot variables, and multipliers.",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit1806_matrix_ops",
+      "kind": "concept",
+      "name": "Matrix Operations and Inverses",
+      "topic": "t_mit1806_linear_equations",
+      "description": "Rules for matrix multiplication, properties of operations, and computing the inverse of a matrix.",
+      "default_order": 3
+    },
+    {
+      "id": "c_mit1806_lu_decomp",
+      "kind": "concept",
+      "name": "LU Factorization",
+      "topic": "t_mit1806_linear_equations",
+      "description": "Factoring a matrix into lower triangular (L) and upper triangular (U) components.",
+      "default_order": 4
+    },
+    {
+      "id": "t_mit1806_vector_spaces",
+      "kind": "topic",
+      "name": "Vector Spaces and Subspaces",
+      "topic": null,
+      "default_order": 2
+    },
+    {
+      "id": "c_mit1806_spaces_subspaces",
+      "kind": "concept",
+      "name": "Vector Spaces and Subspaces",
+      "topic": "t_mit1806_vector_spaces",
+      "description": "Definition of vector spaces and subspaces, closure under addition and scalar multiplication.",
+      "default_order": 5
+    },
+    {
+      "id": "c_mit1806_null_column_space",
+      "kind": "concept",
+      "name": "Null Space and Column Space",
+      "topic": "t_mit1806_vector_spaces",
+      "description": "Understanding the null space (solutions to Ax=0) and column space (combinations of columns).",
+      "default_order": 6
+    },
+    {
+      "id": "c_mit1806_independence_basis",
+      "kind": "concept",
+      "name": "Linear Independence, Basis, and Dimension",
+      "topic": "t_mit1806_vector_spaces",
+      "description": "Linear independence of vectors, spanning sets, defining a basis, and the dimension of a vector space.",
+      "default_order": 7
+    },
+    {
+      "id": "c_mit1806_four_subspaces",
+      "kind": "concept",
+      "name": "The Four Fundamental Subspaces",
+      "topic": "t_mit1806_vector_spaces",
+      "description": "Column space, null space, row space, and left null space, and their dimensions.",
+      "default_order": 8
+    },
+    {
+      "id": "t_mit1806_orthogonality",
+      "kind": "topic",
+      "name": "Orthogonality",
+      "topic": null,
+      "default_order": 3
+    },
+    {
+      "id": "c_mit1806_orthogonality",
+      "kind": "concept",
+      "name": "Orthogonal Vectors and Subspaces",
+      "topic": "t_mit1806_orthogonality",
+      "description": "Orthogonality of the four fundamental subspaces, orthogonal complements.",
+      "default_order": 9
+    },
+    {
+      "id": "c_mit1806_projections",
+      "kind": "concept",
+      "name": "Projections onto Subspaces",
+      "topic": "t_mit1806_orthogonality",
+      "description": "Projection matrices and projecting vectors onto lines or general subspaces.",
+      "default_order": 10
+    },
+    {
+      "id": "c_mit1806_least_squares",
+      "kind": "concept",
+      "name": "Least Squares Approximations",
+      "topic": "t_mit1806_orthogonality",
+      "description": "Solving overdetermined systems using normal equations and finding the best fit line.",
+      "default_order": 11
+    },
+    {
+      "id": "c_mit1806_gram_schmidt",
+      "kind": "concept",
+      "name": "Orthogonal Bases and Gram-Schmidt",
+      "topic": "t_mit1806_orthogonality",
+      "description": "Orthonormal vectors, orthogonal matrices, and the Gram-Schmidt orthogonalization process.",
+      "default_order": 12
+    },
+    {
+      "id": "t_mit1806_determinants",
+      "kind": "topic",
+      "name": "Determinants",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "c_mit1806_det_properties",
+      "kind": "concept",
+      "name": "Properties of Determinants",
+      "topic": "t_mit1806_determinants",
+      "description": "The fundamental properties that define the determinant of a square matrix.",
+      "default_order": 13
+    },
+    {
+      "id": "c_mit1806_det_formulas",
+      "kind": "concept",
+      "name": "Formulas and Cofactors",
+      "topic": "t_mit1806_determinants",
+      "description": "Computing determinants using the permutation formula and cofactor expansions.",
+      "default_order": 14
+    },
+    {
+      "id": "c_mit1806_cramers_rule",
+      "kind": "concept",
+      "name": "Cramer's Rule and Volumes",
+      "topic": "t_mit1806_determinants",
+      "description": "Using determinants to find inverses, solving systems with Cramer's Rule, and volume interpretations.",
+      "default_order": 15
+    },
+    {
+      "id": "t_mit1806_eigenvalues",
+      "kind": "topic",
+      "name": "Eigenvalues and Eigenvectors",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "c_mit1806_eigen",
+      "kind": "concept",
+      "name": "Eigenvalues and Eigenvectors",
+      "topic": "t_mit1806_eigenvalues",
+      "description": "Definition of eigenvalues and eigenvectors, and finding them using characteristic equations.",
+      "default_order": 16
+    },
+    {
+      "id": "c_mit1806_diagonalization",
+      "kind": "concept",
+      "name": "Diagonalization",
+      "topic": "t_mit1806_eigenvalues",
+      "description": "Diagonalizing a matrix using its eigenvectors, computing powers of matrices.",
+      "default_order": 17
+    },
+    {
+      "id": "c_mit1806_diff_eq",
+      "kind": "concept",
+      "name": "Systems of Differential Equations",
+      "topic": "t_mit1806_eigenvalues",
+      "description": "Solving linear systems of differential equations using eigenvalues and eigenvectors.",
+      "default_order": 18
+    },
+    {
+      "id": "c_mit1806_symmetric_matrices",
+      "kind": "concept",
+      "name": "Symmetric Matrices",
+      "topic": "t_mit1806_eigenvalues",
+      "description": "Properties of symmetric matrices, including real eigenvalues and orthogonal eigenvectors.",
+      "default_order": 19
+    },
+    {
+      "id": "c_mit1806_positive_definite",
+      "kind": "concept",
+      "name": "Positive Definite Matrices",
+      "topic": "t_mit1806_eigenvalues",
+      "description": "Tests for positive definite matrices and their applications.",
+      "default_order": 20
+    },
+    {
+      "id": "t_mit1806_applications",
+      "kind": "topic",
+      "name": "SVD and Linear Transformations",
+      "topic": null,
+      "default_order": 6
+    },
+    {
+      "id": "c_mit1806_svd",
+      "kind": "concept",
+      "name": "Singular Value Decomposition (SVD)",
+      "topic": "t_mit1806_applications",
+      "description": "Factoring any matrix into orthogonal and diagonal matrices.",
+      "default_order": 21
+    },
+    {
+      "id": "c_mit1806_linear_transformations",
+      "kind": "concept",
+      "name": "Linear Transformations",
+      "topic": "t_mit1806_applications",
+      "description": "Definition of linear transformations, checking linearity.",
+      "default_order": 22
+    },
+    {
+      "id": "c_mit1806_matrix_transform",
+      "kind": "concept",
+      "name": "The Matrix of a Linear Transformation",
+      "topic": "t_mit1806_applications",
+      "description": "Representing linear transformations with matrices and changing basis.",
+      "default_order": 23
+    }
+  ],
+  "edges": [
+    {
+      "from": "c_mit1806_vectors",
+      "to": "c_mit1806_elimination",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit1806_matrix_ops",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_lu_decomp",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_spaces_subspaces",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_spaces_subspaces",
+      "to": "c_mit1806_null_column_space",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_null_column_space",
+      "to": "c_mit1806_independence_basis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_independence_basis",
+      "to": "c_mit1806_four_subspaces",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_four_subspaces",
+      "to": "c_mit1806_orthogonality",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_orthogonality",
+      "to": "c_mit1806_projections",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_projections",
+      "to": "c_mit1806_least_squares",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_least_squares",
+      "to": "c_mit1806_gram_schmidt",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit1806_det_properties",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_det_properties",
+      "to": "c_mit1806_det_formulas",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_det_formulas",
+      "to": "c_mit1806_cramers_rule",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_det_properties",
+      "to": "c_mit1806_eigen",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "c_mit1806_diagonalization",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_diagonalization",
+      "to": "c_mit1806_diff_eq",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "c_mit1806_symmetric_matrices",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_symmetric_matrices",
+      "to": "c_mit1806_positive_definite",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_positive_definite",
+      "to": "c_mit1806_svd",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_linear_transformations",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit1806_linear_transformations",
+      "to": "c_mit1806_matrix_transform",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_matrix_transform",
+      "to": "c_mit1806_svd",
+      "type": "prereq",
+      "strength": "soft"
+    }
+  ]
+}

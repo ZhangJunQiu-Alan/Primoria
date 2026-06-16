@@ -1,0 +1,104 @@
+{
+  "id": "cs144",
+  "name": "Computer Network",
+  "description": "Principles and protocols of computer networks.",
+  "topics": [
+    {
+      "id": "cs144_network_architecture",
+      "title": "Network Architecture",
+      "description": "Network Architecture in Computer Network",
+      "parent_id": null
+    },
+    {
+      "id": "cs144_osi_model",
+      "title": "OSI Model",
+      "description": "OSI Model in Computer Network",
+      "parent_id": "cs144_network_architecture"
+    },
+    {
+      "id": "cs144_tcp_ip_model",
+      "title": "TCP IP Model",
+      "description": "TCP IP Model in Computer Network",
+      "parent_id": "cs144_network_architecture"
+    },
+    {
+      "id": "cs144_application_layer",
+      "title": "Application Layer",
+      "description": "Application Layer in Computer Network",
+      "parent_id": null
+    },
+    {
+      "id": "cs144_http",
+      "title": "HTTP",
+      "description": "HTTP in Computer Network",
+      "parent_id": "cs144_application_layer"
+    },
+    {
+      "id": "cs144_dns",
+      "title": "DNS",
+      "description": "DNS in Computer Network",
+      "parent_id": "cs144_application_layer"
+    },
+    {
+      "id": "cs144_transport_layer",
+      "title": "Transport Layer",
+      "description": "Transport Layer in Computer Network",
+      "parent_id": null
+    },
+    {
+      "id": "cs144_tcp",
+      "title": "TCP",
+      "description": "TCP in Computer Network",
+      "parent_id": "cs144_transport_layer"
+    },
+    {
+      "id": "cs144_udp",
+      "title": "UDP",
+      "description": "UDP in Computer Network",
+      "parent_id": "cs144_transport_layer"
+    },
+    {
+      "id": "cs144_congestion_control",
+      "title": "Congestion Control",
+      "description": "Congestion Control in Computer Network",
+      "parent_id": "cs144_transport_layer"
+    },
+    {
+      "id": "cs144_network_layer",
+      "title": "Network Layer",
+      "description": "Network Layer in Computer Network",
+      "parent_id": null
+    },
+    {
+      "id": "cs144_ipv4_and_ipv6",
+      "title": "IPv4 and IPv6",
+      "description": "IPv4 and IPv6 in Computer Network",
+      "parent_id": "cs144_network_layer"
+    },
+    {
+      "id": "cs144_routing_algorithms",
+      "title": "Routing Algorithms",
+      "description": "Routing Algorithms in Computer Network",
+      "parent_id": "cs144_network_layer"
+    },
+    {
+      "id": "cs144_link_layer",
+      "title": "Link Layer",
+      "description": "Link Layer in Computer Network",
+      "parent_id": null
+    },
+    {
+      "id": "cs144_ethernet",
+      "title": "Ethernet",
+      "description": "Ethernet in Computer Network",
+      "parent_id": "cs144_link_layer"
+    },
+    {
+      "id": "cs144_mac",
+      "title": "MAC",
+      "description": "MAC in Computer Network",
+      "parent_id": "cs144_link_layer"
+    }
+  ],
+  "edges": []
+}

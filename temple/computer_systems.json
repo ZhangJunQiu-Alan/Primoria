@@ -1,0 +1,861 @@
+{
+  "subject": "CMU 15-213 CSAPP",
+  "schema": {
+    "nodeTypes": {
+      "topic": {
+        "description": "A broad module containing 4-5 concepts",
+        "properties": [
+          "id",
+          "type",
+          "name"
+        ]
+      },
+      "concept": {
+        "description": "A minimal testable concept",
+        "properties": [
+          "id",
+          "type",
+          "name",
+          "parentTopic"
+        ]
+      }
+    },
+    "edgeTypes": {
+      "prereq": {
+        "description": "Prerequisite relationship between concepts or topics",
+        "properties": [
+          "source",
+          "target",
+          "type",
+          "prereqType"
+        ]
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "t1",
+      "name": "Data Representation",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c1_1",
+      "name": "Bits and Bytes",
+      "topic": "t1",
+      "kind": "concept"
+    },
+    {
+      "id": "c1_2",
+      "name": "Integer Representation",
+      "topic": "t1",
+      "kind": "concept"
+    },
+    {
+      "id": "c1_3",
+      "name": "Integer Arithmetic",
+      "topic": "t1",
+      "kind": "concept"
+    },
+    {
+      "id": "c1_4",
+      "name": "Floating Point Representation",
+      "topic": "t1",
+      "kind": "concept"
+    },
+    {
+      "id": "c1_5",
+      "name": "Floating Point Operations",
+      "topic": "t1",
+      "kind": "concept"
+    },
+    {
+      "id": "t2",
+      "name": "Machine-Level Programming",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c2_1",
+      "name": "x86-64 Data Movement",
+      "topic": "t2",
+      "kind": "concept"
+    },
+    {
+      "id": "c2_2",
+      "name": "Arithmetic and Logical Operations",
+      "topic": "t2",
+      "kind": "concept"
+    },
+    {
+      "id": "c2_3",
+      "name": "Control Flow (Conditionals and Loops)",
+      "topic": "t2",
+      "kind": "concept"
+    },
+    {
+      "id": "c2_4",
+      "name": "Procedures and Call Stack",
+      "topic": "t2",
+      "kind": "concept"
+    },
+    {
+      "id": "c2_5",
+      "name": "Arrays and Structs",
+      "topic": "t2",
+      "kind": "concept"
+    },
+    {
+      "id": "t3",
+      "name": "Processor Architecture",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c3_1",
+      "name": "Instruction Set Architecture (Y86-64)",
+      "topic": "t3",
+      "kind": "concept"
+    },
+    {
+      "id": "c3_2",
+      "name": "Sequential CPU Implementation",
+      "topic": "t3",
+      "kind": "concept"
+    },
+    {
+      "id": "c3_3",
+      "name": "Pipelining Principles",
+      "topic": "t3",
+      "kind": "concept"
+    },
+    {
+      "id": "c3_4",
+      "name": "Pipeline Hazards and Forwarding",
+      "topic": "t3",
+      "kind": "concept"
+    },
+    {
+      "id": "c3_5",
+      "name": "Exceptions in Pipelines",
+      "topic": "t3",
+      "kind": "concept"
+    },
+    {
+      "id": "t4",
+      "name": "Code Optimization",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c4_1",
+      "name": "Compiler Limitations",
+      "topic": "t4",
+      "kind": "concept"
+    },
+    {
+      "id": "c4_2",
+      "name": "Loop Unrolling",
+      "topic": "t4",
+      "kind": "concept"
+    },
+    {
+      "id": "c4_3",
+      "name": "Instruction-Level Parallelism",
+      "topic": "t4",
+      "kind": "concept"
+    },
+    {
+      "id": "c4_4",
+      "name": "Memory Aliasing",
+      "topic": "t4",
+      "kind": "concept"
+    },
+    {
+      "id": "c4_5",
+      "name": "Profiling Tools",
+      "topic": "t4",
+      "kind": "concept"
+    },
+    {
+      "id": "t5",
+      "name": "Memory Hierarchy and Cache",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c5_1",
+      "name": "Storage Technologies",
+      "topic": "t5",
+      "kind": "concept"
+    },
+    {
+      "id": "c5_2",
+      "name": "Principle of Locality",
+      "topic": "t5",
+      "kind": "concept"
+    },
+    {
+      "id": "c5_3",
+      "name": "Cache Memory Organization",
+      "topic": "t5",
+      "kind": "concept"
+    },
+    {
+      "id": "c5_4",
+      "name": "Cache Performance Metrics",
+      "topic": "t5",
+      "kind": "concept"
+    },
+    {
+      "id": "c5_5",
+      "name": "Writing Cache-Friendly Code",
+      "topic": "t5",
+      "kind": "concept"
+    },
+    {
+      "id": "t6",
+      "name": "Linking",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c6_1",
+      "name": "Static Linking",
+      "topic": "t6",
+      "kind": "concept"
+    },
+    {
+      "id": "c6_2",
+      "name": "Object Files (ELF)",
+      "topic": "t6",
+      "kind": "concept"
+    },
+    {
+      "id": "c6_3",
+      "name": "Symbol Resolution",
+      "topic": "t6",
+      "kind": "concept"
+    },
+    {
+      "id": "c6_4",
+      "name": "Relocation",
+      "topic": "t6",
+      "kind": "concept"
+    },
+    {
+      "id": "c6_5",
+      "name": "Dynamic Linking",
+      "topic": "t6",
+      "kind": "concept"
+    },
+    {
+      "id": "t7",
+      "name": "Exceptional Control Flow",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c7_1",
+      "name": "Exceptions (Traps, Interrupts, Faults)",
+      "topic": "t7",
+      "kind": "concept"
+    },
+    {
+      "id": "c7_2",
+      "name": "Processes and Context Switches",
+      "topic": "t7",
+      "kind": "concept"
+    },
+    {
+      "id": "c7_3",
+      "name": "Process Control (fork, execve)",
+      "topic": "t7",
+      "kind": "concept"
+    },
+    {
+      "id": "c7_4",
+      "name": "Signals and Signal Handling",
+      "topic": "t7",
+      "kind": "concept"
+    },
+    {
+      "id": "c7_5",
+      "name": "Non-local Jumps",
+      "topic": "t7",
+      "kind": "concept"
+    },
+    {
+      "id": "t8",
+      "name": "Virtual Memory",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c8_1",
+      "name": "Address Translation",
+      "topic": "t8",
+      "kind": "concept"
+    },
+    {
+      "id": "c8_2",
+      "name": "Page Tables",
+      "topic": "t8",
+      "kind": "concept"
+    },
+    {
+      "id": "c8_3",
+      "name": "Translation Lookaside Buffer (TLB)",
+      "topic": "t8",
+      "kind": "concept"
+    },
+    {
+      "id": "c8_4",
+      "name": "Dynamic Memory Allocation",
+      "topic": "t8",
+      "kind": "concept"
+    },
+    {
+      "id": "c8_5",
+      "name": "Garbage Collection Basics",
+      "topic": "t8",
+      "kind": "concept"
+    },
+    {
+      "id": "t9",
+      "name": "System-Level I/O",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c9_1",
+      "name": "Unix I/O",
+      "topic": "t9",
+      "kind": "concept"
+    },
+    {
+      "id": "c9_2",
+      "name": "File Metadata",
+      "topic": "t9",
+      "kind": "concept"
+    },
+    {
+      "id": "c9_3",
+      "name": "Standard I/O Library",
+      "topic": "t9",
+      "kind": "concept"
+    },
+    {
+      "id": "c9_4",
+      "name": "File Sharing",
+      "topic": "t9",
+      "kind": "concept"
+    },
+    {
+      "id": "c9_5",
+      "name": "I/O Redirection",
+      "topic": "t9",
+      "kind": "concept"
+    },
+    {
+      "id": "t10",
+      "name": "Network Programming",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c10_1",
+      "name": "Client-Server Model",
+      "topic": "t10",
+      "kind": "concept"
+    },
+    {
+      "id": "c10_2",
+      "name": "Internet Protocol (IP)",
+      "topic": "t10",
+      "kind": "concept"
+    },
+    {
+      "id": "c10_3",
+      "name": "Transmission Control Protocol (TCP)",
+      "topic": "t10",
+      "kind": "concept"
+    },
+    {
+      "id": "c10_4",
+      "name": "Sockets Interface",
+      "topic": "t10",
+      "kind": "concept"
+    },
+    {
+      "id": "c10_5",
+      "name": "HTTP Protocol Basics",
+      "topic": "t10",
+      "kind": "concept"
+    },
+    {
+      "id": "t11",
+      "name": "Concurrent Programming",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c11_1",
+      "name": "Thread Basics",
+      "topic": "t11",
+      "kind": "concept"
+    },
+    {
+      "id": "c11_2",
+      "name": "Shared Variables",
+      "topic": "t11",
+      "kind": "concept"
+    },
+    {
+      "id": "c11_3",
+      "name": "Synchronization (Semaphores)",
+      "topic": "t11",
+      "kind": "concept"
+    },
+    {
+      "id": "c11_4",
+      "name": "Thread Safety",
+      "topic": "t11",
+      "kind": "concept"
+    },
+    {
+      "id": "c11_5",
+      "name": "Deadlocks",
+      "topic": "t11",
+      "kind": "concept"
+    }
+  ],
+  "edges": [
+    {
+      "type": "prereq",
+      "from": "t1",
+      "to": "t2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t2",
+      "to": "t3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t2",
+      "to": "t4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t3",
+      "to": "t4",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "t4",
+      "to": "t5",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "t2",
+      "to": "t5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t2",
+      "to": "t6",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t2",
+      "to": "t7",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t3",
+      "to": "t7",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t5",
+      "to": "t8",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t7",
+      "to": "t8",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t7",
+      "to": "t9",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t9",
+      "to": "t10",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "t7",
+      "to": "t11",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c1_1",
+      "to": "c1_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c1_2",
+      "to": "c1_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c1_1",
+      "to": "c1_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c1_4",
+      "to": "c1_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_1",
+      "to": "c2_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_2",
+      "to": "c2_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_3",
+      "to": "c2_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_1",
+      "to": "c2_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c3_1",
+      "to": "c3_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c3_2",
+      "to": "c3_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c3_3",
+      "to": "c3_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c3_4",
+      "to": "c3_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c4_1",
+      "to": "c4_2",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "c4_2",
+      "to": "c4_3",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "c4_1",
+      "to": "c4_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c4_2",
+      "to": "c4_5",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "c5_1",
+      "to": "c5_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c5_2",
+      "to": "c5_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c5_3",
+      "to": "c5_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c5_4",
+      "to": "c5_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c5_3",
+      "to": "c5_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c6_1",
+      "to": "c6_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c6_2",
+      "to": "c6_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c6_3",
+      "to": "c6_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c6_4",
+      "to": "c6_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c7_1",
+      "to": "c7_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c7_2",
+      "to": "c7_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c7_3",
+      "to": "c7_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c7_4",
+      "to": "c7_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c8_1",
+      "to": "c8_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c8_2",
+      "to": "c8_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c8_2",
+      "to": "c8_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c8_4",
+      "to": "c8_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c9_1",
+      "to": "c9_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c9_1",
+      "to": "c9_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c9_2",
+      "to": "c9_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c9_4",
+      "to": "c9_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c10_1",
+      "to": "c10_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c10_2",
+      "to": "c10_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c10_3",
+      "to": "c10_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c10_4",
+      "to": "c10_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c11_1",
+      "to": "c11_2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c11_2",
+      "to": "c11_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c11_3",
+      "to": "c11_4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c11_3",
+      "to": "c11_5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c1_3",
+      "to": "c2_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_3",
+      "to": "c4_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_1",
+      "to": "c3_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_1",
+      "to": "c5_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c2_4",
+      "to": "c6_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c3_5",
+      "to": "c7_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c3_3",
+      "to": "c4_3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c4_4",
+      "to": "c5_5",
+      "strength": "soft"
+    },
+    {
+      "type": "prereq",
+      "from": "c5_3",
+      "to": "c8_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c7_3",
+      "to": "c9_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c7_2",
+      "to": "c11_1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c9_1",
+      "to": "c10_1",
+      "strength": "hard"
+    }
+  ]
+}

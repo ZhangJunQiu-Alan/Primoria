@@ -1,0 +1,212 @@
+{
+  "id": "alevel_math",
+  "name": "A-Level Mathematics",
+  "description": "Advanced level mathematics topics.",
+  "topics": [
+    {
+      "id": "alevel_math_algebra_and_functions",
+      "title": "Algebra and Functions",
+      "description": "Algebra and Functions in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_laws_of_indices",
+      "title": "Laws of Indices",
+      "description": "Laws of Indices in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_surds_and_rationalization",
+      "title": "Surds and Rationalization",
+      "description": "Surds and Rationalization in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_quadratic_functions",
+      "title": "Quadratic Functions",
+      "description": "Quadratic Functions in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_solving_quadratic_equations",
+      "title": "Solving Quadratic Equations",
+      "description": "Solving Quadratic Equations in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_simultaneous_equations",
+      "title": "Simultaneous Equations",
+      "description": "Simultaneous Equations in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_polynomial_functions",
+      "title": "Polynomial Functions",
+      "description": "Polynomial Functions in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_inequalities",
+      "title": "Inequalities",
+      "description": "Inequalities in A-Level Mathematics",
+      "parent_id": "alevel_math_algebra_and_functions"
+    },
+    {
+      "id": "alevel_math_coordinate_geometry",
+      "title": "Coordinate Geometry",
+      "description": "Coordinate Geometry in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_trigonometry",
+      "title": "Trigonometry",
+      "description": "Trigonometry in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_exponentials_and_logarithms",
+      "title": "Exponentials and Logarithms",
+      "description": "Exponentials and Logarithms in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_differentiation",
+      "title": "Differentiation",
+      "description": "Differentiation in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_first_principles",
+      "title": "First Principles",
+      "description": "First Principles in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_power_rule",
+      "title": "Power Rule",
+      "description": "Power Rule in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_product_rule",
+      "title": "Product Rule",
+      "description": "Product Rule in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_quotient_rule",
+      "title": "Quotient Rule",
+      "description": "Quotient Rule in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_chain_rule",
+      "title": "Chain Rule",
+      "description": "Chain Rule in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_differentiation_of_special_functions",
+      "title": "Differentiation of Special Functions",
+      "description": "Differentiation of Special Functions in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_second_derivatives",
+      "title": "Second Derivatives",
+      "description": "Second Derivatives in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_stationary_points",
+      "title": "Stationary Points",
+      "description": "Stationary Points in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_maxima_and_minima",
+      "title": "Maxima and Minima",
+      "description": "Maxima and Minima in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_optimization_problems",
+      "title": "Optimization Problems",
+      "description": "Optimization Problems in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_rates_of_change",
+      "title": "Rates of Change",
+      "description": "Rates of Change in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_tangents_and_normals",
+      "title": "Tangents and Normals",
+      "description": "Tangents and Normals in A-Level Mathematics",
+      "parent_id": "alevel_math_differentiation"
+    },
+    {
+      "id": "alevel_math_integration",
+      "title": "Integration",
+      "description": "Integration in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_indefinite_integration",
+      "title": "Indefinite Integration",
+      "description": "Indefinite Integration in A-Level Mathematics",
+      "parent_id": "alevel_math_integration"
+    },
+    {
+      "id": "alevel_math_definite_integration",
+      "title": "Definite Integration",
+      "description": "Definite Integration in A-Level Mathematics",
+      "parent_id": "alevel_math_integration"
+    },
+    {
+      "id": "alevel_math_integration_of_common_functions",
+      "title": "Integration of Common Functions",
+      "description": "Integration of Common Functions in A-Level Mathematics",
+      "parent_id": "alevel_math_integration"
+    },
+    {
+      "id": "alevel_math_integration_by_substitution",
+      "title": "Integration by Substitution",
+      "description": "Integration by Substitution in A-Level Mathematics",
+      "parent_id": "alevel_math_integration"
+    },
+    {
+      "id": "alevel_math_area_under_curves",
+      "title": "Area Under Curves",
+      "description": "Area Under Curves in A-Level Mathematics",
+      "parent_id": "alevel_math_integration"
+    },
+    {
+      "id": "alevel_math_area_between_curves",
+      "title": "Area Between Curves",
+      "description": "Area Between Curves in A-Level Mathematics",
+      "parent_id": "alevel_math_integration"
+    },
+    {
+      "id": "alevel_math_sequences_and_series",
+      "title": "Sequences and Series",
+      "description": "Sequences and Series in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_binomial_expansion",
+      "title": "Binomial Expansion",
+      "description": "Binomial Expansion in A-Level Mathematics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_math_vectors",
+      "title": "Vectors",
+      "description": "Vectors in A-Level Mathematics",
+      "parent_id": null
+    }
+  ],
+  "edges": []
+}

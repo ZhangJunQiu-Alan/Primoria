@@ -1,0 +1,98 @@
+{
+  "id": "11_785",
+  "name": "Introduction to Deep Learning",
+  "description": "Fundamentals of deep neural networks.",
+  "topics": [
+    {
+      "id": "11_785_multilayer_perceptrons",
+      "title": "Multilayer Perceptrons",
+      "description": "Multilayer Perceptrons in Introduction to Deep Learning",
+      "parent_id": null
+    },
+    {
+      "id": "11_785_forward_propagation",
+      "title": "Forward Propagation",
+      "description": "Forward Propagation in Introduction to Deep Learning",
+      "parent_id": "11_785_multilayer_perceptrons"
+    },
+    {
+      "id": "11_785_backpropagation",
+      "title": "Backpropagation",
+      "description": "Backpropagation in Introduction to Deep Learning",
+      "parent_id": "11_785_multilayer_perceptrons"
+    },
+    {
+      "id": "11_785_convolutional_neural_networks",
+      "title": "Convolutional Neural Networks",
+      "description": "Convolutional Neural Networks in Introduction to Deep Learning",
+      "parent_id": null
+    },
+    {
+      "id": "11_785_convolution",
+      "title": "Convolution",
+      "description": "Convolution in Introduction to Deep Learning",
+      "parent_id": "11_785_convolutional_neural_networks"
+    },
+    {
+      "id": "11_785_pooling",
+      "title": "Pooling",
+      "description": "Pooling in Introduction to Deep Learning",
+      "parent_id": "11_785_convolutional_neural_networks"
+    },
+    {
+      "id": "11_785_architectures",
+      "title": "Architectures",
+      "description": "Architectures in Introduction to Deep Learning",
+      "parent_id": "11_785_convolutional_neural_networks"
+    },
+    {
+      "id": "11_785_recurrent_neural_networks",
+      "title": "Recurrent Neural Networks",
+      "description": "Recurrent Neural Networks in Introduction to Deep Learning",
+      "parent_id": null
+    },
+    {
+      "id": "11_785_lstms",
+      "title": "LSTMs",
+      "description": "LSTMs in Introduction to Deep Learning",
+      "parent_id": "11_785_recurrent_neural_networks"
+    },
+    {
+      "id": "11_785_grus",
+      "title": "GRUs",
+      "description": "GRUs in Introduction to Deep Learning",
+      "parent_id": "11_785_recurrent_neural_networks"
+    },
+    {
+      "id": "11_785_attention_mechanisms",
+      "title": "Attention Mechanisms",
+      "description": "Attention Mechanisms in Introduction to Deep Learning",
+      "parent_id": null
+    },
+    {
+      "id": "11_785_transformers",
+      "title": "Transformers",
+      "description": "Transformers in Introduction to Deep Learning",
+      "parent_id": "11_785_attention_mechanisms"
+    },
+    {
+      "id": "11_785_generative_models",
+      "title": "Generative Models",
+      "description": "Generative Models in Introduction to Deep Learning",
+      "parent_id": null
+    },
+    {
+      "id": "11_785_autoencoders",
+      "title": "Autoencoders",
+      "description": "Autoencoders in Introduction to Deep Learning",
+      "parent_id": "11_785_generative_models"
+    },
+    {
+      "id": "11_785_gans",
+      "title": "GANs",
+      "description": "GANs in Introduction to Deep Learning",
+      "parent_id": "11_785_generative_models"
+    }
+  ],
+  "edges": []
+}
