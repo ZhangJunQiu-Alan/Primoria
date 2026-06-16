@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createChatCompletion } from "@/lib/ai/openai-compatible";
+import { draftAgentCompletion } from "@/lib/agent-os/ai";
 import { getCurrentUser } from "@/lib/auth/session";
 import { hasDatabaseUrl } from "@/lib/db/client";
 import { getProviderSettings } from "@/lib/settings/user-settings";
@@ -72,7 +72,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
   const providerSettings = user && hasDatabaseUrl() ? await getProviderSettings(user.id) : {};
   try {
-    const content = await createChatCompletion([
+    const content = await draftAgentCompletion([
       {
         role: "system",
         content:

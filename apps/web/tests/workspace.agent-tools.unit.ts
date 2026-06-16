@@ -8,7 +8,14 @@ import {
   executeWorkspaceInternalTool,
   requiresWorkspaceToolApproval,
 } from "../src/lib/workspaces/agent-tools.ts";
-import type { WorkspaceAgentProfile, WorkspaceMember, WorkspaceTask, WorkspaceThread } from "../src/lib/workspaces/types.ts";
+import {
+  activateWorkspaceToolManifests,
+  createWorkspaceInternalToolRegistry,
+  createWorkspaceToolRendererRegistry,
+  listWorkspaceInternalToolManifests,
+} from "../src/lib/agent-os/tools.ts";
+import { executeWorkspaceAgentTaskOperation as executeAgentTaskOperation } from "../src/lib/agent-os/task-tools.ts";
+import type { WorkspaceAgentConnection, WorkspaceAgentProfile, WorkspaceMember, WorkspaceTask, WorkspaceThread } from "../src/lib/workspaces/types.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -115,6 +122,56 @@ async function main() {
   };
 
   const specs = buildWorkspaceGuardedToolSpecs(profile, context);
+  const manifests = listWorkspaceInternalToolManifests();
+  const manifestRegistry = createWorkspaceInternalToolRegistry();
+  const rendererRegistry = createWorkspaceToolRendererRegistry();
+  const taskManifest = manifestRegistry.get("create_workspace_task");
+  const widgetManifest = manifestRegistry.get("render_interactive_widget");
+  assert(manifests.length === Object.keys(WORKSPACE_INTERNAL_TOOL_POLICIES).length, "Agent OS manifest list covers every internal workspace tool policy");
+  assert(taskManifest?.source === "internal", "internal tool manifest records internal source");
+  assert(taskManifest?.risk === "write" && taskManifest.approval === "on_risk", "internal tool manifest preserves risk and approval");
+  assert(taskManifest?.scopes.includes("tasks:write"), "internal tool manifest exposes scopes");
+  assert(taskManifest?.sideEffects.includes("task"), "internal tool manifest exposes side effects");
+  assert(taskManifest?.execution?.available === true, "internal tool manifest records execution availability");
+  assert(taskManifest?.inspector?.label === "Create task", "internal tool manifest exposes inspector metadata");
+  assert(taskManifest?.render?.renderer === "workspace-task-card", "internal tool manifest exposes renderer metadata");
+  assert(widgetManifest?.render?.streamingRenderer === "workspace-widget-stream", "streaming renderer metadata is available for widgets");
+  assert(rendererRegistry.findForTool("create_workspace_task")?.key === "workspace-task-card", "renderer registry can look up a tool renderer");
+  assert(rendererRegistry.findForArtifact("course")?.key === "workspace-course-card", "renderer registry can look up an artifact renderer");
+
+  const mcpConnection: WorkspaceAgentConnection = {
+    id: "conn_tools",
+    workspaceId: "workspace_tools",
+    ownerId: "owner_tools",
+    scope: "workspace",
+    displayName: "Tool MCP",
+    transport: "http",
+    configRef: "https://mcp.example.test/tools",
+    allowedToolNames: ["search_sources"],
+    status: "available",
+    createdAt: 1,
+    updatedAt: 2,
+  };
+  const activated = activateWorkspaceToolManifests({
+    profile: {
+      ...profile,
+      capabilities: [
+        ...profile.capabilities,
+        { id: "cap_mcp", profileId: profile.id, kind: "mcp_tool", connectionId: mcpConnection.id, toolName: "search_sources", approval: "always", enabled: true },
+        { id: "cap_mcp_disabled", profileId: profile.id, kind: "mcp_tool", connectionId: mcpConnection.id, toolName: "missing_sources", approval: "always", enabled: true },
+      ],
+    },
+    connections: [mcpConnection],
+  });
+  assert(activated.some((tool) => tool.name === "create_workspace_task" && tool.approval === "on_risk"), "tool activator keeps risky internal tool approval policy");
+  assert(activated.some((tool) => tool.name.startsWith("mcp_conn_tools_search_sources") && tool.source === "mcp"), "tool activator maps allowed MCP tools into manifests");
+  assert(!activated.some((tool) => tool.name === "unknown_disabled_tool" || tool.rawToolName === "missing_sources"), "tool activator excludes disabled, unknown, and unallowlisted tools");
+  const constrained = activateWorkspaceToolManifests({
+    profile,
+    constraints: { allowedToolNames: ["summarize_thread"], includeMcp: false },
+  });
+  assert(constrained.length === 1 && constrained[0].name === "summarize_thread", "tool activator honors per-run allowed tool constraints");
+
   const search = specs.find((spec) => spec.name === "search_workspace_messages");
   const summarize = specs.find((spec) => spec.name === "summarize_thread");
   const createTask = specs.find((spec) => spec.name === "create_workspace_task");
@@ -332,6 +389,64 @@ async function main() {
   assert(updateTaskPayload.task.id === openTask.id, "approved update task preserves target task id");
   assert(updateTaskPayload.task.status === "done", "approved update task preserves status");
   assert(updateTaskPayload.task.resultSummary.includes("slope"), "approved update task preserves result summary");
+
+  const taskAdapter = {
+    createTask: async (input: any): Promise<WorkspaceTask> => ({
+      id: "task_created_contract",
+      workspaceId: input.workspaceId,
+      threadId: input.threadId,
+      title: input.title,
+      scope: input.scope ?? "Shared",
+      status: "open",
+      progress: input.progress ?? "new",
+      assigneeId: input.assigneeId,
+      dueAt: input.dueAt,
+      createdAt: 20,
+      updatedAt: 20,
+    }),
+    updateTask: async (input: any): Promise<WorkspaceTask> => ({
+      ...openTask,
+      status: input.status ?? openTask.status,
+      progress: input.progress ?? openTask.progress,
+      assigneeId: input.assigneeId ?? openTask.assigneeId,
+      resultSummary: input.resultSummary,
+      updatedAt: 21,
+    }),
+    listTasks: async () => [openTask],
+    runTask: async () => ({ ...openTask, status: "running", progress: "agent running", updatedAt: 22 }),
+  };
+  const createdTaskContract = await executeAgentTaskOperation(
+    "create",
+    { workspaceId: "workspace_tools", threadId: thread.id, title: "Contract task", assigneeId: member.id },
+    taskAdapter,
+  );
+  assert(createdTaskContract.supported && "task" in createdTaskContract && createdTaskContract.task.title === "Contract task", "task create contract maps to workspace task creation");
+  const listedTaskContract = await executeAgentTaskOperation("list", { workspaceId: "workspace_tools", threadId: thread.id, status: "open" }, taskAdapter);
+  assert(listedTaskContract.supported && "tasks" in listedTaskContract && listedTaskContract.tasks.length === 1, "task list contract maps to workspace task listing");
+  const runTaskContract = await executeAgentTaskOperation("run", { workspaceId: "workspace_tools", taskId: openTask.id }, taskAdapter);
+  assert(runTaskContract.supported && "task" in runTaskContract && runTaskContract.task.status === "running", "task run contract maps to assignment execution");
+  const statusTaskContract = await executeAgentTaskOperation(
+    "status",
+    { workspaceId: "workspace_tools", taskId: openTask.id, status: "done", resultSummary: "Finished." },
+    taskAdapter,
+  );
+  assert(statusTaskContract.supported && "task" in statusTaskContract && statusTaskContract.task.status === "done", "task status contract maps to workspace task update");
+  const unsupportedEditContract = await executeAgentTaskOperation(
+    "edit",
+    { workspaceId: "workspace_tools", taskId: openTask.id, title: "Renamed task" },
+    taskAdapter,
+  );
+  assert(!unsupportedEditContract.supported && unsupportedEditContract.reason.includes("title"), "unsupported task edits return typed unsupported result");
+  for (const operation of ["comment", "dependency", "schedule"] as const) {
+    const input =
+      operation === "comment"
+        ? { workspaceId: "workspace_tools", taskId: openTask.id, comment: "Needs review." }
+        : operation === "dependency"
+          ? { workspaceId: "workspace_tools", taskId: openTask.id, dependsOnTaskId: "task_before" }
+          : { workspaceId: "workspace_tools", taskId: openTask.id, when: "2026-06-17T09:00:00Z" };
+    const result = await executeAgentTaskOperation(operation, input, taskAdapter);
+    assert(!result.supported && result.reason.length > 0, `${operation} returns a typed unsupported result`);
+  }
 
   const unknown = await executeWorkspaceInternalTool(profile, context, {
     toolName: "unknown_disabled_tool",

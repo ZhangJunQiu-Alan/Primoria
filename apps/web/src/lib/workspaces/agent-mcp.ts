@@ -1,5 +1,6 @@
 import type { WorkspaceGuardedToolSpec, WorkspaceInternalToolPolicy } from "./agent-tools";
 import type { WorkspaceAgentConnection, WorkspaceAgentProfile } from "./types";
+import { workspaceMcpRuntimeToolName, workspaceMcpToolManifest } from "../agent-os/tools";
 
 export type WorkspaceMcpLangChainTool = {
   name: string;
@@ -112,18 +113,15 @@ export function buildWorkspaceMcpServerConfig(connection: WorkspaceAgentConnecti
   };
 }
 
-export function workspaceMcpRuntimeToolName(connectionId: string, toolName: string) {
-  return `mcp_${safeWorkspaceToolName(connectionId)}_${safeWorkspaceToolName(toolName)}`.slice(0, 120);
-}
-
 function buildWorkspaceMcpToolPolicy(connection: WorkspaceAgentConnection, rawToolName: string, runtimeToolName: string): WorkspaceInternalToolPolicy {
+  const manifest = workspaceMcpToolManifest({ connection, toolName: rawToolName, runtimeToolName });
   return {
-    toolName: runtimeToolName,
-    risk: "external",
-    approval: "always",
-    scopes: ["connections:use"],
-    visibleLabel: `${connection.displayName}: ${rawToolName}`,
-    description: `Use ${rawToolName} through the ${connection.displayName} connection.`,
+    toolName: manifest.name,
+    risk: manifest.risk,
+    approval: manifest.approval,
+    scopes: manifest.scopes,
+    visibleLabel: manifest.inspector?.label ?? `${connection.displayName}: ${rawToolName}`,
+    description: manifest.description,
   };
 }
 
@@ -155,10 +153,6 @@ function parseWorkspaceStdioConnectionConfig(value: string) {
   const env = record.env && typeof record.env === "object" && !Array.isArray(record.env) ? Object.fromEntries(Object.entries(record.env).filter((entry): entry is [string, string] => typeof entry[1] === "string")) : undefined;
   if (!command) throw new Error("MCP stdio config requires a command.");
   return { command, args, env };
-}
-
-function safeWorkspaceToolName(value: string) {
-  return value.replace(/[^a-zA-Z0-9_]+/g, "_").replace(/^_+|_+$/g, "") || "tool";
 }
 
 async function readWorkspaceMcpConnectionTools(client: WorkspaceMcpClient, connectionId: string) {

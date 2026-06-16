@@ -33,7 +33,7 @@ The system operates as three nested rings:
                                  │ decision flows out
 ┌────────────────────────────────▼─────────────────────────────┐
 │  Ring 1: Personal Loop (individual learning)                  │
-│  Course → Observation → Memory → Decision → Course/Agent/App  │
+│  Course → Observation → Memory → Agent Action → Course/Agent/App │
 │  — the core engine, foundation of everything                  │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -58,7 +58,7 @@ amplifier. Ring 3 is a flywheel.
 │          │  │  Engine   │  │          │  │  Engine       │
 │ personal │  │ who       │  │ generate │  │ system        │
 │ loop     │  │ answers   │  │ what     │  │ evolution     │
-│ decision │  │ bid/assign│  │ block/app│  │ aggregate     │
+│ memory   │  │ route     │  │ block/app│  │ aggregate     │
 └─────────┘  └───────────┘  └──────────┘  └───────────────┘
      │              │              │              │
      └──────────────┴──────────────┴──────────────┘
@@ -75,8 +75,8 @@ One pipeline, four engines, one agent pool.
 ## 3. Course as adaptive teaching surface
 
 Courses are not static documents. They grow on demand. Each block type is the
-materialization of a teaching method — a deliberate pedagogical action the
-Decision Engine can dispatch.
+materialization of a teaching method — a deliberate pedagogical action an agent
+can choose from the current course, learner, goal, and workspace context.
 
 ### Block types and their adaptive triggers
 
@@ -93,10 +93,10 @@ Decision Engine can dispatch.
 | `review` | Spaced repetition | Likely to forget (decay signal) |
 | `reflection` | Metacognitive recap | End of a learning segment |
 
-Key design: block type is not a display format. It is a **decision output**.
-The engine says "use drill now"; the system generates/inserts a drill block.
-This is what "adaptive" means — blocks grow on demand, not pre-authored in a
-fixed arc.
+Key design: block type is not a display format. It is an **agent action
+contract**. An agent may decide "use drill now"; Primoria validates the action,
+persists the event, and generates/inserts the drill block. This is what
+"adaptive" means — blocks grow on demand, not pre-authored in a fixed arc.
 
 ---
 
@@ -111,12 +111,14 @@ Agent Memory      ← about an agent's experience (one per agent instance)
 System Memory     ← about what methods work universally (one global)
 ```
 
-They are not isolated. The Decision Engine reads multiple layers simultaneously:
+They are not isolated. Agent context assembly can read multiple layers
+simultaneously:
 
 > "This user (User Memory) is learning recursion (Course Memory). Visual Agent
 > (Agent Memory) was accepted last time in a similar context. System data
 > (System Memory) shows beginner + recursion + visualization = 78% success."
-> → Dispatch Visual Agent with an animation block.
+> → Give the active agent enough context to call the Visual Agent or generate an
+> animation block.
 
 ### User Memory (per learner)
 
@@ -275,8 +277,9 @@ The workspace extends the personal adaptive loop to group dimensions:
 - Different students get different difficulty/type assignments (personalized)
 - Student collaboration → produces observations → feeds back into individual memory
 
-Workspace is built ON TOP of Ring 1. If personal memory + observation + decision
-is not working, classroom features are hollow. Therefore workspace is P1/P2.
+Workspace is built ON TOP of Ring 1. If personal memory + observation + agent
+action feedback is not working, classroom features are hollow. Therefore
+workspace is P1/P2.
 
 ---
 
@@ -287,12 +290,13 @@ Future: agent observes user struggling on a concept → **proactively generates
 a specialized practice app** → saves to library → recommends to similar users.
 
 Applications are not one-off byproducts. They are **outputs of the adaptive
-loop** — the Decision Engine's choices include "should I generate a standalone
-app for this user's weakness?"
+loop** — an agent can choose "generate a standalone app for this user's
+weakness" when the memory/context signals support it.
 
-CopilotKit generative UI is the execution layer here. Decision Engine says
+CopilotKit generative UI is the execution layer here. The agent proposes
 "generate an interactive recursion visualization exercise for this user";
-CopilotKit + widget renderer is the hand that builds it.
+Primoria applies policy, approval, artifact, and persistence contracts around
+the generated app.
 
 ---
 
@@ -344,8 +348,9 @@ P0 (core loop — must work first):
   Course multi-block-type + on-demand growth
   Observation layer (collect learning signals)
   User Memory + Course Memory
-  Decision Engine (v1: rule-based)
-  → Acceptance: user learns, system detects weakness, inserts appropriate block
+  Agent action policy (v1: rule/context backed)
+  → Acceptance: user learns, system detects weakness, agent inserts or proposes
+    an appropriate block
 
 P1 (loop enhancement):
   Agent Memory + confidence model
@@ -374,15 +379,16 @@ This product architecture maps onto `docs/architecture.md` as follows:
 
 - `packages/contracts` defines: artifact types (block types), agent capability
   schema, event schema, memory model types — all as Zod schemas (single source).
-- `packages/domain` contains: Decision Engine logic, agent coordination (bidding,
-  confidence calculation, routing), course generation with adaptive triggers,
-  observation-to-memory extraction logic.
+- `packages/domain` contains: agent contracts and product policies for routing,
+  confidence signals, course/action contracts, and observation-to-memory
+  extraction logic. It should not become a centralized "Decision Engine"; the
+  agent/runtime owns planning and action choice.
 - `apps/web/lib/db` hosts: the four memory stores (User/Course/Agent/System),
   event log table, concept graph, learner mastery state. Workspace's existing 17
   tables provide the agent memory + collaboration substrate — they need type
   extension, not replacement.
-- `apps/agent` executes: the actuator pool — specialized agents dispatched by the
-  Decision Engine via the domain layer.
+- `apps/agent` executes: the actuator pool — specialized agents run behind the
+  stable Agent OS contracts and product policy layer.
 
 The structural refactor (Phase 0–3) creates clean ground for these engines. The
 product features (P0–P3) are built on that ground afterward.
@@ -391,8 +397,9 @@ product features (P0–P3) are built on that ground afterward.
 
 ## 13. Eight search spaces and their compression
 
-The fundamental problem: for any learner at any moment, choose the optimal next
-teaching action. The raw space is combinatorial:
+The fundamental problem: for any learner at any moment, give the agent enough
+compressed context to choose a useful next teaching action. The raw space is
+combinatorial:
 
 ```
 all possible actions =
@@ -401,8 +408,8 @@ all possible actions =
 ```
 
 We decompose this into 8 independent spaces, each with its own compression
-operator. The Decision Engine navigates the intersection of these compressed
-spaces — not the raw product.
+operator. Agent context and policy should expose these compressed spaces to the
+runtime, so the agent acts over a bounded state instead of the raw product.
 
 | # | Space | Question | Compression Operator | Compressed form |
 | --- | --- | --- | --- | --- |
@@ -459,7 +466,8 @@ Goal: "Become a full-stack engineer"
 ```
 
 Design rules for Goal:
-- Goal provides **scope**, not path. Path is decided by the Decision Engine.
+- Goal provides **scope**, not path. Path is chosen by the agent from bounded
+  context and user feedback.
 - No forced ordering inside a Goal — ordering is adaptive.
 - Progress = aggregated mastery of courses within.
 - Goals can be shared (teacher creates → students enroll).
@@ -491,7 +499,7 @@ Each layer answers a different question:
 - Course: "what should this course teach next"
 - Agent: "who should teach it"
 
-Read rule: Decision Engine loads User + active Goal + current Course memory.
+Read rule: Agent context loads User + active Goal + current Course memory.
 Inactive Goal memory is not loaded — scope isolation prevents signal pollution.
 
 ---

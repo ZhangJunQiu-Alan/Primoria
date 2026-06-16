@@ -1,0 +1,19 @@
+{
+  "name": "@primoria/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./agent": "./src/agent/index.ts",
+    "./artifacts": "./src/artifacts/index.ts",
+    "./chat": "./src/chat/index.ts",
+    "./stream": "./src/stream/index.ts"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

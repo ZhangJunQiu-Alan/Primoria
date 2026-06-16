@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { normalizeWidgetHtml, repairYieldGenerators } from "../src/lib/ai/widget-html.ts";
+import { normalizeWidgetHtml, repairYieldGenerators } from "../src/lib/agent-os/index.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) {

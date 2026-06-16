@@ -1,4 +1,4 @@
-import type { HtmlWidgetArtifact, VisualizationPlanArtifact } from "@/lib/ai/types";
+import type { HtmlWidgetArtifact, VisualizationPlanArtifact } from "@/lib/agent-os";
 import type { LearningApp } from "./types";
 import { findAppByHtmlSignature, hashHtmlSource, saveApp } from "./store";
 

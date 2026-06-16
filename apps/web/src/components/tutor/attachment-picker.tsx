@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { AttachmentMetadata, ChatAttachment } from "@/lib/ai/types";
+import type { AttachmentMetadata, ChatAttachment } from "@/lib/agent-os";
 
 const ACCEPTED_TYPES = [
   "image/png",

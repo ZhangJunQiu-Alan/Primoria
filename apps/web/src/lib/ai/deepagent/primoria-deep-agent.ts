@@ -3,7 +3,7 @@ import { Annotation, Command, MessagesAnnotation } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { z } from "zod";
-import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
+import { normalizeWidgetHtml } from "@/lib/agent-os";
 import type {
   ChatMessage,
   CourseCardArtifact,

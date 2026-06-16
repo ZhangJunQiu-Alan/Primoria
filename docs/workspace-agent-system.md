@@ -2786,3 +2786,114 @@ Primoria should own:
 This boundary is more important than any single runtime option. If the runtime changes later, the product model should still hold.
 
 API JSON errors should survive to the workspace client. Agent create/edit, connection registry, skill-library, memory review, approval decision, run cancel, and related workspace mutations must preserve explicit server error messages instead of collapsing them into generic client failures.
+
+## Agent OS Capability Roadmap
+
+Primoria should implement the full agent operating layer, not only a chat-time
+assistant. LobeHub is the reference for the surrounding product/runtime shell;
+Primoria should keep Deep Agents as the default execution engine while owning a
+stable external agent interface.
+
+The invariant:
+
+```text
+runAgent(input) -> AgentEvent stream
+```
+
+The UI, API routes, DB persistence, approvals, and artifact surfaces should
+depend on this stable event protocol, not on a concrete engine. Internally,
+`runAgent` may use LangChain DeepAgent first, and later swap to another runtime
+without changing the product contract.
+
+Agent OS is not a centralized Decision Engine. The agent/runtime owns planning,
+tool choice, delegation, response strategy, and teaching-action selection.
+Primoria owns the operating boundary around that intelligence: context assembly,
+tool manifests, activation policy, approval, ask-user/resume, event contracts,
+memory review, artifact/task persistence, and audit. Product code should avoid a
+separate "god decision layer" that tries to pre-decide what the agent should do.
+
+### Required capabilities
+
+| Capability | Product meaning | Primoria status | Target contract |
+| --- | --- | --- | --- |
+| Agent Signal | Agent activity becomes stable semantic events, not raw logs | `workspaceAgentRunEvents` exists but is run-log shaped | `AgentSignal` contract for runtime start/end, step, tool, memory, action result, artifact, approval |
+| Tool Activator | Agents can choose and activate tools for the current turn | Tools are mostly pre-bound by profile | `activate_tools` chooses from a visible capability catalog and records why |
+| Agent Builder / Management | Agents can create, edit, invite, and maintain other agents | Profiles/templates exist, but no agent-operated lifecycle tools | `create_agent`, `update_agent`, `invite_agent`, `manage_agent_capabilities` with approvals |
+| Group Orchestration | Multi-agent rooms have an explicit supervisor protocol | DeepAgent `task` and subagent capability exist, but no group loop | Supervisor decisions: `speak`, `broadcast`, `delegate`, `execute_task`, `finish` |
+| Heterogeneous Agents | External agents such as Claude Code or Codex can participate | Not modeled as workspace members/runs | Adapter interface normalizes external streams into `AgentEvent` |
+| Ask User Bridge | An agent can ask the user a question and resume | Approval exists, but only for tool decisions | `ask_user` event + persisted pending interaction + resume command |
+| Memory Extraction Pipeline | Conversations become reviewable structured memory | Memory tables/tools exist in early form | GateKeeper + LayerExtractor writes scoped, reviewable memory candidates |
+| Context Engine | Context assembly is a tested pipeline | Prompt/context still lives inside runtime code | Providers + processors + token accounting produce model input |
+| Tool Manifest + UI Registry | Tool schema, executor, approval, artifact, renderer are one contract | Tools and UI artifacts are split manually | `ToolManifest` with params, returns, side effects, policy, renderer hints |
+| Task Tool | Long-running work is first-class and resumable | Workspace tasks exist, but agent task tooling is shallow | create/list/run/edit/comment/status/dependency/schedule task APIs |
+
+### Implementation order
+
+The right sequence is to build the shell before expanding behavior:
+
+1. **Stable event protocol.** Define `AgentEvent`, `AgentSignal`, and `runAgent`
+   output types first. Map existing DeepAgent stream events into this protocol.
+2. **Tool manifest registry.** Move tool definitions behind manifests before
+   adding more tools. A tool should declare its schema, executor, side effects,
+   approval policy, and UI rendering hints in one place.
+3. **Context engine.** Build `buildAgentContext()` as providers and processors:
+   workspace/thread history, visible artifacts, memory, active tasks, profile,
+   skills, and token budget.
+4. **DeepAgent adapter.** Make LangChain DeepAgent the first engine behind the
+   stable runner. The adapter owns runtime-specific stream parsing,
+   checkpointing, HITL resume, and subagent event normalization.
+5. **Memory as tools.** Add `search_memory` and `save_memory` as normal tools,
+   then add the extraction pipeline after review UI and memory permissions are
+   reliable.
+6. **Tool activator.** Introduce dynamic tool activation only after the registry
+   can explain available tools and enforce per-agent permissions.
+7. **Agent management tools.** Let agents create and edit profiles only through
+   approval-wrapped product tools, never by direct DB mutation.
+8. **Group orchestration.** Add a supervisor loop once single-agent runs,
+   activation, approvals, and task persistence are stable.
+9. **Ask user bridge.** Generalize approval into resumable user interaction.
+   The same resume mechanism should support approvals and clarifying questions.
+10. **Heterogeneous adapters.** Add external agent adapters last, because they
+    depend on the event protocol, ask-user bridge, task model, and security
+    policy being stable.
+
+### Boundary rules
+
+- Deep Agents is an engine adapter, not the product interface.
+- Agent/runtime decides what to do from the supplied context; Primoria decides
+  what actions are allowed, how they are recorded, how they are rendered, and
+  how execution resumes after user input.
+- `packages/domain/src/agent` should stay an Agent OS/domain-policy layer:
+  runner contracts, routing signals, tool/context/memory/task schemas, and
+  product authorization primitives. It should not own a monolithic learning
+  Decision Engine.
+- Agent tools never bypass Primoria authorization, approval, memory visibility,
+  or workspace ownership checks.
+- Product events are semantic. Raw runtime payloads can be attached for debug
+  mode, but UI and persistence should not depend on runtime-specific shapes.
+- User-created agents and groups are product objects. The agent may propose
+  changes, but risky lifecycle changes require explicit approval.
+- External agents must be normalized into the same run, event, approval, task,
+  and artifact contracts as native DeepAgent runs.
+
+## Agent OS Migration Status
+
+Current implementation status:
+
+- Shared contracts live under `packages/contracts/src/agent`, with typed events, signals, profiles, context, tools, memory candidates, task operations, ask-user payloads, and orchestration adapters.
+- Domain runner APIs live under `packages/domain/src/agent`, with `runAgent`, engine adapter types, signal derivation, context support, tool registry, and the opt-in memory extraction pipeline.
+- Web Agent OS facade lives under `apps/web/src/lib/agent-os`. It is the boundary for AI implementation imports, artifact/chat compatibility exports, workspace event mapping, tool activation, context building, memory extraction, ask-user questions, task-tool contracts, and orchestration adapters.
+- Workspace runtime still uses DeepAgent by default, but product/API code sees stable `AgentEvent` and `AgentSignal` views in addition to legacy `agentRunEvents`.
+- Workspace APIs preserve legacy fields such as `agentRunEvents` and `agentApprovals` while adding `agentEvents` and `agentSignals` so clients can migrate incrementally.
+- Tool manifests now describe source, risk, approval, scopes, side effects, execution availability, inspector metadata, and renderer hints. Runtime activation filters profile capabilities per run before DeepAgent receives tools.
+- Context assembly flows through `buildWorkspaceAgentContext`, which combines workspace/thread messages, visible messages, open tasks, memories, connections, delegate profiles, processors, and token accounting metadata.
+- Memory extraction is default-off. Tests can enable a fake extractor and observe `memory.candidate`; explicit `save_agent_memory` remains an approval-wrapped tool path.
+- Ask-user questions use `ask_user.requested` events and resume tokens. They are intentionally separate from tool approval rows and approval decision APIs.
+- Task tooling has typed create/list/run/edit/comment/status/dependency/schedule contracts. Current workspace adapters support the existing create/list/run/status and safe edit subset; unsupported operations return typed unsupported results.
+- Orchestration contracts cover supervisor actions (`speak`, `broadcast`, `delegate`, `execute_task`, `finish`) and external-agent sessions (`spawn`, `streamEvents`, `askUser`, `cancel`) without importing or spawning Claude Code, Codex, or other CLIs by default.
+
+Implementation-internal exceptions:
+
+- `apps/web/src/lib/agent-os/ai.ts`, `artifacts.ts`, `chat.ts`, and `model.ts` are allowed to import `apps/web/src/lib/ai/*` because they are compatibility facades around the legacy AI implementation.
+- Files inside `apps/web/src/lib/ai/**` may import other `lib/ai` implementation modules.
+- App components, hooks, API routes, workspace store code, and tests should consume contracts or `agent-os` exports for migrated artifact/chat/widget/attachment/agent surfaces.

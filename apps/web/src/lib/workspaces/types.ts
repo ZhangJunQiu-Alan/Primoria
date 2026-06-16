@@ -1,4 +1,5 @@
 import type { LearningAppTemplate } from "@/lib/capability-library/types";
+import type { AgentEvent, AgentSignal } from "@primoria/contracts/agent";
 
 export type WorkspaceThreadType = "room" | "direct";
 export type WorkspaceThreadAgentTriggerMode = "mention_only" | "room_default" | "quiet_review";
@@ -192,7 +193,7 @@ export type WorkspaceAgentRunEvent = {
   runId: string;
   workspaceId: string;
   threadId: string;
-  type: "status" | "todo" | "tool_start" | "tool_end" | "subagent_start" | "subagent_end" | "approval_request" | "artifact" | "message_delta";
+  type: "status" | "todo" | "tool_start" | "tool_end" | "subagent_start" | "subagent_end" | "approval_request" | "ask_user_request" | "artifact" | "message_delta";
   label: string;
   payload?: unknown;
   createdAt: number;
@@ -275,6 +276,8 @@ export type WorkspaceAgentRunResult = {
   messages: WorkspaceMessage[];
   runs: WorkspaceAgentRun[];
   events: WorkspaceAgentRunEvent[];
+  agentEvents?: AgentEvent[];
+  agentSignals?: AgentSignal[];
   approvals?: WorkspaceAgentApproval[];
   memories?: WorkspaceAgentMemory[];
   artifacts?: WorkspaceArtifact[];
@@ -286,6 +289,8 @@ export type WorkspaceAgentApprovalDecisionResult = {
   approvals?: WorkspaceAgentApproval[];
   run: WorkspaceAgentRun;
   events: WorkspaceAgentRunEvent[];
+  agentEvents?: AgentEvent[];
+  agentSignals?: AgentSignal[];
   task?: WorkspaceTask;
   message?: WorkspaceMessage;
   artifact?: WorkspaceArtifact;
@@ -302,6 +307,8 @@ export type CancelWorkspaceAgentRunInput = {
 export type WorkspaceAgentRunCancelResult = {
   run: WorkspaceAgentRun;
   events: WorkspaceAgentRunEvent[];
+  agentEvents?: AgentEvent[];
+  agentSignals?: AgentSignal[];
   approvals: WorkspaceAgentApproval[];
 };
 
@@ -313,12 +320,16 @@ export type RetryWorkspaceAgentRunInput = {
 export type WorkspaceAgentRunPage = {
   runs: WorkspaceAgentRun[];
   events: WorkspaceAgentRunEvent[];
+  agentEvents?: AgentEvent[];
+  agentSignals?: AgentSignal[];
   approvals: WorkspaceAgentApproval[];
 };
 
 export type WorkspaceAgentRunDetail = {
   run: WorkspaceAgentRun;
   events: WorkspaceAgentRunEvent[];
+  agentEvents?: AgentEvent[];
+  agentSignals?: AgentSignal[];
   approvals: WorkspaceAgentApproval[];
   inputMessage?: WorkspaceMessage;
   outputMessage?: WorkspaceMessage;

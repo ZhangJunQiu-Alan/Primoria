@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { userSettings } from "../db/schema";
-import type { TutorProviderSettings } from "../ai/types";
+import type { TutorProviderSettings } from "../agent-os";
 
 export async function getProviderSettings(userId: string): Promise<TutorProviderSettings> {
   if (!hasDatabaseUrl()) return {};

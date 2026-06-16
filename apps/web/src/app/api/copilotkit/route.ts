@@ -5,7 +5,7 @@ import {
 } from "@copilotkit/runtime";
 import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
-import { normalizeCopilotMessagesWithAttachments } from "@/lib/ai/copilot-attachments";
+import { normalizeCopilotMessagesWithAttachments } from "@/lib/agent-os";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 
 const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";

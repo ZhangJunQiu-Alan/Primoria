@@ -108,6 +108,11 @@ import {
   usesDatabase,
 } from "./workspace-access-service";
 import {
+  buildWorkspaceAgentEventView,
+  buildWorkspaceAgentPageEventView,
+  buildWorkspaceAgentRunResultEventView,
+} from "./agent-event-views";
+import {
   workspaceAgentCapabilities,
   workspaceAgentConnections,
   workspaceAgentApprovals,
@@ -203,6 +208,14 @@ function summarizeWorkspacePrompt(value: string) {
   const sentence = value.replace(/\s+/g, " ").trim();
   if (sentence.length <= 160) return sentence;
   return `${sentence.slice(0, 157)}...`;
+}
+
+function emptyWorkspaceAgentRunResult(): WorkspaceAgentRunResult {
+  return { messages: [], runs: [], events: [], agentEvents: [], agentSignals: [] };
+}
+
+function emptyWorkspaceAgentRunPage(): WorkspaceAgentRunPage {
+  return { runs: [], events: [], agentEvents: [], agentSignals: [], approvals: [] };
 }
 
 const DB_WORKSPACE_VIEW_CACHE_TTL_MS = 30_000;
@@ -1460,9 +1473,13 @@ export async function listWorkspaceAgentRuns(
       .sort((a, b) => b.startedAt - a.startedAt)
       .slice(0, limit);
     const runIds = new Set(runs.map((run) => run.id));
+    const runEvents = current.agentRunEvents.filter((event) => runIds.has(event.runId)).sort((a, b) => a.createdAt - b.createdAt);
+    const eventView = buildWorkspaceAgentPageEventView(runs, runEvents);
     return {
       runs: runs.sort((a, b) => a.startedAt - b.startedAt),
-      events: current.agentRunEvents.filter((event) => runIds.has(event.runId)).sort((a, b) => a.createdAt - b.createdAt),
+      events: runEvents,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       approvals: current.agentApprovals.filter((approval) => runIds.has(approval.runId)).sort((a, b) => a.requestedAt - b.requestedAt),
     };
   }
@@ -1474,11 +1491,11 @@ export async function listWorkspaceAgentRuns(
       await requireDbWorkspace(ownerId, input.workspaceId);
     }
     const visibleThreadIds = input.threadId ? [input.threadId] : await listDbVisibleWorkspaceThreadIds(ownerId, input.workspaceId);
-    if (!visibleThreadIds.length) return { runs: [], events: [], approvals: [] };
+    if (!visibleThreadIds.length) return emptyWorkspaceAgentRunPage();
     const whereClause = and(eq(workspaceAgentRuns.workspaceId, input.workspaceId), inArray(workspaceAgentRuns.threadId, visibleThreadIds));
     const runRows = await getDb().select().from(workspaceAgentRuns).where(whereClause).orderBy(desc(workspaceAgentRuns.startedAt)).limit(limit);
     const runs = runRows.map(rowToWorkspaceAgentRun).sort((a, b) => a.startedAt - b.startedAt);
-    if (!runs.length) return { runs: [], events: [], approvals: [] };
+    if (!runs.length) return emptyWorkspaceAgentRunPage();
     const runIds = runs.map((run) => run.id);
     const [eventRows, approvalRows] = await Promise.all([
       getDb()
@@ -1492,9 +1509,13 @@ export async function listWorkspaceAgentRuns(
         .where(inArray(workspaceAgentApprovals.runId, runIds))
         .orderBy(asc(workspaceAgentApprovals.requestedAt)),
     ]);
+    const events = eventRows.map(rowToWorkspaceAgentRunEvent);
+    const eventView = buildWorkspaceAgentPageEventView(runs, events);
     return {
       runs,
-      events: eventRows.map(rowToWorkspaceAgentRunEvent),
+      events,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       approvals: approvalRows.map(rowToWorkspaceAgentApproval),
     };
   } catch (error) {
@@ -1556,11 +1577,15 @@ export async function listWorkspaceThreadActivity(
         ])
       : [[], []];
 
+    const events = eventRows.map(rowToWorkspaceAgentRunEvent);
+    const eventView = buildWorkspaceAgentPageEventView(runs, events);
     return {
       messages: messageRows.slice(0, messageLimit).map(rowToWorkspaceMessage).sort((a, b) => a.createdAt - b.createdAt),
       hasMore: messageRows.length > messageLimit,
       runs,
-      events: eventRows.map(rowToWorkspaceAgentRunEvent),
+      events,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       approvals: approvalRows.map(rowToWorkspaceAgentApproval),
     };
   } catch (error) {
@@ -1579,9 +1604,16 @@ export async function getWorkspaceAgentRunDetail(
     const run = current.agentRuns.find((entry) => entry.id === input.runId && entry.workspaceId === input.workspaceId);
     if (!run) throw new Error("Agent run not found.");
     const linkedMessageIds = new Set([run.inputMessageId, run.outputMessageId].filter((id): id is string => Boolean(id)));
+    const runEvents = current.agentRunEvents.filter((event) => event.runId === run.id).sort((a, b) => a.createdAt - b.createdAt);
+    const memories = current.agentMemories
+      .filter((memory) => memory.sourceRunId === run.id && !memory.archivedAt && isLocalWorkspaceAgentMemoryVisibleToOwner(memory, ownerId))
+      .sort((a, b) => a.createdAt - b.createdAt);
+    const eventView = buildWorkspaceAgentRunResultEventView({ runs: [run], events: runEvents, memories });
     return {
       run,
-      events: current.agentRunEvents.filter((event) => event.runId === run.id).sort((a, b) => a.createdAt - b.createdAt),
+      events: runEvents,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       approvals: current.agentApprovals.filter((approval) => approval.runId === run.id).sort((a, b) => a.requestedAt - b.requestedAt),
       inputMessage: run.inputMessageId ? current.messages.find((message) => message.id === run.inputMessageId) : undefined,
       outputMessage: run.outputMessageId ? current.messages.find((message) => message.id === run.outputMessageId) : undefined,
@@ -1589,9 +1621,7 @@ export async function getWorkspaceAgentRunDetail(
       artifacts: current.artifacts
         .filter((artifact) => artifact.sourceRunId === run.id || (artifact.sourceMessageId ? linkedMessageIds.has(artifact.sourceMessageId) : false))
         .sort((a, b) => a.createdAt - b.createdAt),
-      memories: current.agentMemories
-        .filter((memory) => memory.sourceRunId === run.id && !memory.archivedAt && isLocalWorkspaceAgentMemoryVisibleToOwner(memory, ownerId))
-        .sort((a, b) => a.createdAt - b.createdAt),
+      memories,
     };
   }
 
@@ -1647,19 +1677,24 @@ export async function getWorkspaceAgentRunDetail(
         .where(and(eq(workspaceAgentMemories.sourceRunId, run.id), eq(workspaceAgentMemories.workspaceId, input.workspaceId)))
         .orderBy(asc(workspaceAgentMemories.createdAt)),
     ]);
+    const events = eventRows.map(rowToWorkspaceAgentRunEvent);
+    const memories = memoryRows
+      .filter((memory) => isDbWorkspaceAgentMemoryVisibleToOwner(memory, ownerId))
+      .map(rowToWorkspaceAgentMemory)
+      .filter((memory) => !memory.archivedAt);
+    const eventView = buildWorkspaceAgentRunResultEventView({ runs: [run], events, memories, task: taskRows[0] ? rowToWorkspaceTask(taskRows[0]) : undefined });
     const messages = messageRows.map(rowToWorkspaceMessage);
     return {
       run,
-      events: eventRows.map(rowToWorkspaceAgentRunEvent),
+      events,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       approvals: approvalRows.map(rowToWorkspaceAgentApproval),
       inputMessage: run.inputMessageId ? messages.find((message) => message.id === run.inputMessageId) : undefined,
       outputMessage: run.outputMessageId ? messages.find((message) => message.id === run.outputMessageId) : undefined,
       task: taskRows[0] ? rowToWorkspaceTask(taskRows[0]) : undefined,
       artifacts: artifactRows.map(rowToWorkspaceArtifact),
-      memories: memoryRows
-        .filter((memory) => isDbWorkspaceAgentMemoryVisibleToOwner(memory, ownerId))
-        .map(rowToWorkspaceAgentMemory)
-        .filter((memory) => !memory.archivedAt),
+      memories,
     };
   } catch (error) {
     console.error("[workspace] agent run detail failed", error);
@@ -1682,9 +1717,13 @@ export async function cancelWorkspaceAgentRun(
     if (!existingRun) throw new Error("Agent run not found.");
     requireLocalThread(existingRun.threadId, input.workspaceId, ownerId);
     if (isTerminalAgentRunStatus(existingRun.status)) {
+      const runEvents = current.agentRunEvents.filter((event) => event.runId === existingRun.id);
+      const eventView = buildWorkspaceAgentEventView(existingRun, runEvents);
       return {
         run: existingRun,
         events: [],
+        agentEvents: eventView.agentEvents,
+        agentSignals: eventView.agentSignals,
         approvals: current.agentApprovals.filter((approval) => approval.runId === existingRun.id),
       };
     }
@@ -1713,7 +1752,8 @@ export async function cancelWorkspaceAgentRun(
       agentApprovals: approvals,
       workspace: { ...current.workspace, updatedAt: now },
     }, ownerId);
-    return { run, events: [event], approvals: runApprovals };
+    const eventView = buildWorkspaceAgentEventView(run, [...current.agentRunEvents.filter((entry) => entry.runId === run.id), event]);
+    return { run, events: [event], agentEvents: eventView.agentEvents, agentSignals: eventView.agentSignals, approvals: runApprovals };
   }
 
   try {
@@ -1729,12 +1769,20 @@ export async function cancelWorkspaceAgentRun(
     await requireDbThread(ownerId, runRow.workspaceId, runRow.threadId);
     const existingRun = rowToWorkspaceAgentRun(runRow);
     if (isTerminalAgentRunStatus(existingRun.status)) {
-      const approvalRows = await getDb()
-        .select()
-        .from(workspaceAgentApprovals)
-        .where(eq(workspaceAgentApprovals.runId, existingRun.id))
-        .orderBy(asc(workspaceAgentApprovals.requestedAt));
-      return { run: existingRun, events: [], approvals: approvalRows.map(rowToWorkspaceAgentApproval) };
+      const [approvalRows, eventRows] = await Promise.all([
+        getDb()
+          .select()
+          .from(workspaceAgentApprovals)
+          .where(eq(workspaceAgentApprovals.runId, existingRun.id))
+          .orderBy(asc(workspaceAgentApprovals.requestedAt)),
+        getDb()
+          .select()
+          .from(workspaceAgentRunEvents)
+          .where(eq(workspaceAgentRunEvents.runId, existingRun.id))
+          .orderBy(asc(workspaceAgentRunEvents.createdAt)),
+      ]);
+      const eventView = buildWorkspaceAgentEventView(existingRun, eventRows.map(rowToWorkspaceAgentRunEvent));
+      return { run: existingRun, events: [], agentEvents: eventView.agentEvents, agentSignals: eventView.agentSignals, approvals: approvalRows.map(rowToWorkspaceAgentApproval) };
     }
     const run: WorkspaceAgentRun = { ...existingRun, status: "cancelled", completedAt: now };
     const event = buildAgentRunEvent(run, "status", "cancelled", { reason, cancelledBy }, now);
@@ -1773,7 +1821,13 @@ export async function cancelWorkspaceAgentRun(
         .orderBy(asc(workspaceAgentApprovals.requestedAt));
     });
     notifyWorkspaceUpdated(input.workspaceId, ownerId);
-    return { run, events: [event], approvals: approvalRows.map(rowToWorkspaceAgentApproval) };
+    const eventRows = await getDb()
+      .select()
+      .from(workspaceAgentRunEvents)
+      .where(eq(workspaceAgentRunEvents.runId, run.id))
+      .orderBy(asc(workspaceAgentRunEvents.createdAt));
+    const eventView = buildWorkspaceAgentEventView(run, eventRows.map(rowToWorkspaceAgentRunEvent));
+    return { run, events: [event], agentEvents: eventView.agentEvents, agentSignals: eventView.agentSignals, approvals: approvalRows.map(rowToWorkspaceAgentApproval) };
   } catch (error) {
     console.error("[workspace] database agent run cancellation failed", error);
     throw error;
@@ -2177,13 +2231,13 @@ export async function runWorkspaceAgentTurn(
   ownerId: string | null | undefined,
   input: { workspaceId: string; threadId: string; message: WorkspaceMessage; runner?: WorkspaceAgentRuntimeRunner },
 ): Promise<WorkspaceAgentRunResult> {
-  if (input.message.senderKind !== "human") return { messages: [], runs: [], events: [] };
+  if (input.message.senderKind !== "human") return emptyWorkspaceAgentRunResult();
   const view = await getWorkspaceView(ownerId, input.workspaceId);
   const thread = view.threads.find((entry) => entry.id === input.threadId);
-  if (!thread) return { messages: [], runs: [], events: [] };
+  if (!thread) return emptyWorkspaceAgentRunResult();
   const triggerDecision = decideWorkspaceAgentsForMessage(view, thread, input.message.content);
   const agents = triggerDecision.agents;
-  if (!agents.length) return { messages: [], runs: [], events: [] };
+  if (!agents.length) return emptyWorkspaceAgentRunResult();
 
   const recentVisibleMessages = view.messages
     .filter((message) => message.threadId === input.threadId && message.id !== input.message.id)
@@ -2258,23 +2312,24 @@ export async function runWorkspaceAgentTurn(
     if (memory) memories.push(memory);
   }
 
-  return { messages, runs, events, approvals, memories };
+  const eventView = buildWorkspaceAgentRunResultEventView({ runs, events, memories });
+  return { messages, runs, events, agentEvents: eventView.agentEvents, agentSignals: eventView.agentSignals, approvals, memories };
 }
 
 export async function runWorkspaceAgentTask(
   ownerId: string | null | undefined,
   input: { workspaceId: string; task: WorkspaceTask; runner?: WorkspaceAgentRuntimeRunner },
 ): Promise<WorkspaceAgentRunResult> {
-  if (!input.task.assigneeId) return { messages: [], runs: [], events: [] };
+  if (!input.task.assigneeId) return emptyWorkspaceAgentRunResult();
   const view = await getWorkspaceView(ownerId, input.workspaceId);
   const assignee = view.members.find((member) => member.id === input.task.assigneeId);
-  if (!assignee || !isWorkspaceAgentMember(assignee)) return { messages: [], runs: [], events: [] };
+  if (!assignee || !isWorkspaceAgentMember(assignee)) return emptyWorkspaceAgentRunResult();
   const agent: WorkspaceAgentParticipant = {
     member: assignee,
     profile: assignee.agentProfileId ? view.agentProfiles.find((profile) => profile.id === assignee.agentProfileId) : undefined,
   };
   const thread = view.threads.find((entry) => entry.id === input.task.threadId);
-  if (!thread) return { messages: [], runs: [], events: [] };
+  if (!thread) return emptyWorkspaceAgentRunResult();
   const profile = agent.profile ?? await ensureImplicitAgentProfile(ownerId, input.workspaceId, agent.member);
   const recentVisibleMessages = view.messages
     .filter((message) => message.threadId === input.task.threadId)
@@ -2364,13 +2419,18 @@ export async function runWorkspaceAgentTask(
   const artifact = buildWorkspaceArtifactFromMessage(message, persistedRun.run.id);
   const memory = await maybeCreateWorkspaceAgentRunMemory(ownerId, profile, assignee, persistedRun.run, message, resultSummary);
 
+  const memories = memory ? [memory] : [];
+  const artifacts = artifact ? [artifact] : [];
+  const eventView = buildWorkspaceAgentRunResultEventView({ runs: [persistedRun.run], events: persistedRun.events, memories, task });
   return {
     messages: [message],
     runs: [persistedRun.run],
     events: persistedRun.events,
+    agentEvents: eventView.agentEvents,
+    agentSignals: eventView.agentSignals,
     approvals: persistedRun.approvals,
-    memories: memory ? [memory] : [],
-    artifacts: artifact ? [artifact] : [],
+    memories,
+    artifacts,
     task,
   };
 }
@@ -2504,11 +2564,15 @@ export async function decideWorkspaceAgentApproval(
     if (!existingRun) throw new Error("Agent run not found.");
     if (existingApproval.status !== "pending") {
       if (existingApproval.status !== input.decision) throw new Error(`Agent approval is already ${existingApproval.status}.`);
+      const runEvents = current.agentRunEvents.filter((event) => event.runId === existingRun.id);
+      const eventView = buildWorkspaceAgentEventView(existingRun, runEvents);
       return {
         approval: existingApproval,
         approvals: current.agentApprovals.filter((approval) => approval.runId === existingApproval.runId),
         run: existingRun,
         events: [],
+        agentEvents: eventView.agentEvents,
+        agentSignals: eventView.agentSignals,
       };
     }
     assertApprovalDecisionAllowedForRun(existingRun);
@@ -2551,11 +2615,19 @@ export async function decideWorkspaceAgentApproval(
       agentApprovals: expiration.approvals,
       workspace: { ...current.workspace, updatedAt: now },
     }, ownerId);
+    const eventView = buildWorkspaceAgentRunResultEventView({
+      runs: [run],
+      events: [...current.agentRunEvents.filter((entry) => entry.runId === run.id), ...events],
+      memories: execution?.memory ? [execution.memory] : [],
+      task: execution?.task,
+    });
     return {
       approval,
       approvals: expiration.runApprovals,
       run,
       events,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       task: execution?.task,
       message: execution?.message,
       artifact: execution?.artifact,
@@ -2586,16 +2658,26 @@ export async function decideWorkspaceAgentApproval(
     const existingRun = rowToWorkspaceAgentRun(runRow);
     if (existingApproval.status !== "pending") {
       if (existingApproval.status !== input.decision) throw new Error(`Agent approval is already ${existingApproval.status}.`);
-      const siblingRows = await getDb()
-        .select()
-        .from(workspaceAgentApprovals)
-        .where(eq(workspaceAgentApprovals.runId, existingApproval.runId))
-        .orderBy(asc(workspaceAgentApprovals.requestedAt));
+      const [siblingRows, eventRows] = await Promise.all([
+        getDb()
+          .select()
+          .from(workspaceAgentApprovals)
+          .where(eq(workspaceAgentApprovals.runId, existingApproval.runId))
+          .orderBy(asc(workspaceAgentApprovals.requestedAt)),
+        getDb()
+          .select()
+          .from(workspaceAgentRunEvents)
+          .where(eq(workspaceAgentRunEvents.runId, existingRun.id))
+          .orderBy(asc(workspaceAgentRunEvents.createdAt)),
+      ]);
+      const eventView = buildWorkspaceAgentEventView(existingRun, eventRows.map(rowToWorkspaceAgentRunEvent));
       return {
         approval: existingApproval,
         approvals: siblingRows.map(rowToWorkspaceAgentApproval),
         run: existingRun,
         events: [],
+        agentEvents: eventView.agentEvents,
+        agentSignals: eventView.agentSignals,
       };
     }
     assertApprovalDecisionAllowedForRun(existingRun);
@@ -2755,11 +2837,24 @@ export async function decideWorkspaceAgentApproval(
       returnedApprovals = updatedApprovalRows.map(rowToWorkspaceAgentApproval);
     });
     notifyWorkspaceUpdated(input.workspaceId, ownerId);
+    const eventRows = await getDb()
+      .select()
+      .from(workspaceAgentRunEvents)
+      .where(eq(workspaceAgentRunEvents.runId, run.id))
+      .orderBy(asc(workspaceAgentRunEvents.createdAt));
+    const eventView = buildWorkspaceAgentRunResultEventView({
+      runs: [run],
+      events: eventRows.map(rowToWorkspaceAgentRunEvent),
+      memories: execution?.memory ? [execution.memory] : [],
+      task: execution?.task,
+    });
     return {
       approval,
       approvals: returnedApprovals,
       run,
       events,
+      agentEvents: eventView.agentEvents,
+      agentSignals: eventView.agentSignals,
       task: execution?.task,
       message: execution?.message,
       artifact: execution?.artifact,
@@ -3945,7 +4040,9 @@ async function addRetrySourceEvents(
       agentRunEvents: [...current.agentRunEvents, ...retryEvents],
       workspace: { ...current.workspace, updatedAt: now },
     }, ownerId);
-    return { ...result, events: [...retryEvents, ...result.events] };
+    const events = [...retryEvents, ...result.events];
+    const eventView = buildWorkspaceAgentRunResultEventView({ runs: result.runs, events, memories: result.memories, task: result.task });
+    return { ...result, events, agentEvents: eventView.agentEvents, agentSignals: eventView.agentSignals };
   }
 
   await getDb().transaction(async (tx) => {
@@ -3965,7 +4062,9 @@ async function addRetrySourceEvents(
     await tx.update(workspaces).set({ updatedAt: new Date(now) }).where(eq(workspaces.id, workspaceId));
   });
   notifyWorkspaceUpdated(workspaceId, ownerId);
-  return { ...result, events: [...retryEvents, ...result.events] };
+  const events = [...retryEvents, ...result.events];
+  const eventView = buildWorkspaceAgentRunResultEventView({ runs: result.runs, events, memories: result.memories, task: result.task });
+  return { ...result, events, agentEvents: eventView.agentEvents, agentSignals: eventView.agentSignals };
 }
 
 async function ensureImplicitAgentProfile(ownerId: string | null | undefined, workspaceId: string, member: WorkspaceMember) {

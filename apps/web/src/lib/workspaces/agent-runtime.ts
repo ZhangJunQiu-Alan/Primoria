@@ -10,11 +10,20 @@ import {
   type WorkspaceInternalToolPolicy,
   type WorkspaceToolInterruptConfig,
 } from "./agent-tools";
+import type { AgentApprovalRequest, AgentEvent } from "@primoria/contracts/agent";
+import { runAgent, type AgentEngineAdapter } from "../../../../../packages/domain/src/agent/index";
 import { buildWorkspaceMcpGuardedToolSpecs } from "./agent-mcp";
 import { resolveWorkspaceAgentSkillPath } from "./agent-skill-paths";
 import { Command } from "@langchain/langgraph";
 import { HumanMessage } from "@langchain/core/messages";
-import { createTutorModel } from "../ai/deepagent/model";
+import {
+  workspaceRuntimeEventsToAgentEventsWithTerminal,
+  workspaceRuntimeInputToRunAgentInput,
+} from "../agent-os/workspace";
+import { buildWorkspaceAgentContext } from "../agent-os/context";
+import { runWorkspaceAgentMemoryPipeline, type WorkspaceAgentMemoryPipelineOptions } from "../agent-os/memory";
+import { activateWorkspaceToolManifests } from "../agent-os/tools";
+import { createTutorModel } from "../agent-os/model";
 import { cpSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
@@ -53,6 +62,7 @@ export type WorkspaceAgentRuntimeContext = {
   openTasks: WorkspaceTask[];
   agentMemories?: WorkspaceAgentMemory[];
   agentConnections?: WorkspaceAgentConnection[];
+  delegateProfiles?: WorkspaceAgentProfile[];
 };
 
 export type WorkspaceDeepAgentConfig = {
@@ -96,7 +106,7 @@ export type WorkspacePlaceholderReplyInput = {
 };
 
 export type WorkspaceAgentRuntimeEvent = {
-  type: "status" | "todo" | "tool_start" | "tool_end" | "subagent_start" | "subagent_end" | "approval_request" | "artifact" | "message_delta";
+  type: "status" | "todo" | "tool_start" | "tool_end" | "subagent_start" | "subagent_end" | "approval_request" | "ask_user_request" | "artifact" | "message_delta";
   label: string;
   payload?: unknown;
 };
@@ -106,6 +116,7 @@ export type WorkspaceAgentRuntimeRunInput = WorkspaceDeepAgentConfigInput & {
   workspaceId: string;
   threadId: string;
   prompt: string;
+  memoryPipeline?: WorkspaceAgentMemoryPipelineOptions;
 };
 
 export type WorkspaceAgentRuntimeRunnerInput = {
@@ -123,6 +134,7 @@ export type WorkspaceAgentRuntimeRunnerResult = {
   content: string;
   status?: WorkspaceAgentRunStatus;
   events?: WorkspaceAgentRuntimeEvent[];
+  agentEvents?: AgentEvent[];
   error?: string;
 };
 
@@ -459,7 +471,14 @@ async function setupWorkspaceDeepAgentPersistenceObject(value: unknown) {
 }
 
 export function buildWorkspaceDeepAgentConfig(input: WorkspaceDeepAgentConfigInput): WorkspaceDeepAgentConfig {
-  const tools = buildWorkspaceGuardedToolSpecs(input.profile, input);
+  const activatedToolNames = new Set(
+    activateWorkspaceToolManifests({
+      profile: input.profile,
+      connections: input.agentConnections,
+      constraints: { includeMcp: false },
+    }).map((tool) => tool.name),
+  );
+  const tools = buildWorkspaceGuardedToolSpecs(input.profile, input).filter((tool) => activatedToolNames.has(tool.name));
   const skillOptions = { workspaceId: input.thread.workspaceId, ownerId: input.profile.ownerId };
   return {
     name: input.profile.handle,
@@ -585,11 +604,18 @@ function buildWorkspaceSubagentPrompt(profile: WorkspaceAgentProfile) {
 }
 
 function buildWorkspaceSubagentToolSpecs(profile: WorkspaceAgentProfile) {
+  const downgradedProfile = {
+    ...profile,
+    capabilities: profile.capabilities.map(downgradeSubagentWriteCapability),
+  };
+  const activatedToolNames = new Set(
+    activateWorkspaceToolManifests({
+      profile: downgradedProfile,
+      constraints: { includeMcp: false },
+    }).map((tool) => tool.name),
+  );
   return buildWorkspaceGuardedToolSpecs(
-    {
-      ...profile,
-      capabilities: profile.capabilities.map(downgradeSubagentWriteCapability),
-    },
+    downgradedProfile,
     {
       workspaceName: "Delegated workspace context",
       thread: {
@@ -610,7 +636,7 @@ function buildWorkspaceSubagentToolSpecs(profile: WorkspaceAgentProfile) {
       recentMessages: [],
       openTasks: [],
     },
-  ).filter((toolSpec) => toolSpec.policy.risk === "read" || toolSpec.policy.approval === "always");
+  ).filter((toolSpec) => activatedToolNames.has(toolSpec.name) && (toolSpec.policy.risk === "read" || toolSpec.policy.approval === "always"));
 }
 
 function downgradeSubagentWriteCapability(capability: WorkspaceAgentCapability): WorkspaceAgentCapability {
@@ -639,22 +665,184 @@ export async function executeWorkspaceAgentRuntime(
     agentProfileId: input.profile.id,
     runId: input.runId,
   });
-  const result = await runner({
+  const runnerInput = {
     config,
     context: input,
     threadId: deepAgentThreadId,
     prompt: input.prompt,
     profile: input.profile,
     member: input.member,
-  });
+  };
+  const adapter = createWorkspaceRuntimeEngineAdapter(runner, runnerInput);
+  const context = await buildWorkspaceAgentContext(input);
+  const agentEvents: AgentEvent[] = [];
+  for await (const event of runAgent(workspaceRuntimeInputToRunAgentInput({ ...input, context }), {
+    engines: { [adapter.name]: adapter },
+  })) {
+    agentEvents.push(event);
+  }
+  if (input.memoryPipeline?.enabled && input.memoryPipeline.extractor) {
+    const memoryResult = await runWorkspaceAgentMemoryPipeline(input, { content: undefined, status: undefined }, input.memoryPipeline);
+    agentEvents.push(...memoryResult.events);
+  }
+  const result = readWorkspaceRuntimeResultFromAgentEvents(agentEvents);
   return {
     content: result.content,
     status: result.status,
     events: result.events ?? [],
+    agentEvents,
     error: result.error,
     deepAgentThreadId,
     config,
   };
+}
+
+function createWorkspaceRuntimeEngineAdapter(
+  runner: WorkspaceAgentRuntimeRunner,
+  runnerInput: WorkspaceAgentRuntimeRunnerInput,
+): AgentEngineAdapter {
+  return {
+    name: "deepagent",
+    async *run(input) {
+      yield {
+        type: "runtime.started",
+        runId: input.runId,
+        workspaceId: input.workspaceId,
+        threadId: input.threadId,
+        createdAt: Date.now(),
+        engine: "deepagent",
+        model: runnerInput.config.model,
+        payload: {
+          skillCount: runnerInput.config.skills.length,
+          toolCount: runnerInput.config.tools.length,
+          subagentCount: runnerInput.config.subagents.length,
+        },
+      };
+      const result = await runner(runnerInput);
+      for (const event of workspaceRuntimeEventsToAgentEventsWithTerminal({
+        events: result.events ?? [],
+        envelope: {
+          runId: input.runId,
+          workspaceId: input.workspaceId ?? runnerInput.context.thread.workspaceId,
+          threadId: input.threadId ?? runnerInput.context.thread.id,
+        },
+        content: result.content,
+        status: toAgentTerminalStatus(result.status),
+        error: result.error,
+      })) {
+        yield event;
+      }
+    },
+  };
+}
+
+function readWorkspaceRuntimeResultFromAgentEvents(events: AgentEvent[]): WorkspaceAgentRuntimeRunnerResult {
+  const workspaceEvents: WorkspaceAgentRuntimeEvent[] = [];
+  let content = "";
+  let status: WorkspaceAgentRunStatus | undefined;
+  let error: string | undefined;
+  for (const event of events) {
+    if (event.type === "runtime.completed") {
+      const result = readRecord(event.result);
+      content = typeof result.content === "string" ? result.content : content;
+      const nextStatus = result.status;
+      status = isWorkspaceAgentRunStatus(nextStatus) ? nextStatus : "completed";
+      continue;
+    }
+    if (event.type === "runtime.failed") {
+      error = event.error.message;
+      status = "failed";
+      continue;
+    }
+    if (event.type === "runtime.step" && event.label === "waiting_for_approval") {
+      status = "waiting_for_approval";
+    }
+    const workspaceEvent = agentEventToWorkspaceRuntimeEvent(event);
+    if (workspaceEvent) workspaceEvents.push(workspaceEvent);
+  }
+  return { content, status, events: workspaceEvents, error };
+}
+
+function agentEventToWorkspaceRuntimeEvent(event: AgentEvent): WorkspaceAgentRuntimeEvent | undefined {
+  if (event.type === "runtime.started") return undefined;
+  if (event.type === "runtime.step") {
+    return { type: "status", label: event.label, payload: event.payload };
+  }
+  if (event.type === "message.delta") {
+    return { type: "message_delta", label: "assistant_delta", payload: { text: event.text, content: event.content } };
+  }
+  if (event.type === "tool.started") {
+    return { type: "tool_start", label: event.toolName, payload: { input: event.input } };
+  }
+  if (event.type === "tool.completed") {
+    return { type: "tool_end", label: event.toolName, payload: { output: event.output } };
+  }
+  if (event.type === "subagent.started") {
+    return { type: "subagent_start", label: event.name, payload: { input: event.input } };
+  }
+  if (event.type === "subagent.completed") {
+    return { type: "subagent_end", label: event.name, payload: { output: event.output } };
+  }
+  if (event.type === "approval.requested") {
+    return {
+      type: "approval_request",
+      label: event.approval.toolName,
+      payload: buildWorkspaceApprovalRuntimePayload(event.approval),
+    };
+  }
+  if (event.type === "ask_user.requested") {
+    return {
+      type: "ask_user_request",
+      label: event.question.questionId ?? "ask_user",
+      payload: event.question,
+    };
+  }
+  if (event.type === "artifact.created") {
+    return { type: "artifact", label: "artifact", payload: event.artifact };
+  }
+  return undefined;
+}
+
+function readRecord(value: unknown): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return value as Record<string, unknown>;
+}
+
+function buildWorkspaceApprovalRuntimePayload(approval: AgentApprovalRequest) {
+  const policy = readRecord(approval.policy);
+  const reviewConfig = readRecord(policy.reviewConfig);
+  const actionDescription = typeof policy.actionDescription === "string" ? policy.actionDescription : undefined;
+  const { reviewConfig: _reviewConfig, actionDescription: _actionDescription, ...basePolicy } = policy;
+  return {
+    input: approval.input,
+    policy: Object.keys(basePolicy).length ? basePolicy : approval.policy,
+    ...(Object.keys(reviewConfig).length ? { reviewConfig } : {}),
+    ...(actionDescription ? { actionDescription } : {}),
+    deepAgentThreadId: approval.resumeToken,
+  };
+}
+
+function isWorkspaceAgentRunStatus(value: unknown): value is WorkspaceAgentRunStatus {
+  return (
+    value === "queued" ||
+    value === "running" ||
+    value === "waiting_for_approval" ||
+    value === "completed" ||
+    value === "failed" ||
+    value === "cancelled"
+  );
+}
+
+function toAgentTerminalStatus(status: WorkspaceAgentRunStatus | undefined) {
+  if (
+    status === "completed" ||
+    status === "failed" ||
+    status === "cancelled" ||
+    status === "waiting_for_approval"
+  ) {
+    return status;
+  }
+  return undefined;
 }
 
 export function resolveWorkspaceAgentRuntimeRunner(env: Record<string, string | undefined> = process.env): WorkspaceAgentRuntimeRunner | undefined {

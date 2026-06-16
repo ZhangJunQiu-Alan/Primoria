@@ -204,6 +204,9 @@ async function main() {
   assert(config.name === "runtime-coach", "DeepAgent config uses profile handle as name");
   assert(config.model === "test-model", "DeepAgent config keeps selected model");
   assert(Array.isArray(config.tools) && config.tools.length === 2, "DeepAgent config uses allowed internal tools only");
+  assert(config.tools.some((toolSpec) => toolSpec.name === "summarize_thread" && toolSpec.policy.approval === "never"), "activated runtime config keeps read tool approval");
+  assert(config.tools.some((toolSpec) => toolSpec.name === "create_workspace_task" && toolSpec.policy.approval === "on_risk"), "activated runtime config keeps risky tool approval");
+  assert(!config.tools.some((toolSpec) => toolSpec.name === "unknown_tool"), "activated runtime config excludes unknown tool capabilities");
   const resolvedSocraticSkill = resolveWorkspaceAgentSkillPath("/skills/socratic-questioning");
   assert(resolvedSocraticSkill.endsWith("src/lib/workspaces/skills/socratic-questioning"), "system skill id resolves to local skill directory");
   assert(resolveWorkspaceAgentSkillPath("/skills/missing-skill") === undefined, "unknown system skill is not passed to Deep Agents");
@@ -668,6 +671,41 @@ async function main() {
     "runtime executor passes stable DeepAgent thread id",
   );
   assert(executed.events?.some((event) => event.label === "runner_called"), "runtime executor returns runner events");
+  assert(!executed.agentEvents?.some((event) => event.type === "memory.candidate"), "memory extraction is disabled by default");
+
+  const executedWithMemoryCandidate = await executeWorkspaceAgentRuntime(
+    {
+      runId: "warun_runtime_memory",
+      workspaceId: "workspace_runtime",
+      threadId: thread.id,
+      profile,
+      workspaceName: "Runtime Workspace",
+      thread,
+      member,
+      recentMessages: ["Learner: Please remember I like hints."],
+      openTasks: [openTask],
+      prompt: "Remember the learner likes hints.",
+      memoryPipeline: {
+        enabled: true,
+        extractor: () => [
+          {
+            title: "Learner preference",
+            summary: "The learner likes short hints before full answers.",
+            scope: "thread",
+            confidence: 0.9,
+            source: { extractor: "fake-test" },
+          },
+        ],
+      },
+    },
+    async () => ({ content: "noted", status: "completed", events: [] }),
+  );
+  const memoryCandidateEvent = executedWithMemoryCandidate.agentEvents?.find((event) => event.type === "memory.candidate");
+  assert(memoryCandidateEvent?.type === "memory.candidate", "enabled fake extractor emits a memory candidate AgentEvent");
+  assert(
+    !executedWithMemoryCandidate.events?.some((event) => event.type === "tool_end" && event.label === "save_agent_memory"),
+    "memory candidate extraction remains separate from manual save-memory approvals",
+  );
 
   async function* streamEvents() {
     yield { event: "on_tool_start", name: "summarize_thread", data: { input: { query: "derivative" } } };

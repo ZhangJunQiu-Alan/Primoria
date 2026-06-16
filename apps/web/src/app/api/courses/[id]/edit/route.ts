@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import {
-  addBlock,
-  editBlock,
+  addCourseBlock,
+  editCourseBlock,
   moveCourseBlock,
   removeCourseBlock,
-  transformBlock,
-} from "@/lib/ai/deepagent/course-editor";
+  transformCourseBlock,
+} from "@/lib/agent-os/ai";
 
 const SettingsSchema = z
   .object({
@@ -82,21 +82,21 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
     switch (body.action) {
       case "rewrite": {
-        const result = await editBlock(
+        const result = await editCourseBlock(
           { courseId: id, blockId: body.blockId, comment: body.comment, selectedText: body.selectedText },
           body.settings,
         );
         return NextResponse.json({ course: result.course, block: result.block });
       }
       case "add": {
-        const result = await addBlock(
+        const result = await addCourseBlock(
           { courseId: id, targetType: body.targetType, instruction: body.instruction, afterBlockId: body.afterBlockId },
           body.settings,
         );
         return NextResponse.json({ course: result.course, block: result.block });
       }
       case "transform": {
-        const result = await transformBlock(
+        const result = await transformCourseBlock(
           { courseId: id, blockId: body.blockId, targetType: body.targetType, instruction: body.instruction },
           body.settings,
         );

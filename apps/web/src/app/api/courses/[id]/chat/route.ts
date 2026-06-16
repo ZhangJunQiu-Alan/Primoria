@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
-import { createTutorModel } from "@/lib/ai/deepagent/model";
-import { generateCourse } from "@/lib/ai/deepagent/course-generator";
-import { AttachmentsSchema, buildAttachmentContext, buildCourseUserContent, processAttachments } from "@/lib/ai/attachments";
+import { createTutorModel, generateCourse } from "@/lib/agent-os/ai";
+import { AttachmentsSchema, buildAttachmentContext, buildCourseUserContent, processAttachments } from "@/lib/agent-os";
+import {
+  createMemoryProvider,
+  formatCourseMemoryForPrompt,
+  recordCourseInteraction,
+  searchCourseMemory,
+} from "@primoria/memory";
 
 const RequestSchema = z.object({
   message: z.string().min(1),
@@ -84,6 +90,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const body = RequestSchema.parse(await request.json());
     const course = await getCourse(id);
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
+    const user = await getCurrentUser();
 
     const selectedBlock = body.selectedBlockId
       ? course.blocks.find((block) => block.id === body.selectedBlockId) ?? null
@@ -105,17 +112,39 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     }
 
     const model = createTutorModel(body.settings, { streaming: false });
+    const memoryProvider = createMemoryProvider({
+      apiKey: process.env.MEM0_API_KEY,
+      host: process.env.MEM0_HOST,
+      provider: process.env.MEMORY_PROVIDER === "mem0" ? "mem0" : "disabled",
+    });
     const outline = course.blocks
       .map((block, index) => `${index + 1}. [${block.type}] ${block.title ?? block.type}`)
       .join("\n");
     const selected = selectedBlock ? blockToPrompt(selectedBlock) : "No selected block; answer from the whole course.";
     const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
     const attachmentContext = buildAttachmentContext(processedAttachments);
+    const memoryContext = user
+      ? await searchCourseMemory(
+          memoryProvider,
+          {
+            userId: user.id,
+            courseId: course.id,
+            courseTitle: course.title,
+            courseTopic: course.topic,
+            selectedBlockId: selectedBlock?.id ?? null,
+            selectedBlockTitle: selectedBlock?.title ?? null,
+            selectedBlockType: selectedBlock?.type ?? null,
+          },
+          body.message,
+        )
+      : null;
+    const memoryPrompt = memoryContext ? formatCourseMemoryForPrompt(memoryContext) : "No relevant long-term memory found.";
     const userContent = buildCourseUserContent(
       [
         `Course: ${course.title}`,
         `Topic: ${course.topic}`,
         `Summary: ${course.summary}`,
+        `Relevant memory:\n${memoryPrompt}`,
         `Outline:\n${outline}`,
         `Selected context:\n${selected}`,
         "",
@@ -134,8 +163,25 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         content: userContent,
       },
     ]);
+    const reply = messageContentToString(result.content).trim();
+    if (user) {
+      void recordCourseInteraction(memoryProvider, {
+        userId: user.id,
+        courseId: course.id,
+        courseTitle: course.title,
+        courseTopic: course.topic,
+        selectedBlockId: selectedBlock?.id ?? null,
+        selectedBlockTitle: selectedBlock?.title ?? null,
+        selectedBlockType: selectedBlock?.type ?? null,
+      }, {
+        user: body.message,
+        assistant: reply,
+      }).catch((error: unknown) => {
+        console.error("[course/chat][memory]", error);
+      });
+    }
 
-    return NextResponse.json({ reply: messageContentToString(result.content).trim() });
+    return NextResponse.json({ reply });
   } catch (error) {
     console.error("[course/chat]", error);
     const message = error instanceof Error ? error.message : "Course chat failed";

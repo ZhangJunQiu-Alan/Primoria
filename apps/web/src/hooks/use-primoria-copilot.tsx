@@ -6,9 +6,9 @@ import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/r
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
-import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
+import { normalizeWidgetHtml } from "@/lib/agent-os";
 import { setTodos } from "@/lib/todos-store";
-import type { CourseCardArtifact } from "@/lib/ai/types";
+import type { CourseCardArtifact } from "@/lib/agent-os";
 
 const WriteTodosParams = z.object({
   todos: z.array(

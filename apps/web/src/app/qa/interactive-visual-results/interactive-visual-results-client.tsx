@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ToolCard } from "@/components/generative-ui/tool-card";
-import type { TutorArtifact } from "@/lib/ai/types";
+import type { TutorArtifact } from "@/lib/agent-os";
 
 type VisualQaResult = {
   id: string;

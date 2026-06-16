@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import type { GraphVisualizationArtifact, GraphNode, GraphEdge } from "@/lib/ai/types";
+import type { GraphVisualizationArtifact, GraphNode, GraphEdge } from "@/lib/agent-os";
 
 // ── Simulation types ──────────────────────────────────────────────────────────
 
