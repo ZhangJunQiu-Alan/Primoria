@@ -38,6 +38,7 @@ const primoriaAgent = new PrimoriaLangGraphAgent({
 export const POST = async (req: NextRequest) => {
   const denied = await requireAuth();
   if (denied) return denied;
+
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     endpoint: "/api/copilotkit",
     serviceAdapter: new ExperimentalEmptyAdapter(),
