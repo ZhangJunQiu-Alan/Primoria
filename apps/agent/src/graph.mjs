@@ -7,7 +7,6 @@ import { z } from "zod";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-import { generateCourse } from "./course-generator.mjs";
 import { getCourse } from "./course-store.mjs";
 import { summarizeCourse } from "./course-types.mjs";
 
@@ -373,36 +372,23 @@ function serializeCourseCard(summary) {
 }
 
 /**
- * @param {string} topic
+ * The single course-path entry. This is a STATELESS signal: it just surfaces the
+ * learner's goal as a tool result so the browser-rendered card can take over.
+ * KG positioning + course generation + persistence all happen web-side, driven
+ * by the browser (which carries the user's session natively) — see the
+ * "Web-as-brain" architecture. The model cannot generate a course any other way.
  */
-function normalizeCourseTopic(topic) {
-  return topic
-    .replace(/^(生成|创建|做|帮我|请|please|make|create|build)\s*/i, "")
-    .replace(/^(一个|一门|一节|a|an)\s*/i, "")
-    .replace(/^(课程|教程|微课|lesson|course)\s*(关于|on|about)?\s*/i, "")
-    .replace(/^(教我|学习|学一下|讲讲|讲解|系统讲|系统学|teach me|i want to learn|learn about|study)\s*/i, "")
-    .replace(/\s*(的)?(课程|教程|微课|lesson|course|curriculum)$/i, "")
-    .replace(/[。.!！?？]+$/g, "")
-    .replace(/\s+/g, " ")
-    .trim() || topic.trim();
-}
-
-const generateCourseTool = tool(
-  async ({ topic, context_hint }) => {
-    const normalizedTopic = normalizeCourseTopic(topic);
-    const { summary } = await generateCourse(
-      { topic: normalizedTopic, contextHint: context_hint },
-      createModel({ streaming: false }),
-    );
-    return serializeCourseCard(summary);
+const positionLearningGoalTool = tool(
+  async ({ query, graph_id }) => {
+    return JSON.stringify({ type: "learning_goal_position", query, graphId: graph_id });
   },
   {
-    name: "generate_course",
+    name: "position_learning_goal",
     description:
-      "Generate and persist a short structured course. MUST be used when the user asks for 课程 / 教程 / 微课 / 系统学习 / 教我 / 学习 / lesson / course / curriculum / teach me / learn about. Do NOT use widgetRenderer for these course requests.",
+      "Surface a learning goal so the UI can locate it in the knowledge graph and build a course. MUST be the first and only tool used for any 课程 / 教程 / 微课 / 系统学习 / 教我 / 学习 / lesson / course / curriculum / teach me / learn about request. Pass the learner's goal verbatim as `query`. The UI card performs the knowledge-graph positioning and course generation; you must not attempt to build a course any other way.",
     schema: z.object({
-      topic: z.string(),
-      context_hint: z.string().optional(),
+      query: z.string(),
+      graph_id: z.string().optional(),
     }),
     returnDirect: true,
   },
@@ -446,17 +432,16 @@ You have access to:
 - write_todos: lay out a short plan visible to the learner (call it first when a request needs multiple steps)
 - task: delegate a focused job to a subagent (concept-agent or visualization-agent)
 - plan_visualization / widgetRenderer: visualization tools
-- generate_course: create and save a multi-block course, then return an opaque PRIMORIA_COURSE_CARD tool result for the UI
+- position_learning_goal: surface a learning goal so the UI can locate it in the knowledge graph and build a course. This is the ONLY way a course is created.
 - get_course_card: restore a course card by id if needed
 - A filesystem with skill documents you can read for guidance
 
 INTENT ROUTING — choose exactly one branch.
 
 COURSE branch has highest priority. If the latest user message contains 课程 / 教程 / 微课 / 系统讲 / 系统学 / 学一下 / 学习 / 教我 / 讲讲 / 讲解 / lesson / course / curriculum / teach me / I want to learn / learn about / study:
-1. Call write_todos with 3 concise steps: plan the learning path / generate real course blocks / save and show the card.
-2. Call generate_course with the specific topic.
-3. Stop immediately after generate_course returns. The tool result is the UI card.
-Never call task, plan_visualization, or widgetRenderer in COURSE branch.
+1. Call position_learning_goal with the learner's goal as \`query\`. You MUST do this — it is the only way a course gets built.
+2. Reply in ONE short sentence, e.g. 「让我在你的知识图谱里定位一下并开始建课」. The UI card then performs the positioning and course generation and shows the result (a course, a topic menu, or a "be more specific" message) — you do not see or handle that result.
+3. Stop. Never call task, plan_visualization, or widgetRenderer in COURSE branch, and never attempt to generate a course by any other means.
 
 VISUALIZATION branch only applies if COURSE branch does not match. For ANY visualization / interactive / simulation / demo / 可视化 / 演示 / 互动 request, choose the right renderer:
 
@@ -534,7 +519,7 @@ const checkpointer = new MemorySaver();
 export const graph = createDeepAgent({
   name: "primoria-tutor",
   model: createModel(),
-  tools: [planVisualizationTool, widgetRendererTool, stemRendererTool, generateCourseTool, getCourseCardTool],
+  tools: [planVisualizationTool, widgetRendererTool, stemRendererTool, positionLearningGoalTool, getCourseCardTool],
   systemPrompt: SYSTEM_PROMPT,
   subagents,
   checkpointer,

@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { classifyEntry } from "@/lib/knowledge-graph/positioning";
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
-import { searchKnowledgeGraphNodes } from "@/lib/knowledge-graph/search";
+import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { requireAuth } from "@/lib/auth/guard";
 
 export const runtime = "nodejs";
@@ -35,12 +34,12 @@ export async function POST(request: Request) {
     const denied = await requireAuth();
     if (denied) return denied;
     const body = RequestSchema.parse(await request.json());
-    const search = await searchKnowledgeGraphNodes(body);
-    const result = classifyEntry(search, { tau: body.tau, floor: body.floor });
+    const { result, search } = await positionLearningGoal(body);
+    const plan = planFromPositioning(result);
 
     logPositioning(buildPositioningLog({ encodedQuery: search.encodedQuery, search, result }));
 
-    return NextResponse.json({ encodedQuery: search.encodedQuery, ...result });
+    return NextResponse.json({ encodedQuery: search.encodedQuery, ...result, plan });
   } catch (error) {
     console.error("[knowledge-graph/position]", error);
     return NextResponse.json({ error: userFacingError(error) }, { status: 503 });
