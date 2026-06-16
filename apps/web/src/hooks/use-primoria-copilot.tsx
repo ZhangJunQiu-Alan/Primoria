@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem-renderer";
@@ -62,6 +62,11 @@ const CourseCardResult = z.object({
     }),
   ),
   status: z.enum(["generating", "ready"]),
+});
+
+const PositionLearningGoalParams = z.object({
+  query: z.string(),
+  graph_id: z.string().optional(),
 });
 
 const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
@@ -179,6 +184,147 @@ function GetCourseCardTool({
   );
 }
 
+function courseArtifactFromSummary(summary: unknown): CourseCardArtifact | null {
+  if (!summary || typeof summary !== "object") return null;
+  const s = summary as Record<string, unknown>;
+  const parsed = CourseCardResult.safeParse({
+    type: "course_card",
+    courseId: s.id,
+    title: s.title,
+    topic: s.topic,
+    summary: s.summary,
+    estimatedMinutes: s.estimatedMinutes,
+    outline: s.outline ?? [],
+    status: "ready",
+  });
+  return parsed.success ? parsed.data : null;
+}
+
+type MenuItem = { topicId: string; name: string };
+type LearningPhase = "positioning" | "building" | "ready" | "broad" | "fallback" | "error";
+
+// Web-as-brain course card. The agent tool only surfaces the learner's goal; this
+// browser component runs KG positioning (/api/knowledge-graph/position) and, for a
+// specific match, the synchronous build (/api/learning/course). Both fetches carry
+// the user's session natively, so the course persists to app_courses under the
+// signed-in owner. specific -> course card, broad -> menu, fallback -> message.
+function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
+  const [phase, setPhase] = useState<LearningPhase>("positioning");
+  const [artifact, setArtifact] = useState<CourseCardArtifact | null>(null);
+  const [menu, setMenu] = useState<MenuItem[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const requestSeqRef = useRef(0);
+
+  useEffect(() => {
+    if (!query) return;
+    const requestSeq = ++requestSeqRef.current;
+    const isCurrentRequest = () => requestSeqRef.current === requestSeq;
+
+    setPhase("positioning");
+    setArtifact(null);
+    setMenu([]);
+    setMessage("");
+
+    (async () => {
+      try {
+        const posRes = await fetch("/api/knowledge-graph/position", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ query, graphId }),
+        });
+        const posData = await posRes.json();
+        if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
+        if (!isCurrentRequest()) return;
+
+        const plan = posData?.plan;
+        if (plan?.branch === "broad") {
+          setMenu((plan.menu ?? []).map((m: { topicId: string; name: string }) => ({ topicId: m.topicId, name: m.name })));
+          setPhase("broad");
+          return;
+        }
+        if (plan?.branch === "fallback" || plan?.branch !== "specific" || !plan.courseContext) {
+          setMessage(plan?.message || "无法定位这个学习目标，请重新输入更具体的内容。");
+          setPhase("fallback");
+          return;
+        }
+
+        setPhase("building");
+        const buildRes = await fetch("/api/learning/course", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ courseContext: plan.courseContext }),
+        });
+        const buildData = await buildRes.json();
+        if (!buildRes.ok) throw new Error(buildData?.error || "build failed");
+        if (!isCurrentRequest()) return;
+
+        const built = courseArtifactFromSummary(buildData.summary);
+        if (!built) throw new Error("course summary was unusable");
+        setArtifact(built);
+        setPhase("ready");
+      } catch (error) {
+        if (!isCurrentRequest()) return;
+        setMessage(error instanceof Error ? error.message : "Something went wrong.");
+        setPhase("error");
+      }
+    })();
+
+    return () => {
+      if (requestSeqRef.current === requestSeq) requestSeqRef.current += 1;
+    };
+  }, [query, graphId]);
+
+  if (phase === "ready" && artifact) return <ToolCard artifact={artifact} />;
+
+  if (phase === "broad") {
+    return (
+      <div className="message-row tool">
+        <div className="tool-card status-card">
+          <div className="tool-title">
+            <span className="tool-dot" />
+            <span>可能的学习入口</span>
+          </div>
+          <div className="visualizer">
+            <ul className="kg-menu-list">
+              {menu.map((item) => (
+                <li key={item.topicId}>{item.name}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (phase === "fallback" || phase === "error") {
+    return (
+      <div className="message-row tool">
+        <div className="tool-card status-card">
+          <div className="visualizer">
+            <span className="tool-note">{message}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="message-row tool">
+      <div className="tool-card status-card">
+        <div className="tool-title">
+          <span className="tool-spinner" />
+          <span>{phase === "building" ? "generating course" : "locating in knowledge graph"}</span>
+        </div>
+        <div className="visualizer">
+          <span className="tool-note">
+            {phase === "building" ? "正在根据你的知识图谱位置生成课程…" : "正在知识图谱中定位你的学习目标…"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function usePrimoriaGenerativeUI() {
   useComponent({
     name: "widgetRenderer",
@@ -232,6 +378,13 @@ export function usePrimoriaGenerativeUI() {
     render: ({ parameters }) => <WriteTodosSink todos={parameters?.todos ?? []} />,
   });
 
+  useRenderTool({
+    name: "position_learning_goal",
+    parameters: PositionLearningGoalParams,
+    render: ({ parameters }) => <LearningGoalCard query={parameters?.query} graphId={parameters?.graph_id} />,
+  });
+
+  // Backward-compatible: older local runs/messages may still carry generate_course.
   useRenderTool({
     name: "generate_course",
     parameters: GenerateCourseParams,

@@ -4,7 +4,8 @@ import type { Course, CourseBlock } from "@/lib/courses/types";
 import { summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
-import { createTutorModel } from "./model";
+import { createTutorModel, resolveProviderSettings } from "./model";
+import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } from "./course-kg-context";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -59,36 +60,51 @@ const CourseSchema = z.object({
       ]),
     )
     .min(3)
-    .max(8),
+    .max(5),
 });
 
-const COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator sub-agent. You design a single short, deeply learnable course on a topic, broken into 4-7 ordered blocks.
+const COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator sub-agent. You design a compact course on a topic, broken into exactly 3 ordered blocks for the current iteration.
 
-Block types (use the right type for each idea, do NOT just use text):
-- text: a short prose explanation in markdown (2-4 short paragraphs max).
+Use ONLY these block types in this iteration:
+- text: a short prose explanation in markdown (2 short paragraphs max).
 - analogy: map an unfamiliar concept to a familiar one. Fields: source (familiar thing), target (concept being taught), mapping (what corresponds to what).
 - transfer: show how a principle from one domain applies in another. Fields: fromDomain, toDomain, explanation, example.
-- visual: a self-contained interactive HTML/CSS/JS fragment that visualizes a key intuition.
-- code: a small code snippet with a plain-language explanation.
+
+Do NOT generate visual blocks, code blocks, HTML, CSS, or JavaScript in this iteration.
 
 COURSE STRUCTURE RULES:
-- 4-7 blocks total. Order them as a learning arc: hook → core idea → one analogy → one visual or code → transfer to a different domain → wrap-up.
-- Include AT MOST ONE visual block per course. Keep its HTML compact (<300 lines).
-- Include at least one analogy block and one transfer block.
+- Exactly 3 blocks total: one text block, one analogy block, one transfer block.
+- Keep the whole JSON concise, under 900 words.
 - Every block needs a short, specific title (no generic "Introduction").
 - Write in the same language as the user's topic prompt.
-
-VISUAL BLOCK RULES (when you include one):
-- Single self-contained HTML fragment. No external scripts.
-- Use the Primoria palette: cream backgrounds (#fbf7ee / #fffaf2), text #3a352d, muted #6b6357. Highlights: amber (#fff2de + #c8881a border), sage (#e8f3ea + #4a7a5a), lavender (#efe7d7 + #7c6ad0). Rounded 12-18px corners. No black, no neon.
-- Always include at least one interactive control (slider, button, toggle) so the learner can manipulate something.
 
 OUTPUT:
 - Return valid JSON matching the schema. No prose outside JSON.`;
 
+const JSON_ONLY_COURSE_PROMPT = `${COURSE_SYSTEM_PROMPT}
+
+Your provider may not support native structured output. You must still return ONLY one JSON object with this shape:
+{
+  "title": "string",
+  "summary": "string",
+  "estimatedMinutes": 12,
+  "blocks": [
+    { "type": "text", "title": "string", "markdown": "string" },
+    { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
+    { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" }
+  ]
+}
+Exactly 3 blocks. Do not include visual, code, HTML, CSS, or JavaScript.
+No markdown fences. No prose outside JSON.`;
+
+// Re-export so existing importers (and tests) can keep importing from here.
+export { buildKgContextPrompt };
+export type { CourseContext, CourseContextTopic };
+
 export type GenerateCourseInput = {
   topic: string;
   contextHint?: string;
+  kgContext?: CourseContext;
 };
 
 export type GenerateCourseResult = {
@@ -104,18 +120,20 @@ export async function generateCourse(
   input: GenerateCourseInput,
   settings: TutorProviderSettings = {},
 ): Promise<GenerateCourseResult> {
+  const providerSettings = resolveProviderSettings(settings);
   const model = createTutorModel(settings);
 
   const userPrompt = [
     `Topic: ${input.topic}`,
     input.contextHint ? `Prior context from chat: ${input.contextHint}` : "",
+    buildKgContextPrompt(input.kgContext),
     "",
     "Generate the course as JSON. Make every block specific to this topic, not boilerplate.",
   ]
     .filter(Boolean)
     .join("\n");
 
-  const raw = await invokeCourseJson(model, userPrompt, input.topic);
+  const raw = await invokeCourseJson(model, userPrompt, input.topic, providerSettings);
   const draft = normalizeCourseDraft(raw, input.topic);
 
   const now = Date.now();
@@ -140,44 +158,49 @@ export async function generateCourse(
   return { course, summary: summarizeCourse(course) };
 }
 
-async function invokeCourseJson(model: ReturnType<typeof createTutorModel>, userPrompt: string, topic: string) {
-  try {
-    const structured = model.withStructuredOutput(CourseSchema, { name: "course" });
-    return await structured.invoke(
+async function invokeCourseJson(
+  model: ReturnType<typeof createTutorModel>,
+  userPrompt: string,
+  topic: string,
+  providerSettings: ReturnType<typeof resolveProviderSettings>,
+) {
+  if (shouldUseRawAnthropicJson(providerSettings)) {
+    const content = await createRawAnthropicJsonCompletion(providerSettings, userPrompt);
+    return parseJsonObject(content);
+  }
+
+  if (!shouldSkipStructuredOutput(providerSettings)) {
+    try {
+      const structured = model.withStructuredOutput(CourseSchema, { name: "course" });
+      return await withTimeout(
+        structured.invoke(
+          [
+            { role: "system", content: COURSE_SYSTEM_PROMPT },
+            { role: "user", content: userPrompt },
+          ],
+          { callbacks: [] },
+        ),
+        30_000,
+        "Course structured output timed out",
+      );
+    } catch (error) {
+      console.warn("[course-generator] structured output failed, falling back to JSON prompt", error);
+    }
+  }
+
+  const result = await withTimeout(
+    model.invoke(
       [
-        { role: "system", content: COURSE_SYSTEM_PROMPT },
+        {
+          role: "system",
+          content: JSON_ONLY_COURSE_PROMPT,
+        },
         { role: "user", content: userPrompt },
       ],
       { callbacks: [] },
-    );
-  } catch (error) {
-    console.warn("[course-generator] structured output failed, falling back to JSON prompt", error);
-  }
-
-  const result = await model.invoke(
-    [
-      {
-      role: "system",
-      content: `${COURSE_SYSTEM_PROMPT}
-
-Your provider may not support native structured output. You must still return ONLY one JSON object with this shape:
-{
-  "title": "string",
-  "summary": "string",
-  "estimatedMinutes": 12,
-  "blocks": [
-    { "type": "text", "title": "string", "markdown": "string" },
-    { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
-    { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
-    { "type": "visual", "title": "string", "description": "string", "html": "string" },
-    { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" }
-  ]
-}
-No markdown fences. No prose outside JSON.`,
-    },
-      { role: "user", content: userPrompt },
-    ],
-    { callbacks: [] },
+    ),
+    120_000,
+    "Course JSON generation timed out",
   );
 
   try {
@@ -185,6 +208,81 @@ No markdown fences. No prose outside JSON.`,
   } catch (error) {
     console.warn("[course-generator] JSON compatibility mode failed", error);
     throw new Error("Course generator returned invalid JSON. Please retry or use a model with better JSON support.");
+  }
+}
+
+function shouldSkipStructuredOutput(settings: ReturnType<typeof resolveProviderSettings>) {
+  return settings.provider === "anthropic-compatible" && /minimax/i.test(settings.model);
+}
+
+function shouldUseRawAnthropicJson(settings: ReturnType<typeof resolveProviderSettings>) {
+  return shouldSkipStructuredOutput(settings);
+}
+
+type AnthropicMessageResponse = {
+  content?: Array<
+    | { type: "text"; text?: string }
+    | { type: "thinking"; thinking?: string }
+    | Record<string, unknown>
+  >;
+  error?: { message?: string };
+};
+
+async function createRawAnthropicJsonCompletion(
+  settings: ReturnType<typeof resolveProviderSettings>,
+  userPrompt: string,
+) {
+  if (!settings.baseUrl) throw new Error("Missing ANTHROPIC_BASE_URL");
+  if (!settings.apiKey) throw new Error("Missing ANTHROPIC_API_KEY");
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 180_000);
+  try {
+    const response = await fetch(`${settings.baseUrl.replace(/\/$/, "")}/v1/messages`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": settings.apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: settings.model,
+        max_tokens: 1800,
+        temperature: 0.2,
+        system: JSON_ONLY_COURSE_PROMPT,
+        messages: [{ role: "user", content: userPrompt }],
+      }),
+    });
+
+    const json = (await response.json().catch(() => ({}))) as AnthropicMessageResponse;
+    if (!response.ok) {
+      throw new Error(json.error?.message ?? `Course model request failed: ${response.status}`);
+    }
+
+    const text = (json.content ?? [])
+      .filter((part): part is { type: "text"; text?: string } => part.type === "text")
+      .map((part) => part.text ?? "")
+      .join("\n")
+      .trim();
+    if (!text) throw new Error("Course model returned no text content.");
+    return text;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(message)), timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timeout) clearTimeout(timeout);
   }
 }
 
