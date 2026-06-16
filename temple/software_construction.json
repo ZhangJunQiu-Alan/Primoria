@@ -1,0 +1,280 @@
+{
+  "subject": "MIT 6.031 Software Construction",
+  "schema": {
+    "description": "Knowledge graph for MIT 6.031",
+    "node_fields": {
+      "id": "unique id",
+      "kind": "topic | concept",
+      "name": "node name",
+      "topic": "parent topic id or null",
+      "description": "concept description",
+      "default_order": "integer"
+    },
+    "edge_types": {
+      "prereq": "hard or soft"
+    }
+  },
+  "nodes": [
+    {
+      "id": "t_mit6031_fundamentals",
+      "kind": "topic",
+      "name": "Software Construction Fundamentals",
+      "topic": null,
+      "default_order": 1
+    },
+    {
+      "id": "c_mit6031_static_checking",
+      "kind": "concept",
+      "name": "Static Checking",
+      "topic": "t_mit6031_fundamentals",
+      "description": "Types and static vs dynamic checking",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit6031_immutability",
+      "kind": "concept",
+      "name": "Immutability",
+      "topic": "t_mit6031_fundamentals",
+      "description": "Immutable references and objects",
+      "default_order": 2
+    },
+    {
+      "id": "t_mit6031_specifications",
+      "kind": "topic",
+      "name": "Specifications and Testing",
+      "topic": null,
+      "default_order": 2
+    },
+    {
+      "id": "c_mit6031_specs",
+      "kind": "concept",
+      "name": "Specifications",
+      "topic": "t_mit6031_specifications",
+      "description": "Preconditions and postconditions",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit6031_testing",
+      "kind": "concept",
+      "name": "Testing Strategies",
+      "topic": "t_mit6031_specifications",
+      "description": "Partitioning and boundary values",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit6031_exceptions",
+      "kind": "concept",
+      "name": "Exceptions",
+      "topic": "t_mit6031_specifications",
+      "description": "Checked vs unchecked exceptions",
+      "default_order": 3
+    },
+    {
+      "id": "t_mit6031_adt",
+      "kind": "topic",
+      "name": "Abstract Data Types",
+      "topic": null,
+      "default_order": 3
+    },
+    {
+      "id": "c_mit6031_adt_basics",
+      "kind": "concept",
+      "name": "ADT Concepts",
+      "topic": "t_mit6031_adt",
+      "description": "Creators, observers, mutators",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit6031_rep_independence",
+      "kind": "concept",
+      "name": "Representation Independence",
+      "topic": "t_mit6031_adt",
+      "description": "Hiding implementation details",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit6031_rep_invariant",
+      "kind": "concept",
+      "name": "Rep Invariants",
+      "topic": "t_mit6031_adt",
+      "description": "Maintaining valid internal states",
+      "default_order": 3
+    },
+    {
+      "id": "c_mit6031_abstraction_function",
+      "kind": "concept",
+      "name": "Abstraction Functions",
+      "topic": "t_mit6031_adt",
+      "description": "Mapping rep to abstract values",
+      "default_order": 4
+    },
+    {
+      "id": "t_mit6031_oop",
+      "kind": "topic",
+      "name": "Object-Oriented Programming",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "c_mit6031_interfaces",
+      "kind": "concept",
+      "name": "Interfaces and Subtyping",
+      "topic": "t_mit6031_oop",
+      "description": "Polymorphism and inheritance",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit6031_equality",
+      "kind": "concept",
+      "name": "Equality",
+      "topic": "t_mit6031_oop",
+      "description": "Observational and behavioral equality",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit6031_recursive_data",
+      "kind": "concept",
+      "name": "Recursive Data Types",
+      "topic": "t_mit6031_oop",
+      "description": "Immutability with recursion",
+      "default_order": 3
+    },
+    {
+      "id": "t_mit6031_concurrency",
+      "kind": "topic",
+      "name": "Concurrency",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "c_mit6031_concurrency_intro",
+      "kind": "concept",
+      "name": "Concurrency Basics",
+      "topic": "t_mit6031_concurrency",
+      "description": "Threads, processes, race conditions",
+      "default_order": 1
+    },
+    {
+      "id": "c_mit6031_thread_safety",
+      "kind": "concept",
+      "name": "Thread Safety",
+      "topic": "t_mit6031_concurrency",
+      "description": "Strategies for safe concurrency",
+      "default_order": 2
+    },
+    {
+      "id": "c_mit6031_locks",
+      "kind": "concept",
+      "name": "Locks and Synchronization",
+      "topic": "t_mit6031_concurrency",
+      "description": "Deadlocks and synchronization primitives",
+      "default_order": 3
+    },
+    {
+      "id": "c_mit6031_message_passing",
+      "kind": "concept",
+      "name": "Message Passing",
+      "topic": "t_mit6031_concurrency",
+      "description": "Channels and queues",
+      "default_order": 4
+    }
+  ],
+  "edges": [
+    {
+      "from": "c_mit6031_static_checking",
+      "to": "c_mit6031_immutability",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_static_checking",
+      "to": "c_mit6031_specs",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_specs",
+      "to": "c_mit6031_testing",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_specs",
+      "to": "c_mit6031_exceptions",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit6031_specs",
+      "to": "c_mit6031_adt_basics",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_immutability",
+      "to": "c_mit6031_adt_basics",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_adt_basics",
+      "to": "c_mit6031_rep_independence",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_rep_independence",
+      "to": "c_mit6031_rep_invariant",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_rep_invariant",
+      "to": "c_mit6031_abstraction_function",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_adt_basics",
+      "to": "c_mit6031_interfaces",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_interfaces",
+      "to": "c_mit6031_equality",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_interfaces",
+      "to": "c_mit6031_recursive_data",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit6031_adt_basics",
+      "to": "c_mit6031_concurrency_intro",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_concurrency_intro",
+      "to": "c_mit6031_thread_safety",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_thread_safety",
+      "to": "c_mit6031_locks",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_thread_safety",
+      "to": "c_mit6031_message_passing",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
+}

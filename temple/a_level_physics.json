@@ -1,0 +1,248 @@
+{
+  "id": "alevel_physics",
+  "name": "A-Level Physics",
+  "description": "Advanced level physics topics.",
+  "topics": [
+    {
+      "id": "alevel_physics_mechanics",
+      "title": "Mechanics",
+      "description": "Mechanics in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_scalars_vs_vectors",
+      "title": "Scalars vs Vectors",
+      "description": "Scalars vs Vectors in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_kinematics",
+      "title": "Kinematics",
+      "description": "Kinematics in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_forces_and_newtons_laws",
+      "title": "Forces and Newtons Laws",
+      "description": "Forces and Newtons Laws in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_moments_and_equilibrium",
+      "title": "Moments and Equilibrium",
+      "description": "Moments and Equilibrium in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_work_energy_and_power",
+      "title": "Work Energy and Power",
+      "description": "Work Energy and Power in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_momentum_and_collisions",
+      "title": "Momentum and Collisions",
+      "description": "Momentum and Collisions in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_circular_motion",
+      "title": "Circular Motion",
+      "description": "Circular Motion in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_simple_harmonic_motion",
+      "title": "Simple Harmonic Motion",
+      "description": "Simple Harmonic Motion in A-Level Physics",
+      "parent_id": "alevel_physics_mechanics"
+    },
+    {
+      "id": "alevel_physics_materials",
+      "title": "Materials",
+      "description": "Materials in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_stress_and_strain",
+      "title": "Stress and Strain",
+      "description": "Stress and Strain in A-Level Physics",
+      "parent_id": "alevel_physics_materials"
+    },
+    {
+      "id": "alevel_physics_youngs_modulus",
+      "title": "Youngs Modulus",
+      "description": "Youngs Modulus in A-Level Physics",
+      "parent_id": "alevel_physics_materials"
+    },
+    {
+      "id": "alevel_physics_waves",
+      "title": "Waves",
+      "description": "Waves in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_superposition_and_interference",
+      "title": "Superposition and Interference",
+      "description": "Superposition and Interference in A-Level Physics",
+      "parent_id": "alevel_physics_waves"
+    },
+    {
+      "id": "alevel_physics_diffraction_and_resolution",
+      "title": "Diffraction and Resolution",
+      "description": "Diffraction and Resolution in A-Level Physics",
+      "parent_id": "alevel_physics_waves"
+    },
+    {
+      "id": "alevel_physics_standing_waves",
+      "title": "Standing Waves",
+      "description": "Standing Waves in A-Level Physics",
+      "parent_id": "alevel_physics_waves"
+    },
+    {
+      "id": "alevel_physics_refraction",
+      "title": "Refraction",
+      "description": "Refraction in A-Level Physics",
+      "parent_id": "alevel_physics_waves"
+    },
+    {
+      "id": "alevel_physics_electricity",
+      "title": "Electricity",
+      "description": "Electricity in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_ohms_law_and_iv_characteristics",
+      "title": "Ohms Law and IV Characteristics",
+      "description": "Ohms Law and IV Characteristics in A-Level Physics",
+      "parent_id": "alevel_physics_electricity"
+    },
+    {
+      "id": "alevel_physics_series_and_parallel_circuits",
+      "title": "Series and Parallel Circuits",
+      "description": "Series and Parallel Circuits in A-Level Physics",
+      "parent_id": "alevel_physics_electricity"
+    },
+    {
+      "id": "alevel_physics_electrical_power_and_energy",
+      "title": "Electrical Power and Energy",
+      "description": "Electrical Power and Energy in A-Level Physics",
+      "parent_id": "alevel_physics_electricity"
+    },
+    {
+      "id": "alevel_physics_kirchhoffs_laws",
+      "title": "Kirchhoffs Laws",
+      "description": "Kirchhoffs Laws in A-Level Physics",
+      "parent_id": "alevel_physics_electricity"
+    },
+    {
+      "id": "alevel_physics_thermal_physics",
+      "title": "Thermal Physics",
+      "description": "Thermal Physics in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_specific_heat_capacity",
+      "title": "Specific Heat Capacity",
+      "description": "Specific Heat Capacity in A-Level Physics",
+      "parent_id": "alevel_physics_thermal_physics"
+    },
+    {
+      "id": "alevel_physics_ideal_gas_law",
+      "title": "Ideal Gas Law",
+      "description": "Ideal Gas Law in A-Level Physics",
+      "parent_id": "alevel_physics_thermal_physics"
+    },
+    {
+      "id": "alevel_physics_electromagnetism",
+      "title": "Electromagnetism",
+      "description": "Electromagnetism in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_magnetic_fields",
+      "title": "Magnetic Fields",
+      "description": "Magnetic Fields in A-Level Physics",
+      "parent_id": "alevel_physics_electromagnetism"
+    },
+    {
+      "id": "alevel_physics_electromagnetic_induction",
+      "title": "Electromagnetic Induction",
+      "description": "Electromagnetic Induction in A-Level Physics",
+      "parent_id": "alevel_physics_electromagnetism"
+    },
+    {
+      "id": "alevel_physics_transformers",
+      "title": "Transformers",
+      "description": "Transformers in A-Level Physics",
+      "parent_id": "alevel_physics_electromagnetism"
+    },
+    {
+      "id": "alevel_physics_nuclear_physics",
+      "title": "Nuclear Physics",
+      "description": "Nuclear Physics in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_radioactive_decay",
+      "title": "Radioactive Decay",
+      "description": "Radioactive Decay in A-Level Physics",
+      "parent_id": "alevel_physics_nuclear_physics"
+    },
+    {
+      "id": "alevel_physics_nuclear_reactions",
+      "title": "Nuclear Reactions",
+      "description": "Nuclear Reactions in A-Level Physics",
+      "parent_id": "alevel_physics_nuclear_physics"
+    },
+    {
+      "id": "alevel_physics_quantum_physics",
+      "title": "Quantum Physics",
+      "description": "Quantum Physics in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_photoelectric_effect",
+      "title": "Photoelectric Effect",
+      "description": "Photoelectric Effect in A-Level Physics",
+      "parent_id": "alevel_physics_quantum_physics"
+    },
+    {
+      "id": "alevel_physics_wave_particle_duality",
+      "title": "Wave Particle Duality",
+      "description": "Wave Particle Duality in A-Level Physics",
+      "parent_id": "alevel_physics_quantum_physics"
+    },
+    {
+      "id": "alevel_physics_energy_levels_and_spectra",
+      "title": "Energy Levels and Spectra",
+      "description": "Energy Levels and Spectra in A-Level Physics",
+      "parent_id": "alevel_physics_quantum_physics"
+    },
+    {
+      "id": "alevel_physics_astrophysics",
+      "title": "Astrophysics",
+      "description": "Astrophysics in A-Level Physics",
+      "parent_id": null
+    },
+    {
+      "id": "alevel_physics_stellar_classification",
+      "title": "Stellar Classification",
+      "description": "Stellar Classification in A-Level Physics",
+      "parent_id": "alevel_physics_astrophysics"
+    },
+    {
+      "id": "alevel_physics_distance_measurements",
+      "title": "Distance Measurements",
+      "description": "Distance Measurements in A-Level Physics",
+      "parent_id": "alevel_physics_astrophysics"
+    },
+    {
+      "id": "alevel_physics_big_bang_evidence",
+      "title": "Big Bang Evidence",
+      "description": "Big Bang Evidence in A-Level Physics",
+      "parent_id": "alevel_physics_astrophysics"
+    }
+  ],
+  "edges": []
+}

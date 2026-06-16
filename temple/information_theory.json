@@ -1,0 +1,253 @@
+{
+  "subject": "Information Theory and Entropy",
+  "schema": {
+    "description": "Knowledge graph for Information Theory and Entropy",
+    "node_fields": {
+      "id": "unique id",
+      "kind": "topic | concept",
+      "name": "node name",
+      "topic": "parent topic id or null",
+      "description": "concept description",
+      "default_order": "integer"
+    },
+    "edge_types": {
+      "prereq": "hard or soft"
+    }
+  },
+  "nodes": [
+    {
+      "id": "t_infotheory_basics",
+      "kind": "topic",
+      "name": "Entropy and Information Measures",
+      "topic": null,
+      "default_order": 1
+    },
+    {
+      "id": "c_infotheory_entropy",
+      "kind": "concept",
+      "name": "Shannon Entropy",
+      "topic": "t_infotheory_basics",
+      "description": "Measure of uncertainty",
+      "default_order": 1
+    },
+    {
+      "id": "c_infotheory_joint_entropy",
+      "kind": "concept",
+      "name": "Joint and Conditional Entropy",
+      "topic": "t_infotheory_basics",
+      "description": "Entropy of multiple variables",
+      "default_order": 2
+    },
+    {
+      "id": "c_infotheory_mutual_info",
+      "kind": "concept",
+      "name": "Mutual Information",
+      "topic": "t_infotheory_basics",
+      "description": "Information shared between variables",
+      "default_order": 3
+    },
+    {
+      "id": "c_infotheory_kl_divergence",
+      "kind": "concept",
+      "name": "Kullback-Leibler Divergence",
+      "topic": "t_infotheory_basics",
+      "description": "Relative entropy between distributions",
+      "default_order": 4
+    },
+    {
+      "id": "c_infotheory_data_processing",
+      "kind": "concept",
+      "name": "Data Processing Inequality",
+      "topic": "t_infotheory_basics",
+      "description": "Post-processing cannot increase information",
+      "default_order": 5
+    },
+    {
+      "id": "t_infotheory_source_coding",
+      "kind": "topic",
+      "name": "Source Coding",
+      "topic": null,
+      "default_order": 2
+    },
+    {
+      "id": "c_infotheory_aep",
+      "kind": "concept",
+      "name": "Asymptotic Equipartition Property",
+      "topic": "t_infotheory_source_coding",
+      "description": "Typical sets and AEP",
+      "default_order": 1
+    },
+    {
+      "id": "c_infotheory_kraft",
+      "kind": "concept",
+      "name": "Kraft Inequality",
+      "topic": "t_infotheory_source_coding",
+      "description": "Condition for prefix codes",
+      "default_order": 2
+    },
+    {
+      "id": "c_infotheory_shannon_coding",
+      "kind": "concept",
+      "name": "Shannon Source Coding Theorem",
+      "topic": "t_infotheory_source_coding",
+      "description": "Limits of lossless compression",
+      "default_order": 3
+    },
+    {
+      "id": "c_infotheory_huffman",
+      "kind": "concept",
+      "name": "Huffman Coding",
+      "topic": "t_infotheory_source_coding",
+      "description": "Optimal prefix codes",
+      "default_order": 4
+    },
+    {
+      "id": "t_infotheory_channel_capacity",
+      "kind": "topic",
+      "name": "Channel Capacity",
+      "topic": null,
+      "default_order": 3
+    },
+    {
+      "id": "c_infotheory_dmc",
+      "kind": "concept",
+      "name": "Discrete Memoryless Channels",
+      "topic": "t_infotheory_channel_capacity",
+      "description": "Definition of DMCs",
+      "default_order": 1
+    },
+    {
+      "id": "c_infotheory_channel_capacity_def",
+      "kind": "concept",
+      "name": "Channel Capacity",
+      "topic": "t_infotheory_channel_capacity",
+      "description": "Maximum rate of reliable communication",
+      "default_order": 2
+    },
+    {
+      "id": "c_infotheory_shannon_channel",
+      "kind": "concept",
+      "name": "Shannon Channel Coding Theorem",
+      "topic": "t_infotheory_channel_capacity",
+      "description": "Achievability and converse",
+      "default_order": 3
+    },
+    {
+      "id": "t_infotheory_continuous",
+      "kind": "topic",
+      "name": "Continuous Channels",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "c_infotheory_differential_entropy",
+      "kind": "concept",
+      "name": "Differential Entropy",
+      "topic": "t_infotheory_continuous",
+      "description": "Entropy for continuous variables",
+      "default_order": 1
+    },
+    {
+      "id": "c_infotheory_awgn",
+      "kind": "concept",
+      "name": "AWGN Channel",
+      "topic": "t_infotheory_continuous",
+      "description": "Additive White Gaussian Noise channel",
+      "default_order": 2
+    },
+    {
+      "id": "c_infotheory_shannon_hartley",
+      "kind": "concept",
+      "name": "Shannon-Hartley Theorem",
+      "topic": "t_infotheory_continuous",
+      "description": "Capacity of AWGN channel",
+      "default_order": 3
+    }
+  ],
+  "edges": [
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_joint_entropy",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_joint_entropy",
+      "to": "c_infotheory_mutual_info",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_kl_divergence",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "c_infotheory_mutual_info",
+      "to": "c_infotheory_data_processing",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_aep",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_aep",
+      "to": "c_infotheory_shannon_coding",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_kraft",
+      "to": "c_infotheory_huffman",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_mutual_info",
+      "to": "c_infotheory_channel_capacity_def",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_dmc",
+      "to": "c_infotheory_channel_capacity_def",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_channel_capacity_def",
+      "to": "c_infotheory_shannon_channel",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_aep",
+      "to": "c_infotheory_shannon_channel",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_differential_entropy",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_differential_entropy",
+      "to": "c_infotheory_awgn",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_awgn",
+      "to": "c_infotheory_shannon_hartley",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
+}

@@ -1,0 +1,724 @@
+{
+  "subject": "Harvard CS50 This is CS50x",
+  "schema": {
+    "node_types": [
+      "topic",
+      "concept"
+    ],
+    "edge_types": [
+      "prereq"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "topic_week0",
+      "name": "Week 0: Scratch",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_functions",
+      "name": "Functions",
+      "topic": "topic_week0",
+      "kind": "concept"
+    },
+    {
+      "id": "c_events",
+      "name": "Events",
+      "topic": "topic_week0",
+      "kind": "concept"
+    },
+    {
+      "id": "c_conditions",
+      "name": "Conditionals",
+      "topic": "topic_week0",
+      "kind": "concept"
+    },
+    {
+      "id": "c_loops",
+      "name": "Loops",
+      "topic": "topic_week0",
+      "kind": "concept"
+    },
+    {
+      "id": "c_abstraction",
+      "name": "Abstraction",
+      "topic": "topic_week0",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week1",
+      "name": "Week 1: C",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_c_syntax",
+      "name": "C Syntax",
+      "topic": "topic_week1",
+      "kind": "concept"
+    },
+    {
+      "id": "c_data_types",
+      "name": "Data Types",
+      "topic": "topic_week1",
+      "kind": "concept"
+    },
+    {
+      "id": "c_operators",
+      "name": "Operators",
+      "topic": "topic_week1",
+      "kind": "concept"
+    },
+    {
+      "id": "c_compilation",
+      "name": "Compilation Process",
+      "topic": "topic_week1",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week2",
+      "name": "Week 2: Arrays",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_debugging",
+      "name": "Debugging",
+      "topic": "topic_week2",
+      "kind": "concept"
+    },
+    {
+      "id": "c_arrays",
+      "name": "Arrays",
+      "topic": "topic_week2",
+      "kind": "concept"
+    },
+    {
+      "id": "c_strings",
+      "name": "Strings",
+      "topic": "topic_week2",
+      "kind": "concept"
+    },
+    {
+      "id": "c_cli_args",
+      "name": "Command-line Arguments",
+      "topic": "topic_week2",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week3",
+      "name": "Week 3: Algorithms",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_linear_search",
+      "name": "Linear Search",
+      "topic": "topic_week3",
+      "kind": "concept"
+    },
+    {
+      "id": "c_binary_search",
+      "name": "Binary Search",
+      "topic": "topic_week3",
+      "kind": "concept"
+    },
+    {
+      "id": "c_sorting",
+      "name": "Sorting Algorithms",
+      "topic": "topic_week3",
+      "kind": "concept"
+    },
+    {
+      "id": "c_recursion",
+      "name": "Recursion",
+      "topic": "topic_week3",
+      "kind": "concept"
+    },
+    {
+      "id": "c_big_o",
+      "name": "Big O Notation",
+      "topic": "topic_week3",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week4",
+      "name": "Week 4: Memory",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_pointers",
+      "name": "Pointers",
+      "topic": "topic_week4",
+      "kind": "concept"
+    },
+    {
+      "id": "c_malloc",
+      "name": "Dynamic Memory Allocation",
+      "topic": "topic_week4",
+      "kind": "concept"
+    },
+    {
+      "id": "c_call_stack",
+      "name": "Call Stack",
+      "topic": "topic_week4",
+      "kind": "concept"
+    },
+    {
+      "id": "c_file_io",
+      "name": "File I/O",
+      "topic": "topic_week4",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week5",
+      "name": "Week 5: Data Structures",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_linked_lists",
+      "name": "Linked Lists",
+      "topic": "topic_week5",
+      "kind": "concept"
+    },
+    {
+      "id": "c_hash_tables",
+      "name": "Hash Tables",
+      "topic": "topic_week5",
+      "kind": "concept"
+    },
+    {
+      "id": "c_trees",
+      "name": "Trees",
+      "topic": "topic_week5",
+      "kind": "concept"
+    },
+    {
+      "id": "c_tries",
+      "name": "Tries",
+      "topic": "topic_week5",
+      "kind": "concept"
+    },
+    {
+      "id": "c_queues_stacks",
+      "name": "Queues and Stacks",
+      "topic": "topic_week5",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week6",
+      "name": "Week 6: Python",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_python_syntax",
+      "name": "Python Syntax",
+      "topic": "topic_week6",
+      "kind": "concept"
+    },
+    {
+      "id": "c_lists_dicts",
+      "name": "Lists and Dictionaries",
+      "topic": "topic_week6",
+      "kind": "concept"
+    },
+    {
+      "id": "c_oop",
+      "name": "Object-Oriented Programming",
+      "topic": "topic_week6",
+      "kind": "concept"
+    },
+    {
+      "id": "c_exceptions",
+      "name": "Exceptions",
+      "topic": "topic_week6",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week7",
+      "name": "Week 7: SQL",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_relational_db",
+      "name": "Relational Databases",
+      "topic": "topic_week7",
+      "kind": "concept"
+    },
+    {
+      "id": "c_sql_queries",
+      "name": "SQL Queries",
+      "topic": "topic_week7",
+      "kind": "concept"
+    },
+    {
+      "id": "c_joins",
+      "name": "SQL Joins",
+      "topic": "topic_week7",
+      "kind": "concept"
+    },
+    {
+      "id": "c_indexes",
+      "name": "SQL Indexes",
+      "topic": "topic_week7",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week8",
+      "name": "Week 8: HTML, CSS, JavaScript",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_html",
+      "name": "HTML",
+      "topic": "topic_week8",
+      "kind": "concept"
+    },
+    {
+      "id": "c_css",
+      "name": "CSS",
+      "topic": "topic_week8",
+      "kind": "concept"
+    },
+    {
+      "id": "c_js",
+      "name": "JavaScript",
+      "topic": "topic_week8",
+      "kind": "concept"
+    },
+    {
+      "id": "c_dom",
+      "name": "DOM Manipulation",
+      "topic": "topic_week8",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week9",
+      "name": "Week 9: Flask",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_http",
+      "name": "HTTP Protocol",
+      "topic": "topic_week9",
+      "kind": "concept"
+    },
+    {
+      "id": "c_flask",
+      "name": "Flask Framework",
+      "topic": "topic_week9",
+      "kind": "concept"
+    },
+    {
+      "id": "c_mvc",
+      "name": "MVC Architecture",
+      "topic": "topic_week9",
+      "kind": "concept"
+    },
+    {
+      "id": "c_sessions",
+      "name": "Sessions and Cookies",
+      "topic": "topic_week9",
+      "kind": "concept"
+    },
+    {
+      "id": "c_apis",
+      "name": "APIs",
+      "topic": "topic_week9",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_week10",
+      "name": "Week 10: Cybersecurity",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "c_cybersecurity",
+      "name": "Cybersecurity Basics",
+      "topic": "topic_week10",
+      "kind": "concept"
+    },
+    {
+      "id": "c_encryption",
+      "name": "Encryption",
+      "topic": "topic_week10",
+      "kind": "concept"
+    },
+    {
+      "id": "c_authentication",
+      "name": "Authentication",
+      "topic": "topic_week10",
+      "kind": "concept"
+    },
+    {
+      "id": "c_vulnerabilities",
+      "name": "Vulnerabilities",
+      "topic": "topic_week10",
+      "kind": "concept"
+    }
+  ],
+  "edges": [
+    {
+      "type": "prereq",
+      "from": "topic_week0",
+      "to": "topic_week1",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week1",
+      "to": "topic_week2",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week2",
+      "to": "topic_week3",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week3",
+      "to": "topic_week4",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week4",
+      "to": "topic_week5",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week5",
+      "to": "topic_week6",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week6",
+      "to": "topic_week7",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week7",
+      "to": "topic_week8",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week8",
+      "to": "topic_week9",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "topic_week9",
+      "to": "topic_week10",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_functions",
+      "to": "c_c_syntax",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_loops",
+      "to": "c_c_syntax",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_conditions",
+      "to": "c_c_syntax",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_c_syntax",
+      "to": "c_data_types",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_data_types",
+      "to": "c_operators",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_c_syntax",
+      "to": "c_compilation",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_c_syntax",
+      "to": "c_arrays",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_data_types",
+      "to": "c_arrays",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_strings",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_cli_args",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_linear_search",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_linear_search",
+      "to": "c_binary_search",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_sorting",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_functions",
+      "to": "c_recursion",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_sorting",
+      "to": "c_big_o",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_data_types",
+      "to": "c_pointers",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_pointers",
+      "to": "c_malloc",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_recursion",
+      "to": "c_call_stack",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_pointers",
+      "to": "c_file_io",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_pointers",
+      "to": "c_linked_lists",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_malloc",
+      "to": "c_linked_lists",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_linked_lists",
+      "to": "c_hash_tables",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_hash_tables",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_pointers",
+      "to": "c_trees",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_trees",
+      "to": "c_tries",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_queues_stacks",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_c_syntax",
+      "to": "c_python_syntax",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_arrays",
+      "to": "c_lists_dicts",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_hash_tables",
+      "to": "c_lists_dicts",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_python_syntax",
+      "to": "c_oop",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_python_syntax",
+      "to": "c_exceptions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_lists_dicts",
+      "to": "c_relational_db",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_relational_db",
+      "to": "c_sql_queries",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_sql_queries",
+      "to": "c_joins",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_sql_queries",
+      "to": "c_indexes",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_python_syntax",
+      "to": "c_js",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_html",
+      "to": "c_dom",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_js",
+      "to": "c_dom",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_html",
+      "to": "c_css",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_html",
+      "to": "c_http",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_python_syntax",
+      "to": "c_flask",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_http",
+      "to": "c_flask",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_flask",
+      "to": "c_mvc",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_flask",
+      "to": "c_sessions",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_http",
+      "to": "c_apis",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_http",
+      "to": "c_cybersecurity",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_cybersecurity",
+      "to": "c_encryption",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_cybersecurity",
+      "to": "c_authentication",
+      "strength": "hard"
+    },
+    {
+      "type": "prereq",
+      "from": "c_cybersecurity",
+      "to": "c_vulnerabilities",
+      "strength": "hard"
+    }
+  ]
+}

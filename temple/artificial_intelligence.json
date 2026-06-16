@@ -1,0 +1,92 @@
+{
+  "id": "cs188",
+  "name": "Introduction to Artificial Intelligence",
+  "description": "Foundational AI algorithms and concepts.",
+  "topics": [
+    {
+      "id": "cs188_search",
+      "title": "Search",
+      "description": "Search in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_uninformed_search",
+      "title": "Uninformed Search",
+      "description": "Uninformed Search in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_search"
+    },
+    {
+      "id": "cs188_informed_search",
+      "title": "Informed Search",
+      "description": "Informed Search in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_search"
+    },
+    {
+      "id": "cs188_adversarial_search",
+      "title": "Adversarial Search",
+      "description": "Adversarial Search in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_search"
+    },
+    {
+      "id": "cs188_constraint_satisfaction_problems",
+      "title": "Constraint Satisfaction Problems",
+      "description": "Constraint Satisfaction Problems in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_markov_decision_processes",
+      "title": "Markov Decision Processes",
+      "description": "Markov Decision Processes in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_reinforcement_learning",
+      "title": "Reinforcement Learning",
+      "description": "Reinforcement Learning in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_probability",
+      "title": "Probability",
+      "description": "Probability in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_bayes_nets",
+      "title": "Bayes Nets",
+      "description": "Bayes Nets in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_probability"
+    },
+    {
+      "id": "cs188_hidden_markov_models",
+      "title": "Hidden Markov Models",
+      "description": "Hidden Markov Models in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_machine_learning",
+      "title": "Machine Learning",
+      "description": "Machine Learning in Introduction to Artificial Intelligence",
+      "parent_id": null
+    },
+    {
+      "id": "cs188_naïve_bayes",
+      "title": "Naïve Bayes",
+      "description": "Naïve Bayes in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_machine_learning"
+    },
+    {
+      "id": "cs188_perceptrons",
+      "title": "Perceptrons",
+      "description": "Perceptrons in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_machine_learning"
+    },
+    {
+      "id": "cs188_neural_networks",
+      "title": "Neural Networks",
+      "description": "Neural Networks in Introduction to Artificial Intelligence",
+      "parent_id": "cs188_machine_learning"
+    }
+  ],
+  "edges": []
+}

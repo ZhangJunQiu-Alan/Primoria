@@ -1,0 +1,628 @@
+{
+  "subject": "UCB CS61A Structure and Interpretation of Computer Programs",
+  "schema": {
+    "node_types": [
+      "topic",
+      "concept"
+    ],
+    "edge_types": [
+      "prereq"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "topic_intro",
+      "name": "Functions and Control",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "expr_stmt",
+      "topic": "topic_intro",
+      "name": "Expressions and Statements",
+      "kind": "concept"
+    },
+    {
+      "id": "control",
+      "topic": "topic_intro",
+      "name": "Control Structures",
+      "kind": "concept"
+    },
+    {
+      "id": "pure_func",
+      "topic": "topic_intro",
+      "name": "Pure vs Non-Pure Functions",
+      "kind": "concept"
+    },
+    {
+      "id": "env_diag",
+      "topic": "topic_intro",
+      "name": "Environment Diagrams",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_hof",
+      "name": "Higher-Order Functions",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "func_arg",
+      "topic": "topic_hof",
+      "name": "Functions as Arguments",
+      "kind": "concept"
+    },
+    {
+      "id": "func_ret",
+      "topic": "topic_hof",
+      "name": "Functions as Return Values",
+      "kind": "concept"
+    },
+    {
+      "id": "lambda",
+      "topic": "topic_hof",
+      "name": "Lambda Expressions",
+      "kind": "concept"
+    },
+    {
+      "id": "currying",
+      "topic": "topic_hof",
+      "name": "Currying",
+      "kind": "concept"
+    },
+    {
+      "id": "decorators",
+      "topic": "topic_hof",
+      "name": "Decorators",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_recursion",
+      "name": "Recursion and Trees",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "recursion",
+      "topic": "topic_recursion",
+      "name": "Recursion",
+      "kind": "concept"
+    },
+    {
+      "id": "tree_recur",
+      "topic": "topic_recursion",
+      "name": "Tree Recursion",
+      "kind": "concept"
+    },
+    {
+      "id": "tree_abs",
+      "topic": "topic_recursion",
+      "name": "Tree Data Abstraction",
+      "kind": "concept"
+    },
+    {
+      "id": "tree_trav",
+      "topic": "topic_recursion",
+      "name": "Tree Traversal",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_data",
+      "name": "Data Abstraction and Sequences",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "seq",
+      "topic": "topic_data",
+      "name": "Sequences and Slicing",
+      "kind": "concept"
+    },
+    {
+      "id": "list_comp",
+      "topic": "topic_data",
+      "name": "List Comprehensions",
+      "kind": "concept"
+    },
+    {
+      "id": "data_abs",
+      "topic": "topic_data",
+      "name": "Data Abstraction",
+      "kind": "concept"
+    },
+    {
+      "id": "dict",
+      "topic": "topic_data",
+      "name": "Dictionaries",
+      "kind": "concept"
+    },
+    {
+      "id": "box_pointer",
+      "topic": "topic_data",
+      "name": "Box-and-Pointer Diagrams",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_mut_oop",
+      "name": "Mutable Data and OOP",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "mutability",
+      "topic": "topic_mut_oop",
+      "name": "Mutability",
+      "kind": "concept"
+    },
+    {
+      "id": "oop",
+      "topic": "topic_mut_oop",
+      "name": "Object-Oriented Programming",
+      "kind": "concept"
+    },
+    {
+      "id": "inherit_comp",
+      "topic": "topic_mut_oop",
+      "name": "Inheritance and Composition",
+      "kind": "concept"
+    },
+    {
+      "id": "class_attr",
+      "topic": "topic_mut_oop",
+      "name": "Class and Instance Attributes",
+      "kind": "concept"
+    },
+    {
+      "id": "string_rep",
+      "topic": "topic_mut_oop",
+      "name": "String Representation",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_adv_data",
+      "name": "Advanced Data Structures",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "linked_lists",
+      "topic": "topic_adv_data",
+      "name": "Linked Lists",
+      "kind": "concept"
+    },
+    {
+      "id": "mut_trees",
+      "topic": "topic_adv_data",
+      "name": "Mutable Trees",
+      "kind": "concept"
+    },
+    {
+      "id": "iterators",
+      "topic": "topic_adv_data",
+      "name": "Iterators",
+      "kind": "concept"
+    },
+    {
+      "id": "generators",
+      "topic": "topic_adv_data",
+      "name": "Generators",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_scheme",
+      "name": "Scheme and Functional Programming",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "scheme_syntax",
+      "topic": "topic_scheme",
+      "name": "Scheme Syntax",
+      "kind": "concept"
+    },
+    {
+      "id": "scheme_lists",
+      "topic": "topic_scheme",
+      "name": "Scheme Lists and Pairs",
+      "kind": "concept"
+    },
+    {
+      "id": "tail_calls",
+      "topic": "topic_scheme",
+      "name": "Tail Calls and Optimization",
+      "kind": "concept"
+    },
+    {
+      "id": "macros",
+      "topic": "topic_scheme",
+      "name": "Macros",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_interp",
+      "name": "Interpreters",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "parsing",
+      "topic": "topic_interp",
+      "name": "Lexical Analysis and Parsing",
+      "kind": "concept"
+    },
+    {
+      "id": "eval",
+      "topic": "topic_interp",
+      "name": "Evaluation Process",
+      "kind": "concept"
+    },
+    {
+      "id": "apply",
+      "topic": "topic_interp",
+      "name": "Application Process",
+      "kind": "concept"
+    },
+    {
+      "id": "exceptions",
+      "topic": "topic_interp",
+      "name": "Exceptions",
+      "kind": "concept"
+    },
+    {
+      "id": "topic_declarative",
+      "name": "Declarative Programming",
+      "kind": "topic",
+      "topic": null
+    },
+    {
+      "id": "regex",
+      "topic": "topic_declarative",
+      "name": "Regular Expressions",
+      "kind": "concept"
+    },
+    {
+      "id": "bnf",
+      "topic": "topic_declarative",
+      "name": "BNF Context-Free Grammars",
+      "kind": "concept"
+    },
+    {
+      "id": "sql_queries",
+      "topic": "topic_declarative",
+      "name": "SQL Tables and Queries",
+      "kind": "concept"
+    },
+    {
+      "id": "sql_joins",
+      "topic": "topic_declarative",
+      "name": "SQL Joins and Aggregation",
+      "kind": "concept"
+    }
+  ],
+  "edges": [
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "expr_stmt",
+      "to": "control"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "pure_func",
+      "to": "env_diag"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "env_diag",
+      "to": "func_arg"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "func_arg",
+      "to": "func_ret"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "func_ret",
+      "to": "lambda"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "lambda",
+      "to": "currying"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "func_ret",
+      "to": "decorators"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "control",
+      "to": "recursion"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "func_arg",
+      "to": "recursion"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "recursion",
+      "to": "tree_recur"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "expr_stmt",
+      "to": "seq"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "seq",
+      "to": "list_comp"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "seq",
+      "to": "data_abs"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "seq",
+      "to": "dict"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "seq",
+      "to": "box_pointer"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "data_abs",
+      "to": "tree_abs"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "tree_recur",
+      "to": "tree_abs"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "tree_abs",
+      "to": "tree_trav"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "box_pointer",
+      "to": "mutability"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "dict",
+      "to": "mutability"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "mutability",
+      "to": "oop"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "oop",
+      "to": "inherit_comp"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "oop",
+      "to": "class_attr"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "oop",
+      "to": "string_rep"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "mutability",
+      "to": "linked_lists"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "oop",
+      "to": "linked_lists"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "linked_lists",
+      "to": "mut_trees"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "tree_abs",
+      "to": "mut_trees"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "control",
+      "to": "iterators"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "oop",
+      "to": "iterators"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "iterators",
+      "to": "generators"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "expr_stmt",
+      "to": "scheme_syntax"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "linked_lists",
+      "to": "scheme_lists"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "scheme_syntax",
+      "to": "scheme_lists"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "recursion",
+      "to": "tail_calls"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "scheme_syntax",
+      "to": "tail_calls"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "scheme_syntax",
+      "to": "macros"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "tree_abs",
+      "to": "parsing"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "parsing",
+      "to": "eval"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "eval",
+      "to": "apply"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "scheme_syntax",
+      "to": "eval"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "expr_stmt",
+      "to": "regex"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "tree_abs",
+      "to": "bnf"
+    },
+    {
+      "type": "prereq",
+      "strength": "soft",
+      "from": "expr_stmt",
+      "to": "sql_queries"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "sql_queries",
+      "to": "sql_joins"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_intro",
+      "to": "topic_hof"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_intro",
+      "to": "topic_recursion"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_intro",
+      "to": "topic_data"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_recursion",
+      "to": "topic_mut_oop"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_data",
+      "to": "topic_mut_oop"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_mut_oop",
+      "to": "topic_adv_data"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_recursion",
+      "to": "topic_scheme"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_adv_data",
+      "to": "topic_interp"
+    },
+    {
+      "type": "prereq",
+      "strength": "hard",
+      "from": "topic_scheme",
+      "to": "topic_interp"
+    }
+  ]
+}
