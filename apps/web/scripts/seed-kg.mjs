@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 
-import { DEFAULT_GRAPH_ID, createPgClient, graphPath, readJson, withTransaction } from "./kg-db-common.mjs";
+import {
+  DEFAULT_GRAPH_ID,
+  createPgClient,
+  graphPath,
+  listGraphIds,
+  readJson,
+  withTransaction,
+} from "./kg-db-common.mjs";
 
-const graphId = process.argv[2] || DEFAULT_GRAPH_ID;
+const arg = process.argv[2] || DEFAULT_GRAPH_ID;
 
 function validateGraph(graph) {
   if (!Array.isArray(graph.nodes)) throw new Error("Graph JSON must have a nodes array");
@@ -66,8 +73,19 @@ function assertAcyclic(concepts, edges) {
   if (seen !== concepts.length) throw new Error("Prerequisite graph contains a cycle");
 }
 
-async function main() {
+async function seedGraph(client, graphId) {
   const graph = readJson(graphPath(graphId));
+
+  // DB stores concept-level prereq edges only; the topic DAG is derived
+  // separately (build-topic-graph). Drop any topic-endpoint edges with a warning.
+  const kind = new Map(graph.nodes.map((n) => [n.id, n.kind]));
+  const conceptEdges = graph.edges.filter((e) => kind.get(e.from) === "concept" && kind.get(e.to) === "concept");
+  const droppedTopicEdges = graph.edges.length - conceptEdges.length;
+  if (droppedTopicEdges > 0) {
+    process.stderr.write(`[db:seed:kg] ${graphId}: skipping ${droppedTopicEdges} topic-level edge(s) (concept edges only)\n`);
+    graph.edges = conceptEdges;
+  }
+
   validateGraph(graph);
 
   const topics = graph.nodes.filter((n) => n.kind === "topic");
@@ -75,10 +93,7 @@ async function main() {
   const topicIds = topics.map((t) => t.id);
   const conceptIds = concepts.map((c) => c.id);
 
-  const client = createPgClient();
-  await client.connect();
-  try {
-    await withTransaction(client, async () => {
+  await withTransaction(client, async () => {
       await client.query(
         `
           insert into public.knowledge_graphs (id, subject, schema_doc, created_at, updated_at)
@@ -157,11 +172,19 @@ async function main() {
           [graphId, edge.from, edge.to, edge.type, edge.strength],
         );
       }
-    });
+  });
 
-    process.stdout.write(
-      `[db:seed:kg] ${graphId}: ${topics.length} topics, ${concepts.length} concepts, ${graph.edges.length} edges\n`,
-    );
+  process.stdout.write(
+    `[db:seed:kg] ${graphId}: ${topics.length} topics, ${concepts.length} concepts, ${graph.edges.length} edges\n`,
+  );
+}
+
+async function main() {
+  const ids = arg === "all" ? listGraphIds() : [arg];
+  const client = createPgClient();
+  await client.connect();
+  try {
+    for (const id of ids) await seedGraph(client, id);
   } finally {
     await client.end();
   }

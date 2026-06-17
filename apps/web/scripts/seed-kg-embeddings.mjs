@@ -1,28 +1,53 @@
 #!/usr/bin/env node
 
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+
 import {
   DEFAULT_EMBEDDING_MODEL,
   DEFAULT_GRAPH_ID,
   DEFAULT_MODEL_VERSION,
+  REPO_ROOT,
   aliasPath,
   createPgClient,
   graphPath,
+  listGraphIds,
   readJson,
   requireEnv,
   withTransaction,
 } from "./kg-db-common.mjs";
 
-const graphId = process.argv[2] || DEFAULT_GRAPH_ID;
+const arg = process.argv[2] || DEFAULT_GRAPH_ID;
 const EMBEDDING_DIMENSION = 1536;
 
-function aliasesFor(aliasData, nodeId) {
-  const aliases = aliasData.aliases?.[nodeId] ?? [];
-  if (!Array.isArray(aliases)) throw new Error(`Alias entry for ${nodeId} must be an array`);
-  return aliases.filter(Boolean);
+// Global node_id -> Chinese label map (temple/kg_zh_labels.json), used as an
+// alias so Chinese queries match English nodes in recall.
+function loadZhLabels() {
+  const path = resolve(REPO_ROOT, "temple/kg_zh_labels.json");
+  if (!existsSync(path)) return {};
+  return readJson(path).labels ?? {};
 }
 
-function buildEmbedText(graph, topicById, aliasData, node) {
-  const aliases = aliasesFor(aliasData, node.id);
+// Optional per-graph alias sidecar (most graphs have none).
+function loadGraphAliases(graphId) {
+  const path = aliasPath(graphId);
+  if (!existsSync(path)) return {};
+  const data = readJson(path);
+  if (data.graphId && data.graphId !== graphId) throw new Error(`Alias graphId mismatch: ${data.graphId}`);
+  return data.aliases ?? {};
+}
+
+function aliasesFor(graphAliases, zhLabels, nodeId) {
+  const out = [];
+  if (zhLabels[nodeId]) out.push(zhLabels[nodeId]);
+  const extra = graphAliases[nodeId] ?? [];
+  if (!Array.isArray(extra)) throw new Error(`Alias entry for ${nodeId} must be an array`);
+  for (const a of extra) if (a) out.push(a);
+  return out;
+}
+
+function buildEmbedText(graph, topicById, graphAliases, zhLabels, node) {
+  const aliases = aliasesFor(graphAliases, zhLabels, node.id);
   const aliasText = aliases.length > 0 ? `别名: ${aliases.join(", ")}` : null;
 
   if (node.kind === "topic") {
@@ -75,10 +100,9 @@ function vectorLiteral(embedding) {
   return `[${embedding.join(",")}]`;
 }
 
-async function main() {
+async function embedGraph(client, graphId, zhLabels) {
   const graph = readJson(graphPath(graphId));
-  const aliasData = readJson(aliasPath(graphId));
-  if (aliasData.graphId !== graphId) throw new Error(`Alias graphId mismatch: ${aliasData.graphId}`);
+  const graphAliases = loadGraphAliases(graphId);
 
   const nodes = graph.nodes.filter((node) => node.kind === "topic" || node.kind === "concept");
   const topicById = new Map(graph.nodes.filter((node) => node.kind === "topic").map((topic) => [topic.id, topic]));
@@ -86,7 +110,7 @@ async function main() {
     graphId,
     nodeId: node.id,
     kind: node.kind,
-    embedText: buildEmbedText(graph, topicById, aliasData, node),
+    embedText: buildEmbedText(graph, topicById, graphAliases, zhLabels, node),
   }));
 
   const modelVersion = process.env.KG_EMBEDDING_MODEL_VERSION || DEFAULT_MODEL_VERSION;
@@ -95,54 +119,60 @@ async function main() {
     row.embedding = embeddings[index];
   });
 
+  await withTransaction(client, async () => {
+    await client.query(
+      `
+        create temporary table kg_embedding_seed_nodes (
+          kind text not null,
+          node_id text not null
+        ) on commit drop
+      `,
+    );
+
+    for (const row of rows) {
+      await client.query("insert into kg_embedding_seed_nodes (kind, node_id) values ($1, $2)", [
+        row.kind,
+        row.nodeId,
+      ]);
+      await client.query(
+        `
+          insert into public.kg_node_embeddings
+            (graph_id, node_id, kind, embed_text, embedding, model_version, created_at, updated_at)
+          values ($1, $2, $3, $4, $5::vector, $6, now(), now())
+          on conflict (graph_id, kind, node_id, model_version) do update set
+            embed_text = excluded.embed_text,
+            embedding = excluded.embedding,
+            updated_at = now()
+        `,
+        [row.graphId, row.nodeId, row.kind, row.embedText, vectorLiteral(row.embedding), modelVersion],
+      );
+    }
+
+    await client.query(
+      `
+        delete from public.kg_node_embeddings e
+        where e.graph_id = $1
+          and e.model_version = $2
+          and not exists (
+            select 1
+            from kg_embedding_seed_nodes s
+            where s.kind = e.kind and s.node_id = e.node_id
+          )
+      `,
+      [graphId, modelVersion],
+    );
+  });
+
+  process.stdout.write(`[db:seed:kg-embeddings] ${graphId}: ${rows.length} embeddings\n`);
+}
+
+async function main() {
+  const ids = arg === "all" ? listGraphIds() : [arg];
+  const zhLabels = loadZhLabels();
   const client = createPgClient();
   await client.connect();
   try {
-    await withTransaction(client, async () => {
-      await client.query(
-        `
-          create temporary table kg_embedding_seed_nodes (
-            kind text not null,
-            node_id text not null
-          ) on commit drop
-        `,
-      );
-
-      for (const row of rows) {
-        await client.query("insert into kg_embedding_seed_nodes (kind, node_id) values ($1, $2)", [
-          row.kind,
-          row.nodeId,
-        ]);
-        await client.query(
-          `
-            insert into public.kg_node_embeddings
-              (graph_id, node_id, kind, embed_text, embedding, model_version, created_at, updated_at)
-            values ($1, $2, $3, $4, $5::vector, $6, now(), now())
-            on conflict (graph_id, kind, node_id, model_version) do update set
-              embed_text = excluded.embed_text,
-              embedding = excluded.embedding,
-              updated_at = now()
-          `,
-          [row.graphId, row.nodeId, row.kind, row.embedText, vectorLiteral(row.embedding), modelVersion],
-        );
-      }
-
-      await client.query(
-        `
-          delete from public.kg_node_embeddings e
-          where e.graph_id = $1
-            and e.model_version = $2
-            and not exists (
-              select 1
-              from kg_embedding_seed_nodes s
-              where s.kind = e.kind and s.node_id = e.node_id
-            )
-        `,
-        [graphId, modelVersion],
-      );
-    });
-
-    process.stdout.write(`[db:seed:kg-embeddings] ${graphId}: ${rows.length} embeddings (${modelVersion})\n`);
+    for (const id of ids) await embedGraph(client, id, zhLabels);
   } finally {
     await client.end();
   }
