@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import type { AuthUser } from "@/lib/auth/types";
+import { clearCopilotThreadStorage } from "@/lib/copilot-thread-history";
 
 type NavTab = {
   id: string;
@@ -37,6 +40,35 @@ const TABS: NavTab[] = [
     ),
   },
   {
+    id: "workspace",
+    label: "Workspace",
+    description: "Shared room for humans and agents.",
+    href: "/workspace",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+  },
+  {
+    id: "agents",
+    label: "Agents",
+    description: "Create and manage agent teammates.",
+    href: "/workspace/agents",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 8V4H8" />
+        <rect x="4" y="8" width="16" height="12" rx="3" />
+        <path d="M8 13h.01" />
+        <path d="M16 13h.01" />
+        <path d="M9 17h6" />
+      </svg>
+    ),
+  },
+  {
     id: "course",
     label: "Course Builder",
     description: "Plan and generate a full course (soon).",
@@ -54,11 +86,47 @@ const TABS: NavTab[] = [
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
+  if (href === "/workspace") return pathname === "/workspace" || pathname.startsWith("/workspace/review");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function TutorNavRail() {
+type TutorNavRailProps = {
+  initialAuthState?: {
+    authEnabled: boolean;
+    user: AuthUser | null;
+  };
+};
+
+export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const pathname = usePathname() ?? "/";
+  const router = useRouter();
+  const [authEnabled, setAuthEnabled] = useState<boolean | null>(initialAuthState?.authEnabled ?? null);
+  const [user, setUser] = useState<AuthUser | null>(initialAuthState?.user ?? null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/auth/me")
+      .then((response) => response.json() as Promise<{ authEnabled: boolean; user: AuthUser | null }>)
+      .then((data) => {
+        if (cancelled) return;
+        setAuthEnabled(data.authEnabled);
+        setUser(data.user);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
+
+  async function signOut() {
+    await fetch("/api/auth/sign-out", { method: "POST" });
+    clearCopilotThreadStorage();
+    window.localStorage.removeItem("primoria:tutor-provider-settings");
+    setUser(null);
+    router.push("/");
+    router.refresh();
+  }
+
   return (
     <aside className="nav-rail" aria-label="Primoria sections">
       <div className="nav-brand">
@@ -98,6 +166,27 @@ export function TutorNavRail() {
           );
         })}
       </nav>
+      <div className="nav-account">
+        {authEnabled === null ? (
+          <span className="nav-account-hint">Checking workspace…</span>
+        ) : !authEnabled ? (
+          <span className="nav-account-hint">Local JSON mode</span>
+        ) : user ? (
+          <>
+            <span className="nav-account-avatar" aria-hidden="true">{(user.displayName ?? user.email ?? "U").slice(0, 1).toUpperCase()}</span>
+            <span className="nav-account-copy">
+              <strong>{user.displayName ?? "Learner"}</strong>
+              <span>{user.email}</span>
+            </span>
+            <button type="button" onClick={signOut}>Sign out</button>
+          </>
+        ) : (
+          <>
+            <Link className="nav-account-link" href="/auth/sign-in">Sign in</Link>
+            <Link className="nav-account-link primary" href="/auth/sign-up">Create account</Link>
+          </>
+        )}
+      </div>
     </aside>
   );
 }

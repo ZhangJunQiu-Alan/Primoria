@@ -1,106 +1,66 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  CopilotChat,
-  CopilotChatAssistantMessage,
-  CopilotChatMessageView,
-  CopilotChatReasoningMessage,
-  UseAgentUpdate,
-  useAgent,
-  type CopilotChatAssistantMessageProps,
-  type CopilotChatMessageViewProps,
-  type CopilotChatReasoningMessageProps,
-} from "@copilotkit/react-core/v2";
-import { usePrimoriaGenerativeUI, sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
-import { ensureThreadSummary, getCurrentThreadId, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
-
-const PrimoriaAssistantMessage = Object.assign(
-  function PrimoriaAssistantMessage(props: CopilotChatAssistantMessageProps) {
-    const safeContent = sanitizeCopilotAssistantText(props.message.content);
-    const message = { ...props.message, content: safeContent };
-    return <CopilotChatAssistantMessage {...props} message={message} />;
-  },
-  CopilotChatAssistantMessage,
-);
-
-const PrimoriaReasoningMessage = Object.assign(
-  function PrimoriaReasoningMessage(_props: CopilotChatReasoningMessageProps) {
-    return null;
-  },
-  CopilotChatReasoningMessage,
-);
-
-const PrimoriaMessageView = Object.assign(
-  function PrimoriaMessageView(props: CopilotChatMessageViewProps) {
-    return (
-      <CopilotChatMessageView
-        {...props}
-        assistantMessage={PrimoriaAssistantMessage}
-        reasoningMessage={PrimoriaReasoningMessage}
-      />
-    );
-  },
-  CopilotChatMessageView,
-);
-
-
-function CopilotThreadHistoryRecorder({ threadId }: { threadId: string }) {
-  const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
-  const lastRecordedRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    ensureThreadSummary(threadId);
-    const userMessages = agent.messages.filter((message) => message.role === "user");
-    const lastUser = userMessages[userMessages.length - 1];
-    const content = typeof lastUser?.content === "string"
-      ? lastUser.content
-      : Array.isArray(lastUser?.content)
-        ? String((lastUser.content.find((part) => part?.type === "text") as { text?: string } | undefined)?.text ?? "")
-        : "";
-    const trimmed = content.trim();
-    if (!trimmed || lastRecordedRef.current === lastUser?.id) return;
-    lastRecordedRef.current = lastUser?.id ?? trimmed;
-    ensureThreadSummary(threadId, {
-      title: trimmed.slice(0, 48),
-      preview: trimmed.slice(0, 90),
-      messageCount: userMessages.length,
-      updatedAt: Date.now(),
-    });
-  }, [agent.messages, threadId]);
-
-  return null;
-}
+import { useEffect, useState } from "react";
+import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
+import { getCurrentThreadId, hydrateThreadHistoryFromServer, resetCopilotThreads, startFreshCurrentThread, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
+import { CopilotRestorePanel, PRIMORIA_MAIN_SUGGESTIONS, PrimoriaCopilotChatSurface } from "./copilot-chat-surface";
 
 function useCurrentCopilotThreadId() {
-  const [threadId, setThreadId] = useState(() => getCurrentThreadId());
+  const [threadId, setThreadId] = useState("");
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+    const timer = window.setTimeout(() => {
+      if (cancelled) return;
+      setThreadId(startFreshCurrentThread());
+      setIsReady(true);
+      void hydrateThreadHistoryFromServer();
+    }, 0);
+
     function onThreadChanged() {
       setThreadId(getCurrentThreadId());
+      setIsReady(true);
     }
     window.addEventListener(THREAD_EVENT_NAME, onThreadChanged);
-    return () => window.removeEventListener(THREAD_EVENT_NAME, onThreadChanged);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+      window.removeEventListener(THREAD_EVENT_NAME, onThreadChanged);
+    };
   }, []);
 
-  return threadId;
+  return { threadId, isReady: isReady && Boolean(threadId) };
 }
 
 export function TutorChatCopilot() {
   usePrimoriaGenerativeUI();
-  const threadId = useCurrentCopilotThreadId();
+  const { threadId, isReady } = useCurrentCopilotThreadId();
+
+  useEffect(() => {
+    function onCopilotRunError(event: ErrorEvent) {
+      const message = String(event.message || "");
+      if (/Message not found|INCOMPLETE_STREAM|already errored/i.test(message)) {
+        resetCopilotThreads();
+      }
+    }
+    window.addEventListener("error", onCopilotRunError);
+    return () => window.removeEventListener("error", onCopilotRunError);
+  }, []);
 
   return (
-    <div className="copilot-chat-shell" aria-busy="false">
-      <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} />
-      <CopilotChat
-        key={`chat-${threadId}`}
-        threadId={threadId}
-        messageView={PrimoriaMessageView}
-        labels={{
-          chatInputPlaceholder: "Ask anything, or ask for an interactive visualization…",
-        }}
-      />
+    <div className="copilot-chat-shell" aria-busy={!isReady}>
+      {isReady ? (
+        <PrimoriaCopilotChatSurface
+          key={`restore-${threadId}`}
+          threadId={threadId}
+          className="main-copilot-surface"
+          welcomeScreen
+          suggestions={PRIMORIA_MAIN_SUGGESTIONS}
+        />
+      ) : (
+        <CopilotRestorePanel />
+      )}
     </div>
   );
 }

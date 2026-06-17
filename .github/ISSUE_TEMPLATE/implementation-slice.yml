@@ -1,0 +1,74 @@
+name: Implementation slice
+description: Focused Primoria implementation issue
+title: "[Slice]: "
+labels: ["status:needs-slice"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user/system problem does this issue solve?
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - type:learning-signal
+        - type:course-copilot
+        - type:renderer
+        - type:workspace
+        - type:agent-runtime
+        - type:memory
+        - type:learning-app
+        - type:data-architecture
+        - type:sharing
+        - type:onboarding
+        - type:refactor
+        - type:search
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - priority:P0
+        - priority:P1
+        - priority:P2
+        - priority:P3
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Keep this small enough for one focused PR.
+      placeholder: |
+        - Add ...
+        - Update ...
+        - Verify ...
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification
+      description: Tests, screenshots, fixtures, or manual checks expected for this issue.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / Notes
+      description: Related issues, blockers, or constraints.

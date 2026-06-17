@@ -3,28 +3,34 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-
 import { createClient } from "@/lib/supabase/client";
 import { TurnstileWidget } from "@/components/auth/turnstile";
-import { authStyles } from "@/components/auth/styles";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+const isSupabaseActive = Boolean(
+  process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 function errorMessage(err: unknown, fallback: string) {
   return err instanceof Error && err.message ? err.message : fallback;
 }
 
-export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
+export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "sign-up" }) {
   const router = useRouter();
-  const params = useSearchParams();
-  const next = params.get("next") ?? "/";
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") ?? "/library";
+
+  // Normalize mode
+  const normalizedMode = (mode === "signin" || mode === "sign-in") ? "sign-in" : "sign-up";
+  const isSignUp = normalizedMode === "sign-up";
 
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(
-    params.get("error") ? "登录回调失败，请重试。" : null,
+    searchParams.get("error") ? "Authentication callback failed. Please try again." : null
   );
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaResetKey, setCaptchaResetKey] = useState(0);
@@ -48,13 +54,14 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
 
   function guardCaptcha() {
     if (captchaEnabled && !captchaToken) {
-      setError("请先完成人机验证。");
+      setError("Please complete the Turnstile captcha first.");
       return false;
     }
     return true;
   }
 
-  async function handlePassword(event: React.FormEvent) {
+  // Supabase Auth Flows
+  async function submitSupabase(event: React.FormEvent) {
     event.preventDefault();
     if (!guardCaptcha()) return;
     setPending(true);
@@ -62,14 +69,18 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
     setStatus(null);
     try {
       const supabase = createClient();
-      if (mode === "signup") {
+      if (isSignUp) {
         const { error: err } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: redirectTo(), ...captchaOptions() },
+          options: {
+            emailRedirectTo: redirectTo(),
+            data: { display_name: displayName || undefined },
+            ...captchaOptions(),
+          },
         });
         if (err) throw err;
-        setStatus("注册成功，请查收确认邮件后再登录。");
+        setStatus("Registration successful! Please check your email for the verification link.");
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({
           email,
@@ -81,7 +92,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
         router.refresh();
       }
     } catch (err) {
-      setError(errorMessage(err, "操作失败，请重试。"));
+      setError(errorMessage(err, "Authentication failed."));
       resetCaptcha();
     } finally {
       setPending(false);
@@ -90,7 +101,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
 
   async function handleMagicLink() {
     if (!email) {
-      setError("请先填写邮箱。");
+      setError("Please enter your email first.");
       return;
     }
     if (!guardCaptcha()) return;
@@ -104,9 +115,9 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
         options: { emailRedirectTo: redirectTo(), ...captchaOptions() },
       });
       if (err) throw err;
-      setStatus("魔法链接已发送，请查收邮箱。");
+      setStatus("Magic link sent! Please check your email inbox.");
     } catch (err) {
-      setError(errorMessage(err, "发送失败，请重试。"));
+      setError(errorMessage(err, "Failed to send magic link."));
       resetCaptcha();
     } finally {
       setPending(false);
@@ -124,103 +135,122 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
       });
       if (err) throw err;
     } catch (err) {
-      setError(errorMessage(err, "Google 登录暂不可用。"));
+      setError(errorMessage(err, "Google login is currently unavailable."));
     }
   }
 
-  const title = mode === "signup" ? "创建账号" : "登录 Primoria";
-  const cta = mode === "signup" ? "注册" : "登录";
+  // Custom DB-Backed Auth Flows
+  async function submitCustomDb(event: React.FormEvent) {
+    event.preventDefault();
+    setError(null);
+    setPending(true);
+    try {
+      const response = await fetch(isSignUp ? "/api/auth/sign-up" : "/api/auth/sign-in", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, password, displayName: displayName || undefined }),
+      });
+      const data = (await response.json()) as { error?: string };
+      if (!response.ok) throw new Error(data.error ?? "Authentication failed");
+      router.push("/library");
+      router.refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Authentication failed");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  const title = isSignUp ? "Create your workspace" : "Sign in to your workspace";
+  const cta = isSignUp ? "Create account" : "Sign in";
 
   return (
-    <div style={{ maxWidth: 360, margin: "10vh auto", padding: "0 16px", fontFamily: "system-ui, sans-serif" }}>
-      <h1 style={{ fontSize: 22, fontWeight: 600, marginBottom: 20 }}>{title}</h1>
+    <div className="auth-panel">
+      <div className="auth-hero" aria-hidden="true">
+        <span>Postgres workspace</span>
+        <strong>{isSignUp ? "Start with saved memory" : "Welcome back"}</strong>
+        <p>Courses, CopilotKit threads, provider settings, and generated apps stay under your account.</p>
+        <div className="auth-hero-orbits">
+          <i />
+          <i />
+          <i />
+        </div>
+      </div>
 
-      <button type="button" onClick={handleGoogle} disabled={pending} style={secondaryButtonStyle}>
-        使用 Google 继续
-      </button>
+      <form className="auth-card" onSubmit={isSupabaseActive ? submitSupabase : submitCustomDb}>
+        <div className="auth-heading">
+          <span className="course-block-tag">Primoria account</span>
+          <h1>{title}</h1>
+          <p>
+            {isSignUp
+              ? "One account keeps every generated course and learning app cleanly separated."
+              : "Continue learning with your saved Library, chat history, and AI settings."}
+          </p>
+        </div>
 
-      <div style={{ textAlign: "center", color: "#aaa", fontSize: 12, margin: "14px 0" }}>或</div>
-
-      <form onSubmit={handlePassword} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <input
-          type="email"
-          autoComplete="email"
-          placeholder="邮箱"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={inputStyle}
-        />
-        <input
-          type="password"
-          autoComplete={mode === "signup" ? "new-password" : "current-password"}
-          placeholder="密码（至少 8 位）"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={8}
-          style={inputStyle}
-        />
-        {captchaEnabled && TURNSTILE_SITE_KEY ? (
-          <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setCaptchaToken} resetKey={captchaResetKey} />
-        ) : null}
-        <button type="submit" disabled={pending} style={primaryButtonStyle}>
-          {pending ? "处理中…" : cta}
-        </button>
-      </form>
-
-      <button type="button" onClick={handleMagicLink} disabled={pending} style={secondaryButtonStyle}>
-        发送邮箱魔法链接
-      </button>
-
-      {error ? <p style={{ color: "#c0392b", fontSize: 13, marginTop: 12 }}>{error}</p> : null}
-      {status ? <p style={{ color: "#27713a", fontSize: 13, marginTop: 12 }}>{status}</p> : null}
-
-      {mode === "signin" ? (
-        <p style={authStyles.footer}>
-          <Link href="/forgot">忘记密码？</Link>
-        </p>
-      ) : null}
-
-      <p style={{ fontSize: 13, marginTop: 20, color: "#555" }}>
-        {mode === "signup" ? (
-          <>
-            已有账号？<Link href="/login">去登录</Link>
-          </>
-        ) : (
-          <>
-            还没有账号？<Link href="/signup">去注册</Link>
-          </>
+        {isSupabaseActive && (
+          <button type="button" onClick={handleGoogle} disabled={pending} className="auth-submit" style={{ background: "#fff", color: "#111", border: "1px solid #eadfce", marginBottom: 12 }}>
+            Continue with Google
+          </button>
         )}
-      </p>
+
+        {isSignUp ? (
+          <label className="auth-field">
+            <span>Name</span>
+            <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} placeholder="Ada" disabled={pending} />
+          </label>
+        ) : null}
+
+        <label className="auth-field">
+          <span>Email</span>
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" required disabled={pending} />
+        </label>
+
+        <label className="auth-field">
+          <span>Password</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder={isSignUp ? "At least 8 characters" : "Your password"}
+            minLength={isSignUp ? 8 : undefined}
+            required
+            disabled={pending}
+          />
+        </label>
+
+        {isSupabaseActive && captchaEnabled && TURNSTILE_SITE_KEY ? (
+          <div style={{ marginTop: 8 }}>
+            <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setCaptchaToken} resetKey={captchaResetKey} />
+          </div>
+        ) : null}
+
+        {error ? <p className="auth-error">{error}</p> : null}
+        {status ? <p className="auth-error" style={{ color: "#27713a", borderColor: "#cce6d2" }}>{status}</p> : null}
+
+        <button className="auth-submit" type="submit" disabled={pending}>
+          {pending ? "Working…" : cta}
+        </button>
+
+        {isSupabaseActive && (
+          <button type="button" onClick={handleMagicLink} disabled={pending} className="auth-submit" style={{ background: "transparent", color: "#6b6357", border: "1px solid transparent", fontSize: 13, marginTop: 4 }}>
+            Send email magic link
+          </button>
+        )}
+
+        <p className="auth-switch">
+          {isSignUp ? "Already have an account?" : "New to Primoria?"} {" "}
+          <Link href={isSignUp ? (isSupabaseActive ? "/login" : "/auth/sign-up") : (isSupabaseActive ? "/signup" : "/auth/sign-in")}>
+            {isSignUp ? "Sign in" : "Create account"}
+          </Link>
+        </p>
+
+        {isSupabaseActive && !isSignUp ? (
+          <p className="auth-switch" style={{ marginTop: 8 }}>
+            <Link href="/forgot">Forgot password?</Link>
+          </p>
+        ) : null}
+      </form>
     </div>
   );
 }
-
-const inputStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  borderRadius: 8,
-  border: "1px solid #ccc",
-  fontSize: 14,
-};
-
-const primaryButtonStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  borderRadius: 8,
-  border: "none",
-  background: "#111",
-  color: "#fff",
-  fontSize: 14,
-  cursor: "pointer",
-};
-
-const secondaryButtonStyle: React.CSSProperties = {
-  width: "100%",
-  marginTop: 10,
-  padding: "10px 12px",
-  borderRadius: 8,
-  border: "1px solid #ccc",
-  background: "#fff",
-  fontSize: 14,
-  cursor: "pointer",
-};

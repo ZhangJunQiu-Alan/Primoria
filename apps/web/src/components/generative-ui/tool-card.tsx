@@ -2,8 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import type { TutorArtifact } from "@/lib/ai/types";
+import type { TutorArtifact } from "@/lib/agent-os";
 import { WidgetRenderer } from "./widget-renderer";
+import { EChartsRenderer } from "./echarts-renderer";
+import { MermaidRenderer } from "./mermaid-renderer";
+import { PhysicsSceneRenderer } from "./physics-scene-renderer";
+import { AlgorithmVisualizer } from "./algorithm-visualizer";
+import { MathExplorerRenderer } from "./math-explorer-renderer";
+import { WaveVisualizer } from "./wave-visualizer";
+import { GraphVisualizer } from "./graph-visualizer";
+import { MoleculeRenderer } from "./molecule-renderer";
 
 export function ToolCard({
   artifact,
@@ -52,28 +60,24 @@ export function ToolCard({
 
   if (artifact.type === "course_card") {
     const courseHref = `/course/${encodeURIComponent(artifact.courseId)}`;
+    const isReady = artifact.status === "ready";
     const typeIcon: Record<string, string> = {
       text: "T",
       analogy: "≈",
       transfer: "→",
       visual: "◐",
       code: "{}",
+      quiz: "?",
+      mind_map: "M",
+      slide: "S",
+      worksheet: "W",
     };
-    return (
-      <div className="message-row tool">
-        <a
-          className="tool-card course-card-link"
-          href={courseHref}
-          onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-            event.preventDefault();
-            event.stopPropagation();
-            router.push(courseHref);
-          }}
-        >
+    const body = (
+      <>
           <div className="tool-title">
-            <span className="tool-dot" />
+            <span className={isReady ? "tool-dot" : "tool-spinner"} />
             <span>
-              generate_course · {artifact.status === "ready" ? "ready" : "generating…"}
+              generate_course · {isReady ? "ready" : "generating…"}
             </span>
           </div>
           <div className="visualizer course-card-body">
@@ -90,10 +94,32 @@ export function ToolCard({
               ))}
             </ul>
             <span className="course-meta">
-              {artifact.outline.length} blocks · ~{artifact.estimatedMinutes} min · click to open
+              {isReady
+                ? `${artifact.outline.length} blocks · ~${artifact.estimatedMinutes} min · click to open`
+                : "You can switch pages; the course will appear in Library when it is ready."}
             </span>
           </div>
-        </a>
+      </>
+    );
+    return (
+      <div className="message-row tool">
+        {isReady ? (
+          <a
+            className="tool-card course-card-link"
+            href={courseHref}
+            onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();
+              event.stopPropagation();
+              router.push(courseHref);
+            }}
+          >
+            {body}
+          </a>
+        ) : (
+          <div className="tool-card course-card-link course-card-pending" aria-busy="true">
+            {body}
+          </div>
+        )}
       </div>
     );
   }
@@ -114,6 +140,38 @@ export function ToolCard({
         </div>
       </div>
     );
+  }
+
+  if (artifact.type === "echarts_widget") {
+    return <EChartsRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "mermaid_diagram") {
+    return <MermaidRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "physics_scene") {
+    return <PhysicsSceneRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "algorithm_visualization") {
+    return <AlgorithmVisualizer artifact={artifact} />;
+  }
+
+  if (artifact.type === "math_explorer") {
+    return <MathExplorerRenderer artifact={artifact} />;
+  }
+
+  if (artifact.type === "wave_visualization") {
+    return <WaveVisualizer artifact={artifact} />;
+  }
+
+  if (artifact.type === "graph_visualization") {
+    return <GraphVisualizer artifact={artifact} />;
+  }
+
+  if (artifact.type === "molecule") {
+    return <MoleculeRenderer artifact={artifact} />;
   }
 
   if (artifact.type === "todo_list") {

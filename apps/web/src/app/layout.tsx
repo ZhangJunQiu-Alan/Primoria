@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { CopilotKitProvider } from "@/components/copilot-provider";
-import { AuthBar } from "@/components/auth/auth-bar";
-import { getUser } from "@/lib/supabase/server";
 import "katex/dist/katex.min.css";
+import "mind-elixir/style.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,13 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const user = await getUser();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        {user?.email ? <AuthBar email={user.email} /> : null}
-        <CopilotKitProvider>{children}</CopilotKitProvider>
+        {children}
       </body>
     </html>
   );

@@ -1,196 +1,195 @@
+import { and, desc, eq, isNull } from "drizzle-orm";
 import type { Course, CourseBlock, CourseSummary } from "./types";
 import { summarizeCourse } from "./types";
-import { supabaseEnv } from "@/lib/supabase/env";
-import { createClient, getUser } from "@/lib/supabase/server";
-import fs from "node:fs";
-import path from "node:path";
+import { getCurrentUser } from "../auth/session";
+import { getDb, hasDatabaseUrl } from "../db/client";
+import { courses as coursesTable } from "../db/schema";
 
-// Storage strategy:
-// - When Supabase auth is configured AND there is a signed-in user, courses are
-//   persisted per-user in public.app_courses (RLS-scoped to auth.users).
-// - Otherwise (auth not configured / dev), fall back to the on-disk JSON store.
-// All public functions are async and resolve the owner internally — every call
-// site already runs inside a request scope (route handler, server component, or
-// the in-process deep agent), so cookies/getUser() are available.
+export async function saveCourse(course: Course, ownerId?: string | null): Promise<Course> {
+  const resolvedOwnerId = await requireOwnerId(ownerId, "save course");
+  await saveCourseToDb(course, resolvedOwnerId);
+  return course;
+}
 
-const TABLE = "app_courses";
+export async function getCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) return undefined;
+  return getCourseFromDb(id, resolvedOwnerId);
+}
 
-type CourseRow = {
-  id: string;
-  owner_id: string;
-  title: string;
-  topic: string;
-  summary: string;
-  estimated_minutes: number;
-  blocks: CourseBlock[];
-  created_at: string;
-  updated_at: string;
-};
+export async function listCourses(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<CourseSummary[]> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) return [];
+  return listCourseSummariesFromDb(resolvedOwnerId, options);
+}
 
-async function resolveOwner(): Promise<string | null> {
-  if (!supabaseEnv()) return null;
-  const user = await getUser();
+export async function updateBlock(courseId: string, blockId: string, next: CourseBlock, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const blocks = course.blocks.map((block) => (block.id === blockId ? next : block));
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
+export async function insertBlock(courseId: string, block: CourseBlock, atIndex?: number, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const blocks = [...course.blocks];
+  const idx = atIndex === undefined || atIndex < 0 || atIndex > blocks.length ? blocks.length : atIndex;
+  blocks.splice(idx, 0, block);
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
+export async function removeBlock(courseId: string, blockId: string, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const blocks = course.blocks.filter((block) => block.id !== blockId);
+  if (blocks.length === course.blocks.length) return undefined;
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
+export async function moveBlock(courseId: string, blockId: string, toIndex: number, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return undefined;
+  const from = course.blocks.findIndex((block) => block.id === blockId);
+  if (from === -1) return undefined;
+  const blocks = [...course.blocks];
+  const [moved] = blocks.splice(from, 1);
+  const dest = Math.max(0, Math.min(blocks.length, toIndex));
+  blocks.splice(dest, 0, moved);
+  const updated: Course = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
+}
+
+export async function archiveCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(id, ownerId);
+  if (!course) return undefined;
+  const archived: Course = { ...course, archivedAt: Date.now(), version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(archived, ownerId);
+}
+
+export async function unarchiveCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
+  const course = await getCourse(id, ownerId);
+  if (!course) return undefined;
+  const unarchived: Course = { ...course, archivedAt: null, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(unarchived, ownerId);
+}
+
+async function resolveOwnerId(ownerId?: string | null) {
+  if (ownerId) return ownerId;
+  if (!hasDatabaseUrl()) return null;
+  const user = await getCurrentUser();
   return user?.id ?? null;
 }
 
-function rowToCourse(row: CourseRow): Course {
+async function requireOwnerId(ownerId: string | null | undefined, action: string) {
+  if (!hasDatabaseUrl()) throw new Error("DATABASE_URL is not configured. Primoria persistence requires Postgres.");
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) throw new Error(`You must sign in to ${action}.`);
+  return resolvedOwnerId;
+}
+
+async function saveCourseToDb(course: Course, ownerId: string) {
+  const row = courseToRow(course, ownerId);
+  await getDb()
+    .insert(coursesTable)
+    .values(row)
+    .onConflictDoUpdate({
+      target: coursesTable.id,
+      set: {
+        ownerId: row.ownerId,
+        title: row.title,
+        topic: row.topic,
+        summary: row.summary,
+        estimatedMinutes: row.estimatedMinutes,
+        blocks: row.blocks,
+        archivedAt: row.archivedAt,
+        version: row.version,
+        updatedAt: row.updatedAt,
+      },
+    });
+}
+
+async function getCourseFromDb(id: string, ownerId: string): Promise<Course | undefined> {
+  const rows = await getDb().select().from(coursesTable).where(eq(coursesTable.id, id)).limit(1);
+  const row = rows[0];
+  if (!row || row.ownerId !== ownerId) return undefined;
+  return rowToCourse(row);
+}
+
+async function listCoursesFromDb(ownerId: string, options: { includeArchived?: boolean } = {}): Promise<Course[]> {
+  const whereClause = options.includeArchived
+    ? eq(coursesTable.ownerId, ownerId)
+    : and(eq(coursesTable.ownerId, ownerId), isNull(coursesTable.archivedAt));
+  const rows = await getDb().select().from(coursesTable).where(whereClause).orderBy(desc(coursesTable.updatedAt));
+  return rows.map(rowToCourse);
+}
+
+async function listCourseSummariesFromDb(ownerId: string, options: { includeArchived?: boolean } = {}): Promise<CourseSummary[]> {
+  const whereClause = options.includeArchived
+    ? eq(coursesTable.ownerId, ownerId)
+    : and(eq(coursesTable.ownerId, ownerId), isNull(coursesTable.archivedAt));
+  const rows = await getDb()
+    .select({
+      id: coursesTable.id,
+      title: coursesTable.title,
+      topic: coursesTable.topic,
+      summary: coursesTable.summary,
+      estimatedMinutes: coursesTable.estimatedMinutes,
+      blocks: coursesTable.blocks,
+      archivedAt: coursesTable.archivedAt,
+      version: coursesTable.version,
+      createdAt: coursesTable.createdAt,
+      updatedAt: coursesTable.updatedAt,
+    })
+    .from(coursesTable)
+    .where(whereClause)
+    .orderBy(desc(coursesTable.updatedAt));
+  return rows.map((row) =>
+    summarizeCourse({
+      id: row.id,
+      title: row.title,
+      topic: row.topic,
+      summary: row.summary,
+      estimatedMinutes: Number(row.estimatedMinutes),
+      blocks: row.blocks as CourseBlock[],
+      archivedAt: row.archivedAt?.getTime() ?? null,
+      version: row.version ?? 1,
+      createdAt: row.createdAt.getTime(),
+      updatedAt: row.updatedAt.getTime(),
+    }),
+  );
+}
+
+function courseToRow(course: Course, ownerId: string) {
+  return {
+    id: course.id,
+    ownerId,
+    title: course.title,
+    topic: course.topic,
+    summary: course.summary,
+    estimatedMinutes: course.estimatedMinutes,
+    blocks: course.blocks,
+    archivedAt: course.archivedAt ? new Date(course.archivedAt) : null,
+    version: course.version ?? 1,
+    createdAt: new Date(course.createdAt),
+    updatedAt: new Date(course.updatedAt),
+  };
+}
+
+function rowToCourse(row: typeof coursesTable.$inferSelect): Course {
   return {
     id: row.id,
     title: row.title,
     topic: row.topic,
     summary: row.summary,
-    estimatedMinutes: row.estimated_minutes,
-    blocks: Array.isArray(row.blocks) ? row.blocks : [],
-    createdAt: new Date(row.created_at).getTime(),
-    updatedAt: new Date(row.updated_at).getTime(),
+    estimatedMinutes: Number(row.estimatedMinutes),
+    blocks: row.blocks as CourseBlock[],
+    archivedAt: row.archivedAt?.getTime() ?? null,
+    version: row.version ?? 1,
+    createdAt: row.createdAt.getTime(),
+    updatedAt: row.updatedAt.getTime(),
   };
-}
-
-export async function saveCourse(course: Course): Promise<Course> {
-  const owner = await resolveOwner();
-  if (!owner) {
-    jsonStore().courses.set(course.id, course);
-    persistStore();
-    return course;
-  }
-
-  const supabase = await createClient();
-  const { error } = await supabase.from(TABLE).upsert({
-    id: course.id,
-    owner_id: owner,
-    title: course.title,
-    topic: course.topic,
-    summary: course.summary,
-    estimated_minutes: course.estimatedMinutes,
-    blocks: course.blocks,
-    created_at: new Date(course.createdAt).toISOString(),
-    updated_at: new Date(course.updatedAt).toISOString(),
-  });
-  if (error) throw new Error(`Failed to save course: ${error.message}`);
-  return course;
-}
-
-export async function getCourse(id: string): Promise<Course | undefined> {
-  const owner = await resolveOwner();
-  if (!owner) return jsonStore().courses.get(id);
-
-  const supabase = await createClient();
-  const { data, error } = await supabase.from(TABLE).select("*").eq("id", id).maybeSingle();
-  if (error) throw new Error(`Failed to load course: ${error.message}`);
-  return data ? rowToCourse(data as CourseRow) : undefined;
-}
-
-export async function listCourses(): Promise<CourseSummary[]> {
-  const owner = await resolveOwner();
-  if (!owner) {
-    const courses = Array.from(jsonStore().courses.values());
-    courses.sort((a, b) => b.createdAt - a.createdAt);
-    return courses.map(summarizeCourse);
-  }
-
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from(TABLE)
-    .select("*")
-    .eq("owner_id", owner)
-    .order("created_at", { ascending: false });
-  if (error) throw new Error(`Failed to list courses: ${error.message}`);
-  return (data as CourseRow[]).map((row) => summarizeCourse(rowToCourse(row)));
-}
-
-export async function updateBlock(
-  courseId: string,
-  blockId: string,
-  next: CourseBlock,
-): Promise<Course | undefined> {
-  const course = await getCourse(courseId);
-  if (!course) return undefined;
-  const blocks = course.blocks.map((block) => (block.id === blockId ? next : block));
-  const updated: Course = { ...course, blocks, updatedAt: Date.now() };
-  return saveCourse(updated);
-}
-
-// --- JSON fallback store (dev / auth not configured) -----------------------
-
-type GlobalStore = {
-  courses: Map<string, Course>;
-  hydrated: boolean;
-  fileMtimeMs: number;
-};
-
-const globalKey = "__primoria_course_store__";
-const globalAny = globalThis as unknown as Record<string, GlobalStore | undefined>;
-const storeFile = path.join(findWorkspaceRoot(), ".primoria-courses.json");
-
-function jsonStore(): GlobalStore {
-  let store = globalAny[globalKey];
-  if (!store) {
-    store = { courses: new Map(), hydrated: false, fileMtimeMs: 0 };
-    globalAny[globalKey] = store;
-  }
-  if (!store.hydrated) {
-    hydrateStore(store);
-  } else {
-    refreshStoreIfChanged(store);
-  }
-  return store;
-}
-
-function hydrateStore(store: GlobalStore) {
-  store.hydrated = true;
-  try {
-    if (!fs.existsSync(storeFile)) {
-      store.fileMtimeMs = 0;
-      return;
-    }
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { courses?: Course[] };
-    if (!Array.isArray(parsed.courses)) return;
-    store.courses = new Map(parsed.courses.map((course) => [course.id, course]));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to hydrate course store", error);
-  }
-}
-
-function refreshStoreIfChanged(store: GlobalStore) {
-  try {
-    if (!fs.existsSync(storeFile)) {
-      if (store.fileMtimeMs !== 0) {
-        store.courses = new Map();
-        store.fileMtimeMs = 0;
-      }
-      return;
-    }
-
-    const mtimeMs = fs.statSync(storeFile).mtimeMs;
-    if (mtimeMs === store.fileMtimeMs) return;
-
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { courses?: Course[] };
-    if (!Array.isArray(parsed.courses)) return;
-    store.courses = new Map(parsed.courses.map((course) => [course.id, course]));
-    store.fileMtimeMs = mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to refresh course store", error);
-  }
-}
-
-function persistStore() {
-  try {
-    const store = jsonStore();
-    const courses = Array.from(store.courses.values());
-    fs.writeFileSync(storeFile, JSON.stringify({ courses }, null, 2));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to persist course store", error);
-  }
-}
-
-function findWorkspaceRoot() {
-  let dir = process.cwd();
-  while (true) {
-    if (fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return process.cwd();
-    dir = parent;
-  }
 }

@@ -1,43 +1,49 @@
 // @ts-check
 
-import fs from "node:fs";
-import path from "node:path";
+import postgres from "postgres";
 import { summarizeCourse } from "./course-types.mjs";
 
-const globalKey = "__primoria_course_store__";
-const storeFile = path.join(findWorkspaceRoot(), ".primoria-courses.json");
-
-function getStore() {
+const dbGlobalKey = "__primoria_agent_postgres__";
+function getSql() {
+  const url = process.env.DATABASE_URL;
+  if (!url) return null;
   const globalAny = /** @type {any} */ (globalThis);
-  let store = globalAny[globalKey];
-  if (!store) {
-    store = { courses: new Map(), hydrated: false, fileMtimeMs: 0 };
-    globalAny[globalKey] = store;
+  if (!globalAny[dbGlobalKey]) {
+    globalAny[dbGlobalKey] = postgres(url, { max: 1, prepare: false });
   }
-  if (!store.hydrated) hydrateStore(store);
-  else refreshStoreIfChanged(store);
-  return store;
+  return /** @type {postgres.Sql} */ (globalAny[dbGlobalKey]);
 }
 
 /**
  * @param {any} course
+ * @param {string | null | undefined} ownerId
  */
-export function saveCourse(course) {
-  getStore().courses.set(course.id, course);
-  persistStore();
+export async function saveCourse(course, ownerId) {
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is not configured. Primoria persistence requires Postgres.");
+  }
+  if (!ownerId) {
+    throw new Error("Missing primoria_owner_id. Sign in before generating courses.");
+  }
+  await saveCourseToDb(course, ownerId);
   return course;
 }
 
 /**
  * @param {string} id
+ * @param {string | null | undefined} ownerId
  */
-export function getCourse(id) {
-  return getStore().courses.get(id);
+export async function getCourse(id, ownerId) {
+  if (!process.env.DATABASE_URL || !ownerId) return undefined;
+  return getCourseFromDb(id, ownerId);
 }
 
-export function listCourses() {
-  const courses = Array.from(getStore().courses.values());
-  courses.sort((a, b) => b.createdAt - a.createdAt);
+/**
+ * @param {string | null | undefined} ownerId
+ */
+export async function listCourses(ownerId) {
+  if (!process.env.DATABASE_URL || !ownerId) return [];
+  const courses = await listCoursesFromDb(ownerId);
   return courses.map(summarizeCourse);
 }
 
@@ -45,76 +51,92 @@ export function listCourses() {
  * @param {string} courseId
  * @param {string} blockId
  * @param {any} next
+ * @param {string | null | undefined} ownerId
  */
-export function updateBlock(courseId, blockId, next) {
-  const course = getCourse(courseId);
+export async function updateBlock(courseId, blockId, next, ownerId) {
+  const course = await getCourse(courseId, ownerId);
   if (!course) return undefined;
   const blocks = course.blocks.map((/** @type {any} */ block) => (block.id === blockId ? next : block));
-  const updated = { ...course, blocks, updatedAt: Date.now() };
-  return saveCourse(updated);
+  const updated = { ...course, blocks, version: (course.version ?? 1) + 1, updatedAt: Date.now() };
+  return saveCourse(updated, ownerId);
 }
 
 /**
- * @param {{ hydrated: boolean; courses: Map<string, any>; fileMtimeMs: number }} store
+ * @param {any} course
+ * @param {string} ownerId
  */
-function hydrateStore(store) {
-  store.hydrated = true;
-  try {
-    if (!fs.existsSync(storeFile)) {
-      store.fileMtimeMs = 0;
-      return;
-    }
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8"));
-    if (!Array.isArray(parsed.courses)) return;
-    store.courses = new Map(parsed.courses.map((/** @type {any} */ course) => [course.id, course]));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to hydrate course store", error);
-  }
+async function saveCourseToDb(course, ownerId) {
+  const sql = getSql();
+  if (!sql) throw new Error("DATABASE_URL is not configured.");
+  const createdAt = new Date(course.createdAt);
+  const updatedAt = new Date(course.updatedAt);
+  await sql`
+    insert into courses (
+      id, owner_id, title, topic, summary, estimated_minutes, blocks,
+      archived_at, version, created_at, updated_at
+    ) values (
+      ${course.id}, ${ownerId}, ${course.title}, ${course.topic}, ${course.summary},
+      ${course.estimatedMinutes}, ${sql.json(course.blocks)},
+      ${course.archivedAt ? new Date(course.archivedAt) : null}, ${course.version ?? 1}, ${createdAt}, ${updatedAt}
+    )
+    on conflict (id) do update set
+      owner_id = excluded.owner_id,
+      title = excluded.title,
+      topic = excluded.topic,
+      summary = excluded.summary,
+      estimated_minutes = excluded.estimated_minutes,
+      blocks = excluded.blocks,
+      archived_at = excluded.archived_at,
+      version = excluded.version,
+      updated_at = excluded.updated_at
+  `;
+}
+/**
+ * @param {string} id
+ * @param {string} ownerId
+ */
+async function getCourseFromDb(id, ownerId) {
+  const sql = getSql();
+  if (!sql) throw new Error("DATABASE_URL is not configured.");
+  const rows = await sql`
+    select id, title, topic, summary, estimated_minutes, blocks, archived_at, version, created_at, updated_at
+    from courses
+    where id = ${id} and owner_id = ${ownerId}
+    limit 1
+  `;
+  return rows[0] ? rowToCourse(rows[0]) : undefined;
 }
 
 /**
- * @param {{ hydrated: boolean; courses: Map<string, any>; fileMtimeMs?: number }} store
+ * @param {string} ownerId
  */
-function refreshStoreIfChanged(store) {
-  try {
-    if (!fs.existsSync(storeFile)) {
-      if ((store.fileMtimeMs ?? 0) !== 0) {
-        store.courses = new Map();
-        store.fileMtimeMs = 0;
-      }
-      return;
-    }
-
-    const mtimeMs = fs.statSync(storeFile).mtimeMs;
-    if (mtimeMs === (store.fileMtimeMs ?? 0)) return;
-
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8"));
-    if (!Array.isArray(parsed.courses)) return;
-    store.courses = new Map(parsed.courses.map((/** @type {any} */ course) => [course.id, course]));
-    store.fileMtimeMs = mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to refresh course store", error);
-  }
+async function listCoursesFromDb(ownerId) {
+  const sql = getSql();
+  if (!sql) throw new Error("DATABASE_URL is not configured.");
+  const rows = await sql`
+    select id, title, topic, summary, estimated_minutes, blocks, archived_at, version, created_at, updated_at
+    from courses
+    where owner_id = ${ownerId} and archived_at is null
+    order by updated_at desc
+  `;
+  return rows.map(rowToCourse);
 }
 
-function persistStore() {
-  try {
-    const store = getStore();
-    const courses = Array.from(store.courses.values());
-    fs.writeFileSync(storeFile, JSON.stringify({ courses }, null, 2));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[courses/store] Failed to persist course store", error);
-  }
+/**
+ * @param {any} row
+ */
+function rowToCourse(row) {
+  return {
+    id: row.id,
+    title: row.title,
+    topic: row.topic,
+    summary: row.summary,
+    estimatedMinutes: Number(row.estimated_minutes),
+    blocks: row.blocks,
+    archivedAt: row.archived_at ? new Date(row.archived_at).getTime() : null,
+    version: row.version ?? 1,
+    createdAt: new Date(row.created_at).getTime(),
+    updatedAt: new Date(row.updated_at).getTime(),
+  };
 }
 
-function findWorkspaceRoot() {
-  let dir = process.cwd();
-  while (true) {
-    if (fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return process.cwd();
-    dir = parent;
-  }
-}

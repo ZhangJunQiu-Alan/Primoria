@@ -1,0 +1,568 @@
+import { boolean, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  displayName: text("display_name"),
+  avatarUrl: text("avatar_url"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const identities = pgTable(
+  "identities",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    provider: text("provider").notNull(),
+    providerUserId: text("provider_user_id").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    passwordHash: text("password_hash"),
+    verifiedAt: timestamp("verified_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    providerUserUnique: uniqueIndex("identities_provider_user_uidx").on(table.provider, table.providerUserId),
+    userIdx: index("identities_user_idx").on(table.userId),
+    emailIdx: index("identities_email_idx").on(table.email),
+    phoneIdx: index("identities_phone_idx").on(table.phone),
+  }),
+);
+
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    tokenHash: text("token_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    tokenHashUnique: uniqueIndex("sessions_token_hash_uidx").on(table.tokenHash),
+    userIdx: index("sessions_user_idx").on(table.userId),
+    expiresIdx: index("sessions_expires_idx").on(table.expiresAt),
+  }),
+);
+
+export const otpCodes = pgTable(
+  "otp_codes",
+  {
+    id: text("id").primaryKey(),
+    targetType: text("target_type").notNull(),
+    target: text("target").notNull(),
+    codeHash: text("code_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    consumedAt: timestamp("consumed_at", { withTimezone: true }),
+    attempts: integer("attempts").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    targetIdx: index("otp_codes_target_idx").on(table.targetType, table.target),
+    expiresIdx: index("otp_codes_expires_idx").on(table.expiresAt),
+  }),
+);
+
+export const courses = pgTable(
+  "courses",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    topic: text("topic").notNull(),
+    summary: text("summary").notNull(),
+    estimatedMinutes: integer("estimated_minutes").notNull(),
+    blocks: jsonb("blocks").notNull(),
+    archivedAt: timestamp("archived_at", { withTimezone: true }),
+    version: integer("version").notNull().default(1),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+  },
+  (table) => ({
+    ownerUpdatedIdx: index("courses_owner_updated_idx").on(table.ownerId, table.updatedAt),
+    ownerArchivedUpdatedIdx: index("courses_owner_archived_updated_idx").on(table.ownerId, table.archivedAt, table.updatedAt),
+  }),
+);
+
+export const courseGenerationJobs = pgTable(
+  "course_generation_jobs",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull(),
+    topic: text("topic").notNull(),
+    contextHint: text("context_hint"),
+    status: text("status").notNull().default("queued"),
+    attempts: integer("attempts").notNull().default(0),
+    lastError: text("last_error"),
+    leaseOwner: text("lease_owner"),
+    leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerStatusUpdatedIdx: index("course_generation_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
+    statusLeaseIdx: index("course_generation_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    courseIdUnique: uniqueIndex("course_generation_jobs_course_id_uidx").on(table.courseId),
+  }),
+);
+
+export const learningApps = pgTable(
+  "learning_apps",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    displayName: text("display_name").notNull(),
+    description: text("description"),
+    tags: jsonb("tags").notNull(),
+    template: jsonb("template").notNull(),
+    origin: jsonb("origin").notNull(),
+    composition: jsonb("composition"),
+    capabilities: jsonb("capabilities"),
+    metadata: jsonb("metadata").notNull(),
+    htmlSignature: text("html_signature"),
+    archivedAt: timestamp("archived_at", { withTimezone: true }),
+    version: integer("version").notNull().default(1),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+  },
+  (table) => ({
+    ownerUpdatedIdx: index("learning_apps_owner_updated_idx").on(table.ownerId, table.updatedAt),
+    ownerArchivedUpdatedIdx: index("learning_apps_owner_archived_updated_idx").on(table.ownerId, table.archivedAt, table.updatedAt),
+    ownerSignatureUnique: uniqueIndex("learning_apps_owner_signature_uidx").on(table.ownerId, table.htmlSignature),
+  }),
+);
+
+export const courseEditEvents = pgTable(
+  "course_edit_events",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    blockId: text("block_id").notNull(),
+    instruction: text("instruction").notNull(),
+    beforeBlock: jsonb("before_block").notNull(),
+    afterBlock: jsonb("after_block").notNull(),
+    metadata: jsonb("metadata"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerCreatedIdx: index("course_edit_events_owner_created_idx").on(table.ownerId, table.createdAt),
+    courseCreatedIdx: index("course_edit_events_course_created_idx").on(table.courseId, table.createdAt),
+  }),
+);
+
+export const copilotChatThreads = pgTable(
+  "copilot_chat_threads",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    preview: text("preview"),
+    messageCount: integer("message_count").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerUpdatedIdx: index("copilot_chat_threads_owner_updated_idx").on(table.ownerId, table.updatedAt),
+  }),
+);
+
+export const copilotChatMessages = pgTable(
+  "copilot_chat_messages",
+  {
+    id: text("id").primaryKey(),
+    threadId: text("thread_id").notNull().references(() => copilotChatThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    role: text("role").notNull(),
+    content: text("content").notNull(),
+    metadata: jsonb("metadata"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadCreatedIdx: index("copilot_chat_messages_thread_created_idx").on(table.threadId, table.createdAt),
+    ownerCreatedIdx: index("copilot_chat_messages_owner_created_idx").on(table.ownerId, table.createdAt),
+  }),
+);
+
+export const workspaces = pgTable(
+  "workspaces",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    inviteCode: text("invite_code"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerUpdatedIdx: index("workspaces_owner_updated_idx").on(table.ownerId, table.updatedAt),
+    inviteCodeIdx: uniqueIndex("workspaces_invite_code_idx").on(table.inviteCode),
+  }),
+);
+
+export const workspaceAgentProfiles = pgTable(
+  "workspace_agent_profiles",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    displayName: text("display_name").notNull(),
+    handle: text("handle").notNull(),
+    description: text("description").notNull(),
+    visibility: text("visibility").notNull(),
+    templateKey: text("template_key"),
+    systemPrompt: text("system_prompt").notNull(),
+    defaultModel: text("default_model"),
+    memoryScope: text("memory_scope").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceIdx: index("workspace_agent_profiles_workspace_idx").on(table.workspaceId),
+    ownerWorkspaceIdx: index("workspace_agent_profiles_owner_workspace_idx").on(table.ownerId, table.workspaceId),
+    workspaceHandleUnique: uniqueIndex("workspace_agent_profiles_workspace_handle_uidx").on(table.workspaceId, table.handle),
+  }),
+);
+
+export const workspaceAgentCapabilities = pgTable(
+  "workspace_agent_capabilities",
+  {
+    id: text("id").primaryKey(),
+    profileId: text("profile_id").notNull().references(() => workspaceAgentProfiles.id, { onDelete: "cascade" }),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(),
+    source: text("source"),
+    path: text("path"),
+    toolName: text("tool_name"),
+    connectionId: text("connection_id"),
+    agentProfileId: text("agent_profile_id"),
+    approval: text("approval"),
+    enabled: boolean("enabled").notNull().default(true),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    profileIdx: index("workspace_agent_capabilities_profile_idx").on(table.profileId),
+    workspaceIdx: index("workspace_agent_capabilities_workspace_idx").on(table.workspaceId),
+  }),
+);
+
+export const workspaceAgentConnections = pgTable(
+  "workspace_agent_connections",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    scope: text("scope").notNull(),
+    displayName: text("display_name").notNull(),
+    transport: text("transport").notNull(),
+    configRef: text("config_ref").notNull(),
+    allowedToolNames: jsonb("allowed_tool_names").notNull(),
+    status: text("status").notNull().default("available"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerScopeIdx: index("workspace_agent_connections_owner_scope_idx").on(table.ownerId, table.scope),
+    workspaceScopeIdx: index("workspace_agent_connections_workspace_scope_idx").on(table.workspaceId, table.scope),
+  }),
+);
+
+export const workspaceMembers = pgTable(
+  "workspace_members",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    displayName: text("display_name").notNull(),
+    role: text("role").notNull(),
+    status: text("status"),
+    agentProfileId: text("agent_profile_id").references(() => workspaceAgentProfiles.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceIdx: index("workspace_members_workspace_idx").on(table.workspaceId),
+    ownerWorkspaceIdx: index("workspace_members_owner_workspace_idx").on(table.ownerId, table.workspaceId),
+  }),
+);
+
+export const workspaceThreads = pgTable(
+  "workspace_threads",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    agentTriggerMode: text("agent_trigger_mode").notNull().default("room_default"),
+    allowedAgentProfileIds: jsonb("allowed_agent_profile_ids"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceTypeIdx: index("workspace_threads_workspace_type_idx").on(table.workspaceId, table.type),
+    ownerUpdatedIdx: index("workspace_threads_owner_updated_idx").on(table.ownerId, table.updatedAt),
+  }),
+);
+
+export const workspaceThreadMembers = pgTable(
+  "workspace_thread_members",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    memberId: text("member_id").notNull().references(() => workspaceMembers.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadOwnerIdx: index("workspace_thread_members_thread_owner_idx").on(table.threadId, table.ownerId),
+    memberThreadUnique: uniqueIndex("workspace_thread_members_member_thread_uidx").on(table.memberId, table.threadId),
+  }),
+);
+
+export const workspaceMessages = pgTable(
+  "workspace_messages",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    senderName: text("sender_name").notNull(),
+    senderKind: text("sender_kind").notNull(),
+    content: text("content").notNull(),
+    artifact: jsonb("artifact"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadCreatedIdx: index("workspace_messages_thread_created_idx").on(table.threadId, table.createdAt),
+    ownerCreatedIdx: index("workspace_messages_owner_created_idx").on(table.ownerId, table.createdAt),
+  }),
+);
+
+export const workspaceArtifacts = pgTable(
+  "workspace_artifacts",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    reviewStatus: text("review_status").notNull().default("reviewed"),
+    sourceMessageId: text("source_message_id").notNull().references(() => workspaceMessages.id, { onDelete: "cascade" }),
+    sourceRunId: text("source_run_id"),
+    payload: jsonb("payload").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceCreatedIdx: index("workspace_artifacts_workspace_created_idx").on(table.workspaceId, table.createdAt),
+    threadCreatedIdx: index("workspace_artifacts_thread_created_idx").on(table.threadId, table.createdAt),
+    sourceMessageUnique: uniqueIndex("workspace_artifacts_source_message_uidx").on(table.sourceMessageId),
+    sourceRunIdx: index("workspace_artifacts_source_run_idx").on(table.sourceRunId),
+  }),
+);
+
+export const workspaceTasks = pgTable(
+  "workspace_tasks",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    scope: text("scope").notNull(),
+    status: text("status").notNull().default("open"),
+    progress: text("progress").notNull(),
+    dueAt: text("due_at"),
+    metadata: jsonb("metadata"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    threadStatusIdx: index("workspace_tasks_thread_status_idx").on(table.threadId, table.status),
+    ownerUpdatedIdx: index("workspace_tasks_owner_updated_idx").on(table.ownerId, table.updatedAt),
+  }),
+);
+
+export const workspaceAgentRuns = pgTable(
+  "workspace_agent_runs",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    agentProfileId: text("agent_profile_id").notNull().references(() => workspaceAgentProfiles.id, { onDelete: "cascade" }),
+    agentMemberId: text("agent_member_id").references(() => workspaceMembers.id, { onDelete: "set null" }),
+    trigger: text("trigger").notNull(),
+    status: text("status").notNull(),
+    inputMessageId: text("input_message_id").references(() => workspaceMessages.id, { onDelete: "set null" }),
+    outputMessageId: text("output_message_id").references(() => workspaceMessages.id, { onDelete: "set null" }),
+    taskId: text("task_id").references(() => workspaceTasks.id, { onDelete: "set null" }),
+    error: text("error"),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+  },
+  (table) => ({
+    workspaceStatusIdx: index("workspace_agent_runs_workspace_status_idx").on(table.workspaceId, table.status),
+    threadStartedIdx: index("workspace_agent_runs_thread_started_idx").on(table.threadId, table.startedAt),
+    profileStartedIdx: index("workspace_agent_runs_profile_started_idx").on(table.agentProfileId, table.startedAt),
+  }),
+);
+
+export const workspaceAgentRunEvents = pgTable(
+  "workspace_agent_run_events",
+  {
+    id: text("id").primaryKey(),
+    runId: text("run_id").notNull().references(() => workspaceAgentRuns.id, { onDelete: "cascade" }),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    label: text("label").notNull(),
+    payload: jsonb("payload"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    runCreatedIdx: index("workspace_agent_run_events_run_created_idx").on(table.runId, table.createdAt),
+    threadCreatedIdx: index("workspace_agent_run_events_thread_created_idx").on(table.threadId, table.createdAt),
+  }),
+);
+
+export const workspaceAgentApprovals = pgTable(
+  "workspace_agent_approvals",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").notNull().references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    runId: text("run_id").notNull().references(() => workspaceAgentRuns.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    agentProfileId: text("agent_profile_id").notNull().references(() => workspaceAgentProfiles.id, { onDelete: "cascade" }),
+    agentMemberId: text("agent_member_id").references(() => workspaceMembers.id, { onDelete: "set null" }),
+    toolName: text("tool_name").notNull(),
+    status: text("status").notNull(),
+    input: jsonb("input"),
+    policy: jsonb("policy"),
+    deepAgentThreadId: text("deep_agent_thread_id"),
+    requestedAt: timestamp("requested_at", { withTimezone: true }).notNull().defaultNow(),
+    decidedAt: timestamp("decided_at", { withTimezone: true }),
+    decidedBy: text("decided_by"),
+    decisionReason: text("decision_reason"),
+  },
+  (table) => ({
+    runStatusIdx: index("workspace_agent_approvals_run_status_idx").on(table.runId, table.status),
+    workspaceStatusIdx: index("workspace_agent_approvals_workspace_status_idx").on(table.workspaceId, table.status),
+    threadRequestedIdx: index("workspace_agent_approvals_thread_requested_idx").on(table.threadId, table.requestedAt),
+  }),
+);
+
+export const workspaceAgentMemories = pgTable(
+  "workspace_agent_memories",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").references(() => workspaces.id, { onDelete: "cascade" }),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    threadId: text("thread_id").references(() => workspaceThreads.id, { onDelete: "cascade" }),
+    agentProfileId: text("agent_profile_id").notNull().references(() => workspaceAgentProfiles.id, { onDelete: "cascade" }),
+    scope: text("scope").notNull(),
+    title: text("title").notNull(),
+    summary: text("summary").notNull(),
+    sourceRunId: text("source_run_id").references(() => workspaceAgentRuns.id, { onDelete: "set null" }),
+    sourceMessageId: text("source_message_id").references(() => workspaceMessages.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    archivedAt: timestamp("archived_at", { withTimezone: true }),
+  },
+  (table) => ({
+    workspaceScopeIdx: index("workspace_agent_memories_workspace_scope_idx").on(table.workspaceId, table.scope),
+    userScopeIdx: index("workspace_agent_memories_user_scope_idx").on(table.userId, table.scope),
+    threadIdx: index("workspace_agent_memories_thread_idx").on(table.threadId),
+    profileIdx: index("workspace_agent_memories_profile_idx").on(table.agentProfileId),
+  }),
+);
+
+export const workspaceAgentSkills = pgTable(
+  "workspace_agent_skills",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    source: text("source").notNull(),
+    slug: text("slug").notNull(),
+    name: text("name").notNull(),
+    description: text("description").notNull(),
+    instructions: text("instructions").notNull(),
+    markdown: text("markdown").notNull(),
+    currentVersion: integer("current_version").notNull().default(1),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    workspaceIdx: index("workspace_agent_skills_workspace_idx").on(table.workspaceId),
+    ownerIdx: index("workspace_agent_skills_owner_idx").on(table.ownerId),
+    workspaceSlugUnique: uniqueIndex("workspace_agent_skills_workspace_slug_uidx").on(table.source, table.workspaceId, table.slug),
+    userSlugUnique: uniqueIndex("workspace_agent_skills_user_slug_uidx").on(table.source, table.ownerId, table.slug),
+  }),
+);
+
+export const workspaceAgentSkillVersions = pgTable(
+  "workspace_agent_skill_versions",
+  {
+    id: text("id").primaryKey(),
+    skillId: text("skill_id").notNull().references(() => workspaceAgentSkills.id, { onDelete: "cascade" }),
+    workspaceId: text("workspace_id").references(() => workspaces.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    version: integer("version").notNull(),
+    name: text("name").notNull(),
+    description: text("description").notNull(),
+    instructions: text("instructions").notNull(),
+    markdown: text("markdown").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    skillVersionUnique: uniqueIndex("workspace_agent_skill_versions_skill_version_uidx").on(table.skillId, table.version),
+    skillIdx: index("workspace_agent_skill_versions_skill_idx").on(table.skillId),
+    workspaceIdx: index("workspace_agent_skill_versions_workspace_idx").on(table.workspaceId),
+    ownerIdx: index("workspace_agent_skill_versions_owner_idx").on(table.ownerId),
+  }),
+);
+
+export const userSettings = pgTable("user_settings", {
+  userId: text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+  preferences: jsonb("preferences").notNull().default({}),
+  providerSettings: jsonb("provider_settings"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const quizAttempts = pgTable(
+  "quiz_attempts",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    blockId: text("block_id").notNull(),
+    answers: jsonb("answers").notNull(),
+    score: integer("score").notNull(),
+    total: integer("total").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerCourseIdx: index("quiz_attempts_owner_course_idx").on(table.ownerId, table.courseId),
+    blockIdx: index("quiz_attempts_block_idx").on(table.blockId),
+  }),
+);
+
+export type UserRow = typeof users.$inferSelect;
+export type IdentityRow = typeof identities.$inferSelect;
+export type SessionRow = typeof sessions.$inferSelect;

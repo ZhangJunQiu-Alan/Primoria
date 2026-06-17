@@ -1,0 +1,132 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1779502999295,
+      "tag": "0000_cuddly_obadiah_stane",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779504298624,
+      "tag": "0001_pink_luke_cage",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779523500000,
+      "tag": "0002_memory_versions_archive",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779643266445,
+      "tag": "0003_mushy_gargoyle",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1779736800000,
+      "tag": "0004_workspace_invites",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779652180563,
+      "tag": "0005_workspace_thread_members",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779779000000,
+      "tag": "0006_workspace_agent_profiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1779782600000,
+      "tag": "0007_workspace_agent_runs",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1779786200000,
+      "tag": "0008_workspace_agent_approvals",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1779829800000,
+      "tag": "0009_workspace_artifacts",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1779833400000,
+      "tag": "0010_workspace_agent_skills",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1779840600000,
+      "tag": "0011_workspace_agent_memories",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1779844200000,
+      "tag": "0012_workspace_agent_connections",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1779847800000,
+      "tag": "0013_workspace_thread_agent_trigger_mode",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1779851400000,
+      "tag": "0014_workspace_thread_agent_allowlist",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1779855000000,
+      "tag": "0015_workspace_artifact_review_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1780481138007,
+      "tag": "0016_damp_bloodstrike",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1781363171281,
+      "tag": "0017_tan_cammi",
+      "breakpoints": true
+    }
+  ]
+}

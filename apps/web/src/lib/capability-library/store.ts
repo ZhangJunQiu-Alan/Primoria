@@ -1,55 +1,71 @@
 import fs from "node:fs";
 import path from "node:path";
+import { and, desc, eq, isNull } from "drizzle-orm";
+import { getCurrentUser } from "../auth/session";
+import { getDb, hasDatabaseUrl } from "../db/client";
+import { learningApps as learningAppsTable } from "../db/schema";
 import type { LearningApp, LearningAppSummary } from "./types";
 import { summarizeApp } from "./types";
 
-type GlobalStore = {
-  apps: Map<string, LearningApp>;
-  hydrated: boolean;
-  fileMtimeMs: number;
-};
-
-const globalKey = "__primoria_capability_library_store__";
-const globalAny = globalThis as unknown as Record<string, GlobalStore | undefined>;
-const storeFile = path.join(findWorkspaceRoot(), ".primoria-capability-library.json");
-
-function getStore(): GlobalStore {
-  let store = globalAny[globalKey];
-  if (!store) {
-    store = { apps: new Map(), hydrated: false, fileMtimeMs: 0 };
-    globalAny[globalKey] = store;
+export async function saveApp(app: LearningApp, ownerId?: string | null): Promise<LearningApp> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) {
+    saveAppToLocalFile(app);
+    return app;
   }
-  if (!store.hydrated) {
-    hydrateStore(store);
-  } else {
-    refreshStoreIfChanged(store);
-  }
-  return store;
-}
-
-export function saveApp(app: LearningApp): LearningApp {
-  getStore().apps.set(app.id, app);
-  persistStore();
+  await saveAppToDb(app, resolvedOwnerId);
   return app;
 }
 
-export function getApp(id: string): LearningApp | undefined {
-  return getStore().apps.get(id);
+export async function getApp(id: string, ownerId?: string | null): Promise<LearningApp | undefined> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) return getAppFromLocalFile(id);
+  return getAppFromDb(id, resolvedOwnerId);
 }
 
-export function listApps(): LearningAppSummary[] {
-  const apps = Array.from(getStore().apps.values());
-  apps.sort((a, b) => b.metadata.lastUsedAt - a.metadata.lastUsedAt);
-  return apps.map(summarizeApp);
+export async function listApps(ownerId?: string | null, options: { includeArchived?: boolean } = {}): Promise<LearningAppSummary[]> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) return listAppsFromLocalFile(options).map(summarizeApp);
+  return listAppSummariesFromDb(resolvedOwnerId, options);
 }
 
-export function findAppByHtmlSignature(signature: string): LearningApp | undefined {
-  for (const app of getStore().apps.values()) {
-    if (app.template.type === "html" && hashHtmlSource(app.template.source) === signature) {
-      return app;
-    }
+export async function archiveApp(id: string, ownerId?: string | null): Promise<LearningApp | undefined> {
+  const app = await getApp(id, ownerId);
+  if (!app) return undefined;
+  const now = Date.now();
+  const archived: LearningApp = {
+    ...app,
+    archivedAt: now,
+    version: (app.version ?? 1) + 1,
+    metadata: { ...app.metadata, lastUsedAt: now },
+  };
+  return saveApp(archived, ownerId);
+}
+
+export async function unarchiveApp(id: string, ownerId?: string | null): Promise<LearningApp | undefined> {
+  const app = await getApp(id, ownerId);
+  if (!app) return undefined;
+  const now = Date.now();
+  const unarchived: LearningApp = {
+    ...app,
+    archivedAt: null,
+    version: (app.version ?? 1) + 1,
+    metadata: { ...app.metadata, lastUsedAt: now },
+  };
+  return saveApp(unarchived, ownerId);
+}
+
+export async function findAppByHtmlSignature(signature: string, ownerId?: string | null): Promise<LearningApp | undefined> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) {
+    return readLocalLibrary().apps.find((app) => app.template.type === "html" && hashHtmlSource(app.template.source) === signature);
   }
-  return undefined;
+  const rows = await getDb()
+    .select()
+    .from(learningAppsTable)
+    .where(and(eq(learningAppsTable.ownerId, resolvedOwnerId), eq(learningAppsTable.htmlSignature, signature)))
+    .limit(1);
+  return rows[0] ? rowToApp(rows[0]) : undefined;
 }
 
 export function hashHtmlSource(source: string): string {
@@ -60,59 +76,182 @@ export function hashHtmlSource(source: string): string {
   return (hash >>> 0).toString(36);
 }
 
-function hydrateStore(store: GlobalStore) {
-  store.hydrated = true;
+async function resolveOwnerId(ownerId?: string | null) {
+  if (ownerId) return ownerId;
+  if (!hasDatabaseUrl()) return null;
+  const user = await getCurrentUser();
+  return user?.id ?? null;
+}
+
+type LocalLibraryFile = {
+  apps: LearningApp[];
+};
+
+const LOCAL_LIBRARY_FILE = ".primoria-capability-library.json";
+
+function listAppsFromLocalFile(options: { includeArchived?: boolean } = {}): LearningApp[] {
+  const apps = readLocalLibrary().apps;
+  return apps
+    .filter((app) => options.includeArchived || !app.archivedAt)
+    .sort((a, b) => b.metadata.lastUsedAt - a.metadata.lastUsedAt);
+}
+
+function getAppFromLocalFile(id: string): LearningApp | undefined {
+  return readLocalLibrary().apps.find((app) => app.id === id);
+}
+
+function saveAppToLocalFile(app: LearningApp) {
+  const library = readLocalLibrary();
+  const nextApps = [app, ...library.apps.filter((entry) => entry.id !== app.id)];
+  writeLocalLibrary({ apps: nextApps });
+}
+
+function readLocalLibrary(): LocalLibraryFile {
+  const filePath = getLocalLibraryPath();
+  if (!fs.existsSync(filePath)) return { apps: [] };
   try {
-    if (!fs.existsSync(storeFile)) {
-      store.fileMtimeMs = 0;
-      return;
-    }
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { apps?: LearningApp[] };
-    if (!Array.isArray(parsed.apps)) return;
-    store.apps = new Map(parsed.apps.map((app) => [app.id, app]));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[capability-library/store] Failed to hydrate", error);
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf8")) as Partial<LocalLibraryFile>;
+    return { apps: Array.isArray(parsed.apps) ? parsed.apps : [] };
+  } catch {
+    return { apps: [] };
   }
 }
 
-function refreshStoreIfChanged(store: GlobalStore) {
-  try {
-    if (!fs.existsSync(storeFile)) {
-      if (store.fileMtimeMs !== 0) {
-        store.apps = new Map();
-        store.fileMtimeMs = 0;
-      }
-      return;
-    }
-    const mtimeMs = fs.statSync(storeFile).mtimeMs;
-    if (mtimeMs === store.fileMtimeMs) return;
-    const parsed = JSON.parse(fs.readFileSync(storeFile, "utf8")) as { apps?: LearningApp[] };
-    if (!Array.isArray(parsed.apps)) return;
-    store.apps = new Map(parsed.apps.map((app) => [app.id, app]));
-    store.fileMtimeMs = mtimeMs;
-  } catch (error) {
-    console.warn("[capability-library/store] Failed to refresh", error);
-  }
+function writeLocalLibrary(library: LocalLibraryFile) {
+  const filePath = getLocalLibraryPath();
+  const tempPath = `${filePath}.${process.pid}.tmp`;
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(tempPath, `${JSON.stringify(library, null, 2)}\n`, "utf8");
+  fs.renameSync(tempPath, filePath);
 }
 
-function persistStore() {
-  try {
-    const store = getStore();
-    const apps = Array.from(store.apps.values());
-    fs.writeFileSync(storeFile, JSON.stringify({ apps }, null, 2));
-    store.fileMtimeMs = fs.statSync(storeFile).mtimeMs;
-  } catch (error) {
-    console.warn("[capability-library/store] Failed to persist", error);
+function getLocalLibraryPath() {
+  let current = process.cwd();
+  for (let depth = 0; depth < 6; depth += 1) {
+    const candidate = path.join(current, LOCAL_LIBRARY_FILE);
+    if (fs.existsSync(candidate)) return candidate;
+    if (fs.existsSync(path.join(current, "pnpm-workspace.yaml"))) return candidate;
+    const parent = path.dirname(current);
+    if (parent === current) break;
+    current = parent;
   }
+  return path.join(process.cwd(), LOCAL_LIBRARY_FILE);
 }
 
-function findWorkspaceRoot() {
-  let dir = process.cwd();
-  while (true) {
-    if (fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return process.cwd();
-    dir = parent;
-  }
+async function saveAppToDb(app: LearningApp, ownerId: string) {
+  const row = appToRow(app, ownerId);
+  await getDb()
+    .insert(learningAppsTable)
+    .values(row)
+    .onConflictDoUpdate({
+      target: learningAppsTable.id,
+      set: {
+        ownerId: row.ownerId,
+        name: row.name,
+        displayName: row.displayName,
+        description: row.description,
+        tags: row.tags,
+        template: row.template,
+        origin: row.origin,
+        composition: row.composition,
+        capabilities: row.capabilities,
+        metadata: row.metadata,
+        htmlSignature: row.htmlSignature,
+        archivedAt: row.archivedAt,
+        version: row.version,
+        updatedAt: row.updatedAt,
+      },
+    });
+}
+
+async function getAppFromDb(id: string, ownerId: string): Promise<LearningApp | undefined> {
+  const rows = await getDb().select().from(learningAppsTable).where(eq(learningAppsTable.id, id)).limit(1);
+  const row = rows[0];
+  if (!row || row.ownerId !== ownerId) return undefined;
+  return rowToApp(row);
+}
+
+async function listAppsFromDb(ownerId: string, options: { includeArchived?: boolean } = {}): Promise<LearningApp[]> {
+  const whereClause = options.includeArchived
+    ? eq(learningAppsTable.ownerId, ownerId)
+    : and(eq(learningAppsTable.ownerId, ownerId), isNull(learningAppsTable.archivedAt));
+  const rows = await getDb().select().from(learningAppsTable).where(whereClause).orderBy(desc(learningAppsTable.updatedAt));
+  return rows.map(rowToApp);
+}
+
+async function listAppSummariesFromDb(ownerId: string, options: { includeArchived?: boolean } = {}): Promise<LearningAppSummary[]> {
+  const whereClause = options.includeArchived
+    ? eq(learningAppsTable.ownerId, ownerId)
+    : and(eq(learningAppsTable.ownerId, ownerId), isNull(learningAppsTable.archivedAt));
+  const rows = await getDb()
+    .select({
+      id: learningAppsTable.id,
+      name: learningAppsTable.name,
+      displayName: learningAppsTable.displayName,
+      description: learningAppsTable.description,
+      tags: learningAppsTable.tags,
+      template: learningAppsTable.template,
+      origin: learningAppsTable.origin,
+      metadata: learningAppsTable.metadata,
+      archivedAt: learningAppsTable.archivedAt,
+      version: learningAppsTable.version,
+    })
+    .from(learningAppsTable)
+    .where(whereClause)
+    .orderBy(desc(learningAppsTable.updatedAt));
+  return rows.map((row) => {
+    const template = row.template as LearningApp["template"];
+    return {
+      id: row.id,
+      name: row.name,
+      displayName: row.displayName,
+      description: row.description ?? undefined,
+      tags: row.tags as LearningApp["tags"],
+      origin: row.origin as LearningApp["origin"],
+      metadata: row.metadata as LearningApp["metadata"],
+      templateType: template.type,
+      archivedAt: row.archivedAt?.getTime() ?? null,
+      version: row.version ?? 1,
+    };
+  });
+}
+
+function appToRow(app: LearningApp, ownerId: string) {
+  const createdAt = new Date(app.metadata.createdAt);
+  const updatedAt = new Date(app.metadata.lastUsedAt);
+  return {
+    id: app.id,
+    ownerId,
+    name: app.name,
+    displayName: app.displayName,
+    description: app.description ?? null,
+    tags: app.tags,
+    template: app.template,
+    origin: app.origin,
+    composition: app.composition ?? null,
+    capabilities: app.capabilities ?? null,
+    metadata: app.metadata,
+    htmlSignature: app.template.type === "html" ? hashHtmlSource(app.template.source) : null,
+    archivedAt: app.archivedAt ? new Date(app.archivedAt) : null,
+    version: app.version ?? 1,
+    createdAt,
+    updatedAt,
+  };
+}
+
+function rowToApp(row: typeof learningAppsTable.$inferSelect): LearningApp {
+  return {
+    id: row.id,
+    name: row.name,
+    displayName: row.displayName,
+    description: row.description ?? undefined,
+    tags: row.tags as LearningApp["tags"],
+    template: row.template as LearningApp["template"],
+    origin: row.origin as LearningApp["origin"],
+    composition: (row.composition ?? undefined) as LearningApp["composition"],
+    capabilities: (row.capabilities ?? undefined) as LearningApp["capabilities"],
+    metadata: row.metadata as LearningApp["metadata"],
+    archivedAt: row.archivedAt?.getTime() ?? null,
+    version: row.version ?? 1,
+  };
 }

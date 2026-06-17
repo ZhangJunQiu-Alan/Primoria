@@ -4,7 +4,7 @@ import {
   assembleStemStandaloneHtml,
   assembleWidgetStandaloneHtml,
 } from "../src/components/generative-ui/export-utils.ts";
-import { normalizeWidgetDependencies } from "../src/lib/ai/widget-dependencies.ts";
+import { WIDGET_DEPENDENCY_ALLOWLIST, normalizeWidgetDependencies } from "../src/lib/agent-os/index.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -48,6 +48,22 @@ async function main() {
   });
   assert(blockedStemHtml.includes("STEM renderer code was blocked"), "blocked STEM export displays a safety error");
   assert(!blockedStemHtml.includes("fetch('/api/secret')"), "blocked STEM export does not embed unsafe code");
+
+  const threeDeps = normalizeWidgetDependencies([
+    WIDGET_DEPENDENCY_ALLOWLIST.THREE,
+    { url: "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js", global: "THREE", kind: "script" },
+  ]);
+  assert(threeDeps.length === 1, "Three.js keeps only the supported canonical dependency");
+  assert(
+    threeDeps[0]?.url === WIDGET_DEPENDENCY_ALLOWLIST.THREE.url,
+    "Three.js dependency points at the available UMD build",
+  );
+  const threeWidgetHtml = assembleWidgetStandaloneHtml({
+    title: "Three controls",
+    html: `<script>new THREE.OrbitControls(new THREE.PerspectiveCamera(), document.body)</script>`,
+    dependencies: threeDeps,
+  });
+  assert(threeWidgetHtml.includes("installThreeOrbitControlsFallback"), "standalone export includes OrbitControls fallback");
 
   process.stdout.write("[widget-export.unit] ALL UNIT CHECKS PASSED\n");
 }

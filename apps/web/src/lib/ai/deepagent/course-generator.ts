@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { saveCourse } from "@/lib/courses/store";
-import type { Course, CourseBlock } from "@/lib/courses/types";
+import type { BlockType, Course, CourseBlock } from "@/lib/courses/types";
 import { summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel, resolveProviderSettings } from "./model";
 import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } from "./course-kg-context";
+import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -34,7 +35,12 @@ const VisualBlockSchema = z.object({
   type: z.literal("visual"),
   title: z.string(),
   description: z.string(),
-  html: z.string(),
+  engine: z.enum(["html", "echarts", "mermaid", "physics"]).optional(),
+  html: z.string().optional(),
+  echartsOption: z.record(z.unknown()).optional(),
+  echartsHeight: z.number().optional(),
+  mermaidDefinition: z.string().optional(),
+  physicsScene: PhysicsSceneZodSchema.optional(),
 });
 
 const CodeBlockSchema = z.object({
@@ -43,6 +49,103 @@ const CodeBlockSchema = z.object({
   language: z.string(),
   code: z.string(),
   explanation: z.string(),
+});
+
+const SingleQuestionSchema = z.object({
+  kind: z.literal("single"),
+  id: z.string(),
+  question: z.string(),
+  choices: z.array(z.object({ id: z.string(), text: z.string() })).min(2).max(6),
+  correctId: z.string(),
+  explanation: z.string().optional(),
+});
+
+const MultiQuestionSchema = z.object({
+  kind: z.literal("multi"),
+  id: z.string(),
+  question: z.string(),
+  choices: z.array(z.object({ id: z.string(), text: z.string() })).min(2).max(6),
+  correctIds: z.array(z.string()).min(1),
+  explanation: z.string().optional(),
+});
+
+const TrueFalseQuestionSchema = z.object({
+  kind: z.literal("truefalse"),
+  id: z.string(),
+  question: z.string(),
+  correct: z.boolean(),
+  explanation: z.string().optional(),
+});
+
+const QuizBlockSchema = z.object({
+  type: z.literal("quiz"),
+  title: z.string(),
+  questions: z
+    .array(z.discriminatedUnion("kind", [SingleQuestionSchema, MultiQuestionSchema, TrueFalseQuestionSchema]))
+    .min(1)
+    .max(6),
+});
+
+type MindMapNodeRaw = { id: string; topic: string; children?: MindMapNodeRaw[] };
+const MindMapNodeSchema: z.ZodType<MindMapNodeRaw> = z.lazy(() =>
+  z.object({
+    id: z.string(),
+    topic: z.string(),
+    children: z.array(MindMapNodeSchema).optional(),
+  }),
+);
+
+const MindMapBlockSchema = z.object({
+  type: z.literal("mind_map"),
+  title: z.string(),
+  root: MindMapNodeSchema,
+});
+
+const SlideSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  layout: z.enum(["title", "bullets", "quote", "image-text"]),
+  bullets: z.array(z.string()).optional(),
+  markdown: z.string().optional(),
+  note: z.string().optional(),
+});
+
+const SlideBlockSchema = z.object({
+  type: z.literal("slide"),
+  title: z.string(),
+  slides: z.array(SlideSchema).min(2).max(10),
+});
+
+const ShortAnswerItemSchema = z.object({
+  kind: z.literal("short_answer"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  sampleAnswer: z.string().optional(),
+});
+
+const FillBlankItemSchema = z.object({
+  kind: z.literal("fill_blank"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  blanks: z.array(z.string()).min(1),
+});
+
+const ProblemItemSchema = z.object({
+  kind: z.literal("problem"),
+  id: z.string(),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  sampleAnswer: z.string().optional(),
+});
+
+const WorksheetBlockSchema = z.object({
+  type: z.literal("worksheet"),
+  title: z.string(),
+  items: z.array(
+    z.discriminatedUnion("kind", [ShortAnswerItemSchema, FillBlankItemSchema, ProblemItemSchema]),
+  ).min(1).max(8),
 });
 
 const CourseSchema = z.object({
@@ -57,6 +160,10 @@ const CourseSchema = z.object({
         TransferBlockSchema,
         VisualBlockSchema,
         CodeBlockSchema,
+        QuizBlockSchema,
+        MindMapBlockSchema,
+        SlideBlockSchema,
+        WorksheetBlockSchema,
       ]),
     )
     .min(3)
@@ -65,19 +172,35 @@ const CourseSchema = z.object({
 
 const COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator sub-agent. You design a compact course on a topic, broken into exactly 3 ordered blocks for the current iteration.
 
-Use ONLY these block types in this iteration:
-- text: a short prose explanation in markdown (2 short paragraphs max).
+Block types (use the right type for each idea, do NOT just use text):
+- text: prose in markdown. Use for concept explanations (2-4 paragraphs), OR a "Further reading" section with 2-3 markdown links to real resources, OR a "Discussion" section with 2-3 open-ended reflection questions.
 - analogy: map an unfamiliar concept to a familiar one. Fields: source (familiar thing), target (concept being taught), mapping (what corresponds to what).
 - transfer: show how a principle from one domain applies in another. Fields: fromDomain, toDomain, explanation, example.
-
-Do NOT generate visual blocks, code blocks, HTML, CSS, or JavaScript in this iteration.
+- visual: a self-contained interactive HTML/CSS/JS fragment that visualizes a key intuition.
+- code: a small code snippet with a plain-language explanation.
+- quiz: a set of 2-4 questions to check understanding. Each question has a "kind": "single" (one correct answer), "multi" (multiple correct answers), or "truefalse" (true/false). All questions must have an "id" (short unique string like "q1"), a "question" string, and an optional "explanation" shown after submission. For "single" and "multi", include a "choices" array of {id, text} objects. For "single" set "correctId" to the correct choice id. For "multi" set "correctIds" to an array of correct choice ids. For "truefalse" set "correct" to true or false.
+- mind_map: an interactive, editable mind map. Use when the topic has a taxonomic/hierarchical breakdown.
+- slide: a mini slide deck (2-6 slides). Use for step-by-step walkthroughs, processes, timelines, or comparisons. Each slide has "id", "title", "layout" ("title"|"bullets"|"quote"|"image-text"), and optionally "bullets", "markdown", "note".
+- worksheet: a practice worksheet with 2-5 items. Each item has "kind": "short_answer" (open question + sampleAnswer), "fill_blank" (sentence with ___ placeholders + blanks array of answers in order), or "problem" (multi-step problem + sampleAnswer).
 
 COURSE STRUCTURE RULES:
-- Exactly 3 blocks total: one text block, one analogy block, one transfer block.
-- Keep the whole JSON concise, under 900 words.
+- 4-7 blocks total. Order them as a learning arc: hook → core idea → one analogy → one visual or code → transfer to a different domain → quiz → wrap-up.
+- Include AT MOST ONE visual block per course. Keep its HTML compact (<300 lines).
+- Include at least one analogy block and one transfer block.
+- Include AT MOST ONE quiz block per course, placed near the end as a comprehension check.
+- Include AT MOST ONE mind_map block per course. Use it to show a concept overview or taxonomy, typically early in the course.
+- Include AT MOST ONE slide block per course. Use it for a process walkthrough or step-by-step overview.
+- Include AT MOST ONE worksheet block per course. Place it after the core content as a practice exercise.
 - Every block needs a short, specific title (no generic "Introduction").
 - Write in the same language as the user's topic prompt.
 
+VISUAL BLOCK RULES (include at most one per course):
+Choose the engine that best fits the concept:
+- engine "echarts": charts, data plots, function curves, histograms. Set echartsOption to a complete ECharts option object. Use Primoria palette: amber #c8881a, sage #4a7a5a, lavender #7c6ad0. Always set a chart title inside the option.
+- engine "mermaid": flowcharts, sequence diagrams, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string.
+- engine "physics": physics simulations (pendulum, collision, projectile, spring, inclined plane). Set physicsScene with a bodies array and optional constraints.
+- engine "html" (fallback): custom interactive experiences. Single self-contained HTML fragment, must include at least one interactive control.
+Only include fields for the chosen engine. Do not include "html" when using echarts/mermaid/physics.
 OUTPUT:
 - Return valid JSON matching the schema. No prose outside JSON.`;
 
@@ -91,13 +214,15 @@ Your provider may not support native structured output. You must still return ON
   "blocks": [
     { "type": "text", "title": "string", "markdown": "string" },
     { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
-    { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" }
+    { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
+    { "type": "visual", "title": "string", "description": "string", "engine": "echarts|mermaid|physics|html", "echartsOption": {}, "mermaidDefinition": "string", "html": "string" },
+    { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" },
+    { "type": "slide", "title": "string", "slides": [{ "id": "s1", "title": "string", "layout": "bullets", "bullets": ["point 1"] }] },
+    { "type": "worksheet", "title": "string", "items": [{ "kind": "fill_blank", "id": "w1", "prompt": "The ___ is used to ___", "blanks": ["term", "purpose"] }, { "kind": "short_answer", "id": "w2", "prompt": "Explain X in your own words.", "sampleAnswer": "..." }] }
   ]
 }
-Exactly 3 blocks. Do not include visual, code, HTML, CSS, or JavaScript.
 No markdown fences. No prose outside JSON.`;
 
-// Re-export so existing importers (and tests) can keep importing from here.
 export { buildKgContextPrompt };
 export type { CourseContext, CourseContextTopic };
 
@@ -105,6 +230,7 @@ export type GenerateCourseInput = {
   topic: string;
   contextHint?: string;
   kgContext?: CourseContext;
+  courseId?: string;
 };
 
 export type GenerateCourseResult = {
@@ -143,12 +269,14 @@ export async function generateCourse(
   }));
 
   const course: Course = {
-    id: randomId("crs"),
+    id: input.courseId ?? randomId("crs"),
     title: draft.title,
     topic: input.topic,
     summary: draft.summary,
     estimatedMinutes: draft.estimatedMinutes,
     blocks,
+    archivedAt: null,
+    version: 1,
     createdAt: now,
     updatedAt: now,
   };
@@ -158,24 +286,128 @@ export async function generateCourse(
   return { course, summary: summarizeCourse(course) };
 }
 
+const BLOCK_SCHEMAS = {
+  text: TextBlockSchema,
+  analogy: AnalogyBlockSchema,
+  transfer: TransferBlockSchema,
+  visual: VisualBlockSchema,
+  code: CodeBlockSchema,
+  quiz: QuizBlockSchema,
+  mind_map: MindMapBlockSchema,
+  slide: SlideBlockSchema,
+  worksheet: WorksheetBlockSchema,
+} as const satisfies Record<BlockType, z.ZodTypeAny>;
+
+export type GenerateBlockInput = {
+  course: Course;
+  targetType: BlockType;
+  instruction: string;
+  sourceBlock?: CourseBlock;
+};
+
+export async function generateBlock(
+  input: GenerateBlockInput,
+  settings: TutorProviderSettings = {},
+): Promise<CourseBlock> {
+  const model = createTutorModel(settings);
+  const schema = BLOCK_SCHEMAS[input.targetType];
+  const systemPrompt = `${COURSE_SYSTEM_PROMPT}
+
+You are now generating EXACTLY ONE block of type "${input.targetType}" for an existing course. Return only that single block as JSON matching the schema for this type. Do not return a full course.`;
+  const userPrompt = buildSingleBlockPrompt(input);
+
+  const raw = await invokeSingleBlock(model, schema, systemPrompt, userPrompt, input.targetType);
+  const withType = raw && typeof raw === "object" ? { ...(raw as Record<string, unknown>), type: input.targetType } : raw;
+  const normalized = normalizeBlock(withType, input.course.topic);
+  if (!normalized || normalized.type !== input.targetType) {
+    throw new Error(`Could not generate a usable "${input.targetType}" block.`);
+  }
+  return { id: randomId("blk"), ...normalized };
+}
+
+function buildSingleBlockPrompt(input: GenerateBlockInput): string {
+  const outline = input.course.blocks
+    .map((block, i) => `${i + 1}. [${block.type}] ${block.title ?? block.type}`)
+    .join("\n");
+  const lines = [
+    `Course title: ${input.course.title}`,
+    `Course topic: ${input.course.topic}`,
+    `Existing blocks:`,
+    outline || "(none)",
+    "",
+  ];
+  if (input.sourceBlock) {
+    const { id: _id, ...rest } = input.sourceBlock;
+    lines.push(
+      `Transform the following block into a "${input.targetType}" block, preserving its teaching intent and meaning:`,
+      JSON.stringify(rest, null, 2),
+      "",
+    );
+  }
+  lines.push(
+    `Learner request: ${input.instruction}`,
+    "",
+    `Generate exactly one "${input.targetType}" block as JSON. Write in the same language as the course. Make it specific to this course, not boilerplate.`,
+  );
+  return lines.join("\n");
+}
+
+async function invokeSingleBlock(
+  model: ReturnType<typeof createTutorModel>,
+  schema: z.ZodTypeAny,
+  systemPrompt: string,
+  userPrompt: string,
+  targetType: BlockType,
+) {
+  try {
+    const structured = model.withStructuredOutput(schema, { name: "course_block" });
+    return await structured.invoke(
+      [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+      { callbacks: [] },
+    );
+  } catch (error) {
+    console.warn("[course-generator] single-block structured output failed, falling back to JSON prompt", error);
+  }
+
+  const result = await model.invoke(
+    [
+      {
+        role: "system",
+        content: `${systemPrompt}
+
+Your provider may not support native structured output. Return ONLY one JSON object for a "${targetType}" block. No markdown fences. No prose outside JSON.`,
+      },
+      { role: "user", content: userPrompt },
+    ],
+    { callbacks: [] },
+  );
+
+  return parseJsonObject(messageContentToString(result.content));
+}
+
 async function invokeCourseJson(
   model: ReturnType<typeof createTutorModel>,
   userPrompt: string,
   topic: string,
-  providerSettings: ReturnType<typeof resolveProviderSettings>,
+  providerSettings?: ReturnType<typeof resolveProviderSettings>,
 ) {
-  if (shouldUseRawAnthropicJson(providerSettings)) {
-    const content = await createRawAnthropicJsonCompletion(providerSettings, userPrompt);
+  const settings = providerSettings ?? resolveProviderSettings({});
+
+  if (shouldUseRawAnthropicJson(settings)) {
+    const content = await createRawAnthropicJsonCompletion(settings, userPrompt);
     return parseJsonObject(content);
   }
 
-  if (!shouldSkipStructuredOutput(providerSettings)) {
+  if (!shouldSkipStructuredOutput(settings)) {
     try {
       const structured = model.withStructuredOutput(CourseSchema, { name: "course" });
       return await withTimeout(
         structured.invoke(
           [
-            { role: "system", content: COURSE_SYSTEM_PROMPT },
+            { role: "system", content: JSON_ONLY_COURSE_PROMPT },
             { role: "user", content: userPrompt },
           ],
           { callbacks: [] },
@@ -443,12 +675,23 @@ function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSch
   }
 
   if (type === "visual") {
-    return {
-      type: "visual",
+    const engine = typeof obj.engine === "string" ? obj.engine : undefined;
+    const base = {
+      type: "visual" as const,
       title,
       description: cleanText(obj.description ?? obj.content ?? obj.markdown, `互动观察「${topic}」的关键关系。`).slice(0, 220),
-      html: normalizeHtml(obj.html, topic),
+      engine: engine as "html" | "echarts" | "mermaid" | "physics" | undefined,
     };
+    if (engine === "echarts" && obj.echartsOption && typeof obj.echartsOption === "object") {
+      return { ...base, echartsOption: obj.echartsOption as Record<string, unknown>, echartsHeight: typeof obj.echartsHeight === "number" ? obj.echartsHeight : undefined };
+    }
+    if (engine === "mermaid" && typeof obj.mermaidDefinition === "string" && obj.mermaidDefinition.trim()) {
+      return { ...base, mermaidDefinition: obj.mermaidDefinition };
+    }
+    if (engine === "physics" && obj.physicsScene && typeof obj.physicsScene === "object") {
+      return { ...base, physicsScene: obj.physicsScene as z.infer<typeof PhysicsSceneZodSchema> };
+    }
+    return { ...base, engine: "html" as const, html: normalizeHtml(obj.html, topic) };
   }
 
   if (type === "code") {
@@ -462,11 +705,149 @@ function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSch
     };
   }
 
+  if (type === "quiz") {
+    const rawQuestions = Array.isArray(obj.questions) ? obj.questions : [];
+    const questions = rawQuestions
+      .map((q: unknown) => normalizeQuizQuestion(q))
+      .filter((q): q is NonNullable<ReturnType<typeof normalizeQuizQuestion>> => q !== null)
+      .slice(0, 6);
+    if (questions.length === 0) return null;
+    return { type: "quiz", title, questions };
+  }
+
+  if (type === "mind_map") {
+    const root = normalizeMindMapNode(obj.root ?? obj.nodeData, topic);
+    if (!root) return null;
+    return { type: "mind_map", title, root };
+  }
+
+  if (type === "slide") {
+    const rawSlides = Array.isArray(obj.slides) ? obj.slides : [];
+    const slides = rawSlides
+      .map((s: unknown, i: number) => normalizeSlide(s, i))
+      .filter((s): s is z.infer<typeof SlideSchema> => s !== null);
+    if (slides.length === 0) return null;
+    return { type: "slide", title, slides };
+  }
+
+  if (type === "worksheet") {
+    const rawItems = Array.isArray(obj.items) ? obj.items : [];
+    const items = rawItems
+      .map((item: unknown, i: number) => normalizeWorksheetItem(item, i))
+      .filter((item): item is z.infer<typeof WorksheetBlockSchema>["items"][number] => item !== null);
+    if (items.length === 0) return null;
+    return { type: "worksheet", title, items };
+  }
+
   return {
     type: "text",
     title,
     markdown: cleanText(obj.markdown ?? obj.content ?? obj.description ?? obj.text, `围绕「${topic}」建立核心直觉。`),
   };
+}
+
+function normalizeQuizQuestion(q: unknown): z.infer<typeof SingleQuestionSchema> | z.infer<typeof MultiQuestionSchema> | z.infer<typeof TrueFalseQuestionSchema> | null {
+  if (!q || typeof q !== "object") return null;
+  const obj = q as Record<string, unknown>;
+  const kind = typeof obj.kind === "string" ? obj.kind : "single";
+  const id = cleanText(obj.id, `q${Math.random().toString(36).slice(2, 6)}`);
+  const question = cleanText(obj.question, "").slice(0, 400);
+  if (!question) return null;
+  const explanation = typeof obj.explanation === "string" ? obj.explanation.trim() : undefined;
+
+  if (kind === "truefalse") {
+    return { kind: "truefalse", id, question, correct: obj.correct === true, explanation };
+  }
+
+  const rawChoices = Array.isArray(obj.choices) ? obj.choices : [];
+  const choices = rawChoices
+    .map((c: unknown) => {
+      if (!c || typeof c !== "object") return null;
+      const co = c as Record<string, unknown>;
+      const choiceId = cleanText(co.id, `c${Math.random().toString(36).slice(2, 6)}`);
+      const text = cleanText(co.text, "").slice(0, 200);
+      if (!text) return null;
+      return { id: choiceId, text };
+    })
+    .filter((c): c is { id: string; text: string } => c !== null);
+
+  if (choices.length < 2) return null;
+
+  if (kind === "multi") {
+    const correctIds = Array.isArray(obj.correctIds)
+      ? obj.correctIds.filter((cid) => typeof cid === "string" && choices.some((c) => c.id === cid))
+      : [];
+    if (correctIds.length === 0) return null;
+    return { kind: "multi", id, question, choices, correctIds, explanation };
+  }
+
+  const correctId = typeof obj.correctId === "string" && choices.some((c) => c.id === obj.correctId)
+    ? obj.correctId
+    : choices[0].id;
+  return { kind: "single", id, question, choices, correctId, explanation };
+}
+
+function normalizeWorksheetItem(item: unknown, index: number): z.infer<typeof WorksheetBlockSchema>["items"][number] | null {
+  if (!item || typeof item !== "object") return null;
+  const obj = item as Record<string, unknown>;
+  const kind = typeof obj.kind === "string" ? obj.kind : "short_answer";
+  const id = cleanText(obj.id, `w${index + 1}`);
+  const prompt = cleanText(obj.prompt ?? obj.question ?? obj.text, "").slice(0, 600);
+  if (!prompt) return null;
+  const hint = typeof obj.hint === "string" && obj.hint.trim() ? obj.hint.trim() : undefined;
+
+  if (kind === "fill_blank") {
+    const blanksInPrompt = (prompt.match(/___/g) ?? []).length;
+    const rawBlanks = Array.isArray(obj.blanks)
+      ? obj.blanks.filter((b): b is string => typeof b === "string" && b.trim().length > 0)
+      : [];
+    const blanks = blanksInPrompt > 0
+      ? rawBlanks.slice(0, blanksInPrompt).concat(
+          Array(Math.max(0, blanksInPrompt - rawBlanks.length)).fill("…"),
+        )
+      : rawBlanks;
+    if (blanks.length === 0) return null;
+    return { kind: "fill_blank", id, prompt, ...(hint ? { hint } : {}), blanks };
+  }
+
+  const sampleAnswer = typeof obj.sampleAnswer === "string" && obj.sampleAnswer.trim()
+    ? obj.sampleAnswer.trim()
+    : typeof obj.answer === "string" && obj.answer.trim()
+    ? obj.answer.trim()
+    : undefined;
+
+  if (kind === "problem") {
+    return { kind: "problem", id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
+  }
+  return { kind: "short_answer", id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
+}
+
+function normalizeSlide(s: unknown, index: number): z.infer<typeof SlideSchema> | null {
+  if (!s || typeof s !== "object") return null;
+  const obj = s as Record<string, unknown>;
+  const id = cleanText(obj.id, `s${index + 1}`);
+  const title = cleanText(obj.title, `Slide ${index + 1}`).slice(0, 80);
+  const validLayouts = ["title", "bullets", "quote", "image-text"] as const;
+  const layout: (typeof validLayouts)[number] =
+    validLayouts.includes(obj.layout as (typeof validLayouts)[number]) ? (obj.layout as (typeof validLayouts)[number]) : "bullets";
+  const bullets = Array.isArray(obj.bullets)
+    ? obj.bullets.filter((b): b is string => typeof b === "string" && b.trim().length > 0).slice(0, 8)
+    : undefined;
+  const markdown = typeof obj.markdown === "string" && obj.markdown.trim() ? obj.markdown.trim() : undefined;
+  const note = typeof obj.note === "string" && obj.note.trim() ? obj.note.trim() : undefined;
+  return { id, title, layout, ...(bullets && bullets.length > 0 ? { bullets } : {}), ...(markdown ? { markdown } : {}), ...(note ? { note } : {}) };
+}
+
+function normalizeMindMapNode(node: unknown, topicFallback: string): MindMapNodeRaw | null {
+  if (!node || typeof node !== "object") return null;
+  const obj = node as Record<string, unknown>;
+  const topic = cleanText(obj.topic ?? obj.name ?? obj.label, topicFallback).slice(0, 80);
+  const id = cleanText(obj.id, `n${Math.random().toString(36).slice(2, 8)}`);
+  const rawChildren = Array.isArray(obj.children) ? obj.children : [];
+  const children = rawChildren
+    .map((c: unknown) => normalizeMindMapNode(c, ""))
+    .filter((c): c is MindMapNodeRaw => c !== null);
+  return { id, topic, ...(children.length > 0 ? { children } : {}) };
 }
 
 function cleanText(value: unknown, fallback: string): string {
@@ -484,6 +865,14 @@ function defaultBlockTitle(type: string, topic: string): string {
       return "互动观察";
     case "code":
       return "代码中的函数";
+    case "quiz":
+      return "知识检测";
+    case "mind_map":
+      return `${topic}概念图`;
+    case "slide":
+      return `${topic}要点`;
+    case "worksheet":
+      return `${topic}练习`;
     default:
       return `理解${topic}`;
   }
@@ -557,7 +946,7 @@ function isUsableCourseDraft(course: z.infer<typeof CourseSchema>): boolean {
     course.summary,
     ...course.blocks.flatMap((block) =>
       Object.entries(block)
-        .filter(([key, value]) => key !== "html" && typeof value === "string")
+        .filter(([key, value]) => !["html", "echartsOption", "mermaidDefinition", "physicsScene", "echartsHeight"].includes(key) && typeof value === "string")
         .map(([, value]) => value),
     ),
   ];

@@ -3,6 +3,7 @@ import { validateStemCode, type StemSubject } from "../../lib/ai/stem-code";
 import { PHYSICS_RUNTIME_CODE } from "./runtimes/physics-runtime";
 import { MATH_RUNTIME_CODE } from "./runtimes/math-runtime";
 import { CS_RUNTIME_CODE } from "./runtimes/cs-runtime";
+import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 
 type WidgetExportInput = {
   title: string;
@@ -106,16 +107,37 @@ const STEM_RUNTIME_CODE: Record<StemSubject, string> = {
 };
 
 function stemContainers(subject: StemSubject) {
-  if (subject === "math") return `<div id="math-container"></div><div id="math-controls"></div>`;
-  if (subject === "cs") return `<div id="cs-container"></div><div id="cs-controls"></div>`;
-  return `<div id="physics-container"></div><div id="physics-labels"></div>`;
+  if (subject === "physics") {
+    return `
+    <div id="physics-container" style="position: relative; line-height: 0;"></div>
+    <div id="physics-labels" aria-label="Simulation stats"></div>
+    `;
+  }
+  if (subject === "math") {
+    return `
+    <div id="math-container" style="position: relative; line-height: 0;"></div>
+    <div id="math-sliders" style="padding: 8px 12px; display: flex; flex-direction: column; gap: 8px;" aria-label="Math parameters"></div>
+    `;
+  }
+  return `
+  <div id="cs-container" style="position: relative; line-height: 0;"></div>
+  <div id="cs-controls" aria-label="CS algorithm controls">
+    <div class="cs-ctrl-row">
+      <button class="cs-btn" id="cs-btn-play">▶ Play</button>
+      <button class="cs-btn" id="cs-btn-step">Step ➔</button>
+      <button class="cs-btn" id="cs-btn-reset">↺ Reset</button>
+      <span class="cs-counter" id="cs-step-counter">Step 0/0</span>
+    </div>
+    <p class="cs-desc" id="cs-step-desc"></p>
+    <div class="cs-stats" id="cs-step-stats"></div>
+  </div>
+  `;
 }
 
 function stemSubjectCss(subject: StemSubject) {
   if (subject === "math") {
     return `
     #math-container canvas { display: block; border-radius: 10px; max-width: 100%; }
-    #math-controls { padding: 8px 12px 4px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .math-slider { display: flex; align-items: center; gap: 6px; }
     .math-slider-label { font-size: 12px; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; white-space: nowrap; min-width: 80px; }
     .math-slider input[type=range] { width: 120px; accent-color: #ef7358; }
@@ -184,18 +206,20 @@ export function assembleWidgetStandaloneHtml({ html, title, dependencies }: Widg
   <script>
     window.sendPrompt = function() {};
     window.openLink = function(url) { if (url) window.open(url, '_blank', 'noopener,noreferrer'); };
-    window.addEventListener('error', function(event) {
+    
+    function showError(prefix, value) {
       var box = document.createElement('div');
       box.className = 'primoria-error';
-      box.textContent = 'Widget script error: ' + (event.message || 'unknown error');
+      box.textContent = prefix + ': ' + (value || 'unknown error');
       document.body.prepend(box);
-    });
+    }
+    
+    window.addEventListener('error', function(event) { showError('Widget script error', event.message); });
     window.addEventListener('unhandledrejection', function(event) {
-      var box = document.createElement('div');
-      box.className = 'primoria-error';
-      box.textContent = 'Widget promise error: ' + ((event.reason && event.reason.message) || event.reason || 'promise rejected');
-      document.body.prepend(box);
+      var reason = event.reason;
+      showError('Widget promise error', (reason && reason.message) || reason || 'promise rejected');
     });
+    
     document.addEventListener('click', function(e) {
       var a = e.target.closest('a[href]');
       if (a && /^https?:\\/\\//.test(a.href)) {
@@ -203,6 +227,7 @@ export function assembleWidgetStandaloneHtml({ html, title, dependencies }: Widg
         window.open(a.href, '_blank', 'noopener,noreferrer');
       }
     });
+    ${THREE_ORBIT_CONTROLS_SHIM}
   </script>
 </head>
 <body>
@@ -315,29 +340,33 @@ export function assembleStandaloneHtml(html: string, title: string): string {
   return assembleWidgetStandaloneHtml({ html, title });
 }
 
-export function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-export function triggerDownload(htmlString: string, filename: string): void {
-  const blob = new Blob([htmlString], { type: "text/html" });
+export function triggerDownload(html: string, filename: string) {
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
   anchor.download = filename;
   document.body.appendChild(anchor);
   anchor.click();
-  document.body.removeChild(anchor);
+  anchor.remove();
   URL.revokeObjectURL(url);
 }
 
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+export function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+}
+
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, (char) => {
+    if (char === "&") return "&amp;";
+    if (char === "<") return "&lt;";
+    if (char === ">") return "&gt;";
+    if (char === '"') return "&quot;";
+    return "&#39;";
+  });
 }

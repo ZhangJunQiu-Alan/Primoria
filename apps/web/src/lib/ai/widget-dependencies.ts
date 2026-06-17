@@ -17,11 +17,10 @@ export const WIDGET_DEPENDENCY_ALLOWLIST = {
   math: { global: "math", url: "https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js", kind: "script" },
   L: { global: "L", url: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js", kind: "script" },
   mermaid: { global: "mermaid", url: "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js", kind: "script" },
+  echarts: { global: "echarts", url: "https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js", kind: "script" },
 } satisfies Record<string, WidgetDependency>;
 
-const ALLOWED_BY_URL = new Map(
-  Object.values(WIDGET_DEPENDENCY_ALLOWLIST).map((dep) => [dep.url, dep]),
-);
+const ALLOWED_BY_URL = new Map(Object.values(WIDGET_DEPENDENCY_ALLOWLIST).map((dep) => [dep.url, dep]));
 
 export function normalizeWidgetDependency(value: unknown): WidgetDependency | null {
   if (typeof value === "string") {

@@ -17,15 +17,8 @@ const graphSource = readFileSync(resolve(here, "../../agent/src/graph.mjs"), "ut
 
 function main() {
   assert(graphSource.includes('name: "position_learning_goal"'), "position_learning_goal tool is defined");
-  assert(!graphSource.includes('name: "generate_course"'), "generate_course tool is removed");
 
   assert(/tools:\s*\[[^\]]*positionLearningGoalTool/.test(graphSource), "tools array registers positionLearningGoalTool");
-  assert(!/tools:\s*\[[^\]]*generateCourseTool/.test(graphSource), "tools array drops generateCourseTool");
-
-  // The agent must not generate or persist courses itself (Web-as-brain).
-  assert(!graphSource.includes("enqueueCourseGenerationJob"), "agent does not enqueue course jobs");
-  assert(!graphSource.includes("course-generation-jobs"), "agent does not import the course-generation-jobs module");
-  assert(!graphSource.includes("course-generator"), "agent does not import the course generator");
 
   console.log("course-branch-static.unit passed");
 }

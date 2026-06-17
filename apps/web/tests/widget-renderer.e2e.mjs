@@ -91,6 +91,9 @@ async function main() {
     const unclosedFrame = page.frameLocator('iframe[title="Unclosed fixture"]');
     await unclosedFrame.getByText("Widget script tag is incomplete").waitFor({ timeout: 5000 });
 
+    const threeFrame = page.frameLocator('iframe[title="Three dependency fixture"]');
+    await threeFrame.locator("#three-status", { hasText: "THREE OrbitControls ok" }).waitFor({ timeout: 10000 });
+
     const mathFrame = page.frameLocator('iframe[title="Math fixture"]');
     await mathFrame.locator("canvas").first().waitFor({ timeout: 5000 });
     const csFrame = page.frameLocator('iframe[title="CS fixture"]');

@@ -2,6 +2,8 @@
 
 Primoria is an AI-native learning workspace for generating short courses, interactive learning widgets, course-aware tutoring, and future classroom/workspace collaboration flows.
 
+The main product direction is documented in [docs/long-horizon-learning-principles.md](docs/long-horizon-learning-principles.md).
+
 The repository is a pnpm monorepo with two main apps:
 
 - `apps/web` — Next.js web app, course library, tutor UI, course detail pages, API routes.
@@ -46,6 +48,43 @@ ANTHROPIC_BASE_URL=https://your-anthropic-compatible-endpoint
 ANTHROPIC_API_KEY=your-key
 ANTHROPIC_MODEL=your-model
 ```
+
+
+### Supabase cloud database and accounts
+
+Primoria currently uses Postgres for account creation, user sessions, CopilotKit chat history, provider settings, generated courses, learning apps, and workspace collaboration state. For team collaboration, use a shared Supabase cloud Postgres database.
+
+```bash
+DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
+```
+
+Create the Supabase project at `https://database.new`, copy the Session Pooler URI from the dashboard Connect panel, replace the password placeholder, and put the value in `apps/web/.env.local` or the hosted app environment variables. Do not guess the pooler host from the region; Supabase may use hosts such as `aws-0-...` or `aws-1-...`.
+
+Then verify the cloud connection and run migrations:
+
+```bash
+pnpm --filter @primoria/web db:check
+pnpm --filter @primoria/web db:migrate
+```
+
+See `docs/supabase-cloud.md` for the full cloud setup runbook. The database layer remains Postgres-first and vendor-portable; Supabase is the current shared cloud provider, but application code should rely on Primoria repositories rather than direct vendor-specific calls.
+
+Initial auth support includes:
+
+- `users`
+- `identities`
+- `sessions`
+- reserved `otp_codes` for future phone/email OTP login
+- email + password sign-up/sign-in
+- HTTP-only session cookies
+
+Local JSON files are no longer used as a runtime fallback in the database-backed app. Use the import command only for one-time migration of older local data into a database account:
+
+```bash
+pnpm --filter @primoria/web import:local-data you@example.com
+```
+
+Create the account in the app before running the import command.
 
 ### Optional CopilotKit / LangGraph mode
 
@@ -110,6 +149,15 @@ pnpm build
 
 # Lint the web app
 pnpm lint
+
+# Generate database migrations after schema changes
+pnpm --filter @primoria/web db:generate
+
+# Verify DATABASE_URL connectivity
+pnpm --filter @primoria/web db:check
+
+# Apply database migrations when DATABASE_URL is configured
+pnpm --filter @primoria/web db:migrate
 ```
 
 ## Useful test / verification commands

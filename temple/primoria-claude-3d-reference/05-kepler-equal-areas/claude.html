@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kepler's Second Law — Equal Areas in Equal Times</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #07080d;
+    --bg-1: #0d1018;
+    --ink: #e8e4d8;
+    --ink-dim: #9a9384;
+    --gold: #d4b06a;
+    --gold-soft: #b89656;
+    --amber: #ff9d4d;
+    --cyan: #6fd3ff;
+    --magenta: #ff6fa8;
+    --rule: rgba(212, 176, 106, 0.18);
+    --panel: rgba(13, 16, 24, 0.72);
+    --panel-edge: rgba(212, 176, 106, 0.22);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-0);
+    color: var(--ink);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    position: relative;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255, 157, 77, 0.06), transparent 50%),
+      radial-gradient(ellipse at 85% 90%, rgba(111, 211, 255, 0.05), transparent 55%),
+      var(--bg-0);
+  }
+
+  /* Grain texture overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 30;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.78 0 0 0 0 0.6 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  #canvas-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+  }
+  canvas { display: block; }
+
+  /* === Header === */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    padding: 22px 32px 18px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    pointer-events: none;
+  }
+  .header > * { pointer-events: auto; }
+
+  .title-block {
+    line-height: 1;
+  }
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    opacity: 0.85;
+  }
+  .title {
+    font-size: 28px;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  .title em { color: var(--gold); font-style: italic; }
+
+  .law-card {
+    text-align: right;
+    max-width: 320px;
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    border-left: 1px solid var(--rule);
+    padding-left: 18px;
+  }
+  .law-card span {
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* === Panel === */
+  .panel {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 10;
+    width: 320px;
+    background: var(--panel);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border: 1px solid var(--panel-edge);
+    border-radius: 2px;
+    padding: 18px 20px 16px;
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,0.8),
+      inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .panel::before {
+    content: "";
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid rgba(212, 176, 106, 0.08);
+    border-radius: 1px;
+    pointer-events: none;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .panel-title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .panel-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+  }
+
+  .control {
+    margin-bottom: 14px;
+  }
+  .control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .control-label {
+    font-size: 13px;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .control-value {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--gold);
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--p, 50%), rgba(212,176,106,0.15) var(--p, 50%), rgba(212,176,106,0.15) 100%);
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 12px rgba(212, 176, 106, 0.5);
+    cursor: grab;
+    transition: transform 0.15s;
+  }
+  input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.2); cursor: grabbing; }
+  input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 1px solid var(--gold);
+    cursor: grab;
+  }
+
+  .button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .btn {
+    background: rgba(212, 176, 106, 0.06);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 9px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 1px;
+  }
+  .btn:hover {
+    background: rgba(212, 176, 106, 0.14);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary {
+    background: rgba(212, 176, 106, 0.18);
+    color: var(--gold);
+    border-color: var(--gold-soft);
+  }
+  .btn.primary:hover {
+    background: rgba(212, 176, 106, 0.3);
+  }
+
+  /* === Readout === */
+  .readout {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 10;
+    width: 260px;
+    background: var(--panel);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border: 1px solid var(--panel-edge);
+    border-radius: 2px;
+    padding: 16px 18px;
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,0.8),
+      inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  .readout-title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .stat:last-child { margin-bottom: 0; }
+  .stat-label {
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .stat-val {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .stat-val.fast { color: var(--amber); }
+  .stat-val.slow { color: var(--cyan); }
+
+  .speed-bar {
+    height: 3px;
+    margin-top: 12px;
+    border-radius: 1px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+    position: relative;
+  }
+  .speed-bar-fill {
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, var(--cyan), var(--amber));
+    transition: width 0.18s ease;
+  }
+
+  /* === Hint === */
+  .hint {
+    position: fixed;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    z-index: 9;
+    pointer-events: none;
+    color: var(--ink-dim);
+    font-size: 11px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0.5;
+  }
+
+  /* === Legend === */
+  .legend {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+    display: flex;
+    gap: 22px;
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--panel-edge);
+    padding: 10px 18px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.12em;
+    color: var(--ink-dim);
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .swatch {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .swatch.sector-a { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+  .swatch.sector-b { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  .swatch.orbit { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+  /* === Responsive === */
+  @media (max-width: 900px) {
+    .header { padding: 16px 18px 14px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .law-card { text-align: left; border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 8px; max-width: none; }
+    .title { font-size: 22px; }
+    .hint { display: none; }
+    .legend { left: 12px; right: 12px; transform: none; bottom: 12px; justify-content: space-between; padding: 8px 12px; }
+  }
+  @media (max-width: 720px) {
+    .panel, .readout {
+      position: fixed;
+      left: 12px; right: 12px;
+      width: auto;
+    }
+    .panel { bottom: 120px; }
+    .readout { bottom: 56px; }
+    .legend { bottom: 6px; font-size: 9px; gap: 12px; }
+  }
+
+  /* === Tooltip labels on canvas === */
+  .marker {
+    position: fixed;
+    z-index: 8;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+  .marker.show { opacity: 0.85; }
+  .marker::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 1px;
+    background: var(--gold);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<div id="canvas-wrap"></div>
+
+<header class="header">
+  <div class="title-block">
+    <div class="eyebrow">Astronomia Nova · 1609</div>
+    <h1 class="title">Kepler's Second Law — <em>Equal Areas in Equal Times</em></h1>
+  </div>
+  <div class="law-card">
+    A line joining a planet and its star sweeps out <span>equal areas</span> during equal intervals of time. Watch the planet accelerate near perihelion and slow at aphelion.
+  </div>
+</header>
+
+<div class="marker" id="marker-peri">Perihelion</div>
+<div class="marker" id="marker-apo">Aphelion</div>
+<div class="marker" id="marker-sun">Star</div>
+
+<aside class="panel">
+  <div class="panel-header">
+    <div class="panel-title">Controls</div>
+    <div class="panel-tag">/ 03</div>
+  </div>
+
+  <div class="control">
+    <div class="control-row">
+      <label class="control-label" for="ecc">Eccentricity</label>
+      <span class="control-value" id="ecc-val">0.60</span>
+    </div>
+    <input type="range" id="ecc" min="0" max="0.85" step="0.01" value="0.60">
+  </div>
+
+  <div class="control">
+    <div class="control-row">
+      <label class="control-label" for="speed">Time step</label>
+      <span class="control-value" id="speed-val">1.00×</span>
+    </div>
+    <input type="range" id="speed" min="0.1" max="3" step="0.05" value="1">
+  </div>
+
+  <div class="control">
+    <div class="control-row">
+      <label class="control-label" for="sweep">Sweep interval (Δt)</label>
+      <span class="control-value" id="sweep-val">0.10 P</span>
+    </div>
+    <input type="range" id="sweep" min="0.04" max="0.25" step="0.01" value="0.10">
+  </div>
+
+  <div class="button-row">
+    <button class="btn primary" id="btn-play">Pause</button>
+    <button class="btn" id="btn-sweep">Mark</button>
+    <button class="btn" id="btn-reset">Reset</button>
+  </div>
+</aside>
+
+<aside class="readout">
+  <div class="readout-title">Telemetry</div>
+  <div class="stat">
+    <span class="stat-label">Distance r</span>
+    <span class="stat-val" id="r-val">1.00 AU</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Orbital speed v</span>
+    <span class="stat-val" id="v-val">1.00 v₀</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Sector A · area</span>
+    <span class="stat-val" id="area-a">— AU²</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Sector B · area</span>
+    <span class="stat-val" id="area-b">— AU²</span>
+  </div>
+  <div class="speed-bar"><div class="speed-bar-fill" id="speed-bar"></div></div>
+</aside>
+
+<div class="hint">Drag to rotate · Scroll to zoom</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="swatch orbit"></span>Orbit</div>
+  <div class="legend-item"><span class="swatch sector-a"></span>Sector A (near star)</div>
+  <div class="legend-item"><span class="swatch sector-b"></span>Sector B (far from star)</div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.min.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* ============================================================
+   SCENE SETUP
+============================================================ */
+const wrap = document.getElementById('canvas-wrap');
+const scene = new THREE.Scene();
+scene.background = null;
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camState = {
+  azimuth: Math.PI * 0.15,
+  elevation: 0.85,
+  distance: 14,
+  target: new THREE.Vector3(0, 0, 0)
+};
+function updateCamera() {
+  const r = camState.distance;
+  const x = r * Math.cos(camState.elevation) * Math.sin(camState.azimuth);
+  const y = r * Math.sin(camState.elevation);
+  const z = r * Math.cos(camState.elevation) * Math.cos(camState.azimuth);
+  camera.position.set(x, y, z);
+  camera.lookAt(camState.target);
+}
+updateCamera();
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+wrap.appendChild(renderer.domElement);
+
+/* ============================================================
+   STARFIELD BACKGROUND
+============================================================ */
+function makeStarfield() {
+  const g = new THREE.BufferGeometry();
+  const N = 1200;
+  const positions = new Float32Array(N * 3);
+  const colors = new Float32Array(N * 3);
+  const sizes = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    const r = 60 + Math.random() * 40;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    positions[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    positions[i*3+2] = r * Math.cos(phi);
+    const t = Math.random();
+    const c = new THREE.Color().setHSL(0.55 + 0.15 * Math.random(), 0.2, 0.6 + 0.4 * t);
+    colors[i*3] = c.r; colors[i*3+1] = c.g; colors[i*3+2] = c.b;
+    sizes[i] = 0.08 + Math.random() * 0.15;
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  g.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const m = new THREE.PointsMaterial({
+    size: 0.18,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.9,
+    sizeAttenuation: true,
+    depthWrite: false
+  });
+  return new THREE.Points(g, m);
+}
+scene.add(makeStarfield());
+
+/* ============================================================
+   ORBIT MECHANICS
+   Ellipse: r = a(1-e²) / (1 + e cos ν)
+   Kepler's 2nd law -> dν/dt = L / r²
+============================================================ */
+const orbit = {
+  a: 4.5,         // semi-major axis (scene units)
+  e: 0.60,        // eccentricity
+  nu: 0,          // true anomaly
+  t: 0,           // simulated time (in units of period P)
+  speed: 1.0,     // time-step multiplier
+  sweepDt: 0.10,  // sweep interval in units of P
+  playing: true,
+  L: 1            // specific angular momentum (computed)
+};
+
+// Compute L so the period stays normalized to 1 regardless of e.
+// Area swept per period = π a b. dA/dt = L/2 (constant). So L = 2πab/P with P=1.
+function recomputeL() {
+  const b = orbit.a * Math.sqrt(1 - orbit.e * orbit.e);
+  orbit.L = 2 * Math.PI * orbit.a * b; // since P = 1
+}
+recomputeL();
+
+function radiusAt(nu, e = orbit.e, a = orbit.a) {
+  return a * (1 - e * e) / (1 + e * Math.cos(nu));
+}
+
+// Position in orbital plane (XZ here; star at origin, focus at origin).
+// Perihelion at +X direction.
+function positionAt(nu) {
+  const r = radiusAt(nu);
+  return new THREE.Vector3(r * Math.cos(nu), 0, r * Math.sin(nu));
+}
+
+/* ============================================================
+   ORBIT VISUALS
+============================================================ */
+// The plane container so we can subtly tilt it for depth
+const orbitalPlane = new THREE.Group();
+orbitalPlane.rotation.x = -0.08;
+scene.add(orbitalPlane);
+
+// Reference disk (faint)
+const diskGeo = new THREE.RingGeometry(0.01, 8.5, 96);
+const diskMat = new THREE.MeshBasicMaterial({
+  color: 0xd4b06a,
+  transparent: true,
+  opacity: 0.025,
+  side: THREE.DoubleSide,
+  depthWrite: false
+});
+const disk = new THREE.Mesh(diskGeo, diskMat);
+disk.rotation.x = -Math.PI / 2;
+orbitalPlane.add(disk);
+
+// Concentric reference circles
+for (let i = 1; i <= 4; i++) {
+  const radius = i * 2;
+  const segs = 128;
+  const pts = [];
+  for (let k = 0; k <= segs; k++) {
+    const a = (k / segs) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.cos(a) * radius, 0, Math.sin(a) * radius));
+  }
+  const g = new THREE.BufferGeometry().setFromPoints(pts);
+  const m = new THREE.LineBasicMaterial({ color: 0xd4b06a, transparent: true, opacity: 0.06 });
+  orbitalPlane.add(new THREE.Line(g, m));
+}
+
+// Cross axes
+const axisMat = new THREE.LineBasicMaterial({ color: 0xd4b06a, transparent: true, opacity: 0.12 });
+const axisGeoX = new THREE.BufferGeometry().setFromPoints([
+  new THREE.Vector3(-9, 0, 0), new THREE.Vector3(9, 0, 0)
+]);
+const axisGeoZ = new THREE.BufferGeometry().setFromPoints([
+  new THREE.Vector3(0, 0, -9), new THREE.Vector3(0, 0, 9)
+]);
+orbitalPlane.add(new THREE.Line(axisGeoX, axisMat));
+orbitalPlane.add(new THREE.Line(axisGeoZ, axisMat));
+
+// Orbit curve (rebuilt when e changes)
+let orbitLine, orbitGlow;
+function buildOrbitCurve() {
+  if (orbitLine) {
+    orbitalPlane.remove(orbitLine);
+    orbitLine.geometry.dispose();
+    orbitLine.material.dispose();
+  }
+  if (orbitGlow) {
+    orbitalPlane.remove(orbitGlow);
+    orbitGlow.geometry.dispose();
+    orbitGlow.material.dispose();
+  }
+  const segs = 256;
+  const pts = [];
+  for (let i = 0; i <= segs; i++) {
+    const nu = (i / segs) * Math.PI * 2;
+    pts.push(positionAt(nu));
+  }
+  const g = new THREE.BufferGeometry().setFromPoints(pts);
+  const m = new THREE.LineBasicMaterial({ color: 0xd4b06a, transparent: true, opacity: 0.75 });
+  orbitLine = new THREE.Line(g, m);
+  orbitalPlane.add(orbitLine);
+
+  // Glow underlay
+  const m2 = new THREE.LineBasicMaterial({ color: 0xff9d4d, transparent: true, opacity: 0.12 });
+  orbitGlow = new THREE.Line(g.clone(), m2);
+  orbitGlow.scale.set(1.005, 1, 1.005);
+  orbitalPlane.add(orbitGlow);
+}
+buildOrbitCurve();
+
+/* ============================================================
+   STAR (Sun) at focus
+============================================================ */
+const starGroup = new THREE.Group();
+orbitalPlane.add(starGroup);
+
+const starGeo = new THREE.SphereGeometry(0.45, 48, 48);
+const starMat = new THREE.MeshBasicMaterial({ color: 0xfff0c8 });
+const star = new THREE.Mesh(starGeo, starMat);
+starGroup.add(star);
+
+// Corona sprite
+function makeGlowTexture() {
+  const size = 256;
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  const ctx = cv.getContext('2d');
+  const g = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  g.addColorStop(0, 'rgba(255, 230, 170, 0.95)');
+  g.addColorStop(0.2, 'rgba(255, 180, 90, 0.55)');
+  g.addColorStop(0.5, 'rgba(255, 120, 60, 0.18)');
+  g.addColorStop(1, 'rgba(255, 80, 40, 0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+  return new THREE.CanvasTexture(cv);
+}
+const glowTex = makeGlowTexture();
+const coronaMat = new THREE.SpriteMaterial({ map: glowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+const corona = new THREE.Sprite(coronaMat);
+corona.scale.set(3.2, 3.2, 1);
+starGroup.add(corona);
+
+const corona2 = new THREE.Sprite(coronaMat.clone());
+corona2.scale.set(5.5, 5.5, 1);
+corona2.material.opacity = 0.45;
+starGroup.add(corona2);
+
+// Foci markers (mathematical, faint)
+const focusDot = new THREE.Mesh(
+  new THREE.SphereGeometry(0.07, 16, 16),
+  new THREE.MeshBasicMaterial({ color: 0xd4b06a, transparent: true, opacity: 0.6 })
+);
+// Other focus: position depends on a, e
+let otherFocus;
+function placeOtherFocus() {
+  if (otherFocus) orbitalPlane.remove(otherFocus);
+  otherFocus = focusDot.clone();
+  otherFocus.position.set(-2 * orbit.a * orbit.e, 0, 0);
+  orbitalPlane.add(otherFocus);
+}
+placeOtherFocus();
+
+/* ============================================================
+   PLANET
+============================================================ */
+const planetGroup = new THREE.Group();
+orbitalPlane.add(planetGroup);
+
+const planetMat = new THREE.MeshStandardMaterial({
+  color: 0x6fd3ff,
+  emissive: 0x183040,
+  roughness: 0.55,
+  metalness: 0.1
+});
+const planet = new THREE.Mesh(new THREE.SphereGeometry(0.22, 32, 32), planetMat);
+planetGroup.add(planet);
+
+// Planet halo
+const planetHalo = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: glowTex,
+  color: 0x9fe4ff,
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  opacity: 0.6
+}));
+planetHalo.scale.set(1.3, 1.3, 1);
+planetGroup.add(planetHalo);
+
+// Light from star
+const sunLight = new THREE.PointLight(0xfff0c8, 2.2, 60, 1.5);
+starGroup.add(sunLight);
+scene.add(new THREE.AmbientLight(0x404858, 0.6));
+
+// Radius line (planet -> star)
+const radLineMat = new THREE.LineBasicMaterial({ color: 0xd4b06a, transparent: true, opacity: 0.55 });
+const radLineGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+const radLine = new THREE.Line(radLineGeo, radLineMat);
+orbitalPlane.add(radLine);
+
+// Trail
+const trailMax = 220;
+const trailGeo = new THREE.BufferGeometry();
+const trailPositions = new Float32Array(trailMax * 3);
+const trailAlpha = new Float32Array(trailMax);
+trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
+const trailMat = new THREE.LineBasicMaterial({ color: 0x6fd3ff, transparent: true, opacity: 0.6 });
+const trail = new THREE.Line(trailGeo, trailMat);
+orbitalPlane.add(trail);
+let trailIdx = 0;
+let trailCount = 0;
+function pushTrail(p) {
+  trailPositions[trailIdx*3] = p.x;
+  trailPositions[trailIdx*3+1] = p.y;
+  trailPositions[trailIdx*3+2] = p.z;
+  trailIdx = (trailIdx + 1) % trailMax;
+  trailCount = Math.min(trailCount + 1, trailMax);
+
+  // Build ordered array oldest -> newest
+  const ordered = new Float32Array(trailMax * 3);
+  for (let i = 0; i < trailCount; i++) {
+    const src = (trailIdx - trailCount + i + trailMax) % trailMax;
+    ordered[i*3] = trailPositions[src*3];
+    ordered[i*3+1] = trailPositions[src*3+1];
+    ordered[i*3+2] = trailPositions[src*3+2];
+  }
+  // Fill remaining with last point to keep buffer clean
+  for (let i = trailCount; i < trailMax; i++) {
+    ordered[i*3] = ordered[(trailCount-1)*3] || 0;
+    ordered[i*3+1] = ordered[(trailCount-1)*3+1] || 0;
+    ordered[i*3+2] = ordered[(trailCount-1)*3+2] || 0;
+  }
+  trailGeo.setAttribute('position', new THREE.BufferAttribute(ordered, 3));
+  trailGeo.setDrawRange(0, trailCount);
+  trailGeo.attributes.position.needsUpdate = true;
+}
+
+/* ============================================================
+   AREA SECTORS (the heart of the demonstration)
+   Each sector is a triangle fan from the star (origin) along
+   the orbit from nu_start to nu_end.
+============================================================ */
+function buildSectorMesh(nuStart, nuEnd, color, opacity) {
+  // Ensure nuEnd > nuStart (handle wrap)
+  let s = nuStart, e = nuEnd;
+  if (e < s) e += Math.PI * 2;
+  const segs = Math.max(20, Math.floor((e - s) * 40));
+  const verts = [];
+  const idx = [];
+  // Apex at origin (star focus)
+  verts.push(0, 0, 0);
+  for (let i = 0; i <= segs; i++) {
+    const nu = s + (e - s) * (i / segs);
+    const p = positionAt(nu);
+    verts.push(p.x, p.y, p.z);
+  }
+  for (let i = 1; i <= segs; i++) {
+    idx.push(0, i, i + 1);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+
+  const m = new THREE.MeshBasicMaterial({
+    color, transparent: true, opacity,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
+  const mesh = new THREE.Mesh(g, m);
+
+  // Edge outline along the arc
+  const edgePts = [];
+  edgePts.push(new THREE.Vector3(0, 0.001, 0));
+  for (let i = 0; i <= segs; i++) {
+    const nu = s + (e - s) * (i / segs);
+    const p = positionAt(nu);
+    edgePts.push(p);
+  }
+  edgePts.push(new THREE.Vector3(0, 0.001, 0));
+  const eg = new THREE.BufferGeometry().setFromPoints(edgePts);
+  const em = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.85 });
+  const edge = new THREE.Line(eg, em);
+
+  const grp = new THREE.Group();
+  grp.add(mesh);
+  grp.add(edge);
+  return grp;
+}
+
+// Analytical sector area: ∫(1/2) r² dν from nu_s to nu_e
+function sectorArea(nuStart, nuEnd) {
+  let s = nuStart, e = nuEnd;
+  if (e < s) e += Math.PI * 2;
+  const N = 200;
+  let sum = 0;
+  for (let i = 0; i < N; i++) {
+    const nu = s + (e - s) * ((i + 0.5) / N);
+    const r = radiusAt(nu);
+    sum += 0.5 * r * r;
+  }
+  return sum * (e - s) / N;
+}
+
+let sectorA = null, sectorB = null;
+let sectorAState = null, sectorBState = null;
+
+function clearSectors() {
+  if (sectorA) { orbitalPlane.remove(sectorA); sectorA = null; sectorAState = null; }
+  if (sectorB) { orbitalPlane.remove(sectorB); sectorB = null; sectorBState = null; }
+  document.getElementById('area-a').textContent = '— AU²';
+  document.getElementById('area-b').textContent = '— AU²';
+}
+
+// Pre-place two demonstrative sectors of equal sweep time:
+// Sector A near perihelion (fast region), Sector B near aphelion (slow region).
+function placeDemonstrationSectors() {
+  clearSectors();
+
+  // Sector A: centered on perihelion (nu = 0), spans sweepDt of time.
+  const halfA = halfNuForSweep(0, orbit.sweepDt);
+  const aStart = -halfA;
+  const aEnd = halfA;
+  sectorA = buildSectorMesh(aStart, aEnd, 0xff9d4d, 0.25);
+  orbitalPlane.add(sectorA);
+  sectorAState = { start: aStart, end: aEnd };
+
+  // Sector B: centered on aphelion (nu = π).
+  const halfB = halfNuForSweep(Math.PI, orbit.sweepDt);
+  const bStart = Math.PI - halfB;
+  const bEnd = Math.PI + halfB;
+  sectorB = buildSectorMesh(bStart, bEnd, 0x6fd3ff, 0.25);
+  orbitalPlane.add(sectorB);
+  sectorBState = { start: bStart, end: bEnd };
+
+  const areaA = sectorArea(aStart, aEnd);
+  const areaB = sectorArea(bStart, bEnd);
+  document.getElementById('area-a').textContent = areaA.toFixed(3) + ' AU²';
+  document.getElementById('area-b').textContent = areaB.toFixed(3) + ' AU²';
+}
+
+// Given a center true-anomaly and a desired sweep time dt (in units of P=1),
+// find the half-angle delta such that the time from (center - delta) to
+// (center + delta) equals dt. Uses dν/dt = L/r².
+function halfNuForSweep(nuCenter, dt) {
+  // Bisection on delta in [0, π]
+  let lo = 0, hi = Math.PI;
+  for (let it = 0; it < 40; it++) {
+    const mid = (lo + hi) / 2;
+    const t = sweepTime(nuCenter - mid, nuCenter + mid);
+    if (t < dt) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+// Time elapsed sweeping from nuStart to nuEnd. dt = r²/L dν
+function sweepTime(nuStart, nuEnd) {
+  let s = nuStart, e = nuEnd;
+  if (e < s) e += Math.PI * 2;
+  const N = 200;
+  let sum = 0;
+  for (let i = 0; i < N; i++) {
+    const nu = s + (e - s) * ((i + 0.5) / N);
+    const r = radiusAt(nu);
+    sum += (r * r) / orbit.L;
+  }
+  return sum * (e - s) / N;
+}
+
+placeDemonstrationSectors();
+
+/* ============================================================
+   PERIHELION / APHELION MARKER DOTS
+============================================================ */
+const periMarker = new THREE.Mesh(
+  new THREE.SphereGeometry(0.09, 16, 16),
+  new THREE.MeshBasicMaterial({ color: 0xff9d4d })
+);
+periMarker.position.copy(positionAt(0));
+orbitalPlane.add(periMarker);
+
+const apoMarker = new THREE.Mesh(
+  new THREE.SphereGeometry(0.09, 16, 16),
+  new THREE.MeshBasicMaterial({ color: 0x6fd3ff })
+);
+apoMarker.position.copy(positionAt(Math.PI));
+orbitalPlane.add(apoMarker);
+
+function updateApsidesMarkers() {
+  periMarker.position.copy(positionAt(0));
+  apoMarker.position.copy(positionAt(Math.PI));
+}
+
+/* ============================================================
+   CAMERA INTERACTION (drag / scroll)
+============================================================ */
+let dragging = false, lastX = 0, lastY = 0;
+const dom = renderer.domElement;
+
+dom.addEventListener('pointerdown', (e) => {
+  dragging = true; lastX = e.clientX; lastY = e.clientY;
+  dom.style.cursor = 'grabbing';
+  dom.setPointerCapture(e.pointerId);
+});
+dom.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  camState.azimuth -= dx * 0.006;
+  camState.elevation = Math.max(0.05, Math.min(Math.PI / 2 - 0.02, camState.elevation - dy * 0.006));
+  updateCamera();
+});
+dom.addEventListener('pointerup', (e) => {
+  dragging = false;
+  dom.style.cursor = 'grab';
+  if (dom.hasPointerCapture(e.pointerId)) dom.releasePointerCapture(e.pointerId);
+});
+dom.style.cursor = 'grab';
+
+dom.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const factor = Math.exp(e.deltaY * 0.001);
+  camState.distance = Math.max(7, Math.min(30, camState.distance * factor));
+  updateCamera();
+}, { passive: false });
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ============================================================
+   UI BINDINGS
+============================================================ */
+const eccInput = document.getElementById('ecc');
+const eccVal = document.getElementById('ecc-val');
+const speedInput = document.getElementById('speed');
+const speedVal = document.getElementById('speed-val');
+const sweepInput = document.getElementById('sweep');
+const sweepVal = document.getElementById('sweep-val');
+const btnPlay = document.getElementById('btn-play');
+const btnSweep = document.getElementById('btn-sweep');
+const btnReset = document.getElementById('btn-reset');
+
+function setSliderFill(el) {
+  const v = (parseFloat(el.value) - parseFloat(el.min)) / (parseFloat(el.max) - parseFloat(el.min));
+  el.style.setProperty('--p', (v * 100) + '%');
+}
+[eccInput, speedInput, sweepInput].forEach(el => {
+  setSliderFill(el);
+  el.addEventListener('input', () => setSliderFill(el));
+});
+
+eccInput.addEventListener('input', () => {
+  orbit.e = parseFloat(eccInput.value);
+  eccVal.textContent = orbit.e.toFixed(2);
+  recomputeL();
+  buildOrbitCurve();
+  placeOtherFocus();
+  updateApsidesMarkers();
+  placeDemonstrationSectors();
+});
+
+speedInput.addEventListener('input', () => {
+  orbit.speed = parseFloat(speedInput.value);
+  speedVal.textContent = orbit.speed.toFixed(2) + '×';
+});
+
+sweepInput.addEventListener('input', () => {
+  orbit.sweepDt = parseFloat(sweepInput.value);
+  sweepVal.textContent = orbit.sweepDt.toFixed(2) + ' P';
+  placeDemonstrationSectors();
+});
+
+btnPlay.addEventListener('click', () => {
+  orbit.playing = !orbit.playing;
+  btnPlay.textContent = orbit.playing ? 'Pause' : 'Play';
+});
+
+btnSweep.addEventListener('click', () => {
+  // Drop a live sweep mark at planet's current ν with the same dt
+  const center = orbit.nu;
+  const half = halfNuForSweep(center, orbit.sweepDt);
+  const start = center - half;
+  const end = center + half;
+  const liveSector = buildSectorMesh(start, end, 0xd4b06a, 0.18);
+  orbitalPlane.add(liveSector);
+  // Fade & remove
+  let life = 0;
+  const fade = () => {
+    life += 0.012;
+    liveSector.children.forEach(c => {
+      if (c.material) c.material.opacity = Math.max(0, c.material.opacity - 0.005);
+    });
+    if (life < 1) requestAnimationFrame(fade);
+    else orbitalPlane.remove(liveSector);
+  };
+  fade();
+});
+
+btnReset.addEventListener('click', () => {
+  orbit.e = 0.60;
+  orbit.speed = 1.0;
+  orbit.sweepDt = 0.10;
+  orbit.nu = 0;
+  orbit.t = 0;
+  orbit.playing = true;
+  btnPlay.textContent = 'Pause';
+  eccInput.value = orbit.e; setSliderFill(eccInput);
+  speedInput.value = orbit.speed; setSliderFill(speedInput);
+  sweepInput.value = orbit.sweepDt; setSliderFill(sweepInput);
+  eccVal.textContent = orbit.e.toFixed(2);
+  speedVal.textContent = orbit.speed.toFixed(2) + '×';
+  sweepVal.textContent = orbit.sweepDt.toFixed(2) + ' P';
+  camState.azimuth = Math.PI * 0.15;
+  camState.elevation = 0.85;
+  camState.distance = 14;
+  updateCamera();
+  recomputeL();
+  buildOrbitCurve();
+  placeOtherFocus();
+  updateApsidesMarkers();
+  placeDemonstrationSectors();
+  trailCount = 0; trailIdx = 0;
+  trailGeo.setDrawRange(0, 0);
+});
+
+/* ============================================================
+   2D LABEL PROJECTION (perihelion, aphelion, star)
+============================================================ */
+const markerPeri = document.getElementById('marker-peri');
+const markerApo = document.getElementById('marker-apo');
+const markerSun = document.getElementById('marker-sun');
+
+function project(vec3) {
+  const v = vec3.clone().applyMatrix4(orbitalPlane.matrixWorld);
+  v.project(camera);
+  return {
+    x: (v.x * 0.5 + 0.5) * window.innerWidth,
+    y: (-v.y * 0.5 + 0.5) * window.innerHeight,
+    z: v.z
+  };
+}
+
+function updateMarkers() {
+  const peri = project(positionAt(0));
+  const apo = project(positionAt(Math.PI));
+  const sun = project(new THREE.Vector3(0, 0, 0));
+
+  markerPeri.style.left = (peri.x + 14) + 'px';
+  markerPeri.style.top = (peri.y - 14) + 'px';
+  markerPeri.classList.toggle('show', peri.z < 1);
+
+  markerApo.style.left = (apo.x + 14) + 'px';
+  markerApo.style.top = (apo.y - 14) + 'px';
+  markerApo.classList.toggle('show', apo.z < 1);
+
+  markerSun.style.left = (sun.x + 14) + 'px';
+  markerSun.style.top = (sun.y + 14) + 'px';
+  markerSun.classList.toggle('show', sun.z < 1);
+}
+
+/* ============================================================
+   ANIMATION LOOP
+============================================================ */
+const rVal = document.getElementById('r-val');
+const vVal = document.getElementById('v-val');
+const speedBar = document.getElementById('speed-bar');
+
+let lastTime = performance.now();
+
+function tick(now) {
+  const dt = Math.min(0.05, (now - lastTime) / 1000);
+  lastTime = now;
+
+  if (orbit.playing) {
+    // Advance true anomaly via Kepler's 2nd law: dν/dt = L / r²
+    const r = radiusAt(orbit.nu);
+    const dnu = (orbit.L / (r * r)) * dt * 0.35 * orbit.speed; // 0.35 = visual pacing
+    orbit.nu += dnu;
+    orbit.t += dt;
+    if (orbit.nu > Math.PI * 2) orbit.nu -= Math.PI * 2;
+  }
+
+  // Update planet position
+  const pPos = positionAt(orbit.nu);
+  planetGroup.position.copy(pPos);
+
+  // Update radius line
+  const rlPositions = radLine.geometry.attributes.position.array;
+  rlPositions[0] = 0; rlPositions[1] = 0; rlPositions[2] = 0;
+  rlPositions[3] = pPos.x; rlPositions[4] = pPos.y; rlPositions[5] = pPos.z;
+  radLine.geometry.attributes.position.needsUpdate = true;
+
+  // Update trail
+  if (orbit.playing) pushTrail(pPos);
+
+  // Star pulse
+  const pulse = 1 + Math.sin(now * 0.001) * 0.04;
+  corona.scale.set(3.2 * pulse, 3.2 * pulse, 1);
+
+  // Telemetry
+  const rNow = radiusAt(orbit.nu);
+  const a = orbit.a;
+  // v ∝ sqrt(2/r - 1/a) (vis-viva, normalized to v0 at r=a)
+  const vNow = Math.sqrt(Math.max(0.001, 2 / rNow - 1 / a)) / Math.sqrt(1 / a);
+  rVal.textContent = (rNow / a).toFixed(3) + ' a';
+  vVal.textContent = vNow.toFixed(3) + ' v₀';
+
+  // Color-code speed
+  const rPeri = a * (1 - orbit.e);
+  const rApo = a * (1 + orbit.e);
+  const vMax = Math.sqrt(2 / rPeri - 1 / a) / Math.sqrt(1 / a);
+  const vMin = Math.sqrt(2 / rApo - 1 / a) / Math.sqrt(1 / a);
+  const frac = (vNow - vMin) / Math.max(0.001, vMax - vMin);
+  speedBar.style.width = (frac * 100) + '%';
+  vVal.classList.toggle('fast', frac > 0.7);
+  vVal.classList.toggle('slow', frac < 0.3);
+
+  updateMarkers();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+
+</body>
+</html>
