@@ -37,7 +37,7 @@ export function createTutorModel(settings: TutorProviderSettings = {}, options: 
       apiKey,
       anthropicApiUrl: baseUrl?.replace(/\/$/, ""),
       temperature: 0.2,
-      maxTokens: 4096,
+      maxTokens: 16384,
       streaming,
     });
   }
@@ -47,7 +47,7 @@ export function createTutorModel(settings: TutorProviderSettings = {}, options: 
     model,
     apiKey,
     temperature: 0.2,
-    maxTokens: 4096,
+    maxTokens: 16384,
     streaming,
     configuration: {
       baseURL: baseUrl.replace(/\/$/, ""),
