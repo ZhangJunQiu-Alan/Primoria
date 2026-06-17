@@ -1,0 +1,711 @@
+{
+  "graphId": "a_level_mathematics",
+  "subject": "A-Level Mathematics (CIE 9709)",
+  "generatedFrom": "temple/a_level_mathematics.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "mat_algebra",
+      "name": "Algebra and Functions",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "mat_indices_surds",
+          "name": "Indices and Surds",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_quadratics",
+          "name": "Quadratic Functions",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_solve_quadratics",
+          "name": "Solving Quadratics and Discriminant",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_simultaneous",
+          "name": "Simultaneous Equations",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "mat_inequalities",
+          "name": "Inequalities",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "mat_functions",
+          "name": "Functions and Inverses",
+          "defaultOrder": 6
+        },
+        {
+          "conceptId": "mat_composite",
+          "name": "Composite Functions",
+          "defaultOrder": 7
+        },
+        {
+          "conceptId": "mat_modulus",
+          "name": "Modulus Function",
+          "defaultOrder": 8
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_sequences",
+          "hard": false
+        },
+        {
+          "topicId": "mat_exp_log",
+          "hard": true
+        },
+        {
+          "topicId": "mat_numerical",
+          "hard": false
+        },
+        {
+          "topicId": "mat_complex",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_polynomials",
+      "name": "Polynomials and Partial Fractions",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "mat_poly_division",
+          "name": "Polynomial Division",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_factor_theorem",
+          "name": "Factor and Remainder Theorem",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_partial_fractions",
+          "name": "Partial Fractions",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_integration",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_coord_geom",
+      "name": "Coordinate Geometry",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "mat_straight_lines",
+          "name": "Straight Lines",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_parallel_perp",
+          "name": "Parallel and Perpendicular Lines",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_circles",
+          "name": "Circles",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_sequences",
+      "name": "Sequences and Series",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "mat_arithmetic",
+          "name": "Arithmetic Series",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_geometric",
+          "name": "Geometric Series",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_binomial_pos",
+          "name": "Binomial Expansion (positive integer)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_binomial_gen",
+          "name": "Binomial Expansion (general index)",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_algebra"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_trig",
+      "name": "Trigonometry",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "mat_trig_ratios",
+          "name": "Trig Ratios and Graphs",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_radians",
+          "name": "Radian Measure",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_trig_identities",
+          "name": "Trig Identities",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_solve_trig",
+          "name": "Solving Trig Equations",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "mat_double_angle",
+          "name": "Compound and Double Angle Formulae",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "mat_rform",
+          "name": "R-Formula",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_exp_log",
+      "name": "Exponentials and Logarithms",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "mat_exp_func",
+          "name": "Exponential Functions",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_log_laws",
+          "name": "Logarithms and Laws",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_solve_exp",
+          "name": "Solving Exponential and Log Equations",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_linearise",
+          "name": "Linearising with Logarithms",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_algebra"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_differentiation",
+      "name": "Differentiation (Basic)",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "mat_first_principles",
+          "name": "Differentiation from First Principles",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_power_rule",
+          "name": "Power Rule",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_chain_rule",
+          "name": "Chain Rule",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_tangent_normal",
+          "name": "Tangents and Normals",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "mat_stationary",
+          "name": "Stationary Points",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "mat_rates",
+          "name": "Connected Rates of Change",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_differentiation_adv",
+          "hard": true
+        },
+        {
+          "topicId": "mat_integration",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_differentiation_adv",
+      "name": "Differentiation (Advanced)",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "mat_product_quotient",
+          "name": "Product and Quotient Rules",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_special_derivatives",
+          "name": "Derivatives of Special Functions",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_implicit",
+          "name": "Implicit Differentiation",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_parametric",
+          "name": "Parametric Differentiation",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_integration",
+          "hard": true
+        },
+        {
+          "topicId": "mat_mech_kinematics",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_differentiation"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_integration",
+      "name": "Integration",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "mat_indefinite",
+          "name": "Indefinite Integration",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_definite_area",
+          "name": "Definite Integration and Area",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_standard_integrals",
+          "name": "Integration of Standard Functions",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_substitution",
+          "name": "Integration by Substitution",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "mat_by_parts",
+          "name": "Integration by Parts",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "mat_int_partial",
+          "name": "Integration using Partial Fractions",
+          "defaultOrder": 6
+        },
+        {
+          "conceptId": "mat_volumes",
+          "name": "Volumes of Revolution",
+          "defaultOrder": 7
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_diff_eq",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_polynomials",
+        "mat_differentiation",
+        "mat_differentiation_adv"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_numerical",
+      "name": "Numerical Methods",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "mat_locate_roots",
+          "name": "Locating Roots",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_iteration",
+          "name": "Iterative Methods",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_algebra"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_diff_eq",
+      "name": "Differential Equations",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "mat_form_de",
+          "name": "Forming Differential Equations",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_separation",
+          "name": "Separation of Variables",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_integration"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_vectors",
+      "name": "Vectors",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "mat_vector_basics",
+          "name": "Vectors in 2D and 3D",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_vector_magnitude",
+          "name": "Magnitude and Direction",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_scalar_product",
+          "name": "Scalar Product",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_vector_lines",
+          "name": "Vector Equations of Lines",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_complex",
+      "name": "Complex Numbers",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "mat_complex_arith",
+          "name": "Complex Number Arithmetic",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_argand",
+          "name": "Argand Diagram",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_mod_arg",
+          "name": "Modulus-Argument Form",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_complex_loci",
+          "name": "Complex Roots and Loci",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_algebra"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_mech_kinematics",
+      "name": "Mechanics: Kinematics",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "mat_kin_constant",
+          "name": "Kinematics with Constant Acceleration",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_kin_variable",
+          "name": "Variable Acceleration",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_projectiles",
+          "name": "Projectiles",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_differentiation_adv"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_mech_forces",
+      "name": "Mechanics: Forces and Newton's Laws",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "mat_forces_equilibrium",
+          "name": "Forces and Equilibrium",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_friction",
+          "name": "Friction",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_newton_laws",
+          "name": "Newton's Laws of Motion",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_connected_particles",
+          "name": "Connected Particles",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_mech_energy",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_mech_energy",
+      "name": "Mechanics: Energy and Momentum",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "mat_work_energy_power",
+          "name": "Work, Energy and Power",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_momentum_impulse",
+          "name": "Momentum and Impulse",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_mech_forces"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_stats_data",
+      "name": "Statistics: Data",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "mat_data_rep",
+          "name": "Representation of Data",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_central_spread",
+          "name": "Central Tendency and Spread",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_random_vars",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_probability",
+      "name": "Probability",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "mat_perm_comb",
+          "name": "Permutations and Combinations",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_prob_rules",
+          "name": "Probability Rules",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_conditional",
+          "name": "Conditional Probability",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_random_vars",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_random_vars",
+      "name": "Random Variables and Distributions",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "mat_discrete_rv",
+          "name": "Discrete Random Variables",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_binomial_dist",
+          "name": "Binomial Distribution",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "mat_geometric_dist",
+          "name": "Geometric Distribution",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "mat_poisson",
+          "name": "Poisson Distribution",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_normal",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_stats_data",
+        "mat_probability"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_normal",
+      "name": "Normal Distribution",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "mat_normal_dist",
+          "name": "Normal Distribution",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_normal_approx",
+          "name": "Normal Approximations",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_inference",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_inference",
+      "name": "Sampling and Hypothesis Testing",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "mat_sampling",
+          "name": "Sampling",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_hypothesis",
+          "name": "Hypothesis Testing",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_normal"
+      ],
+      "isRoot": false
+    }
+  ]
+}

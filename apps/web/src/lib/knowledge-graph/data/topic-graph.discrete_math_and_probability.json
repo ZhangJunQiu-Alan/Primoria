@@ -1,0 +1,584 @@
+{
+  "graphId": "discrete_math_and_probability",
+  "subject": "Discrete Math and Probability Theory",
+  "generatedFrom": "temple/discrete_math_and_probability.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "topic_logic",
+      "name": "Logic and Proofs",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "propositional_logic",
+          "name": "Propositional Logic",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "direct_proofs",
+          "name": "Direct Proofs",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "proof_by_contraposition",
+          "name": "Proof by Contraposition",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "proof_by_contradiction",
+          "name": "Proof by Contradiction",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_induction",
+          "hard": true
+        },
+        {
+          "topicId": "topic_matching",
+          "hard": false
+        },
+        {
+          "topicId": "topic_countability_computability",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_induction",
+      "name": "Induction",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "simple_induction",
+          "name": "Simple Induction",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "strong_induction",
+          "name": "Strong Induction",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "well_ordering_principle",
+          "name": "Well-Ordering Principle",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "structural_induction",
+          "name": "Structural Induction",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_graphs",
+          "hard": true
+        },
+        {
+          "topicId": "topic_modular_arithmetic",
+          "hard": true
+        },
+        {
+          "topicId": "topic_countability_computability",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "topic_logic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_matching",
+      "name": "Stable Matching",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "stable_matching_problem",
+          "name": "Stable Matching Problem",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "gale_shapley_algorithm",
+          "name": "Gale-Shapley Algorithm",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "matching_optimality",
+          "name": "Matching Optimality",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "matching_pessimality",
+          "name": "Matching Pessimality",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_logic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_graphs",
+      "name": "Graph Theory",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "graph_basics",
+          "name": "Graph Basics",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "eulerian_tours",
+          "name": "Eulerian Tours",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "trees",
+          "name": "Trees",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "planar_graphs",
+          "name": "Planar Graphs",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "hypercubes",
+          "name": "Hypercubes",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_induction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_modular_arithmetic",
+      "name": "Modular Arithmetic",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "euclids_algorithm",
+          "name": "Euclid's Algorithm",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "extended_euclid",
+          "name": "Extended Euclid",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "chinese_remainder_theorem",
+          "name": "Chinese Remainder Theorem",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "fermats_little_theorem",
+          "name": "Fermat's Little Theorem",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_crypto",
+          "hard": true
+        },
+        {
+          "topicId": "topic_polynomials",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "topic_induction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_crypto",
+      "name": "Cryptography",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "symmetric_cryptography",
+          "name": "Symmetric Cryptography",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "rsa_setup_and_encryption",
+          "name": "RSA Setup and Encryption",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "rsa_decryption_proof",
+          "name": "RSA Decryption Proof",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "digital_signatures",
+          "name": "Digital Signatures",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_modular_arithmetic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_polynomials",
+      "name": "Polynomials",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "polynomial_roots_and_degree",
+          "name": "Polynomial Roots and Degree",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "polynomial_interpolation",
+          "name": "Polynomial Interpolation",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "secret_sharing",
+          "name": "Secret Sharing",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "error_correcting_codes",
+          "name": "Error Correcting Codes",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_modular_arithmetic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_countability_computability",
+      "name": "Countability and Computability",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "bijections_and_cardinality",
+          "name": "Bijections and Cardinality",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "cantors_diagonalization",
+          "name": "Cantor's Diagonalization",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "uncountability_of_reals",
+          "name": "Uncountability of Reals",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "the_halting_problem",
+          "name": "The Halting Problem",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "undecidability",
+          "name": "Undecidability",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_logic",
+        "topic_induction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_counting",
+      "name": "Counting",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "basic_counting_rules",
+          "name": "Basic Counting Rules",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "combinations_permutations",
+          "name": "Combinations and Permutations",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "combinatorial_proofs",
+          "name": "Combinatorial Proofs",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "stars_and_bars",
+          "name": "Stars and Bars",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "inclusion_exclusion",
+          "name": "Inclusion-Exclusion",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_discrete_prob",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_discrete_prob",
+      "name": "Discrete Probability",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "probability_spaces",
+          "name": "Probability Spaces",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "conditional_probability",
+          "name": "Conditional Probability",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "bayes_rule",
+          "name": "Bayes' Rule",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "event_independence",
+          "name": "Event Independence",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_random_vars",
+          "hard": true
+        },
+        {
+          "topicId": "topic_markov",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_counting"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_random_vars",
+      "name": "Random Variables and Expectation",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "discrete_random_variables",
+          "name": "Discrete Random Variables",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "expectation",
+          "name": "Expectation",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "linearity_of_expectation",
+          "name": "Linearity of Expectation",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "variance_and_covariance",
+          "name": "Variance and Covariance",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_discrete_dists",
+          "hard": true
+        },
+        {
+          "topicId": "topic_continuous_prob",
+          "hard": true
+        },
+        {
+          "topicId": "topic_concentration",
+          "hard": true
+        },
+        {
+          "topicId": "topic_markov",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_discrete_prob"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_discrete_dists",
+      "name": "Discrete Distributions",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "bernoulli_binomial_distributions",
+          "name": "Bernoulli and Binomial Distributions",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "geometric_distribution",
+          "name": "Geometric Distribution",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "poisson_distribution",
+          "name": "Poisson Distribution",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "hypergeometric_distribution",
+          "name": "Hypergeometric Distribution",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_continuous_prob",
+      "name": "Continuous Probability",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "continuous_random_variables",
+          "name": "Continuous Random Variables",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "probability_density_function",
+          "name": "Probability Density Function",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "cumulative_distribution_function",
+          "name": "Cumulative Distribution Function",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "uniform_exponential_distributions",
+          "name": "Uniform and Exponential Distributions",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "normal_distribution",
+          "name": "Normal Distribution",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_concentration",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_concentration",
+      "name": "Concentration Inequalities",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "markovs_inequality",
+          "name": "Markov's Inequality",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "chebyshevs_inequality",
+          "name": "Chebyshev's Inequality",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "chernoff_bounds",
+          "name": "Chernoff Bounds",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "weak_law_of_large_numbers",
+          "name": "Weak Law of Large Numbers",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "central_limit_theorem",
+          "name": "Central Limit Theorem",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_random_vars",
+        "topic_continuous_prob"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_markov",
+      "name": "Markov Chains",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "markov_chains_basics",
+          "name": "Markov Chains Basics",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "hitting_times",
+          "name": "Hitting Times",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "stationary_distributions",
+          "name": "Stationary Distributions",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "page_rank_algorithm",
+          "name": "PageRank Algorithm",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_discrete_prob",
+        "topic_random_vars"
+      ],
+      "isRoot": false
+    }
+  ]
+}

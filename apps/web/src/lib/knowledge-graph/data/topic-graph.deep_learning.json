@@ -1,0 +1,324 @@
+{
+  "graphId": "deep_learning",
+  "subject": "Introduction to Deep Learning (CMU 11-785)",
+  "generatedFrom": "temple/deep_learning.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "dl_foundations",
+      "name": "Neural Network Foundations",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "dl_perceptron",
+          "name": "Perceptron",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_mlp",
+          "name": "Multilayer Perceptron",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_activation",
+          "name": "Activation Functions",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_forward",
+          "name": "Forward Propagation",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_computational_graph",
+          "name": "Computational Graphs",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "dl_backprop",
+          "name": "Backpropagation",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "dl_optim",
+          "hard": false
+        },
+        {
+          "topicId": "dl_training",
+          "hard": true
+        },
+        {
+          "topicId": "dl_cnn",
+          "hard": true
+        },
+        {
+          "topicId": "dl_rnn_seq",
+          "hard": true
+        },
+        {
+          "topicId": "dl_generative",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "dl_optim",
+      "name": "Optimization",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "dl_loss",
+          "name": "Loss Functions",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_optimization",
+          "name": "Stochastic Gradient Descent",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_momentum",
+          "name": "Momentum",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_optimizers",
+          "name": "Adaptive Optimizers",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_lr_schedule",
+          "name": "Learning Rate Schedules",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "dl_training",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "dl_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_training",
+      "name": "Regularization and Stabilization",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "dl_vanishing_grad",
+          "name": "Vanishing/Exploding Gradients",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_weight_init",
+          "name": "Weight Initialization",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_batchnorm",
+          "name": "Batch Normalization",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_regularization",
+          "name": "Regularization",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_dropout",
+          "name": "Dropout",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "dl_cnn",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "dl_foundations",
+        "dl_optim"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_cnn",
+      "name": "Convolutional Neural Networks",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "dl_convolution",
+          "name": "Convolution",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_padding_stride",
+          "name": "Padding and Stride",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_pooling",
+          "name": "Pooling",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_cnn_arch",
+          "name": "CNN Architectures",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_resnet",
+          "name": "Residual Networks",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "dl_transfer_learning",
+          "name": "Transfer Learning",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "dl_foundations",
+        "dl_training"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_rnn_seq",
+      "name": "Recurrent Neural Networks",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "dl_rnn",
+          "name": "Recurrent Neural Networks",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_bptt",
+          "name": "Backpropagation Through Time",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_seq_vanishing",
+          "name": "Long-Range Dependencies",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_lstm",
+          "name": "LSTM",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_gru",
+          "name": "GRU",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "dl_attn",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "dl_foundations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_attn",
+      "name": "Attention and Transformers",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "dl_attention",
+          "name": "Attention Mechanism",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_self_attention",
+          "name": "Self-Attention",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_multihead",
+          "name": "Multi-Head Attention",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_positional",
+          "name": "Positional Encoding",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_transformer",
+          "name": "Transformer Architecture",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "dl_pretraining",
+          "name": "Pretraining & Fine-tuning",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "dl_rnn_seq"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_generative",
+      "name": "Generative Models",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "dl_autoencoder",
+          "name": "Autoencoders",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "dl_vae",
+          "name": "Variational Autoencoders",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "dl_gan",
+          "name": "Generative Adversarial Networks",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dl_gan_training",
+          "name": "GAN Training Dynamics",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "dl_diffusion",
+          "name": "Diffusion Models",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "dl_flow",
+          "name": "Normalizing Flows",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "dl_foundations"
+      ],
+      "isRoot": false
+    }
+  ]
+}

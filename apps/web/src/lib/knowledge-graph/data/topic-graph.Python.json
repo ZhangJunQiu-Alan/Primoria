@@ -1,0 +1,389 @@
+{
+  "graphId": "Python",
+  "subject": "Structure and Interpretation of Computer Programs",
+  "generatedFrom": "temple/Python.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "topic_intro",
+      "name": "Functions and Control",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "expr_stmt",
+          "name": "Expressions and Statements",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "control",
+          "name": "Control Structures",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pure_func",
+          "name": "Pure vs Non-Pure Functions",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "env_diag",
+          "name": "Environment Diagrams",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_hof",
+          "hard": true
+        },
+        {
+          "topicId": "topic_data",
+          "hard": true
+        },
+        {
+          "topicId": "topic_recursion",
+          "hard": true
+        },
+        {
+          "topicId": "topic_adv_data",
+          "hard": true
+        },
+        {
+          "topicId": "topic_scheme",
+          "hard": true
+        },
+        {
+          "topicId": "topic_declarative",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_hof",
+      "name": "Higher-Order Functions",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "func_arg",
+          "name": "Functions as Arguments",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "func_ret",
+          "name": "Functions as Return Values",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "lambda",
+          "name": "Lambda Expressions",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "currying",
+          "name": "Currying",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "decorators",
+          "name": "Decorators",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_recursion",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_data",
+      "name": "Data Abstraction and Sequences",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "seq",
+          "name": "Sequences and Slicing",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "list_comp",
+          "name": "List Comprehensions",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "data_abs",
+          "name": "Data Abstraction",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "dict",
+          "name": "Dictionaries",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "box_pointer",
+          "name": "Box-and-Pointer Diagrams",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_recursion",
+          "hard": true
+        },
+        {
+          "topicId": "topic_mut_oop",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_recursion",
+      "name": "Recursion and Trees",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "recursion",
+          "name": "Recursion",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "tree_recur",
+          "name": "Tree Recursion",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "tree_abs",
+          "name": "Tree Data Abstraction",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "tree_trav",
+          "name": "Tree Traversal",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_adv_data",
+          "hard": true
+        },
+        {
+          "topicId": "topic_scheme",
+          "hard": true
+        },
+        {
+          "topicId": "topic_interp",
+          "hard": false
+        },
+        {
+          "topicId": "topic_declarative",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro",
+        "topic_hof",
+        "topic_data"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_mut_oop",
+      "name": "Mutable Data and OOP",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "mutability",
+          "name": "Mutability",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "oop",
+          "name": "Object-Oriented Programming",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "inherit_comp",
+          "name": "Inheritance and Composition",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "class_attr",
+          "name": "Class and Instance Attributes",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "string_rep",
+          "name": "String Representation",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_adv_data",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_data"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_adv_data",
+      "name": "Advanced Data Structures",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "linked_lists",
+          "name": "Linked Lists",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mut_trees",
+          "name": "Mutable Trees",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "iterators",
+          "name": "Iterators",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "generators",
+          "name": "Generators",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_scheme",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro",
+        "topic_recursion",
+        "topic_mut_oop"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_scheme",
+      "name": "Scheme and Functional Programming",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "scheme_syntax",
+          "name": "Scheme Syntax",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "scheme_lists",
+          "name": "Scheme Lists and Pairs",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "tail_calls",
+          "name": "Tail Calls and Optimization",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "macros",
+          "name": "Macros",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_interp",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro",
+        "topic_recursion",
+        "topic_adv_data"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_interp",
+      "name": "Interpreters",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "parsing",
+          "name": "Lexical Analysis and Parsing",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "eval",
+          "name": "Evaluation Process",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "apply",
+          "name": "Application Process",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "exceptions",
+          "name": "Exceptions",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_recursion",
+        "topic_scheme"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_declarative",
+      "name": "Declarative Programming",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "regex",
+          "name": "Regular Expressions",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "bnf",
+          "name": "BNF Context-Free Grammars",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "sql_queries",
+          "name": "SQL Tables and Queries",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "sql_joins",
+          "name": "SQL Joins and Aggregation",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_intro",
+        "topic_recursion"
+      ],
+      "isRoot": false
+    }
+  ]
+}

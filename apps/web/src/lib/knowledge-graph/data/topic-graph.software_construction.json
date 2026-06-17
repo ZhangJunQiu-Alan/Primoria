@@ -1,0 +1,171 @@
+{
+  "graphId": "software_construction",
+  "subject": "Software Construction",
+  "generatedFrom": "temple/software_construction.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "t_mit6031_fundamentals",
+      "name": "Software Construction Fundamentals",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_static_checking",
+          "name": "Static Checking",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit6031_immutability",
+          "name": "Immutability",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit6031_specifications",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit6031_adt",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t_mit6031_specifications",
+      "name": "Specifications and Testing",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_specs",
+          "name": "Specifications",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit6031_testing",
+          "name": "Testing Strategies",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit6031_exceptions",
+          "name": "Exceptions",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit6031_adt",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit6031_fundamentals"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit6031_adt",
+      "name": "Abstract Data Types",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_adt_basics",
+          "name": "ADT Concepts",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit6031_rep_independence",
+          "name": "Representation Independence",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit6031_rep_invariant",
+          "name": "Rep Invariants",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_mit6031_abstraction_function",
+          "name": "Abstraction Functions",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit6031_oop",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit6031_concurrency",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit6031_fundamentals",
+        "t_mit6031_specifications"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit6031_oop",
+      "name": "Object-Oriented Programming",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_interfaces",
+          "name": "Interfaces and Subtyping",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit6031_equality",
+          "name": "Equality",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit6031_recursive_data",
+          "name": "Recursive Data Types",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit6031_adt"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit6031_concurrency",
+      "name": "Concurrency",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_concurrency_intro",
+          "name": "Concurrency Basics",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit6031_thread_safety",
+          "name": "Thread Safety",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit6031_locks",
+          "name": "Locks and Synchronization",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_mit6031_message_passing",
+          "name": "Message Passing",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit6031_adt"
+      ],
+      "isRoot": false
+    }
+  ]
+}

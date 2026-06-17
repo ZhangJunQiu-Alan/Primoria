@@ -1,0 +1,191 @@
+{
+  "graphId": "computer_network",
+  "subject": "Computer Networking (Stanford CS144)",
+  "generatedFrom": "temple/computer_network.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "net_arch",
+      "name": "Network Architecture",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "net_layering",
+          "name": "Network Layering",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_osi",
+          "name": "OSI Model",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "net_tcpip",
+          "name": "TCP/IP Model",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "net_encapsulation",
+          "name": "Encapsulation",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "net_network",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "net_link",
+      "name": "Link Layer",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "net_link_services",
+          "name": "Link Layer Services",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_mac",
+          "name": "MAC Addressing",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "net_ethernet",
+          "name": "Ethernet",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "net_switching",
+          "name": "Switching",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "net_network",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "net_network",
+      "name": "Network Layer",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "net_ip_addressing",
+          "name": "IP Addressing",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_ipv4_ipv6",
+          "name": "IPv4 and IPv6",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "net_forwarding",
+          "name": "Forwarding and Routers",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "net_routing",
+          "name": "Routing Algorithms",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "net_transport",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "net_arch",
+        "net_link"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "net_transport",
+      "name": "Transport Layer",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "net_transport_services",
+          "name": "Transport Layer Services",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_udp",
+          "name": "UDP",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "net_tcp",
+          "name": "TCP",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "net_rdt",
+          "name": "Reliable Data Transfer",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "net_flow_control",
+          "name": "Flow Control",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "net_congestion",
+          "name": "Congestion Control",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "net_application",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "net_network"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "net_application",
+      "name": "Application Layer",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "net_http",
+          "name": "HTTP",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_dns",
+          "name": "DNS",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "net_app_protocols",
+          "name": "Other Application Protocols",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "net_transport"
+      ],
+      "isRoot": false
+    }
+  ]
+}

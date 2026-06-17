@@ -1,0 +1,279 @@
+{
+  "graphId": "computer_architecture",
+  "subject": "Great Ideas in Computer Architecture",
+  "generatedFrom": "temple/computer_architecture.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "topic_data_rep",
+      "name": "Data Representation",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "concept_binary_hex",
+          "name": "Binary and Hexadecimal",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_integer_rep",
+          "name": "Two's Complement & Integer Rep",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_floating_point",
+          "name": "IEEE 754 Floating Point",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_endianness",
+          "name": "Endianness and Memory Layout",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_c_prog",
+      "name": "C Programming",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "concept_c_basics",
+          "name": "C Basics & Control Flow",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_pointers_arrays",
+          "name": "Pointers and Arrays",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_memory_management",
+          "name": "Dynamic Memory Management",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_structs_unions",
+          "name": "Structs, Unions, and Typedefs",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_riscv",
+      "name": "RISC-V Assembly",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "concept_riscv_basics",
+          "name": "Registers & Basic Instructions",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_riscv_control",
+          "name": "Control Flow & Branches",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_riscv_functions",
+          "name": "Function Calling Convention",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_riscv_formats",
+          "name": "Instruction Formats",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "concept_call_pipeline",
+          "name": "Compiler, Assembler, Linker, Loader",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_sds",
+      "name": "Synchronous Digital Systems",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "concept_boolean_algebra",
+          "name": "Boolean Algebra & Logic Gates",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_combinational_logic",
+          "name": "Combinational Logic Blocks",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_state_elements",
+          "name": "State Elements (Flip-Flops)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_sequential_logic",
+          "name": "Sequential Logic & Timing",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "concept_fsm",
+          "name": "Finite State Machines",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_cpu",
+      "name": "CPU Architecture & Datapath",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "concept_single_cycle",
+          "name": "Single-Cycle Datapath",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_cpu_control",
+          "name": "CPU Control Logic",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_pipelining",
+          "name": "Pipelining Principles",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_pipeline_hazards",
+          "name": "Pipeline Hazards & Forwarding",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "concept_branch_prediction",
+          "name": "Branch Prediction",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_memory",
+      "name": "Memory Hierarchy",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "concept_cache_basics",
+          "name": "Cache Basics & Direct Mapped",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_associative_caches",
+          "name": "Associative Caches",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_cache_performance",
+          "name": "AMAT & Cache Misses",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_virtual_memory",
+          "name": "Virtual Memory & Page Tables",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "concept_tlb",
+          "name": "Translation Lookaside Buffer (TLB)",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_parallelism",
+      "name": "Parallel Computing",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "concept_amdahls_law",
+          "name": "Amdahl's Law",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_simd",
+          "name": "Data-Level Parallelism (SIMD)",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_multithreading",
+          "name": "Thread-Level Parallelism (OpenMP)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_cache_coherence",
+          "name": "Cache Coherence & False Sharing",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "concept_warehouse_scale",
+          "name": "Warehouse-Scale Computing",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_io_dep",
+      "name": "I/O and Dependability",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "concept_memory_mapped_io",
+          "name": "Memory-Mapped I/O",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "concept_polling_interrupts",
+          "name": "Polling and Interrupts",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "concept_dma",
+          "name": "Direct Memory Access (DMA)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "concept_ecc_parity",
+          "name": "Error Correction Codes",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "concept_raid",
+          "name": "RAID and Dependability",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    }
+  ]
+}

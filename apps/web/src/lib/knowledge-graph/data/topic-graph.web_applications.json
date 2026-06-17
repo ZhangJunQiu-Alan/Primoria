@@ -1,0 +1,191 @@
+{
+  "graphId": "web_applications",
+  "subject": "Web Applications (Stanford CS142)",
+  "generatedFrom": "temple/web_applications.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "web_foundations",
+      "name": "Web Foundations",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "web_http",
+          "name": "HTTP Protocol",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "web_url_dns",
+          "name": "URLs and DNS",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "web_client_server",
+          "name": "Client-Server Model",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "web_backend",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "web_frontend",
+      "name": "Frontend Technologies",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "web_html",
+          "name": "HTML",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "web_css",
+          "name": "CSS",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "web_javascript",
+          "name": "JavaScript",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "web_dom",
+          "name": "DOM Manipulation",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "web_react",
+          "name": "React Components",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "web_state_props",
+          "name": "State and Props",
+          "defaultOrder": 6
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "web_backend",
+          "hard": true
+        },
+        {
+          "topicId": "web_security",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "web_backend",
+      "name": "Backend Technologies",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "web_node",
+          "name": "Node.js",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "web_express",
+          "name": "Express and Routing",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "web_rest",
+          "name": "REST APIs",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "web_auth",
+          "name": "Authentication and Sessions",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "web_data",
+          "hard": false
+        },
+        {
+          "topicId": "web_security",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "web_foundations",
+        "web_frontend"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "web_data",
+      "name": "Databases",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "web_relational",
+          "name": "Relational Databases",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "web_sql",
+          "name": "SQL",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "web_nosql",
+          "name": "NoSQL and MongoDB",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "web_security",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "web_backend"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "web_security",
+      "name": "Web Security",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "web_xss",
+          "name": "Cross-Site Scripting (XSS)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "web_csrf",
+          "name": "Cross-Site Request Forgery (CSRF)",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "web_sql_injection",
+          "name": "SQL Injection",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "web_frontend",
+        "web_backend",
+        "web_data"
+      ],
+      "isRoot": false
+    }
+  ]
+}
