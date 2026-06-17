@@ -1,0 +1,149 @@
+{
+  "graphId": "information_theory",
+  "subject": "Information Theory and Entropy",
+  "generatedFrom": "temple/information_theory.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "t_infotheory_basics",
+      "name": "Entropy and Information Measures",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "c_infotheory_entropy",
+          "name": "Shannon Entropy",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_infotheory_joint_entropy",
+          "name": "Joint and Conditional Entropy",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_infotheory_mutual_info",
+          "name": "Mutual Information",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_infotheory_kl_divergence",
+          "name": "Kullback-Leibler Divergence",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_infotheory_data_processing",
+          "name": "Data Processing Inequality",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_infotheory_source_coding",
+          "hard": true
+        },
+        {
+          "topicId": "t_infotheory_channel_capacity",
+          "hard": true
+        },
+        {
+          "topicId": "t_infotheory_continuous",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t_infotheory_source_coding",
+      "name": "Source Coding",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c_infotheory_aep",
+          "name": "Asymptotic Equipartition Property",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_infotheory_kraft",
+          "name": "Kraft Inequality",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_infotheory_shannon_coding",
+          "name": "Shannon Source Coding Theorem",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_infotheory_huffman",
+          "name": "Huffman Coding",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_infotheory_channel_capacity",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_infotheory_basics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_infotheory_channel_capacity",
+      "name": "Channel Capacity",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_infotheory_dmc",
+          "name": "Discrete Memoryless Channels",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_infotheory_channel_capacity_def",
+          "name": "Channel Capacity",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_infotheory_shannon_channel",
+          "name": "Shannon Channel Coding Theorem",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_infotheory_basics",
+        "t_infotheory_source_coding"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_infotheory_continuous",
+      "name": "Continuous Channels",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c_infotheory_differential_entropy",
+          "name": "Differential Entropy",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_infotheory_awgn",
+          "name": "AWGN Channel",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_infotheory_shannon_hartley",
+          "name": "Shannon-Hartley Theorem",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_infotheory_basics"
+      ],
+      "isRoot": false
+    }
+  ]
+}

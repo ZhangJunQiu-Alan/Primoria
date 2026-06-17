@@ -1,0 +1,192 @@
+{
+  "graphId": "numerical_analysis",
+  "subject": "Introduction to Numerical Analysis",
+  "generatedFrom": "temple/numerical_analysis.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "t_mit18330_errors",
+      "name": "Errors and Computer Arithmetic",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit18330_floating_point",
+          "name": "Floating Point Representation",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit18330_error_analysis",
+          "name": "Error Analysis",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit18330_conditioning",
+          "name": "Conditioning",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit18330_root_finding",
+          "hard": false
+        },
+        {
+          "topicId": "t_mit18330_linear_systems",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit18330_interpolation",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit18330_odes",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t_mit18330_root_finding",
+      "name": "Root Finding",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit18330_bisection",
+          "name": "Bisection Method",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit18330_newton",
+          "name": "Newton's Method",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit18330_secant",
+          "name": "Secant Method",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit18330_errors"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit18330_linear_systems",
+      "name": "Linear Systems",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit18330_lu",
+          "name": "LU Factorization",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit18330_cholesky",
+          "name": "Cholesky Factorization",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit18330_iterative_linear",
+          "name": "Iterative Methods",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit18330_interpolation",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit18330_errors"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit18330_interpolation",
+      "name": "Interpolation and Approximation",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit18330_polynomial_interp",
+          "name": "Polynomial Interpolation",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit18330_splines",
+          "name": "Spline Interpolation",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit18330_least_squares",
+          "name": "Least Squares Approximation",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit18330_integration",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit18330_errors",
+        "t_mit18330_linear_systems"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit18330_integration",
+      "name": "Numerical Integration",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit18330_newton_cotes",
+          "name": "Newton-Cotes Formulas",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit18330_gaussian_quad",
+          "name": "Gaussian Quadrature",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit18330_interpolation"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit18330_odes",
+      "name": "Ordinary Differential Equations",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit18330_euler",
+          "name": "Euler's Method",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit18330_runge_kutta",
+          "name": "Runge-Kutta Methods",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit18330_ode_stability",
+          "name": "Stability of ODE Methods",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit18330_errors"
+      ],
+      "isRoot": false
+    }
+  ]
+}

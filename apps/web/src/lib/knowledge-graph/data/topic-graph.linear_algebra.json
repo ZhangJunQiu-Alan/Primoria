@@ -1,0 +1,223 @@
+{
+  "graphId": "linear_algebra",
+  "subject": "Linear Algebra",
+  "generatedFrom": "temple/linear_algebra.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "t_mit1806_linear_equations",
+      "name": "Solving Linear Equations",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_vectors",
+          "name": "Vectors and Linear Combinations",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit1806_elimination",
+          "name": "Elimination with Matrices",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit1806_matrix_ops",
+          "name": "Matrix Operations and Inverses",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_mit1806_lu_decomp",
+          "name": "LU Factorization",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_vector_spaces",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit1806_determinants",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit1806_applications",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t_mit1806_vector_spaces",
+      "name": "Vector Spaces and Subspaces",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_spaces_subspaces",
+          "name": "Vector Spaces and Subspaces",
+          "defaultOrder": 5
+        },
+        {
+          "conceptId": "c_mit1806_null_column_space",
+          "name": "Null Space and Column Space",
+          "defaultOrder": 6
+        },
+        {
+          "conceptId": "c_mit1806_independence_basis",
+          "name": "Linear Independence, Basis, and Dimension",
+          "defaultOrder": 7
+        },
+        {
+          "conceptId": "c_mit1806_four_subspaces",
+          "name": "The Four Fundamental Subspaces",
+          "defaultOrder": 8
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_orthogonality",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit1806_linear_equations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_orthogonality",
+      "name": "Orthogonality",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_orthogonality",
+          "name": "Orthogonal Vectors and Subspaces",
+          "defaultOrder": 9
+        },
+        {
+          "conceptId": "c_mit1806_projections",
+          "name": "Projections onto Subspaces",
+          "defaultOrder": 10
+        },
+        {
+          "conceptId": "c_mit1806_least_squares",
+          "name": "Least Squares Approximations",
+          "defaultOrder": 11
+        },
+        {
+          "conceptId": "c_mit1806_gram_schmidt",
+          "name": "Orthogonal Bases and Gram-Schmidt",
+          "defaultOrder": 12
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit1806_vector_spaces"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_determinants",
+      "name": "Determinants",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_det_properties",
+          "name": "Properties of Determinants",
+          "defaultOrder": 13
+        },
+        {
+          "conceptId": "c_mit1806_det_formulas",
+          "name": "Formulas and Cofactors",
+          "defaultOrder": 14
+        },
+        {
+          "conceptId": "c_mit1806_cramers_rule",
+          "name": "Cramer's Rule and Volumes",
+          "defaultOrder": 15
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_eigenvalues",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit1806_linear_equations"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_eigenvalues",
+      "name": "Eigenvalues and Eigenvectors",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_eigen",
+          "name": "Eigenvalues and Eigenvectors",
+          "defaultOrder": 16
+        },
+        {
+          "conceptId": "c_mit1806_diagonalization",
+          "name": "Diagonalization",
+          "defaultOrder": 17
+        },
+        {
+          "conceptId": "c_mit1806_diff_eq",
+          "name": "Systems of Differential Equations",
+          "defaultOrder": 18
+        },
+        {
+          "conceptId": "c_mit1806_symmetric_matrices",
+          "name": "Symmetric Matrices",
+          "defaultOrder": 19
+        },
+        {
+          "conceptId": "c_mit1806_positive_definite",
+          "name": "Positive Definite Matrices",
+          "defaultOrder": 20
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_applications",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit1806_determinants"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_applications",
+      "name": "SVD and Linear Transformations",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_svd",
+          "name": "Singular Value Decomposition (SVD)",
+          "defaultOrder": 21
+        },
+        {
+          "conceptId": "c_mit1806_linear_transformations",
+          "name": "Linear Transformations",
+          "defaultOrder": 22
+        },
+        {
+          "conceptId": "c_mit1806_matrix_transform",
+          "name": "The Matrix of a Linear Transformation",
+          "defaultOrder": 23
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit1806_linear_equations",
+        "t_mit1806_eigenvalues"
+      ],
+      "isRoot": false
+    }
+  ]
+}

@@ -1,0 +1,471 @@
+{
+  "graphId": "computer_systems",
+  "subject": "Computer Systems",
+  "generatedFrom": "temple/computer_systems.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "t1",
+      "name": "Data Representation",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "c1_1",
+          "name": "Bits and Bytes",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c1_2",
+          "name": "Integer Representation",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c1_3",
+          "name": "Integer Arithmetic",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c1_4",
+          "name": "Floating Point Representation",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c1_5",
+          "name": "Floating Point Operations",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t2",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t2",
+      "name": "Machine-Level Programming",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c2_1",
+          "name": "x86-64 Data Movement",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c2_2",
+          "name": "Arithmetic and Logical Operations",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c2_3",
+          "name": "Control Flow (Conditionals and Loops)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c2_4",
+          "name": "Procedures and Call Stack",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c2_5",
+          "name": "Arrays and Structs",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t3",
+          "hard": true
+        },
+        {
+          "topicId": "t4",
+          "hard": true
+        },
+        {
+          "topicId": "t5",
+          "hard": true
+        },
+        {
+          "topicId": "t6",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t3",
+      "name": "Processor Architecture",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c3_1",
+          "name": "Instruction Set Architecture (Y86-64)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c3_2",
+          "name": "Sequential CPU Implementation",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c3_3",
+          "name": "Pipelining Principles",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c3_4",
+          "name": "Pipeline Hazards and Forwarding",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c3_5",
+          "name": "Exceptions in Pipelines",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t4",
+          "hard": true
+        },
+        {
+          "topicId": "t7",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t2"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t4",
+      "name": "Code Optimization",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c4_1",
+          "name": "Compiler Limitations",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c4_2",
+          "name": "Loop Unrolling",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c4_3",
+          "name": "Instruction-Level Parallelism",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c4_4",
+          "name": "Memory Aliasing",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c4_5",
+          "name": "Profiling Tools",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t5",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t2",
+        "t3"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t5",
+      "name": "Memory Hierarchy and Cache",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c5_1",
+          "name": "Storage Technologies",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c5_2",
+          "name": "Principle of Locality",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c5_3",
+          "name": "Cache Memory Organization",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c5_4",
+          "name": "Cache Performance Metrics",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c5_5",
+          "name": "Writing Cache-Friendly Code",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t8",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t2",
+        "t4"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t6",
+      "name": "Linking",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "c6_1",
+          "name": "Static Linking",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c6_2",
+          "name": "Object Files (ELF)",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c6_3",
+          "name": "Symbol Resolution",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c6_4",
+          "name": "Relocation",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c6_5",
+          "name": "Dynamic Linking",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t2"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t7",
+      "name": "Exceptional Control Flow",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "c7_1",
+          "name": "Exceptions (Traps, Interrupts, Faults)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c7_2",
+          "name": "Processes and Context Switches",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c7_3",
+          "name": "Process Control (fork, execve)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c7_4",
+          "name": "Signals and Signal Handling",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c7_5",
+          "name": "Non-local Jumps",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t9",
+          "hard": true
+        },
+        {
+          "topicId": "t11",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t3"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t8",
+      "name": "Virtual Memory",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "c8_1",
+          "name": "Address Translation",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c8_2",
+          "name": "Page Tables",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c8_3",
+          "name": "Translation Lookaside Buffer (TLB)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c8_4",
+          "name": "Dynamic Memory Allocation",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c8_5",
+          "name": "Garbage Collection Basics",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t5"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t9",
+      "name": "System-Level I/O",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "c9_1",
+          "name": "Unix I/O",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c9_2",
+          "name": "File Metadata",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c9_3",
+          "name": "Standard I/O Library",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c9_4",
+          "name": "File Sharing",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c9_5",
+          "name": "I/O Redirection",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t10",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t7"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t10",
+      "name": "Network Programming",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "c10_1",
+          "name": "Client-Server Model",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c10_2",
+          "name": "Internet Protocol (IP)",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c10_3",
+          "name": "Transmission Control Protocol (TCP)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c10_4",
+          "name": "Sockets Interface",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c10_5",
+          "name": "HTTP Protocol Basics",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t9"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t11",
+      "name": "Concurrent Programming",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "c11_1",
+          "name": "Thread Basics",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c11_2",
+          "name": "Shared Variables",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c11_3",
+          "name": "Synchronization (Semaphores)",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c11_4",
+          "name": "Thread Safety",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c11_5",
+          "name": "Deadlocks",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t7"
+      ],
+      "isRoot": false
+    }
+  ]
+}

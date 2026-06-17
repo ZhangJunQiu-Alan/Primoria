@@ -1,0 +1,845 @@
+{
+  "graphId": "a_level_physics",
+  "subject": "A-Level Physics (CIE 9702)",
+  "generatedFrom": "temple/a_level_physics.json",
+  "generatedAt": "2026-06-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "topics": [
+    {
+      "topicId": "phy_measurement",
+      "name": "Physical Quantities and Units",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "phy_si_units",
+          "name": "SI Base Units",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_homogeneity",
+          "name": "Homogeneity of Equations",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_scalars_vectors",
+          "name": "Scalars and Vectors",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_uncertainty",
+          "name": "Errors and Uncertainties",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_combine_uncertainty",
+          "name": "Combining Uncertainties",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_kinematics",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_kinematics",
+      "name": "Kinematics",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "phy_motion_quantities",
+          "name": "Displacement Velocity Acceleration",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_suvat",
+          "name": "Equations of Motion",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_motion_graphs",
+          "name": "Motion Graphs",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_free_fall",
+          "name": "Free Fall",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_projectile",
+          "name": "Projectile Motion",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_dynamics",
+          "hard": true
+        },
+        {
+          "topicId": "phy_circular",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_measurement"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_dynamics",
+      "name": "Dynamics",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "phy_newton_laws",
+          "name": "Newton's Laws of Motion",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_mass_weight",
+          "name": "Mass and Weight",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_momentum",
+          "name": "Linear Momentum",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_momentum_conservation",
+          "name": "Conservation of Momentum",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_impulse",
+          "name": "Impulse and Collisions",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_forces",
+          "hard": true
+        },
+        {
+          "topicId": "phy_work_energy",
+          "hard": true
+        },
+        {
+          "topicId": "phy_circular",
+          "hard": true
+        },
+        {
+          "topicId": "phy_thermal",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_kinematics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_forces",
+      "name": "Forces, Density and Pressure",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "phy_force_types",
+          "name": "Types of Force",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_moments",
+          "name": "Moments and Couples",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_equilibrium",
+          "name": "Equilibrium of Forces",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_density_pressure",
+          "name": "Density and Pressure",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_upthrust",
+          "name": "Upthrust and Archimedes",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_deformation",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_dynamics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_work_energy",
+      "name": "Work, Energy and Power",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "phy_work",
+          "name": "Work Done",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_ke_pe",
+          "name": "Kinetic and Potential Energy",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_energy_conservation",
+          "name": "Conservation of Energy",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_power_efficiency",
+          "name": "Power and Efficiency",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_deformation",
+          "hard": false
+        },
+        {
+          "topicId": "phy_oscillations",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_dynamics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_deformation",
+      "name": "Deformation of Solids",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "phy_hookes_law",
+          "name": "Hooke's Law",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_stress_strain",
+          "name": "Stress, Strain and Young Modulus",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_elastic_plastic",
+          "name": "Elastic and Plastic Behaviour",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_strain_energy",
+          "name": "Elastic Strain Energy",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_forces",
+        "phy_work_energy"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_waves",
+      "name": "Waves",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "phy_progressive_waves",
+          "name": "Progressive Waves",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_wave_types",
+          "name": "Transverse and Longitudinal Waves",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_intensity",
+          "name": "Wave Intensity",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_em_spectrum",
+          "name": "Electromagnetic Spectrum",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_doppler",
+          "name": "Doppler Effect",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_superposition",
+          "hard": true
+        },
+        {
+          "topicId": "phy_quantum",
+          "hard": true
+        },
+        {
+          "topicId": "phy_astro",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_superposition",
+      "name": "Superposition",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "phy_superposition_principle",
+          "name": "Principle of Superposition",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_interference",
+          "name": "Two-Source Interference",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_diffraction",
+          "name": "Diffraction",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_diffraction_grating",
+          "name": "Diffraction Grating",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_stationary_waves",
+          "name": "Stationary Waves",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_waves"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_electricity",
+      "name": "Current of Electricity",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "phy_current_charge",
+          "name": "Electric Current and Charge",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_pd_emf",
+          "name": "Potential Difference and EMF",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_resistance_ohm",
+          "name": "Resistance and Ohm's Law",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_resistivity",
+          "name": "Resistivity",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_iv_characteristics",
+          "name": "I-V Characteristics",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_dc_circuits",
+          "hard": true
+        },
+        {
+          "topicId": "phy_electric_fields",
+          "hard": true
+        },
+        {
+          "topicId": "phy_magnetic_fields",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_dc_circuits",
+      "name": "DC Circuits",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "phy_kirchhoff",
+          "name": "Kirchhoff's Laws",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_series_parallel",
+          "name": "Series and Parallel Resistors",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_potential_divider",
+          "name": "Potential Dividers",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_internal_resistance",
+          "name": "Internal Resistance",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_electricity"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_circular",
+      "name": "Motion in a Circle",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "phy_angular_speed",
+          "name": "Radian Measure and Angular Speed",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_centripetal_accel",
+          "name": "Centripetal Acceleration",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_centripetal_force",
+          "name": "Centripetal Force",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_gravitation",
+          "hard": true
+        },
+        {
+          "topicId": "phy_oscillations",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_kinematics",
+        "phy_dynamics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_gravitation",
+      "name": "Gravitational Fields",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "phy_newton_gravitation",
+          "name": "Newton's Law of Gravitation",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_grav_field_strength",
+          "name": "Gravitational Field Strength",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_grav_potential",
+          "name": "Gravitational Potential",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_orbits",
+          "name": "Orbital Motion",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_electric_fields",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_circular"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_oscillations",
+      "name": "Oscillations",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "phy_shm",
+          "name": "Simple Harmonic Motion",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_shm_energy",
+          "name": "SHM Energy",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_damping",
+          "name": "Damping",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_resonance",
+          "name": "Resonance",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_work_energy",
+        "phy_circular"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_thermal",
+      "name": "Thermal Physics and Ideal Gases",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "phy_temperature",
+          "name": "Temperature and Thermal Equilibrium",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_heat_capacity",
+          "name": "Specific Heat and Latent Heat",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_kinetic_theory",
+          "name": "Kinetic Theory of Gases",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_ideal_gas",
+          "name": "Ideal Gas Law",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_internal_energy",
+          "name": "Internal Energy and First Law",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_dynamics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_electric_fields",
+      "name": "Electric Fields",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "phy_coulomb",
+          "name": "Coulomb's Law",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_e_field_strength",
+          "name": "Electric Field Strength",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_e_potential",
+          "name": "Electric Potential",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_field_analogy",
+          "name": "Gravitational and Electric Field Analogy",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_capacitance",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_electricity",
+        "phy_gravitation"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_capacitance",
+      "name": "Capacitance",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "phy_capacitance_def",
+          "name": "Capacitance",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_capacitor_networks",
+          "name": "Capacitors in Series and Parallel",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_capacitor_energy",
+          "name": "Energy Stored in a Capacitor",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_capacitor_discharge",
+          "name": "Charging and Discharging",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_electric_fields"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_magnetic_fields",
+      "name": "Magnetic Fields",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "phy_flux_density",
+          "name": "Magnetic Flux Density",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_force_conductor",
+          "name": "Force on a Current-Carrying Conductor",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_force_charge",
+          "name": "Force on a Moving Charge",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_fields_currents",
+          "name": "Magnetic Fields Due to Currents",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_induction",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_electricity"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_induction",
+      "name": "Electromagnetic Induction",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "phy_flux_linkage",
+          "name": "Magnetic Flux and Flux Linkage",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_faraday",
+          "name": "Faraday's Law",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_lenz",
+          "name": "Lenz's Law",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_ac",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_magnetic_fields"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_ac",
+      "name": "Alternating Currents",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "phy_ac_rms",
+          "name": "AC and RMS Values",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_transformers",
+          "name": "Transformers",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_rectification",
+          "name": "Rectification",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_induction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_quantum",
+      "name": "Quantum Physics",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "phy_photon",
+          "name": "Photon Energy",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_photoelectric",
+          "name": "Photoelectric Effect",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_wave_particle",
+          "name": "Wave-Particle Duality",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_energy_levels",
+          "name": "Energy Levels and Line Spectra",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_astro",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_waves"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_nuclear",
+      "name": "Nuclear Physics",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "phy_nuclear_structure",
+          "name": "Atomic and Nuclear Structure",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_fundamental_particles",
+          "name": "Fundamental Particles and Quarks",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_binding_energy",
+          "name": "Mass Defect and Binding Energy",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_radioactive_decay",
+          "name": "Radioactive Decay",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "phy_half_life",
+          "name": "Half-Life",
+          "defaultOrder": 5
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_astro",
+      "name": "Astronomy and Cosmology",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "phy_luminosity",
+          "name": "Luminosity and Radiant Flux Intensity",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_standard_candles",
+          "name": "Standard Candles",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_stellar_radii",
+          "name": "Stellar Radii",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "phy_hubble",
+          "name": "Hubble's Law and the Big Bang",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_waves",
+        "phy_quantum"
+      ],
+      "isRoot": false
+    }
+  ]
+}
