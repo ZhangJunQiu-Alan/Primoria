@@ -1,5 +1,5 @@
-import { readFileSync, existsSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { dirname, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
 
@@ -8,9 +8,12 @@ const { Client } = pg;
 export const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 export const WEB_ROOT = resolve(SCRIPT_DIR, "..");
 export const REPO_ROOT = resolve(WEB_ROOT, "../..");
-export const DEFAULT_GRAPH_ID = "calculus_single_variable_v1";
+export const DEFAULT_GRAPH_ID = "mit_calculus";
 export const DEFAULT_MODEL_VERSION = "openai:text-embedding-3-small:1536";
 export const DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small";
+export const TEMPLE_DIR = resolve(REPO_ROOT, "temple");
+// temple/*.json that are not subject graphs (cross edges, label sidecar, etc.)
+const NON_GRAPH_FILES = new Set(["cross_subject_edges.json", "kg_zh_labels.json"]);
 
 function loadEnvFile(file) {
   if (!existsSync(file)) return;
@@ -48,11 +51,23 @@ export function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
 }
 
+// graph_id maps directly to temple/<graph_id>.json
 export function graphPath(graphId = DEFAULT_GRAPH_ID) {
-  if (graphId !== DEFAULT_GRAPH_ID) {
-    throw new Error(`No source JSON is configured for graph_id=${graphId}`);
-  }
-  return resolve(REPO_ROOT, "temple/calculus_knowledge_graph.json");
+  const path = resolve(TEMPLE_DIR, `${graphId}.json`);
+  if (!existsSync(path)) throw new Error(`No source JSON for graph_id=${graphId} (${path})`);
+  return path;
+}
+
+// All subject-graph ids = temple/*.json minus the non-graph sidecars.
+export function listGraphIds() {
+  return readdirSync(TEMPLE_DIR)
+    .filter((f) => f.endsWith(".json") && !NON_GRAPH_FILES.has(f))
+    .map((f) => basename(f, ".json"))
+    .sort();
+}
+
+export function crossEdgesPath() {
+  return resolve(TEMPLE_DIR, "cross_subject_edges.json");
 }
 
 export function aliasPath(graphId = DEFAULT_GRAPH_ID) {

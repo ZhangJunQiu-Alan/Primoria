@@ -16,7 +16,9 @@
     "db:migrate:courses": "node scripts/migrate-courses.mjs",
     "db:migrate:kg": "node scripts/migrate-kg.mjs",
     "db:seed:kg": "node scripts/seed-kg.mjs",
+    "db:seed:kg-cross": "node scripts/seed-kg-cross.mjs",
     "db:seed:kg-embeddings": "node scripts/seed-kg-embeddings.mjs",
+    "db:seed:kg-all": "node scripts/seed-kg.mjs all && node scripts/seed-kg-cross.mjs",
     "db:sync:kg": "pnpm db:migrate:kg && pnpm db:seed:kg && pnpm db:seed:kg-embeddings",
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs"
   },
