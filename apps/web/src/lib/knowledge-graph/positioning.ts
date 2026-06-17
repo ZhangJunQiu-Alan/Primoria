@@ -122,8 +122,36 @@ function buildLinearPath(graphId: string, startTopicId: string, targetConceptId:
 // summing similarity per graph_id; the winning graph is then positioned in
 // isolation by classifyEntry. Returns null when there are no results.
 export function pickDominantGraph(results: KnowledgeGraphSearchResult[]): string | null {
+  if (results.length === 0) return null;
+
+  // 1. Calculate mass with concept/topic weights (concept is 1.0, topic is 0.5)
   const mass = new Map<string, number>();
-  for (const r of results) mass.set(r.graphId, (mass.get(r.graphId) ?? 0) + Math.max(r.similarity, 0));
+  for (const r of results) {
+    const weight = r.kind === "concept" ? 1.0 : 0.5;
+    const score = Math.max(r.similarity, 0) * weight;
+    mass.set(r.graphId, (mass.get(r.graphId) ?? 0) + score);
+  }
+
+  // 2. Identify top hits from different graphs to calculate margin
+  const top1 = results[0];
+  const top2 = results.find(r => r.graphId !== top1.graphId);
+
+  // Apply a dynamic bonus for the top-matching graph.
+  // If the absolute top hit is a concept and it significantly beats the next competitor
+  // in a different graph, we boost it to avoid "crowding out".
+  // If the difference is tiny, they are essentially a tie, so no large bonus is applied.
+  if (top1 && top1.similarity > 0) {
+    let bonus = 0;
+    const margin = top2 ? (top1.similarity - top2.similarity) : top1.similarity;
+    if (margin > 0.025) {
+      bonus = top1.similarity * 2.0;
+    } else {
+      bonus = top1.similarity * 0.1;
+    }
+    mass.set(top1.graphId, (mass.get(top1.graphId) ?? 0) + bonus);
+  }
+
+  // 3. Find the winning graph
   let best: string | null = null;
   let bestMass = -Infinity;
   for (const [graphId, m] of mass) {
@@ -132,6 +160,20 @@ export function pickDominantGraph(results: KnowledgeGraphSearchResult[]): string
       best = graphId;
     }
   }
+
+  // 4. Resolve ties or near-ties with A-Level tie-breaker
+  if (best) {
+    const threshold = bestMass * 0.9;
+    for (const [graphId, m] of mass) {
+      if (graphId !== best && m >= threshold) {
+        if (graphId.startsWith("a_level_") && !best.startsWith("a_level_")) {
+          best = graphId;
+          bestMass = m;
+        }
+      }
+    }
+  }
+
   return best;
 }
 
