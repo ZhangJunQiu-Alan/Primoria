@@ -1,5 +1,5 @@
-import { classifyEntry, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
-import { searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
+import { classifyEntry, pickDominantGraph, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
+import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
 import type { TopicConcept } from "./topic-graph";
 
 // Shared "position a learning goal in the KG" core, reused by both the Next route
@@ -43,10 +43,25 @@ export type PositioningPlan =
 export async function positionLearningGoal(
   input: PositionLearningGoalInput,
 ): Promise<PositionLearningGoalResult> {
-  const search = await searchKnowledgeGraphNodes(input);
+  const rawSearch = await searchKnowledgeGraphNodes(input);
   const overrides: Partial<PositioningParams> = {};
   if (input.tau !== undefined) overrides.tau = input.tau;
   if (input.floor !== undefined) overrides.floor = input.floor;
+
+  // Cross-graph recall (no graphId): collapse to the dominant subject so the rest
+  // of positioning runs within a single graph. A concrete graphId is unchanged.
+  let search = rawSearch;
+  if (rawSearch.graphId === ALL_KG_GRAPHS) {
+    const dominant = pickDominantGraph(rawSearch.results);
+    if (dominant) {
+      search = {
+        ...rawSearch,
+        graphId: dominant,
+        results: rawSearch.results.filter((r) => r.graphId === dominant),
+      };
+    }
+  }
+
   const result = classifyEntry(search, overrides);
   return { result, search };
 }

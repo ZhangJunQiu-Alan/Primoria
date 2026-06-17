@@ -264,7 +264,7 @@ export default function PipelineDebugPage() {
             <input
               value={graphId}
               onChange={(e) => setGraphId(e.target.value)}
-              placeholder="graphId（可空，默认 calculus）"
+              placeholder="graphId（可空 = 跨全部学科图召回）"
               style={{
                 flex: "1 1 240px",
                 background: "#0b0d11",
