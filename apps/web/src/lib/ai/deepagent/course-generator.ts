@@ -167,7 +167,7 @@ const CourseSchema = z.object({
       ]),
     )
     .min(3)
-    .max(5),
+    .max(15),
 });
 
 const COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator sub-agent. You design a compact course on a topic, broken into exactly 3 ordered blocks for the current iteration.
