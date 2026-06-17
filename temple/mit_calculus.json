@@ -1,7 +1,7 @@
 {
-  "subject": "MIT 18.01/18.02 Calculus",
+  "subject": "Calculus",
   "schema": {
-    "description": "Knowledge graph mapping the detailed syllabus and topics of MIT 18.01 (Single Variable Calculus) and 18.02 (Multivariable Calculus)",
+    "description": "Knowledge graph mapping the detailed syllabus and topics of Calculus",
     "node_fields": {
       "id": "unique id",
       "kind": "topic | concept",
@@ -27,7 +27,7 @@
       "kind": "concept",
       "name": "Limits and Continuity",
       "topic": "t_1801_differentiation",
-      "description": "Concept of limits, epsilon-delta definition, and continuity",
+      "description": "The limit formalising the value a function approaches near a point, made rigorous by the epsilon-delta definition, with continuity meaning the limit equals the function value.",
       "default_order": 1
     },
     {
@@ -35,7 +35,7 @@
       "kind": "concept",
       "name": "Definition of Derivative",
       "topic": "t_1801_differentiation",
-      "description": "Derivative as a limit of difference quotients",
+      "description": "The derivative defined as the limit of difference quotients, giving the instantaneous rate of change and the slope of the tangent line to a curve.",
       "default_order": 2
     },
     {
@@ -43,7 +43,7 @@
       "kind": "concept",
       "name": "Differentiation Rules",
       "topic": "t_1801_differentiation",
-      "description": "Power, product, and quotient rules",
+      "description": "Rules for differentiating combinations of functions, including the power, product, and quotient rules, enabling derivatives without returning to the limit definition.",
       "default_order": 3
     },
     {
@@ -51,7 +51,7 @@
       "kind": "concept",
       "name": "Chain Rule",
       "topic": "t_1801_differentiation",
-      "description": "Differentiating composite functions",
+      "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
       "default_order": 4
     },
     {
@@ -59,7 +59,7 @@
       "kind": "concept",
       "name": "Implicit Differentiation",
       "topic": "t_1801_differentiation",
-      "description": "Differentiating implicit equations",
+      "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative.",
       "default_order": 5
     },
     {
@@ -74,7 +74,7 @@
       "kind": "concept",
       "name": "Related Rates",
       "topic": "t_1801_apps_diff",
-      "description": "Solving problems involving related rates of change",
+      "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
       "default_order": 1
     },
     {
@@ -82,7 +82,7 @@
       "kind": "concept",
       "name": "Linear Approximation",
       "topic": "t_1801_apps_diff",
-      "description": "Linearization and Newton's Method",
+      "description": "Linear approximation using the tangent line to estimate function values near a point, the basis of differentials and Newton's method.",
       "default_order": 2
     },
     {
@@ -90,7 +90,7 @@
       "kind": "concept",
       "name": "Curve Sketching",
       "topic": "t_1801_apps_diff",
-      "description": "Using derivatives to find extrema, concavity, and sketch curves",
+      "description": "Using first and second derivatives to locate extrema, intervals of increase and decrease, concavity, and inflection points to sketch a curve.",
       "default_order": 3
     },
     {
@@ -98,7 +98,7 @@
       "kind": "concept",
       "name": "Mean Value Theorem",
       "topic": "t_1801_apps_diff",
-      "description": "Mean Value Theorem and its consequences",
+      "description": "The mean value theorem guaranteeing a point where the instantaneous rate of change equals the average rate over an interval, with key consequences.",
       "default_order": 4
     },
     {
@@ -113,7 +113,7 @@
       "kind": "concept",
       "name": "Riemann Sums",
       "topic": "t_1801_integration",
-      "description": "Approximating area using sums",
+      "description": "Riemann sums approximating the area under a curve by summing the areas of rectangles, whose limit defines the definite integral.",
       "default_order": 1
     },
     {
@@ -121,7 +121,7 @@
       "kind": "concept",
       "name": "Definite Integrals",
       "topic": "t_1801_integration",
-      "description": "Definition and properties of definite integrals",
+      "description": "The definite integral defined as the limit of Riemann sums, giving the signed area under a curve, with linearity and additivity properties.",
       "default_order": 2
     },
     {
@@ -129,7 +129,7 @@
       "kind": "concept",
       "name": "Fundamental Theorem of Calculus",
       "topic": "t_1801_integration",
-      "description": "Connecting derivatives and integrals",
+      "description": "The fundamental theorem of calculus linking differentiation and integration, evaluating definite integrals via antiderivatives and differentiating integral functions.",
       "default_order": 3
     },
     {
@@ -137,7 +137,7 @@
       "kind": "concept",
       "name": "Integration by Substitution",
       "topic": "t_1801_integration",
-      "description": "Reversing the chain rule",
+      "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form.",
       "default_order": 4
     },
     {
@@ -152,7 +152,7 @@
       "kind": "concept",
       "name": "Integration by Parts",
       "topic": "t_1801_tech_int",
-      "description": "Reversing the product rule",
+      "description": "Integration by parts reversing the product rule to integrate products of functions, trading one integral for an often simpler one.",
       "default_order": 1
     },
     {
@@ -160,7 +160,7 @@
       "kind": "concept",
       "name": "Trigonometric Integrals",
       "topic": "t_1801_tech_int",
-      "description": "Integrating products and powers of trig functions",
+      "description": "Techniques for integrating products and powers of trigonometric functions using identities to reduce them to directly integrable forms.",
       "default_order": 2
     },
     {
@@ -168,7 +168,7 @@
       "kind": "concept",
       "name": "Trigonometric Substitution",
       "topic": "t_1801_tech_int",
-      "description": "Using trig identities to evaluate integrals",
+      "description": "Trigonometric substitution evaluating integrals containing quadratic radicals by substituting trigonometric functions and applying identities.",
       "default_order": 3
     },
     {
@@ -176,7 +176,7 @@
       "kind": "concept",
       "name": "Partial Fractions",
       "topic": "t_1801_tech_int",
-      "description": "Integrating rational functions",
+      "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
       "default_order": 4
     },
     {
@@ -184,7 +184,7 @@
       "kind": "concept",
       "name": "Improper Integrals",
       "topic": "t_1801_tech_int",
-      "description": "Integrals over infinite intervals or with infinite discontinuities",
+      "description": "Improper integrals defined by limits, evaluating integrals over infinite intervals or with unbounded integrands and testing for convergence.",
       "default_order": 5
     },
     {
@@ -199,7 +199,7 @@
       "kind": "concept",
       "name": "Area Between Curves",
       "topic": "t_1801_apps_int",
-      "description": "Calculating areas bounded by functions",
+      "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
       "default_order": 1
     },
     {
@@ -207,7 +207,7 @@
       "kind": "concept",
       "name": "Volumes of Solids",
       "topic": "t_1801_apps_int",
-      "description": "Volumes by slicing, disks, washers, and cylindrical shells",
+      "description": "Computing volumes of solids of revolution and general solids using slicing, disk, washer, and cylindrical-shell integration methods.",
       "default_order": 2
     },
     {
@@ -215,7 +215,7 @@
       "kind": "concept",
       "name": "Arc Length",
       "topic": "t_1801_apps_int",
-      "description": "Length of a plane curve",
+      "description": "Computing the length of a plane curve by integrating the arc-length element derived from the Pythagorean relationship of differentials.",
       "default_order": 3
     },
     {
@@ -223,7 +223,7 @@
       "kind": "concept",
       "name": "Work",
       "topic": "t_1801_apps_int",
-      "description": "Calculating physical work using integration",
+      "description": "Computing physical work done by a variable force by integrating force over displacement, applied to springs, pumping, and lifting problems.",
       "default_order": 4
     },
     {
@@ -238,7 +238,7 @@
       "kind": "concept",
       "name": "Sequences and Series",
       "topic": "t_1801_series",
-      "description": "Convergence of sequences and basic series",
+      "description": "Sequences as ordered lists of numbers and series as their sums, with convergence describing whether they approach a finite limit.",
       "default_order": 1
     },
     {
@@ -246,7 +246,7 @@
       "kind": "concept",
       "name": "Convergence Tests",
       "topic": "t_1801_series",
-      "description": "Integral, comparison, ratio, and root tests",
+      "description": "Tests for series convergence, including the integral, comparison, ratio, and root tests, determining whether an infinite series sums to a finite value.",
       "default_order": 2
     },
     {
@@ -254,7 +254,7 @@
       "kind": "concept",
       "name": "Power Series",
       "topic": "t_1801_series",
-      "description": "Radius and interval of convergence",
+      "description": "Power series representing functions as infinite polynomials, with a radius and interval of convergence determining where they converge.",
       "default_order": 3
     },
     {
@@ -262,7 +262,7 @@
       "kind": "concept",
       "name": "Taylor Series",
       "topic": "t_1801_series",
-      "description": "Taylor and Maclaurin series expansions",
+      "description": "Taylor and Maclaurin series expanding a function as a power series about a point using its derivatives, approximating functions locally.",
       "default_order": 4
     },
     {
@@ -277,7 +277,7 @@
       "kind": "concept",
       "name": "Dot Product",
       "topic": "t_1802_vectors",
-      "description": "Vectors, magnitude, and the dot product",
+      "description": "Vectors with magnitude and direction, and the dot product measuring projection and the angle between them, yielding a scalar from two vectors.",
       "default_order": 1
     },
     {
@@ -285,7 +285,7 @@
       "kind": "concept",
       "name": "Cross Product",
       "topic": "t_1802_vectors",
-      "description": "Cross product and matrices",
+      "description": "The cross product of two vectors producing a vector perpendicular to both, whose magnitude equals the area of the parallelogram they span.",
       "default_order": 2
     },
     {
@@ -293,7 +293,7 @@
       "kind": "concept",
       "name": "Lines and Planes",
       "topic": "t_1802_vectors",
-      "description": "Equations of lines and planes in 3D space",
+      "description": "Equations of lines and planes in three-dimensional space using points, direction vectors, and normal vectors in vector and scalar forms.",
       "default_order": 3
     },
     {
@@ -301,7 +301,7 @@
       "kind": "concept",
       "name": "Parametric Curves",
       "topic": "t_1802_vectors",
-      "description": "Vector functions, velocity, and acceleration",
+      "description": "Vector-valued functions tracing curves in space, whose derivatives give the velocity and acceleration along the parametrised path.",
       "default_order": 4
     },
     {
@@ -316,7 +316,7 @@
       "kind": "concept",
       "name": "Multivariable Functions",
       "topic": "t_1802_partial_diff",
-      "description": "Functions of several variables and level surfaces",
+      "description": "Functions of several variables mapping points to values, visualised through level curves and surfaces, generalising single-variable functions.",
       "default_order": 1
     },
     {
@@ -324,7 +324,7 @@
       "kind": "concept",
       "name": "Partial Derivatives",
       "topic": "t_1802_partial_diff",
-      "description": "Computing partial derivatives",
+      "description": "Partial derivatives measuring the rate of change of a multivariable function with respect to one variable while holding the others fixed.",
       "default_order": 2
     },
     {
@@ -332,7 +332,7 @@
       "kind": "concept",
       "name": "Multivariable Chain Rule",
       "topic": "t_1802_partial_diff",
-      "description": "Chain rule for functions of several variables",
+      "description": "The multivariable chain rule differentiating compositions of several-variable functions by summing contributions through each intermediate variable.",
       "default_order": 3
     },
     {
@@ -340,7 +340,7 @@
       "kind": "concept",
       "name": "Gradient and Directional Derivative",
       "topic": "t_1802_partial_diff",
-      "description": "Gradient vector and directional derivatives",
+      "description": "The gradient vector of partial derivatives pointing in the direction of steepest increase, with directional derivatives giving rates along any direction.",
       "default_order": 4
     },
     {
@@ -355,7 +355,7 @@
       "kind": "concept",
       "name": "Tangent Planes",
       "topic": "t_1802_apps_partial",
-      "description": "Tangent planes and linear approximation",
+      "description": "The tangent plane approximating a surface near a point, generalising the tangent line and providing linear approximation in several variables.",
       "default_order": 1
     },
     {
@@ -363,7 +363,7 @@
       "kind": "concept",
       "name": "Local Extrema",
       "topic": "t_1802_apps_partial",
-      "description": "Finding local maxima, minima, and saddle points",
+      "description": "Finding local maxima, minima, and saddle points of multivariable functions using critical points and the second-derivative (Hessian) test.",
       "default_order": 2
     },
     {
@@ -371,7 +371,7 @@
       "kind": "concept",
       "name": "Lagrange Multipliers",
       "topic": "t_1802_apps_partial",
-      "description": "Optimization with constraints",
+      "description": "Lagrange multipliers optimising a function subject to constraints by setting its gradient proportional to the constraint gradients.",
       "default_order": 3
     },
     {
@@ -379,7 +379,7 @@
       "kind": "concept",
       "name": "Differentials",
       "topic": "t_1802_apps_partial",
-      "description": "Differentials and error estimation",
+      "description": "Differentials approximating small changes in a multivariable function from changes in its inputs, used for linear approximation and error estimation.",
       "default_order": 4
     },
     {
@@ -394,7 +394,7 @@
       "kind": "concept",
       "name": "Double Integrals",
       "topic": "t_1802_multiple_int",
-      "description": "Evaluating double integrals over general regions",
+      "description": "Double integrals computing volume and accumulated quantities over two-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 1
     },
     {
@@ -402,7 +402,7 @@
       "kind": "concept",
       "name": "Polar Integrals",
       "topic": "t_1802_multiple_int",
-      "description": "Double integrals in polar coordinates",
+      "description": "Evaluating double integrals in polar coordinates, where the area element gains a factor of r, simplifying circular and radial regions.",
       "default_order": 2
     },
     {
@@ -410,7 +410,7 @@
       "kind": "concept",
       "name": "Triple Integrals",
       "topic": "t_1802_multiple_int",
-      "description": "Evaluating triple integrals",
+      "description": "Triple integrals computing volume and accumulated quantities over three-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 3
     },
     {
@@ -418,7 +418,7 @@
       "kind": "concept",
       "name": "Cylindrical and Spherical Coordinates",
       "topic": "t_1802_multiple_int",
-      "description": "Integration in cylindrical and spherical coordinate systems",
+      "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
       "default_order": 4
     },
     {
@@ -426,7 +426,7 @@
       "kind": "concept",
       "name": "Change of Variables",
       "topic": "t_1802_multiple_int",
-      "description": "Jacobians and changing variables in multiple integrals",
+      "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
       "default_order": 5
     },
     {
@@ -441,7 +441,7 @@
       "kind": "concept",
       "name": "Vector Fields",
       "topic": "t_1802_vector_calc",
-      "description": "Vector fields and line integrals",
+      "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
       "default_order": 1
     },
     {
@@ -449,7 +449,7 @@
       "kind": "concept",
       "name": "Fundamental Theorem for Line Integrals",
       "topic": "t_1802_vector_calc",
-      "description": "Conservative vector fields and potential functions",
+      "description": "The fundamental theorem for line integrals showing conservative fields have path-independent integrals computed from a potential function.",
       "default_order": 2
     },
     {
@@ -457,7 +457,7 @@
       "kind": "concept",
       "name": "Green's Theorem",
       "topic": "t_1802_vector_calc",
-      "description": "Green's Theorem in the plane",
+      "description": "Green's theorem relating a line integral around a closed plane curve to a double integral of curl over the enclosed region.",
       "default_order": 3
     },
     {
@@ -465,7 +465,7 @@
       "kind": "concept",
       "name": "Curl and Divergence",
       "topic": "t_1802_vector_calc",
-      "description": "Computing curl and divergence of a vector field",
+      "description": "Curl measuring a vector field's local rotation and divergence measuring its net outward flux per unit volume, fundamental differential operators.",
       "default_order": 4
     },
     {
@@ -480,7 +480,7 @@
       "kind": "concept",
       "name": "Parametric Surfaces",
       "topic": "t_1802_surface_int",
-      "description": "Parametric representations of surfaces and surface area",
+      "description": "Parametric representations of surfaces using two parameters, enabling computation of surface area through the cross product of partial derivatives.",
       "default_order": 1
     },
     {
@@ -488,7 +488,7 @@
       "kind": "concept",
       "name": "Surface Integrals",
       "topic": "t_1802_surface_int",
-      "description": "Surface integrals and flux of a vector field",
+      "description": "Surface integrals accumulating a scalar field or the flux of a vector field across a surface, generalising double integrals to curved surfaces.",
       "default_order": 2
     },
     {
@@ -496,7 +496,7 @@
       "kind": "concept",
       "name": "Stokes' Theorem",
       "topic": "t_1802_surface_int",
-      "description": "Relating line integrals to surface integrals",
+      "description": "Stokes' theorem relating the line integral of a field around a closed curve to the surface integral of its curl over a bounded surface.",
       "default_order": 3
     },
     {
@@ -504,7 +504,7 @@
       "kind": "concept",
       "name": "Divergence Theorem",
       "topic": "t_1802_surface_int",
-      "description": "Relating surface integrals to triple integrals",
+      "description": "The divergence theorem relating the outward flux of a vector field through a closed surface to the triple integral of its divergence inside.",
       "default_order": 4
     }
   ],

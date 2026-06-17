@@ -27,7 +27,7 @@
       "kind": "concept",
       "name": "Shannon Entropy",
       "topic": "t_infotheory_basics",
-      "description": "Measure of uncertainty",
+      "description": "Shannon entropy, the average number of bits needed to describe a random variable's outcome, quantifying its inherent uncertainty.",
       "default_order": 1
     },
     {
@@ -35,7 +35,7 @@
       "kind": "concept",
       "name": "Joint and Conditional Entropy",
       "topic": "t_infotheory_basics",
-      "description": "Entropy of multiple variables",
+      "description": "Joint entropy measuring the uncertainty of several variables together, and conditional entropy measuring remaining uncertainty given another variable.",
       "default_order": 2
     },
     {
@@ -43,7 +43,7 @@
       "kind": "concept",
       "name": "Mutual Information",
       "topic": "t_infotheory_basics",
-      "description": "Information shared between variables",
+      "description": "Mutual information quantifying the reduction in uncertainty about one variable gained from observing another, the information they share.",
       "default_order": 3
     },
     {
@@ -51,7 +51,7 @@
       "kind": "concept",
       "name": "Kullback-Leibler Divergence",
       "topic": "t_infotheory_basics",
-      "description": "Relative entropy between distributions",
+      "description": "Kullback-Leibler divergence, the relative entropy measuring the inefficiency of assuming one distribution when another is true; non-negative and asymmetric.",
       "default_order": 4
     },
     {
@@ -59,7 +59,7 @@
       "kind": "concept",
       "name": "Data Processing Inequality",
       "topic": "t_infotheory_basics",
-      "description": "Post-processing cannot increase information",
+      "description": "The data-processing inequality stating that processing a signal cannot increase the mutual information it carries about a source.",
       "default_order": 5
     },
     {
@@ -74,7 +74,7 @@
       "kind": "concept",
       "name": "Asymptotic Equipartition Property",
       "topic": "t_infotheory_source_coding",
-      "description": "Typical sets and AEP",
+      "description": "The asymptotic equipartition property, showing long sequences fall into a typical set of nearly equal probability, underpinning the coding theorems.",
       "default_order": 1
     },
     {
@@ -82,7 +82,7 @@
       "kind": "concept",
       "name": "Kraft Inequality",
       "topic": "t_infotheory_source_coding",
-      "description": "Condition for prefix codes",
+      "description": "The Kraft inequality giving the necessary and sufficient condition on codeword lengths for a uniquely decodable prefix code to exist.",
       "default_order": 2
     },
     {
@@ -90,7 +90,7 @@
       "kind": "concept",
       "name": "Shannon Source Coding Theorem",
       "topic": "t_infotheory_source_coding",
-      "description": "Limits of lossless compression",
+      "description": "Shannon's source coding theorem establishing entropy as the fundamental limit on the average rate of lossless data compression.",
       "default_order": 3
     },
     {
@@ -98,7 +98,7 @@
       "kind": "concept",
       "name": "Huffman Coding",
       "topic": "t_infotheory_source_coding",
-      "description": "Optimal prefix codes",
+      "description": "Huffman coding, a greedy algorithm building optimal prefix-free codes that minimise expected codeword length for known symbol probabilities.",
       "default_order": 4
     },
     {
@@ -113,7 +113,7 @@
       "kind": "concept",
       "name": "Discrete Memoryless Channels",
       "topic": "t_infotheory_channel_capacity",
-      "description": "Definition of DMCs",
+      "description": "Discrete memoryless channels modelling noisy transmission where each output depends only on the current input via fixed transition probabilities.",
       "default_order": 1
     },
     {
@@ -121,7 +121,7 @@
       "kind": "concept",
       "name": "Channel Capacity",
       "topic": "t_infotheory_channel_capacity",
-      "description": "Maximum rate of reliable communication",
+      "description": "Channel capacity, the maximum mutual information over input distributions, defining the highest rate of reliable communication.",
       "default_order": 2
     },
     {
@@ -129,7 +129,7 @@
       "kind": "concept",
       "name": "Shannon Channel Coding Theorem",
       "topic": "t_infotheory_channel_capacity",
-      "description": "Achievability and converse",
+      "description": "Shannon's channel coding theorem proving that reliable communication is achievable below capacity and impossible above it.",
       "default_order": 3
     },
     {
@@ -144,7 +144,7 @@
       "kind": "concept",
       "name": "Differential Entropy",
       "topic": "t_infotheory_continuous",
-      "description": "Entropy for continuous variables",
+      "description": "Differential entropy extending entropy to continuous random variables as an integral, with properties differing from the discrete case.",
       "default_order": 1
     },
     {
@@ -152,7 +152,7 @@
       "kind": "concept",
       "name": "AWGN Channel",
       "topic": "t_infotheory_continuous",
-      "description": "Additive White Gaussian Noise channel",
+      "description": "The additive white Gaussian noise channel, a continuous model where transmitted signals are corrupted by independent Gaussian noise.",
       "default_order": 2
     },
     {
@@ -160,7 +160,7 @@
       "kind": "concept",
       "name": "Shannon-Hartley Theorem",
       "topic": "t_infotheory_continuous",
-      "description": "Capacity of AWGN channel",
+      "description": "The Shannon-Hartley theorem giving the capacity of a bandlimited AWGN channel as a function of bandwidth and signal-to-noise ratio.",
       "default_order": 3
     }
   ],

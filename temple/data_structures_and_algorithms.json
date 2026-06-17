@@ -1,7 +1,7 @@
 {
-  "subject": "UCB CS61B Data Structures and Algorithms",
+  "subject": "Data Structures and Algorithms",
   "schema": {
-    "description": "Knowledge graph representing the structured curriculum of UC Berkeley's CS61B: Data Structures and Algorithms, capturing topics, minimal testable concepts, and their dependency DAG.",
+    "description": "Knowledge graph representing the structured curriculum of Data Structures and Algorithms, capturing topics, minimal testable concepts, and their dependency DAG.",
     "node_fields": {
       "id": "unique id",
       "kind": "topic | concept",

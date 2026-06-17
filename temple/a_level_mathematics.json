@@ -1,212 +1,1353 @@
 {
-  "id": "alevel_math",
-  "name": "A-Level Mathematics",
-  "description": "Advanced level mathematics topics.",
-  "topics": [
+  "subject": "A-Level Mathematics (CIE 9709)",
+  "schema": {
+    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
+    "node_fields": {
+      "id": "globally unique id",
+      "kind": "topic | concept",
+      "name": "concept name",
+      "topic": "owning topic id; null for topic nodes",
+      "description": "one-sentence definition for prompting/RAG",
+      "default_order": "default teaching order within the topic"
+    },
+    "edge_types": {
+      "prereq": "from must be learned before to; strength=hard|soft"
+    },
+    "concept_node_definition": "concept = smallest independently quiz-testable skill"
+  },
+  "nodes": [
     {
-      "id": "alevel_math_algebra_and_functions",
-      "title": "Algebra and Functions",
-      "description": "Algebra and Functions in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_algebra",
+      "kind": "topic",
+      "name": "Algebra and Functions",
+      "topic": null,
+      "default_order": 1
     },
     {
-      "id": "alevel_math_laws_of_indices",
-      "title": "Laws of Indices",
-      "description": "Laws of Indices in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_indices_surds",
+      "kind": "concept",
+      "name": "Indices and Surds",
+      "topic": "mat_algebra",
+      "description": "Laws of indices for manipulating powers and the simplification and rationalisation of surds, expressing irrational roots in exact form.",
+      "default_order": 1
     },
     {
-      "id": "alevel_math_surds_and_rationalization",
-      "title": "Surds and Rationalization",
-      "description": "Surds and Rationalization in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_quadratics",
+      "kind": "concept",
+      "name": "Quadratic Functions",
+      "topic": "mat_algebra",
+      "description": "Quadratic functions and their parabolic graphs, completing the square to find the vertex, line of symmetry, and maximum or minimum.",
+      "default_order": 2
     },
     {
-      "id": "alevel_math_quadratic_functions",
-      "title": "Quadratic Functions",
-      "description": "Quadratic Functions in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_solve_quadratics",
+      "kind": "concept",
+      "name": "Solving Quadratics and Discriminant",
+      "topic": "mat_algebra",
+      "description": "Solving quadratic equations by factorising, completing the square, or the formula, with the discriminant determining the number of real roots.",
+      "default_order": 3
     },
     {
-      "id": "alevel_math_solving_quadratic_equations",
-      "title": "Solving Quadratic Equations",
-      "description": "Solving Quadratic Equations in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_simultaneous",
+      "kind": "concept",
+      "name": "Simultaneous Equations",
+      "topic": "mat_algebra",
+      "description": "Solving simultaneous equations, including one linear and one quadratic, by substitution or elimination to find common solutions.",
+      "default_order": 4
     },
     {
-      "id": "alevel_math_simultaneous_equations",
-      "title": "Simultaneous Equations",
-      "description": "Simultaneous Equations in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_inequalities",
+      "kind": "concept",
+      "name": "Inequalities",
+      "topic": "mat_algebra",
+      "description": "Solving linear and quadratic inequalities algebraically and graphically, and representing the solution sets on a number line.",
+      "default_order": 5
     },
     {
-      "id": "alevel_math_polynomial_functions",
-      "title": "Polynomial Functions",
-      "description": "Polynomial Functions in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_functions",
+      "kind": "concept",
+      "name": "Functions and Inverses",
+      "topic": "mat_algebra",
+      "description": "Functions defined by their domain and range, the distinction between one-to-one and many-to-one mappings, and finding inverse functions.",
+      "default_order": 6
     },
     {
-      "id": "alevel_math_inequalities",
-      "title": "Inequalities",
-      "description": "Inequalities in A-Level Mathematics",
-      "parent_id": "alevel_math_algebra_and_functions"
+      "id": "mat_composite",
+      "kind": "concept",
+      "name": "Composite Functions",
+      "topic": "mat_algebra",
+      "description": "Composite functions formed by applying one function to the result of another, with attention to domain and the order of composition.",
+      "default_order": 7
     },
     {
-      "id": "alevel_math_coordinate_geometry",
-      "title": "Coordinate Geometry",
-      "description": "Coordinate Geometry in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_modulus",
+      "kind": "concept",
+      "name": "Modulus Function",
+      "topic": "mat_algebra",
+      "description": "The modulus function giving absolute value, its graph, and solving equations and inequalities involving modulus expressions.",
+      "default_order": 8
     },
     {
-      "id": "alevel_math_trigonometry",
-      "title": "Trigonometry",
-      "description": "Trigonometry in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_polynomials",
+      "kind": "topic",
+      "name": "Polynomials and Partial Fractions",
+      "topic": null,
+      "default_order": 2
     },
     {
-      "id": "alevel_math_exponentials_and_logarithms",
-      "title": "Exponentials and Logarithms",
-      "description": "Exponentials and Logarithms in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_poly_division",
+      "kind": "concept",
+      "name": "Polynomial Division",
+      "topic": "mat_polynomials",
+      "description": "Dividing polynomials by a linear or quadratic divisor using long division or inspection to obtain a quotient and remainder.",
+      "default_order": 1
     },
     {
-      "id": "alevel_math_differentiation",
-      "title": "Differentiation",
-      "description": "Differentiation in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_factor_theorem",
+      "kind": "concept",
+      "name": "Factor and Remainder Theorem",
+      "topic": "mat_polynomials",
+      "description": "The factor and remainder theorems relating the value of a polynomial at a point to its factors and to the remainder on division.",
+      "default_order": 2
     },
     {
-      "id": "alevel_math_first_principles",
-      "title": "First Principles",
-      "description": "First Principles in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_partial_fractions",
+      "kind": "concept",
+      "name": "Partial Fractions",
+      "topic": "mat_polynomials",
+      "description": "Decomposing a rational function into a sum of simpler partial fractions, handling linear, repeated, and quadratic factors.",
+      "default_order": 3
     },
     {
-      "id": "alevel_math_power_rule",
-      "title": "Power Rule",
-      "description": "Power Rule in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_coord_geom",
+      "kind": "topic",
+      "name": "Coordinate Geometry",
+      "topic": null,
+      "default_order": 3
     },
     {
-      "id": "alevel_math_product_rule",
-      "title": "Product Rule",
-      "description": "Product Rule in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_straight_lines",
+      "kind": "concept",
+      "name": "Straight Lines",
+      "topic": "mat_coord_geom",
+      "description": "The equation of a straight line in various forms, with gradient and intercepts found from points or other given conditions.",
+      "default_order": 1
     },
     {
-      "id": "alevel_math_quotient_rule",
-      "title": "Quotient Rule",
-      "description": "Quotient Rule in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_parallel_perp",
+      "kind": "concept",
+      "name": "Parallel and Perpendicular Lines",
+      "topic": "mat_coord_geom",
+      "description": "The gradient conditions for parallel and perpendicular lines, where perpendicular gradients multiply to give negative one.",
+      "default_order": 2
     },
     {
-      "id": "alevel_math_chain_rule",
-      "title": "Chain Rule",
-      "description": "Chain Rule in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_circles",
+      "kind": "concept",
+      "name": "Circles",
+      "topic": "mat_coord_geom",
+      "description": "The equation of a circle from its centre and radius, and finding intersections, tangents, and properties using coordinate geometry.",
+      "default_order": 3
     },
     {
-      "id": "alevel_math_differentiation_of_special_functions",
-      "title": "Differentiation of Special Functions",
-      "description": "Differentiation of Special Functions in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_sequences",
+      "kind": "topic",
+      "name": "Sequences and Series",
+      "topic": null,
+      "default_order": 4
     },
     {
-      "id": "alevel_math_second_derivatives",
-      "title": "Second Derivatives",
-      "description": "Second Derivatives in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_arithmetic",
+      "kind": "concept",
+      "name": "Arithmetic Series",
+      "topic": "mat_sequences",
+      "description": "Arithmetic progressions with a common difference, and the formulae for the nth term and the sum of the first n terms.",
+      "default_order": 1
     },
     {
-      "id": "alevel_math_stationary_points",
-      "title": "Stationary Points",
-      "description": "Stationary Points in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_geometric",
+      "kind": "concept",
+      "name": "Geometric Series",
+      "topic": "mat_sequences",
+      "description": "Geometric progressions with a common ratio, formulae for the nth term and sum, and the sum to infinity of a convergent series.",
+      "default_order": 2
     },
     {
-      "id": "alevel_math_maxima_and_minima",
-      "title": "Maxima and Minima",
-      "description": "Maxima and Minima in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_binomial_pos",
+      "kind": "concept",
+      "name": "Binomial Expansion (positive integer)",
+      "topic": "mat_sequences",
+      "description": "The binomial expansion of an expression raised to a positive integer power using binomial coefficients and Pascal's triangle.",
+      "default_order": 3
     },
     {
-      "id": "alevel_math_optimization_problems",
-      "title": "Optimization Problems",
-      "description": "Optimization Problems in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_binomial_gen",
+      "kind": "concept",
+      "name": "Binomial Expansion (general index)",
+      "topic": "mat_sequences",
+      "description": "The binomial expansion for a general rational or negative index as an infinite series, valid within its range of convergence.",
+      "default_order": 4
     },
     {
-      "id": "alevel_math_rates_of_change",
-      "title": "Rates of Change",
-      "description": "Rates of Change in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_trig",
+      "kind": "topic",
+      "name": "Trigonometry",
+      "topic": null,
+      "default_order": 5
     },
     {
-      "id": "alevel_math_tangents_and_normals",
-      "title": "Tangents and Normals",
-      "description": "Tangents and Normals in A-Level Mathematics",
-      "parent_id": "alevel_math_differentiation"
+      "id": "mat_trig_ratios",
+      "kind": "concept",
+      "name": "Trig Ratios and Graphs",
+      "topic": "mat_trig",
+      "description": "The trigonometric ratios sine, cosine, and tangent, their graphs, periodicity, and exact values for standard angles.",
+      "default_order": 1
     },
     {
-      "id": "alevel_math_integration",
-      "title": "Integration",
-      "description": "Integration in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_radians",
+      "kind": "concept",
+      "name": "Radian Measure",
+      "topic": "mat_trig",
+      "description": "Radian measure of angles and its use in the arc length and sector area formulae for a circle.",
+      "default_order": 2
     },
     {
-      "id": "alevel_math_indefinite_integration",
-      "title": "Indefinite Integration",
-      "description": "Indefinite Integration in A-Level Mathematics",
-      "parent_id": "alevel_math_integration"
+      "id": "mat_trig_identities",
+      "kind": "concept",
+      "name": "Trig Identities",
+      "topic": "mat_trig",
+      "description": "Fundamental trigonometric identities, including the Pythagorean identities, used to simplify expressions and prove relationships.",
+      "default_order": 3
     },
     {
-      "id": "alevel_math_definite_integration",
-      "title": "Definite Integration",
-      "description": "Definite Integration in A-Level Mathematics",
-      "parent_id": "alevel_math_integration"
+      "id": "mat_solve_trig",
+      "kind": "concept",
+      "name": "Solving Trig Equations",
+      "topic": "mat_trig",
+      "description": "Solving trigonometric equations within a given interval using identities, graphs, and the symmetry of trigonometric functions.",
+      "default_order": 4
     },
     {
-      "id": "alevel_math_integration_of_common_functions",
-      "title": "Integration of Common Functions",
-      "description": "Integration of Common Functions in A-Level Mathematics",
-      "parent_id": "alevel_math_integration"
+      "id": "mat_double_angle",
+      "kind": "concept",
+      "name": "Compound and Double Angle Formulae",
+      "topic": "mat_trig",
+      "description": "Compound-angle and double-angle formulae expanding trigonometric functions of the sum and of multiples of angles.",
+      "default_order": 5
     },
     {
-      "id": "alevel_math_integration_by_substitution",
-      "title": "Integration by Substitution",
-      "description": "Integration by Substitution in A-Level Mathematics",
-      "parent_id": "alevel_math_integration"
+      "id": "mat_rform",
+      "kind": "concept",
+      "name": "R-Formula",
+      "topic": "mat_trig",
+      "description": "Expressing a sin θ plus b cos θ in the form R sin(θ + α), used to solve equations and find maxima and minima.",
+      "default_order": 6
     },
     {
-      "id": "alevel_math_area_under_curves",
-      "title": "Area Under Curves",
-      "description": "Area Under Curves in A-Level Mathematics",
-      "parent_id": "alevel_math_integration"
+      "id": "mat_exp_log",
+      "kind": "topic",
+      "name": "Exponentials and Logarithms",
+      "topic": null,
+      "default_order": 6
     },
     {
-      "id": "alevel_math_area_between_curves",
-      "title": "Area Between Curves",
-      "description": "Area Between Curves in A-Level Mathematics",
-      "parent_id": "alevel_math_integration"
+      "id": "mat_exp_func",
+      "kind": "concept",
+      "name": "Exponential Functions",
+      "topic": "mat_exp_log",
+      "description": "Exponential functions and the natural exponential e^x, modelling growth and decay, and the properties of their graphs.",
+      "default_order": 1
     },
     {
-      "id": "alevel_math_sequences_and_series",
-      "title": "Sequences and Series",
-      "description": "Sequences and Series in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_log_laws",
+      "kind": "concept",
+      "name": "Logarithms and Laws",
+      "topic": "mat_exp_log",
+      "description": "Logarithms as the inverse of exponentials, and the laws of logarithms for manipulating products, quotients, and powers.",
+      "default_order": 2
     },
     {
-      "id": "alevel_math_binomial_expansion",
-      "title": "Binomial Expansion",
-      "description": "Binomial Expansion in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_solve_exp",
+      "kind": "concept",
+      "name": "Solving Exponential and Log Equations",
+      "topic": "mat_exp_log",
+      "description": "Solving exponential and logarithmic equations by applying logarithms and the laws of logarithms to isolate the unknown.",
+      "default_order": 3
     },
     {
-      "id": "alevel_math_vectors",
-      "title": "Vectors",
-      "description": "Vectors in A-Level Mathematics",
-      "parent_id": null
+      "id": "mat_linearise",
+      "kind": "concept",
+      "name": "Linearising with Logarithms",
+      "topic": "mat_exp_log",
+      "description": "Using logarithms to linearise power and exponential relationships, plotting transformed data to determine the model's constants.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_differentiation",
+      "kind": "topic",
+      "name": "Differentiation (Basic)",
+      "topic": null,
+      "default_order": 7
+    },
+    {
+      "id": "mat_first_principles",
+      "kind": "concept",
+      "name": "Differentiation from First Principles",
+      "topic": "mat_differentiation",
+      "description": "The derivative defined as the limit of the gradient of a chord, used to differentiate simple functions from first principles.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_power_rule",
+      "kind": "concept",
+      "name": "Power Rule",
+      "topic": "mat_differentiation",
+      "description": "The power rule for differentiating powers of x, extended by linearity to differentiate sums of polynomial terms.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_chain_rule",
+      "kind": "concept",
+      "name": "Chain Rule",
+      "topic": "mat_differentiation",
+      "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_tangent_normal",
+      "kind": "concept",
+      "name": "Tangents and Normals",
+      "topic": "mat_differentiation",
+      "description": "Finding the equations of the tangent and normal to a curve at a point, using the derivative as the gradient.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_stationary",
+      "kind": "concept",
+      "name": "Stationary Points",
+      "topic": "mat_differentiation",
+      "description": "Locating stationary points where the derivative is zero and classifying them as maxima, minima, or points of inflection.",
+      "default_order": 5
+    },
+    {
+      "id": "mat_rates",
+      "kind": "concept",
+      "name": "Connected Rates of Change",
+      "topic": "mat_differentiation",
+      "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule.",
+      "default_order": 6
+    },
+    {
+      "id": "mat_differentiation_adv",
+      "kind": "topic",
+      "name": "Differentiation (Advanced)",
+      "topic": null,
+      "default_order": 8
+    },
+    {
+      "id": "mat_product_quotient",
+      "kind": "concept",
+      "name": "Product and Quotient Rules",
+      "topic": "mat_differentiation_adv",
+      "description": "The product and quotient rules for differentiating the product and the quotient of two functions.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_special_derivatives",
+      "kind": "concept",
+      "name": "Derivatives of Special Functions",
+      "topic": "mat_differentiation_adv",
+      "description": "Differentiating exponential, logarithmic, and trigonometric functions using their standard derivative results.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_implicit",
+      "kind": "concept",
+      "name": "Implicit Differentiation",
+      "topic": "mat_differentiation_adv",
+      "description": "Implicit differentiation finding the derivative of a relation not solved explicitly for y by differentiating both sides.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_parametric",
+      "kind": "concept",
+      "name": "Parametric Differentiation",
+      "topic": "mat_differentiation_adv",
+      "description": "Parametric differentiation finding dy/dx for curves defined parametrically by applying the chain rule through the parameter.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_integration",
+      "kind": "topic",
+      "name": "Integration",
+      "topic": null,
+      "default_order": 9
+    },
+    {
+      "id": "mat_indefinite",
+      "kind": "concept",
+      "name": "Indefinite Integration",
+      "topic": "mat_integration",
+      "description": "Indefinite integration as the reverse of differentiation, finding antiderivatives with an arbitrary constant of integration.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_definite_area",
+      "kind": "concept",
+      "name": "Definite Integration and Area",
+      "topic": "mat_integration",
+      "description": "Definite integration evaluating the area under a curve between limits using the fundamental theorem of calculus.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_standard_integrals",
+      "kind": "concept",
+      "name": "Integration of Standard Functions",
+      "topic": "mat_integration",
+      "description": "Integrating standard functions, including powers, exponentials, and trigonometric functions, from their known antiderivatives.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_substitution",
+      "kind": "concept",
+      "name": "Integration by Substitution",
+      "topic": "mat_integration",
+      "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_by_parts",
+      "kind": "concept",
+      "name": "Integration by Parts",
+      "topic": "mat_integration",
+      "description": "Integration by parts reversing the product rule to integrate the product of two functions.",
+      "default_order": 5
+    },
+    {
+      "id": "mat_int_partial",
+      "kind": "concept",
+      "name": "Integration using Partial Fractions",
+      "topic": "mat_integration",
+      "description": "Integrating rational functions by first decomposing them into partial fractions that can be integrated individually.",
+      "default_order": 6
+    },
+    {
+      "id": "mat_volumes",
+      "kind": "concept",
+      "name": "Volumes of Revolution",
+      "topic": "mat_integration",
+      "description": "Volumes of revolution generated by rotating a region about an axis, computed by integrating the area of circular cross-sections.",
+      "default_order": 7
+    },
+    {
+      "id": "mat_numerical",
+      "kind": "topic",
+      "name": "Numerical Methods",
+      "topic": null,
+      "default_order": 10
+    },
+    {
+      "id": "mat_locate_roots",
+      "kind": "concept",
+      "name": "Locating Roots",
+      "topic": "mat_numerical",
+      "description": "Locating roots of an equation by a sign change over an interval, establishing the existence of a root before iteration.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_iteration",
+      "kind": "concept",
+      "name": "Iterative Methods",
+      "topic": "mat_numerical",
+      "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_diff_eq",
+      "kind": "topic",
+      "name": "Differential Equations",
+      "topic": null,
+      "default_order": 11
+    },
+    {
+      "id": "mat_form_de",
+      "kind": "concept",
+      "name": "Forming Differential Equations",
+      "topic": "mat_diff_eq",
+      "description": "Forming differential equations from descriptions of rates of change, translating a physical situation into an equation.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_separation",
+      "kind": "concept",
+      "name": "Separation of Variables",
+      "topic": "mat_diff_eq",
+      "description": "Solving first-order differential equations by separating the variables and integrating each side.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_vectors",
+      "kind": "topic",
+      "name": "Vectors",
+      "topic": null,
+      "default_order": 12
+    },
+    {
+      "id": "mat_vector_basics",
+      "kind": "concept",
+      "name": "Vectors in 2D and 3D",
+      "topic": "mat_vectors",
+      "description": "Vectors in two and three dimensions represented in component and unit-vector form, with addition and scalar multiplication.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_vector_magnitude",
+      "kind": "concept",
+      "name": "Magnitude and Direction",
+      "topic": "mat_vectors",
+      "description": "The magnitude of a vector from its components using Pythagoras, and finding its direction and corresponding unit vector.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_scalar_product",
+      "kind": "concept",
+      "name": "Scalar Product",
+      "topic": "mat_vectors",
+      "description": "The scalar (dot) product of two vectors, used to find the angle between them and to test for perpendicularity.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_vector_lines",
+      "kind": "concept",
+      "name": "Vector Equations of Lines",
+      "topic": "mat_vectors",
+      "description": "The vector equation of a line through a point with a given direction, and finding intersections and angles between lines.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_complex",
+      "kind": "topic",
+      "name": "Complex Numbers",
+      "topic": null,
+      "default_order": 13
+    },
+    {
+      "id": "mat_complex_arith",
+      "kind": "concept",
+      "name": "Complex Number Arithmetic",
+      "topic": "mat_complex",
+      "description": "Complex numbers in the form a + bi, with addition, subtraction, multiplication, division, and the complex conjugate.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_argand",
+      "kind": "concept",
+      "name": "Argand Diagram",
+      "topic": "mat_complex",
+      "description": "Representing complex numbers as points or vectors on an Argand diagram, illustrating their geometric interpretation.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_mod_arg",
+      "kind": "concept",
+      "name": "Modulus-Argument Form",
+      "topic": "mat_complex",
+      "description": "The modulus-argument (polar) form of a complex number, with multiplication and division combining moduli and arguments.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_complex_loci",
+      "kind": "concept",
+      "name": "Complex Roots and Loci",
+      "topic": "mat_complex",
+      "description": "Complex roots of polynomials occurring in conjugate pairs, and loci in the complex plane defined by modulus and argument conditions.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_mech_kinematics",
+      "kind": "topic",
+      "name": "Mechanics: Kinematics",
+      "topic": null,
+      "default_order": 14
+    },
+    {
+      "id": "mat_kin_constant",
+      "kind": "concept",
+      "name": "Kinematics with Constant Acceleration",
+      "topic": "mat_mech_kinematics",
+      "description": "Kinematics of straight-line motion with constant acceleration, using the suvat equations to relate displacement, velocity, and time.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_kin_variable",
+      "kind": "concept",
+      "name": "Variable Acceleration",
+      "topic": "mat_mech_kinematics",
+      "description": "Kinematics with variable acceleration, using differentiation and integration to relate displacement, velocity, and acceleration over time.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_projectiles",
+      "kind": "concept",
+      "name": "Projectiles",
+      "topic": "mat_mech_kinematics",
+      "description": "Projectile motion analysed by resolving into independent horizontal and vertical components of motion under gravity.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_mech_forces",
+      "kind": "topic",
+      "name": "Mechanics: Forces and Newton's Laws",
+      "topic": null,
+      "default_order": 15
+    },
+    {
+      "id": "mat_forces_equilibrium",
+      "kind": "concept",
+      "name": "Forces and Equilibrium",
+      "topic": "mat_mech_forces",
+      "description": "Resolving forces into components and applying the conditions for the equilibrium of a particle under coplanar forces.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_friction",
+      "kind": "concept",
+      "name": "Friction",
+      "topic": "mat_mech_forces",
+      "description": "The frictional force opposing motion, modelled by the coefficient of friction and limiting equilibrium on a rough surface.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_newton_laws",
+      "kind": "concept",
+      "name": "Newton's Laws of Motion",
+      "topic": "mat_mech_forces",
+      "description": "Newton's laws of motion relating the resultant force acting on a body to its mass and resulting acceleration.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_connected_particles",
+      "kind": "concept",
+      "name": "Connected Particles",
+      "topic": "mat_mech_forces",
+      "description": "Analysing connected particles, such as those joined by a string over a pulley, by applying Newton's laws to each.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_mech_energy",
+      "kind": "topic",
+      "name": "Mechanics: Energy and Momentum",
+      "topic": null,
+      "default_order": 16
+    },
+    {
+      "id": "mat_work_energy_power",
+      "kind": "concept",
+      "name": "Work, Energy and Power",
+      "topic": "mat_mech_energy",
+      "description": "Work done by a force, kinetic and potential energy, the work-energy principle, and power as the rate of doing work.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_momentum_impulse",
+      "kind": "concept",
+      "name": "Momentum and Impulse",
+      "topic": "mat_mech_energy",
+      "description": "Linear momentum and impulse, and the conservation of momentum applied to collisions between particles.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_stats_data",
+      "kind": "topic",
+      "name": "Statistics: Data",
+      "topic": null,
+      "default_order": 17
+    },
+    {
+      "id": "mat_data_rep",
+      "kind": "concept",
+      "name": "Representation of Data",
+      "topic": "mat_stats_data",
+      "description": "Representing data using histograms, box-and-whisker plots, and cumulative frequency graphs to display its distribution.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_central_spread",
+      "kind": "concept",
+      "name": "Central Tendency and Spread",
+      "topic": "mat_stats_data",
+      "description": "Measures of central tendency and spread, including the mean, median, variance, standard deviation, and quartiles.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_probability",
+      "kind": "topic",
+      "name": "Probability",
+      "topic": null,
+      "default_order": 18
+    },
+    {
+      "id": "mat_perm_comb",
+      "kind": "concept",
+      "name": "Permutations and Combinations",
+      "topic": "mat_probability",
+      "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_prob_rules",
+      "kind": "concept",
+      "name": "Probability Rules",
+      "topic": "mat_probability",
+      "description": "The rules of probability, including the addition and multiplication rules for combined, mutually exclusive, and independent events.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_conditional",
+      "kind": "concept",
+      "name": "Conditional Probability",
+      "topic": "mat_probability",
+      "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_random_vars",
+      "kind": "topic",
+      "name": "Random Variables and Distributions",
+      "topic": null,
+      "default_order": 19
+    },
+    {
+      "id": "mat_discrete_rv",
+      "kind": "concept",
+      "name": "Discrete Random Variables",
+      "topic": "mat_random_vars",
+      "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_binomial_dist",
+      "kind": "concept",
+      "name": "Binomial Distribution",
+      "topic": "mat_random_vars",
+      "description": "The binomial distribution modelling the number of successes in a fixed number of independent trials with constant probability.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_geometric_dist",
+      "kind": "concept",
+      "name": "Geometric Distribution",
+      "topic": "mat_random_vars",
+      "description": "The geometric distribution modelling the number of independent trials up to and including the first success.",
+      "default_order": 3
+    },
+    {
+      "id": "mat_poisson",
+      "kind": "concept",
+      "name": "Poisson Distribution",
+      "topic": "mat_random_vars",
+      "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval.",
+      "default_order": 4
+    },
+    {
+      "id": "mat_normal",
+      "kind": "topic",
+      "name": "Normal Distribution",
+      "topic": null,
+      "default_order": 20
+    },
+    {
+      "id": "mat_normal_dist",
+      "kind": "concept",
+      "name": "Normal Distribution",
+      "topic": "mat_normal",
+      "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_normal_approx",
+      "kind": "concept",
+      "name": "Normal Approximations",
+      "topic": "mat_normal",
+      "description": "Using the normal distribution to approximate the binomial or Poisson distribution under suitable conditions, with continuity correction.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_inference",
+      "kind": "topic",
+      "name": "Sampling and Hypothesis Testing",
+      "topic": null,
+      "default_order": 21
+    },
+    {
+      "id": "mat_sampling",
+      "kind": "concept",
+      "name": "Sampling",
+      "topic": "mat_inference",
+      "description": "Sampling concepts including populations, samples, and the sampling distribution of the mean used for statistical inference.",
+      "default_order": 1
+    },
+    {
+      "id": "mat_hypothesis",
+      "kind": "concept",
+      "name": "Hypothesis Testing",
+      "topic": "mat_inference",
+      "description": "Hypothesis testing using a test statistic and a significance level to decide between a null and an alternative hypothesis.",
+      "default_order": 2
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "from": "mat_indices_surds",
+      "to": "mat_quadratics",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_quadratics",
+      "to": "mat_solve_quadratics",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_quadratics",
+      "to": "mat_simultaneous",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_simultaneous",
+      "to": "mat_inequalities",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_inequalities",
+      "to": "mat_functions",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_functions",
+      "to": "mat_composite",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_composite",
+      "to": "mat_modulus",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_poly_division",
+      "to": "mat_factor_theorem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_factor_theorem",
+      "to": "mat_partial_fractions",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_straight_lines",
+      "to": "mat_parallel_perp",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_parallel_perp",
+      "to": "mat_circles",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_arithmetic",
+      "to": "mat_geometric",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_geometric",
+      "to": "mat_binomial_pos",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_binomial_pos",
+      "to": "mat_binomial_gen",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "mat_radians",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_radians",
+      "to": "mat_trig_identities",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_trig_identities",
+      "to": "mat_solve_trig",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_trig",
+      "to": "mat_double_angle",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_double_angle",
+      "to": "mat_rform",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "mat_log_laws",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_log_laws",
+      "to": "mat_solve_exp",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_exp",
+      "to": "mat_linearise",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_first_principles",
+      "to": "mat_power_rule",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_chain_rule",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_tangent_normal",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_tangent_normal",
+      "to": "mat_stationary",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_stationary",
+      "to": "mat_rates",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_product_quotient",
+      "to": "mat_special_derivatives",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "mat_implicit",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_implicit",
+      "to": "mat_parametric",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_indefinite",
+      "to": "mat_definite_area",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_definite_area",
+      "to": "mat_standard_integrals",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_standard_integrals",
+      "to": "mat_substitution",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_substitution",
+      "to": "mat_by_parts",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_by_parts",
+      "to": "mat_int_partial",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_int_partial",
+      "to": "mat_volumes",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_locate_roots",
+      "to": "mat_iteration",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_form_de",
+      "to": "mat_separation",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "mat_vector_magnitude",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_magnitude",
+      "to": "mat_scalar_product",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "mat_vector_lines",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_complex_arith",
+      "to": "mat_argand",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_argand",
+      "to": "mat_mod_arg",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_mod_arg",
+      "to": "mat_complex_loci",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_kin_constant",
+      "to": "mat_kin_variable",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_kin_variable",
+      "to": "mat_projectiles",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_forces_equilibrium",
+      "to": "mat_friction",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_friction",
+      "to": "mat_newton_laws",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "mat_connected_particles",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_work_energy_power",
+      "to": "mat_momentum_impulse",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_data_rep",
+      "to": "mat_central_spread",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_perm_comb",
+      "to": "mat_prob_rules",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "mat_conditional",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_binomial_dist",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_binomial_dist",
+      "to": "mat_geometric_dist",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_geometric_dist",
+      "to": "mat_poisson",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "mat_normal_approx",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "mat_hypothesis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_quadratics",
+      "to": "mat_functions",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_straight_lines",
+      "to": "mat_circles",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_indices_surds",
+      "to": "mat_binomial_pos",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "mat_trig_identities",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_trig_identities",
+      "to": "mat_double_angle",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_indices_surds",
+      "to": "mat_exp_func",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_product_quotient",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_implicit",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_parametric",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_rates",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_stationary",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_tangent_normal",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_substitution",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_product_quotient",
+      "to": "mat_by_parts",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_partial_fractions",
+      "to": "mat_int_partial",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_definite_area",
+      "to": "mat_volumes",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "mat_standard_integrals",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_quadratics",
+      "to": "mat_locate_roots",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_standard_integrals",
+      "to": "mat_separation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "mat_scalar_product",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "mat_vector_lines",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_quadratics",
+      "to": "mat_complex_arith",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_kin_constant",
+      "to": "mat_projectiles",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "mat_kin_variable",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_forces_equilibrium",
+      "to": "mat_newton_laws",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "mat_work_energy_power",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "mat_momentum_impulse",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_central_spread",
+      "to": "mat_discrete_rv",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "mat_discrete_rv",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_geometric_dist",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_poisson",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_normal_dist",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_binomial_dist",
+      "to": "mat_normal_approx",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "mat_sampling",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
 }

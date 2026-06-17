@@ -1,5 +1,5 @@
 {
-  "subject": "Harvard CS50 This is CS50x",
+  "subject": "Introduction to Computer Science",
   "schema": {
     "node_types": [
       "topic",
@@ -14,355 +14,462 @@
       "id": "topic_week0",
       "name": "Week 0: Scratch",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 1
     },
     {
       "id": "c_functions",
       "name": "Functions",
       "topic": "topic_week0",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces."
     },
     {
       "id": "c_events",
       "name": "Events",
       "topic": "topic_week0",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch."
     },
     {
       "id": "c_conditions",
       "name": "Conditionals",
       "topic": "topic_week0",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false."
     },
     {
       "id": "c_loops",
       "name": "Loops",
       "topic": "topic_week0",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition."
     },
     {
       "id": "c_abstraction",
       "name": "Abstraction",
       "topic": "topic_week0",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers."
     },
     {
       "id": "topic_week1",
       "name": "Week 1: C",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "c_c_syntax",
       "name": "C Syntax",
       "topic": "topic_week1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them."
     },
     {
       "id": "c_data_types",
       "name": "Data Types",
       "topic": "topic_week1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them."
     },
     {
       "id": "c_operators",
       "name": "Operators",
       "topic": "topic_week1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions."
     },
     {
       "id": "c_compilation",
       "name": "Compilation Process",
       "topic": "topic_week1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages."
     },
     {
       "id": "topic_week2",
       "name": "Week 2: Arrays",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "c_debugging",
       "name": "Debugging",
       "topic": "topic_week2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour."
     },
     {
       "id": "c_arrays",
       "name": "Arrays",
       "topic": "topic_week2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures."
     },
     {
       "id": "c_strings",
       "name": "Strings",
       "topic": "topic_week2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations."
     },
     {
       "id": "c_cli_args",
       "name": "Command-line Arguments",
       "topic": "topic_week2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line."
     },
     {
       "id": "topic_week3",
       "name": "Week 3: Algorithms",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 4
     },
     {
       "id": "c_linear_search",
       "name": "Linear Search",
       "topic": "topic_week3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time."
     },
     {
       "id": "c_binary_search",
       "name": "Binary Search",
       "topic": "topic_week3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time."
     },
     {
       "id": "c_sorting",
       "name": "Sorting Algorithms",
       "topic": "topic_week3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity."
     },
     {
       "id": "c_recursion",
       "name": "Recursion",
       "topic": "topic_week3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate."
     },
     {
       "id": "c_big_o",
       "name": "Big O Notation",
       "topic": "topic_week3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency."
     },
     {
       "id": "topic_week4",
       "name": "Week 4: Memory",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "c_pointers",
       "name": "Pointers",
       "topic": "topic_week4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C."
     },
     {
       "id": "c_malloc",
       "name": "Dynamic Memory Allocation",
       "topic": "topic_week4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution."
     },
     {
       "id": "c_call_stack",
       "name": "Call Stack",
       "topic": "topic_week4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames."
     },
     {
       "id": "c_file_io",
       "name": "File I/O",
       "topic": "topic_week4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution."
     },
     {
       "id": "topic_week5",
       "name": "Week 5: Data Structures",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 6
     },
     {
       "id": "c_linked_lists",
       "name": "Linked Lists",
       "topic": "topic_week5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory."
     },
     {
       "id": "c_hash_tables",
       "name": "Hash Tables",
       "topic": "topic_week5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup."
     },
     {
       "id": "c_trees",
       "name": "Trees",
       "topic": "topic_week5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup."
     },
     {
       "id": "c_tries",
       "name": "Tries",
       "topic": "topic_week5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory."
     },
     {
       "id": "c_queues_stacks",
       "name": "Queues and Stacks",
       "topic": "topic_week5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access."
     },
     {
       "id": "topic_week6",
       "name": "Week 6: Python",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 7
     },
     {
       "id": "c_python_syntax",
       "name": "Python Syntax",
       "topic": "topic_week6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs."
     },
     {
       "id": "c_lists_dicts",
       "name": "Lists and Dictionaries",
       "topic": "topic_week6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation."
     },
     {
       "id": "c_oop",
       "name": "Object-Oriented Programming",
       "topic": "topic_week6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse."
     },
     {
       "id": "c_exceptions",
       "name": "Exceptions",
       "topic": "topic_week6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic."
     },
     {
       "id": "topic_week7",
       "name": "Week 7: SQL",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 8
     },
     {
       "id": "c_relational_db",
       "name": "Relational Databases",
       "topic": "topic_week7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system."
     },
     {
       "id": "c_sql_queries",
       "name": "SQL Queries",
       "topic": "topic_week7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively."
     },
     {
       "id": "c_joins",
       "name": "SQL Joins",
       "topic": "topic_week7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables."
     },
     {
       "id": "c_indexes",
       "name": "SQL Indexes",
       "topic": "topic_week7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes."
     },
     {
       "id": "topic_week8",
       "name": "Week 8: HTML, CSS, JavaScript",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 9
     },
     {
       "id": "c_html",
       "name": "HTML",
       "topic": "topic_week8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers."
     },
     {
       "id": "c_css",
       "name": "CSS",
       "topic": "topic_week8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules."
     },
     {
       "id": "c_js",
       "name": "JavaScript",
       "topic": "topic_week8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model."
     },
     {
       "id": "c_dom",
       "name": "DOM Manipulation",
       "topic": "topic_week8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically."
     },
     {
       "id": "topic_week9",
       "name": "Week 9: Flask",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "c_http",
       "name": "HTTP Protocol",
       "topic": "topic_week9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes."
     },
     {
       "id": "c_flask",
       "name": "Flask Framework",
       "topic": "topic_week9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions."
     },
     {
       "id": "c_mvc",
       "name": "MVC Architecture",
       "topic": "topic_week9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly."
     },
     {
       "id": "c_sessions",
       "name": "Sessions and Cookies",
       "topic": "topic_week9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits."
     },
     {
       "id": "c_apis",
       "name": "APIs",
       "topic": "topic_week9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume."
     },
     {
       "id": "topic_week10",
       "name": "Week 10: Cybersecurity",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 11
     },
     {
       "id": "c_cybersecurity",
       "name": "Cybersecurity Basics",
       "topic": "topic_week10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information."
     },
     {
       "id": "c_encryption",
       "name": "Encryption",
       "topic": "topic_week10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication."
     },
     {
       "id": "c_authentication",
       "name": "Authentication",
       "topic": "topic_week10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources."
     },
     {
       "id": "c_vulnerabilities",
       "name": "Vulnerabilities",
       "topic": "topic_week10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching."
     }
   ],
   "edges": [

@@ -1,5 +1,5 @@
 {
-  "subject": "UCB CS70 Discrete Math and Probability Theory",
+  "subject": "Discrete Math and Probability Theory",
   "schema": {
     "nodes": {
       "topic": "A broad module containing 4-5 concepts",
@@ -15,481 +15,626 @@
       "id": "topic_logic",
       "name": "Logic and Proofs",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 1
     },
     {
       "id": "propositional_logic",
       "topic": "topic_logic",
       "name": "Propositional Logic",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning."
     },
     {
       "id": "direct_proofs",
       "topic": "topic_logic",
       "name": "Direct Proofs",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps."
     },
     {
       "id": "proof_by_contraposition",
       "topic": "topic_logic",
       "name": "Proof by Contraposition",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'."
     },
     {
       "id": "proof_by_contradiction",
       "topic": "topic_logic",
       "name": "Proof by Contradiction",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true."
     },
     {
       "id": "topic_induction",
       "name": "Induction",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "simple_induction",
       "topic": "topic_induction",
       "name": "Simple Induction",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1."
     },
     {
       "id": "strong_induction",
       "topic": "topic_induction",
       "name": "Strong Induction",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor."
     },
     {
       "id": "well_ordering_principle",
       "topic": "topic_induction",
       "name": "Well-Ordering Principle",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction."
     },
     {
       "id": "structural_induction",
       "topic": "topic_induction",
       "name": "Structural Induction",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules."
     },
     {
       "id": "topic_matching",
       "name": "Stable Matching",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "stable_matching_problem",
       "topic": "topic_matching",
       "name": "Stable Matching Problem",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners."
     },
     {
       "id": "gale_shapley_algorithm",
       "topic": "topic_matching",
       "name": "Gale-Shapley Algorithm",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances."
     },
     {
       "id": "matching_optimality",
       "topic": "topic_matching",
       "name": "Matching Optimality",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings."
     },
     {
       "id": "matching_pessimality",
       "topic": "topic_matching",
       "name": "Matching Pessimality",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side."
     },
     {
       "id": "topic_graphs",
       "name": "Graph Theory",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 4
     },
     {
       "id": "graph_basics",
       "topic": "topic_graphs",
       "name": "Graph Basics",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles."
     },
     {
       "id": "eulerian_tours",
       "topic": "topic_graphs",
       "name": "Eulerian Tours",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree."
     },
     {
       "id": "trees",
       "topic": "topic_graphs",
       "name": "Trees",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices."
     },
     {
       "id": "planar_graphs",
       "topic": "topic_graphs",
       "name": "Planar Graphs",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces."
     },
     {
       "id": "hypercubes",
       "topic": "topic_graphs",
       "name": "Hypercubes",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit."
     },
     {
       "id": "topic_modular_arithmetic",
       "name": "Modular Arithmetic",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "euclids_algorithm",
       "topic": "topic_modular_arithmetic",
       "name": "Euclid's Algorithm",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller."
     },
     {
       "id": "extended_euclid",
       "topic": "topic_modular_arithmetic",
       "name": "Extended Euclid",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses."
     },
     {
       "id": "chinese_remainder_theorem",
       "topic": "topic_modular_arithmetic",
       "name": "Chinese Remainder Theorem",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli."
     },
     {
       "id": "fermats_little_theorem",
       "topic": "topic_modular_arithmetic",
       "name": "Fermat's Little Theorem",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a."
     },
     {
       "id": "topic_crypto",
       "name": "Cryptography",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 6
     },
     {
       "id": "symmetric_cryptography",
       "topic": "topic_crypto",
       "name": "Symmetric Cryptography",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages."
     },
     {
       "id": "rsa_setup_and_encryption",
       "topic": "topic_crypto",
       "name": "RSA Setup and Encryption",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent."
     },
     {
       "id": "rsa_decryption_proof",
       "topic": "topic_crypto",
       "name": "RSA Decryption Proof",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents."
     },
     {
       "id": "digital_signatures",
       "topic": "topic_crypto",
       "name": "Digital Signatures",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key."
     },
     {
       "id": "topic_polynomials",
       "name": "Polynomials",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 7
     },
     {
       "id": "polynomial_roots_and_degree",
       "topic": "topic_polynomials",
       "name": "Polynomial Roots and Degree",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course."
     },
     {
       "id": "polynomial_interpolation",
       "topic": "topic_polynomials",
       "name": "Polynomial Interpolation",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field."
     },
     {
       "id": "secret_sharing",
       "topic": "topic_polynomials",
       "name": "Secret Sharing",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it."
     },
     {
       "id": "error_correcting_codes",
       "topic": "topic_polynomials",
       "name": "Error Correcting Codes",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures."
     },
     {
       "id": "topic_countability_computability",
       "name": "Countability and Computability",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 8
     },
     {
       "id": "bijections_and_cardinality",
       "topic": "topic_countability_computability",
       "name": "Bijections and Cardinality",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them."
     },
     {
       "id": "cantors_diagonalization",
       "topic": "topic_countability_computability",
       "name": "Cantor's Diagonalization",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable."
     },
     {
       "id": "uncountability_of_reals",
       "topic": "topic_countability_computability",
       "name": "Uncountability of Reals",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable."
     },
     {
       "id": "the_halting_problem",
       "topic": "topic_countability_computability",
       "name": "The Halting Problem",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization."
     },
     {
       "id": "undecidability",
       "topic": "topic_countability_computability",
       "name": "Undecidability",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem."
     },
     {
       "id": "topic_counting",
       "name": "Counting",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 9
     },
     {
       "id": "basic_counting_rules",
       "topic": "topic_counting",
       "name": "Basic Counting Rules",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices."
     },
     {
       "id": "combinations_permutations",
       "topic": "topic_counting",
       "name": "Combinations and Permutations",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas."
     },
     {
       "id": "combinatorial_proofs",
       "topic": "topic_counting",
       "name": "Combinatorial Proofs",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal."
     },
     {
       "id": "stars_and_bars",
       "topic": "topic_counting",
       "name": "Stars and Bars",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins."
     },
     {
       "id": "inclusion_exclusion",
       "topic": "topic_counting",
       "name": "Inclusion-Exclusion",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections."
     },
     {
       "id": "topic_discrete_prob",
       "name": "Discrete Probability",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "probability_spaces",
       "topic": "topic_discrete_prob",
       "name": "Probability Spaces",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms."
     },
     {
       "id": "conditional_probability",
       "topic": "topic_discrete_prob",
       "name": "Conditional Probability",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability."
     },
     {
       "id": "bayes_rule",
       "topic": "topic_discrete_prob",
       "name": "Bayes' Rule",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods."
     },
     {
       "id": "event_independence",
       "topic": "topic_discrete_prob",
       "name": "Event Independence",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product."
     },
     {
       "id": "topic_random_vars",
       "name": "Random Variables and Expectation",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 11
     },
     {
       "id": "discrete_random_variables",
       "topic": "topic_random_vars",
       "name": "Discrete Random Variables",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value."
     },
     {
       "id": "expectation",
       "topic": "topic_random_vars",
       "name": "Expectation",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution."
     },
     {
       "id": "linearity_of_expectation",
       "topic": "topic_random_vars",
       "name": "Linearity of Expectation",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent."
     },
     {
       "id": "variance_and_covariance",
       "topic": "topic_random_vars",
       "name": "Variance and Covariance",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together."
     },
     {
       "id": "topic_discrete_dists",
       "name": "Discrete Distributions",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 12
     },
     {
       "id": "bernoulli_binomial_distributions",
       "topic": "topic_discrete_dists",
       "name": "Bernoulli and Binomial Distributions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials."
     },
     {
       "id": "geometric_distribution",
       "topic": "topic_discrete_dists",
       "name": "Geometric Distribution",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property."
     },
     {
       "id": "poisson_distribution",
       "topic": "topic_discrete_dists",
       "name": "Poisson Distribution",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials."
     },
     {
       "id": "hypergeometric_distribution",
       "topic": "topic_discrete_dists",
       "name": "Hypergeometric Distribution",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population."
     },
     {
       "id": "topic_continuous_prob",
       "name": "Continuous Probability",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 13
     },
     {
       "id": "continuous_random_variables",
       "topic": "topic_continuous_prob",
       "name": "Continuous Random Variables",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function."
     },
     {
       "id": "probability_density_function",
       "topic": "topic_continuous_prob",
       "name": "Probability Density Function",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval."
     },
     {
       "id": "cumulative_distribution_function",
       "topic": "topic_continuous_prob",
       "name": "Cumulative Distribution Function",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution."
     },
     {
       "id": "uniform_exponential_distributions",
       "topic": "topic_continuous_prob",
       "name": "Uniform and Exponential Distributions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times."
     },
     {
       "id": "normal_distribution",
       "topic": "topic_continuous_prob",
       "name": "Normal Distribution",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem."
     },
     {
       "id": "topic_concentration",
       "name": "Concentration Inequalities",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 14
     },
     {
       "id": "markovs_inequality",
       "topic": "topic_concentration",
       "name": "Markov's Inequality",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean."
     },
     {
       "id": "chebyshevs_inequality",
       "topic": "topic_concentration",
       "name": "Chebyshev's Inequality",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance."
     },
     {
       "id": "chernoff_bounds",
       "topic": "topic_concentration",
       "name": "Chernoff Bounds",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function."
     },
     {
       "id": "weak_law_of_large_numbers",
       "topic": "topic_concentration",
       "name": "Weak Law of Large Numbers",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean."
     },
     {
       "id": "central_limit_theorem",
       "topic": "topic_concentration",
       "name": "Central Limit Theorem",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution."
     },
     {
       "id": "topic_markov",
       "name": "Markov Chains",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 15
     },
     {
       "id": "markov_chains_basics",
       "topic": "topic_markov",
       "name": "Markov Chains Basics",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state."
     },
     {
       "id": "hitting_times",
       "topic": "topic_markov",
       "name": "Hitting Times",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state."
     },
     {
       "id": "stationary_distributions",
       "topic": "topic_markov",
       "name": "Stationary Distributions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state."
     },
     {
       "id": "page_rank_algorithm",
       "topic": "topic_markov",
       "name": "PageRank Algorithm",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph."
     }
   ],
   "edges": [

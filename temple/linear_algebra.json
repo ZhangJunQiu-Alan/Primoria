@@ -1,5 +1,5 @@
 {
-  "subject": "MIT 18.06 Linear Algebra",
+  "subject": "Linear Algebra",
   "schema": {
     "nodes": [
       {
@@ -234,7 +234,7 @@
       "kind": "concept",
       "name": "Linear Transformations",
       "topic": "t_mit1806_applications",
-      "description": "Definition of linear transformations, checking linearity.",
+      "description": "Maps between vector spaces that preserve addition and scalar multiplication, characterised by their action on a basis and represented by matrices.",
       "default_order": 22
     },
     {
@@ -378,12 +378,6 @@
       "to": "c_mit1806_matrix_transform",
       "type": "prereq",
       "strength": "hard"
-    },
-    {
-      "from": "c_mit1806_matrix_transform",
-      "to": "c_mit1806_svd",
-      "type": "prereq",
-      "strength": "soft"
     }
   ]
 }
