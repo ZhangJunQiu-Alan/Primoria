@@ -15,6 +15,10 @@
 .env.*
 !.env.example
 
+# Supabase CLI local link/cache state
+supabase/.temp/
+**/supabase/.temp/
+
 # Dependencies and build outputs
 node_modules/
 .pnpm-home/

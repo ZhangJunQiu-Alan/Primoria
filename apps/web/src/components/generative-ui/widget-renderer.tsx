@@ -5,6 +5,7 @@ import { z } from "zod";
 import { IDIOMORPH_JS } from "./idiomorph-inline";
 import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
+import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 import { normalizeWidgetDependencies } from "@/lib/ai/widget-dependencies";
 
 export const WidgetDependency = z.object({
@@ -16,7 +17,7 @@ export const WidgetDependency = z.object({
 export const WidgetRendererProps = z.object({
   title: z.string(),
   description: z.string(),
-  html: z.string(),
+  html: z.string().optional().default(""),
   dependencies: z.array(WidgetDependency).optional(),
 });
 
@@ -202,6 +203,17 @@ svg .c-red text.ts { fill: #A32D2D; }
 export const FORM_STYLES_CSS = `
 * { box-sizing: border-box; margin: 0; }
 html { background: transparent; }
+html,
+body {
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+}
 body {
   min-width: 0;
   font-family: var(--font-sans);
@@ -306,6 +318,8 @@ window.addEventListener('unhandledrejection', function(event) {
 });
 window.__primoriaShowWidgetError = showWidgetError;
 
+${THREE_ORBIT_CONTROLS_SHIM}
+
 document.addEventListener('click', function(event) {
   var promptButton = event.target.closest('button[data-prompt], [role="button"][data-prompt]');
   if (promptButton) {
@@ -339,13 +353,14 @@ var COMMON_DEPENDENCIES = {
   d3: { global: 'd3', url: 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js', kind: 'script' },
   Chart: { global: 'Chart', url: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js', kind: 'script' },
   gsap: { global: 'gsap', url: 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', kind: 'script' },
-  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js', kind: 'script' },
+  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js', kind: 'script' },
   anime: { global: 'anime', url: 'https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js', kind: 'script' },
   Matter: { global: 'Matter', url: 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js', kind: 'script' },
   p5: { global: 'p5', url: 'https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js', kind: 'script' },
   math: { global: 'math', url: 'https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js', kind: 'script' },
   L: { global: 'L', url: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', kind: 'script' },
-  mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' }
+  mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' },
+  cytoscape: { global: 'cytoscape', url: 'https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js', kind: 'script' }
 };
 var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(map, key) {
   map[COMMON_DEPENDENCIES[key].url] = true;
@@ -457,6 +472,9 @@ function loadDependency(dep, done) {
 
 function loadDependencies(deps, done) {
   if (!deps.length) {
+    try {
+      if (window.__primoriaInstallThreeOrbitControls) window.__primoriaInstallThreeOrbitControls();
+    } catch (_) {}
     done();
     return;
   }
@@ -498,9 +516,9 @@ function runScripts(content, scripts, index, dependencies) {
         content.appendChild(nextScript);
       } else {
         nextScript.textContent =
-          'try {\\n' +
+          "try {\\n" +
           (info.text || '') +
-          '\\n} catch (error) { window.__primoriaShowWidgetError(error && error.message ? error.message : \\'script failed\\'); throw error; }';
+          "\\n} catch (error) { window.__primoriaShowWidgetError(error && error.message ? error.message : \\\"script failed\\\"); throw error; }";
         content.appendChild(nextScript);
         runScripts(content, scripts, index + 1, dependencies);
       }
@@ -519,7 +537,7 @@ window.addEventListener('message', function(event) {
   var content = document.getElementById('content');
   if (!content) return;
 
-  var rawHtml = String(event.data.html || '');
+  var rawHtml = normalizeRuntimeHtml(String(event.data.html || ''));
   if (event.data.executeScripts !== false && !rawHtml.trim()) {
     content.innerHTML = '';
     showWidgetError('Widget returned empty HTML.');
@@ -566,19 +584,26 @@ window.addEventListener('message', function(event) {
   reportHeight();
 });
 
+function normalizeRuntimeHtml(html) {
+  return String(html || '')
+    .replace(/min-height\s*:\s*100(?:dvh|vh)\s*;?/gi, 'min-height:auto;')
+    .replace(/height\s*:\s*100(?:dvh|vh)\s*;?/gi, 'height:auto;')
+    .replace(/width\s*:\s*100(?:dvw|vw)\s*;?/gi, 'width:100%;')
+    .replace(/position\s*:\s*fixed\s*;?/gi, 'position:absolute;');
+}
+
 function reportHeight() {
   var content = document.getElementById('content');
   if (!content) return;
 
-  var clone = content.cloneNode(true);
-  var width = content.offsetWidth || content.getBoundingClientRect().width || 720;
-  clone.style.cssText =
-    'position:fixed;top:-9999px;left:-9999px;width:' +
-    width +
-    'px;height:auto;overflow:hidden;visibility:hidden;pointer-events:none;';
-  document.body.appendChild(clone);
-  var height = Math.max(clone.scrollHeight, 80);
-  document.body.removeChild(clone);
+  var rect = content.getBoundingClientRect();
+  var height = Math.max(content.scrollHeight, rect.height, 80);
+  var children = content.children || [];
+  for (var i = 0; i < children.length; i += 1) {
+    var childRect = children[i].getBoundingClientRect();
+    height = Math.max(height, childRect.bottom - rect.top);
+  }
+  height = Math.min(Math.ceil(height + 4), 1400);
   window.parent.postMessage({ type: 'primoria-widget-resize', height: height }, '*');
 }
 
@@ -608,6 +633,13 @@ function useLoadingPhrase(active: boolean) {
     return () => clearInterval(interval);
   }, [active]);
   return LOADING_PHRASES[index];
+}
+
+function hasCompleteScriptTags(value: unknown) {
+  const text = typeof value === "string" ? value : "";
+  const scriptOpens = (text.match(/<script[\s>]/gi) || []).length;
+  const scriptCloses = (text.match(/<\/script>/gi) || []).length;
+  return scriptOpens <= scriptCloses;
 }
 
 function assembleShell() {
@@ -653,7 +685,8 @@ function assembleShell() {
 </html>`;
 }
 
-export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: WidgetRendererComponentProps) {
+export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }: WidgetRendererComponentProps) {
+  const safeHtml = typeof html === "string" ? html : "";
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shellReadyRef = useRef(false);
   const committedHtmlRef = useRef("");
@@ -665,10 +698,12 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
   const settledTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const normalizedDependencies = useMemo(() => normalizeWidgetDependencies(dependencies), [dependencies]);
-  const htmlSettled = html === settledHtml;
+  const scriptsComplete = hasCompleteScriptTags(safeHtml);
+  const htmlPreviewSettled = safeHtml === settledHtml;
+  const canExecuteHtml = htmlPreviewSettled;
   const exportHtml = useMemo(
-    () => (html ? assembleWidgetStandaloneHtml({ title, html, dependencies: normalizedDependencies }) : undefined),
-    [html, normalizedDependencies, title],
+    () => (safeHtml ? assembleWidgetStandaloneHtml({ title, html: safeHtml, dependencies: normalizedDependencies }) : undefined),
+    [safeHtml, normalizedDependencies, title],
   );
 
   const handleMessage = useCallback(
@@ -697,16 +732,15 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, [handleMessage]);
-
   useEffect(() => {
     executedHtmlRef.current = "";
-  }, [html]);
+  }, [safeHtml]);
 
   useEffect(() => {
     if (settledTimerRef.current) clearTimeout(settledTimerRef.current);
     if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
     settledTimerRef.current = setTimeout(() => {
-      setSettledHtml(html);
+      setSettledHtml(safeHtml);
       setFadingOut(true);
       fadeTimerRef.current = setTimeout(() => {
         setFadingOut(false);
@@ -716,16 +750,16 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
       if (settledTimerRef.current) clearTimeout(settledTimerRef.current);
       if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
     };
-  }, [html]);
+  }, [safeHtml]);
 
   useEffect(() => {
-    if (!html || (loaded && height > 0)) return;
+    if (!safeHtml || (loaded && height > 0)) return;
     const timeout = setTimeout(() => {
       setLoaded(true);
       setHeight((current) => (current > 0 ? current : 300));
     }, 4000);
     return () => clearTimeout(timeout);
-  }, [html, loaded, height]);
+  }, [safeHtml, loaded, height]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -737,20 +771,20 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
       return;
     }
 
-    if (!loaded || !iframe.contentWindow || html === committedHtmlRef.current) return;
-    committedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies: normalizedDependencies, executeScripts: false }, "*");
-  }, [html, normalizedDependencies, loaded]);
+    if (!loaded || !iframe.contentWindow || safeHtml === committedHtmlRef.current) return;
+    committedHtmlRef.current = safeHtml;
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html: safeHtml, dependencies: normalizedDependencies, executeScripts: false }, "*");
+  }, [safeHtml, normalizedDependencies, loaded]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
-    if (!htmlSettled || !html || !loaded || !iframe?.contentWindow || html === executedHtmlRef.current) return;
-    executedHtmlRef.current = html;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html, dependencies: normalizedDependencies, executeScripts: true }, "*");
-  }, [html, normalizedDependencies, htmlSettled, loaded]);
+    if (!canExecuteHtml || !safeHtml || !loaded || !iframe?.contentWindow || safeHtml === executedHtmlRef.current) return;
+    executedHtmlRef.current = safeHtml;
+    iframe.contentWindow.postMessage({ type: "primoria-update-content", html: safeHtml, dependencies: normalizedDependencies, executeScripts: true }, "*");
+  }, [safeHtml, normalizedDependencies, canExecuteHtml, loaded]);
 
-  const showIframe = Boolean(html);
-  const isStreaming = Boolean(html) && !htmlSettled;
+  const showIframe = Boolean(safeHtml);
+  const isStreaming = Boolean(safeHtml) && !htmlPreviewSettled;
   const loadingPhrase = useLoadingPhrase(isStreaming);
   const showStreamingIndicator = isStreaming || fadingOut;
 
@@ -765,12 +799,12 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
           <span>{loadingPhrase}...</span>
         </div>
       ) : null}
-      {htmlSettled && !html.trim() ? (
+      {htmlPreviewSettled && !safeHtml.trim() ? (
         <div className="widget-renderer-error" role="alert">
           Widget returned empty HTML.
         </div>
       ) : null}
-      <ExportOverlay title={title} exportHtml={exportHtml} ready={!!html && htmlSettled}>
+      <ExportOverlay title={title} exportHtml={exportHtml} ready={Boolean(safeHtml) && canExecuteHtml}>
         <iframe
           ref={iframeRef}
           className="widget-frame"
@@ -779,8 +813,7 @@ export function WidgetRenderer({ html, title, dependencies, onSendPrompt }: Widg
           onLoad={() => setLoaded(true)}
           style={{
             height: showIframe ? (height > 0 ? height : 300) : 0,
-            opacity: showIframe ? 1 : 0,
-            display: html ? undefined : "none",
+            display: safeHtml ? undefined : "none",
           }}
         />
       </ExportOverlay>

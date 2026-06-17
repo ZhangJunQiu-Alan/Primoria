@@ -35,9 +35,9 @@ const markdownComponents: Components = {
   },
 };
 
-export function CourseMarkdown({ markdown }: { markdown: string }) {
+export function CourseMarkdown({ markdown, className }: { markdown: string; className?: string }) {
   return (
-    <div className="course-markdown">
+    <div className={["course-markdown", className].filter(Boolean).join(" ")}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}
@@ -46,5 +46,26 @@ export function CourseMarkdown({ markdown }: { markdown: string }) {
         {markdown}
       </ReactMarkdown>
     </div>
+  );
+}
+
+const inlineMarkdownComponents: Components = {
+  ...markdownComponents,
+  p({ children }) {
+    return <>{children}</>;
+  },
+};
+
+export function CourseInlineMarkdown({ markdown, className }: { markdown: string; className?: string }) {
+  return (
+    <span className={["course-markdown", "course-markdown-inline", className].filter(Boolean).join(" ")}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeKatex]}
+        components={inlineMarkdownComponents}
+      >
+        {markdown}
+      </ReactMarkdown>
+    </span>
   );
 }

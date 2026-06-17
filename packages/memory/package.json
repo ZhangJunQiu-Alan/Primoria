@@ -1,0 +1,16 @@
+{
+  "name": "@primoria/memory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "mem0ai": "^3.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "typescript": "^5.7.0"
+  }
+}

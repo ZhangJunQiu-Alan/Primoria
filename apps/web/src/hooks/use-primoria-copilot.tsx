@@ -8,8 +8,9 @@ import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem
 import { PlanCard } from "@/components/generative-ui/plan-card";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
+import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
-import type { CourseCardArtifact } from "@/lib/ai/types";
+import type { CourseCardArtifact } from "@/lib/agent-os";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -30,8 +31,8 @@ const PlanVisualizationParams = z.object({
 
 const RenderWidgetParams = z.object({
   title: z.string().optional(),
-  description: z.string(),
-  html: z.string(),
+  description: z.string().optional().default(""),
+  html: z.string().optional().default(""),
   dependencies: z.array(z.object({
     url: z.string(),
     global: z.string().optional(),
@@ -48,6 +49,8 @@ const GetCourseCardParams = z.object({
   course_id: z.string(),
 });
 
+const CourseBlockTypeResult = z.enum(["text", "analogy", "transfer", "visual", "code", "quiz", "mind_map", "slide", "worksheet"]);
+
 const CourseCardResult = z.object({
   type: z.literal("course_card"),
   courseId: z.string(),
@@ -57,7 +60,7 @@ const CourseCardResult = z.object({
   estimatedMinutes: z.number(),
   outline: z.array(
     z.object({
-      type: z.enum(["text", "analogy", "transfer", "visual", "code"]),
+      type: CourseBlockTypeResult,
       title: z.string(),
     }),
   ),
@@ -71,31 +74,18 @@ const PositionLearningGoalParams = z.object({
 
 const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
 
-// First write_todos render slot to mount in this session claims the anchor
-// position and renders the PlanProgressCard; later write_todos calls in the
-// same turn still update the shared store but render nothing, so the card
-// updates in place instead of stacking.
-let anchorInstanceId: string | null = null;
-
 function WriteTodosSink({ todos }: { todos: z.infer<typeof WriteTodosParams>["todos"] }) {
-  const idRef = useRef<string | null>(null);
-  if (!idRef.current) {
-    idRef.current = Math.random().toString(36).slice(2);
-  }
-  const myId = idRef.current;
-
   useEffect(() => {
     setTodos(todos ?? []);
   }, [todos]);
 
-  if (anchorInstanceId === null) {
-    anchorInstanceId = myId;
-  }
+  if (!todos?.length) return null;
 
-  if (anchorInstanceId === myId) {
-    return <PlanProgressCard />;
-  }
-  return <></>;
+  return (
+    <div className="primoria-copilot-tool primoria-copilot-progress-tool">
+      <PlanProgressCard />
+    </div>
+  );
 }
 
 function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>["key_elements"]) {
@@ -107,15 +97,54 @@ function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>
 }
 
 function WidgetCard({ title, description, html, dependencies }: z.infer<typeof RenderWidgetParams>) {
+  const safeHtml = typeof html === "string" ? normalizeWidgetHtml(html) : "";
   return (
-    <div className="message-row tool widget-renderer-row">
+    <div className="primoria-copilot-tool primoria-copilot-widget-tool">
       <WidgetRenderer
         title={title || "Interactive learning widget"}
-        description={description}
-        html={html}
+        description={description || ""}
+        html={safeHtml}
         dependencies={dependencies}
       />
     </div>
+  );
+}
+
+function VisualizationPlanTool({
+  status,
+  approach,
+  technology,
+  keyElements,
+}: {
+  status: "inProgress" | "executing" | "complete";
+  approach?: string;
+  technology?: string;
+  keyElements?: string[];
+}) {
+  const isRunning = status === "executing" || status === "inProgress";
+  return (
+    <details className="primoria-copilot-tool primoria-copilot-plan-tool" open={isRunning || undefined}>
+      <summary>
+        <span className={isRunning ? "tool-spinner" : "inline-plan-check"} aria-hidden="true">
+          {isRunning ? null : "✓"}
+        </span>
+        <span>{isRunning ? "Planning visualization…" : `Plan: ${technology || "visualization"}`}</span>
+        <span className="inline-plan-chevron" aria-hidden="true">▾</span>
+      </summary>
+      {approach ? (
+        <div className="primoria-copilot-plan-body">
+          {technology ? <span>{technology}</span> : null}
+          <p>{approach}</p>
+          {keyElements && keyElements.length > 0 ? (
+            <ul>
+              {keyElements.map((element) => (
+                <li key={element}>{element}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      ) : null}
+    </details>
   );
 }
 
@@ -143,10 +172,10 @@ function CourseCardTool({
   parameters?: Partial<z.infer<typeof GenerateCourseParams>>;
 }) {
   const artifact = parseCourseCardResult(result);
-  if (artifact) return <ToolCard artifact={artifact} />;
+  if (artifact) return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
 
   return (
-    <div className="message-row tool">
+    <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
           <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
@@ -171,9 +200,9 @@ function GetCourseCardTool({
   parameters?: Partial<z.infer<typeof GetCourseCardParams>>;
 }) {
   const artifact = parseCourseCardResult(result);
-  if (artifact) return <ToolCard artifact={artifact} />;
+  if (artifact) return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
   return (
-    <div className="message-row tool">
+    <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
           <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
@@ -345,7 +374,7 @@ export function usePrimoriaGenerativeUI() {
     name: "plan_visualization",
     parameters: PlanVisualizationParams,
     render: ({ status, parameters }) => (
-      <PlanCard
+      <VisualizationPlanTool
         status={status}
         approach={parameters?.approach ?? "Planning the visualization."}
         technology={parameters?.technology ?? "HTML + JavaScript"}
@@ -401,18 +430,43 @@ export function usePrimoriaGenerativeUI() {
     ),
   });
 
-  useDefaultRenderTool({
-    render: ({ name, status }) => (
-      <div className="message-row tool">
-        <div className="activity-list">
-          <div className={`activity-row ${status === "complete" ? "complete" : "executing"}`}>
-            <span className={status === "complete" ? "tool-dot activity-indicator" : "tool-spinner activity-indicator"} />
-            <span className="activity-name">{name}</span>
-            <span className="activity-desc">{status === "complete" ? `${name} finished.` : `Running ${name}.`}</span>
+  const makeVisualizerRenderTool = (name: string) => {
+    useRenderTool({
+      name,
+      parameters: z.any(),
+      render: ({ status, result }) => {
+        if (result) {
+          try {
+            const artifact = JSON.parse(result);
+            return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
+          } catch {}
+        }
+        return (
+          <div className="primoria-copilot-tool">
+            <div className="tool-card status-card">
+              <div className="tool-title">
+                <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
+                <span>{name} · {status === "complete" ? "complete" : "executing"}</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    ),
+        );
+      },
+    });
+  };
+
+  makeVisualizerRenderTool("render_chart");
+  makeVisualizerRenderTool("render_diagram");
+  makeVisualizerRenderTool("render_physics_scene");
+  makeVisualizerRenderTool("render_algorithm");
+  makeVisualizerRenderTool("render_math_explorer");
+  makeVisualizerRenderTool("render_wave");
+  makeVisualizerRenderTool("render_graph");
+  makeVisualizerRenderTool("render_molecule");
+  makeVisualizerRenderTool("render_3d_scene");
+
+  useDefaultRenderTool({
+    render: () => <></>,
   });
 }
 

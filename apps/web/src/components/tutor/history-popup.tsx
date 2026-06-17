@@ -12,26 +12,9 @@ import {
 
 function readSessions() {
   const currentThreadId = getCurrentThreadId();
-  const sessions = readThreadHistory();
-  if (!sessions.some((session) => session.id === currentThreadId)) {
-    const now = Date.now();
-    return {
-      currentThreadId,
-      sessions: [
-        {
-          id: currentThreadId,
-          title: "New tutor chat",
-          messageCount: 0,
-          createdAt: now,
-          updatedAt: now,
-        },
-        ...sessions,
-      ],
-    };
-  }
   return {
     currentThreadId,
-    sessions,
+    sessions: readThreadHistory().filter((session) => session.messageCount > 0),
   };
 }
 
@@ -46,7 +29,7 @@ export function ChatHistoryPopup({
   onNewChat: () => void;
   onSelectChat?: (threadId: string) => void;
 }) {
-  const [currentThreadId, setCurrentThread] = useState(() => getCurrentThreadId());
+  const [currentThreadId, setCurrentThread] = useState(getCurrentThreadId());
   const [sessions, setSessions] = useState<CopilotThreadSummary[]>([]);
 
   useEffect(() => {
@@ -129,7 +112,7 @@ export function ChatHistoryPopup({
         )}
 
         <p className="history-hint">
-          CopilotKit sessions are stored locally by thread id on this browser.
+          Sessions sync to your account and restore on this browser after sign-in.
         </p>
       </div>
     </div>

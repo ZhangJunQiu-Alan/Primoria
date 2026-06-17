@@ -1,9 +1,16 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
-import { createTutorModel } from "@/lib/ai/deepagent/model";
-import { generateCourse } from "@/lib/ai/deepagent/course-generator";
+import { createTutorModel, generateCourse } from "@/lib/agent-os/ai";
+import { AttachmentsSchema, buildAttachmentContext, buildCourseUserContent, processAttachments } from "@/lib/agent-os";
+import {
+  createMemoryProvider,
+  formatCourseMemoryForPrompt,
+  recordCourseInteraction,
+  searchCourseMemory,
+} from "@primoria/memory";
 import { requireAuth } from "@/lib/auth/guard";
 
 const RequestSchema = z.object({
@@ -17,6 +24,7 @@ const RequestSchema = z.object({
       model: z.string().optional(),
     })
     .optional(),
+  attachments: AttachmentsSchema,
 });
 
 function blockToPrompt(block: CourseBlock) {
@@ -29,7 +37,22 @@ function blockToPrompt(block: CourseBlock) {
     return `Block ${title} (transfer):\nFrom: ${block.fromDomain}\nTo: ${block.toDomain}\nExplanation: ${block.explanation}\nExample: ${block.example}`;
   }
   if (block.type === "visual") {
-    return `Block ${title} (visual):\nDescription: ${block.description}\nHTML summary: ${block.html.slice(0, 700)}`;
+    return `Block ${title} (visual):\nDescription: ${block.description}\nHTML summary: ${(block.html ?? "").slice(0, 700)}`;
+  }
+  if (block.type === "quiz") {
+    const qs = block.questions.map((q, i) => `Q${i + 1} [${q.kind}]: ${q.question}`).join("\n");
+    return `Block ${title} (quiz):\n${qs}`;
+  }
+  if (block.type === "mind_map") {
+    return `Block ${title} (mind_map): root="${block.root.topic}", ${block.root.children?.length ?? 0} top-level branches`;
+  }
+  if (block.type === "slide") {
+    const summary = block.slides.map((s, i) => `${i + 1}. ${s.title}`).join("; ");
+    return `Block ${title} (slide, ${block.slides.length} slides): ${summary}`;
+  }
+  if (block.type === "worksheet") {
+    const summary = block.items.map((it, i) => `${i + 1}[${it.kind}]: ${it.prompt.slice(0, 60)}`).join("; ");
+    return `Block ${title} (worksheet, ${block.items.length} items): ${summary}`;
   }
   return `Block ${title} (code/${block.language}):\nExplanation: ${block.explanation}\nCode:\n${block.code}`;
 }
@@ -70,6 +93,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const body = RequestSchema.parse(await request.json());
     const course = await getCourse(id);
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
+    const user = await getCurrentUser();
 
     const selectedBlock = body.selectedBlockId
       ? course.blocks.find((block) => block.id === body.selectedBlockId) ?? null
@@ -90,11 +114,48 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       });
     }
 
-    const model = createTutorModel(body.settings);
+    const model = createTutorModel(body.settings, { streaming: false });
+    const memoryProvider = createMemoryProvider({
+      apiKey: process.env.MEM0_API_KEY,
+      host: process.env.MEM0_HOST,
+      provider: process.env.MEMORY_PROVIDER === "mem0" ? "mem0" : "disabled",
+    });
     const outline = course.blocks
       .map((block, index) => `${index + 1}. [${block.type}] ${block.title ?? block.type}`)
       .join("\n");
     const selected = selectedBlock ? blockToPrompt(selectedBlock) : "No selected block; answer from the whole course.";
+    const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
+    const attachmentContext = buildAttachmentContext(processedAttachments);
+    const memoryContext = user
+      ? await searchCourseMemory(
+          memoryProvider,
+          {
+            userId: user.id,
+            courseId: course.id,
+            courseTitle: course.title,
+            courseTopic: course.topic,
+            selectedBlockId: selectedBlock?.id ?? null,
+            selectedBlockTitle: selectedBlock?.title ?? null,
+            selectedBlockType: selectedBlock?.type ?? null,
+          },
+          body.message,
+        )
+      : null;
+    const memoryPrompt = memoryContext ? formatCourseMemoryForPrompt(memoryContext) : "No relevant long-term memory found.";
+    const userContent = buildCourseUserContent(
+      [
+        `Course: ${course.title}`,
+        `Topic: ${course.topic}`,
+        `Summary: ${course.summary}`,
+        `Relevant memory:\n${memoryPrompt}`,
+        `Outline:\n${outline}`,
+        `Selected context:\n${selected}`,
+        "",
+        body.message,
+      ].join("\n"),
+      attachmentContext,
+      processedAttachments,
+    );
     const result = await model.invoke([
       {
         role: "system",
@@ -102,19 +163,28 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       },
       {
         role: "user",
-        content: [
-          `Course: ${course.title}`,
-          `Topic: ${course.topic}`,
-          `Summary: ${course.summary}`,
-          `Outline:\n${outline}`,
-          `Selected context:\n${selected}`,
-          "",
-          `Learner question: ${body.message}`,
-        ].join("\n"),
+        content: userContent,
       },
     ]);
+    const reply = messageContentToString(result.content).trim();
+    if (user) {
+      void recordCourseInteraction(memoryProvider, {
+        userId: user.id,
+        courseId: course.id,
+        courseTitle: course.title,
+        courseTopic: course.topic,
+        selectedBlockId: selectedBlock?.id ?? null,
+        selectedBlockTitle: selectedBlock?.title ?? null,
+        selectedBlockType: selectedBlock?.type ?? null,
+      }, {
+        user: body.message,
+        assistant: reply,
+      }).catch((error: unknown) => {
+        console.error("[course/chat][memory]", error);
+      });
+    }
 
-    return NextResponse.json({ reply: messageContentToString(result.content).trim() });
+    return NextResponse.json({ reply });
   } catch (error) {
     console.error("[course/chat]", error);
     const message = error instanceof Error ? error.message : "Course chat failed";

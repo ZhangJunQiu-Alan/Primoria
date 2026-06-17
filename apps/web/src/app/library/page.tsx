@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { listCourses } from "@/lib/courses/store";
+import { listCourseGenerationJobs } from "@/lib/courses/generation-jobs";
 import { listApps } from "@/lib/capability-library/store";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { CourseLibraryGrid } from "@/components/library/course-library-grid";
 
 export const dynamic = "force-dynamic";
 
@@ -16,17 +19,21 @@ export default async function LibraryPage({
   const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
   const activeTab: TabKey = rawTab === "apps" ? "apps" : "courses";
 
-  const courses = await listCourses();
-  const apps = listApps();
+  const authEnabled = isAuthEnabled();
+  const user = await getCurrentUser();
+  const shouldGate = authEnabled && !user;
+  const [courses, apps, courseGenerationJobs] = shouldGate
+    ? [[], [], []]
+    : await Promise.all([listCourses(user?.id), listApps(user?.id), listCourseGenerationJobs(user?.id)]);
 
   return (
     <main className="app-shell">
-      <TutorNavRail />
+      <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="workspace library-workspace">
         <header className="library-header">
           <h1>Library</h1>
           <p>
-            Courses and capability apps Primoria has built up for you. They live on disk for this server install.
+            Courses and capability apps Primoria has built up for you. Your workspace is saved to Postgres and only appears when you are signed in.
           </p>
         </header>
 
@@ -37,7 +44,7 @@ export default async function LibraryPage({
             aria-current={activeTab === "courses" ? "page" : undefined}
           >
             Courses
-            <span className="library-tab-count">{courses.length}</span>
+            <span className="library-tab-count">{courses.length + courseGenerationJobs.length}</span>
           </Link>
           <Link
             href="/library?tab=apps"
@@ -49,35 +56,21 @@ export default async function LibraryPage({
           </Link>
         </nav>
 
-        {activeTab === "courses" ? (
-          courses.length === 0 ? (
-            <div className="library-empty">
-              <p>No courses yet.</p>
-              <p>
-                Go back to the <Link href="/">tutor</Link> and ask something like &ldquo;教我熵的直觉&rdquo;.
-              </p>
+        {shouldGate ? (
+          <div className="library-empty library-auth-empty">
+            <span className="course-block-tag">Private workspace</span>
+            <h2>Sign in to view your Library</h2>
+            <p>Your courses, apps, chat threads, and settings are tied to your account.</p>
+            <div className="auth-required-actions">
+              <Link href="/auth/sign-in">Sign in</Link>
+              <Link href="/auth/sign-up">Create account</Link>
             </div>
-          ) : (
-            <ul className="library-grid">
-              {courses.map((course) => (
-                <li key={course.id}>
-                  <Link href={`/course/${course.id}`} className="library-card">
-                    <strong>{course.title}</strong>
-                    <p className="library-card-summary">{course.summary}</p>
-                    <span className="library-card-meta">
-                      {course.outline.length} blocks · ~{course.estimatedMinutes} min
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )
+          </div>
+        ) : activeTab === "courses" ? (
+          <CourseLibraryGrid initialCourses={courses} initialJobs={courseGenerationJobs} />
         ) : apps.length === 0 ? (
           <div className="library-empty">
             <p>No apps yet.</p>
-            <p>
-              Apps appear here automatically when the tutor produces an interactive widget worth keeping. Try asking for &ldquo;做一个牛顿摆动量传递的可视化&rdquo;.
-            </p>
           </div>
         ) : (
           <ul className="library-grid">
@@ -96,7 +89,7 @@ export default async function LibraryPage({
                     </ul>
                   ) : null}
                   <span className="library-card-meta">
-                    {originLabel(app.origin.kind)} · used {app.metadata.usageCount}× · {formatRelative(app.metadata.lastUsedAt)}
+                    {originLabel(app.origin.kind)} · v{app.version} · used {app.metadata.usageCount}× · {formatRelative(app.metadata.lastUsedAt)}
                   </span>
                 </article>
               </li>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { StemRenderer } from "@/components/generative-ui/stem-renderer";
+import { WIDGET_DEPENDENCY_ALLOWLIST } from "@/lib/ai/widget-dependencies";
 
 const streamingInitialHtml = `
 <section data-testid="stream-fixture">
@@ -44,6 +45,22 @@ const unclosedScriptHtml = `
 </section>
 <script>
   window.__neverFinishes =`;
+
+const threeHtml = `
+<section>
+  <strong>Three dependency fixture</strong>
+  <p id="three-status">waiting</p>
+  <canvas id="three-canvas" width="120" height="80"></canvas>
+</section>
+<script>
+  const camera = new THREE.PerspectiveCamera(45, 1.5, 0.1, 100);
+  camera.position.set(1, 2, 2);
+  const controls = new THREE.OrbitControls(camera, document.getElementById('three-canvas'));
+  controls.target.set(0, 0, 0);
+  controls.update();
+  controls.dispose();
+  document.getElementById('three-status').textContent = 'THREE OrbitControls ok';
+</script>`;
 
 const mathCode = `
 const scene = MathGL.scene({ title: 'linear fixture', xMin: -3, xMax: 3, yMin: -3, yMax: 3 });
@@ -101,6 +118,16 @@ export function WidgetRendererFixtureClient() {
       <section data-testid="unclosed-section">
         <h2>Unclosed script</h2>
         <WidgetRenderer title="Unclosed fixture" description="Unclosed fixture" html={unclosedScriptHtml} />
+      </section>
+
+      <section data-testid="dependency-section">
+        <h2>Dependency loading</h2>
+        <WidgetRenderer
+          title="Three dependency fixture"
+          description="Three dependency fixture"
+          html={threeHtml}
+          dependencies={[WIDGET_DEPENDENCY_ALLOWLIST.THREE]}
+        />
       </section>
 
       <section data-testid="stem-section">

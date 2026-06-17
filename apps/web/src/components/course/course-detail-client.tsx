@@ -1,21 +1,24 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useCopilotAction, useCopilotAdditionalInstructions, useCopilotReadable } from "@copilotkit/react-core";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useAgent, useCopilotKit, useFrontendTool, UseAgentUpdate } from "@copilotkit/react-core/v2";
+import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
-import { CourseMarkdown } from "./course-markdown";
+import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
+import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
 const DEFAULT_SIDEBAR_WIDTH = 410;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
+const COURSE_COPILOT_PROMPT_EVENT = "primoria:course-copilot-prompt";
 
-type CourseLocalMessage = {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  isError?: boolean;
+type SelectedTextContext = {
+  blockId: string;
+  blockTitle: string;
+  blockType: CourseBlock["type"];
+  text: string;
 };
 
 function blockToContext(block: CourseBlock) {
@@ -50,9 +53,10 @@ function blockToContext(block: CourseBlock) {
       type: block.type,
       title,
       description: block.description,
-      htmlSummary: block.html.slice(0, 900),
+      htmlSummary: (block.html ?? "").slice(0, 900),
     };
   }
+  if (block.type !== "code") return { id: block.id, type: block.type, title };
   return {
     id: block.id,
     type: block.type,
@@ -63,7 +67,11 @@ function blockToContext(block: CourseBlock) {
   };
 }
 
-function buildCourseContext(course: Course, selectedBlock: CourseBlock | null) {
+function buildCourseContext(
+  course: Course,
+  selectedBlock: CourseBlock | null,
+  selectedText: SelectedTextContext | null,
+) {
   return {
     course: {
       id: course.id,
@@ -79,6 +87,7 @@ function buildCourseContext(course: Course, selectedBlock: CourseBlock | null) {
       })),
     },
     selectedBlock: selectedBlock ? blockToContext(selectedBlock) : null,
+    selectedText,
   };
 }
 
@@ -86,106 +95,39 @@ function clampSidebarWidth(width: number) {
   return Math.min(MAX_SIDEBAR_WIDTH, Math.max(MIN_SIDEBAR_WIDTH, width));
 }
 
-function CourseLocalChat({
-  messages,
-  isLoading,
-  placeholder,
-  onSubmit,
-}: {
-  messages: CourseLocalMessage[];
-  isLoading: boolean;
-  placeholder: string;
-  onSubmit: (value: string) => void;
-}) {
-  const [draft, setDraft] = useState("");
-
-  function submit() {
-    const value = draft.trim();
-    if (!value || isLoading) return;
-    setDraft("");
-    onSubmit(value);
-  }
-
-  return (
-    <div className="course-local-chat-view">
-      <div className="course-local-messages" aria-live="polite">
-        {messages.length === 0 ? (
-          <div className="course-local-empty">
-            <strong>Ask about this block</strong>
-            <span>Use the chips above, or type your own question.</span>
-          </div>
-        ) : (
-          messages.map((message) => (
-            <div key={message.id} className={`course-local-message ${message.role}${message.role === "assistant" && message.isError ? " error" : ""}`}>
-              {message.role === "assistant" ? <CourseMarkdown markdown={message.content} /> : message.content}
-            </div>
-          ))
-        )}
-        {isLoading ? <div className="course-local-message assistant loading">Thinking…</div> : null}
-      </div>
-      <div className="course-local-input-wrap">
-        <textarea
-          value={draft}
-          placeholder={placeholder}
-          disabled={isLoading}
-          onChange={(event) => setDraft(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-              event.preventDefault();
-              submit();
-            }
-          }}
-          rows={2}
-        />
-        <button type="button" disabled={isLoading || !draft.trim()} onClick={submit}>
-          Send
-        </button>
-      </div>
-    </div>
-  );
+function selectionTextInside(element: HTMLElement) {
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed || selection.rangeCount === 0) return "";
+  if (!selection.anchorNode || !selection.focusNode) return "";
+  if (!element.contains(selection.anchorNode) || !element.contains(selection.focusNode)) return "";
+  return selection.toString().replace(/\s+/g, " ").trim();
 }
 
-function CourseAIContextBridge({
+function nodeElement(node: Node | null) {
+  if (!node) return null;
+  return node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
+}
+
+function CourseRevisionAction({
   course,
   selectedBlock,
+  selectedTextContext,
   onCourseUpdated,
 }: {
   course: Course;
   selectedBlock: CourseBlock | null;
+  selectedTextContext: SelectedTextContext | null;
   onCourseUpdated: (course: Course) => void;
 }) {
-  const context = useMemo(() => buildCourseContext(course, selectedBlock), [course, selectedBlock]);
-
-  useCopilotReadable(
-    {
-      description: "Current Primoria course detail page and selected lesson block. Use this before answering course questions.",
-      value: context,
-    },
-    [context],
-  );
-
-  useCopilotAdditionalInstructions(
-    {
-      instructions:
-        "You are inside a Primoria course detail page. Use the readable course context and selectedBlock when answering. If the learner asks to modify, rewrite, simplify, expand, fix, improve, localize, add examples to, or otherwise change the selected lesson block, call revise_selected_course_block with their requested change. If no block is selected, ask them to select a block first. If the learner asks to create another course, use generate_course and keep the result as a course card. Answer in the user's language.",
-    },
-    [],
-  );
-
-  useCopilotAction(
+  useFrontendTool(
     {
       name: "revise_selected_course_block",
       description:
-        "Revise the currently selected block in the open Primoria course. Use this whenever the learner asks to change/improve/rewrite/simplify/expand/fix the selected block. Requires a selected block.",
-      parameters: [
-        {
-          name: "instruction",
-          type: "string",
-          description: "The learner's concrete revision request for the selected block.",
-          required: true,
-        },
-      ],
-      handler: async ({ instruction }: { instruction: string }) => {
+        "Revise the currently selected block in the open Primoria course. Use this only when the learner explicitly asks to change/improve/rewrite/simplify/expand/fix the selected block.",
+      parameters: z.object({
+        instruction: z.string().describe("The learner's concrete revision request for the selected block."),
+      }),
+      handler: async ({ instruction }) => {
         if (!selectedBlock) {
           return { ok: false, error: "No block is selected. Ask the learner to click a course block first." };
         }
@@ -195,7 +137,8 @@ function CourseAIContextBridge({
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             blockId: selectedBlock.id,
-            comment: instruction,
+            comment: String(instruction ?? ""),
+            selectedText: selectedTextContext?.blockId === selectedBlock.id ? selectedTextContext.text : undefined,
             settings: readSettings(),
           }),
         });
@@ -209,7 +152,9 @@ function CourseAIContextBridge({
           courseId: data.course.id,
           blockId: selectedBlock.id,
           blockTitle: data.block?.title ?? selectedBlock.title ?? selectedBlock.type,
-          message: "Selected course block was revised and the page has been updated.",
+          message: selectedTextContext?.blockId === selectedBlock.id
+            ? "Selected text was revised and the page has been updated."
+            : "Selected course block was revised and the page has been updated.",
         };
       },
       render: ({ status, result }) => {
@@ -229,130 +174,213 @@ function CourseAIContextBridge({
         );
       },
     },
+    [course.id, selectedBlock?.id, selectedTextContext?.blockId, selectedTextContext?.text, onCourseUpdated],
+  );
+
+  return null;
+}
+
+const BLOCK_TYPE_ENUM = z.enum([
+  "text",
+  "analogy",
+  "transfer",
+  "visual",
+  "code",
+  "quiz",
+  "mind_map",
+  "slide",
+  "worksheet",
+]);
+
+function ActionStatus({ name, status, result }: { name: string; status: string; result: unknown }) {
+  const parsed = result as { ok?: boolean; error?: string; message?: string } | undefined;
+  return (
+    <div className="course-ai-action-status">
+      <span className={status === "complete" && parsed?.ok === false ? "error" : "ok"} />
+      <strong>{name}</strong>
+      <p>
+        {status === "complete"
+          ? parsed?.ok === false
+            ? parsed.error ?? "Action failed."
+            : parsed?.message ?? "Course updated."
+          : "Updating the course…"}
+      </p>
+    </div>
+  );
+}
+
+function CourseStructureActions({
+  course,
+  selectedBlock,
+  onCourseUpdated,
+}: {
+  course: Course;
+  selectedBlock: CourseBlock | null;
+  onCourseUpdated: (course: Course) => void;
+}) {
+  async function postEdit(body: Record<string, unknown>) {
+    const response = await fetch(`/api/courses/${course.id}/edit`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = (await response.json()) as { course?: Course; block?: CourseBlock; error?: string };
+    if (!response.ok || !data.course) {
+      return { ok: false as const, error: data.error ?? "Action failed" };
+    }
+    onCourseUpdated(data.course);
+    return { ok: true as const, course: data.course, block: data.block };
+  }
+
+  useFrontendTool(
+    {
+      name: "add_course_block",
+      description:
+        "Add a NEW block to the open Primoria course. Use when the learner asks to add a quiz, worksheet, mind map, slides, example, analogy, visual, etc. Pick the block type that best fits the request.",
+      parameters: z.object({
+        targetType: BLOCK_TYPE_ENUM.describe("The block type to create."),
+        instruction: z.string().describe("What the new block should cover, in the learner's terms."),
+        afterBlockId: z
+          .string()
+          .optional()
+          .describe("Insert the new block right after this existing block id. Omit to append at the end."),
+      }),
+      handler: async ({ targetType, instruction, afterBlockId }) => {
+        const res = await postEdit({ action: "add", targetType, instruction, afterBlockId, settings: readSettings() });
+        if (!res.ok) return res;
+        return { ok: true, blockId: res.block?.id, message: `Added a new ${targetType} block.` };
+      },
+      render: ({ status, result }) => <ActionStatus name="add_course_block" status={status} result={result} />,
+    },
+    [course.id, onCourseUpdated],
+  );
+
+  useFrontendTool(
+    {
+      name: "transform_selected_course_block",
+      description:
+        "Convert the currently selected course block into a DIFFERENT block type (e.g. turn a text block into a mind map, or a section into a quiz). Use only when a block is selected and the learner asks to change its format.",
+      parameters: z.object({
+        targetType: BLOCK_TYPE_ENUM.describe("The block type to convert into."),
+        instruction: z.string().describe("Any guidance for the conversion."),
+      }),
+      handler: async ({ targetType, instruction }) => {
+        if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
+        const res = await postEdit({ action: "transform", blockId: selectedBlock.id, targetType, instruction, settings: readSettings() });
+        if (!res.ok) return res;
+        return { ok: true, blockId: res.block?.id, message: `Converted the block into a ${targetType} block.` };
+      },
+      render: ({ status, result }) => <ActionStatus name="transform_selected_course_block" status={status} result={result} />,
+    },
+    [course.id, selectedBlock?.id, onCourseUpdated],
+  );
+
+  useFrontendTool(
+    {
+      name: "remove_selected_course_block",
+      description:
+        "Delete the currently selected block from the open course. Use only when the learner explicitly asks to remove/delete the selected block.",
+      parameters: z.object({
+        reason: z.string().optional().describe("Optional reason for removing the block."),
+      }),
+      handler: async ({ reason }) => {
+        if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
+        const res = await postEdit({ action: "remove", blockId: selectedBlock.id, instruction: reason });
+        if (!res.ok) return res;
+        return { ok: true, message: "Removed the selected block." };
+      },
+      render: ({ status, result }) => <ActionStatus name="remove_selected_course_block" status={status} result={result} />,
+    },
+    [course.id, selectedBlock?.id, onCourseUpdated],
+  );
+
+  useFrontendTool(
+    {
+      name: "move_selected_course_block",
+      description:
+        "Reorder the currently selected block to a new position in the course. toIndex is 0-based (0 = first). Use when the learner asks to move the selected block earlier or later.",
+      parameters: z.object({
+        toIndex: z.number().int().min(0).describe("0-based destination position in the course."),
+      }),
+      handler: async ({ toIndex }) => {
+        if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
+        const res = await postEdit({ action: "move", blockId: selectedBlock.id, toIndex });
+        if (!res.ok) return res;
+        return { ok: true, message: `Moved the block to position ${toIndex + 1}.` };
+      },
+      render: ({ status, result }) => <ActionStatus name="move_selected_course_block" status={status} result={result} />,
+    },
     [course.id, selectedBlock?.id, onCourseUpdated],
   );
 
   return null;
 }
 
+function sendCoursePrompt(threadId: string, prompt: string) {
+  window.dispatchEvent(new CustomEvent(COURSE_COPILOT_PROMPT_EVENT, { detail: { threadId, prompt } }));
+}
+
+function CourseSuggestionBridge({ threadId }: { threadId: string }) {
+  const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
+  const { copilotkit } = useCopilotKit();
+
+  useEffect(() => {
+    function onPrompt(event: Event) {
+      const detail = (event as CustomEvent<{ threadId?: string; prompt?: string }>).detail;
+      const prompt = detail?.prompt?.trim();
+      if (detail?.threadId !== threadId || !prompt || agent.isRunning) return;
+
+      agent.addMessage({
+        id: crypto.randomUUID(),
+        role: "user",
+        content: prompt,
+      });
+      void copilotkit.runAgent({ agent });
+    }
+
+    window.addEventListener(COURSE_COPILOT_PROMPT_EVENT, onPrompt);
+    return () => window.removeEventListener(COURSE_COPILOT_PROMPT_EVENT, onPrompt);
+  }, [agent, copilotkit, threadId]);
+
+  return null;
+}
+
+function CourseGenerativeUI() {
+  usePrimoriaGenerativeUI();
+  return null;
+}
+
 function CourseAIAssistantPanel({
   course,
   selectedBlock,
-  onSelectBlock,
   collapsed,
   width,
   onCollapsedChange,
   onWidthChange,
   onCourseUpdated,
+  copilotEnabled,
+  selectedTextContext,
 }: {
   course: Course;
   selectedBlock: CourseBlock | null;
-  onSelectBlock: (blockId: string | null) => void;
   collapsed: boolean;
   width: number;
   onCollapsedChange: (collapsed: boolean) => void;
   onWidthChange: (width: number) => void;
   onCourseUpdated: (course: Course) => void;
+  copilotEnabled: boolean;
+  selectedTextContext: SelectedTextContext | null;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
   const startWidthRef = useRef(DEFAULT_SIDEBAR_WIDTH);
-  const [localMessages, setLocalMessages] = useState<CourseLocalMessage[]>([]);
-  const [localLoading, setLocalLoading] = useState(false);
-  const [directRevisionStatus, setDirectRevisionStatus] = useState<
-    { status: "idle" | "executing" | "complete" | "error"; message: string }
-  >({ status: "idle", message: "" });
 
-  const appendLocalMessage = useCallback((message: Omit<CourseLocalMessage, "id">) => {
-    setLocalMessages((current) => [...current, { ...message, id: crypto.randomUUID() }]);
-  }, []);
-
-  const askCourseCopilot = useCallback(
-    async (message: string) => {
-      const trimmed = message.trim();
-      if (!trimmed || localLoading) return;
-      appendLocalMessage({ role: "user", content: trimmed });
-      setLocalLoading(true);
-      try {
-        const response = await fetch(`/api/courses/${course.id}/chat`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            message: trimmed,
-            selectedBlockId: selectedBlock?.id ?? null,
-            settings: readSettings(),
-          }),
-        });
-        const data = (await response.json()) as { reply?: string; error?: string };
-        if (!response.ok) throw new Error(data.error ?? "Course Copilot failed");
-        appendLocalMessage({
-          role: "assistant",
-          content: data.reply?.trim() || "我读到了上下文，但这次没有生成有效回答。请换个问法再试一次。",
-        });
-      } catch (error) {
-        appendLocalMessage({
-          role: "assistant",
-          content: error instanceof Error ? error.message : "Course Copilot failed",
-          isError: true,
-        });
-      } finally {
-        setLocalLoading(false);
-      }
-    },
-    [appendLocalMessage, course.id, localLoading, selectedBlock],
-  );
-
-  const reviseSelectedBlockDirectly = useCallback(
-    async (instruction: string) => {
-      if (!selectedBlock) {
-        setDirectRevisionStatus({ status: "error", message: "请先点击左侧选择一个要修改的课程 block。" });
-        return false;
-      }
-
-      setDirectRevisionStatus({ status: "executing", message: "正在根据你的反馈修改当前 block…" });
-      try {
-        const response = await fetch(`/api/courses/${course.id}/edit`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            blockId: selectedBlock.id,
-            comment: instruction,
-            settings: readSettings(),
-          }),
-        });
-        const data = (await response.json()) as { course?: Course; block?: CourseBlock; error?: string };
-        if (!response.ok || !data.course) throw new Error(data.error ?? "Edit failed");
-        onCourseUpdated(data.course);
-        setDirectRevisionStatus({
-          status: "complete",
-          message: `已修改：${data.block?.title ?? selectedBlock.title ?? selectedBlock.type}`,
-        });
-        return true;
-      } catch (error) {
-        setDirectRevisionStatus({
-          status: "error",
-          message: error instanceof Error ? error.message : "修改失败",
-        });
-        return false;
-      }
-    },
-    [course.id, onCourseUpdated, selectedBlock],
-  );
-
-  const interceptCourseRevision = useCallback(
-    (value: string) => {
-      const normalized = value.trim();
-      if (!normalized) return false;
-      if (!selectedBlock) return false;
-      const looksLikeRevision =
-        /(改|修改|优化|重写|换成|更口语|更简单|扩展|补充|增加|删掉|修复|调整|rewrite|revise|improve|simplify|expand|fix|change)/i.test(
-          normalized,
-        ) && /(当前|这节|这一节|这个|这段|block|选中|selected)/i.test(normalized);
-      if (!looksLikeRevision) return false;
-      void reviseSelectedBlockDirectly(normalized);
-      return true;
-    },
-    [reviseSelectedBlockDirectly, selectedBlock],
+  // Use a v5 namespace so old LangGraph/CopilotKit dev checkpoints and
+  // context-injected course-chat history cannot leak into Course Copilot.
+  const courseThreadId = `course-v5-${course.id}`;
+  const courseContext = useMemo(
+    () => buildCourseContext(course, selectedBlock, selectedTextContext),
+    [course, selectedBlock, selectedTextContext],
   );
 
   useEffect(() => {
@@ -389,6 +417,60 @@ function CourseAIAssistantPanel({
     selectedBlock ? `围绕当前 block 出 3 道练习题` : `基于这门课生成 3 个课后练习`,
     `继续创建一门和「${course.topic}」相关的进阶课程`,
   ];
+  const selectedTextPreview = selectedTextContext
+    ? `${Array.from(selectedTextContext.text).slice(0, 5).join("")}${Array.from(selectedTextContext.text).length > 5 ? "..." : ""}`
+    : "";
+  const composerContext = selectedTextContext ? (
+    <div
+      className="course-ai-composer-context"
+      aria-label="Current course context"
+      style={{
+        boxSizing: "border-box",
+        paddingLeft: 8,
+      }}
+    >
+      <div
+        className="course-ai-selection-pill"
+        title={selectedTextContext.text}
+        aria-label="Selected text is attached to this request."
+        style={{
+          width: "fit-content",
+          maxWidth: "100%",
+          minHeight: 26,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 7,
+          padding: "5px 10px 5px 8px",
+          borderRadius: 999,
+          background: "#fffaf2",
+          border: "1px solid rgba(200, 136, 26, 0.24)",
+          boxShadow: "0 4px 14px rgba(57, 42, 25, 0.08)",
+          color: "#7c4f10",
+          fontSize: 11,
+          fontWeight: 800,
+          lineHeight: 1,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            width: 6,
+            height: 6,
+            flex: "0 0 auto",
+            display: "block",
+            borderRadius: "50%",
+            background: "#c8881a",
+            boxShadow: "0 0 0 3px rgba(200, 136, 26, 0.12)",
+          }}
+        />
+        <span style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          &quot;{selectedTextPreview}&quot;
+        </span>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <aside
@@ -402,7 +484,23 @@ function CourseAIAssistantPanel({
         aria-label="Resize AI sidebar"
         onPointerDown={beginResize}
       />
-      <CourseAIContextBridge course={course} selectedBlock={selectedBlock} onCourseUpdated={onCourseUpdated} />
+      {copilotEnabled ? (
+        <>
+          <CourseGenerativeUI />
+          <CourseRevisionAction
+            course={course}
+            selectedBlock={selectedBlock}
+            selectedTextContext={selectedTextContext}
+            onCourseUpdated={onCourseUpdated}
+          />
+          <CourseStructureActions
+            course={course}
+            selectedBlock={selectedBlock}
+            onCourseUpdated={onCourseUpdated}
+          />
+          <CourseSuggestionBridge threadId={courseThreadId} />
+        </>
+      ) : null}
       <div className="course-ai-sidebar-header">
         <button
           type="button"
@@ -415,75 +513,53 @@ function CourseAIAssistantPanel({
         {!collapsed ? (
           <div className="course-ai-titleblock">
             <strong>Course Copilot</strong>
-            <span>{selectedBlock ? `Context: ${selectedBlock.title ?? selectedBlock.type}` : "Context: whole course"}</span>
+            <span>Ask about this course</span>
           </div>
         ) : null}
       </div>
       {!collapsed ? (
         <>
-          <div className="course-ai-context-card">
-            <span className="course-ai-context-eyebrow">Auto context</span>
-            <strong>{course.title}</strong>
-            <p>{selectedBlock ? `正在读取：${selectedBlock.title ?? selectedBlock.type}` : "未选中 block，默认读取整门课程。"}</p>
-            <div className="course-ai-block-chips">
-              <button
-                type="button"
-                className={!selectedBlock ? "active" : ""}
-                onClick={() => onSelectBlock(null)}
-              >
-                Whole course
-              </button>
-              {course.blocks.slice(0, 5).map((block, index) => (
-                <button
-                  key={block.id}
-                  type="button"
-                  className={selectedBlock?.id === block.id ? "active" : ""}
-                  onClick={() => onSelectBlock(block.id)}
-                  title={block.title ?? block.type}
-                >
-                  {index + 1}. {block.type}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="course-ai-suggestions" aria-label="Suggested prompts">
-            {suggestedPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                type="button"
-                disabled={localLoading}
-                onClick={() => void askCourseCopilot(prompt)}
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-          {directRevisionStatus.status !== "idle" ? (
-            <div className={`course-ai-direct-status ${directRevisionStatus.status}`}>
-              <span />
-              <p>{directRevisionStatus.message}</p>
-            </div>
-          ) : null}
-          <div className="course-ai-chat">
-            <CourseLocalChat
-              messages={localMessages}
-              isLoading={localLoading}
-              placeholder="Ask about this course…"
-              onSubmit={(value) => {
-                if (interceptCourseRevision(value)) return;
-                void askCourseCopilot(value);
-              }}
-            />
-          </div>
+          {copilotEnabled ? (
+            <>
+              <div className="course-ai-suggestions" aria-label="Suggested prompts">
+                {suggestedPrompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => sendCoursePrompt(courseThreadId, prompt)}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+              <div className="course-ai-chat">
+                <PrimoriaCopilotChatSurface
+                  key={courseThreadId}
+                  threadId={courseThreadId}
+                  title={`Course: ${course.title}`}
+                  placeholder="Ask about this course, selected block, or upload a file…"
+                  className="course-copilot-surface"
+                  context={{
+                    description: "Primoria course detail mode",
+                    value: JSON.stringify(courseContext),
+                  }}
+                  composerContext={composerContext}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="course-ai-chat auth-required">Sign in to use Course Copilot.</div>
+          )}
         </>
       ) : null}
     </aside>
   );
 }
 
-export function CourseDetailClient({ initialCourse }: { initialCourse: Course }) {
+export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialCourse: Course; copilotEnabled: boolean }) {
   const [course, setCourse] = useState<Course>(initialCourse);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
+  const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
 
@@ -491,7 +567,9 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
     const saved = window.localStorage.getItem(SIDEBAR_WIDTH_KEY);
     if (!saved) return;
     const parsed = Number(saved);
-    if (Number.isFinite(parsed)) setSidebarWidth(clampSidebarWidth(parsed));
+    if (!Number.isFinite(parsed)) return;
+    const frame = window.requestAnimationFrame(() => setSidebarWidth(clampSidebarWidth(parsed)));
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
@@ -499,7 +577,74 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
     window.localStorage.setItem(SIDEBAR_WIDTH_KEY, String(sidebarWidth));
   }, [sidebarCollapsed, sidebarWidth]);
 
+  useEffect(() => {
+    const workspace = document.querySelector<HTMLElement>(".course-workspace");
+    if (!workspace) return;
+    workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? 56 : sidebarWidth}px`);
+  }, [sidebarCollapsed, sidebarWidth]);
+
   const selectedBlock = course.blocks.find((b) => b.id === selectedBlockId) ?? null;
+
+  function selectBlock(block: CourseBlock) {
+    setSelectedBlockId(block.id);
+    setSelectedTextContext(null);
+  }
+
+  function updateSelectedText(block: CourseBlock, element: HTMLElement) {
+    const text = selectionTextInside(element);
+    if (!text) return;
+    setSelectedBlockId(block.id);
+    setSelectedTextContext({
+      blockId: block.id,
+      blockTitle: block.title ?? block.type,
+      blockType: block.type,
+      text,
+    });
+  }
+
+  useEffect(() => {
+    let frame = 0;
+
+    function syncSelectionContext() {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
+
+        const text = selection.toString().replace(/\s+/g, " ").trim();
+        if (!text) return;
+
+        const anchorBlock = nodeElement(selection.anchorNode)?.closest<HTMLElement>(".course-block-wrapper");
+        const focusBlock = nodeElement(selection.focusNode)?.closest<HTMLElement>(".course-block-wrapper");
+        if (!anchorBlock || !focusBlock || anchorBlock !== focusBlock) return;
+
+        const blockId = anchorBlock.dataset.blockId;
+        const block = course.blocks.find((candidate) => candidate.id === blockId);
+        if (!block) return;
+
+        setSelectedBlockId(block.id);
+        setSelectedTextContext((current) => {
+          if (current?.blockId === block.id && current.text === text) return current;
+          return {
+            blockId: block.id,
+            blockTitle: block.title ?? block.type,
+            blockType: block.type,
+            text,
+          };
+        });
+      });
+    }
+
+    document.addEventListener("selectionchange", syncSelectionContext);
+    window.addEventListener("mouseup", syncSelectionContext);
+    window.addEventListener("keyup", syncSelectionContext);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      document.removeEventListener("selectionchange", syncSelectionContext);
+      window.removeEventListener("mouseup", syncSelectionContext);
+      window.removeEventListener("keyup", syncSelectionContext);
+    };
+  }, [course.blocks]);
 
   return (
     <div
@@ -509,29 +654,51 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
       <div className="course-detail-main">
         <div className="course-blocks-column">
           {course.blocks.map((block) => (
-            <button
+            <div
               key={block.id}
-              type="button"
+              role="button"
+              tabIndex={0}
+              data-block-id={block.id}
               className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
-              onClick={() => setSelectedBlockId(block.id)}
+              onClick={(event) => {
+                if (selectionTextInside(event.currentTarget)) return;
+                selectBlock(block);
+              }}
+              onMouseUp={(event) => updateSelectedText(block, event.currentTarget)}
+              onKeyUp={(event) => {
+                if (event.key === "Shift" || event.key.startsWith("Arrow")) {
+                  updateSelectedText(block, event.currentTarget);
+                }
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  selectBlock(block);
+                }
+              }}
             >
-              <BlockRenderer block={block} />
-            </button>
+              <BlockRenderer block={block} courseId={course.id} />
+            </div>
           ))}
         </div>
       </div>
       <CourseAIAssistantPanel
         course={course}
         selectedBlock={selectedBlock}
-        onSelectBlock={setSelectedBlockId}
         collapsed={sidebarCollapsed}
         width={sidebarWidth}
         onCollapsedChange={setSidebarCollapsed}
         onWidthChange={setSidebarWidth}
+        copilotEnabled={copilotEnabled}
+        selectedTextContext={selectedTextContext}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);
           if (selectedBlockId && !nextCourse.blocks.some((block) => block.id === selectedBlockId)) {
             setSelectedBlockId(null);
+            setSelectedTextContext(null);
+          }
+          if (selectedTextContext && !nextCourse.blocks.some((block) => block.id === selectedTextContext.blockId)) {
+            setSelectedTextContext(null);
           }
         }}
       />
@@ -540,9 +707,26 @@ export function CourseDetailClient({ initialCourse }: { initialCourse: Course })
 }
 
 const SETTINGS_KEY = "primoria:tutor-provider-settings";
+let providerSettingsCache: { provider?: "openai-compatible" | "anthropic-compatible"; baseUrl?: string; apiKey?: string; model?: string } | undefined;
+
+async function refreshProviderSettingsCache() {
+  try {
+    const response = await fetch("/api/settings/provider", { cache: "no-store" });
+    if (!response.ok) return;
+    const data = (await response.json()) as { authEnabled?: boolean; settings?: typeof providerSettingsCache };
+    if (data.authEnabled && data.settings) {
+      providerSettingsCache = data.settings;
+      window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(data.settings));
+    }
+  } catch {
+    // Keep local fallback.
+  }
+}
 
 function readSettings() {
   if (typeof window === "undefined") return undefined;
+  if (providerSettingsCache) return providerSettingsCache;
+  void refreshProviderSettingsCache();
   const raw = window.localStorage.getItem(SETTINGS_KEY);
   if (!raw) return undefined;
   try {
