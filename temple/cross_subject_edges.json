@@ -1,0 +1,501 @@
+{
+  "description": "Cross-subject prerequisite edges. Endpoints are globally-unique concept ids living in different subject graphs. Direction: prerequisite -> dependent.",
+  "edges": [
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "ml_linear_reg",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "linear_algebra.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "c_mit1806_projections",
+      "to": "ml_linear_reg",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "linear_algebra.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "ml_gradient_descent",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "ml_pca",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "linear_algebra.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "ml_logistic_reg",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "normal_distribution",
+      "to": "ml_gda",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "conditional_probability",
+      "to": "ml_naive_bayes",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "ml_backprop",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "dl_backprop",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "deep_learning.json"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "dl_mlp",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "linear_algebra.json",
+      "to_graph": "deep_learning.json"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "dl_optimization",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "deep_learning.json"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "dl_vae",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "deep_learning.json"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "ai_prob",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "artificial_intelligence.json"
+    },
+    {
+      "from": "bayes_rule",
+      "to": "ai_bayes_rule",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "artificial_intelligence.json"
+    },
+    {
+      "from": "markov_chains_basics",
+      "to": "ai_markov_chain",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "artificial_intelligence.json"
+    },
+    {
+      "from": "conditional_probability",
+      "to": "ai_naive_bayes",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "artificial_intelligence.json"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "c_infotheory_entropy",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "information_theory.json"
+    },
+    {
+      "from": "expectation",
+      "to": "c_infotheory_entropy",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "information_theory.json"
+    },
+    {
+      "from": "conditional_probability",
+      "to": "c_infotheory_joint_entropy",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "information_theory.json"
+    },
+    {
+      "from": "normal_distribution",
+      "to": "c_infotheory_differential_entropy",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "information_theory.json"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit18330_lu",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "linear_algebra.json",
+      "to_graph": "numerical_analysis.json"
+    },
+    {
+      "from": "c_1801_deriv_def",
+      "to": "c_mit18330_newton",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "numerical_analysis.json"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_mit18330_newton_cotes",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "numerical_analysis.json"
+    },
+    {
+      "from": "c_1801_taylor_series",
+      "to": "c_mit18330_error_analysis",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "mit_calculus.json",
+      "to_graph": "numerical_analysis.json"
+    },
+    {
+      "from": "c_mit1806_least_squares",
+      "to": "c_mit18330_least_squares",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "linear_algebra.json",
+      "to_graph": "numerical_analysis.json"
+    },
+    {
+      "from": "simple_induction",
+      "to": "c_ucb61b_recursion_analysis",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "basic_counting_rules",
+      "to": "c_ucb61b_loop_analysis",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "graph_basics",
+      "to": "c_ucb61b_graph_api",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "phy_scalars_vectors",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_mathematics.json",
+      "to_graph": "a_level_physics.json"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "phy_scalars_vectors",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_mathematics.json",
+      "to_graph": "a_level_physics.json"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "phy_half_life",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_mathematics.json",
+      "to_graph": "a_level_physics.json"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "phy_capacitor_discharge",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_mathematics.json",
+      "to_graph": "a_level_physics.json"
+    },
+    {
+      "from": "mat_log_laws",
+      "to": "che_ph_ka",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_mathematics.json",
+      "to_graph": "a_level_chemistry.json"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "che_rate_equation",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_mathematics.json",
+      "to_graph": "a_level_chemistry.json"
+    },
+    {
+      "from": "c_python_syntax",
+      "to": "seq",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "Python.json"
+    },
+    {
+      "from": "c_lists_dicts",
+      "to": "dict",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "Python.json"
+    },
+    {
+      "from": "oop",
+      "to": "c_ucb61b_classes_objects",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "Python.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "recursion",
+      "to": "c_ucb61b_recursion_analysis",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "Python.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "data_abs",
+      "to": "c_ucb61b_java_basics",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "Python.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "c_trees",
+      "to": "c_ucb61b_trees_intro",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "c_hash_tables",
+      "to": "c_ucb61b_hash_code",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "data_structures_and_algorithms.json"
+    },
+    {
+      "from": "c_ucb61b_classes_objects",
+      "to": "c_mit6031_adt_basics",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "software_construction.json"
+    },
+    {
+      "from": "c_ucb61b_bst_operations",
+      "to": "c_mit6031_recursive_data",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "software_construction.json"
+    },
+    {
+      "from": "concept_integer_rep",
+      "to": "c1_2",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_architecture.json",
+      "to_graph": "computer_systems.json"
+    },
+    {
+      "from": "concept_floating_point",
+      "to": "c1_4",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_architecture.json",
+      "to_graph": "computer_systems.json"
+    },
+    {
+      "from": "net_ip_addressing",
+      "to": "c10_2",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_network.json",
+      "to_graph": "computer_systems.json"
+    },
+    {
+      "from": "net_tcp",
+      "to": "c10_3",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_network.json",
+      "to_graph": "computer_systems.json"
+    },
+    {
+      "from": "c_js",
+      "to": "web_javascript",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "web_applications.json"
+    },
+    {
+      "from": "c_html",
+      "to": "web_html",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "web_applications.json"
+    },
+    {
+      "from": "c_relational_db",
+      "to": "web_relational",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "web_applications.json"
+    },
+    {
+      "from": "net_http",
+      "to": "web_http",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_network.json",
+      "to_graph": "web_applications.json"
+    },
+    {
+      "from": "c_ucb61b_bfs",
+      "to": "ai_uninformed",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "artificial_intelligence.json"
+    },
+    {
+      "from": "c_ucb61b_graph_api",
+      "to": "ai_search_problem",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "artificial_intelligence.json"
+    },
+    {
+      "from": "c_ucb61b_big_theta",
+      "to": "ml_gradient_descent",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "machine_learning.json"
+    },
+    {
+      "from": "che_covalent",
+      "to": "bio_carbohydrates",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_chemistry.json",
+      "to_graph": "a_level_biology.json"
+    },
+    {
+      "from": "che_imf",
+      "to": "bio_water",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_chemistry.json",
+      "to_graph": "a_level_biology.json"
+    },
+    {
+      "from": "che_amino_acids",
+      "to": "bio_proteins",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_chemistry.json",
+      "to_graph": "a_level_biology.json"
+    },
+    {
+      "from": "che_collision",
+      "to": "bio_enzyme_action",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_chemistry.json",
+      "to_graph": "a_level_biology.json"
+    },
+    {
+      "from": "phy_kinetic_theory",
+      "to": "che_gas_laws",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_physics.json",
+      "to_graph": "a_level_chemistry.json"
+    },
+    {
+      "from": "phy_nuclear_structure",
+      "to": "che_subatomic",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_physics.json",
+      "to_graph": "a_level_chemistry.json"
+    },
+    {
+      "from": "phy_energy_levels",
+      "to": "che_electron_config",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "a_level_physics.json",
+      "to_graph": "a_level_chemistry.json"
+    },
+    {
+      "from": "phy_internal_energy",
+      "to": "che_enthalpy",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "a_level_physics.json",
+      "to_graph": "a_level_chemistry.json"
+    }
+  ]
+}

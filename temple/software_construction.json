@@ -1,7 +1,7 @@
 {
-  "subject": "MIT 6.031 Software Construction",
+  "subject": "Software Construction",
   "schema": {
-    "description": "Knowledge graph for MIT 6.031",
+    "description": "Knowledge graph for Software Construction",
     "node_fields": {
       "id": "unique id",
       "kind": "topic | concept",
@@ -27,7 +27,7 @@
       "kind": "concept",
       "name": "Static Checking",
       "topic": "t_mit6031_fundamentals",
-      "description": "Types and static vs dynamic checking",
+      "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
       "default_order": 1
     },
     {
@@ -35,7 +35,7 @@
       "kind": "concept",
       "name": "Immutability",
       "topic": "t_mit6031_fundamentals",
-      "description": "Immutable references and objects",
+      "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
       "default_order": 2
     },
     {
@@ -50,7 +50,7 @@
       "kind": "concept",
       "name": "Specifications",
       "topic": "t_mit6031_specifications",
-      "description": "Preconditions and postconditions",
+      "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
       "default_order": 1
     },
     {
@@ -58,7 +58,7 @@
       "kind": "concept",
       "name": "Testing Strategies",
       "topic": "t_mit6031_specifications",
-      "description": "Partitioning and boundary values",
+      "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
       "default_order": 2
     },
     {
@@ -66,7 +66,7 @@
       "kind": "concept",
       "name": "Exceptions",
       "topic": "t_mit6031_specifications",
-      "description": "Checked vs unchecked exceptions",
+      "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
       "default_order": 3
     },
     {
@@ -81,7 +81,7 @@
       "kind": "concept",
       "name": "ADT Concepts",
       "topic": "t_mit6031_adt",
-      "description": "Creators, observers, mutators",
+      "description": "Abstract data types defined by their operations—creators, producers, observers, and mutators—rather than by their internal representation.",
       "default_order": 1
     },
     {
@@ -89,7 +89,7 @@
       "kind": "concept",
       "name": "Representation Independence",
       "topic": "t_mit6031_adt",
-      "description": "Hiding implementation details",
+      "description": "Designing an ADT so clients depend only on its abstract specification, allowing the internal representation to change without breaking them.",
       "default_order": 2
     },
     {
@@ -97,7 +97,7 @@
       "kind": "concept",
       "name": "Rep Invariants",
       "topic": "t_mit6031_adt",
-      "description": "Maintaining valid internal states",
+      "description": "A condition every valid object of a type must satisfy, checked to ensure the internal representation stays consistent.",
       "default_order": 3
     },
     {
@@ -105,7 +105,7 @@
       "kind": "concept",
       "name": "Abstraction Functions",
       "topic": "t_mit6031_adt",
-      "description": "Mapping rep to abstract values",
+      "description": "A mapping from an ADT's concrete representation to the abstract value it represents, defining the meaning of the implementation.",
       "default_order": 4
     },
     {
@@ -120,7 +120,7 @@
       "kind": "concept",
       "name": "Interfaces and Subtyping",
       "topic": "t_mit6031_oop",
-      "description": "Polymorphism and inheritance",
+      "description": "Interfaces specifying behaviour that multiple implementations provide, enabling subtype polymorphism where subtypes are substitutable for supertypes.",
       "default_order": 1
     },
     {
@@ -128,7 +128,7 @@
       "kind": "concept",
       "name": "Equality",
       "topic": "t_mit6031_oop",
-      "description": "Observational and behavioral equality",
+      "description": "Defining when two objects are equal, distinguishing observational equality of abstract values from reference identity, subject to consistency requirements.",
       "default_order": 2
     },
     {
@@ -136,7 +136,7 @@
       "kind": "concept",
       "name": "Recursive Data Types",
       "topic": "t_mit6031_oop",
-      "description": "Immutability with recursion",
+      "description": "Recursive data types defined in terms of themselves, such as immutable lists or trees, processed by recursion over their cases.",
       "default_order": 3
     },
     {
@@ -151,7 +151,7 @@
       "kind": "concept",
       "name": "Concurrency Basics",
       "topic": "t_mit6031_concurrency",
-      "description": "Threads, processes, race conditions",
+      "description": "Concurrent execution via threads or processes, introducing interleaving, race conditions, and the central challenge of shared mutable state.",
       "default_order": 1
     },
     {
@@ -159,7 +159,7 @@
       "kind": "concept",
       "name": "Thread Safety",
       "topic": "t_mit6031_concurrency",
-      "description": "Strategies for safe concurrency",
+      "description": "Strategies ensuring correct behaviour under concurrent access, including confinement, immutability, and synchronisation of shared data.",
       "default_order": 2
     },
     {
@@ -167,7 +167,7 @@
       "kind": "concept",
       "name": "Locks and Synchronization",
       "topic": "t_mit6031_concurrency",
-      "description": "Deadlocks and synchronization primitives",
+      "description": "Coordinating threads with locks for mutual exclusion, and the risk of deadlock when threads acquire multiple locks in conflicting orders.",
       "default_order": 3
     },
     {
@@ -175,7 +175,7 @@
       "kind": "concept",
       "name": "Message Passing",
       "topic": "t_mit6031_concurrency",
-      "description": "Channels and queues",
+      "description": "Concurrency where components communicate by sending messages through channels or queues instead of sharing mutable memory.",
       "default_order": 4
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "subject": "UCB CS61A Structure and Interpretation of Computer Programs",
+  "subject": "Structure and Interpretation of Computer Programs",
   "schema": {
     "node_types": [
       "topic",
@@ -14,289 +14,376 @@
       "id": "topic_intro",
       "name": "Functions and Control",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 1
     },
     {
       "id": "expr_stmt",
       "topic": "topic_intro",
       "name": "Expressions and Statements",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame."
     },
     {
       "id": "control",
       "topic": "topic_intro",
       "name": "Control Structures",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests."
     },
     {
       "id": "pure_func",
       "topic": "topic_intro",
       "name": "Pure vs Non-Pure Functions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O."
     },
     {
       "id": "env_diag",
       "topic": "topic_intro",
       "name": "Environment Diagrams",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes."
     },
     {
       "id": "topic_hof",
       "name": "Higher-Order Functions",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "func_arg",
       "topic": "topic_hof",
       "name": "Functions as Arguments",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns."
     },
     {
       "id": "func_ret",
       "topic": "topic_hof",
       "name": "Functions as Return Values",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour."
     },
     {
       "id": "lambda",
       "topic": "topic_hof",
       "name": "Lambda Expressions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name."
     },
     {
       "id": "currying",
       "topic": "topic_hof",
       "name": "Currying",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied."
     },
     {
       "id": "decorators",
       "topic": "topic_hof",
       "name": "Decorators",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source."
     },
     {
       "id": "topic_recursion",
       "name": "Recursion and Trees",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 4
     },
     {
       "id": "recursion",
       "topic": "topic_recursion",
       "name": "Recursion",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly."
     },
     {
       "id": "tree_recur",
       "topic": "topic_recursion",
       "name": "Tree Recursion",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions."
     },
     {
       "id": "tree_abs",
       "topic": "topic_recursion",
       "name": "Tree Data Abstraction",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction."
     },
     {
       "id": "tree_trav",
       "topic": "topic_recursion",
       "name": "Tree Traversal",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains."
     },
     {
       "id": "topic_data",
       "name": "Data Abstraction and Sequences",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "seq",
       "topic": "topic_data",
       "name": "Sequences and Slicing",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position."
     },
     {
       "id": "list_comp",
       "topic": "topic_data",
       "name": "List Comprehensions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable."
     },
     {
       "id": "data_abs",
       "topic": "topic_data",
       "name": "Data Abstraction",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes."
     },
     {
       "id": "dict",
       "topic": "topic_data",
       "name": "Dictionaries",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position."
     },
     {
       "id": "box_pointer",
       "topic": "topic_data",
       "name": "Box-and-Pointer Diagrams",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data."
     },
     {
       "id": "topic_mut_oop",
       "name": "Mutable Data and OOP",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "mutability",
       "topic": "topic_mut_oop",
       "name": "Mutability",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object."
     },
     {
       "id": "oop",
       "topic": "topic_mut_oop",
       "name": "Object-Oriented Programming",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods."
     },
     {
       "id": "inherit_comp",
       "topic": "topic_mut_oop",
       "name": "Inheritance and Composition",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects."
     },
     {
       "id": "class_attr",
       "topic": "topic_mut_oop",
       "name": "Class and Instance Attributes",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object."
     },
     {
       "id": "string_rep",
       "topic": "topic_mut_oop",
       "name": "String Representation",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations."
     },
     {
       "id": "topic_adv_data",
       "name": "Advanced Data Structures",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 6
     },
     {
       "id": "linked_lists",
       "topic": "topic_adv_data",
       "name": "Linked Lists",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing."
     },
     {
       "id": "mut_trees",
       "topic": "topic_adv_data",
       "name": "Mutable Trees",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed."
     },
     {
       "id": "iterators",
       "topic": "topic_adv_data",
       "name": "Iterators",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted."
     },
     {
       "id": "generators",
       "topic": "topic_adv_data",
       "name": "Generators",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls."
     },
     {
       "id": "topic_scheme",
       "name": "Scheme and Functional Programming",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 7
     },
     {
       "id": "scheme_syntax",
       "topic": "topic_scheme",
       "name": "Scheme Syntax",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form."
     },
     {
       "id": "scheme_lists",
       "topic": "topic_scheme",
       "name": "Scheme Lists and Pairs",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures."
     },
     {
       "id": "tail_calls",
       "topic": "topic_scheme",
       "name": "Tail Calls and Optimization",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space."
     },
     {
       "id": "macros",
       "topic": "topic_scheme",
       "name": "Macros",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms."
     },
     {
       "id": "topic_interp",
       "name": "Interpreters",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 8
     },
     {
       "id": "parsing",
       "topic": "topic_interp",
       "name": "Lexical Analysis and Parsing",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree."
     },
     {
       "id": "eval",
       "topic": "topic_interp",
       "name": "Evaluation Process",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules."
     },
     {
       "id": "apply",
       "topic": "topic_interp",
       "name": "Application Process",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body."
     },
     {
       "id": "exceptions",
       "topic": "topic_interp",
       "name": "Exceptions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler."
     },
     {
       "id": "topic_declarative",
       "name": "Declarative Programming",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 9
     },
     {
       "id": "regex",
       "topic": "topic_declarative",
       "name": "Regular Expressions",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping."
     },
     {
       "id": "bnf",
       "topic": "topic_declarative",
       "name": "BNF Context-Free Grammars",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals."
     },
     {
       "id": "sql_queries",
       "topic": "topic_declarative",
       "name": "SQL Tables and Queries",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps."
     },
     {
       "id": "sql_joins",
       "topic": "topic_declarative",
       "name": "SQL Joins and Aggregation",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average."
     }
   ],
   "edges": [

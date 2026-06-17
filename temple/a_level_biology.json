@@ -1,212 +1,1028 @@
 {
-  "id": "alevel_biology",
-  "name": "A-Level Biology",
-  "description": "Advanced level biology topics.",
-  "topics": [
+  "subject": "A-Level Biology (CIE 9700)",
+  "schema": {
+    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
+    "node_fields": {
+      "id": "globally unique id",
+      "kind": "topic | concept",
+      "name": "concept name",
+      "topic": "owning topic id; null for topic nodes",
+      "description": "one-sentence definition for prompting/RAG",
+      "default_order": "default teaching order within the topic"
+    },
+    "edge_types": {
+      "prereq": "from must be learned before to; strength=hard|soft"
+    },
+    "concept_node_definition": "concept = smallest independently quiz-testable skill"
+  },
+  "nodes": [
     {
-      "id": "alevel_biology_cell_biology",
-      "title": "Cell Biology",
-      "description": "Cell Biology in A-Level Biology",
-      "parent_id": null
+      "id": "bio_cell_structure",
+      "kind": "topic",
+      "name": "Cell Structure",
+      "topic": null,
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_cell_types",
-      "title": "Cell Types",
-      "description": "Cell Types in A-Level Biology",
-      "parent_id": "alevel_biology_cell_biology"
+      "id": "bio_microscopy",
+      "kind": "concept",
+      "name": "Microscopy",
+      "topic": "bio_cell_structure",
+      "description": "The use of light and electron microscopes to view cells, where resolution—the ability to distinguish two close points—and magnification determine the detail observable.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_organelles",
-      "title": "Organelles",
-      "description": "Organelles in A-Level Biology",
-      "parent_id": "alevel_biology_cell_biology"
+      "id": "bio_organelles",
+      "kind": "concept",
+      "name": "Eukaryotic Organelles",
+      "topic": "bio_cell_structure",
+      "description": "Membrane-bound and non-membrane structures within eukaryotic cells, such as the nucleus, mitochondria, and endoplasmic reticulum, each performing specialised functions.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_microscopy",
-      "title": "Microscopy",
-      "description": "Microscopy in A-Level Biology",
-      "parent_id": "alevel_biology_cell_biology"
+      "id": "bio_prokaryotes",
+      "kind": "concept",
+      "name": "Prokaryotic Cells",
+      "topic": "bio_cell_structure",
+      "description": "Bacterial cells lacking a nucleus and membrane-bound organelles, with circular DNA, smaller ribosomes, and a cell wall, contrasted with eukaryotic cells.",
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_cell_membrane",
-      "title": "Cell Membrane",
-      "description": "Cell Membrane in A-Level Biology",
-      "parent_id": "alevel_biology_cell_biology"
+      "id": "bio_cell_size",
+      "kind": "concept",
+      "name": "Cell Size and Magnification",
+      "topic": "bio_cell_structure",
+      "description": "Calculating actual cell size, magnification, and image size using the relationship that magnification equals image size divided by actual size, with consistent units.",
+      "default_order": 4
     },
     {
-      "id": "alevel_biology_transport_across_membranes",
-      "title": "Transport Across Membranes",
-      "description": "Transport Across Membranes in A-Level Biology",
-      "parent_id": "alevel_biology_cell_biology"
+      "id": "bio_molecules",
+      "kind": "topic",
+      "name": "Biological Molecules",
+      "topic": null,
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_cell_cycle_and_division",
-      "title": "Cell Cycle and Division",
-      "description": "Cell Cycle and Division in A-Level Biology",
-      "parent_id": "alevel_biology_cell_biology"
+      "id": "bio_water",
+      "kind": "concept",
+      "name": "Water",
+      "topic": "bio_molecules",
+      "description": "The properties of water arising from its polarity and hydrogen bonding, including its role as a solvent, high specific heat capacity, and cohesion important to life.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_biological_molecules",
-      "title": "Biological Molecules",
-      "description": "Biological Molecules in A-Level Biology",
-      "parent_id": null
+      "id": "bio_carbohydrates",
+      "kind": "concept",
+      "name": "Carbohydrates",
+      "topic": "bio_molecules",
+      "description": "Sugars and polysaccharides built from monosaccharides via glycosidic bonds, including glucose, starch, glycogen, and cellulose, serving energy and structural roles.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_carbohydrates",
-      "title": "Carbohydrates",
-      "description": "Carbohydrates in A-Level Biology",
-      "parent_id": "alevel_biology_biological_molecules"
+      "id": "bio_lipids",
+      "kind": "concept",
+      "name": "Lipids",
+      "topic": "bio_molecules",
+      "description": "Hydrophobic molecules including triglycerides for energy storage and phospholipids whose amphipathic structure forms the bilayer of cell membranes.",
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_proteins",
-      "title": "Proteins",
-      "description": "Proteins in A-Level Biology",
-      "parent_id": "alevel_biology_biological_molecules"
+      "id": "bio_proteins",
+      "kind": "concept",
+      "name": "Proteins",
+      "topic": "bio_molecules",
+      "description": "Polymers of amino acids joined by peptide bonds, folding through primary, secondary, tertiary, and quaternary structure that determines their biological function.",
+      "default_order": 4
     },
     {
-      "id": "alevel_biology_enzymes",
-      "title": "Enzymes",
-      "description": "Enzymes in A-Level Biology",
-      "parent_id": "alevel_biology_biological_molecules"
+      "id": "bio_tests",
+      "kind": "concept",
+      "name": "Biochemical Tests",
+      "topic": "bio_molecules",
+      "description": "Qualitative biochemical tests identifying biological molecules, such as Benedict's for reducing sugars, iodine for starch, biuret for protein, and the emulsion test for lipids.",
+      "default_order": 5
     },
     {
-      "id": "alevel_biology_lipids",
-      "title": "Lipids",
-      "description": "Lipids in A-Level Biology",
-      "parent_id": "alevel_biology_biological_molecules"
+      "id": "bio_enzymes",
+      "kind": "topic",
+      "name": "Enzymes",
+      "topic": null,
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_nucleic_acids",
-      "title": "Nucleic Acids",
-      "description": "Nucleic Acids in A-Level Biology",
-      "parent_id": "alevel_biology_biological_molecules"
+      "id": "bio_enzyme_action",
+      "kind": "concept",
+      "name": "Enzyme Action",
+      "topic": "bio_enzymes",
+      "description": "Enzymes as biological catalysts lowering activation energy, binding substrates at their active site according to the induced-fit model to form products.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_water",
-      "title": "Water",
-      "description": "Water in A-Level Biology",
-      "parent_id": "alevel_biology_biological_molecules"
+      "id": "bio_enzyme_factors",
+      "kind": "concept",
+      "name": "Factors Affecting Enzyme Activity",
+      "topic": "bio_enzymes",
+      "description": "How temperature, pH, substrate concentration, and enzyme concentration affect the rate of enzyme-catalysed reactions, including denaturation at extremes.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_genetics_and_inheritance",
-      "title": "Genetics and Inheritance",
-      "description": "Genetics and Inheritance in A-Level Biology",
-      "parent_id": null
+      "id": "bio_enzyme_inhibition",
+      "kind": "concept",
+      "name": "Enzyme Inhibition",
+      "topic": "bio_enzymes",
+      "description": "Reduction of enzyme activity by inhibitors, with competitive inhibitors binding the active site and non-competitive inhibitors binding elsewhere to alter it.",
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_central_dogma",
-      "title": "Central Dogma",
-      "description": "Central Dogma in A-Level Biology",
-      "parent_id": "alevel_biology_genetics_and_inheritance"
+      "id": "bio_membranes",
+      "kind": "topic",
+      "name": "Cell Membranes and Transport",
+      "topic": null,
+      "default_order": 4
     },
     {
-      "id": "alevel_biology_inheritance_patterns",
-      "title": "Inheritance Patterns",
-      "description": "Inheritance Patterns in A-Level Biology",
-      "parent_id": "alevel_biology_genetics_and_inheritance"
+      "id": "bio_membrane_structure",
+      "kind": "concept",
+      "name": "Membrane Structure",
+      "topic": "bio_membranes",
+      "description": "The fluid mosaic model describing the cell membrane as a phospholipid bilayer with embedded proteins, cholesterol, and glycoproteins controlling exchange.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_linkage_and_crossing_over",
-      "title": "Linkage and Crossing Over",
-      "description": "Linkage and Crossing Over in A-Level Biology",
-      "parent_id": "alevel_biology_genetics_and_inheritance"
+      "id": "bio_passive_transport",
+      "kind": "concept",
+      "name": "Diffusion and Osmosis",
+      "topic": "bio_membranes",
+      "description": "Movement of substances down a concentration gradient without energy, by diffusion and facilitated diffusion, and the osmosis of water across membranes.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_mutations",
-      "title": "Mutations",
-      "description": "Mutations in A-Level Biology",
-      "parent_id": "alevel_biology_genetics_and_inheritance"
+      "id": "bio_active_transport",
+      "kind": "concept",
+      "name": "Active Transport",
+      "topic": "bio_membranes",
+      "description": "Movement of substances against a concentration gradient using ATP and carrier proteins, including bulk transport by endocytosis and exocytosis.",
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_gene_regulation",
-      "title": "Gene Regulation",
-      "description": "Gene Regulation in A-Level Biology",
-      "parent_id": "alevel_biology_genetics_and_inheritance"
+      "id": "bio_cell_cycle",
+      "kind": "topic",
+      "name": "The Mitotic Cell Cycle",
+      "topic": null,
+      "default_order": 5
     },
     {
-      "id": "alevel_biology_human_physiology",
-      "title": "Human Physiology",
-      "description": "Human Physiology in A-Level Biology",
-      "parent_id": null
+      "id": "bio_chromosomes",
+      "kind": "concept",
+      "name": "Chromosome Behaviour",
+      "topic": "bio_cell_cycle",
+      "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_circulation",
-      "title": "Circulation",
-      "description": "Circulation in A-Level Biology",
-      "parent_id": "alevel_biology_human_physiology"
+      "id": "bio_mitosis",
+      "kind": "concept",
+      "name": "Mitosis",
+      "topic": "bio_cell_cycle",
+      "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_gas_exchange_and_respiration",
-      "title": "Gas Exchange and Respiration",
-      "description": "Gas Exchange and Respiration in A-Level Biology",
-      "parent_id": "alevel_biology_human_physiology"
+      "id": "bio_nucleic_acids",
+      "kind": "topic",
+      "name": "Nucleic Acids and Protein Synthesis",
+      "topic": null,
+      "default_order": 6
     },
     {
-      "id": "alevel_biology_kidneys_and_osmoregulation",
-      "title": "Kidneys and Osmoregulation",
-      "description": "Kidneys and Osmoregulation in A-Level Biology",
-      "parent_id": "alevel_biology_human_physiology"
+      "id": "bio_dna_structure",
+      "kind": "concept",
+      "name": "DNA Structure",
+      "topic": "bio_nucleic_acids",
+      "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_ecology_and_ecosystems",
-      "title": "Ecology and Ecosystems",
-      "description": "Ecology and Ecosystems in A-Level Biology",
-      "parent_id": null
+      "id": "bio_dna_replication",
+      "kind": "concept",
+      "name": "DNA Replication",
+      "topic": "bio_nucleic_acids",
+      "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_energy_flow",
-      "title": "Energy flow",
-      "description": "Energy flow in A-Level Biology",
-      "parent_id": "alevel_biology_ecology_and_ecosystems"
+      "id": "bio_transcription",
+      "kind": "concept",
+      "name": "Transcription",
+      "topic": "bio_nucleic_acids",
+      "description": "The synthesis of a messenger RNA copy of a gene by RNA polymerase, using one DNA strand as a template in the nucleus.",
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_nutrient_cycles",
-      "title": "Nutrient cycles",
-      "description": "Nutrient cycles in A-Level Biology",
-      "parent_id": "alevel_biology_ecology_and_ecosystems"
+      "id": "bio_translation",
+      "kind": "concept",
+      "name": "Translation",
+      "topic": "bio_nucleic_acids",
+      "description": "The synthesis of a polypeptide at the ribosome, where transfer RNA matches anticodons to mRNA codons to assemble amino acids in sequence.",
+      "default_order": 4
     },
     {
-      "id": "alevel_biology_sampling",
-      "title": "Sampling",
-      "description": "Sampling in A-Level Biology",
-      "parent_id": "alevel_biology_ecology_and_ecosystems"
+      "id": "bio_mutation",
+      "kind": "concept",
+      "name": "Gene Mutation",
+      "topic": "bio_nucleic_acids",
+      "description": "Changes to the DNA base sequence, such as substitutions, insertions, and deletions, which may alter the resulting protein and the phenotype.",
+      "default_order": 5
     },
     {
-      "id": "alevel_biology_succession",
-      "title": "Succession",
-      "description": "Succession in A-Level Biology",
-      "parent_id": "alevel_biology_ecology_and_ecosystems"
+      "id": "bio_transport_plants",
+      "kind": "topic",
+      "name": "Transport in Plants",
+      "topic": null,
+      "default_order": 7
     },
     {
-      "id": "alevel_biology_evolution",
-      "title": "Evolution",
-      "description": "Evolution in A-Level Biology",
-      "parent_id": null
+      "id": "bio_xylem",
+      "kind": "concept",
+      "name": "Xylem and Water Transport",
+      "topic": "bio_transport_plants",
+      "description": "The transport of water and mineral ions upward through dead, lignified xylem vessels, driven by transpiration pull via the cohesion-tension mechanism.",
+      "default_order": 1
     },
     {
-      "id": "alevel_biology_natural_selection",
-      "title": "Natural selection",
-      "description": "Natural selection in A-Level Biology",
-      "parent_id": "alevel_biology_evolution"
+      "id": "bio_transpiration",
+      "kind": "concept",
+      "name": "Transpiration",
+      "topic": "bio_transport_plants",
+      "description": "The loss of water vapour from leaves through stomata, and the effect of light, temperature, humidity, and air movement on its rate.",
+      "default_order": 2
     },
     {
-      "id": "alevel_biology_sources_of_variation",
-      "title": "Sources of variation",
-      "description": "Sources of variation in A-Level Biology",
-      "parent_id": "alevel_biology_evolution"
+      "id": "bio_phloem",
+      "kind": "concept",
+      "name": "Phloem and Translocation",
+      "topic": "bio_transport_plants",
+      "description": "The translocation of sucrose and other assimilates through living phloem sieve tubes from sources to sinks by pressure flow.",
+      "default_order": 3
     },
     {
-      "id": "alevel_biology_speciation",
-      "title": "Speciation",
-      "description": "Speciation in A-Level Biology",
-      "parent_id": "alevel_biology_evolution"
+      "id": "bio_transport_mammals",
+      "kind": "topic",
+      "name": "Transport in Mammals",
+      "topic": null,
+      "default_order": 8
     },
     {
-      "id": "alevel_biology_evidence",
-      "title": "Evidence",
-      "description": "Evidence in A-Level Biology",
-      "parent_id": "alevel_biology_evolution"
+      "id": "bio_heart",
+      "kind": "concept",
+      "name": "The Heart",
+      "topic": "bio_transport_mammals",
+      "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_blood_vessels",
+      "kind": "concept",
+      "name": "Blood Vessels",
+      "topic": "bio_transport_mammals",
+      "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_haemoglobin",
+      "kind": "concept",
+      "name": "Haemoglobin and Oxygen Transport",
+      "topic": "bio_transport_mammals",
+      "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_gas_exchange",
+      "kind": "topic",
+      "name": "Gas Exchange",
+      "topic": null,
+      "default_order": 9
+    },
+    {
+      "id": "bio_lungs",
+      "kind": "concept",
+      "name": "Gas Exchange in the Lungs",
+      "topic": "bio_gas_exchange",
+      "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_disease",
+      "kind": "topic",
+      "name": "Infectious Disease and Immunity",
+      "topic": null,
+      "default_order": 10
+    },
+    {
+      "id": "bio_infectious",
+      "kind": "concept",
+      "name": "Infectious Disease",
+      "topic": "bio_disease",
+      "description": "Diseases caused by pathogens such as bacteria, viruses, fungi, and protoctists, and the ways they are transmitted between hosts.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_immune_response",
+      "kind": "concept",
+      "name": "Immune Response",
+      "topic": "bio_disease",
+      "description": "The body's defence against pathogens through phagocytes engulfing invaders and lymphocytes mounting specific cell-mediated and humoral responses.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_antibodies",
+      "kind": "concept",
+      "name": "Antibodies and Vaccination",
+      "topic": "bio_disease",
+      "description": "Antibodies as proteins binding specific antigens to neutralise pathogens, and vaccination conferring active immunity through memory cells.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_respiration",
+      "kind": "topic",
+      "name": "Energy and Respiration",
+      "topic": null,
+      "default_order": 11
+    },
+    {
+      "id": "bio_glycolysis",
+      "kind": "concept",
+      "name": "Glycolysis",
+      "topic": "bio_respiration",
+      "description": "The cytoplasmic breakdown of glucose into pyruvate, producing a small net yield of ATP and reduced NAD without requiring oxygen.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_krebs",
+      "kind": "concept",
+      "name": "Link Reaction and Krebs Cycle",
+      "topic": "bio_respiration",
+      "description": "The link reaction converting pyruvate to acetyl coenzyme A, and the Krebs cycle oxidising it to release carbon dioxide and reduced coenzymes.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_oxidative",
+      "kind": "concept",
+      "name": "Oxidative Phosphorylation",
+      "topic": "bio_respiration",
+      "description": "Oxidative phosphorylation using the electron transport chain and chemiosmosis across the inner mitochondrial membrane to synthesise most ATP.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_anaerobic",
+      "kind": "concept",
+      "name": "Anaerobic Respiration",
+      "topic": "bio_respiration",
+      "description": "Respiration without oxygen, regenerating NAD through lactate fermentation in animals or ethanol fermentation in yeast and plants, yielding little ATP.",
+      "default_order": 4
+    },
+    {
+      "id": "bio_photosynthesis",
+      "kind": "topic",
+      "name": "Photosynthesis",
+      "topic": null,
+      "default_order": 12
+    },
+    {
+      "id": "bio_light_dependent",
+      "kind": "concept",
+      "name": "Light-Dependent Reactions",
+      "topic": "bio_photosynthesis",
+      "description": "The light-dependent reactions in the thylakoids capturing light to produce ATP and reduced NADP while splitting water to release oxygen.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_calvin",
+      "kind": "concept",
+      "name": "Calvin Cycle",
+      "topic": "bio_photosynthesis",
+      "description": "The Calvin cycle in the stroma fixing carbon dioxide using ATP and reduced NADP to synthesise carbohydrate via the enzyme RuBisCO.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_limiting_factors",
+      "kind": "concept",
+      "name": "Limiting Factors",
+      "topic": "bio_photosynthesis",
+      "description": "Environmental factors such as light intensity, carbon dioxide concentration, and temperature that limit the overall rate of photosynthesis.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_homeostasis",
+      "kind": "topic",
+      "name": "Homeostasis",
+      "topic": null,
+      "default_order": 13
+    },
+    {
+      "id": "bio_homeostasis_principles",
+      "kind": "concept",
+      "name": "Homeostasis Principles",
+      "topic": "bio_homeostasis",
+      "description": "The maintenance of a stable internal environment through negative feedback, where deviations from set points trigger corrective responses.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_kidney",
+      "kind": "concept",
+      "name": "The Kidney and Osmoregulation",
+      "topic": "bio_homeostasis",
+      "description": "Ultrafiltration and selective reabsorption in the nephron forming urine, and the osmoregulation of water balance through the action of ADH.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_glucose_control",
+      "kind": "concept",
+      "name": "Control of Blood Glucose",
+      "topic": "bio_homeostasis",
+      "description": "Regulation of blood glucose by insulin and glucagon from the pancreas, and the disruption of this control in diabetes mellitus.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_coordination",
+      "kind": "topic",
+      "name": "Control and Coordination",
+      "topic": null,
+      "default_order": 14
+    },
+    {
+      "id": "bio_nervous",
+      "kind": "concept",
+      "name": "Nervous Transmission",
+      "topic": "bio_coordination",
+      "description": "The transmission of nerve impulses as action potentials, generated by the movement of sodium and potassium ions across the neurone membrane.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_synapses",
+      "kind": "concept",
+      "name": "Synapses",
+      "topic": "bio_coordination",
+      "description": "Chemical transmission across synapses, where neurotransmitter released from the presynaptic neurone diffuses to receptors on the postsynaptic membrane.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_hormonal",
+      "kind": "concept",
+      "name": "Hormonal Control",
+      "topic": "bio_coordination",
+      "description": "Endocrine coordination in which hormones secreted by glands travel in the blood to target cells, producing slower, longer-lasting responses.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_plant_responses",
+      "kind": "concept",
+      "name": "Plant Responses",
+      "topic": "bio_coordination",
+      "description": "Plant responses to stimuli, including tropisms controlled by auxin and other growth regulators that direct growth toward or away from stimuli.",
+      "default_order": 4
+    },
+    {
+      "id": "bio_inheritance",
+      "kind": "topic",
+      "name": "Inheritance",
+      "topic": null,
+      "default_order": 15
+    },
+    {
+      "id": "bio_meiosis",
+      "kind": "concept",
+      "name": "Meiosis",
+      "topic": "bio_inheritance",
+      "description": "Reduction division producing four genetically varied haploid gametes, with crossing over and independent assortment generating genetic variation.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_genetic_crosses",
+      "kind": "concept",
+      "name": "Genetic Crosses",
+      "topic": "bio_inheritance",
+      "description": "Predicting inheritance using monohybrid and dihybrid crosses, applying dominance, codominance, and the characteristic ratios of Mendelian genetics.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_linkage",
+      "kind": "concept",
+      "name": "Gene Linkage and Crossing Over",
+      "topic": "bio_inheritance",
+      "description": "Genes on the same chromosome inherited together as linked genes, with crossing over producing recombinants at a frequency reflecting their distance.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_gene_control",
+      "kind": "concept",
+      "name": "Control of Gene Expression",
+      "topic": "bio_inheritance",
+      "description": "The regulation of gene expression in eukaryotes, including transcriptional control and the role of regulatory proteins in switching genes on and off.",
+      "default_order": 4
+    },
+    {
+      "id": "bio_evolution",
+      "kind": "topic",
+      "name": "Selection and Evolution",
+      "topic": null,
+      "default_order": 16
+    },
+    {
+      "id": "bio_variation",
+      "kind": "concept",
+      "name": "Variation",
+      "topic": "bio_evolution",
+      "description": "Genetic and environmental variation among individuals, with continuous and discontinuous variation arising from genes, environment, and their interaction.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_natural_selection",
+      "kind": "concept",
+      "name": "Natural Selection",
+      "topic": "bio_evolution",
+      "description": "Differential survival and reproduction of individuals with advantageous alleles, changing allele frequencies in a population over generations.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_speciation",
+      "kind": "concept",
+      "name": "Speciation",
+      "topic": "bio_evolution",
+      "description": "The formation of new species when populations become reproductively isolated, allowing them to diverge through allopatric or sympatric mechanisms.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_biodiversity",
+      "kind": "topic",
+      "name": "Biodiversity and Conservation",
+      "topic": null,
+      "default_order": 17
+    },
+    {
+      "id": "bio_classification",
+      "kind": "concept",
+      "name": "Classification",
+      "topic": "bio_biodiversity",
+      "description": "The hierarchical classification of organisms into taxa and the three-domain system, reflecting their evolutionary relationships.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_biodiversity_sampling",
+      "kind": "concept",
+      "name": "Biodiversity and Sampling",
+      "topic": "bio_biodiversity",
+      "description": "Measuring biodiversity using random sampling and indices such as Simpson's index to quantify species richness and evenness in a habitat.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_conservation",
+      "kind": "concept",
+      "name": "Conservation",
+      "topic": "bio_biodiversity",
+      "description": "Methods of maintaining biodiversity and ecosystems, balancing human activity with the protection of species and their habitats.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_genetic_tech",
+      "kind": "topic",
+      "name": "Genetic Technology",
+      "topic": null,
+      "default_order": 18
+    },
+    {
+      "id": "bio_gene_tech",
+      "kind": "concept",
+      "name": "Gene Technology",
+      "topic": "bio_genetic_tech",
+      "description": "Recombinant DNA technology cutting and joining DNA with enzymes to insert genes into vectors, enabling gene cloning and expression.",
+      "default_order": 1
+    },
+    {
+      "id": "bio_pcr_electrophoresis",
+      "kind": "concept",
+      "name": "PCR and Electrophoresis",
+      "topic": "bio_genetic_tech",
+      "description": "The polymerase chain reaction amplifying DNA in vitro, and gel electrophoresis separating DNA fragments by size for analysis.",
+      "default_order": 2
+    },
+    {
+      "id": "bio_gene_applications",
+      "kind": "concept",
+      "name": "Applications of Genetic Technology",
+      "topic": "bio_genetic_tech",
+      "description": "Applications of genetic technology in medicine and agriculture, including genetically modified organisms, gene therapy, and genetic screening.",
+      "default_order": 3
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "from": "bio_microscopy",
+      "to": "bio_organelles",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_organelles",
+      "to": "bio_prokaryotes",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_prokaryotes",
+      "to": "bio_cell_size",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_water",
+      "to": "bio_carbohydrates",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_carbohydrates",
+      "to": "bio_lipids",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_lipids",
+      "to": "bio_proteins",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_tests",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_enzyme_action",
+      "to": "bio_enzyme_factors",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_enzyme_factors",
+      "to": "bio_enzyme_inhibition",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_membrane_structure",
+      "to": "bio_passive_transport",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_passive_transport",
+      "to": "bio_active_transport",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_chromosomes",
+      "to": "bio_mitosis",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_dna_replication",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_replication",
+      "to": "bio_transcription",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_transcription",
+      "to": "bio_translation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_translation",
+      "to": "bio_mutation",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_xylem",
+      "to": "bio_transpiration",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_transpiration",
+      "to": "bio_phloem",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_heart",
+      "to": "bio_blood_vessels",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_blood_vessels",
+      "to": "bio_haemoglobin",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_infectious",
+      "to": "bio_immune_response",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_immune_response",
+      "to": "bio_antibodies",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_glycolysis",
+      "to": "bio_krebs",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_krebs",
+      "to": "bio_oxidative",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_oxidative",
+      "to": "bio_anaerobic",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_light_dependent",
+      "to": "bio_calvin",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_calvin",
+      "to": "bio_limiting_factors",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_homeostasis_principles",
+      "to": "bio_kidney",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_kidney",
+      "to": "bio_glucose_control",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_nervous",
+      "to": "bio_synapses",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_synapses",
+      "to": "bio_hormonal",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_hormonal",
+      "to": "bio_plant_responses",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_meiosis",
+      "to": "bio_genetic_crosses",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_genetic_crosses",
+      "to": "bio_linkage",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_linkage",
+      "to": "bio_gene_control",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_variation",
+      "to": "bio_natural_selection",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_natural_selection",
+      "to": "bio_speciation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_classification",
+      "to": "bio_biodiversity_sampling",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_biodiversity_sampling",
+      "to": "bio_conservation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_gene_tech",
+      "to": "bio_pcr_electrophoresis",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_pcr_electrophoresis",
+      "to": "bio_gene_applications",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_enzyme_action",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_carbohydrates",
+      "to": "bio_tests",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_lipids",
+      "to": "bio_membrane_structure",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_membrane_structure",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_organelles",
+      "to": "bio_mitosis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_dna_structure",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_transcription",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_replication",
+      "to": "bio_mutation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_passive_transport",
+      "to": "bio_xylem",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_haemoglobin",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_passive_transport",
+      "to": "bio_lungs",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_immune_response",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_enzyme_action",
+      "to": "bio_glycolysis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_membrane_structure",
+      "to": "bio_oxidative",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_glycolysis",
+      "to": "bio_anaerobic",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_oxidative",
+      "to": "bio_light_dependent",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_homeostasis_principles",
+      "to": "bio_glucose_control",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_active_transport",
+      "to": "bio_nervous",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_homeostasis_principles",
+      "to": "bio_hormonal",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_mitosis",
+      "to": "bio_meiosis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_transcription",
+      "to": "bio_gene_control",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_mutation",
+      "to": "bio_variation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_meiosis",
+      "to": "bio_variation",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_speciation",
+      "to": "bio_classification",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_dna_replication",
+      "to": "bio_pcr_electrophoresis",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_gene_tech",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_gene_tech",
+      "to": "bio_gene_applications",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
 }

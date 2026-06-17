@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>课程知识图谱查看器 V2</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --line: #dfe7f1;
+      --ink: #182235;
+      --muted: #66758a;
+      --blue: #3867d6;
+      --green: #20bf6b;
+      --red: #eb3b5a;
+      --orange: #fa8231;
+      --purple: #8854d0;
+      --shadow: 0 12px 34px rgba(25, 42, 70, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(56, 103, 214, 0.13), transparent 26%),
+        radial-gradient(circle at 92% 0%, rgba(32, 191, 107, 0.12), transparent 27%),
+        linear-gradient(180deg, #f8fbff, var(--bg));
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .page { padding: 26px; }
+    .header {
+      max-width: 1680px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 22px;
+    }
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+    .subhead {
+      max-width: 900px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .meta {
+      min-width: 280px;
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .stats {
+      max-width: 1680px;
+      margin: 0 auto 16px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .stat {
+      min-height: 82px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--blue);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+    }
+    .stat strong {
+      display: block;
+      font-size: 27px;
+      line-height: 1;
+    }
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .layout {
+      max-width: 1680px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr) 360px;
+      gap: 16px;
+      align-items: start;
+    }
+    .panel, .side, .inspector {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+    .panel {
+      min-width: 0;
+      overflow: hidden;
+    }
+    .side, .inspector {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow: auto;
+      padding: 14px;
+    }
+    .main { min-width: 0; display: grid; gap: 16px; }
+
+    .panelHeader {
+      padding: 16px 18px;
+      border-bottom: 1px solid #e5edf6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #fbfdff;
+    }
+    .panelHeader h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+    .panelHeader p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .search {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .search label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .search input {
+      height: 40px;
+      border: 1px solid #ccd8e6;
+      border-radius: 8px;
+      padding: 0 12px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+    .search input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(56, 103, 214, 0.14);
+    }
+
+    .courseList, .topicList, .stack { display: grid; gap: 8px; }
+    .courseBtn, .topicBtn {
+      width: 100%;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 11px;
+      color: var(--ink);
+      background: transparent;
+      text-align: left;
+    }
+    .courseBtn {
+      display: grid;
+      grid-template-columns: 12px minmax(0, 1fr);
+      gap: 10px;
+    }
+    .courseBtn:hover, .topicBtn:hover { background: #f2f6fc; }
+    .courseBtn.active, .topicBtn.active {
+      border-color: #b8c9e4;
+      background: #edf4ff;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 5px;
+      border-radius: 99px;
+    }
+    .courseBtn strong, .topicBtn strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    .courseBtn small, .topicBtn small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .legend, .tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .lineKey {
+      width: 22px;
+      height: 3px;
+      border-radius: 99px;
+      display: inline-block;
+      background: var(--red);
+    }
+    .lineKey.soft { background: #4f76c7; }
+    .tabs {
+      padding: 4px;
+      border: 1px solid #d7e1ed;
+      border-radius: 8px;
+      background: #eef3f9;
+    }
+    .tabs button {
+      min-width: 56px;
+      height: 32px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .tabs button.active {
+      color: var(--ink);
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(28, 42, 66, 0.08);
+    }
+
+    .svgWrap {
+      width: 100%;
+      min-width: 0;
+      overflow: auto;
+      background: #fff;
+    }
+    #network svg {
+      width: 100%;
+      height: auto;
+    }
+    #courseGraph svg {
+      max-width: none;
+    }
+    svg { display: block; }
+    text { font-family: inherit; }
+    .node { cursor: pointer; outline: none; }
+    .networkLabel { fill: #263349; font-size: 10.5px; font-weight: 800; pointer-events: none; }
+    .countLabel, .topicGlyph { fill: #fff; font-size: 12px; font-weight: 900; pointer-events: none; }
+    .conceptGlyph { fill: var(--ink); font-size: 10px; font-weight: 900; pointer-events: none; }
+    .topicLabel { fill: #263349; font-size: 10.5px; font-weight: 850; pointer-events: none; }
+    .conceptLabel { fill: #263349; font-size: 9.5px; font-weight: 800; pointer-events: none; }
+    .laneFooter { fill: #7a8495; font-size: 10px; font-weight: 800; pointer-events: none; }
+
+    .block {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+    .block h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+    .compact {
+      margin: 0;
+      display: grid;
+      gap: 9px;
+    }
+    .compact div {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 10px;
+    }
+    .compact dt {
+      color: #7a8495;
+      font-size: 11px;
+      font-weight: 850;
+    }
+    .compact dd {
+      margin: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .selectedName {
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .chips span {
+      padding: 4px 7px;
+      border-radius: 99px;
+      background: #eef3f9;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+    }
+    .desc, .empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .nodeList {
+      max-height: 260px;
+      overflow: auto;
+      display: grid;
+      gap: 7px;
+    }
+    .nodeItem {
+      padding: 9px;
+      border: 1px solid #e4ebf4;
+      border-radius: 8px;
+      background: #fbfcff;
+    }
+    .nodeItem strong {
+      display: block;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .nodeItem span {
+      display: block;
+      margin-top: 4px;
+      color: #7a8495;
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+    .relations {
+      padding-top: 10px;
+      border-top: 1px solid #e4ebf4;
+    }
+    .relations h4 {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .relations ul {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .relations li + li { margin-top: 5px; }
+    .error {
+      max-width: 900px;
+      margin: 48px auto;
+      border: 1px solid #efb8b8;
+      border-radius: 8px;
+      background: #fff7f7;
+      padding: 18px;
+      color: #8a3030;
+    }
+
+    @media (max-width: 1240px) {
+      .layout { grid-template-columns: 280px minmax(0, 1fr); }
+      .inspector { grid-column: 1 / -1; position: static; max-height: none; }
+    }
+    @media (max-width: 860px) {
+      .page { padding: 16px; }
+      .header { display: grid; }
+      .meta { min-width: 0; text-align: left; }
+      .stats, .layout { grid-template-columns: 1fr; }
+      .side { position: static; max-height: none; }
+      .panelHeader { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <p class="kicker">知识图谱查看器 V2</p>
+        <h1>课程知识图谱临时查看器</h1>
+        <p class="subhead">从当前目录读取 20 个课程知识图谱和跨学科依赖文件，用来查看课程之间的前置依赖、单课程节点关系，以及每个主题包含哪些概念节点。</p>
+      </div>
+      <div class="meta">
+        <span id="sourceMeta">数据源：当前 temple 目录</span>
+        <span id="updatedMeta"></span>
+      </div>
+    </header>
+
+    <section class="stats" id="stats"></section>
+
+    <div class="layout">
+      <aside class="side">
+        <div class="search">
+          <label for="courseSearch">搜索课程</label>
+          <input id="courseSearch" placeholder="微积分 / 物理 / 计算机..." />
+        </div>
+        <div class="courseList" id="courseList"></div>
+      </aside>
+
+      <section class="main">
+        <section class="panel">
+          <div class="panelHeader">
+            <div>
+              <h2>课程知识图谱之间的关系</h2>
+              <p id="crossDescription">方向：前置知识 -> 后续知识。</p>
+            </div>
+            <div class="legend">
+              <span><i class="lineKey"></i>强依赖</span>
+              <span><i class="lineKey soft"></i>弱依赖</span>
+            </div>
+          </div>
+          <div class="svgWrap" id="network"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panelHeader">
+            <div>
+              <h2 id="courseTitle"></h2>
+              <p id="courseMeta"></p>
+            </div>
+            <div class="tabs" id="strengthTabs">
+              <button data-strength="all" class="active">全部</button>
+              <button data-strength="hard">强依赖</button>
+              <button data-strength="soft">弱依赖</button>
+            </div>
+          </div>
+          <div class="svgWrap" id="courseGraph"></div>
+        </section>
+      </section>
+
+      <aside class="inspector">
+        <section class="block">
+          <h3>主题列表</h3>
+          <div class="topicList" id="topicList"></div>
+        </section>
+        <section class="block" id="courseStats"></section>
+        <section class="block" id="topicInspector"></section>
+        <section class="block" id="nodeInspector"></section>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const KG_FILES = [
+      "Python.json",
+      "a_level_biology.json",
+      "a_level_chemistry.json",
+      "a_level_mathematics.json",
+      "a_level_physics.json",
+      "artificial_intelligence.json",
+      "computer_architecture.json",
+      "computer_network.json",
+      "computer_systems.json",
+      "data_structures_and_algorithms.json",
+      "deep_learning.json",
+      "discrete_math_and_probability.json",
+      "information_theory.json",
+      "introduction_to_computer_science.json",
+      "linear_algebra.json",
+      "machine_learning.json",
+      "mit_calculus.json",
+      "numerical_analysis.json",
+      "software_construction.json",
+      "web_applications.json"
+    ];
+
+    const COLORS = ["#3867d6", "#20bf6b", "#eb3b5a", "#fa8231", "#8854d0", "#0fb9b1", "#f7b731", "#2d98da", "#45aaf2", "#a55eea", "#26de81", "#fd9644"];
+    const COURSE_DISPLAY_NAMES = {
+      "Python.json": "Python 编程",
+      "a_level_biology.json": "生物",
+      "a_level_chemistry.json": "化学",
+      "a_level_mathematics.json": "数学",
+      "a_level_physics.json": "物理",
+      "artificial_intelligence.json": "人工智能",
+      "computer_architecture.json": "计算机组成",
+      "computer_network.json": "计算机网络",
+      "computer_systems.json": "计算机系统",
+      "data_structures_and_algorithms.json": "数据结构与算法",
+      "deep_learning.json": "深度学习",
+      "discrete_math_and_probability.json": "离散数学与概率",
+      "information_theory.json": "信息论",
+      "introduction_to_computer_science.json": "计算机科学导论",
+      "linear_algebra.json": "线性代数",
+      "machine_learning.json": "机器学习",
+      "mit_calculus.json": "微积分",
+      "numerical_analysis.json": "数值分析",
+      "software_construction.json": "软件构造",
+      "web_applications.json": "Web 应用开发"
+    };
+    const state = { courses: [], crossEdges: [], relations: [], selectedCourseId: "", selectedTopicId: "", selectedNodeId: "", strength: "all", query: "", zhLabels: {} };
+
+    function esc(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+    }
+    function color(index) { return COLORS[index % COLORS.length]; }
+    function short(value, max = 24) { value = String(value ?? ""); return value.length > max ? value.slice(0, max - 1) + "…" : value; }
+    function strengthColor(strength) { return strength === "hard" ? "#c94c4c" : strength === "soft" ? "#4f76c7" : "#7a8495"; }
+    function displayCourseName(fileName, rawSubject) {
+      return COURSE_DISPLAY_NAMES[fileName] || String(rawSubject || fileName.replace(/\.json$/, ""));
+    }
+    function zhStrength(strength) {
+      if (strength === "hard") return "强依赖";
+      if (strength === "soft") return "弱依赖";
+      return "未知强度";
+    }
+    function zhType(type) {
+      if (type === "prereq") return "前置依赖";
+      return String(type || "关系");
+    }
+    function zhKind(kind) {
+      if (kind === "topic") return "主题";
+      if (kind === "concept") return "概念";
+      return String(kind || "节点");
+    }
+    function zhNodeName(id, fallback) {
+      return state.zhLabels[id] || String(fallback || id || "");
+    }
+    function edgeLabel(edge) { return `${zhType(edge.type)} · ${zhStrength(edge.strength)}`; }
+    function conceptsForTopic(course, topicId) {
+      return course.concepts.filter((node) => node.topic === topicId).sort((a, b) => a.defaultOrder - b.defaultOrder || a.name.localeCompare(b.name));
+    }
+
+    async function loadJson(file) {
+      const response = await fetch(file, { cache: "no-store" });
+      if (!response.ok) throw new Error(`${file}: ${response.status}`);
+      return response.json();
+    }
+
+    function normalizeCourse(fileName, raw) {
+      const nodes = (Array.isArray(raw.nodes) ? raw.nodes : []).map((node) => ({
+        id: String(node.id || ""),
+        name: String(node.name || node.id || ""),
+        kind: String(node.kind || "concept"),
+        topic: typeof node.topic === "string" ? node.topic : null,
+        description: String(node.description || ""),
+        defaultOrder: Number.isFinite(node.default_order) ? node.default_order : 9999
+      })).filter((node) => node.id);
+      const nodeIds = new Set(nodes.map((node) => node.id));
+      const edges = (Array.isArray(raw.edges) ? raw.edges : []).map((edge) => ({
+        from: String(edge.from || ""),
+        to: String(edge.to || ""),
+        type: String(edge.type || "prereq"),
+        strength: String(edge.strength || edge.weight || "unknown"),
+        isResolved: nodeIds.has(String(edge.from || "")) && nodeIds.has(String(edge.to || ""))
+      })).filter((edge) => edge.from && edge.to);
+      const topics = nodes.filter((node) => node.kind === "topic").sort((a, b) => a.defaultOrder - b.defaultOrder || a.name.localeCompare(b.name));
+      const concepts = nodes.filter((node) => node.kind !== "topic");
+      return {
+        id: fileName.replace(/\.json$/, ""),
+        fileName,
+        subject: displayCourseName(fileName, raw.subject),
+        rawSubject: String(raw.subject || fileName.replace(/\.json$/, "")),
+        schema: String(raw.schema || ""),
+        nodes,
+        edges,
+        topics,
+        concepts,
+        stats: {
+          nodeCount: nodes.length,
+          topicCount: topics.length,
+          conceptCount: concepts.length,
+          edgeCount: edges.length,
+          hardEdgeCount: edges.filter((edge) => edge.strength === "hard").length,
+          softEdgeCount: edges.filter((edge) => edge.strength === "soft").length,
+          unresolvedEdges: edges.filter((edge) => !edge.isResolved).length
+        }
+      };
+    }
+
+    function buildCrossEdges(raw) {
+      const byFile = new Map(state.courses.map((course) => [course.fileName, course]));
+      const nodeNames = new Map(state.courses.map((course) => [course.id, new Map(course.nodes.map((node) => [node.id, zhNodeName(node.id, node.name)]))]));
+      return (Array.isArray(raw.edges) ? raw.edges : []).flatMap((edge) => {
+        const fromCourse = byFile.get(edge.from_graph);
+        const toCourse = byFile.get(edge.to_graph);
+        if (!fromCourse || !toCourse) return [];
+        const fromNodeId = String(edge.from || "");
+        const toNodeId = String(edge.to || "");
+        return [{
+          fromNodeId,
+          toNodeId,
+          fromNodeName: nodeNames.get(fromCourse.id)?.get(fromNodeId) || fromNodeId,
+          toNodeName: nodeNames.get(toCourse.id)?.get(toNodeId) || toNodeId,
+          fromCourseId: fromCourse.id,
+          toCourseId: toCourse.id,
+          fromCourseName: fromCourse.subject,
+          toCourseName: toCourse.subject,
+          type: String(edge.type || "prereq"),
+          strength: String(edge.strength || edge.weight || "unknown")
+        }];
+      });
+    }
+
+    function aggregateRelations(edges) {
+      const map = new Map();
+      for (const edge of edges) {
+        const key = `${edge.fromCourseId}->${edge.toCourseId}`;
+        const item = map.get(key) || { fromCourseId: edge.fromCourseId, toCourseId: edge.toCourseId, count: 0, hardCount: 0, softCount: 0 };
+        item.count += 1;
+        if (edge.strength === "hard") item.hardCount += 1;
+        if (edge.strength === "soft") item.softCount += 1;
+        map.set(key, item);
+      }
+      return Array.from(map.values()).sort((a, b) => b.count - a.count);
+    }
+
+    function renderStats() {
+      const totals = state.courses.reduce((acc, course) => {
+        acc.nodes += course.stats.nodeCount;
+        acc.topics += course.stats.topicCount;
+        acc.concepts += course.stats.conceptCount;
+        acc.edges += course.stats.edgeCount;
+        return acc;
+      }, { nodes: 0, topics: 0, concepts: 0, edges: 0 });
+      const items = [
+        ["课程图谱", state.courses.length, "var(--blue)"],
+        ["主题", totals.topics, "var(--green)"],
+        ["概念节点", totals.concepts, "var(--orange)"],
+        ["课程内关系", totals.edges, "var(--purple)"],
+        ["跨课程关系", state.crossEdges.length, "var(--red)"]
+      ];
+      document.getElementById("stats").innerHTML = items.map(([label, value, tone]) => `<div class="stat" style="border-top-color:${tone}"><strong>${value}</strong><span>${label}</span></div>`).join("");
+    }
+
+    function renderCourseList() {
+      const q = state.query.trim().toLowerCase();
+      const courses = q ? state.courses.filter((course) => `${course.subject} ${course.fileName}`.toLowerCase().includes(q)) : state.courses;
+      document.getElementById("courseList").innerHTML = courses.map((course, index) => `
+        <button class="courseBtn ${course.id === state.selectedCourseId ? "active" : ""}" data-course="${esc(course.id)}">
+          <span class="dot" style="background:${color(index)}"></span>
+          <span><strong>${esc(course.subject)}</strong><small>${course.stats.topicCount} 个主题 · ${course.stats.conceptCount} 个概念 · ${course.stats.edgeCount} 条关系</small></span>
+        </button>
+      `).join("");
+    }
+
+    function renderNetwork() {
+      const width = 900, height = 460, cx = width / 2, cy = height / 2 + 8, r = 168;
+      const maxNodes = Math.max(...state.courses.map((course) => course.stats.nodeCount), 1);
+      const positions = new Map();
+      state.courses.forEach((course, index) => {
+        const angle = -Math.PI / 2 + (index / state.courses.length) * Math.PI * 2;
+        positions.set(course.id, { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r, radius: 15 + (course.stats.nodeCount / maxNodes) * 17, color: color(index) });
+      });
+      const paths = state.relations.map((rel) => {
+        const from = positions.get(rel.fromCourseId), to = positions.get(rel.toCourseId);
+        if (!from || !to) return "";
+        const dx = to.x - from.x, dy = to.y - from.y;
+        const mx = (from.x + to.x) / 2 - dy * 0.14, my = (from.y + to.y) / 2 + dx * 0.14;
+        const selected = rel.fromCourseId === state.selectedCourseId || rel.toCourseId === state.selectedCourseId;
+        return `<path d="M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}" fill="none" stroke="${rel.hardCount >= rel.softCount ? "#be4b55" : "#4f76c7"}" stroke-width="${selected ? 2.4 : Math.min(1 + rel.count * 0.35, 4)}" opacity="${selected ? 0.78 : 0.24}" marker-end="url(#networkArrow)" />`;
+      }).join("");
+      const nodes = state.courses.map((course) => {
+        const pos = positions.get(course.id);
+        const selected = course.id === state.selectedCourseId;
+        return `<g class="node" data-course="${esc(course.id)}">
+          <circle cx="${pos.x}" cy="${pos.y}" r="${pos.radius + (selected ? 6 : 0)}" fill="${selected ? pos.color + "22" : "#fff"}" stroke="${selected ? pos.color : "#d6deeb"}" stroke-width="${selected ? 2.5 : 1.2}" />
+          <circle cx="${pos.x}" cy="${pos.y}" r="${pos.radius}" fill="${pos.color}" />
+          <text x="${pos.x}" y="${pos.y + 4}" text-anchor="middle" class="countLabel">${course.stats.topicCount}</text>
+          <text x="${pos.x}" y="${pos.y + pos.radius + 20}" text-anchor="middle" class="networkLabel">${esc(short(course.subject, 24))}</text>
+          <title>${esc(course.subject)}：${course.stats.topicCount} 个主题，${course.stats.conceptCount} 个概念</title>
+        </g>`;
+      }).join("");
+      document.getElementById("network").innerHTML = `<svg viewBox="0 0 ${width} ${height}" width="100%" role="img" aria-label="课程知识图谱网络">
+        <defs><marker id="networkArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"></path></marker></defs>
+        <circle cx="${cx}" cy="${cy}" r="${r + 56}" fill="#f8fafc" stroke="#dce3ef" />
+        ${paths}${nodes}
+      </svg>`;
+    }
+
+    function renderCourseGraph() {
+      const course = selectedCourse();
+      if (!course) return;
+      const columnWidth = 192, top = 74, gap = 48, left = 96;
+      const conceptsByTopic = new Map(course.topics.map((topic) => [topic.id, conceptsForTopic(course, topic.id)]));
+      const maxConcepts = Math.max(...Array.from(conceptsByTopic.values()).map((items) => items.length), 1);
+      const width = Math.max(1180, left * 2 + Math.max(course.topics.length, 1) * columnWidth);
+      const height = Math.max(440, top + 110 + maxConcepts * gap);
+      const positions = new Map();
+      course.topics.forEach((topic, topicIndex) => {
+        const topicColor = color(topicIndex);
+        const x = left + topicIndex * columnWidth;
+        positions.set(topic.id, { ...topic, x, y: top, color: topicColor, topicName: topic.name });
+        (conceptsByTopic.get(topic.id) || []).forEach((concept, conceptIndex) => {
+          positions.set(concept.id, { ...concept, x: x + (conceptIndex % 2 === 0 ? -34 : 34), y: top + 84 + Math.floor(conceptIndex / 2) * gap, color: topicColor, topicName: topic.name });
+        });
+      });
+      const lanes = course.topics.map((topic, index) => {
+        const pos = positions.get(topic.id);
+        const highlighted = state.selectedTopicId === topic.id;
+        return `<g><rect x="${pos.x - 82}" y="26" width="164" height="${height - 58}" rx="18" fill="${highlighted ? pos.color + "16" : index % 2 === 0 ? "#f8fafc" : "#fff"}" stroke="${highlighted ? pos.color : "#e0e7f1"}" stroke-width="${highlighted ? 1.8 : 1}" />
+          <text x="${pos.x}" y="${height - 24}" text-anchor="middle" class="laneFooter">${(conceptsByTopic.get(topic.id) || []).length} 个概念</text></g>`;
+      }).join("");
+      const edgePaths = course.edges.filter((edge) => edge.isResolved && (state.strength === "all" || edge.strength === state.strength)).map((edge, index) => {
+        const from = positions.get(edge.from), to = positions.get(edge.to);
+        if (!from || !to) return "";
+        const sameTopic = from.topic === to.topic || from.id === to.topic || to.id === from.topic;
+        const dx = to.x - from.x;
+        const offset = sameTopic ? 24 + (index % 3) * 10 : Math.min(Math.abs(dx) * 0.22 + 36, 120);
+        const mx = (from.x + to.x) / 2, my = (from.y + to.y) / 2 - offset;
+        const connected = state.selectedNodeId === edge.from || state.selectedNodeId === edge.to;
+        return `<path d="M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}" fill="none" stroke="${strengthColor(edge.strength)}" stroke-width="${connected ? 2.4 : edge.strength === "hard" ? 1.6 : 1.1}" stroke-dasharray="${edge.strength === "soft" ? "5 5" : ""}" opacity="${state.selectedNodeId ? (connected ? 0.88 : 0.16) : 0.34}" marker-end="url(#courseArrow)"><title>${esc(zhNodeName(from.id, from.name) + " -> " + zhNodeName(to.id, to.name) + "（" + edgeLabel(edge) + "）")}</title></path>`;
+      }).join("");
+      const nodeSvg = Array.from(positions.values()).map((node) => {
+        const isTopic = node.kind === "topic";
+        const selected = state.selectedNodeId === node.id;
+        const topicSelected = state.selectedTopicId === node.id || state.selectedTopicId === node.topic;
+        return `<g class="node" data-node="${esc(node.id)}" data-topic="${isTopic ? esc(node.id) : esc(node.topic || "")}">
+          <circle cx="${node.x}" cy="${node.y}" r="${isTopic ? 28 : 14}" fill="${isTopic ? node.color : topicSelected ? node.color + "dd" : "#fff"}" stroke="${selected ? "#111827" : node.color}" stroke-width="${selected ? 3 : isTopic ? 1.6 : 1.4}" />
+          <text x="${node.x}" y="${node.y + (isTopic ? 5 : 4)}" text-anchor="middle" class="${isTopic ? "topicGlyph" : "conceptGlyph"}">${isTopic ? "主" : "概"}</text>
+          <text x="${node.x}" y="${node.y + (isTopic ? 48 : 30)}" text-anchor="middle" class="${isTopic ? "topicLabel" : "conceptLabel"}">${esc(short(zhNodeName(node.id, node.name), isTopic ? 20 : 18))}</text>
+          <title>${esc(zhNodeName(node.id, node.name))} · ${esc(zhKind(node.kind))}</title>
+        </g>`;
+      }).join("");
+      document.getElementById("courseGraph").innerHTML = `<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-label="${esc(course.subject)} 知识图谱">
+        <defs><marker id="courseArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"></path></marker></defs>
+        ${lanes}${edgePaths}${nodeSvg}
+      </svg>`;
+    }
+
+    function selectedCourse() {
+      return state.courses.find((course) => course.id === state.selectedCourseId) || state.courses[0];
+    }
+
+    function localNodeName(course, nodeId) {
+      const node = course.nodes.find((item) => item.id === nodeId);
+      return zhNodeName(nodeId, node?.name || nodeId);
+    }
+
+    function renderTopicsAndInspector() {
+      const course = selectedCourse();
+      if (!course) return;
+      document.getElementById("courseTitle").textContent = course.subject;
+      document.getElementById("courseMeta").textContent = `${course.fileName} · ${course.stats.topicCount} 个主题 · ${course.stats.conceptCount} 个概念 · ${course.stats.edgeCount} 条关系`;
+      document.getElementById("topicList").innerHTML = course.topics.map((topic) => `
+        <button class="topicBtn ${topic.id === state.selectedTopicId ? "active" : ""}" data-topic="${esc(topic.id)}">
+          <strong>${esc(zhNodeName(topic.id, topic.name))}</strong><small>#${topic.defaultOrder} · ${conceptsForTopic(course, topic.id).length} 个概念</small>
+        </button>
+      `).join("");
+      document.getElementById("courseStats").innerHTML = `<h3>课程统计</h3><dl class="compact">
+        <div><dt>文件</dt><dd>${esc(course.fileName)}</dd></div>
+        <div><dt>主题</dt><dd>${course.stats.topicCount}</dd></div>
+        <div><dt>概念</dt><dd>${course.stats.conceptCount}</dd></div>
+        <div><dt>关系</dt><dd>${course.stats.edgeCount}（${course.stats.hardEdgeCount} 条强依赖 / ${course.stats.softEdgeCount} 条弱依赖）</dd></div>
+      </dl>`;
+      const topic = course.topics.find((item) => item.id === state.selectedTopicId) || course.topics[0];
+      const concepts = topic ? conceptsForTopic(course, topic.id) : [];
+      document.getElementById("topicInspector").innerHTML = `<h3>当前主题包含的概念节点</h3>${topic ? `<div class="selectedName">${esc(zhNodeName(topic.id, topic.name))}</div><div class="nodeList">${concepts.map((concept) => `<div class="nodeItem"><strong>${esc(zhNodeName(concept.id, concept.name))}</strong><span>${esc(concept.id)}</span></div>`).join("")}</div>` : `<p class="empty">请选择一个主题。</p>`}`;
+      const node = course.nodes.find((item) => item.id === state.selectedNodeId);
+      const localOut = node ? course.edges.filter((edge) => edge.from === node.id) : [];
+      const localIn = node ? course.edges.filter((edge) => edge.to === node.id) : [];
+      const crossOut = node ? state.crossEdges.filter((edge) => edge.fromCourseId === course.id && edge.fromNodeId === node.id) : [];
+      const crossIn = node ? state.crossEdges.filter((edge) => edge.toCourseId === course.id && edge.toNodeId === node.id) : [];
+      document.getElementById("nodeInspector").innerHTML = node ? `
+        <h3>当前节点关系</h3>
+        <div class="selectedName">${esc(zhNodeName(node.id, node.name))}</div>
+        <div class="chips"><span>${esc(zhKind(node.kind))}</span><span>${esc(node.id)}</span></div>
+        ${relationHtml("本课程出边", localOut.map((edge) => `${localNodeName(course, edge.from)} -> ${localNodeName(course, edge.to)} · ${edgeLabel(edge)}`))}
+        ${relationHtml("本课程入边", localIn.map((edge) => `${localNodeName(course, edge.from)} -> ${localNodeName(course, edge.to)} · ${edgeLabel(edge)}`))}
+        ${relationHtml("跨课程出边", crossOut.map((edge) => `${edge.fromNodeName} -> ${edge.toCourseName} / ${edge.toNodeName} · ${edgeLabel(edge)}`))}
+        ${relationHtml("跨课程入边", crossIn.map((edge) => `${edge.fromCourseName} / ${edge.fromNodeName} -> ${edge.toNodeName} · ${edgeLabel(edge)}`))}
+      ` : `<h3>当前节点关系</h3><p class="empty">请选择图上的一个节点。</p>`;
+    }
+
+    function relationHtml(title, rows) {
+      return `<div class="relations"><h4>${esc(title)} · ${rows.length}</h4>${rows.length ? `<ul>${rows.slice(0, 10).map((row) => `<li>${esc(row)}</li>`).join("")}</ul>` : `<p class="empty">无</p>`}</div>`;
+    }
+
+    function renderAll() {
+      renderStats();
+      renderCourseList();
+      renderNetwork();
+      renderTopicsAndInspector();
+      renderCourseGraph();
+    }
+
+    function chooseCourse(courseId) {
+      const course = state.courses.find((item) => item.id === courseId);
+      if (!course) return;
+      state.selectedCourseId = course.id;
+      state.selectedTopicId = course.topics[0]?.id || "";
+      state.selectedNodeId = state.selectedTopicId;
+      renderAll();
+    }
+
+    document.addEventListener("click", (event) => {
+      const courseButton = event.target.closest("[data-course]");
+      if (courseButton) chooseCourse(courseButton.dataset.course);
+      const topicButton = event.target.closest("[data-topic]");
+      if (topicButton) {
+        state.selectedTopicId = topicButton.dataset.topic;
+        state.selectedNodeId = state.selectedTopicId;
+        renderAll();
+      }
+      const nodeButton = event.target.closest("[data-node]");
+      if (nodeButton) {
+        state.selectedNodeId = nodeButton.dataset.node;
+        if (nodeButton.dataset.topic) state.selectedTopicId = nodeButton.dataset.topic;
+        renderAll();
+      }
+    });
+
+    document.getElementById("courseSearch").addEventListener("input", (event) => {
+      state.query = event.target.value;
+      renderCourseList();
+    });
+    document.getElementById("strengthTabs").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-strength]");
+      if (!button) return;
+      state.strength = button.dataset.strength;
+      document.querySelectorAll("#strengthTabs button").forEach((item) => item.classList.toggle("active", item === button));
+      renderCourseGraph();
+    });
+
+    async function boot() {
+      try {
+        const loaded = await Promise.all(KG_FILES.map(async (file) => normalizeCourse(file, await loadJson(file))));
+        state.courses = loaded.sort((a, b) => a.subject.localeCompare(b.subject));
+        const zhLabelData = await loadJson("kg_zh_labels.json").catch(() => ({ labels: {} }));
+        state.zhLabels = zhLabelData.labels || {};
+        const cross = await loadJson("cross_subject_edges.json").catch(() => ({ description: "", edges: [] }));
+        document.getElementById("crossDescription").textContent = "方向：前置知识 -> 后续知识。线条表示一个课程里的概念是另一个课程概念的前置依赖。";
+        state.crossEdges = buildCrossEdges(cross);
+        state.relations = aggregateRelations(state.crossEdges);
+        state.selectedCourseId = state.courses[0]?.id || "";
+        state.selectedTopicId = state.courses[0]?.topics[0]?.id || "";
+        state.selectedNodeId = state.selectedTopicId;
+        document.getElementById("updatedMeta").textContent = `加载时间：${new Date().toISOString().replace("T", " ").replace(/\.\d{3}Z$/, " UTC")}`;
+        renderAll();
+      } catch (error) {
+        document.body.innerHTML = `<div class="error"><h2>无法读取知识图谱 JSON</h2><p>${esc(error.message)}</p><p>请从 temple 目录启动静态服务，例如：<code>python3 -m http.server 8099 -d temple</code>，然后打开 <code>http://localhost:8099/kg_visualizer_v2.html</code>。</p></div>`;
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

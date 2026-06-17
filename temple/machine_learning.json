@@ -1,104 +1,677 @@
 {
-  "id": "cs229",
-  "name": "Machine Learning",
-  "description": "Machine learning algorithms and statistical pattern recognition.",
-  "topics": [
+  "subject": "Machine Learning (Stanford CS229)",
+  "schema": {
+    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
+    "node_fields": {
+      "id": "globally unique id",
+      "kind": "topic | concept",
+      "name": "concept name",
+      "topic": "owning topic id; null for topic nodes",
+      "description": "one-sentence definition for prompting/RAG",
+      "default_order": "default teaching order within the topic"
+    },
+    "edge_types": {
+      "prereq": "from must be learned before to; strength=hard|soft"
+    },
+    "concept_node_definition": "concept = smallest independently quiz-testable skill"
+  },
+  "nodes": [
     {
-      "id": "cs229_supervised_learning",
-      "title": "Supervised Learning",
-      "description": "Supervised Learning in Machine Learning",
-      "parent_id": null
+      "id": "ml_linear",
+      "kind": "topic",
+      "name": "Linear Regression",
+      "topic": null,
+      "default_order": 1
     },
     {
-      "id": "cs229_linear_regression",
-      "title": "Linear Regression",
-      "description": "Linear Regression in Machine Learning",
-      "parent_id": "cs229_supervised_learning"
+      "id": "ml_linear_reg",
+      "kind": "concept",
+      "name": "Linear Regression Model",
+      "topic": "ml_linear",
+      "description": "A supervised model predicting a continuous target as a linear combination of input features, fitted by minimising the squared error between predictions and observations.",
+      "default_order": 1
     },
     {
-      "id": "cs229_logistic_regression",
-      "title": "Logistic Regression",
-      "description": "Logistic Regression in Machine Learning",
-      "parent_id": "cs229_supervised_learning"
+      "id": "ml_cost_mse",
+      "kind": "concept",
+      "name": "Mean Squared Error Cost",
+      "topic": "ml_linear",
+      "description": "The mean squared error cost averaging squared residuals between predictions and targets, a convex objective whose minimisation defines least-squares regression.",
+      "default_order": 2
     },
     {
-      "id": "cs229_generalized_linear_models",
-      "title": "Generalized Linear Models",
-      "description": "Generalized Linear Models in Machine Learning",
-      "parent_id": "cs229_supervised_learning"
+      "id": "ml_gradient_descent",
+      "kind": "concept",
+      "name": "Batch Gradient Descent",
+      "topic": "ml_linear",
+      "description": "An iterative optimiser updating parameters along the negative gradient of the cost, using the entire training batch to compute each gradient step.",
+      "default_order": 3
     },
     {
-      "id": "cs229_support_vector_machines",
-      "title": "Support Vector Machines",
-      "description": "Support Vector Machines in Machine Learning",
-      "parent_id": "cs229_supervised_learning"
+      "id": "ml_sgd",
+      "kind": "concept",
+      "name": "Stochastic & Mini-batch GD",
+      "topic": "ml_linear",
+      "description": "Gradient-descent variants updating parameters from one example (stochastic) or a small subset (mini-batch), trading gradient noise for faster, scalable updates.",
+      "default_order": 4
     },
     {
-      "id": "cs229_decision_trees",
-      "title": "Decision Trees",
-      "description": "Decision Trees in Machine Learning",
-      "parent_id": "cs229_supervised_learning"
+      "id": "ml_normal_eq",
+      "kind": "concept",
+      "name": "Normal Equations",
+      "topic": "ml_linear",
+      "description": "A closed-form solution for linear regression obtained by setting the cost's gradient to zero and solving the resulting linear system without iteration.",
+      "default_order": 5
     },
     {
-      "id": "cs229_deep_learning",
-      "title": "Deep Learning",
-      "description": "Deep Learning in Machine Learning",
-      "parent_id": null
+      "id": "ml_feature_scaling",
+      "kind": "concept",
+      "name": "Feature Scaling & Learning Rate",
+      "topic": "ml_linear",
+      "description": "Normalising features to comparable ranges and choosing an appropriate learning rate, both of which speed and stabilise gradient-descent convergence.",
+      "default_order": 6
     },
     {
-      "id": "cs229_neural_networks",
-      "title": "Neural Networks",
-      "description": "Neural Networks in Machine Learning",
-      "parent_id": "cs229_deep_learning"
+      "id": "ml_classification",
+      "kind": "topic",
+      "name": "Classification and GLMs",
+      "topic": null,
+      "default_order": 2
     },
     {
-      "id": "cs229_backpropagation",
-      "title": "Backpropagation",
-      "description": "Backpropagation in Machine Learning",
-      "parent_id": "cs229_deep_learning"
+      "id": "ml_logistic_reg",
+      "kind": "concept",
+      "name": "Logistic Regression",
+      "topic": "ml_classification",
+      "description": "A probabilistic linear classifier modelling the probability of a binary class with the logistic function, fitted by maximising the likelihood of the labels.",
+      "default_order": 1
     },
     {
-      "id": "cs229_unsupervised_learning",
-      "title": "Unsupervised Learning",
-      "description": "Unsupervised Learning in Machine Learning",
-      "parent_id": null
+      "id": "ml_sigmoid",
+      "kind": "concept",
+      "name": "Sigmoid & Decision Boundary",
+      "topic": "ml_classification",
+      "description": "The sigmoid function mapping real scores to probabilities in (0,1), inducing a linear decision boundary where the predicted probability equals one half.",
+      "default_order": 2
     },
     {
-      "id": "cs229_kmeans_clustering",
-      "title": "K-Means Clustering",
-      "description": "K-Means Clustering in Machine Learning",
-      "parent_id": "cs229_unsupervised_learning"
+      "id": "ml_logistic_mle",
+      "kind": "concept",
+      "name": "Logistic MLE & Gradient",
+      "topic": "ml_classification",
+      "description": "Estimating logistic-regression parameters by maximising the log-likelihood of the labels, whose gradient drives the gradient-ascent or descent updates.",
+      "default_order": 3
     },
     {
-      "id": "cs229_gaussian_mixture_models",
-      "title": "Gaussian Mixture Models",
-      "description": "Gaussian Mixture Models in Machine Learning",
-      "parent_id": "cs229_unsupervised_learning"
+      "id": "ml_newton_method",
+      "kind": "concept",
+      "name": "Newton's Method",
+      "topic": "ml_classification",
+      "description": "A second-order optimisation method using the Hessian to take curvature-aware steps, converging in few iterations for logistic regression.",
+      "default_order": 4
     },
     {
-      "id": "cs229_principal_component_analysis",
-      "title": "Principal Component Analysis",
-      "description": "Principal Component Analysis in Machine Learning",
-      "parent_id": "cs229_unsupervised_learning"
+      "id": "ml_softmax",
+      "kind": "concept",
+      "name": "Softmax Regression",
+      "topic": "ml_classification",
+      "description": "Softmax regression generalising logistic regression to multiple classes by producing a normalised probability distribution over the class scores.",
+      "default_order": 5
     },
     {
-      "id": "cs229_reinforcement_learning",
-      "title": "Reinforcement Learning",
-      "description": "Reinforcement Learning in Machine Learning",
-      "parent_id": null
+      "id": "ml_exp_family",
+      "kind": "concept",
+      "name": "Exponential Family",
+      "topic": "ml_classification",
+      "description": "A family of distributions sharing a canonical exponential form, unifying common distributions and providing the foundation for generalised linear models.",
+      "default_order": 6
     },
     {
-      "id": "cs229_mdps",
-      "title": "MDPs",
-      "description": "MDPs in Machine Learning",
-      "parent_id": "cs229_reinforcement_learning"
+      "id": "ml_glm",
+      "kind": "concept",
+      "name": "Generalized Linear Models",
+      "topic": "ml_classification",
+      "description": "Generalised linear models relating a linear predictor to a response from the exponential family through a link function, generalising ordinary regression.",
+      "default_order": 7
     },
     {
-      "id": "cs229_value_iteration",
-      "title": "Value Iteration",
-      "description": "Value Iteration in Machine Learning",
-      "parent_id": "cs229_reinforcement_learning"
+      "id": "ml_generative",
+      "kind": "topic",
+      "name": "Generative Learning",
+      "topic": null,
+      "default_order": 3
+    },
+    {
+      "id": "ml_generative_vs_disc",
+      "kind": "concept",
+      "name": "Generative vs Discriminative",
+      "topic": "ml_generative",
+      "description": "The contrast between generative models that learn the joint distribution p(x,y) and discriminative models that learn the conditional p(y|x) directly.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_gda",
+      "kind": "concept",
+      "name": "Gaussian Discriminant Analysis",
+      "topic": "ml_generative",
+      "description": "Gaussian discriminant analysis, a generative classifier modelling each class's features as a multivariate Gaussian and applying Bayes' rule to classify.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_naive_bayes",
+      "kind": "concept",
+      "name": "Naive Bayes",
+      "topic": "ml_generative",
+      "description": "A generative classifier assuming features are conditionally independent given the class, enabling simple, scalable estimation popular for text classification.",
+      "default_order": 3
+    },
+    {
+      "id": "ml_laplace",
+      "kind": "concept",
+      "name": "Laplace Smoothing",
+      "topic": "ml_generative",
+      "description": "Laplace (add-one) smoothing adding pseudocounts to probability estimates so that unseen feature-class combinations receive nonzero probability.",
+      "default_order": 4
+    },
+    {
+      "id": "ml_svm_margin",
+      "kind": "topic",
+      "name": "SVM: Margins and Duality",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "ml_margins",
+      "kind": "concept",
+      "name": "Functional & Geometric Margins",
+      "topic": "ml_svm_margin",
+      "description": "Functional and geometric margins measuring a classifier's confidence and the signed distance from examples to the decision boundary, central to SVMs.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_optimal_margin",
+      "kind": "concept",
+      "name": "Optimal Margin Classifier",
+      "topic": "ml_svm_margin",
+      "description": "The optimal margin classifier, a convex primal optimisation finding the hyperplane that maximises the geometric margin to the nearest training points.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_lagrange_duality",
+      "kind": "concept",
+      "name": "Lagrange Duality & KKT",
+      "topic": "ml_svm_margin",
+      "description": "Lagrange duality reformulating a constrained optimisation via its dual, with the KKT conditions characterising optimal primal-dual solutions for SVMs.",
+      "default_order": 3
+    },
+    {
+      "id": "ml_svm_dual",
+      "kind": "concept",
+      "name": "SVM Dual Problem",
+      "topic": "ml_svm_margin",
+      "description": "The SVM dual problem expressing the optimisation in terms of inner products between examples, exposing support vectors and enabling kernels.",
+      "default_order": 4
+    },
+    {
+      "id": "ml_svm_kernel",
+      "kind": "topic",
+      "name": "SVM: Kernels and Optimization",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "ml_kernels",
+      "kind": "concept",
+      "name": "Kernel Trick",
+      "topic": "ml_svm_kernel",
+      "description": "The kernel trick computing inner products in a high-dimensional feature space implicitly, letting linear algorithms learn nonlinear decision boundaries.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_mercer",
+      "kind": "concept",
+      "name": "Valid Kernels (Mercer)",
+      "topic": "ml_svm_kernel",
+      "description": "Mercer's condition characterising valid kernels as functions yielding positive semidefinite Gram matrices, guaranteeing a corresponding feature space.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_soft_margin",
+      "kind": "concept",
+      "name": "Soft Margin & Slack",
+      "topic": "ml_svm_kernel",
+      "description": "A soft-margin SVM introducing slack variables and a penalty parameter to tolerate misclassification, balancing margin width against training errors.",
+      "default_order": 3
+    },
+    {
+      "id": "ml_smo",
+      "kind": "concept",
+      "name": "SMO Algorithm",
+      "topic": "ml_svm_kernel",
+      "description": "Sequential minimal optimisation, a coordinate-ascent algorithm solving the SVM dual by analytically optimising pairs of Lagrange multipliers at a time.",
+      "default_order": 4
+    },
+    {
+      "id": "ml_theory",
+      "kind": "topic",
+      "name": "Learning Theory",
+      "topic": null,
+      "default_order": 6
+    },
+    {
+      "id": "ml_bias_variance",
+      "kind": "concept",
+      "name": "Bias-Variance Tradeoff",
+      "topic": "ml_theory",
+      "description": "The bias-variance tradeoff decomposing generalisation error into bias from oversimplification and variance from sensitivity to the training sample.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_regularization",
+      "kind": "concept",
+      "name": "Regularization (L1/L2)",
+      "topic": "ml_theory",
+      "description": "Adding an L1 or L2 penalty on parameters to the cost, discouraging large weights to reduce overfitting and, for L1, inducing sparse solutions.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_cross_val",
+      "kind": "concept",
+      "name": "Cross-Validation",
+      "topic": "ml_theory",
+      "description": "Cross-validation estimating generalisation by repeatedly training on subsets and validating on held-out folds, used for model selection and tuning.",
+      "default_order": 3
+    },
+    {
+      "id": "ml_vc_dimension",
+      "kind": "concept",
+      "name": "VC Dimension & Bounds",
+      "topic": "ml_theory",
+      "description": "The VC dimension measuring a hypothesis class's capacity as the largest set it can shatter, bounding the gap between training and true error.",
+      "default_order": 4
+    },
+    {
+      "id": "ml_model_selection",
+      "kind": "concept",
+      "name": "Model & Feature Selection",
+      "topic": "ml_theory",
+      "description": "Choosing among models and feature subsets to balance fit and complexity, using validation performance and selection procedures to avoid overfitting.",
+      "default_order": 5
+    },
+    {
+      "id": "ml_deep",
+      "kind": "topic",
+      "name": "Neural Networks",
+      "topic": null,
+      "default_order": 7
+    },
+    {
+      "id": "ml_neural_nets",
+      "kind": "concept",
+      "name": "Neural Networks",
+      "topic": "ml_deep",
+      "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_backprop",
+      "kind": "concept",
+      "name": "Backpropagation",
+      "topic": "ml_deep",
+      "description": "Backpropagation efficiently computing gradients of the loss with respect to all weights by applying the chain rule backward through the network.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_unsupervised",
+      "kind": "topic",
+      "name": "Unsupervised Learning",
+      "topic": null,
+      "default_order": 8
+    },
+    {
+      "id": "ml_kmeans",
+      "kind": "concept",
+      "name": "K-Means Clustering",
+      "topic": "ml_unsupervised",
+      "description": "K-means clustering partitioning data into K clusters by alternately assigning points to the nearest centroid and recomputing centroids to minimise inertia.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_em_algorithm",
+      "kind": "concept",
+      "name": "EM Algorithm",
+      "topic": "ml_unsupervised",
+      "description": "Expectation-maximisation, an iterative method for maximum-likelihood estimation with latent variables, alternating expected-completion and parameter-update steps.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_gmm_em",
+      "kind": "concept",
+      "name": "Gaussian Mixtures via EM",
+      "topic": "ml_unsupervised",
+      "description": "Gaussian mixture models representing data as a weighted mixture of Gaussians, fitted by expectation-maximisation to perform soft probabilistic clustering.",
+      "default_order": 3
+    },
+    {
+      "id": "ml_pca",
+      "kind": "concept",
+      "name": "Principal Component Analysis",
+      "topic": "ml_unsupervised",
+      "description": "Principal component analysis reducing dimensionality by projecting data onto orthogonal directions of greatest variance, the leading eigenvectors of the covariance.",
+      "default_order": 4
+    },
+    {
+      "id": "ml_ica",
+      "kind": "concept",
+      "name": "Independent Component Analysis",
+      "topic": "ml_unsupervised",
+      "description": "Independent component analysis separating a multivariate signal into statistically independent, non-Gaussian source components, as in blind source separation.",
+      "default_order": 5
+    },
+    {
+      "id": "ml_rl",
+      "kind": "topic",
+      "name": "Reinforcement Learning",
+      "topic": null,
+      "default_order": 9
+    },
+    {
+      "id": "ml_mdp",
+      "kind": "concept",
+      "name": "Markov Decision Processes",
+      "topic": "ml_rl",
+      "description": "Markov decision processes formalising sequential decision-making under uncertainty with states, actions, transition probabilities, rewards, and a discount factor.",
+      "default_order": 1
+    },
+    {
+      "id": "ml_value_policy",
+      "kind": "concept",
+      "name": "Value & Policy Iteration",
+      "topic": "ml_rl",
+      "description": "Value iteration and policy iteration, dynamic-programming algorithms computing optimal policies for a known MDP via the Bellman equations.",
+      "default_order": 2
+    },
+    {
+      "id": "ml_q_learning",
+      "kind": "concept",
+      "name": "Q-Learning",
+      "topic": "ml_rl",
+      "description": "Q-learning, a model-free, off-policy algorithm learning optimal action-value estimates from sampled transitions without knowing the environment's dynamics.",
+      "default_order": 3
+    },
+    {
+      "id": "ml_value_approx",
+      "kind": "concept",
+      "name": "Value Function Approximation",
+      "topic": "ml_rl",
+      "description": "Value function approximation generalising value estimates across large or continuous state spaces using parameterised functions like linear models or networks.",
+      "default_order": 4
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "from": "ml_linear_reg",
+      "to": "ml_cost_mse",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_cost_mse",
+      "to": "ml_gradient_descent",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gradient_descent",
+      "to": "ml_sgd",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_sgd",
+      "to": "ml_normal_eq",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_normal_eq",
+      "to": "ml_feature_scaling",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_sigmoid",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_sigmoid",
+      "to": "ml_logistic_mle",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_mle",
+      "to": "ml_newton_method",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_newton_method",
+      "to": "ml_softmax",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_softmax",
+      "to": "ml_exp_family",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_exp_family",
+      "to": "ml_glm",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_generative_vs_disc",
+      "to": "ml_gda",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_gda",
+      "to": "ml_naive_bayes",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_naive_bayes",
+      "to": "ml_laplace",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_margins",
+      "to": "ml_optimal_margin",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_optimal_margin",
+      "to": "ml_lagrange_duality",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_lagrange_duality",
+      "to": "ml_svm_dual",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_kernels",
+      "to": "ml_mercer",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_mercer",
+      "to": "ml_soft_margin",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_soft_margin",
+      "to": "ml_smo",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_bias_variance",
+      "to": "ml_regularization",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_regularization",
+      "to": "ml_cross_val",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_cross_val",
+      "to": "ml_vc_dimension",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_vc_dimension",
+      "to": "ml_model_selection",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_neural_nets",
+      "to": "ml_backprop",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_kmeans",
+      "to": "ml_em_algorithm",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_em_algorithm",
+      "to": "ml_gmm_em",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gmm_em",
+      "to": "ml_pca",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_pca",
+      "to": "ml_ica",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_mdp",
+      "to": "ml_value_policy",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_value_policy",
+      "to": "ml_q_learning",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_q_learning",
+      "to": "ml_value_approx",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_linear_reg",
+      "to": "ml_normal_eq",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gradient_descent",
+      "to": "ml_logistic_reg",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_logistic_mle",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_softmax",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_glm",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_generative_vs_disc",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_svm_dual",
+      "to": "ml_kernels",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_svm_dual",
+      "to": "ml_smo",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_linear_reg",
+      "to": "ml_bias_variance",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_bias_variance",
+      "to": "ml_cross_val",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_neural_nets",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gradient_descent",
+      "to": "ml_backprop",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
 }

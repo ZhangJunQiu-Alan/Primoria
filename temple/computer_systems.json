@@ -1,5 +1,5 @@
 {
-  "subject": "CMU 15-213 CSAPP",
+  "subject": "Computer Systems",
   "schema": {
     "nodeTypes": {
       "topic": {
@@ -37,397 +37,518 @@
       "id": "t1",
       "name": "Data Representation",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 1
     },
     {
       "id": "c1_1",
       "name": "Bits and Bytes",
       "topic": "t1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state."
     },
     {
       "id": "c1_2",
       "name": "Integer Representation",
       "topic": "t1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges."
     },
     {
       "id": "c1_3",
       "name": "Integer Arithmetic",
       "topic": "t1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings."
     },
     {
       "id": "c1_4",
       "name": "Floating Point Representation",
       "topic": "t1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values."
     },
     {
       "id": "c1_5",
       "name": "Floating Point Operations",
       "topic": "t1",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour."
     },
     {
       "id": "t2",
       "name": "Machine-Level Programming",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "c2_1",
       "name": "x86-64 Data Movement",
       "topic": "t2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words."
     },
     {
       "id": "c2_2",
       "name": "Arithmetic and Logical Operations",
       "topic": "t2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions."
     },
     {
       "id": "c2_3",
       "name": "Control Flow (Conditionals and Loops)",
       "topic": "t2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream."
     },
     {
       "id": "c2_4",
       "name": "Procedures and Call Stack",
       "topic": "t2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions."
     },
     {
       "id": "c2_5",
       "name": "Arrays and Structs",
       "topic": "t2",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture."
     },
     {
       "id": "t3",
       "name": "Processor Architecture",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "c3_1",
       "name": "Instruction Set Architecture (Y86-64)",
       "topic": "t3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation."
     },
     {
       "id": "c3_2",
       "name": "Sequential CPU Implementation",
       "topic": "t3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle."
     },
     {
       "id": "c3_3",
       "name": "Pipelining Principles",
       "topic": "t3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle."
     },
     {
       "id": "c3_4",
       "name": "Pipeline Hazards and Forwarding",
       "topic": "t3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back."
     },
     {
       "id": "c3_5",
       "name": "Exceptions in Pipelines",
       "topic": "t3",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions."
     },
     {
       "id": "t4",
       "name": "Code Optimization",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 4
     },
     {
       "id": "c4_1",
       "name": "Compiler Limitations",
       "topic": "t4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations."
     },
     {
       "id": "c4_2",
       "name": "Loop Unrolling",
       "topic": "t4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism."
     },
     {
       "id": "c4_3",
       "name": "Instruction-Level Parallelism",
       "topic": "t4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput."
     },
     {
       "id": "c4_4",
       "name": "Memory Aliasing",
       "topic": "t4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations."
     },
     {
       "id": "c4_5",
       "name": "Profiling Tools",
       "topic": "t4",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths."
     },
     {
       "id": "t5",
       "name": "Memory Hierarchy and Cache",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "c5_1",
       "name": "Storage Technologies",
       "topic": "t5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte."
     },
     {
       "id": "c5_2",
       "name": "Principle of Locality",
       "topic": "t5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance."
     },
     {
       "id": "c5_3",
       "name": "Cache Memory Organization",
       "topic": "t5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks."
     },
     {
       "id": "c5_4",
       "name": "Cache Performance Metrics",
       "topic": "t5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness."
     },
     {
       "id": "c5_5",
       "name": "Writing Cache-Friendly Code",
       "topic": "t5",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance."
     },
     {
       "id": "t6",
       "name": "Linking",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 6
     },
     {
       "id": "c6_1",
       "name": "Static Linking",
       "topic": "t6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image."
     },
     {
       "id": "c6_2",
       "name": "Object Files (ELF)",
       "topic": "t6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders."
     },
     {
       "id": "c6_3",
       "name": "Symbol Resolution",
       "topic": "t6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates."
     },
     {
       "id": "c6_4",
       "name": "Relocation",
       "topic": "t6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses."
     },
     {
       "id": "c6_5",
       "name": "Dynamic Linking",
       "topic": "t6",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing."
     },
     {
       "id": "t7",
       "name": "Exceptional Control Flow",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 7
     },
     {
       "id": "c7_1",
       "name": "Exceptions (Traps, Interrupts, Faults)",
       "topic": "t7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel."
     },
     {
       "id": "c7_2",
       "name": "Processes and Context Switches",
       "topic": "t7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context."
     },
     {
       "id": "c7_3",
       "name": "Process Control (fork, execve)",
       "topic": "t7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle."
     },
     {
       "id": "c7_4",
       "name": "Signals and Signal Handling",
       "topic": "t7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events."
     },
     {
       "id": "c7_5",
       "name": "Non-local Jumps",
       "topic": "t7",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery."
     },
     {
       "id": "t8",
       "name": "Virtual Memory",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 8
     },
     {
       "id": "c8_1",
       "name": "Address Translation",
       "topic": "t8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space."
     },
     {
       "id": "c8_2",
       "name": "Page Tables",
       "topic": "t8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation."
     },
     {
       "id": "c8_3",
       "name": "Translation Lookaside Buffer (TLB)",
       "topic": "t8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks."
     },
     {
       "id": "c8_4",
       "name": "Dynamic Memory Allocation",
       "topic": "t8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation."
     },
     {
       "id": "c8_5",
       "name": "Garbage Collection Basics",
       "topic": "t8",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation."
     },
     {
       "id": "t9",
       "name": "System-Level I/O",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 9
     },
     {
       "id": "c9_1",
       "name": "Unix I/O",
       "topic": "t9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls."
     },
     {
       "id": "c9_2",
       "name": "File Metadata",
       "topic": "t9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call."
     },
     {
       "id": "c9_3",
       "name": "Standard I/O Library",
       "topic": "t9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering."
     },
     {
       "id": "c9_4",
       "name": "File Sharing",
       "topic": "t9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork."
     },
     {
       "id": "c9_5",
       "name": "I/O Redirection",
       "topic": "t9",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers."
     },
     {
       "id": "t10",
       "name": "Network Programming",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "c10_1",
       "name": "Client-Server Model",
       "topic": "t10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection."
     },
     {
       "id": "c10_2",
       "name": "Internet Protocol (IP)",
       "topic": "t10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing."
     },
     {
       "id": "c10_3",
       "name": "Transmission Control Protocol (TCP)",
       "topic": "t10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control."
     },
     {
       "id": "c10_4",
       "name": "Sockets Interface",
       "topic": "t10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept."
     },
     {
       "id": "c10_5",
       "name": "HTTP Protocol Basics",
       "topic": "t10",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP."
     },
     {
       "id": "t11",
       "name": "Concurrent Programming",
       "kind": "topic",
-      "topic": null
+      "topic": null,
+      "default_order": 11
     },
     {
       "id": "c11_1",
       "name": "Thread Basics",
       "topic": "t11",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process."
     },
     {
       "id": "c11_2",
       "name": "Shared Variables",
       "topic": "t11",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 2,
+      "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others."
     },
     {
       "id": "c11_3",
       "name": "Synchronization (Semaphores)",
       "topic": "t11",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints."
     },
     {
       "id": "c11_4",
       "name": "Thread Safety",
       "topic": "t11",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 4,
+      "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state."
     },
     {
       "id": "c11_5",
       "name": "Deadlocks",
       "topic": "t11",
-      "kind": "concept"
+      "kind": "concept",
+      "default_order": 5,
+      "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold."
     }
   ],
   "edges": [

@@ -1,104 +1,335 @@
 {
-  "id": "cs142",
-  "name": "Web Applications",
-  "description": "Concepts of modern web application development.",
-  "topics": [
+  "subject": "Web Applications (Stanford CS142)",
+  "schema": {
+    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
+    "node_fields": {
+      "id": "globally unique id",
+      "kind": "topic | concept",
+      "name": "concept name",
+      "topic": "owning topic id; null for topic nodes",
+      "description": "one-sentence definition for prompting/RAG",
+      "default_order": "default teaching order within the topic"
+    },
+    "edge_types": {
+      "prereq": "from must be learned before to; strength=hard|soft"
+    },
+    "concept_node_definition": "concept = smallest independently quiz-testable skill"
+  },
+  "nodes": [
     {
-      "id": "cs142_internet_basics",
-      "title": "Internet Basics",
-      "description": "Internet Basics in Web Applications",
-      "parent_id": null
+      "id": "web_foundations",
+      "kind": "topic",
+      "name": "Web Foundations",
+      "topic": null,
+      "default_order": 1
     },
     {
-      "id": "cs142_http_protocol",
-      "title": "HTTP Protocol",
-      "description": "HTTP Protocol in Web Applications",
-      "parent_id": "cs142_internet_basics"
+      "id": "web_http",
+      "kind": "concept",
+      "name": "HTTP Protocol",
+      "topic": "web_foundations",
+      "description": "The stateless application-layer protocol underlying the web, where clients issue requests with methods and headers and servers reply with status codes and bodies.",
+      "default_order": 1
     },
     {
-      "id": "cs142_dns",
-      "title": "DNS",
-      "description": "DNS in Web Applications",
-      "parent_id": "cs142_internet_basics"
+      "id": "web_url_dns",
+      "kind": "concept",
+      "name": "URLs and DNS",
+      "topic": "web_foundations",
+      "description": "How web resources are named by URLs and located by resolving the hostname through DNS into an IP address before connecting.",
+      "default_order": 2
     },
     {
-      "id": "cs142_frontend_technologies",
-      "title": "Frontend Technologies",
-      "description": "Frontend Technologies in Web Applications",
-      "parent_id": null
+      "id": "web_client_server",
+      "kind": "concept",
+      "name": "Client-Server Model",
+      "topic": "web_foundations",
+      "description": "The web's architecture where browser clients request resources and servers respond, dividing responsibilities between front-end presentation and back-end logic.",
+      "default_order": 3
     },
     {
-      "id": "cs142_html_and_css",
-      "title": "HTML and CSS",
-      "description": "HTML and CSS in Web Applications",
-      "parent_id": "cs142_frontend_technologies"
+      "id": "web_frontend",
+      "kind": "topic",
+      "name": "Frontend Technologies",
+      "topic": null,
+      "default_order": 2
     },
     {
-      "id": "cs142_javascript_dom",
-      "title": "JavaScript DOM",
-      "description": "JavaScript DOM in Web Applications",
-      "parent_id": "cs142_frontend_technologies"
+      "id": "web_html",
+      "kind": "concept",
+      "name": "HTML",
+      "topic": "web_frontend",
+      "description": "HyperText Markup Language structuring web page content as a tree of nested elements with semantic tags that browsers parse and render.",
+      "default_order": 1
     },
     {
-      "id": "cs142_reactjs",
-      "title": "React.js",
-      "description": "React.js in Web Applications",
-      "parent_id": "cs142_frontend_technologies"
+      "id": "web_css",
+      "kind": "concept",
+      "name": "CSS",
+      "topic": "web_frontend",
+      "description": "Cascading Style Sheets describing the presentation of HTML, controlling layout, colour, and typography through selectors, the box model, and cascading rules.",
+      "default_order": 2
     },
     {
-      "id": "cs142_backend_technologies",
-      "title": "Backend Technologies",
-      "description": "Backend Technologies in Web Applications",
-      "parent_id": null
+      "id": "web_javascript",
+      "kind": "concept",
+      "name": "JavaScript",
+      "topic": "web_frontend",
+      "description": "The browser's scripting language adding interactivity to pages, manipulating content and responding to events with an event-driven, single-threaded model.",
+      "default_order": 3
     },
     {
-      "id": "cs142_nodejs",
-      "title": "Node.js",
-      "description": "Node.js in Web Applications",
-      "parent_id": "cs142_backend_technologies"
+      "id": "web_dom",
+      "kind": "concept",
+      "name": "DOM Manipulation",
+      "topic": "web_frontend",
+      "description": "The Document Object Model representing a page as a live tree of objects that scripts traverse and mutate to update content dynamically.",
+      "default_order": 4
     },
     {
-      "id": "cs142_rest_apis",
-      "title": "REST APIs",
-      "description": "REST APIs in Web Applications",
-      "parent_id": "cs142_backend_technologies"
+      "id": "web_react",
+      "kind": "concept",
+      "name": "React Components",
+      "topic": "web_frontend",
+      "description": "A component-based JavaScript library building user interfaces from reusable components that render declaratively from data, reconciled through a virtual DOM.",
+      "default_order": 5
     },
     {
-      "id": "cs142_databases",
-      "title": "Databases",
-      "description": "Databases in Web Applications",
-      "parent_id": null
+      "id": "web_state_props",
+      "kind": "concept",
+      "name": "State and Props",
+      "topic": "web_frontend",
+      "description": "React's data-flow model where props pass data down to child components and state holds local mutable data that triggers re-rendering when changed.",
+      "default_order": 6
     },
     {
-      "id": "cs142_relational_databases",
-      "title": "Relational Databases",
-      "description": "Relational Databases in Web Applications",
-      "parent_id": "cs142_databases"
+      "id": "web_backend",
+      "kind": "topic",
+      "name": "Backend Technologies",
+      "topic": null,
+      "default_order": 3
     },
     {
-      "id": "cs142_nosql",
-      "title": "NoSQL",
-      "description": "NoSQL in Web Applications",
-      "parent_id": "cs142_databases"
+      "id": "web_node",
+      "kind": "concept",
+      "name": "Node.js",
+      "topic": "web_backend",
+      "description": "A server-side JavaScript runtime built on the V8 engine, using an event-driven, non-blocking I/O model to build scalable network applications.",
+      "default_order": 1
     },
     {
-      "id": "cs142_web_security",
-      "title": "Web Security",
-      "description": "Web Security in Web Applications",
-      "parent_id": null
+      "id": "web_express",
+      "kind": "concept",
+      "name": "Express and Routing",
+      "topic": "web_backend",
+      "description": "A minimal Node.js web framework providing routing and middleware to handle HTTP requests, compose request processing, and build server-side APIs.",
+      "default_order": 2
     },
     {
-      "id": "cs142_xss",
-      "title": "XSS",
-      "description": "XSS in Web Applications",
-      "parent_id": "cs142_web_security"
+      "id": "web_rest",
+      "kind": "concept",
+      "name": "REST APIs",
+      "topic": "web_backend",
+      "description": "An architectural style for web APIs modelling functionality as resources addressed by URLs and manipulated through standard HTTP methods and status codes.",
+      "default_order": 3
     },
     {
-      "id": "cs142_csrf",
-      "title": "CSRF",
-      "description": "CSRF in Web Applications",
-      "parent_id": "cs142_web_security"
+      "id": "web_auth",
+      "kind": "concept",
+      "name": "Authentication and Sessions",
+      "topic": "web_backend",
+      "description": "Mechanisms verifying user identity and maintaining logged-in state across stateless HTTP using sessions, cookies, and tokens such as JWTs.",
+      "default_order": 4
+    },
+    {
+      "id": "web_data",
+      "kind": "topic",
+      "name": "Databases",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "web_relational",
+      "kind": "concept",
+      "name": "Relational Databases",
+      "topic": "web_data",
+      "description": "Databases organising data into tables of rows and columns, with primary and foreign keys expressing relationships, queried using SQL.",
+      "default_order": 1
+    },
+    {
+      "id": "web_sql",
+      "kind": "concept",
+      "name": "SQL",
+      "topic": "web_data",
+      "description": "Structured Query Language for defining and manipulating relational data, expressing selection, filtering, joining, and aggregation declaratively.",
+      "default_order": 2
+    },
+    {
+      "id": "web_nosql",
+      "kind": "concept",
+      "name": "NoSQL and MongoDB",
+      "topic": "web_data",
+      "description": "Non-relational document stores like MongoDB holding schema-flexible JSON-like documents, trading relational guarantees for scalability and flexibility.",
+      "default_order": 3
+    },
+    {
+      "id": "web_security",
+      "kind": "topic",
+      "name": "Web Security",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "web_xss",
+      "kind": "concept",
+      "name": "Cross-Site Scripting (XSS)",
+      "topic": "web_security",
+      "description": "Cross-site scripting, a vulnerability where attacker-supplied scripts execute in victims' browsers, mitigated by escaping output and content security policies.",
+      "default_order": 1
+    },
+    {
+      "id": "web_csrf",
+      "kind": "concept",
+      "name": "Cross-Site Request Forgery (CSRF)",
+      "topic": "web_security",
+      "description": "Cross-site request forgery, an attack tricking an authenticated browser into sending unintended requests, defended with anti-CSRF tokens and SameSite cookies.",
+      "default_order": 2
+    },
+    {
+      "id": "web_sql_injection",
+      "kind": "concept",
+      "name": "SQL Injection",
+      "topic": "web_security",
+      "description": "An attack inserting malicious SQL through unsanitised input to manipulate database queries, prevented with parameterised queries and input validation.",
+      "default_order": 3
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "from": "web_http",
+      "to": "web_url_dns",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "web_url_dns",
+      "to": "web_client_server",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "web_html",
+      "to": "web_css",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_css",
+      "to": "web_javascript",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "web_javascript",
+      "to": "web_dom",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_dom",
+      "to": "web_react",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_react",
+      "to": "web_state_props",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_node",
+      "to": "web_express",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_express",
+      "to": "web_rest",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_rest",
+      "to": "web_auth",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_relational",
+      "to": "web_sql",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_sql",
+      "to": "web_nosql",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "web_xss",
+      "to": "web_csrf",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "web_csrf",
+      "to": "web_sql_injection",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "web_http",
+      "to": "web_client_server",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_javascript",
+      "to": "web_node",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_http",
+      "to": "web_rest",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_dom",
+      "to": "web_xss",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_auth",
+      "to": "web_csrf",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_sql",
+      "to": "web_sql_injection",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "web_rest",
+      "to": "web_nosql",
+      "type": "prereq",
+      "strength": "soft"
+    }
+  ]
 }

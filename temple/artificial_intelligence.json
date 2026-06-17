@@ -1,92 +1,525 @@
 {
-  "id": "cs188",
-  "name": "Introduction to Artificial Intelligence",
-  "description": "Foundational AI algorithms and concepts.",
-  "topics": [
+  "subject": "Introduction to Artificial Intelligence (UCB CS188)",
+  "schema": {
+    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
+    "node_fields": {
+      "id": "globally unique id",
+      "kind": "topic | concept",
+      "name": "concept name",
+      "topic": "owning topic id; null for topic nodes",
+      "description": "one-sentence definition for prompting/RAG",
+      "default_order": "default teaching order within the topic"
+    },
+    "edge_types": {
+      "prereq": "from must be learned before to; strength=hard|soft"
+    },
+    "concept_node_definition": "concept = smallest independently quiz-testable skill"
+  },
+  "nodes": [
     {
-      "id": "cs188_search",
-      "title": "Search",
-      "description": "Search in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_search",
+      "kind": "topic",
+      "name": "Search",
+      "topic": null,
+      "default_order": 1
     },
     {
-      "id": "cs188_uninformed_search",
-      "title": "Uninformed Search",
-      "description": "Uninformed Search in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_search"
+      "id": "ai_search_problem",
+      "kind": "concept",
+      "name": "Search Problem Formulation",
+      "topic": "ai_search",
+      "description": "Formulating a problem for search as states, actions, a transition model, a goal test, and path costs, enabling systematic solution finding.",
+      "default_order": 1
     },
     {
-      "id": "cs188_informed_search",
-      "title": "Informed Search",
-      "description": "Informed Search in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_search"
+      "id": "ai_uninformed",
+      "kind": "concept",
+      "name": "Uninformed Search",
+      "topic": "ai_search",
+      "description": "Search strategies using no domain knowledge, including breadth-first, depth-first, and uniform-cost search, differing in completeness, optimality, and complexity.",
+      "default_order": 2
     },
     {
-      "id": "cs188_adversarial_search",
-      "title": "Adversarial Search",
-      "description": "Adversarial Search in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_search"
+      "id": "ai_heuristics",
+      "kind": "concept",
+      "name": "Heuristics and Admissibility",
+      "topic": "ai_search",
+      "description": "Heuristic functions estimating the cost to reach the goal, where admissibility (never overestimating) and consistency guarantee optimal informed search.",
+      "default_order": 3
     },
     {
-      "id": "cs188_constraint_satisfaction_problems",
-      "title": "Constraint Satisfaction Problems",
-      "description": "Constraint Satisfaction Problems in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_informed",
+      "kind": "concept",
+      "name": "Informed Search (A*)",
+      "topic": "ai_search",
+      "description": "Informed search using heuristics to guide exploration, including greedy best-first and A*, which expands nodes by estimated total path cost.",
+      "default_order": 4
     },
     {
-      "id": "cs188_markov_decision_processes",
-      "title": "Markov Decision Processes",
-      "description": "Markov Decision Processes in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_minimax",
+      "kind": "concept",
+      "name": "Adversarial Search (Minimax)",
+      "topic": "ai_search",
+      "description": "Adversarial search computing optimal play in zero-sum games by recursively assuming each player maximises its own outcome against an optimal opponent.",
+      "default_order": 5
     },
     {
-      "id": "cs188_reinforcement_learning",
-      "title": "Reinforcement Learning",
-      "description": "Reinforcement Learning in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_alphabeta",
+      "kind": "concept",
+      "name": "Alpha-Beta Pruning",
+      "topic": "ai_search",
+      "description": "An optimisation of minimax that prunes branches which cannot affect the final decision, allowing deeper search within the same time budget.",
+      "default_order": 6
     },
     {
-      "id": "cs188_probability",
-      "title": "Probability",
-      "description": "Probability in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_csp",
+      "kind": "topic",
+      "name": "Constraint Satisfaction",
+      "topic": null,
+      "default_order": 2
     },
     {
-      "id": "cs188_bayes_nets",
-      "title": "Bayes Nets",
-      "description": "Bayes Nets in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_probability"
+      "id": "ai_csp_def",
+      "kind": "concept",
+      "name": "Constraint Satisfaction Problems",
+      "topic": "ai_csp",
+      "description": "Constraint satisfaction problems defined by variables, domains, and constraints, seeking assignments that satisfy all constraints simultaneously.",
+      "default_order": 1
     },
     {
-      "id": "cs188_hidden_markov_models",
-      "title": "Hidden Markov Models",
-      "description": "Hidden Markov Models in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_backtracking",
+      "kind": "concept",
+      "name": "Backtracking Search",
+      "topic": "ai_csp",
+      "description": "A depth-first search for CSPs that assigns variables one at a time and backtracks when a constraint is violated, pruning the search tree.",
+      "default_order": 2
     },
     {
-      "id": "cs188_machine_learning",
-      "title": "Machine Learning",
-      "description": "Machine Learning in Introduction to Artificial Intelligence",
-      "parent_id": null
+      "id": "ai_arc_consistency",
+      "kind": "concept",
+      "name": "Constraint Propagation",
+      "topic": "ai_csp",
+      "description": "Constraint propagation that prunes domain values inconsistent with constraints, with arc consistency and forward checking reducing search effort.",
+      "default_order": 3
     },
     {
-      "id": "cs188_naïve_bayes",
-      "title": "Naïve Bayes",
-      "description": "Naïve Bayes in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_machine_learning"
+      "id": "ai_local_search",
+      "kind": "concept",
+      "name": "Local Search",
+      "topic": "ai_csp",
+      "description": "Search that iteratively improves a complete assignment using local moves, such as hill climbing and min-conflicts, trading completeness for scalability.",
+      "default_order": 4
     },
     {
-      "id": "cs188_perceptrons",
-      "title": "Perceptrons",
-      "description": "Perceptrons in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_machine_learning"
+      "id": "ai_mdp",
+      "kind": "topic",
+      "name": "Markov Decision Processes",
+      "topic": null,
+      "default_order": 3
     },
     {
-      "id": "cs188_neural_networks",
-      "title": "Neural Networks",
-      "description": "Neural Networks in Introduction to Artificial Intelligence",
-      "parent_id": "cs188_machine_learning"
+      "id": "ai_mdp_def",
+      "kind": "concept",
+      "name": "Markov Decision Processes",
+      "topic": "ai_mdp",
+      "description": "Markov decision processes modelling sequential decisions under uncertainty with states, actions, stochastic transitions, rewards, and a discount factor.",
+      "default_order": 1
+    },
+    {
+      "id": "ai_bellman",
+      "kind": "concept",
+      "name": "Bellman Equations",
+      "topic": "ai_mdp",
+      "description": "The Bellman equations recursively expressing the optimal value of a state as the best expected immediate reward plus discounted future value.",
+      "default_order": 2
+    },
+    {
+      "id": "ai_value_iteration",
+      "kind": "concept",
+      "name": "Value Iteration",
+      "topic": "ai_mdp",
+      "description": "A dynamic-programming algorithm computing optimal MDP values by iteratively applying the Bellman update until the value function converges.",
+      "default_order": 3
+    },
+    {
+      "id": "ai_policy_iteration",
+      "kind": "concept",
+      "name": "Policy Iteration",
+      "topic": "ai_mdp",
+      "description": "An MDP algorithm alternating policy evaluation, computing a policy's values, with policy improvement, acting greedily, until the policy stabilises.",
+      "default_order": 4
+    },
+    {
+      "id": "ai_rl",
+      "kind": "topic",
+      "name": "Reinforcement Learning",
+      "topic": null,
+      "default_order": 4
+    },
+    {
+      "id": "ai_rl_framework",
+      "kind": "concept",
+      "name": "Reinforcement Learning Framework",
+      "topic": "ai_rl",
+      "description": "Reinforcement learning, where an agent learns optimal behaviour by interacting with an unknown environment and receiving rewards, without a transition model.",
+      "default_order": 1
+    },
+    {
+      "id": "ai_td",
+      "kind": "concept",
+      "name": "Temporal Difference Learning",
+      "topic": "ai_rl",
+      "description": "Temporal-difference learning updating value estimates from successive observations, bootstrapping from later estimates without waiting for final outcomes.",
+      "default_order": 2
+    },
+    {
+      "id": "ai_qlearning",
+      "kind": "concept",
+      "name": "Q-Learning",
+      "topic": "ai_rl",
+      "description": "A model-free, off-policy reinforcement-learning algorithm that learns optimal action values directly from experience, independent of the policy followed.",
+      "default_order": 3
+    },
+    {
+      "id": "ai_exploration",
+      "kind": "concept",
+      "name": "Exploration vs Exploitation",
+      "topic": "ai_rl",
+      "description": "The exploration-exploitation tradeoff balancing trying new actions to gain information against choosing currently best actions to maximise reward.",
+      "default_order": 4
+    },
+    {
+      "id": "ai_approx_q",
+      "kind": "concept",
+      "name": "Approximate Q-Learning",
+      "topic": "ai_rl",
+      "description": "Approximate Q-learning representing the value function with features and weights, generalising across states too numerous to store in a table.",
+      "default_order": 5
+    },
+    {
+      "id": "ai_probability",
+      "kind": "topic",
+      "name": "Probability and Bayes Nets",
+      "topic": null,
+      "default_order": 5
+    },
+    {
+      "id": "ai_prob",
+      "kind": "concept",
+      "name": "Probability Fundamentals",
+      "topic": "ai_probability",
+      "description": "Probability fundamentals for AI, including random variables, joint and marginal distributions, and independence, used to reason under uncertainty.",
+      "default_order": 1
+    },
+    {
+      "id": "ai_bayes_rule",
+      "kind": "concept",
+      "name": "Bayes Rule",
+      "topic": "ai_probability",
+      "description": "Bayes' rule inverting conditional probabilities to update beliefs about hypotheses given observed evidence, combining prior probabilities with likelihoods.",
+      "default_order": 2
+    },
+    {
+      "id": "ai_bayes_nets",
+      "kind": "concept",
+      "name": "Bayesian Networks",
+      "topic": "ai_probability",
+      "description": "Bayesian networks compactly representing a joint distribution as a directed acyclic graph that encodes conditional independence among variables.",
+      "default_order": 3
+    },
+    {
+      "id": "ai_bn_inference",
+      "kind": "concept",
+      "name": "Inference in Bayes Nets",
+      "topic": "ai_probability",
+      "description": "Inference in Bayesian networks computing posterior probabilities via exact methods like variable elimination or approximate sampling techniques.",
+      "default_order": 4
+    },
+    {
+      "id": "ai_markov_models",
+      "kind": "topic",
+      "name": "Markov Models and HMMs",
+      "topic": null,
+      "default_order": 6
+    },
+    {
+      "id": "ai_markov_chain",
+      "kind": "concept",
+      "name": "Markov Models",
+      "topic": "ai_markov_models",
+      "description": "Markov models representing stochastic state sequences satisfying the Markov property, where the next state depends only on the current state.",
+      "default_order": 1
+    },
+    {
+      "id": "ai_hmm",
+      "kind": "concept",
+      "name": "Hidden Markov Models",
+      "topic": "ai_markov_models",
+      "description": "Hidden Markov models pairing an unobserved Markov state sequence with observations, used to infer hidden states from noisy evidence.",
+      "default_order": 2
+    },
+    {
+      "id": "ai_forward",
+      "kind": "concept",
+      "name": "Forward Algorithm",
+      "topic": "ai_markov_models",
+      "description": "The forward algorithm computing the filtered belief over hidden states given the observations seen so far, via recursive probability updates.",
+      "default_order": 3
+    },
+    {
+      "id": "ai_viterbi",
+      "kind": "concept",
+      "name": "Viterbi Algorithm",
+      "topic": "ai_markov_models",
+      "description": "The Viterbi algorithm using dynamic programming to find the single most likely sequence of hidden states given an observation sequence.",
+      "default_order": 4
+    },
+    {
+      "id": "ai_particle",
+      "kind": "concept",
+      "name": "Particle Filtering",
+      "topic": "ai_markov_models",
+      "description": "Particle filtering approximating the belief over states with weighted samples, propagated and resampled to track distributions in large state spaces.",
+      "default_order": 5
+    },
+    {
+      "id": "ai_ml",
+      "kind": "topic",
+      "name": "Machine Learning",
+      "topic": null,
+      "default_order": 7
+    },
+    {
+      "id": "ai_naive_bayes",
+      "kind": "concept",
+      "name": "Naive Bayes",
+      "topic": "ai_ml",
+      "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
+      "default_order": 1
+    },
+    {
+      "id": "ai_perceptron",
+      "kind": "concept",
+      "name": "Perceptron",
+      "topic": "ai_ml",
+      "description": "A linear classifier that learns a separating hyperplane by updating weights on misclassified examples via the perceptron learning rule.",
+      "default_order": 2
+    },
+    {
+      "id": "ai_neural_nets",
+      "kind": "concept",
+      "name": "Neural Networks",
+      "topic": "ai_ml",
+      "description": "Multilayer neural networks composing linear transformations with nonlinear activations to learn complex, nonlinear decision functions from data.",
+      "default_order": 3
+    },
+    {
+      "id": "ai_generalization",
+      "kind": "concept",
+      "name": "Generalization and Overfitting",
+      "topic": "ai_ml",
+      "description": "Generalisation describing how well a model performs on unseen data, with overfitting and model capacity governing the gap between training and test error.",
+      "default_order": 4
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "from": "ai_search_problem",
+      "to": "ai_uninformed",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_uninformed",
+      "to": "ai_heuristics",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_heuristics",
+      "to": "ai_informed",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_informed",
+      "to": "ai_minimax",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_minimax",
+      "to": "ai_alphabeta",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_csp_def",
+      "to": "ai_backtracking",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_backtracking",
+      "to": "ai_arc_consistency",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_arc_consistency",
+      "to": "ai_local_search",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_mdp_def",
+      "to": "ai_bellman",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bellman",
+      "to": "ai_value_iteration",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_value_iteration",
+      "to": "ai_policy_iteration",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_rl_framework",
+      "to": "ai_td",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_td",
+      "to": "ai_qlearning",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_qlearning",
+      "to": "ai_exploration",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_exploration",
+      "to": "ai_approx_q",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_prob",
+      "to": "ai_bayes_rule",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bayes_rule",
+      "to": "ai_bayes_nets",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bayes_nets",
+      "to": "ai_bn_inference",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_markov_chain",
+      "to": "ai_hmm",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_hmm",
+      "to": "ai_forward",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_forward",
+      "to": "ai_viterbi",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_viterbi",
+      "to": "ai_particle",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_naive_bayes",
+      "to": "ai_perceptron",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_perceptron",
+      "to": "ai_neural_nets",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_neural_nets",
+      "to": "ai_generalization",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_uninformed",
+      "to": "ai_informed",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_search_problem",
+      "to": "ai_csp_def",
+      "type": "prereq",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_bellman",
+      "to": "ai_policy_iteration",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_mdp_def",
+      "to": "ai_rl_framework",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_qlearning",
+      "to": "ai_approx_q",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_prob",
+      "to": "ai_markov_chain",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_hmm",
+      "to": "ai_particle",
+      "type": "prereq",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bayes_rule",
+      "to": "ai_naive_bayes",
+      "type": "prereq",
+      "strength": "hard"
+    }
+  ]
 }
