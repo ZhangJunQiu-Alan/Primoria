@@ -118,6 +118,23 @@ function buildLinearPath(graphId: string, startTopicId: string, targetConceptId:
   return { startTopicId, targetConceptId, linear: path.length > 1, path };
 }
 
+// Cross-graph recall returns hits from every graph. Pick the dominant subject by
+// summing similarity per graph_id; the winning graph is then positioned in
+// isolation by classifyEntry. Returns null when there are no results.
+export function pickDominantGraph(results: KnowledgeGraphSearchResult[]): string | null {
+  const mass = new Map<string, number>();
+  for (const r of results) mass.set(r.graphId, (mass.get(r.graphId) ?? 0) + Math.max(r.similarity, 0));
+  let best: string | null = null;
+  let bestMass = -Infinity;
+  for (const [graphId, m] of mass) {
+    if (m > bestMass) {
+      bestMass = m;
+      best = graphId;
+    }
+  }
+  return best;
+}
+
 export function classifyEntry(
   search: Pick<KnowledgeGraphSearchResponse, "graphId" | "results">,
   overrides: Partial<PositioningParams> = {},

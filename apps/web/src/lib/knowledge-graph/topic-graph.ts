@@ -1,6 +1,4 @@
-import calculusTopicGraph from "./data/topic-graph.calculus_single_variable_v1.json";
-
-import { DEFAULT_KG_GRAPH_ID } from "./search";
+import { DEFAULT_TOPIC_GRAPH_ID, TOPIC_GRAPHS } from "./data/topic-graphs.generated";
 
 export type TopicConcept = {
   conceptId: string;
@@ -29,12 +27,14 @@ export type TopicGraph = {
   topics: TopicNode[];
 };
 
-const GRAPHS: Record<string, TopicGraph> = {
-  [DEFAULT_KG_GRAPH_ID]: calculusTopicGraph as TopicGraph,
-};
+export { DEFAULT_TOPIC_GRAPH_ID } from "./data/topic-graphs.generated";
 
-export function getTopicGraph(graphId: string = DEFAULT_KG_GRAPH_ID): TopicGraph {
-  const graph = GRAPHS[graphId];
+export function listTopicGraphIds(): string[] {
+  return Object.keys(TOPIC_GRAPHS);
+}
+
+export function getTopicGraph(graphId: string = DEFAULT_TOPIC_GRAPH_ID): TopicGraph {
+  const graph = TOPIC_GRAPHS[graphId];
   if (!graph) throw new Error(`Unknown topic graph: ${graphId}`);
   return graph;
 }

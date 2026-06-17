@@ -7,7 +7,8 @@ import {
 } from "./embeddings";
 import { encodeKnowledgeGraphQuery, type EncodedKnowledgeGraphQuery } from "./query-encoding";
 
-export const DEFAULT_KG_GRAPH_ID = "calculus_single_variable_v1";
+// Sentinel for cross-graph recall (search across every graph, no graph filter).
+export const ALL_KG_GRAPHS = "*";
 export const DEFAULT_KG_SEARCH_TOP_K = 15;
 
 export type KnowledgeGraphNodeKind = "topic" | "concept";
@@ -93,7 +94,9 @@ export async function searchKnowledgeGraphNodes(input: {
   topK?: number;
   modelVersion?: string;
 }): Promise<KnowledgeGraphSearchResponse> {
-  const graphId = input.graphId || DEFAULT_KG_GRAPH_ID;
+  // No graphId (or "*") => cross-graph recall: rank nodes across every graph so
+  // cold-start positioning can discover the subject from the top hits.
+  const graphFilter = input.graphId && input.graphId !== ALL_KG_GRAPHS ? input.graphId : null;
   const modelVersion = input.modelVersion || getKnowledgeGraphEmbeddingModelVersion();
   const topK = clampTopK(input.topK);
   const encodedQuery = encodeKnowledgeGraphQuery(input.query);
@@ -127,17 +130,17 @@ export async function searchKnowledgeGraphNodes(input: {
       left join public.knowledge_graph_topics concept_topic
         on concept_topic.graph_id = concept_node.graph_id
        and concept_topic.topic_id = concept_node.topic_id
-      where e.graph_id = $2
-        and e.model_version = $3
+      where e.model_version = $2
+        ${graphFilter ? "and e.graph_id = $4" : ""}
       order by e.embedding <=> $1::vector
-      limit $4
+      limit $3
     `,
-    [queryVector, graphId, modelVersion, topK],
+    graphFilter ? [queryVector, modelVersion, topK, graphFilter] : [queryVector, modelVersion, topK],
   );
 
   return {
     encodedQuery,
-    graphId,
+    graphId: graphFilter ?? ALL_KG_GRAPHS,
     modelVersion,
     topK,
     results: result.rows.map(mapRow),

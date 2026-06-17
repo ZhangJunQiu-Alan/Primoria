@@ -248,7 +248,7 @@ async function createRawAnthropicJsonCompletion(
       signal: controller.signal,
       body: JSON.stringify({
         model: settings.model,
-        max_tokens: 1800,
+        max_tokens: 16384,
         temperature: 0.2,
         system: JSON_ONLY_COURSE_PROMPT,
         messages: [{ role: "user", content: userPrompt }],
