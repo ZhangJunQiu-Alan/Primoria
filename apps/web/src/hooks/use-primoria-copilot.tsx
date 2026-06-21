@@ -10,7 +10,7 @@ import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
 import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
-import type { CourseCardArtifact } from "@/lib/agent-os";
+import type { CourseCardArtifact, TutorArtifact } from "@/lib/agent-os";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -238,6 +238,7 @@ type LearningPhase = "positioning" | "building" | "ready" | "broad" | "fallback"
 // the user's session natively, so the course persists to app_courses under the
 // signed-in owner. specific -> course card, broad -> menu, fallback -> message.
 function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
+  const [activeQuery, setActiveQuery] = useState<string | undefined>(query);
   const [phase, setPhase] = useState<LearningPhase>("positioning");
   const [artifact, setArtifact] = useState<CourseCardArtifact | null>(null);
   const [menu, setMenu] = useState<MenuItem[]>([]);
@@ -245,7 +246,11 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
   const requestSeqRef = useRef(0);
 
   useEffect(() => {
-    if (!query) return;
+    setActiveQuery(query);
+  }, [query]);
+
+  useEffect(() => {
+    if (!activeQuery) return;
     const requestSeq = ++requestSeqRef.current;
     const isCurrentRequest = () => requestSeqRef.current === requestSeq;
 
@@ -259,7 +264,7 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
         const posRes = await fetch("/api/knowledge-graph/position", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ query, graphId }),
+          body: JSON.stringify({ query: activeQuery, graphId }),
         });
         const posData = await posRes.json();
         if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
@@ -301,7 +306,7 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     return () => {
       if (requestSeqRef.current === requestSeq) requestSeqRef.current += 1;
     };
-  }, [query, graphId]);
+  }, [activeQuery, graphId]);
 
   if (phase === "ready" && artifact) return <ToolCard artifact={artifact} />;
 
@@ -314,9 +319,24 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
             <span>可能的学习入口</span>
           </div>
           <div className="visualizer">
-            <ul className="kg-menu-list">
+            <ul className="kg-menu-list" style={{ listStyleType: "none", padding: 0, margin: "8px 0" }}>
               {menu.map((item) => (
-                <li key={item.topicId}>{item.name}</li>
+                <li
+                  key={item.topicId}
+                  onClick={() => setActiveQuery(item.name)}
+                  style={{
+                    cursor: "pointer",
+                    padding: "8px 12px",
+                    margin: "4px 0",
+                    background: "var(--background-secondary, #f4f4f5)",
+                    borderRadius: "6px",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--background-hover, #e4e4e7)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "var(--background-secondary, #f4f4f5)")}
+                >
+                  {item.name}
+                </li>
               ))}
             </ul>
           </div>
@@ -430,46 +450,46 @@ export function usePrimoriaGenerativeUI() {
     ),
   });
 
-  const makeVisualizerRenderTool = (name: string) => {
-    useRenderTool({
-      name,
-      parameters: z.any(),
-      render: ({ status, result }) => {
-        if (result) {
-          try {
-            const artifact = JSON.parse(result);
-            return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
-          } catch {}
-        }
-        return (
-          <div className="primoria-copilot-tool">
-            <div className="tool-card status-card">
-              <div className="tool-title">
-                <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
-                <span>{name} · {status === "complete" ? "complete" : "executing"}</span>
-              </div>
-            </div>
-          </div>
-        );
-      },
-    });
-  };
-
-  makeVisualizerRenderTool("render_chart");
-  makeVisualizerRenderTool("render_diagram");
-  makeVisualizerRenderTool("render_physics_scene");
-  makeVisualizerRenderTool("render_algorithm");
-  makeVisualizerRenderTool("render_math_explorer");
-  makeVisualizerRenderTool("render_wave");
-  makeVisualizerRenderTool("render_graph");
-  makeVisualizerRenderTool("render_molecule");
-  makeVisualizerRenderTool("render_3d_scene");
+  useRenderTool({ name: "render_chart", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_chart" status={status} result={result} /> });
+  useRenderTool({ name: "render_diagram", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_diagram" status={status} result={result} /> });
+  useRenderTool({ name: "render_physics_scene", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_physics_scene" status={status} result={result} /> });
+  useRenderTool({ name: "render_algorithm", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_algorithm" status={status} result={result} /> });
+  useRenderTool({ name: "render_math_explorer", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_math_explorer" status={status} result={result} /> });
+  useRenderTool({ name: "render_wave", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_wave" status={status} result={result} /> });
+  useRenderTool({ name: "render_graph", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_graph" status={status} result={result} /> });
+  useRenderTool({ name: "render_molecule", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_molecule" status={status} result={result} /> });
+  useRenderTool({ name: "render_3d_scene", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_3d_scene" status={status} result={result} /> });
 
   useDefaultRenderTool({
     render: () => <></>,
   });
 }
 
+function VisualizerToolRender({ name, status, result }: { name: string; status: string; result?: string }) {
+  let artifact: unknown = null;
+  if (result) {
+    try {
+      artifact = JSON.parse(result);
+    } catch {}
+  }
+  if (isTutorArtifact(artifact)) {
+    return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
+  }
+  return (
+    <div className="primoria-copilot-tool">
+      <div className="tool-card status-card">
+        <div className="tool-title">
+          <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
+          <span>{name} · {status === "complete" ? "complete" : "executing"}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function isTutorArtifact(value: unknown): value is TutorArtifact {
+  return value !== null && typeof value === "object" && "type" in value && typeof (value as { type: unknown }).type === "string";
+}
 
 export function sanitizeCopilotAssistantText(content?: string) {
   const text = (content ?? "").trim();
