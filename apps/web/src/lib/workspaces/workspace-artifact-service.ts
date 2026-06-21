@@ -25,7 +25,6 @@ export type WorkspaceArtifactMessageBundle = {
 };
 
 export function inferWorkspaceArtifactKind(artifact: WorkspaceMessageArtifact): WorkspaceArtifactKind {
-  if (artifact.type === "app") return "app";
   const groups = new Set(artifact.groups.map((group) => group.trim().toLowerCase()).filter(Boolean));
   if (groups.has("course")) return "course";
   if (groups.has("task result")) return "task_result";
@@ -33,7 +32,7 @@ export function inferWorkspaceArtifactKind(artifact: WorkspaceMessageArtifact): 
 }
 
 export function defaultWorkspaceArtifactReviewStatus(kind: WorkspaceArtifactKind): WorkspaceArtifactReviewStatus {
-  return kind === "app" ? "reviewed" : "needs_review";
+  return "needs_review";
 }
 
 export function buildWorkspaceArtifactRecord(input: WorkspaceArtifactSeedInput & { sourceMessageId: string }): WorkspaceArtifact {

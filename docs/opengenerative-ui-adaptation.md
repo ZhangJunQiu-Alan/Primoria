@@ -39,5 +39,4 @@ Primoria should borrow the architecture, not the exact visual skin.
 
 ## Still not adopted
 
-- Capability-library sedimentation is not yet wired into the LangGraph renderer path.
 - Reuse of saved apps through a router agent remains future work.

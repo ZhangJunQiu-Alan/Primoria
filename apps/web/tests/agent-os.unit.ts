@@ -181,8 +181,7 @@ async function main() {
   assert(registry.get("create_workspace_task")?.approval === "on_risk", "registry exposes approval policy");
   assert(registry.get("save_agent_memory")?.sideEffects.includes("memory"), "registry exposes memory side effect");
   assert(registry.get("create_workspace_task")?.inspector?.label === "Create task", "registry exposes inspector metadata");
-  assert(registry.get("render_interactive_widget")?.render?.streamingRenderer === "workspace-widget-stream", "registry exposes streaming renderer metadata");
-  assert(registry.list().length >= 10, "workspace internal tools are available as manifests");
+  assert(registry.list().length >= 8, "workspace internal tools are available as manifests");
 
   const profile: WorkspaceAgentProfile = {
     id: "profile_agent_os_tools",

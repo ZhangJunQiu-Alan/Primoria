@@ -1,28 +1,16 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
-import { getApp } from "@/lib/capability-library/store";
 import { getWorkspaceOwnerId } from "@/lib/workspaces/owner";
 import { buildWorkspaceArtifactFromMessage, createWorkspaceMessage, getWorkspaceView, listWorkspaceMessages, runWorkspaceAgentTurn } from "@/lib/workspaces/store";
 import type { WorkspaceMessageArtifact } from "@/lib/workspaces/types";
 
-const ArtifactSchema = z.union([
-  z.object({
-    type: z.literal("app"),
-    appId: z.string().min(1).max(160).optional(),
-    version: z.number().int().positive().optional(),
-    title: z.string().min(1).max(120),
-    description: z.string().min(1).max(240),
-    primaryAction: z.string().min(1).max(40),
-    secondaryAction: z.string().min(1).max(40).optional(),
-  }),
-  z.object({
-    type: z.literal("task"),
-    title: z.string().min(1).max(120),
-    description: z.string().min(1).max(240),
-    groups: z.array(z.string().min(1).max(80)).max(6),
-  }),
-]);
+const ArtifactSchema = z.object({
+  type: z.literal("task"),
+  title: z.string().min(1).max(120),
+  description: z.string().min(1).max(240),
+  groups: z.array(z.string().min(1).max(80)).max(6),
+});
 
 const MessageSchema = z.object({
   threadId: z.string().min(1),
@@ -67,18 +55,16 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   if (view.workspace.id !== id) return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   const parsed = MessageSchema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return NextResponse.json({ error: "Message request is invalid." }, { status: 400 });
-  let artifact;
   let message;
   let agentRun;
   try {
-    artifact = await enrichMessageArtifact(user?.id, parsed.data.artifact);
     message = await createWorkspaceMessage(ownerId, {
       workspaceId: id,
       threadId: parsed.data.threadId,
       content: parsed.data.content,
       senderName: parsed.data.senderName ?? user?.displayName ?? "You",
       senderKind: "human",
-      artifact,
+      artifact: parsed.data.artifact as WorkspaceMessageArtifact | undefined,
     });
     agentRun = await runWorkspaceAgentTurn(ownerId, { workspaceId: id, threadId: parsed.data.threadId, message });
   } catch (error) {
@@ -96,18 +82,4 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     agentMemories: agentRun.memories ?? [],
     agentArtifacts: agentRun.artifacts ?? [],
   });
-}
-
-async function enrichMessageArtifact(
-  ownerId: string | null | undefined,
-  artifact: z.infer<typeof ArtifactSchema> | undefined,
-): Promise<WorkspaceMessageArtifact | undefined> {
-  if (!artifact || artifact.type !== "app" || !artifact.appId) return artifact;
-  const app = await getApp(artifact.appId, ownerId);
-  if (!app) return artifact;
-  return {
-    ...artifact,
-    version: artifact.version ?? app.version,
-    template: app.template,
-  };
 }

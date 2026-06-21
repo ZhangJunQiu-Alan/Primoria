@@ -9,7 +9,6 @@ export default [
   {
     // The following rules were added in React 19's react-hooks lint package and
     // surface pre-existing tech debt in components that predate this feature.
-    // Tracked separately — out of scope for the capability-library feature.
     rules: {
       "react-hooks/set-state-in-effect": "warn",
       "react-hooks/refs": "warn",

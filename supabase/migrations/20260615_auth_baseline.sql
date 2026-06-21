@@ -2,7 +2,7 @@
 --
 -- Establishes Supabase Auth (auth.users) as the canonical identity for apps/web.
 -- NOTE: the pre-existing hand-rolled public.users + owner_id schema is the FK
--- backbone of ~25 externally-owned tables (workspace_*, courses, learning_apps,
+-- backbone of externally-owned tables (workspace_*, courses,
 -- copilot_chat_*, quiz_attempts, ...). It is intentionally LEFT UNTOUCHED here.
 -- This migration only adds an app-owned profile keyed to auth.users.
 

@@ -24,7 +24,7 @@ const prompts = [
   {
     id: "04-diagram-course-schema",
     expectedMode: "diagram",
-    prompt: "Create an ER diagram for a learning app with Users, Courses, Lessons, Blocks, Attempts, and SavedArtifacts. Show the key relationships.",
+    prompt: "Create an ER diagram for a learning platform with Users, Courses, Lessons, Blocks, Attempts, and SavedArtifacts. Show the key relationships.",
   },
   {
     id: "05-physics-pendulum",

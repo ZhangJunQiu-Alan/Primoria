@@ -69,5 +69,4 @@ Preview artifacts:
 ## Next implementation steps
 
 1. Route adaptive course requests through knowledge-graph positioning before generation.
-2. Reattach capability-library sedimentation to LangGraph widget outputs.
-3. Add explicit structured intent routing if prompt-only routing becomes unstable.
+2. Add explicit structured intent routing if prompt-only routing becomes unstable.

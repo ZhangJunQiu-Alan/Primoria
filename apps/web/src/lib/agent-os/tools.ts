@@ -146,8 +146,6 @@ export function workspaceToolRendererRegistrations(): ToolRendererRegistration[]
     { key: "workspace-tool-result", description: "Generic workspace tool result inspector." },
     { key: "workspace-task-card", toolName: "create_workspace_task", artifactType: "task", description: "Workspace task card renderer." },
     { key: "workspace-task-card-update", toolName: "update_workspace_task", artifactType: "task", description: "Workspace task update renderer." },
-    { key: "workspace-app-card", toolName: "share_learning_app", artifactType: "app", description: "Learning app card renderer." },
-    { key: "workspace-widget-card", toolName: "render_interactive_widget", artifactType: "app", streaming: true, description: "Interactive widget renderer." },
     { key: "workspace-course-card", toolName: "generate_course", artifactType: "course", description: "Course artifact renderer." },
     { key: "workspace-memory-card", toolName: "save_agent_memory", artifactType: "memory", description: "Agent memory review renderer." },
     { key: "workspace-artifact-card", toolName: "save_learning_artifact", artifactType: "saved_artifact", description: "Saved learning artifact renderer." },
@@ -159,7 +157,6 @@ function workspaceToolSideEffects(toolName: WorkspaceInternalToolName): string[]
   if (toolName === "create_workspace_task" || toolName === "update_workspace_task") return ["task"];
   if (toolName === "save_agent_memory") return ["memory"];
   if (toolName === "generate_course") return ["course", "artifact"];
-  if (toolName === "render_interactive_widget" || toolName === "share_learning_app") return ["artifact", "message"];
   if (toolName === "create_quiz" || toolName === "save_learning_artifact") return ["artifact"];
   return ["workspace"];
 }
@@ -168,7 +165,6 @@ function workspaceToolArtifactType(toolName: WorkspaceInternalToolName): string 
   if (toolName === "create_workspace_task" || toolName === "update_workspace_task") return "task";
   if (toolName === "save_agent_memory") return "memory";
   if (toolName === "generate_course") return "course";
-  if (toolName === "render_interactive_widget" || toolName === "share_learning_app") return "app";
   if (toolName === "save_learning_artifact") return "saved_artifact";
   if (toolName === "create_quiz") return "quiz";
   return undefined;
@@ -177,16 +173,14 @@ function workspaceToolArtifactType(toolName: WorkspaceInternalToolName): string 
 function workspaceToolRendererKey(toolName: WorkspaceInternalToolName): string {
   if (toolName === "create_workspace_task") return "workspace-task-card";
   if (toolName === "update_workspace_task") return "workspace-task-card-update";
-  if (toolName === "share_learning_app") return "workspace-app-card";
-  if (toolName === "render_interactive_widget") return "workspace-widget-card";
   if (toolName === "generate_course") return "workspace-course-card";
   if (toolName === "save_agent_memory") return "workspace-memory-card";
   if (toolName === "save_learning_artifact") return "workspace-artifact-card";
   return "workspace-tool-result";
 }
 
-function workspaceToolStreamingRendererKey(toolName: WorkspaceInternalToolName): string | undefined {
-  return toolName === "render_interactive_widget" ? "workspace-widget-stream" : undefined;
+function workspaceToolStreamingRendererKey(_toolName: WorkspaceInternalToolName): string | undefined {
+  return undefined;
 }
 
 function workspaceToolInspectorFields(toolName: WorkspaceInternalToolName): string[] {
@@ -194,7 +188,6 @@ function workspaceToolInspectorFields(toolName: WorkspaceInternalToolName): stri
   if (toolName === "create_workspace_task" || toolName === "update_workspace_task") return ["task", "taskIds", "nextStep"];
   if (toolName === "save_agent_memory") return ["memory", "scope", "nextStep"];
   if (toolName === "generate_course") return ["topic", "moduleIds", "assessments"];
-  if (toolName === "render_interactive_widget" || toolName === "share_learning_app") return ["appId", "title", "description"];
   return ["summary", "artifact"];
 }
 

@@ -110,33 +110,6 @@ export const courseGenerationJobs = pgTable(
   }),
 );
 
-export const learningApps = pgTable(
-  "learning_apps",
-  {
-    id: text("id").primaryKey(),
-    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    name: text("name").notNull(),
-    displayName: text("display_name").notNull(),
-    description: text("description"),
-    tags: jsonb("tags").notNull(),
-    template: jsonb("template").notNull(),
-    origin: jsonb("origin").notNull(),
-    composition: jsonb("composition"),
-    capabilities: jsonb("capabilities"),
-    metadata: jsonb("metadata").notNull(),
-    htmlSignature: text("html_signature"),
-    archivedAt: timestamp("archived_at", { withTimezone: true }),
-    version: integer("version").notNull().default(1),
-    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
-  },
-  (table) => ({
-    ownerUpdatedIdx: index("learning_apps_owner_updated_idx").on(table.ownerId, table.updatedAt),
-    ownerArchivedUpdatedIdx: index("learning_apps_owner_archived_updated_idx").on(table.ownerId, table.archivedAt, table.updatedAt),
-    ownerSignatureUnique: uniqueIndex("learning_apps_owner_signature_uidx").on(table.ownerId, table.htmlSignature),
-  }),
-);
-
 export const courseEditEvents = pgTable(
   "course_edit_events",
   {

@@ -91,17 +91,13 @@ Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full 
 
 `ToolCard` (`apps/web/src/components/generative-ui/tool-card.tsx`) routes each `TutorArtifact` type to its renderer. Adding a new artifact type requires: (1) the type in `types.ts`, (2) a branch in `ToolCard`, (3) schema in `primoria-deep-agent.ts` and `graph.mjs`.
 
-### Capability library / sedimentation
-
-After a widget renders, `sedimentWidget` in `apps/web/src/lib/capability-library/sedimentation.ts` automatically saves it to the `learning_apps` DB table if it passes size and dedup checks. This is the "widget library" users can browse.
-
 ### Course generation
 
 `generateCourseTool` in the agent calls `generateCourse` in `apps/web/src/lib/ai/deepagent/course-generator.ts`. Courses are stored in the `courses` table (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Course blocks are `jsonb` and include types: `text | analogy | transfer | visual | code`. Visual blocks currently carry `{ html }`.
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Tables: `users`, `identities`, `sessions`, `otp_codes`, `courses`, `course_edit_events`, `copilot_chat_threads`, `copilot_chat_messages`, `user_settings`, `learning_apps` (capability library).
+ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Tables include `users`, `identities`, `sessions`, `otp_codes`, `courses`, `course_edit_events`, `copilot_chat_threads`, `copilot_chat_messages`, and `user_settings`.
 
 ### Model provider
 

@@ -30,7 +30,6 @@ const TOOL_OPTIONS: Array<{
   { toolName: "update_workspace_task", label: "Update tasks", approval: "on_risk" },
   { toolName: "create_quiz", label: "Create quizzes", approval: "never" },
   { toolName: "generate_course", label: "Generate courses", approval: "always" },
-  { toolName: "render_interactive_widget", label: "Render widgets", approval: "always" },
   { toolName: "save_learning_artifact", label: "Save artifacts", approval: "always" },
   { toolName: "save_agent_memory", label: "Save memory", approval: "always" },
 ];

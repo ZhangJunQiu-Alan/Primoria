@@ -36,11 +36,9 @@ Primary references checked before implementation:
 - Users can target a direct chat to a workspace member, while rooms stay shared by default.
 - Users can add human or AI teammate members from the details drawer.
 - Users can send messages through `POST /api/workspaces/[id]/messages`.
-- Users can attach and publish an application card into the current chat, including references to saved Library apps when available.
-- Users can open shared HTML apps from workspace cards in a sandboxed preview dialog, and generator apps expose their saved prompt for follow-up.
 - Users can create tasks, assign them to workspace members, submit result notes, and mark them complete/reopened from the task list.
 - The workspace client streams current workspace updates through `GET /api/workspaces/[id]/events` and falls back to periodic refresh if streaming is unavailable.
-- Local development without a signed-in user uses an in-memory empty workspace and `.primoria-capability-library.json` for saved apps so the UI remains usable.
+- Local development without a signed-in user uses an in-memory empty workspace so the UI remains usable.
 - Signed-in Postgres mode creates an empty starter workspace when needed, then persists workspace, members, threads, messages, and tasks from real user actions.
 - Database migrations load `.env.local` for local CLI runs, and `tests/workspace.db.ts` covers persisted invite/direct-message visibility.
 - Details are collapsed by default and can be expanded for members, tasks, and the agent brief.

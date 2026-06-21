@@ -4,9 +4,7 @@ import { eq } from "drizzle-orm";
 import { getDb } from "../src/lib/db/client";
 import { identities } from "../src/lib/db/schema";
 import { saveCourse } from "../src/lib/courses/store";
-import { saveApp } from "../src/lib/capability-library/store";
 import type { Course } from "../src/lib/courses/types";
-import type { LearningApp } from "../src/lib/capability-library/types";
 
 async function main() {
   const email = process.argv[2]?.trim().toLowerCase();
@@ -18,7 +16,6 @@ async function main() {
 
   const root = findWorkspaceRoot();
   const coursesFile = path.join(root, ".primoria-courses.json");
-  const appsFile = path.join(root, ".primoria-capability-library.json");
 
   let courseCount = 0;
   if (fs.existsSync(coursesFile)) {
@@ -29,16 +26,7 @@ async function main() {
     }
   }
 
-  let appCount = 0;
-  if (fs.existsSync(appsFile)) {
-    const parsed = JSON.parse(fs.readFileSync(appsFile, "utf8")) as { apps?: LearningApp[] };
-    for (const app of parsed.apps ?? []) {
-      await saveApp(app, ownerId);
-      appCount += 1;
-    }
-  }
-
-  console.log(`Imported ${courseCount} courses and ${appCount} apps for ${email}.`);
+  console.log(`Imported ${courseCount} courses for ${email}.`);
 }
 
 function findWorkspaceRoot() {

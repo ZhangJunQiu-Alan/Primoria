@@ -22,7 +22,6 @@ const AgentDraftSchema = z.object({
     "update_workspace_task",
     "create_quiz",
     "generate_course",
-    "render_interactive_widget",
     "save_learning_artifact",
     "save_agent_memory",
   ])).min(1).max(9),
@@ -76,7 +75,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       {
         role: "system",
         content:
-          "Create a concise Primoria learning agent draft. Return only JSON with displayName, description, systemPrompt, and skills. Skills must be selected from summarize_thread, search_workspace_messages, create_workspace_task, update_workspace_task, create_quiz, generate_course, render_interactive_widget, save_learning_artifact, save_agent_memory.",
+          "Create a concise Primoria learning agent draft. Return only JSON with displayName, description, systemPrompt, and skills. Skills must be selected from summarize_thread, search_workspace_messages, create_workspace_task, update_workspace_task, create_quiz, generate_course, save_learning_artifact, save_agent_memory.",
       },
       {
         role: "user",
