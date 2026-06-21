@@ -67,10 +67,9 @@ async function requestJson(pathname, init, cookieHeader) {
   return data;
 }
 
-async function openWorkspaceThread(page, ownerCookieValue, workspaceName, roomName) {
+async function openWorkspaceThread(page, ownerCookieValue, workspaceId, roomName) {
   await page.context().addCookies([{ name: "primoria_workspace_owner", value: ownerCookieValue, domain: BASE_HOSTNAME, path: "/" }]);
-  await page.goto(`${BASE}/workspace`, { waitUntil: "domcontentloaded" });
-  await page.locator(".workspace-list", { hasText: workspaceName }).getByText(workspaceName).click();
+  await page.goto(`${BASE}/workspace?workspaceId=${workspaceId}`, { waitUntil: "domcontentloaded" });
   await page.locator(".workspace-switcher").getByRole("button", { name: /Groups/ }).click();
   await page.locator(".workspace-chat-section", { hasText: roomName }).getByText(roomName).click();
 }
@@ -121,6 +120,7 @@ async function main() {
       method: "POST",
       body: JSON.stringify({ threadId, content: `@${AGENT_NAME} create an approved task ${RUN_ID}` }),
     }, ownerCookie);
+    log("DEBUG approvalMessage:", JSON.stringify(approvalMessage, null, 2));
     assert(approvalMessage.agentRuns?.[0]?.status === "completed", "normal message path completes with placeholder runtime");
 
     const taskRun = await requestJson(`/api/workspaces/${workspaceId}/tasks`, {
@@ -222,7 +222,7 @@ async function main() {
 
     browser = await chromium.launch();
     const page = await browser.newPage({ viewport: { width: 1360, height: 860 } });
-    await openWorkspaceThread(page, ownerCookieValue, WORKSPACE_NAME, ROOM_NAME);
+    await openWorkspaceThread(page, ownerCookieValue, workspaceId, ROOM_NAME);
 
     const artifactMessage = page.locator(".workspace-message.agent", { hasText: `Approved Artifact ${RUN_ID}` }).last();
     await artifactMessage.waitFor();

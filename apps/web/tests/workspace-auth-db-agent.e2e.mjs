@@ -101,12 +101,11 @@ async function signUpAndGetCookie() {
   return { user: data.user, cookie };
 }
 
-async function openWorkspaceThread(page, sessionCookie, workspaceName, roomName) {
+async function openWorkspaceThread(page, sessionCookie, workspaceId, roomName) {
   const sessionCookieValue = /primoria_session=([^;]+)/.exec(sessionCookie)?.[1];
   assert(sessionCookieValue, "session cookie value exists for browser smoke");
   await page.context().addCookies([{ name: "primoria_session", value: sessionCookieValue, domain: BASE_HOSTNAME, path: "/" }]);
-  await page.goto(`${BASE}/workspace`, { waitUntil: "domcontentloaded" });
-  await page.locator(".workspace-list", { hasText: workspaceName }).getByText(workspaceName).click();
+  await page.goto(`${BASE}/workspace?workspaceId=${workspaceId}`, { waitUntil: "domcontentloaded" });
   await page.locator(".workspace-switcher").getByRole("button", { name: /Groups/ }).click();
   await page.locator(".workspace-chat-section", { hasText: roomName }).getByText(roomName).click();
 }
@@ -271,9 +270,12 @@ async function main() {
     assert(finalView.artifacts.some((artifact) => artifact.sourceRunId === approved.run.id && artifact.kind === "saved_artifact"), "final DB view indexes first-class approved artifact");
     assert(finalView.messages.some((message) => message.artifact?.title === `Authenticated DB Artifact ${RUN_ID}`), "final DB view keeps compatibility artifact message");
 
+    console.log("DEBUG: finalView.messages:", JSON.stringify(finalView.messages.map((m) => ({ id: m.id, senderName: m.senderName, content: m.content.slice(0, 50) })), null, 2));
+    console.log("DEBUG: finalView.agentRuns:", JSON.stringify(finalView.agentRuns.map((r) => ({ id: r.id, trigger: r.trigger, status: r.status, outputMessageId: r.outputMessageId })), null, 2));
+
     browser = await chromium.launch();
     const page = await browser.newPage({ viewport: { width: 1360, height: 860 } });
-    await openWorkspaceThread(page, cookie, WORKSPACE_NAME, ROOM_NAME);
+    await openWorkspaceThread(page, cookie, workspaceId, ROOM_NAME);
     await page.locator(".workspace-message.agent", { hasText: `Authenticated DB Artifact ${RUN_ID}` }).last().waitFor();
     await page.locator(".workspace-agent-run-chip", { hasText: "completed" }).last().waitFor();
     await page.locator(".workspace-artifact-message-card", { hasText: `Authenticated DB Artifact ${RUN_ID}` }).last().waitFor();

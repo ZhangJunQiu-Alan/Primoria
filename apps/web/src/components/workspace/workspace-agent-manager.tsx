@@ -114,7 +114,7 @@ export function WorkspaceAgentManager({
     setAgentComposerOpen(false);
   }
 
-  function useTemplate(template: WorkspaceAgentTemplate) {
+  function applyTemplate(template: WorkspaceAgentTemplate) {
     resetFeedback();
     setTab("agents");
     setAgentComposerOpen(true);
@@ -379,7 +379,7 @@ export function WorkspaceAgentManager({
                   </select>
                 </label>
                 <div className="workspace-agent-store-actions">
-                  <button type="button" onClick={() => useTemplate(selectedStoreTemplate)}>Customize</button>
+                  <button type="button" onClick={() => applyTemplate(selectedStoreTemplate)}>Customize</button>
                   <button type="button" onClick={() => void installTemplate(selectedStoreTemplate)} disabled={saving || Boolean(installedStoreProfile)}>
                     {installedStoreProfile ? "Installed" : storeInstallTarget === "private" ? "Save to My agents" : "Install to workspace"}
                   </button>

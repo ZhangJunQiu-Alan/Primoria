@@ -126,8 +126,8 @@ function buildWorkspaceMcpToolPolicy(connection: WorkspaceAgentConnection, rawTo
 }
 
 async function createDefaultWorkspaceMcpClient(config: WorkspaceMcpClientConfig): Promise<WorkspaceMcpClient> {
-  const module = await import("@langchain/mcp-adapters");
-  const { MultiServerMCPClient } = module as {
+  const mcpAdapters = await import("@langchain/mcp-adapters");
+  const { MultiServerMCPClient } = mcpAdapters as {
     MultiServerMCPClient?: new (config: WorkspaceMcpClientConfig) => WorkspaceMcpClient;
   };
   if (!MultiServerMCPClient) throw new Error("LangChain MCP adapter is not available.");
