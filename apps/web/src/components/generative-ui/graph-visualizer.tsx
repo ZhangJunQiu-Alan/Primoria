@@ -174,7 +174,10 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
   const [selected, setSelected] = useState<string | null>(null);
   const [tx, setTx]   = useState({ x: 0, y: 0, s: 1 });
   const txRef         = useRef(tx);
-  txRef.current       = tx;
+  useEffect(() => {
+    txRef.current = tx;
+  }, [tx]);
+  const [isDragging, setIsDragging] = useState(false);
   const svgRef        = useRef<SVGSVGElement>(null);
   const dragRef       = useRef<{ id: string; startPx: number; startPy: number; origX: number; origY: number } | null>(null);
   const panRef        = useRef<{ startPx: number; startPy: number; origTx: number; origTy: number } | null>(null);
@@ -218,6 +221,7 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
     const n = nodeMap.get(nodeId);
     if (!n) return;
     dragRef.current = { id: nodeId, startPx: e.clientX, startPy: e.clientY, origX: n.x, origY: n.y };
+    setIsDragging(true);
   }
 
   function handleSvgPointerDown(e: React.PointerEvent<SVGSVGElement>) {
@@ -248,6 +252,7 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
   function handleSvgPointerUp() {
     dragRef.current = null;
     panRef.current  = null;
+    setIsDragging(false);
   }
 
   function handleWheel(e: React.WheelEvent<SVGSVGElement>) {

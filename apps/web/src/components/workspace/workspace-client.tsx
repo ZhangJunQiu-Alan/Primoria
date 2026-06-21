@@ -207,6 +207,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
   const [mentionIndex, setMentionIndex] = useState(0);
+  const [selectionStart, setSelectionStart] = useState<number | null>(null);
+  const [prevMentionQuery, setPrevMentionQuery] = useState<string | undefined>(undefined);
+  const [prevThreadId, setPrevThreadId] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [newThreadOpen, setNewThreadOpen] = useState(false);
@@ -364,7 +367,12 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const visibleAgentProfiles = useMemo(() => dedupeVisibleAgentProfiles(view.agentProfiles), [view.agentProfiles]);
   const visibleMembers = useMemo(() => dedupeVisibleMembers(view.members, view.agentProfiles), [view.members, view.agentProfiles]);
   const agentMembers = visibleMembers.filter(isAgentMember);
-  const mentionRange = getActiveAgentMentionRange(draft, composerInputRef.current?.selectionStart ?? draft.length);
+  const mentionRange = getActiveAgentMentionRange(draft, selectionStart ?? draft.length);
+  if (mentionRange?.query !== prevMentionQuery || activeThread?.id !== prevThreadId) {
+    setPrevMentionQuery(mentionRange?.query);
+    setPrevThreadId(activeThread?.id);
+    setMentionIndex(0);
+  }
   const mentionCandidates = mentionRange
     ? agentMembers
         .filter((member) => agentPickerMatchesQuery(mentionRange.query, [member.displayName, member.role, member.status ?? ""]))
@@ -432,9 +440,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     if (workspaceReady && view.persisted && activeThread) writeCachedActiveThreadId(view.workspace.id, activeThread.id);
   }, [activeThread, view.persisted, view.workspace.id, workspaceReady]);
 
-  useEffect(() => {
-    setMentionIndex(0);
-  }, [mentionRange?.query, activeThread?.id]);
+
 
   useEffect(() => {
     workspaceIdRef.current = view.workspace.id;
@@ -690,7 +696,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   }, [agentTemplates.length, memberPickerOpen, memberRole, view.workspace.id]);
 
   const loadWorkspaceAgentSkills = useCallback(async (signal?: AbortSignal) => {
-    setLoadingWorkspaceAgentSkills(true);
+    Promise.resolve().then(() => {
+      if (!signal?.aborted) setLoadingWorkspaceAgentSkills(true);
+    });
     try {
       const response = await fetch(`/api/workspaces/${view.workspace.id}/agent-skills`, { cache: "no-store", signal });
       if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Agent skills could not be loaded."));
@@ -706,7 +714,11 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   useEffect(() => {
     if (!memberPickerOpen || memberRole !== "Agent") return;
     const controller = new AbortController();
-    void loadWorkspaceAgentSkills(controller.signal);
+    Promise.resolve().then(() => {
+      if (!controller.signal.aborted) {
+        void loadWorkspaceAgentSkills(controller.signal);
+      }
+    });
     return () => controller.abort();
   }, [memberPickerOpen, memberRole, loadWorkspaceAgentSkills]);
 
@@ -1978,6 +1990,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           mentionPickerOpen={mentionPickerOpen}
           sending={sending}
           onDraftChange={setDraft}
+          onSelectionChange={setSelectionStart}
           onInsertMention={insertComposerMention}
           onKeyDown={handleComposerKeyDown}
           onSubmit={sendMessage}

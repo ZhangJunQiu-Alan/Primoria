@@ -245,7 +245,7 @@ export function BatchVisualModeClient() {
       finalArtifact: errorArtifact(message),
       error: message,
     }));
-  }, [handleStreamEvent, updateCase]);
+  }, [updateCase]);
 
   const runAll = useCallback(() => {
     const nextRunId = makeRunId();

@@ -58,12 +58,14 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
   const ryRef = useRef(0.4);
   const zoomRef = useRef(1.0);
   const dragRef = useRef<{ px: number; py: number } | null>(null);
-  const reprRef = useRef<Repr>(artifact.representation ?? "ball_stick");
-  const [repr, setRepr] = useState<Repr>(reprRef.current);
+  const [repr, setRepr] = useState<Repr>(() => artifact.representation ?? "ball_stick");
+  const [prevRepresentation, setPrevRepresentation] = useState(artifact.representation);
+  if (artifact.representation !== prevRepresentation) {
+    setPrevRepresentation(artifact.representation);
+    setRepr(artifact.representation ?? "ball_stick");
+  }
 
-  // centeredRef always up-to-date with latest artifact
-  const centeredRef = useRef(centerAtoms(artifact.atoms));
-  centeredRef.current = centerAtoms(artifact.atoms);
+  const centeredData = useMemo(() => centerAtoms(artifact.atoms), [artifact.atoms]);
 
   function draw() {
     const canvas = canvasRef.current;
@@ -77,10 +79,10 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
     ctx.fillStyle = "#0f1523";
     ctx.fillRect(0, 0, W, H);
 
-    const { atoms: centered, scale0 } = centeredRef.current;
+    const { atoms: centered, scale0 } = centeredData;
     const scale = scale0 * zoomRef.current;
     const rx = rxRef.current, ry = ryRef.current;
-    const rep = reprRef.current;
+    const rep = repr;
 
     function project(x: number, y: number, z: number) {
       const y1 = y * Math.cos(rx) - z * Math.sin(rx);
@@ -167,7 +169,9 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
   }
 
   const drawRef = useRef(draw);
-  drawRef.current = draw;
+  useEffect(() => {
+    drawRef.current = draw;
+  });
 
   useEffect(() => { drawRef.current(); }, [artifact, repr]);
 
@@ -195,7 +199,6 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
     drawRef.current();
   }
   function switchRepr(r: Repr) {
-    reprRef.current = r;
     setRepr(r);
     drawRef.current();
   }

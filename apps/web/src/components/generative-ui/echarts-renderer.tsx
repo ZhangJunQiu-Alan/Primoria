@@ -30,8 +30,6 @@ export function EChartsRenderer({ artifact }: { artifact: EChartsArtifact }) {
       chartRef.current?.dispose();
       chartRef.current = null;
     };
-  // Re-init when option changes (new artifact version)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [artifact.option]);
 
   // Update option in-place without re-init when same chart instance exists
