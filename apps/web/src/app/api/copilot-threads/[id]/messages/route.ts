@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { listCopilotMessages, upsertCopilotMessage } from "@/lib/copilot/thread-repository";
+import { recordLearningEvent } from "@/lib/learning-events/store";
 
 const MessageSchema = z.object({
   id: z.string(),
@@ -26,5 +27,14 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const { id } = await context.params;
   const body = MessageSchema.parse(await request.json());
   await upsertCopilotMessage(user.id, id, body);
+  if (body.role === "user") {
+    await recordLearningEvent({
+      type: "chat.question",
+      ownerId: user.id,
+      id: `cq_${body.id}`,
+      threadId: id,
+      messageId: body.id,
+    });
+  }
   return NextResponse.json({ ok: true });
 }

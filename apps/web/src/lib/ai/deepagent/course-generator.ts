@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { saveCourse } from "@/lib/courses/store";
+import { getCurrentUser } from "@/lib/auth/session";
+import { recordLearningEvent } from "@/lib/learning-events/store";
 import type { BlockType, Course, CourseBlock } from "@/lib/courses/types";
 import { summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
@@ -231,6 +233,8 @@ export type GenerateCourseInput = {
   contextHint?: string;
   kgContext?: CourseContext;
   courseId?: string;
+  ownerId?: string;
+  source?: "cold_start" | "profile";
 };
 
 export type GenerateCourseResult = {
@@ -240,6 +244,18 @@ export type GenerateCourseResult = {
 
 function randomId(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
+}
+
+// Best-effort owner for the course.generated event. Falls back to the request
+// session; returns null in non-request contexts (e.g. background job worker)
+// rather than throwing, since event logging must never break generation.
+async function resolveEventOwnerId(explicit?: string): Promise<string | null> {
+  if (explicit) return explicit;
+  try {
+    return (await getCurrentUser())?.id ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export async function generateCourse(
@@ -282,6 +298,19 @@ export async function generateCourse(
   };
 
   await saveCourse(course);
+
+  const eventOwnerId = await resolveEventOwnerId(input.ownerId);
+  if (eventOwnerId) {
+    await recordLearningEvent({
+      type: "course.generated",
+      ownerId: eventOwnerId,
+      courseId: course.id,
+      graphId: input.kgContext?.graphId ?? null,
+      conceptId: input.kgContext?.targetConceptId ?? null,
+      topic: input.topic,
+      source: input.source ?? "cold_start",
+    });
+  }
 
   return { course, summary: summarizeCourse(course) };
 }

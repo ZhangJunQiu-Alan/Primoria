@@ -4,6 +4,8 @@ import { z } from "zod";
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { requireAuth } from "@/lib/auth/guard";
+import { getCurrentUser } from "@/lib/auth/session";
+import { recordLearningEvent } from "@/lib/learning-events/store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,6 +40,20 @@ export async function POST(request: Request) {
     const plan = planFromPositioning(result);
 
     logPositioning(buildPositioningLog({ encodedQuery: search.encodedQuery, search, result }));
+
+    const user = await getCurrentUser().catch(() => null);
+    if (user) {
+      await recordLearningEvent({
+        type: "position.computed",
+        ownerId: user.id,
+        graphId: search.graphId,
+        conceptId: result.targetConceptId ?? null,
+        rawQuery: search.encodedQuery.rawQuery,
+        branch: result.branch,
+        topTopicId: result.diagnostics.topicMass[0]?.topicId ?? null,
+        maxSimilarity: result.diagnostics.maxSimilarity,
+      });
+    }
 
     return NextResponse.json({ encodedQuery: search.encodedQuery, ...result, plan });
   } catch (error) {

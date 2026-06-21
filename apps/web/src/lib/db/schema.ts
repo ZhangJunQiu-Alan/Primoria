@@ -536,6 +536,26 @@ export const quizAttempts = pgTable(
   }),
 );
 
+export const learningEvents = pgTable(
+  "learning_events",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    courseId: text("course_id"),
+    blockId: text("block_id"),
+    graphId: text("graph_id"),
+    conceptId: text("concept_id"),
+    payload: jsonb("payload").notNull().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerCreatedIdx: index("learning_events_owner_created_idx").on(table.ownerId, table.createdAt),
+    ownerTypeIdx: index("learning_events_owner_type_idx").on(table.ownerId, table.type),
+    ownerConceptIdx: index("learning_events_owner_concept_idx").on(table.ownerId, table.conceptId),
+  }),
+);
+
 export type UserRow = typeof users.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;
