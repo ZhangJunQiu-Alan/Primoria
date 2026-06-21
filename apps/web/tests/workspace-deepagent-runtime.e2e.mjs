@@ -120,12 +120,11 @@ async function signUpAndGetCookie() {
   return cookie;
 }
 
-async function openWorkspaceThread(page, sessionCookie, workspaceName, roomName) {
+async function openWorkspaceThread(page, sessionCookie, workspaceId, roomName) {
   const sessionCookieValue = /primoria_session=([^;]+)/.exec(sessionCookie)?.[1];
   assert(sessionCookieValue, "session cookie value exists for browser smoke");
   await page.context().addCookies([{ name: "primoria_session", value: sessionCookieValue, domain: BASE_HOSTNAME, path: "/" }]);
-  await page.goto(`${BASE}/workspace`, { waitUntil: "domcontentloaded" });
-  await page.locator(".workspace-list", { hasText: workspaceName }).getByText(workspaceName).click();
+  await page.goto(`${BASE}/workspace?workspaceId=${workspaceId}`, { waitUntil: "domcontentloaded" });
   await page.locator(".workspace-switcher").getByRole("button", { name: /Groups/ }).click();
   await page.locator(".workspace-chat-section", { hasText: roomName }).getByText(roomName).click();
 }
@@ -201,7 +200,7 @@ async function main() {
 
     browser = await chromium.launch();
     const page = await browser.newPage({ viewport: { width: 1360, height: 860 } });
-    await openWorkspaceThread(page, cookie, WORKSPACE_NAME, ROOM_NAME);
+    await openWorkspaceThread(page, cookie, workspaceId, ROOM_NAME);
     await page.locator(".workspace-message.agent", { hasText: FINAL_RESPONSE }).waitFor();
     await page.locator(".workspace-agent-run-chip", { hasText: "completed" }).last().waitFor();
 

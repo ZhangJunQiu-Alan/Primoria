@@ -66,11 +66,12 @@ type CachedThreadActivity = {
   hasMore?: boolean;
 };
 
-function readCachedWorkspaceShell() {
+function readCachedWorkspaceShell(qid?: string | null) {
   if (typeof window === "undefined") return null;
   try {
     const parsed = JSON.parse(window.localStorage.getItem(WORKSPACE_SHELL_CACHE_KEY) ?? "null") as { view?: WorkspaceView; savedAt?: number } | null;
     if (!parsed?.view?.persisted || !parsed.view.workspace?.id || !Array.isArray(parsed.view.threads)) return null;
+    if (qid && parsed.view.workspace.id !== qid) return null;
     return parsed.view;
   } catch {
     return null;
@@ -443,7 +444,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     if (initialView.persisted) return;
     const controller = new AbortController();
     async function loadInitialWorkspace() {
-      const cached = readCachedWorkspaceShell();
+      const qid = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("workspaceId") : null;
+      const cached = readCachedWorkspaceShell(qid);
       if (cached) {
         const cachedThread = pickWorkspaceThread(cached, readCachedActiveThreadId(cached.workspace.id));
         setView(cached);
@@ -454,7 +456,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         setWorkspaceReady(true);
       }
       try {
-        const response = await fetch("/api/workspaces?view=shell", { cache: "no-store", signal: controller.signal });
+        const url = qid ? `/api/workspaces/${qid}?view=shell` : "/api/workspaces?view=shell";
+        const response = await fetch(url, { cache: "no-store", signal: controller.signal });
         if (!response.ok) throw new Error("Workspace could not be loaded.");
         const data = (await response.json()) as WorkspaceView;
         if (controller.signal.aborted) return;
@@ -686,12 +689,26 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     };
   }, [agentTemplates.length, memberPickerOpen, memberRole, view.workspace.id]);
 
+  const loadWorkspaceAgentSkills = useCallback(async (signal?: AbortSignal) => {
+    setLoadingWorkspaceAgentSkills(true);
+    try {
+      const response = await fetch(`/api/workspaces/${view.workspace.id}/agent-skills`, { cache: "no-store", signal });
+      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Agent skills could not be loaded."));
+      const data = (await response.json()) as { skills?: WorkspaceAgentSkillOption[] };
+      setWorkspaceAgentSkills(Array.isArray(data.skills) ? data.skills : []);
+    } catch (skillError) {
+      if (!signal?.aborted) setError(skillError instanceof Error ? skillError.message : "Agent skills could not be loaded.");
+    } finally {
+      if (!signal?.aborted) setLoadingWorkspaceAgentSkills(false);
+    }
+  }, [view.workspace.id]);
+
   useEffect(() => {
     if (!memberPickerOpen || memberRole !== "Agent") return;
     const controller = new AbortController();
     void loadWorkspaceAgentSkills(controller.signal);
     return () => controller.abort();
-  }, [memberPickerOpen, memberRole, view.workspace.id]);
+  }, [memberPickerOpen, memberRole, loadWorkspaceAgentSkills]);
 
   function selectThread(thread: WorkspaceThread) {
     markThreadRead(view.workspace.id, activeThread?.id, view.messages);
@@ -749,19 +766,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     }
   }
 
-  async function loadWorkspaceAgentSkills(signal?: AbortSignal) {
-    setLoadingWorkspaceAgentSkills(true);
-    try {
-      const response = await fetch(`/api/workspaces/${view.workspace.id}/agent-skills`, { cache: "no-store", signal });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Agent skills could not be loaded."));
-      const data = (await response.json()) as { skills?: WorkspaceAgentSkillOption[] };
-      setWorkspaceAgentSkills(Array.isArray(data.skills) ? data.skills : []);
-    } catch (skillError) {
-      if (!signal?.aborted) setError(skillError instanceof Error ? skillError.message : "Agent skills could not be loaded.");
-    } finally {
-      if (!signal?.aborted) setLoadingWorkspaceAgentSkills(false);
-    }
-  }
+
 
   async function createWorkspaceAgentSkill(mode: "create" | "edit") {
     const name = (mode === "create" ? customSkillName : customEditSkillName).trim();

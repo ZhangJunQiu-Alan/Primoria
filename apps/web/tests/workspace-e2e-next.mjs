@@ -39,7 +39,13 @@ export function startNextDevServer(input) {
   input.log("starting Next.js dev server on port", input.port);
   const server = spawn("pnpm", ["--filter", "@primoria/web", "dev"], {
     cwd: input.repoRoot,
-    env: { ...process.env, ...input.env, ...snapshot.env, PORT: input.port },
+    env: {
+      ...process.env,
+      PRIMORIA_WORKSPACE_DEEPAGENT: "0",
+      ...input.env,
+      ...snapshot.env,
+      PORT: input.port,
+    },
     detached: true,
     stdio: ["ignore", "pipe", "pipe"],
   });

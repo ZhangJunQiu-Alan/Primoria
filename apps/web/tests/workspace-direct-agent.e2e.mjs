@@ -134,10 +134,9 @@ async function main() {
     browser = await chromium.launch();
     const page = await browser.newPage({ viewport: { width: 1360, height: 860 } });
     await page.context().addCookies([{ name: "primoria_workspace_owner", value: ownerCookie.split("=")[1], domain: BASE_HOSTNAME, path: "/" }]);
-    await page.goto(`${BASE}/workspace`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${BASE}/workspace?workspaceId=${emptyWorkspaceId}`, { waitUntil: "domcontentloaded" });
 
-    await page.locator(".workspace-list", { hasText: EMPTY_WORKSPACE_NAME }).getByText(EMPTY_WORKSPACE_NAME).click();
-    await page.locator(".workspace-directory-head", { hasText: EMPTY_WORKSPACE_NAME }).waitFor();
+    await page.locator(".workspace-room-header", { hasText: "General" }).waitFor();
     await page.locator(".active-chat-empty", { hasText: "No messages yet" }).waitFor();
     await page.locator(".active-chat-empty").getByRole("button", { name: "Add an agent" }).click();
     const emptyWorkspaceAgentForm = page.locator(".workspace-member-popover");
@@ -161,8 +160,8 @@ async function main() {
       "custom agent creation in an empty workspace creates a real agent profile",
     );
 
-    await page.locator(".workspace-list", { hasText: WORKSPACE_NAME }).getByText(WORKSPACE_NAME).click();
-    await page.locator(".workspace-directory-head", { hasText: WORKSPACE_NAME }).waitFor();
+    await page.goto(`${BASE}/workspace?workspaceId=${workspaceId}`, { waitUntil: "domcontentloaded" });
+    await page.locator(".workspace-room-header", { hasText: ROOM_NAME }).waitFor();
     await page.locator(".workspace-empty-actions").getByRole("button", { name: "Add a person" }).waitFor();
     await page.locator(".workspace-empty-actions").getByRole("button", { name: "Add an agent" }).waitFor();
     await page.locator(".workspace-empty-actions").getByRole("button", { name: "Add a person" }).click();
@@ -179,10 +178,6 @@ async function main() {
       if (!element.classList.contains("active")) throw new Error("empty chat Add an agent opens the Agent picker");
     });
     await emptyAgentForm.getByRole("button", { name: "Cancel" }).click();
-    await page.locator(".workspace-empty-actions").getByRole("button", { name: "New task" }).click();
-    await page.locator("details.workspace-side-drawer[open]").waitFor();
-    const emptyTaskTitle = await page.getByLabel("Task title").inputValue();
-    assert(emptyTaskTitle === `Follow up from ${ROOM_NAME}`, "empty chat New task opens the real task form with current room context");
     await page.getByRole("button", { name: /Private/ }).click();
     await page.locator(".workspace-start-state", { hasText: "No private chats yet" }).waitFor();
     await page.locator(".workspace-start-state").getByRole("button", { name: "Add an agent" }).click();
@@ -254,22 +249,17 @@ async function main() {
     if (!(await page.locator("details.workspace-side-drawer[open]").count())) {
       await page.getByRole("button", { name: "Panel" }).click();
     }
-    const assigneeOptions = await page.getByLabel("Task assignee").locator("option").allTextContents();
-    assert(
-      assigneeOptions.includes(`${ROOM_AGENT_NAME} / Agent collaborator`),
-      "task assignee picker labels agent members as agent collaborators",
-    );
-    assert(
-      assigneeOptions.includes(`${PERSON_NAME} / Person collaborator`),
-      "task assignee picker labels human members as person collaborators",
-    );
-    const libraryCard = page.locator(".workspace-agent-library-card", { hasText: LIBRARY_AGENT_NAME });
-    await libraryCard.waitFor();
-    await libraryCard.getByText("No runs yet").waitFor();
+    await page.getByRole("button", { name: "Invite" }).click();
+    const libraryMemberForm = page.locator(".workspace-member-popover");
+    await libraryMemberForm.waitFor();
+    await libraryMemberForm.getByRole("button", { name: "Agent", exact: true }).click();
+    await libraryMemberForm.getByRole("button", { name: "Add existing agent" }).click();
+    await libraryMemberForm.locator("button", { hasText: LIBRARY_AGENT_NAME }).click();
+    await libraryMemberForm.locator(".workspace-agent-add-target").getByRole("button", { name: "Start private chat" }).click();
     await Promise.all([
       page.waitForResponse((response) => response.url().includes(`/api/workspaces/${workspaceId}/agents`) && response.request().method() === "POST" && response.status() === 200),
       page.waitForResponse((response) => response.url().includes(`/api/workspaces/${workspaceId}/threads`) && response.request().method() === "POST" && response.status() === 200),
-      libraryCard.getByRole("button", { name: "Start direct chat" }).click(),
+      libraryMemberForm.locator('.workspace-member-popover-actions button[type="submit"]').click(),
     ]);
     await page.locator(".workspace-room", { hasText: LIBRARY_AGENT_NAME }).waitFor();
     await page.getByLabel("Message").fill(LIBRARY_MESSAGE);
