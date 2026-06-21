@@ -263,7 +263,9 @@ export function MathExplorerRenderer({ artifact }: { artifact: MathExplorerArtif
   }, [artifact, paramValues]);
 
   const drawCanvasRef = useRef(drawCanvas);
-  drawCanvasRef.current = drawCanvas;
+  useEffect(() => {
+    drawCanvasRef.current = drawCanvas;
+  }, [drawCanvas]);
 
   useEffect(() => {
     getMathjs()

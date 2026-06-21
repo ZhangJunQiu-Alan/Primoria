@@ -13,6 +13,7 @@ type WorkspaceComposerProps = {
   mentionPickerOpen: boolean;
   sending: boolean;
   onDraftChange: (value: string) => void;
+  onSelectionChange?: (value: number | null) => void;
   onInsertMention: (member: WorkspaceMember) => void;
   onKeyDown: KeyboardEventHandler<HTMLInputElement>;
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -28,6 +29,7 @@ export function WorkspaceComposer({
   mentionPickerOpen,
   sending,
   onDraftChange,
+  onSelectionChange,
   onInsertMention,
   onKeyDown,
   onSubmit,
@@ -46,7 +48,13 @@ export function WorkspaceComposer({
           ref={composerInputRef}
           aria-label="Message"
           value={draft}
-          onChange={(event) => onDraftChange(event.target.value)}
+          onChange={(event) => {
+            onDraftChange(event.target.value);
+            onSelectionChange?.(event.target.selectionStart);
+          }}
+          onSelect={(event) => {
+            onSelectionChange?.(event.currentTarget.selectionStart);
+          }}
           onKeyDown={onKeyDown}
           disabled={!activeThread}
           autoComplete="off"

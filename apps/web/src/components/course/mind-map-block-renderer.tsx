@@ -39,8 +39,10 @@ export function MindMapBlockRenderer({
   const blockIdRef = useRef(block.id);
   const courseIdRef = useRef(courseId);
 
-  blockIdRef.current = block.id;
-  courseIdRef.current = courseId;
+  useEffect(() => {
+    blockIdRef.current = block.id;
+    courseIdRef.current = courseId;
+  }, [block.id, courseId]);
 
   const save = useCallback((root: MindMapNode) => {
     const cId = courseIdRef.current;

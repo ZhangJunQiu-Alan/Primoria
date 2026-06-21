@@ -326,10 +326,12 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
         ctx.fillText(`${i * 25}%λ`, PAD.l + (i / 4) * plotW, H - 1);
       }
     }
-  }, [artifact.layout, artifact.timeScale, localWaves, fMin, fMax, tWindow]);
+  }, [artifact.layout, localWaves, fMin, fMax, tWindow]);
 
   const drawRef = useRef(draw);
-  drawRef.current = draw;
+  useEffect(() => {
+    drawRef.current = draw;
+  }, [draw]);
 
   // ── Animation loop ────────────────────────────────────────────────────────────
 
